@@ -1,9 +1,5 @@
 from tower import ugettext_lazy as _lazy
 
-from search.sphinxapi import (SPH_SORT_ATTR_DESC, SPH_SORT_ATTR_ASC,
-                              SPH_SORT_EXTENDED, SPH_GROUPBY_ATTR)
-
-
 WHERE_WIKI = 1
 WHERE_SUPPORT = 2
 WHERE_BASIC = WHERE_WIKI
@@ -58,14 +54,6 @@ NUMBER_LIST = (
     (INTERVAL_NONE, _lazy(u"Don't filter")),
     (INTERVAL_BEFORE, _lazy(u'Less than')),
     (INTERVAL_AFTER, _lazy(u'More than')),
-)
-
-SORT_QUESTIONS = (
-    #: (mode, clause)
-    (SPH_SORT_EXTENDED, '@relevance DESC, age ASC'),  # default
-    (SPH_SORT_ATTR_DESC, 'updated'),
-    (SPH_SORT_ATTR_DESC, 'created'),
-    (SPH_SORT_ATTR_DESC, 'replies'),
 )
 
 SORTBY_QUESTIONS = (

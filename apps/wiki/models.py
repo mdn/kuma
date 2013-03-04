@@ -28,7 +28,7 @@ import constance.config
 from elasticutils.contrib.django.models import Indexable
 
 from notifications.models import NotificationsMixin
-from search.index import SearchMappingType
+from search.index import SearchMappingType, register_mapping_type
 from search.tasks import register_live_index
 from sumo import ProgrammingError
 from sumo_locales import LOCALES
@@ -1478,6 +1478,7 @@ class Document(NotificationsMixin, ModelBase):
         return DocumentType
 
 
+@register_mapping_type
 class DocumentType(SearchMappingType, Indexable):
     @classmethod
     def get_model(cls):
@@ -1505,6 +1506,16 @@ class DocumentType(SearchMappingType, Indexable):
             'locale': {'type': 'string', 'index': 'not_analyzed'},
             'content': {'type': 'string', 'analyzer': 'snowball'}
         }
+
+    @classmethod
+    def get_indexable(cls):
+        model = cls.get_model()
+        return (model.objects
+                    .filter(is_template=0,
+                            is_redirect=0)
+                    .exclude(slug__icontains='Talk:')
+                    .values_list('id', flat=True)
+               )
 
 
 class ReviewTag(TagBase):
