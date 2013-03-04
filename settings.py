@@ -531,7 +531,6 @@ MINIFY_BUNDLES = {
             'css/mdn-screen.css',
             'css/modals.css',
             'css/mdn-video-player.css',
-            'css/mdn-forums-sidebar-module.css',
             'css/mdn-calendar.css',
         ),
         'demostudio': (
@@ -551,12 +550,8 @@ MINIFY_BUNDLES = {
             'css/jqueryui/jquery-ui-1.8.14.custom.css',
             #'css/jqueryui/jqueryui.css',
         ),
-        'forums': (
-            'css/forums.css',
-        ),
         'questions': (
             'css/to-delete.css',
-            'css/questions.css',
             'css/tags.css',
         ),
         'search': (
@@ -589,12 +584,6 @@ MINIFY_BUNDLES = {
         ),
         'ie': (
             'css/ie.css',
-        ),
-        'customercare': (
-            'css/customercare.css',
-        ),
-        'chat': (
-            'css/chat.css',
         ),
         'users': (
             'css/users.css',
@@ -657,22 +646,14 @@ MINIFY_BUNDLES = {
             'js/libs/tag-it.js',
         ),
         'questions': (
-            'js/markup.js',
             'js/libs/jquery.ajaxupload.js',
-            'js/upload.js',
-            'js/questions.js',
             'js/tags.js',
         ),
         'search': (
             'js/search.js',
         ),
-        'forums': (
-            'js/markup.js',
-            'js/forums.js',
-        ),
         'gallery': (
             'js/libs/jquery.ajaxupload.js',
-            'js/gallery.js',
         ),
         'wiki': (
             'js/libs/django/prepopulate.js',
@@ -704,11 +685,7 @@ MINIFY_BUNDLES = {
             'js/libs/jquery.NobleCount.js',
             'js/libs/jquery.cookie.js',
             'js/libs/jquery.bullseye-1.0.min.js',
-            'js/customercare.js',
             'js/users.js',
-        ),
-        'chat': (
-            'js/chat.js',
         ),
         'users': (
             'js/users.js',
