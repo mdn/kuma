@@ -29,9 +29,7 @@
                 <a href="{{ parent_path }}" class="metadataDisplay" target="_blank">{{ parent_slug }}</a></li>
           {% endif %}
           {% if not is_template %}
-            <li><label><dfn title="{{_('Generate table of contents')}}">{{_('TOC:')}}</dfn></label>
-              {{ revision_form.show_toc | safe }}
-            </li>
+            {% include 'wiki/includes/document_toc_field.html' %}
           {% endif %}
         </ul>
         <input type="hidden" name="parent_topic" value="{{ parent_id | safe }}" />

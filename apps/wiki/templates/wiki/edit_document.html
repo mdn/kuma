@@ -99,9 +99,7 @@
             <ul class="metadata">
                 <li><label>{{_('Title:')}}</label> {{ revision_form.title | safe }}</li>
                 {% if not document.is_template %}
-                  <li><label><dfn title="{{_('Generate table of contents')}}">{{_('TOC:')}}</dfn></label>
-                    {{ revision_form.show_toc | safe }}
-                  </li>
+                  {% include 'wiki/includes/document_toc_field.html' %}
                 {% endif %}
                 {% if show_translation_parent_block %}
                 <li class="metadata-choose-parent">
