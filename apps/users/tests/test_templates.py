@@ -16,7 +16,6 @@ from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 from test_utils import RequestFactory
 
-import constance.config
 from dekicompat.tests import (SINGLE_ACCOUNT_FIXTURE_XML,
                               mock_post_mindtouch_user,
                               mock_put_mindtouch_user,
@@ -29,7 +28,7 @@ from sumo.helpers import urlparams
 from sumo.tests import post
 from users.models import RegistrationProfile
 from users.tests import TestCaseBase
-from users.views import _clean_next_url, SESSION_VERIFIED_EMAIL
+from users.views import _clean_next_url
 
 
 class LoginTests(TestCaseBase):
@@ -141,6 +140,18 @@ class LoginTests(TestCaseBase):
                                      'next': invalid_next})
         eq_(302, response.status_code)
         eq_('http://testserver' + valid_next, response['location'])
+
+    # http://bugzil.la/847190
+    @attr('sec')
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_clean_next_url_protocol_relative_redirect(self, get_current):
+        '''Test with an XSS in ?next parameter.'''
+        get_current.return_value.domain = 'testserver.com'
+        redir_next = '%252f%252fgoo.gl/yY9B5&paddingpaddingpadding'
+        redir_request = RequestFactory().get('/users/login',
+                                             {'next': redir_next})
+
+        eq_(None, _clean_next_url(redir_request))
 
     def test_login_legacy_password(self):
         '''Test logging in with a legacy md5 password.'''
