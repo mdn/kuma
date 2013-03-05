@@ -36,6 +36,12 @@ class dev_hacks {
         ensure => file,
         source => "/vagrant/puppet/files/vagrant/settings_local.py";
     }
+
+    exec { 'clean-pyc-files':
+        cwd => '/vagrant',
+        command => "/usr/bin/find . -name '*.pyc' -print0 | /usr/bin/xargs -0 /bin/rm -f",
+        require => File['/vagrant/settings_local.py']
+    }
         
     file { "/vagrant/kumascript_settings_local.json":
         ensure => file,
