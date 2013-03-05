@@ -1,4 +1,5 @@
 import os
+import urllib
 import urlparse
 
 from django.conf import settings
@@ -606,6 +607,10 @@ def _clean_next_url(request):
         parsed_url = urlparse.urlparse(url)
         # Don't redirect outside of site_domain.
         # Don't include protocol+domain, so if we are https we stay that way.
+        # http://bugzil.la/847190
+        relative_url_prefix = urllib.quote_plus(urllib.quote_plus('//'))
+        if url.upper().startswith(relative_url_prefix):
+            url = None
         if parsed_url.scheme:
             site_domain = Site.objects.get_current().domain
             url_domain = parsed_url.netloc
