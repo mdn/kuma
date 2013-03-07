@@ -190,6 +190,10 @@
             .before(ui)
             .removeClass('edited-section-loading');
         // Fire up the CKEditor, stash it in the UI's data store
+        CKEDITOR.inlineHeight = ui.find('.src').height();
+        CKEDITOR.inlineCallback = function() {
+            ui.find('.edited-section-buttons').addClass('loaded');
+        };
         $('.edited-section-ui.current')
             .data('edit_url', section_edit_url)
             .data('editor',

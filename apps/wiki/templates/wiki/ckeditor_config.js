@@ -1,5 +1,4 @@
 CKEDITOR.on('instanceReady', function(ev) {
-
     var writer = ev.editor.dataProcessor.writer;
 
     // Tighten up the indentation a bit from the default of wide tabs.
@@ -29,6 +28,10 @@ CKEDITOR.on('instanceReady', function(ev) {
     if(toolbox && pathP) {
         toolbox.appendChild(pathP);
     }
+
+    // Callback for inline, if necessary
+    var callback = CKEDITOR.inlineCallback;
+    callback && callback(ev);
 });
 
 // Any utilities we need to be globably available will go here
@@ -111,7 +114,8 @@ CKEDITOR.editorConfig = function(config) {
     config.toolbar = 'MDN';
     config.tabSpaces = 2;
 
-    config.autoGrow_minHeight = 600;
+    var inlineHeight = CKEDITOR.inlineHeight;
+    config.autoGrow_minHeight = (!inlineHeight || inlineHeight < 150 ? 500 : inlineHeight);
     config.contentsCss = ['/media/css/wiki-screen.css', '/media/css/wiki-edcontent.css', '/en-US/docs/Template:CustomCSS?raw=1'];
     config.toolbarCanCollapse = false;
     config.resize_enabled = false;
@@ -120,17 +124,19 @@ CKEDITOR.editorConfig = function(config) {
     config.docType = '<!DOCTYPE html>';
     config.bodyClass = 'page-content';
     
-    CKEDITOR.stylesSet.add('default', [
-        { name: 'None', element: 'p' },
-        { name: 'Note box', element: 'div', attributes: { 'class': 'note' }, wrap: true },
-        { name: 'Warning box', element: 'div', attributes: { 'class': 'warning' }, wrap: true },
-        { name: 'Callout box', element: 'div', attributes: { 'class': 'geckoVersionNote' }, wrap: true },
-        { name: 'Two columns', element: 'div', attributes: { 'class': 'twocolumns' }, wrap: true },
-        { name: 'Three columns', element: 'div', attributes: { 'class': 'threecolumns' }, wrap: true },
-        { name: 'SEO Summary', element: 'span', attributes: { 'class': 'seoSummary' }, wrap: false },
-        { name: 'Syntax Box', element: 'div', attributes: { 'class': 'syntaxbox' }, wrap: false },
-        { name: 'Right Sidebar', element: 'div', attributes: { 'class': 'standardSidebar' }, wrap: false }
-    ]);
+    if(!CKEDITOR.stylesSet.registered['default']) {
+            CKEDITOR.stylesSet.add('default', [
+            { name: 'None', element: 'p' },
+            { name: 'Note box', element: 'div', attributes: { 'class': 'note' }, wrap: true },
+            { name: 'Warning box', element: 'div', attributes: { 'class': 'warning' }, wrap: true },
+            { name: 'Callout box', element: 'div', attributes: { 'class': 'geckoVersionNote' }, wrap: true },
+            { name: 'Two columns', element: 'div', attributes: { 'class': 'twocolumns' }, wrap: true },
+            { name: 'Three columns', element: 'div', attributes: { 'class': 'threecolumns' }, wrap: true },
+            { name: 'SEO Summary', element: 'span', attributes: { 'class': 'seoSummary' }, wrap: false },
+            { name: 'Syntax Box', element: 'div', attributes: { 'class': 'syntaxbox' }, wrap: false },
+            { name: 'Right Sidebar', element: 'div', attributes: { 'class': 'standardSidebar' }, wrap: false }
+        ]);
+    }
 
     {{ editor_config|safe }}    
 };
