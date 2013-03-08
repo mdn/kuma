@@ -10,6 +10,30 @@ from django.utils.translation.trans_real import parse_accept_lang_header
 _locals = threading.local()
 
 
+def get_best_language(accept_lang):
+    """Given an Accept-Language header, return the best-matching language."""
+
+    LUM = settings.LANGUAGE_URL_MAP
+    NSL = settings.NON_SUPPORTED_LOCALES
+    LC = settings.LANGUAGE_CODE
+    langs = dict(LUM)
+    # Add in non-supported first to allow overriding prefix behavior.
+    langs.update((k.lower(), v if v else LC) for k, v in NSL.items() if
+                 k.lower() not in langs)
+    langs.update((k.split('-')[0], v) for k, v in LUM.items() if
+                 k.split('-')[0] not in langs)
+    ranked = parse_accept_lang_header(accept_lang)
+    for lang, _ in ranked:
+        lang = lang.lower()
+        if lang in langs:
+            return langs[lang]
+        pre = lang.split('-')[0]
+        if pre in langs:
+            return langs[pre]
+    # Couldn't find any acceptable locale.
+    return False
+
+
 def set_url_prefixer(prefixer):
     """Set the Prefixer for the current thread."""
     _locals.prefixer = prefixer
@@ -103,22 +127,10 @@ class Prefixer(object):
                 return settings.LANGUAGE_URL_MAP[lang]
 
         if self.request.META.get('HTTP_ACCEPT_LANGUAGE'):
-            ranked_languages = parse_accept_lang_header(
+            best = get_best_language(
                 self.request.META['HTTP_ACCEPT_LANGUAGE'])
-
-            # Do we support or remap their locale?
-            supported = [lang[0] for lang in ranked_languages if lang[0]
-                        in settings.LANGUAGE_URL_MAP]
-
-            # Do we support a less specific locale? (xx-YY -> xx)
-            if not len(supported):
-                for lang in ranked_languages:
-                    supported = find_supported(lang[0])
-                    if supported:
-                        break
-
-            if len(supported):
-                return settings.LANGUAGE_URL_MAP[supported[0].lower()]
+            if best:
+                return best
 
         return settings.LANGUAGE_CODE
 
