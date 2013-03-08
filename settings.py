@@ -118,6 +118,21 @@ DEV_POOTLE_PRODUCT_DETAILS_MAP = {
     'xx-testing': 'x-testing',
 }
 
+# Locales that are known but unsupported. Keys are the locale, values
+# are an optional fallback locale, or None, to use the LANGUAGE_CODE.
+NON_SUPPORTED_LOCALES = {
+    'af': None,
+    'an': 'es',
+    'br': 'fr',
+    'csb': 'pl',
+    'lij': 'it',
+    'nb-NO': 'no',
+    'nn-NO': 'no',
+    'oc': 'fr',
+    'sr': 'sr-CYRL',  # Override the tendency to go sr->sr-LATN.
+    'sv-SE': 'sv',
+}
+
 try:
     DEV_LANGUAGES = [
         loc.replace('_','-') for loc in os.listdir(path('locale'))
