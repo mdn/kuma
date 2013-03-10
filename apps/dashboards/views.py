@@ -174,8 +174,11 @@ def revisions(request):
             prev = rev.get_previous()
             from_rev = str(prev.id if prev else rev.id)
             doc_url = reverse('wiki.document', args=[rev.document.full_path], locale=rev.document.locale)
-            comment = format_comment(rev)
-            richTitle = '<a href="%s" target="_blank">%s</a><span class="dash-locale">%s</span><span class="dashboard-comment">%s</span>' % (doc_url, jinja2.escape(rev.document.slug), rev.document.locale, comment)
+            articleUrl = '<a href="%s" target="_blank">%s</a>' % (doc_url, jinja2.escape(rev.document.slug))
+            articleLocale = '<span class="dash-locale">%s</span>' % rev.document.locale
+            articleComment = '<span class="dashboard-comment">%s</span>' % format_comment(rev)
+            articleIsNew = '<span class="dashboard-new">New: </span>' if rev.based_on_id is None else ''
+            richTitle = articleIsNew + articleUrl + articleLocale + articleComment
 
             revision_json['aaData'].append({
                 'id': rev.id,
