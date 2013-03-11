@@ -24,10 +24,12 @@ from django.http import Http404
 from django.utils.http import http_date
 
 from south.modelsinspector import add_introspection_rules
-
 import constance.config
+from elasticutils.contrib.django.models import Indexable
 
 from notifications.models import NotificationsMixin
+from search.index import SearchMappingType
+from search.tasks import register_live_index
 from sumo import ProgrammingError
 from sumo_locales import LOCALES
 from sumo.models import ManagerBase, ModelBase, LocaleField
@@ -537,6 +539,7 @@ class DocumentRenderedContentNotAvailable(Exception):
     pass
 
 
+@register_live_index
 class Document(NotificationsMixin, ModelBase):
     """A localized knowledgebase document, not revision-specific."""
 
@@ -1485,6 +1488,38 @@ class Document(NotificationsMixin, ModelBase):
         """Return whether `user` is notified of edits to me."""
         from wiki.events import EditDocumentEvent
         return EditDocumentEvent.is_notifying(user, self)
+
+    def get_mapping_type(self):
+        return DocumentType
+
+
+class DocumentType(SearchMappingType, Indexable):
+    @classmethod
+    def get_model(cls):
+        return Document
+
+    @classmethod
+    def extract_document(cls, obj_id, obj=None):
+        if obj is None:
+            obj = cls.get_model().objects.get(pk=obj_id)
+
+        return {
+            'id': obj.id,
+            'title': obj.title,
+            'slug': obj.slug,
+            'locale': obj.locale,
+            'content': obj.rendered_html
+        }
+
+    @classmethod
+    def get_mapping(cls):
+        return {
+            'id': {'type': 'integer'},
+            'title': {'type': 'string'},
+            'slug': {'type': 'string'},
+            'locale': {'type': 'string', 'index': 'not_analyzed'},
+            'content': {'type': 'string', 'analyzer': 'snowball'}
+        }
 
 
 class ReviewTag(TagBase):
