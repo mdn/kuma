@@ -80,6 +80,10 @@
     padding-top: 3px;
 }
 
+.dashboard #revisions-table .dashboard-new {
+    font-weight: bold;
+}
+
 .dashboard .dataTables_info {
     float: none;
     text-align: right;
