@@ -1,10 +1,2 @@
 User-Agent: *
-Crawl-delay: 5
-Sitemap: https://developer.mozilla.org/sitemap.xml
-Request-rate: 1/5
-
-Disallow: /*feed=rss
-Disallow: /*type=feed
-Disallow: /skins
-Disallow: /template:
-Disallow: /media
+Disallow: /

@@ -74,6 +74,27 @@ def rebuild_kb():
 
 
 @cronjobs.register
+def build_robots():
+    if settings.ENGAGE_ROBOTS:
+        content = """User-Agent: *
+Crawl-delay: 5
+Sitemap: https://developer.mozilla.org/sitemap.xml
+Request-rate: 1/5
+
+Disallow: /*feed=rss
+Disallow: /*type=feed
+Disallow: /skins
+Disallow: /template:
+Disallow: /media"""
+    else:
+        content = """User-agent: *
+Disallow: /"""
+    handle = open('%s/robots.txt' % settings.MEDIA_ROOT, 'w')
+    handle.write(content)
+    handle.close()
+
+
+@cronjobs.register
 def build_sitemaps():
     sitemap_element = "<sitemap><loc>%s</loc><lastmod>%s</lastmod></sitemap>"
     sitemap_index = "<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">"
