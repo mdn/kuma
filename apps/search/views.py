@@ -18,7 +18,6 @@ def jsonp_is_valid(func):
 
 
 def search(request):
-    import pdb; pdb.set_trace()
     if not flag_is_active(request, 'elasticsearch'):
         """Google Custom Search results page."""
         query = request.GET.get('q', '')
