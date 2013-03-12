@@ -31,7 +31,3 @@ class BestLanguageTests(TestCase):
         """en-US is a better match for en-gb, es;q=0.2 than es."""
         best = get_best_language('en-gb, es;q=0.2')
         eq_('en-US', best)
-
-    def test_serbian(self):
-        """sr -> sr-CYRL, not sr-LATN."""
-        eq_('sr-CYRL', get_best_language('sr'))
