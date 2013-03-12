@@ -100,11 +100,6 @@ SUMO_LANGUAGES = (
     'zh-TW',
 )
 
-#LANGUAGE_CHOICES = tuple([(i, LOCALES[i].native) for i in SUMO_LANGUAGES])
-#LANGUAGES = dict([(i.lower(), LOCALES[i].native) for i in SUMO_LANGUAGES])
-
-#LANGUAGE_URL_MAP = dict([(i.lower(), i) for i in SUMO_LANGUAGES])
-
 # Accepted locales
 MDN_LANGUAGES = ('en-US', 'ar', 'bn-BD', 'de', 'el', 'es', 'fa', 'fi', 'fr',
                  'cs', 'ca', 'fy-NL', 'ga-IE', 'he', 'hr', 'hu', 'id', 'it',
@@ -120,17 +115,19 @@ DEV_POOTLE_PRODUCT_DETAILS_MAP = {
 
 # Locales that are known but unsupported. Keys are the locale, values
 # are an optional fallback locale, or None, to use the LANGUAGE_CODE.
+'''SUMO's list is a good start, but we don't need them until users ask
+'af': None,
+'an': 'es',
+'br': 'fr',
+'csb': 'pl',
+'lij': 'it',
+'nb-NO': 'no',
+'nn-NO': 'no',
+'oc': 'fr',
+'sr': 'sr-CYRL',  # Override the tendency to go sr->sr-LATN.
+'sv-SE': 'sv',
+'''
 NON_SUPPORTED_LOCALES = {
-    'af': None,
-    'an': 'es',
-    'br': 'fr',
-    'csb': 'pl',
-    'lij': 'it',
-    'nb-NO': 'no',
-    'nn-NO': 'no',
-    'oc': 'fr',
-    'sr': 'sr-CYRL',  # Override the tendency to go sr->sr-LATN.
-    'sv-SE': 'sv',
 }
 
 try:
