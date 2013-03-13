@@ -23,8 +23,10 @@ You can also check out the <a href="https://reps.mozilla.org/events/#/period/fut
       </p>
     </header>
 
+{% if waffle.flag('events_map') %}
     <div id="map_canvas" class="boxed"></div>
     <div id="cal1Container"></div>
+{% endif %}
 
     <h2>{{ _('Upcoming Conferences') }}</h2>
     <table id="upcoming" class="events" summary="{{ _('Upcoming conferences featuring Mozilla speakers') }}">
@@ -83,6 +85,8 @@ You can also check out the <a href="https://reps.mozilla.org/events/#/period/fut
 {% endblock %}
 
 {% block js %}
+{% if waffle.flag('events_map') %}
 <script src="https://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key={{ google_maps_api_key }}" type="text/javascript"></script>
+{% endif %}
 {{ js('events') }}
 {% endblock %}

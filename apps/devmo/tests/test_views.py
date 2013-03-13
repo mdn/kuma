@@ -506,12 +506,23 @@ class EventsViewsTest(test_utils.TestCase):
         r = self.client.get(url, follow=True)
         eq_(200, r.status_code)
 
-        # doc = pq(r.content)
-        # past events ordered newest to oldest
-        # rows = doc.find('table#past tr')
-        # prev_end_datetime = datetime.datetime.today()
-        # rows.each(check_event_date)
+    def test_events_map_flag(self):
+        url = reverse('devmo.views.events')
 
+        r = self.client.get(url, follow=True)
+        eq_(200, r.status_code)
+        doc = pq(r.content)
+        eq_([], doc.find('#map_canvas'))
+        ok_("maps.google.com" not in r.content)
+
+        events_map_flag = Flag.objects.create(name='events_map', everyone=True)
+        events_map_flag.save()
+
+        r = self.client.get(url, follow=True)
+        eq_(200, r.status_code)
+        doc = pq(r.content)
+        eq_(1, len(doc.find('#map_canvas')))
+        ok_("maps.google.com" in r.content)
 
 class SoapboxViewsTest(test_utils.TestCase):
     fixtures = ['devmo_calendar.json']
