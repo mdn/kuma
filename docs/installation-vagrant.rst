@@ -25,7 +25,7 @@ Getting up and running
 
        gem update
        gem install vagrant
-- Note:  If you're on Mac OS X, and you cannot install vagrant using gem, you may need to install the Xcode Command Line Tools to get the gem installation working.
+- Note:  If you're on Mac OS X, and you cannot install vagrant using gem, you may need to install the `Xcode Command Line Tools <https://developer.apple.com/downloads/index.action>`_ to get the gem installation working.
 .. _vagrantup.com: http://vagrantup.com/
 -  To follow the instructions from `Webdev Bootcamp <http://mozweb.readthedocs.org/en/latest/git.html#working-on-projects>`_,
    fork the project into your own account.
