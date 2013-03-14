@@ -77,6 +77,21 @@ class RedirectTests(TestCaseBase):
                        follow=True)
         self.assertContains(response, 'REDIRECT ')
 
+    def test_self_redirect_suppression(self):
+        """The document view shouldn't redirect to itself."""
+
+        slug = 'redirdoc'
+        html = 'REDIRECT <a class="redirect" href="/en-US/docs/' + slug + '">smoo</a>'
+
+        doc = document(title='blah', slug=slug, html=html, save=True,
+        locale=settings.WIKI_DEFAULT_LANGUAGE)
+        doc.save()
+        rev = revision(document=doc, content=html, is_approved=True, save=True)
+        rev.save()
+
+        response = self.client.get(doc.get_absolute_url(), follow=True)
+        self.assertContains(response, html)
+
 
 class LocaleRedirectTests(TestCaseBase):
     """Tests for fallbacks to en-US and such for slug lookups."""
