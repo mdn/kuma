@@ -217,4 +217,4 @@ class FakeResponse:
         self.__dict__.update(entries)
 
     def read(self):
-        return self.body
+        return self.text

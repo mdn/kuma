@@ -31,6 +31,9 @@ class ElasticTestCase(TestCase):
 
         cls._old_es_index_prefix = settings.ES_INDEX_PREFIX
         settings.ES_INDEX_PREFIX = settings.ES_INDEX_PREFIX + 'test'
+        # TODO: cleanup after upgarding test-utils (also in tearDownClass)
+        cls._old_es_live_index = settings.__dict__['ES_LIVE_INDEX']
+        settings.__dict__['ES_LIVE_INDEX'] = True
 
     @classmethod
     def tearDownClass(cls):
@@ -38,6 +41,8 @@ class ElasticTestCase(TestCase):
         if not cls.skipme:
             # Restore old setting.
             settings.ES_INDEX_PREFIX = cls._old_es_index_prefix
+            # TODO: cleanup after upgarding test-utils
+            settings.__dict__['ES_LIVE_INDEX'] = cls._old_es_live_index
 
     def setUp(self):
         if self.skipme:

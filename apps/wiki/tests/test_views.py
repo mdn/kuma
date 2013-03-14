@@ -551,7 +551,7 @@ class KumascriptIntegrationTests(TestCaseBase):
         def my_requests_get(url, headers=None, timeout=None):
             trap['headers'] = headers
             return FakeResponse(status_code=200,
-                headers={}, body='HELLO WORLD')
+                headers={}, text='HELLO WORLD')
 
         mock_requests_get.side_effect = my_requests_get
 
@@ -575,7 +575,7 @@ class KumascriptIntegrationTests(TestCaseBase):
         def my_requests_get(url, headers=None, timeout=None):
             trap['headers'] = headers
             return FakeResponse(status_code=200,
-                headers={}, body='HELLO WORLD')
+                headers={}, text='HELLO WORLD')
 
         mock_requests_get.side_effect = my_requests_get
 
@@ -604,14 +604,14 @@ class KumascriptIntegrationTests(TestCaseBase):
             trap['req_cnt'] += 1
             trap['headers'] = headers
             if trap['req_cnt'] in [1, 2]:
-                return FakeResponse(status_code=200, body=expected_content,
+                return FakeResponse(status_code=200, text=expected_content,
                     headers={
                         "etag": expected_etag,
                         "last-modified": expected_modified,
                         "age": 456
                     })
             else:
-                return FakeResponse(status_code=304, body='',
+                return FakeResponse(status_code=304, text='',
                     headers={
                         "etag": expected_etag,
                         "last-modified": expected_modified,
@@ -698,7 +698,7 @@ class KumascriptIntegrationTests(TestCaseBase):
             trap['headers'] = headers
             return FakeResponse(
                 status_code=200,
-                body='HELLO WORLD',
+                text='HELLO WORLD',
                 headers=headers_out
             )
         mock_requests_get.side_effect = my_requests_get
@@ -725,7 +725,7 @@ class KumascriptIntegrationTests(TestCaseBase):
         def my_post(url, timeout=None, headers=None, data=None):
             trap['data'] = data
             return FakeResponse(status_code=200, headers={},
-                                body=content.encode('utf8'))
+                                text=content.encode('utf8'))
         mock_post.side_effect = my_post
 
         constance.config.KUMASCRIPT_TIMEOUT = 1.0
@@ -2801,7 +2801,7 @@ class DeferredRenderingViewTests(TestCaseBase):
         from StringIO import StringIO
         m_resp = mock.Mock()
         m_resp.status_code = 200
-        m_resp.content = test_content
+        m_resp.text = test_content
         m_resp.read = StringIO(test_content).read
         mock_requests_post.return_value = m_resp
 
