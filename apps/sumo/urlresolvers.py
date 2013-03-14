@@ -62,7 +62,7 @@ def reverse(viewname, urlconf=None, args=None, kwargs=None, prefix=None,
         return url
 
 
-def find_supported(test):
+def find_supported(ranked):
     """Given a ranked language list, return the best-matching locale."""
     langs = dict(settings.LANGUAGE_URL_MAP)
     for lang, _ in ranked:
