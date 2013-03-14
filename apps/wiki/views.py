@@ -400,7 +400,7 @@ def document(request, document_slug, document_locale):
     redirect_url = (None if request.GET.get('redirect') == 'no'
                     else doc.redirect_url())
 
-    if redirect_url:
+    if redirect_url and redirect_url != doc.get_absolute_url():
         url = urlparams(redirect_url, query_dict=request.GET,
                         redirectslug=doc.slug, redirectlocale=doc.locale)
         return HttpResponsePermanentRedirect(url)
