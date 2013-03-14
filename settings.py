@@ -165,7 +165,8 @@ def lazy_lang_url_map():
     # langs = DEV_LANGUAGES if (getattr(settings, 'DEV', False) or getattr(settings, 'STAGE', False)) else PROD_LANGUAGES
     langs = PROD_LANGUAGES
     lang_url_map = dict([(i.lower(), i) for i in langs])
-    for requested_lang, delivered_lang in LOCALE_ALIASES:
+    for requested_lang in LOCALE_ALIASES:
+        delivered_lang = LOCALE_ALIASES[requested_lang]
         if delivered_lang in langs:
             lang_url_map[requested_lang.lower()] = delivered_lang
     return lang_url_map
