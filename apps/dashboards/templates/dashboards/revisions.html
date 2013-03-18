@@ -32,7 +32,7 @@
       <input name="user" id="revision-dashboard-user" value="{{ request.GET.user }}" />
 
       <label for="revision-dashboard-newusers">{{ _('New users only')}}</label>
-      <input type="checkbox" name="newusers" id="revsion-dashboard-newusers" {% if request.GET.newusers %}checked{% endif %} />
+      <input type="checkbox" name="newusers" id="revision-dashboard-newusers" {% if request.GET.newusers %}checked{% endif %} />
 
       <label for="revision-dashboard-topic">{{ _('Topic') }}:</label>
       <input name="topic" id="revision-dashboard-topic" value="{{ request.GET.topic }}" />

@@ -163,13 +163,19 @@ def revisions(request):
             revisions = revisions.filter(slug__icontains=topic)
 
         if newusers:
-            sql = """SELECT id, creator_id, created
+            """Users with the first edit not older than 7 days or
+               with fewer than 20 revisions at all"""
+            sql = """SELECT id, creator_id, MIN(created)
                      FROM wiki_revision
                      GROUP BY creator_id
                      HAVING COUNT(*) <= 20
-                     OR created >= DATE_SUB(NOW(), INTERVAL 7 DAY)"""
-            users = [u.creator_id for u in Revision.objects.raw(sql)]
-            revisions = revisions.filter(creator__id__in=users)
+                     OR MIN(created) >= DATE_SUB(NOW(), INTERVAL 7 DAY)"""
+            result = list(Revision.objects.raw(sql))
+            if result:
+                users = [u.creator_id for u in result]
+                revisions = revisions.filter(creator__id__in=users)
+            else:
+                revisions = Revision.objects.none()
 
         total = revisions.count()
         revisions = revisions[display_start:display_start + PAGE_SIZE]
