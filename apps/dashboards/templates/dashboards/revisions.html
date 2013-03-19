@@ -31,8 +31,11 @@
       <label for="revision-dashboard-user">{{ _('User') }}:</label>
       <input name="user" id="revision-dashboard-user" value="{{ request.GET.user }}" />
 
-      <label for="revision-dashboard-newusers">{{ _('New users only')}}</label>
-      <input type="checkbox" name="newusers" id="revision-dashboard-newusers" {% if request.GET.newusers %}checked{% endif %} />
+      {% if waffle.flag('revision-dashboard-newusers') %}
+        <label for="revision-dashboard-newusers">{{ _('New users only')}}</label>
+        <input type="checkbox" name="newusers" id="revision-dashboard-newusers" {% if request.GET.newusers %}checked{% endif %} />
+      {% endif %}
+
 
       <label for="revision-dashboard-topic">{{ _('Topic') }}:</label>
       <input name="topic" id="revision-dashboard-topic" value="{{ request.GET.topic }}" />
