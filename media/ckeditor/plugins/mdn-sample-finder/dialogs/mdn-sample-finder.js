@@ -45,10 +45,6 @@ CKEDITOR.dialog.add( 'mdn-sample-finder', function( editor ) {
 						{ 
 							// Do the moz autocomplete stuff
 							if(!autoCompleteTextbox) {
-								// Scroll listener
-								var openCancelScroll = function(e) {
-									jQuery(autoCompleteTextbox).mozillaAutocomplete('reposition');
-								};
 
 								// Get the INPUT node
 								autoCompleteTextbox = this.getElement().getElementsByTag('input').$[0];
@@ -73,12 +69,6 @@ CKEDITOR.dialog.add( 'mdn-sample-finder', function( editor ) {
 									buildRequestData: function(req) {
 										req.current_locale = 1;
 										return req;
-									},
-									open: function() {
-										jQuery(window).bind("scroll", openCancelScroll);
-									},
-									close: function() {
-										jQuery(window).unbind("scroll", openCancelScroll);	
 									}
 								});
 							}

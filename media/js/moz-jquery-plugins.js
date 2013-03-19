@@ -3,6 +3,16 @@
 	"locking in" a value
 */
 (function($) {
+
+	// Move the suggestion list when the page scrolls and the list is open
+	function openCloseScroll(event) {
+		return function() {
+			var self = this;
+			$(window)[event]("scroll", function() {
+				$(self).mozillaAutocomplete("reposition");
+			});
+		};
+	}
 	
     /*
 		Customized autocomplete that provides:
@@ -36,7 +46,9 @@
 			// Allow overriding of "_renderItem" method
 			_renderItem: null,
 			// Show items as anchors with title attributes
-			_renderItemAsLink: false
+			_renderItemAsLink: false,
+			open: openCloseScroll("bind"),
+			close: openCloseScroll("unbind")
 		},
 		
 		// Create a cache - make this a 
@@ -258,7 +270,6 @@
 					        .appendTo(list);
 				}
 			}
-			
 		},
 		
 		reposition: function() {

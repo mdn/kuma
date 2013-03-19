@@ -465,12 +465,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 									var dialog = this.getDialog(),
 										listener,
 										term;
-										
-									// Scroll listener
-									var openCancelScroll = function(e) {
-										jQuery(autoCompleteTextbox).mozillaAutocomplete('reposition');
-									};
-									
+
 									// Create widget if not done already
 									if(!autoCompleteTextbox) {
 										autoCompleteTextbox = this.getElement().getElementsByTag('input').$[0];
@@ -489,12 +484,6 @@ CKEDITOR.dialog.add( 'link', function( editor )
 											buildRequestData: function(req) {
 												req.current_locale = 1;
 												return req;
-											},
-											open: function() {
-												jQuery(window).bind("scroll", openCancelScroll);
-											},
-											close: function() {
-												jQuery(window).unbind("scroll", openCancelScroll);	
 											}
 										});
 									}
