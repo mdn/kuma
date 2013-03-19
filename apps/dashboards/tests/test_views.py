@@ -2,6 +2,7 @@ import json
 
 from nose.plugins.attrib import attr
 from nose.tools import eq_, ok_
+from pyquery import PyQuery as pq
 
 from waffle.models import Flag
 
@@ -98,3 +99,19 @@ class RevisionsDashTest(TestCase):
         eq_(200, response.status_code)
         revisions = json.loads(response.content)
         ok_(['lorem' not in rev['slug'] for rev in revisions['aaData']])
+
+    @attr('dashboards')
+    def test_newuser_filter_waffle(self):
+        url = reverse('dashboards.revisions', locale='en-US')
+        response = self.client.get(url)
+        eq_(200, response.status_code)
+        ok_('revision-dashboard-newusers' not in response.content)
+
+        rev_dash_newusers = Flag.objects.create(
+            name='revision-dashboard-newusers', everyone=True)
+        rev_dash_newusers.save()
+
+        url = reverse('dashboards.revisions', locale='en-US')
+        response = self.client.get(url)
+        eq_(200, response.status_code)
+        ok_('revision-dashboard-newusers' in response.content)
