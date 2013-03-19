@@ -12,25 +12,8 @@ _prefixes = {}
 def get_best_language(accept_lang):
     """Given an Accept-Language header, return the best-matching language."""
 
-    LUM = settings.LANGUAGE_URL_MAP
-    NSL = settings.NON_SUPPORTED_LOCALES
-    LC = settings.LANGUAGE_CODE
-    langs = dict(LUM)
-    # Add in non-supported first to allow overriding prefix behavior.
-    langs.update((k.lower(), v if v else LC) for k, v in NSL.items() if
-                 k.lower() not in langs)
-    langs.update((k.split('-')[0], v) for k, v in LUM.items() if
-                 k.split('-')[0] not in langs)
     ranked = parse_accept_lang_header(accept_lang)
-    for lang, _ in ranked:
-        lang = lang.lower()
-        if lang in langs:
-            return langs[lang]
-        pre = lang.split('-')[0]
-        if pre in langs:
-            return langs[pre]
-    # Couldn't find any acceptable locale.
-    return False
+    return find_supported(ranked)
 
 
 def set_url_prefix(prefix):
@@ -56,10 +39,19 @@ def reverse(viewname, urlconf=None, args=None, kwargs=None, prefix=None):
         return url
 
 
-def find_supported(test):
-    return [settings.LANGUAGE_URL_MAP[x] for
-            x in settings.LANGUAGE_URL_MAP if
-            x.split('-', 1)[0] == test.lower().split('-', 1)[0]]
+def find_supported(ranked):
+    """Given a ranked language list, return the best-matching locale."""
+    langs = dict(settings.LANGUAGE_URL_MAP)
+    for lang, _ in ranked:
+        lang = lang.lower()
+        if lang in langs:
+            return langs[lang]
+        # Add derived language tags to the end of the list as a fallback.
+        pre = '-'.join(lang.split('-')[0:-1])
+        if pre:
+            ranked.append((pre, None))
+    # Couldn't find any acceptable locale.
+    return False
 
 
 class Prefixer(object):
@@ -77,18 +69,16 @@ class Prefixer(object):
         """
         path = path_.lstrip('/')
 
-        # Use partitition instead of split since it always returns 3 parts
+        # Use partition instead of split since it always returns 3 parts
         first, _, rest = path.partition('/')
 
-        lang = first.lower()
-        if lang in settings.LANGUAGE_URL_MAP:
-            return settings.LANGUAGE_URL_MAP[lang], rest
+        # Treat locale as a single-item ranked list.
+        lang = find_supported([(first, 1.0)])
+
+        if lang:
+            return lang, rest
         else:
-            supported = find_supported(first)
-            if len(supported):
-                return supported[0], rest
-            else:
-                return '', path
+            return '', path
 
     def get_language(self):
         """
