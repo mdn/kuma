@@ -100,8 +100,9 @@
       {% endif %}
     </div>
   </article>
-
-      {{ page|paginator }}
+      {% if page %}
+        {{ page|paginator }}
+      {% endif %}
 
     </div>
    </div>
