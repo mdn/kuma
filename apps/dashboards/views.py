@@ -145,6 +145,7 @@ def revisions(request):
         username = request.GET.get('user', None)
         locale = request.GET.get('locale', None)
         topic = request.GET.get('topic', None)
+        newusers = request.GET.get('newusers', None)
 
         display_start = int(request.GET.get('iDisplayStart', 0))
 
@@ -160,6 +161,21 @@ def revisions(request):
 
         if topic:
             revisions = revisions.filter(slug__icontains=topic)
+
+        if newusers:
+            """Users with the first edit not older than 7 days or
+               with fewer than 20 revisions at all"""
+            sql = """SELECT id, creator_id, MIN(created)
+                     FROM wiki_revision
+                     GROUP BY creator_id
+                     HAVING COUNT(*) <= 20
+                     OR MIN(created) >= DATE_SUB(NOW(), INTERVAL 7 DAY)"""
+            result = list(Revision.objects.raw(sql))
+            if result:
+                users = [u.creator_id for u in result]
+                revisions = revisions.filter(creator__id__in=users)
+            else:
+                revisions = Revision.objects.none()
 
         total = revisions.count()
         revisions = revisions[display_start:display_start + PAGE_SIZE]
