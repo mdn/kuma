@@ -113,27 +113,41 @@ DEV_POOTLE_PRODUCT_DETAILS_MAP = {
     'xx-testing': 'x-testing',
 }
 
-# Locales that are known but unsupported. Keys are the locale, values
-# are an optional fallback locale, or None, to use the LANGUAGE_CODE.
-'''SUMO's list is a good start, but we don't need them until users ask
-'af': None,
-'an': 'es',
-'br': 'fr',
-'csb': 'pl',
-'lij': 'it',
-'nb-NO': 'no',
-'nn-NO': 'no',
-'oc': 'fr',
-'sr': 'sr-CYRL',  # Override the tendency to go sr->sr-LATN.
-'sv-SE': 'sv',
-'''
-NON_SUPPORTED_LOCALES = {
+# Override generic locale handling with explicit mappings.
+# Keys are the requested locale; values are the delivered locale.
+LOCALE_ALIASES = {
+    # Treat "English (United States)" as the canonical "English".
+    'en': 'en-US',
+
+    # Create aliases for over-specific locales.
+    'bn': 'bn-BD',
+    'fy': 'fy-NL',
+    'ga': 'ga-IE',
+    'gu': 'gu-IN',
+    'hi': 'hi-IN',
+    'hy': 'hy-AM',
+    'pa': 'pa-IN',
+    'sv': 'sv-SE',
+    'ta': 'ta-LK',
+
+    # Map a prefix to one of its multiple specific locales.
+    'pt': 'pt-PT',
+    'sr': 'sr-Cyrl',
+    'zh': 'zh-CN',
+
+    # Create aliases for locales which do not share a prefix.
+    'nb-NO': 'no',
+    'nn-NO': 'no',
+
+    # Create aliases for locales which use region subtags to assume scripts.
+    'zh-Hans': 'zh-CN',
+    'zh-Hant': 'zh-TW',
 }
 
 try:
     DEV_LANGUAGES = [
         loc.replace('_','-') for loc in os.listdir(path('locale'))
-        if os.path.isdir(path('locale', loc)) 
+        if os.path.isdir(path('locale', loc))
             and loc not in ['.svn', '.git', 'templates']
     ]
     for pootle_dir in DEV_LANGUAGES:
@@ -151,11 +165,10 @@ def lazy_lang_url_map():
     # langs = DEV_LANGUAGES if (getattr(settings, 'DEV', False) or getattr(settings, 'STAGE', False)) else PROD_LANGUAGES
     langs = PROD_LANGUAGES
     lang_url_map = dict([(i.lower(), i) for i in langs])
-    lang_url_map['en'] = 'en-US'
-    lang_url_map['pt'] = 'pt-PT'
-    lang_url_map['bn'] = 'bn-BD'
-    lang_url_map['fy'] = 'fy-NL'
-    lang_url_map['ga'] = 'ga-IE'
+    for requested_lang in LOCALE_ALIASES:
+        delivered_lang = LOCALE_ALIASES[requested_lang]
+        if delivered_lang in langs:
+            lang_url_map[requested_lang.lower()] = delivered_lang
     return lang_url_map
 
 LANGUAGE_URL_MAP = lazy(lazy_lang_url_map, dict)()
@@ -188,7 +201,7 @@ def lazy_language_deki_map():
 LANGUAGE_DEKI_MAP = lazy(lazy_language_deki_map, dict)()
 
 # List of MindTouch locales mapped to Kuma locales.
-# 
+#
 # Language in MindTouch pages are first determined from the locale in the page
 # title, with a fallback to the language in the page record.
 #
@@ -202,14 +215,14 @@ LANGUAGE_DEKI_MAP = lazy(lazy_language_deki_map, dict)()
 #
 # Then, the database languages were inventoried like so:
 #
-#     select page_language, count(page_id) as ct 
+#     select page_language, count(page_id) as ct
 #     from pages group by page_language order by ct desc;
 #
 # Also worth noting, these are locales configured in the prod Control Panel:
 #
 # en,ar,ca,cs,de,el,es,fa,fi,fr,he,hr,hu,it,ja,
 # ka,ko,nl,pl,pt,ro,ru,th,tr,uk,vi,zh-cn,zh-tw
-# 
+#
 # The Kuma side was picked from elements of the MDN_LANGUAGES list in
 # settings.py, and a few were added to match MindTouch locales.
 #
