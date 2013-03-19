@@ -5,7 +5,6 @@ from django.contrib.sites.models import Site
 from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail, mail_admins
-from django.db import transaction
 from django.template import Context, loader
 
 import celery.conf

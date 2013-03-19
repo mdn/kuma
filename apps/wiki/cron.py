@@ -12,8 +12,7 @@ from django.utils.encoding import smart_str
 import cronjobs
 
 from wiki import tasks
-from wiki.models import Document
-from wiki.search import DocumentType
+from wiki.models import Document, DocumentType
 
 
 @cronjobs.register
@@ -76,10 +75,13 @@ def rebuild_kb():
 @cronjobs.register
 def build_sitemaps():
     sitemap_element = "<sitemap><loc>%s</loc><lastmod>%s</lastmod></sitemap>"
-    sitemap_index = "<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">"
+    sitemap_index = ("<sitemapindex xmlns=\"http://www.sitemaps.org/"
+                    "schemas/sitemap/0.9\">")
     for locale in settings.MDN_LANGUAGES:
         queryset = (Document.objects
-                        .filter(is_template=False, locale=locale, is_redirect=False)
+                        .filter(is_template=False,
+                                locale=locale,
+                                is_redirect=False)
                         .exclude(title__startswith='User:')
                         .exclude(slug__icontains='Talk:')
                    )
@@ -89,7 +91,8 @@ def build_sitemaps():
             urls = sitemap.get_urls(page=1)
             xml = smart_str(loader.render_to_string('sitemap.xml',
                                                     {'urlset': urls}))
-            xml = xml.replace('http://developer.mozilla.org', 'https://developer.mozilla.org')
+            xml = xml.replace('http://developer.mozilla.org',
+                              'https://developer.mozilla.org')
             directory = '%s/sitemaps/%s' % (settings.MEDIA_ROOT, locale)
             if not os.path.exists(directory):
                 os.makedirs(directory)

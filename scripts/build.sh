@@ -78,10 +78,10 @@ echo "Starting tests..." `date`
 export FORCE_DB='yes sir'
 
 if [[ $1 = '--with-coverage' ]]; then
-    coverage run manage.py test actioncounters contentflagging dashboards demos devmo kpi landing users wiki -v 2 --noinput
-    coverage xml $(find apps/actioncounters apps/contentflagging apps/dashboards apps/demos apps/devmo apps/kpi apps/landing apps/users apps/wiki lib -name '*.py')
+    coverage run manage.py test actioncounters contentflagging dashboards demos devmo kpi landing search users wiki -v 2 --noinput
+    coverage xml $(find apps/actioncounters apps/contentflagging apps/dashboards apps/demos apps/devmo apps/kpi apps/landing apps/search apps/users apps/wiki lib -name '*.py')
 else
-    python manage.py test actioncounters contentflagging dashboards demos devmo kpi landing users wiki -v 2 --noinput
+    python manage.py test actioncounters contentflagging dashboards demos devmo kpi landing search users wiki -v 2 --noinput
 fi
 
 echo 'shazam!'

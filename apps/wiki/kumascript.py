@@ -205,11 +205,7 @@ def add_env_headers(headers, env_vars):
 
 
 def process_body(response, use_constance_bleach_whitelists=False):
-    # HACK: Assume we're getting UTF-8, which we should be.
-    # TODO: Better solution would be to upgrade the requests module
-    # in vendor from 0.6.1 to at least 0.10.6, and use resp.text,
-    # which does auto-detection. But, that will break things.
-    resp_body = response.read().decode('utf8')
+    resp_body = response.text
 
     # We defer bleach sanitation of kumascript content all the way
     # through editing, source display, and raw output. But, we still
