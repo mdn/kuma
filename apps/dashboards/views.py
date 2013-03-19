@@ -177,7 +177,9 @@ def revisions(request):
             articleUrl = '<a href="%s" target="_blank">%s</a>' % (doc_url, jinja2.escape(rev.document.slug))
             articleLocale = '<span class="dash-locale">%s</span>' % rev.document.locale
             articleComment = '<span class="dashboard-comment">%s</span>' % format_comment(rev)
-            articleIsNew = '<span class="dashboard-new">New: </span>' if rev.based_on_id is None else ''
+            articleIsNew = ''
+            if rev.based_on_id is None and not rev.document.is_redirect:
+                articleIsNew = '<span class="dashboard-new">New: </span>' 
             richTitle = articleIsNew + articleUrl + articleLocale + articleComment
 
             revision_json['aaData'].append({
