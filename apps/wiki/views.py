@@ -1623,6 +1623,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
                 post_data['show_toc'] = based_on_rev.show_toc
 
                 rev_form = RevisionForm(post_data)
+                rev_form.instance.document = doc  # for rev_form.clean()
 
                 if rev_form.is_valid():
                     _save_rev_and_notify(rev_form, request.user, doc)

@@ -915,6 +915,8 @@ class Document(NotificationsMixin, ModelBase):
             return unique_attr()
 
     def revert(self, revision, user):
+        if revision.document.original == self:
+            revision.based_on = revision
         revision.id = None
         revision.comment = "Revert to revision of %s by %s" % (
                 revision.created, revision.creator)
