@@ -2,8 +2,12 @@ from os.path import dirname
 
 import mock
 
-from django.conf import settings
+from django.conf import settings, UserSettingsHolder
 from django.contrib.auth.models import User
+from django.utils.functional import wraps
+
+import constance.config
+from constance.backends import database as constance_database
 
 import test_utils
 from nose.plugins.skip import SkipTest
