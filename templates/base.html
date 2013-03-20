@@ -140,7 +140,9 @@
           <noscript><button type="submit">{{ _('Search') }}</button></noscript>
         </p>
         <input type="hidden" name="sitesearch" value="developer.mozilla.org">
+        {% if not waffle.flag('elasticsearch') %}
         <div id="site-search-gg"></div>
+        {% endif %}
       </form>
 
       <a href="http://www.mozilla.org/" id="tabzilla">mozilla</a>
