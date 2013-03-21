@@ -59,10 +59,9 @@ a.new:link, a.new:visited, a.new:hover, a.new:active, a.new:focus { color: #900;
 .page-content dt { font-style: normal; font-weight: bold; }
 .page-content dd { margin-bottom: .5em; padding-left: 15px; }
 .page-content pre { border: 1px dotted #cbc8b9; background: #f6f6f2; padding: 15px; overflow: auto; font: 100% "Courier New", "Andale Mono", monospace; }
-.page-content code, .pageText tt { font: 100% "Courier New", "Andale Mono", monospace; font-weight: inherit; }
+.page-content code { font: 100% "Courier New", "Andale Mono", monospace; font-weight: inherit; }
 .page-content pre code { font-size: 100%; }
 .page-content strong code { font-weight: inherit; }
-.page-content strong tt { font-weight: inherit; }
 .page-content a code { color: inherit; }
 .page-content img { max-width: 100%; height: auto; }
 .page-content caption { font-weight: bold; }
