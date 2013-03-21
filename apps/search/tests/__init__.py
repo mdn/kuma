@@ -41,7 +41,12 @@ class ElasticTestCase(TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        super(ElasticTestCase, cls).tearDownClass()
+        try:
+            super(ElasticTestCase, cls).tearDownClass()
+        except AttributeError:
+            # python 2.6 has no setUpClass, but that's okay
+            pass
+
         if not cls.skipme:
             # Restore old setting.
             settings.ES_INDEX_PREFIX = cls._old_es_index_prefix
