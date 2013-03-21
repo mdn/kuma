@@ -16,7 +16,11 @@ class ElasticTestCase(TestCase):
 
     @classmethod
     def setUpClass(cls):
-        super(ElasticTestCase, cls).setUpClass()
+        try:
+            super(ElasticTestCase, cls).setUpClass()
+        except AttributeError:
+            # python 2.6 has no setUpClass, but that's okay
+            pass
 
         if not getattr(settings, 'ES_URLS', None):
             cls.skipme = True
