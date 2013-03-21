@@ -26,13 +26,27 @@ def search(request):
 
     """Performs search or displays the search form."""
     search_query = request.GET.get('q', None)
-    search = DocumentType.search()
-    if search_query:
-        search = search.query(or_={'title': search_query,
-                                   'content': search_query}
-                             )
+    page = int(request.GET.get('page', 1))
 
-    return jingo.render(request, 'search/results.html', {'results': search})
+    # Pagination
+    if page < 1:
+        page = 1
+    page_count = 10
+    start = page_count * (page - 1)
+    end = start + page_count
+
+    results = DocumentType.search()
+    if search_query:
+        results = results.query(or_={'title': search_query,
+                                   'content': search_query})
+    result_count = results.count()
+    results = results[start:end]
+
+    return jingo.render(request, 'search/results.html', {'results': results,
+            'search_query': search_query,
+            'result_count': result_count,
+            'prev_page': page - 1 if start > 0 else None,
+            'next_page': page + 1 if end < result_count else None})
 
 
 @cache_page(60 * 15)  # 15 minutes.
