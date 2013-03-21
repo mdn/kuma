@@ -5,7 +5,10 @@
 
 {% macro doc_block(doc) -%}
   <li class="doc-result">
-  {{ doc.title }}
+    {% set url = '%s%s' % (settings.SITE_URL, url('wiki.document', doc.slug, locale=doc.locale)) %}
+    <h3><a href="{{ url }}">{{ doc.title }}</a></h3>
+    <div class="searchMeta"><a href="{{ url }}">{{ url }}</a></div>
+    <p><!-- match content here --></p>
   </li>
 {% endmacro %}
 
@@ -15,24 +18,58 @@
     <div id="content-main" class="full">
 <article id="search-results" class="main">
   <div class="search-results">
+    
+    <h1>Search</h1>
+    <div class="search-form">
+      <form action="" method="get">
+        <input name="q" id="search-q" type="search" value="{{ search_query }}" autofocus />
+        <button type="submit" id="search-submit">Search!</button>
+      </form>
+    </div>
 
-    <ul>
-    {% for doc in results %}
-      {{ doc_block(doc) }}
-    {% endfor %}
-    </ul>
-{#
-    {% for doc in results %}
-      <div class="result {{ doc.type }}">
-        <a class="title" href="{{ doc.url|urlparams(s=q,as='s') }}">{{ doc.title }}</a>
-        <p>
-          <a href="{{ doc.url|urlparams(s=q,as='s') }}">
-            {{ doc.search_summary|safe }}
+    {% if search_query: %}
+      {% if result_count: %}
+        <h2>Search Results For "{{ search_query }}"</h2>
+        <ul>
+        {% for doc in results %}
+          {{ doc_block(doc) }}
+        {% endfor %}
+        </ul>
+
+        <div class="pager">
+        {% if next_page %}
+          <a class="button" href="{{ request.get_full_path()|urlparams(page=next_page) }}">
+          {{ _('Next Page') }}
           </a>
-        </p>
-      </div>
-    {% endfor %}
-#}
+        {% endif %}
+        {% if prev_page %}
+          <a class="button" href="{{ request.get_full_path()|urlparams(page=prev_page) }}">
+          {{ _('Previous Page') }}
+          </a>
+        {% endif %}
+        </div>
+      {% else %}
+        <h2>{{ _('Ooops!') }}</h2>
+        <p>{{ _('No documents relating to your search could be found.') }}</p>
+        {% include 'search/popular.html' %}
+      {% endif %}
+    {% else %}
+      {% include 'search/popular.html' %}
+    {% endif %}
+
+    <style type="text/css">
+    .doc-result { padding-bottom: 20px; }
+    .doc-result h3 { margin-bottom: 0; }
+    .doc-result .searchMeta { color: #999; font-size: 0.8em; padding: .2em 0; }
+    .doc-result p { padding-left: 0; margin-bottom: 0; font-size: 0.9em; }
+    .search-form  { margin-bottom: 30px; }
+    #search-q     { width: 80%; }
+    #search-submit { display: inline-block; }
+    .search-popular { width: 49%; float: left; margin-top: 20px; }
+    .search-popular ul { list-style-type: circle; padding-left: 30px; }
+    .search-popular ul li { padding-bottom: 10px; }
+    .search-popular-col1{ margin-right: 1%; }
+    </style>
 
   </div>
 
