@@ -26,12 +26,12 @@
         if (!fixed) {
           fixed = true;
           $head.css({
-            position: 'fixed',
+            position: "fixed",
             top: 19,
             width: "95%"
           });
           $tools.css({
-            position: 'fixed',
+            position: "fixed",
             top: headHeight + 28,
             width: $("#cke_id_content").width() - 11
           });
@@ -48,12 +48,12 @@
         if (fixed) {
           fixed = false;
           $head.css({
-            position: 'relative',
+            position: "relative",
             top: "auto",
             width: "auto"
           });
           $tools.css({
-            position: 'relative',
+            position: "relative",
             top: "auto",
             width: "auto"
           });
@@ -69,7 +69,7 @@
       }
 
       // remove the id_content required attribute
-      $('#id_content').removeAttr("required");
+      $("#id_content").removeAttr("required");
 
     });
 
