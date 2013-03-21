@@ -39,10 +39,11 @@
             {% if document.current_revision == rev %}
               {% set reached_current = True %}
             {% endif %}
+            {% set is_current = document.current_revision.id == rev %}
             {% if loop.first %}<ul>{% endif %}
-            <li class="{% if document.current_revision == rev %}current{% endif %}{% if rev.reviewed and not rev.is_approved %}rejected{% endif %}">
+            <li class="{% if document.current_revision.id == rev %}current{% endif %}{% if rev.reviewed and not rev.is_approved %}rejected{% endif %}">
               <div class="radio">
-                {% if not loop.first %}<input type="radio" name="from" value="{{ rev.id }}" {% if loop.index == 2 %}checked="checked"{% endif %} />{% endif %}
+                {% if not current %}<input type="radio" name="from" value="{{ rev.id }}" {% if loop.index == 2 %}checked="checked"{% endif %} />{% endif %}
               </div>
               <div class="radio">
                 {% if not loop.last %}<input type="radio" name="to" value="{{ rev.id }}" {% if loop.first %}checked="checked"{% endif %} />{% endif %}
@@ -99,8 +100,27 @@
       {% endif %}
     </div>
   </article>
+      {% if page %}
+        {{ page|paginator }}
+      {% endif %}
+
     </div>
    </div>
 </section>
 {% endblock %}
 
+ {% block site_js %}
+  {{ super() }}
+  {{ js('framebuster') }}
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      function gettext(a){return a}
+      var pagination = $('.pagination'),
+        next = pagination.find('.next');
+      if(next.length) {
+        pagination.append('<li><a href="?limit=all" id="pagination-all">' + gettext('View All') + '</a></li>');
+      }
+    });
+  </script>
+{% endblock %}

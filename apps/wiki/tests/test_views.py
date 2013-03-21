@@ -161,6 +161,32 @@ class ViewTests(TestCaseBase):
         eq_('an article title', data['title'])
         ok_('translations' in data)
 
+    def test_history_view(self):
+        slug = 'history-view-test-doc'
+        html = 'history view test doc'
+
+        doc = document(title='History view test doc', slug=slug,
+                       html=html, save=True,
+                       locale=settings.WIKI_DEFAULT_LANGUAGE)
+
+        for i in xrange(1, 51):
+            rev = revision(document=doc, content=html,
+                           comment='Revision %s' % i,
+                           is_approved=True, save=True)
+            rev.save()
+
+        url = reverse('wiki.document_revisions', args=(slug,),
+                      locale=settings.WIKI_DEFAULT_LANGUAGE)
+
+        resp = self.client.get(url)
+        eq_(200, resp.status_code)
+
+        all_url = urlparams(reverse('wiki.document_revisions', args=(slug,),
+                                    locale=settings.WIKI_DEFAULT_LANGUAGE),
+                            limit='all')
+        resp = self.client.get(url)
+        eq_(200, resp.status_code)
+
     def test_toc_view(self):
         slug = 'toc_test_doc'
         html = '<h2>Head 2</h2><h3>Head 3</h3>'
