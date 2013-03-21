@@ -65,11 +65,11 @@ ASYNC_SIGNALS = False
 
 NOSE_PLUGINS = [
     'nose.plugins.logcapture.LogCapture',
-    'nose.plugins.xunit.Xunit',
+    # 'nose.plugins.xunit.Xunit',
 ]
 NOSE_ARGS = [
     '--logging-clear-handlers',
-    '--with-xunit',
+    # '--with-xunit',
 ]
 SETTINGS
 
