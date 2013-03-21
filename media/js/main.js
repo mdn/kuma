@@ -19,7 +19,6 @@ k = {};
         }
 
         initAutoSubmitSelects();
-        initSearchAutoFilters();
         disableFormsOnSubmit();
         lazyLoadScripts();
     });
@@ -30,42 +29,6 @@ k = {};
     function initAutoSubmitSelects() {
         $('select.autosubmit').change(function() {
             $(this).closest('form').submit();
-        });
-    }
-
-    function initSearchAutoFilters() {
-        var $browser = $('#browser'),
-            $os = $('#os'),
-            $search = $('.support-search form'),
-            for_os = $('body').data('for-os'),
-            for_version = $('body').data('for-version');
-
-        /**
-         * (Possibly create, and) update a hidden input on new search forms
-         * to filter based on Help With selections.
-         */
-        function updateAndCreateFilter(name, $source, data) {
-            $search.each(function(i, el) {
-                var $input = $(el).find('input[name='+name+']');
-                if (!$input.length) {
-                    $input = $('<input type="hidden" name="'+name+'">');
-                    $(el).prepend($input);
-                }
-                $input.val(data[$source.val()]);
-            });
-        }
-
-        /**
-         * Before submitting the form, update the hidden input values for
-         * browser version and OS.
-         */
-        $search.submit(function() {
-            if ($browser.length) {
-                updateAndCreateFilter('fx', $browser, for_version);
-            }
-            if ($os.length) {
-                updateAndCreateFilter('os', $os, for_os);
-            }
         });
     }
 
