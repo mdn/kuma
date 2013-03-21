@@ -625,7 +625,6 @@ MINIFY_BUNDLES = {
             'js/mdn/jquery-1.4.2.min.js',
             'js/mdn/init.js',
             'js/mdn/gsearch.js',
-            'js/mdn/webtrends.js',
 
             # Home Page
             # cycle and slideshow only needed on the home page (or any page
