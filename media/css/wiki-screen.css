@@ -593,6 +593,9 @@ div.bug, div.warning { margin: 0 0 1.5em; border: 2px solid #ac6262; padding: 10
 .originaldocinfo h2 { font-size: 120%; }
 .licenseblock { border: 1px dashed #ccc; padding: 0 10px; background: #f1f1f1; font-size: 80%; font-family: Verdana, Tahoma, sans-serif; }
 
+/*** @SyntaxHighlighter style blocks *********/
+article .syntaxhighlighter { width: auto !important; }
+
 /*** @WYSIWYG style blocks *********/
 .twocolumns { -moz-column-count: 2; -webkit-column-count: 2; column-count: 2; }
 .threecolumns { -moz-column-count: 3; -webkit-column-count: 3; column-count: 3; }
