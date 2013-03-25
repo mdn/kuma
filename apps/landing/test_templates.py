@@ -27,7 +27,7 @@ class HomeTests(test_utils.TestCase):
     def test_google_analytics(self):
         url = reverse('landing.views.home')
 
-        constance.config.GOOGLE_ANALYTICS_ACCOUNT = ''
+        constance.config.GOOGLE_ANALYTICS_ACCOUNT = '0'
         r = self.client.get(url, follow=True)
         eq_(200, r.status_code)
         ok_('var _gaq' not in r.content)
