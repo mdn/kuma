@@ -356,10 +356,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'sumo.anonymous.AnonymousIdentityMiddleware',
-    #'twitter.middleware.SessionMiddleware',
     'sumo.middleware.PlusToSpaceMiddleware',
     'commonware.middleware.HidePasswordOnException',
-    #'dekicompat.middleware.DekiUserMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django_statsd.middleware.GraphiteRequestTimingMiddleware',
     'django_statsd.middleware.GraphiteMiddleware',
@@ -433,29 +431,15 @@ INSTALLED_APPS = (
     # SUMO
     'users',
     ROOT_PACKAGE,
-    #'authority',
-    #'timezones',
-    #'access',
-    #'sumo',
     # TODO: Reenable search when we switch to kuma wiki - or, at least waffle it.
     'search',
-    #'forums',
     'djcelery',
     'notifications',
-    #'questions',
-    #'kadmin',
     'taggit',
-    #'flagit',
-    #'upload',
     'wiki',
-    #'kbforums',
     'dashboards',
     'kpi',
     'gallery',
-    #'customercare',
-    #'twitter',
-    #'chat',
-    #'inproduct',
 
     # migrations
     'south',
@@ -659,12 +643,8 @@ MINIFY_BUNDLES = {
         'common': (
             'js/libs/jquery.min.js',
             'js/libs/modernizr-1.6.min.js',
-            #'js/kbox.js',
-            #'global/menu.js',
-            #'js/main.js',
         ),
         'libs/jqueryui': (
-            #'js/libs/jqueryui.min.js',
             'js/libs/jquery-ui-1.8.14.custom.min.js',
         ),
         'libs/tagit': (
@@ -729,6 +709,7 @@ JAVA_BIN = '/usr/bin/java'
 #
 # Session cookies
 SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_HTTPONLY = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 # Cookie prefix from PHPBB settings.
