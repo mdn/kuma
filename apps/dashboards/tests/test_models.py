@@ -107,16 +107,3 @@ class DocumentVisitsTests(SkippedTestCase):
             '"measures":{"Visits":213817.0,"Views":595329.0,"Average Time '
             'Viewed":25.0},"SubRows":null}}}}}'
             % ((settings.LANGUAGE_CODE,) * 2)))
-
-    @patch_object(settings._wrapped, 'WEBTRENDS_WIKI_REPORT_URL',
-                  'https://localhost:123654/nonexistent')
-    def test_networking_failure(self):
-        """Assert a StatsIOError is thrown when networking fails."""
-        self.assertRaises(StatsIOError, WikiDocumentVisits.json_for, THIS_WEEK)
-
-    # This takes 14 seconds and hits the WebTrends server, for which you might
-    # not have credentials. If you have credentials and want to test the
-    # networking, uncomment this.
-    # def test_networking(self):
-    #     WikiDocumentVisits.reload_period_from_json(
-    #         THIS_WEEK, WikiDocumentVisits.json_for(THIS_WEEK))

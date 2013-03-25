@@ -30,22 +30,6 @@ class StatsIOError(IOError):
     """An error communicating with WebTrends"""
 
 
-def period_dates():
-    """Return when each period begins and ends, relative to now.
-
-    Return values are in the format WebTrends likes: "2010m01d30" or
-    "current_day-7".
-
-    """
-    # WebTrends' server apparently runs in UTC, FWIW.
-    yesterday = 'current_day-1'  # Start at yesterday so we get a full week of
-                                 # data.
-    return {THIS_WEEK: ('current_day-7',
-                        yesterday),
-            ALL_TIME: (settings.WEBTRENDS_EPOCH.strftime('%Ym%md%d'),
-                       yesterday)}
-
-
 class WikiDocumentVisits(ModelBase):
     """Web stats for Knowledge Base Documents"""
 
@@ -116,27 +100,3 @@ class WikiDocumentVisits(ModelBase):
                          'document: %s' % url)
             counts[doc.pk] = visits
         return counts
-
-    @classmethod
-    def json_for(cls, period):
-        """Return the JSON-formatted WebTrends stats for the given period.
-
-        Make one attempt to fetch and reload the data. If something fails, it's
-        the caller's responsibility to retry.
-
-        """
-        auth_handler = HTTPBasicAuthHandler()
-        auth_handler.add_password(realm=settings.WEBTRENDS_REALM,
-                                  uri=settings.WEBTRENDS_WIKI_REPORT_URL,
-                                  user=settings.WEBTRENDS_USER,
-                                  passwd=settings.WEBTRENDS_PASSWORD)
-        opener = build_opener(auth_handler)
-        start, end = period_dates()[period]
-        url = (settings.WEBTRENDS_WIKI_REPORT_URL +
-               '&start_period=%s&end_period=%s' % (start, end))
-        try:
-            # TODO: A wrong username or password results in a recursion depth
-            # error.
-            return opener.open(url).read()
-        except IOError, e:
-            raise StatsIOError(*e.args)
