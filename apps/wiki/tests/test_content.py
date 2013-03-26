@@ -777,6 +777,21 @@ class AllowedHTMLTests(TestCase):
             eq_(html_str, bleach.clean(html_str, attributes=ALLOWED_ATTRIBUTES,
                                        tags=ALLOWED_TAGS))
 
+    def test_stripped_ie_comment(self):
+        """bug 801046: strip IE conditional comments"""
+        content = """
+            <p>Hi there.</p>
+            <!--[if]><script>alert(1)</script -->
+            <!--[if<img src=x onerror=alert(2)//]> -->
+            <p>Goodbye</p>
+        """
+        expected = """
+            <p>Hi there.</p>
+            <p>Goodbye</p>
+        """
+        result = Document.objects.clean_content(content)
+        eq_(normalize_html(expected), normalize_html(result))
+
 
 class GetSEODescriptionTests(TestCase):
 
