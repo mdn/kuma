@@ -12,4 +12,4 @@ It is a Django_ application.
 .. _Django: http://www.djangoproject.com/
 
 
-You can access the staging site at https:/developer.allizom.org/
+You can access the staging site at https://developer.allizom.org/
