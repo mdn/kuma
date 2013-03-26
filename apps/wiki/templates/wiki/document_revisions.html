@@ -51,21 +51,6 @@
               <div class="date">
                 <a href="{{ url('wiki.revision', document.full_path, rev.id) }}" rel="nofollow, noindex">{{ datetimeformat(rev.created, format='datetime') }}</a>
               </div>
-              <div class="status">
-                {% if document.current_revision.id == rev.id %}
-                    <span class="current">{{ _('Current') }}</span>
-                {% elif not rev.is_approved and not rev.reviewed %}
-                    {% if not reached_current and user.has_perm('wiki.review_revision') %}
-                      <a href="{{ url('wiki.review_revision', document.full_path, rev.id) }}">{{ _('Review') }}</a>
-                    {% else %}
-                      <span class="unreviewed">{{ _('Unreviewed', 'revision') }}</span>
-                    {% endif %}
-                {% elif rev.is_approved %}
-                  <span class="approved">{{ _('Approved') }}</span>
-                {% else %}
-                    <span class="rejected">{{ _('Rejected') }}</span>
-                {% endif %}
-              </div>
               <div class="significance">
                 {% if rev.significance == 20 %}
                   M
