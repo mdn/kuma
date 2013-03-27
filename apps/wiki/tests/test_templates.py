@@ -220,8 +220,8 @@ class DocumentTests(TestCaseBase):
 
     @attr('toc')
     def test_show_toc(self):
-        """Toggling show_toc field on/off should cause table of
-        contents to appear/disappear."""
+        """Toggling show_toc on/off through the toc_depth field should
+        cause table of contents to appear/disappear."""
         doc_content = """
         <h2>This is a section</h2>
         <p>This is section content.</p>
@@ -233,7 +233,7 @@ class DocumentTests(TestCaseBase):
         eq_(200, response.status_code)
         ok_('<div class="page-toc">' in response.content)
         new_r = revision(document=r.document, content=r.content,
-                         show_toc=False, is_approved=True)
+                         toc_depth=0, is_approved=True)
         new_r.save()
         response = self.client.get(r.document.get_absolute_url())
         eq_(200, response.status_code)
@@ -535,8 +535,8 @@ class NewRevisionTests(TestCaseBase):
         response = self.client.post(
             reverse('wiki.edit_document', args=[self.d.full_path]),
             {'summary': 'A brief summary', 'content': 'The article content',
-             'keywords': 'keyword1 keyword2', 'slug': self.d.slug,
-             'based_on': self.d.current_revision.id, 'form': 'rev'})
+             'keywords': 'keyword1 keyword2', 'slug': self.d.slug, 'toc_depth': 1,
+             'based_on': self.d.current_revision.id, 'form': 'rev',})
         ok_(response.status_code in (200, 302))
         eq_(2, self.d.revisions.count())
         new_rev = self.d.revisions.order_by('-id')[0]
@@ -614,7 +614,7 @@ class NewRevisionTests(TestCaseBase):
         _test_form_maintains_based_on_rev(
             self.client, self.d, 'wiki.edit_document',
             {'summary': 'Windy', 'content': 'gerbils', 'form': 'rev',
-             'slug': self.d.slug},
+             'slug': self.d.slug, 'toc_depth': 1},
             locale='en-US')
 
 

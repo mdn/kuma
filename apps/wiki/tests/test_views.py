@@ -1860,9 +1860,9 @@ class DocumentEditingTests(TestCaseBase):
         data = new_document_data()
         ok_(Document.uncached.get(slug=d.slug, locale=d.locale).show_toc)
         data['form'] = 'rev'
-        del data['show_toc']
+        data['toc_depth'] = 0
         client.post(reverse('wiki.edit_document', args=[d.full_path]), data)
-        ok_(not Document.uncached.get(slug=d.slug, locale=d.locale).current_revision.show_toc)
+        eq_(0, Document.uncached.get(slug=d.slug, locale=d.locale).current_revision.toc_depth)
 
     @attr('toc')
     def test_toc_toggle_on(self):
@@ -1870,7 +1870,7 @@ class DocumentEditingTests(TestCaseBase):
         client = LocalizingClient()
         client.login(username='admin', password='testpass')
         d, r = doc_rev()
-        new_r = revision(document=d, content=r.content, show_toc=False,
+        new_r = revision(document=d, content=r.content, toc_depth=0,
                          is_approved=True)
         new_r.save()
         ok_(not Document.uncached.get(slug=d.slug, locale=d.locale).show_toc)
@@ -2348,7 +2348,7 @@ class SectionEditingResourceTests(TestCaseBase):
             <p>test</p>
             <p>test</p>
         """)
-        rev.show_toc = True
+        rev.toc_depth = 1
         rev.save()
 
         replace = """
@@ -2364,7 +2364,7 @@ class SectionEditingResourceTests(TestCaseBase):
                                HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         changed = Document.objects.get(pk=doc.id).current_revision
         ok_(rev.id != changed.id)
-        ok_(changed.show_toc)
+        eq_(1, changed.toc_depth)
 
     def test_section_edit_review_tags(self):
         """review tags are preserved in section editing."""
@@ -2685,7 +2685,7 @@ class DeferredRenderingViewTests(TestCaseBase):
         self.d, self.r = doc_rev(self.raw_content)
 
         # Disable TOC, makes content inspection easier.
-        self.r.show_toc = False
+        self.r.toc_depth = 0
         self.r.save()
 
         self.d.html = self.raw_content
