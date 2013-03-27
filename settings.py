@@ -13,11 +13,6 @@ from sumo_locales import LOCALES
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
-LOG_LEVEL = logging.WARN
-SYSLOG_TAG = 'http_app_kuma'
-LOGGING = {
-           'loggers': {},
-}
 ROOT = os.path.dirname(os.path.abspath(__file__))
 path = lambda *a: os.path.join(ROOT, *a)
 
@@ -70,6 +65,14 @@ DEKIWIKI_MOCK = True
 CACHE_BACKEND = 'locmem://?timeout=86400'
 CACHE_PREFIX = 'kuma:'
 CACHE_COUNT_TIMEOUT = 60  # seconds
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'TIMEOUT': 60,
+        'KEY_PREFIX': 'kuma',
+    }
+}
 
 # Addresses email comes from
 DEFAULT_FROM_EMAIL = 'notifications@developer.mozilla.org'
@@ -288,6 +291,7 @@ HUMANSTXT_ROOT = MEDIA_ROOT
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
 MEDIA_URL = '/media/'
+STATIC_URL = '/static/'
 
 SERVE_MEDIA = False
 
@@ -311,7 +315,7 @@ TEMPLATE_LOADERS = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.core.context_processors.auth',
+    'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.debug',
     'django.core.context_processors.media',
     'django.core.context_processors.request',
@@ -352,12 +356,11 @@ MIDDLEWARE_CLASSES = (
     'commonware.middleware.NoVarySessionMiddleware',
     'commonware.middleware.FrameOptionsHeader',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.middleware.csrf.CsrfResponseMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'sumo.anonymous.AnonymousIdentityMiddleware',
     'sumo.middleware.PlusToSpaceMiddleware',
-    'commonware.middleware.HidePasswordOnException',
+    #'dekicompat.middleware.DekiUserMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django_statsd.middleware.GraphiteRequestTimingMiddleware',
     'django_statsd.middleware.GraphiteMiddleware',
@@ -366,10 +369,17 @@ MIDDLEWARE_CLASSES = (
 # Auth
 AUTHENTICATION_BACKENDS = (
     'django_browserid.auth.BrowserIDBackend',
-    'users.backends.Sha256Backend',
+    'django.contrib.auth.backends.ModelBackend',
     'dekicompat.backends.DekiUserBackend',
 )
 AUTH_PROFILE_MODULE = 'devmo.UserProfile'
+
+PASSWORD_HASHERS = (
+    'users.backends.Sha256Hasher',
+    'django.contrib.auth.hashers.SHA1PasswordHasher',
+    'django.contrib.auth.hashers.MD5PasswordHasher',
+    'django.contrib.auth.hashers.UnsaltedMD5PasswordHasher',
+)
 
 USER_AVATAR_PATH = 'uploads/avatars/'
 DEFAULT_AVATAR = MEDIA_URL + 'img/avatar-default.png'
@@ -377,7 +387,7 @@ AVATAR_SIZE = 48  # in pixels
 ACCOUNT_ACTIVATION_DAYS = 30
 MAX_AVATAR_FILE_SIZE = 131072  # 100k, in bytes
 
-ROOT_URLCONF = '%s.urls' % ROOT_PACKAGE
+ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates"
@@ -430,7 +440,10 @@ INSTALLED_APPS = (
 
     # SUMO
     'users',
-    ROOT_PACKAGE,
+    #'authority',
+    #'timezones',
+    #'access',
+    #'sumo',
     # TODO: Reenable search when we switch to kuma wiki - or, at least waffle it.
     'search',
     'djcelery',
@@ -461,11 +474,12 @@ FEEDER_TIMEOUT = 6 # in seconds
 def JINJA_CONFIG():
     import jinja2
     from django.conf import settings
+    from django.core.cache.backends.memcached import CacheClass as MemcachedCacheClass
     from caching.base import cache
     config = {'extensions': ['tower.template.i18n', 'caching.ext.cache',
                              'jinja2.ext.with_', 'jinja2.ext.loopcontrols'],
               'finalize': lambda x: x if x is not None else ''}
-    if 'memcached' in cache.scheme and not settings.DEBUG:
+    if isinstance(cache, MemcachedCacheClass) and not settings.DEBUG:
         # We're passing the _cache object directly to jinja because
         # Django can't store binary directly; it enforces unicode on it.
         # Details: http://jinja.pocoo.org/2/documentation/api#bytecode-cache
@@ -1073,3 +1087,37 @@ GRAPHITE_TIMEOUT = 1
 
 ES_DISABLED = True
 ES_LIVE_INDEX = False
+
+LOG_LEVEL = logging.WARN
+SYSLOG_TAG = 'http_app_kuma'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'mdn_default': {
+            'format': ('%s: %%(asctime)s %%(name)s:%%(levelname)s %%(message)s '
+                       ':%%(pathname)s:%%(lineno)s' % SYSLOG_TAG),
+        },
+    },
+    'handlers': {
+        'mdn_debug': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'mdn_default',
+            'level': LOG_LEVEL,
+        },
+        'mdn_prod': {
+            'class': 'logging.handlers.SysLogHandler',
+            'formatter': 'mdn_default',
+            'level': LOG_LEVEL,
+        },
+    },
+    'loggers': {
+        'mdn': {
+            'handlers': ['mdn_prod' if not DEBUG else 'mdn_debug'],
+            'level': LOG_LEVEL,
+            'propagate': False,
+        },
+        
+    },
+}

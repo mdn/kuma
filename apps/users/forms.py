@@ -9,8 +9,10 @@ from tower import ugettext as _, ugettext_lazy as _lazy
 
 from dekicompat.backends import DekiUserBackend
 from sumo.widgets import ImageWidget
-from upload.forms import clean_image_extension
-from upload.utils import check_file_size, FileTooLargeError
+# HACK: This breaks avatar upload, but kuma doesn't use that (yet?) or the
+# upload app. This fixes a missing database error.
+#from upload.forms import clean_image_extension
+#from upload.utils import check_file_size, FileTooLargeError
 from users.models import Profile
 from users.widgets import FacebookURLWidget, TwitterURLWidget
 

@@ -340,7 +340,7 @@ def document(request, document_slug, document_locale):
 
         # We can throw a 404 immediately if the request type is HEAD
         if request.method == 'HEAD':
-            raise Http404
+            raise Http404()
 
         try:
             # Look in default language:
@@ -369,7 +369,7 @@ def document(request, document_slug, document_locale):
                 request.GET.get('include', False) is not False or
                 request.GET.get('nocreate', False) is not False or
                 not request.user.is_authenticated()):
-                raise Http404
+                raise Http404()
 
             # The user may be trying to create a child page; if a parent exists
             # for this document, redirect them to the "Create" page

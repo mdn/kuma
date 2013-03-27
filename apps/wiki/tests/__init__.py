@@ -1,6 +1,9 @@
+import sys
 from datetime import datetime
 import time
+import logging
 
+from django.conf import settings
 from django.contrib.auth.models import User, Group, Permission
 from django.core.files import temp as tempfile
 from django.template.defaultfilters import slugify
@@ -21,8 +24,11 @@ class TestCaseBase(TestCase):
         super(TestCaseBase, self).setUp()
         self.client = LocalizingClient()
 
-        self.kumaediting_flag = Flag.objects.create(name='kumaediting',
-                                                   everyone=True)
+        ke_flag, created = Flag.objects.get_or_create(name='kumaediting')
+        ke_flag.everyone = True
+        ke_flag.save()
+
+        self.kumaediting_flag = ke_flag
 
     def tearDown(self):
         self.kumaediting_flag.delete()

@@ -17,6 +17,7 @@
     {{ errorlist(document_form) }}
     {{ errorlist(revision_form) }}
     <form id="wiki-page-edit" class="editing" method="post" action="">
+      {{ csrf() }}
       <fieldset>
       <header id="article-head">
         {{ document_form.category|safe }}
