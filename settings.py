@@ -291,6 +291,7 @@ HUMANSTXT_ROOT = MEDIA_ROOT
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
 MEDIA_URL = '/media/'
+STATIC_URL = '/static/'
 
 SERVE_MEDIA = False
 
@@ -387,7 +388,7 @@ AVATAR_SIZE = 48  # in pixels
 ACCOUNT_ACTIVATION_DAYS = 30
 MAX_AVATAR_FILE_SIZE = 131072  # 100k, in bytes
 
-ROOT_URLCONF = '%s.urls' % ROOT_PACKAGE
+ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates"
