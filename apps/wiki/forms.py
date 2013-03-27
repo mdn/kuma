@@ -199,10 +199,10 @@ class RevisionForm(forms.ModelForm):
                                 'max_length': SUMMARY_LONG})
 
     showfor_data = {
-        'oses': [(smart_str(c[0][0]), [(o.slug, smart_str(o.name)) for
+        'oses': [(unicode(c[0][0]), [(o.slug, unicode(o.name)) for
                                     o in c[1]]) for
                  c in GROUPED_OPERATING_SYSTEMS],
-        'versions': [(smart_str(c[0][0]), [(v.slug, smart_str(v.name)) for
+        'versions': [(unicode(c[0][0]), [(v.slug, unicode(v.name)) for
                                         v in c[1] if v.show_in_ui]) for
                      c in GROUPED_FIREFOX_VERSIONS]}
 

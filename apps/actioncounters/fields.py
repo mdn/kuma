@@ -37,7 +37,7 @@ class ActionCounterField(models.IntegerField):
         t = ActionCounterCreator(self)
         setattr(cls, name, t)
 
-    def get_db_prep_save(self, value):
+    def get_db_prep_save(self, value, connection):
         pass
 
 

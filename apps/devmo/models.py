@@ -106,7 +106,7 @@ class UserProfile(ModelBase):
     locale = LocaleField(null=True, blank=True, db_index=True,
                          verbose_name=_(u'Language'))
     homepage = models.URLField(max_length=255, blank=True, default='',
-                               verify_exists=False, error_messages={
+                               error_messages={
                                'invalid': _(u'This URL has an invalid format. '
                                             u'Valid URLs look like '
                                             u'http://example.com/my_page.')})
@@ -649,12 +649,12 @@ class Event(ModelBase):
     date = models.DateField()
     end_date = models.DateField(blank=True, null=True)
     conference = models.CharField(max_length=255)
-    conference_link = models.URLField(blank=True, verify_exists=False)
+    conference_link = models.URLField(blank=True)
     location = models.CharField(max_length=255)
     people = models.TextField()
     description = models.TextField()
     done = models.BooleanField(default=False)
-    materials = models.URLField(blank=True, verify_exists=False)
+    materials = models.URLField(blank=True)
     calendar = models.ForeignKey(Calendar)
 
     class Meta:

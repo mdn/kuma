@@ -16,6 +16,7 @@
     <div id="content-main" class="full">
   <article id="edit-document" class="article" role="main">
     <form id="wiki-page-edit" class="editing" method="post" action="">
+      {{ csrf() }}
       <fieldset>
 
         {{ errorlist(revision_form) }}

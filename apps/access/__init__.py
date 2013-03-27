@@ -1,7 +1,9 @@
 from django.contrib.contenttypes.models import ContentType
 
-from authority import get_check
-from authority.models import Permission
+# HACK: This breaks the things below, but we don't even use them or the
+# authority app. This fixes a missing database error.
+#from authority import get_check
+#from authority.models import Permission
 
 
 def has_perm_or_owns(user, perm, obj, perm_obj,
