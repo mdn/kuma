@@ -360,7 +360,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'sumo.anonymous.AnonymousIdentityMiddleware',
     'sumo.middleware.PlusToSpaceMiddleware',
-    'commonware.middleware.HidePasswordOnException',
     #'dekicompat.middleware.DekiUserMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django_statsd.middleware.GraphiteRequestTimingMiddleware',
