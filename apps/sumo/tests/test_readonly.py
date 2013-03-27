@@ -37,7 +37,7 @@ class ReadOnlyModeTest(test_utils.TestCase):
         models.signals.pre_delete.disconnect(self.db_error)
 
     def db_error(self, *args, **kwargs):
-        raise mysql.OperationalError("You can't do this in read-only mode.")
+        raise DatabaseError("You can't do this in read-only mode.")
 
     def test_db_error(self):
         assert_raises(DatabaseError, Question.objects.create, id=12)
