@@ -44,18 +44,6 @@
       <dd class="rev-to">{{ revision_to.tags }}</dd>
       {% endif %}
       
-      {% if revision_from.keywords or revision_to.keywords %}
-      <dt>{{ _('Keywords:') }}</dt>
-      <dd class="rev-from">{{ revision_from.keywords }}</dd>
-      <dd class="rev-to">{{ revision_to.keywords }}</dd>
-      {% endif %}
-      
-      {% if revision_from.summary or revision_to.summary %}
-      <dt>{{ _('Search results summary:') }}</dt>
-      <dd class="rev-from">{{ revision_from.summary }}</dd>
-      <dd class="rev-to">{{ revision_to.summary }}</dd>
-      {% endif %}
-      
       <dt>{{ _('Content:') }}</dt>
       <dd>{{ diff_table(revision_from.content, revision_to.content, revision_from.id, revision_to.id) }}</dd>
     </dl>
