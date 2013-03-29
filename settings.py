@@ -551,6 +551,7 @@ TOWER_ADD_HEADERS = True
 MINIFY_BUNDLES = {
     'css': {
         'mdn': (
+            'css/fonts.css',
             'css/mdn-screen.css',
             'css/modals.css',
             'css/mdn-video-player.css',
