@@ -40,6 +40,7 @@
   <section id="content-main" class="full">
 
     <form id="profile-edit" class="submission" method="post" action="">
+        {{ csrf() }}
         <h1 class="page-title">{{ profile.user.username }}</h1>
       
       <div class="extra">
