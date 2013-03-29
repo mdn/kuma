@@ -32,8 +32,6 @@ Font sizes -
 14px *  .642 = 9px
 -----------------------------------------------------------------------------*/
 
-@import "fonts.css";
-
 /* @Reset *********/
 header, hgroup, nav, section, article, aside, footer, figure, details, summary { display: block; }
 html, body, form, fieldset, legend, figure,
