@@ -25,6 +25,7 @@ ADMINS = (
 SITE_URL = 'https://developer.mozilla.org'
 PROTOCOL = 'https://'
 DOMAIN = 'developer.mozilla.org'
+USE_X_FORWARDED_HOST = True
 
 MANAGERS = ADMINS
 
