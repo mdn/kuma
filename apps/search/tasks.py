@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.db.models.signals import post_save, pre_delete
 
-from celery.decorators import task
+from celery.task import task
 
 
 @task
