@@ -19,6 +19,7 @@ build.py
 media/uploads
 media/attachments
 media/sitemap*
+static/
 locale
 xfers/*
 puppet/cache/*
