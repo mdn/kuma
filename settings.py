@@ -293,6 +293,7 @@ HUMANSTXT_ROOT = MEDIA_ROOT
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
 MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
+STATIC_ROOT = path('static')
 
 SERVE_MEDIA = False
 
@@ -408,6 +409,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.admin',
     'django.contrib.sitemaps',
+    'django.contrib.staticfiles',
 
     # BrowserID
     'django_browserid',
