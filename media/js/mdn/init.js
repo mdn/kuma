@@ -2,9 +2,9 @@
 
 /* Fake the placeholder attribute since Firefox doesn't support it. */
 jQuery.fn.placeholder = function(new_value) {
-
+    var placeholder = 'placeholder';
     if (new_value) {
-        this.attr('placeholder', new_value);
+        this.attr(placeholder, new_value);
     }
 
     /* Bail early if we have built-in placeholder support. */
@@ -12,29 +12,29 @@ jQuery.fn.placeholder = function(new_value) {
         return this;
     }
 
-    if (new_value && this.hasClass('placeholder')) {
+    if (new_value && this.hasClass(placeholder)) {
         this.val('').blur();
     }
 
     return this.focus(function() {
         var $this = $(this),
-            text = $this.attr('placeholder');
+            text = $this.attr(placeholder);
 
         if ($this.val() === text) {
-            $this.val('').removeClass('placeholder');
+            $this.val('').removeClass(placeholder);
         }
     }).blur(function() {
         var $this = $(this),
-            text = $this.attr('placeholder');
+            text = $this.attr(placeholder);
 
         if ($this.val() === '') {
-            $this.val(text).addClass('placeholder');
+            $this.val(text).addClass(placeholder);
         }
     }).each(function(){
         /* Remove the placeholder text before submitting the form. */
         var self = $(this);
         self.closest('form').submit(function() {
-            if (self.hasClass('placeholder')) {
+            if (self.hasClass(placeholder)) {
                 self.val('');
             }
         });
@@ -45,11 +45,11 @@ jQuery.fn.placeholder = function(new_value) {
 jQuery.extend({
 	parseQuerystring: function(str){
 		var nvpair = {},
-			qs = (str || window.location.search).replace("?", ""),
-			pairs = qs.split("&");
+			qs = (str || window.location.search).replace('?', ''),
+			pairs = qs.split('&');
 			
 		$.each(pairs, function(i, v){
-			var pair = v.split("=");
+			var pair = v.split('=');
 			nvpair[pair[0]] = pair[1];
 		});
 		
@@ -57,11 +57,11 @@ jQuery.extend({
 	},
   slugifyString: function(str) {
     // Remove anything from the slug that could cause big problems
-    str = str.replace(/[\?\&\"\'\#\*\$\/ +?]/g, "_");
+    str = str.replace(/[\?\&\"\'\#\*\$\/ +?]/g, '_');
     // "$" is used for verb delimiter in URLs
-    str = str.replace(/\$/g, ""); 
+    str = str.replace(/\$/g, ''); 
     // Don't allow "_____" mess
-    str = str.replace(/\_+/g, "_");
+    str = str.replace(/\_+/g, '_');
     return str;
   }
 });
@@ -96,41 +96,40 @@ jQuery.extend({
         });
 
   // Set up nav dropdowns  
-  $(".toggle").click(function() {
-    $(".sub-menu:visible").slideUp(100).attr("aria-hidden", "true");
-    $(".toggle.open").removeClass("open");
-    $(this).siblings(".sub-menu").slideToggle(150).removeAttr("aria-hidden");
-    $(this).toggleClass("open");
+  $('.toggle').click(function() {
+    var $this = $(this)
+    $('.sub-menu:visible').slideUp(100).attr('aria-hidden', 'true');
+    $('.toggle.open').removeClass('open');
+    $this.siblings('.sub-menu').slideToggle(150).removeAttr('aria-hidden');
+    $this.toggleClass('open');
     return false;
   });
   
   // Keep the dropdown visible when it's in use
-  $(".sub-menu").hover(
+  $('.sub-menu').hover(
     function() {
-      $(this).show().removeAttr("aria-hidden");
+      $(this).show().removeAttr('aria-hidden');
     },
     function() {
-      $(this).delay(100).slideUp(150).attr("aria-hidden", "true");
-      $("a.toggle").delay(100).removeClass("open").blur();
+      $(this).delay(100).slideUp(150).attr('aria-hidden', 'true');
+      $('a.toggle').delay(100).removeClass('open').blur();
     }
   );
 
   // Hide dropdowns when anything else is clicked
-  $(document).bind('click', function(e) {
-    var $clicked = $(e.target);
-    if (! $clicked.parents().hasClass("menu"))
-      $(".sub-menu").hide().attr("aria-hidden", "true");
-      $("a.toggle").removeClass("open");
-  });
-  
-  // or gets focus
-  $("a, input, textarea, button, :focus").bind('focus', function(e) {
-    var $focused = $(e.target);
-    if (! $focused.parents().hasClass("menu")) {
-      $(".sub-menu").hide().attr("aria-hidden", "true");
-      $("a.toggle").removeClass("open");
+  // or focused
+  (function() {
+    function callback(e) {
+      var $subject = $(e.target);
+      if (! $subject.parents().hasClass('menu'))
+        $('.sub-menu').hide().attr('aria-hidden', 'true');
+        $('a.toggle').removeClass('open');
     }
-  });
+
+    $(document).bind('click', callback);
+    $('a, input, textarea, button, :focus').bind('focus', callback);
+
+  })();
 
   function bindBrowserIDSignin() {
     $('.browserid-signin').click(function (e) {
@@ -147,8 +146,6 @@ jQuery.extend({
 
   // Wire up the statically-drawn browserid-signin element on the change
   // email page
-  $('#change-email', '.signed-out').ready(function(){
-      bindBrowserIDSignin();
-  });
+  $('#change-email', '.signed-out').ready(bindBrowserIDSignin);
 
 // });
