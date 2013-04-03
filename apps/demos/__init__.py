@@ -325,7 +325,9 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "summary": _("Web Workers make it easy for you to run scripts in the background. By using Web Workers, you can create dazzling user interfaces that are not hindered by even the most computationally-intensive tasks."),
         "description": _("Web Workers make it easy for you to run scripts in the background. By using Web Workers, you can create dazzling user interfaces that are not hindered by even the most computationally-intensive tasks."),
         "learn_more": [],
-        "tab_copy": _("??"),
+        "tab_copy": _("""<p>The Mozilla Dev Derby is a monthly Web development contest open to anyone willing to learn. This month, we want to see what you can do with web workers. Web workers let you run scripts in the background, making even the most computationally-intensive applications possible.</p>
+<p>Need help getting started? No problem. The <a href="https://developer.mozilla.org/en-US/">Mozilla Developer Network (MDN)</a> has you covered with some of the best documentation out there. Beginners will appreciate our <a href="https://developer.mozilla.org/en-US/learn">comprehensive guide on the basics</a> and more experienced Web developers should appreciate the thousands of other articles provided. When you're ready to tackle web workers in particular, take a look at our <a href="https://developer.mozilla.org/en-US/docs/DOM/Using_web_workers">detailed web workers guide</a>. Need some examples? The Demo Studio already has a handful of <a href="https://developer.mozilla.org/en-US/demos/tag/tech:webworkers">web worker demos</a> to learn from.</p>
+<p>It may seem like a lot, but you don't need to be an expert to create something great. What can you do with web workers?</p>"""),
     },
     {
         "tag_name": "challenge:2013:may",
@@ -336,6 +338,18 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "tagline": _("Action!"),
         "summary": _("The getUserMedia function lets you access (with permission) the cameras and microphones of your users. No plugins needed! What can you do once you have this media? The possibilities are endless."),
         "description": _("The getUserMedia function lets you access (with permission) the cameras and microphones of your users. No plugins needed! What can you do once you have this media? The possibilities are endless."),
+        "learn_more": [],
+        "tab_copy": _("??"),
+    },
+    {
+        "tag_name": "challenge:2013:june",
+        "title": _("June 2013 Dev Derby Challenge - WebGL II"),
+        "short_title": _("WebGL"),
+        "dateline": _("June 2013"),
+        "short_dateline": _("June"),
+        "tagline": _("Twice the 3D!"),
+        "summary": _("WebGL brings the power of OpenGL, for creating interactive 3D graphics, to the Web, with no plug-ins required."),
+        "description": _("WebGL brings the power of OpenGL, for creating interactive 3D graphics, to the Web, with no plug-ins required."),
         "learn_more": [],
         "tab_copy": _("??"),
     },
