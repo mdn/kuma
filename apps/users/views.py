@@ -1,5 +1,4 @@
 import os
-import urllib
 import urlparse
 
 from django.conf import settings
@@ -16,7 +15,7 @@ from django.views.decorators.http import (require_http_methods, require_GET,
 from django.views.decorators.csrf import csrf_exempt
 
 from django.shortcuts import get_object_or_404
-from django.utils.http import base36_to_int
+from django.utils.http import base36_to_int, is_safe_url
 
 from django_browserid.forms import BrowserIDForm
 from django_browserid.auth import get_audience
@@ -600,37 +599,26 @@ def _clean_next_url(request):
     elif 'HTTP_REFERER' in request.META:
         url = request.META.get('HTTP_REFERER').decode('latin1', 'ignore')
     else:
-        url = None
+        return None
 
-    if url:
-        parsed_url = urlparse.urlparse(url)
-        # Don't redirect outside of site_domain.
-        # Don't include protocol+domain, so if we are https we stay that way.
-        # http://bugzil.la/847190
-        relative_url_prefix = urllib.quote_plus(urllib.quote_plus('//'))
-        if url.upper().startswith(relative_url_prefix):
-            url = None
-        if parsed_url.scheme:
-            site_domain = Site.objects.get_current().domain
-            url_domain = parsed_url.netloc
-            if site_domain != url_domain:
-                url = None
-            else:
-                url = u'?'.join([getattr(parsed_url, x) for x in
-                                ('path', 'query') if getattr(parsed_url, x)])
+    site = Site.objects.get_current()
+    if not is_safe_url(url, site.domain):
+        return None
+    parsed_url = urlparse.urlparse(url)
 
-        # Don't redirect right back to login, logout, register, or change email
-        # pages
-        locale, register_url = split_path(reverse('users.browserid_register'))
-        locale, change_email_url = split_path(
-                                        reverse('users.change_email'))
-        for looping_url in [settings.LOGIN_URL, settings.LOGOUT_URL,
-                            register_url, change_email_url]:
-            if looping_url in parsed_url.path:
-                url = None
+    # Don't redirect right back to login, logout, register, or
+    # change email pages
+    locale, register_url = split_path(reverse(
+        'users.browserid_register'))
+    locale, change_email_url = split_path(reverse(
+        'users.change_email'))
+    LOOPING_NEXT_URLS = [settings.LOGIN_URL, settings.LOGOUT_URL,
+                          register_url, change_email_url]
+    for looping_url in LOOPING_NEXT_URLS:
+        if looping_url in parsed_url.path:
+            return None
 
     # TODO?HACK: can't use urllib.quote_plus because mod_rewrite quotes the
     # next url value already.
-    if url:
-        url = url.replace(' ', '+')
+    url = url.replace(' ', '+')
     return url
