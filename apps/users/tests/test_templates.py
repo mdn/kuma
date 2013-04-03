@@ -12,9 +12,7 @@ from django.utils.http import int_to_base36
 import mock
 from nose import SkipTest
 from nose.tools import eq_
-from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
-from test_utils import RequestFactory
 
 from dekicompat.tests import (SINGLE_ACCOUNT_FIXTURE_XML,
                               mock_post_mindtouch_user,
@@ -28,7 +26,6 @@ from sumo.helpers import urlparams
 from sumo.tests import post
 from users.models import RegistrationProfile
 from users.tests import TestCaseBase
-from users.views import _clean_next_url
 
 
 class LoginTests(TestCaseBase):
@@ -109,17 +106,6 @@ class LoginTests(TestCaseBase):
         eq_(next, doc('input[name="next"]')[0].attrib['value'])
 
     @mock.patch_object(Site.objects, 'get_current')
-    def test_clean_url(self, get_current):
-        '''Verify that protocol and domain get removed.'''
-        get_current.return_value.domain = 'su.mo.com'
-        r = RequestFactory().post('/users/login',
-                                  {'next': 'https://su.mo.com/kb/new?f=b'})
-        eq_('/kb/new?f=b', _clean_next_url(r))
-        r = RequestFactory().post('/users/login',
-                                  {'next': 'http://su.mo.com/kb/new'})
-        eq_('/kb/new', _clean_next_url(r))
-
-    @mock.patch_object(Site.objects, 'get_current')
     def test_login_invalid_next_parameter(self, get_current):
         '''Test with an invalid ?next=http://example.com parameter.'''
         get_current.return_value.domain = 'testserver.com'
@@ -140,18 +126,6 @@ class LoginTests(TestCaseBase):
                                      'next': invalid_next})
         eq_(302, response.status_code)
         eq_('http://testserver' + valid_next, response['location'])
-
-    # http://bugzil.la/847190
-    @attr('sec')
-    @mock.patch_object(Site.objects, 'get_current')
-    def test_clean_next_url_protocol_relative_redirect(self, get_current):
-        '''Test with an XSS in ?next parameter.'''
-        get_current.return_value.domain = 'testserver.com'
-        redir_next = '%252f%252fgoo.gl/yY9B5&paddingpaddingpadding'
-        redir_request = RequestFactory().get('/users/login',
-                                             {'next': redir_next})
-
-        eq_(None, _clean_next_url(redir_request))
 
     def test_login_legacy_password(self):
         '''Test logging in with a legacy md5 password.'''

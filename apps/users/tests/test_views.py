@@ -11,6 +11,7 @@ from nose import SkipTest
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
+from test_utils import RequestFactory
 
 from dekicompat.tests import (mock_mindtouch_login,
                               mock_missing_get_deki_user,
@@ -22,10 +23,11 @@ from dekicompat.tests import (mock_mindtouch_login,
 
 from dekicompat.backends import DekiUserBackend, MINDTOUCH_USER_XML
 from notifications.tests import watch
+from sumo.helpers import urlparams
 from sumo.tests import TestCase, LocalizingClient
 from sumo.urlresolvers import reverse
 from users.models import RegistrationProfile, EmailChange
-from users.views import SESSION_VERIFIED_EMAIL
+from users.views import SESSION_VERIFIED_EMAIL, _clean_next_url
 from users.tests import get_deki_user_doc
 
 
@@ -183,6 +185,63 @@ class LoginTestCase(TestCase):
         # Login page should show welcome back
         doc = pq(response.content)
         eq_('testaccount', doc.find('ul.user-state a:first').text())
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_clean_next_url_request_properties(self, get_current):
+        '''_clean_next_url checks POST, GET, and REFERER'''
+        get_current.return_value.domain = 'dev.mo.org'
+
+        r = RequestFactory().get('/users/login', {'next': '/demos/submit'},
+                                 HTTP_REFERER='referer-trumped-by-get')
+        eq_('/demos/submit', _clean_next_url(r))
+        r = RequestFactory().post('/users/login', {'next': '/demos/submit'})
+        eq_('/demos/submit', _clean_next_url(r))
+        r = RequestFactory().get('/users/login', HTTP_REFERER='/demos/submit')
+        eq_('/demos/submit', _clean_next_url(r))
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_clean_next_url_no_self_redirects(self, get_current):
+        '''_clean_next_url checks POST, GET, and REFERER'''
+        get_current.return_value.domain = 'dev.mo.org'
+
+        for next in [settings.LOGIN_URL, settings.LOGOUT_URL]:
+            r = RequestFactory().get('/users/login', {'next': next})
+            eq_(None, _clean_next_url(r))
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_clean_next_url_invalid_next_parameter(self, get_current):
+        '''_clean_next_url cleans invalid urls'''
+        get_current.return_value.domain = 'dev.mo.org'
+
+        for next in self._invalid_nexts():
+            r = RequestFactory().get('/users/login', {'next': next})
+            eq_(None, _clean_next_url(r))
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_login_invalid_next_parameter(self, get_current):
+        '''Test with an invalid ?next=http://example.com parameter.'''
+        get_current.return_value.domain = 'testserver.com'
+        valid_next = reverse('home', locale=settings.LANGUAGE_CODE)
+
+        for invalid_next in self._invalid_nexts():
+            # Verify that _valid_ next parameter is set in form hidden field.
+            response = self.client.get(urlparams(reverse('users.login'),
+                                                 next=invalid_next))
+            eq_(200, response.status_code)
+            doc = pq(response.content)
+            eq_(valid_next, doc('input[name="next"]')[0].attrib['value'])
+
+            # Verify that it gets used on form POST.
+            response = self.client.post(reverse('users.login'),
+                                        {'username': 'testuser',
+                                         'password': 'testpass',
+                                         'next': invalid_next})
+            eq_(302, response.status_code)
+            eq_('http://testserver' + valid_next, response['location'])
+            self.client.logout()
+
+    def _invalid_nexts(self):
+        return ['http://foobar.com/evil/', '//goo.gl/y-bad']
 
 
 class RegisterTestCase(TestCase):
