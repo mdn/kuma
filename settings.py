@@ -619,7 +619,8 @@ MINIFY_BUNDLES = {
     },
     'js': {
         'mdn': (
-            'js/mdn/jquery-1.4.2.min.js',
+            'js/jquery-1.9.1.js',
+            'js/jquery-upgrade-bridge.js',
             'js/mdn/init.js',
             'js/mdn/gsearch.js',
 
