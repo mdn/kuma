@@ -89,7 +89,7 @@ def update_site(env, debug):
         (CHDIR, os.path.join(here)),
         (EXEC, 'python2.6 vendor/src/schematic/schematic migrations/'),
         (EXEC, 'python2.6 manage.py migrate'),
-        (EXEC, 'python2.6 manage.py collectstatic'),
+        (EXEC, 'python2.6 manage.py collectstatic --noinput'),
         (EXEC, 'LANG=en_US.UTF-8 python2.6 manage.py compress_assets'),
     ]
  
