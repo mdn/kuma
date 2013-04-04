@@ -344,7 +344,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
     {
         "tag_name": "challenge:2013:june",
         "title": _("June 2013 Dev Derby Challenge - WebGL II"),
-        "short_title": _("WebGL"),
+        "short_title": _("WebGL II"),
         "dateline": _("June 2013"),
         "short_dateline": _("June"),
         "tagline": _("Twice the 3D!"),
