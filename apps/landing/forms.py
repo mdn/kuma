@@ -2,6 +2,8 @@ from django import forms
 
 from tower import ugettext as _, ugettext_lazy as _lazy
 
+from product_details import product_details
+
 EMAIL_REQUIRED = _lazy(u'Email address is required.')
 EMAIL_SHORT = _lazy(u'Email address is too short (%(show_value)s characters). '
                     'It must be at least %(limit_value)s characters.')
@@ -26,3 +28,20 @@ class SubscriptionForm(forms.Form):
         label=_lazy(u'I agree'),
         error_messages={'required': PRIVACY_REQUIRED}
     )
+
+    def __init__(self, locale, *args, **kwargs):
+        regions = product_details.get_regions(locale)
+        regions = sorted(regions.iteritems(), key=lambda x: x[1])
+
+        lang = country = locale.lower()
+        if '-' in lang:
+            lang, country = lang.split('-', 1)
+
+        super(SubscriptionForm, self).__init__(*args, **kwargs)
+
+        self.fields['country'] = forms.ChoiceField(
+            label=_lazy(u'Your country'),
+            choices=regions,
+            initial=country,
+            required=False
+        )
