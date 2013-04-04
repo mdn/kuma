@@ -277,7 +277,9 @@ MDC_PAGES_DIR = path('../mdc_pages')
 # to load the internationalization machinery.
 USE_I18N = True
 USE_L10N = True
-LOCALE_PATHS = path('locale')
+LOCALE_PATHS = (
+    path('locale'),
+)
 
 # Use the real robots.txt?
 ENGAGE_ROBOTS = False
