@@ -70,7 +70,7 @@ def revision(save=False, **kwargs):
     defaults = {'summary': 'Some summary', 'content': 'Some content',
                 'significance': SIGNIFICANCES[0][0], 'comment': 'Some comment',
                 'creator': kwargs.get('creator', get_user()), 'document': d,
-                'tags': '"some", "tags"'}
+                'tags': '"some", "tags"', 'toc_depth': 1}
 
     defaults.update(kwargs)
 
@@ -136,7 +136,7 @@ def new_document_data(tags=None):
         'keywords': 'key1, key2',
         'summary': 'lipsum',
         'content': 'lorem ipsum dolor sit amet',
-        'show_toc': 'true',
+        'toc_depth': 1,
     }
 
 

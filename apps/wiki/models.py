@@ -233,6 +233,21 @@ CATEGORIES = (
     (10, _lazy(u'Reference')),
 )
 
+# Depth of table-of-contents in document display.
+TOC_DEPTH_NONE = 0
+TOC_DEPTH_ALL = 1
+TOC_DEPTH_H2 = 2
+TOC_DEPTH_H3 = 3
+TOC_DEPTH_H4 = 4
+
+TOC_DEPTH_CHOICES = (
+    (TOC_DEPTH_NONE, _lazy(u'No table of contents')),
+    (TOC_DEPTH_ALL, _lazy(u'All levels')),
+    (TOC_DEPTH_H2, _lazy(u'H2 and higher')),
+    (TOC_DEPTH_H3, _lazy(u'H3 and higher')),
+    (TOC_DEPTH_H4, _lazy('H4 and higher')),
+)
+
 # FF versions used to filter article searches, power {for} tags, etc.:
 #
 # Iterables of (ID, name, abbreviation for {for} tags, max version this version
@@ -456,7 +471,7 @@ class DocumentManager(ManagerBase):
             'title', 'locale', 'slug', 'tags', 'is_template', 'is_localizable',
             'parent', 'parent_topic', 'category', 'document', 'is_redirect',
             'summary', 'content', 'comment',
-            'keywords', 'tags', 'show_toc', 'significance', 'is_approved',
+            'keywords', 'tags', 'toc_depth', 'significance', 'is_approved',
             'creator',  # HACK: Replaced on import, but deserialize needs it
             'mindtouch_page_id', 'mindtouch_old_id', 'is_mindtouch_migration',
         )
@@ -933,11 +948,10 @@ class Document(NotificationsMixin, ModelBase):
         revise this document"""
         curr_rev = self.current_revision
         new_rev = Revision(creator=user, document=self, content=self.html)
-        for n in ('title', 'slug', 'show_toc', 'category'):
+        for n in ('title', 'slug', 'category'):
             setattr(new_rev, n, getattr(self, n))
-        if new_rev.show_toc is None:
-            # HACK: show_toc cannot be null, but there's no default.
-            new_rev.show_toc = True
+        if curr_rev:
+            new_rev.toc_depth = curr_rev.toc_depth
 
         # Accept optional field edits...
 
@@ -1042,7 +1056,7 @@ class Document(NotificationsMixin, ModelBase):
                                     href=self.get_absolute_url(),
                                     title=self.title),
                                 is_approved=True,
-                                show_toc=self.current_revision.show_toc,
+                                toc_depth=self.current_revision.toc_depth,
                                 reviewer=self.current_revision.creator,
                                 creator=user)
 
@@ -1224,7 +1238,7 @@ class Document(NotificationsMixin, ModelBase):
 
     @property
     def show_toc(self):
-        return self.current_revision and self.current_revision.show_toc
+        return self.current_revision and self.current_revision.toc_depth
 
     @property
     def language(self):
@@ -1584,7 +1598,8 @@ class Revision(ModelBase):
     # should constrain things from getting expensive.
     review_tags = TaggableManager(through=ReviewTaggedRevision)
 
-    show_toc = models.BooleanField(default=True)
+    toc_depth = models.IntegerField(choices=TOC_DEPTH_CHOICES,
+                                    default=TOC_DEPTH_ALL)
 
     created = models.DateTimeField(default=datetime.now, db_index=True)
     reviewed = models.DateTimeField(null=True)

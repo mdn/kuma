@@ -14,6 +14,7 @@ from sumo.tests import TestCase
 import wiki.content
 from wiki.content import (CodeSyntaxFilter, DekiscriptMacroFilter,
                           SectionTOCFilter, SectionIDFilter, IframeHostFilter,
+                          H2TOCFilter, H3TOCFilter,
                           SECTION_TAGS, get_seo_description)
 from wiki.models import ALLOWED_TAGS, ALLOWED_ATTRIBUTES, Document
 from wiki.tests import normalize_html, doc_rev, document, revision
@@ -419,6 +420,73 @@ class ContentSectionToolTests(TestCase):
         result = (wiki.content
                   .parse(doc_src)
                   .filter(SectionTOCFilter).serialize())
+        eq_(normalize_html(expected), normalize_html(result))
+
+    @attr('toc')
+    def test_generate_toc_h2(self):
+        doc_src = """
+            <h2 id="HTML">HTML</h2>
+              <h3 id="HTML5_canvas_element">HTML5 <code>canvas</code> element</h3>
+            <h2 id="JavaScript">JavaScript</h2>
+              JavaScript is awesome.
+              <h3 id="WebGL">WebGL</h3>
+              <h3 id="Audio">Audio</h3>
+                <h4 id="Audio-API">Audio API</h4>
+            <h2 id="CSS">CSS</h2>
+                <h4 id="CSS_transforms">CSS transforms</h4>
+              <h3 id="Gradients">Gradients</h3>
+                <h4 id="Scaling_backgrounds">Scaling backgrounds</h4>
+        """
+        expected = """
+            <li><a rel="internal" href="#HTML">HTML</a>
+            </li>
+            <li><a rel="internal" href="#JavaScript">JavaScript</a>
+            </li>
+            <li><a rel="internal" href="#CSS">CSS</a>
+            </li>
+        """
+        result = (wiki.content
+                  .parse(doc_src)
+                  .filter(H2TOCFilter).serialize())
+        eq_(normalize_html(expected), normalize_html(result))
+
+    @attr('toc')
+    def test_generate_toc_h3(self):
+        doc_src = """
+            <h2 id="HTML">HTML</h2>
+              <h3 id="HTML5_canvas_element">HTML5 <code>canvas</code> element</h3>
+            <h2 id="JavaScript">JavaScript</h2>
+              JavaScript is awesome.
+              <h3 id="WebGL">WebGL</h3>
+              <h3 id="Audio">Audio</h3>
+                <h4 id="Audio-API">Audio API</h4>
+            <h2 id="CSS">CSS</h2>
+                <h4 id="CSS_transforms">CSS transforms</h4>
+              <h3 id="Gradients">Gradients</h3>
+                <h4 id="Scaling_backgrounds">Scaling backgrounds</h4>
+        """
+        expected = """
+            <li><a rel="internal" href="#HTML">HTML</a>
+                <ol>
+                  <li><a rel="internal" href="#HTML5_canvas_element">HTML5 <code>canvas</code> element</a></li>
+                </ol>
+            </li>
+            <li><a rel="internal" href="#JavaScript">JavaScript</a>
+                <ol>
+                  <li><a rel="internal" href="#WebGL">WebGL</a>
+                  <li><a rel="internal" href="#Audio">Audio</a>
+                  </li>
+                </ol>
+            </li>
+            <li><a rel="internal" href="#CSS">CSS</a>
+                <ol>
+                  <li><a rel="internal" href="#Gradients">Gradients</a>
+                </ol>
+            </li>
+        """
+        result = (wiki.content
+                  .parse(doc_src)
+                  .filter(H3TOCFilter).serialize())
         eq_(normalize_html(expected), normalize_html(result))
 
     def test_dekiscript_macro_conversion(self):
