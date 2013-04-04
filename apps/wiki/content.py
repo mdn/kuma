@@ -541,17 +541,23 @@ class SectionTOCFilter(html5lib_Filter):
         self.in_header = False
         self.open_level = 0
         self.in_hierarchy = False
+        self.max_level = 6
 
     def __iter__(self):
         input = html5lib_Filter.__iter__(self)
 
+        self.skip_header = False
+
         for token in input:
             if ('StartTag' == token['type'] and
                     token['name'] in HEAD_TAGS_TOC):
-                self.in_header = True
-                out = ()
                 level_match = re.compile(r'^h(\d)$').match(token['name'])
                 level = int(level_match.group(1))
+                if level > self.max_level:
+                    self.skip_header = True
+                    continue
+                self.in_header = True
+                out = ()
                 if level > self.level:
                     diff = level - self.level
                     for i in range(diff):
@@ -587,7 +593,8 @@ class SectionTOCFilter(html5lib_Filter):
                     for t in out:
                         yield t
             elif ('StartTag' == token['type'] and
-                    token['name'] in TAGS_IN_TOC):
+                  token['name'] in TAGS_IN_TOC and
+                  not self.skip_header):
                 yield token
             elif (token['type'] in ("Characters", "SpaceCharacters")
                   and self.in_header):
@@ -597,6 +604,11 @@ class SectionTOCFilter(html5lib_Filter):
                 yield token
             elif ('EndTag' == token['type'] and
                     token['name'] in HEAD_TAGS_TOC):
+                level_match = re.compile(r'^h(\d)$').match(token['name'])
+                level = int(level_match.group(1))
+                if level > self.max_level:
+                    self.skip_header = False
+                    continue
                 self.in_header = False
                 out = ({'type': 'EndTag', 'name': 'a'},)
                 for t in out:
@@ -609,6 +621,26 @@ class SectionTOCFilter(html5lib_Filter):
                         {'type': 'EndTag', 'name': 'li'})
             for t in out:
                 yield t
+
+
+class H2TOCFilter(SectionTOCFilter):
+    def __init__(self, source):
+        html5lib_Filter.__init__(self, source)
+        self.level = 2
+        self.max_level = 2
+        self.in_header = False
+        self.open_level = 0
+        self.in_hierarchy = False
+
+
+class H3TOCFilter(SectionTOCFilter):
+    def __init__(self, source):
+        html5lib_Filter.__init__(self, source)
+        self.level = 2
+        self.max_level = 3
+        self.in_header = False
+        self.open_level = 0
+        self.in_hierarchy = False
 
 
 class SectionFilter(html5lib_Filter):

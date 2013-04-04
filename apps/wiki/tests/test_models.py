@@ -784,18 +784,18 @@ class RevisionTests(TestCase):
 
     @attr('toc')
     def test_show_toc(self):
-        """Setting show_toc appropriately affects the Document's
+        """Setting toc_depth appropriately affects the Document's
         show_toc property."""
         d, r = doc_rev('Toggle table of contents.')
-        assert r.show_toc
+        assert (r.toc_depth != 0)
         assert d.show_toc
 
-        r = revision(document=d, content=r.content, show_toc=False,
+        r = revision(document=d, content=r.content, toc_depth=0,
                      is_approved=True)
         r.save()
         assert not d.show_toc
 
-        r = revision(document=d, content=r.content, show_toc=True,
+        r = revision(document=d, content=r.content, toc_depth=1,
                      is_approved=True)
         r.save()
         assert d.show_toc

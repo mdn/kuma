@@ -483,8 +483,12 @@ def document(request, document_slug, document_locale):
         # Generate a TOC for the document using the sections provided by
         # SectionEditingLinks
         if doc.show_toc and not show_raw:
+            toc_filter = {1: wiki.content.SectionTOCFilter,
+                          2: wiki.content.H2TOCFilter,
+                          3: wiki.content.H3TOCFilter,
+                          4: wiki.content.SectionTOCFilter}[doc.current_revision.toc_depth]
             toc_html = (wiki.content.parse(tool.serialize())
-                                    .filter(wiki.content.SectionTOCFilter)
+                                    .filter(toc_filter)
                                     .serialize())
 
         # If a section ID is specified, extract that section.
@@ -824,7 +828,10 @@ def new_document(request):
                 initial_html = clone_doc.html
                 initial_tags = clone_doc.tags.all()
                 initial_slug = clone_doc.slug + '_clone'
-                initial_toc = clone_doc.show_toc
+                if clone_doc.current_revision:
+                    initial_toc = clone_doc.current_revision.toc_depth
+                else:
+                    initial_toc = 1
 
             except Document.DoesNotExist:
                 pass
@@ -849,7 +856,7 @@ def new_document(request):
             'content': initial_html,
             'review_tags': review_tags,
             'tags': initial_tags,
-            'show_toc': initial_toc
+            'toc_depth': initial_toc
         })
 
         allow_add_attachment = (
@@ -1562,7 +1569,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
 
     if user_has_rev_perm:
         initial = {'based_on': based_on_rev.id, 'comment': '',
-                   'show_toc': based_on_rev.show_toc}
+                   'toc_depth': based_on_rev.toc_depth}
         if revision_id:
             initial.update(
                 content=Revision.objects.get(pk=revision_id).content)
@@ -1630,8 +1637,8 @@ def translate(request, document_slug, document_locale, revision_id=None):
                 # append final slug
                 post_data['slug'] = destination_slug
 
-                # update the post data with the show_toc of original
-                post_data['show_toc'] = based_on_rev.show_toc
+                # update the post data with the toc_depth of original
+                post_data['toc_depth'] = based_on_rev.toc_depth
 
                 rev_form = RevisionForm(post_data)
                 rev_form.instance.document = doc  # for rev_form.clean()

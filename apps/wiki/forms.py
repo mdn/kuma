@@ -19,7 +19,7 @@ from wiki.models import (Document, Revision, FirefoxVersion, OperatingSystem,
                          AttachmentRevision,
                      FIREFOX_VERSIONS, OPERATING_SYSTEMS, SIGNIFICANCES,
                      GROUPED_FIREFOX_VERSIONS, GROUPED_OPERATING_SYSTEMS,
-                     CATEGORIES, REVIEW_FLAG_TAGS, RESERVED_SLUGS)
+                     CATEGORIES, REVIEW_FLAG_TAGS, RESERVED_SLUGS, TOC_DEPTH_CHOICES)
 
 
 TITLE_REQUIRED = _lazy(u'Please provide a title.')
@@ -222,9 +222,11 @@ class RevisionForm(forms.ModelForm):
         widget=CheckboxSelectMultiple, required=False,
         choices=REVIEW_FLAG_TAGS)
 
-    show_toc = forms.BooleanField(
-        required=False,
-        label=_("Generate and display a table of contents in this article:"))
+    toc_depth = forms.TypedChoiceField(
+        coerce=int,
+        choices=TOC_DEPTH_CHOICES,
+        label=_("In table of contents, show only levels up to and including:"),
+        required=False)
 
     current_rev = forms.CharField(required=False,
                                   widget=forms.HiddenInput())
@@ -232,7 +234,7 @@ class RevisionForm(forms.ModelForm):
     class Meta(object):
         model = Revision
         fields = ('title', 'slug', 'tags', 'keywords', 'summary', 'content',
-                  'comment', 'based_on', 'show_toc')
+                  'comment', 'based_on', 'toc_depth')
 
     def __init__(self, *args, **kwargs):
 
@@ -374,7 +376,7 @@ class RevisionForm(forms.ModelForm):
         new_rev = super(RevisionForm, self).save(commit=False, **kwargs)
         new_rev.document = document
         new_rev.creator = creator
-        new_rev.show_toc = old_rev.show_toc
+        new_rev.toc_depth = old_rev.toc_depth
         new_rev.save()
         new_rev.review_tags.set(*[t.name for t in
                                   old_rev.review_tags.all()])
@@ -395,7 +397,7 @@ class RevisionForm(forms.ModelForm):
 
         new_rev.document = document
         new_rev.creator = creator
-        new_rev.show_toc = self.cleaned_data['show_toc']
+        new_rev.toc_depth = self.cleaned_data['toc_depth']
         new_rev.save()
         new_rev.review_tags.set(*self.cleaned_data['review_tags'])
         return new_rev
