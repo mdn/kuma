@@ -132,11 +132,7 @@
             
             {% include 'wiki/includes/title_autosuggest_url.html' %}
 
-            <section class="page-meta"><section id="page-comment">
-              <h2>{{_('Revision Comment')}}</h2>
-              <p>{{_('Tell us why you made this change.')}}</p>
-              {{ revision_form.comment | safe }}
-            </section></section>
+            {% include 'wiki/includes/revision_comment.html' %}
 
             <section class="page-meta">
               {% set tags = document.tags.all() %}

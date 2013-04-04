@@ -118,11 +118,7 @@
           </section>
         </div>
 
-        <section class="page-meta" style="clear:both;"><section id="page-comment">
-          <h2>{{_('Revision Comment')}}</h2>
-          <p>{{_('Tell us why you made this change.')}}</p>
-          {{ revision_form.comment | safe }}
-        </section></section>
+        {% include 'wiki/includes/revision_comment.html' %}
         
       </details>
     {% endif %}
