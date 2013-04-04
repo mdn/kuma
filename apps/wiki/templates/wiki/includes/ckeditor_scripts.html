@@ -2,22 +2,4 @@
 <script src="{{ MEDIA_URL }}ckeditor/ckeditor.js"></script>
 <script src="{{ MEDIA_URL }}ckeditor/adapters/jquery.js"></script>
 <script src="{{ MEDIA_URL }}js/wiki_ckeditor.js"></script>
-
-<script type="text/javascript">
-$(document).ready(function() {
-
-	var showing = 1,
-		$show_toc_depth_block = $('#show_toc_depth_block');
-
-	if($show_toc_depth_block.length) {
-		$('#toc_customize').click(updateTocLevel);
-		updateTocLevel();
-	}
-
-	function updateTocLevel() {
-		showing = !showing;
-		$show_toc_depth_block.animate({ 'opacity': showing ? 1 : 0 });
-	}
-});
-</script>
 {% endif %}
