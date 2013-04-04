@@ -106,6 +106,7 @@ class AppsViewsTest(test_utils.TestCase):
 
         r = self.client.post(url,
                 {'format': 'html',
+                 'country': 'pt',
                  'email': 'testuser@test.com',
                  'agree': 'checked'},
             follow=True)

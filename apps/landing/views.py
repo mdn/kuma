@@ -77,7 +77,7 @@ def apps(request):
 
 def apps_newsletter(request):
     if request.method == 'POST':
-        form = SubscriptionForm(data=request.POST)
+        form = SubscriptionForm(request.locale, data=request.POST)
         context = {'form': form}
         if form.is_valid():
             optin = 'N'
@@ -87,6 +87,7 @@ def apps_newsletter(request):
                 try:
                     result = basket.subscribe(email=form.cleaned_data['email'],
                                  newsletters=settings.BASKET_APPS_NEWSLETTER,
+                                 country=form.cleaned_data['country'],
                                  format=form.cleaned_data['format'],
                                  lang=request.locale,
                                  optin=optin)
@@ -100,7 +101,7 @@ def apps_newsletter(request):
             del context['form']
 
     else:
-        context = {'form': SubscriptionForm()}
+        context = {'form': SubscriptionForm(request.locale)}
 
     return jingo.render(request, 'landing/apps_newsletter.html', context)
 

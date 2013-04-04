@@ -17,6 +17,7 @@
 <h3 class="mod-title">{{ _('Firefox Apps & Hacks Newsletter') }}</h3>
 {% if form %}
 <form id="newsletter-sub" class="fm-subscribe" action="{{ url('apps_newsletter') }}" method="POST">
+  {{ csrf() }}
   <p class="mod-intro">{% trans %}
     Sign up now for news about Firefox OS, Firefox Marketplace and the Open Web apps ecosystem.  <strong>Join us!</strong>
   {% endtrans %}</p>
@@ -35,6 +36,11 @@
           {{ form.email.errors }}
           <label for="email">{{ form.email.label }}</label>
           {{ form.email }}
+        </li>
+        <li>
+          {{ form.country.errors }}
+          <label for="country">{{ form.country.label }}</label>
+          {{ form.country }}
         </li>
         <li class="check">
           {{ form.format.errors }}
