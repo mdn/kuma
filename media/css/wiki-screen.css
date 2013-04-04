@@ -248,8 +248,7 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 .editing ul.metadata li label { display: block; float: left; line-height: 2.5em; text-align: right; width: 10ex; font-weight: bold; padding-right: 0.25em; color: #888; }
 .editing ul.metadata li label.inline { color:#000; width:auto; font-weight:normal; float:none; text-align:left; display:inline-block; padding-left:34px; }
 .editing ul.metadata li .show_toc_block { padding: 7px 0 0 0; }
-.editing ul.metadata li a#toc_customize { /* display: inline-block; */ display: none; margin-left: 10px; font-size: 0.8em; color: #999; text-decoration: none; border-bottom: 1px dotted #999; }
-.editing ul.metadata li #show_toc_depth_block { margin-left: -12px; opacity: 0; }
+.editing ul.metadata li #show_toc_depth_block { margin-left: -12px; }
 .editing ul.metadata li input, .editing ul.metadata li input#id_title { font-size: 1em; padding: 6px 8px; margin: 2px 0px; width: 70%; }
 .editing ul.metadata li input[type="checkbox"] { width: auto; margin-left: 6px; }
 .editing ul.metadata li .metadataDisplay { display:inline-block; padding: 8px 0 0 3px; }
