@@ -915,6 +915,22 @@ class DocumentEditingTests(TestCaseBase):
                                       args=['Template:NoExist'],
                                       locale=locale))
         eq_(302, response.status_code)
+    
+    def test_new_document_comment(self):
+        """ Creating a new document with a revision comment saves the comment """
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+        
+        comment = 'I am the revision comment'
+        slug = 'Test-doc-comment'
+        loc = settings.WIKI_DEFAULT_LANGUAGE
+
+        # Create a new doc.
+        data = new_document_data()
+        data.update({'slug': slug, 'comment': comment})
+        resp = client.post(reverse('wiki.new_document'), data)
+        eq_(comment,
+            Document.uncached.get(slug=slug, locale=loc).current_revision.comment)
 
     @attr('retitle')
     def test_retitling_solo_doc(self):
