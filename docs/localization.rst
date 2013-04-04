@@ -275,7 +275,6 @@ be big merging headaches.
 Updating strings is pretty easy. Check out the localizations as above, then::
 
     $ python manage.py extract
-    $ python manage.py verbatimize --rename
 
 Congratulations! You've now updated the POT file.
 
