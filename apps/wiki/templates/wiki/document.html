@@ -77,6 +77,9 @@
           {% if waffle.flag('page_move') %}
             <li><a href="{{ url('wiki.move', document.slug, locale=document.locale) }}">{{ _('Move this page') }}</a></li>
           {% endif %}
+          {% if user.is_superuser %}
+            <li><a href="{{ url('admin:wiki_document_change', document.id) }}">{{ _('View in Admin') }}</a></li>
+          {% endif %}
         </ul>
       </li>
       {% if document.is_localizable or document.parent %}
