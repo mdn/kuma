@@ -1007,6 +1007,7 @@ li.tag-expert label:hover { border-color: #bbb; }
 .fm-subscribe li { margin-bottom: 1em; font-size: .857em; }
 .fm-subscribe label, .fm-subscribe .label { display: block; margin: 0 0 .25em; font: 200 1.25em/1.2 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
 .fm-subscribe input { border: 1px solid #bfbbad; background: #fff; padding: 4px 8px; width: 182px; font-size: .857em; }
+.fm-subscribe select { width: 200px; }
 .fm-subscribe input:hover, .fm-subscribe input:focus { border-color: #8d846f; }
 .fm-subscribe .fm-submit { text-align: right; font-size: 1.143em; }
 .fm-subscribe .inline label, .fm-subscribe .inline .label { width: auto; display: inline; font-family: inherit; font-size: 1em; text-transform: none; }
