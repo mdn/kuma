@@ -1107,9 +1107,9 @@ LOGGING = {
             'level': LOG_LEVEL,
         },
         'mdn_prod': {
-            'class': 'logging.handlers.SysLogHandler',
+            'class': 'django.utils.log.AdminEmailHandler',
             'formatter': 'mdn_default',
-            'level': LOG_LEVEL,
+            'level': logging.ERROR,
         },
     },
     'loggers': {
@@ -1118,6 +1118,5 @@ LOGGING = {
             'level': LOG_LEVEL,
             'propagate': False,
         },
-        
     },
 }
