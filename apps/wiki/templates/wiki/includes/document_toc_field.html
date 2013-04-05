@@ -1,16 +1,4 @@
 <li>
   <label><dfn title="{{_('Generate table of contents')}}">{{_('TOC:')}}</dfn></label>
-
-  <div id="show_toc_depth_block">
-    <label for="toc_depth" class="inline">
-      {{ _('In table of contents, show only levels up to and including:') }}
-      <select name="toc_depth">
-        <option value="0">Don't show a table of contents</option>
-        <option value="1">All</option>
-        <option value="2">H2</option>
-        <option value="3">H3</option>
-        <option value="4" selected>H4</option>
-      </select>
-    </label>
-  </div>
+  {{ revision_form.toc_depth }}
 </li>
