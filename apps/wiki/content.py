@@ -784,16 +784,19 @@ class CodeSyntaxFilter(html5lib_Filter):
 class IframeHostFilter(html5lib_Filter):
     """Filter which scans through <iframe> tags and strips the src attribute if
     it doesn't contain a URL whose host matches a given list of allowed
-    hosts."""
+    hosts. Also strips any markup found within <iframe></iframe>.
+    """
     def __init__(self, source, hosts):
         html5lib_Filter.__init__(self, source)
 
         self.hosts = hosts
 
     def __iter__(self):
+        in_iframe = False
         for token in html5lib_Filter.__iter__(self):
             if ('StartTag' == token['type']):
                 if 'iframe' == token['name']:
+                    in_iframe = True
                     attrs = dict(token['data'])
                     src = attrs.get('src', '')
                     if src:
@@ -801,7 +804,12 @@ class IframeHostFilter(html5lib_Filter):
                         if not parts.netloc or parts.netloc not in self.hosts:
                             attrs['src'] = ''
                     token['data'] = attrs.items()
-            yield token
+                    yield token
+            if ('EndTag' == token['type']):
+                if 'iframe' == token['name']:
+                    in_iframe = False
+            if not in_iframe:
+                yield token
 
 
 class DekiscriptMacroFilter(html5lib_Filter):
