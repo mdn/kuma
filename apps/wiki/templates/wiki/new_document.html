@@ -29,7 +29,9 @@
             <li><label>{{_('Parent:')}}</label> 
                 <a href="{{ parent_path }}" class="metadataDisplay" target="_blank">{{ parent_slug }}</a></li>
           {% endif %}
-          {% if not is_template %}
+          {% if is_template %}
+            <input type="hidden" name="toc_depth" value="0" />
+          {% else %}
             {% include 'wiki/includes/document_toc_field.html' %}
           {% endif %}
         </ul>
