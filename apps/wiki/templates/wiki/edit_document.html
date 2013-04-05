@@ -99,7 +99,9 @@
           {% if revision_form and not section_id %}
             <ul class="metadata">
                 <li><label>{{_('Title:')}}</label> {{ revision_form.title | safe }}</li>
-                {% if not document.is_template %}
+                {% if document.is_template %}
+                  <input type="hidden" name="toc_depth" value="0" />
+                {% else %}
                   {% include 'wiki/includes/document_toc_field.html' %}
                 {% endif %}
                 {% if show_translation_parent_block %}

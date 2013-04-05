@@ -14,6 +14,7 @@ from nose import SkipTest
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
+from BeautifulSoup import BeautifulSoup
 
 import constance.config
 
@@ -238,6 +239,22 @@ class DocumentTests(TestCaseBase):
         response = self.client.get(r.document.get_absolute_url())
         eq_(200, response.status_code)
         ok_('<div class="page-toc">' not in response.content)
+
+    @attr('toc')
+    def test_show_toc_hidden_input_for_templates(self):
+        """Toggling show_toc on/off through the toc_depth field should
+        cause table of contents to appear/disappear."""
+        doc_content = """w00t"""
+        doc = document(slug="Template:w00t", save=True)
+        r = revision(document=doc, save=True, content=doc_content,
+                     is_approved=True)
+        response = self.client.get(r.document.get_absolute_url())
+        eq_(200, response.status_code)
+        soup = BeautifulSoup(response.content)
+        hidden_inputs = soup.findAll("input", type="hidden")
+        for input in hidden_inputs:
+            if input['name'] == 'toc_depth':
+                eq_(0, input['value'])
 
 
 class AttachmentTests(TestCaseBase):
