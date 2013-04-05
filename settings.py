@@ -1013,6 +1013,14 @@ CONSTANCE_CONFIG = dict(
         'value disables the feature altogether.',
     ),
 
+    KUMA_CUSTOM_SAMPLE_CSS_PATH = (
+        '/en-US/docs/Template:CustomSampleCSS',
+        'Path to a wiki document whose raw content will be loaded as a CSS '
+        'stylesheet for live sample template. Will also cause the ?raw '
+        'parameter for this path to send a Content-Type: text/css header. Empty '
+        'value disables the feature altogether.',
+    ),
+
     DIFF_CONTEXT_LINES = (
         0,
         'Number of lines of context to show in diff display.',

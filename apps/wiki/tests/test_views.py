@@ -2581,30 +2581,25 @@ class CodeSampleViewTests(TestCaseBase):
             </div>
             <p>test</p>
         """)
-        expected = """
-            <!DOCTYPE html>
-            <html>
-                <head>
-                    <style type="text/css">
-                        .some-css { color: red; }
-                    </style>
-                </head>
-                <body>
-                    Some HTML
-                    <script type="text/javascript">
-                        window.alert("HI THERE")
-                    </script>
-                </body>
-            </html>
-        """
+        expecteds = (
+            '<style type="text/css">.some-css { color: red; }</style>',
+            'Some HTML',
+            '<script type="text/javascript">window.alert("HI THERE")</script>',
+        )
+
         response = client.get(reverse('wiki.code_sample',
                               args=[d.full_path, 'sample1']),
                               HTTP_HOST='testserver')
         ok_('Access-Control-Allow-Origin' in response)
         eq_('*', response['Access-Control-Allow-Origin'])
         eq_(200, response.status_code)
-        eq_(normalize_html(expected),
-            normalize_html(response.content))
+        normalized = normalize_html(response.content)
+        logging.debug(normalized)
+
+        # Content checks
+        ok_('<!DOCTYPE html>' in response.content)
+        for item in expecteds:
+            ok_(item in normalized)
 
     @override_constance_settings(KUMA_CODE_SAMPLE_HOSTS='sampleserver')
     def test_code_sample_host_restriction(self):
