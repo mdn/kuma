@@ -710,6 +710,22 @@ class ContentSectionToolTests(TestCase):
         eq_(if3.length, 1)
         eq_(if3.attr('src'), '')
 
+    def test_iframe_host_contents_filter(self):
+        """Any contents inside an <iframe> should be removed"""
+        doc_src = """
+            <iframe>
+            <iframe src="javascript:alert(1);"></iframe>
+            </iframe>
+        """
+        expected_src = """
+            <iframe>
+            </iframe>
+        """
+        result_src = (wiki.content.parse(doc_src)
+                      .filterIframeHosts(['sampleserver'])
+                      .serialize())
+        eq_(normalize_html(expected_src), normalize_html(result_src))
+
     def test_link_annotation(self):
         d, r = doc_rev("This document exists")
         d.save()
