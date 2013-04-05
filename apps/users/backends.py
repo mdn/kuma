@@ -5,6 +5,8 @@ from django.contrib.auth.hashers import mask_hash
 from django.utils.crypto import constant_time_compare
 from django.utils.datastructures import SortedDict
 
+from tower import ugettext as _, ugettext_lazy as _lazy
+
 
 class Sha256Hasher(BasePasswordHasher):
     """
