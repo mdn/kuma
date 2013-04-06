@@ -46,6 +46,3 @@ class UserProfileEditForm(forms.ModelForm):
                 "subset of interests"))
 
         return cleaned_data['expertise']
-
-    def clean_timezone(self):
-        pass
