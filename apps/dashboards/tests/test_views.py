@@ -50,7 +50,7 @@ class RevisionsDashTest(TestCase):
         eq_(200, response.status_code)
         ok_('text/html' in response['Content-Type'])
         ok_('dashboards/revisions.html' in
-            [template.name for template in response.template])
+            [template.name for template in response.templates])
 
     @attr('dashboards')
     def test_locale_filter(self):

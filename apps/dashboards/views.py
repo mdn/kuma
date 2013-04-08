@@ -189,24 +189,36 @@ def revisions(request):
         for rev in revisions:
             prev = rev.get_previous()
             from_rev = str(prev.id if prev else rev.id)
-            doc_url = reverse('wiki.document', args=[rev.document.full_path], locale=rev.document.locale)
-            articleUrl = '<a href="%s" target="_blank">%s</a>' % (doc_url, jinja2.escape(rev.document.slug))
-            articleLocale = '<span class="dash-locale">%s</span>' % rev.document.locale
-            articleComment = '<span class="dashboard-comment">%s</span>' % format_comment(rev)
+            doc_url = reverse('wiki.document', args=[rev.document.full_path],
+                              locale=rev.document.locale)
+            articleUrl = '<a href="%s" target="_blank">%s</a>' % (doc_url,
+                    jinja2.escape(rev.document.slug))
+            articleLocale = ('<span class="dash-locale">%s</span>'
+                             % rev.document.locale)
+            articleComment = ('<span class="dashboard-comment">%s</span>'
+                              % format_comment(rev))
             articleIsNew = ''
             if rev.based_on_id is None and not rev.document.is_redirect:
-                articleIsNew = '<span class="dashboard-new">New: </span>' 
-            richTitle = articleIsNew + articleUrl + articleLocale + articleComment
+                articleIsNew = '<span class="dashboard-new">New: </span>'
+            richTitle = (articleIsNew + articleUrl + articleLocale +
+                         articleComment)
 
             revision_json['aaData'].append({
                 'id': rev.id,
                 'prev_id': from_rev,
                 'doc_url': doc_url,
-                'edit_url': reverse('wiki.edit_document', args=[rev.document.full_path], locale=rev.document.locale),
-                'compare_url': reverse('wiki.compare_revisions', args=[rev.document.full_path]) + '?from=%s&to=%s&raw=1' % (from_rev, str(rev.id)),
-                'revert_url': reverse('wiki.revert_document', args=[rev.document.full_path, rev.id]),
-                'history_url': reverse('wiki.document_revisions', args=[rev.document.full_path], locale=rev.document.locale),
-                'creator': '<a href="" class="creator">%s</a>' % jinja2.escape(rev.creator.username),
+                'edit_url': reverse('wiki.edit_document',
+                    args=[rev.document.full_path], locale=rev.document.locale),
+                'compare_url': reverse('wiki.compare_revisions',
+                    args=[rev.document.full_path], locale=rev.document.locale)
+                    + '?from=%s&to=%s&raw=1' % (from_rev, str(rev.id)),
+                'revert_url': reverse('wiki.revert_document',
+                    args=[rev.document.full_path, rev.id],
+                    locale=rev.document.locale),
+                'history_url': reverse('wiki.document_revisions',
+                    args=[rev.document.full_path], locale=rev.document.locale),
+                'creator': ('<a href="" class="creator">%s</a>'
+                            % jinja2.escape(rev.creator.username)),
                 'title': rev.title,
                 'richTitle': richTitle,
                 'date': rev.created.strftime('%b %d, %y - %H:%M'),
