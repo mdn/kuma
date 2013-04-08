@@ -136,4 +136,16 @@ What’s next?
 
        ./manage.py createsuperuser
 
--  To allow creation and editing of documents, go to /admin/, go to the waffle section and add a flag called ``kumaediting``.  You may also want to add the ``page_move`` flag to allow page moves by slug.
+
+Important Waffle Flags
+------------
+
+Some site funcationaly require waffle flags.  Waffle flags include:
+
+-  ``kumaediting``:  Allows creation, editing, and translating of documents
+-  ``page_move``:  Allows moving of documents
+-  ``revision-dashboard-newusers``:  Allows searching of new users through the revision dashboard
+-  ``events_map``:  Allows display of map on the events page
+-  ``elasticsearch``:  Enables elastic search for site search
+
+To create or modify waffle flags, visit "/admin/" and click the "Waffle" link.
