@@ -46,7 +46,7 @@ from . import TestCaseBase, FakeResponse, make_test_file
 from authkeys.models import Key
 
 from wiki.models import (VersionMetadata, Document, Revision, Attachment,
-                         AttachmentRevision, DocumentAttachment)
+                         AttachmentRevision, DocumentAttachment, TOC_DEPTH_H4)
 from wiki.tests import (doc_rev, document, new_document_data, revision,
                         normalize_html, create_template_test_users)
 from wiki.views import _version_groups, DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL
@@ -931,6 +931,27 @@ class DocumentEditingTests(TestCaseBase):
         resp = client.post(reverse('wiki.new_document'), data)
         eq_(comment,
             Document.uncached.get(slug=slug, locale=loc).current_revision.comment)
+
+    @attr('toc')
+    def test_toc_initial(self):
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+
+        resp = client.get(reverse('wiki.new_document'))
+        eq_(200, resp.status_code)
+
+        page = pq(resp.content)
+        toc_select = page.find('#id_toc_depth')
+        toc_options = toc_select.find('option')
+        for option in toc_options:
+            opt_element = pq(option)
+            found_selected = False
+            if opt_element.attr('selected'):
+                found_selected = True
+                eq_(str(TOC_DEPTH_H4), opt_element.attr('value'))
+        if not found_selected:
+            raise AssertionError("No ToC depth initially selected.")
+
 
     @attr('retitle')
     def test_retitling_solo_doc(self):
