@@ -17,9 +17,10 @@ from sumo.form_fields import StrippedCharField
 import wiki.content
 from wiki.models import (Document, Revision, FirefoxVersion, OperatingSystem,
                          AttachmentRevision,
-                     FIREFOX_VERSIONS, OPERATING_SYSTEMS, SIGNIFICANCES,
-                     GROUPED_FIREFOX_VERSIONS, GROUPED_OPERATING_SYSTEMS,
-                     CATEGORIES, REVIEW_FLAG_TAGS, RESERVED_SLUGS, TOC_DEPTH_CHOICES)
+                         FIREFOX_VERSIONS, OPERATING_SYSTEMS, SIGNIFICANCES,
+                         GROUPED_FIREFOX_VERSIONS, GROUPED_OPERATING_SYSTEMS,
+                         CATEGORIES, REVIEW_FLAG_TAGS, RESERVED_SLUGS,
+                         TOC_DEPTH_CHOICES)
 
 
 TITLE_REQUIRED = _lazy(u'Please provide a title.')
@@ -222,12 +223,6 @@ class RevisionForm(forms.ModelForm):
         widget=CheckboxSelectMultiple, required=False,
         choices=REVIEW_FLAG_TAGS)
 
-    toc_depth = forms.TypedChoiceField(
-        coerce=int,
-        choices=TOC_DEPTH_CHOICES,
-        label=_("In table of contents, show only levels up to and including:"),
-        required=False)
-
     current_rev = forms.CharField(required=False,
                                   widget=forms.HiddenInput())
 
@@ -270,6 +265,9 @@ class RevisionForm(forms.ModelForm):
 
             self.initial['review_tags'] = [x.name
                 for x in self.instance.review_tags.all()]
+
+        if self.section_id:
+            self.fields['toc_depth'].required = False
 
     def _clean_collidable(self, name):
         value = self.cleaned_data[name]

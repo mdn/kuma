@@ -64,7 +64,7 @@ from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
                          FIREFOX_VERSIONS, GROUPED_FIREFOX_VERSIONS,
                          REVIEW_FLAG_TAGS_DEFAULT,
                          DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL,
-                         get_current_or_latest_revision)
+                         get_current_or_latest_revision, TOC_DEPTH_H4)
 from wiki.tasks import send_reviewed_notification
 from wiki.helpers import format_comment
 import wiki.content
@@ -821,7 +821,7 @@ def new_document(request):
         initial_data = {}
         initial_html = ''
         initial_tags = ''
-        initial_toc = True
+        initial_toc = TOC_DEPTH_H4
 
         if clone_id:
             try:

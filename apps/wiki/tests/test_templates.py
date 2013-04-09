@@ -25,7 +25,7 @@ from wiki.cron import calculate_related_documents
 from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,
                          ApproveRevisionInLocaleEvent)
 from wiki.models import (Document, Revision, HelpfulVote, SIGNIFICANCES,
-                         DocumentTag, Attachment)
+                         DocumentTag, Attachment, TOC_DEPTH_H4)
 from wiki.tasks import send_reviewed_notification
 from wiki.tests import (TestCaseBase, document, revision, new_document_data,
                         create_topical_parents_docs, make_test_file)
@@ -1645,4 +1645,5 @@ def _translation_data():
         'tags': 'tagUno,tagDos,tagTres',
         'keywords': 'keyUno, keyDos, keyTres',
         'summary': 'lipsumo',
-        'content': 'loremo ipsumo doloro sito ameto'}
+        'content': 'loremo ipsumo doloro sito ameto',
+        'toc_depth': TOC_DEPTH_H4}
