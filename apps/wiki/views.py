@@ -64,7 +64,8 @@ from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
                          FIREFOX_VERSIONS, GROUPED_FIREFOX_VERSIONS,
                          REVIEW_FLAG_TAGS_DEFAULT,
                          DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL,
-                         get_current_or_latest_revision, TOC_DEPTH_H4)
+                         get_current_or_latest_revision, TOC_DEPTH_H4,
+                         REDIRECT_CONTENT)
 from wiki.tasks import send_reviewed_notification
 from wiki.helpers import format_comment
 import wiki.content
@@ -1250,7 +1251,7 @@ def ckeditor_config(request):
         code = default_config[0].code
     else:
         code = ''
-    context = {'editor_config': code}
+    context = {'editor_config': code, 'redirect_pattern': REDIRECT_CONTENT}
     return jingo.render(request, 'wiki/ckeditor_config.js', context,
                        mimetype="application/x-javascript")
 
