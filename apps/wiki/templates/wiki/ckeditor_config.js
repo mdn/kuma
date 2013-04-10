@@ -35,7 +35,9 @@ CKEDITOR.on('instanceReady', function(ev) {
 });
 
 // Any utilities we need to be globably available will go here
-CKEDITOR.mdn = {};
+CKEDITOR.mdn = CKEDITOR.mdn || {
+    redirectPattern: '{{ redirect_pattern|safe }}'
+};
 
 (function() {
     // Brick dialog "changed" prompts
@@ -95,7 +97,7 @@ CKEDITOR.mdn = {};
 CKEDITOR.timestamp = '{{ BUILD_ID_JS }}';
 CKEDITOR.editorConfig = function(config) {
 
-    config.extraPlugins = 'autogrow,definitionlist,mdn-buttons,mdn-link,mdn-syntaxhighlighter,mdn-keystrokes,mdn-attachments,mdn-image,mdn-enterkey,mdn-wrapstyle,mdn-table,tablesort,mdn-sampler,mdn-sample-finder,mdn-maximize';
+    config.extraPlugins = 'autogrow,definitionlist,mdn-buttons,mdn-link,mdn-syntaxhighlighter,mdn-keystrokes,mdn-attachments,mdn-image,mdn-enterkey,mdn-wrapstyle,mdn-table,tablesort,mdn-sampler,mdn-sample-finder,mdn-maximize,mdn-redirect';
     config.removePlugins = 'link,image,tab,enterkey,table,maximize';
     config.entities = false;
     
@@ -105,7 +107,7 @@ CKEDITOR.editorConfig = function(config) {
         ['Maximize'],
         '/',
         ['h1Button', 'h2Button', 'h3Button', 'h4Button', 'h5Button', 'h6Button', 'Styles'],
-        ['preButton', 'mdn-syntaxhighlighter', 'mdn-sampler', 'mdn-sample-finder'],
+        ['preButton', 'mdn-syntaxhighlighter', 'mdn-sampler', 'mdn-sample-finder', 'mdn-redirect'],
         ['Link', 'Unlink', 'Anchor', '-', 'Bold', 'Italic', 'Underline', 'codeButton', 'Strike', 'Superscript', 'RemoveFormat', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight']
     ];
     
