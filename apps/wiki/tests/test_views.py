@@ -1550,6 +1550,39 @@ class DocumentEditingTests(TestCaseBase):
         eq_(302, response.status_code)
         self.assertRedirects(response, reverse('wiki.document', args=['length/' + child_data['slug']], locale='es'))
 
+    def test_translate_keeps_toc_depth(self):
+        client = self.client
+        client.login(username='admin', password='testpass')
+
+        locale = settings.WIKI_DEFAULT_LANGUAGE
+        original_slug = 'eng-doc'
+        foreign_locale = 'es'
+        foreign_slug = 'es-doc'
+
+        en_doc = document(title='Eng Doc', slug=original_slug, is_localizable=True, locale=locale)
+        en_doc.save()
+        r = revision(document=en_doc, toc_depth=1)
+        r.save()
+
+        post_data = new_document_data()
+        post_data['title'] = 'ES Doc'
+        post_data['slug'] = foreign_slug
+        post_data['content'] = 'This is the content'
+        post_data['is_localizable'] = True
+        post_data['form'] = 'both'
+        post_data['toc_depth'] = r.toc_depth
+        translate_url = reverse('wiki.document', args=[original_slug], locale=settings.WIKI_DEFAULT_LANGUAGE) + '$translate?tolocale=' + foreign_locale
+        response = client.post(translate_url, post_data)
+        self.assertRedirects(response, reverse('wiki.document', args=[foreign_slug], locale=foreign_locale))
+
+        es_d = Document.objects.get(locale=foreign_locale, slug=foreign_slug)
+        eq_(r.toc_depth, es_d.current_revision.toc_depth)
+
+        # Go to edit the translation, ensure the the slug is correct
+        response = client.get(reverse('wiki.edit_document', args=[foreign_slug], locale=foreign_locale))
+        page = pq(response.content)
+        eq_(page.find('input[name=slug]')[0].value, foreign_slug)
+
     def test_slug_translate(self):
         """Editing a translated doc keeps the correct slug"""
         client = self.client
