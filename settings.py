@@ -1105,31 +1105,48 @@ SYSLOG_TAG = 'http_app_kuma'
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    'formatters': {
-        'mdn_default': {
-            'format': ('%s: %%(asctime)s %%(name)s:%%(levelname)s %%(message)s '
-                       ':%%(pathname)s:%%(lineno)s' % SYSLOG_TAG),
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+        'require_debug_true': {
+            # use from devmo.helpers until we upgrade to django 1.5
+            '()': 'devmo.future.filters.RequireDebugTrue',
         },
     },
+    'formatters': {
+        'default': {
+            'format': '{0}: %(asctime)s %(name)s:%(levelname)s %(message)s: '
+                      '%(pathname)s:%(lineno)s'.format(SYSLOG_TAG),
+        }
+    },
     'handlers': {
-        'mdn_debug': {
+        'console': {
             'class': 'logging.StreamHandler',
-            'formatter': 'mdn_default',
+            'filters': ['require_debug_true'],
             'level': LOG_LEVEL,
         },
-        'mdn_prod': {
+        'mail_admins': {
             'class': 'django.utils.log.AdminEmailHandler',
-            'formatter': 'mdn_default',
+            'filters': ['require_debug_false'],
             'level': logging.ERROR,
         },
     },
     'loggers': {
         'mdn': {
-            'handlers': ['mdn_prod' if not DEBUG else 'mdn_debug'],
-            'level': LOG_LEVEL,
-            'propagate': False,
+            'handlers': ['console'],
+            'propogate': True,
+            # Use the most permissive setting. It is filtered in the handlers.
+            'level': logging.DEBUG,
+        },
+        'django.request': {
+            'handlers': ['console', 'mail_admins'],
+            'propogate': True,
+            # Use the most permissive setting. It is filtered in the handlers.
+            'level': logging.DEBUG,
         },
     },
 }
+
 
 CSRF_COOKIE_SECURE = True
