@@ -220,7 +220,7 @@ class DocumentTests(TestCaseBase):
         assert 'Add translation' not in doc('#tool-menus .menu li').text()
 
     @attr('toc')
-    def test_show_toc(self):
+    def test_toc_depth(self):
         """Toggling show_toc on/off through the toc_depth field should
         cause table of contents to appear/disappear."""
         doc_content = """
