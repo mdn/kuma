@@ -438,6 +438,7 @@ INSTALLED_APPS = (
     'soapbox',
     'django_statsd',
     'authkeys',
+    'tidings',
 
     # SUMO
     'users',
@@ -448,7 +449,6 @@ INSTALLED_APPS = (
     # TODO: Reenable search when we switch to kuma wiki - or, at least waffle it.
     'search',
     'djcelery',
-    'notifications',
     'taggit',
     'wiki',
     'dashboards',
@@ -478,7 +478,8 @@ def JINJA_CONFIG():
     from django.core.cache.backends.memcached import CacheClass as MemcachedCacheClass
     from caching.base import cache
     config = {'extensions': ['tower.template.i18n', 'caching.ext.cache',
-                             'jinja2.ext.with_', 'jinja2.ext.loopcontrols'],
+                             'jinja2.ext.with_', 'jinja2.ext.loopcontrols',
+                             'jinja2.ext.autoescape'],
               'finalize': lambda x: x if x is not None else ''}
     if isinstance(cache, MemcachedCacheClass) and not settings.DEBUG:
         # We're passing the _cache object directly to jinja because
@@ -876,9 +877,8 @@ TWITTER_CONSUMER_KEY = ''
 TWITTER_CONSUMER_SECRET = ''
 
 
-NOTIFICATIONS_FROM_ADDRESS = 'notifications@support.mozilla.com'
-# Anonymous watches must be confirmed.
-CONFIRM_ANONYMOUS_WATCHES = True
+TIDINGS_FROM_ADDRESS = 'notifications@support.mozilla.com'
+TIDINGS_CONFIRM_ANONYMOUS_WATCHES = True
 
 
 # URL of the chat server.

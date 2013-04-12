@@ -44,7 +44,7 @@ def send_reviewed_notification(revision, document, message):
                                 'message': message,
                                 'url': url,
                                 'host': Site.objects.get_current().domain}))
-    send_mail(subject, content, settings.NOTIFICATIONS_FROM_ADDRESS,
+    send_mail(subject, content, settings.TIDINGS_FROM_ADDRESS,
               [revision.creator.email])
 
 

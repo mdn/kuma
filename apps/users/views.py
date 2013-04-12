@@ -25,7 +25,7 @@ from django_browserid import auth as browserid_auth
 import jingo
 
 from access.decorators import logout_required, login_required
-from notifications.tasks import claim_watches
+from tidings.tasks import claim_watches
 from sumo.decorators import ssl_required
 from sumo.urlresolvers import reverse, split_path
 from upload.tasks import _create_image_thumbnail
