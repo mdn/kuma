@@ -12,6 +12,7 @@ from django.contrib.sites.models import Site
 from django.http import HttpResponseRedirect, Http404
 from django.views.decorators.http import (require_http_methods, require_GET,
                                           require_POST)
+from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.decorators.csrf import csrf_exempt
 
 from django.shortcuts import get_object_or_404
@@ -230,6 +231,7 @@ def browserid_register(request):
 
 
 @ssl_required
+@xframe_options_sameorigin
 def login(request):
     """Try to log the user in."""
     next_url = _clean_next_url(request)
@@ -246,10 +248,8 @@ def login(request):
             form.cleaned_data.get('username'),
             form.cleaned_data.get('password'))
 
-    response = jingo.render(request, 'users/login.html',
+    return jingo.render(request, 'users/login.html',
                             {'form': form, 'next_url': next_url})
-    response['x-frame-options'] = 'SAMEORIGIN'
-    return response
 
 
 @ssl_required

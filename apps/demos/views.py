@@ -15,6 +15,7 @@ from django.contrib.contenttypes.models import ContentType
 
 from django.utils.translation import ugettext_lazy as _
 
+from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.generic.list_detail import object_list
 
 from devmo.models import UserProfile
@@ -181,18 +182,16 @@ def unlike(request, slug):
         submission.likes.decrement(request)
     return _like_feedback(request, submission, 'unliked')
 
-
+@xframe_options_sameorigin
 def _like_feedback(request, submission, event):
     if request.GET.get('iframe', False):
-        response = jingo.render(request, 'demos/iframe_utils.html', dict(
+        return jingo.render(request, 'demos/iframe_utils.html', dict(
             submission=submission, event=event
         ))
-        response['x-frame-options'] = 'SAMEORIGIN'
-        return response
     return HttpResponseRedirect(reverse(
         'demos.views.detail', args=(submission.slug,)))
 
-
+@xframe_options_sameorigin
 def flag(request, slug):
     submission = get_object_or_404(Submission, slug=slug)
 
@@ -216,11 +215,8 @@ def flag(request, slug):
             return HttpResponseRedirect(reverse(
                 'demos.views.detail', args=(submission.slug,)))
 
-    #TODO liberate?
-    response = jingo.render(request, 'demos/flag.html', {
+    return jingo.render(request, 'demos/flag.html', {
         'form': form, 'submission': submission})
-    response['x-frame-options'] = 'SAMEORIGIN'
-    return response
 
 
 def download(request, slug):
@@ -297,6 +293,7 @@ def edit(request, slug):
         'form': form, 'submission': submission, 'edit': True})
 
 
+@xframe_options_sameorigin
 def delete(request, slug):
     """Delete a submission"""
     submission = get_object_or_404(Submission, slug=slug)
@@ -308,10 +305,8 @@ def delete(request, slug):
         _invalidate_submission_listing_helper_cache()
         return HttpResponseRedirect(reverse('demos.views.home'))
 
-    response = jingo.render(request, 'demos/delete.html', {
+    return jingo.render(request, 'demos/delete.html', {
         'submission': submission})
-    response['x-frame-options'] = 'SAMEORIGIN'
-    return response
 
 
 @login_required
@@ -340,6 +335,7 @@ def new_comment(request, slug, parent_id=None):
         'demos.views.detail', args=(submission.slug,)))
 
 
+@xframe_options_sameorigin
 def delete_comment(request, slug, object_id):
     """Delete a comment on a submission, if permitted."""
     tc = get_object_or_404(ThreadedComment, id=int(object_id))
@@ -350,11 +346,9 @@ def delete_comment(request, slug, object_id):
         tc.delete()
         return HttpResponseRedirect(reverse(
             'demos.views.detail', args=(submission.slug,)))
-    response = jingo.render(request, 'demos/delete_comment.html', {
+    return jingo.render(request, 'demos/delete_comment.html', {
         'comment': tc
     })
-    response['x-frame-options'] = 'SAMEORIGIN'
-    return response
 
 
 def hideshow(request, slug, hide=True):

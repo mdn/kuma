@@ -354,7 +354,7 @@ MIDDLEWARE_CLASSES = (
     'sumo.middleware.RemoveSlashMiddleware',
     'inproduct.middleware.EuBuildMiddleware',
     'commonware.middleware.NoVarySessionMiddleware',
-    'commonware.middleware.FrameOptionsHeader',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -1150,3 +1150,4 @@ LOGGING = {
 
 
 CSRF_COOKIE_SECURE = True
+X_FRAME_OPTIONS = 'DENY'
