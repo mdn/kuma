@@ -30,6 +30,8 @@ from django.http.multipartparser import MultiPartParser
 from django.shortcuts import get_object_or_404, render_to_response, redirect
 from django.views.decorators.http import (require_GET, require_POST,
                                           require_http_methods, condition)
+from django.views.decorators.clickjacking import xframe_options_exempt
+from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.decorators.csrf import csrf_exempt
 
 import constance.config
@@ -523,7 +525,7 @@ def document(request, document_slug, document_locale):
     # iframe inclusion
     if show_raw:
         response = HttpResponse(doc_html)
-        response['x-frame-options'] = 'Allow'
+        response['X-Frame-Options'] = 'Allow'
         response['X-Robots-Tag'] = 'noindex'
         absolute_url = doc.get_absolute_url()
         if (constance.config.KUMA_CUSTOM_CSS_PATH == absolute_url or
@@ -1015,7 +1017,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                                   data-status="OK"
                                   data-current-revision="%s">OK</span>
                         """ % doc.current_revision.id)
-                        response['x-frame-options'] = 'SAMEORIGIN'
+                        response['X-Frame-Options'] = 'SAMEORIGIN'
                         return response
 
                     return HttpResponseRedirect(
@@ -1067,7 +1069,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                                   data-status="OK"
                                   data-current-revision="%s">OK</span>
                         """ % doc.current_revision.id)
-                        response['x-frame-options'] = 'SAMEORIGIN'
+                        response['X-Frame-Options'] = 'SAMEORIGIN'
                         return response
 
                     if (is_raw and orig_rev is not None and
@@ -1077,8 +1079,8 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                         # current revision at start of editing, we should tell
                         # the client to refresh the page.
                         response = HttpResponse('RESET')
+                        response['X-Frame-Options'] = 'SAMEORIGIN'
                         response.status_code = 205
-                        response['x-frame-options'] = 'SAMEORIGIN'
                         return response
 
                     if rev_form.instance.is_approved:
@@ -1141,6 +1143,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                          'attachment_data_json': json.dumps(attachments)})
 
 
+@xframe_options_sameorigin
 def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
                              is_raw, rev_form, doc_form, section_id, rev, doc):
     """Handle when a mid-air collision is detected upon submission"""
@@ -1169,25 +1172,21 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
         # resolution UI.
         response = HttpResponse('CONFLICT')
         response.status_code = 409
-        response['x-frame-options'] = 'SAMEORIGIN'
         return response
 
     # Make this response iframe-friendly so we can hack around the
     # save-and-edit iframe button
-    response = jingo.render(request, 'wiki/edit_document.html',
-                            {'collision': True,
-                             'revision_form': rev_form,
-                             'document_form': doc_form,
-                             'content': content,
-                             'current_content': curr_content,
-                             'section_id': section_id,
-                             'original_revision': orig_rev,
-                             'current_revision': curr_rev,
-                             'revision': rev,
-                             'document': doc})
-
-    response['x-frame-options'] = 'SAMEORIGIN'
-    return response
+    return jingo.render(request, 'wiki/edit_document.html',
+                        {'collision': True,
+                         'revision_form': rev_form,
+                         'document_form': doc_form,
+                         'content': content,
+                         'current_content': curr_content,
+                         'section_id': section_id,
+                         'original_revision': orig_rev,
+                         'current_revision': curr_rev,
+                         'revision': rev,
+                         'document': doc})
 
 
 @require_http_methods(['GET', 'POST'])
@@ -1437,6 +1436,7 @@ def review_revision(request, document_slug, document_locale, revision_id):
 
 
 @require_GET
+@xframe_options_sameorigin
 @process_document_path
 @prevent_indexing
 def compare_revisions(request, document_slug, document_locale):
@@ -1470,7 +1470,6 @@ def compare_revisions(request, document_slug, document_locale):
     else:
         response = jingo.render(request, 'wiki/compare_revisions.html',
                                 context)
-    response['x-frame-options'] = 'SAMEORIGIN'
     return response
 
 
@@ -1789,6 +1788,7 @@ def toc_view(request, document_slug=None, document_locale=None):
 
 @require_GET
 @allow_CORS_GET
+@xframe_options_exempt
 @process_document_path
 def code_sample(request, document_slug, document_locale, sample_id):
     """Extract a code sample from a document and render it as a standalone
@@ -1804,8 +1804,7 @@ def code_sample(request, document_slug, document_locale, sample_id):
                                  locale=document_locale)
     data = document.extract_code_sample(sample_id)
     data['document'] = document
-    response = jingo.render(request, 'wiki/code_sample.html', data)
-    response['x-frame-options'] = 'ALLOW'
+    return jingo.render(request, 'wiki/code_sample.html', data)
     return response
 
 
@@ -2093,7 +2092,7 @@ def raw_file(request, attachment_id, filename):
         resp = HttpResponse(rev.file.read(), mimetype=rev.mime_type)
         resp["Last-Modified"] = rev.created
         resp["Content-Length"] = rev.file.size
-        resp['x-frame-options'] = 'ALLOW-FROM: %s' % settings.DOMAIN
+        resp['X-Frame-Options'] = 'ALLOW-FROM: %s' % settings.DOMAIN
         return resp
     else:
         return HttpResponsePermanentRedirect(attachment.get_file_url())
@@ -2126,6 +2125,7 @@ def attachment_history(request, attachment_id):
 
 
 @require_POST
+@xframe_options_sameorigin
 @login_required
 def new_attachment(request):
     """Create a new Attachment object and populate its initial
@@ -2176,8 +2176,6 @@ def new_attachment(request):
         else:
             response = jingo.render(request, 'wiki/edit_attachment.html',
                                     {'form': form})
-
-    response['x-frame-options'] = 'SAMEORIGIN'
     return response
 
 
