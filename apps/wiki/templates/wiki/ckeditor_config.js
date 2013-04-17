@@ -110,6 +110,11 @@ CKEDITOR.editorConfig = function(config) {
         ['preButton', 'mdn-syntaxhighlighter', 'mdn-sampler', 'mdn-sample-finder', 'mdn-redirect'],
         ['Link', 'Unlink', 'Anchor', '-', 'Bold', 'Italic', 'Underline', 'codeButton', 'Strike', 'Superscript', 'RemoveFormat', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight']
     ];
+
+    {% if waffle.flag('youtube_wysiwyg') %}
+        config.extraPlugins += ',youtube';
+        config.toolbar_MDN[5].push('youtube');
+    {% endif %}
     
     config.skin = 'kuma';
     config.startupFocus = true;
