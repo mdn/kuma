@@ -151,18 +151,20 @@
 <script type="text/javascript" src="{{MEDIA_URL}}js/mdn/jquery.hoverIntent.minified.js"></script>
 <script type="text/javascript">
 // <![CDATA[
-	$(".gallery").ready(function(){
-		$(".gallery").addClass("js");
+	$(document).ready(function(){
+    var $gallery = $(".gallery"),
+        duration = 200;
+		$gallery.addClass("js");
 
-    $(".gallery .demo").hoverIntent({
+    $gallery.find(".demo").hoverIntent({
       interval: 250,
       over: function() {
-        var content = $(this).html(),
-            demo = $(this), 
-            offs = $(this).offset();
-        $("#content").prepend('<div class="demo demohover"><div class="in">'+content+'<\/div><\/div>');
-        $("div.demohover").css({ left: offs.left, top: offs.top }).fadeIn(200).mouseleave(function() {
-          $(this).fadeOut(200, function(){ 
+        var $demo = $(this),
+            content = $demo.html(),
+            offs = $demo.offset();
+        $("#content").prepend('<div class="demo demohover"><div class="in">' + content + '<\/div><\/div>');
+        $("div.demohover").css({ left: offs.left, top: offs.top }).fadeIn(duration).mouseleave(function() {
+          $(this).fadeOut(duration, function(){ 
             $(this).remove(); 
           });
         });
