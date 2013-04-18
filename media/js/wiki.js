@@ -44,12 +44,7 @@
             initApproveReject();
         }
         if ($body.is('.document')){
-            initSyntaxHighlighter();
             initTabBox();
-        }
-
-        if ($body.is('.revert-document')) {
-            initSyntaxHighlighter();
         }
 
         if ($body.is('.home')) {
@@ -620,17 +615,6 @@
                    .prepopulate($(field.dependency_ids.join(',')),
                                 field.maxLength);
         });
-    }
-
-    function initSyntaxHighlighter() {
-        $('pre').each(function() {
-            var $this = $(this),
-                newText = $this.text().replace(/<span class="nowiki">(.*)<\/span>/g, '$1');
-            $this.text(newText);
-        });
-        SyntaxHighlighter.defaults.toolbar = false;
-        SyntaxHighlighter.defaults['auto-links'] = false;
-        SyntaxHighlighter.all();
     }
 
     // Return a table of contents (an <ol>) listing the visible headers within
