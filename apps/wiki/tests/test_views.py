@@ -1864,6 +1864,57 @@ class DocumentEditingTests(TestCaseBase):
                                       args=('atom', 'editorial', )))
         ok_('<entry><title>%s</title>' % doc.title in response.content)
 
+    @attr('review-tags')
+    def test_quick_review(self):
+        """Test the quick-review button."""
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+
+        test_data = [
+           {'params': {'approve_technical': 1},
+            'expected_tags': ['editorial'],
+            'name': 'technical',
+            'message_contains': ['Technical review completed.']
+            },
+           {'params': {'approve_editorial': 1},
+            'expected_tags': ['technical'],
+            'name': 'editorial',
+            'message_contains': ['Editorial review completed.']
+            },
+            {'params': {'approve_technical': 1,
+                        'approve_editorial': 1},
+             'expected_tags': [],
+             'name': 'editorial-technical',
+             'message_contains': ['Technical review completed.',
+                                  'Editorial review completed.']
+             }
+            ]
+
+        for data_dict in test_data:
+            slug = 'test-quick-review-%s' % data_dict['name']
+            data = new_document_data()
+            data.update({'review_tags': ['editorial', 'technical'],
+                         'slug': slug})
+            resp = client.post(reverse('wiki.new_document'), data)
+            
+            doc = Document.objects.get(slug=slug)
+            rev = doc.revisions.order_by('-id').all()[0]
+            review_url = reverse('wiki.quick_review',
+                                 args=[doc.full_path])
+
+            params = dict(data_dict['params'], revision_id=rev.id)
+            resp = client.post(urlparams(review_url, **params))
+            
+            eq_(302, resp.status_code)
+
+            doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE, slug=slug)
+            rev = doc.revisions.order_by('-id').all()[0]
+            review_tags = [x.name for x in rev.review_tags.all()]
+            review_tags.sort()
+            for expected_str in data_dict['message_contains']:
+                ok_(expected_str in rev.summary)
+            eq_(data_dict['expected_tags'], review_tags)
+
     @attr('midair')
     def test_edit_midair_collision(self):
         client = LocalizingClient()
