@@ -552,6 +552,7 @@ td.diff_header {
 
 /* Prism syntax highlighting */
 pre[class*="language-"] { line-height: 1.5em; margin-bottom: 20px !important; }
+pre[class*="language-"] span.comment { display: inline-block; }
 .error pre[class*="language-"] { margin: 10px 0 0 0 !important; background: none; }
 pre[class*="language-"].twopartsyntaxbox { margin-bottom: 0 !important; }
 pre[class*="language-"].twopartsyntaxbox, pre[class*="language-"].syntaxbox {
