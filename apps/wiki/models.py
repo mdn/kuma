@@ -1033,6 +1033,10 @@ class Document(NotificationsMixin, ModelBase):
         if title_changed:
             del self.old_title
 
+    def delete(self, *args, **kwargs):
+        # Temporary while we investigate disappearing pages.
+        raise Exception("Attempt to delete document %s: %s" % (self.id, self.title))
+
     def move(self, new_slug=None, user=None):
         """
         Complete the process of moving a page by leaving a redirect
