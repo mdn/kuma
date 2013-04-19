@@ -5,7 +5,7 @@
   <link rel="stylesheet" href="{{ MEDIA_URL }}prism/plugins/line-highlight/prism-line-highlight.css" type="text/css" />
   <link rel="stylesheet" href="{{ MEDIA_URL }}prism/plugins/ie8/prism-ie8.css" type="text/css" />
 
-  <script type="text/javascript" src="{{ MEDIA_URL }}prism/prism.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}prism/prism.js" data-manual></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}prism/plugins/ie8/prism-ie8.js"></script>
   <script type="text/javascript">
   (function($) {
@@ -36,8 +36,8 @@
             semiSplit = klass.split(';'),
             klassParts = semiSplit[0].split(':');
 
-        // Default to HTML styling for all PRE's (and unsupported languages)
-        $pre.attr('class', 'language-' + defaultBrush);
+        // Style all as HTML initially
+        $pre.addClass('language-' + defaultBrush);
         
         // Format PRE content for Prism highlighting
         if(klassParts[0] == 'brush') {
@@ -54,6 +54,9 @@
             }
         }
     });
+
+    // Highlight elements now that they've been treated
+    Prism.highlightAll();
 
     // Patch for IE8 so that Prism works
     function patchIE8ForPrism() {
