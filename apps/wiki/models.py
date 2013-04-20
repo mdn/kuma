@@ -954,6 +954,11 @@ class Document(NotificationsMixin, ModelBase):
             setattr(new_rev, n, getattr(self, n))
         if curr_rev:
             new_rev.toc_depth = curr_rev.toc_depth
+            original_doc = curr_rev.document.original
+            if original_doc == self:
+                new_rev.based_on = curr_rev
+            else:
+                new_rev.based_on = original_doc.current_revision
 
         # Accept optional field edits...
 
