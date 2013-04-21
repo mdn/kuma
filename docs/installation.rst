@@ -36,6 +36,8 @@ following things (in addition to Git, of course).
 
 * ``libmagic`` and headers.
 
+* ``libtidy`` and headers
+
 * Several Python packages. See `Installing the Packages`_.
 
 Installation for these is very system dependent. Using a package manager, like
