@@ -174,6 +174,15 @@ development instance::
 The ``SESSION_EXPIRE_AT_BROWSER_CLOSE`` setting is not strictly necessary, but
 it's convenient for development.
 
+Secure Cookies
+--------------
+
+To prevent error messages like ``Forbidden (CSRF cookie not set.):``, you need to
+set your ``settings_local.py`` with the following::
+
+    CSRF_COOKIE_SECURE = False
+
+
 Testing it Out
 ==============
 
