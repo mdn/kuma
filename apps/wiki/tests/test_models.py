@@ -16,6 +16,8 @@ from django.contrib.contenttypes.models import ContentType
 
 import constance.config
 
+from waffle.models import Flag, Switch
+
 from sumo import ProgrammingError
 from sumo.tests import TestCase
 
@@ -134,6 +136,26 @@ class DocumentTests(TestCase):
         d.save()
 
         assert not d.is_template
+
+    def test_error_on_delete(self):
+        """Ensure error-on-delete is only thrown when waffle switch active"""
+        switch = Switch.objects.create(name='wiki_error_on_delete')
+
+        for active in (True, False):
+            
+            switch.active = active
+            switch.save()
+
+            d = document()
+            d.save()
+
+            try:
+                d.delete()
+                if active:
+                    ok_(False, 'Exception on delete when active')
+            except Exception, e:
+                if not active:
+                    ok_(False, 'No exception on delete when not active')
 
     def test_delete_tagged_document(self):
         """Make sure deleting a tagged doc deletes its tag relationships."""
