@@ -221,10 +221,6 @@ class ContentSectionTool(object):
         self.stream = SectionIDFilter(self.stream)
         return self
 
-    def injectSectionEditingLinks(self, full_path, locale):
-        self.stream = SectionEditLinkFilter(self.stream, full_path, locale)
-        return self
-
     def annotateLinks(self, base_url):
         self.stream = LinkAnnotationFilter(self.stream, base_url)
         return self
@@ -483,54 +479,6 @@ class SectionIDFilter(html5lib_Filter):
                 yield start
                 for t in tmp:
                     yield t
-
-
-class SectionEditLinkFilter(html5lib_Filter):
-    """Filter which injects editing links for sections with IDs"""
-
-    def __init__(self, source, full_path, locale):
-        html5lib_Filter.__init__(self, source)
-        self.full_path = full_path
-        self.locale = locale
-
-    def __iter__(self):
-        input = html5lib_Filter.__iter__(self)
-
-        for token in input:
-
-            yield token
-
-            if ('StartTag' == token['type'] and
-                    token['name'] in SECTION_TAGS):
-                attrs = dict(token['data'])
-                id = attrs.get('id', None)
-                if id:
-                    out = (
-                        {'type': 'StartTag', 'name': 'a',
-                         'data': {
-                             'title': _('Edit section'),
-                             'class': 'edit-section',
-                             'data-section-id': id,
-                             'data-section-src-url': u'%s?%s' % (
-                                 reverse('wiki.document',
-                                         args=[self.full_path],
-                                         locale=self.locale),
-                                 urlencode({'section': id.encode('utf-8'),
-                                            'raw': 'true'})
-                              ),
-                              'href': u'%s?%s' % (
-                                 reverse('wiki.edit_document',
-                                         args=[self.full_path],
-                                         locale=self.locale),
-                                 urlencode({'section': id.encode('utf-8'),
-                                            'edit_links': 'true'})
-                              )
-                         }},
-                        {'type': 'Characters', 'data': _('Edit')},
-                        {'type': 'EndTag', 'name': 'a'}
-                    )
-                    for t in out:
-                        yield t
 
 
 class SectionTOCFilter(html5lib_Filter):

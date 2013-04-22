@@ -329,6 +329,7 @@
          conflict is detected. It needs to be server side in order to get supplied
          with a CSRF token. #}
       <form class="conflict-bouncer template" method="POST" action="">
+        {{ csrf() }}
         <input type="hidden" name="form" value="rev">
         <input type="hidden" name="current_rev" value="">
         <input type="hidden" name="content" value="">
