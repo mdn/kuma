@@ -39,6 +39,8 @@ from taggit.models import ItemBase, TagBase
 from taggit.managers import TaggableManager
 from taggit.utils import parse_tags, edit_string_for_tags
 
+import waffle
+
 from wiki import TEMPLATE_TITLE_PREFIX
 import wiki.content
 
@@ -1034,8 +1036,11 @@ class Document(NotificationsMixin, ModelBase):
             del self.old_title
 
     def delete(self, *args, **kwargs):
-        # Temporary while we investigate disappearing pages.
-        raise Exception("Attempt to delete document %s: %s" % (self.id, self.title))
+        if waffle.switch_is_active('wiki_error_on_delete'):
+            # bug 863692: Temporary while we investigate disappearing pages.
+            raise Exception("Attempt to delete document %s: %s" % (self.id, self.title))
+        else:
+            super(Document, self).delete(*args, **kwargs)
 
     def move(self, new_slug=None, user=None):
         """
