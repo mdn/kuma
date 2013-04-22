@@ -111,10 +111,6 @@ def monitor(request):
         (settings.USER_AVATAR_PATH, os.R_OK | os.W_OK, msg),
         (settings.IMAGE_UPLOAD_PATH, os.R_OK | os.W_OK, msg),
         (settings.THUMBNAIL_UPLOAD_PATH, os.R_OK | os.W_OK, msg),
-        (settings.GALLERY_IMAGE_PATH, os.R_OK | os.W_OK, msg),
-        (settings.GALLERY_IMAGE_THUMBNAIL_PATH, os.R_OK | os.W_OK, msg),
-        (settings.GALLERY_VIDEO_PATH, os.R_OK | os.W_OK, msg),
-        (settings.GALLERY_VIDEO_THUMBNAIL_PATH, os.R_OK | os.W_OK, msg),
     )
 
     filepath_results = []

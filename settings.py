@@ -453,7 +453,6 @@ INSTALLED_APPS = (
     'wiki',
     'dashboards',
     'kpi',
-    'gallery',
 
     # migrations
     'south',
@@ -508,7 +507,6 @@ DOMAIN_METHODS = {
         ('apps/dashboards/**', 'ignore'),
         ('apps/flagit/**', 'ignore'),
         ('apps/forums/**', 'ignore'),
-        ('apps/gallery/**', 'ignore'),
         ('apps/inproduct/**', 'ignore'),
         ('apps/kadmin/**', 'ignore'),
         ('apps/kbforums/**', 'ignore'),
@@ -601,10 +599,6 @@ MINIFY_BUNDLES = {
         'home': (
             'css/home.css',
         ),
-        'gallery': (
-            'css/to-delete.css',
-            'css/gallery.css',
-        ),
         'ie': (
             'css/ie.css',
         ),
@@ -670,9 +664,6 @@ MINIFY_BUNDLES = {
         ),
         'search': (
             'js/search.js',
-        ),
-        'gallery': (
-            'js/libs/jquery.ajaxupload.js',
         ),
         'wiki': (
             'js/libs/django/prepopulate.js',
@@ -846,18 +837,6 @@ TOP_CONTRIBUTORS_CACHE_TIMEOUT = 60 * 60 * 12
 
 # Do not change this without also deleting all wiki documents:
 WIKI_DEFAULT_LANGUAGE = LANGUAGE_CODE
-
-# Gallery settings
-GALLERY_DEFAULT_LANGUAGE = WIKI_DEFAULT_LANGUAGE
-GALLERY_IMAGE_PATH = 'uploads/gallery/images/'
-GALLERY_IMAGE_THUMBNAIL_PATH = 'uploads/gallery/images/thumbnails/'
-GALLERY_VIDEO_PATH = 'uploads/gallery/videos/'
-GALLERY_VIDEO_URL = None
-GALLERY_VIDEO_THUMBNAIL_PATH = 'uploads/gallery/videos/thumbnails/'
-GALLERY_VIDEO_THUMBNAIL_PROGRESS_URL = MEDIA_URL + 'img/video-thumb.png'
-THUMBNAIL_PROGRESS_WIDTH = 32  # width of the above image
-THUMBNAIL_PROGRESS_HEIGHT = 32  # height of the above image
-VIDEO_MAX_FILESIZE = 16777216  # 16 megabytes, in bytes
 
 # Customer Care settings
 CC_MAX_TWEETS = 500   # Max. no. of tweets in DB

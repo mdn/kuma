@@ -4,7 +4,6 @@ import jingo
 from tower import ugettext_lazy as _lazy
 from wikimarkup.parser import Parser
 
-from gallery.models import Image
 from sumo.urlresolvers import reverse
 from wiki.models import Document
 
