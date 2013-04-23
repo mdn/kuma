@@ -508,7 +508,6 @@ DOMAIN_METHODS = {
         ('apps/search/**', 'ignore'),
         ('apps/sumo/**', 'ignore'),
         ('apps/tags/**', 'ignore'),
-        ('apps/twitter/**', 'ignore'),
         ('apps/upload/**', 'ignore'),
         ('apps/**.py',
             'tower.management.commands.extract.extract_tower_python'),
@@ -819,9 +818,6 @@ TOP_CONTRIBUTORS_CACHE_TIMEOUT = 60 * 60 * 12
 
 # Do not change this without also deleting all wiki documents:
 WIKI_DEFAULT_LANGUAGE = LANGUAGE_CODE
-
-TWITTER_CONSUMER_KEY = ''
-TWITTER_CONSUMER_SECRET = ''
 
 
 NOTIFICATIONS_FROM_ADDRESS = 'notifications@support.mozilla.com'
