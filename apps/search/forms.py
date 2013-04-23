@@ -6,7 +6,6 @@ from django.forms.util import ValidationError
 
 from tower import ugettext_lazy as _lazy
 
-from forums.models import Forum as DiscussionForum
 import search as constants
 from sumo.form_fields import TypedMultipleChoiceField
 from sumo_locales import LOCALES
@@ -116,11 +115,6 @@ class SearchForm(forms.Form):
         required=False, coerce=int, widget=forms.CheckboxSelectMultiple,
         label=_lazy('Thread type'), choices=constants.DISCUSSION_STATUS_LIST,
         coerce_only=True)
-
-    forums = [(f.id, f.name) for f in DiscussionForum.objects.all()]
-    forum = TypedMultipleChoiceField(
-        required=False, coerce=int,
-        label=_lazy('Search in forum'), choices=forums, coerce_only=True)
 
     # Support questions fields
     asked_by = forms.CharField(required=False, widget=user_widget)

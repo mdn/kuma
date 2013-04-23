@@ -1,37 +1,10 @@
 from django.conf.urls.defaults import patterns, url, include
 
-from kbforums.feeds import ThreadsFeed, PostsFeed
 from sumo.views import redirect_to
 from wiki.feeds import (DocumentsRecentFeed, DocumentsReviewFeed, RevisionsFeed,
                         AttachmentsFeed,
                         DocumentsUpdatedTranslationParentFeed,)
 
-
-# These patterns inherit from /discuss
-discuss_patterns = patterns('kbforums.views',
-    url(r'^$', 'threads', name='wiki.discuss.threads'),
-    url(r'^/feed', ThreadsFeed(), name='wiki.discuss.threads.feed'),
-    url(r'^/new', 'new_thread', name='wiki.discuss.new_thread'),
-    url(r'^/watch', 'watch_forum', name='wiki.discuss.watch_forum'),
-    url(r'^/(?P<thread_id>\d+)$', 'posts', name='wiki.discuss.posts'),
-    url(r'^/(?P<thread_id>\d+)/feed$', PostsFeed(),
-        name='wiki.discuss.posts.feed'),
-    url(r'^/(?P<thread_id>\d+)/watch$', 'watch_thread',
-        name='wiki.discuss.watch_thread'),
-    url(r'^/(?P<thread_id>\d+)/reply$', 'reply', name='wiki.discuss.reply'),
-    url(r'^/(?P<thread_id>\d+)/sticky$', 'sticky_thread',
-        name='wiki.discuss.sticky_thread'),
-    url(r'^/(?P<thread_id>\d+)/lock$', 'lock_thread',
-        name='wiki.discuss.lock_thread'),
-    url(r'^/(?P<thread_id>\d+)/edit$', 'edit_thread',
-        name='wiki.discuss.edit_thread'),
-    url(r'^/(?P<thread_id>\d+)/delete$', 'delete_thread',
-        name='wiki.discuss.delete_thread'),
-    url(r'^/(?P<thread_id>\d+)/(?P<post_id>\d+)/edit', 'edit_post',
-        name='wiki.discuss.edit_post'),
-    url(r'^/(?P<thread_id>\d+)/(?P<post_id>\d+)/delete', 'delete_post',
-        name='wiki.discuss.delete_post'),
-)
 
 # These patterns inherit (?P<document_path>[^\$]+).
 document_patterns = patterns('wiki.views',
@@ -61,9 +34,6 @@ document_patterns = patterns('wiki.views',
 
     # Vote helpful/not helpful
     url(r'^\$vote', 'helpful_vote', name="wiki.document_vote"),
-
-    # KB discussion forums
-    (r'^\$discuss', include(discuss_patterns)),
 )
 
 urlpatterns = patterns('docs.views',
