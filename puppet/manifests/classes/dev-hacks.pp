@@ -11,11 +11,13 @@ class dev_tools {
 class dev_hacks {
 
     exec { 'locale-gen':
-        command => "/usr/sbin/locale-gen en_US.utf8"
+        command => "/usr/sbin/locale-gen en_US.utf8",
+        unless => '/bin/grep -q "en_US.utf8" /etc/default/locale'
     }
 
     exec { 'update-locale':
         command => "/usr/sbin/update-locale LC_ALL='en_US.utf8'",
+        unless => '/bin/grep -q "en_US.utf8" /etc/default/locale',
         require => Exec['locale-gen']
     }
 

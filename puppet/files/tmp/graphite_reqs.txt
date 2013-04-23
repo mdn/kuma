@@ -1,0 +1,7 @@
+django==1.3
+python-memcached
+django-tagging
+twisted
+whisper==0.9.9
+carbon==0.9.9
+graphite-web==0.9.9
