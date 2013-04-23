@@ -503,9 +503,7 @@ DOMAIN_METHODS = {
         ('apps/access/**', 'ignore'),
         ('apps/dashboards/**', 'ignore'),
         ('apps/flagit/**', 'ignore'),
-        ('apps/forums/**', 'ignore'),
         ('apps/kadmin/**', 'ignore'),
-        ('apps/kbforums/**', 'ignore'),
         ('apps/questions/**', 'ignore'),
         ('apps/search/**', 'ignore'),
         ('apps/sumo/**', 'ignore'),
@@ -517,12 +515,6 @@ DOMAIN_METHODS = {
         ('**/templates/**.html',
             'tower.management.commands.extract.extract_tower_template'),
     ],
-#    'lhtml': [
-#        ('apps/forums/**', 'ignore'),
-#        ('apps/questions/**', 'ignore'),
-#        ('**/templates/**.lhtml',
-#            'tower.management.commands.extract.extract_tower_template'),
-#    ],
     'javascript': [
         # We can't say **.js because that would dive into any libraries.
         ('media/ckeditor/plugins/mdn-link/**.js', 'javascript'),
