@@ -30,7 +30,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #EMAIL_FILE_PATH = '/home/vagrant/logs/kuma-email.log'
 
 # Uncomment to enable a real celery queue
-CELERY_ALWAYS_EAGER = False
+#CELERY_ALWAYS_EAGER = False
 
 INSTALLED_APPS = INSTALLED_APPS + (
     "django_extensions",
@@ -59,7 +59,6 @@ DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.sql.SQLDebugPanel',
     'debug_toolbar.panels.signals.SignalDebugPanel',
     'debug_toolbar.panels.logger.LoggingPanel',
-    'django_statsd.panel.StatsdPanel',
 )
 
 DEVSERVER_MODULES = (
@@ -129,8 +128,6 @@ LOGIN_REDIRECT_URL = '/'
 LOGIN_REDIRECT_URL_FAILURE = '/'
 
 KUMASCRIPT_URL_TEMPLATE = 'http://localhost:9080/docs/{path}'
-
-STATSD_CLIENT = 'django_statsd.clients.toolbar'
 
 ATTACHMENT_HOST = 'mdn-local.mozillademos.org'
 
