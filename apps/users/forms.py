@@ -9,10 +9,6 @@ from tower import ugettext as _, ugettext_lazy as _lazy
 
 from dekicompat.backends import DekiUserBackend
 from sumo.widgets import ImageWidget
-# HACK: This breaks avatar upload, but kuma doesn't use that (yet?) or the
-# upload app. This fixes a missing database error.
-#from upload.forms import clean_image_extension
-#from upload.utils import check_file_size, FileTooLargeError
 from users.models import Profile
 from users.widgets import FacebookURLWidget, TwitterURLWidget
 
@@ -239,17 +235,6 @@ class AvatarForm(forms.ModelForm):
     class Meta(object):
         model = Profile
         fields = ('avatar',)
-
-    def clean_avatar(self):
-        if not ('avatar' in self.cleaned_data and self.cleaned_data['avatar']):
-            return self.cleaned_data['avatar']
-        try:
-            check_file_size(self.cleaned_data['avatar'],
-                            settings.MAX_AVATAR_FILE_SIZE)
-        except FileTooLargeError as e:
-            raise forms.ValidationError(e.args[0])
-        clean_image_extension(self.cleaned_data.get('avatar'))
-        return self.cleaned_data['avatar']
 
 
 class EmailConfirmationForm(forms.Form):
