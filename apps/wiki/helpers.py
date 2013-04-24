@@ -12,6 +12,7 @@ from tidylib import tidy_document
 from tower import ugettext as _
 import logging
 
+from django.utils.html import strip_tags
 from sumo.urlresolvers import reverse
 import wiki
 from wiki import DIFF_WRAP_COLUMN
@@ -78,6 +79,21 @@ seqm is a difflib.SequenceMatcher instance whose a & b are strings"""
     return ''.join(output)
 
 
+def diff_word_count(seqm):
+    """Gives diff in terms of words added/removed of
+    a difflib.SequenceMatcher instance """
+    words = [0, 0]
+    for opcode, a0, a1, b0, b1 in seqm.get_opcodes():
+        if opcode == 'insert':
+            words[0] += len(re.findall(r'\w+', seqm.b[b0:b1]))
+        elif opcode == 'delete':
+            words[1] += len(re.findall(r'\w+', seqm.b[a0:a1]))
+        elif opcode == 'replace':
+            words[0] += len(re.findall(r'\w+', seqm.b[a0:a1]))
+            words[1] += len(re.findall(r'\w+', seqm.b[b0:b1]))
+    return words
+
+
 def _massage_diff_content(content):
     tidy_options = {'output-xhtml': 0, 'force-output': 1}
     content = tidy_document(content, options=tidy_options)
@@ -110,6 +126,38 @@ def format_comment(rev):
                                      prev_rev.slug, rev.slug)
 
     return comment
+
+
+@register.function
+def comment_diff_percent(rev):
+    """Gives percentage of changed comparing with previous revision """
+    prev_rev = rev.get_previous()
+    message = ''
+    if prev_rev:
+        tidy_from, errors = _massage_diff_content(prev_rev.content)
+        tidy_to, errors = _massage_diff_content(rev.content)
+        sm = difflib.SequenceMatcher(None, tidy_from, tidy_to)
+        ratio = 1 - sm.quick_ratio()
+        percent = round(ratio, 4) * 100
+        message = _(u'%s%% change in content.' % percent)
+    return message
+
+
+@register.function
+def comment_diff_words(rev):
+    """Gives words added/removed after comparing with previous revision """
+    prev_rev = rev.get_previous()
+    message = ''
+    if prev_rev:
+        # Remove line-breaks, tabs and all tags
+        regex = re.compile(r'[\n\r\t]')
+        tidy_from = regex.sub(' ', strip_tags(prev_rev.content))
+        tidy_to = regex.sub(' ', strip_tags(rev.content))
+
+        sm = difflib.SequenceMatcher(None, tidy_from, tidy_to)
+        words = diff_word_count(sm)
+        message = _(u'%s words added, %s words removed.' % (words[0], words[1]))
+    return message
 
 
 @register.function
