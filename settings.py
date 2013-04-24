@@ -508,7 +508,6 @@ DOMAIN_METHODS = {
         ('apps/search/**', 'ignore'),
         ('apps/sumo/**', 'ignore'),
         ('apps/tags/**', 'ignore'),
-        ('apps/upload/**', 'ignore'),
         ('apps/**.py',
             'tower.management.commands.extract.extract_tower_python'),
         ('**/templates/**.html',
@@ -723,8 +722,6 @@ SEARCH_CACHE_PERIOD = 15
 # Columns are 250 but this leaves 50 chars for the upload_to prefix
 MAX_FILENAME_LENGTH = 200
 MAX_FILEPATH_LENGTH = 250
-# Default storage engine - ours does not preserve filenames
-#DEFAULT_FILE_STORAGE = 'upload.storage.RenameFileStorage'
 
 ATTACHMENT_HOST = 'mdn.mozillademos.org'
 
