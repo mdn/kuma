@@ -1,6 +1,0 @@
-<div class="have-problem">
-  {{ ngettext('<mark>1 person</mark> <span>has this problem</span>',
-              '<mark>{count} people</mark> <span>have this problem</span>',
-              question.num_votes)|fe(count=question.num_votes ) }}
-  <span class="recent">{{ _('{count} new this week')|f(count=question.num_votes_past_week) }}</span>
-</div>

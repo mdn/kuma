@@ -27,7 +27,6 @@ urlpatterns = patterns('',
 
     (r'^search', include('search.urls')),
     #(r'^forums', include('forums.urls')),
-    #(r'^questions', include('questions.urls')),
     #(r'^flagged', include('flagit.urls')),
     #(r'^upload', include('upload.urls')),
 

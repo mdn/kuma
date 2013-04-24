@@ -1,9 +1,0 @@
-{{ csrf() }}
-<select name="reason">
-  <option value="spam">{{ _('Spam or other unrelated content') }}</option>
-  <option value="language">{{ _('Inappropriate language/dialog') }}</option>
-  <option value="bug_support">{{ _('Misplaced bug report or support request') }}</option>
-  <option value="other">{{ _('Other (please specify)') }}</option>
-</select>
-<input type="text" class="text" name="other" />
-<input type="submit" class="link-btn" value="{{ _('Report Abuse') }}" />
