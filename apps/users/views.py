@@ -28,7 +28,6 @@ from access.decorators import logout_required, login_required
 from notifications.tasks import claim_watches
 from sumo.decorators import ssl_required
 from sumo.urlresolvers import reverse, split_path
-from upload.tasks import _create_image_thumbnail
 from users.forms import (ProfileForm, AvatarForm, EmailConfirmationForm,
                          AuthenticationForm, EmailChangeForm,
                          PasswordResetForm, BrowserIDRegisterForm,
@@ -462,8 +461,6 @@ def edit_avatar(request):
                 os.unlink(old_avatar_path)
             user_profile = form.save()
 
-            content = _create_image_thumbnail(user_profile.avatar.path,
-                                              settings.AVATAR_SIZE)
             # Delete uploaded avatar and replace with thumbnail.
             name = user_profile.avatar.name
             user_profile.avatar.delete()

@@ -29,7 +29,6 @@ urlpatterns = patterns('',
     #(r'^forums', include('forums.urls')),
     #(r'^questions', include('questions.urls')),
     #(r'^flagged', include('flagit.urls')),
-    #(r'^upload', include('upload.urls')),
 
     # Docs landing page and next-gen kuma wiki
     ('', include('docs.urls')),
