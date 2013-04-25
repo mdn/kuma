@@ -841,6 +841,25 @@ class RevisionTests(TestCase):
         ok_('Revert to' in reverted.comment)
         ok_('Test reverting' == reverted.content)
         ok_(old_id != reverted.id)
+
+    def test_revert_review_tags(self):
+        d, r = doc_rev('Test reverting with review tags')
+        r.review_tags.set('technical')
+        old_id = r.id
+
+        time.sleep(1)
+
+        r2 = revision(document=d, title='Test reverting with review tags',
+                      content='An edit to revert',
+                      comment='This edit gets reverted',
+                      is_approved=True)
+        r2.save()
+        r2.review_tags.set('editorial')
+
+        reverted = d.revert(r, r.creator)
+        reverted_tags = [t.name for t in reverted.review_tags.all()]
+        ok_('technical' in reverted_tags)
+        ok_('editorial' not in reverted_tags)
         
 class RelatedDocumentTests(TestCase):
     fixtures = ['test_users.json', 'wiki/documents.json']

@@ -1911,6 +1911,68 @@ def delete_revision(request, document_path, revision_id):
                                         args=[document.full_path]))
 
 
+@login_required
+@require_POST
+@process_document_path
+def quick_review(request, document_slug, document_locale):
+    """Quickly mark a revision as no longer needing a particular type
+    of review."""
+    try:
+        doc = Document.objects.get(locale=document_locale,
+                                   slug=document_slug)
+    except Document.DoesNotExist:
+        raise Http404
+    if not doc.allows_revision_by(request.user):
+        raise PermissionDenied
+    rev_id = request.GET.get('revision_id')
+    if not rev_id:
+        raise Http404
+    try:
+        rev = Revision.objects.get(pk=rev_id)
+    except Revision.DoesNotExist:
+        raise Http404
+    if rev.id != doc.current_revision.id:
+        # TODO: Find a better way to bail out of a collision.
+        # Ideal is to kick them to the diff view, but that expects
+        # fully-filled-out editing forms, and we don't have those
+        # here.
+        raise PermissionDenied(_lazy("Document has been edited; please re-review."))
+    
+    current_tags = [t.name for t in rev.review_tags.all()]
+    needs_technical = 'technical' in current_tags
+    needs_editorial = 'editorial' in current_tags
+
+    if not any((needs_technical, needs_editorial)):
+        # No need to "approve" something that doesn't need it.
+        return HttpResponseRedirect(doc.get_absolute_url())
+    
+    approve_technical = request.GET.get('approve_technical', False)
+    approve_editorial = request.GET.get('approve_editorial', False)
+
+    new_tags = []
+    messages = []
+
+    if needs_technical and not approve_technical:
+        new_tags.append('technical')
+    elif needs_technical:
+        messages.append('Technical review completed.')
+
+    if needs_editorial and not approve_editorial:
+        new_tags.append('editorial')
+    elif needs_editorial:
+        messages.append('Editorial review completed.')
+
+    if messages:
+        # We approved something, make the new revision.
+        new_rev = doc.revise(request.user,
+                             data={'summary': ' '.join(messages)})
+        if new_tags:
+            new_rev.review_tags.set(*new_tags)
+        else:
+            new_rev.review_tags.clear()
+    return HttpResponseRedirect(doc.get_absolute_url())
+
+
 def _document_form_initial(document):
     """Return a dict with the document data pertinent for the form."""
     return {'title': document.title,

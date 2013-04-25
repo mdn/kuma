@@ -934,6 +934,7 @@ class Document(NotificationsMixin, ModelBase):
             return unique_attr()
 
     def revert(self, revision, user):
+        old_review_tags = [t.name for t in revision.review_tags.all()]
         if revision.document.original == self:
             revision.based_on = revision
         revision.id = None
@@ -942,6 +943,8 @@ class Document(NotificationsMixin, ModelBase):
         revision.created = datetime.now()
         revision.creator = user
         revision.save()
+        if old_review_tags:
+            revision.review_tags.set(*old_review_tags)
         revision.make_current()
         return revision
 
