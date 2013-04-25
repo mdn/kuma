@@ -22,7 +22,6 @@ from dekicompat.tests import (mock_mindtouch_login,
                               mock_post_mindtouch_user)
 
 from dekicompat.backends import DekiUserBackend, MINDTOUCH_USER_XML
-from notifications.tests import watch
 from sumo.helpers import urlparams
 from sumo.tests import TestCase, LocalizingClient
 from sumo.urlresolvers import reverse
@@ -330,29 +329,6 @@ class RegisterTestCase(TestCase):
         eq_(200, response.status_code)
         user = User.objects.get(pk=user.pk)
         assert user.is_active
-
-    @mock_put_mindtouch_user
-    @mock_post_mindtouch_user
-    @mock.patch_object(Site.objects, 'get_current')
-    def test_new_user_claim_watches(self, get_current):
-        """Claim user watches upon activation."""
-        old, settings.CELERY_ALWAYS_EAGER = settings.CELERY_ALWAYS_EAGER, True
-
-        get_current.return_value.domain = 'su.mo.com'
-
-        watch(email='sumouser@test.com', save=True)
-
-        now = time()
-        username = 'sumo%s' % now
-        user = RegistrationProfile.objects.create_inactive_user(
-            username, 'testpass', 'sumouser@test.com')
-        key = RegistrationProfile.objects.all()[0].activation_key
-        self.client.get(reverse('users.activate', args=[key]), follow=True)
-
-        # Watches are claimed.
-        assert user.watch_set.exists()
-
-        settings.CELERY_ALWAYS_EAGER = old
 
     @mock_get_deki_user
     def test_duplicate_username(self):

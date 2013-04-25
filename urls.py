@@ -67,7 +67,7 @@ urlpatterns = patterns('',
     (r'^keys/', include('authkeys.urls')),
 
     # Services and sundry.
-    #(r'', include('sumo.urls')),
+    (r'^', include('tidings.urls')),
     (r'^humans.txt$', 'django.views.static.serve',
         {'document_root': settings.HUMANSTXT_ROOT, 'path': 'humans.txt'}),
 )

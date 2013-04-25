@@ -7,16 +7,37 @@ from django.template import Context, loader
 
 from tower import ugettext as _
 
-from notifications.events import InstanceEvent, Event
+from devmo import email_utils
+from tidings.events import InstanceEvent, Event
 from sumo.urlresolvers import reverse
+from wiki.helpers import diff_table
 from wiki.models import Document
 
 
-log = logging.getLogger('k.wiki.events')
+log = logging.getLogger('mdn.wiki.events')
 
+
+def context_dict(revision):
+    """Return a dict that fills in the blanks in notification templates."""
+    document = revision.document
+    from_revision = revision.get_previous()
+    to_revision = revision
+    diff = diff_table(from_revision.content, to_revision.content,
+                           from_revision.id, to_revision.id)
+
+    return {
+        'document_title': document.title,
+        'creator': revision.creator,
+        'host': Site.objects.get_current().domain,
+        'history_url': reverse('wiki.document_revisions',
+                               locale=document.locale,
+                               args=[document.slug]),
+
+        'diff': diff
+    }
 
 def notification_mails(revision, subject, template, url, users_and_watches):
-    """Return EmailMessages in the KB's standard notification mail format."""
+    """Return EmailMessages in standard notification mail format."""
     document = revision.document
     subject = subject.format(title=document.title, creator=revision.creator,
                              locale=document.locale)
@@ -26,7 +47,7 @@ def notification_mails(revision, subject, template, url, users_and_watches):
          'url': url,
          'host': Site.objects.get_current().domain}
     content = t.render(Context(c))
-    mail = EmailMessage(subject, content, settings.NOTIFICATIONS_FROM_ADDRESS)
+    mail = EmailMessage(subject, content, settings.TIDINGS_FROM_ADDRESS)
 
     for u, dummy in users_and_watches:
         mail.to = [u.email]
@@ -43,15 +64,20 @@ class EditDocumentEvent(InstanceEvent):
         self.revision = revision
 
     def _mails(self, users_and_watches):
-        document = self.revision.document
-        # log.debug('Sending edited notification email for document (id=%s)' %
-        #           document.id)
-        subject = _('{title} was edited by {creator}')
-        url = reverse('wiki.document_revisions', locale=document.locale,
-                      args=[document.slug])
-        return notification_mails(self.revision, subject,
-                                  'wiki/email/edited.ltxt', url,
-                                  users_and_watches)
+        revision = self.revision
+        document = revision.document
+        log.debug('Sending edited notification email for document (id=%s)' %
+                   document.id)
+        subject = _('{document_title} was edited by {creator}')
+        context = context_dict(revision)
+
+        return email_utils.emails_with_users_and_watches(
+            subject=subject,
+            text_template='wiki/email/edited.ltxt',
+            html_template=None,
+            context_vars=context,
+            users_and_watches=users_and_watches,
+            default_locale=document.locale)
 
 
 class _RevisionInLocaleEvent(Event):

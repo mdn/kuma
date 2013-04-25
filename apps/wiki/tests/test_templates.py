@@ -1,6 +1,7 @@
 # This Python file uses the following encoding: utf-8
 from datetime import datetime, timedelta
 import urllib
+import time
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -492,7 +493,8 @@ class NewRevisionTests(TestCaseBase):
     def setUp(self):
         super(NewRevisionTests, self).setUp()
         self.d = _create_document()
-        self.client.login(username='admin', password='testpass')
+        self.username = 'admin'
+        self.client.login(username=self.username, password='testpass')
 
     def test_new_revision_GET_logged_out(self):
         """Creating a revision without being logged in redirects to login page.
@@ -529,7 +531,7 @@ class NewRevisionTests(TestCaseBase):
         eq_(doc('#id_content')[0].value, r.content)
 
     @mock.patch_object(Site.objects, 'get_current')
-    @mock.patch_object(settings._wrapped, 'CONFIRM_ANONYMOUS_WATCHES', False)
+    @mock.patch_object(settings._wrapped, 'TIDINGS_CONFIRM_ANONYMOUS_WATCHES', False)
     def test_new_revision_POST_document_with_current(self, get_current):
         """HTTP POST to new revision URL creates the revision on a document.
 
@@ -545,10 +547,9 @@ class NewRevisionTests(TestCaseBase):
 
         # Sign up for notifications:
         EditDocumentEvent.notify('sam@example.com', self.d).activate().save()
-        ReviewableRevisionInLocaleEvent.notify('joe@example.com',
-            locale='en-US').activate().save()
 
-        # Edit a document:
+        # Edit a document (pause for get_previous)
+        time.sleep(1)
         response = self.client.post(
             reverse('wiki.edit_document', args=[self.d.full_path]),
             {'summary': 'A brief summary', 'content': 'The article content',
@@ -560,18 +561,17 @@ class NewRevisionTests(TestCaseBase):
         eq_(self.d.current_revision, new_rev.based_on)
 
         # Assert notifications fired and have the expected content:
-        attrs_eq(mail.outbox[0],
-                 subject=u'%s is ready for review (%s)' % (self.d.title,
-                                                           new_rev.creator),
-                 body=READY_FOR_REVIEW_EMAIL_CONTENT %
-                    (self.d.title, self.d.slug, new_rev.id),
-                 to=['joe@example.com'])
-        attrs_eq(mail.outbox[1],
-                 subject=u'%s was edited by %s' % (self.d.title,
-                                                   new_rev.creator),
-                 body=DOCUMENT_EDITED_EMAIL_CONTENT %
-                    (self.d.title, self.d.slug),
-                 to=['sam@example.com'])
+        expected_to = ['sam@example.com']
+        expected_subject = u'%s was edited by %s' % (self.d.title,
+                                                     new_rev.creator)
+        edited_email = mail.outbox[0]
+        eq_(expected_subject, edited_email.subject)
+        eq_(expected_to, edited_email.to)
+        ok_('%s created a new revision to the document %s.' % (self.username,
+                                                               self.d.title)
+            in edited_email.body)
+        ok_('https://testserver/en-US/docs/%s$history' % self.d.slug
+            in edited_email.body)
 
         settings.CELERY_ALWAYS_EAGER = old
 
@@ -801,7 +801,7 @@ class ReviewRevisionTests(SkippedTestCase):
 
     @mock.patch_object(send_reviewed_notification, 'delay')
     @mock.patch_object(Site.objects, 'get_current')
-    @mock.patch_object(settings._wrapped, 'CONFIRM_ANONYMOUS_WATCHES', False)
+    @mock.patch_object(settings._wrapped, 'TIDINGS_CONFIRM_ANONYMOUS_WATCHES', False)
     def test_approve_revision(self, get_current, reviewed_delay):
         """Verify revision approval with proper notifications."""
         get_current.return_value.domain = 'testserver'
@@ -1313,44 +1313,6 @@ def _test_form_maintains_based_on_rev(client, doc, view, post_data,
     ok_(response.status_code in (200, 302))
     fred_rev = Revision.objects.all().order_by('-id')[0]
     eq_(orig_rev, fred_rev.based_on)
-
-
-class DocumentWatchTests(SkippedTestCase):
-    """Tests for un/subscribing to document edit notifications."""
-    fixtures = ['test_users.json']
-
-    def setUp(self):
-        super(DocumentWatchTests, self).setUp()
-        self.document = _create_document()
-        self.client.login(username='testuser', password='testpass')
-
-    def test_watch_GET_405(self):
-        """Watch document with HTTP GET results in 405."""
-        response = get(self.client, 'wiki.document_watch',
-                       args=[self.document.slug])
-        eq_(405, response.status_code)
-
-    def test_unwatch_GET_405(self):
-        """Unwatch document with HTTP GET results in 405."""
-        response = get(self.client, 'wiki.document_unwatch',
-                       args=[self.document.slug])
-        eq_(405, response.status_code)
-
-    def test_watch_unwatch(self):
-        """Watch and unwatch a document."""
-        user = User.objects.get(username='testuser')
-        # Subscribe
-        response = post(self.client, 'wiki.document_watch',
-                       args=[self.document.slug])
-        eq_(200, response.status_code)
-        assert EditDocumentEvent.is_notifying(user, self.document), \
-               'Watch was not created'
-        # Unsubscribe
-        response = post(self.client, 'wiki.document_unwatch',
-                       args=[self.document.slug])
-        eq_(200, response.status_code)
-        assert not EditDocumentEvent.is_notifying(user, self.document), \
-               'Watch was not destroyed'
 
 
 class LocaleWatchTests(SkippedTestCase):
