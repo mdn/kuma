@@ -35,7 +35,7 @@ from taggit.utils import parse_tags, edit_string_for_tags
 
 from waffle.models import Flag
 
-from sumo.tests import LocalizingClient
+from sumo.tests import LocalizingClient, post, get
 from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
 
@@ -45,6 +45,7 @@ from . import TestCaseBase, FakeResponse, make_test_file
 
 from authkeys.models import Key
 
+from wiki.events import EditDocumentEvent
 from wiki.models import (VersionMetadata, Document, Revision, Attachment,
                          AttachmentRevision, DocumentAttachment, TOC_DEPTH_H4)
 from wiki.tests import (doc_rev, document, new_document_data, revision,
@@ -2077,6 +2078,44 @@ class DocumentEditingTests(TestCaseBase):
         ok_(302 == response.status_code)
         rev = doc.revisions.order_by('-id').all()[0]
         ok_('lorem ipsum dolor sit amet' == rev.content)
+
+
+class DocumentWatchTests(TestCaseBase):
+    """Tests for un/subscribing to document edit notifications."""
+    fixtures = ['test_users.json']
+
+    def setUp(self):
+        super(DocumentWatchTests, self).setUp()
+        self.document, self.r = doc_rev()
+        self.client.login(username='testuser', password='testpass')
+
+    def test_watch_GET_405(self):
+        """Watch document with HTTP GET results in 405."""
+        response = get(self.client, 'wiki.document_watch',
+                       args=[self.document.slug])
+        eq_(405, response.status_code)
+
+    def test_unwatch_GET_405(self):
+        """Unwatch document with HTTP GET results in 405."""
+        response = get(self.client, 'wiki.document_unwatch',
+                       args=[self.document.slug])
+        eq_(405, response.status_code)
+
+    def test_watch_unwatch(self):
+        """Watch and unwatch a document."""
+        user = User.objects.get(username='testuser')
+        # Subscribe
+        response = post(self.client, 'wiki.document_watch',
+                       args=[self.document.slug])
+        eq_(200, response.status_code)
+        assert EditDocumentEvent.is_notifying(user, self.document), \
+               'Watch was not created'
+        # Unsubscribe
+        response = post(self.client, 'wiki.document_unwatch',
+                       args=[self.document.slug])
+        eq_(200, response.status_code)
+        assert not EditDocumentEvent.is_notifying(user, self.document), \
+               'Watch was not destroyed'
 
 
 class SectionEditingResourceTests(TestCaseBase):

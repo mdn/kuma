@@ -27,7 +27,7 @@ from south.modelsinspector import add_introspection_rules
 import constance.config
 from elasticutils.contrib.django.models import Indexable
 
-from notifications.models import NotificationsMixin
+from tidings.models import NotificationsMixin
 from search.index import SearchMappingType, register_mapping_type
 from search.tasks import register_live_index
 from sumo import ProgrammingError
