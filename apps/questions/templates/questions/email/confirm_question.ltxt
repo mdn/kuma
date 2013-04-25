@@ -1,7 +1,0 @@
-{% load i18n %}
-{# L10n: This is an email. Whitespace matters! #}{% autoescape off %}
-{% blocktrans %}Please confirm your question ({{ question_title }}) at the link below:
-
-https://{{ host }}{{ confirm_url }}
-{% endblocktrans %}
-{% endautoescape %}
