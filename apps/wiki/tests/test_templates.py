@@ -198,12 +198,11 @@ class DocumentTests(TestCaseBase):
 
     def test_watch_includes_csrf(self):
         """The watch/unwatch forms should include the csrf tag."""
-        raise SkipTest()
         self.client.login(username='testuser', password='testpass')
         d = document(save=True)
         resp = self.client.get(d.get_absolute_url())
         doc = pq(resp.content)
-        assert doc('#doc-watch input[type=hidden]')
+        assert doc('.page-watch input[type=hidden]')
 
     def test_non_localizable_translate_disabled(self):
         """Non localizable document doesn't show tab for 'Localize'."""

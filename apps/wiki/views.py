@@ -1666,6 +1666,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
 @require_POST
 @login_required
 @process_document_path
+@waffle_flag('page_watch')
 def watch_document(request, document_slug, document_locale):
     """Start watching a document for edits."""
     document = get_object_or_404(
@@ -1677,6 +1678,7 @@ def watch_document(request, document_slug, document_locale):
 @require_POST
 @login_required
 @process_document_path
+@waffle_flag('page_watch')
 def unwatch_document(request, document_slug, document_locale):
     """Stop watching a document for edits."""
     document = get_object_or_404(
@@ -1687,6 +1689,7 @@ def unwatch_document(request, document_slug, document_locale):
 
 @require_POST
 @login_required
+@waffle_flag('locale_watch')
 def watch_locale(request):
     """Start watching a locale for revisions ready for review."""
     ReviewableRevisionInLocaleEvent.notify(request.user, locale=request.locale)
@@ -1697,6 +1700,7 @@ def watch_locale(request):
 
 @require_POST
 @login_required
+@waffle_flag('local_watch')
 def unwatch_locale(request):
     """Stop watching a locale for revisions ready for review."""
     ReviewableRevisionInLocaleEvent.stop_notifying(request.user,
@@ -1993,7 +1997,6 @@ def _save_rev_and_notify(rev_form, creator, document):
     document.schedule_rendering('max-age=0')
 
     # Enqueue notifications
-    ReviewableRevisionInLocaleEvent(new_rev).fire(exclude=new_rev.creator)
     EditDocumentEvent(new_rev).fire(exclude=new_rev.creator)
 
 
