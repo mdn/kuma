@@ -3,6 +3,7 @@ import json
 
 from django.contrib.sites.models import Site
 from django.http import HttpResponse, HttpResponseBadRequest
+from django.shortcuts import render
 from django.views.decorators.cache import cache_page
 
 import jingo
@@ -21,7 +22,7 @@ def search(request):
     if not flag_is_active(request, 'elasticsearch'):
         """Google Custom Search results page."""
         query = request.GET.get('q', '')
-        return jingo.render(request, 'landing/searchresults.html',
+        return render(request, 'landing/searchresults.html',
                             {'query': query})
 
     """Performs search or displays the search form."""
@@ -42,7 +43,7 @@ def search(request):
     result_count = results.count()
     results = results[start:end]
 
-    return jingo.render(request, 'search/results.html', {'results': results,
+    return render(request, 'search/results.html', {'results': results,
             'search_query': search_query,
             'result_count': result_count,
             'prev_page': page - 1 if start > 0 else None,
@@ -67,6 +68,6 @@ def suggestions(request):
 def plugin(request):
     """Render an OpenSearch Plugin."""
     site = Site.objects.get_current()
-    return jingo.render(request, 'search/plugin.html',
+    return render(request, 'search/plugin.html',
                         {'site': site, 'locale': request.locale},
-                        mimetype='application/opensearchdescription+xml')
+                        content_type='application/opensearchdescription+xml')

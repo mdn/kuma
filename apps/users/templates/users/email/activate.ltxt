@@ -1,4 +1,8 @@
-{% load i18n %}{# L10n: This is an email.  Whitespace matters! #}{% blocktrans %}
+{# This is an email. Whitespace matters! #}
+
+{% autoescape false %}
+
+{% trans domain=domain, activate_url=activate_url %}
 Welcome to {{ domain }}.
 
 Before you can use your new account you must activate it -
@@ -14,4 +18,4 @@ away this e-mail.
 Thanks!
 
 The {{ domain }} team
-{% endblocktrans %}
+{% endtrans %}{% endautoescape %}

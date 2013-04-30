@@ -89,7 +89,7 @@ def build_sitemaps():
             info = {'queryset': queryset, 'date_field': 'modified'}
             sitemap = GenericSitemap(info, priority=0.5)
             urls = sitemap.get_urls(page=1)
-            xml = smart_str(loader.render_to_string('sitemap.xml',
+            xml = smart_str(loader.render_to_string('wiki/sitemap.xml',
                                                     {'urlset': urls}))
             xml = xml.replace('http://developer.mozilla.org',
                               'https://developer.mozilla.org')

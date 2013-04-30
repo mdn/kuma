@@ -5,9 +5,9 @@ from basket.base import BasketException
 
 from django.conf import settings
 from django.http import HttpResponseServerError
+from django.shortcuts import render
 
 import constance.config
-import jingo
 from waffle.decorators import waffle_switch
 
 from devmo import (SECTION_USAGE, SECTION_ADDONS, SECTION_APPS, SECTION_MOBILE,
@@ -32,8 +32,8 @@ def home(request):
     for s in SECTION_USAGE:
         updates += Bundle.objects.recent_entries(s.updates)[:1]
 
-    return jingo.render(request, 'landing/home.html', {
-        'demos': demos, 'updates': updates, 'tweets': tweets})
+    return render(request, 'landing/home.html',
+                  {'demos': demos, 'updates': updates, 'tweets': tweets})
 
 
 def addons(request):
@@ -55,8 +55,8 @@ def mozilla(request):
 def search(request):
     """Google Custom Search results page."""
     query = request.GET.get('q', '')
-    return jingo.render(request, 'landing/searchresults.html',
-                        {'query': query})
+    return render(request, 'landing/searchresults.html',
+                  {'query': query})
 
 
 def mobile(request):
@@ -103,17 +103,17 @@ def apps_newsletter(request):
     else:
         context = {'form': SubscriptionForm(request.locale)}
 
-    return jingo.render(request, 'landing/apps_newsletter.html', context)
+    return render(request, 'landing/apps_newsletter.html', context)
 
 
 def learn(request):
     """Learn landing page."""
-    return jingo.render(request, 'landing/learn.html')
+    return render(request, 'landing/learn.html')
 
 
 def learn_html(request):
     """HTML landing page."""
-    return jingo.render(request, 'landing/learn_html.html')
+    return render(request, 'landing/learn_html.html')
 
 
 @waffle_switch('html5_landing')
@@ -121,27 +121,27 @@ def learn_html5(request):
     """HTML5 landing page."""
     demos = (Submission.objects.all_sorted()
              .filter(featured=True, taggit_tags__name__in=['tech:html5']))[:6]
-    return jingo.render(request, 'landing/learn_html5.html', {'demos': demos})
+    return render(request, 'landing/learn_html5.html', {'demos': demos})
 
 
 def learn_css(request):
     """CSS landing page."""
-    return jingo.render(request, 'landing/learn_css.html')
+    return render(request, 'landing/learn_css.html')
 
 
 def learn_javascript(request):
     """JavaScript landing page."""
-    return jingo.render(request, 'landing/learn_javascript.html')
+    return render(request, 'landing/learn_javascript.html')
 
 
 def promote_buttons(request):
     """Bug 646192: MDN affiliate buttons"""
-    return jingo.render(request, 'landing/promote_buttons.html')
+    return render(request, 'landing/promote_buttons.html')
 
 
 def forum_archive(request):
     """Forum Archive from phpbb-static landing page."""
-    return jingo.render(request, 'landing/forum_archive.html')
+    return render(request, 'landing/forum_archive.html')
 
 
 def common_landing(request, section=None, extra=None):
@@ -156,4 +156,4 @@ def common_landing(request, section=None, extra=None):
     if extra:
         data.update(extra)
 
-    return jingo.render(request, 'landing/%s.html' % section.short, data)
+    return render(request, 'landing/%s.html' % section.short, data)

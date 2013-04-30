@@ -9,7 +9,7 @@ from django.core.cache import cache
 
 import celery.conf
 import mock
-from nose.tools import eq_
+from nose.tools import eq_, ok_
 from test_utils import RequestFactory
 
 from sumo.tests import TestCase
@@ -17,24 +17,6 @@ from devmo.tests import override_settings
 from wiki.tasks import (send_reviewed_notification, rebuild_kb,
                         schedule_rebuild_kb, _rebuild_kb_chunk)
 from wiki.tests import TestCaseBase, revision
-
-
-REVIEWED_EMAIL_CONTENT = """
-
-Your revision has been reviewed.
-
-admin has approved your revision to the document
-%s.
-
-Message from the reviewer:
-
-%s
-
-To view the history of this document, click the following
-link, or paste it into your browser's location bar:
-
-https://testserver/en-US/docs/%s$history
-"""
 
 
 class RebuildTestCase(TestCase):
@@ -116,8 +98,8 @@ class ReviewMailTestCase(TestCaseBase):
         eq_('Your revision has been approved: %s' % doc.title,
             mail.outbox[0].subject)
         eq_([rev.creator.email], mail.outbox[0].to)
-        eq_(REVIEWED_EMAIL_CONTENT % (doc.title, msg, doc.slug),
-            mail.outbox[0].body)
+        ok_('https://testserver/en-US/docs/%s$history' % doc.slug
+            in mail.outbox[0].body)
 
     @mock.patch_object(Site.objects, 'get_current')
     def test_reviewed_by_creator_no_notification(self, get_current):
