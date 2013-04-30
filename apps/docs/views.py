@@ -4,11 +4,11 @@ import random
 
 from django.conf import settings
 from django.http import (HttpResponseRedirect)
+from django.shortcuts import render
 
 from caching.base import cached
 import commonware
 from dateutil.parser import parse as date_parse
-import jingo
 from tower import ugettext as _
 
 from feeder.models import Entry
@@ -68,7 +68,7 @@ def docs(request):
     data = {'active_docs': active_docs, 
             'review_flag_docs': review_flag_docs,
             'dotd': dotd}
-    return jingo.render(request, 'docs/docs.html', data)
+    return render(request, 'docs/docs.html', data)
 
 
 def _get_popular_item():
