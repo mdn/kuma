@@ -37,8 +37,9 @@ def search(request):
 
     results = DocumentType.search()
     if search_query:
-        results = results.query(or_={'title': search_query,
+        results = (results.query(or_={'title': search_query,
                                    'content': search_query})
+                          .highlight('content'))
     result_count = results.count()
     results = results[start:end]
 
