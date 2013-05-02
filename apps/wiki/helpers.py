@@ -113,6 +113,25 @@ def format_comment(rev):
 
 
 @register.function
+def revisions_unified_diff(from_revision, to_revision):
+    fromfile = u'[%s] %s #%s' % (from_revision.document.locale,
+                                 from_revision.document.title,
+                                 from_revision.id)
+    tofile = u'[%s] %s #%s' % (to_revision.document.locale,
+                               to_revision.document.title,
+                               to_revision.id)
+    tidy_from, errors = _massage_diff_content(from_revision.content)
+    tidy_to, errors = _massage_diff_content(to_revision.content)
+    diff = u'\n'.join(difflib.unified_diff(
+        tidy_from.splitlines(),
+        tidy_to.splitlines(),
+        fromfile=fromfile,
+        tofile=tofile
+    ))
+    return diff
+
+
+@register.function
 def diff_table(content_from, content_to, prev_id, curr_id):
     """Creates an HTML diff of the passed in content_from and content_to."""
     tidy_from, errors = _massage_diff_content(content_from)

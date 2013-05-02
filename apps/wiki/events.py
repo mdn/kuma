@@ -10,7 +10,7 @@ from tower import ugettext as _
 from devmo import email_utils
 from tidings.events import InstanceEvent, Event
 from sumo.urlresolvers import reverse
-from wiki.helpers import diff_table
+from wiki.helpers import revisions_unified_diff
 from wiki.models import Document
 
 
@@ -22,8 +22,7 @@ def context_dict(revision):
     document = revision.document
     from_revision = revision.get_previous()
     to_revision = revision
-    diff = diff_table(from_revision.content, to_revision.content,
-                           from_revision.id, to_revision.id)
+    diff = revisions_unified_diff(from_revision, to_revision)
 
     return {
         'document_title': document.title,
