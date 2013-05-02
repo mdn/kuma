@@ -14,6 +14,7 @@ from django.views.decorators.http import (require_http_methods, require_GET,
                                           require_POST)
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.debug import sensitive_post_parameters
 
 from django.shortcuts import get_object_or_404
 from django.utils.http import base36_to_int, is_safe_url
@@ -108,6 +109,7 @@ def browserid_change_email(request):
 @csrf_exempt
 @ssl_required
 @require_POST
+@sensitive_post_parameters()
 def browserid_verify(request):
     """Process a submitted BrowserID assertion.
 
@@ -161,6 +163,7 @@ def browserid_verify(request):
 
 
 @ssl_required
+@sensitive_post_parameters('password')
 def browserid_register(request):
     """Handle user creation when assertion is valid, but no existing user"""
     statsd_waffle_incr('users.browserid_register', 'signin_metrics')
@@ -231,6 +234,7 @@ def browserid_register(request):
 
 @ssl_required
 @xframe_options_sameorigin
+@sensitive_post_parameters('password')
 def login(request):
     """Try to log the user in."""
     next_url = _clean_next_url(request)
@@ -265,6 +269,7 @@ def logout(request):
 @ssl_required
 @logout_required
 @require_http_methods(['GET', 'POST'])
+@sensitive_post_parameters('password', 'password2')
 def register(request):
     """Register a new user."""
     try:
@@ -496,6 +501,7 @@ def delete_avatar(request):
                         {'profile': user_profile})
 
 
+@sensitive_post_parameters()
 def password_reset(request):
     """Password reset form.
 
@@ -527,6 +533,7 @@ def password_reset_sent(request):
 
 
 @ssl_required
+@sensitive_post_parameters()
 def password_reset_confirm(request, uidb36=None, token=None):
     """View that checks the hash in a password reset link and presents a
     form for entering a new password.
