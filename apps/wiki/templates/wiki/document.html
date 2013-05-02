@@ -1,4 +1,5 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
+{% from "wiki/includes/document_macros.html" import document_watch with context %}
 {% extends "wiki/base.html" %}
 {% block title %}{{ page_title(document.title + seo_parent_title) }}{% endblock %}
 {% set classes = 'document' %}
@@ -131,11 +132,9 @@
         </div>
         <ul id="page-buttons">
             <li class="page-history"><a href="{{ url('wiki.document_revisions', document.full_path) }}">{{_('History')}}</a></li>
-            {#
-            {% if request.user.is_authenticated() %}
-              <li class="page-watch"><a href="{{ url('wiki.document_watch', document.full_path) }}">{{_('Watch')}}</a></li>
+            {% if request.user.is_authenticated() and waffle.flag('page_watch') %}
+              {{ document_watch(document, request.user) }}
             {% endif %}
-            #}
             {% if document.allows_revision_by(request.user) %}
               {% if fallback_reason %}
                 {% set edit_label = _('Edit English')  %}
