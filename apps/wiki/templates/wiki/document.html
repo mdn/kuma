@@ -196,19 +196,17 @@
     {% endif %}
     #}
     
-      {# There's no .has() method on review_tags; need to iterate for now #}
       {% if document.current_revision %}
-        {% for tag in document.current_revision.review_tags.all() %}
-          {% if 'technical' == tag.name %}
-            <div class="warning review-technical">{% trans %}
-              <p>This article is in need of a technical review.</p>
-            {% endtrans %}</div>
-          {% elif 'editorial' == tag.name %}
-            <div class="warning review-editorial">{% trans %}
-              <p>This article is in need of an editorial review.</p>
-            {% endtrans %}</div>
-          {% endif %}
-        {% endfor %}
+        {% if document.current_revision.needs_technical_review() %}
+          <div class="warning review-technical">{% trans %}
+            <p>This article is in need of a technical review.</p>
+          {% endtrans %}</div>
+        {% endif %}
+        {% if document.current_revision.needs_editorial_review() %}
+          <div class="warning review-editorial">{% trans %}
+            <p>This article is in need of an editorial review.</p>
+          {% endtrans %}</div>
+        {% endif %}
       {% endif %}
       {% if fallback_reason %}
         <div id="doc-pending-fallback" class="warning">
@@ -284,6 +282,31 @@
 
       {% if attachments | length %}
       {% include 'wiki/includes/attachment_list.html' %}
+      {% endif %}
+
+      {% if document.current_revision and document.allows_revision_by(request.user) %}
+        {% if document.current_revision.needs_technical_review() or document.current_revision.needs_editorial_review() %}
+          <section class="page-meta">
+            <h2>{{ _('Quick review') }}</h2>
+            <section id="quick-review">
+              <form method="post" action="{{url('wiki.quick_review', document.full_path)}}?revision_id={{document.current_revision.id }}">
+                {{ csrf }}
+                <p>{% trans %}The following review(s) have been requested for this article:{% endtrans %}
+                <dl>
+                  {% if document.current_revision.needs_technical_review() %}
+                    <dt>{% trans %}Technical review:{% endtrans %}</dt>
+                    <dd><input type="checkbox" value="approve_technical" id="id_approve_technical"> <label for="id_approve_technical">{% trans %}I have completed this review{% endtrans %}</label></dd>
+                  {% endif %}
+                  {% if document.current_revision.needs_editorial_review() %}
+                    <dt>{% trans %}Editorial review:{% endtrans %}</dt>
+                    <dd><input type="checkbox" value="approve_editorial" id="id_approve_editorial"> <label for="id_approve_editorial">{% trans %}I have completed this review{% endtrans %}</label></dd>
+                  {% endif %}
+                </dl>
+                <p><input type="submit" value="{{ _('Confirm reviews') }}"></p>
+              </form>
+            </section>
+          </section>
+        {% endif %}
       {% endif %}
 
       <section id="doc-contributors" role="contentinfo">
