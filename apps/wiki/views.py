@@ -1251,7 +1251,7 @@ def ckeditor_config(request):
         code = ''
     context = {'editor_config': code, 'redirect_pattern': REDIRECT_CONTENT}
     return render(request, 'wiki/ckeditor_config.js', context,
-                       mimetype="application/x-javascript")
+                       content_type="application/x-javascript")
 
 
 @login_required
