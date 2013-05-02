@@ -7,7 +7,7 @@ from django.core.cache import cache
 
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.core.urlresolvers import reverse
 
 from django.contrib.auth.decorators import login_required
@@ -103,7 +103,7 @@ def detail(request, slug):
             .exclude(hidden=True)\
             .order_by('-modified').all()[:5]
 
-    return jingo.render(request, 'demos/detail.html', {
+    return render(request, 'demos/detail.html', {
         'submission': submission,
         'last_new_comment_id': last_new_comment_id,
         'more_by': more_by
@@ -185,7 +185,7 @@ def unlike(request, slug):
 @xframe_options_sameorigin
 def _like_feedback(request, submission, event):
     if request.GET.get('iframe', False):
-        return jingo.render(request, 'demos/iframe_utils.html', dict(
+        return render(request, 'demos/iframe_utils.html', dict(
             submission=submission, event=event
         ))
     return HttpResponseRedirect(reverse(
@@ -215,7 +215,7 @@ def flag(request, slug):
             return HttpResponseRedirect(reverse(
                 'demos.views.detail', args=(submission.slug,)))
 
-    return jingo.render(request, 'demos/flag.html', {
+    return render(request, 'demos/flag.html', {
         'form': form, 'submission': submission})
 
 
@@ -233,14 +233,14 @@ def launch(request, slug):
         return HttpResponseRedirect(
             submission.demo_package.url.replace('.zip', '/index.html'))
     else:
-        return jingo.render(request, 'demos/launch.html', {
+        return render(request, 'demos/launch.html', {
             'submission': submission})
 
 
 def submit(request):
     """Accept submission of a demo"""
     if not request.user.is_authenticated():
-        return jingo.render(request, 'demos/submit_noauth.html', {})
+        return render(request, 'demos/submit_noauth.html')
 
     if request.method != "POST":
         initial = {}
@@ -263,7 +263,7 @@ def submit(request):
             return HttpResponseRedirect(reverse(
                     'demos.views.detail', args=(new_sub.slug,)))
 
-    return jingo.render(request, 'demos/submit.html', {'form': form})
+    return render(request, 'demos/submit.html', {'form': form})
 
 
 def edit(request, slug):
@@ -289,7 +289,7 @@ def edit(request, slug):
             return HttpResponseRedirect(reverse(
                     'demos.views.detail', args=(sub.slug,)))
 
-    return jingo.render(request, 'demos/submit.html', {
+    return render(request, 'demos/submit.html', {
         'form': form, 'submission': submission, 'edit': True})
 
 
@@ -305,7 +305,7 @@ def delete(request, slug):
         _invalidate_submission_listing_helper_cache()
         return HttpResponseRedirect(reverse('demos.views.home'))
 
-    return jingo.render(request, 'demos/delete.html', {
+    return render(request, 'demos/delete.html', {
         'submission': submission})
 
 
@@ -346,7 +346,7 @@ def delete_comment(request, slug, object_id):
         tc.delete()
         return HttpResponseRedirect(reverse(
             'demos.views.detail', args=(submission.slug,)))
-    return jingo.render(request, 'demos/delete_comment.html', {
+    return render(request, 'demos/delete_comment.html', {
         'comment': tc
     })
 
@@ -367,7 +367,7 @@ def hideshow(request, slug, hide=True):
 
 def terms(request):
     """Terms of use page"""
-    return jingo.render(request, 'demos/terms.html', {})
+    return render(request, 'demos/terms.html', {})
 
 
 def devderby_landing(request):
@@ -396,7 +396,7 @@ def devderby_landing(request):
         .exclude(hidden=True))
 
     # TODO: Use an object_list here, in case we need pagination?
-    return jingo.render(request, 'demos/devderby_landing.html', dict(
+    return render(request, 'demos/devderby_landing.html', dict(
         current_challenge_tag_name=current_challenge_tag_name,
         previous_winner_tag_name=previous_winner_tag_name,
         previous_challenge_tag_names=previous_challenge_tag_names,
@@ -408,7 +408,7 @@ def devderby_landing(request):
 
 def devderby_rules(request):
     """Dev Derby rules page"""
-    return jingo.render(request, 'demos/devderby_rules.html', {})
+    return render(request, 'demos/devderby_rules.html', {})
 
 
 def devderby_by_date(request, year, month):

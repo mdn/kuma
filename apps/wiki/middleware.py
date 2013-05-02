@@ -1,4 +1,4 @@
-import jingo
+from django.shortcuts import render
 
 from wiki import ReadOnlyException
 
@@ -9,7 +9,7 @@ class ReadOnlyMiddleware(object):
     """
     def process_exception(self, request, exception):
         if isinstance(exception, ReadOnlyException):
-            return jingo.render(request, '403.html',
+            return render(request, '403.html',
                                 {'reason': exception.args[0]},
                                 status=403)
         return None

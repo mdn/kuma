@@ -107,7 +107,7 @@ class Paginator(object):
     def render(self):
         c = {'pager': self.pager, 'num_pages': self.num_pages,
              'count': self.count}
-        t = env.get_template('layout/paginator.html').render(**c)
+        t = env.get_template('layout/paginator.html').render(c)
         return jinja2.Markup(t)
 
 

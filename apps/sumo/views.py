@@ -8,10 +8,10 @@ from django.conf import settings
 from django.core.cache import cache, parse_backend_uri
 from django.http import (HttpResponsePermanentRedirect, HttpResponseRedirect,
                          HttpResponse)
+from django.shortcuts import render
 from django.views.decorators.cache import never_cache
 
 import celery.task
-import jingo
 from PIL import Image
 
 from sumo.urlresolvers import reverse
@@ -23,19 +23,19 @@ log = logging.getLogger('k.services')
 def handle403(request):
     """A 403 message that looks nicer than the normal Apache forbidden page."""
 
-    return jingo.render(request, 'handlers/403.html', status=403)
+    return render(request, 'handlers/403.html', status=403)
 
 
 def handle404(request):
     """A handler for 404s."""
 
-    return jingo.render(request, 'handlers/404.html', status=404)
+    return render(request, 'handlers/404.html', status=404)
 
 
 def handle500(request):
     """A 500 message that looks nicer than the normal Apache error page."""
 
-    return jingo.render(request, 'handlers/500.html', status=500)
+    return render(request, 'handlers/500.html', status=500)
 
 
 def redirect_to(request, url, permanent=True, **kwargs):

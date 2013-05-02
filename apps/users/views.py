@@ -10,20 +10,19 @@ from django.contrib.auth.tokens import default_token_generator
 from django.contrib import messages
 from django.contrib.sites.models import Site
 from django.http import HttpResponseRedirect, Http404
+from django.shortcuts import render
 from django.views.decorators.http import (require_http_methods, require_GET,
                                           require_POST)
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.debug import sensitive_post_parameters
 
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.utils.http import base36_to_int, is_safe_url
 
 from django_browserid.forms import BrowserIDForm
 from django_browserid.auth import get_audience
 from django_browserid import auth as browserid_auth
-
-import jingo
 
 from access.decorators import logout_required, login_required
 from tidings.tasks import claim_watches
@@ -218,7 +217,7 @@ def browserid_register(request):
                 except MindTouchAPIError:
                     if user:
                         user.delete()
-                    return jingo.render(request, '500.html',
+                    return render(request, '500.html',
                                         {'error_message': "We couldn't "
                                         "register a new account at this time. "
                                         "Please try again later."})
@@ -227,7 +226,7 @@ def browserid_register(request):
     # for the next request.
     request.session.modified = True
 
-    return jingo.render(request, 'users/browserid_register.html',
+    return render(request, 'users/browserid_register.html',
                         {'login_form': login_form,
                          'register_form': register_form})
 
@@ -251,7 +250,7 @@ def login(request):
             form.cleaned_data.get('username'),
             form.cleaned_data.get('password'))
 
-    return jingo.render(request, 'users/login.html',
+    return render(request, 'users/login.html',
                             {'form': form, 'next_url': next_url})
 
 
@@ -275,11 +274,11 @@ def register(request):
     try:
         form = handle_register(request)
         if form.is_valid():
-            return jingo.render(request, 'users/register_done.html')
-        return jingo.render(request, 'users/register.html',
+            return render(request, 'users/register_done.html')
+        return render(request, 'users/register.html',
                             {'form': form})
     except MindTouchAPIError, e:
-        return jingo.render(request, '500.html',
+        return render(request, '500.html',
                             {'error_message': "We couldn't "
                             "register a new account at this time. "
                             "Please try again later."})
@@ -300,9 +299,9 @@ def activate(request, activation_key):
         # my_questions = Question.uncached.filter(creator=account)
         # TODO: remove this after dropping unconfirmed questions.
         # my_questions.update(status=CONFIRMED)
-    return jingo.render(request, 'users/activate.html',
-                        {'account': account, 'questions': my_questions,
-                         'form': form})
+    return render(request, 'users/activate.html',
+                  {'account': account, 'questions': my_questions,
+                   'form': form})
 
 
 def resend_confirmation(request):
@@ -318,13 +317,11 @@ def resend_confirmation(request):
             except RegistrationProfile.DoesNotExist:
                 # Don't leak existence of email addresses.
                 pass
-            return jingo.render(request,
-                                'users/resend_confirmation_done.html',
-                                {'email': email})
+            return render(request, 'users/resend_confirmation_done.html',
+                          {'email': email})
     else:
         form = EmailConfirmationForm()
-    return jingo.render(request, 'users/resend_confirmation.html',
-                        {'form': form})
+    return render(request, 'users/resend_confirmation.html', {'form': form})
 
 
 def send_email_reminder(request):
@@ -351,13 +348,11 @@ def send_email_reminder(request):
                 # Don't leak existence of email addresses.
                 statsd_waffle_incr('users.send_email_reminder.NOUSER',
                                   'signin_metrics')
-            return jingo.render(request,
-                                'users/send_email_reminder_done.html',
-                                {'username': username, 'error': error})
+            return render(request, 'users/send_email_reminder_done.html',
+                          {'username': username, 'error': error})
     else:
         form = EmailConfirmationForm()
-    return jingo.render(request, 'users/resend_confirmation.html',
-                        {'form': form})
+    return render(request, 'users/resend_confirmation.html', {'form': form})
 
 
 @login_required
@@ -375,14 +370,12 @@ def change_email(request):
                 user=request.user, email=form.cleaned_data['email'])
             EmailChange.objects.send_confirmation_email(
                 email_change, form.cleaned_data['email'])
-            return jingo.render(request,
-                                'users/change_email_done.html',
-                                {'email': form.cleaned_data['email']})
+            return render(request, 'users/change_email_done.html',
+                          {'email': form.cleaned_data['email']})
     else:
         form = EmailChangeForm(request.user,
                                initial={'email': request.user.email})
-    return jingo.render(request, 'users/change_email.html',
-                        {'form': form})
+    return render(request, 'users/change_email.html', {'form': form})
 
 
 @require_GET
@@ -407,15 +400,14 @@ def confirm_change_email(request, activation_key):
     # Delete the activation profile now, we don't need it anymore.
     email_change.delete()
 
-    return jingo.render(request, 'users/change_email_complete.html',
-                        {'old_email': old_email, 'new_email': new_email,
-                         'username': u.username, 'duplicate': duplicate})
+    return render(request, 'users/change_email_complete.html',
+                  {'old_email': old_email, 'new_email': new_email,
+                   'username': u.username, 'duplicate': duplicate})
 
 
 def profile(request, user_id):
     user_profile = get_object_or_404(UserProfile, user__id=user_id)
-    return jingo.render(request, 'users/profile.html',
-                        {'profile': user_profile})
+    return render(request, 'users/profile.html', {'profile': user_profile})
 
 
 @login_required
@@ -438,8 +430,8 @@ def edit_profile(request):
     else:  # request.method == 'GET'
         form = ProfileForm(instance=user_profile)
 
-    return jingo.render(request, 'users/edit_profile.html',
-                        {'form': form, 'profile': user_profile})
+    return render(request, 'users/edit_profile.html',
+                  {'form': form, 'profile': user_profile})
 
 
 @login_required
@@ -475,8 +467,8 @@ def edit_avatar(request):
     else:  # request.method == 'GET'
         form = AvatarForm(instance=user_profile)
 
-    return jingo.render(request, 'users/edit_avatar.html',
-                        {'form': form, 'profile': user_profile})
+    return render(request, 'users/edit_avatar.html',
+                  {'form': form, 'profile': user_profile})
 
 
 @login_required
@@ -497,8 +489,8 @@ def delete_avatar(request):
         return HttpResponseRedirect(reverse('users.edit_profile'))
     # else:  # request.method == 'GET'
 
-    return jingo.render(request, 'users/confirm_avatar_delete.html',
-                        {'profile': user_profile})
+    return render(request, 'users/confirm_avatar_delete.html',
+                  {'profile': user_profile})
 
 
 @sensitive_post_parameters()
@@ -519,7 +511,7 @@ def password_reset(request):
     else:
         form = PasswordResetForm()
 
-    return jingo.render(request, 'users/pw_reset_form.html', {'form': form})
+    return render(request, 'users/pw_reset_form.html', {'form': form})
 
 
 def password_reset_sent(request):
@@ -529,7 +521,7 @@ def password_reset_sent(request):
     email is sent.
 
     """
-    return jingo.render(request, 'users/pw_reset_sent.html')
+    return render(request, 'users/pw_reset_sent.html')
 
 
 @ssl_required
@@ -562,7 +554,7 @@ def password_reset_confirm(request, uidb36=None, token=None):
         context['validlink'] = False
         form = None
     context['form'] = form
-    return jingo.render(request, 'users/pw_reset_confirm.html', context)
+    return render(request, 'users/pw_reset_confirm.html', context)
 
 
 def password_reset_complete(request):
@@ -572,8 +564,7 @@ def password_reset_complete(request):
 
     """
     form = AuthenticationForm()
-    return jingo.render(request, 'users/pw_reset_complete.html',
-                        {'form': form})
+    return render(request, 'users/pw_reset_complete.html', {'form': form})
 
 
 @login_required
@@ -586,13 +577,13 @@ def password_change(request):
             return HttpResponseRedirect(reverse('users.pw_change_complete'))
     else:
         form = PasswordChangeForm(user=request.user)
-    return jingo.render(request, 'users/pw_change.html', {'form': form})
+    return render(request, 'users/pw_change.html', {'form': form})
 
 
 @login_required
 def password_change_complete(request):
     """Change password complete page."""
-    return jingo.render(request, 'users/pw_change_complete.html')
+    return render(request, 'users/pw_change_complete.html')
 
 
 def _clean_next_url(request):
