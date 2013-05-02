@@ -1,9 +1,8 @@
-import jingo
 import logging
 
 from django.conf import settings
 from django.core.paginator import Paginator
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.http import (HttpResponseRedirect, HttpResponseForbidden)
 
 from devmo.urlresolvers import reverse
@@ -36,7 +35,7 @@ def events(request):
         "ABQIAAAAijZqBZcz-rowoXZC1tt9iRT5rHVQFKUGOHoyfP"
         "_4KyrflbHKcRTt9kQJVST5oKMRj8vKTQS2b7oNjQ")
 
-    return jingo.render(request, 'devmo/calendar.html', {
+    return render(request, 'devmo/calendar.html', {
         'upcoming_events': upcoming_events,
         'past_events': past_events,
         'google_maps_api_key': google_maps_api_key
@@ -66,7 +65,7 @@ def profile_view(request, username):
     wiki_activity, docs_feed_items = None, None
     wiki_activity = profile.wiki_activity()
 
-    return jingo.render(request, 'devmo/profile.html', dict(
+    return render(request, 'devmo/profile.html', dict(
         profile=profile, demos=demos, demos_paginator=demos_paginator,
         demos_page=demos_page, docs_feed_items=docs_feed_items,
         wiki_activity=wiki_activity
@@ -136,7 +135,7 @@ def profile_edit(request, username):
             return HttpResponseRedirect(reverse(
                     'devmo.views.profile_view', args=(profile.user.username,)))
 
-    return jingo.render(request, 'devmo/profile_edit.html', dict(
+    return render(request, 'devmo/profile_edit.html', dict(
         profile=profile, form=form, INTEREST_SUGGESTIONS=INTEREST_SUGGESTIONS
     ))
 

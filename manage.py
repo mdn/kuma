@@ -34,8 +34,8 @@ except ImportError:
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings_mod)
 
-import safe_django_forms
-safe_django_forms.monkeypatch()
+import jingo.monkey
+jingo.monkey.patch()
 
 if __name__ == "__main__":
     execute_from_command_line(sys.argv)

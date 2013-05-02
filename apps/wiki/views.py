@@ -20,14 +20,14 @@ except ImportError:
 from django.conf import settings
 from django.db import transaction
 from django.core.exceptions import PermissionDenied
-from django.template import RequestContext
+from django.template import RequestContext, loader
 from django.core.cache import cache
 from django.contrib import messages
 from django.http import (HttpResponse, HttpResponseRedirect,
                          HttpResponsePermanentRedirect,
                          Http404, HttpResponseBadRequest)
 from django.http.multipartparser import MultiPartParser
-from django.shortcuts import get_object_or_404, render_to_response, redirect
+from django.shortcuts import get_object_or_404, render_to_response, redirect, render
 from django.views.decorators.http import (require_GET, require_POST,
                                           require_http_methods, condition)
 from django.views.decorators.clickjacking import xframe_options_exempt
@@ -222,8 +222,6 @@ def allow_CORS_GET(func):
 def _format_attachment_obj(attachments):
     attachments_list = []
     for attachment in attachments:
-        html = jingo.get_env().select_template(
-                                        ['wiki/includes/attachment_row.html'])
         obj = {
             'title': attachment.title,
             'date': str(attachment.current_revision.created),
@@ -244,7 +242,8 @@ def _format_attachment_obj(attachments):
         except:
             pass
 
-        obj['html'] = mark_safe(html.render({'attachment': obj}))
+        obj['html'] = mark_safe(loader.render_to_string('wiki/includes/attachment_row.html',
+                                                        {'attachment': obj}))
         attachments_list.append(obj)
     return attachments_list
 
@@ -581,7 +580,7 @@ def document(request, document_slug, document_locale):
             'attachment_data_json': json.dumps(attachments)}
     data.update(SHOWFOR_DATA)
 
-    response = jingo.render(request, 'wiki/document.html', data)
+    response = render(request, 'wiki/document.html', data)
     return set_common_headers(response)
 
 
@@ -709,7 +708,7 @@ def revision(request, document_slug, document_locale, revision_id):
     data = {'document': rev.document, 'revision': rev,
             'comment': format_comment(rev)}
     data.update(SHOWFOR_DATA)
-    return jingo.render(request, 'wiki/revision.html', data)
+    return render(request, 'wiki/revision.html', data)
 
 
 @require_GET
@@ -733,7 +732,7 @@ def list_documents(request, category=None, tag=None):
                                              category=category_id,
                                              tag=tag_obj)
     docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
-    return jingo.render(request, 'wiki/list_documents.html',
+    return render(request, 'wiki/list_documents.html',
                         {'documents': docs,
                          'category': category,
                          'tag': tag})
@@ -744,7 +743,7 @@ def list_templates(request):
     """Returns listing of all templates"""
     docs = Document.objects.filter(is_template=True).order_by('title')
     docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
-    return jingo.render(request, 'wiki/list_documents.html',
+    return render(request, 'wiki/list_documents.html',
                         {'documents': docs,
                          'is_templates': True})
 
@@ -754,7 +753,7 @@ def list_tags(request):
     """Returns listing of all tags"""
     tags = DocumentTag.objects.order_by('name')
     tags = paginate(request, tags, per_page=DOCUMENTS_PER_PAGE)
-    return jingo.render(request, 'wiki/list_tags.html',
+    return render(request, 'wiki/list_tags.html',
                         {'tags': tags})
 
 
@@ -764,7 +763,7 @@ def list_files(request):
     files = paginate(request,
                      Attachment.objects.order_by('title'),
                      per_page=DOCUMENTS_PER_PAGE)
-    return jingo.render(request, 'wiki/list_files.html',
+    return render(request, 'wiki/list_files.html',
                         {'files': files})
 
 
@@ -774,7 +773,7 @@ def list_documents_for_review(request, tag=None):
     tag_obj = tag and get_object_or_404(ReviewTag, name=tag) or None
     docs = paginate(request, Document.objects.filter_for_review(tag=tag_obj),
                     per_page=DOCUMENTS_PER_PAGE)
-    return jingo.render(request, 'wiki/list_documents_for_review.html',
+    return render(request, 'wiki/list_documents_for_review.html',
                         {'documents': docs,
                          'tag': tag_obj,
                          'tag_name': tag})
@@ -866,7 +865,7 @@ def new_document(request):
 
         allow_add_attachment = (
             Attachment.objects.allow_add_attachment_by(request.user))
-        return jingo.render(request, 'wiki/new_document.html',
+        return render(request, 'wiki/new_document.html',
                             {'is_template': is_template,
                              'parent_slug': parent_slug,
                              'parent_id': initial_parent_id,
@@ -910,7 +909,7 @@ def new_document(request):
 
     allow_add_attachment = (
         Attachment.objects.allow_add_attachment_by(request.user))
-    return jingo.render(request, 'wiki/new_document.html',
+    return render(request, 'wiki/new_document.html',
                         {'is_template': is_template,
                          'document_form': doc_form,
                          'revision_form': rev_form,
@@ -1125,7 +1124,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
         Attachment.objects.allow_add_attachment_by(request.user))
     docInfo = json.dumps(_get_document_for_json(doc))
 
-    return jingo.render(request, 'wiki/edit_document.html',
+    return render(request, 'wiki/edit_document.html',
                         {'revision_form': rev_form,
                          'document_form': doc_form,
                          'section_id': section_id,
@@ -1176,7 +1175,7 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
 
     # Make this response iframe-friendly so we can hack around the
     # save-and-edit iframe button
-    return jingo.render(request, 'wiki/edit_document.html',
+    return render(request, 'wiki/edit_document.html',
                         {'collision': True,
                          'revision_form': rev_form,
                          'document_form': doc_form,
@@ -1207,7 +1206,7 @@ def move(request, document_slug, document_locale):
         if form.is_valid():
             conflicts = doc._tree_conflicts(form.cleaned_data['slug'])
             if conflicts:
-                return jingo.render(request, 'wiki/move_document.html', {
+                return render(request, 'wiki/move_document.html', {
                     'form': form,
                     'document': doc,
                     'descendants':  descendants,
@@ -1235,7 +1234,7 @@ def move(request, document_slug, document_locale):
     else:
         form = TreeMoveForm()
 
-    return jingo.render(request, 'wiki/move_document.html', {
+    return render(request, 'wiki/move_document.html', {
         'form': form,
         'document': doc,
         'descendants':  descendants,
@@ -1251,7 +1250,7 @@ def ckeditor_config(request):
     else:
         code = ''
     context = {'editor_config': code, 'redirect_pattern': REDIRECT_CONTENT}
-    return jingo.render(request, 'wiki/ckeditor_config.js', context,
+    return render(request, 'wiki/ckeditor_config.js', context,
                        mimetype="application/x-javascript")
 
 
@@ -1273,7 +1272,7 @@ def preview_revision(request):
     data = {'content': wiki_content, 'title': request.POST.get('title', ''),
             'kumascript_errors': kumascript_errors}
     #data.update(SHOWFOR_DATA)
-    return jingo.render(request, 'wiki/preview.html', data)
+    return render(request, 'wiki/preview.html', data)
 
 
 @require_GET
@@ -1382,7 +1381,7 @@ def document_revisions(request, document_slug, document_locale):
     revs_out = [r for r in revs if r.id == curr_id]
     revs_out.extend([r for r in revs if r.id != curr_id])
 
-    return jingo.render(request, 'wiki/document_revisions.html',
+    return render(request, 'wiki/document_revisions.html',
                         {'revisions': revs_out, 'document': doc,
                          'page': page, 'revs': revs, 'curr_id': curr_id})
 
@@ -1432,7 +1431,7 @@ def review_revision(request, document_slug, document_locale, revision_id):
     data = {'revision': rev, 'document': doc, 'form': form,
             'parent_revision': parent_revision}
     data.update(SHOWFOR_DATA)
-    return jingo.render(request, template, data)
+    return render(request, template, data)
 
 
 @require_GET
@@ -1464,11 +1463,11 @@ def compare_revisions(request, document_slug, document_locale):
     context = {'document': doc, 'revision_from': revision_from,
                          'revision_to': revision_to}
     if request.GET.get('raw', 0):
-        response = jingo.render(request,
+        response = render(request,
                                 'wiki/includes/revision_diff_table.html',
                                 context)
     else:
-        response = jingo.render(request, 'wiki/compare_revisions.html',
+        response = render(request, 'wiki/compare_revisions.html',
                                 context)
     return response
 
@@ -1479,7 +1478,7 @@ def select_locale(request, document_slug, document_locale):
     """Select a locale to translate the document to."""
     doc = get_object_or_404(
         Document, locale=document_locale, slug=document_slug)
-    return jingo.render(request, 'wiki/select_locale.html', {'document': doc})
+    return render(request, 'wiki/select_locale.html', {'document': doc})
 
 
 @require_http_methods(['GET', 'POST'])
@@ -1519,7 +1518,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
 
     if not parent_doc.is_localizable:
         message = _lazy(u'You cannot translate this document.')
-        return jingo.render(request, 'handlers/400.html',
+        return render(request, 'handlers/400.html',
                             {'message': message}, status=400)
 
     if revision_id:
@@ -1653,7 +1652,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
 
     parent_split = _split_slug(parent_doc.slug)
 
-    return jingo.render(request, 'wiki/translate.html',
+    return render(request, 'wiki/translate.html',
                         {'parent': parent_doc, 'document': doc,
                          'document_form': doc_form, 'revision_form': rev_form,
                          'locale': document_locale, 'based_on': based_on_rev,
@@ -1804,8 +1803,7 @@ def code_sample(request, document_slug, document_locale, sample_id):
                                  locale=document_locale)
     data = document.extract_code_sample(sample_id)
     data['document'] = document
-    return jingo.render(request, 'wiki/code_sample.html', data)
-    return response
+    return render(request, 'wiki/code_sample.html', data)
 
 
 @require_POST
@@ -1857,7 +1855,7 @@ def revert_document(request, document_path, revision_id):
 
     if request.method == 'GET':
         # Render the confirmation page
-        return jingo.render(request, 'wiki/confirm_revision_revert.html',
+        return render(request, 'wiki/confirm_revision_revert.html',
                             {'revision': revision, 'document': document})
 
     document.revert(revision, request.user)
@@ -1879,7 +1877,7 @@ def delete_revision(request, document_path, revision_id):
 
     if request.method == 'GET':
         # Render the confirmation page
-        return jingo.render(request, 'wiki/confirm_revision_delete.html',
+        return render(request, 'wiki/confirm_revision_delete.html',
                             {'revision': revision, 'document': document})
 
     # Handle confirm delete form POST
@@ -2169,7 +2167,7 @@ def mindtouch_file_redirect(request, file_id, filename):
 def attachment_detail(request, attachment_id):
     """Detail view of an attachment."""
     attachment = get_object_or_404(Attachment, pk=attachment_id)
-    return jingo.render(request, 'wiki/attachment_detail.html',
+    return render(request, 'wiki/attachment_detail.html',
                         {'attachment': attachment,
                          'revision': attachment.current_revision})
 
@@ -2181,7 +2179,7 @@ def attachment_history(request, attachment_id):
     # a few extra bits, like the ability to set an arbitrary revision
     # to be current.
     attachment = get_object_or_404(Attachment, pk=attachment_id)
-    return jingo.render(request, 'wiki/attachment_history.html',
+    return render(request, 'wiki/attachment_history.html',
                         {'attachment': attachment,
                          'revision': attachment.current_revision})
 
@@ -2219,7 +2217,7 @@ def new_attachment(request):
                               rev.filename())
 
         if request.POST.get('is_ajax', ''):
-            response = jingo.render(
+            response = render(
                 request,
                 'wiki/includes/attachment_upload_results.html',
                 {'result': json.dumps(_format_attachment_obj([attachment]))})
@@ -2231,12 +2229,12 @@ def new_attachment(request):
                 'title': request.POST.get('is_ajax', ''),
                 'error': _(u'The file provided is not valid')
             }
-            response = jingo.render(
+            response = render(
                 request,
                 'wiki/includes/attachment_upload_results.html',
                 {'result': json.dumps([error_obj])})
         else:
-            response = jingo.render(request, 'wiki/edit_attachment.html',
+            response = render(request, 'wiki/edit_attachment.html',
                                     {'form': form})
     return response
 
@@ -2260,5 +2258,5 @@ def edit_attachment(request, attachment_id):
             return HttpResponseRedirect(attachment.get_absolute_url())
     else:
         form = AttachmentRevisionForm()
-    return jingo.render(request, 'wiki/edit_attachment.html',
+    return render(request, 'wiki/edit_attachment.html',
                         {'form': form})

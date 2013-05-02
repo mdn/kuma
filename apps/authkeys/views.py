@@ -1,11 +1,9 @@
 import logging
 
-import jingo
-
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.http import (HttpResponseRedirect, HttpResponseForbidden)
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
@@ -33,13 +31,13 @@ def new(request):
             new_key.save()
             data['key'] = new_key
 
-    return jingo.render(request, 'authkeys/new.html', data)
+    return render(request, 'authkeys/new.html', data)
 
 
 @login_required
 def list(request):
     keys = Key.objects.filter(user=request.user)
-    return jingo.render(request, 'authkeys/list.html', dict(keys=keys))
+    return render(request, 'authkeys/list.html', dict(keys=keys))
 
 
 @login_required
@@ -49,7 +47,7 @@ def history(request, pk):
         raise PermissionDenied
     items = key.history.all().order_by('-pk')
     items = paginate(request, items, per_page=ITEMS_PER_PAGE)
-    return jingo.render(request, 'authkeys/history.html',
+    return render(request, 'authkeys/history.html',
                         dict(key=key, items=items))
 
 
@@ -61,4 +59,4 @@ def delete(request, pk):
     if request.method == "POST":
         key.delete()
         return HttpResponseRedirect(reverse('authkeys.list'))
-    return jingo.render(request, 'authkeys/delete.html', dict(key=key))
+    return render(request, 'authkeys/delete.html', dict(key=key))

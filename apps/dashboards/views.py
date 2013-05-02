@@ -7,10 +7,10 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.http import Http404, HttpResponseRedirect, HttpResponse
+from django.shortcuts import render
 from django.utils.datastructures import SortedDict
 from django.views.decorators.http import require_GET
 
-import jingo
 import jinja2
 from tower import ugettext_lazy as _lazy, ugettext as _
 from waffle.decorators import waffle_flag
@@ -44,7 +44,7 @@ def home(request):
             Document, title, request.locale, message)
 
     data.update(SHOWFOR_DATA)
-    return jingo.render(request, 'dashboards/home.html', data)
+    return render(request, 'dashboards/home.html', data)
 
 
 def mobile(request):
@@ -55,7 +55,7 @@ def mobile(request):
             Document, title, request.locale, message)
 
     data.update(SHOWFOR_DATA)
-    return jingo.render(request, 'dashboards/mobile.html', data)
+    return render(request, 'dashboards/mobile.html', data)
 
 
 def _kb_readout(request, readout_slug, readouts, locale=None, mode=None):
@@ -72,7 +72,7 @@ def _kb_readout(request, readout_slug, readouts, locale=None, mode=None):
 def _kb_detail(request, readout_slug, readouts, main_view_name,
                main_dash_title, locale=None):
     """Show all the rows for the given KB article statistics table."""
-    return jingo.render(request, 'dashboards/kb_detail.html',
+    return render(request, 'dashboards/kb_detail.html',
         {'readout': _kb_readout(request, readout_slug, readouts, locale),
          'locale': locale,
          'main_dash_view': main_view_name,
@@ -117,7 +117,7 @@ def _kb_main(request, readouts, template, locale=None, extra_data=None):
                     request.user, locale=settings.WIKI_DEFAULT_LANGUAGE)}
     if extra_data:
         data.update(extra_data)
-    return jingo.render(request, 'dashboards/' + template, data)
+    return render(request, 'dashboards/' + template, data)
 
 
 @require_GET
@@ -228,7 +228,7 @@ def revisions(request):
         result = json.dumps(revision_json)
         return HttpResponse(result, mimetype='application/json')
 
-    return jingo.render(request, 'dashboards/revisions.html')
+    return render(request, 'dashboards/revisions.html')
 
 
 @require_GET
