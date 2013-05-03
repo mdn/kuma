@@ -339,7 +339,9 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "summary": _("The getUserMedia function lets you access (with permission) the cameras and microphones of your users. No plugins needed! What can you do once you have this media? The possibilities are endless."),
         "description": _("The getUserMedia function lets you access (with permission) the cameras and microphones of your users. No plugins needed! What can you do once you have this media? The possibilities are endless."),
         "learn_more": [],
-        "tab_copy": _("??"),
+        "tab_copy": _("""<p>The Mozilla Dev Derby is a monthly Web development contest open to anyone willing to learn. This month, we want to see what you can do with getUserMedia. Build your own photo booth application, help your users record their music and more. With the camera and microphone access offered through getUserMedia, anything is possible.</p>
+<p>Need help getting started? No problem. The <a href="https://developer.mozilla.org/en-US/">Mozilla Developer Network (MDN)</a> has you covered with some of the best documentation out there. Beginners will appreciate our <a href="https://developer.mozilla.org/en-US/learn">comprehensive guide on the basics</a> and more experienced Web developers should appreciate the thousands of other articles provided. When you're ready to tackle getUserMedia in particular, check out the wonderful <a href="https://developer.mozilla.org/en-US/docs/WebRTC/Taking_webcam_photos">annotated demo</a> written by our very own Christian Heilmann. Want even more depth? Take a look at our <a href="https://developer.mozilla.org/en-US/docs/WebRTC/navigator.getUserMedia">detailed technical overview</a>.</p>
+<p>It may seem like a lot, but you don't need to be an expert to create something great. What can you do with getUserMedia?</p>"""),
     },
     {
         "tag_name": "challenge:2013:june",
@@ -350,6 +352,18 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "tagline": _("Twice the 3D!"),
         "summary": _("WebGL brings the power of OpenGL, for creating interactive 3D graphics, to the Web, with no plug-ins required."),
         "description": _("WebGL brings the power of OpenGL, for creating interactive 3D graphics, to the Web, with no plug-ins required."),
+        "learn_more": [],
+        "tab_copy": _("??"),
+    },
+    {
+        "tag_name": "challenge:2013:july",
+        "title": _("July 2013 Dev Derby Challenge - File API"),
+        "short_title": _("File API"),
+        "dateline": _("July 2013"),
+        "short_dateline": _("July"),
+        "tagline": _("File found"),
+        "summary": _("The File API lets you read the contents of files submitted by your users, making natural and familiar data operations possible."),
+        "description": _("The File API lets you read the contents of files submitted by your users, making natural and familiar data operations possible."),
         "learn_more": [],
         "tab_copy": _("??"),
     },
