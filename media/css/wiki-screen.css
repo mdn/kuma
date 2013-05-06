@@ -219,7 +219,7 @@ div.note p:last-child, div.tip p:last-child, div.warning.review-technical p:last
 
 .template { display: none; }
 
-a.edit-section { display: none; margin-top: 0.5em; float: right; padding: .25em 5px .15em; border: 0; border-radius: 3px; box-shadow: 1px 1px 0 rgba(0,0,0,.25); color: #333; background: #a5d9f3 url("../img/light-shade.png") 0 .75em repeat-x; font: 200 15px/1 "Bebas Neue", "League Gothic", Haettenschweiler, sans-serif; text-transform: uppercase; letter-spacing: .5px; text-decoration: none; }
+a.edit-section { margin-top: 0.5em; float: right; padding: .25em 5px .15em; border: 0; border-radius: 3px; box-shadow: 1px 1px 0 rgba(0,0,0,.25); color: #333; background: #a5d9f3 url("../img/light-shade.png") 0 .75em repeat-x; font: 200 15px/1 "Bebas Neue", "League Gothic", Haettenschweiler, sans-serif; text-transform: uppercase; letter-spacing: .5px; text-decoration: none; }
 a.edit-section:before { content: "\25c0\00a0"; font-size: .857em; }
 a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333; background-color: #ade4ff; text-decoration: none; }
 

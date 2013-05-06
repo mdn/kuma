@@ -1092,6 +1092,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                                   locale=doc.locale)
                     params = {}
                     if is_raw:
+                        params['macros'] = 'true'
                         params['raw'] = 'true'
                         if need_edit_links:
                             # Only need to carry over ?edit_links with ?raw,
