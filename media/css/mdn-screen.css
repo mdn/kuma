@@ -261,6 +261,8 @@ p.notice { padding-bottom: 10px; top: 0; margin-bottom: 15px; }
 
 .new-menu #nav-main .menu #nav-sub-community, .new-menu #nav-main .menu #nav-sub-firefox { width: 150px; margin-left: -85px; }
 
+.section-demos .new-menu #nav-main-demos .demos { background: none; }
+
 /*** @Search *********/
 #site-search { width: 280px; float: right; text-align: left; padding-left: 0; margin: -8px 140px 0 0; position: relative; }
 #site-search p { margin: 0; }

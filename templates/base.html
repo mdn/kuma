@@ -68,13 +68,15 @@
                 <ul>
                   <li>
                     <ul>
-                      <li><a href="{{ devmo_url('HTML') }}">{{ _('HTML') }}</a></li>
-                      <li><a href="{{ devmo_url('CSS') }}">{{ _('CSS') }}</a></li>
-                      <li><a href="{{ devmo_url('JavaScript') }}">{{ _('JavaScript') }}</a></li>
+                      <li><a href="{{ devmo_url('Web/HTML') }}">{{ _('HTML') }}</a></li>
+                      <li><a href="{{ devmo_url('Web/CSS') }}">{{ _('CSS') }}</a></li>
+                      <li><a href="{{ devmo_url('Web/JS') }}">{{ _('JavaScript') }}</a></li>
                       <li><a href="{{ devmo_url('Web/Graphics') }}">{{ _('Graphics (SVG, Canvas, WebGL)') }}</a></li>
+                      <li><a href="{{ devmo_url('Web/API') }}">{{ _('APIs / DOM') }}</a></li>
+                      <li><a href="{{ devmo_url('Apps') }}">{{ _('Apps') }}</a></li>
                       <li><a href="{{ devmo_url('Tools') }}">{{ _('Dev Tools') }}</a></li>
                       <li><a href="{{ devmo_url('Web/MathML') }}">{{ _('MathML') }}</a></li>
-                      <li><a href="{{ url('docs') }}">{{ _('...more docs') }}</a></li>
+                      <li><a href="{{ devmo_url('Web') }}">{{ _('...more docs') }}</a></li>
                     </ul>
                   </li>
                   <li>
@@ -82,7 +84,7 @@
                       <li><a href="{{ devmo_url('Web/Tutorials') }}">{{ _('Tutorials') }}</a></li>
                       <li><a href="{{ devmo_url('Web/References') }}">{{ _('References') }}</a></li>
                       <li><a href="{{ devmo_url('Web/Guide') }}">{{ _('Developer Guides') }}</a></li>
-                      <li><a href="{{ url('demos') }}">{{ _('Audio') }}</a></li>
+                      <li><a href="{{ url('demos') }}">{{ _('Demos') }}</a></li>
                     </ul>
                   </li>
                 </ul>
@@ -245,6 +247,18 @@
   {% for script in scripts %}
     {{ js(script) }}
   {% endfor %}
+
+
+  {% if waffle.flag('new_menu') %}
+    <script type="text/javascript">
+      // Event tracking for the new menu
+      $(function() {
+        $('#nav-main').on('click', 'a', function(e) {
+          window._gaq && _gaq.push(['_trackEvent', 'Menu', 'Click', e.target.innerHTML, e.target.href]);
+        });
+      });
+    </script>
+  {% endif %}
 {% endblock %}
 {% block js %}{% endblock %}
 {# end js #}
