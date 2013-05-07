@@ -357,7 +357,9 @@ class RevisionsFeed(DocumentsFeed):
         return description
 
     def item_link(self, item):
-        return reverse('wiki.document', args=[item.document.full_path])
+        return self.request.build_absolute_uri(
+            reverse('wiki.views.document', locale=item.document.locale,
+                    args=(item.document.slug,)))
 
     def item_pubdate(self, item):
         return item.created
