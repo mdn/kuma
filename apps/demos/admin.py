@@ -130,8 +130,6 @@ delete_selected.short_description = ugettext_lazy(
 
 
 class SubmissionAdmin(admin.ModelAdmin):
-    change_list_template = 'smuggler/change_list.html'
-
     actions = (delete_selected, censor_selected,)
 
     list_display = ('title', 'creator', 'featured', 'censored', 'hidden',
