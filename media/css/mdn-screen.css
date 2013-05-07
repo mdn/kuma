@@ -183,10 +183,10 @@ p.notice { padding-bottom: 10px; top: 0; margin-bottom: 15px; }
 #nav-main-learning a:hover, #nav-main-learning a:focus, #nav-main-learning a:active { color: #a7df38; }
 #nav-main-community a:hover, #nav-main-community a:focus, #nav-main-community a:active { color: #0cf; }
 
-#nav-main .menu { padding: 0 12px 0 0; background: url("../img/nav-arrows.png") 100% -545px no-repeat; }
-#nav-main .menu:hover { background-position: 100% -595px; }
-#nav-main #nav-main-docs:hover { background-position: 100% -645px; }
-#nav-main #nav-main-community:hover { background-position: 100% -1145px; }
+#nav-main .menu { padding: 0 12px 0 0; background: url("../img/nav-arrows.png") 100% -530px no-repeat; }
+#nav-main .menu:hover { background-position: 100% -580px; }
+#nav-main #nav-main-docs:hover { background-position: 100% -630px; }
+#nav-main #nav-main-community:hover { background-position: 100% -1130px; }
 
 #nav-main .menu .sub-menu { position: absolute; z-index: 98; left: -999em; top: 27px; background: #000; list-style: none; width: 90px; font-size: 1em; padding: 10px 6px 4px; border: 4px solid #f8d575; text-align: center; -moz-box-shadow: 0 0 3px rgba(0,0,0,.5); -webkit-box-shadow: 0 0 3px rgba(0,0,0,.5); box-shadow: 0 0 3px rgba(0,0,0,.5); }
 #nav-main .menu .sub-menu li { display: block; float: none; width: 100%; margin: 0 0 .35em; }
@@ -229,6 +229,25 @@ p.notice { padding-bottom: 10px; top: 0; margin-bottom: 15px; }
 #nav-main #nav-sub-docs p { border-top: 1px solid #666; clear: both; padding: .75em 0 0; margin: .5em 0; text-align: right; font: .785em "Lucida Grande", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif; text-transform: none; letter-spacing: normal; }
 #nav-main #nav-sub-docs a { color: #ccc; height: auto; display: block; padding: .4em 0; border: 0; }
 #nav-main #nav-sub-docs a:hover, #nav-sub-docs a:focus, #nav-sub-docs a:active { border: 0; padding: .4em 0; color: #fb9500; text-decoration: underline; }
+
+/*** New MDN Navigation *********/
+#nav-main.new-menu a { height: 34px; }
+#nav-main.new-menu a:hover, #nav-main.new-menu a:focus, #nav-main.new-menu a:active { padding-bottom: 9px; border-bottom: 0; }
+#nav-main.new-menu > li > a { font-size: 0.9em; }
+#nav-main.new-menu > li > a em { font-size: 1.2em; font-style: normal; }
+#nav-main.new-menu .menu .sub-menu { top: 41px; }
+#nav-main.new-menu .toggle.open { height: 32px; }
+
+#nav-main-firefox a:hover, #nav-main-firefox a:focus, #nav-main-firefox a:active { color: #f8d575; }
+#nav-main-apps a:hover, #nav-main-apps a:focus, #nav-main-apps a:active { color: #9ac500; }
+
+#nav-main.new-menu #nav-main-docs .open { color: #f89700; background-position: center -65px; }
+#nav-main.new-menu #nav-main-firefox .open { color: #f8d575; background-position: center -15px; }
+#nav-main.new-menu #nav-main-community .open { color: #00b6f0; background-position: center -1065px; }
+
+.hasJS #nav-main.new-menu #nav-sub-docs, #nav-main.new-menu .menu:hover #nav-sub-docs { margin-left: -100px; }
+#nav-main.new-menu #nav-sub-docs { width: 210px; padding: 10px 15px; font-size: .857em; border-color: #fb9500; }
+#nav-main.new-menu #nav-sub-docs > ul > li { width: 49.9%; }
 
 /*** @Search *********/
 #site-search { width: 280px; float: right; text-align: left; padding-left: 0; margin: -8px 140px 0 0; position: relative; }
