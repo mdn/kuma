@@ -183,10 +183,10 @@ p.notice { padding-bottom: 10px; top: 0; margin-bottom: 15px; }
 #nav-main-learning a:hover, #nav-main-learning a:focus, #nav-main-learning a:active { color: #a7df38; }
 #nav-main-community a:hover, #nav-main-community a:focus, #nav-main-community a:active { color: #0cf; }
 
-#nav-main .menu { padding: 0 12px 0 0; background: url("../img/nav-arrows.png") 100% -530px no-repeat; }
-#nav-main .menu:hover { background-position: 100% -580px; }
-#nav-main #nav-main-docs:hover { background-position: 100% -630px; }
-#nav-main #nav-main-community:hover { background-position: 100% -1130px; }
+#nav-main .menu { padding: 0 12px 0 0; background: url("../img/nav-arrows.png") 100% -545px no-repeat; }
+#nav-main .menu:hover { background-position: 100% -595px; }
+#nav-main #nav-main-docs:hover { background-position: 100% -645px; }
+#nav-main #nav-main-community:hover { background-position: 100% -1145px; }
 
 #nav-main .menu .sub-menu { position: absolute; z-index: 98; left: -999em; top: 27px; background: #000; list-style: none; width: 90px; font-size: 1em; padding: 10px 6px 4px; border: 4px solid #f8d575; text-align: center; -moz-box-shadow: 0 0 3px rgba(0,0,0,.5); -webkit-box-shadow: 0 0 3px rgba(0,0,0,.5); box-shadow: 0 0 3px rgba(0,0,0,.5); }
 #nav-main .menu .sub-menu li { display: block; float: none; width: 100%; margin: 0 0 .35em; }
@@ -248,6 +248,11 @@ p.notice { padding-bottom: 10px; top: 0; margin-bottom: 15px; }
 .hasJS #nav-main.new-menu #nav-sub-docs, #nav-main.new-menu .menu:hover #nav-sub-docs { margin-left: -100px; }
 #nav-main.new-menu #nav-sub-docs { width: 210px; padding: 10px 15px; font-size: .857em; border-color: #fb9500; }
 #nav-main.new-menu #nav-sub-docs > ul > li { width: 49.9%; }
+
+#nav-main.new-menu .menu { background: url("../img/nav-arrows.png") 100% -530px no-repeat; }
+#nav-main.new-menu .menu:hover { background-position: 100% -580px; }
+#nav-main.new-menu #nav-main-docs:hover { background-position: 100% -630px; }
+#nav-main.new-menu #nav-main-community:hover { background-position: 100% -1130px; }
 
 /*** @Search *********/
 #site-search { width: 280px; float: right; text-align: left; padding-left: 0; margin: -8px 140px 0 0; position: relative; }
