@@ -1,0 +1,190 @@
+/* general styles */
+.new-home .outline-block {
+  background: #fff;
+  padding: 20px;
+  border: 1px solid #e8e8e8;
+  -moz-box-shadow: 0 2px 2px rgba(0,0,0,.15);
+  -webkit-box-shadow: 0 2px 2px rgba(0,0,0,.15);
+  box-shadow: 0 2px 2px rgba(0,0,0,.15);
+  margin-bottom: 20px;
+}
+
+.new-home .outline-block h2 span {
+  color: #995c00;
+  font-size: .8em;
+}
+
+.new-home .home-popular h2,
+.new-home .home-community h2,
+.new-home h2.new-heading {
+  font: normal 26px/1.1 "Bebas Neue","League Gothic",Haettenschweiler,"Arial Narrow",sans-serif;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  margin-bottom: 0.4em;
+}
+
+.new-home .home-popular h3,
+.new-home .home-community h3 {
+  font: normal 20px/1.1 "Bebas Neue","League Gothic",Haettenschweiler,"Arial Narrow",sans-serif;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  margin-bottom: 0.1em;
+  color: #444;
+}
+
+/* search area */
+.new-home .home-search {
+  padding: 10px !important;
+}
+.new-home .home-search input {
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 10px;
+  font-size: 1.5em;
+  border-color: #ddd;
+}
+.new-home .home-search input::-moz-placeholder {
+  color: #999;
+  font-style: italic;
+}
+.new-home .home-search input::-webkit-input-placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+/* quick layout stuff */
+.new-home .home-left {
+  float: left;
+  width: 700px;
+  margin-right: 20px;
+}
+.new-home .home-right {
+  float: left;
+  width: 220px;
+}
+
+/* popular docs */
+.new-home .home-popular {
+  
+}
+.new-home .home-popular > ul {
+  margin-bottom: 0;
+}
+.new-home .home-popular ul:after,
+.new-home .home-community > ul:after
+ {
+  content: "."; display: block; clear: both; height: 0; visibility: hidden; /* clear floats */
+}
+
+.new-home .home-popular .home-popular-docs,
+.new-home .home-popular .home-popular-mozilla,
+.new-home .home-popular .home-popular-features {
+  float: left;
+  width: 31%;
+  height: 230px;
+}
+.new-home .home-popular .home-popular-docs,
+.new-home .home-popular .home-popular-mozilla {
+  border-right: 1px dotted gray;
+  margin-right: 3%;
+}
+.new-home .home-popular .home-popular-docs a, 
+.new-home .home-popular .home-popular-mozilla a,
+.new-home .home-popular .home-popular-features a {
+  display: block;
+  padding: .4em 0;
+  font-weight: bold;
+  font-size: 0.9em;
+}
+
+/* community involvement */
+.new-home .home-community ul.home-community-list {
+  margin-left: 40px;
+  margin-right: 40px;
+}
+.new-home .home-community ul.home-community-list > li {
+  float: left;
+  width: 48%;
+}
+.new-home .home-community ul.home-community-list > li li {
+  padding: .4em 0;
+  font-size: 0.9em;
+  color: #666;
+}
+.new-home .home-community ul.home-community-conversion {
+  margin-bottom: 0;
+  text-align: center;
+  border-top: 1px dotted gray;
+  padding-top: 20px;
+}
+.new-home .home-community ul.home-community-conversion li {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+/* hacks */
+.new-home .home-hacks .entry-title {
+  font-size: 1em;
+  margin-bottom: 0.3em;
+}
+.new-home .home-hacks .entry-meta {
+  font-style: italic;
+  font-size: 0.8em;
+  color: #666;
+  margin: 0;
+}
+.new-home .home-hacks .entry-summary {
+  margin-bottom: 0.4em;
+  font-size: 0.9em;
+}
+.new-home .home-hacks .hentry {
+  border-bottom: 1px dotted #999;
+  margin: 0 0 1em;
+  padding: 0 0 1em;
+}
+.new-home .home-hacks .hentry:last-child {
+  border: 0;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+/* right promos */
+.new-home .home-promos .promo{
+  margin-bottom: 20px;
+}
+
+/* right demos */
+.new-home .home-demos {
+  margin-top: 20px;
+  margin-left: 20px;
+}
+.new-home .home-demos h2 {
+  margin-bottom: 0;
+}
+.new-home .home-demos .home-demos-conversion {
+  font-size: 0.8em;
+  color: #999;
+}
+.new-home .home-demos .home-demos-featured {
+  padding: 10px 0;
+  font-size: 0.85em;
+}
+.new-home .home-demos .gallery {
+  margin: 10px 0;
+}
+.new-home .home-demos .gallery li.demo {
+  width: 180px;
+  height: 133px;
+  overflow: hidden;
+  padding: 7px 5px 0;
+  margin-bottom: 0;
+}
+.new-home .home-demos .gallery .byline {
+  display: none;
+}
+.new-home .home-demos .gallery .demo-title a {
+  color: transparent;
+  font-size: 0;
+}
