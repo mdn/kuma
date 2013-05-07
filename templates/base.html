@@ -44,7 +44,7 @@
 {% endtrans %}
 </div></noscript>
 <![endif]-->
-  <header id="masthead" class="{% block headerclass %}minor{% endblock %}">
+  <header id="masthead" class="{% block headerclass %}minor{% endblock %} {% if waffle.flag('new_menu') %}new-menu{% endif %}">
     <div class="wrap">
       <ul id="nav-access">
         <li><a href="#language">{{ _('Select language') }}</a></li>
@@ -62,7 +62,7 @@
 
       {% if waffle.flag('new_menu') %}
         <nav id="nav">
-          <ul id="nav-main" role="menubar" class="new-menu">
+          <ul id="nav-main" role="menubar">
             <li id="nav-main-docs" class="menu" rel="menuitem"><a href="#nav-sub-docs" class="toggle" aria-haspopup="true" aria-labelledby="nav-main-docs" title="{{ _('Read Documentation') }}">{{ _('Read<br /><em>Docs</em>') }}</a>
               <div id="nav-sub-docs" class="sub-menu" aria-hidden="true">
                 <ul>
