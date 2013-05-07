@@ -104,6 +104,28 @@ class FeedTests(TestCaseBase):
         ok_('Revision 3' in resp.content)
         ok_('Revision 2' in resp.content)
 
+    def test_bug869301_revisions_feed_locale(self):
+        """Links to documents in revisions feed with ?all_locales should
+        reflect proper document locale, regardless of requestor's locale"""
+        d = document(title='HTML9', locale="fr")
+        d.save()
+        for i in xrange(1, 6):
+            revision(save=True, document=d,
+                         title='HTML9', comment='Revision %s' % i,
+                         content="Some Content %s" % i,
+                         is_approved=True,
+                         created=datetime.datetime.now()\
+                         + datetime.timedelta(seconds=5 * i))
+
+        resp = self.client.get('%s?all_locales' % 
+                reverse('wiki.feeds.recent_revisions',
+                        args=(), kwargs={'format': 'rss'}, locale='en-US'))
+        eq_(200, resp.status_code)
+        feed = pq(resp.content)
+        eq_(5, len(feed.find('item')))
+        for i, item in enumerate(feed.find('item')):
+            href = pq(item).find('link').text()
+            ok_('/fr/' in href)
 
     def test_revisions_feed_diffs(self):
         d = document(title='HTML9')
