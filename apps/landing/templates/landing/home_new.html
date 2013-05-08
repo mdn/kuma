@@ -70,7 +70,7 @@
 
         <!-- community -->
         <section class="home-community outline-block">
-          <h2>{{ _('Get Involved <span>MDN Community') }}</span></h2>
+          <h2>{{ _('Get Involved <span>MDN Community</span>') }}</h2>
           <p>{{ _('The <strong>Mozilla Developer Network</strong> (MDN) is an open documentation wiki written by developers, for developers, where anyone can contribute.') }} <a href="{{ devmo_url('Project:MDN/Contributing/Join_the_community') }}"> {{ _('Join MDN') }}</a> {{ _(' and help with:') }}</p>
 
           <ul class="home-community-list">
@@ -100,7 +100,7 @@
 
         <!-- hacks -->
         <section class="home-hacks outline-block">
-          <h2 class="new-heading">Hacks Blog <span>hacks.mozilla.org</span></h2>
+          <h2 class="new-heading">{{ _('Hacks Blog <span>hacks.mozilla.org</span>') | safe }}</h2>
           {{ newsfeed(updates, section_headers=True) }}
         </section>
       </div>
