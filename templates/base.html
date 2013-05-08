@@ -68,23 +68,23 @@
                 <ul>
                   <li>
                     <ul>
-                      <li><a href="{{ devmo_url('Web/HTML') }}">{{ _('HTML') }}</a></li>
-                      <li><a href="{{ devmo_url('Web/CSS') }}">{{ _('CSS') }}</a></li>
-                      <li><a href="{{ devmo_url('Web/JS') }}">{{ _('JavaScript') }}</a></li>
-                      <li><a href="{{ devmo_url('Web/Graphics') }}">{{ _('Graphics (SVG, Canvas, WebGL)') }}</a></li>
-                      <li><a href="{{ devmo_url('Web/API') }}">{{ _('APIs / DOM') }}</a></li>
-                      <li><a href="{{ devmo_url('Apps') }}">{{ _('Apps') }}</a></li>
-                      <li><a href="{{ devmo_url('Tools') }}">{{ _('Dev Tools') }}</a></li>
-                      <li><a href="{{ devmo_url('Web/MathML') }}">{{ _('MathML') }}</a></li>
-                      <li><a href="{{ devmo_url('Web') }}">{{ _('...more docs') }}</a></li>
+                      <li><a href="{{ devmo_url('Web/HTML') }}?menu">{{ _('HTML') }}</a></li>
+                      <li><a href="{{ devmo_url('Web/CSS') }}?menu">{{ _('CSS') }}</a></li>
+                      <li><a href="{{ devmo_url('Web/JS') }}?menu">{{ _('JavaScript') }}</a></li>
+                      <li><a href="{{ devmo_url('Web/Graphics') }}?menu">{{ _('Graphics (SVG, Canvas, WebGL)') }}</a></li>
+                      <li><a href="{{ devmo_url('Web/API') }}?menu">{{ _('APIs / DOM') }}</a></li>
+                      <li><a href="{{ devmo_url('Apps') }}?menu">{{ _('Apps') }}</a></li>
+                      <li><a href="{{ devmo_url('Tools') }}?menu">{{ _('Dev Tools') }}</a></li>
+                      <li><a href="{{ devmo_url('Web/MathML') }}?menu">{{ _('MathML') }}</a></li>
+                      <li><a href="{{ devmo_url('Web') }}?menu">{{ _('...more docs') }}</a></li>
                     </ul>
                   </li>
                   <li>
                     <ul>
-                      <li><a href="{{ devmo_url('Web/Tutorials') }}">{{ _('Tutorials') }}</a></li>
-                      <li><a href="{{ devmo_url('Web/References') }}">{{ _('References') }}</a></li>
-                      <li><a href="{{ devmo_url('Web/Guide') }}">{{ _('Developer Guides') }}</a></li>
-                      <li><a href="{{ url('demos') }}">{{ _('Demos') }}</a></li>
+                      <li><a href="{{ devmo_url('Web/Tutorials') }}?menu">{{ _('Tutorials') }}</a></li>
+                      <li><a href="{{ devmo_url('Web/References') }}?menu">{{ _('References') }}</a></li>
+                      <li><a href="{{ devmo_url('Web/Guide') }}?menu">{{ _('Developer Guides') }}</a></li>
+                      <li><a href="{{ url('demos') }}?menu">{{ _('Demos') }}</a></li>
                     </ul>
                   </li>
                 </ul>
@@ -93,19 +93,19 @@
             <li id="nav-main-apps" role="menuitem"><a href="https://marketplace.firefox.com/developers/">{{ _('Make<br /><em>Apps</em>') }}</a></li>
             <li id="nav-main-firefox" class="menu" role="menuitem"><a href="#nav-sub-firefox" class="firefox toggle" aria-haspopup="true" aria-labelledby="nav-main-firefox">{{ _('Build & Use<br /><em>Firefox</em>') }}</a>
               <ul id="nav-sub-firefox" class="sub-menu">
-                <li><a href="{{ devmo_url('Mozilla/Firefox_OS') }}">{{ _('Firefox OS') }}</a></li>
-                <li><a href="{{ devmo_url('Mozilla/Firefox') }}">{{ _('Firefox Desktop') }}</a></li>
-                <li><a href="{{ devmo_url('Mozilla/Firefox_for_Android') }}">{{ _('Mobile') }}</a></li>
-                <li><a href="{{ devmo_url('Addons') }}">{{ _('Add-ons') }}</a></li>
+                <li><a href="{{ devmo_url('Mozilla/Firefox_OS') }}?menu">{{ _('Firefox OS') }}</a></li>
+                <li><a href="{{ devmo_url('Mozilla/Firefox') }}?menu">{{ _('Firefox Desktop') }}</a></li>
+                <li><a href="{{ devmo_url('Mozilla/Firefox_for_Android') }}?menu">{{ _('Mobile') }}</a></li>
+                <li><a href="{{ devmo_url('Addons') }}?menu">{{ _('Add-ons') }}</a></li>
               </ul>
             </li>
-            <li id="nav-main-demos" role="menuitem"><a href="{{ url('demos') }}" class="demos">{{ _('See & Submit<br /><em>Demos</em>') }}</a></li>
+            <li id="nav-main-demos" role="menuitem"><a href="{{ url('demos') }}?menu" class="demos">{{ _('See & Submit<br /><em>Demos</em>') }}</a></li>
             <li id="nav-main-community" class="menu" role="menuitem"><a href="#nav-sub-community" class="community toggle" aria-haspopup="true" aria-labelledby="nav-main-community">{{ _('Get<br /><em>Involved</em>') }}</a>
               <ul id="nav-sub-community" class="sub-menu">
-                <li><a href="{{ devmo_url('Project:MDN/Contributing/Join_the_community') }}">{{ _('Join the Community') }}</a></li>
-                <li><a href="{{ devmo_url('Project:MDN/Contributing') }}">{{ _('Contribute to MDN') }}</a></li>
-                <li><a href="{{ url('events') }}">{{ _('Events') }}</a></li>
-                <li><a href="{{ devmo_url('Project:MDN/Contributing/Follow_what_s_happening') }}">{{ _('Tweets, Blogs, and More') }}</a></li>
+                <li><a href="{{ devmo_url('Project:MDN/Contributing/Join_the_community') }}?menu">{{ _('Join the Community') }}</a></li>
+                <li><a href="{{ devmo_url('Project:MDN/Contributing') }}?menu">{{ _('Contribute to MDN') }}</a></li>
+                <li><a href="{{ url('events') }}?menu">{{ _('Events') }}</a></li>
+                <li><a href="{{ devmo_url('Project:MDN/Contributing/Follow_what_s_happening') }}?menu">{{ _('Tweets, Blogs, and More') }}</a></li>
               </ul>
             </li>
           </ul>
