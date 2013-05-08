@@ -251,8 +251,9 @@ p.notice { padding-bottom: 10px; top: 0; margin-bottom: 15px; }
 
 #nav-main #nav-sub-docs ul { font-size: 12px; }
 .hasJS .new-menu #nav-main #nav-sub-docs, .new-menu #nav-main .menu:hover #nav-sub-docs { margin-left: -100px; }
-.new-menu #nav-main #nav-sub-docs { width: 210px; padding: 10px 15px; font-size: .857em; border-color: #fb9500; }
+.new-menu #nav-main #nav-sub-docs { width: 310px; padding: 10px 15px; font-size: .857em; border-color: #fb9500; }
 .new-menu #nav-main #nav-sub-docs > ul > li { width: 49.9%; }
+.new-menu #nav-main #nav-sub-docs li { text-align: start; }
 
 .new-menu #nav-main .menu { background: url("../img/nav-arrows.png") 100% -530px no-repeat; }
 .new-menu #nav-main .menu:hover { background-position: 100% -580px; }
