@@ -271,3 +271,22 @@ class EmailChange(models.Model):
 
     def __unicode__(self):
         return u'Change email request to %s for %s' % (self.email, self.user)
+
+
+class UserBan(models.Model):
+    user = models.ForeignKey(User, related_name="bans")
+    by = models.ForeignKey(User, related_name="bans_issued")
+    reason = models.TextField()
+    date = models.DateField(default=datetime.date.today)
+    is_active = models.BooleanField(default=True)
+
+    def __unicode__(self):
+        message = _lazy(u'%s banned by %s') % (self.user, self.by)
+        if not self.is_active:
+            message = _lazy(u"%s (no longer active)") % message
+        return message
+
+    def save(self, *args, **kwargs):
+        super(UserBan, self).save(*args, **kwargs)
+        self.user.is_active = not self.is_active
+        self.user.save()

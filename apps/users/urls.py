@@ -54,6 +54,9 @@ users_patterns = patterns('',
     url(r'^/change_email$', views.change_email, name='users.change_email'),
     url(r'^/confirm_email/(?P<activation_key>\w+)$',
         views.confirm_change_email, name='users.confirm_email'),
+    url(r'^/ban/(?P<user_id>\d+)$',
+        views.ban_user,
+        name='users.ban_user'),
 )
 
 urlpatterns = patterns('',

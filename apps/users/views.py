@@ -5,6 +5,7 @@ from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth.forms import (SetPasswordForm,
                                        PasswordChangeForm)
+from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib import messages
@@ -31,8 +32,8 @@ from sumo.urlresolvers import reverse, split_path
 from users.forms import (ProfileForm, AvatarForm, EmailConfirmationForm,
                          AuthenticationForm, EmailChangeForm,
                          PasswordResetForm, BrowserIDRegisterForm,
-                         EmailReminderForm)
-from users.models import Profile, RegistrationProfile, EmailChange
+                         EmailReminderForm, UserBanForm)
+from users.models import Profile, RegistrationProfile, EmailChange, UserBan
 from devmo.models import UserProfile
 from dekicompat.backends import DekiUserBackend, MindTouchAPIError
 from users.utils import (handle_login, handle_register, send_reminder_email,
@@ -617,3 +618,29 @@ def _clean_next_url(request):
     # next url value already.
     url = url.replace(' ', '+')
     return url
+
+
+@permission_required('users.add_userban')
+def ban_user(request, user_id):
+    """
+    Ban a user.
+    
+    """
+    try:
+        user = User.objects.get(pk=user_id)
+    except User.DoesNotExist:
+        raise Http404
+    if request.method == 'POST':
+        form = UserBanForm(data=request.POST)
+        if form.is_valid():
+            ban = UserBan(user=user,
+                          by=request.user,
+                          reason=form.cleaned_data['reason'],
+                          is_active=True)
+            ban.save()
+            return HttpResponseRedirect(user.get_absolute_url())
+    form = UserBanForm()
+    return render(request,
+                  'users/ban_user.html',
+                  {'form': form,
+                   'user': user})
