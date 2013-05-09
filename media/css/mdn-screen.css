@@ -231,14 +231,14 @@ p.notice { padding-bottom: 10px; top: 0; margin-bottom: 15px; }
 #nav-main #nav-sub-docs a:hover, #nav-sub-docs a:focus, #nav-sub-docs a:active { border: 0; padding: .4em 0; color: #fb9500; text-decoration: underline; }
 
 /*** New MDN Header and Navigation *********/
-.new-menu #logo { font: 26px/1 "Bebas Neue","League Gothic",Haettenschweiler,Impact,"Arial Narrow",sans-serif; }
+.new-menu #logo { font: 26px/1 "Bebas Neue","League Gothic",Haettenschweiler,Impact,"Arial Narrow",sans-serif; margin-top: 4px; }
 .new-menu #logo img { top: 2px; }
 .new-menu #nav { margin-top: -10px; }
 .new-menu #nav-main a { height: 34px; }
 .new-menu #nav-main a:hover, .new-menu #nav-main a:focus, .new-menu #nav-main a:active { padding-bottom: 9px; border-bottom: 0; }
 .new-menu #nav-main > li { margin-right: 20px; }
-.new-menu #nav-main > li > a { font-size: .9em; }
-.new-menu #nav-main > li > a em { font-size: 1.5em; font-style: normal; }
+.new-menu #nav-main > li > a { font-size: .8em; }
+.new-menu #nav-main > li > a em { font-size: 1.7em; font-style: normal; }
 .new-menu #nav-main .menu .sub-menu { top: 45px; }
 .new-menu #nav-main .toggle.open { height: 36px; }
 

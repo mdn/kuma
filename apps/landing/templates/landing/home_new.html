@@ -38,13 +38,25 @@
                 <li><a href="{{ devmo_url('Web/CSS') }}">{{ _('CSS') }}</a></li>
                 <li><a href="{{ devmo_url('Web/JS') }}">{{ _('JavaScript') }}</a></li>
                 <li><a href="{{ devmo_url('Web/API') }}">{{ _('APIs / DOM') }}</a></li>
-                <li><a href="{{ devmo_url('Apps') }}">{{ _('Apps') }}</a></li>
                 <li><a href="{{ devmo_url('Web/Graphics') }}">{{ _('Graphics') }}</a></li>
-                <li><a href="{{ devmo_url('Tools') }}">{{ _('Developer Tools') }}</a></li>
                 <li><a href="{{ devmo_url('Web/MathML') }}">{{ _('MathML') }}</a></li>
+                <li>&nbsp;</li>
+                <li><a href="{{ url('docs') }}">{{ _('Browse All Docs') }}</a></li>
               </ul>
             </li>
             <li class="home-popular-mozilla">
+              <h3>{{ _('In Depth') }}</h3>
+              <ul>
+                <li><a href="{{ devmo_url('Web/Tutorials') }}">{{ _('Tutorials') }}</a></li>
+                <li><a href="{{ devmo_url('Web/References') }}">{{ _('References') }}</a></li>
+                <li><a href="{{ devmo_url('Web/Guide') }}">{{ _('Developer Guides') }}</a></li>
+                <li>&nbsp;</li>
+                <li><a href="{{ devmo_url('Tools') }}">{{ _('Developer Tools') }}</a></li>
+                <li><a href="{{ devmo_url('Apps') }}">{{ _('Apps') }}</a></li>
+                <li><a href="{{ url('demos') }}">{{ _('Demos') }}</a></li>
+              </ul>
+            </li>
+            <li class="home-popular-features">
               <h3>{{ _('Mozilla For Developers') }}</h3>
               <ul>
                 <li><a href="{{ devmo_url('Mozilla/Firefox') }}">{{ _('Firefox for Developers') }}</a></li>
@@ -54,16 +66,7 @@
                 <li><a href="{{ devmo_url('Addons') }}">{{ _('Add-ons') }}</a></li>
                 <li><a href="{{ devmo_url('Persona') }}">{{ _('Persona') }}</a></li>
               </ul>
-            </li>
-            <li class="home-popular-features">
-              <h3>{{ _('In Depth') }}</h3>
-              <ul>
-                <li><a href="{{ devmo_url('Web/Tutorials') }}">{{ _('Tutorials') }}</a></li>
-                <li><a href="{{ devmo_url('Web/References') }}">{{ _('References') }}</a></li>
-                <li><a href="{{ devmo_url('Web/Guide') }}">{{ _('Developer Guides') }}</a></li>
-                <li><a href="{{ url('demos') }}">{{ _('Demos') }}</a></li>
-                <li><a href="{{ url('docs') }}"><br /><br /><br /><br />{{ _('...more docs') }}</a></li>
-              </ul>
+              
             </li>
           </ul>
         </section>
