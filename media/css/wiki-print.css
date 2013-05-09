@@ -43,9 +43,9 @@ header, hgroup, nav, section, article, aside, footer { display: block; }
 body { width: auto; margin: 0 .5in; font: 12pt/1.286 Georgia, "Times New Roman", Times, serif; color: #000; }
 
 h1, h2, h3, h4, h5, h6 { margin: 0 0 .8em; }
-h1 { font-size: 1.857em; }
-h2 { font-size: 1.428em; }
-h3 { font-size: 1.142em; }
+h1 { font-size: 1.6em;}
+h2 { font-size: 1.32em; }
+h3 { font-size: 1.122em; }
 h4, h5, h6 { font-size: 1em; }
 
 p, ol, ul, dl, table { margin: 0 0 1.4em; }
