@@ -289,17 +289,18 @@
           <section class="page-meta">
             <h2>{{ _('Quick review') }}</h2>
             <section id="quick-review">
-              <form method="post" action="{{url('wiki.quick_review', document.full_path)}}?revision_id={{document.current_revision.id }}">
-                {{ csrf }}
+              <form method="post" action="{{url('wiki.quick_review', document.full_path)}}">
+                {{ csrf() }}
+                <input type="hidden" name="revision_id" value="{{ document.current_revision.id }}"/>
                 <p>{% trans %}The following review(s) have been requested for this article:{% endtrans %}
                 <dl>
                   {% if document.current_revision.needs_technical_review() %}
                     <dt>{% trans %}Technical review:{% endtrans %}</dt>
-                    <dd><input type="checkbox" value="approve_technical" id="id_approve_technical"> <label for="id_approve_technical">{% trans %}I have completed this review{% endtrans %}</label></dd>
+                    <dd><input type="checkbox" value="approve_technical" id="id_approve_technical" name="approve_technical"> <label for="id_approve_technical">{% trans %}I have completed this review{% endtrans %}</label></dd>
                   {% endif %}
                   {% if document.current_revision.needs_editorial_review() %}
                     <dt>{% trans %}Editorial review:{% endtrans %}</dt>
-                    <dd><input type="checkbox" value="approve_editorial" id="id_approve_editorial"> <label for="id_approve_editorial">{% trans %}I have completed this review{% endtrans %}</label></dd>
+                    <dd><input type="checkbox" value="approve_editorial" id="id_approve_editorial" name="approve_editorial"> <label for="id_approve_editorial">{% trans %}I have completed this review{% endtrans %}</label></dd>
                   {% endif %}
                 </dl>
                 <p><input type="submit" value="{{ _('Confirm reviews') }}"></p>
