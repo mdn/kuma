@@ -26,9 +26,10 @@ def home(request):
             .exclude(hidden=True))[:5]
     if waffle.flag_is_active(request, 'new_homepage'):
         template = 'landing/home_new.html'
-        demos = Submission.objects.filter(featured=True)\
+        demos = Submission.objects.filter(id=constance.config.DEMOS_DEVDERBY_HOMEPAGE_FEATURED_DEMO)\
                     .exclude(hidden=True)\
                     .order_by('-modified').all()[:1]
+
     tweets = []
     for section in SECTION_USAGE:
         tweets += Bundle.objects.recent_entries(section.twitter)[:2]

@@ -874,6 +874,11 @@ CONSTANCE_CONFIG = dict(
         "Dev derby tags for previous challenges (space-separated tags)"
     ),
 
+    DEMOS_DEVDERBY_HOMEPAGE_FEATURED_DEMO = (
+        0,
+        'The ID of the demo which should be featured on the new homepage structure'
+    ),
+
     BASKET_RETRIES = (
         5,
         'Number of time to retry basket post before giving up.'
