@@ -253,13 +253,26 @@ def _split_slug(slug):
     slug_split = slug.split('/')
     length = len(slug_split)
     root = None
+
+    seo_root = ''
+    bad_seo_roots = ['Web']
+
     if length > 1:
         root = slug_split[0]
+
+        if root in bad_seo_roots:
+           if length > 2:
+            seo_root = root + '/' + slug_split[1] 
+        else:
+            seo_root = root
+
     specific = slug_split.pop()
 
-    return {'specific': specific, 'parent': '/'.join(slug_split),
+    parent = '/'.join(slug_split)
+
+    return {'specific': specific, 'parent': parent,
             'full': slug, 'parent_split': slug_split, 'length': length,
-            'root': root}
+            'root': root, 'seo_root': seo_root}
 
 
 def _join_slug(parent_split, slug):
@@ -557,11 +570,12 @@ def document(request, document_slug, document_locale):
 
     # Get the additional title information, if necessary
     seo_parent_title = ''
-    if slug_dict['root']:
+
+    if slug_dict['seo_root']:
         try:
-            root_doc = Document.objects.get(locale=document_locale,
-                                            slug=slug_dict['root'])
-            seo_parent_title = ' - ' + root_doc.title
+            seo_root_doc = Document.objects.get(locale=document_locale,
+                                            slug=slug_dict['seo_root'])
+            seo_parent_title = ' - ' + seo_root_doc.title
         except Document.DoesNotExist:
             pass
 

@@ -793,6 +793,7 @@ class DocumentSEOTests(TestCaseBase):
             response = client.get(reverse('wiki.document', args=[slug],
                                     locale=settings.WIKI_DEFAULT_LANGUAGE))
             page = pq(response.content)
+
             ok_(page.find('title').text() in aught_titles)
 
         # Test nested document titles
@@ -802,6 +803,15 @@ class DocumentSEOTests(TestCaseBase):
         _make_doc(u'Special Φ Char', [u'Special \u03a6 Char - One | MDN',
                                       u'Special \xce\xa6 Char - One | MDN'],
                   'one/two/special_char')
+
+        # Additional tests for /Web/*  changes
+        _make_doc('Firefox OS', ['Firefox OS | MDN'], 'firefox_os')
+        _make_doc('Email App', ['Email App - Firefox OS | MDN'], 'firefox_os/email_app')
+        _make_doc('Web', ['Web | MDN'], 'Web')
+        _make_doc('HTML', ['HTML | MDN'], 'Web/html')
+        _make_doc('Fieldset', ['Fieldset - HTML | MDN'], 'Web/html/fieldset')
+        _make_doc('Legend', ['Legend - HTML | MDN'], 'Web/html/fieldset/legend')
+
 
     def test_seo_script(self):
 
