@@ -13,3 +13,11 @@ It is a Django_ application.
 
 
 You can access the staging site at https://developer.allizom.org/
+
+-------
+ Setup
+-------
+
+Installation instructions can be found at:
+
+https://github.com/mozilla/kuma/blob/master/docs/installation.rst
