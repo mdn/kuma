@@ -6,10 +6,17 @@ Kuma is the platform that powers `MDN (developer.mozilla.org)
 <https://developer.mozilla.org>`_
 
 
-It is a Django_ application. 
+Development
+===========
 
-.. MozillaDeveloperNetowrk: https://support.mozilla.org/
-.. _Django: http://www.djangoproject.com/
+:Code:          https://github.com/mozilla/kuma
+:Issues:        http://mzl.la/mdn_backlog
+:Dev Docs:      https://github.com/mozilla/kuma/blob/master/docs/installation-vagrant.rst
+:CI Server:     https://ci.mozilla.org/job/mdn/
+:Mailing list:  https://lists.mozilla.org/listinfo/dev-mdn
+:IRC:           irc://irc.mozilla.org/mdndev
+:Servers:       https://developer-dev.allizom.org/ (dev)
 
+                https://developer.allizom.org/ (stage)
 
-You can access the staging site at https://developer.allizom.org/
+                https://developer.mozilla.org/ (prod)
