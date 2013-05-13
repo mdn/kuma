@@ -21,11 +21,11 @@ from django.core.exceptions import ValidationError
 from django.core.urlresolvers import resolve
 from django.db import models, transaction
 from django.http import Http404
-from django.utils.http import http_date
+from django.utils.html import strip_tags
 
 from south.modelsinspector import add_introspection_rules
 import constance.config
-from elasticutils.contrib.django.models import Indexable
+from elasticutils.contrib.django import Indexable
 
 from tidings.models import NotificationsMixin
 from search.index import SearchMappingType, register_mapping_type
@@ -1536,7 +1536,7 @@ class DocumentType(SearchMappingType, Indexable):
             'title': obj.title,
             'slug': obj.slug,
             'locale': obj.locale,
-            'content': obj.rendered_html
+            'content': strip_tags(obj.rendered_html)
         }
 
     @classmethod
@@ -1546,7 +1546,7 @@ class DocumentType(SearchMappingType, Indexable):
             'title': {'type': 'string'},
             'slug': {'type': 'string'},
             'locale': {'type': 'string', 'index': 'not_analyzed'},
-            'content': {'type': 'string', 'analyzer': 'snowball'}
+            'content': {'type': 'string', 'analyzer': 'wikiMarkup'}
         }
 
     @classmethod
@@ -1558,6 +1558,18 @@ class DocumentType(SearchMappingType, Indexable):
                     .exclude(slug__icontains='Talk:')
                     .values_list('id', flat=True)
                )
+
+    @classmethod
+    def get_analysis(cls):
+        return {
+            'analyzer': {
+                'wikiMarkup': {
+                    'type': 'standard',
+                    'char_filter': 'html_strip'
+                }
+            }
+        }
+
 
 
 class ReviewTag(TagBase):

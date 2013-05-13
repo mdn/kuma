@@ -7,6 +7,11 @@
   <li class="doc-result">
     {% set url = '%s%s' % (settings.SITE_URL, url('wiki.document', doc.slug, locale=doc.locale)) %}
     <h3><a href="{{ url }}">{{ doc.title }}</a></h3>
+    <div class="searchHighlight">
+    {% for match in doc._highlight['content'] %}
+      <span>{{ match|safe }}</span> ...
+    {% endfor %}
+    </div>
     <div class="searchMeta"><a href="{{ url }}">{{ url }}</a></div>
     <p><!-- match content here --></p>
   </li>
