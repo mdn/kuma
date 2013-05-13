@@ -1907,15 +1907,14 @@ class DocumentEditingTests(TestCaseBase):
             data.update({'review_tags': ['editorial', 'technical'],
                          'slug': slug})
             resp = client.post(reverse('wiki.new_document'), data)
-            
+
             doc = Document.objects.get(slug=slug)
             rev = doc.revisions.order_by('-id').all()[0]
             review_url = reverse('wiki.quick_review',
                                  args=[doc.full_path])
 
             params = dict(data_dict['params'], revision_id=rev.id)
-            resp = client.post(urlparams(review_url, **params))
-            
+            resp = client.post(review_url, params)
             eq_(302, resp.status_code)
 
             doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE, slug=slug)

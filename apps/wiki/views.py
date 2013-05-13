@@ -1940,7 +1940,7 @@ def quick_review(request, document_slug, document_locale):
         raise Http404
     if not doc.allows_revision_by(request.user):
         raise PermissionDenied
-    rev_id = request.GET.get('revision_id')
+    rev_id = request.POST.get('revision_id')
     if not rev_id:
         raise Http404
     try:
@@ -1953,7 +1953,7 @@ def quick_review(request, document_slug, document_locale):
         # fully-filled-out editing forms, and we don't have those
         # here.
         raise PermissionDenied(_lazy("Document has been edited; please re-review."))
-    
+
     current_tags = [t.name for t in rev.review_tags.all()]
     needs_technical = 'technical' in current_tags
     needs_editorial = 'editorial' in current_tags
@@ -1961,9 +1961,9 @@ def quick_review(request, document_slug, document_locale):
     if not any((needs_technical, needs_editorial)):
         # No need to "approve" something that doesn't need it.
         return HttpResponseRedirect(doc.get_absolute_url())
-    
-    approve_technical = request.GET.get('approve_technical', False)
-    approve_editorial = request.GET.get('approve_editorial', False)
+
+    approve_technical = request.POST.get('approve_technical', False)
+    approve_editorial = request.POST.get('approve_editorial', False)
 
     new_tags = []
     messages = []
