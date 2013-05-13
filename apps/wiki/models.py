@@ -1761,6 +1761,12 @@ class Revision(ModelBase):
         else:
             return None
 
+    def needs_editorial_review(self):
+        return 'editorial' in [t.name for t in self.review_tags.all()]
+
+    def needs_technical_review(self):
+        return 'technical' in [t.name for t in self.review_tags.all()]
+
 
 # FirefoxVersion and OperatingSystem map many ints to one Document. The
 # enumeration table of int-to-string is not represented in the DB because of
