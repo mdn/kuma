@@ -3,10 +3,6 @@ $(document).ready(function() {
     var tabs = $('#search-tabs').tabs(),
         cache_search_date = $('.showhide-input');
 
-    $('#search-tabs input[name="q"]').autoPlaceholderText();
-    $('#search-tabs input[name="author"]').autoPlaceholderText();
-    $('#search-tabs input[name="tags"]').autoPlaceholderText();
-
     $('#tab-wrapper form').submit(function() {
         $('input.auto-fill').each(function() {
             var $this = $(this);
@@ -61,10 +57,11 @@ jQuery.fn.numericInput = function (options) {
     }
 
     this.keydown(function(event) {
+        var key = event.keyCode;
         // Allow only backspace and delete
-        if ( event.keyCode == 46 || event.keyCode == 8 ) {
+        if ( key == 46 || key == 8 ) {
             // let it happen, don't do anything
-        } else if (event.shiftKey || event.keyCode < 48 || event.keyCode > 57) {
+        } else if (event.shiftKey || key < 48 || key > 57) {
             // Ensure that it is a number and stop the keypress
             event.preventDefault(); 
         }
