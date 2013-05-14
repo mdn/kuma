@@ -6,7 +6,7 @@ from django.conf import settings
 from django.db import reset_queries
 
 from elasticutils.contrib.django import get_es, S
-from elasticutils.contrib.django.models import DjangoMappingType
+from elasticutils.contrib.django import MappingType
 from pyelasticsearch.exceptions import (ConnectionError, Timeout,
                                         ElasticHttpNotFoundError)
 
@@ -56,8 +56,8 @@ def get_index():
     return '%s-%s' % (settings.ES_INDEX_PREFIX, settings.ES_INDEXES['default'])
 
 
-class SearchMappingType(DjangoMappingType):
-    """DjangoMappingType with correct index."""
+class SearchMappingType(MappingType):
+    """MappingType with correct index."""
     @classmethod
     def get_index(cls):
         return get_index()
@@ -202,10 +202,13 @@ def recreate_index(es=None):
         es = get_indexing_es()
 
     mappings = {}
+    analysis = None
     for name, mt in get_mapping_types().items():
         mapping = mt.get_mapping()
         if mapping is not None:
             mappings[name] = {'properties': mapping}
+
+        analysis = mt.get_analysis()
 
     index = get_index()
 
@@ -220,7 +223,12 @@ def recreate_index(es=None):
     # freak out if the inferred mapping is incompatible with the
     # explicit mapping).
 
-    es.create_index(index, settings={'mappings': mappings})
+    es.create_index(index, settings={'mappings': mappings,
+                                     'settings':
+                                        {'index':
+                                            {'analysis': analysis}
+                                        }
+                                    })
 
 
 def get_indexable(percent=100, mapping_types=None):

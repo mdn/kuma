@@ -3,19 +3,21 @@ from nose.tools import eq_
 from search.tests import ElasticTestCase
 
 from wiki.models import DocumentType
-from wiki.tests import document
+from wiki.tests import revision
 
 
 class TestLiveIndexing(ElasticTestCase):
+
+    fixtures = ['test_users.json',]
 
     def test_live_indexing_docs(self):
         S = DocumentType.search
         count_before = S().count()
 
-        d = document(title='Testing live index', save=True)
+        r = revision(save=True)
         self.refresh()
         eq_(count_before + 1, S().count())
 
-        d.delete()
+        r.document.delete()
         self.refresh()
         eq_(count_before, S().count())
