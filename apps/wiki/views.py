@@ -1986,6 +1986,7 @@ def quick_review(request, document_slug, document_locale):
             new_rev.review_tags.set(*new_tags)
         else:
             new_rev.review_tags.clear()
+    doc.schedule_rendering('max-age=0')
     return HttpResponseRedirect(doc.get_absolute_url())
 
 
