@@ -171,6 +171,9 @@
   padding: 10px 0;
   font-size: 0.85em;
 }
+.new-home .home-demos .home-demos-featured .flag {
+  display: none;
+}
 .new-home .home-demos .gallery {
   margin: 10px 0;
 }
