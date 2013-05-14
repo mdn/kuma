@@ -79,20 +79,26 @@
           <ul class="home-community-list">
             <li>
               <ul>
-                <li>{{ _('Editorial review') }}</li>
-                <li>{{ _('Technical review') }}</li>
-                <li>{{ _('Creating new docs') }}</li>
-                <li>{{ _('Demos &amp; code samples') }}</li>
+                <li><a href="{{ devmo_url('needs-review/editorial') }}">{{ _('Editorial review') }}</a></li>
+                <li><a href="{{ devmo_url('needs-review/technical') }}">{{ _('Technical review') }}</a></li>
+                <li><a href="{{ devmo_url('Project:Getting_started') }}#Create_a_new_page">{{ _('Creating new docs') }}</a></li>
+                <li>
+                  {% trans demo_url=url('demos_submit'),samples_url=devmo_url('tag/NeedsExample') %}
+                  <a href="{{ demo_url }}">Demos</a> &amp; <a href="{{ samples_url }}">code samples</a>
+                  {% endtrans %}
+                </li>
               </ul>
             </li>
             <li>
               <ul>
-                <li>{{ _('Translating (L10N)') }}</li>
-                <li>{{ _('Promoting MDN') }}</li>
-                <li>{{ _('Contributing to the MDN codebase') }}</li>
+                <li><a href="{{ devmo_url('Project:Localization_Projects') }}">{{ _('Translating (L10N)') }}</a></li>
+                <li><a href="{{ url('promote') }}">{{ _('Promoting MDN') }}</a></li>
+                <li><a href="https://github.com/mozilla/kuma#readme">{{ _('Contributing to the MDN codebase') }}</a></li>
               </ul>
             </li>
           </ul>
+
+          
 
           <ul class="home-community-conversion">
             <li><a href="{{ devmo_url('Project:MDN/Contributing/Join_the_community') }}">{{ _('Join the Community') }}</a></li>
