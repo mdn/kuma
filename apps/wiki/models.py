@@ -1570,6 +1570,15 @@ class DocumentType(SearchMappingType, Indexable):
             }
         }
 
+    def get_excerpt(self):
+        stripped_matches = []
+        if 'content' in self._highlight:
+            for match in self._highlight['content']:
+                stripped_matches.append(bleach.clean(match,
+                                                     tags=['em',],
+                                                     strip=True))
+        return u'...'.join(stripped_matches)
+
 
 
 class ReviewTag(TagBase):
