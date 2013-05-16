@@ -44,7 +44,7 @@
 {% endtrans %}
 </div></noscript>
 <![endif]-->
-  <header id="masthead" class="{% block headerclass %}minor{% endblock %} {% if waffle.flag('new_menu') %}new-menu{% endif %}">
+  <header id="masthead" class="{% block headerclass %}minor{% endblock %} new-menu">
     <div class="wrap">
       <ul id="nav-access">
         <li><a href="#language">{{ _('Select language') }}</a></li>
@@ -59,8 +59,6 @@
       </div>
       
       {% block headernav %}
-
-      {% if waffle.flag('new_menu') %}
         <nav id="nav">
           <ul id="nav-main" role="menubar">
             <li id="nav-main-docs" class="menu" rel="menuitem"><a href="#nav-sub-docs" class="toggle" aria-haspopup="true" aria-labelledby="nav-main-docs" title="{{ _('Read Documentation') }}">{{ _('Read<br /><em>Docs</em>') }}</a>
@@ -111,79 +109,6 @@
             </li>
           </ul>
         </nav>
-      {% else %}
-        <nav id="nav">
-          <ul id="nav-main" role="menubar">
-            <li id="nav-main-topics" class="menu" role="menuitem"><a href="#nav-sub-topics" class="toggle" aria-haspopup="true" aria-labelledby="nav-main-topics" title="{{ _('Explore other parts of MDN') }}">{{ _('Topics') }}</a>
-              <ul id="nav-sub-topics" class="sub-menu" aria-hidden="true">
-                <li id="nav-sub-web"><a href="{{ url('web') }}">{{ _('Web') }}</a></li>
-                <li id="nav-sub-apps"><a href="{{ devmo_url('apps') }}">{{ _('Apps') }}</a></li>
-                <li id="nav-sub-mobile"><a href="{{ url('mobile') }}">{{ _('Mobile') }}</a></li>
-                <li id="nav-sub-addons"><a href="{{ url('addons') }}">{{ _('Add-ons') }}</a></li>
-                <li id="nav-sub-mozilla"><a href="{{ url('mozilla') }}">{{ _('Mozilla') }}</a></li>
-              </ul>
-            </li>
-            <li id="nav-main-docs" class="menu" role="menuitem">
-              <a href="{{ url('docs') }}" class="docs toggle" aria-haspopup="true" aria-labelledby="nav-main-docs">{{ _('Docs') }}</a>
-              <div id="nav-sub-docs" class="sub-menu" aria-hidden="true">
-                <ul>
-                  <li>
-                    <ul>
-                      <li><a href="{{ devmo_url('HTML') }}">{{ _('HTML') }}</a></li>
-                      <li><a href="{{ devmo_url('DOM') }}">{{ _('DOM') }}</a></li>
-                      <li><a href="{{ devmo_url('HTML/Using_HTML5_audio_and_video') }}">{{ _('Video') }}</a></li>
-                      <li><a href="{{ devmo_url('HTML/Using_HTML5_audio_and_video') }}">{{ _('Audio') }}</a></li>
-                      <li><a href="{{ devmo_url('SVG') }}">{{ _('SVG') }}</a></li>
-                      <li><a href="{{ devmo_url('WebGL') }}">{{ _('WebGL') }}</a></li>
-                    </ul>
-                  </li>
-                  <li>
-                    <ul>
-                      <li><a href="{{ devmo_url('HTML/HTML5') }}">{{ _('HTML5') }}</a></li>
-                      <li><a href="{{ devmo_url('WebSockets') }}">{{ _('WebSockets') }}</a></li>
-                      <li><a href="{{ devmo_url('HTML/Using_the_application_cache') }}">{{ _('Offline Cache') }}</a></li>
-                      <li><a href="{{ devmo_url('DOM/Storage') }}">{{ _('Local Storage') }}</a></li>
-                      <li><a href="{{ devmo_url('IndexedDB') }}">{{ _('IndexedDB') }}</a></li>
-                      <li><a href="{{ devmo_url('Using_files_from_web_applications') }}">{{ _('File API') }}</a></li>
-                    </ul>
-                  </li>
-                  <li>
-                    <ul>
-                      <li><a href="{{ devmo_url('CSS') }}">{{ _('CSS') }}</a></li>
-                      <li><a href="{{ devmo_url('CSS/Using_CSS_gradients') }}">{{ _('Gradients') }}</a></li>
-                      <li><a href="{{ devmo_url('CSS/Tutorials/Using_CSS_transforms') }}">{{ _('Transforms') }}</a></li>
-                      <li><a href="{{ devmo_url('CSS/Tutorials/Using_CSS_transitions') }}">{{ _('Transitions') }}</a></li>
-                      <li><a href="{{ devmo_url('CSS/Tutorials/Using_CSS_animations') }}">{{ _('Animations') }}</a></li>
-                      <li><a href="{{ devmo_url('CSS/Media_queries') }}">{{ _('Media Queries') }}</a></li>
-                    </ul>
-                  </li>
-                  <li>
-                    <ul>
-                      <li><a href="{{ devmo_url('JavaScript') }}">{{ _('JavaScript') }}</a></li>
-                      <li><a href="{{ devmo_url('AJAX') }}">{{ _('AJAX') }}</a></li>
-                      <li><a href="{{ devmo_url('HTML/Canvas') }}">{{ _('Canvas') }}</a></li>
-                      <li><a href="{{ devmo_url('Using_geolocation') }}">{{ _('Geolocation') }}</a></li>
-                      <li><a href="{{ devmo_url('DragDrop/Drag_and_Drop') }}">{{ _('Drag &amp; Drop')|safe }}</a></li>
-                      <li><a href="{{ devmo_url('DOM/Using_web_workers') }}">{{ _('Web Workers') }}</a></li>
-                    </ul>
-                  </li>
-                </ul>
-                <p><a href="{{ url('docs') }}">{{ ('More docs&hellip;')|safe }}</a></p>
-              </div>
-            </li>
-            <li id="nav-main-demos" role="menuitem"><a href="{{ url('demos') }}" class="demos">{{ _('Demos') }}</a></li>
-            <li id="nav-main-learning" role="menuitem"><a href="{{ url('learn') }}" class="learning">{{ _('Learning') }}</a></li>
-            <li id="nav-main-community" class="menu" role="menuitem"><a href="#nav-sub-community" class="community toggle" aria-haspopup="true" aria-labelledby="nav-main-community">{{ _('Community') }}</a>
-              <ul id="nav-sub-community" class="sub-menu">
-                <li><a href="{{ url('events') }}">{{ _('Events') }}</a></li>
-                <li><a href="{{ url('promote') }}">{{ _('Promote') }}</a></li>
-                <li><a href="{{ devmo_url('Project:How_to_Help') }}">{{ _('Contribute') }}</a></li>
-                <li><a href="{{ url('apps_newsletter') }}">{{ _('Newsletter') }}</a></li>
-              </ul>
-            </li>
-          </ul>
-        </nav>
-      {% endif %}
 
       {% endblock %}
     
