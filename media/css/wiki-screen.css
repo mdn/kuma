@@ -277,7 +277,8 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 #page-buttons .page-edit a { padding-left: 32px; background: #a5d9f3 url("../img/wiki/button-edit.png") 0 50% repeat-x; }
 #page-buttons .page-edit a:hover, #page-buttons .page-edit a:focus, #page-buttons .page-edit a:active { background-color: #ade4ff; text-decoration: none; }
 #page-buttons .page-edit a.disabled { cursor: pointer; opacity: .75; background-color: #c8e6ed; }
-#page-buttons .page-watch input { padding-left: 35px; background: #f2d29e url("../img/wiki/button-watch.png") 0 50% repeat-x; }
+#page-buttons .page-watch input { padding-left: 35px; /* padding-top: 6px; padding-bottom: 2px; */ background: #f2d29e url("../img/wiki/button-watch.png") 0 50% repeat-x; }
+#page-buttons .page-watch input::-moz-focus-inner { border: 0; padding: 0; margin-top:-2px; margin-bottom: -2px; }
 #page-buttons .page-watch input:hover, #page-buttons .page-watch a:focus, #page-buttons .page-watch a:active { background-color: #f8daa9; text-decoration: none; }
 #page-buttons .page-watch input.disabled { cursor: pointer; opacity: .75; background-color: #f0e4c7; }
 
