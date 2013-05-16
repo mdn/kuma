@@ -61,7 +61,7 @@
             "locale": "en-US",
             "current_revision": 22,
             "is_template": false,
-            "html": "<p>audio is in this <strong>but the word for tough things</strong> will be ignored\n</p>",
+            "rendered_html": "<p>audio is in this <strong>but the word for tough things</strong> will be ignored\n</p>",
             "slug": "lorem-ipsum"
         }
     },

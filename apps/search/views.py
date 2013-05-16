@@ -6,7 +6,6 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render
 from django.views.decorators.cache import cache_page
 
-import jingo
 from waffle import flag_is_active
 
 from wiki.models import DocumentType
