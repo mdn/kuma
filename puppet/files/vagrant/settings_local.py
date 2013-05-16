@@ -9,6 +9,7 @@ TEMPLATE_DEBUG = DEBUG
 SERVE_MEDIA = DEBUG
 
 SESSION_COOKIE_SECURE = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 DEMO_UPLOADS_ROOT = '/home/vagrant/uploads/demos'
 DEMO_UPLOADS_URL = '/media/uploads/demos/'

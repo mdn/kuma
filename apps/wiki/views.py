@@ -338,6 +338,13 @@ def document(request, document_slug, document_locale):
     base_url = request.build_absolute_uri('/')
     slug_dict = _split_slug(document_slug)
 
+    # Grab some parameters that affect output
+    section_id = request.GET.get('section', None)
+    show_raw = request.GET.get('raw', False) is not False
+    show_summary = request.GET.get('summary', False) is not False
+    is_include = request.GET.get('include', False) is not False
+    no_create = request.GET.get('nocreate', False) is not False
+
     # If a slug isn't available in the requested locale, fall back to en-US:
     try:
         doc = Document.objects.get(locale=document_locale, slug=document_slug)
@@ -380,10 +387,8 @@ def document(request, document_slug, document_locale):
         except Document.DoesNotExist:
 
             # If any of these parameters are present, throw a real 404.
-            if (request.GET.get('raw', False) is not False or
-                request.GET.get('include', False) is not False or
-                request.GET.get('nocreate', False) is not False or
-                not request.user.is_authenticated()):
+            if (show_raw or is_include or no_create or
+                    not request.user.is_authenticated()):
                 raise Http404()
 
             # The user may be trying to create a child page; if a parent exists
@@ -433,13 +438,6 @@ def document(request, document_slug, document_locale):
 
     # Utility to set common headers used by all response exit points
     response_headers = dict()
-
-    # Grab some parameters that affect output
-    section_id = request.GET.get('section', None)
-    show_raw = request.GET.get('raw', False) is not False
-    show_summary = request.GET.get('summary', False) is not False
-    is_include = request.GET.get('include', False) is not False
-    need_edit_links = request.GET.get('edit_links', False) is not False
 
     def set_common_headers(r):
         r['ETag'] = doc.calculate_etag(section_id)
@@ -513,13 +511,6 @@ def document(request, document_slug, document_locale):
         # Annotate links within the page, but only if not sending raw source.
         if not show_raw:
             tool.annotateLinks(base_url=base_url)
-
-        # If this user can edit the document, inject some section editing
-        # links.
-        if ((need_edit_links or not show_raw) and
-                request.user.is_authenticated() and
-                doc.allows_revision_by(request.user)):
-            tool.injectSectionEditingLinks(doc.full_path, doc.locale)
 
         doc_html = tool.serialize()
 
@@ -946,9 +937,11 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
         Document, locale=document_locale, slug=document_slug)
     user = request.user
 
-    # If this document has a parent, then the edit is handled by the
-    # translate view. Pass it on.
-    if doc.parent and doc.parent.id != doc.id:
+    section_id = request.GET.get('section', None)
+
+    # If this document has a parent and it's not a section edit, then the edit
+    # is handled by the translate view. Pass it on.
+    if not section_id and doc.parent and doc.parent.id != doc.id:
         return translate(request, doc.parent.slug, doc.locale, revision_id,
                          bypass_process_document_path=True)
     if revision_id:
@@ -964,9 +957,6 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
     # This is only for the edit form.
     rev.slug = slug_dict['specific']
 
-    section_id = request.GET.get('section', None)
-    if section_id and not request.is_ajax():
-        return HttpResponse(_("Sections may only be edited inline."))
     disclose_description = bool(request.GET.get('opendescription'))
 
     doc_form = rev_form = None
@@ -992,7 +982,6 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
     else:  # POST
         is_iframe_target = request.GET.get('iframe', False)
         is_raw = request.GET.get('raw', False)
-        need_edit_links = request.GET.get('edit_links', False)
         parent_id = request.POST.get('parent_id', '')
 
         # Attempt to set a parent
@@ -1101,16 +1090,30 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                     else:
                         view = 'wiki.document_revisions'
 
+                    if is_raw and section_id:
+                        # HACK: is_raw and section_id indicates an inline section
+                        # edit, so let's (ab)use the KumaScript preview mechanism
+                        # to offer immediate feedback while the rest of the page
+                        # has been scheduled for rendering
+                        wiki_content = rev_form.data['content']
+                        # There's a chance rendering might be disabled, so
+                        # check for that...
+                        should_render = kumascript.should_use_rendered(
+                                doc, {'raw': True, 'macros': True},
+                                html=wiki_content)
+                        if should_render:
+                            wiki_content, kumascript_errors = kumascript.post(
+                                    request, wiki_content,
+                                    request.locale)
+                            return HttpResponse(wiki_content)
+
                     # Construct the redirect URL, adding any needed parameters
                     url = reverse(view, args=[doc.full_path],
                                   locale=doc.locale)
                     params = {}
                     if is_raw:
+                        params['macros'] = 'true'
                         params['raw'] = 'true'
-                        if need_edit_links:
-                            # Only need to carry over ?edit_links with ?raw,
-                            # because they're on by default in the normal UI
-                            params['edit_links'] = 'true'
                         if section_id:
                             # If a section was edited, and we're using the raw
                             # content API, constrain to that section.
@@ -1187,8 +1190,9 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
         response.status_code = 409
         return response
 
-    # Make this response iframe-friendly so we can hack around the
-    # save-and-edit iframe button
+    # Update the current_rev, so that a subsequent attempt to save will work.
+    rev_form.data['current_rev'] = curr_rev.id
+
     return render(request, 'wiki/edit_document.html',
                         {'collision': True,
                          'revision_form': rev_form,

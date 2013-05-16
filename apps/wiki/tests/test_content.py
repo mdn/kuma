@@ -286,35 +286,6 @@ class ContentSectionToolTests(TestCase):
                   .serialize())
         eq_(normalize_html(expected), normalize_html(result))
 
-    def test_section_edit_links(self):
-        doc_src = """
-            <h1 id="s1">Head 1</h1>
-            <p>test</p>
-            <p>test</p>
-            <h2 id="s2">Head 2</h2>
-            <p>test</p>
-            <p>test</p>
-            <h3 id="s3">Head 3</h3>
-            <p>test</p>
-            <p>test</p>
-        """
-        expected = """
-            <h1 id="s1"><a class="edit-section" data-section-id="s1" data-section-src-url="/en-US/docs/some-slug?raw=true&amp;section=s1" href="/en-US/docs/some-slug$edit?section=s1&amp;edit_links=true" title="Edit section">Edit</a>Head 1</h1>
-            <p>test</p>
-            <p>test</p>
-            <h2 id="s2"><a class="edit-section" data-section-id="s2" data-section-src-url="/en-US/docs/some-slug?raw=true&amp;section=s2" href="/en-US/docs/some-slug$edit?section=s2&amp;edit_links=true" title="Edit section">Edit</a>Head 2</h2>
-            <p>test</p>
-            <p>test</p>
-            <h3 id="s3"><a class="edit-section" data-section-id="s3" data-section-src-url="/en-US/docs/some-slug?raw=true&amp;section=s3" href="/en-US/docs/some-slug$edit?section=s3&amp;edit_links=true" title="Edit section">Edit</a>Head 3</h3>
-            <p>test</p>
-            <p>test</p>
-        """
-        result = (wiki.content
-                  .parse(doc_src)
-                  .injectSectionEditingLinks('some-slug', 'en-US')
-                  .serialize())
-        eq_(normalize_html(expected), normalize_html(result))
-
     def test_code_syntax_conversion(self):
         doc_src = """
             <h2>Some JavaScript</h2>:

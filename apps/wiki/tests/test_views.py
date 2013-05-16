@@ -2168,41 +2168,6 @@ class SectionEditingResourceTests(TestCaseBase):
         eq_(normalize_html(expected),
             normalize_html(response.content))
 
-    def test_raw_with_editing_links_source(self):
-        """The raw source for a document can be requested, with section editing
-        links"""
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
-        d, r = doc_rev("""
-            <h1 id="s1">s1</h1>
-            <p>test</p>
-            <p>test</p>
-
-            <h1 id="s2">s2</h1>
-            <p>test</p>
-            <p>test</p>
-
-            <h1 id="s3">s3</h1>
-            <p>test</p>
-            <p>test</p>
-        """)
-        expected = """
-            <h1 id="s1"><a class="edit-section" data-section-id="s1" data-section-src-url="/en-US/docs/%(full_path)s?raw=true&amp;section=s1" href="/en-US/docs/%(full_path)s$edit?section=s1&amp;edit_links=true" title="Edit section">Edit</a>s1</h1>
-            <p>test</p>
-            <p>test</p>
-            <h1 id="s2"><a class="edit-section" data-section-id="s2" data-section-src-url="/en-US/docs/%(full_path)s?raw=true&amp;section=s2" href="/en-US/docs/%(full_path)s$edit?section=s2&amp;edit_links=true" title="Edit section">Edit</a>s2</h1>
-            <p>test</p>
-            <p>test</p>
-            <h1 id="s3"><a class="edit-section" data-section-id="s3" data-section-src-url="/en-US/docs/%(full_path)s?raw=true&amp;section=s3" href="/en-US/docs/%(full_path)s$edit?section=s3&amp;edit_links=true" title="Edit section">Edit</a>s3</h1>
-            <p>test</p>
-            <p>test</p>
-        """ % {'full_path': d.full_path}
-        response = client.get('%s?raw=true&edit_links=true' %
-                              reverse('wiki.document', args=[d.full_path]),
-                              HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        eq_(normalize_html(expected),
-            normalize_html(response.content))
-
     def test_raw_section_source(self):
         """The raw source for a document section can be requested"""
         client = LocalizingClient()

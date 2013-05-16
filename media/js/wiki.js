@@ -95,7 +95,9 @@
         // If we don't have a #wikiArticle, bail out.
         var wiki_article = $('body.document #wikiArticle');
         if (!wiki_article.length) { return; }
-        
+
+        injectSectionEditingButtons();
+
         // Wire up the wiki article with an event delegation handler
         wiki_article.click(function (ev) {
             var target = $(ev.target);
@@ -117,6 +119,42 @@
     }
 
     /**
+     * Inject section editing buttons, where necessary.
+     */
+    function injectSectionEditingButtons () {
+        // If we don't have an edit button at all, bail out.
+        var edit_button = $('#page-buttons .page-edit a');
+        if (!edit_button.length) { return; }
+
+        var edit_text = edit_button.text();
+        var edit_url = edit_button.attr('href');
+        var raw_url = location.href + '?raw';
+
+        // Inject section editing buttons.
+        $('#wikiArticle h1,h2,h3,h4,h5,h6').each(function () {
+            var hdr = $(this);
+
+            // Avoid mucking with article nav headers
+            if (hdr.parents('#article-nav').length > 0) { return; }
+
+            // Don't add duplicate section editing buttons.
+            var existing_buttons = hdr.find('.edit-section');
+            if (existing_buttons.length) { return; }
+
+            // Finally, construct and prepend the section editing button.
+            var hdr_id = hdr.attr('id');
+            var section_param = 'section=' + encodeURIComponent(hdr_id);
+            $('<a class="edit-section"/>')
+                .attr('href', edit_url + '?' + section_param)
+                .attr('data-section-src-url', raw_url + '&' + section_param)
+                .attr('data-section-id', hdr_id)
+                .data('section', hdr)
+                .text(edit_text)
+                .prependTo(hdr);
+        });
+    }
+
+    /**
      * Handle a click on a section editing link.
      */
     function handleSectionEditClick (ev, link) {
@@ -127,16 +165,16 @@
         }
 
         // Look up some details about the section refered to by the link
-        var section_id = link.attr('data-section-id'),
-            section_edit_url = link.attr('href'),
-            section_src_url = link.attr('data-section-src-url'),
-            section_el = $('#'+section_id),
-            section_tag = section_el[0].tagName.toUpperCase();
+        var section_id = link.attr('data-section-id');
+        var section_edit_url = link.attr('href');
+        var section_src_url = link.attr('data-section-src-url');
+        var section_el = link.data('section');
 
         // Bail if the referenced section element doesn't exist.
         if (!section_el.length) { return; }
-        
+
         // Bail if the referenced section element is not a header.
+        var section_tag = section_el[0].tagName.toUpperCase();
         if (-1 == HEADERS.indexOf(section_tag)) { return; }
 
         // If there's a current editor, cancel it.
@@ -165,8 +203,19 @@
                                    'id="edited-section"/>');
 
         // Start loading the current section source, launch editor when loaded.
-        $.get(section_src_url, function (html_data) {
-            launchSectionEditor(section_id, section_edit_url, html_data);
+        // Lots of hacks here to try to forcibly load the freshest source.
+        $.ajax({
+            url: section_src_url + '&__=' + (new Date().getTime()),
+            headers: {
+                'Cache-Control': 'no-cache',
+            },
+            success: function (html_data) {
+                launchSectionEditor(section_id, section_edit_url, html_data);
+            },
+            error: function (xhr, status_code, err) {
+                alert('Error loading section, please try again.');
+                cleanupSectionEdit();
+            }
         });
 
         return false;
@@ -293,6 +342,7 @@
             ui.remove();
         });
         $('#edited-section').children().unwrap();
+        injectSectionEditingButtons();
     }
 
     // Add `odd` CSS class to home page content sections for older browsers.
