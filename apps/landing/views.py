@@ -9,7 +9,6 @@ from django.shortcuts import render
 
 import constance.config
 from waffle.decorators import waffle_switch
-import waffle
 
 from devmo import (SECTION_USAGE, SECTION_ADDONS, SECTION_APPS, SECTION_MOBILE,
                    SECTION_WEB, SECTION_MOZILLA)
@@ -21,14 +20,9 @@ from landing.forms import SubscriptionForm
 def home(request):
     """Home page."""
 
-    template = 'landing/home.html'
-    demos = (Submission.objects.all_sorted('upandcoming')
-            .exclude(hidden=True))[:5]
-    if waffle.flag_is_active(request, 'new_homepage'):
-        template = 'landing/home_new.html'
-        demos = Submission.objects.filter(id=constance.config.DEMOS_DEVDERBY_HOMEPAGE_FEATURED_DEMO)\
-                    .exclude(hidden=True)\
-                    .order_by('-modified').all()[:1]
+    demos = Submission.objects.filter(id=constance.config.DEMOS_DEVDERBY_HOMEPAGE_FEATURED_DEMO)\
+                .exclude(hidden=True)\
+                .order_by('-modified').all()[:1]
 
     tweets = []
     for section in SECTION_USAGE:
@@ -39,7 +33,7 @@ def home(request):
     for s in SECTION_USAGE:
         updates += Bundle.objects.recent_entries(s.updates)[:1]
 
-    return render(request, template,
+    return render(request, 'landing/homepage.html',
                   {'demos': demos, 'updates': updates, 'tweets': tweets,
                     'current_challenge_tag_name': 
                     str(constance.config.DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG).strip()})
