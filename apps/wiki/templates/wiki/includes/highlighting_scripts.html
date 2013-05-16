@@ -4,9 +4,12 @@
   <link rel="stylesheet" href="{{ MEDIA_URL }}prism/prism.css" type="text/css" />
   <link rel="stylesheet" href="{{ MEDIA_URL }}prism/plugins/line-highlight/prism-line-highlight.css" type="text/css" />
   <link rel="stylesheet" href="{{ MEDIA_URL }}prism/plugins/ie8/prism-ie8.css" type="text/css" />
+  <link rel="stylesheet" href="{{ MEDIA_URL }}prism-mdn-plugins/line-numbering/prism-line-numbering.css" type="text/css" />
 
   <script type="text/javascript" src="{{ MEDIA_URL }}prism/prism.js" data-manual></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}prism/plugins/line-highlight/prism-line-highlight.js" data-manual></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}prism/plugins/ie8/prism-ie8.js"></script>
+  <script type="text/javascript" src="{{ MEDIA_URL }}prism-mdn-plugins/line-numbering/prism-line-numbering.js"></script>
   <script type="text/javascript">
   (function($) {
     // Fudge a few languages
@@ -48,8 +51,11 @@
         // Accommodate for line-highlighting
         // highlight:[8,9,10,11,17,18,19,20]
         if(semiSplit.length > 1) {
+            console.log('semiSplit ', semiSplit.length)
             var lines = semiSplit[1].match(/\[(.*)\]/);
+            console.log(lines)
             if(lines && lines.length > 1) {
+                console.log(lines[1])
                 $pre.attr('data-line', lines[1]);
             }
         }
