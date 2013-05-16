@@ -284,7 +284,7 @@
       {% include 'wiki/includes/attachment_list.html' %}
       {% endif %}
 
-      {% if document.current_revision and document.allows_revision_by(request.user) %}
+      {% if request.user.is_authenticated() and document.current_revision and document.allows_revision_by(request.user) %}
         {% if document.current_revision.needs_technical_review() or document.current_revision.needs_editorial_review() %}
           <section class="page-meta">
             <h2>{{ _('Quick review') }}</h2>
