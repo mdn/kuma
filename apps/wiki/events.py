@@ -28,6 +28,15 @@ def context_dict(revision):
         'document_title': document.title,
         'creator': revision.creator,
         'host': Site.objects.get_current().domain,
+        'compare_url': reverse('wiki.compare_revisions',
+            args=[document.full_path], locale=document.locale)
+            + '?from=%s&to=%s' % (from_revision.id, to_revision.id),
+        'view_url': reverse('wiki.document',
+                            locale=document.locale,
+                            args=[document.slug]),
+        'edit_url': reverse('wiki.edit_document',
+                            locale=document.locale,
+                            args=[document.slug]),
         'history_url': reverse('wiki.document_revisions',
                                locale=document.locale,
                                args=[document.slug]),
@@ -67,7 +76,7 @@ class EditDocumentEvent(InstanceEvent):
         document = revision.document
         log.debug('Sending edited notification email for document (id=%s)' %
                    document.id)
-        subject = _('{document_title} was edited by {creator}')
+        subject = _('[MDN] Page "{document_title}" changed by {creator}')
         context = context_dict(revision)
 
         return email_utils.emails_with_users_and_watches(

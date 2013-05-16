@@ -561,12 +561,12 @@ class NewRevisionTests(TestCaseBase):
 
         # Assert notifications fired and have the expected content:
         expected_to = ['sam@example.com']
-        expected_subject = u'%s was edited by %s' % (self.d.title,
+        expected_subject = u'[MDN] Page "%s" changed by %s' % (self.d.title,
                                                      new_rev.creator)
         edited_email = mail.outbox[0]
         eq_(expected_subject, edited_email.subject)
         eq_(expected_to, edited_email.to)
-        ok_('%s created a new revision to the document %s.' % (self.username,
+        ok_('%s changed %s.' % (self.username,
                                                                self.d.title)
             in edited_email.body)
         ok_('https://testserver/en-US/docs/%s$history' % self.d.slug
