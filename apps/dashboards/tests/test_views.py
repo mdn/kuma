@@ -38,11 +38,6 @@ class ContributorDashTests(TestCase):
 class RevisionsDashTest(TestCase):
     fixtures = ['test_users.json', 'wiki/documents.json']
 
-    def setUp(self):
-        super(RevisionsDashTest, self).setUp()
-        self.dashboard_flag = Flag.objects.create(name='revisions_dashboard',
-                                                  everyone=True)
-
     @attr('dashboards')
     def test_main_view(self):
         response = self.client.get(reverse('dashboards.revisions',
