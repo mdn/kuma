@@ -138,7 +138,6 @@ def contributors(request):
 
 
 @require_GET
-@waffle_flag('revisions_dashboard')
 def revisions(request):
     """Dashboard for reviewing revisions"""
     if request.is_ajax():
@@ -232,7 +231,6 @@ def revisions(request):
 
 
 @require_GET
-@waffle_flag('revisions_dashboard')
 def user_lookup(request):
     """Returns partial username matches"""
     userlist = []
@@ -250,7 +248,6 @@ def user_lookup(request):
 
 
 @require_GET
-@waffle_flag('revisions_dashboard')
 def topic_lookup(request):
     """Returns partial topic matches"""
     topiclist = []
