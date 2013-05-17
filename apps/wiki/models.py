@@ -758,7 +758,8 @@ class Document(NotificationsMixin, ModelBase):
         Document.objects.filter(pk=self.pk).update(render_scheduled_at=now)
         self.render_scheduled_at = now
 
-        if not self.defer_rendering:
+        if (waffle.switch_is_active('wiki_force_immediate_rendering') or
+                not self.defer_rendering):
             # Attempt an immediate rendering.
             self.render(cache_control, base_url)
         else:
