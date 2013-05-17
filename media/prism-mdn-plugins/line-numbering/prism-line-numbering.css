@@ -1,4 +1,4 @@
-pre[data-line] {
+pre[data-number] {
 	position: relative;
 	padding: 1em 0 1em 3em;
 }

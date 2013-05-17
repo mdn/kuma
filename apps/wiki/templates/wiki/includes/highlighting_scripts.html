@@ -7,8 +7,6 @@
   <link rel="stylesheet" href="{{ MEDIA_URL }}prism-mdn-plugins/line-numbering/prism-line-numbering.css" type="text/css" />
 
   <script type="text/javascript" src="{{ MEDIA_URL }}prism/prism.js" data-manual></script>
-  <script type="text/javascript" src="{{ MEDIA_URL }}prism/plugins/line-highlight/prism-line-highlight.js" data-manual></script>
-  <script type="text/javascript" src="{{ MEDIA_URL }}prism/plugins/ie8/prism-ie8.js"></script>
   <script type="text/javascript" src="{{ MEDIA_URL }}prism-mdn-plugins/line-numbering/prism-line-numbering.js"></script>
   <script type="text/javascript">
   (function($) {
@@ -17,18 +15,6 @@
     languages.xml = languages.xul = languages.html = languages.markup;
     languages.js = languages.json = languages.javascript;
     languages.cpp = languages.clike;
-
-    // Hacks to make this work in IE8 :(
-    if (!('forEach' in Array.prototype)) {
-        patchIE8ForPrism();
-    }
-    else {
-        // Capable browsers get syntax highlighting because
-        // querySelectorAll isn't easily patchable
-        var script = document.createElement('script');
-        script.src = '/media/prism/plugins/line-highlight/prism-line-highlight.js';
-        document.body.appendChild(script);
-    }
 
     // Treat and highlight PRE elements!
     $('pre').each(function() {
@@ -41,28 +27,45 @@
 
         // Style all as HTML initially
         $pre.addClass('language-' + defaultBrush);
+
+        // Some boxes shouldn't be numbered
+        if($pre.hasClass('syntaxbox') || $pre.hasClass('twopartsyntaxbox')) {
+          $pre.attr('data-prism-prevent-line-number', 1);
+        }
         
         // Format PRE content for Prism highlighting
         if(klassParts[0] == 'brush') {
             var brush = $.trim(klassParts[1].toLowerCase());
-            $pre.html('<code class="language-' + (languages[brush] ? brush : defaultBrush) + '">' + $.trim($pre.html()) + '</code>');
+            brush = languages[brush] ? brush : defaultBrush;
+            $pre.html('<code class="language-' + brush + '">' + $.trim($pre.html()) + '</code>');
         }
 
         // Accommodate for line-highlighting
         // highlight:[8,9,10,11,17,18,19,20]
         if(semiSplit.length > 1) {
-            console.log('semiSplit ', semiSplit.length)
             var lines = semiSplit[1].match(/\[(.*)\]/);
-            console.log(lines)
             if(lines && lines.length > 1) {
-                console.log(lines[1])
                 $pre.attr('data-line', lines[1]);
             }
         }
     });
-
-    // Highlight elements now that they've been treated
-    Prism.highlightAll();
+  
+    // Use line highlighting if not IE8
+    var script = document.createElement('script');
+    if('forEach' in Array.prototype) {
+      // Capable browsers get syntax highlighting because
+      // querySelectorAll isn't easily patchable
+      script.src = '{{ MEDIA_URL }}prism/plugins/line-highlight/prism-line-highlight.js';
+    }
+    else {
+      patchIE8ForPrism();
+      script.src = '{{ MEDIA_URL }}prism/plugins/ie8/prism-ie8.js';
+    }
+    script.onload = function() {
+      // Highlight elements now that they've been treated
+      Prism.highlightAll();
+    };
+    document.body.appendChild(script);
 
     // Patch for IE8 so that Prism works
     function patchIE8ForPrism() {
