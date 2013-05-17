@@ -4,7 +4,7 @@
 */
 (function(){
 
-if(!window.Prism) {
+if(!window.Prism || !document.querySelectorAll) {
 	return;
 }
 
@@ -17,7 +17,7 @@ function numberLines(pre) {
 	var lineHeight = parseFloat(getComputedStyle(pre).lineHeight);
 	var code = pre.querySelector('code');
 	var numLines = code.innerHTML.split('\n').length;
-	pre.setAttribute('data-line', '1');
+	pre.setAttribute('data-number', '1');
 
 	for (var i=1; i <= numLines; i++) {
 		var line = document.createElement('div');
@@ -34,7 +34,7 @@ function numberLines(pre) {
 Prism.hooks.add('after-highlight', function(env) {
 	var pre = env.element.parentNode;
 	
-	if (!pre || !/pre/i.test(pre.nodeName)) {
+	if (!pre || !/pre/i.test(pre.nodeName) || pre.getAttribute('data-prism-prevent-line-number')) {
 		return;
 	}
 
