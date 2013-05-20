@@ -121,6 +121,8 @@ def get(document, cache_control, base_url, timeout=None):
         # http://developer.mindtouch.com/en/docs/DekiScript/Reference/
         #   Wiki_Functions_and_Variables
         path = document.get_absolute_url()
+        # TODO: Someday merge with _get_document_for_json in views.py
+        # where most of this is duplicated code.
         env_vars = dict(
             path=path,
             url=urljoin(base_url, path),

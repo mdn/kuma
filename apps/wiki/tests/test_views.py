@@ -149,12 +149,25 @@ class ViewTests(TestCaseBase):
     fixtures = ['test_users.json', 'wiki/documents.json']
 
     def test_json_view(self):
+        expected_tags = sorted(['foo', 'bar', 'baz'])
+        expected_review_tags = sorted(['tech', 'editorial'])
+
+        doc = Document.objects.get(pk=1)
+        doc.tags.set(*expected_tags)
+        doc.current_revision.review_tags.set(*expected_review_tags)
+
         url = reverse('wiki.json', locale=settings.WIKI_DEFAULT_LANGUAGE)
 
         resp = self.client.get(url, {'title': 'an article title'})
         eq_(200, resp.status_code)
         data = json.loads(resp.content)
         eq_('article-title', data['slug'])
+
+        result_tags = sorted([str(x) for x in data['tags']])
+        eq_(expected_tags, result_tags)
+        
+        result_review_tags = sorted([str(x) for x in data['review_tags']])
+        eq_(expected_review_tags, result_review_tags)
 
         url = reverse('wiki.json_slug', args=('article-title',),
                       locale=settings.WIKI_DEFAULT_LANGUAGE)
@@ -165,6 +178,12 @@ class ViewTests(TestCaseBase):
         data = json.loads(resp.content)
         eq_('an article title', data['title'])
         ok_('translations' in data)
+
+        result_tags = sorted([str(x) for x in data['tags']])
+        eq_(expected_tags, result_tags)
+        
+        result_review_tags = sorted([str(x) for x in data['review_tags']])
+        eq_(expected_review_tags, result_review_tags)
 
     def test_history_view(self):
         slug = 'history-view-test-doc'
