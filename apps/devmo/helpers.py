@@ -42,6 +42,18 @@ def isotime(t):
     return _append_tz(t).astimezone(pytz.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
+@register.filter
+def datetimeformat(value,
+                   out_format='%Y-%m-%d',
+                   in_format='%Y-%m-%dT%H:%M:%S'):
+    if isinstance(value, unicode):
+        try:
+            value = datetime.datetime.strptime(value, in_format)
+        except:
+            pass
+    return value.strftime(out_format)
+
+
 def _append_tz(t):
     tz = pytz.timezone(settings.TIME_ZONE)
     return tz.localize(t)

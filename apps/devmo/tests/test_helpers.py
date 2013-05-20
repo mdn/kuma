@@ -2,7 +2,7 @@ from nose.tools import eq_, ok_
 import test_utils
 from soapbox.models import Message
 
-from devmo.helpers import urlencode, get_soapbox_messages
+from devmo.helpers import urlencode, get_soapbox_messages, datetimeformat
 
 
 class TestUrlEncode(test_utils.TestCase):
@@ -15,6 +15,13 @@ class TestUrlEncode(test_utils.TestCase):
             urlencode(s)
         except KeyError:
             ok_(False, "There should be no KeyError")
+
+
+class TestDateTimeFormat(test_utils.TestCase):
+
+    def test_utf8_urlencode(self):
+        s = u"2013-05-20T15:06:45"
+        eq_('2013-05-20', datetimeformat(s))
 
 
 class TestSoapbox(test_utils.TestCase):
