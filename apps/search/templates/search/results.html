@@ -7,6 +7,9 @@
   <li class="doc-result">
     {% set url = '%s%s' % (settings.SITE_URL, url('wiki.document', doc.slug, locale=doc.locale)) %}
     <h3><a href="{{ url }}">{{ doc.title }}</a></h3>
+    <div class="searchDate">
+      {{ doc.modified|datetimeformat }}
+    </div>
     <div class="searchHighlight">
       {{ doc.get_excerpt()|safe }}
     </div>

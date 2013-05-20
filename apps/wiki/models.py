@@ -1537,6 +1537,7 @@ class DocumentType(SearchMappingType, Indexable):
             'title': obj.title,
             'slug': obj.slug,
             'locale': obj.locale,
+            'modified': obj.modified,
             'content': strip_tags(obj.rendered_html)
         }
 
@@ -1547,6 +1548,7 @@ class DocumentType(SearchMappingType, Indexable):
             'title': {'type': 'string'},
             'slug': {'type': 'string'},
             'locale': {'type': 'string', 'index': 'not_analyzed'},
+            'modified': {'type': 'date'},
             'content': {'type': 'string', 'analyzer': 'wikiMarkup'}
         }
 
