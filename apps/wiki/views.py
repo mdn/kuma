@@ -280,6 +280,7 @@ def _join_slug(parent_split, slug):
     return '/'.join(parent_split)
 
 
+# TODO: Maybe refactor this into a .to_json() method on the Document model?
 def _get_document_for_json(doc, addLocaleToTitle=False):
     """Returns a document in object format for output as JSON"""
     content = (wiki.content.parse(doc.html)
@@ -305,12 +306,20 @@ def _get_document_for_json(doc, addLocaleToTitle=False):
                            locale=translation.locale)
         })
 
+    if not doc.current_revision:
+        review_tags = []
+    else:
+        review_tags = [x.name for x in
+                       doc.current_revision.review_tags.all()]
+     
     return {
         'title': title,
         'label': doc.title,
         'url': doc.get_absolute_url(),
         'id': doc.id,
         'slug': doc.slug,
+        'tags': [x.name for x in doc.tags.all()],
+        'review_tags': review_tags,
         'sections': wiki.content.get_content_sections(content),
         'locale': doc.locale,
         'summary': summary,
