@@ -46,6 +46,9 @@ pre:before {
 pre[class^="brush:js"]:before, pre[class^="brush: js"]:before {
 	content: "JavaScript";
 }
+pre[class^="brush:json"]:before, pre[class^="brush: json"]:before {
+	content: "JSON";
+}
 pre[class^="brush:css"]:before, pre[class^="brush: css"]:before {
 	content: "CSS";
 }

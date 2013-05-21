@@ -592,6 +592,17 @@ MINIFY_BUNDLES = {
         'tagit': (
             'css/jquery.tagit.css',
         ),
+        'syntax-highlighter': (
+            'syntaxhighlighter/styles/shCore.css',
+            'syntaxhighlighter/styles/shThemeDefault.css',
+        ),
+        'syntax-prism': (
+            'prism/prism.css',
+            'prism/plugins/line-highlight/prism-line-highlight.css',
+            'prism/plugins/ie8/prism-ie8.css',
+            'prism-mdn/plugins/line-numbering/prism-line-numbering.css',
+            'prism-mdn/components/prism-json.css',
+        ),
     },
     'js': {
         'mdn': (
@@ -666,7 +677,25 @@ MINIFY_BUNDLES = {
         ),
         'framebuster': (
             'js/framebuster.js',
-        )
+        ),
+        'syntax-highlighter': (
+            'syntaxhighlighter/scripts/shCore.js',
+            'syntaxhighlighter/scripts/shBrushBash.js',
+            'syntaxhighlighter/scripts/shBrushCpp.js',
+            'syntaxhighlighter/scripts/shBrushCss.js',
+            'syntaxhighlighter/scripts/shBrushJava.js',
+            'syntaxhighlighter/scripts/shBrushJScript.js',
+            'syntaxhighlighter/scripts/shBrushPhp.js',
+            'syntaxhighlighter/scripts/shBrushXml.js',
+            'syntaxhighlighter/scripts/shBrushPlain.js',
+            'syntaxhighlighter/scripts/shBrushPython.js',
+            'js/syntax-highlighter.js',
+        ),
+        'syntax-prism': (
+            'prism-mdn/components/prism-json.js',
+            'prism-mdn/plugins/line-numbering/prism-line-numbering.js',
+            'js/syntax-prism.js',
+        ),
     },
 }
 
