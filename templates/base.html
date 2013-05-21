@@ -20,7 +20,7 @@
   <!--[if lte IE 7]><link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/mdn-ie7.css"><![endif]-->
   <!--[if lte IE 6]><link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/mdn-ie6.css"><![endif]-->
   <link rel="stylesheet" type="text/css" media="print" href="{{ MEDIA_URL }}css/mdn-print.css">
-  <link rel="stylesheet" href="//www.mozilla.org/tabzilla/media/css/tabzilla.css">
+  <link rel="stylesheet" href="https://mozorg.cdn.mozilla.net/media/css/tabzilla-min.css">
 
   <link rel="search" type="application/opensearchdescription+xml" href="{{ settings.SITE_URL }}/{{ request.locale }}/search/xml" title="{{ _('Mozilla Developer Network') }}" />
 
@@ -166,7 +166,7 @@
 <script src="{{ url('jsi18n') }}build:{{ BUILD_ID_JS }}"></script>
 {# js #}
 {% block site_js %}
-  <script src="//www.mozilla.org/tabzilla/media/js/tabzilla.js" async></script>
+  <script src="//mozorg.cdn.mozilla.net/{{ request.locale }}/tabzilla/tabzilla.js" async></script>
   <script src="//www.google.com/jsapi" type="text/javascript"></script>
   <script src="https://login.persona.org/include.js" type="text/javascript"></script>
   {{ js('mdn') }}
