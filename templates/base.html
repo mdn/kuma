@@ -126,7 +126,7 @@
         {% endif %}
       </form>
 
-      <a href="http://www.mozilla.org/" id="tabzilla">mozilla</a>
+      <a href="//www.mozilla.org/" id="tabzilla">mozilla</a>
     </div>
   </header>
 {# end head #}
@@ -139,7 +139,7 @@
 <div class="wrap">
   <p>
   {% trans feedback_url=devmo_url('Project:Feedback') %}
-  Is MDN helpful to you? Please  <a href="{{ feedback_url }}">share your feedback</a> with us. Or join our  <a id="dev-mdc-link" href="https://lists.mozilla.org/listinfo/dev-mdc">mailing list about improving MDN content</a>.
+  Is MDN helpful to you? Please  <a href="{{ feedback_url }}">share your feedback</a> with us. Or join our  <a id="dev-mdc-link" href="//lists.mozilla.org/listinfo/dev-mdc">mailing list about improving MDN content</a>.
   {% endtrans %}
   </p>
 </div>
@@ -154,8 +154,8 @@
       Content is available under <a href="{{ copyright_url }}">these licenses</a>
       {% endtrans %}
       &bull; <a href="{{ devmo_url('Project:About') }}">{{ _('About MDN') }}</a>
-      &bull; <a href="https://github.com/mozilla/kuma/">{{ _('Contribute to the code') }}</a>
-      &bull; <a href="http://www.mozilla.org/en-US/privacy">{{ _('Privacy Policy') }}</a>
+      &bull; <a href="//github.com/mozilla/kuma">{{ _('Contribute to the code') }}</a>
+      &bull; <a href="//www.mozilla.org/en-US/privacy">{{ _('Privacy Policy') }}</a>
     </div>
     {% block lang_switcher %}
         {% include "includes/lang_switcher.html" %}
