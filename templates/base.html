@@ -1,6 +1,8 @@
+{% from "includes/common_macros.html" import optimizely_script with context %}
 <!DOCTYPE html>
 <html lang="{{ LANG }}" dir="{{ DIR }}" id="developer-mozilla-org" xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:og="http://ogp.me/ns#">
 <head>
+  {{ optimizely_script() }}
   <title>{% block title %}{{ _('Mozilla Developer Network') }}{% endblock %}</title>
   
   <meta charset="utf-8">
