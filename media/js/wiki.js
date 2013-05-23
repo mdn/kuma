@@ -982,7 +982,8 @@
             finalKey += '/template';
         }
 
-        return $.trim(finalKey);
+        finalKey = $.trim(finalKey);
+        return finalKey;
     }
 
     // Injects a DIV with language to the effect of "you had a previous draft, want to restore it?"
@@ -1019,7 +1020,7 @@
         $draftDiv.find('.discardLink').click(function(e) {
             e.preventDefault();
             hideDraftBox();
-            clearDraft(getStorageKey());
+            clearDraft(DRAFT_NAME);
         });
     }
     function hideDraftBox() {
@@ -1031,13 +1032,11 @@
     // Initialize logic for save and save-and-edit buttons.
     // 
     function initSaveAndEditButtons () {
-        var STORAGE_NAME = getStorageKey();
-
         // Save button submits to top-level
         $('#btn-save').click(function () {
             if (supportsLocalStorage) {
                 // Clear any preserved content.
-                localStorage.removeItem(STORAGE_NAME);
+                localStorage.removeItem(DRAFT_NAME);
             }
             $(formSelector)
                 .attr('action', '')
