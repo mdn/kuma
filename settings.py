@@ -994,6 +994,11 @@ CONSTANCE_CONFIG = dict(
         'Google Analytics Tracking Account Number (0 to disable)',
     ),
 
+    OPTIMIZELY_PROJECT_ID = (
+        '',
+        'The ID value for optimizely Project Code script'
+    ),
+
     BLEACH_ALLOWED_TAGS = (
         json.dumps([
             'a', 'p', 'div',

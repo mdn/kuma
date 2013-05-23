@@ -45,3 +45,9 @@
     {{ field|safe }}
   </div>
 {% endmacro %}
+
+{% macro optimizely_script() %}
+  {% if waffle.flag('optimizely') and config.OPTIMIZELY_PROJECT_ID %}
+  <script src="//cdn.optimizely.com/js/{{ config.OPTIMIZELY_PROJECT_ID }}.js"></script>
+  {% endif %}
+{% endmacro %}
