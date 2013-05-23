@@ -1053,7 +1053,7 @@
                 // Preserve editor content, because saving to the iframe can
                 // yield things like 403 / login-required errors that bust out
                 // of the frame
-                localStorage.setItem(STORAGE_NAME, savedTa);
+                localStorage.setItem(DRAFT_NAME, savedTa);
             }
             // Redirect the editor form to the iframe.
             $(formSelector)
@@ -1075,7 +1075,7 @@
 
                         // Dig into the iframe on load and look for "OK". If found,
                         // then it should be safe to throw away the preserved content.
-                        localStorage.removeItem(STORAGE_NAME);
+                        localStorage.removeItem(DRAFT_NAME);
 
                         // We also need to update the form's current_rev to
                         // avoid triggering a conflict, since we just saved in
