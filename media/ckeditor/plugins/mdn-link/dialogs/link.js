@@ -1265,13 +1265,14 @@ CKEDITOR.dialog.add( 'link', function( editor )
 				
 			// Clear out the previous auto-creation text
 			autoCompleteSelection = null;
-			
+
 			// If there's selected text but not an element, search for an article
 			if(selectedText && !selectedElement) {
 				$autoComplete.val(selectedText);
+				autoCompleteTextbox.focus();
+				autoCompleteTextbox.select();
 				$autoComplete.mozillaAutocomplete('deselect');
 				$autoComplete.mozillaAutocomplete('search', selectedText);
-				autoCompleteTextbox.select();
 				return;
 			}
 			
