@@ -1020,7 +1020,7 @@
         $draftDiv.find('.discardLink').click(function(e) {
             e.preventDefault();
             hideDraftBox();
-            clearDraft(DRAFT_NAME);
+            clearDraft();
         });
     }
     function hideDraftBox() {
@@ -1036,8 +1036,9 @@
         $('#btn-save').click(function () {
             if (supportsLocalStorage) {
                 // Clear any preserved content.
-                localStorage.removeItem(DRAFT_NAME);
+                clearDraft();
             }
+            clearTimeout(DRAFT_TIMEOUT_ID);
             $(formSelector)
                 .attr('action', '')
                 .removeAttr('target');
@@ -1046,15 +1047,15 @@
 
         // Save-and-edit submits to a hidden iframe, style the button with a
         // loading anim.
-        var savedTa;
         $('#btn-save-and-edit').click(function () {
-            savedTa = $(formSelector + ' textarea[name=content]').val();
+            var savedTa = $(formSelector + ' textarea[name=content]').val();
             if (supportsLocalStorage) {
                 // Preserve editor content, because saving to the iframe can
                 // yield things like 403 / login-required errors that bust out
                 // of the frame
-                localStorage.setItem(DRAFT_NAME, savedTa);
+                saveDraft(savedTa);
             }
+            clearTimeout(DRAFT_TIMEOUT_ID);
             // Redirect the editor form to the iframe.
             $(formSelector)
                 .attr('action', '?iframe=1')
@@ -1119,16 +1120,16 @@
         $('#draft-time').attr('title', now.toISOString()).text(nowString);
     }
 
-    function saveDraft() {
+    function saveDraft(val) {
         if (supportsLocalStorage) {
-            localStorage.setItem(DRAFT_NAME, $(formSelector + ' textarea[name=content]').val());
+            localStorage.setItem(DRAFT_NAME, val || $(formSelector + ' textarea[name=content]').val());
             updateDraftState(gettext('saved'));
         }
     }
 
-    function clearDraft(key) {
+    function clearDraft() {
         if (supportsLocalStorage) {
-           localStorage.removeItem(key);
+           localStorage.removeItem(DRAFT_NAME);
         }
     }
 
@@ -1137,11 +1138,17 @@
         DRAFT_NAME = getStorageKey();
 
         if (supportsLocalStorage) {
-            var prev_draft = localStorage.getItem(DRAFT_NAME);
+            var prev_draft = localStorage.getItem(DRAFT_NAME),
+                treatDraft = function(content) {
+                    return (content || '').replace(/ /g, '&nbsp;');
+                },
+
+                treatedDraft = $.trim(treatDraft(prev_draft)),
+                treatedServer = treatDraft($(formSelector + ' textarea[name=content]').val().trim());
             if (prev_draft){
                 // draft matches server so discard draft
-                if ($.trim(prev_draft) == $(formSelector + ' textarea[name=content]').val().trim()) {
-                    clearDraft(DRAFT_NAME);
+                if (treatedDraft == treatedServer) {
+                    clearDraft();
                 } else {
                     displayDraftBox(prev_draft);
                 }
@@ -1160,10 +1167,10 @@
             $('#id_content').ckeditorGet().on('key', callback);
         }
 
-        // 
+        // Clear draft upon discard
        $('#btn-discard').click(function() {
             clearTimeout(DRAFT_TIMEOUT_ID);
-           clearDraft(DRAFT_NAME);
+           clearDraft();
        });
     }
 
