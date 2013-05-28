@@ -8,7 +8,7 @@ class UserBanAdmin(admin.ModelAdmin):
     list_display = ('user', 'by', 'reason')
     list_filter = ('is_active',)
     raw_id_fields = ('user',)
-    search_fields = ('user', 'reason')
+    search_fields = ('user__username', 'reason')
 
 
 admin.site.register(UserBan, UserBanAdmin)
