@@ -362,6 +362,7 @@ MIDDLEWARE_CLASSES = (
     'sumo.middleware.PlusToSpaceMiddleware',
     #'dekicompat.middleware.DekiUserMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'users.middleware.BanMiddleware',
     'django_statsd.middleware.GraphiteRequestTimingMiddleware',
     'django_statsd.middleware.GraphiteMiddleware',
 )
