@@ -25,7 +25,7 @@ from dekicompat.backends import DekiUserBackend, MINDTOUCH_USER_XML
 from sumo.helpers import urlparams
 from sumo.tests import TestCase, LocalizingClient
 from sumo.urlresolvers import reverse
-from users.models import RegistrationProfile, EmailChange
+from users.models import RegistrationProfile, EmailChange, UserBan
 from users.views import SESSION_VERIFIED_EMAIL, _clean_next_url
 from users.tests import get_deki_user_doc
 
@@ -909,3 +909,56 @@ class OldProfileTestCase(TestCase):
     def test_old_profile_url_gone(self):
         resp = self.client.get('/users/edit', follow=True)
         eq_(404, resp.status_code)
+
+
+class BanTestCase(TestCase):
+    fixtures = ['test_users.json']
+
+    @attr('bans')
+    def test_ban_permission(self):
+        """The ban permission controls access to the ban view."""
+        client = LocalizingClient()
+        admin = User.objects.get(username='admin')
+        testuser = User.objects.get(username='testuser')
+
+        # testuser doesn't have ban permission, can't ban.
+        client.login(username='testuser',
+                     password='testpass')
+        ban_url = reverse('users.ban_user',
+                          kwargs={'user_id': admin.id})
+        resp = client.get(ban_url)
+        eq_(302, resp.status_code)
+        ok_(settings.LOGIN_URL in resp['Location'])
+        client.logout()
+
+        # admin has ban permission, can ban.
+        client.login(username='admin',
+                     password='testpass')
+        ban_url = reverse('users.ban_user',
+                          kwargs={'user_id': testuser.id})
+        resp = client.get(ban_url)
+        eq_(200, resp.status_code)
+
+    @attr('bans')
+    def test_ban_view(self):
+        testuser = User.objects.get(username='testuser')
+        admin = User.objects.get(username='admin')
+
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+
+        data = {'reason': 'Banned by unit test.'}
+        ban_url = reverse('users.ban_user',
+                          kwargs={'user_id': testuser.id})
+
+        resp = client.post(ban_url, data)
+        eq_(302, resp.status_code)
+        ok_(testuser.get_absolute_url() in resp['Location'])
+
+        testuser_banned = User.objects.get(username='testuser')
+        ok_(not testuser_banned.is_active)
+
+        bans = UserBan.objects.filter(user=testuser,
+                                      by=admin,
+                                      reason='Banned by unit test.')
+        ok_(bans.count())

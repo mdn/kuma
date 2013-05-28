@@ -264,3 +264,7 @@ class EmailChangeForm(forms.Form):
             raise forms.ValidationError(_('A user with that email address '
                                           'already exists.'))
         return self.cleaned_data['email']
+
+
+class UserBanForm(forms.Form):
+    reason = forms.CharField(widget=forms.Textarea)
