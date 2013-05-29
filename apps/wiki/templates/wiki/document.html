@@ -224,7 +224,7 @@
         {% if toc_html %}
         <div id="article-nav">
           <div class="page-toc">
-            <h2>Table of Contents</h2>
+            <h2>{{ _('Table of Contents') }}</h2>
             <ol>
               {{ toc_html|safe }}
             </ol>
@@ -232,16 +232,16 @@
           <ul class="page-anchors">
             <li class="anchor-tags">
               {% if tags|length %}
-                <a href="#page-tags">Tags</a>
+                <a href="#page-tags">{{ _('Tags') }}</a>
               {% else %}
-                <span title="{{ _('This document has no tags') }}">Tags</span>
+                <span title="{{ _('This document has no tags') }}">{{ _('Tags') }}</span>
               {% endif %}
             </li>
             <li class="anchor-files">
               {% if attachments|length %}
                 <a href="#page-file">Files</a>
               {% else %}
-                <span title="{{ _('This document has no attachments') }}">Files</span>
+                <span title="{{ _('This document has no attachments') }}">{{ _('Files') }}</span>
               {% endif %}
             </li>
           </ul>
@@ -318,12 +318,12 @@
         {% set current_revision = document.current_revision %}
         {% if current_revision.creator %}
           <br />
-          {{ _('Last updated by') }}:  
+          {{ _('Last updated by:') }}  
           <a href="{{ url('devmo.views.profile_view', username=current_revision.creator) }}">{{ current_revision.creator }}</a>, 
           {{ datetimeformat(current_revision.created, format='datetime') }}
           {% if current_revision.reviewer and current_revision.reviewed %}
             <br />
-            {{ _('Last reviewed by') }}:  
+            {{ _('Last reviewed by:') }}  
             <a href="{{ url('devmo.views.profile_view', username=current_revision.reviewer) }}">{{ current_revision.reviewer }}</a>, 
             {{ datetimeformat(current_revision.reviewed, format='datetime') }}
           {% endif %}
