@@ -148,11 +148,13 @@ class LocaleRedirectTests(TestCaseBase):
 class ViewTests(TestCaseBase):
     fixtures = ['test_users.json', 'wiki/documents.json']
 
+    @attr('bug875349')
     def test_json_view(self):
         expected_tags = sorted(['foo', 'bar', 'baz'])
         expected_review_tags = sorted(['tech', 'editorial'])
 
         doc = Document.objects.get(pk=1)
+        doc.save()
         doc.tags.set(*expected_tags)
         doc.current_revision.review_tags.set(*expected_review_tags)
 
@@ -231,6 +233,7 @@ class ViewTests(TestCaseBase):
                           '<ol><li><a href="#Head_3" rel="internal">Head 3</a>'
                           '</ol></li></ol>')
 
+    @attr('bug875349')
     def test_children_view(self):
         test_content = '<p>Test <a href="http://example.com">Summary</a></p>'
 
@@ -260,19 +263,28 @@ class ViewTests(TestCaseBase):
         child_doc_2 = _make_doc('Child 2', 'Root/Child_2', root_doc)
         child_doc_3 = _make_doc('Child 3', 'Root/Child_3', root_doc, True)
 
-        resp = self.client.get(reverse('wiki.get_children', args=['Root'],
-            locale=settings.WIKI_DEFAULT_LANGUAGE))
-        ok_('Access-Control-Allow-Origin' in resp)
-        eq_('*', resp['Access-Control-Allow-Origin'])
-        json_obj = json.loads(resp.content)
+        for expand in (True, False):
+            url = reverse('wiki.get_children', args=['Root'],
+                          locale=settings.WIKI_DEFAULT_LANGUAGE)
+            if expand:
+                url = '%s?expand' % url
+            resp = self.client.get(url)
+            ok_('Access-Control-Allow-Origin' in resp)
+            eq_('*', resp['Access-Control-Allow-Origin'])
+            json_obj = json.loads(resp.content)
 
-        # Basic structure creation testing
-        eq_(json_obj['slug'], 'Root')
-        eq_(json_obj['summary'],
-            'Test <a href="http://example.com">Summary</a>')
-        eq_(len(json_obj['subpages']), 2)
-        eq_(len(json_obj['subpages'][0]['subpages']), 2)
-        eq_(json_obj['subpages'][0]['subpages'][1]['title'], 'Grandchild 2')
+            # Basic structure creation testing
+            eq_(json_obj['slug'], 'Root')
+            if not expand:
+                ok_('summary' not in json_obj)
+            else:
+                eq_(json_obj['summary'],
+                    'Test <a href="http://example.com">Summary</a>')
+                ok_('tags' in json_obj)
+                ok_('review_tags' in json_obj)
+            eq_(len(json_obj['subpages']), 2)
+            eq_(len(json_obj['subpages'][0]['subpages']), 2)
+            eq_(json_obj['subpages'][0]['subpages'][1]['title'], 'Grandchild 2')
 
         # Depth parameter testing
         def _depth_test(depth, aught):

@@ -617,6 +617,9 @@ class Document(NotificationsMixin, ModelBase):
     files = models.ManyToManyField('Attachment',
                                    through='DocumentAttachment')
 
+    # JSON representation of Document for API results, built on save
+    json = models.TextField(editable=False, blank=True, null=True)
+
     # Raw HTML of approved revision's wiki markup
     html = models.TextField(editable=False)
 
@@ -805,6 +808,9 @@ class Document(NotificationsMixin, ModelBase):
         # time falls under the limit? Probably safer to require manual
         # intervention to free docs from deferred jail.
 
+        # Force-refresh cached JSON data after rendering.
+        json_data = self.get_json_data(stale=False)
+
         self.save()
 
     def get_summary(self, strip_markup=True, use_rendered=True):
@@ -821,6 +827,94 @@ class Document(NotificationsMixin, ModelBase):
         summary = wiki.content.get_seo_description(src, self.locale,
                                                    strip_markup)
         return summary
+
+    def build_json_data(self):
+        content = (wiki.content.parse(self.html)
+                               .injectSectionIDs()
+                               .serialize())
+        sections = wiki.content.get_content_sections(content)
+
+        summary = ''
+        if self.current_revision and self.current_revision.summary:
+            summary = self.current_revision.summary
+        else:
+            summary = self.get_summary(strip_markup=False)
+
+        translations = []
+        if self.pk:
+            for translation in self.other_translations:
+                translations.append({
+                    'locale': translation.locale,
+                    'title': translation.title,
+                    'url': reverse('wiki.document', args=[translation.full_path],
+                                   locale=translation.locale)
+                })
+
+        if not self.current_revision:
+            review_tags = []
+        else:
+            review_tags = [x.name for x in
+                           self.current_revision.review_tags.all()]
+        if not self.pk:
+            tags = []
+        else:
+            tags = [x.name for x in self.tags.all()]
+         
+        if self.modified:
+            modified = self.modified.isoformat()
+        else:
+            modified = datetime.now().isoformat()
+
+        return {
+            'title': self.title,
+            'label': self.title,
+            'url': self.get_absolute_url(),
+            'id': self.id,
+            'slug': self.slug,
+            'tags': tags,
+            'review_tags': review_tags,
+            'sections': sections,
+            'locale': self.locale,
+            'summary': summary,
+            'translations': translations,
+            'modified': modified,
+            'json_modified': datetime.now().isoformat()
+        }
+
+    def get_json_data(self, stale=True):
+        """Returns a document in object format for output as JSON.
+
+        The stale parameter, when True, accepts stale cached data even after
+        the document has been modified."""
+
+        # Have parsed data & don't care about freshness? Here's a quick out..
+        curr_json_data = getattr(self, '_json_data', None)
+        if curr_json_data and stale:
+            return curr_json_data
+
+        # Attempt to parse the current contents of self.json, taking care in
+        # case it's empty or broken JSON.
+        self._json_data = {}
+        if self.json:
+            try:
+                self._json_data = json.loads(self.json)
+            except (TypeError, ValueError):
+                pass
+
+        # Try to get ISO 8601 datestamps for the doc and the json
+        json_lmod = self._json_data.get('json_modified', '')
+        doc_lmod = self.modified.isoformat()
+        
+        # If there's no parsed data or the data is stale & we care, it's time
+        # to rebuild the cached JSON data.
+        if (not self._json_data) or (not stale and doc_lmod > json_lmod):
+            old_json = self.json
+            self._json_data = self.build_json_data()
+            self.json = json.dumps(self._json_data)
+            # HACK: Update just the json field for the document.
+            Document.objects.filter(pk=self.pk).update(json=self.json)
+
+        return self._json_data
 
     def extract_code_sample(self, id):
         """Given the id of a code sample, attempt to extract it from rendered
