@@ -722,6 +722,7 @@ class DocumentListTests(TestCaseBase):
         eq_(Document.objects.filter(locale=self.locale).count(),
             len(doc('#document-list ul.documents li')))
 
+    @attr('tags')
     def test_tag_list(self):
         """Verify the tagged documents list view."""
         tag = DocumentTag(name='Test Tag', slug='test-tag')
@@ -729,6 +730,24 @@ class DocumentListTests(TestCaseBase):
         self.doc.tags.add(tag)
         response = self.client.get(reverse('wiki.tag',
                                    args=[tag.name]))
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        eq_(1, len(doc('#document-list ul.documents li')))
+
+    # http://bugzil.la/871638
+    @attr('tags')
+    def test_tag_list_duplicates(self):
+        """
+        Verify the tagged documents list view, even for duplicate tags
+        """
+        en_tag = DocumentTag(name='CSS Reference', slug='css-reference')
+        en_tag.save()
+        fr_tag = DocumentTag(name='CSS Référence', slug='css-reference_1')
+        fr_tag.save()
+        self.doc.tags.add(en_tag)
+        self.doc.tags.add(fr_tag)
+        response = self.client.get(reverse('wiki.tag',
+                                   args=[en_tag.name]))
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_(1, len(doc('#document-list ul.documents li')))

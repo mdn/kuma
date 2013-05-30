@@ -750,7 +750,14 @@ def list_documents(request, category=None, tag=None):
 
     # Taggit offers a slug - but use name here, because the slugification
     # stinks and is hard to customize.
-    tag_obj = tag and get_object_or_404(DocumentTag, name=tag) or None
+    tag_obj = None
+    if tag:
+        matching_tags = DocumentTag.objects.filter(name=tag)
+        if len(matching_tags) == 0:
+            raise Http404
+        for matching_tag in matching_tags:
+            if matching_tag.name == tag:
+                tag_obj = matching_tag
     docs = Document.objects.filter_for_list(locale=request.locale,
                                              category=category_id,
                                              tag=tag_obj)
