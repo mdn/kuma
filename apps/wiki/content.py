@@ -233,6 +233,10 @@ class ContentSectionTool(object):
         self.stream = IframeHostFilter(self.stream, hosts)
         return self
 
+    def filterEditorSafety(self):
+        self.stream = EditorSafetyFilter(self.stream)
+        return self
+
     def extractSection(self, id):
         self.stream = SectionFilter(self.stream, id)
         return self
@@ -778,6 +782,23 @@ class CodeSyntaxFilter(html5lib_Filter):
                             attrs['class'] = "brush: %s" % brush
                             del attrs['function']
                             token['data'] = attrs.items()
+            yield token
+
+
+class EditorSafetyFilter(html5lib_Filter):
+    """Minimal filter meant to strip out harmful attributes and elements before
+    rendering HTML for use in CKEditor"""
+    def __iter__(self):
+
+        for token in html5lib_Filter.__iter__(self):
+        
+            if ('StartTag' == token['type']):
+
+                # Strip out any attributes that start with "on"
+                token['data'] = [(k,v)
+                    for (k,v) in dict(token['data']).items()
+                    if not k.startswith('on')]
+
             yield token
 
 
