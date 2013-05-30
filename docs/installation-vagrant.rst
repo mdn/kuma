@@ -13,7 +13,7 @@ the current working directory`_ for performance reasons, and also Vagrant
 support for Windows is not-so-great yet.
 
 .. _vagrant: http://vagrantup.com/
-.. _uses NFS to share the current working directory: http://vagrantup.com/docs/nfs.html
+.. _uses NFS to share the current working directory: http://docs.vagrantup.com/v2/synced-folders/nfs.html
 
 
 Getting up and running
