@@ -802,6 +802,36 @@ class ContentSectionToolTests(TestCase):
                           .serialize())
             eq_(normalize_html(expected_line), normalize_html(result_line))
 
+    @attr('bug821986')
+    def test_editor_safety_filter(self):
+        """Markup that's hazardous for editing should be stripped"""
+        doc_src = """
+            <svg><circle onload=confirm(3)>
+            <h1 class="header1">Header One</h1>
+            <p>test</p>
+            <section>
+                <h1 class="header2">Header Two</h1>
+                <p>test</p>
+            </section>
+            <h1 class="header3">Header Three</h1>
+            <p>test</p>
+        """
+        expected_src = """
+            <svg><circle>
+            <h1 class="header1">Header One</h1>
+            <p>test</p>
+            <section>
+                <h1 class="header2">Header Two</h1>
+                <p>test</p>
+            </section>
+            <h1 class="header3">Header Three</h1>
+            <p>test</p>
+        """
+        result_src = (wiki.content.parse(doc_src)
+                      .filterEditorSafety()
+                      .serialize())
+        eq_(normalize_html(expected_src), normalize_html(result_src))
+
 
 class AllowedHTMLTests(TestCase):
     simple_tags = (

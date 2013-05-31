@@ -1,10 +1,24 @@
 from nose.tools import eq_, ok_
+from nose.plugins.attrib import attr
 
 from sumo.tests import TestCase
 from wiki.forms import RevisionForm, RevisionValidationForm
 from wiki.tests import doc_rev, normalize_html
 
 
+class FormEditorSafetyFilterTests(TestCase):
+    fixtures = ['test_users.json']
+
+    @attr('bug821986')
+    def test_form_onload_attr_filter(self):
+        """RevisionForm should strip out any harmful onload attributes from
+        input markup"""
+        d, r = doc_rev("""
+            <svg><circle onload=confirm(3)>
+        """)
+        rev_form = RevisionForm(instance=r)
+        ok_('onload' not in rev_form.initial['content'])
+        
 class FormSectionEditingTests(TestCase):
     fixtures = ['test_users.json']
 

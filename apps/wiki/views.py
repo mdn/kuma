@@ -530,6 +530,10 @@ def document(request, document_slug, document_locale):
                 doc.allows_revision_by(request.user)):
             tool.injectSectionEditingLinks(doc.full_path, doc.locale)
 
+        # ?raw view is often used for editors - apply safety filtering.
+        if show_raw:
+            tool.filterEditorSafety()
+
         doc_html = tool.serialize()
 
         # If this is an include, filter out the class="noinclude" blocks.
@@ -1594,11 +1598,15 @@ def translate(request, document_slug, document_locale, revision_id=None):
     if user_has_rev_perm:
         initial = {'based_on': based_on_rev.id, 'comment': '',
                    'toc_depth': based_on_rev.toc_depth}
+        content = None
         if revision_id:
-            initial.update(
-                content=Revision.objects.get(pk=revision_id).content)
+            content = Revision.objects.get(pk=revision_id).content
         elif not doc:
-            initial.update(content=based_on_rev.content)
+            content = based_on_rev.content
+        if content:
+            initial.update(content=wiki.content.parse(content)
+                                   .filterEditorSafety()
+                                   .serialize())
         instance = doc and get_current_or_latest_revision(doc)
         rev_form = RevisionForm(instance=instance, initial=initial)
 
