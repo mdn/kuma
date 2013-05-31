@@ -909,6 +909,26 @@ class DocumentEditingTests(TestCaseBase):
                                        locale=settings.WIKI_DEFAULT_LANGUAGE))
         eq_(response['X-Robots-Tag'], 'noindex')
 
+    @attr('bug821986')
+    def test_editor_safety_filter(self):
+        """Safety filter should be applied before rendering editor"""
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+
+        r = revision(save=True, content="""
+            <svg><circle onload=confirm(3)>
+        """)
+
+        args = [r.document.full_path]
+        urls = (
+            reverse('wiki.edit_document', args=args),
+            '%s?tolocale=%s' % (reverse('wiki.translate', args=args), 'fr')
+        )
+        for url in urls:
+            page = pq(client.get(url).content)
+            editor_src = page.find('#id_content').text()
+            ok_('onload' not in editor_src)
+
     def test_create_on_404(self):
         client = LocalizingClient()
         client.login(username='admin', password='testpass')
@@ -981,7 +1001,6 @@ class DocumentEditingTests(TestCaseBase):
                 eq_(str(TOC_DEPTH_H4), opt_element.attr('value'))
         if not found_selected:
             raise AssertionError("No ToC depth initially selected.")
-
 
     @attr('retitle')
     def test_retitling_solo_doc(self):
@@ -2186,6 +2205,21 @@ class SectionEditingResourceTests(TestCaseBase):
         eq_('*', response['Access-Control-Allow-Origin'])
         eq_(normalize_html(expected),
             normalize_html(response.content))
+
+    @attr('bug821986')
+    def test_raw_editor_safety_filter(self):
+        """Safety filter should be applied before rendering editor"""
+        client = LocalizingClient()
+        client.login(username='admin', password='testpass')
+        d, r = doc_rev("""
+            <p onload=alert(3)>FOO</p>
+            <svg><circle onload=confirm(3)>HI THERE</circle></svg>
+        """)
+        response = client.get('%s?raw=true' %
+                              reverse('wiki.document', args=[d.full_path]),
+                              HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        ok_('<p onload=' not in response.content)
+        ok_('<circle onload=' not in response.content)
 
     def test_raw_with_editing_links_source(self):
         """The raw source for a document can be requested, with section editing

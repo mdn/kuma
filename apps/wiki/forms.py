@@ -260,6 +260,7 @@ class RevisionForm(forms.ModelForm):
                 tool.injectSectionIDs()
                 if self.section_id:
                     tool.extractSection(self.section_id)
+                tool.filterEditorSafety()
                 content = tool.serialize()
             self.initial['content'] = content
 
