@@ -70,7 +70,7 @@ Getting up and running
    Note: If you decide to run nfs: false, the system will be a lot slower. There is also the potential of running into
    weird issues with puppet, since the current puppet configurations do not currently support nfs: false.
 
--  Add developer-dev.mozilla.org to /etc/hosts to the end of your hosts file with this shell command::
+-  Add some hostnames to the end of your hosts file with this shell command::
 
        echo '192.168.10.55 developer-local.allizom.org mdn-local.mozillademos.org' | sudo tee /etc/hosts
 
