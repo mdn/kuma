@@ -15,7 +15,7 @@ import wiki.content
 from wiki.content import (CodeSyntaxFilter, DekiscriptMacroFilter,
                           SectionTOCFilter, SectionIDFilter, IframeHostFilter,
                           H2TOCFilter, H3TOCFilter,
-                          SECTION_TAGS, get_seo_description)
+                          SECTION_TAGS, get_seo_description, get_content_sections)
 from wiki.models import ALLOWED_TAGS, ALLOWED_ATTRIBUTES, Document
 from wiki.tests import normalize_html, doc_rev, document, revision
 from wiki.helpers import bugize_text
@@ -23,6 +23,12 @@ from wiki.helpers import bugize_text
 
 class ContentSectionToolTests(TestCase):
     fixtures = ['test_users.json']
+
+    def test_section_pars_for_empty_docs(self):
+        doc = document(title='Doc', locale=u'fr', slug=u'doc', save=True,
+                        html='<!-- -->')
+        res = get_content_sections(doc.html)
+        eq_(type(res).__name__, 'list')
 
     def test_section_ids(self):
 
