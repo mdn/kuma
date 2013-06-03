@@ -46,18 +46,21 @@ def parse(src):
     return ContentSectionTool(src)
 
 
-def get_content_sections(src = ''):
+def get_content_sections(src=''):
     """Gets sections in a document, """
     sections = []
 
     if src:
         attr = '[id]'
-        elements = pq(src).find(((attr + ',').join(SECTION_TAGS)) + attr)
-        
-        def objectify_pyquery_item(i):
-            sections.append({ 'title': i.text(), 'id': i.attr('id') })
+        try:
+            elements = pq(src).find(((attr + ',').join(SECTION_TAGS)) + attr)
 
-        elements.each(lambda e: objectify_pyquery_item(e))
+            def objectify_pyquery_item(i):
+                sections.append({'title': i.text(), 'id': i.attr('id')})
+
+            elements.each(lambda e: objectify_pyquery_item(e))
+        except:
+            pass
 
     return sections
 
