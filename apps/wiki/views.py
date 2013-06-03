@@ -311,7 +311,7 @@ def _get_document_for_json(doc, addLocaleToTitle=False):
     else:
         review_tags = [x.name for x in
                        doc.current_revision.review_tags.all()]
-     
+
     return {
         'title': title,
         'label': doc.title,
