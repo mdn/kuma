@@ -4,12 +4,18 @@
                ('WT.oss_r', num_results)) %}
 
 {% macro doc_block(doc) -%}
-  {% set url = '%s%s' % (settings.SITE_URL, url('wiki.document', doc.slug, locale=doc.locale)) %}
+  {% set doc_url = '%s%s' % (settings.SITE_URL, url('wiki.document', doc.slug, locale=doc.locale)) %}
   <li class="doc-result" data-url="{{ url }}" data-locale="{{ doc.locale }}" tabindex="0">
-    <h3><a href="{{ url }}">{{ doc.title }}</a> 
+    <h3><a href="{{ doc_url }}">{{ doc.title }}</a> 
       {% if request.locale != doc.locale %} <span class="locale">({{ doc.locale }})</span>{% endif %}
     </h3>
     <div class="searchMeta">
+      <ul class="tags">
+        {% for tag in doc.tags %}
+          {% set tag_url = url('wiki.tag', tag) %}
+        <li><a href="{{ tag_url }}">{{ tag }}</a></li>
+        {% endfor %}
+      </ul>
       {#
       <ul class="crumbs">
         {% for doc in doc.parents %}
