@@ -140,6 +140,10 @@
 							var width = this.getValueOf( 'youtubePlugin', 'txtWidth' );
 							var height = this.getValueOf( 'youtubePlugin', 'txtHeight' );
 
+							if(url) {
+								url = 'https://www.youtube.com/embed/' + url.split('=')[1] + '/?feature=player_detailpage';
+ 							}
+
 							content = '<iframe width="' + width + '" height="' + height + '" src="' + url + '" frameborder="0" allowfullscreen></iframe>';
 						}
 

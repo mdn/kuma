@@ -2774,7 +2774,7 @@ class AutosuggestDocumentsTests(TestCaseBase):
 class CodeSampleViewTests(TestCaseBase):
     fixtures = ['test_users.json']
 
-    @override_constance_settings(KUMA_CODE_SAMPLE_HOSTS='testserver')
+    @override_constance_settings(KUMA_WIKI_IFRAME_ALLOWED_HOSTS='^https?\:\/\/testserver')
     def test_code_sample_1(self):
         """The raw source for a document can be requested"""
         client = LocalizingClient()
@@ -2807,7 +2807,7 @@ class CodeSampleViewTests(TestCaseBase):
         for item in expecteds:
             ok_(item in normalized)
 
-    @override_constance_settings(KUMA_CODE_SAMPLE_HOSTS='sampleserver')
+    @override_constance_settings(KUMA_WIKI_IFRAME_ALLOWED_HOSTS='^https?\:\/\/sampleserver')
     def test_code_sample_host_restriction(self):
         client = LocalizingClient()
         d, r = doc_rev("""
@@ -2830,7 +2830,7 @@ class CodeSampleViewTests(TestCaseBase):
                               HTTP_HOST='sampleserver')
         eq_(200, response.status_code)
 
-    @override_constance_settings(KUMA_CODE_SAMPLE_HOSTS='sampleserver')
+    @override_constance_settings(KUMA_WIKI_IFRAME_ALLOWED_HOSTS='^https?\:\/\/sampleserver')
     def test_code_sample_iframe_embed(self):
         slug = 'test-code-embed'
         embed_url = ('https://sampleserver/%s/docs/%s$samples/sample1' %
