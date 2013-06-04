@@ -1426,6 +1426,15 @@
          $moveSlug.blur(function() {
              $lookupLink.focus();
          });
+
+         // Help on the client side for validating slugs to be moved
+         function formatSlug() {
+            var startValue = this.value;
+            if(startValue.length && startValue[0] == '/') {
+                this.value = startValue.substr(1);
+            }
+         }
+         $moveSlug.keyup(formatSlug).change(formatSlug).focus(formatSlug).blur(formatSlug);
      }
 
     $(document).ready(init);
