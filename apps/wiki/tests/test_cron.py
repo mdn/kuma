@@ -6,6 +6,7 @@ from sumo.tests import TestCase
 from wiki.cron import build_sitemaps
 from wiki.models import Document
 
+from datetime import datetime;
 
 class SitemapsTestCase(TestCase):
     fixtures = ['test_users.json', 'wiki/documents.json']
@@ -28,6 +29,8 @@ class SitemapsTestCase(TestCase):
                                'r').read()
 
             docs = Document.objects.filter(locale=locale)
+
+            ok_(docs[0].modified.strftime('%Y-%m-%d') in sitemap_xml)
             for doc in docs:
                 ok_(doc.slug in sitemap_xml)
 
