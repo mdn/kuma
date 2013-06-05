@@ -16,6 +16,7 @@ from tower import ugettext as _
 from sumo.urlresolvers import reverse
 from sumo.utils import chunked
 from wiki.models import Document, SlugCollision
+from wiki.signals import render_done
 
 
 log = logging.getLogger('k.task')
@@ -114,3 +115,4 @@ def _rebuild_kb_chunk(data, **kwargs):
 def render_document(doc, cache_control, base_url):
     """Simple task wrapper for the render() method of the Document model"""
     doc.render(cache_control, base_url)
+    render_done.send(sender=doc)
