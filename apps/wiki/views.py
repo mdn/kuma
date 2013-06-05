@@ -280,53 +280,6 @@ def _join_slug(parent_split, slug):
     return '/'.join(parent_split)
 
 
-# TODO: Maybe refactor this into a .to_json() method on the Document model?
-def _get_document_for_json(doc, addLocaleToTitle=False):
-    """Returns a document in object format for output as JSON"""
-    content = (wiki.content.parse(doc.html)
-                                .injectSectionIDs()
-                                .serialize())
-    title = doc.title
-    if(addLocaleToTitle):
-        title += ' [' + doc.locale + ']'
-
-    summary = ''
-    if doc.current_revision and doc.current_revision.summary:
-        summary = doc.current_revision.summary
-    else:
-        summary = doc.get_summary(strip_markup=False)
-
-    # Map out translations
-    translations = []
-    for translation in doc.other_translations:
-        translations.append({
-            'locale': translation.locale,
-            'title': translation.title,
-            'url': reverse('wiki.document', args=[translation.full_path],
-                           locale=translation.locale)
-        })
-
-    if not doc.current_revision:
-        review_tags = []
-    else:
-        review_tags = [x.name for x in
-                       doc.current_revision.review_tags.all()]
-
-    return {
-        'title': title,
-        'label': doc.title,
-        'url': doc.get_absolute_url(),
-        'id': doc.id,
-        'slug': doc.slug,
-        'tags': [x.name for x in doc.tags.all()],
-        'review_tags': review_tags,
-        'sections': wiki.content.get_content_sections(content),
-        'locale': doc.locale,
-        'summary': summary,
-        'translations': translations
-    }
-
-
 @csrf_exempt
 @require_http_methods(['GET', 'PUT', 'HEAD'])
 @allow_CORS_GET
@@ -1156,7 +1109,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
     attachments = _format_attachment_obj(doc.attachments)
     allow_add_attachment = (
         Attachment.objects.allow_add_attachment_by(request.user))
-    docInfo = json.dumps(_get_document_for_json(doc))
+    docInfo = json.dumps(doc.get_json_data())
 
     return render(request, 'wiki/edit_document.html',
                         {'revision_form': rev_form,
@@ -1314,6 +1267,7 @@ def preview_revision(request):
 @process_document_path
 def get_children(request, document_slug, document_locale):
     """Retrieves a document and returns its children in a JSON structure"""
+    expand = request.GET.get('expand', False) is not False
     maxDepth = 5
     depth = int(request.GET.get('depth', maxDepth))
     if(depth > maxDepth):
@@ -1325,14 +1279,17 @@ def get_children(request, document_slug, document_locale):
             if d.is_redirect:
                 return None
 
-            res = {
-                'title': d.title,
-                'slug': d.slug,
-                'locale': d.locale,
-                'url':  d.get_absolute_url(),
-                'summary': d.get_summary(strip_markup=False),
-                'subpages': []
-            }
+            if expand:
+                res = dict(d.get_json_data())
+                res['subpages'] = []
+            else:
+                res = {
+                    'title': d.title,
+                    'slug': d.slug,
+                    'locale': d.locale,
+                    'url':  d.get_absolute_url(),
+                    'subpages': []
+                }
 
             if level < depth:
                 descendants = d.get_descendants(1)
@@ -1380,7 +1337,9 @@ def autosuggest_documents(request):
     # Generates a list of acceptable docs
     docs_list = []
     for d in docs:
-        docs_list.append(_get_document_for_json(d, True))
+        data = d.get_json_data()
+        data['title'] += ' [' + d.locale + ']'
+        docs_list.append(data)
 
     data = json.dumps(docs_list)
     return HttpResponse(data, mimetype='application/json')
@@ -1791,7 +1750,15 @@ def json_view(request, document_slug=None, document_locale=None):
                                 .injectSectionIDs()
                                 .serialize())
 
-    json_obj = _get_document_for_json(document)
+    stale = True
+    if request.user.is_authenticated():
+        # A logged-in user can demand fresh data with a shift-refresh
+        # Shift-Reload sends Cache-Control: no-cache
+        ua_cc = request.META.get('HTTP_CACHE_CONTROL')
+        if ua_cc == 'no-cache':
+            stale = False
+
+    json_obj = document.get_json_data(stale=stale)
 
     data = json.dumps(json_obj)
     return HttpResponse(data, mimetype='application/json')
