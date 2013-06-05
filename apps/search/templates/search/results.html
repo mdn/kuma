@@ -5,17 +5,19 @@
 
 {% macro doc_block(doc) -%}
   {% set doc_url = '%s%s' % (settings.SITE_URL, url('wiki.document', doc.slug, locale=doc.locale)) %}
-  <li class="doc-result" data-url="{{ url }}" data-locale="{{ doc.locale }}" tabindex="0">
+  <li class="doc-result" data-url="{{ doc_url }}" data-locale="{{ doc.locale }}">
     <h3><a href="{{ doc_url }}">{{ doc.title }}</a> 
       {% if request.locale != doc.locale %} <span class="locale">({{ doc.locale }})</span>{% endif %}
     </h3>
+    {% if doc.tags|length %}
+    <ul class="tags">
+      {% for tag in doc.tags %}
+        {% set tag_url = url('wiki.tag', tag) %}
+      <li><a href="{{ tag_url }}">{{ tag }}</a></li>
+      {% endfor %}
+    </ul>
+    {% endif %}
     <div class="searchMeta">
-      <ul class="tags">
-        {% for tag in doc.tags %}
-          {% set tag_url = url('wiki.tag', tag) %}
-        <li><a href="{{ tag_url }}">{{ tag }}</a></li>
-        {% endfor %}
-      </ul>
       {#
       <ul class="crumbs">
         {% for doc in doc.parents %}
@@ -28,25 +30,6 @@
     <div class="searchHighlight"> 
       <p>{{ doc.get_excerpt()|safe }}</p>
     </div>
-    {#
-    <div class="searchAddress">
-      {% set tags = doc.tags.all() %}
-      {% if tags | length %}
-      <section id="page-tags">
-        <h2>{{ _('Tags') }} ({{ tags | length}})</h2>
-        <div id="deki-page-tags">
-          <ul class="tags tagit ui-widget ui-widget-content">
-            {% for tag in tags %}
-            <li class="tagit-choice ui-widget-content ui-state-default">
-                <a class="text tagit-label" href="{{url('wiki.tag', tag.name)}}">{{ tag.name }}</a>
-            </li>
-            {% endfor %}
-          </ul>
-        </div>
-      </section>
-      {% endif %}
-    </div>
-    #}
     <p><!-- match content here --></p>
   </li>
 {% endmacro %}
@@ -59,7 +42,7 @@
   <div class="search-results">
     
     <h1>Search</h1>
-    <div class="search-form">
+    <div class="search-form boxed">
       <form action="" method="get">
         <input name="q" id="search-q" type="search" value="{{ search_query }}" autofocus />
         <button type="submit" id="search-submit">Search!</button>
@@ -67,6 +50,7 @@
     </div>
 
     {% if search_query: %}
+      <div class="boxed">
       {% if result_count: %}
         <h2>Search Results For "{{ search_query }}"</h2>
         <ul class="search-results-list">
@@ -95,6 +79,7 @@
     {% else %}
       {% include 'search/popular.html' %}
     {% endif %}
+    </div>
 
     <style type="text/css">
     .doc-result { padding: 10px; margin: 0 -10px; }
@@ -109,6 +94,12 @@
 
     .doc-result .searchAddress a { color: #999; }
 
+    .doc-result .tags { margin-bottom: 0.3em; }
+    .doc-result .tags li { display: inline; font-size: 0.8em; color: #666; }
+    .doc-result .tags li:after { content: ","; }
+    .doc-result .tags li:last-child:after { content: ""; }
+    .doc-result .tags a  { color: #090; font-style: italic; }
+
     .doc-result .searchMeta .crumbs { margin: 0 0 0.3em 0; }
     .doc-result .searchMeta .crumbs li { display: inline; padding-left: 13px; margin-left: 6px; background: url("{{ MEDIA_URL }}/img/nav-arrows.png") -15px -698px no-repeat; font-size: 0.8em; }
     .doc-result .searchMeta .crumbs li:first-child { padding-left: 0; margin-left: 0; background: none; }
@@ -117,7 +108,7 @@
     .doc-result .searchMeta .searchDate { color: #999; }
     .doc-result p { padding-left: 0; margin-bottom: 0; font-size: 0.9em; }
     .search-form  { margin-bottom: 30px; }
-    #search-q     { width: 80%; }
+    #search-q     { width: 80%; -webkit-appearance: textfield; }
     #search-submit { display: inline-block; }
     .search-popular { width: 49%; float: left; margin-top: 20px; }
     .search-popular ul { list-style-type: circle; padding-left: 30px; }
