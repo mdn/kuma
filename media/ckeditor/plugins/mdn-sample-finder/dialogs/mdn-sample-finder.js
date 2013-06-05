@@ -120,7 +120,7 @@ CKEDITOR.dialog.add( 'mdn-sample-finder', function( editor ) {
 		onOk: function() {
 			var section = jQuery(sectionsSelect.getInputElement().$).val();;
 			if(section) {
-				var value = "{{ EmbedLiveSample('" + section + "', '', ''";
+				var value = "{{ EmbedLiveSample('" + section + "', '', '', ''";
 				if(autoCompleteItem) {
 					value += ", '" + autoCompleteItem.slug + "'";
 				}
