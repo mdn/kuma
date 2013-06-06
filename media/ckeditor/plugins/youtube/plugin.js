@@ -131,13 +131,16 @@
 
 						if ( this.getContentElement( 'youtubePlugin', 'txtEmbed' ).isEnabled() )
 						{
-							content = this.getValueOf( 'youtubePlugin', 'txtEmbed' );
+							content = this.getValueOf( 'youtubePlugin', 'txtEmbed' ).replace('http:', 'https:');
 						}
 						else {
 							var url = this.getValueOf( 'youtubePlugin', 'txtUrl' );
 							var width = this.getValueOf( 'youtubePlugin', 'txtWidth' );
 							var height = this.getValueOf( 'youtubePlugin', 'txtHeight' );
-							var video = jQuery.parseQuerystring(url).v;
+							var urlSplit = url.split('?');
+							var video = urlSplit.length && urlSplit[1] ? jQuery.parseQuerystring(urlSplit[1]).v : '';
+
+							console.log(video);
 
 							if(video) {
 								url = 'https://www.youtube.com/embed/' + video + '/?feature=player_detailpage';
