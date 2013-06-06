@@ -1,4 +1,6 @@
 (function($, sh) {
+  SyntaxHighlighter.brushes.JScript.aliases.push('json');
+
   $(document).ready(function() {
     $('pre').each(function() {
         var $this = $(this),
