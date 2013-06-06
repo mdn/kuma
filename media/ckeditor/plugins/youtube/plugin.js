@@ -65,8 +65,7 @@
 												alert( editor.lang.youtube.noCode );
 												return false;
 											}
-											else
-											if ( this.getValue().length === 0 || this.getValue().indexOf( 'http://' ) === -1 ){
+											else if (!(/https?\:\/\//.test(this.getValue()))) {
 												alert( editor.lang.youtube.invalidEmbed );
 												return false;
 											}
@@ -101,8 +100,7 @@
 														alert( editor.lang.youtube.noCode );
 														return false;
 													}
-													else
-													if ( this.getValue().length === 0 || this.getValue().indexOf( 'http://' ) === -1 ){
+													else if (!(/https?\:\/\//.test(this.getValue()))) {
 														alert( editor.lang.youtube.invalidUrl );
 														return false;
 													}
@@ -139,16 +137,19 @@
 							var url = this.getValueOf( 'youtubePlugin', 'txtUrl' );
 							var width = this.getValueOf( 'youtubePlugin', 'txtWidth' );
 							var height = this.getValueOf( 'youtubePlugin', 'txtHeight' );
+							var video = jQuery.parseQuerystring(url).v;
 
-							if(url) {
-								url = 'https://www.youtube.com/embed/' + url.split('=')[1] + '/?feature=player_detailpage';
+							if(video) {
+								url = 'https://www.youtube.com/embed/' + video + '/?feature=player_detailpage';
+								content = '<iframe width="' + width + '" height="' + height + '" src="' + url + '" frameborder="0" allowfullscreen></iframe>';
  							}
-
-							content = '<iframe width="' + width + '" height="' + height + '" src="' + url + '" frameborder="0" allowfullscreen></iframe>';
 						}
 
 						var instance = this.getParentEditor();
 						instance.insertHtml( content );
+
+						this.getContentElement( 'youtubePlugin', 'txtEmbed' ).enable();
+						this.getContentElement( 'youtubePlugin', 'txtUrl' ).enable();
 					}
 				};
 			});
