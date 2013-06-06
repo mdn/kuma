@@ -375,10 +375,9 @@ class DocumentManager(ManagerBase):
     """Manager for Documents, assists for queries"""
 
     def clean_content(self, content_in, use_constance_bleach_whitelists=False):
-        allowed_hosts = constance.config.KUMA_CODE_SAMPLE_HOSTS.split(' ')
         out = (wiki.content
                .parse(content_in)
-               .filterIframeHosts(allowed_hosts)
+               .filterIframeHosts(constance.config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS)
                .serialize())
 
         if use_constance_bleach_whitelists:

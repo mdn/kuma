@@ -700,7 +700,7 @@ class ContentSectionToolTests(TestCase):
         """ % dict(embed_url=embed_url)
 
         result_src = (wiki.content.parse(doc_src)
-                      .filterIframeHosts(['sampleserver'])
+                      .filterIframeHosts('^https?\:\/\/sampleserver')
                       .serialize())
         page = pq(result_src)
 
@@ -716,6 +716,45 @@ class ContentSectionToolTests(TestCase):
         eq_(if3.length, 1)
         eq_(if3.attr('src'), '')
 
+    def test_iframe_host_filter_invalid_host(self):
+        doc_src = """
+            <iframe id="if1" src="http://sampleserver"></iframe>
+            <iframe id="if2" src="http://testserver"></iframe>
+            <iframe id="if3" src="http://davidwalsh.name"></iframe>
+            <iframe id="if4" src="ftp://davidwalsh.name"></iframe>
+            <p>test</p>
+        """
+        result_src = (wiki.content.parse(doc_src)
+                      .filterIframeHosts('^https?\:\/\/(sample|test)server')
+                      .serialize())
+        page = pq(result_src)
+
+        eq_(page.find('#if1').attr('src'), 'http://sampleserver')
+        eq_(page.find('#if2').attr('src'), 'http://testserver')
+        eq_(page.find('#if3').attr('src'), '')
+        eq_(page.find('#if4').attr('src'), '')
+
+    def test_iframe_host_filter_youtube(self):
+        tubes = (
+            'http://www.youtube.com/embed/iaNoBlae5Qw/?feature=player_detailpage',
+            'https://youtube.com/embed/iaNoBlae5Qw/?feature=player_detailpage',
+            'https://youtube.com/sembed/'
+        )
+        doc_src = """
+            <iframe id="if1" src="%s"></iframe>
+            <iframe id="if2" src="%s"></iframe>
+            <iframe id="if3" src="%s"></iframe>
+            <p>test</p>
+        """ % tubes
+        result_src = (wiki.content.parse(doc_src)
+                      .filterIframeHosts('^https?\:\/\/(www.)?youtube.com\/embed\/(\.*)')
+                      .serialize())
+        page = pq(result_src)
+
+        eq_(page.find('#if1').attr('src'), tubes[0])
+        eq_(page.find('#if2').attr('src'), tubes[1])
+        eq_(page.find('#if3').attr('src'), '')
+
     def test_iframe_host_contents_filter(self):
         """Any contents inside an <iframe> should be removed"""
         doc_src = """
@@ -728,7 +767,7 @@ class ContentSectionToolTests(TestCase):
             </iframe>
         """
         result_src = (wiki.content.parse(doc_src)
-                      .filterIframeHosts(['sampleserver'])
+                      .filterIframeHosts('^https?\:\/\/sampleserver')
                       .serialize())
         eq_(normalize_html(expected_src), normalize_html(result_src))
 
