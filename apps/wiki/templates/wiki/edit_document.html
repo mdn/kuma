@@ -174,12 +174,7 @@
     {{ js('framebuster') }}
 
     {% if document.is_template %}
-      <script src="{{ MEDIA_URL }}ace/ace.js" 
-        type="text/javascript" charset="utf-8"></script>
-      <script src="{{ MEDIA_URL }}ace/theme-dreamweaver.js"
-        type="text/javascript" charset="utf-8"></script>
-      <script src="{{ MEDIA_URL }}ace/mode-javascript.js"
-        type="text/javascript" charset="utf-8"></script>
+      {{ js('ace-editor') }}
     {% else %}
       {% include 'wiki/includes/ckeditor_scripts.html' %}
     {% endif %}
