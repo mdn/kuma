@@ -114,6 +114,8 @@ def format_comment(rev):
 
 @register.function
 def revisions_unified_diff(from_revision, to_revision):
+    if from_revision == None or to_revision == None:
+        return "Diff is unavailable."
     fromfile = u'[%s] %s #%s' % (from_revision.document.locale,
                                  from_revision.document.title,
                                  from_revision.id)
