@@ -153,7 +153,10 @@ var _ = self.Prism = {
 			var worker = new Worker(_.filename);
 
 			worker.onmessage = function(evt) {
-				env.highlightedCode = Token.stringify(JSON.parse(evt.data));
+				env.highlightedCode = Token.stringify(JSON.parse(evt.data), language);
+
+				_.hooks.run('before-insert', env);
+
 				env.element.innerHTML = env.highlightedCode;
 
 				callback && callback.call(env.element);
@@ -167,7 +170,10 @@ var _ = self.Prism = {
 			}));
 		}
 		else {
-			env.highlightedCode = _.highlight(env.code, env.grammar)
+			env.highlightedCode = _.highlight(env.code, env.grammar, env.language)
+
+			_.hooks.run('before-insert', env);
+
 			env.element.innerHTML = env.highlightedCode;
 
 			callback && callback.call(element);
@@ -177,11 +183,11 @@ var _ = self.Prism = {
 		}
 	},
 
-	highlight: function (text, grammar) {
-		return Token.stringify(_.tokenize(text, grammar));
+	highlight: function (text, grammar, language) {
+		return Token.stringify(_.tokenize(text, grammar), language);
 	},
 
-	tokenize: function(text, grammar) {
+	tokenize: function(text, grammar, language) {
 		var Token = _.Token;
 
 		var strarr = [text];
@@ -203,7 +209,8 @@ var _ = self.Prism = {
 
 			var pattern = grammar[token],
 				inside = pattern.inside,
-				lookbehind = !!pattern.lookbehind || 0;
+				lookbehind = !!pattern.lookbehind,
+				lookbehindLength = 0;
 
 			pattern = pattern.pattern || pattern;
 
@@ -223,13 +230,14 @@ var _ = self.Prism = {
 				pattern.lastIndex = 0;
 
 				var match = pattern.exec(str);
+
 				if (match) {
 					if(lookbehind) {
-						lookbehind = match[1].length;
+						lookbehindLength = match[1].length;
 					}
 
-					var from = match.index - 1 + lookbehind,
-					    match = match[0].slice(lookbehind),
+					var from = match.index - 1 + lookbehindLength,
+					    match = match[0].slice(lookbehindLength),
 					    len = match.length,
 					    to = from + len,
 						before = str.slice(0, from + 1),
@@ -287,21 +295,25 @@ var Token = _.Token = function(type, content) {
 	this.content = content;
 };
 
-Token.stringify = function(o) {
+Token.stringify = function(o, language, parent) {
 	if (typeof o == 'string') {
 		return o;
 	}
 
 	if (Object.prototype.toString.call(o) == '[object Array]') {
-		return o.map(Token.stringify).join('');
+		return o.map(function(element) {
+			return Token.stringify(element, language, o);
+		}).join('');
 	}
 
 	var env = {
 		type: o.type,
-		content: Token.stringify(o.content),
+		content: Token.stringify(o.content, language, parent),
 		tag: 'span',
 		classes: ['token', o.type],
-		attributes: {}
+		attributes: {},
+		language: language,
+		parent: parent
 	};
 
 	if (env.type == 'comment') {
@@ -432,14 +444,27 @@ if (Prism.languages.markup) {
 
 Prism.languages.clike = {
 	'comment': {
-		pattern: /(^|[^\\])(\/\*[\w\W]*?\*\/|\/\/.*?(\r?\n|$))/g,
+		pattern: /(^|[^\\])(\/\*[\w\W]*?\*\/|(^|[^:])\/\/.*?(\r?\n|$))/g,
 		lookbehind: true
 	},
 	'string': /("|')(\\?.)*?\1/g,
+	'class-name': {
+		pattern: /((?:class|interface|extends|implements|trait|instanceof|new)\s+)[a-z0-9_\.\\]+/ig,
+		lookbehind: true,
+		inside: {
+			punctuation: /(\.|\\)/
+		}
+	},
 	'keyword': /\b(if|else|while|do|for|return|in|instanceof|function|new|try|catch|finally|null|break|continue)\b/g,
 	'boolean': /\b(true|false)\b/g,
-	'number': /\b-?(0x)?\d*\.?[\da-f]+\b/g,
-	'operator': /[-+]{1,2}|!|=?&lt;|=?&gt;|={1,2}|(&amp;){1,2}|\|?\||\?|\*|\//g,
+	'function': {
+		pattern: /[a-z0-9_]+\(/ig,
+		inside: {
+			punctuation: /\(/
+		}
+	},
+	'number': /\b-?(0x[\dA-Fa-f]+|\d*\.?\d+([Ee]-?\d+)?)\b/g,
+	'operator': /[-+]{1,2}|!|=?&lt;|=?&gt;|={1,2}|(&amp;){1,2}|\|?\||\?|\*|\/|\~|\^|\%/g,
 	'ignore': /&(lt|gt|amp);/gi,
 	'punctuation': /[{}[\];(),.:]/g
 };
@@ -450,7 +475,7 @@ Prism.languages.clike = {
 
 Prism.languages.javascript = Prism.languages.extend('clike', {
 	'keyword': /\b(var|let|if|else|while|do|for|return|in|instanceof|function|new|with|typeof|try|catch|finally|null|break|continue)\b/g,
-	'number': /\b(-?(0x)?\d*\.?[\da-f]+|NaN|-?Infinity)\b/g,
+	'number': /\b-?(0x[\dA-Fa-f]+|\d*\.?\d+([Ee]-?\d+)?|NaN|-?Infinity)\b/g
 });
 
 Prism.languages.insertBefore('javascript', 'keyword', {
@@ -476,28 +501,58 @@ if (Prism.languages.markup) {
 }
 
 /* **********************************************
-     Begin prism-coffeescript.js
+     Begin prism-file-highlight.js
 ********************************************** */
 
-Prism.languages.coffeescript = Prism.languages.extend('javascript', {
-  'block-comment': /([#]{3}\s*\r?\n(.*\s*\r*\n*)\s*?\r?\n[#]{3})/g,
-  'comment': /(\s|^)([#]{1}[^#^\r^\n]{2,}?(\r?\n|$))/g,
-  'keyword': /\b(this|window|delete|class|extends|namespace|extend|ar|let|if|else|while|do|for|each|of|return|in|instanceof|new|with|typeof|try|catch|finally|null|undefined|break|continue)\b/g,
+(function(){
+
+if (!window.Prism || !document.querySelector) {
+	return;
+}
+
+var Extensions = {
+	'js': 'javascript',
+	'html': 'markup',
+	'svg': 'markup'
+};
+
+Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function(pre) {
+	var src = pre.getAttribute('data-src');
+	var extension = (src.match(/\.(\w+)$/) || [,''])[1];
+	var language = Extensions[extension] || extension;
+	
+	var code = document.createElement('code');
+	code.className = 'language-' + language;
+	
+	pre.textContent = '';
+	
+	code.textContent = 'Loading…';
+	
+	pre.appendChild(code);
+	
+	var xhr = new XMLHttpRequest();
+	
+	xhr.open('GET', src, true);
+
+	xhr.onreadystatechange = function() {
+		console.log(xhr.readyState, xhr.status, src);
+		if (xhr.readyState == 4) {
+			
+			if (xhr.status < 400 && xhr.responseText) {
+				code.textContent = xhr.responseText;
+			
+				Prism.highlightElement(code);
+			}
+			else if (xhr.status >= 400) {
+				code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+			}
+			else {
+				code.textContent = '✖ Error: File does not exist or is empty';
+			}
+		}
+	};
+	
+	xhr.send(null);
 });
 
-Prism.languages.insertBefore('coffeescript', 'keyword', {
-  'function': {
-    pattern: /[a-z|A-z]+\s*[:|=]\s*(\([.|a-z\s|,|:|{|}|\"|\'|=]*\))?\s*-&gt;/gi,
-    inside: {
-      'function-name': /[_?a-z-|A-Z-]+(\s*[:|=])| @[_?$?a-z-|A-Z-]+(\s*)| /g,
-      'operator': /[-+]{1,2}|!|=?&lt;|=?&gt;|={1,2}|(&amp;){1,2}|\|?\||\?|\*|\//g
-    }
-  },
-
-  'class-name': {
-    pattern: /(class\s+)[a-z-]+[\.a-z]*\s/gi,
-    lookbehind: true
-  },
-
-  'attr-name': /[_?a-z-|A-Z-]+(\s*:)| @[_?$?a-z-|A-Z-]+(\s*)| /g
-});
+})();
