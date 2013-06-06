@@ -147,7 +147,10 @@ var _ = self.Prism = {
 			var worker = new Worker(_.filename);	
 			
 			worker.onmessage = function(evt) {
-				env.highlightedCode = Token.stringify(JSON.parse(evt.data));
+				env.highlightedCode = Token.stringify(JSON.parse(evt.data), language);
+
+				_.hooks.run('before-insert', env);
+
 				env.element.innerHTML = env.highlightedCode;
 				
 				callback && callback.call(env.element);
@@ -161,7 +164,10 @@ var _ = self.Prism = {
 			}));
 		}
 		else {
-			env.highlightedCode = _.highlight(env.code, env.grammar)
+			env.highlightedCode = _.highlight(env.code, env.grammar, env.language)
+
+			_.hooks.run('before-insert', env);
+
 			env.element.innerHTML = env.highlightedCode;
 			
 			callback && callback.call(element);
@@ -171,11 +177,11 @@ var _ = self.Prism = {
 		}
 	},
 	
-	highlight: function (text, grammar) {
-		return Token.stringify(_.tokenize(text, grammar));
+	highlight: function (text, grammar, language) {
+		return Token.stringify(_.tokenize(text, grammar), language);
 	},
 	
-	tokenize: function(text, grammar) {
+	tokenize: function(text, grammar, language) {
 		var Token = _.Token;
 		
 		var strarr = [text];
@@ -197,7 +203,8 @@ var _ = self.Prism = {
 			
 			var pattern = grammar[token], 
 				inside = pattern.inside,
-				lookbehind = !!pattern.lookbehind || 0;
+				lookbehind = !!pattern.lookbehind,
+				lookbehindLength = 0;
 			
 			pattern = pattern.pattern || pattern;
 			
@@ -220,11 +227,11 @@ var _ = self.Prism = {
 				
 				if (match) {
 					if(lookbehind) {
-						lookbehind = match[1].length;
+						lookbehindLength = match[1].length;
 					}
 
-					var from = match.index - 1 + lookbehind,
-					    match = match[0].slice(lookbehind),
+					var from = match.index - 1 + lookbehindLength,
+					    match = match[0].slice(lookbehindLength),
 					    len = match.length,
 					    to = from + len,
 						before = str.slice(0, from + 1),
@@ -282,21 +289,25 @@ var Token = _.Token = function(type, content) {
 	this.content = content;
 };
 
-Token.stringify = function(o) {
+Token.stringify = function(o, language, parent) {
 	if (typeof o == 'string') {
 		return o;
 	}
-	
+
 	if (Object.prototype.toString.call(o) == '[object Array]') {
-		return o.map(Token.stringify).join('');
+		return o.map(function(element) {
+			return Token.stringify(element, language, o);
+		}).join('');
 	}
 	
 	var env = {
 		type: o.type,
-		content: Token.stringify(o.content),
+		content: Token.stringify(o.content, language, parent),
 		tag: 'span',
 		classes: ['token', o.type],
-		attributes: {}
+		attributes: {},
+		language: language,
+		parent: parent
 	};
 	
 	if (env.type == 'comment') {
