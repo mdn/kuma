@@ -81,6 +81,11 @@
         type="text/javascript" charset="utf-8"></script>
       <script src="{{ MEDIA_URL }}ace/mode-javascript.js"
         type="text/javascript" charset="utf-8"></script>
+      <script type="text/javascript">
+      $(document).ready(function(){
+        $('.ace_text-input').focus();
+      });
+      </script>
     {% else %}
       {% include 'wiki/includes/ckeditor_scripts.html' %}
     {% endif %}
