@@ -824,8 +824,7 @@ class IframeHostFilter(html5lib_Filter):
                     attrs = dict(token['data'])
                     src = attrs.get('src', '')
                     if src:
-                        parts = urlparse(src)
-                        if not parts.netloc or parts.netloc not in self.hosts:
+                        if not re.search(self.hosts, src):
                             attrs['src'] = ''
                     token['data'] = attrs.items()
                     yield token

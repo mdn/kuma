@@ -4,6 +4,7 @@ from datetime import datetime
 import json
 import hashlib
 import logging
+import re
 from urllib import urlencode
 from string import ascii_letters
 
@@ -1803,9 +1804,10 @@ def code_sample(request, document_slug, document_locale, sample_id):
     HTML document"""
 
     # Restrict rendering of live code samples to specified hosts
-    host = request.META.get('HTTP_HOST', '')
-    allowed_hosts = constance.config.KUMA_CODE_SAMPLE_HOSTS.split(' ')
-    if host not in allowed_hosts:
+    full_address = (''.join(('http', ('', 's')[request.is_secure()], '://', 
+                    request.META.get('HTTP_HOST'), request.path)))
+
+    if not re.search(constance.config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS, full_address):
         raise PermissionDenied
 
     document = get_object_or_404(Document, slug=document_slug,

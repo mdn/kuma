@@ -977,17 +977,9 @@ CONSTANCE_CONFIG = dict(
         'Allowed file types for wiki file attachments',
     ),
 
-    KUMA_CODE_SAMPLE_HOSTS = (
-        ' '.join([
-            'developer-local.allizom.org',
-            'developer-dev.allizom.org',
-            'developer.allizom.org',
-            'mozillademos.org',
-            'testserver',
-            'localhost:8000'
-        ]),
-        'List of domains from which live code samples may be served '
-        '(space-separated)'
+    KUMA_WIKI_IFRAME_ALLOWED_HOSTS = (
+        '^https?\:\/\/(developer-local.allizom.org|developer-dev.allizom.org|developer.allizom.org|mozillademos.org|testserver|localhost\:8000|(www.)?youtube.com\/embed\/(\.*))',
+        'Regex comprised of domain names that are allowed for IFRAME SRCs'
     ),
 
     GOOGLE_ANALYTICS_ACCOUNT = (
