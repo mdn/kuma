@@ -4,15 +4,21 @@ from .feeds import RecentSubmissionsFeed, FeaturedSubmissionsFeed
 from .feeds import TagSubmissionsFeed, ProfileSubmissionsFeed
 from .feeds import SearchSubmissionsFeed
 
+from .views import AllView
+from .views import DevDerbyTagView
+from .views import HomeView
+from .views import SearchView
+from .views import TagView
+
 
 urlpatterns = patterns('demos.views',
 
-    url(r'^$', 'home', name='demos'),
+    url(r'^$', HomeView.as_view(), name='demos'),
 
     url(r'^devderby/?$', 'devderby_landing', name='demos_devderby_landing'),
     url(r'^devderby/(?P<year>\d\d\d\d)/(?P<month>[\w]+)/?$',
         'devderby_by_date', name='demos_devderby_by_date'),
-    url(r'^devderby/tag/(?P<tag>[^/]+)/?$', 'devderby_tag',
+    url(r'^devderby/tag/(?P<tag>[^/]+)/?$', DevDerbyTagView.as_view(),
         name='demos_devderby_tag'),
     url(r'^devderby/rules/?$', 'devderby_rules', name='demos_devderby_rules'),
 
@@ -40,9 +46,9 @@ urlpatterns = patterns('demos.views',
     url(r'^detail/(?P<slug>[^/]+)/show$', 'hideshow', dict(hide=False),
         name='demos_show'),
 
-    url(r'^search/?$', 'search', name="demos_search"),
-    url(r'^all/?$', 'all', name='demos_all'),
-    url(r'^tag/(?P<tag>[^/]+)/?$', 'tag', name='demos_tag'),
+    url(r'^search/?$', SearchView.as_view(), name="demos_search"),
+    url(r'^all/?$', AllView.as_view(), name='demos_all'),
+    url(r'^tag/(?P<tag>[^/]+)/?$', TagView.as_view(), name='demos_tag'),
     url(r'^profile/(?P<username>[^/]+)/?$', 'profile_detail',
         name="demos_profile_detail"),
 
