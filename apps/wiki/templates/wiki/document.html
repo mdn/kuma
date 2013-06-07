@@ -232,16 +232,16 @@
           <ul class="page-anchors">
             <li class="anchor-tags">
               {% if tags|length %}
-                <a href="#page-tags">{{ _('Tags') }}</a>
+                <i class="icon-tags"></i> <a href="#page-tags">{{ _('Tags') }}</a>
               {% else %}
-                <span title="{{ _('This document has no tags') }}">{{ _('Tags') }}</span>
+                <i class="icon-tags off"></i> <span title="{{ _('This document has no tags') }}">{{ _('Tags') }}</span>
               {% endif %}
             </li>
             <li class="anchor-files">
               {% if attachments|length %}
-                <a href="#page-file">Files</a>
+                <i class="icon-paper-clip"></i> <a href="#page-file">Files</a>
               {% else %}
-                <span title="{{ _('This document has no attachments') }}">{{ _('Files') }}</span>
+                <i class="icon-paper-clip off"></i> <span title="{{ _('This document has no attachments') }}">{{ _('Files') }}</span>
               {% endif %}
             </li>
           </ul>
