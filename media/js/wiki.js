@@ -79,6 +79,7 @@
             session.on('change', function(){
               textarea.val(editor.getSession().getValue());
             });
+            $('.ace_text-input').focus();
             initDrafting();
         }
         if ($body.is('.move-page')) {

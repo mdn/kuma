@@ -697,6 +697,12 @@ MINIFY_BUNDLES = {
             'prism-mdn/plugins/line-numbering/prism-line-numbering.js',
             'js/syntax-prism.js',
         ),
+        'ace-editor': (
+            'ace/ace.js',
+            'ace/mode-javascript.js',
+            'ace/theme-dreamweaver.js',
+            'ace/worker-javascript.js',
+        ),
     },
 }
 
