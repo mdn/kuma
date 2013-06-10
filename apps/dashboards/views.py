@@ -149,7 +149,8 @@ def revisions(request):
         display_start = int(request.GET.get('iDisplayStart', 0))
 
         revisions = (Revision.objects.select_related('creator').all()
-                     .order_by('-created'))
+                     .order_by('-created')
+                     .defer('content'))
 
         # apply filters, limits, and pages
         if username:
