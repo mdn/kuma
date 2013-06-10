@@ -197,16 +197,18 @@
 			this.options.select = function(event, ui, isSilent) {
 				// Set the selection
 				var selection = self.selection = ui.item;
-				// Call the select method if present
-				if(select) select.call(self, event, ui);
-				// Set the INPUT element's value to the item value
-				self.element.val(selection.value);
-				// Add the valid class
-				self.updateStyles(true);
-				// Set the title attribute
-				self.element.attr("title", gettext("Selected: ") + self.selection.label);
-				// Call onSelect for callback purposes
-				self.options.onSelect(selection, isSilent);
+				if(selection.value != undefined) {
+						// Call the select method if present
+					if(select) select.call(self, event, ui);
+					// Set the INPUT element's value to the item value
+					if(selection) self.element.val(selection.value);
+					// Add the valid class
+					self.updateStyles(true);
+					// Set the title attribute
+					self.element.attr("title", gettext("Selected: ") + self.selection.label);
+					// Call onSelect for callback purposes
+					self.options.onSelect(selection, isSilent);
+				}
 			};
 			
 			// Add keyup event so that if they don't select from the 
@@ -228,7 +230,6 @@
 				if(e && e.keyCode == 13) {
 					e.preventDefault();
 					e.stopPropagation();
-					
 					if(lookup) {
 						self.options.select.call(self, e, { item: self.selection });
 					}
