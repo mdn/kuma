@@ -541,7 +541,6 @@ MINIFY_BUNDLES = {
             'css/modals.css',
             'css/mdn-video-player.css',
             'css/mdn-calendar.css',
-            'font-awesome/css/font-awesome.min.css',
             'css/redesign-transition.css',
         ),
         'demostudio': (
