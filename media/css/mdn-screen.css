@@ -1029,6 +1029,10 @@ li.tag-expert label:hover { border-color: #bbb; }
 #elsewhere .remove:hover { background-position: center -48px; }
 #elsewhere .errorlist { margin-left: 150px; width: 500px; }
 
+/* @Banned User *********/
+#profile-banned ul { padding-left: 22px; list-style-type: disc; }
+#profile-banned ul li { line-height: 1.5em; }
+
 /* @Error pages *********/
 .beast { float: right; margin: 20px 0 20px 20px; }
 
