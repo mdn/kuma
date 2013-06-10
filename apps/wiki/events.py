@@ -24,13 +24,17 @@ def context_dict(revision):
     to_revision = revision
     diff = revisions_unified_diff(from_revision, to_revision)
 
+    compare_url = ''
+    if from_revision:
+        compare_url = (reverse('wiki.compare_revisions',
+            args=[document.full_path], locale=document.locale)
+            + '?from=%s&to=%s' % (from_revision.id, to_revision.id))
+
     return {
         'document_title': document.title,
         'creator': revision.creator,
         'host': Site.objects.get_current().domain,
-        'compare_url': reverse('wiki.compare_revisions',
-            args=[document.full_path], locale=document.locale)
-            + '?from=%s&to=%s' % (from_revision.id, to_revision.id),
+        'compare_url': compare_url,
         'view_url': reverse('wiki.document',
                             locale=document.locale,
                             args=[document.slug]),

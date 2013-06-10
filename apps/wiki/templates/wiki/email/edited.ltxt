@@ -10,10 +10,12 @@
 {{ diff|safe }}
 
 --
+{% if compare_url %}
 {% trans %}
 Compare on MDN:
 {% endtrans %}
  https://{{ host }}{{ compare_url }}
+{% endif %}
 {% trans %}
 View Article:
 {% endtrans %}
