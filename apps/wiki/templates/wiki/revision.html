@@ -38,6 +38,10 @@
           <li>
             <mark>{{ _('Creator:') }}</mark>
             <span>{{ revision.creator }}</span>
+
+            {% if user.has_perm('users.add_userban') and revision.creator != request.user %}
+            (<a href="{{ url('admin:users_userban_add') }}?user={{revision.creator.id}}&by={{request.user.id}}">Ban user</a>)
+            {% endif %}
           </li>
           <li class="revision-is-reviewed">
             <mark>{{ _('Is reviewed?') }}</mark>

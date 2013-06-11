@@ -1,1 +1,32 @@
-You have been banned.
+{# vim: set ts=2 et sts=2 sw=2: #}
+{% extends "users/base.html" %}
+{% set title = _('You\'ve Been Banned') %}
+{% set classes = 'profile' %}
+{% block title %}{{ page_title(title) }}{% endblock %}
+
+{% block content %}
+<section id="content">
+  <div class="wrap">
+    <div id="content-main" class="full">
+	  <article id="profile-banned" class="main">
+	    <h1>{{ title }}</h1>
+	    <p>
+	    	{{ _('You have been banned for the following reason:') }}
+	    </p>
+	    <ul>
+	    	{% if bans | length %}
+		    	{% for ban in bans %}
+		    	<li>{{ ban.reason }}</li>
+		    	{% endfor %}
+		    {% endif %}
+	    </ul>
+
+	    {% trans %}
+	    <p><a href="mailto:mdn-admins@mozilla.org?subject=Ban Appeal">Click here</a> to appeal this ban.</p>
+	    {% endtrans %}
+
+	  </article>
+	</div>
+  </div>
+</section>
+{% endblock %}
