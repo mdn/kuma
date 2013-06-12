@@ -25,3 +25,12 @@ class DocumentTypeTests(ElasticTestCase):
         for doc in results:
             excerpt = doc.get_excerpt()
             eq_('', excerpt)
+
+    def test_current_locale_results(self):
+        self.refresh()
+        results = (DocumentType.search().query(or_={'title': 'article',
+                                                    'content': 'article'})
+                                        .filter(locale='en-US')
+                                        .highlight('content'))
+        for doc in results:
+            eq_('en-US', doc.locale)

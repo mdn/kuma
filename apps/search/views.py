@@ -39,6 +39,7 @@ def search(request):
     if search_query:
         results = (results.query(or_={'title': search_query,
                                    'content': search_query})
+                          .filter(locale=request.locale)
                           .highlight('content'))
     result_count = results.count()
     results = results[start:end]
