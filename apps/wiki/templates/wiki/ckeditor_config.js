@@ -54,6 +54,11 @@ CKEDITOR.mdn = CKEDITOR.mdn || {
     delete CKEDITOR.dtd.$block['time'];
     CKEDITOR.dtd.$inline['time'] = 1;
 
+    // Tell CKEditor that <i> elements are block so empty <i>'s aren't removed
+    // This is essentially for Font-Awesome
+    CKEDITOR.dtd.$block['i'] = 1;
+    delete CKEDITOR.dtd.$removeEmpty['i'];
+
     // Manage key presses
     var keys = CKEDITOR.mdn.keys = {
             control2: CKEDITOR.CTRL + 50,
@@ -123,7 +128,12 @@ CKEDITOR.editorConfig = function(config) {
 
     var inlineHeight = CKEDITOR.inlineHeight;
     config.autoGrow_minHeight = (!inlineHeight || inlineHeight < 150 ? 500 : inlineHeight);
-    config.contentsCss = ['/media/css/wiki-screen.css', '/media/css/wiki-edcontent.css', '/en-US/docs/Template:CustomCSS?raw=1'];
+    config.contentsCss = [
+        '/media/css/wiki-screen.css', 
+        '/media/css/wiki-edcontent.css', 
+        '/en-US/docs/Template:CustomCSS?raw=1',
+        '/media/font-awesome/css/font-awesome.min.css'
+    ];
     config.toolbarCanCollapse = false;
     config.resize_enabled = false;
     config.dialog_backgroundCoverColor = 'black';
