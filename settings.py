@@ -320,7 +320,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.debug',
     'django.core.context_processors.media',
     'django.core.context_processors.request',
-    'django.core.context_processors.csrf',
+    'session_csrf.context_processor',
     'django.contrib.messages.context_processors.messages',
 
     'sumo.context_processors.global_settings',
@@ -355,9 +355,9 @@ MIDDLEWARE_CLASSES = (
     'sumo.middleware.RemoveSlashMiddleware',
     'commonware.middleware.NoVarySessionMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'session_csrf.CsrfMiddleware',
     'sumo.anonymous.AnonymousIdentityMiddleware',
     'sumo.middleware.PlusToSpaceMiddleware',
     #'dekicompat.middleware.DekiUserMiddleware',
@@ -772,9 +772,9 @@ def read_only_mode(env):
     # No sessions without the database, so disable auth.
     env['AUTHENTICATION_BACKENDS'] = ()
 
-    # Add in the read-only middleware before csrf middleware.
+    # Add in the read-only middleware.
     extra = 'sumo.middleware.ReadOnlyMiddleware'
-    before = 'django.middleware.csrf.CsrfViewMiddleware'
+    before = 'django.contrib.auth.middleware.AuthenticationMiddleware'
     m = list(env['MIDDLEWARE_CLASSES'])
     m.insert(m.index(before), extra)
     env['MIDDLEWARE_CLASSES'] = tuple(m)
@@ -1087,7 +1087,6 @@ LOGGING = {
 }
 
 
-CSRF_COOKIE_SECURE = True
 X_FRAME_OPTIONS = 'DENY'
 
 SENTRY_DSN = 'set this in settings_local.py'

@@ -25,6 +25,8 @@ from django_browserid.forms import BrowserIDForm
 from django_browserid.auth import get_audience
 from django_browserid import auth as browserid_auth
 
+from session_csrf import anonymous_csrf
+
 from access.decorators import logout_required, login_required
 from tidings.tasks import claim_watches
 from sumo.decorators import ssl_required
@@ -82,6 +84,7 @@ def set_browserid_explained(response):
     return response
 
 
+@csrf_exempt
 @ssl_required
 @login_required
 @require_POST
@@ -163,6 +166,7 @@ def browserid_verify(request):
 
 
 @ssl_required
+@anonymous_csrf
 @sensitive_post_parameters('password')
 def browserid_register(request):
     """Handle user creation when assertion is valid, but no existing user"""
@@ -233,6 +237,7 @@ def browserid_register(request):
 
 
 @ssl_required
+@anonymous_csrf
 @xframe_options_sameorigin
 @sensitive_post_parameters('password')
 def login(request):
@@ -304,7 +309,7 @@ def activate(request, activation_key):
                   {'account': account, 'questions': my_questions,
                    'form': form})
 
-
+@anonymous_csrf
 def resend_confirmation(request):
     """Resend confirmation email."""
     if request.method == 'POST':

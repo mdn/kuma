@@ -1,3 +1,7 @@
+import session_csrf
+
+session_csrf.monkeypatch()
+
 from django.conf.urls.defaults import include, patterns, url
 from django.conf import settings
 from django.contrib import admin

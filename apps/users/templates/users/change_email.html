@@ -11,6 +11,7 @@
       <article id="change-email" class="main">
           <h1>{{ _('Change email with Persona') }}</h1>
             <form class="browserid boxed" action="{{url('users.browserid_change_email')}}" method="POST">
+	      {{ csrf() }}
               <input type="hidden" name="next" value="{{ next_url }}" />
               {{ errorlist(form) }}
               {% trans browserid_href='https://persona.org/', why_browserid='http://identity.mozilla.com/post/12950196039/deploying-browserid-at-mozilla' %}
