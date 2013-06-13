@@ -97,7 +97,7 @@ CKEDITOR.mdn = CKEDITOR.mdn || {
 CKEDITOR.timestamp = '{{ BUILD_ID_JS }}';
 CKEDITOR.editorConfig = function(config) {
 
-    config.extraPlugins = 'autogrow,definitionlist,mdn-buttons,mdn-link,mdn-syntaxhighlighter,mdn-keystrokes,mdn-attachments,mdn-image,mdn-enterkey,mdn-wrapstyle,mdn-table,tablesort,mdn-sampler,mdn-sample-finder,mdn-maximize,mdn-redirect';
+    config.extraPlugins = 'autogrow,definitionlist,mdn-buttons,mdn-link,mdn-syntaxhighlighter,mdn-keystrokes,mdn-attachments,mdn-image,mdn-enterkey,mdn-wrapstyle,mdn-table,tablesort,mdn-sampler,mdn-sample-finder,mdn-maximize,mdn-redirect,youtube';
     config.removePlugins = 'link,image,tab,enterkey,table,maximize';
     config.entities = false;
     
@@ -107,14 +107,9 @@ CKEDITOR.editorConfig = function(config) {
         ['Maximize'],
         '/',
         ['h1Button', 'h2Button', 'h3Button', 'h4Button', 'h5Button', 'h6Button', 'Styles'],
-        ['preButton', 'mdn-syntaxhighlighter', 'mdn-sampler', 'mdn-sample-finder', 'mdn-redirect'],
+        ['preButton', 'mdn-syntaxhighlighter', 'mdn-sampler', 'mdn-sample-finder', 'mdn-redirect', 'youtube'],
         ['Link', 'Unlink', 'Anchor', '-', 'Bold', 'Italic', 'Underline', 'codeButton', 'Strike', 'Superscript', 'RemoveFormat', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight']
     ];
-
-    {% if waffle.flag('youtube_wysiwyg') %}
-        config.extraPlugins += ',youtube';
-        config.toolbar_MDN[5].push('youtube');
-    {% endif %}
     
     config.skin = 'kuma';
     config.startupFocus = true;
