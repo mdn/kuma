@@ -16,7 +16,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext_lazy as _
 
 from django.views.decorators.clickjacking import xframe_options_sameorigin
-from django.views.generic.list_detail import object_list
+from django.views.generic import ListView
 
 from devmo.models import UserProfile
 
@@ -65,26 +65,27 @@ def _invalidate_submission_listing_helper_cache():
         cache.incr(DEMOS_CACHE_NS_KEY)
 
 
-def home(request):
-    """Home page."""
-    featured_submissions = Submission.objects.filter(featured=True)\
-        .exclude(hidden=True)\
-        .order_by('-modified').all()[:3]
+class HomeView(ListView):
+    allow_empty = True
+    context_object_name = 'submission_list'
+    paginate_by = DEMOS_PAGE_SIZE
+    template_name = 'demos/home.html'
 
-    submissions = Submission.objects.all_sorted(
-        request.GET.get('sort', 'created')
-    )
-    if not Submission.allows_listing_hidden_by(request.user):
-        submissions = submissions.exclude(hidden=True)
+    def get_queryset(self):
+        submissions = Submission.objects.all_sorted(
+            self.request.GET.get('sort', 'created')
+            )
+        if not Submission.allows_listing_hidden_by(self.request.user):
+            submissions = submissions.exclude(hidden=True)
+        return submissions
 
-    return object_list(request, submissions,
-        extra_context={
-            'featured_submission_list': featured_submissions,
-        },
-        paginate_by=DEMOS_PAGE_SIZE, allow_empty=True,
-        template_loader=template_loader,
-        template_object_name='submission',
-        template_name='demos/home.html')
+    def get_context_data(self, **kwargs):
+        base_context = super(HomeView, self).get_context_data(**kwargs)
+        featured_submissions = Submission.objects.filter(featured=True)\
+                               .exclude(hidden=True)\
+                               .order_by('-modified').all()[:3]
+        base_context['featured_submission_list'] = featured_submissions
+        return base_context
 
 
 def detail(request, slug):
@@ -110,58 +111,109 @@ def detail(request, slug):
     })
 
 
-def all(request):
-    """Browse all demo submissions"""
-    sort_order = request.GET.get('sort', 'created')
-    queryset = Submission.objects.all_sorted(sort_order)
-    if not Submission.allows_listing_hidden_by(request.user):
-        queryset = queryset.exclude(hidden=True)
-    return object_list(request, queryset,
-        paginate_by=DEMOS_PAGE_SIZE, allow_empty=True,
-        template_loader=template_loader,
-        template_object_name='submission',
-        template_name='demos/listing_all.html')
+class AllView(ListView):
+    allow_empty = True
+    context_object_name = 'submission_list'
+    paginate_by = DEMOS_PAGE_SIZE
+    template_name = 'demos/home.html'
+
+    def get_queryset(self):
+        sort_order = self.request.GET.get('sort', 'created')
+        queryset = Submission.objects.all_sorted(sort_order)
+        if not Submission.allows_listing_hidden_by(self.request.user):
+            queryset = queryset.exclude(hidden=True)
+        return queryset
+        
+
+class TagView(ListView):
+    allow_empty = True
+    context_object_name = 'submission_list'
+    paginate_by = DEMOS_PAGE_SIZE
+    template_name = 'demos/listing_tag.html'
+
+    def get(self, request, *args, **kwargs):
+        tag = kwargs['tag']
+        tag_obj = get_object_or_404(Tag, name=tag)
+        
+        if tag in KNOWN_TECH_TAGS:
+            return HttpResponseRedirect(reverse(
+                'demos.views.tag', args=('tech:%s' % tag,)))
+
+        # Bounce to special-purpose Dev Derby tag page
+        if tag.startswith('challenge:'):
+            return HttpResponseRedirect(reverse(
+                'demos_devderby_tag', args=(tag,)))
+
+        return super(TagView, self).get(request, *args, **kwargs)
+
+    def get_queryset(self):
+        tag = self.kwargs['tag']
+        sort_order = self.request.GET.get('sort', 'created')
+        queryset = Submission.objects.all_sorted(sort_order)\
+                   .filter(taggit_tags__name__in=[tag])\
+                   .exclude(hidden=True)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        tag_obj = get_object_or_404(Tag, name=self.kwargs['tag'])
+        base_context = super(TagView, self).get_context_data(**kwargs)
+        base_context['tag'] = tag_obj
+        return base_context
 
 
-def tag(request, tag):
-    """Tag view of demos"""
+class DevDerbyTagView(ListView):
+    allow_empty = True
+    context_object_name = 'submission_list'
+    paginate_by = DEMOS_PAGE_SIZE
 
-    # HACK: bug 657779 - migrated from plain tags to tech:* tags for these:
-    if tag in KNOWN_TECH_TAGS:
-        return HttpResponseRedirect(reverse(
-            'demos.views.tag', args=('tech:%s' % tag,)))
+    def get(self, request, *args, **kwargs):
+        tag = kwargs['tag']
+        if not tag.startswith('challenge'):
+            return HttpResponseRedirect(reverse(
+                'demos_tag', args=(tag,)))
+        return super(DevDerbyTagView, self).get(request, *args, **kwargs)
 
-    # Bounce to special-purpose Dev Derby tag page
-    if tag.startswith('challenge:'):
-        return HttpResponseRedirect(reverse(
-            'demos.views.devderby_tag', args=(tag,)))
+    def get_queryset(self):
+        tag = self.kwargs['tag']
+        sort_order = self.request.GET.get('sort', 'created')
+        return Submission.objects.all_sorted(sort_order)\
+               .filter(taggit_tags__name__in=[tag])\
+               .exclude(hidden=True)
 
-    tag_obj = get_object_or_404(Tag, name=tag)
+    def get_context_data(self, **kwargs):
+        tag = self.kwargs['tag']
+        tag_obj = get_object_or_404(Tag, name=tag)
+        winner_demos = []
+        for name in ('firstplace', 'secondplace', 'thirdplace'):
+            # Look for the winner tag using our naming convention, eg.
+            # system:challenge:firstplace:2011:june
+            winner_tag_name = 'system:challenge:%s:%s' % (
+                name, tag.replace('challenge:', '')
+                )
 
-    sort_order = request.GET.get('sort', 'created')
-    queryset = Submission.objects.all_sorted(sort_order)\
-            .filter(taggit_tags__name__in=[tag])\
-            .exclude(hidden=True)
+            # Grab only the first match for this tag. If there are others, we'll
+            # just ignore them.
+            demos = (Submission.objects.all()
+                     .filter(taggit_tags__name__in=[winner_tag_name]))
+            for demo in demos:
+                winner_demos.append(demo)
+        base_context = super(DevDerbyTagView, self).get_context_data(**kwargs)
+        base_context['tag'] = tag_obj
+        base_context['winner_demos'] = winner_demos
+        return base_context
 
-    return object_list(request, queryset,
-        paginate_by=DEMOS_PAGE_SIZE, allow_empty=True,
-        extra_context=dict(tag=tag_obj),
-        template_loader=template_loader,
-        template_object_name='submission',
-        template_name='demos/listing_tag.html')
 
+class SearchView(ListView):
+    allow_empty = True
+    context_object_name = 'submission_list'
+    paginate_by = DEMOS_PAGE_SIZE
 
-def search(request):
-    """Search against submission title, summary, and description"""
-    query_string = request.GET.get('q', '')
-    sort_order = request.GET.get('sort', 'created')
-    queryset = Submission.objects.search(query_string, sort_order)\
-            .exclude(hidden=True)
-    return object_list(request, queryset,
-        paginate_by=DEMOS_PAGE_SIZE, allow_empty=True,
-        template_loader=template_loader,
-        template_object_name='submission',
-        template_name='demos/listing_search.html')
+    def get_queryset(self):
+        query_string = self.request.GET.get('q', '')
+        sort_order = self.request.GET.get('sort', 'created')
+        queryset = Submission.objects.search(query_string, sort_order)\
+                   .exclude(hidden=True)
+        return queryset
 
 
 def profile_detail(request, username):
@@ -416,48 +468,3 @@ def devderby_by_date(request, year, month):
     see: https://bugzilla.mozilla.org/show_bug.cgi?id=666460#c15
     """
     return devderby_tag(request, 'challenge:%s:%s' % (year, month))
-
-
-def devderby_tag(request, tag):
-    """Render a devderby-specific tag page with details on the derby and a
-    showcase of winners, if any."""
-
-    if not tag.startswith('challenge:'):
-        return HttpResponseRedirect(reverse(
-            'demos.views.tag', args=(tag,)))
-
-    tag_obj = get_object_or_404(Tag, name=tag)
-
-    # Assemble the demos submitted for the derby
-    sort_order = request.GET.get('sort', 'created')
-    queryset = Submission.objects.all_sorted(sort_order)\
-            .filter(taggit_tags__name__in=[tag])\
-            .exclude(hidden=True)
-
-    # Search for the winners, tag by tag.
-    # TODO: Do this all in one query, and sort here by winner place?
-    winner_demos = []
-    for name in ('firstplace', 'secondplace', 'thirdplace'):
-
-        # Look for the winner tag using our naming convention, eg.
-        # system:challenge:firstplace:2011:june
-        winner_tag_name = 'system:challenge:%s:%s' % (
-            name, tag.replace('challenge:', '')
-        )
-
-        # Grab only the first match for this tag. If there are others, we'll
-        # just ignore them.
-        demos = (Submission.objects.all()
-            .filter(taggit_tags__name__in=[winner_tag_name]))
-        for demo in demos:
-            winner_demos.append(demo)
-
-    return object_list(request, queryset,
-        paginate_by=DEMOS_PAGE_SIZE, allow_empty=True,
-        extra_context=dict(
-            tag=tag_obj,
-            winner_demos=winner_demos
-        ),
-        template_loader=template_loader,
-        template_object_name='submission',
-        template_name='demos/devderby_tag.html')
