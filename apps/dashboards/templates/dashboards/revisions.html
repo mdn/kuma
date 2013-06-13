@@ -62,6 +62,7 @@
         <li> <a id="view" href="#">{{ _('View Page') }}</a> </li>
         <li class="page-edit"> <a id="edit" href="#">{{ _('Edit Page') }}</a> </li>
         <li class="page-history"> <a id="history" href="#">{{ _('History') }}</a> </li>
+        <li id="ban-user"></li>
       </ul>
       </section>
 
@@ -169,7 +170,8 @@ $(document).ready(function(){
         $revertLink   =   $('a#revert'),
         $viewLink     =   $('a#view'),
         $editLink     =   $('a#edit'),
-        $historyLink  =   $('a#history');
+        $historyLink  =   $('a#history'),
+        $banUserItem  =   $('#ban-user');
 
     if(e.target.tagName == 'A') return;
 
@@ -194,6 +196,9 @@ $(document).ready(function(){
         $viewLink.attr('href', data.doc_url);
         $editLink.attr('href', data.edit_url);
         $historyLink.attr('href', data.history_url);
+
+        console.log(data.ban_link);
+        $banUserItem.html(data.ban_link);
       }
     });
   }
