@@ -85,6 +85,13 @@ class DemoListViewsTest(test_utils.TestCase):
         count = pq(r.content)('h2.count').text()
         eq_(count, "2 Demos")
 
+    @attr('bug882709')
+    def test_search_view(self):
+        try:
+            self.client.get(reverse('demos_search'))
+        except:
+            self.fail("Search should not ISE.")
+
 
 class DemoViewsTest(test_utils.TestCase):
     fixtures = ['test_users.json']
