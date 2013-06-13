@@ -131,18 +131,18 @@
           {% endif %}
         </div>
         <ul id="page-buttons">
-            <li class="page-history"><a href="{{ url('wiki.document_revisions', document.full_path) }}">{{_('History')}}</a></li>
+            <li class="page-history"><a href="{{ url('wiki.document_revisions', document.full_path) }}"><i class="icon-book"></i>{{_('History')}}</a></li>
             {% if request.user.is_authenticated() and waffle.flag('page_watch') %}
               {{ document_watch(document, request.user) }}
             {% endif %}
             {% if document.allows_revision_by(request.user) %}
               {% if fallback_reason %}
                 {% set edit_label = _('Edit English')  %}
-                <li class="page-edit"><a href="{{ help_link }}">{{ _('Translate') }}</a></li>
+                <li class="page-edit"><a href="{{ help_link }}"><i class="icon-pencil"></i>{{ _('Translate') }}</a></li>
               {% else %}
                 {% set edit_label = _('Edit')  %}
               {% endif %}
-              <li class="page-edit"><a href="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}">{{ edit_label }}</a></li>
+              <li class="page-edit"><a href="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}"><i class="icon-pencil"></i>{{ edit_label }}</a></li>
             {% endif %}
         </ul>
 
@@ -232,16 +232,16 @@
           <ul class="page-anchors">
             <li class="anchor-tags">
               {% if tags|length %}
-                <i class="icon-tags"></i> <a href="#page-tags">{{ _('Tags') }}</a>
+                <i class="icon-tags"></i><a href="#page-tags">{{ _('Tags') }}</a>
               {% else %}
-                <i class="icon-tags off"></i> <span title="{{ _('This document has no tags') }}">{{ _('Tags') }}</span>
+                <i class="icon-tags off"></i><span title="{{ _('This document has no tags') }}">{{ _('Tags') }}</span>
               {% endif %}
             </li>
             <li class="anchor-files">
               {% if attachments|length %}
-                <i class="icon-paper-clip"></i> <a href="#page-file">Files</a>
+                <i class="icon-paper-clip"></i><a href="#page-file">Files</a>
               {% else %}
-                <i class="icon-paper-clip off"></i> <span title="{{ _('This document has no attachments') }}">{{ _('Files') }}</span>
+                <i class="icon-paper-clip off"></i><span title="{{ _('This document has no attachments') }}">{{ _('Files') }}</span>
               {% endif %}
             </li>
           </ul>
