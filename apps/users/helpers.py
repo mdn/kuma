@@ -4,6 +4,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from jinja2 import escape, Markup
 from jingo import register
 
+from tower import ugettext as _
+
 from sumo.urlresolvers import reverse
 
 
@@ -35,6 +37,15 @@ def display_name(user):
         return user.username
     return profile.fullname if profile.fullname else user.username
 
+@register.function
+def ban_link(ban_user, banner_user):
+    """Returns a link to ban a user"""
+
+    link = ''
+    if ban_user.id != banner_user.id and banner_user.has_perm('users.add_userban'):
+        url = '%s?user=%s&by=%s' % (reverse('admin:users_userban_add'), ban_user.id, banner_user.id)
+        link = '<a href="%s" class="button ban-link">%s</a>' % (url, _('Ban User'))
+    return Markup(link)
 
 @register.filter
 def public_email(email):
