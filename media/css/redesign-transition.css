@@ -12,17 +12,19 @@
 		LONGTERM Styles
 /*************************************************/
 
+/*  Wiki page styles  */
 
-/*  Wiki page styles */
 
 
+/*  Font-Awesome  */
+i[class^='icon-'] { margin-right: 4px; }
 
 
 /************************************************
 		COMPAT Styles - DELETE AFTER LAUNCH
 /*************************************************/
 
-/*  Wiki page styles */
+/*  Wiki page styles  */
 #article-nav .anchor-tags i.off, #article-nav .anchor-files i.off { color: #333; }
 #article-nav .anchor-tags i, #article-nav .anchor-files i { color: #369; }
 #article-nav .anchor-tags a, #article-nav .anchor-tags span,
