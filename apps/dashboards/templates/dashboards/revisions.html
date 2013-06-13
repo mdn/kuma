@@ -60,8 +60,9 @@
       <ul id="page-buttons">
         <li> <a id="revert" href="#"><i class="icon-undo"></i>{{ _('Revert') }}</a> </li>
         <li> <a id="view" href="#"><i class="icon-circle-arrow-right"></i>{{ _('View Page') }}</a> </li>
-        <li class="page-edit"> <a id="edit" href="#"><i class="icon-pencil"></i>{{ _('Edit Page') }}</a> </li>
-        <li class="page-history"> <a id="history" href="#"><i class="icon-book"></i>{{ _('History') }}</a> </li>
+        <li class="page-edit"><a id="edit" href="#"><i class="icon-pencil"></i>{{ _('Edit Page') }}</a> </li>
+        <li class="page-history"><a id="history" href="#"><i class="icon-book"></i>{{ _('History') }}</a> </li>
+        <li id="ban-user"></li>
       </ul>
       </section>
 
@@ -169,7 +170,8 @@ $(document).ready(function(){
         $revertLink   =   $('a#revert'),
         $viewLink     =   $('a#view'),
         $editLink     =   $('a#edit'),
-        $historyLink  =   $('a#history');
+        $historyLink  =   $('a#history'),
+        $banUserItem  =   $('#ban-user');
 
     if(e.target.tagName == 'A') return;
 
@@ -194,6 +196,7 @@ $(document).ready(function(){
         $viewLink.attr('href', data.doc_url);
         $editLink.attr('href', data.edit_url);
         $historyLink.attr('href', data.history_url);
+        $banUserItem.html(data.ban_link);
       }
     });
   }
