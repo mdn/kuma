@@ -197,8 +197,7 @@ def devderby_tag_to_date_url(tag):
     if not tag:
         return ''
     parts = tag.split(':')
-    return reverse('demos.views.devderby_by_date',
-                   args=(parts[-2], parts[-1]))
+    return reverse('demos_devderby_by_date', args=(parts[-2], parts[-1]))
 
 
 @register.function
