@@ -21,6 +21,9 @@ from sumo_locales import LOCALES
 from sumo.parser import get_object_fallback
 from sumo.urlresolvers import reverse
 from sumo.utils import smart_int
+
+from users.helpers import ban_link
+
 from wiki.events import (ApproveRevisionInLocaleEvent,
                          ReviewableRevisionInLocaleEvent)
 from wiki.models import Document, Revision
@@ -222,7 +225,8 @@ def revisions(request):
                 'title': rev.title,
                 'richTitle': richTitle,
                 'date': rev.created.strftime('%b %d, %y - %H:%M'),
-                'slug': rev.document.slug
+                'slug': rev.document.slug,
+                'ban_link': ban_link(rev.creator, request.user)
             })
 
         result = json.dumps(revision_json)
