@@ -165,6 +165,7 @@ class DevDerbyTagView(ListView):
     allow_empty = True
     context_object_name = 'submission_list'
     paginate_by = DEMOS_PAGE_SIZE
+    template_name = 'demos/listing_tag.html'
 
     def get(self, request, *args, **kwargs):
         tag = kwargs['tag']
@@ -201,6 +202,15 @@ class DevDerbyTagView(ListView):
         base_context['tag'] = tag_obj
         base_context['winner_demos'] = winner_demos
         return base_context
+
+
+class DevDerbyByDate(DevDerbyTagView):
+    def get(self, request, *args, **kwargs):
+        year = kwargs['year']
+        month = kwargs['month']
+        self.kwargs['tag'] = 'challenge:%s:%s' % (year, month)
+        return super(DevDerbyByDate, self).get(request,
+                                                tag=self.kwargs['tag'])
 
 
 class SearchView(ListView):
@@ -462,10 +472,3 @@ def devderby_landing(request):
 def devderby_rules(request):
     """Dev Derby rules page"""
     return render(request, 'demos/devderby_rules.html', {})
-
-
-def devderby_by_date(request, year, month):
-    """Friendly URL path to devderby tag.
-    see: https://bugzilla.mozilla.org/show_bug.cgi?id=666460#c15
-    """
-    return devderby_tag(request, 'challenge:%s:%s' % (year, month))

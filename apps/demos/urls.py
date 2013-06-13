@@ -5,7 +5,7 @@ from .feeds import TagSubmissionsFeed, ProfileSubmissionsFeed
 from .feeds import SearchSubmissionsFeed
 
 from .views import AllView
-from .views import DevDerbyTagView
+from .views import DevDerbyTagView, DevDerbyByDate
 from .views import HomeView
 from .views import SearchView
 from .views import TagView
@@ -17,7 +17,7 @@ urlpatterns = patterns('demos.views',
 
     url(r'^devderby/?$', 'devderby_landing', name='demos_devderby_landing'),
     url(r'^devderby/(?P<year>\d\d\d\d)/(?P<month>[\w]+)/?$',
-        'devderby_by_date', name='demos_devderby_by_date'),
+        DevDerbyByDate.as_view(), name='demos_devderby_by_date'),
     url(r'^devderby/tag/(?P<tag>[^/]+)/?$', DevDerbyTagView.as_view(),
         name='demos_devderby_tag'),
     url(r'^devderby/rules/?$', 'devderby_rules', name='demos_devderby_rules'),
