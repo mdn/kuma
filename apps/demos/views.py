@@ -137,7 +137,7 @@ class TagView(ListView):
         
         if tag in KNOWN_TECH_TAGS:
             return HttpResponseRedirect(reverse(
-                'demos.views.tag', args=('tech:%s' % tag,)))
+                'demos_tag', args=('tech:%s' % tag,)))
 
         # Bounce to special-purpose Dev Derby tag page
         if tag.startswith('challenge:'):
@@ -355,7 +355,7 @@ def delete(request, slug):
     if request.method == "POST":
         submission.delete()
         _invalidate_submission_listing_helper_cache()
-        return HttpResponseRedirect(reverse('demos.views.home'))
+        return HttpResponseRedirect(reverse('demos'))
 
     return render(request, 'demos/delete.html', {
         'submission': submission})
