@@ -52,7 +52,7 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'dl', 'dt', 'dd', 'small', 'sub', 'sup', 'u', 'strike', 'samp',
     'ul', 'ol', 'li',
     'nobr', 'dfn', 'caption', 'var', 's',
-    'img', 'hr',
+    'i', 'img', 'hr',
     'input', 'label', 'select', 'option', 'textarea',
     # Note: <iframe> is allowed, but src="" is pre-filtered before bleach
     'iframe',
@@ -82,6 +82,7 @@ ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is',
                              'height']
 ALLOWED_ATTRIBUTES['a'] = ['style', 'id', 'class', 'href', 'title',
                            'lang', 'name', 'dir', 'hreflang', 'rel']
+ALLOWED_ATTRIBUTES['i'] = ['class']
 ALLOWED_ATTRIBUTES['td'] = ['style', 'id', 'class', 'colspan', 'rowspan',
                             'lang', 'dir']
 ALLOWED_ATTRIBUTES['th'] = ['style', 'id', 'class', 'colspan', 'rowspan',
