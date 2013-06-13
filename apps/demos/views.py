@@ -207,6 +207,7 @@ class SearchView(ListView):
     allow_empty = True
     context_object_name = 'submission_list'
     paginate_by = DEMOS_PAGE_SIZE
+    template_name = 'demos/listing_search.html'
 
     def get_queryset(self):
         query_string = self.request.GET.get('q', '')
