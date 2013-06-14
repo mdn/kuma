@@ -837,7 +837,7 @@ TOP_CONTRIBUTORS_CACHE_TIMEOUT = 60 * 60 * 12
 WIKI_DEFAULT_LANGUAGE = LANGUAGE_CODE
 
 
-TIDINGS_FROM_ADDRESS = 'notifications@support.mozilla.com'
+TIDINGS_FROM_ADDRESS = 'notifications@developer.mozilla.org'
 TIDINGS_CONFIRM_ANONYMOUS_WATCHES = True
 
 # recaptcha
