@@ -13,10 +13,10 @@
   {% if document %}
     <li>
       <iframe id="save-and-edit-target" name="save-and-edit-target"></iframe>
-      <button type="submit" id="btn-save-and-edit" class="btn-save"><span>{{ _('Save and Keep Editing') }}</span></button>
+      <button type="submit" id="btn-save-and-edit" class="btn-save"><i class="icon-edit"></i><span>{{ _('Save and Keep Editing') }}</span></button>
     </li>
   {% endif %}
-  <li><button type="submit" id="btn-save" class="btn-save">{{ _('Save Changes') }}</button></li>
-  <li><button type="button" id="btn-preview" class="btn-preview" data-preview-url="{{ url('wiki.preview') }}">{{ _('Preview Changes') }}</button></li>
-  <li><a href="{{ discard_href }}" id="btn-discard" class="btn-discard">{{ _('Discard Changes') }}</a></li>
+  <li><button type="submit" id="btn-save" class="btn-save"><i class="icon-save"></i>{{ _('Save Changes') }}</button></li>
+  <li><button type="button" id="btn-preview" class="btn-preview" data-preview-url="{{ url('wiki.preview') }}"><i class="icon-play-circle"></i>{{ _('Preview Changes') }}</button></li>
+  <li><a href="{{ discard_href }}" id="btn-discard" class="btn-discard"><i class="icon-undo"></i>{{ _('Discard Changes') }}</a></li>
 </ul>
