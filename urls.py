@@ -19,7 +19,7 @@ urlpatterns = patterns('',
     ('', include('devmo.urls')),
     (r'^logout/$', 'dekicompat.views.logout'),
     (r'^demos/', include('demos.urls')),
-    (r'^demos', lambda x: redirect('demos.views.home')),
+    (r'^demos', lambda x: redirect('demos')),
 
     # Django admin:
     (r'^admin/', include('smuggler.urls')),
