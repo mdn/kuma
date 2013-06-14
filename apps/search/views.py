@@ -37,10 +37,13 @@ def search(request):
 
     results = DocumentType.search()
     if search_query:
-        results = (results.query(or_={'title__text': search_query,
-                                   'content__text': search_query})
+        query_fields = ['title', 'content', 'summary']
+        or_dict = {}
+        for field in query_fields:
+            or_dict[field + '__text'] = search_query
+        results = (results.query(or_=or_dict)
                           .filter(locale=request.locale)
-                          .highlight('content'))
+                          .highlight(*DocumentType.excerpt_fields))
     result_count = results.count()
     results = results[start:end]
 

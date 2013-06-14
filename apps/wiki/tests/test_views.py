@@ -45,6 +45,7 @@ from . import TestCaseBase, FakeResponse, make_test_file
 
 from authkeys.models import Key
 
+from wiki.content import get_seo_description
 from wiki.events import EditDocumentEvent
 from wiki.models import (VersionMetadata, Document, Revision, Attachment,
                          AttachmentRevision, DocumentAttachment, TOC_DEPTH_H4)
@@ -246,6 +247,12 @@ class ViewTests(TestCaseBase):
                 content = 'REDIRECT <a class="redirect" href="x">Blah</a>'
             else:
                 content = test_content
+                revision(document=doc,
+                         content=test_content,
+                         summary=get_seo_description(
+                             test_content,
+                             strip_markup=False),
+                         save=True)
             doc.html = content
             if parent:
                 doc.parent_topic = parent
