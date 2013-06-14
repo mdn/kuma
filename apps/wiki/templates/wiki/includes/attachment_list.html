@@ -1,7 +1,7 @@
 {% set show_attach_button = allow_add_attachment %}
 
 <section id="page-attachments">
-  <h2>{{ _('Attachments') }} <bdi>(<span id="page-attachments-count">{{ attachment_data | length}}</span>)</bdi></h2>
+  <h2><i class="icon-paper-clip"></i>{{ _('Attachments') }} <bdi>(<span id="page-attachments-count">{{ attachment_data | length}}</span>)</bdi></h2>
 
   {% if show_attach_button and attachment_form %}
   <p class="add">

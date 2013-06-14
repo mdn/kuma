@@ -139,7 +139,7 @@
             <section class="page-meta">
               {% set tags = document.tags.all() %}
               <section id="page-tags">
-                <h2>{{ _('Tags') }}</h2>
+                <h2><i class="icon-tags"></i>{{ _('Tags') }}</h2>
                 <input id="tagit_tags" type="text" name="tags" value="{% for tag in tags %}{{ tag.name }},{% endfor %}" maxlength="255" />
               </section>
             </section>

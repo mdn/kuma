@@ -107,7 +107,7 @@
         <div class="localized">
           <section class="page-meta">
               <section id="page-tags">
-                <h2>{{ _('Tags') }}</h2>
+                <h2><i class="icon-tag"></i>{{ _('Tags') }}</h2>
                 {% if document.tags %}
                   {% set tags = document.tags.all() %}
                   <input id="tagit_tags" type="text" name="tags" value="{% for tag in tags %}{{ tag.name }},{% endfor %}" maxlength="255" />
