@@ -267,7 +267,7 @@ p.notice { padding-bottom: 10px; top: 0; margin-bottom: 15px; }
 /*** @Search *********/
 #site-search { width: 260px; float: right; text-align: left; padding-left: 0; margin: -8px 140px 0 0; position: relative; }
 #site-search p { margin: 0; }
-#site-search #q { width: 150px; padding: 3px 4px 3px 28px; margin: 0 0 0 4px; float: right; background: #555; background: rgba(80,80,80,.9) url("../img/search-icons.png") 6px -96px no-repeat; border: 1px solid #666; color: #aaa; font-size: .857em; -webkit-appearance: textfield; appearance: textfield; }
+#site-search #q { width: 150px; padding: 3px 4px 3px 28px; margin: 0 0 0 4px; float: right; background: #555; background: rgba(80,80,80,.9) url("../img/search-icons.png") 6px -96px no-repeat; border: 1px solid #666; color: #aaa; font-size: .857em; -webkit-appearance: textfield; appearance: textfield; -moz-box-sizing: content-box; box-sizing: content-box; }
 #site-search #q:hover, #site-search #q:focus { border-color: #9c0d10; background-color: #fff; color: #333; }
 #site-search button { font-size: 12px; width: 60px; position: absolute; right: -70px; }
 #site-search-gg { width: 60px; height: 28px; font-size: .642em; float: right; text-align: right; position: relative; }
