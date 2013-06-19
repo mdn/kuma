@@ -1,0 +1,91 @@
+{% extends "l10ndashboard/base.html" %}
+
+{% block content %}
+<section id="content">
+<div class="wrap">
+    <div id="content-main" class="full">
+        <h1>{{ _("Localization Dashboard") }}</h1>
+    </div>
+    <div id="wikiArticle" class="page-content boxed">
+        <form action="" method="GET">
+            <ul id="dashboard-filter">
+                <li>
+                    {{ _("Locale") }}
+                    <select name="locale">
+                        <option value="0">{{ _("Select a locale") }}</option>
+                        {% for locale, name in locales %}
+                        <option value="{{ locale }}"{{ selected(locale, filters['locale']) }}>{{ name }}</option>
+                        {% endfor %}
+                    </select>
+                </li>
+                <li>
+                    {{ _("Topic") }}
+                    <select name="topic">
+                        {% for topic in topics %}
+                        <option value="{{ topic }}">{{ topic }}</option>
+                        {% endfor %}
+                    </select>
+                </li>
+                <li>
+                    {{ _("Localization Flags") }}
+                    <select name="localization_flags">
+                        <option value="0"></option>
+                        <option value="inprogress"{{ selected('inprogress', filters['localization_flags']) }}>Localization in Progress</option>
+                    </select>
+                </li>
+                <li>
+                    {{ _("Order by") }}
+                    <select name="orderby">
+                        {% for order in orderby_list %}
+                        <option value="{{ order[0] }}">{{ order[1] }}</option>
+                        {% endfor %}
+                    </select>
+                </li>
+                <li>
+                    <button type="submit">{{ _("Filter") }}</button>
+                    {% if any(filters.values()) %}
+                        <a href="{{ request.path }}">{{ _("Clear filter") }}</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </form>
+        <table class="doc-list">
+            <tr>
+                <th>
+                    {{ _("Locale") }}
+                </th>
+                <th>
+                    {{ _("Difficulty") }}
+                </th>
+                <th>
+                    {{ _("Locale article") }}  {# TODO: Use this format -- "%s locale" % locale #}
+                </th>
+                <th>
+                    {{ _("Revision time") }}  {# TODO: Use this format -- "%s revision time" % locale #}
+                </th>
+                <th>
+                    {{ _("English article") }}
+                </th>
+                <th>
+                    {{ _("English revision time") }}
+                </th>
+            </tr>
+        {% for doc in docs %}
+            <tr>
+                <td>{{ doc.language }} ({{ doc.locale }})</td>
+                <td>&nbsp;</td>
+                <td><a href="{{ doc.get_absolute_url() }}">{{ doc.title }}</a></td>
+                <td>{{ doc.current_revision.created }}</td>
+                <td><a href="{{ doc.parent.get_absolute_url() }}">{{ doc.parent.title }}</a></td>
+                <td>{{ doc.parent.current_revision.created }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td>{{ _("No documents found.") }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+</div>
+</section>
+{% endblock %}

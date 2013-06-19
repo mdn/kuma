@@ -445,6 +445,9 @@ INSTALLED_APPS = (
     'actioncounters',
     'threadedcomments',
 
+    # Location Dashboard
+    'l10ndashboard',
+
     # util
     'cronjobs',
     'jingo_minify',
@@ -598,6 +601,9 @@ MINIFY_BUNDLES = {
             'js/libs/prism/plugins/ie8/prism-ie8.css',
             'js/prism-mdn/plugins/line-numbering/prism-line-numbering.css',
             'js/prism-mdn/components/prism-json.css',
+        ),
+        'l10ndashboard': (
+            'css/l10ndashboard.css',
         ),
     },
     'js': {
