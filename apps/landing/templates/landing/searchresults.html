@@ -4,7 +4,7 @@
 
 {% block bodyclass %}section-docs landing serp{% endblock %}
 
-{% block title %}{{ page_title(_('Search Results')) }}{% endblock %}
+{% block title %}{{ page_title(_('Search Results for "{query}"')|f(query=query)) }}{% endblock %}
 
 {% block content %}
 <section id="content">
