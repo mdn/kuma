@@ -372,6 +372,7 @@ MIDDLEWARE_CLASSES = (
 AUTHENTICATION_BACKENDS = (
     'django_browserid.auth.BrowserIDBackend',
     'django.contrib.auth.backends.ModelBackend',
+    'teamwork.backends.TeamworkBackend',
     'dekicompat.backends.DekiUserBackend',
 )
 AUTH_PROFILE_MODULE = 'devmo.UserProfile'
@@ -444,6 +445,7 @@ INSTALLED_APPS = (
     'django_statsd',
     'authkeys',
     'tidings',
+    'teamwork',
     'djcelery',
     'taggit',
     'raven.contrib.django.raven_compat',
@@ -1080,3 +1082,9 @@ CSRF_COOKIE_SECURE = True
 X_FRAME_OPTIONS = 'DENY'
 
 SENTRY_DSN = 'set this in settings_local.py'
+TEAMWORK_BASE_POLICIES = {
+    'anonymous': (
+        'wiki.view_document',),
+    'authenticated': (
+        'wiki.view_document', 'wiki.add_document', 'wiki.add_revision'),
+}
