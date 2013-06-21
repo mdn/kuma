@@ -21,6 +21,7 @@ from wiki.models import (Document, Revision, FirefoxVersion, OperatingSystem,
                          GROUPED_FIREFOX_VERSIONS, GROUPED_OPERATING_SYSTEMS,
                          CATEGORIES, REVIEW_FLAG_TAGS, RESERVED_SLUGS,
                          TOC_DEPTH_CHOICES)
+from wiki import SLUG_CLEANSING_REGEX
 
 
 TITLE_REQUIRED = _lazy(u'Please provide a title.')
@@ -499,3 +500,12 @@ class TreeMoveForm(forms.Form):
                              error_messages={'required': SLUG_REQUIRED,
                                              'min_length': SLUG_SHORT,
                                              'max_length': SLUG_LONG})
+
+    def clean_slug(self):
+        # Removes leading slash and {locale/docs/} if necessary
+        # IMPORTANT: This exact same regex is used on the client side, so
+        # update both if doing so
+        self.cleaned_data['slug'] = re.sub(re.compile(SLUG_CLEANSING_REGEX), 
+                                      '', self.cleaned_data['slug'])
+
+        return self.cleaned_data['slug']
