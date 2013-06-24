@@ -1,5 +1,5 @@
 {% set show_attach_button = allow_add_attachment %}
-
+<section class="page-meta">
 <section id="page-attachments">
   <h2><i class="icon-paper-clip"></i>{{ _('Attachments') }} <bdi>(<span id="page-attachments-count">{{ attachment_data | length}}</span>)</bdi></h2>
 
@@ -15,7 +15,7 @@
 
   <script>
     // This is a global, but has to be :/
-    MDN_ATTACHMENTS = {{ (attachment_data_json | safe) or '[]' }};
+    window.MDN_ATTACHMENTS = {{ (attachment_data_json | safe) or '[]' }};
   </script>
   <table cellpadding="0" cellspacing="0" id="page-attachments-table" class="{% if not attachment_data|length %}hidden{% endif %}">
     <thead>
@@ -61,4 +61,5 @@
   <iframe id="page-attachments-upload-target" name="page-attachments-upload-target"></iframe>
   </form>
   {% endif %}
+</section>
 </section>
