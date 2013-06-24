@@ -2,14 +2,20 @@
 {% extends "search/base.html" %}
 {% set meta = (('WT.oss', q),
                ('WT.oss_r', num_results)) %}
+{% block title %}
+  {% if search_query %}
+    {{ page_title(_('Search Results for "{search_query}"')|f(search_query=search_query)) }}
+  {% else %}
+    {{ page_title(_('Search')) }}
+  {% endif %}
+{% endblock %}
 
 {% macro doc_block(doc) -%}
   {% set doc_url = '%s%s' % (settings.SITE_URL, url('wiki.document', doc.slug, locale=doc.locale)) %}
-  <li class="doc-result" data-url="{{ doc_url }}" data-locale="{{ doc.locale }}">
-    <h3><a href="{{ doc_url }}">{{ doc.title }}</a> 
-      {% if request.locale != doc.locale %} <span class="locale">({{ doc.locale }})</span>{% endif %}
-    </h3>
+  <li class="doc-result">
+    <h3><a href="{{ doc_url }}">{{ doc.title }}</a></h3>
     {% if doc.tags|length %}
+    <i class="icon-tags"></i>
     <ul class="tags">
       {% for tag in doc.tags %}
         {% set tag_url = url('wiki.tag', tag) %}
@@ -82,34 +88,34 @@
     </div>
 
     <style type="text/css">
+    /* basic result styling */
     .doc-result { padding: 10px; margin: 0 -10px; }
-      .doc-result:hover, .doc-result:focus { background: rgba(0, 0, 0, 0.05); cursor: pointer; }
-
+    .doc-result.selected { background: rgba(0, 0, 0, 0.05); cursor: pointer; }
     .doc-result h3 { margin-bottom: 0; }
-    .doc-result .locale { color: #444; background: #ccc; border-radius: 3px; padding: 0 2px; font-size: 0.6em; text-transform: uppercase; top: -3px; }
-    .doc-result em { border-bottom: 1px dotted #ba543c; background: #fcf1b3; }
+    .doc-result p { padding-left: 0; margin-bottom: 0; font-size: 0.9em; }
+    .doc-result em { background: rgb(255,255,212); }
 
-    .doc-result .searchMeta .searchDate, 
-      .doc-result .searchAddress { color: #999; font-size: 0.8em; padding: .2em 0; }
-
-    .doc-result .searchAddress a { color: #999; }
-
-    .doc-result .tags { margin-bottom: 0.3em; }
-    .doc-result .tags li { display: inline; font-size: 0.8em; color: #666; }
-    .doc-result .tags li:after { content: ","; }
+    /* tag styling */
+    .doc-result .tags { margin-bottom: 0.3em; display:inline-block; }
+    .doc-result .tags li { display: inline; }
+    .doc-result .tags li:after { content: ","; color: #666; }
     .doc-result .tags li:last-child:after { content: ""; }
-    .doc-result .tags a  { color: #090; font-style: italic; }
+    .doc-result .tags a { font-style: italic; }
+    .search-results-list i[class='icon-tags'], .doc-result .tags a { color: #090; }
+    .search-results-list i[class='icon-tags'], .doc-result .tags li { font-size: 0.8em; }
 
+    /* crumb styling */
     .doc-result .searchMeta .crumbs { margin: 0 0 0.3em 0; }
     .doc-result .searchMeta .crumbs li { display: inline; padding-left: 13px; margin-left: 6px; background: url("{{ MEDIA_URL }}/img/nav-arrows.png") -15px -698px no-repeat; font-size: 0.8em; }
     .doc-result .searchMeta .crumbs li:first-child { padding-left: 0; margin-left: 0; background: none; }
     .doc-result .searchMeta .crumbs li a { text-decoration: underline; color: #090; }
 
-    .doc-result .searchMeta .searchDate { color: #999; }
-    .doc-result p { padding-left: 0; margin-bottom: 0; font-size: 0.9em; }
+    /* search form styling */
     .search-form  { margin-bottom: 30px; }
     #search-q     { width: 80%; -webkit-appearance: textfield; }
     #search-submit { display: inline-block; }
+
+    /* not yet used styles -- popular / sidebar */
     .search-popular { width: 49%; float: left; margin-top: 20px; }
     .search-popular ul { list-style-type: circle; padding-left: 30px; }
     .search-popular ul li { padding-bottom: 10px; }
@@ -126,16 +132,86 @@
 
 {% block js %}
   <script>
-      function selectResult(e) {
-        if(e.target.tagName == 'A') return;
-        var url = $(this).attr('data-url');
-        if(url && (e.type == 'click' || (e.type == 'keyup' && e.keyCode == 13))) { 
-          window.location = url; 
-        }
-      }
+      // new stuff
+      (function($) {
+        var $searchResults;
+        var targetTestRegex = /input|textarea|select|option/i;
 
-      jQuery('ul.search-results-list')
-        .on('click', '.doc-result', selectResult)
-        .on('keyup', '.doc-result', selectResult);
+        // Populate $searchResults
+        updateResults();
+
+        // Apply the keyup listener for search engine movement
+        $(document.body).on('keyup', keyHandler);
+
+        // Keep mouseover selection in sync with keyboard selection
+        $('.search-results-list')
+          .on('mouseenter', '.doc-result', handleMouseEvent)
+          .on('mouseleave', '.doc-result', handleMouseEvent)
+          .on('click', '.doc-result', function(e) {
+            if(e.target.tagName != 'a') window.location = $(e.currentTarget).find('h3 a').attr('href');
+          });
+
+        // Generates callback for mouseenter and mouseout
+        function handleMouseEvent(e) {
+            selectItem(e.type == 'mouseenter' ? e.currentTarget : null);
+        }
+
+        function keyHandler(e) {
+          // If they're in an input of some kind, ignore
+          if(targetTestRegex.test(e.target.tagName) || e.metaKey || e.ctrlKey || e.altKey) return;
+
+          // Switch for deciding what to do
+          switch(e.keyCode) {
+            case 38: // up
+              var item = getItem();
+              if(item.prev.length) {
+                e.preventDefault();
+                selectItem(item.prev);
+              }
+
+              break;
+            case 40: // down
+              var item = getItem(true);
+              if(item.next.length) {
+                e.preventDefault();
+                selectItem(item.next);
+              }
+              break;
+          }
+        }
+
+        // Get the result list at any time
+        // Useful because we'll implement ajax search
+        function updateResults() {
+          $searchResults = $('.doc-result');
+        }
+
+        // Returns the currently selected item, if any
+        function getSelected() {
+          return $('.search-results-list .selected');
+        }
+
+        // Selects an item in the list of results
+        function selectItem(item) {
+          var selected = getSelected();
+          selected && selected.removeClass('selected');
+          if(item) $(item).addClass('selected').find('h3 a').get(0).focus();
+        }
+
+        // Retrieves the selected search item, as well
+        // as the other relevant item
+        function getItem(isDown) {
+          var selected = getSelected(),
+              hasSelected = selected.length,
+              first = $($searchResults.get(0));
+
+          return {
+            selected: selected,
+            // Conditional depending on up or down
+            next: hasSelected ? selected.next() : first,
+            prev: hasSelected ? selected.prev() : (isDown ? first : [])
+          };
+        }
+      })(jQuery);
   </script>
 {% endblock %}
