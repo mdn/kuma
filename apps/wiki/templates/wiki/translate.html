@@ -91,6 +91,28 @@
             <div class="boxed translate-display">
               {{ based_on.content|safe }}
             </div>
+
+            <section class="page-meta">
+            <section id="page-tags">
+              <h3><i class="icon-tag"></i>{{ _('Tags') }}</h3>
+                {% set tags = parent.tags.all() %}
+              <div id="deki-page-tags">
+                {% if tags | length %}
+                  <ul class="tags tagit ui-widget ui-widget-content">
+                    {% for tag in tags %}
+                    <li class="tagit-choice ui-widget-content ui-state-default">
+                        <a class="text tagit-label" href="{{url('wiki.tag', tag.name)}}">{{ tag.name }}</a>
+                    </li>
+                    {% endfor %}
+                  </ul>
+                {% else %}
+                  <p>{{ _('This document has no tags.') }}</p>
+                {% endif %}
+              </div>
+            </section>
+            </section>
+
+
           </article>
           
           <article class="localized">
