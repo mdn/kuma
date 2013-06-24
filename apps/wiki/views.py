@@ -52,7 +52,7 @@ from access.decorators import permission_required, login_required
 from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
 from sumo.utils import paginate, smart_int
-from wiki import (DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX)
+from wiki import (DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX, SLUG_CLEANSING_REGEX)
 from wiki.decorators import check_readonly
 from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,
                          ApproveRevisionInLocaleEvent)
@@ -1200,6 +1200,7 @@ def move(request, document_slug, document_locale):
                     'descendants':  descendants,
                     'descendants_count': len(descendants),
                     'conflicts': conflicts,
+                    'SLUG_CLEANSING_REGEX': SLUG_CLEANSING_REGEX,
                 })
             # Set new parent, if any
             new_slug_bits = form.cleaned_data['slug'].split('/')
@@ -1227,6 +1228,7 @@ def move(request, document_slug, document_locale):
         'document': doc,
         'descendants':  descendants,
         'descendants_count': len(descendants),
+        'SLUG_CLEANSING_REGEX': SLUG_CLEANSING_REGEX,
     })
 
 

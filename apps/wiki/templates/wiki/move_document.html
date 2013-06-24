@@ -54,7 +54,7 @@
               <dl>
                 <dt><label for="moveSlug">{{ _('New Slug:') }}</label> </dt>
                 <dd>
-                  <input type="text" name="slug" id="moveSlug" value="" />
+                  <input type="text" name="slug" id="moveSlug" value="" required="required" data-validator="{{ SLUG_CLEANSING_REGEX }}" />
                   <input type="hidden" value="{{ document.slug }}" id="currentSlug" />
                   <input type="hidden" value="{{ document.locale }}" id="moveLocale" />
                 </dd>
