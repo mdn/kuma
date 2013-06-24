@@ -1421,21 +1421,18 @@
          });
 
          // Hide lookup when the field is blurred
-         $suggestionInput.blur(onHide);
+         $suggestionInput.on('blur', onHide);
 
          // Go to link when blured
-         $moveSlug.blur(function() {
+         $moveSlug.on('blur', function() {
              $lookupLink.focus();
          });
 
          // Help on the client side for validating slugs to be moved
-         function formatSlug() {
-            var startValue = this.value;
-            if(startValue.length && startValue[0] == '/') {
-                this.value = startValue.substr(1);
-            }
-         }
-         $moveSlug.keyup(formatSlug).change(formatSlug).focus(formatSlug).blur(formatSlug);
+         var moveRegex = new RegExp($moveSlug.attr('data-validator'), 'i');
+         $moveSlug.on('change keyup focus blur', function() {
+            this.value = this.value.replace(moveRegex, '');
+         });
      }
 
     $(document).ready(init);
