@@ -766,7 +766,6 @@ class Document(NotificationsMixin, ModelBase):
                 not self.defer_rendering):
             # Attempt an immediate rendering.
             self.render(cache_control, base_url)
-            render_done.send(sender=self)
         else:
             # Attempt to queue a rendering. If celery.conf.ALWAYS_EAGER is
             # True, this is also an immediate rendering.
@@ -810,10 +809,8 @@ class Document(NotificationsMixin, ModelBase):
         # time falls under the limit? Probably safer to require manual
         # intervention to free docs from deferred jail.
 
-        # Force-refresh cached JSON data after rendering.
-        json_data = self.get_json_data(stale=False)
-
         self.save()
+        render_done.send(sender=self)
 
     def get_summary(self, strip_markup=True, use_rendered=True):
         """Attempt to get the document summary from rendered content, with

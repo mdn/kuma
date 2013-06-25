@@ -5,6 +5,7 @@ from django.contrib.sites.models import Site
 from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail, mail_admins
+from django.dispatch import receiver
 from django.template import Context, loader
 
 import celery.conf
@@ -115,4 +116,14 @@ def _rebuild_kb_chunk(data, **kwargs):
 def render_document(doc, cache_control, base_url):
     """Simple task wrapper for the render() method of the Document model"""
     doc.render(cache_control, base_url)
-    render_done.send(sender=doc)
+
+
+@task
+def build_json_data_for_document_task(doc, stale):
+    """Force-refresh cached JSON data after rendering."""
+    doc.get_json_data(stale=stale)
+
+
+@receiver(render_done)
+def build_json_data_handler(sender, **kwargs):
+    build_json_data_for_document_task.delay(sender, stale=False)
