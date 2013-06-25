@@ -18,6 +18,8 @@
 
 /*  Font-Awesome  */
 i[class^='icon-'] { margin-right: 4px; }
+a i[class^='icon-']:before, button i[class^='icon-']:before { cursor: pointer; }
+
 
 
 /************************************************
