@@ -954,6 +954,7 @@ transition-property: bottom, opacity, visibility;
 #profile-head { position: relative; margin: 0 0 30px; padding: 20px; border: 1px solid #cbc8b9; background: rgba(198,198,175,.25); overflow: hidden; }
 #profile-head .main { width: 740px; float: right; }
 #profile-head .extra { width: 130px; float: left; }
+#profile-head .memberSince { font-size: 0.857em; color: #6a9412; font-style: italic; }
 #profile-head .photo { margin: 0 0 1em; background: #fff; padding: 5px; -moz-box-shadow: 3px 3px 0 rgba(0,0,0,.1); -webkit-box-shadow: 3px 3px 0 rgba(0,0,0,.1); box-shadow: 3px 3px 0 rgba(0,0,0,.1); }
 #profile-head .page-title, #profile-edit .page-title { margin: 0 0 .25em; padding-right: 160px; }
 #profile-head b { font-size: .77em; font-weight: normal; color: #a19f93; }
