@@ -419,6 +419,9 @@ INSTALLED_APPS = (
     'docs',
     'feeder',
     'landing',
+    'search',
+    'users',
+    'wiki',
 
     # DEMOS
     'demos',
@@ -440,18 +443,10 @@ INSTALLED_APPS = (
     'django_statsd',
     'authkeys',
     'tidings',
-
-    # SUMO
-    'users',
-    #'authority',
-    #'timezones',
-    #'access',
-    #'sumo',
-    # TODO: Reenable search when we switch to kuma wiki - or, at least waffle it.
-    'search',
     'djcelery',
     'taggit',
-    'wiki',
+    'raven.contrib.django.raven_compat',
+
     'dashboards',
     'kpi',
 
@@ -1096,3 +1091,5 @@ LOGGING = {
 
 CSRF_COOKIE_SECURE = True
 X_FRAME_OPTIONS = 'DENY'
+
+SENTRY_DSN = 'set this in settings_local.py'
