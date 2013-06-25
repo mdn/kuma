@@ -6,6 +6,7 @@ KUMASCRIPT_TIMEOUT_ERROR = [
      "message": "Request to Kumascript service timed out",
      "args": ["TimeoutError"]}
 ]
+SLUG_CLEANSING_REGEX = '^\/?(([A-z-]+)?\/?docs\/)?'
 
 
 class ReadOnlyException(Exception):

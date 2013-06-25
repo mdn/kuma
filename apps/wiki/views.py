@@ -52,7 +52,7 @@ from access.decorators import permission_required, login_required
 from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
 from sumo.utils import paginate, smart_int
-from wiki import (DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX)
+from wiki import (DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX, SLUG_CLEANSING_REGEX)
 from wiki.decorators import check_readonly
 from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,
                          ApproveRevisionInLocaleEvent)
@@ -1200,6 +1200,7 @@ def move(request, document_slug, document_locale):
                     'descendants':  descendants,
                     'descendants_count': len(descendants),
                     'conflicts': conflicts,
+                    'SLUG_CLEANSING_REGEX': SLUG_CLEANSING_REGEX,
                 })
             # Set new parent, if any
             new_slug_bits = form.cleaned_data['slug'].split('/')
@@ -1227,6 +1228,7 @@ def move(request, document_slug, document_locale):
         'document': doc,
         'descendants':  descendants,
         'descendants_count': len(descendants),
+        'SLUG_CLEANSING_REGEX': SLUG_CLEANSING_REGEX,
     })
 
 
@@ -1649,6 +1651,12 @@ def translate(request, document_slug, document_locale, revision_id=None):
                     return HttpResponseRedirect(url)
 
     parent_split = _split_slug(parent_doc.slug)
+    allow_add_attachment = (
+        Attachment.objects.allow_add_attachment_by(request.user))
+    
+    attachments = []
+    if doc and doc.attachments:
+        attachments = _format_attachment_obj(doc.attachments)
 
     return render(request, 'wiki/translate.html',
                         {'parent': parent_doc, 'document': doc,
@@ -1656,6 +1664,10 @@ def translate(request, document_slug, document_locale, revision_id=None):
                          'locale': document_locale, 'based_on': based_on_rev,
                          'disclose_description': disclose_description,
                          'discard_href': discard_href,
+                         'allow_add_attachment': allow_add_attachment,
+                         'attachment_form': AttachmentRevisionForm(),
+                         'attachment_data': attachments,
+                         'attachment_data_json': json.dumps(attachments),
                          'specific_slug': parent_split['specific'],
                          'parent_slug': parent_split['parent']})
 

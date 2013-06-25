@@ -115,6 +115,7 @@ textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
   0% { background-color: #90ee90; } 
   100% { background-color: transparent; } 
 }
+#page-attachments { clear: both; }
 #page-attachments table  { margin: 20px 0 0 0; width: 100%; border: 1px solid #E0E0DC; border-bottom:0; border-right:0; border-collapse: collapse; }
 #page-attachments .hidden { display:none; }
 #page-attachments th, #page-attachments td { padding: 5px; border-bottom: 1px solid #E0E0DC; border-right: 1px solid #E0E0DC; vertical-align:top; }

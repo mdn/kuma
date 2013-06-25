@@ -2,7 +2,7 @@ from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 
 from sumo.tests import TestCase
-from wiki.forms import RevisionForm, RevisionValidationForm
+from wiki.forms import RevisionForm, RevisionValidationForm, TreeMoveForm
 from wiki.tests import doc_rev, normalize_html
 
 
@@ -96,3 +96,25 @@ class RevisionValidationTests(TestCase):
         rev_form = RevisionValidationForm(data)
         rev_form.parent_slug = 'User:groovecoder'
         ok_(not rev_form.is_valid())
+
+
+class TreeMoveFormTests(TestCase):
+
+    def test_form_properly_strips_leading_cruft(self):
+        """ Tests that leading slash and {locale}/docs/ is removed if included """
+
+        #[submitted_value, properly_cleaned_value]
+        comparisons = [
+            ['/somedoc', 'somedoc'], # leading slash
+            ['/en-US/docs/mynewplace', 'mynewplace'], # locale and docs
+            ['something/else/more/docs/more', 'something/else/more/docs/more'], # valid
+            ['/docs/one/two', 'one/two'], # leading docs
+            ['docs/one/two', 'one/two'], # leading docs without slash
+            ['fr/docs/one/two', 'one/two'], # foreign locale with docs
+            ['docs/project/docs', 'project/docs'] # docs with later docs
+        ]
+
+        for comparison in comparisons:
+            form = TreeMoveForm({ 'slug': comparison[0] })
+            form.is_valid()
+            eq_(comparison[1], form.cleaned_data['slug'])
