@@ -30,6 +30,9 @@ RewriteRule ^robots.txt$ media/robots.txt [L]
 RewriteRule ^sitemap.xml$ media/sitemap.xml [L]
 RewriteRule ^sitemaps/([\w\-]*)/sitemap.xml$ media/sitemaps/$1/sitemap.xml [L]
 
+# Bug 887428 - Misprinted URL in promo materials
+RewriteRule ^Firefox_OS/Security$ docs/Mozilla/Firefox_OS/Security [R=301,L,NC]
+
 # Some blanket section moves / renames
 RewriteRule ^En/JavaScript/Reference/Objects/Array$ en-US/docs/JavaScript/Reference/Global_Objects/Array [R=301,L,NC]
 RewriteRule ^En/JavaScript/Reference/Objects$ en-US/docs/JavaScript/Reference/Global_Objects/Object [R=301,L,NC]
