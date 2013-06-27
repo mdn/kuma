@@ -510,8 +510,7 @@ DOMAIN_METHODS = {
     ],
     'javascript': [
         # We can't say **.js because that would dive into any libraries.
-        ('media/ckeditor/plugins/mdn-link/**.js', 'javascript'),
-        ('media/ckeditor/plugins/mdn-syntaxhighlighter/**.js', 'javascript'),
+        ('media/ckeditor/plugins/mdn-link/**.js', 'javascript')
     ],
 }
 
@@ -588,10 +587,6 @@ MINIFY_BUNDLES = {
         ),
         'tagit': (
             'css/jquery.tagit.css',
-        ),
-        'syntax-highlighter': (
-            'syntaxhighlighter/styles/shCore.css',
-            'syntaxhighlighter/styles/shThemeDefault.css',
         ),
         'syntax-prism': (
             'prism/prism.css',
@@ -674,19 +669,6 @@ MINIFY_BUNDLES = {
         ),
         'framebuster': (
             'js/framebuster.js',
-        ),
-        'syntax-highlighter': (
-            'syntaxhighlighter/scripts/shCore.js',
-            'syntaxhighlighter/scripts/shBrushBash.js',
-            'syntaxhighlighter/scripts/shBrushCpp.js',
-            'syntaxhighlighter/scripts/shBrushCss.js',
-            'syntaxhighlighter/scripts/shBrushJava.js',
-            'syntaxhighlighter/scripts/shBrushJScript.js',
-            'syntaxhighlighter/scripts/shBrushPhp.js',
-            'syntaxhighlighter/scripts/shBrushXml.js',
-            'syntaxhighlighter/scripts/shBrushPlain.js',
-            'syntaxhighlighter/scripts/shBrushPython.js',
-            'js/syntax-highlighter.js',
         ),
         'syntax-prism': (
             'prism-mdn/components/prism-json.js',
