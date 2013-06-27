@@ -7,6 +7,7 @@ import logging
 import re
 from urllib import urlencode
 from string import ascii_letters
+import jinja2
 
 try:
     from cStringIO import cStringIO as StringIO
@@ -2193,7 +2194,7 @@ def attachment_detail(request, attachment_id):
     current = attachment.current_revision
 
     if current.mime_type in ['image/png', 'image/jpeg', 'image/jpg', 'image/gif']:
-        preview_content = '<img src="%s" alt="%s" />' % (attachment.get_file_url(), current.title)
+        preview_content = jinja2.Markup('<img src="%s" alt="%s" />') % (attachment.get_file_url(), attachment.title)
 
     return render(request, 'wiki/attachment_detail.html',
                         {'attachment': attachment,
