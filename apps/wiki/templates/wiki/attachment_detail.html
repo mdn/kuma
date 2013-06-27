@@ -18,7 +18,7 @@
         <ul>
           <li>
             <mark>{{ _('Revision slug:') }}</mark>
-            <span>{{ revision.slug }}</span>
+            <span><a href="{{ attachment.get_file_url() }}">{{ revision.slug }}</a></span>
           </li>
           <li>
             <mark>{{ _('Revision title:') }}</mark>
@@ -34,7 +34,7 @@
           </li>
           <li>
             <mark>{{ _('Creator:') }}</mark>
-            <span>{{ revision.creator }}</span>
+            <span><a href="{{ url('devmo.views.profile_view', username=revision.creator) }}">{{ revision.creator }}</a></span>
           </li>
           <li>
             <mark>{{ _('MIME Type:') }}</mark>
@@ -69,7 +69,11 @@
     <details class="h2">
       <summary>{{ _('Attachment Preview') }}</summary>
       <div id="doc-content">
-        Image thumbnail or document content here
+        {% if preview_content %}
+          {{ preview_content|safe }}
+        {% else %}
+          {{ _('No preview is available.') }}
+        {% endif %}
       </div>
     </details>
   </article>
