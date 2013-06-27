@@ -1,15 +1,7 @@
 <!-- include syntax highlighting scripts -->
-{% if waffle.flag('prism_highlighter') %}
-  
-  {{ css('syntax-prism') }}
-
-  <script type="text/javascript">
-    MEDIA_URL = '{{ MEDIA_URL }}';
-  </script>
-  <script type="text/javascript" src="{{ MEDIA_URL }}prism/prism.js" data-manual></script>
-  {{ js('syntax-prism') }}
-{% else %}
-  
-  {{ css('syntax-highlighter') }}
-  {{ js('syntax-highlighter') }}
-{% endif %}
+{{ css('syntax-prism') }}
+<script type="text/javascript">
+MEDIA_URL = '{{ MEDIA_URL }}';
+</script>
+<script type="text/javascript" src="{{ MEDIA_URL }}prism/prism.js" data-manual></script>
+{{ js('syntax-prism') }}
