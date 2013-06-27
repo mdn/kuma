@@ -170,6 +170,7 @@ p.notice { padding-bottom: 10px; top: 0; margin-bottom: 15px; }
 
 #nav-main a { display: inline-block; height: 18px; padding-bottom: 9px; background: url("../img/nav-arrows.png") center bottom no-repeat; }
 #nav-main a:hover, #nav-main a:focus, #nav-main a:active { text-decoration: none; padding-bottom: 8px; border-bottom: 1px solid #000; }
+#nav-main a.demos { background-image:none; }
 
 #nav-main .sub-menu a { display: inline; height: auto; padding: 0; background: none; }
 #nav-main .sub-menu a:hover, #nav-main .sub-menu a:focus, #nav-main .sub-menu a:active { padding: 0; border: 0; }
@@ -214,6 +215,7 @@ p.notice { padding-bottom: 10px; top: 0; margin-bottom: 15px; }
 #nav-main #nav-main-topics .open { color: #f8d575; background-position: center -30px; }
 #nav-main #nav-main-docs .open { color: #ffae3b; background-position: center -80px; }
 #nav-main #nav-main-community .open { color: #00b6f0; background-position: center -1080px; }
+#nav-main #nav-main-apps .open { color: #9ac500; background-position: center -212px; }
 
 #nav-main-topics a:hover, #nav-main-topics a:focus, #nav-main-topics a:active { color: #f8d575; }
 #nav-main-community a:hover, #nav-main-community a:focus, #nav-main-community a:active { color: #0cf; }
@@ -259,6 +261,9 @@ p.notice { padding-bottom: 10px; top: 0; margin-bottom: 15px; }
 .new-menu #nav-main .menu:hover { background-position: 100% -580px; }
 .new-menu #nav-main #nav-main-docs:hover { background-position: 100% -630px; }
 .new-menu #nav-main #nav-main-community:hover { background-position: 100% -1130px; }
+.new-menu #nav-main #nav-main-apps:hover { background-position: 100% -1270px; }
+
+.new-menu #nav-main #nav-sub-apps { width: 180px; padding: 10px 15px; border-color: #9AC500; margin-left: -110px; }
 
 .new-menu #nav-main .menu #nav-sub-community, .new-menu #nav-main .menu #nav-sub-firefox { width: 150px; margin-left: -85px; }
 
