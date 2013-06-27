@@ -377,7 +377,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 				// For some reason, setup() doesn't automagically get called on any input in this dialog
 				// So I'm calling it myself
 				var select = this.getContentElement("info", "attachment")._.children[0];
-				CKEDITOR.mdn.updateAttachments(select, this.getValueOf('info', 'txtUrl'), imageAttachmentFilter);
+				mdn.ckeditor.updateAttachments(select, this.getValueOf('info', 'txtUrl'), imageAttachmentFilter);
 			},
 			onOk : function()
 			{
@@ -521,7 +521,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 								onChange: function() {
 									var value = this.getValue(),
 										dialog = this.getDialog(),
-										alt = CKEDITOR.mdn.getObjectByUrl(value);
+										alt = mdn.ckeditor.getObjectByUrl(value);
 									dialog.setValueOf('info', 'txtUrl', value);
 									if(alt) {
 										dialog.setValueOf('info', 'txtAlt', alt.description);
@@ -529,7 +529,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 								},
 								setup: function(data) {
 									attachmentsSelect = this;
-									CKEDITOR.mdn.updateAttachments(this, imageAttachmentFilter);
+									mdn.ckeditor.updateAttachments(this, imageAttachmentFilter);
 								}
 							}]
 						},
