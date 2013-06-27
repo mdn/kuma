@@ -179,6 +179,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 						if ( this.state == CKEDITOR.TRISTATE_OFF )		// Go fullscreen if the state is off.
 						{
+							// Bug #782686
+							editor.document.getDocumentElement().addClass('maximized');
+
 							// Add event handler for resizing.
 							mainWindow.on( 'resize', resizeHandler );
 
@@ -244,6 +247,9 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 						}
 						else if ( this.state == CKEDITOR.TRISTATE_ON )	// Restore from fullscreen if the state is on.
 						{
+							// Bug #782686
+							editor.document.getDocumentElement().removeClass('maximized');
+
 							// Remove event handler for resizing.
 							mainWindow.removeListener( 'resize', resizeHandler );
 
