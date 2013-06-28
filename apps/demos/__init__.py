@@ -367,7 +367,9 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "summary": _("The File API lets you read the contents of files submitted by your users, making natural and familiar data operations possible."),
         "description": _("The File API lets you read the contents of files submitted by your users, making natural and familiar data operations possible."),
         "learn_more": [],
-        "tab_copy": _("??"),
+        "tab_copy": _("""<p>The Mozilla Dev Derby is a monthly web development contest open to anyone willing to learn. This month, we want to see what you can do with the File API.</p>
+<p>Need help getting started? No problem. The <a href="https://developer.mozilla.org">Mozilla Developer Network (MDN)</a> has you covered with some of the best documentation out there. Beginners will appreciate our <a href="https://developer.mozilla.org/en-US/learn">comprehensive guide on the basics</a> and more experienced web developers should appreciate the thousands of other articles provided. When you're ready to tackle the File API in particular, take a look at our <a href="https://developer.mozilla.org/en-US/docs/Using_files_from_web_applications">very detailed File API documentation</a>. Need some examples? Check out the many <a href="https://developer.mozilla.org/en-US/demos/tag/tech:files">File API demos</a> already available on the Demo Studio.</p>
+<p>It may seem like a lot, but you don't need to be an expert to create something great.  What can you do with the File API?</p>"""),
     },
 
     {
