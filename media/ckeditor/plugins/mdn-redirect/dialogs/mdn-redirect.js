@@ -2,7 +2,7 @@ CKEDITOR.dialog.add( 'mdn-redirect', function( editor ) {
 
 	var topLabel = gettext('MDN Redirect'),
 		docInfo = window.documentInfo,
-		autoCompleteUrl = jQuery('#autosuggestTitleUrl').attr('data-url'),
+		autoCompleteUrl = mdn.wiki.autosuggestTitleUrl,
 		autoCompleteTextbox,
 		$autoCompleteTextbox;
 
@@ -77,7 +77,7 @@ CKEDITOR.dialog.add( 'mdn-redirect', function( editor ) {
 			var editor = dialog.sender.getParentEditor(),
 				title = dialog.sender.getContentElement( 'info', 'autoselect' ).getValue()
 				url = dialog.sender.getContentElement( 'info', 'url' ).getValue(),
-				pattern = CKEDITOR.mdn.redirectPattern;
+				pattern = mdn.ckeditor.redirectPattern;
 			editor && title && url && editor.setData(
 				pattern.replace('%(href)s', url).replace('%(title)s', title)
 			);

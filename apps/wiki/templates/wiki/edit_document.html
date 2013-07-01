@@ -106,7 +106,6 @@
                 {% endif %}
                 {% if show_translation_parent_block %}
                 <li class="metadata-choose-parent">
-                    {% include 'wiki/includes/title_autosuggest_url.html' %}
                     {{_('Find the translation source with the lookup below and then click "Save Changes.')}}
                     <br />
                     <strong>{{_('Lookup:')}}</strong> <input type="text" id="parent_text" />
@@ -131,8 +130,6 @@
             {% endif %}
             <input type="hidden" name="form" value="rev" />
             {{ revision_form.hidden_fields()|join|safe }}
-            
-            {% include 'wiki/includes/title_autosuggest_url.html' %}
 
             {% include 'wiki/includes/revision_comment.html' %}
 

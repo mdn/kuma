@@ -3,11 +3,11 @@ CKEDITOR.plugins.add('mdn-attachments', {
 
         	// Utility method for updating the attachments dropdown
         	// Should be used within the mdn-link and image dialogs
-        	CKEDITOR.mdn.updateAttachments = function(select, url, filter) {
+        	mdn.ckeditor.updateAttachments = function(select, url, filter) {
         		if(!select) return;
 
 				var attachmentsArray = [],
-					mdnArray = window.MDN_ATTACHMENTS,
+					mdnArray = mdn.wiki.attachments,
 					validFiles = {};
 
 				// Clear the select
@@ -53,11 +53,13 @@ CKEDITOR.plugins.add('mdn-attachments', {
 			}
 
 			// Utility method to get an MDN attachment object by url
-			CKEDITOR.mdn.getObjectByUrl = function(url) {
-				if(!window.MDN_ATTACHMENTS) return;
+			mdn.ckeditor.getObjectByUrl = function(url) {
+				var attachments = mdn.wiki.attachments;
+
+				if(!attachments) return;
 				
 				var returnObj = false;
-				$.each(window.MDN_ATTACHMENTS, function() {
+				$.each(attachments, function() {
 					if(this.url == url) {
 						returnObj = this;
 					}
