@@ -93,15 +93,15 @@
             </div>
 
             <section class="page-meta">
-            <section id="page-tags">
+            <section class="page-tags">
               <h3><i class="icon-tag"></i>{{ _('Tags') }}</h3>
-                {% set tags = parent.tags.all() %}
+                {% set parent_tags = parent.tags.all() %}
               <div id="deki-page-tags">
-                {% if tags | length %}
+                {% if parent_tags | length %}
                   <ul class="tags tagit ui-widget ui-widget-content">
-                    {% for tag in tags %}
+                    {% for parent_tag in parent_tags %}
                     <li class="tagit-choice ui-widget-content ui-state-default">
-                        <a class="text tagit-label" href="{{url('wiki.tag', tag.name)}}">{{ tag.name }}</a>
+                        <a class="text tagit-label" href="{{url('wiki.tag', parent_tag.name)}}">{{ parent_tag.name }}</a>
                     </li>
                     {% endfor %}
                   </ul>
@@ -128,7 +128,7 @@
         <div class="approved">&nbsp;</div>
         <div class="localized">
           <section class="page-meta">
-              <section id="page-tags">
+              <section id="page-tags" class="page-tags">
                 <h2><i class="icon-tag"></i>{{ _('Tags') }}</h2>
                 {% if document.tags %}
                   {% set tags = document.tags.all() %}
