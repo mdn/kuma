@@ -86,6 +86,7 @@
                       <li><a href="{{ devmo_url('Web/Tutorials') }}?menu">{{ _('Tutorials') }}</a></li>
                       <li><a href="{{ devmo_url('Web/Reference') }}?menu">{{ _('References') }}</a></li>
                       <li><a href="{{ devmo_url('Web/Guide') }}?menu">{{ _('Developer Guides') }}</a></li>
+                      <li><a href="{{ devmo_url('Accessibility') }}">{{ _('Accessibility') }}</a></li>
                       <li><a href="{{ url('demos') }}?menu">{{ _('Demos') }}</a></li>
                       <li><br /><br /><a href="{{ url('docs') }}?menu">{{ _('...more docs') }}</a></li>
                     </ul>
@@ -93,7 +94,14 @@
                 </ul>
               </div>
             </li>
-            <li id="nav-main-apps" role="menuitem"><a href="https://marketplace.firefox.com/developers/">{{ _('Make<br /><em>Apps</em>') }}</a></li>
+            <li id="nav-main-apps" class="menu" role="menuitem"><a href="#nav-sub-apps" class="toggle" aria-haspopup="true" aria-labelledby="nav-main-apps">{{ _('Make<br /><em>Apps</em>') }}</a>
+              <ul id="nav-sub-apps" class="sub-menu">
+                <li><a href="http://marketplace.firefox.com/developers/design?menu">{{ _('Design Apps') }}</a></li>
+                <li><a href="http://marketplace.firefox.com/developers/build?menu">{{ _('Build Apps') }}</a></li>
+                <li><a href="http://marketplace.firefox.com/developers/publish?menu">{{ _('Publish Apps') }}</a></li>
+                <li><a href="http://marketplace.firefox.com/developers/tools?menu">{{ _('Tools for Making Apps') }}</a></li>
+              </ul>
+            </li>
             <li id="nav-main-firefox" class="menu" role="menuitem"><a href="#nav-sub-firefox" class="firefox toggle" aria-haspopup="true" aria-labelledby="nav-main-firefox">{{ _('Build & Use<br /><em>Firefox</em>') }}</a>
               <ul id="nav-sub-firefox" class="sub-menu">
                 <li><a href="{{ devmo_url('Mozilla/Firefox_OS') }}?menu">{{ _('Firefox OS') }}</a></li>

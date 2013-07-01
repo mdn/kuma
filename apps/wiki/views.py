@@ -7,6 +7,7 @@ import logging
 import re
 from urllib import urlencode
 from string import ascii_letters
+import jinja2
 
 try:
     from cStringIO import cStringIO as StringIO
@@ -2189,8 +2190,15 @@ def mindtouch_file_redirect(request, file_id, filename):
 def attachment_detail(request, attachment_id):
     """Detail view of an attachment."""
     attachment = get_object_or_404(Attachment, pk=attachment_id)
+    preview_content = ''
+    current = attachment.current_revision
+
+    if current.mime_type in ['image/png', 'image/jpeg', 'image/jpg', 'image/gif']:
+        preview_content = jinja2.Markup('<img src="%s" alt="%s" />') % (attachment.get_file_url(), attachment.title)
+
     return render(request, 'wiki/attachment_detail.html',
                         {'attachment': attachment,
+                         'preview_content': preview_content,
                          'revision': attachment.current_revision})
 
 
