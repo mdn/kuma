@@ -941,7 +941,7 @@
             $('#parent_text').mozillaAutocomplete({
                 minLength: 1,
                 requireValidOption: true,
-                autocompleteUrl: $('#autosuggestTitleUrl').attr('data-url'),
+                autocompleteUrl: mdn.wiki.autosuggestTitleUrl,
                 _renderItemAsLink: true,
                 buildRequestData: function(req) {
                     req.locale = 'en-US';
@@ -1256,8 +1256,7 @@
 
                 return $clone;
             }
-            var firstClone = clone();
-            firstClone.find('input[type="text"]')[0].focus();
+            clone().find('input[type="text"]')[0].focus();
         });
 
         // Add an "ajax" parameter to the form for the sake of the server
@@ -1291,8 +1290,8 @@
                             // Update attachment count
                             $attachmentsCount.text(parseInt($attachmentsCount.text(), 10) + 1);
                             // Add item to list
-                            if(window.MDN_ATTACHMENTS) {
-                                window.MDN_ATTACHMENTS.push(this);
+                            if(mdn.wiki.attachments) {
+                                mdn.wiki.attachments.push(this);
                             }
                             validIndexes.push(i);
                             // Remove the form row
@@ -1394,7 +1393,7 @@
          $suggestionInput.mozillaAutocomplete({
              minLength: 1,
              requireValidOption: true,
-             autocompleteUrl: $('#autosuggestTitleUrl').attr('data-url'),
+             autocompleteUrl: mdn.wiki.autosuggestTitleUrl,
              _renderItemAsLink: true,
              buildRequestData: function(req) {
                  req.locale = moveLocale;

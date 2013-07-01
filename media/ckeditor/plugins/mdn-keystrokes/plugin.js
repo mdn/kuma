@@ -6,7 +6,7 @@ CKEDITOR.plugins.add('mdn-keystrokes', {
 	// Initialize
 	init: function(editor) {
 		
-		var keys = CKEDITOR.mdn.keys;
+		var keys = mdn.ckeditor.keys;
 
 		editor.on('key', function(event) {
 			event.stop();

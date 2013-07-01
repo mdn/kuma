@@ -9,7 +9,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 	
 	// These vars are specific to the autocompleter
 	var autoCompleteCreated = false,
-		autoCompleteUrl = jQuery('#autosuggestTitleUrl').attr('data-url'),
+		autoCompleteUrl = mdn.wiki.autosuggestTitleUrl,
 		autoCompleteTextbox,
 		autoCompleteSelection,
 		attachmentsSelect;
@@ -504,7 +504,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 									},
 									setup: function(data) {
 										attachmentsSelect = this;
-										CKEDITOR.mdn.updateAttachments(this, this.getDialog().getValueOf('info', 'url'));
+										mdn.ckeditor.updateAttachments(this, this.getDialog().getValueOf('info', 'url'));
 									}
 								}]
 							},
@@ -1001,7 +1001,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 				lang;
 
 			// Update the dropdown
-			CKEDITOR.mdn.updateAttachments(attachmentsSelect, this.getValueOf('info', 'url'));
+			mdn.ckeditor.updateAttachments(attachmentsSelect, this.getValueOf('info', 'url'));
 
 			// Fill in all the relevant fields if there's already one link selected.
 			if ((element = plugin.getSelectedLink(editor)) && element.hasAttribute('href')) {
@@ -1015,7 +1015,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 			this.setupContent( parseLink.apply( this, [ editor, element ] ) );
 
 			// Update the attachments list
-			CKEDITOR.mdn.updateAttachments(attachmentsSelect, this.getValueOf('info', 'url'));
+			mdn.ckeditor.updateAttachments(attachmentsSelect, this.getValueOf('info', 'url'));
 			
 			// If there's an element, don't take action, let the editor handle it
 			this.hasSourceElement = !(element == null);

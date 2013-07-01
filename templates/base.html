@@ -36,6 +36,19 @@
   <script src="{{ MEDIA_URL }}js/html5.js"></script>
   <![endif]-->
 
+  <script type="text/javascript">
+    // This represents the site configuration
+    // TODO:  Move this to its own module when we're AMD-ready
+    window.mdn = {
+      build: '{{ BUILD_ID_JS }}',
+      // Setting these objects up for later use
+      ckeditor: {},
+      wiki: {
+        autosuggestTitleUrl: '{{ url('wiki.autosuggest_documents') }}'
+      }
+    };
+  </script>
+
   {% block extrahead %}{% endblock %}
   {% include "includes/google_analytics.html" %}
 </head>

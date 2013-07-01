@@ -34,10 +34,8 @@ CKEDITOR.on('instanceReady', function(ev) {
     callback && callback(ev);
 });
 
-// Any utilities we need to be globably available will go here
-CKEDITOR.mdn = CKEDITOR.mdn || {
-    redirectPattern: '{{ redirect_pattern|safe }}'
-};
+// Provide redirect pattern for corresponding plugin
+mdn.ckeditor.redirectPattern = '{{ redirect_pattern|safe }}';
 
 (function() {
     // Brick dialog "changed" prompts
@@ -60,7 +58,7 @@ CKEDITOR.mdn = CKEDITOR.mdn || {
     delete CKEDITOR.dtd.$removeEmpty['i'];
 
     // Manage key presses
-    var keys = CKEDITOR.mdn.keys = {
+    var keys = mdn.ckeditor.keys = {
             control2: CKEDITOR.CTRL + 50,
             control3: CKEDITOR.CTRL + 51,
             control4: CKEDITOR.CTRL + 52,
