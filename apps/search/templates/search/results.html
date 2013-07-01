@@ -49,14 +49,14 @@
     
     <h1>Search</h1>
     <div class="search-form boxed">
-      <form action="" method="get">
+      <form action="" method="get" id="search-form">
         <input name="q" id="search-q" type="search" value="{{ search_query }}" autofocus />
         <button type="submit" id="search-submit">Search!</button>
       </form>
     </div>
 
     {% if search_query: %}
-      <div class="boxed">
+      <div class="boxed" id="results-box"><!--RESULTS-->
       {% if result_count: %}
         <h2>Search Results For "{{ search_query }}"</h2>
         <ul class="search-results-list">
@@ -85,9 +85,13 @@
     {% else %}
       {% include 'search/popular.html' %}
     {% endif %}
-    </div>
+    <!--/RESULTS--></div>
+
 
     <style type="text/css">
+    #results-box { opacity: 1; transition-property: opacity; transition-duration: .5s; -webkit-transition-property: opacity; -webkit-transition-duration: .5s;  }
+    #results-box.searching { opacity: 0.5; }
+
     /* basic result styling */
     .doc-result { padding: 10px; margin: 0 -10px; }
     .doc-result.selected { background: rgba(0, 0, 0, 0.05); cursor: pointer; }
@@ -136,6 +140,10 @@
       (function($) {
         var $searchResults;
         var targetTestRegex = /input|textarea|select|option/i;
+        var $searchInput = $('#search-q');
+        var cache = {};
+        var cacheValue = $searchInput.val().toLowerCase();
+        var $resultParent = $('#results-box');
 
         // Populate $searchResults
         updateResults();
@@ -168,7 +176,6 @@
                 e.preventDefault();
                 selectItem(item.prev);
               }
-
               break;
             case 40: // down
               var item = getItem(true);
@@ -211,6 +218,65 @@
             next: hasSelected ? selected.next() : first,
             prev: hasSelected ? selected.prev() : (isDown ? first : [])
           };
+        }
+
+        // Call onSuccess on this page now to save current result
+        ajaxSuccess(document.body.innerHTML);
+
+        $('#search-form').on('submit', function(e) {
+          e.preventDefault();
+
+          var value = $searchInput.val(), url;
+
+          // Save the cacheValue for use within ajaxSuccess
+          cacheValue = value.toLowerCase()
+
+          if(value) {
+            url = '{{ url("search") }}?q=' + value;
+            history.pushState && history.pushState({ value: value, cacheValue: cacheValue }, '', url);
+
+            // Add this new value to history, only doing so if there's a value
+            // In here to prevent the original page from being pushed
+            window.addEventListener("popstate", function(info) {
+              var oldValue = info.state.cacheValue || info.state.value;
+              ajaxSuccess(cache[oldValue]);
+              ajaxComplete();
+              $searchInput.val(oldValue);
+            });
+
+            // Pull stuff from cache if we have it
+            if(cache[cacheValue]) {
+              ajaxSuccess(cache[cacheValue]);
+              ajaxComplete();
+            }
+            // Go get the new stuff!
+            else {
+              $resultParent.addClass('searching');
+              $.ajax(url, {
+                complete: ajaxComplete,
+                success: ajaxSuccess,
+                error: function() {
+                  // error case - just window.location to the url?
+                  window.location = url;
+                }
+              });
+            }
+          }
+
+          return false;
+        });
+    
+        // Occurs upon successful (or cached) result
+        function ajaxSuccess(result) {
+            var cacheRes = result.substring(result.indexOf('<!--RESULTS-->'), result.indexOf('<!--/RESULTS-->'));
+            cache[cacheValue] = result;
+            $resultParent.html(cacheRes);
+            updateResults();
+        }
+
+        // Occurs regardless of success or failure
+        function ajaxComplete() {
+          $resultParent.removeClass('searching');
         }
       })(jQuery);
   </script>
