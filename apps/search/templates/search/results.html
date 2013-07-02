@@ -141,7 +141,7 @@
         updateResults();
 
         // Apply the keyup listener for search engine movement
-        $(document.body).on('keyup', keyHandler);
+        $(document.body).on('keypress', keyHandler);
 
         // Keep mouseover selection in sync with keyboard selection
         $('.search-results-list')
@@ -168,7 +168,6 @@
                 e.preventDefault();
                 selectItem(item.prev);
               }
-
               break;
             case 40: // down
               var item = getItem(true);
