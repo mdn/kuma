@@ -1073,13 +1073,13 @@ LOGGING = {
     'loggers': {
         'mdn': {
             'handlers': ['console'],
-            'propogate': True,
+            'propagate': True,
             # Use the most permissive setting. It is filtered in the handlers.
             'level': logging.DEBUG,
         },
         'django.request': {
-            'handlers': ['console', 'mail_admins'],
-            'propogate': True,
+            'handlers': ['console'],
+            'propagate': True,
             # Use the most permissive setting. It is filtered in the handlers.
             'level': logging.DEBUG,
         },
