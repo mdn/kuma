@@ -1,2 +1,6 @@
+{# This Source Code Form is subject to the terms of the Mozilla Public
+ # License, v. 2.0. If a copy of the MPL was not distributed with this
+ # file, You can obtain one at http://mozilla.org/MPL/2.0/. #}
+
 {% set display_name = user.first_name | default(user.username, true) %}
 <a href="{{ url('devmo.views.profile_view', username=user.username) }}" class="url fn" title="{{_('See {display_name}\'s profile') | f(display_name=display_name)}}">{% if show_gravatar %}<img src="{{ user.get_profile().gravatar }}" class="photo avatar" width="{{ gravatar_size }}" height="{{ gravatar_size }}" border="0" /> {% endif %}<span>{{ display_name }}</span></a>

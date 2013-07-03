@@ -1,3 +1,7 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
 .calendar #page-head { margin: 0; padding: 40px 0 10px; text-align: center; clear: both; }
 .calendar #page-head p { text-align: justify; font-size: .857em; width: 700px; margin: 0 auto 1em; color: #666; }
 .calendar #page-head p.intro {  font-size: 16px; }

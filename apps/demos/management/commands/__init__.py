@@ -1,3 +1,7 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 # HACK: monkey-patch natural key onto User for django 1.2
 # see https://code.djangoproject.com/ticket/13914#comment:26
 from django.contrib.auth import models as auth_models
