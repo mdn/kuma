@@ -1181,6 +1181,7 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
 @permission_required('wiki.move_tree')
 @process_document_path
 @check_readonly
+@prevent_indexing
 @transaction.autocommit  # For rendering bookkeeping, needs immediate updates
 @waffle_flag('page_move')
 def move(request, document_slug, document_locale):
