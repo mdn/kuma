@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+{# This Source Code Form is subject to the terms of the Mozilla Public
+ # License, v. 2.0. If a copy of the MPL was not distributed with this
+ # file, You can obtain one at http://mozilla.org/MPL/2.0/. #}
+
 <html lang="en-US" dir="ltr" id="developer-mozilla-org" xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:og="http://ogp.me/ns#">
 {% set full_url = request.build_absolute_uri(submission.get_absolute_url()) %}
 {% set short_url = full_url | bitly_shorten %}

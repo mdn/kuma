@@ -1,2 +1,6 @@
+{# This Source Code Form is subject to the terms of the Mozilla Public
+ # License, v. 2.0. If a copy of the MPL was not distributed with this
+ # file, You can obtain one at http://mozilla.org/MPL/2.0/. #}
+
 {% set display_name = submission.creator.first_name | default(submission.creator.username, true) %}
 <a href="{{ url('devmo.views.profile_view', username=submission.creator.username) }}" class="url fn" title="{{_('See {display_name}\'s profile') | f(display_name=display_name)}}">{{ display_name }}</a>

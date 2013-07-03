@@ -1,3 +1,7 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
 /* @Modal dialogs *********/
 #simplemodal-overlay { background: #fff; opacity: 0.15; }
 #simplemodal-container { padding: 18px; background: #aaa082; background: rgba(170,160,130,.75); overflow: visible; }
