@@ -50,7 +50,7 @@
       {% include 'wiki/includes/revision_comment.html' %}
 
       <section class="page-meta">
-        <section id="page-tags">
+        <section id="page-tags" class="page-tags">
           <h2><i class="icon-tags"></i>{{ _('Tags') }}</h2>
           <input id="tagit_tags" type="text" name="tags" value="{% for tag in initial_tags %}{{ tag.name }},{% endfor %}" maxlength="255" />
         </section>

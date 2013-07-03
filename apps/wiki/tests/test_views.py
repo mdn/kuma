@@ -1790,10 +1790,10 @@ class DocumentEditingTests(TestCaseBase):
                                           args=[doc.full_path]), data)
             page = pq(response.content)
             for t in yes_tags:
-                eq_(1, page.find('#page-tags li a:contains("%s")' % t).length,
+                eq_(1, page.find('.page-tags li a:contains("%s")' % t).length,
                     '%s should NOT appear in document view tags' % t)
             for t in no_tags:
-                eq_(0, page.find('#page-tags li a:contains("%s")' % t).length,
+                eq_(0, page.find('.page-tags li a:contains("%s")' % t).length,
                     '%s should appear in document view tags' % t)
 
             # Check for the document title in the tag listing

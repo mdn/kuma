@@ -86,10 +86,10 @@ img.rwrap { background: #fff; padding: 0 0 .75em 20px; }
 textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
 
 /* tag editing; uses tagit */
-#page-tags #id_tags { width: 90%; }
-#page-tags ul.tagit { background: none repeat scroll 0 0 #FFFFFF; border: 1px solid #CBC8B9; padding: 6px 8px; min-height: 30px; }
-#page-tags ul.tagit .tagit-label { color: #333333; font-weight: normal; }
-#page-tags ul.tagit li.tagit-choice { margin-bottom:0; }
+.page-tags #id_tags { width: 90%; }
+.page-tags ul.tagit { background: none repeat scroll 0 0 #FFFFFF; border: 1px solid #CBC8B9; padding: 6px 8px; min-height: 30px; }
+.page-tags ul.tagit .tagit-label { color: #333333; font-weight: normal; }
+.page-tags ul.tagit li.tagit-choice { margin-bottom:0; }
 
 #deki-page-tags ul.tagit { background: transparent; border: 0; padding: 0; min-height: none; margin-top: 6px; }
 #deki-page-tags li.tagit-choice { padding-right: 10px; }
@@ -651,9 +651,9 @@ tr.release td.stepLabel { padding: 0 5px 15px 25px; width: 12%; text-align: righ
 .html-rtl #nav,
 .html-rtl #title, 
 .html-rtl #nav-toolbar .crumbs, 
-.html-rtl #page-tags h2, 
-.html-rtl #page-tags #deki-page-tags,
-.html-rtl #page-tags .tags-edit, 
+.html-rtl .page-tags h2, 
+.html-rtl .page-tags #deki-page-tags,
+.html-rtl .page-tags .tags-edit, 
 .html-rtl #site-info #legal, 
 .html-rtl .deki-pagination div, 
 .html-rtl .pagination span, 
@@ -682,9 +682,9 @@ tr.release td.stepLabel { padding: 0 5px 15px 25px; width: 12%; text-align: righ
 .html-rtl .compact #nav .nav-menu:hover .sub-menu, .html-rtl .compact #nav .hover .sub-menu, .html-rtl .compact #nav a:focus + ul { right: auto; }
 .html-rtl #article-nav { padding: 0 20px 1em 0; }
 .html-rtl .page-meta h2 { margin: 0 0 0 20px; }
-.html-rtl #page-tags #deki-page-tags-toggleview, .html-rtl .page-meta p.add { right: auto; left: 20px; text-align: left; }
-.html-rtl #page-tags #deki-page-tags .tagData { padding-right: 0; padding-left: 30px; }
-.html-rtl #page-tags #deki-page-tags .tagButtons { padding-left: 0; padding-right: 10px; float: left; }
+.html-rtl .page-tags #deki-page-tags-toggleview, .html-rtl .page-meta p.add { right: auto; left: 20px; text-align: left; }
+.html-rtl .page-tags #deki-page-tags .tagData { padding-right: 0; padding-left: 30px; }
+.html-rtl .page-tags #deki-page-tags .tagButtons { padding-left: 0; padding-right: 10px; float: left; }
 .html-rtl #page-buttons { right: auto; left: 20px; }
 .html-rtl #site-info #legal { padding: 0 55px 0 0; }
 .html-rtl #site-info #legal img { left: auto; right: 0; }
