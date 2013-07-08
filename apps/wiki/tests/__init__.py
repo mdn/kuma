@@ -29,12 +29,6 @@ class TestCaseBase(TestCase):
         ke_flag.save()
         self.kumaediting_flag = ke_flag
 
-        pw_flag, created = Flag.objects.get_or_create(name='page_watch')
-        pw_flag.everyone = True
-        pw_flag.save()
-        self.page_watch_flag = pw_flag
-
-
     def tearDown(self):
         self.kumaediting_flag.delete()
 

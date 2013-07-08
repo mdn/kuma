@@ -47,7 +47,7 @@
 {% endmacro %}
 
 {% macro optimizely_script() %}
-  {% if waffle.flag('optimizely') and config.OPTIMIZELY_PROJECT_ID %}
+  {% if config.OPTIMIZELY_PROJECT_ID > 0 %}
   <script src="//cdn.optimizely.com/js/{{ config.OPTIMIZELY_PROJECT_ID }}.js"></script>
   {% endif %}
 {% endmacro %}
