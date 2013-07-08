@@ -996,6 +996,22 @@ CONSTANCE_CONFIG = dict(
         ]),
         "JSON array listing CSS styles allowed on tags",
     ),
+
+    WIKI_DOCUMENT_TAG_SUGGESTIONS = (
+        json.dumps([
+            "Accessibility", "AJAX", "API", "Apps",
+            "Canvas", "CSS", "Device", "DOM", "Events",
+            "Extensions", "Firefox", "Firefox OS", "Games",
+            "Gecko", "Graphics", "Internationalization", "History", "HTML", "HTTP", "JavaScript", "Layout",
+            "Localization", "MDN", "Mobile", "Mozilla",
+            "Networking", "Persona", "Places", "Plugins", "Protocols",
+
+            "Reference", "Tutorial", "Landing",
+
+            "junk", "NeedsMarkupWork", "NeedsContent", "NeedsExample",
+        ]),
+        "JSON array listing tag suggestions for documents"
+    ),
 )
 
 BROWSERID_VERIFICATION_URL = 'https://verifier.login.persona.org/verify'

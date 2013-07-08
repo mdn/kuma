@@ -167,6 +167,7 @@
 {% block site_js %}
     {{ super() }}
     {{ js('framebuster') }}
+    {% include 'wiki/includes/tag_suggestions.html' %}
 
     {% if document.is_template %}
       {{ js('ace-editor') }}
