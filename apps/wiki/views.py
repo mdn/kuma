@@ -1677,7 +1677,6 @@ def translate(request, document_slug, document_locale, revision_id=None):
 @require_POST
 @login_required
 @process_document_path
-@waffle_flag('page_watch')
 def watch_document(request, document_slug, document_locale):
     """Start watching a document for edits."""
     document = get_object_or_404(
@@ -1689,7 +1688,6 @@ def watch_document(request, document_slug, document_locale):
 @require_POST
 @login_required
 @process_document_path
-@waffle_flag('page_watch')
 def unwatch_document(request, document_slug, document_locale):
     """Stop watching a document for edits."""
     document = get_object_or_404(

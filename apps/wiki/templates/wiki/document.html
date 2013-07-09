@@ -132,9 +132,7 @@
         </div>
         <ul id="page-buttons">
             <li class="page-history"><a href="{{ url('wiki.document_revisions', document.full_path) }}"><i class="icon-book"></i>{{_('History')}}</a></li>
-            {% if request.user.is_authenticated() and waffle.flag('page_watch') %}
-              {{ document_watch(document, request.user) }}
-            {% endif %}
+            {{ document_watch(document, request.user) }}
             {% if document.allows_revision_by(request.user) %}
               {% if fallback_reason %}
                 {% set edit_label = _('Edit English')  %}
