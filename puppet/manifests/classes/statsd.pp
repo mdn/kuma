@@ -70,15 +70,25 @@ class statsd {
         unless => "/usr/bin/sqlite3 /opt/graphite/storage/graphite.db 'select * from auth_user' | /bin/grep -q admin",
         require => Exec['graphite-syncdb']
     }
+    file { '/etc/init.d/carbon-cache':
+        ensure => link,
+        target => '/etc/init/carbon-cache.conf',
+        require => File['/etc/init/carbon-cache.conf']
+    }
     service { 'carbon-cache':
         ensure => running,
         enable => true,
-        require => File['/etc/init/carbon-cache.conf']
+        require => File['/etc/init.d/carbon-cache']
+    }
+    file { '/etc/init.d/statsd':
+        ensure => link,
+        target => '/etc/init/statsd.conf',
+        require => File['/etc/init/statsd.conf']
     }
     service { 'statsd':
         ensure => running,
         enable => true,
-        require => File['/etc/init/statsd.conf']
+        require => File['/etc/init.d/statsd']
     }
         
 }
