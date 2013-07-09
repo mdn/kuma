@@ -50,7 +50,7 @@
     <h1>Search</h1>
     <div class="search-form boxed">
       <form action="" method="get" id="search-form">
-        <input name="q" id="search-q" type="search" value="{{ search_query }}" autofocus />
+        <input name="q" id="search-q" type="search" value="{{ search_query }}" {% if not search_query %}autofocus{% endif %} />
         <button type="submit" id="search-submit">Search!</button>
       </form>
     </div>
@@ -135,6 +135,8 @@
 {% endblock %}
 
 {% block js %}
+  <!-- TODO:  MOVE THIS TO ENTIRE SITE PACKAGE WITH REDESIGN -->
+  <script src="{{ MEDIA_URL }}mousetrap/mousetrap.js"></script>
   <script>
       // new stuff
       (function($) {
@@ -147,9 +149,6 @@
 
         // Populate $searchResults
         updateResults();
-
-        // Apply the keyup listener for search engine movement
-        $(document.body).on('keyup', keyHandler);
 
         // Keep mouseover selection in sync with keyboard selection
         $('.search-results-list')
@@ -164,28 +163,24 @@
             selectItem(e.type == 'mouseenter' ? e.currentTarget : null);
         }
 
-        function keyHandler(e) {
-          // If they're in an input of some kind, ignore
-          if(targetTestRegex.test(e.target.tagName) || e.metaKey || e.ctrlKey || e.altKey) return;
-
-          // Switch for deciding what to do
-          switch(e.keyCode) {
-            case 38: // up
-              var item = getItem();
-              if(item.prev.length) {
-                e.preventDefault();
-                selectItem(item.prev);
-              }
-              break;
-            case 40: // down
-              var item = getItem(true);
-              if(item.next.length) {
-                e.preventDefault();
-                selectItem(item.next);
-              }
-              break;
+        // Down Key
+        Mousetrap.bind('down', function(e) {
+          var item = getItem(true);
+          if(item.next.length) {
+            if(e.preventDefault) e.preventDefault();
+            selectItem(item.next);
           }
-        }
+        });
+
+        // Up Key
+        Mousetrap.bind('up', function(e) {
+          var item = getItem();
+          if(item.prev.length) {
+            if(e.preventDefault) e.preventDefault();
+            selectItem(item.prev);
+          }
+        });
+
 
         // Get the result list at any time
         // Useful because we'll implement ajax search
@@ -278,6 +273,14 @@
         function ajaxComplete() {
           $resultParent.removeClass('searching');
         }
+
+        // Initial action
+        {% if search_query and result_count: %}
+           Mousetrap.trigger('down');
+        {% else %}
+          $searchInput.get(0).focus();
+        {% endif %}
+
       })(jQuery);
   </script>
 {% endblock %}
