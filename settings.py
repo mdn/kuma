@@ -1,4 +1,4 @@
-# Django settings for kitsune project.
+# Django settings for kuma project.
 from datetime import date
 import logging
 import os

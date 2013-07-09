@@ -1,12 +1,12 @@
-=============================
-Running Kitsune with mod_wsgi
-=============================
+==========================
+Running Kuma with mod_wsgi
+==========================
 
 
 Requirements
 ============
 
-* See `the installation docs <installation.rst>`_.
+* See :doc:`the installation docs <installation>`.
 * `Apache HTTP server <http://httpd.apache.org/>`_
 * mod_rewrite
 * mod_headers
@@ -18,11 +18,11 @@ Requirements
 Overview
 ========
 
-Setting up Kitsune to run as a WSGI application is fairly straightforward. You
+Setting up Kuma to run as a WSGI application is fairly straightforward. You
 will need to install the requirements and clone the vendor repo as described in
-`installation.rst <installation.rst>`_.
+the :doc:`installation docs <installation>`.
 
-There are 3 steps once Kitsune is installed:
+There are 3 steps once Kuma is installed:
 
 * Set the document root.
 * Set up aliases.
@@ -47,23 +47,23 @@ In the Apache config (or ``<VirtualHost>``) you will need the following:
 
 ::
 
-    DocumentRoot /path/to/kitsune/webroot/
+    DocumentRoot /path/to/kuma/webroot/
 
-    <Directory "/path/to/kitsune/webroot/">
+    <Directory "/path/to/kuma/webroot/">
         Options +FollowSymLinks
     </Directory>
 
-    Alias /media/ "/path/to/kitsune/media/"
+    Alias /media/ "/path/to/kuma/media/"
     Alias /admin-media/ \
-        "/path/to/kitsune/vendor/src/django/django/contrib/admin/media/"
+        "/path/to/kuma/vendor/src/django/django/contrib/admin/media/"
 
     WSGISocketPrefix /var/run/wsgi
 
-    WSGIDaemonProcess kitsune processes=8 threads=1 \
+    WSGIDaemonProcess kuma processes=8 threads=1 \
         maximum-requests=4000
-    WSGIProcessGroup kitsune
+    WSGIProcessGroup kuma
 
-    WSGIScriptAlias /k "/path/to/kitsune/wsgi/kitsune.wsgi"
+    WSGIScriptAlias /k "/path/to/kuma/wsgi/kuma.wsgi"
 
 ``WSGISocketPrefix``:
     May or may not be necessary. It was for me.
@@ -74,11 +74,11 @@ In the Apache config (or ``<VirtualHost>``) you will need the following:
     between 4000 and 10000.
 
 ``WSGIScriptAlias``:
-    Will make Kitsune accessible from ``http://domain/k``, and we use rewrites
+    Will make Kuma accessible from ``http://domain/k``, and we use rewrites
     in ``webroot/.htaccess`` to hide the ``/k``. This will change soon, and the
     ``.htaccess`` file won't be necessary.
 
-The ``Alias`` directives let Kitsune access its CSS, JS, and images through
+The ``Alias`` directives let Kuma access its CSS, JS, and images through
 Apache, reducing the load on Django.
 
 
@@ -146,9 +146,10 @@ to find stack traces):
 Apache Error Page
 -----------------
 
-So you've got a really bad error and you aren't even seeing the Kitsune error
+So you've got a really bad error and you aren't even seeing the Kuma error
 page! This is usually caused by an uncaught exception during the WSGI
-application start-up. Our `WSGI script <../wsgi/kitsune.wsgi>`_ tries to run
+application start-up. Our `WSGI script
+<https://github.com/mozilla/kuma/blob/master/wsgi/kuma.wsgi>`_ tries to run
 all the initial validation that the dev server runs, to catch these errors
 early.
 
@@ -176,17 +177,17 @@ Error message. You can still get stack traces, though, by setting the
         ('me', 'my@email.address'),
     )
 
-Django will email you the stack trace. Provided you've set up `email
-<email.rst>`_.
+Django will email you the stack trace. Provided you've set up :doc:`email
+<email>`.
 
 
 Reloading WSGI
 ==============
 
-WSGI keeps Python and Kitsune running in an isolated process. That means code
+WSGI keeps Python and Kuma running in an isolated process. That means code
 changes aren't automatically reflected on the server. In most default
 configurations of ``mod_wsgi``, you can simply do this::
 
-    touch wsgi/kitsune.wsgi
+    touch wsgi/kuma.wsgi
 
 That will cause the WSGI process to reload.
