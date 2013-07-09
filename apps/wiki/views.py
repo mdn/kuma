@@ -860,6 +860,7 @@ def new_document(request):
                              'parent_id': initial_parent_id,
                              'document_form': doc_form,
                              'revision_form': rev_form,
+                             'WIKI_DOCUMENT_TAG_SUGGESTIONS': constance.config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
                              'initial_tags': initial_tags,
                              'allow_add_attachment': allow_add_attachment,
                              'attachment_form': AttachmentRevisionForm(),
@@ -1128,6 +1129,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                          'allow_add_attachment': allow_add_attachment,
                          'attachment_form': AttachmentRevisionForm(),
                          'attachment_data': attachments,
+                         'WIKI_DOCUMENT_TAG_SUGGESTIONS': constance.config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
                          'attachment_data_json': json.dumps(attachments)})
 
 
@@ -1670,6 +1672,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
                          'attachment_form': AttachmentRevisionForm(),
                          'attachment_data': attachments,
                          'attachment_data_json': json.dumps(attachments),
+                         'WIKI_DOCUMENT_TAG_SUGGESTIONS': constance.config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
                          'specific_slug': parent_split['specific'],
                          'parent_slug': parent_split['parent']})
 

@@ -157,6 +157,7 @@
 {% endblock %}
 
 {% block js %}
+  {% include 'wiki/includes/tag_suggestions.html' %}
   <script src="{{ MEDIA_URL }}ckeditor/ckeditor.js"></script>
   <script src="{{ MEDIA_URL }}ckeditor/adapters/jquery.js"></script>
   <script src="{{ MEDIA_URL }}js/wiki_ckeditor_translate.js"></script>
