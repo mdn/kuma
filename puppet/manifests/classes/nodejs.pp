@@ -1,4 +1,4 @@
-# Get node.js and npm installed under CentOS 
+# Get node.js and npm installed under CentOS
 class nodejs {
     package {
         [ "nodejs", "nodejs-dev", "npm" ]:
@@ -11,7 +11,6 @@ class nodejs {
     }
     exec { 'npm-install':
         cwd => "/vagrant/kumascript",
-        user => "vagrant",
         command => "/usr/bin/npm install",
         creates => "/vagrant/kumascript/node_modules/fibers",
         require => [
