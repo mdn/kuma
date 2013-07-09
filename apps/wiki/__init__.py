@@ -8,7 +8,6 @@ KUMASCRIPT_TIMEOUT_ERROR = [
 ]
 SLUG_CLEANSING_REGEX = '^\/?(([A-z-]+)?\/?docs\/)?'
 
-
 class ReadOnlyException(Exception):
     """
     A special exception to signal the wiki is read-only

@@ -69,6 +69,7 @@
 
 {% block site_js %}
     {{ super() }}
+    {% include 'wiki/includes/tag_suggestions.html' %}
 
     {% if is_template %}
       {{ js('ace-editor') }}

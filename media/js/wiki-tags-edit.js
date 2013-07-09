@@ -33,7 +33,7 @@
 
     // Turn the text input into the widget
     var j = idTagsField.tagit({
-      availableTags: window.INTEREST_SUGGESTIONS || [],
+      availableTags: mdn.wiki.tagSuggestions || [],
       singleField: true,
       allowSpaces: true,
       singleFieldNode: idTagsField,
