@@ -11,7 +11,6 @@ class nodejs {
     }
     exec { 'npm-install':
         cwd => "/vagrant/kumascript",
-        user => "vagrant",
         command => "/usr/bin/npm install",
         creates => "/vagrant/kumascript/node_modules/fibers",
         require => [

@@ -2,7 +2,6 @@
 class statsd {
     exec { 'statsd-install':
         cwd => '/home/vagrant',
-        user => 'vagrant',
         # TODO: This revision works, but try to see what statsd runs in mozilla infra
         command => '/usr/bin/npm install git://github.com/etsy/statsd.git#922e9e58c57ae4e61268cbd6925c112f0e4e468c',
         creates => '/home/vagrant/node_modules/statsd',
