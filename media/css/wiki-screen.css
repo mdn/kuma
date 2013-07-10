@@ -216,7 +216,8 @@ div.note p:last-child, div.tip p:last-child, div.warning.review-technical p:last
 .title h1.talk span { font-size: .538em; font-weight: normal; color: #6d6d67; }
 .title .pageback { font-size: .857em; margin-top: -1.6em; float: left; width: 75%; }
 .title .page-moved { float: left; width: 60%; clear: both; margin: -1.5em 0 1em; font-size: .785em; }
-.title .redirected-from { padding: 5px 0 0 18px; font-size: 0.785em; }
+.title .redirected-from, .title .offline-notice { padding: 5px 0 0 18px; font-size: 0.785em; }
+.title .offline-notice a { color: #888; }
 
 .template { display: none; }
 
@@ -434,6 +435,14 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 .translate-display pre {
   white-space: normal;
 }
+
+/* Wiki offline notice - jQuery UI dialog overrides included */
+#offline-dialog-content { display: none; padding-bottom: 20px; }
+.offline-dialog-mac, .offline-dialog-others { display:inline-block; width:200px; height:200px; border: 1px solid #ccc; padding: 20px; position: relative; vertical-align: text-top; }
+.offline-dialog-mac:before, .offline-dialog-others:after { content: attr(data-title); font-weight: bold; position: absolute; top: -10px; left: 10px; background: #eee; padding: 0 10px; }
+.offline-dialog-mac:hover, .offline-dialog-others:hover { text-decoration: none; background: #ddd; color: #333; border-color: #aaa; }
+.offline-dialog-others  { margin-left: 20px; text-align: center; }
+
 
 /* The .no-details styles will get applied only if JavaScript is enabled and <details> is not natively supported. */
 /* Add focus styles (for keyboard accessibility) */
