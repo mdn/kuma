@@ -31,9 +31,14 @@ class SECTION_WEB:
     twitter = 'twitter-web'
     updates = 'updates-web'
 
+class SECTION_HACKS:
+    short = 'hacks'
+    pretty = _(u'Moz Hacks')
+    twitter = 'twitter-moz-hacks'
+    updates = 'updates-moz-hacks'
 
-SECTION_USAGE = _sections = (SECTION_WEB, SECTION_MOBILE, SECTION_ADDONS,
-                             SECTION_APPS, SECTION_MOZILLA)
+
+SECTION_USAGE = _sections = (SECTION_HACKS,)
 
 SECTIONS = dict((section.short, section)
                 for section in _sections)

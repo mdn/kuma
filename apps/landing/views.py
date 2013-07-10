@@ -13,7 +13,7 @@ from waffle.decorators import waffle_switch
 from waffle.models import Flag
 
 from devmo import (SECTION_USAGE, SECTION_ADDONS, SECTION_APPS, SECTION_MOBILE,
-                   SECTION_WEB, SECTION_MOZILLA)
+                   SECTION_WEB, SECTION_MOZILLA, SECTION_HACKS)
 from feeder.models import Bundle, Feed
 from demos.models import Submission
 from landing.forms import SubscriptionForm
@@ -25,17 +25,12 @@ def home(request):
                 .exclude(hidden=True)\
                 .order_by('-modified').all()[:1]
 
-    tweets = []
-    for section in SECTION_USAGE:
-        tweets += Bundle.objects.recent_entries(section.twitter)[:2]
-    tweets.sort(key=lambda t: t.last_published, reverse=True)
-
     updates = []
     for s in SECTION_USAGE:
-        updates += Bundle.objects.recent_entries(s.updates)[:1]
+        updates += Bundle.objects.recent_entries(s.updates)[:5]
 
     return render(request, 'landing/homepage.html',
-                  {'demos': demos, 'updates': updates, 'tweets': tweets,
+                  {'demos': demos, 'updates': updates,
                     'current_challenge_tag_name': 
                     str(constance.config.DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG).strip()})
 
@@ -66,6 +61,11 @@ def search(request):
 def mobile(request):
     """Mobile landing page."""
     return common_landing(request, section=SECTION_MOBILE)
+
+
+def hacks(request):
+    """Hacks landing page."""
+    return common_landing(request, section=SECTION_HACKS)
 
 
 def web(request):
