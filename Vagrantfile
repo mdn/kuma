@@ -15,37 +15,38 @@ end
 CONF = _config
 MOUNT_POINT = "/vagrant"
 
-Vagrant::Config.run do |config|
-
+Vagrant.configure("2") do |config|
+  
     config.vm.box = CONF['box']
     config.vm.box_url = CONF['box_url']
+    config.vm.network :private_network, ip: CONF['ip_address']
     config.package.name = CONF['package_name']
-
+  
     # nfs needs to be explicitly enabled to run.
     if CONF['nfs'] == false or RUBY_PLATFORM =~ /mswin(32|64)/
-        config.vm.share_folder("v-root", MOUNT_POINT, ".")
+        config.vm.synced_folder ".", MOUNT_POINT
     else
-        config.vm.share_folder("v-root", MOUNT_POINT, ".", :nfs => true)
+        config.vm.synced_folder ".", MOUNT_POINT, :nfs => true
     end
-
-    # This thing can be a little hungry for memory
-    config.vm.customize ["modifyvm", :id, "--memory", CONF['memory_size']]
-
-    # uncomment to enable VM GUI console, mainly for troubleshooting
-    if CONF['gui'] == true
-        config.vm.boot_mode = :gui
+  
+    config.vm.provider :virtualbox do |vb|
+        vb.customize ["modifyvm", :id, "--memory", CONF['memory_size']]
+        vb.customize ['modifyvm', :id, '--ostype', 'Ubuntu_64']
+        # This thing can be a little hungry for memory
+        # uncomment to enable VM GUI console, mainly for troubleshooting
+        if CONF['gui'] == true
+            vb.boot_mode = :gui
+        end
     end
-
-    config.vm.network :hostonly, CONF['ip_address']
-
+  
     # Increase vagrant's patience during hang-y CentOS bootup
     # see: https://github.com/jedi4ever/veewee/issues/14
     config.ssh.max_tries = 50
-    config.ssh.timeout   = 300
-
+    config.ssh.timeout = 300
+  
     config.vm.provision :puppet do |puppet|
         puppet.manifests_path = "puppet/manifests"
         puppet.manifest_file = "dev-vagrant.pp"
     end
-
+  
 end
