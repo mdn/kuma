@@ -31,3 +31,4 @@ kumascript.log
 kumascript_settings_local.json
 lib/product_details_json
 .DS_Store
+node_modules/
