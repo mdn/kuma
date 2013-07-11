@@ -510,7 +510,7 @@ DOMAIN_METHODS = {
     ],
     'javascript': [
         # We can't say **.js because that would dive into any libraries.
-        ('media/ckeditor/plugins/mdn-link/**.js', 'javascript')
+        ('media/js/libs/ckeditor/plugins/mdn-link/**.js', 'javascript')
     ],
 }
 
@@ -533,7 +533,7 @@ MINIFY_BUNDLES = {
             'css/fonts.css',
             'css/mdn-screen.css',
             'css/modals.css',
-            'css/mdn-video-player.css',
+            'css/video-player.css',
             'css/mdn-calendar.css',
             'css/redesign-transition.css',
         ),
@@ -542,12 +542,6 @@ MINIFY_BUNDLES = {
         ),
         'devderby': (
             'css/devderby.css',
-        ),
-        'common': (
-            'css/reset.css',
-            'global/headerfooter.css',
-            'css/kbox.css',
-            'css/main.css',
         ),
         # TODO: remove dependency on jquery ui CSS and use our own
         'jqueryui/jqueryui': (
@@ -582,24 +576,21 @@ MINIFY_BUNDLES = {
         'users': (
             'css/users.css',
         ),
-        'monitor': (
-            'css/monitor.css',
-        ),
         'tagit': (
             'css/jquery.tagit.css',
         ),
         'syntax-prism': (
-            'prism/prism.css',
-            'prism/plugins/line-highlight/prism-line-highlight.css',
-            'prism/plugins/ie8/prism-ie8.css',
+            'js/libs/prism/prism.css',
+            'js/libs/prism/plugins/line-highlight/prism-line-highlight.css',
+            'js/libs/prism/plugins/ie8/prism-ie8.css',
             'prism-mdn/plugins/line-numbering/prism-line-numbering.css',
             'prism-mdn/components/prism-json.css',
         ),
     },
     'js': {
         'mdn': (
-            'js/jquery-1.9.1.js',
-            'js/jquery-upgrade-bridge.js',
+            'js/libs/jquery-1.9.1.js',
+            'js/jquery-upgrade-compat.js',
             'js/mdn/init.js',
             'js/mdn/gsearch.js',
 
@@ -620,7 +611,6 @@ MINIFY_BUNDLES = {
         ),
         'events': (
             'js/libs/jquery.gmap-1.1.0.js',
-            'js/libs/jquery.tablesorter.min.js',
             'js/mdn/calendar.js',
         ),
         'demostudio': (
@@ -632,10 +622,6 @@ MINIFY_BUNDLES = {
         'demostudio_devderby_landing': (
             'js/mdn/demos-devderby-landing.js',
         ),
-        'common': (
-            'js/libs/jquery.min.js',
-            'js/libs/modernizr-1.6.min.js',
-        ),
         'libs/jqueryui': (
             'js/libs/jquery-ui-1.8.14.custom.min.js',
         ),
@@ -646,12 +632,11 @@ MINIFY_BUNDLES = {
             'js/search.js',
         ),
         'wiki': (
-            'js/libs/django/prepopulate.js',
             'js/mdn/jquery.simplemodal.1.4.1.min.js',
-            'js/wiki.js',
-            'js/main.js',
             'js/libs/jqueryui.min.js',
             'js/moz-jquery-plugins.js',
+            'js/main.js',
+            'js/wiki.js',
             'js/libs/tag-it.js',
             'js/wiki-tags-edit.js',
         ),
@@ -662,7 +647,7 @@ MINIFY_BUNDLES = {
             'js/libs/DataTables-1.9.4/extras/Scroller/media/js/dataTables.scroller.js',
         ),
         'users': (
-            'js/users.js',
+            'js/mdn/empty.js',
         ),
         'mdn_home': (
             'js/mdn/empty.js',
@@ -676,10 +661,10 @@ MINIFY_BUNDLES = {
             'js/syntax-prism.js',
         ),
         'ace-editor': (
-            'ace/ace.js',
-            'ace/mode-javascript.js',
-            'ace/theme-dreamweaver.js',
-            'ace/worker-javascript.js',
+            'js/libs/ace/ace.js',
+            'js/libs/ace/mode-javascript.js',
+            'js/libs/ace/theme-dreamweaver.js',
+            'js/libs/ace/worker-javascript.js',
         ),
     },
 }

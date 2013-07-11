@@ -3,20 +3,20 @@
   // Callback functions after CKE is ready
   var setup_ckeditor = function() {
 
-    var $appBoxes = $(".approved .boxed"),
-      $head = $("#article-head"),
-      $transdesc = $("#trans-description"),
-      $transcont = $("#content-fields"),
-      $tools = $("div.cke_toolbox"),
-      $wikiArt = $("#cke_wikiArticle"),
-      contentTop = $("#content").offset(),
+    var $appBoxes = $('.approved .boxed'),
+      $head = $('#article-head'),
+      $transdesc = $('#trans-description'),
+      $transcont = $('#content-fields'),
+      $tools = $('div.cke_toolbox'),
+      $wikiArt = $('#cke_wikiArticle'),
+      contentTop = $('#content').offset(),
       transTop = $transcont.offset(),
       headHeight = $head.height(),
       toolHeight = $tools.height(),
-      contentBottom = $(".page-meta").first().offset().top - 300,
+      contentBottom = $('.page-meta').first().offset().top - 300,
       fixed = false;
 
-    $("#content-fields .approved .boxed").css({
+    $('#content-fields .approved .boxed').css({
       paddingTop: toolHeight + 50
     });
 
@@ -26,21 +26,21 @@
         if (!fixed) {
           fixed = true;
           $head.css({
-            position: "fixed",
+            position: 'fixed',
             top: 19,
-            width: "95%"
+            width: '95%'
           });
           $tools.css({
-            position: "fixed",
+            position: 'fixed',
             top: headHeight + 28,
-            width: $("#cke_id_content").width() - 11
+            width: $('#cke_id_content').width() - 11
           });
-          $("#cke_id_content").css({
+          $('#cke_id_content').css({
             marginTop: headHeight
           });
-          $(".approved header").hide();
-          $(".localized header").hide();
-          $("#content-fields .approved .boxed").css({
+          $('.approved header').hide();
+          $('.localized header').hide();
+          $('#content-fields .approved .boxed').css({
             paddingTop: toolHeight - 40
           });
         }
@@ -48,28 +48,28 @@
         if (fixed) {
           fixed = false;
           $head.css({
-            position: "relative",
-            top: "auto",
-            width: "auto"
+            position: 'relative',
+            top: 'auto',
+            width: 'auto'
           });
           $tools.css({
-            position: "relative",
-            top: "auto",
-            width: "auto"
+            position: 'relative',
+            top: 'auto',
+            width: 'auto'
           });
-          $("#cke_id_content").css({
+          $('#cke_id_content').css({
             marginTop: 0
           });
-          $(".approved header").show();
-          $(".localized header").show();
-          $("#content-fields .approved .boxed").css({
+          $('.approved header').show();
+          $('.localized header').show();
+          $('#content-fields .approved .boxed').css({
             paddingTop: toolHeight + 50
           });
         }
       }
 
       // remove the id_content required attribute
-      $("#id_content").removeAttr("required");
+      $('#id_content').removeAttr('required');
 
     });
 
@@ -83,10 +83,10 @@
 
   };
 
-  $("#id_content").each(function() {
-    if (!$("body").is(".edit.is-template")) {
+  $('#id_content').each(function() {
+    if (!$('body').is('.edit.is-template')) {
       $(this).ckeditor(setup_ckeditor, {
-        customConfig: "/docs/ckeditor_config.js"
+        customConfig: '/docs/ckeditor_config.js'
       });
     }
   });
