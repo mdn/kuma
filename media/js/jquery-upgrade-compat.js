@@ -13,7 +13,7 @@ jQuery.uaMatch = function( ua ) {
 		[];
 
 	return { browser: match[1] || "", version: match[2] || "0" };
-}
+};
 jQuery.browser = {};
 
 (function() {
