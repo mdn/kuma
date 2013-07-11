@@ -246,14 +246,14 @@
           <ul class="page-anchors">
             <li class="anchor-tags">
               {% if tags|length %}
-                <i class="icon-tags"></i><a href="#page-tags">{{ _('Tags') }}</a>
+                <i class="icon-tags"></i><a href="#document-tags">{{ _('Tags') }}</a>
               {% else %}
                 <i class="icon-tags off"></i><span title="{{ _('This document has no tags') }}">{{ _('Tags') }}</span>
               {% endif %}
             </li>
             <li class="anchor-files">
               {% if attachments|length %}
-                <i class="icon-paper-clip"></i><a href="#page-file">Files</a>
+                <i class="icon-paper-clip"></i><a href="#page-attachments">Files</a>
               {% else %}
                 <i class="icon-paper-clip off"></i><span title="{{ _('This document has no attachments') }}">{{ _('Files') }}</span>
               {% endif %}
@@ -280,7 +280,7 @@
     
     <section class="page-meta">
       {% if tags | length %}
-      <section class="page-tags">
+      <section class="page-tags" id="document-tags">
         <h2><i class="icon-tags"></i>{{ _('Tags') }} ({{ tags | length}})</h2>
         <div id="deki-page-tags">
           <ul class="tags tagit ui-widget ui-widget-content">
