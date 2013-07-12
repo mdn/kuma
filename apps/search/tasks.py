@@ -1,8 +1,9 @@
 from django.conf import settings
-from django.db.models.signals import post_save, pre_delete
+from django.db.models.signals import pre_delete
 
 from celery.task import task
 
+from wiki.signals import render_done
 
 @task
 def index_item_task(mapping_type, item_id, **kwargs):
@@ -22,7 +23,7 @@ def _live_index_handler(sender, **kwargs):
 
     instance = kwargs['instance']
 
-    if kwargs['signal'] == post_save:
+    if kwargs['signal'] == render_done:
         index_item_task.delay(instance.get_mapping_type(), instance.id)
 
     if kwargs['signal'] == pre_delete:
@@ -32,7 +33,7 @@ def _live_index_handler(sender, **kwargs):
 def register_live_index(model_cls):
     """Register a model and index for auto indexing."""
     uid = str(model_cls) + 'live_indexing'
-    post_save.connect(_live_index_handler, model_cls, dispatch_uid=uid)
+    render_done.connect(_live_index_handler, model_cls, dispatch_uid=uid)
     pre_delete.connect(_live_index_handler, model_cls, dispatch_uid=uid)
     # Enable this to be used as decorator.
     return model_cls

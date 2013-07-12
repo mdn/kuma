@@ -34,3 +34,13 @@ class DocumentTypeTests(ElasticTestCase):
                                         .highlight('content'))
         for doc in results:
             eq_('en-US', doc.locale)
+
+    def test_get_excerpt_uses_summary(self):
+        self.refresh()
+        results = (DocumentType.search().query(content__match='audio')
+                                        .highlight('content'))
+        ok_(results.count() > 0)
+        for doc in results:
+            excerpt = doc.get_excerpt()
+            ok_('the word for tough things' in excerpt)
+            ok_('extra content' not in excerpt)
