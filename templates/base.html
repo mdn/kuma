@@ -2,7 +2,9 @@
 <!DOCTYPE html>
 <html lang="{{ LANG }}" dir="{{ DIR }}" id="developer-mozilla-org" xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:og="http://ogp.me/ns#">
 <head>
-  {{ optimizely_script() }}
+  {% if not is_sphinx %}
+    {{ optimizely_script() }}
+  {% endif %}
   <title>{% block title %}{{ _('Mozilla Developer Network') }}{% endblock %}</title>
   
   <meta charset="utf-8">
@@ -31,7 +33,7 @@
   <!--[if IE]>
   <meta http-equiv="imagetoolbar" content="no">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-  <script src="{{ MEDIA_URL }}js/libs/html5.js"></script>
+  <script src="{{ settings.SITE_URL }}/{{ MEDIA_URL }}js/libs/html5.js"></script>
   <![endif]-->
 
   <script type="text/javascript">
@@ -49,7 +51,10 @@
   </script>
 
   {% block extrahead %}{% endblock %}
-  {% include "includes/google_analytics.html" %}
+
+  {% if not is_sphinx %}
+    {% include "includes/google_analytics.html" %}
+  {% endif %}
 </head>
 
 <body id="{% block pageid %}{% endblock %}" class="html-{{ DIR }} {% block bodyclass %}{% endblock %}" role="document">
@@ -64,7 +69,9 @@
     <div class="wrap">
       <ul id="nav-access">
         <li><a href="#language">{{ _('Select language') }}</a></li>
-        <li><a href="#q">{{ _('Skip to search') }}</a></li>
+        {% if not is_sphinx %}
+          <li><a href="#q">{{ _('Skip to search') }}</a></li>
+        {% endif %}
         <li><a href="#content">{{ _('Skip to main content') }}</a></li>
       </ul>
     
@@ -129,7 +136,8 @@
         </nav>
 
       {% endblock %}
-    
+      
+      {% if not is_sphinx %}
       {% include "includes/login.html" %}
       
       <form id="site-search" method="get" action="http://www.google.com/search"
@@ -143,6 +151,7 @@
         <div id="site-search-gg"></div>
         {% endif %}
       </form>
+      {% endif %}
 
       <a href="//www.mozilla.org/" id="tabzilla">mozilla</a>
     </div>
@@ -175,9 +184,11 @@
       &bull; <a href="//github.com/mozilla/kuma">{{ _('Contribute to the code') }}</a>
       &bull; <a href="//www.mozilla.org/en-US/privacy">{{ _('Privacy Policy') }}</a>
     </div>
-    {% block lang_switcher %}
-        {% include "includes/lang_switcher.html" %}
-    {% endblock %}
+    {% if not is_sphinx %}
+      {% block lang_switcher %}
+          {% include "includes/lang_switcher.html" %}
+      {% endblock %}
+    {% endif %}
 </div>
 </footer>
 
