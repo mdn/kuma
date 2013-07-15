@@ -126,15 +126,15 @@
             <h1 class="page-title">{{ document.title }}</h1>
             {% if waffle.flag('offline_notice') %}
             <div class="offline-notice">
-              <a href="javascript:;" id="offline-notice-link"><i class="icon-book"></i>{{ _('Read Content Offline') }}</a>
+              <a href="javascript:;" id="offline-notice-link"><i class="icon-book"></i>{{ _('Read content offline') }}</a>
             </div>
 
             <div id="offline-dialog-content" target="_blank" title="{{ _('Read MDN Offline') }}">
-              <p>{{ _('Did you know that you can read content offline by using one of these tools?  If you would like to read offline MDN content in another format, let us know by commenting on <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=665750">Bug 665750</a>.') }}</p>
+              <p>{{ _('Did you know that you can read content offline by using one of these tools?  If you would like to read offline MDN content in another format, let us know by commenting on <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=665750" data-title="Bug 665750">Bug 665750</a>.') }}</p>
               <a href="https://itunes.apple.com/us/app/dash-docs-snippets/id458034879?mt=12" class="offline-dialog-mac" data-title="Dash App">
                 <img src="{{ request.build_absolute_uri('/media/img/dash-app.png') }}" alt="Dash App" />
               </a>
-              <a href="http://dochub.io" target="_blank" class="offline-dialog-others" data-title="DocHub">
+              <a href="https://github.com/rgarcia/dochub#runnning-locally" target="_blank" class="offline-dialog-others" data-title="DocHub">
                 <i class="icon-book" style="font-size: 160px;"></i>
               </a>
             </div>
@@ -398,12 +398,13 @@
             } 
           });
           // Record opening of the menu
-          ga.push(['_trackEvent', 'Offline Content', 'Click', 'Offline content link', '1']);
+          ga.push(['_trackEvent', 'Offline Content Dialog - Open', 'Click', 'Offline content link', '1']);
         });
 
-        $('#offline-dialog-content').on('click', 'a', function(e) {
+        $('#offline-dialog-content').on('click', 'a', function(e, c) {
           // Record if they go to any of the links (bug link or either option)
-          ga.push(['_trackEvent', 'Offline Content Dialog Click', 'Click', e.target.innerHTML, e.target.href]);
+          var title = $(e.currentTarget).attr('data-title');
+          ga.push(['_trackEvent', 'Offline Content Dialog - ' + title, 'Click', title, '1']);
         });
       })(jQuery, window._gaq || []);
     </script>

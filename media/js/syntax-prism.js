@@ -44,11 +44,11 @@
     if('forEach' in Array.prototype) {
       // Capable browsers get syntax highlighting because
       // querySelectorAll isn't easily patchable
-      script.src = window.MEDIA_URL + 'prism/plugins/line-highlight/prism-line-highlight.js';
+      script.src = mdn.mediaPath + 'js/libs/prism/plugins/line-highlight/prism-line-highlight.js';
     }
     else {
       patchIE8ForPrism();
-      script.src = window.MEDIA_URL + 'prism/plugins/ie8/prism-ie8.js';
+      script.src = mdn.mediaPath + 'js/libs/prism/plugins/ie8/prism-ie8.js';
     }
     script.onload = function() {
       // Highlight elements now that they've been treated

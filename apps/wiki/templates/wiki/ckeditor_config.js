@@ -49,8 +49,8 @@ mdn.ckeditor.redirectPattern = '{{ redirect_pattern|safe }}';
     };
 
     // <time> elements should be inline
-    delete CKEDITOR.dtd.$block['time'];
     CKEDITOR.dtd.$inline['time'] = 1;
+    delete CKEDITOR.dtd.$block['time'];
 
     // Tell CKEditor that <i> elements are block so empty <i>'s aren't removed
     // This is essentially for Font-Awesome
@@ -122,10 +122,10 @@ CKEDITOR.editorConfig = function(config) {
     var inlineHeight = CKEDITOR.inlineHeight;
     config.autoGrow_minHeight = (!inlineHeight || inlineHeight < 150 ? 500 : inlineHeight);
     config.contentsCss = [
-        '/media/css/wiki-screen.css', 
-        '/media/css/wiki-edcontent.css', 
-        '/en-US/docs/Template:CustomCSS?raw=1',
-        '/media/font-awesome/css/font-awesome.min.css'
+        mdn.mediaPath + 'css/wiki-screen.css', 
+        mdn.mediaPath + 'css/wiki-edcontent.css', 
+        mdn.mediaPath + 'css/libs/font-awesome/css/font-awesome.min.css',
+        '/en-US/docs/Template:CustomCSS?raw=1'
     ];
     config.toolbarCanCollapse = false;
     config.resize_enabled = false;
