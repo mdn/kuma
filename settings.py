@@ -550,6 +550,10 @@ MINIFY_BUNDLES = {
         ),
         'search': (
             'css/search.css',
+            'css/modals.css',
+            'css/jqueryui/jqueryui.css',
+            'css/jqueryui/jquery-ui-1.8.14.custom.css',
+            'css/jqueryui/moz-jquery-plugins.css',
         ),
         'wiki': (
             'css/wiki.css',
@@ -557,7 +561,7 @@ MINIFY_BUNDLES = {
             'css/wiki-screen.css',
             'css/jqueryui/jqueryui.css',
             'css/jqueryui/jquery-ui-1.8.14.custom.css',
-            'css/jqueryui/moz-jquery-plugins.css'
+            'css/jqueryui/moz-jquery-plugins.css',
         ),
         'wiki-print': (
             'css/wiki-print.css',
@@ -630,6 +634,8 @@ MINIFY_BUNDLES = {
         ),
         'search': (
             'js/search.js',
+            'js/mdn/jquery.simplemodal.1.4.1.min.js',
+            'js/libs/jqueryui.min.js',
         ),
         'wiki': (
             'js/mdn/jquery.simplemodal.1.4.1.min.js',
