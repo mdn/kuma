@@ -1325,7 +1325,12 @@ def autosuggest_documents(request):
     locale = request.GET.get('locale', False)
     current_locale = request.GET.get('current_locale', False)
     exclude_current_locale = request.GET.get('exclude_current_locale', False)
-
+    
+    if not partial_title:
+        # Only handle actual autosuggest requests, not requests for a
+        # memory-busting list of all documents.
+        return HttpResponseBadRequest(_lazy('Autosuggest requires a partial title. For a full document index, see the main page.'))
+        
     # Retrieve all documents that aren't redirects or templates
     docs = (Document.objects.
         extra(select={'length': 'Length(slug)'}).
