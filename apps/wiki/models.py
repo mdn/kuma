@@ -1818,7 +1818,8 @@ class Revision(models.Model):
             # TODO(erik): This error message ignores non-translations.
             raise ProgrammingError('Revision.based_on must be None or refer '
                                    'to a revision of the default-'
-                                   'language document.')
+                                   'language document. It was %s' %
+                                   self.based_on)
 
         if not self.title:
             self.title = self.document.title

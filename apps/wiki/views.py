@@ -1659,17 +1659,19 @@ def translate(request, document_slug, document_locale, revision_id=None):
                 rev_form = RevisionForm(post_data)
                 rev_form.instance.document = doc  # for rev_form.clean()
 
-                parent_id = request.POST.get('parent_id', '')
-
-                # Attempt to set a parent
-                if parent_id:
-                    try:
-                        parent_doc = get_object_or_404(Document, id=parent_id)
-                        doc.parent = parent_doc
-                    except Document.DoesNotExist:
-                        pass
-
                 if rev_form.is_valid():
+                    parent_id = request.POST.get('parent_id', '')
+
+                    # Attempt to set a parent
+                    if parent_id:
+                        try:
+                            parent_doc = get_object_or_404(Document, id=parent_id)
+                            rev_form.instance.document.parent = parent_doc
+                            rev_form.instance.based_on = doc.current_revision
+                            doc.parent = parent_doc
+                        except Document.DoesNotExist:
+                            pass
+
                     _save_rev_and_notify(rev_form, request.user, doc)
                     url = reverse('wiki.document', args=[doc.full_path],
                                   locale=doc.locale)

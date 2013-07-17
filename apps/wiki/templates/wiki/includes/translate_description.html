@@ -6,21 +6,6 @@
         <summary>{{ _('Translate Description') }}</summary>
         {{ errorlist(desc_form) }}
             <ul class="description">
-              {% if revision_form %}
-              <li class="metadata-choose-parent">
-                <dl class="approved">
-                  <dt>{{_('Find the translation source with the lookup below and then click "Save Changes.')}}</dt>
-                  <dd><label>{{_('Lookup:')}}</label>
-                    <input type="text" id="parent_text" />
-                    <input type="hidden" name="parent_id" id="parent_id" value="{{ parent.id }}" />
-                  </dd>
-                </dl>
-                <dl class="localized">
-                  <dt>&nbsp;</dt>
-                  <dd>&nbsp;</dd>
-                </dl>
-              </li>
-              {% endif %}
               <li>
                 <dl class="approved">
                   <dt>{{ _('Title:') }}</dt>
@@ -65,6 +50,21 @@
                     <dd>{{ revision_form.toc_depth | safe }}</dd>
                   </dl>
                 </li>
+              {% endif %}
+              {% if revision_form %}
+              <li class="metadata-choose-parent">
+                <dl class="approved">
+                  <dt>&nbsp;</dt>
+                  <dd>&nbsp;</dd>
+                </dl>
+                <dl class="localized">
+                  <dt><label>{{_('Lookup:')}}</label>
+                    <input type="text" id="parent_text" />
+                    <input type="hidden" name="parent_id" id="parent_id" value="{{ parent.id }}" />
+                  </dt>
+                  <dd>{{_('Find the translation source with the lookup above and then click "Save Changes.')}}</dd>
+                </dl>
+              </li>
               {% endif %}
             </ul>
       </details>
