@@ -2722,6 +2722,11 @@ class MindTouchRedirectTests(TestCaseBase):
 class AutosuggestDocumentsTests(TestCaseBase):
     """ Test the we're properly filtering out the Redirects from the document list """
 
+    def test_autosuggest_no_term(self):
+        url = reverse('wiki.autosuggest_documents', locale=settings.WIKI_DEFAULT_LANGUAGE)
+        resp = self.client.get(url)
+        eq_(400, resp.status_code)
+
     def test_document_redirects(self):
 
         # All contain "e", so that will be the search term
