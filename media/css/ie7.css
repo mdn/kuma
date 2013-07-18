@@ -4,33 +4,49 @@ Created by Craig Cook - focalcurve.com
         on 27 June, 2010
 -----------------------------------------------------------------------------*/
 
-.wrap, #nav, .type, #sections, #footbar, .folder.visible, #gallery-sort, #gallery-foot, #page-head, .gallery { zoom: 1; } /* I can hasLayout */
-#nav { margin-bottom: -3px; }
-#nav-main li, #nav-extra li { display: inline; }
+.wrap, #masthead, #nav, .type, #sections, #footbar, .folder.visible, .gallery-head, .gallery-foot, #page-head, .gallery { zoom: 1; } /* I can hasLayout */
 .module .gallery li { display: inline; }
+#masthead .wrap { z-index: 999; }
+#nav li { display: inline; }
+#nav-sub { left: -10px; top: -2px; }
 #content-sub .heat-graph a b { margin-top: -1.25em; }
 .entry-meta cite { font-style: normal; }
 #content #glossary ul li { width: 90%; display: list-item; margin: 0 10px .5em 0; background: transparent url("../img/bullet-tiny.png") 0 .5em no-repeat; padding: 0 0 0 12px; border: 0; }
-#sections { padding: 0 1.5%; margin: 0 -1.5%; }
-#sections .mdn-section { width: 16.25%; }
-#slideshow.js .slide-desc { background-color: #444; }
-#other-sections .section:first-child { border-left: 1px; }
 ul.sortable .remove { font-family: sans-serif; margin-top: -1.25em; }
 .replaced input { filter:alpha(opacity=100); }
 .replaced .replacement { display: none; }
 #content .submission .aside { position: relative; right: -30px; }
-.nav-slide a { background-color: #000; }
-#featured-demos .nav-slide a { background-color: #000; }
-#masthead.compact { position: relative; z-index: 99; }
-.compact #nav .menu:hover .sub-menu, .compact #nav .hover .sub-menu, .compact #nav a:focus + ul { left: 0; }
+/*
 .gallery .demo { height: 10em; }
 .js .demo { height: 5em; }
-
-#featured-demos { border: 1px solid #000; }
-#featured-demos header { position: relative; top: -60px; width: 580px; margin-bottom: -60px; }
-#featured-demos header h2 { zoom: 1; }
+*/
 
 #demobox, #demobox .demo-meta, #demobox .tools, #demobox .like, #demobox .unlike, #demobox .share { zoom: 1; }
+
+#page-head #nav-derby ul { float: right; }
+#page-head #nav-derby li { float: left; }
+#devderby #resources ul { zoom: 1; }
+#devderby #resources ul li { float: left; }
+
+#promote-buttons #button-preview.fixed { margin-left: 31px; }
+
+.home-promos { zoom: 1; margin-bottom: 40px; }
+.home-promos .promo div { position: absolute; left: 0; }
+.home-promos .promo a { position: absolute; left: 0; width: 80%; padding: 20px 10%; }
+
+#home-demos .gallery { width: 100%; }
+#home-demos .demo { height: auto; }
+
+#derby-cta { background-image: none; }
+#derby-cta a:link, #derby-cta a:visited { color: #efefef; }
+
+.section-demos #demos-head { z-index: 20; }
+.section-demos #derby-cta { background-image: none; }
+.section-demos #demos-head #learn-pop { top: 20px; }
+
+#search-browse { position: relative; z-index: 20; }
+#search-browse b { width: 80px; text-align: center; float: left; margin-top: -15px; }
+#search-browse .demo-search, #search-browse #demo-tags { margin-top: -15px; }
 
 /* IE doesn't inherit */
 ul.sortable .remove, 
