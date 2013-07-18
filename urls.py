@@ -9,7 +9,6 @@ from django.views.decorators.cache import cache_page
 import authority
 import jingo
 
-
 admin.autodiscover()
 authority.autodiscover()
 

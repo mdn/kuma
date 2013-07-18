@@ -42,8 +42,8 @@ TAGS_IN_TOC = ('code')
 DOC_SPECIAL_PATHS = ('new', 'tag', 'feeds', 'templates', 'needs-review')
 
 
-def parse(src):
-    return ContentSectionTool(src)
+def parse(src, is_full_document = False):
+    return ContentSectionTool(src, is_full_document)
 
 
 def get_content_sections(src=''):
@@ -182,7 +182,7 @@ def extract_code_sample(id, src):
 
 class ContentSectionTool(object):
 
-    def __init__(self, src=None):
+    def __init__(self, src=None, is_full_document=False):
 
         self.tree = html5lib.treebuilders.getTreeBuilder("simpletree")
 
@@ -200,11 +200,14 @@ class ContentSectionTool(object):
         self.stream = []
 
         if (src):
-            self.parse(src)
+            self.parse(src, is_full_document)
 
-    def parse(self, src):
+    def parse(self, src, is_full_document):
         self.src = src
-        self.doc = self.parser.parseFragment(self.src)
+        if is_full_document:
+            self.doc = self.parser.parse(self.src, parseMeta=True)
+        else:
+            self.doc = self.parser.parseFragment(self.src)
         self.stream = self.walker(self.doc)
         return self
 
@@ -228,6 +231,10 @@ class ContentSectionTool(object):
         self.stream = SectionEditLinkFilter(self.stream, full_path, locale)
         return self
 
+    def absolutizeAddresses(self, base_url, tag_attributes):
+        self.stream = URLAbsolutionFilter(self.stream, base_url, tag_attributes)
+        return self
+
     def annotateLinks(self, base_url):
         self.stream = LinkAnnotationFilter(self.stream, base_url)
         return self
@@ -248,6 +255,40 @@ class ContentSectionTool(object):
         replace_stream = self.walker(self.parser.parseFragment(replace_src))
         self.stream = SectionFilter(self.stream, id, replace_stream)
         return self
+
+class URLAbsolutionFilter(html5lib_Filter):
+    """Filter which turns relative links into absolute links.
+       Originally created for teh purpose of sphinx templates."""
+
+    def __init__(self, source, base_url, tag_attributes):
+        html5lib_Filter.__init__(self, source)
+        self.base_url = base_url
+        self.tag_attributes = tag_attributes
+
+    def __iter__(self):
+        input = html5lib_Filter.__iter__(self)
+
+        for token in input:
+
+            if ('StartTag' == token['type'] and token['name'] in self.tag_attributes):
+                attrs = dict(token['data'])
+
+                # If the element has the attribute we're looking for
+                desired_attr = self.tag_attributes[token['name']]
+                if desired_attr in attrs:
+                    address = attrs[desired_attr]
+                    if not address.startswith('http'):
+                        # Starts with "/", so just add the base url
+                        if address.startswith('//'):
+                            #do nothing
+                            attrs[desired_attr] = address
+                        elif address.startswith('/'):
+                            attrs[desired_attr] = self.base_url + address
+                        else:
+                            attrs[desired_attr] = self.base_url + '/' + address
+                        token['data'] = attrs.items()
+
+            yield token
 
 
 class LinkAnnotationFilter(html5lib_Filter):

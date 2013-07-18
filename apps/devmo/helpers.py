@@ -91,7 +91,10 @@ def devmo_url(context, path):
         Look for a wiki page in the current locale, or default to given path
     """
     if not settings.DEKIWIKI_ENDPOINT:
-        locale = context['request'].locale
+        if hasattr(context['request'], 'locale'):
+            locale = context['request'].locale
+        else:
+            locale = settings.WIKI_DEFAULT_LANGUAGE
         try:
             url = cache.get('devmo_url:%s_%s' % (locale, path))
         except:
