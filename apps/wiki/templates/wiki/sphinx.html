@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- top toolbar -->
+<section id="nav-toolbar"><div><div class="wrap">
+  
+  <!-- left crumb navigation -->
+  <nav class="crumbs" role="navigation">
+    <ol>
+        <li class="crumb"><a href="{{ '{{ pathto(master_doc) }}' }}">{{ '{{ docstitle }}' }}</a></li>
+        <li class="crumb">{{ '{{ title }}' }}</li>
+    </ol>
+  </nav>
+  
+</div></div></section>
+
+<section id="content">
+    <div class="wrap">
+        <div id="content-main" class="full">
+            <article class="article" role="main">
+                {#
+                <header id="article-head"><div class="title">
+                    <h1 class="page-title">{{ title }}</h1>
+                </div></header>
+                #}
+                <div id="wikiArticle" class="page-content boxed">
+                    <div id="article-nav">
+                      <div class="page-toc">
+                        <h2>Table of Contents</h2>
+                        {{ '{{ toctree(collapse=False) }}' }}
+                      </div>
+                    </div>
+                    {{ '{% block body %}{% endblock %}' }}
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+
+{% block js %}
+    {{ js('wiki') }}
+{% endblock %}
+
+{% block extrahead %}
+    {{ css('wiki') }}
+{% endblock %}
