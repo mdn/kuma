@@ -142,7 +142,7 @@ class DocumentTests(TestCase):
         eq_(json.dumps(data), doc.json)
 
         # Load up another copy of the doc from the DB, and check json
-        saved_doc = Document.uncached.get(pk=doc.pk)
+        saved_doc = Document.objects.get(pk=doc.pk)
         eq_(json.dumps(data), saved_doc.json)
 
         # Finally, check on a few fields stored in JSON
@@ -668,7 +668,7 @@ class RedirectCreationTests(TestCase):
         """Test proper redirect creation on slug change."""
         self.d.slug = 'new-slug'
         self.d.save()
-        redirect = Document.uncached.get(slug=self.old_slug)
+        redirect = Document.objects.get(slug=self.old_slug)
         # "uncached" isn't necessary, but someday a worse caching layer could
         # make it so.
         attrs = dict(title=self.d.title, href=self.d.get_absolute_url())
@@ -682,7 +682,7 @@ class RedirectCreationTests(TestCase):
         self.d.save()
         attrs = dict(title=self.d.title, href=self.d.get_absolute_url())
         eq_(REDIRECT_CONTENT % attrs,
-            Document.uncached.get(
+            Document.objects.get(
                 slug=self.old_slug,
                 title=self.old_title).current_revision.content)
 
@@ -693,7 +693,7 @@ class RedirectCreationTests(TestCase):
         d.title = 'Weasel'
         d.save()
         # There should be no redirect from Gerbil -> Weasel:
-        assert not Document.uncached.filter(title='Gerbil').exists()
+        assert not Document.objects.filter(title='Gerbil').exists()
 
     def _test_collision_avoidance(self, attr, other_attr, template):
         """When creating redirects, dodge existing docs' titles and slugs."""
@@ -707,7 +707,7 @@ class RedirectCreationTests(TestCase):
         self.d.save()
 
         # It should be called something like Whatever Redirect 2:
-        redirect = Document.uncached.get(**{attr: getattr(self,
+        redirect = Document.objects.get(**{attr: getattr(self,
                                                           'old_' + attr)})
         eq_(template % dict(old=getattr(self.d, other_attr),
                             number=2), getattr(redirect, other_attr))
@@ -720,7 +720,7 @@ class RedirectCreationTests(TestCase):
         """Auto-created redirects should be marked unlocalizable."""
         self.d.slug = 'new-slug'
         self.d.save()
-        redirect = Document.uncached.get(slug=self.old_slug)
+        redirect = Document.objects.get(slug=self.old_slug)
         eq_(False, redirect.is_localizable)
 
 
@@ -898,29 +898,29 @@ class RelatedDocumentTests(TestCase):
     fixtures = ['test_users.json', 'wiki/documents.json']
 
     def test_related_documents_calculated(self):
-        d = Document.uncached.get(pk=1)
+        d = Document.objects.get(pk=1)
         eq_(0, d.related_documents.count())
 
         calculate_related_documents()
 
-        d = Document.uncached.get(pk=1)
+        d = Document.objects.get(pk=1)
         eq_(2, d.related_documents.count())
 
     def test_related_only_locale(self):
         calculate_related_documents()
-        d = Document.uncached.get(pk=1)
+        d = Document.objects.get(pk=1)
         for rd in d.related_documents.all():
             eq_(settings.WIKI_DEFAULT_LANGUAGE, rd.locale)
 
     def test_only_approved_revisions(self):
         calculate_related_documents()
-        d = Document.uncached.get(pk=1)
+        d = Document.objects.get(pk=1)
         for rd in d.related_documents.all():
             assert rd.current_revision
 
     def test_only_approved_have_related(self):
         calculate_related_documents()
-        d = Document.uncached.get(pk=3)
+        d = Document.objects.get(pk=3)
         eq_(0, d.related_documents.count())
 
 
@@ -1044,7 +1044,7 @@ class DumpAndLoadJsonTests(TestCase):
         # Ensure the current revisions of the documents have changed, and that
         # the creator matches the uploader.
         for d_orig in (d1, d2, d3, d4):
-            d_curr = Document.uncached.get(pk=d_orig.pk)
+            d_curr = Document.objects.get(pk=d_orig.pk)
             eq_(2, d_curr.revisions.count())
             ok_(d_orig.current_revision.id != d_curr.current_revision.id)
             ok_(d_orig.current_revision.creator_id !=
@@ -1069,7 +1069,7 @@ class DumpAndLoadJsonTests(TestCase):
 
             # The original primary key should have gone away.
             try:
-                d_curr = Document.uncached.get(pk=d_orig.pk)
+                d_curr = Document.objects.get(pk=d_orig.pk)
                 ok_(False, "This should have been an error")
             except Document.DoesNotExist:
                 pass
@@ -1124,7 +1124,7 @@ class DeferredRenderingTests(TestCase):
         # Next, get a fresh copy of the document and try getting a rendering.
         # It should *not* call out to kumascript, because the rendered content
         # should be in the DB.
-        d1_fresh = Document.uncached.get(pk=self.d1.pk)
+        d1_fresh = Document.objects.get(pk=self.d1.pk)
         eq_(self.rendered_content, d1_fresh.rendered_html)
         ok_(d1_fresh.render_started_at)
         ok_(d1_fresh.last_rendered_at)

@@ -50,7 +50,7 @@ class Command(BaseCommand):
         to_prefetch = []
         logging.info("Querying all Documents...")
         doc_cnt, doc_total = 0, Document.objects.count()
-        for doc in Document.uncached.order_by('-modified').iterator():
+        for doc in Document.objects.order_by('-modified').iterator():
 
             # Give some indication of progress, occasionally
             doc_cnt += 1
