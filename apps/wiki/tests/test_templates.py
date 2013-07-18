@@ -665,7 +665,7 @@ class DocumentEditTests(TestCaseBase):
         response = post(self.client, 'wiki.edit_document', data,
                         args=[self.d.full_path])
         eq_(200, response.status_code)
-        doc = Document.uncached.get(pk=self.d.pk)
+        doc = Document.objects.get(pk=self.d.pk)
         eq_(new_title, doc.title)
 
     def test_change_slug_case(self):
@@ -677,7 +677,7 @@ class DocumentEditTests(TestCaseBase):
         response = post(self.client, 'wiki.edit_document', data,
                         args=[self.d.full_path])
         eq_(200, response.status_code)
-        doc = Document.uncached.get(pk=self.d.pk)
+        doc = Document.objects.get(pk=self.d.pk)
         eq_(new_slug, doc.slug)
 
     def test_change_title_case(self):
@@ -689,7 +689,7 @@ class DocumentEditTests(TestCaseBase):
         response = post(self.client, 'wiki.edit_document', data,
                         args=[self.d.full_path])
         eq_(200, response.status_code)
-        doc = Document.uncached.get(pk=self.d.pk)
+        doc = Document.objects.get(pk=self.d.pk)
         eq_(new_title, doc.title)
 
 
@@ -930,7 +930,7 @@ class ReviewRevisionTests(SkippedTestCase):
         response = self.client.post(url, {'approve': 'Approve Translation'},
                                     follow=True)
         eq_(200, response.status_code)
-        d = Document.uncached.get(pk=doc_es.id)
+        d = Document.objects.get(pk=doc_es.id)
         r = Revision.uncached.get(pk=rev_es2.id)
         eq_(d.current_revision, r)
         assert r.reviewed
@@ -1486,7 +1486,7 @@ class RelatedDocumentTestCase(SkippedTestCase):
 
     def test_related_order(self):
         calculate_related_documents()
-        d = Document.uncached.get(pk=1)
+        d = Document.objects.get(pk=1)
         response = self.client.get(d.get_absolute_url())
 
         doc = pq(response.content)
