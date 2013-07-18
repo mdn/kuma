@@ -567,9 +567,6 @@ MINIFY_BUNDLES = {
             'js/libs/DataTables-1.9.4/media/css/jquery.dataTables.css',
             'js/libs/DataTables-1.9.4/extras/Scroller/media/css/dataTables.scroller.css',
         ),
-        'home': (
-            'css/home.css',
-        ),
         'ie': (
             'css/ie.css',
         ),
@@ -591,36 +588,36 @@ MINIFY_BUNDLES = {
         'mdn': (
             'js/libs/jquery-1.9.1.js',
             'js/jquery-upgrade-compat.js',
-            'js/mdn/init.js',
-            'js/mdn/gsearch.js',
+            'js/init.js',
+            'js/gsearch.js',
 
             # Home Page
             # cycle and slideshow only needed on the home page (or any page
             # featuring the slide show widget).
-            'js/mdn/jquery.cycle.js',
-            'js/mdn/slideshow.js',
+            'js/libs/jquery.cycle.js',
+            'js/libs/slideshow.js',
 
             # Used only on pages with video popups
-            'js/mdn/video-player.js',
+            'js/libs/video-player.js',
 
-            'js/mdn/jquery.simplemodal.1.4.1.min.js',
+            'js/libs/jquery.simplemodal.1.4.1.min.js',
         ),
         'profile': (
-            'js/mdn/profile.js',
+            'js/profile.js',
             'js/moz-jquery-plugins.js',
         ),
         'events': (
             'js/libs/jquery.gmap-1.1.0.js',
-            'js/mdn/calendar.js',
+            'js/calendar.js',
         ),
         'demostudio': (
-            'js/mdn/jquery.hoverIntent.minified.js',
-            'js/mdn/jquery.scrollTo-1.4.2-min.js',
-            'js/mdn/demos.js',
-            'js/mdn/modal-control.js'
+            'js/libs/jquery.hoverIntent.minified.js',
+            'js/libs/jquery.scrollTo-1.4.2-min.js',
+            'js/demos.js',
+            'js/modal-control.js'
         ),
         'demostudio_devderby_landing': (
-            'js/mdn/demos-devderby-landing.js',
+            'js/demos-devderby-landing.js',
         ),
         'libs/jqueryui': (
             'js/libs/jquery-ui-1.8.14.custom.min.js',
@@ -632,7 +629,7 @@ MINIFY_BUNDLES = {
             'js/search.js',
         ),
         'wiki': (
-            'js/mdn/jquery.simplemodal.1.4.1.min.js',
+            'js/libs/jquery.simplemodal.1.4.1.min.js',
             'js/libs/jqueryui.min.js',
             'js/moz-jquery-plugins.js',
             'js/main.js',
@@ -647,10 +644,10 @@ MINIFY_BUNDLES = {
             'js/libs/DataTables-1.9.4/extras/Scroller/media/js/dataTables.scroller.js',
         ),
         'users': (
-            'js/mdn/empty.js',
+            'js/empty.js',
         ),
         'mdn_home': (
-            'js/mdn/empty.js',
+            'js/empty.js',
         ),
         'framebuster': (
             'js/framebuster.js',
