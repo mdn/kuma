@@ -47,18 +47,31 @@
 <article id="search-results" class="main">
   <div class="search-results">
     
-    <h1>Search</h1>
+    <h1>{{ _('Search') }}</h1>
+
+    <p id="search-survey-intro">
+      {% trans %}
+        We'd like to know how we can improve MDN search.  To help us out, please complete 
+        <a href="javascript:;" id="search-survey-link">this survey</a>.
+
+        <div id="search-survey-dialog-content" title="Search Survey">
+          <iframe src="http://www.surveygizmo.com/s3/iframe/1302591/fbb74ad279ed" frameborder="0" width="700" height="500"></iframe>
+        </div>
+      {% endtrans %}
+    </p>
+
     <div class="search-form boxed">
       <form action="" method="get" id="search-form">
         <input name="q" id="search-q" type="search" value="{{ search_query }}" {% if not search_query %}autofocus{% endif %} />
-        <button type="submit" id="search-submit">Search!</button>
+        <button type="submit" id="search-submit">{{ _('Search!') }}</button>
       </form>
     </div>
 
     {% if search_query: %}
       <div class="boxed" id="results-box"><!--RESULTS-->
       {% if result_count: %}
-        <h2>Search Results For "{{ search_query }}"</h2>
+        <h2>{{ _('Search Results For "%s"') % search_query }}</h2>
+
         <ul class="search-results-list">
         {% for doc in results %}
           {{ doc_block(doc) }}
@@ -118,6 +131,12 @@
     .search-form  { margin-bottom: 30px; }
     #search-q     { width: 80%; -webkit-appearance: textfield; }
     #search-submit { display: inline-block; }
+
+    /* search survey */
+    #search-survey-dialog-content { display: none; }
+    #search-survey-intro  { padding-left: 0; }
+    #search-survey-intro a { color: #369; }
+    button, .button, input[type=submit], input[type=button] { padding: .35em .75em .2em; display: inline-block; background: #bd5642 url("/media/img/button-shade.png") 0 .75em repeat-x !important; color: #fff !important; font: 200 1em/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-decoration: none; text-transform: uppercase; letter-spacing: .5px; border: 0; -moz-border-radius: .2em; -webkit-border-radius: .2em; border-radius: .2em; -moz-box-shadow: 1px 1px 0 rgba(0,0,0,.25); -webkit-box-shadow: 1px 1px 0 rgba(0,0,0,.25); box-shadow: 1px 1px 0 rgba(0,0,0,.25); }
 
     /* not yet used styles -- popular / sidebar */
     .search-popular { width: 49%; float: left; margin-top: 20px; }
@@ -280,6 +299,20 @@
         {% else %}
           $searchInput.get(0).focus();
         {% endif %}
+
+        // Search survey launcher
+        $('#search-survey-link').on('click', function() {
+          $('#search-survey-dialog-content').dialog({ 
+            width: 730, 
+            height: 630,
+            modal: true,
+            buttons: { 
+              {{ _('Close') }}: function() { 
+                $(this).dialog('close'); 
+              } 
+            }
+          });
+        });
 
       })(jQuery);
   </script>
