@@ -32,7 +32,7 @@ from search.index import SearchMappingType, register_mapping_type
 from search.tasks import register_live_index
 from sumo import ProgrammingError
 from sumo_locales import LOCALES
-from sumo.models import ManagerBase, ModelBase, LocaleField
+from sumo.models import LocaleField
 from sumo.urlresolvers import reverse, split_path
 
 from taggit.models import ItemBase, TagBase
@@ -372,7 +372,7 @@ def _inherited(parent_attr, direct_attr):
     return property(getter, setter)
 
 
-class DocumentManager(ManagerBase):
+class DocumentManager(models.Manager):
     """Manager for Documents, assists for queries"""
 
     def clean_content(self, content_in, use_constance_bleach_whitelists=False):
@@ -556,7 +556,7 @@ class DocumentRenderedContentNotAvailable(Exception):
 
 
 @register_live_index
-class Document(NotificationsMixin, ModelBase):
+class Document(NotificationsMixin, models.Model):
     """A localized knowledgebase document, not revision-specific."""
 
     class Meta(object):
@@ -938,7 +938,7 @@ class Document(NotificationsMixin, ModelBase):
     def _existing(self, attr, value):
         """Return an existing doc (if any) in this locale whose `attr` attr is
         equal to mine."""
-        return Document.uncached.filter(locale=self.locale,
+        return Document.objects.filter(locale=self.locale,
                                         **{attr: value})
 
     def _raise_if_collides(self, attr, exception):
@@ -977,7 +977,6 @@ class Document(NotificationsMixin, ModelBase):
 
         # Can't make not localizable if it has translations
         # This only applies to documents that already exist, hence self.pk
-        # TODO: Use uncached manager here, if we notice problems
         if self.pk and not self.is_localizable and self.translations.exists():
             raise ValidationError('"%s": document has %s translations but is '
                                   'not localizable.' % (
@@ -1705,7 +1704,7 @@ class ReviewTaggedRevision(ItemBase):
             reviewtaggedrevision__content_object__isnull=False).distinct()
 
 
-class Revision(ModelBase):
+class Revision(models.Model):
     """A revision of a localized knowledgebase document"""
     document = models.ForeignKey(Document, related_name='revisions')
 
@@ -1891,7 +1890,7 @@ class Revision(ModelBase):
 # FirefoxVersion and OperatingSystem map many ints to one Document. The
 # enumeration table of int-to-string is not represented in the DB because of
 # difficulty working DB-dwelling gettext keys into our l10n workflow.
-class FirefoxVersion(ModelBase):
+class FirefoxVersion(models.Model):
     """A Firefox version, version range, etc. used to categorize documents"""
     item_id = models.IntegerField(choices=[(v.id, v.name) for v in
                                            FIREFOX_VERSIONS])
@@ -1901,7 +1900,7 @@ class FirefoxVersion(ModelBase):
         unique_together = ('item_id', 'document')
 
 
-class OperatingSystem(ModelBase):
+class OperatingSystem(models.Model):
     """An operating system used to categorize documents"""
     item_id = models.IntegerField(choices=[(o.id, o.name) for o in
                                            OPERATING_SYSTEMS])
@@ -1911,7 +1910,7 @@ class OperatingSystem(ModelBase):
         unique_together = ('item_id', 'document')
 
 
-class HelpfulVote(ModelBase):
+class HelpfulVote(models.Model):
     """Helpful or Not Helpful vote on Document."""
     document = models.ForeignKey(Document, related_name='poll_votes')
     helpful = models.BooleanField(default=False)
@@ -1921,7 +1920,7 @@ class HelpfulVote(ModelBase):
     user_agent = models.CharField(max_length=1000)
 
 
-class RelatedDocument(ModelBase):
+class RelatedDocument(models.Model):
     document = models.ForeignKey(Document, related_name='related_from')
     related = models.ForeignKey(Document, related_name='related_to')
     in_common = models.IntegerField()
@@ -1938,7 +1937,7 @@ def toolbar_config_upload_to(instance, filename):
         return 'js/ckeditor_config_%s.js' % instance.creator.id
 
 
-class EditorToolbar(ModelBase):
+class EditorToolbar(models.Model):
     creator = models.ForeignKey(User, related_name='created_toolbars')
     default = models.BooleanField(default=False)
     name = models.CharField(max_length=100)
