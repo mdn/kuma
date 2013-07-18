@@ -17,7 +17,7 @@ class Command(NoArgsCommand):
 
 	def handle(self, *args, **options):
 
-		# Not ideal, but we need to temporarily remove <link> as a void/ignored element
+		# Not ideal, but we need to temporarily remove inline elemnents as a void/ignored element
 		# TO DO:  Can this clone code be shortened?
 		new_void_set = set()
 		for item in html5lib_constants.voidElements:
@@ -35,7 +35,7 @@ class Command(NoArgsCommand):
 
 		# Use a filter to make links absolute
 		tool = (wiki.content.parse(content, is_full_document=True))
-		content = tool.absolutizeAddresses(base_url=settings.SITE_URL, tag_attributes={
+		content = tool.absolutizeAddresses(base_url=settings.PRODUCTION_URL, tag_attributes={
 			'a': 'href',
             'img': 'src',
             'form': 'action',

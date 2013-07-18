@@ -22,9 +22,10 @@ ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
 )
 
-SITE_URL = 'https://developer.mozilla.org'
 PROTOCOL = 'https://'
 DOMAIN = 'developer.mozilla.org'
+SITE_URL = PROTOCOL + DOMAIN
+PRODUCTION_URL = SITE_URL
 USE_X_FORWARDED_HOST = True
 
 MANAGERS = ADMINS
