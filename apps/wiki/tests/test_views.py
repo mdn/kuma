@@ -2817,7 +2817,6 @@ class CodeSampleViewTests(TestCaseBase):
         eq_('*', response['Access-Control-Allow-Origin'])
         eq_(200, response.status_code)
         normalized = normalize_html(response.content)
-        logging.debug(normalized)
 
         # Content checks
         ok_('<!DOCTYPE html>' in response.content)

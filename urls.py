@@ -6,11 +6,9 @@ from django.shortcuts import redirect, render
 from django.views.i18n import javascript_catalog
 from django.views.decorators.cache import cache_page
 
-import authority
 import jingo
 
 admin.autodiscover()
-authority.autodiscover()
 
 urlpatterns = patterns('',
    # Home / landing pages:
