@@ -632,7 +632,7 @@ MINIFY_BUNDLES = {
         ),
         'search': (
             'js/search.js',
-            'js/mdn/jquery.simplemodal.1.4.1.min.js',
+            'js/libs/jquery.simplemodal.1.4.1.min.js',
             'js/libs/jqueryui.min.js',
         ),
         'wiki': (
