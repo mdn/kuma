@@ -13,6 +13,7 @@ import waffle
 
 from access.decorators import login_required
 from demos.models import Submission
+from teamwork.models import Team
 
 from . import INTEREST_SUGGESTIONS
 from .models import Calendar, Event, UserProfile
@@ -65,10 +66,19 @@ def profile_view(request, username):
     wiki_activity, docs_feed_items = None, None
     wiki_activity = profile.wiki_activity()
 
+    if request.user.is_anonymous():
+        show_manage_roles_button = False
+    else:
+        # TODO: This seems wasteful, just to decide whether to show the button
+        roles_by_team = Team.objects.get_team_roles_managed_by(request.user,
+                                                               user)
+        show_manage_roles_button = (len(roles_by_team) > 0)
+
     return render(request, 'devmo/profile.html', dict(
         profile=profile, demos=demos, demos_paginator=demos_paginator,
         demos_page=demos_page, docs_feed_items=docs_feed_items,
-        wiki_activity=wiki_activity
+        wiki_activity=wiki_activity,
+        show_manage_roles_button=show_manage_roles_button,
     ))
 
 

@@ -88,13 +88,17 @@
         </ul>
       </div>
 
-      <!-- Only shown for the user and admins -->
       <p class="edit">
-      {% if profile.allows_editing_by(request.user) %}
+          {% if show_manage_roles_button %}
+              {# TODO: Need a method to detect whether the logged in user can manage any roles, here #}
+              <a href="{{ url('teamwork.views.user_roles', profile.user.username) }}" class="button">{{_("Manage Roles")}}</a>
+          {% endif %}
+          <!-- Only shown for the user and admins -->
+          {% if profile.allows_editing_by(request.user) %}
               <a href="{{ url('authkeys.list') }}" class="button">{{_("Manage API Keys")}}</a>
               <a id="edit-profile" href="{{ url('devmo.views.profile_edit', username=profile.user.username) }}" class="button">{{_("Edit Profile")}}</a>
-      {% endif %}
-      {{ ban_link(profile.user, request.user) }}
+          {% endif %}
+          {{ ban_link(profile.user, request.user) }}
       </p>
     </section>
 

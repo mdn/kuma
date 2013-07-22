@@ -303,7 +303,7 @@ SERVE_MEDIA = False
 
 # Paths that don't require a locale prefix.
 SUPPORTED_NONLOCALES = ('media', 'admin', 'robots.txt', 'services', 'static',
-                        '1', 'files', '@api', )
+                        '1', 'files', '@api', 'grappelli')
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '#%tc(zja8j01!r#h_y)=hy!^k)9az74k+-ib&ij&+**s3-e^_z'
@@ -314,6 +314,13 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
 #     'django.template.loaders.eggs.Loader',
+)
+
+JINGO_EXCLUDE_APPS = (
+    'admin',
+    'admindocs',
+    'registration',
+    'grappelli',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -397,6 +404,11 @@ TEMPLATE_DIRS = (
     path('templates'),
 )
 
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+)
+
 # TODO: Figure out why changing the order of apps (for example, moving taggit
 # higher in the list) breaks tests.
 INSTALLED_APPS = (
@@ -406,7 +418,11 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
+
+    'grappelli.dashboard',
+    'grappelli',
     'django.contrib.admin',
+    
     'django.contrib.sitemaps',
     'django.contrib.staticfiles',
 
@@ -1094,3 +1110,6 @@ TEAMWORK_BASE_POLICIES = {
     'authenticated': (
         'wiki.view_document', 'wiki.add_document', 'wiki.add_revision'),
 }
+
+GRAPPELLI_ADMIN_TITLE = 'Mozilla Developer Network - Admin'
+GRAPPELLI_INDEX_DASHBOARD = 'admin_dashboard.CustomIndexDashboard'
