@@ -992,7 +992,7 @@ class DocumentEditingTests(TestCaseBase):
         data.update({'slug': slug, 'comment': comment})
         resp = client.post(reverse('wiki.new_document'), data)
         eq_(comment,
-            Document.uncached.get(slug=slug, locale=loc).current_revision.comment)
+            Document.objects.get(slug=slug, locale=loc).current_revision.comment)
 
     @attr('toc')
     def test_toc_initial(self):
@@ -1037,9 +1037,9 @@ class DocumentEditingTests(TestCaseBase):
         url = reverse('wiki.edit_document', args=[d.full_path])
         client.post(url, data)
         eq_(new_title,
-            Document.uncached.get(slug=d.slug, locale=d.locale).title)
+            Document.objects.get(slug=d.slug, locale=d.locale).title)
         try:
-            Document.uncached.get(title=old_title)
+            Document.objects.get(title=old_title)
             self.fail("Should not find doc by old title after retitling.")
         except Document.DoesNotExist:
             pass
@@ -1072,9 +1072,9 @@ class DocumentEditingTests(TestCaseBase):
         url = reverse('wiki.edit_document', args=[d.full_path])
         client.post(url, data)
         eq_(new_title,
-            Document.uncached.get(slug=d.slug, locale=d.locale).title)
+            Document.objects.get(slug=d.slug, locale=d.locale).title)
         try:
-            Document.uncached.get(title=old_title)
+            Document.objects.get(title=old_title)
             self.fail("Should not find doc by old title after retitling.")
         except Document.DoesNotExist:
             pass
@@ -1093,9 +1093,9 @@ class DocumentEditingTests(TestCaseBase):
                      'form': 'rev'})
         client.post('%s?iframe=1' % reverse('wiki.edit_document',
                                             args=[d.full_path]), data)
-        eq_(old_slug, Document.uncached.get(slug=d.slug,
+        eq_(old_slug, Document.objects.get(slug=d.slug,
                                              locale=d.locale).slug)
-        assert "REDIRECT" not in Document.uncached.get(slug=old_slug).html
+        assert "REDIRECT" not in Document.objects.get(slug=old_slug).html
 
     @attr('clobber')
     def test_slug_collision_errors(self):
@@ -2023,11 +2023,11 @@ class DocumentEditingTests(TestCaseBase):
         client.login(username='admin', password='testpass')
         d, _ = doc_rev()
         data = new_document_data()
-        ok_(Document.uncached.get(slug=d.slug, locale=d.locale).show_toc)
+        ok_(Document.objects.get(slug=d.slug, locale=d.locale).show_toc)
         data['form'] = 'rev'
         data['toc_depth'] = 0
         client.post(reverse('wiki.edit_document', args=[d.full_path]), data)
-        eq_(0, Document.uncached.get(slug=d.slug, locale=d.locale).current_revision.toc_depth)
+        eq_(0, Document.objects.get(slug=d.slug, locale=d.locale).current_revision.toc_depth)
 
     @attr('toc')
     def test_toc_toggle_on(self):
@@ -2038,11 +2038,11 @@ class DocumentEditingTests(TestCaseBase):
         new_r = revision(document=d, content=r.content, toc_depth=0,
                          is_approved=True)
         new_r.save()
-        ok_(not Document.uncached.get(slug=d.slug, locale=d.locale).show_toc)
+        ok_(not Document.objects.get(slug=d.slug, locale=d.locale).show_toc)
         data = new_document_data()
         data['form'] = 'rev'
         client.post(reverse('wiki.edit_document', args=[d.full_path]), data)
-        ok_(Document.uncached.get(slug=d.slug, locale=d.locale).show_toc)
+        ok_(Document.objects.get(slug=d.slug, locale=d.locale).show_toc)
 
     def test_parent_topic(self):
         """Selection of a parent topic when creating a document."""
@@ -2446,7 +2446,7 @@ class SectionEditingResourceTests(TestCaseBase):
             normalize_html(response.content))
 
         # Also, ensure that the revision is slipped into the headers
-        eq_(unicode(Document.uncached.get(slug=doc.slug, locale=doc.locale)
+        eq_(unicode(Document.objects.get(slug=doc.slug, locale=doc.locale)
                                      .current_revision.id),
             unicode(response['x-kuma-revision']))
 
@@ -2722,6 +2722,11 @@ class MindTouchRedirectTests(TestCaseBase):
 class AutosuggestDocumentsTests(TestCaseBase):
     """ Test the we're properly filtering out the Redirects from the document list """
 
+    def test_autosuggest_no_term(self):
+        url = reverse('wiki.autosuggest_documents', locale=settings.WIKI_DEFAULT_LANGUAGE)
+        resp = self.client.get(url)
+        eq_(400, resp.status_code)
+
     def test_document_redirects(self):
 
         # All contain "e", so that will be the search term
@@ -2812,7 +2817,6 @@ class CodeSampleViewTests(TestCaseBase):
         eq_('*', response['Access-Control-Allow-Origin'])
         eq_(200, response.status_code)
         normalized = normalize_html(response.content)
-        logging.debug(normalized)
 
         # Content checks
         ok_('<!DOCTYPE html>' in response.content)
@@ -3155,9 +3159,9 @@ class APITests(TestCaseBase):
         eq_(205, resp.status_code)
 
         # Verify the edit happened.
-        curr_d = Document.uncached.get(pk=self.d.pk)
+        curr_d = Document.objects.get(pk=self.d.pk)
         eq_(normalize_html(data['content'].strip()),
-            normalize_html(Document.uncached.get(pk=self.d.pk).html))
+            normalize_html(Document.objects.get(pk=self.d.pk).html))
 
         # Also, verify that this resulted in a new revision.
         curr_r = curr_d.current_revision
@@ -3196,7 +3200,7 @@ class APITests(TestCaseBase):
         """
 
         # Verify the section edit happened.
-        curr_d = Document.uncached.get(pk=self.d.pk)
+        curr_d = Document.objects.get(pk=self.d.pk)
         eq_(normalize_html(expected.strip()),
             normalize_html(curr_d.html))
         eq_(data['title'], curr_d.title)
@@ -3265,7 +3269,7 @@ class APITests(TestCaseBase):
         eq_(201, resp.status_code)
 
         new_slug = '%s/nonexistent/newchild' % self.d.slug
-        new_doc = Document.uncached.get(locale=settings.WIKI_DEFAULT_LANGUAGE, slug=new_slug)
+        new_doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE, slug=new_slug)
         eq_(p_doc.pk, new_doc.parent_topic.pk)
 
     def test_put_unsupported_content_type(self):
@@ -3298,7 +3302,7 @@ class APITests(TestCaseBase):
                          HTTP_AUTHORIZATION=self.basic_auth)
         eq_(201, resp.status_code)
 
-        new_doc = Document.uncached.get(locale=settings.WIKI_DEFAULT_LANGUAGE, slug=slug)
+        new_doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE, slug=slug)
         eq_(data['title'], new_doc.title)
         eq_(normalize_html(data['content']), normalize_html(new_doc.html))
 
@@ -3314,7 +3318,7 @@ class APITests(TestCaseBase):
                          HTTP_AUTHORIZATION=self.basic_auth)
         eq_(201, resp.status_code)
 
-        new_doc = Document.uncached.get(locale=settings.WIKI_DEFAULT_LANGUAGE, slug=slug)
+        new_doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE, slug=slug)
         eq_(normalize_html(html), normalize_html(new_doc.html))
 
     def test_put_complex_html(self):
@@ -3341,7 +3345,7 @@ class APITests(TestCaseBase):
                          HTTP_AUTHORIZATION=self.basic_auth)
         eq_(201, resp.status_code)
 
-        new_doc = Document.uncached.get(locale=settings.WIKI_DEFAULT_LANGUAGE, slug=slug)
+        new_doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE, slug=slug)
         eq_(data['title'], new_doc.title)
         eq_(normalize_html(data['content']), normalize_html(new_doc.html))
 

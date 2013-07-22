@@ -281,7 +281,7 @@ class RevisionForm(forms.ModelForm):
 
         error_message = {'slug': SLUG_COLLIDES}.get(name, OTHER_COLLIDES)
         try:
-            existing_doc = Document.uncached.get(
+            existing_doc = Document.objects.get(
                     locale=self.instance.document.locale,
                     **{name: value})
             if self.instance and self.instance.document:

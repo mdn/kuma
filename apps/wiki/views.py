@@ -44,6 +44,8 @@ import jingo
 from tower import ugettext_lazy as _lazy
 from tower import ugettext as _
 
+from teamwork.shortcuts import get_object_or_404_or_403
+
 from smuggler.utils import superuser_required
 from smuggler.forms import ImportFileForm
 
@@ -394,6 +396,10 @@ def document(request, document_slug, document_locale):
                                                    slug=redirect_slug)
         except Document.DoesNotExist:
             pass
+
+    # We've got a doc, so now let's enforce the view_document permission
+    if not request.user.has_perm('wiki.view_document', doc):
+        raise PermissionDenied
 
     # Utility to set common headers used by all response exit points
     response_headers = dict()
@@ -918,7 +924,7 @@ def new_document(request):
 @transaction.autocommit  # For rendering bookkeeping, needs immediate updates
 def edit_document(request, document_slug, document_locale, revision_id=None):
     """Create a new revision of a wiki document, or edit document metadata."""
-    doc = get_object_or_404(
+    doc = get_object_or_404_or_403('wiki.add_revision', request.user,
         Document, locale=document_locale, slug=document_slug)
     user = request.user
 
@@ -1325,7 +1331,12 @@ def autosuggest_documents(request):
     locale = request.GET.get('locale', False)
     current_locale = request.GET.get('current_locale', False)
     exclude_current_locale = request.GET.get('exclude_current_locale', False)
-
+    
+    if not partial_title:
+        # Only handle actual autosuggest requests, not requests for a
+        # memory-busting list of all documents.
+        return HttpResponseBadRequest(_lazy('Autosuggest requires a partial title. For a full document index, see the main page.'))
+        
     # Retrieve all documents that aren't redirects or templates
     docs = (Document.objects.
         extra(select={'length': 'Length(slug)'}).
