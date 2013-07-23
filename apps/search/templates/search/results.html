@@ -155,12 +155,11 @@
 
 {% block js %}
   <!-- TODO:  MOVE THIS TO ENTIRE SITE PACKAGE WITH REDESIGN -->
-  <script src="{{ MEDIA_URL }}mousetrap/mousetrap.js"></script>
+  <script src="{{ MEDIA_URL }}js/libs/mousetrap/mousetrap.js"></script>
   <script>
       // new stuff
       (function($) {
         var $searchResults;
-        var targetTestRegex = /input|textarea|select|option/i;
         var $searchInput = $('#search-q');
         var cache = {};
         var cacheValue = $searchInput.val().toLowerCase();
