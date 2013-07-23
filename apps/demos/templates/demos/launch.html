@@ -19,8 +19,8 @@
   
   <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/demowrap.css">
   <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/modals.css">
-  <script src="{{ MEDIA_URL }}js/libs/jquery-1.9.1.js"></script>
-  <script src="{{ MEDIA_URL }}js/jquery-upgrade-compat.js"></script>
+  {{ css('popup') }}
+  <script src="{{ url('jsi18n') }}build:{{ BUILD_ID_JS }}"></script>
   
   <!--[if IE]>
   <meta http-equiv="imagetoolbar" content="no">
@@ -88,7 +88,7 @@
     </nav>
     
       <p id="close"><a href="{{ submission.demo_package.url.replace('.zip', '/index.html') }}" title="{{_('Remove this toolbar')}}">{{_('Remove toolbar')}}</a></p>
-    
+    {{ js('popup') }}
     <script type="text/javascript">
 
     $(document).ready(function() {

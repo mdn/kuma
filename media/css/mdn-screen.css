@@ -921,7 +921,7 @@ transition-property: bottom, opacity, visibility;
 .tag-popup span { display: block; width: 0; height: 0; margin: 0 auto; border-top: 10px solid rgba(0,0,0,.85); border-left: 10px solid transparent; border-right: 10px solid transparent; }
 
 #flag-confirm label { display: block; }
-#flag-confirm textarea { display: block; width: 96%; height: 8em; }
+#flag-confirm textarea { display: block; width: 500px; height: 8em; }
 #flag-confirm .submit { margin: 1em 0 0; }
 #flag-confirm .submit button { font-size: 1.142em; }
 
