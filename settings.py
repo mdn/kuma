@@ -535,13 +535,20 @@ MINIFY_BUNDLES = {
         'mdn': (
             'css/fonts.css',
             'css/mdn-screen.css',
-            'css/modals.css',
             'css/video-player.css',
             'css/mdn-calendar.css',
             'css/redesign-transition.css',
         ),
+        'popup': (
+            'css/jqueryui/jqueryui.css',
+            'css/jqueryui/jquery-ui-1.8.14.custom.css',
+            'css/jqueryui/moz-jquery-plugins.css',
+        ),
         'demostudio': (
             'css/demos.css',
+            'css/jqueryui/jqueryui.css',
+            'css/jqueryui/jquery-ui-1.8.14.custom.css',
+            'css/jqueryui/moz-jquery-plugins.css',
         ),
         'devderby': (
             'css/devderby.css',
@@ -553,14 +560,12 @@ MINIFY_BUNDLES = {
         ),
         'search': (
             'css/search.css',
-            'css/modals.css',
             'css/jqueryui/jqueryui.css',
             'css/jqueryui/jquery-ui-1.8.14.custom.css',
             'css/jqueryui/moz-jquery-plugins.css',
         ),
         'wiki': (
             'css/wiki.css',
-            'css/modals.css',
             'css/wiki-screen.css',
             'css/jqueryui/jqueryui.css',
             'css/jqueryui/jquery-ui-1.8.14.custom.css',
@@ -606,8 +611,13 @@ MINIFY_BUNDLES = {
 
             # Used only on pages with video popups
             'js/libs/video-player.js',
-
-            'js/libs/jquery.simplemodal.1.4.1.min.js',
+        ),
+        'popup': (
+            'js/libs/jquery-1.9.1.js',
+            'js/jquery-upgrade-compat.js',
+            'js/libs/jqueryui.min.js',
+            'js/modal-control.js',
+            'js/init.js',
         ),
         'profile': (
             'js/profile.js',
@@ -621,7 +631,8 @@ MINIFY_BUNDLES = {
             'js/libs/jquery.hoverIntent.minified.js',
             'js/libs/jquery.scrollTo-1.4.2-min.js',
             'js/demos.js',
-            'js/modal-control.js'
+            'js/libs/jqueryui.min.js',
+            'js/modal-control.js',
         ),
         'demostudio_devderby_landing': (
             'js/demos-devderby-landing.js',
@@ -634,11 +645,9 @@ MINIFY_BUNDLES = {
         ),
         'search': (
             'js/search.js',
-            'js/libs/jquery.simplemodal.1.4.1.min.js',
             'js/libs/jqueryui.min.js',
         ),
         'wiki': (
-            'js/libs/jquery.simplemodal.1.4.1.min.js',
             'js/libs/jqueryui.min.js',
             'js/moz-jquery-plugins.js',
             'js/main.js',

@@ -295,9 +295,9 @@
       <div id="demo-report">
         <h3>{{ _("Report a Problem") }}</h3>
         <ul>
-            <li><a class="modal" href="{{ url('demos_flag', slug=submission.slug) }}?flag_type=notworking">{{_('Demo is not working')}}</a></li>
-            <li><a class="modal" href="{{ url('demos_flag', slug=submission.slug) }}?flag_type=inappropriate">{{_('Demo is inappropriate')}}</a></li>
-            <li><a class="modal" href="{{ url('demos_flag', slug=submission.slug) }}?flag_type=plagarised">{{_('Demo is not by this author')}}</a></li>
+            <li><a class="modal" href="{{ url('demos_flag', slug=submission.slug) }}?flag_type=notworking" title="{{_('Flag Content')}}">{{_('Demo is not working')}}</a></li>
+            <li><a class="modal" href="{{ url('demos_flag', slug=submission.slug) }}?flag_type=inappropriate" title="{{_('Flag Content')}}">{{_('Demo is inappropriate')}}</a></li>
+            <li><a class="modal" href="{{ url('demos_flag', slug=submission.slug) }}?flag_type=plagarised" title="{{_('Flag Content')}}">{{_('Demo is not by this author')}}</a></li>
         </ul>
       </div>
       

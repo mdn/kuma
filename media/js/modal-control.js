@@ -1,38 +1,25 @@
 $(document).ready(function() {
+    var $content,
+        id = 'modal-content';
+        
+    $('.modal').on('click', function(e) {
+        e.preventDefault();
 
-    // When a modal link is clicked
-    $(".modal").click(function () {
-            
-        var width  = 600,
-            height = 400,
-            href   = $(this).attr("href");
-
-        href += ((href.indexOf("?") == -1) ? "?" : "&") + "popup=1";
-
-        // Open the modal to the iframe address provided by the link
-        $.modal(
-            "<iframe style='border:0' scrolling='no' src='" + href + "' height='" + height + "' width='" + width + "'>", 
-            {
-                overlayClose: true,
-                containerCss: { width: width, height: height },
-                dataCss: { overflow: "hidden" },
-                onOpen: function (dialog) {
-                    dialog.wrap.css({ overflow: "hidden" });
-                    dialog.overlay.show();
-                    dialog.container.show();
-                    dialog.data.show();
-                }
-            }
-        );
-
-        return false;
-    });
-
-    // Close the modal when the "x" is clicked
-    $(".closeModal").click(function () {
-        if (top.$ && top.$.modal) {
-            top.$.modal.close();
+        // Create the iframe if not yet created
+        if(!$content) {
+            $content = $('<div id="' + id + '" title="' + gettext('Demo Studio') + '"><iframe style="border:0;" scrolling="no" height="400" width="600"></iframe></div>').appendTo(document.body);
         }
-        return false;
+
+        // Set the address
+        var href = e.target.href;
+        href += ((href.indexOf('?') == -1) ? '?' : '&') + 'popup=1';
+        $content.find('iframe').attr('src', href);
+
+        // Launch the modal
+        $('#' + id).dialog({ 
+            width: 620, 
+            height: 500,
+            modal: true
+        });
     });
 });
