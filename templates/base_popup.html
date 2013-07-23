@@ -34,9 +34,11 @@
 {% block content %}{% endblock %}
 
 {# js #}
+<script src="{{ url('jsi18n') }}build:{{ BUILD_ID_JS }}"></script>
+
 {% block site_js %}
+{{ js('popup') }}
 <script src="//www.google.com/jsapi" type="text/javascript"></script>
-  {{ js('common') }}
 <script type="text/javascript">
 $(document).ready(function() {
   // Set up input placeholders.

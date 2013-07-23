@@ -1,6 +1,0 @@
-/* @Modal dialogs *********/
-#simplemodal-overlay { background: #fff; opacity: 0.15; }
-#simplemodal-container { padding: 18px; background: #aaa082; background: rgba(170,160,130,.75); overflow: visible; }
-#simplemodal-wrap { overflow: hidden; }
-.simplemodal-close { cursor: pointer; width: 28px; height: 28px; position: absolute; right: -7px; top: -7px; text-indent: -999em; overflow: hidden; background: #000 url("../img/icons-welcome.png") 0 -550px no-repeat; }
-.simplemodal-close:hover, .simplemodal-close:focus { background-position: 0 -600px; }
