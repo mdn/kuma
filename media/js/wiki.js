@@ -868,18 +868,26 @@
 
     function initTabBox() {
         $('.htab').each(function(index) {
-            var $htab = $(this),
-                $items = $htab.find('>ul>li');
+            var $self = $(this);
+            var $items = $self.find('>ul>li');
 
-            $htab.append($('div[id=compat-desktop]')[index]);
-            $htab.append($('div[id=compat-mobile]')[index]);
+            $self.addClass('tabs');
 
-            $items.find('a').click(function() {
-                var $this = $(this)
-                $items.removeClass('selected');
-                $this.parent().addClass('selected');
-                $htab.find('>div').hide().eq($items.index($this.parent())).show();
-            }).eq(0).click();
+            var desktopTable = $('div[id=compat-desktop]')[index];
+            if(desktopTable) {
+                $($items.find('a').get(0)).attr('href', '#tab-1-' + index);
+                $(desktopTable).attr('id', 'tab-1-' + index);
+                $self.append(desktopTable);
+            }
+
+            var mobileTable = $('div[id=compat-mobile]')[index];
+            if(mobileTable) {
+                $($items.find('a').get(1)).attr('href', '#tab-2-' + index);
+                $(mobileTable).attr('id', 'tab-2-' + index);
+                $self.append(mobileTable);
+            }
+
+            $self.tabs();
         });
     }
 
