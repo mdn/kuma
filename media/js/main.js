@@ -1,9 +1,6 @@
 // Use a global k to share data accross JS files
-k = {};
-
 (function () {
-    k.LAZY_DELAY = 500;  // delay to lazy loading scripts, in ms
-    k.MEDIA_URL = '/media/';
+    var LAZY_DELAY = 500;  // delay to lazy loading scripts, in ms
 
     $(document).ready(function() {
         /* Focus form field when clicking on error message. */
@@ -82,14 +79,14 @@ k = {};
 
         setTimeout(function lazyLoad() {
             for (i in scripts) {
-                $.get(k.MEDIA_URL + scripts[i]);
+                $.get(mdn.mediaPath + scripts[i]);
             }
             for (i in styles) {
                 $('head').append(
                     '<link rel="stylesheet" type="text/css" href="' +
-                    k.MEDIA_URL + styles[i] + '">');
+                    mdn.mediaPath + styles[i] + '">');
             }
-        }, k.LAZY_DELAY);
+        }, LAZY_DELAY);
     }
 
     /*
