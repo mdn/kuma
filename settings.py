@@ -592,8 +592,8 @@ MINIFY_BUNDLES = {
             'js/libs/prism/prism.css',
             'js/libs/prism/plugins/line-highlight/prism-line-highlight.css',
             'js/libs/prism/plugins/ie8/prism-ie8.css',
-            'prism-mdn/plugins/line-numbering/prism-line-numbering.css',
-            'prism-mdn/components/prism-json.css',
+            'js/prism-mdn/plugins/line-numbering/prism-line-numbering.css',
+            'js/prism-mdn/components/prism-json.css',
         ),
     },
     'js': {
@@ -671,8 +671,8 @@ MINIFY_BUNDLES = {
             'js/framebuster.js',
         ),
         'syntax-prism': (
-            'prism-mdn/components/prism-json.js',
-            'prism-mdn/plugins/line-numbering/prism-line-numbering.js',
+            'js/prism-mdn/components/prism-json.js',
+            'js/prism-mdn/plugins/line-numbering/prism-line-numbering.js',
             'js/syntax-prism.js',
         ),
         'ace-editor': (
