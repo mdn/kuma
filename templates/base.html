@@ -1,4 +1,7 @@
 {% from "includes/common_macros.html" import optimizely_script with context %}
+{% if waffle.flag('redesign') %}
+  {% include "base_redesign.html" %}
+{% else %}
 <!DOCTYPE html>
 <html lang="{{ LANG }}" dir="{{ DIR }}" id="developer-mozilla-org" xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:og="http://ogp.me/ns#">
 <head>
@@ -36,19 +39,7 @@
   <script src="{{ settings.SITE_URL }}/{{ MEDIA_URL }}js/libs/html5.js"></script>
   <![endif]-->
 
-  <script type="text/javascript">
-    // This represents the site configuration
-    // TODO:  Move this to its own module when we're AMD-ready
-    window.mdn = {
-      build: '{{ BUILD_ID_JS }}',
-      // Setting these objects up for later use
-      ckeditor: {},
-      mediaPath: '{{ MEDIA_URL }}',
-      wiki: {
-        autosuggestTitleUrl: '{{ url('wiki.autosuggest_documents') }}'
-      }
-    };
-  </script>
+  {% include "includes/config.html" %}
 
   {% block extrahead %}{% endblock %}
 
@@ -218,3 +209,4 @@
 {# end js #}
 </body>
 </html>
+{% endif %} {# ends redesign flag #}
