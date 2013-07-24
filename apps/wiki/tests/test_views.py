@@ -1760,6 +1760,26 @@ class DocumentEditingTests(TestCaseBase):
         ok_('A Test Article' in translations.html())
         ok_('English (US)' in translations.text())
 
+    def test_translation_source(self):
+        """Allow users to change "translation source" settings"""
+        self.client.login(username='admin', password='testpass')
+        data = new_document_data()
+        self.client.post(reverse('wiki.new_document'), data)
+        parent = Document.objects.get(locale=data['locale'], slug=data['slug'])
+
+        data.update({'full_path': 'en-US/a-test-article',
+                     'title': 'Another Test Article',
+                     'content': "Yahoooo!",
+                     'parent_id': parent.id})
+        self.client.post(reverse('wiki.new_document'), data)
+        child = Document.objects.get(locale=data['locale'], slug=data['slug'])
+
+        url = reverse('wiki.edit_document', args=[child.slug])
+        response = self.client.get(url)
+        content = pq(response.content)
+        ok_(content('li.metadata-choose-parent'))
+        ok_(str(parent.id) in content.html())
+
     @attr('tags')
     @mock.patch_object(Site.objects, 'get_current')
     def test_document_tags(self, get_current):

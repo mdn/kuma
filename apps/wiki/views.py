@@ -1049,9 +1049,9 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                     if 'current_rev' in rev_form._errors:
                         # Jump out to a function to escape indentation hell
                         return _edit_document_collision(
-                                request, orig_rev, curr_rev, is_iframe_target,
-                                is_raw, rev_form, doc_form, section_id,
-                                rev, doc)
+                            request, orig_rev, curr_rev, is_iframe_target,
+                            is_raw, rev_form, doc_form, section_id,
+                            rev, doc)
 
                 if rev_form.is_valid():
                     _save_rev_and_notify(rev_form, user, doc)
@@ -1120,23 +1120,23 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
         Attachment.objects.allow_add_attachment_by(request.user))
     docInfo = json.dumps(doc.get_json_data())
 
-    return render(request, 'wiki/edit_document.html',
-                        {'revision_form': rev_form,
-                         'document_form': doc_form,
-                         'section_id': section_id,
-                         'show_translation_parent_block':
-                            show_translation_parent_block,
-                         'disclose_description': disclose_description,
-                         'parent_slug': parent_slug,
-                         'parent_path': parent_path,
-                         'revision': rev,
-                         'document': doc,
-                         'docInfo': docInfo,
-                         'allow_add_attachment': allow_add_attachment,
-                         'attachment_form': AttachmentRevisionForm(),
-                         'attachment_data': attachments,
-                         'WIKI_DOCUMENT_TAG_SUGGESTIONS': constance.config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
-                         'attachment_data_json': json.dumps(attachments)})
+    context = {
+        'revision_form': rev_form,
+        'document_form': doc_form,
+        'section_id': section_id,
+        'disclose_description': disclose_description,
+        'parent_slug': parent_slug,
+        'parent_path': parent_path,
+        'revision': rev,
+        'document': doc,
+        'docInfo': docInfo,
+        'allow_add_attachment': allow_add_attachment,
+        'attachment_form': AttachmentRevisionForm(),
+        'attachment_data': attachments,
+        'WIKI_DOCUMENT_TAG_SUGGESTIONS': constance.config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
+        'attachment_data_json': json.dumps(attachments)
+    }
+    return render(request, 'wiki/edit_document.html', context)
 
 
 @xframe_options_sameorigin
@@ -1529,8 +1529,8 @@ def translate(request, document_slug, document_locale, revision_id=None):
 
     if not parent_doc.is_localizable:
         message = _lazy(u'You cannot translate this document.')
-        return render(request, 'handlers/400.html',
-                            {'message': message}, status=400)
+        context = {'message': message}
+        return render(request, 'handlers/400.html', context, status=400)
 
     if revision_id:
         initial_rev = get_object_or_404(Revision, pk=revision_id)
@@ -1589,8 +1589,8 @@ def translate(request, document_slug, document_locale, revision_id=None):
             content = based_on_rev.content
         if content:
             initial.update(content=wiki.content.parse(content)
-                                   .filterEditorSafety()
-                                   .serialize())
+                                               .filterEditorSafety()
+                                               .serialize())
         instance = doc and get_current_or_latest_revision(doc)
         rev_form = RevisionForm(instance=instance, initial=initial)
 
@@ -1660,6 +1660,20 @@ def translate(request, document_slug, document_locale, revision_id=None):
                 rev_form.instance.document = doc  # for rev_form.clean()
 
                 if rev_form.is_valid():
+                    parent_id = request.POST.get('parent_id', '')
+
+                    # Attempt to set a parent
+                    if parent_id:
+                        try:
+                            parent_doc = get_object_or_404(Document, id=parent_id)
+                            rev_form.instance.document.parent = parent_doc
+                            rev_form.instance.document.parent_topic = parent_doc
+                            doc.parent = parent_doc
+                            doc.parent_topic = parent_doc
+                            rev_form.instance.based_on.document = doc.original
+                        except Document.DoesNotExist:
+                            pass
+
                     _save_rev_and_notify(rev_form, request.user, doc)
                     url = reverse('wiki.document', args=[doc.full_path],
                                   locale=doc.locale)
@@ -1668,24 +1682,29 @@ def translate(request, document_slug, document_locale, revision_id=None):
     parent_split = _split_slug(parent_doc.slug)
     allow_add_attachment = (
         Attachment.objects.allow_add_attachment_by(request.user))
-    
+
     attachments = []
     if doc and doc.attachments:
         attachments = _format_attachment_obj(doc.attachments)
 
-    return render(request, 'wiki/translate.html',
-                        {'parent': parent_doc, 'document': doc,
-                         'document_form': doc_form, 'revision_form': rev_form,
-                         'locale': document_locale, 'based_on': based_on_rev,
-                         'disclose_description': disclose_description,
-                         'discard_href': discard_href,
-                         'allow_add_attachment': allow_add_attachment,
-                         'attachment_form': AttachmentRevisionForm(),
-                         'attachment_data': attachments,
-                         'attachment_data_json': json.dumps(attachments),
-                         'WIKI_DOCUMENT_TAG_SUGGESTIONS': constance.config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
-                         'specific_slug': parent_split['specific'],
-                         'parent_slug': parent_split['parent']})
+    context = {
+        'parent': parent_doc,
+        'document': doc,
+        'document_form': doc_form,
+        'revision_form': rev_form,
+        'locale': document_locale,
+        'based_on': based_on_rev,
+        'disclose_description': disclose_description,
+        'discard_href': discard_href,
+        'allow_add_attachment': allow_add_attachment,
+        'attachment_form': AttachmentRevisionForm(),
+        'attachment_data': attachments,
+        'attachment_data_json': json.dumps(attachments),
+        'WIKI_DOCUMENT_TAG_SUGGESTIONS': constance.config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
+        'specific_slug': parent_split['specific'],
+        'parent_slug': parent_split['parent']
+    }
+    return render(request, 'wiki/translate.html', context)
 
 
 @require_POST

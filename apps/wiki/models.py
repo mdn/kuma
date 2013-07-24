@@ -904,7 +904,7 @@ class Document(NotificationsMixin, models.Model):
         # Try to get ISO 8601 datestamps for the doc and the json
         json_lmod = self._json_data.get('json_modified', '')
         doc_lmod = self.modified.isoformat()
-        
+
         # If there's no parsed data or the data is stale & we care, it's time
         # to rebuild the cached JSON data.
         if (not self._json_data) or (not stale and doc_lmod > json_lmod):
@@ -1818,7 +1818,8 @@ class Revision(models.Model):
             # TODO(erik): This error message ignores non-translations.
             raise ProgrammingError('Revision.based_on must be None or refer '
                                    'to a revision of the default-'
-                                   'language document.')
+                                   'language document. It was %s' %
+                                   self.based_on)
 
         if not self.title:
             self.title = self.document.title

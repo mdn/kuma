@@ -602,15 +602,15 @@
             $('#btn-properties').hide();
         }
     }
-    
     // 
     // Initialize logic for metadata parent translation
     // 
     function initMetadataParentTranslation() {
-        var $parentLi = $('#article-head .metadata .metadata-choose-parent'),
+        var $parentLis = $('#article-head .metadata .metadata-choose-parent, ' +
+                           '#trans-description .description .metadata-choose-parent'),
             $parentInput = $('#parent_id');
-        if($parentLi.length) {
-            $parentLi.css('display', 'block');
+        $parentLis.each(function(index) {
+            $(this).css('display', 'block');
             $('#parent_text').mozillaAutocomplete({
                 minLength: 1,
                 requireValidOption: true,
@@ -627,9 +627,8 @@
                     $parentInput.val('');
                 }
             });
-        }
+        });
     }
-    
 
     //
     // Generates a storage key to be used by new, edit, translate, and translate-edit purposes
