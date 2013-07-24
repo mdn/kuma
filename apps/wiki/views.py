@@ -1529,8 +1529,8 @@ def translate(request, document_slug, document_locale, revision_id=None):
 
     if not parent_doc.is_localizable:
         message = _lazy(u'You cannot translate this document.')
-        return render(request, 'handlers/400.html',
-                            {'message': message}, status=400)
+        context = {'message': message}
+        return render(request, 'handlers/400.html', context, status=400)
 
     if revision_id:
         initial_rev = get_object_or_404(Revision, pk=revision_id)
@@ -1589,8 +1589,8 @@ def translate(request, document_slug, document_locale, revision_id=None):
             content = based_on_rev.content
         if content:
             initial.update(content=wiki.content.parse(content)
-                                   .filterEditorSafety()
-                                   .serialize())
+                                               .filterEditorSafety()
+                                               .serialize())
         instance = doc and get_current_or_latest_revision(doc)
         rev_form = RevisionForm(instance=instance, initial=initial)
 
@@ -1667,8 +1667,10 @@ def translate(request, document_slug, document_locale, revision_id=None):
                         try:
                             parent_doc = get_object_or_404(Document, id=parent_id)
                             rev_form.instance.document.parent = parent_doc
-                            rev_form.instance.based_on = doc.current_revision
+                            rev_form.instance.document.parent_topic = parent_doc
                             doc.parent = parent_doc
+                            doc.parent_topic = parent_doc
+                            rev_form.instance.based_on.document = doc.original
                         except Document.DoesNotExist:
                             pass
 
