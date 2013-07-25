@@ -2152,11 +2152,20 @@ class DocumentEditingTests(TestCaseBase):
 
         response = client.post(reverse('wiki.revert_document',
                                        args=[doc.full_path, rev.id]),
-                               {'revert': True})
+                               {'revert': True, 'comment': 'Blah blah'})
 
         ok_(302 == response.status_code)
         rev = doc.revisions.order_by('-id').all()[0]
         ok_('lorem ipsum dolor sit amet' == rev.content)
+        ok_('Blah blah' in rev.comment)
+
+        rev = doc.revisions.order_by('-id').all()[1]
+        response = client.post(reverse('wiki.revert_document',
+                                       args=[doc.full_path, rev.id]),
+                               {'revert': True})
+        ok_(302 == response.status_code)
+        rev = doc.revisions.order_by('-id').all()[0]
+        ok_(not ': ' in rev.comment)
 
 
 class DocumentWatchTests(TestCaseBase):
