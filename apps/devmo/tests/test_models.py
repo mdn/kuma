@@ -11,8 +11,7 @@ import test_utils
 from django.conf import settings
 from django.contrib.auth.models import User
 
-from devmo.models import Calendar, Event, UserProfile, UserDocsActivityFeed
-from dekicompat.tests import mock_put_mindtouch_user
+from devmo.models import Calendar, Event, UserProfile
 from wiki.tests import revision
 
 
@@ -89,7 +88,6 @@ class TestUserProfile(test_utils.TestCase):
     def setUp(self):
         pass
 
-    @mock_put_mindtouch_user
     def test_websites(self):
         """A list of websites can be maintained on a UserProfile"""
         user = User.objects.get(username='testuser')
@@ -128,72 +126,6 @@ class TestUserProfile(test_utils.TestCase):
         p2.save()
         p3 = UserProfile.objects.get(user=user)
         eq_(test_sites, p3.websites)
-
-    @attr('docs_activity')
-    def test_user_docs_activity_url(self):
-        """Can build the API URL for a user docs activity feed"""
-        username = "Sheppy"
-        url = UserDocsActivityFeed(username=username).feed_url_for_user()
-        ok_(url.endswith('/@api/deki/users/=%s/feed?format=raw' % username))
-
-    @attr('bug689203')
-    def test_activity_url_bug689203(self):
-        try:
-            username = u"She\xeappy"
-            UserDocsActivityFeed(username=username).feed_url_for_user()
-        except KeyError:
-            ok_(False, "No KeyError should be thrown")
-
-    @attr('docs_activity')
-    @patch('devmo.models.UserDocsActivityFeed.fetch_user_feed')
-    def test_user_docs_activity(self, fetch_user_feed):
-        if not settings.DEKIWIKI_ENDPOINT:
-            # Skip this, if MindTouch API not available.
-            raise SkipTest()
-
-        fetch_user_feed.return_value = (open(USER_DOCS_ACTIVITY_FEED_XML, 'r')
-                                        .read())
-        feed = UserDocsActivityFeed(username="Sheppy")
-        items = feed.items
-
-        eq_(100, len(items))
-
-        for item in items:
-
-            ok_(hasattr(item, 'rc_id'))
-            ok_(hasattr(item, 'rc_comment'))
-            ok_(hasattr(item, 'rc_title'))
-            ok_(hasattr(item, 'rc_timestamp'))
-
-            ok_(isinstance(item.rc_timestamp, datetime))
-            ok_(type(item.rc_revision) is int)
-
-            if 'EDIT' == item.rc_type:
-                ok_(item.edit_url is not None)
-            if 'NEW' == item.rc_type:
-                ok_(item.history_url is None)
-                ok_(item.diff_url is None)
-            if 'MOVE' == item.rc_type:
-                eq_(item.rc_moved_to_title, item.current_title)
-
-    @attr('docs_activity')
-    @attr('bug715923')
-    @patch('devmo.models.UserDocsActivityFeed.fetch_user_feed')
-    def test_bug715923_feed_parsing_errors(self, fetch_user_feed):
-        fetch_user_feed.return_value = """
-            THIS IS NOT EVEN XML, SO BROKEN
-        """
-        if not settings.DEKIWIKI_ENDPOINT:
-            # Skip this, if MindTouch API not available.
-            raise SkipTest()
-
-        try:
-            feed = UserDocsActivityFeed(username="Sheppy")
-            items = feed.items
-            eq_(False, items,
-                "On error, items should be False")
-        except Exception, e:
-            ok_(False, "There should be no exception %s" % e)
 
     def test_irc_nickname(self):
         """We've added IRC nickname as a profile field.
