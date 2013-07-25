@@ -1895,7 +1895,7 @@ def revert_document(request, document_path, revision_id):
         return render(request, 'wiki/confirm_revision_revert.html',
                             {'revision': revision, 'document': document})
 
-    document.revert(revision, request.user)
+    document.revert(revision, request.user, request.POST.get('comment'))
     return HttpResponseRedirect(reverse('wiki.document_revisions',
                                 args=[document.full_path]))
 

@@ -536,6 +536,12 @@ td.diff_header {
     margin: 20px 0 0;
 }
 
+#delete-revision textarea {
+  width: 90%;
+  height: 80px;
+  margin-bottom: 20px;
+}
+
 /* WYSIWYG-specific styles */
 .ui-autocomplete { 
   z-index: 100001 !important; /* Ugly, but have to do this for the autocomplete component to display on top of the CKEditor dialog */

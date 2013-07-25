@@ -27,6 +27,10 @@
         <div>{{ revision.tags }}</div>
         <form action="" method="post">
           {{ csrf() }}
+
+          <label><strong>{{ _('Comment') }}</strong></label>
+          {{ _('Why are you reverting to this revision?') }}
+          <textarea name="comment"></textarea>
           <p>
             {{ _('You are about to revert the document to this revision.  Click "submit" to revert to the content&nbsp;above.')|safe }}
           </p>

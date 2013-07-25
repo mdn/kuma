@@ -1027,13 +1027,15 @@ class Document(NotificationsMixin, models.Model):
             # Come up with a unique slug (or title):
             return unique_attr()
 
-    def revert(self, revision, user):
+    def revert(self, revision, user, comment=None):
         old_review_tags = [t.name for t in revision.review_tags.all()]
         if revision.document.original == self:
             revision.based_on = revision
         revision.id = None
         revision.comment = "Revert to revision of %s by %s" % (
                 revision.created, revision.creator)
+        if comment:
+            revision.comment += ': "%s"' % comment
         revision.created = datetime.now()
         revision.creator = user
         revision.save()
