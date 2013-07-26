@@ -1690,6 +1690,8 @@ class DocumentType(SearchMappingType, Indexable):
             if field in self._highlight:
                 stripped_matches = bleach_matches(self._highlight[field])
                 return u'...'.join(stripped_matches)
+        if not stripped_matches:
+            return self.summary
         return u'...'.join(stripped_matches)
 
 
