@@ -17,8 +17,11 @@
       tabSwitch(currentblock);
     }
     else {
-      currentblock = $('#current-challenge .tabs li.current a').attr('href').replace(targetRegex, '$1');
-      tabSwitch(currentblock);
+      var href = $('#current-challenge .tabs li.current a').attr('href');
+      if(href) {
+        currentblock = href.replace(targetRegex, '$1');
+        tabSwitch(currentblock);
+      }
     }
     $('#'+currentblock).removeClass('block-hidden'); // make the current block visible
   };
