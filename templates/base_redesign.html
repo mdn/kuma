@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="{{ LANG }}" dir="{{ DIR }}" id="developer-mozilla-org" xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:og="http://ogp.me/ns#">
+<head>
+	<title>{% block title %}{{ _('Mozilla Developer Network') }}{% endblock %}</title>
+
+	{% block site_css %}
+		{{ css('redesign') }}
+	{% endblock %}
+	<link rel="stylesheet" type="text/css" media="print" href="{{ MEDIA_URL }}css/redesign/print.css" />
+
+	<!--[if IE]>
+	<meta http-equiv="imagetoolbar" content="no" />
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	<script src="{{ settings.SITE_URL }}{{ MEDIA_URL }}js/libs/html5.js"></script>
+	<![endif]-->
+
+	{% include "includes/config.html" %}
+
+	{% block extrahead %}{% endblock %}
+
+	{% if not is_sphinx %}
+		{% include "includes/google_analytics.html" %}
+	{% endif %}
+</head>
+<body>
+
+	<!-- Header -->
+	<header>
+
+	</header>
+
+	<!-- Main Content Area -->
+	<main>
+
+	</main>
+
+	<!-- Footer -->
+	<footer>
+
+	</footer>
+
+	<!-- Site JavaScript -->
+	{% block site_js %}
+		{{ js('redesign') }}
+	{% endblock %}
+	{% block js %}{% endblock %}
+	<script src="/{{ request.locale }}/waffles.js" type="text/javascript" async></script>
+</body>
+</html>

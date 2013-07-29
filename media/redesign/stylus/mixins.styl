@@ -1,0 +1,13 @@
+/*
+
+	This Stylus file provides man mixins for use within the MDN theme.
+
+*/
+
+/* generates a grid based on min/max and increment */
+generate-grid(increment, start, end)
+	total = start
+	for n, x in 0..((end - start) / increment)
+		.column-{x+1}
+			width total
+		total = total + increment
