@@ -5,6 +5,7 @@ Every Time
 2. git submodule update --init
 3. pushd vendor && git pull origin master && git submodule update --init && popd
 4. Find and remove any *.pyc files.
+5. ./scripts/compile-stylesheets
 5. manage.py compress_assets
 6. pushd locale && svn up && ./compile-mo.sh . && popd
 7. schematic migrations
