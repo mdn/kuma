@@ -361,7 +361,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'sumo.anonymous.AnonymousIdentityMiddleware',
     'sumo.middleware.PlusToSpaceMiddleware',
-    #'dekicompat.middleware.DekiUserMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'users.middleware.BanMiddleware',
     'django_statsd.middleware.GraphiteRequestTimingMiddleware',
@@ -373,7 +372,6 @@ AUTHENTICATION_BACKENDS = (
     'django_browserid.auth.BrowserIDBackend',
     'django.contrib.auth.backends.ModelBackend',
     'teamwork.backends.TeamworkBackend',
-    'dekicompat.backends.DekiUserBackend',
 )
 AUTH_PROFILE_MODULE = 'devmo.UserProfile'
 
@@ -416,7 +414,6 @@ INSTALLED_APPS = (
     'django_browserid',
 
     # MDN
-    'dekicompat',
     'devmo',
     'docs',
     'feeder',

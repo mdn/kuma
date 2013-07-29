@@ -8,7 +8,6 @@ from pyquery import PyQuery as pq
 from django.conf import settings
 from django.contrib.auth.models import User
 
-from dekicompat.backends import DekiUserBackend
 from devmo.models import UserProfile
 from sumo.tests import LocalizingClient, TestCase
 
@@ -38,12 +37,3 @@ def user(save=False, **kwargs):
     if save:
         u.save()
     return u
-
-
-def get_deki_user_doc(user):
-    deki_id = user.get_profile().deki_user_id
-    resp = requests.get(DekiUserBackend.profile_by_id_url % (str(deki_id) +
-                        '?apikey=' + settings.DEKIWIKI_APIKEY))
-    eq_(200, resp.status_code)
-    doc = pq(resp.content)
-    return doc

@@ -12,7 +12,6 @@ from sumo.tests import TestCase
 from users.helpers import (profile_url, profile_avatar, public_email,
                            display_name, user_list)
 from devmo.models import UserProfile
-from dekicompat.tests import mock_put_mindtouch_user
 
 
 class HelperTestCase(TestCase):
@@ -42,7 +41,6 @@ class HelperTestCase(TestCase):
              '&#110;&#111;&#116;&#46;&#97;&#110;&#46;&#101;&#109;&#97;&#105;'
              '&#108;</span>', public_email('not.an.email'))
 
-    @mock_put_mindtouch_user
     def test_display_name(self):
         new_user = User.objects.create(pk=40000, username='testuser3')
         eq_(u'testuser3', display_name(new_user))
