@@ -65,6 +65,8 @@ def revision(save=False, **kwargs):
     if 'document' not in kwargs:
         d = document()
         d.save()
+    else:
+        d = kwargs['document']
 
     defaults = {'summary': 'Some summary', 'content': 'Some content',
                 'significance': SIGNIFICANCES[0][0], 'comment': 'Some comment',

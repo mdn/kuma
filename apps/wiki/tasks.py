@@ -5,6 +5,7 @@ from django.contrib.sites.models import Site
 from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail, mail_admins
+from django.dispatch import receiver
 from django.template import Context, loader
 
 import celery.conf
@@ -16,6 +17,7 @@ from tower import ugettext as _
 from sumo.urlresolvers import reverse
 from sumo.utils import chunked
 from wiki.models import Document, SlugCollision
+from wiki.signals import render_done
 
 
 log = logging.getLogger('k.task')
@@ -105,7 +107,6 @@ def _rebuild_kb_chunk(data, **kwargs):
         subject = ('[%s] Exceptions raised in _rebuild_kb_chunk()' %
                    settings.PLATFORM_NAME)
         mail_admins(subject=subject, message='\n'.join(messages))
-    transaction.commit_unless_managed()
 
     unpin_this_thread()  # Not all tasks need to do use the master.
 
@@ -114,3 +115,15 @@ def _rebuild_kb_chunk(data, **kwargs):
 def render_document(doc, cache_control, base_url):
     """Simple task wrapper for the render() method of the Document model"""
     doc.render(cache_control, base_url)
+
+
+@task
+def build_json_data_for_document_task(pk, stale):
+    """Force-refresh cached JSON data after rendering."""
+    document = Document.objects.get(pk=pk)
+    document.get_json_data(stale=stale)
+
+
+@receiver(render_done)
+def build_json_data_handler(sender, instance, **kwargs):
+    build_json_data_for_document_task.delay(instance.pk, stale=False)

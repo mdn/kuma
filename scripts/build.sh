@@ -71,6 +71,13 @@ NOSE_ARGS = [
     '--logging-clear-handlers',
     '--with-xunit',
 ]
+ES_INDEX_PREFIX = 'mdn_$JOB_NAME'
+ES_URLS = ['http://jenkins-es20:9200']
+ES_INDEXES = {'default': 'main_index'}
+ES_INDEXING_TIMEOUT = 30
+ES_LIVE_INDEX = True
+ES_DISABLED = False
+
 SETTINGS
 
 

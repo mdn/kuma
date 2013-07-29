@@ -15,6 +15,8 @@ class TestLiveIndexing(ElasticTestCase):
         count_before = S().count()
 
         r = revision(save=True)
+        r.document.render()
+
         self.refresh()
         eq_(count_before + 1, S().count())
 
