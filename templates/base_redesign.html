@@ -4,7 +4,7 @@
 	<title>{% block title %}{{ _('Mozilla Developer Network') }}{% endblock %}</title>
 
 	{% block site_css %}
-		{{ css('redesign') }}
+		{# {{ css('redesign') }} #}
 	{% endblock %}
 	<link rel="stylesheet" type="text/css" media="print" href="{{ MEDIA_URL }}css/redesign/print.css" />
 
@@ -41,7 +41,7 @@
 
 	<!-- Site JavaScript -->
 	{% block site_js %}
-		{{ js('redesign') }}
+		{# {{ js('redesign') }} #}
 	{% endblock %}
 	{% block js %}{% endblock %}
 	<script src="/{{ request.locale }}/waffles.js" type="text/javascript" async></script>
