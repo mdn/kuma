@@ -1,6 +1,7 @@
 import json
 import logging
 
+from datetime import datetime
 from functools import partial
 
 from django.conf import settings
@@ -15,8 +16,6 @@ import jinja2
 from tower import ugettext_lazy as _lazy, ugettext as _
 from waffle.decorators import waffle_flag
 
-from dashboards.readouts import (overview_rows, READOUTS, L10N_READOUTS,
-                                 CONTRIBUTOR_READOUTS)
 from sumo_locales import LOCALES
 from sumo.parser import get_object_fallback
 from sumo.urlresolvers import reverse
@@ -30,7 +29,10 @@ from wiki.models import Document, Revision
 from wiki.views import SHOWFOR_DATA
 from wiki.helpers import format_comment
 
-from datetime import datetime
+from .readouts import (overview_rows, READOUTS, L10N_READOUTS,
+                       CONTRIBUTOR_READOUTS)
+from . import (DEFAULT_LOCALE, ORDERS, LOCALES, TOPICS, LANGUAGES,
+               WAFFLE_FLAG)
 
 
 HOME_DOCS = {'quick': 'Home page - Quick', 'explore': 'Home page - Explore'}
@@ -131,6 +133,45 @@ def localization(request):
     data = {'overview_rows': partial(overview_rows, request.locale)}
     return _kb_main(request, L10N_READOUTS, 'localization.html',
                     extra_data=data)
+
+
+@require_GET
+@waffle_flag(WAFFLE_FLAG)
+def localization_new(request):
+    import q
+
+    locale = request.GET.get('locale')
+    topic = request.GET.get('topic')
+    orderby = request.GET.get('orderby')
+    localization_flags = request.GET.get('localization_flags')
+
+    docs = Document.objects.exclude(locale=DEFAULT_LOCALE)
+
+    if locale and locale in LANGUAGES:
+        docs = docs.filter(locale=locale)
+
+    if localization_flags:
+        docs = docs.filter(current_revision__localization_tags__name=localization_flags)
+
+    q(docs)
+    if orderby and orderby in ORDERS:
+        q(orderby)
+        docs = docs #.order_by('-' + orderby)
+    else:
+        docs = docs.order_by('-modified')
+
+    filters = {
+        'locale': locale,
+        'topic': topic,
+        'localization_flags': localization_flags,
+        'orderby': orderby,
+    }
+    q(docs)
+    params = {
+        'locales': LOCALES, 'topics': TOPICS, 'orderby_list': ORDERS,
+        'docs': docs, 'filters': filters,
+    }
+    return render(request, 'dashboards/localization_new.html', params)
 
 
 @require_GET

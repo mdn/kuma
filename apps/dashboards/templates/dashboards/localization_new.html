@@ -1,4 +1,6 @@
-{% extends "l10ndashboard/base.html" %}
+{% extends "base.html" %}
+
+{% set title = _('Localization Dashboard') %}
 
 {% block content %}
 <section id="content">
@@ -22,7 +24,7 @@
                     {{ _("Topic") }}
                     <select name="topic">
                         {% for topic in topics %}
-                        <option value="{{ topic }}">{{ topic }}</option>
+                        <option value="{{ topic }}"{{ selected(topic, filters['topic']) }}>{{ topic }}</option>
                         {% endfor %}
                     </select>
                 </li>
@@ -75,9 +77,18 @@
                 <td>{{ doc.language }} ({{ doc.locale }})</td>
                 <td>&nbsp;</td>
                 <td><a href="{{ doc.get_absolute_url() }}">{{ doc.title }}</a></td>
+                {% if doc.current_revision %}
                 <td>{{ doc.current_revision.created }}</td>
+                {% else %}
+                <td>&nbsp;</td>
+                {% endif %}
+                {% if doc.parent %}
                 <td><a href="{{ doc.parent.get_absolute_url() }}">{{ doc.parent.title }}</a></td>
                 <td>{{ doc.parent.current_revision.created }}</td>
+                {% else %}
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                {% endif %}
             </tr>
         {% else %}
             <tr>

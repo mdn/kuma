@@ -28,9 +28,6 @@ urlpatterns = patterns('',
     ('', include('docs.urls')),
     (r'^docs', include('wiki.urls')),
 
-    # L10N Dashboard
-    (r'^l10ndashboard', include('l10ndashboard.urls')),
-
     # Kitsune admin (not Django admin).
     #(r'^admin/', include('kadmin.urls')),
 
