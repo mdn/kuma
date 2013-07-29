@@ -1,0 +1,90 @@
+/* Desktop Layout (default)
+	*
+	* The Sandstone layout is based on a 12 column grid where each column is 60px wide with 20px gutters.
+	* The gutters are achieved with 10px left and right margins on each column.
+	* Blocks can span multiple columns in any number of configurations.
+	*
+	* There are 30px outer page gutters for a total page width of 1000px.
+	*
+	* width = (60px * columns) + (20px * (columns - 1))
+	*
+	* 1 column span - width: 60px;
+	* 2 column span - width: 140px;
+	* 3 column span - width: 220px;
+	* 4 column span - width: 300px;
+	* 5 column span - width: 380px;
+	* 6 column span - width: 460px;
+	* 7 column span - width: 540px;
+	* 8 column span - width: 620px;
+	* 9 column span - width: 700px;
+	* 10 column span - width: 780px;
+	* 11 column span - width: 860px;
+	* 12 column span - width: 940px;
+*/
+generate-grid(grid-increment-desktop, grid-start-desktop, grid-end-desktop)
+
+
+/* Tablet Layout - 760px
+	*
+	* For smaller viewports, the column width drops to 40px with the
+	* same 20px column gutter and 30px page gutters.
+	*
+	* width = (40px * columns) + (20px * (columns - 1))
+	*
+	* 1 column span - width: 40px;
+	* 2 column span - width: 100px;
+	* 3 column span - width: 160px;
+	* 4 column span - width: 220px;
+	* 5 column span - width: 280px;
+	* 6 column span - width: 340px;
+	* 7 column span - width: 400px;
+	* 8 column span - width: 460px;
+	* 9 column span - width: 520px;
+	* 10 column span - width: 580px;
+	* 11 column span - width: 640px;
+	* 12 column span - width: 700px;
+*/
+@media only screen and (min-width: 760px) and (max-width: 1000px) 
+
+	generate-grid(grid-increment-tablet, grid-start-tablet, grid-end-tablet)
+
+/* Mobile Layout - 320px
+ *
+ * For very small viewports, we switch to a 5 column grid
+ * at 40px per column, still with a 20px gutter.
+ *
+ * The outer page gutter goes from 30px to 20px.
+ *
+ * width = (40px * columns) + (20px * (columns - 1))
+ *
+ * 1 column span - width: 40px;
+ * 2 column span - width: 100px;
+ * 3 column span - width: 160px;
+ * 4 column span - width: 220px;
+ * 5 column span - width: 280px;
+ */
+@media only screen and (max-width: 760px) 
+
+	generate-grid(grid-increment-mobile, grid-start-mobile, grid-end-mobile)
+
+ /* Wide Mobile Layout - 480px
+ *
+ * For slightly wider viewports (e.g. smartphones in landscape mode),
+ * we keep the 40px column but gain two more columns, for a total of 7.
+ *
+ * The outer page gutter is still 20px for a total page width of 440px.
+ *
+ * width = (40px * columns) + (20px * (columns - 1))
+ *
+ * 1 column span - width: 40px;
+ * 2 column span - width: 100px;
+ * 3 column span - width: 160px;
+ * 4 column span - width: 220px;
+ * 5 column span - width: 280px;
+ * 6 column span - width: 340px;
+ * 7 column span - width: 400px;
+ */
+
+@media only screen and (min-width: 480px) and (max-width: 760px)
+
+	generate-grid(grid-increment-mobile, grid-start-mobile, grid-end-mobile-wide)

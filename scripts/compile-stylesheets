@@ -1,0 +1,7 @@
+BASEDIR=$(dirname $0)
+
+#! /bin/sh
+for file in main print wiki demo-studio profile search zones
+do
+	stylus $BASEDIR/../media/redesign/stylus/$file.styl --out $BASEDIR/../media/redesign/css --compress
+done

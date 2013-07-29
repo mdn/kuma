@@ -595,6 +595,9 @@ MINIFY_BUNDLES = {
             'js/prism-mdn/plugins/line-numbering/prism-line-numbering.css',
             'js/prism-mdn/components/prism-json.css',
         ),
+        'redesign': (
+            'css/redesign/main.css',
+        ),
     },
     'js': {
         'mdn': (
@@ -680,6 +683,9 @@ MINIFY_BUNDLES = {
             'js/libs/ace/mode-javascript.js',
             'js/libs/ace/theme-dreamweaver.js',
             'js/libs/ace/worker-javascript.js',
+        ),
+        'redesign': (
+            'redesign/js/main.js',
         ),
     },
 }

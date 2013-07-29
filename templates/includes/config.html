@@ -1,0 +1,12 @@
+<script type="text/javascript">
+  // This represents the site configuration
+  // TODO:  Move this to its own module when we're AMD-ready
+  window.mdn = {
+    build: '{{ BUILD_ID_JS }}',
+    ckeditor: {},
+    mediaPath: '{{ MEDIA_URL }}',
+    wiki: {
+      autosuggestTitleUrl: '{{ url('wiki.autosuggest_documents') }}'
+    }
+  };
+</script>
