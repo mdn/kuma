@@ -158,7 +158,7 @@
             {% endfor %}
             </ul>
 
-            {% if current_challenge_tag_name %}
+            {% if not waffle.flag('derby_closed') and current_challenge_tag_name %}
             <strong>{{ _('This month\'s') }} <a href="{{ url('demos_devderby_landing') }}">{{ _('Dev Derby') }}</a>:</strong><br />
             <strong class="derby-topic" style="color:#995C00">{{ tag_meta(current_challenge_tag_name, 'short_title') }}</strong><br />
             <span class="derby-explain">{{ _('Submit your demo to the Derby to win an Android phone or other prizes.') }}</span>
