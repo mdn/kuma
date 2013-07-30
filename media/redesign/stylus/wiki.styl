@@ -1,0 +1,112 @@
+@import 'vars'
+@import 'mixins'
+@import 'grid'
+
+.crumbs
+	font-size smaller-font-size
+	margin-bottom 40px
+
+	li
+		display inline-block
+
+	i
+		color #c1c2c4
+		display inline-block
+		margin 0 10px 0 5px
+		font-size 70%
+	
+	reverse-link-decoration()
+
+.page-buttons
+	float right
+
+	li
+		display inline-block
+		margin-left (grid-spacing / 2)
+
+	a
+		font-size smaller-font-size
+		compat-only(font-family, site-font-family)
+		compat-only(letter-spacing, auto)
+
+	i
+		font-size: 16px
+
+.summary
+	background light-background-color
+	font-weight bold
+	padding grid-spacing
+	margin-bottom grid-spacing
+
+	prevent-last-child-spacing(p, margin-bottom)
+
+	
+/* tag and file icons under the TOC */
+.tag-attach-list
+	margin-top grid-spacing
+	position relative
+
+	i
+		left (grid-spacing / 2)
+		position absolute
+		font-weight bold
+
+	ul, > a
+		margin-left 40px
+		display block
+		font-size smaller-font-size
+
+		li
+			display inline-block
+
+	> a
+		text-decoration none
+		&:hover
+			text-decoration underline
+
+.tags
+	li
+		margin-bottom 7px
+	a
+		padding 1px 4px
+		border 1px solid #cee9f9
+		text-decoration none
+		border-radius 4px
+
+/* quick links */
+.quick-links
+	position relative
+	font-size smaller-font-size
+
+	li
+		position relative
+		padding-top list-item-spacing
+
+	ol ol li
+		padding-left 20px
+
+	a
+		display block
+		position relative
+		padding-left 20px
+	i
+		margin-right (grid-spacing / 2)
+		font-size 14px
+		position absolute
+		left 3px
+		top 1px
+
+	reverse-link-decoration()
+
+/* adjustments to columns based on show/hide */
+#wiki-column-container.wiki-right-closed #wiki-content, #wiki-column-container.wiki-left-closed #wiki-content
+	@extend .column-9
+
+#wiki-column-container.wiki-right-closed #wiki-content
+	margin-right: 0
+
+#wiki-column-container.wiki-left-closed #wiki-content
+	margin-left: 0
+
+#wiki-column-container.wiki-left-closed.wiki-right-closed #wiki-content
+	@extend .column-all

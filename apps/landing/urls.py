@@ -16,4 +16,9 @@ urlpatterns = patterns('landing.views',
     url(r'^promote/buttons/?$', 'promote_buttons', name='promote_buttons'),
     url(r'^forum-archive/?$', 'forum_archive', name='forum_archive'),
     url(r'^waffles.js$', 'waffles', name='waffles'),
+
+    # Redesign stub helpers
+    url(r'^redesign/stub/zone/?$', 'redesign_zone', name='redesign_zone'),
+    url(r'^redesign/stub/article/?$', 'redesign_article', name='redesign_article'),
+    url(r'^redesign/stub/search_results/?$', 'redesign_results', name='redesign_results'),
 )

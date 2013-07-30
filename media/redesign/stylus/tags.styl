@@ -1,0 +1,68 @@
+@import 'vars'
+
+/* headings */
+h1, h2, h3, h4
+	font-weight light-font-weight
+	margin-bottom (grid-spacing/2)
+
+h1
+	font-size 48px
+	letter-spacing -2px
+	margin-bottom grid-spacing
+h2
+	font-size 32px
+	letter-spacing -1px
+	line-height 100%
+
+h3
+	font-size 28px
+	letter-spacing -0.5px
+	line-height 100%
+
+h4
+	font-size 24px
+	letter-spacing -0.25px
+	line-height 100%
+	
+/* basic text */
+p
+	margin-bottom grid-spacing
+
+
+/* forms */
+input[type='search']
+	vendorize(appearance, textfield)
+
+
+/* links */
+a
+	color link-color
+
+	i[class^='icon-']:before, i[class*=' icon-']:before
+		cursor pointer
+
+a.button
+	text-decoration none
+	display inline-block
+	compat-important(background-color, button-background)
+	compat-important(color, button-color)
+	compat-important(text-transform, uppercase)
+	compat-important(padding, 5px 11px)
+	compat-important(border-radius, 4px)
+	vendorize(box-shadow, inset 0 -1px #bbbfc2)
+	compat-only(background-image, none)
+
+	span 
+		width 0
+		overflow hidden
+		display: block;
+		position: absolute
+		top: -99999px
+		left: -99999px
+
+	i
+		display inline-block
+		margin-left (grid-spacing / 2)
+
+	&.icon-only i
+		margin 1px 0

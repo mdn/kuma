@@ -1,0 +1,127 @@
+/* header */
+header, header > .center
+	height 90px
+
+body > header
+	create-gradient-background(header-background-color)
+	border-bottom 1px solid rgba(255, 255, 255, 0.2)
+
+	.logo
+		@extend .offscreen
+		width 114px
+		height 26px
+		background url('../img/temporary-logo.png') 0 0 no-repeat
+		display block
+		position absolute
+		left gutter-width
+		bottom 21px
+
+nav
+	> ul
+		position absolute
+		right gutter-width
+		bottom 21px
+
+		> li
+			display inline-block
+			padding-left 47px
+			position relative
+
+			> a
+				compat-important(color, menu-link-color)
+				compat-important(text-transform, uppercase)
+				compat-important(text-decoration, none)
+				compat-important(font-weight, bold)
+
+	button[type='submit']
+		display none
+
+	.submenu
+		position absolute
+		top 40px
+		left -200px
+		border-top 5px solid #404040
+		background #fff
+		padding (grid-spacing * .75) grid-spacing
+		width 520px
+		z-index 9999
+		display none
+
+		& > div:first-child
+			border-right 1px dotted #d4dde4
+			margin-right grid-spacing
+
+		.submenu-column
+			min-height 90px
+			width 225px
+			display inline-block
+			padding-right grid-spacing
+
+		a
+			font-size smaller-font-size
+			padding 5px 0
+			display block
+
+		reverse-link-decoration()
+
+		generate-arrow()
+		&:before
+			border-bottom-color #fff
+			position absolute
+			top -19px
+			left 255px
+			z-index 2
+
+		&:after
+			border-bottom-color #333
+			position absolute
+			top -24px
+			left 255px
+			z-index 1
+
+
+
+.search-wrap
+	background #fff
+	padding 4px 8px
+	border-radius 3px
+
+	input
+		background transparent
+		border 0
+		color menu-link-color
+		text-transform uppercase
+		font-weight bold
+		width 180px
+		compat-only(padding, 0)
+
+		&::-webkit-input-placeholder
+			color text-color
+			text-align right
+		&::-moz-input-placeholder
+			color text-color
+			text-align right
+
+	@media media-query-tablet
+
+		input
+			width 100px
+		
+
+/* main content area */
+main
+	padding-top first-content-top-padding
+
+
+
+
+
+
+
+
+
+
+
+/* footer */
+footer
+	height 300px
