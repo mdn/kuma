@@ -6,8 +6,10 @@
 
 {% block extrahead %}
     {{ css('devderby') }}
+    {% if not waffle.flag('derby_closed') %}
     <link rel="alternate" type="application/atom+xml" title="{{_('Dev Derby Submissions')}}"
         href="{{ url('demos_feed_tag', tag=current_challenge_tag_name, format='atom') }}" />
+    {% endif %}
 {% endblock %}
 
 {% block title %}{{ page_title(_('Dev Derby')) }}{% endblock %}
@@ -35,23 +37,43 @@
     <header id="derby-head">
       <p class="presents"><a href="{{ url('demos') }}">{{_("Mozilla Demo Studio")}}</a> {{_("presents")}}</p>
       <h1><a href="{{url('demos_devderby_landing')}}">{{_("Dev Derby")}}</a></h1>
-      <h2>{% trans title=tag_meta(current_challenge_tag_name, "short_title") %}Show us what you can do with {{ title }}{% endtrans %}</h2>
-      <p class="info">{{_("Join the Dev Derby now and submit your demo to win an Android phone or other prizes.")}}</p>
-      <p class="submit">{% trans %}<a href="{{ submit_url }}"><b>Submit</b> Your Demo</a>{% endtrans %}</p>
+
+      {% if not waffle.flag('derby_closed') %}
+        <h2>{% trans title=tag_meta(current_challenge_tag_name, "short_title") %}Show us what you can do with {{ title }}{% endtrans %}</h2>
+        <p class="info">{{_("Join the Dev Derby now and submit your demo to win an Android phone or other prizes.")}}</p>
+        <p class="submit">{% trans %}<a href="{{ submit_url }}"><b>Submit</b> Your Demo</a>{% endtrans %}</p>
+      {% else %}
+        <h2>{{ _('Dev Derby on Hiatus') }}</h2>
+        <p>{{ _('The Dev Derby will be on hiatus from August to October 2013.  It will return in November.') }}</p>
+      {% endif %}
     </header>
 
   <div class="main">
     <section id="upcoming">
       <header>
+        {% if not waffle.flag('derby_closed') %}
         <h1>{{_("Upcoming Challenges")}}</h1>
+        {% else %}
+        <h1>{{_("Recent Challenges")}}</h1>
+        {% endif %}
       </header>
       <ol>
         <li class="first">
-          <h2 class="title">{{tag_meta(current_challenge_tag_name, "short_title")}}</h2>
-          <h3 class="date">{{tag_meta(current_challenge_tag_name, "short_dateline")}}</h3>
-          <h4 class="tagline">{{tag_meta(current_challenge_tag_name, "tagline")}}</h4>
-          <h5 class="current">{% trans %}<span><b>Current</b> Derby</span>{% endtrans %}</h5>
-          <p class="desc">{{tag_meta(current_challenge_tag_name, "summary")}}</p>
+          {% if not waffle.flag('derby_closed') %}
+            <h2 class="title">{{tag_meta(current_challenge_tag_name, "short_title")}}</h2>
+            <h3 class="date">{{tag_meta(current_challenge_tag_name, "short_dateline")}}</h3>
+            <h4 class="tagline">{{tag_meta(current_challenge_tag_name, "tagline")}}</h4>
+            <h5 class="current">{% trans %}<span><b>Current</b> Derby</span>{% endtrans %}</h5>
+            <p class="desc">{{tag_meta(current_challenge_tag_name, "summary")}}</p>
+          {% else %}
+            <h2 class="title"><a href="{{ devderby_tag_to_date_url("challenge:2013:july") }}">{{tag_meta("challenge:2013:july", "short_title")}}</a></h2>
+            <h3 class="date">{{tag_meta("challenge:2013:july", "short_dateline")}}</h3>
+            <h4 class="tagline"><a href="{{ devderby_tag_to_date_url("challenge:2013:july") }}">{{tag_meta("challenge:2013:july", "tagline")}}</a></h4>
+            {% if not waffle.flag('derby_closed') %}
+            <h5 class="current">{% trans %}<span><b>Current</b> Derby</span>{% endtrans %}</h5>
+            {% endif %}
+            <p class="desc">{{tag_meta("challenge:2013:july", "summary")}}</p>
+          {% endif %}
         </li>
         <li class="second">
           <h2 class="title"><a href="{{ devderby_tag_to_date_url("challenge:2013:may") }}">{{tag_meta("challenge:2013:may", "short_title")}}</a></h2>
@@ -69,6 +91,7 @@
     </section>
     
     <section id="current-challenge">
+      {% if not waffle.flag('derby_closed') %}
       <ul class="tabs">
         <li class="current"><a href="#tab-challenge">{{_("Current")}}</a></li>
         <li><a href="#tab-submissions">{{_("Submissions")}}</a></li>
@@ -193,6 +216,20 @@
         </ul>
       </section>
     
+    {% else %}
+
+      {% trans %}
+        <div style="padding-right: 20px;">
+          <h2>Dev Derby on Hiatus</h2>
+          <p>The Dev Derby will be on hiatus from August to October while we work on revamping the contest series. The winners of all monthly contests through August 2013 will be announced on <a href="https://hacks.mozilla.org/">Mozilla Hacks</a> and rewarded per the contest rules, but a new monthly contest will not begin until November. When it returns, you may see some changes in the contest format. However, the Dev Derby mission remains unchanged: to provide a platform that helps web developers learn, share, and push the web forward.</p>
+
+          <p>For more information, see <a href="https://hacks.mozilla.org/2013/06/announcing-an-administrative-change-to-the-dev-derby/">Announcing an administrative change to the Dev Derby</a>. If you have suggestions or feedback about Dev Derby, please leave them in the comments on that posting.</p>
+
+          <p>See you in November!</p>
+        </div>
+      {% endtrans %}
+
+    {% endif %}
     </section><!-- /#current-challenge -->
   </div><!-- /.main -->
       
