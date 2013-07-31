@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import *
+from django.conf.urls import include, patterns, url
 
 from .feeds import RecentSubmissionsFeed, FeaturedSubmissionsFeed
 from .feeds import TagSubmissionsFeed, ProfileSubmissionsFeed
