@@ -80,6 +80,9 @@ from wiki import kumascript
 from pyquery import PyQuery as pq
 from django.utils.safestring import mark_safe
 
+from django.core.validators import URLValidator
+from django.core.mail import EmailMessage
+
 
 log = logging.getLogger('k.wiki')
 
@@ -1490,6 +1493,36 @@ def select_locale(request, document_slug, document_locale):
     doc = get_object_or_404(
         Document, locale=document_locale, slug=document_slug)
     return render(request, 'wiki/select_locale.html', {'document': doc})
+
+
+@require_http_methods(['GET', 'POST'])
+@prevent_indexing
+def mvp_signup(request):
+    """ Something """
+    context = {'submitted': False}
+
+    if request.method == 'POST':
+        location = request.POST.get('location', '')
+        context['location'] = location
+
+        if location:
+            validate = URLValidator(verify_exists=True)
+            try:
+                validate(location)
+                context['submitted'] = True
+
+                message = """
+A request for external documentation to be added to MDN has 
+been made for the following address:
+
+%s
+                """ % location
+                EmailMessage('MVP External Source Documentation Request', message, to=[settings.MVP_SIGNUP_EMAIL])
+
+            except:
+                context['error'] = _('The URL you provided could not be reached.')
+                pass
+    return render(request, 'wiki/mvp_signup.html', context)
 
 
 @require_http_methods(['GET', 'POST'])
