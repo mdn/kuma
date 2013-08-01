@@ -84,6 +84,9 @@
         </section>
         {% endif %}
 
+        {% if waffle.flag('external_signup') %}
+        <h2>Do you have docs you want to automatically add to MDN from an external source? <a href="{{ url('wiki.external_signup') }}">Let us know!</a></h2>
+        {% endif %}
         <header id="article-head">
 
           <div class="title">

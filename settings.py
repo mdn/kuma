@@ -1012,6 +1012,11 @@ CONSTANCE_CONFIG = dict(
         ]),
         "JSON array listing tag suggestions for documents"
     ),
+
+    EXTERNAL_SIGNUP_EMAIL = (
+        '',
+        'The email address to receive external docs signup emails.'
+    ),
 )
 
 BROWSERID_VERIFICATION_URL = 'https://verifier.login.persona.org/verify'

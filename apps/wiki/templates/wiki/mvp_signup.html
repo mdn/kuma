@@ -1,6 +1,6 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
-{% set title = _('MVP External Document Source Signup') %}
+{% set title = _('External Document Source Signup') %}
 {% block title %}{{ page_title(title) }}{% endblock %}
 
 {% block content %}
@@ -21,8 +21,8 @@
           {{ error }}
         </pre>
         {% endif %}
-        
-        <form action="/en-US/docs/mvp-signup" method="post">
+
+        <form action="{{ url('wiki.external_signup') }}" method="post">
           {{ csrf() }}
           <input type="text" value="{{ location }}" placeholder="{{ _('URL to hosted docs or repository') }}" name="location" autofocus required />
           <button>{{ _('Add Your Docs to MDN') }}</button>
