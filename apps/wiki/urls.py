@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import patterns, url, include
+from django.conf.urls import include, patterns, url
 
 from sumo.views import redirect_to
 from wiki.feeds import (DocumentsRecentFeed, DocumentsReviewFeed, RevisionsFeed,
