@@ -1011,6 +1011,7 @@ table.activity tfoot .feed { padding-left: 20px; background: url("../img/icons-l
 
 #profile-edit ul.tagit { width: 610px; background: #fff; border: 1px solid #cbc8b9; padding: 6px 8px; }
 ul.tagit li.tagit-new { display: inline-block; }
+.ui-helper-hidden-accessible { display: none; }
 ul.tagit li.tagit-new input { width: auto; border: 0; padding: 0; background: transparent; }
 li.tagit-choice { display: inline-block; margin: 0 10px 10px 0; border: 1px solid #dbd9d1; padding: 3px 4px 4px 10px; background: #f9f9f9; border-radius: 2px; }
 li.tagit-choice .close { margin-left: 4px; }
