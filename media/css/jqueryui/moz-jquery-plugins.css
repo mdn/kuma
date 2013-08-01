@@ -21,13 +21,9 @@
 	background-repeat: no-repeat !important;
 }
 
-/* override for jQuery UI dialogs */
-.ui-dialog-titlebar { background: #000; border-color: #111; }
-.ui-icon-closethick { background: #ccc; border-radius: 4px; }
-.ui-dialog .ui-dialog-titlebar-close { padding: 0; width: auto; }
-.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { border: none; }
-.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { border: none; }
-.ui-dialog .ui-dialog-titlebar-close span { margin: 0; }
-.ui-widget-content .ui-icon { background-image: url("images/ui-icons_222222_256x240.png"); }
-.ui-dialog .ui-dialog-titlebar-close { height: auto; }
-.ui-dialog-buttonpane { border-top: 0; }
+/* dialog updates */
+.ui-dialog-titlebar {
+	background: none !important;
+	background-color: #000 !important;
+	border-color: #999;
+}
