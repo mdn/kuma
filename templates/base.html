@@ -1,4 +1,4 @@
-{% macro title() %}
+{% macro page_title_macro(t) %}
   {% block title %}{{ _('Mozilla Developer Network') }}{% endblock %}
 {% endmacro %}
 
@@ -43,7 +43,7 @@
   {% block bodyclass %}{% endblock %}
 {% endmacro %}
 
-{% macro content() %}
+{% macro page_content() %}
   {% block content %}{% endblock %}
 {% endmacro %}
 
@@ -89,7 +89,7 @@
 <!DOCTYPE html>
 <html lang="{{ LANG }}" dir="{{ DIR }}" id="developer-mozilla-org" xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:og="http://ogp.me/ns#">
 <head>
-  <title>{{ title() }}</title>
+  <title>{{ page_title_macro() }}</title>
 
   {{ site_css() }}
   
@@ -203,7 +203,7 @@
   
   <!-- Content will go here -->
   <main><div class="center">
-  {{ content() }}
+  {{ page_content() }}
   </div></main>
 
 
@@ -256,7 +256,7 @@
   {% if not is_sphinx %}
     {{ optimizely_script() }}
   {% endif %}
-  <title>{{ title() }}</title>
+  <title>{{ page_title_macro() }}</title>
   
   <meta charset="utf-8">
   <meta name="robots" content="index, follow">
@@ -383,7 +383,7 @@
 {# end head #}
 
     {{ soapbox_messages(get_soapbox_messages(request.path)) }}
-{{ content() }}
+{{ page_content() }}
 
 {# footer #}
 <section id="footbar">
