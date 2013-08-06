@@ -70,6 +70,23 @@ def post(request, content, locale=settings.LANGUAGE_CODE,
         return content, resp_errors
 
 
+def _get_attachment_metadata_dict(attachment):
+    filesize = 0
+    try:
+        filesize = attachment.current_revision.file.size
+    except OSError:
+        pass
+    return {
+        'title': attachment.title,
+        'description': attachment.current_revision.description,
+        'filename': attachment.current_revision.filename(),
+        'size': filesize,
+        'author': attachment.current_revision.creator.username,
+        'mime': attachment.current_revision.mime_type,
+        'url': attachment.get_file_url(),
+    }
+
+
 def get(document, cache_control, base_url, timeout=None):
     """Perform a kumascript GET request for a document locale and slug."""
     if not cache_control:
@@ -106,15 +123,7 @@ def get(document, cache_control, base_url, timeout=None):
         # Create the file interface
         files = []
         for attachment in document.attachments.all():
-            files.append({
-                'title': attachment.title,
-                'description': attachment.current_revision.description,
-                'filename': attachment.current_revision.filename(),
-                'size': attachment.current_revision.file.size,
-                'author': attachment.current_revision.creator.username,
-                'mime': attachment.current_revision.mime_type,
-                'url': attachment.get_file_url(),
-            })
+            files.append(_get_attachment_metadata_dict(attachment))
 
         # Assemble some KumaScript env vars
         # TODO: See dekiscript vars for future inspiration
