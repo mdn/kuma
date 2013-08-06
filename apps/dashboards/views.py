@@ -151,20 +151,19 @@ def revisions(request):
 
         display_start = int(request.GET.get('iDisplayStart', 0))
 
-        revisions = (Revision.objects.select_related('creator').all()
-                     .order_by('-created')
+        revisions = (Revision.objects.select_related('creator')
+                     .order_by('-creator')
                      .defer('content'))
 
-        # apply filters, limits, and pages
+        # Build up a dict of the filter conditions, if any, then apply
+        # them all in one go.
+        query_kwargs = {}
         if username:
-            revisions = (revisions
-                         .filter(creator__username__istartswith=username))
+            query_kwargs['creator__username__istartswith'] = username
         if locale:
-            revisions = revisions.filter(document__locale=locale)
-
+            query_kwargs['document__locale'] = lcoale
         if topic:
-            revisions = revisions.filter(slug__icontains=topic)
-
+            query_kwargs['slug__icontains'] = topic
         if newusers:
             """Users with the first edit not older than 7 days or
                with fewer than 20 revisions at all"""
@@ -176,12 +175,23 @@ def revisions(request):
             result = list(Revision.objects.raw(sql))
             if result:
                 users = [u.creator_id for u in result]
-                revisions = revisions.filter(creator__id__in=users)
+                query_kwargs['creator__id__in'] = users
             else:
                 revisions = Revision.objects.none()
 
-        total = revisions.count()
-        revisions = revisions[display_start:display_start + PAGE_SIZE]
+        if query_kwargs:
+            revisions = revisions.filter(**query_kwargs)
+            total = Revision.objects.count()
+        else:
+            # If no filters, just do a straight count(). It's the same
+            # result, but much faster to compute.
+            total = Revision.objects.count()
+
+        if total >= display_start:
+            # Only bother with this if we're actually going to get
+            # some revisions from it. Otherwise it's a pointless but
+            # potentially complex query.
+            revisions = revisions[display_start:display_start + PAGE_SIZE]
 
         # build the master JSON
         revision_json = {
