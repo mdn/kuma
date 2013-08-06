@@ -1,3 +1,5 @@
+@import 'vars'
+
 /*
 
 	This Stylus file provides man mixins for use within the MDN theme.
@@ -11,3 +13,95 @@ generate-grid(increment, start, end)
 		.column-{x+1}
 			width total
 		total = total + increment
+
+	/* now add a few meaningful names */
+	.column-strip
+		@extend .column-3
+	.column-main
+		@extend .column-9
+	.column-half
+		@extend .column-6
+
+/* vendorizes a propery */
+vendorize(property, value)
+	-webkit-{property} value
+	-moz-{property} value
+	{property} value
+
+/* prevents spacing of a given element if it's the last child */
+prevent-last-child-spacing(element='*', property='padding')
+	& {element}:last-child
+		{property} 0
+
+/* text-decoration none, hover text-decoration underline */
+reverse-link-decoration()
+	a
+		text-decoration none
+		&:hover, &:active, &:focus
+			text-decoration underline
+
+/* generates a background property for header and zones */
+create-gradient-background(color)
+	background url('../img/header-background.png') 0 0 repeat color;
+
+/* generates the essential "before" and "after" code for pseudo-arrows */
+generate-arrow()
+	&:before, &:after
+		content ' '
+		height 0
+		position absolute
+		width 0
+		border 10px solid transparent
+
+/* generates the center property */
+generate-center(media-width)
+	.center
+		width (media-width - 2 * gutter-width)
+		padding 0 gutter-width
+
+/* use this in the case of having to override styles from old template :( */
+compat-important(prop, value)
+	{prop}: value !important
+
+/* Used for style which are only present to override other styles -- these will be deleted once legacy design is gone */
+compat-only(prop, value)
+	compat-important(prop, value)
+
+/* 
+	CLASSES TO BE EXTENDED BY OTHER CLASSES
+
+	These are very "general" and non-specific on purpose
+	There's a good chance these classes wont be used directly in HTML
+*/
+.clear
+	&:before, &:after
+		content "\0020"
+		display block
+		height 0
+		overflow hidden
+
+	&:after
+		clear both
+
+.offscreen
+	text-indent -9999px
+	overflow hidden
+
+.title
+	font-weight bold
+	text-transform uppercase
+	color text-color
+	text-decoration none
+	display block
+
+.smaller
+	font-size smaller-font-size
+
+.larger
+	font-size larger-font-size
+
+.hidden
+	display none
+
+.grid-padding
+	padding grid-spacing

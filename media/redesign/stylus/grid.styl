@@ -1,3 +1,26 @@
+@import 'vars'
+@import 'mixins'
+
+
+/* Column helpers for the grids to be generated */
+.column-closed
+	display none
+
+.column-all
+	width auto
+
+/* This is a "helper" which automatically formats its column children, clears the floats afterward, removes margin from last item */
+.column-container
+	@extend .clear
+
+	> [class^='column-']
+		margin-right grid-spacing
+		float left
+
+		&:last-child
+			margin-right 0
+
+
 /* Desktop Layout (default)
 	*
 	* The Sandstone layout is based on a 12 column grid where each column is 60px wide with 20px gutters.
@@ -22,6 +45,10 @@
 	* 12 column span - width: 940px;
 */
 generate-grid(grid-increment-desktop, grid-start-desktop, grid-end-desktop)
+.center
+	position relative
+	margin 0 auto
+generate-center(site-width-desktop)
 
 
 /* Tablet Layout - 760px
@@ -44,8 +71,9 @@ generate-grid(grid-increment-desktop, grid-start-desktop, grid-end-desktop)
 	* 11 column span - width: 640px;
 	* 12 column span - width: 700px;
 */
-@media only screen and (min-width: 760px) and (max-width: 1000px) 
-
+@media media-query-tablet
+	
+	generate-center(site-width-tablet)
 	generate-grid(grid-increment-tablet, grid-start-tablet, grid-end-tablet)
 
 /* Mobile Layout - 320px
@@ -63,8 +91,9 @@ generate-grid(grid-increment-desktop, grid-start-desktop, grid-end-desktop)
  * 4 column span - width: 220px;
  * 5 column span - width: 280px;
  */
-@media only screen and (max-width: 760px) 
-
+@media media-query-mobile
+	
+	generate-center(site-width-mobile)
 	generate-grid(grid-increment-mobile, grid-start-mobile, grid-end-mobile)
 
  /* Wide Mobile Layout - 480px
@@ -85,6 +114,7 @@ generate-grid(grid-increment-desktop, grid-start-desktop, grid-end-desktop)
  * 7 column span - width: 400px;
  */
 
-@media only screen and (min-width: 480px) and (max-width: 760px)
-
+@media media-query-mobile-wide
+	
+	generate-center(site-width-mobile-wide)
 	generate-grid(grid-increment-mobile, grid-start-mobile, grid-end-mobile-wide)

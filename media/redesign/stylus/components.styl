@@ -1,0 +1,95 @@
+/* togglers */
+.toggler
+	position relative
+
+	i
+		position absolute
+		right 10px
+		top 3px
+		color #d4dde4
+
+.toggle-container.closed
+	display none
+
+
+/* table of contents; uses toggler */
+.toc
+	background light-background-color
+	padding grid-spacing (grid-spacing * .75)
+
+	> ol
+		padding-left (grid-spacing + (grid-spacing/2))
+		font-size smaller-font-size
+
+	a.title
+		position relative
+		&.title
+			text-decoration none
+
+	ol
+		counter-reset toc
+
+	li 
+		position relative
+		counter-increment toc
+		padding-top grid-spacing
+
+		&:before
+			content counters(toc, '.')
+			text-align right
+			position absolute
+			left -(grid-spacing + (grid-spacing/2))
+			color #484848
+
+	reverse-link-decoration()
+
+/* subnav */
+.subnav
+	.toggler
+		padding grid-spacing
+		border-bottom 1px dotted #d4dde4
+		text-transform uppercase
+		display block
+
+	.toggleable.current
+		background #f4f7f8
+
+	i
+		top (grid-spacing + 3px)
+		right grid-spacing
+
+	.toggle-container
+		a
+			@extend .smaller
+			display block
+			padding list-item-spacing grid-spacing
+
+		.toggleable
+			background #e9eef1
+
+			.toggler
+				@extend .title
+				font-weight normal
+				padding-top (grid-spacing / 2)
+				padding-bottom (grid-spacing / 2)
+				border 0
+
+				i
+					top (grid-spacing / 2)
+
+			.toggle-container a
+				padding-left grid-spacing + (grid-spacing / 2)
+
+		.current a
+			position relative
+			color text-color
+
+			generate-arrow()
+
+			&:before
+				border-right-color #fff
+				position absolute
+				top 20%
+				right 0
+
+	reverse-link-decoration()

@@ -1,0 +1,81 @@
+@import 'vars'
+@import 'mixins'
+@import 'grid'
+
+.zone-landing
+	
+	header
+		create-gradient-background(#0095DD)
+
+	nav > ul > li > a
+		compat-important(color, #fff)
+
+	.search-wrap
+		create-gradient-background(rgba(255, 255, 255, 0.2))
+
+		input, i
+			color #fff
+
+			&::-webkit-input-placeholder
+				color #fff
+			&::-moz-input-placeholder
+				color #fff
+				
+	h1
+		color #fff
+
+	.crumbs
+		color #fff
+
+		a
+			color rgba(255, 255, 255, 0.7)
+
+.zone-content
+	padding-top 38px
+	reverse-link-decoration()
+
+.zone-subnav-container
+	margin-top -200px
+	background #fff
+	min-height 400px
+
+.zone-landing-header
+	create-gradient-background(#0095dd)
+	padding-bottom grid-spacing
+	color #fff
+	position relative
+	overflow-y hidden
+	padding-top first-content-top-padding
+
+	p
+		@extend .column-5
+		font-size larger-font-size
+		font-weight light-font-weight
+		margin (2 * grid-spacing) 0 0 250px
+
+	img
+		position absolute
+		right -140px
+		top 60px
+		display block
+
+	a.button
+		compat-important(color, #fff)
+		compat-important(background-color, rgba(0, 0, 0, 0.1))
+		vendorize(box-shadow, inset 0 -1px #147ba5)
+
+.zone-landing-lists li
+	padding list-item-spacing 0
+	prevent-last-child-spacing(padding-bottom)
+
+.zone-callout
+	position relative
+	padding grid-spacing
+	background #f4f7f8
+	margin (grid-spacing + (grid-spacing / 2)) 0
+
+	table
+		width 100%
+	td
+		vertical-align bottom
+		padding-right grid-spacing
