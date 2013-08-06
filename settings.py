@@ -800,7 +800,12 @@ CELERY_SEND_TASK_ERROR_EMAILS = True
 CELERYD_LOG_LEVEL = logging.INFO
 CELERYD_CONCURRENCY = 4
 
-CELERY_IMPORTS = ( 'wiki.tasks', 'search.tasks', 'tidings.events' )
+CELERY_IMPORTS = (
+    'wiki.tasks',
+    'search.tasks',
+    'tidings.events',
+    'elasticutils.contrib.django.tasks',
+)
 
 # Wiki rebuild settings
 WIKI_REBUILD_TOKEN = 'sumo:wiki:full-rebuild'

@@ -3,20 +3,9 @@ import logging
 from django.conf import settings
 from django.db.models.signals import pre_delete
 
-from celery.task import task
+from elasticutils.contrib.django.tasks import index_objects, unindex_objects
 
 from wiki.signals import render_done
-
-
-@task
-def index_item_task(mapping_type, item_id, **kwargs):
-    doc = mapping_type.extract_document(item_id)
-    mapping_type.index(doc, item_id)
-
-
-@task
-def unindex_item_task(mapping_type, item_id, **kwargs):
-    mapping_type.unindex(item_id)
 
 
 def render_done_handler(**kwargs):
@@ -24,7 +13,7 @@ def render_done_handler(**kwargs):
         return
     instance = kwargs['instance']
     try:
-        index_item_task.delay(instance.get_mapping_type(), instance.id)
+        index_objects.delay(instance.get_mapping_type(), [instance.id])
     except:
         logging.error('Search indexing task failed',
                       exc_info=True)
@@ -34,7 +23,7 @@ def pre_delete_handler(**kwargs):
     if not settings.ES_LIVE_INDEX or 'instance' not in kwargs:
         return
     instance = kwargs['instance']
-    unindex_item_task.delay(instance.get_mapping_type(), instance.id)
+    unindex_objects.delay(instance.get_mapping_type(), [instance.id])
 
 
 def register_live_index(model_cls):
