@@ -1,3 +1,5 @@
+import logging
+
 from django.conf import settings
 from django.db.models.signals import pre_delete
 
@@ -21,7 +23,11 @@ def render_done_handler(**kwargs):
     if not settings.ES_LIVE_INDEX or 'instance' not in kwargs:
         return
     instance = kwargs['instance']
-    index_item_task.delay(instance.get_mapping_type(), instance.id)
+    try:
+        index_item_task.delay(instance.get_mapping_type(), instance.id)
+    except:
+        logging.error('Search indexing task failed',
+                      exc_info=True)
 
 
 def pre_delete_handler(**kwargs):

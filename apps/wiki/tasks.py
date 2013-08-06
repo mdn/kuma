@@ -126,4 +126,8 @@ def build_json_data_for_document_task(pk, stale):
 
 @receiver(render_done)
 def build_json_data_handler(sender, instance, **kwargs):
-    build_json_data_for_document_task.delay(instance.pk, stale=False)
+    try:
+        build_json_data_for_document_task.delay(instance.pk, stale=False)
+    except:
+        logging.error('JSON metadata build task failed',
+                      exc_info=True)
