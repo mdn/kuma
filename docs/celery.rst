@@ -2,7 +2,7 @@
 Celery and Rabbit
 =================
 
-Kitsune uses `Celery <http://celeryproject.org/>`_ to enable offline task
+Kuma uses `Celery <http://celeryproject.org/>`_ to enable offline task
 processing for long-running jobs like sending email notifications and
 re-rendering the Knowledge Base.
 
@@ -45,9 +45,9 @@ RabbitMQ takes very little configuration.
     sudo rabbitmq-server -detached
 
     # Set up the permissions.
-    rabbitmqctl add_user kitsune kitsune
-    rabbitmqctl add_vhost kitsune
-    rabbitmqctl set_permissions -p kitsune kitsune ".*" ".*" ".*"
+    rabbitmqctl add_user kuma kuma
+    rabbitmqctl add_vhost kuma
+    rabbitmqctl set_permissions -p kuma kuma ".*" ".*" ".*"
 
 That should do it. You may need to use ``sudo`` for ``rabbitmqctl``. It depends
 on the OS and how Rabbit was installed.
@@ -60,7 +60,7 @@ Celery
 Installing
 ----------
 
-Celery (and Django-Celery) is part of our `vendor library <vendor.rst>`_. You
+Celery (and Django-Celery) is part of our :doc:`vendor library <vendor>`. You
 shouldn't need to do any manual installation.
 
 
@@ -77,7 +77,7 @@ Celery::
     CELERY_ALWAYS_EAGER = False
 
 This defaults to ``True``, which causes all task processing to be done online.
-This lets you run Kitsune even if you don't have Rabbit or want to deal with
+This lets you run Kuma even if you don't have Rabbit or want to deal with
 running workers all the time.
 
 You can also configure the log level or concurrency. Here are the defaults::

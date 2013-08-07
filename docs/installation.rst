@@ -3,7 +3,7 @@ Installation
 ============
 
 This page describes the manual installation procedure. If you can, you
-should set up the `vagrant-managed virtual machine <installation-vagrant.rst>`_
+should set up the :doc:`vagrant-managed virtual machine <installation-vagrant>`
 instead.
 
 Requirements
@@ -54,7 +54,7 @@ it's more like our production environment) you'll also need:
 
 * ``mod_wsgi``
 
-See the documentation on `WSGI <wsgi.rst>`_ for more information and
+See the documentation on :doc:`WSGI <wsgi>` for more information and
 instructions.
 
 
@@ -200,7 +200,7 @@ You might need to first set ``LC_CTYPE`` if you're on Mac OS X until
 What’s next?
 ============
 
-See `development <development.rst>`_ for further instructions.
+See :doc:`development <development>` for further instructions.
 
 Last Steps
 ==========
@@ -208,5 +208,5 @@ Last Steps
 Setting Up Search
 -----------------
 
-See the `search documentation <search.rst>`_ for steps to get Sphinx search
-working.
+See the :doc:`search documentation <sphinx-search>` for steps to get Sphinx
+search working.
