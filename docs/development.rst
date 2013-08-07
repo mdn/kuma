@@ -2,8 +2,8 @@
 Development
 ============
 
-After you have completed the `manual installation steps <installation.rst>`_
-or set up the `Vagrant-managed VM <installation-vagrant.rst>`_), and are able
+After you have completed the :doc:`manual installation steps <installation>`
+or set up the :doc:`Vagrant-managed VM <installation-vagrant>`), and are able
 to run Kuma using ``./manage.py runserver``, you can start contributing.
 
 Running Kuma
@@ -14,7 +14,7 @@ the kumascript service to enable wiki templates processing::
 
     node kumascript/run.js
 
-...and `celery <celery.rst>`_ to enable background task processing (such as sending
+...and :doc:`celery <celery>` to enable background task processing (such as sending
 the e-mail notifications).
 Note that, before running the kumascript, you need to install the node.js ``fibers`` module
 by running ``npm install fibers``.
@@ -76,7 +76,7 @@ When using the vagrant VM you must `run the tests from the root folder`_, not fr
 
     (cd / && /vagrant/manage.py test ...)
 
-For more information, see the `test documentation <tests.rst>`_.
+For more information, see the :doc:`test documentation <tests>`.
 
 .. _run the tests from the root folder: https://bugzilla.mozilla.org/show_bug.cgi?id=756536#c2
 
@@ -86,3 +86,15 @@ Kumascript tests
 If you're changing Kumascript, be sure to run its tests too.
 See https://github.com/mozilla/kumascript
 
+Coding Conventions
+==================
+
+Tests
+-----
+
+* Avoid naming test files ``test_utils.py``, since we use a library with the
+  same name. Use ``test__utils.py`` instead.
+
+* If you're expecting ``reverse`` to return locales in the URL, use
+  ``LocalizingClient`` instead of the default client for the ``TestCase``
+  class.

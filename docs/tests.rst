@@ -10,8 +10,8 @@ behavior--and new code should come with tests.
 Running the Test Suite
 ======================
 
-If you followed the steps in `the installation docs <installation.rst>`_, then
-all you should need to do to run the test suite is::
+If you followed the steps in :doc:`the installation docs <installation>`,
+then all you should need to do to run the test suite is::
 
     ./manage.py test
 
