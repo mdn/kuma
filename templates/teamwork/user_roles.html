@@ -1,0 +1,49 @@
+{% extends "demos/base.html" %}
+
+{% block pageid %}{% endblock %}
+{% block bodyclass %}section-wiki{% endblock %}
+{% block title %}{{ page_title(_('Manage Roles | {user}') | f(user=user)) }}{% endblock %}
+
+{% block content %}
+<section id="content">
+<div class="wrap">
+
+  <section id="content-main" role="main" class="full">
+
+    <h2>Manage roles for {{ user }}</h2>
+
+    {% if roles_by_team %}
+        <ul class="teams">
+            {% for team, roles in roles_by_team %}
+                <li id="team-{{ team.id }}">
+                    <h3>{{ team }}</h3>
+                    <table class="roles">
+                        {% for r in roles %}
+                        <tr class="role" id="role-{{ r.role.id }}">
+                            <td>
+                                <span class="name">{{ r.role }}</span>
+                            </td>
+                            <td>
+                                <form method="POST" action="">
+                                    {{ csrf() }}
+                                    <input type="hidden" name="role_id" value="{{ r.role.pk }}">
+                                    <input type="submit" value="{% if r.granted %}revoke{% else %}grant{% endif %}">
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>{% trans %}
+            There are no roles you can manage for this user.
+        {% endtrans %}</p>
+    {% endif %}
+
+  </section>
+
+</div>
+</section>
+{% endblock %}

@@ -39,6 +39,8 @@ from taggit.models import ItemBase, TagBase
 from taggit.managers import TaggableManager
 from taggit.utils import parse_tags, edit_string_for_tags
 
+from teamwork.models import Team
+
 import waffle
 
 import wiki.content
@@ -563,6 +565,7 @@ class Document(NotificationsMixin, models.Model):
     class Meta(object):
         unique_together = (('parent', 'locale'), ('slug', 'locale'))
         permissions = (
+            ("view_document", "Can view document"),
             ("add_template_document", "Can add Template:* document"),
             ("change_template_document", "Can change Template:* document"),
             ("move_tree", "Can move a tree of documents"),
@@ -647,6 +650,9 @@ class Document(NotificationsMixin, models.Model):
     # parent, it can do what it wants. This invariant is enforced in save().
     category = models.IntegerField(choices=CATEGORIES, db_index=True)
 
+    # Team to which this document belongs, if any
+    team = models.ForeignKey(Team, blank=True, null=True)
+
     # HACK: Migration bookkeeping - index by the old_id of MindTouch revisions
     # so that migrations can be idempotent.
     mindtouch_page_id = models.IntegerField(
@@ -656,11 +662,6 @@ class Document(NotificationsMixin, models.Model):
     # Last modified time for the document. Should be equal-to or greater than
     # the current revision's created field
     modified = models.DateTimeField(auto_now=True, null=True, db_index=True)
-
-    # firefox_versions,
-    # operating_systems:
-    #    defined in the respective classes below. Use them as in
-    #    test_firefox_versions.
 
     def calculate_etag(self, section_id=None):
         """Calculate an etag-suitable hash for document content or a section"""
@@ -1478,7 +1479,20 @@ class Document(NotificationsMixin, models.Model):
             return self.from_url(url)
 
     def __unicode__(self):
-        return '[%s] %s' % (self.locale, self.title)
+        return u'%s (%s)' % (self.get_absolute_url(), self.title)
+
+    def filter_permissions(self, user, permissions):
+        """Filter permissions with custom logic"""
+        # No-op, for now.
+        return permissions
+
+    def get_permission_parents(self):
+        """Build a list of parent topics from self to root"""
+        curr, parents = self, []
+        while curr.parent_topic:
+            curr = curr.parent_topic
+            parents.append(curr)
+        return parents
 
     def allows_revision_by(self, user):
         """Return whether `user` is allowed to create new revisions of me.

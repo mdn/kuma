@@ -12,9 +12,16 @@ from tidylib import tidy_document
 from tower import ugettext as _
 import logging
 
+from django.contrib.contenttypes.models import ContentType
+
 from sumo.urlresolvers import reverse
 import wiki
 from wiki import DIFF_WRAP_COLUMN
+
+from teamwork.shortcuts import build_policy_admin_links
+
+
+register.function(build_policy_admin_links)
 
 
 def compare_url(doc, from_id, to_id):
