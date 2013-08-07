@@ -81,6 +81,16 @@
           {% if user.is_superuser %}
             <li><a href="{{ url('admin:wiki_document_change', document.id) }}">{{ _('View in Admin') }}</a></li>
           {% endif %}
+
+          {% set policy_links = build_policy_admin_links(request.user, document) %}
+          {% if policy_links['change_one'] %}
+            <li><a target="_blank" href="{{ policy_links['change_one'] }}">{{ _('Manage access policy') }}</a></li>
+          {% elif policy_links['change_list'] %}
+            <li><a target="_blank" href="{{ policy_links['change_list'] }}">{{ _('Manage access policies') }}</a></li>
+          {% elif policy_links['add'] %}
+            <li><a target="_blank" href="{{ policy_links['add'] }}">{{ _('Add access policy') }}</a></li>
+          {% endif %}
+        
         </ul>
       </li>
       {% if document.is_localizable or document.parent %}
