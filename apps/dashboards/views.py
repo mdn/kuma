@@ -161,7 +161,7 @@ def revisions(request):
         if username:
             query_kwargs['creator__username__istartswith'] = username
         if locale:
-            query_kwargs['document__locale'] = lcoale
+            query_kwargs['document__locale'] = locale
         if topic:
             query_kwargs['slug__icontains'] = topic
         if newusers:

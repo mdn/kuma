@@ -2,7 +2,6 @@ import json
 
 from nose.plugins.attrib import attr
 from nose.tools import eq_, ok_
-from pyquery import PyQuery as pq
 
 from waffle.models import Flag
 
@@ -49,10 +48,11 @@ class RevisionsDashTest(TestCase):
 
     @attr('dashboards')
     def test_locale_filter(self):
-        url = reverse('dashboards.revisions', locale='fr')
+        url = reverse('dashboards.revisions', locale='fr') + '?locale=fr'
         response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(200, response.status_code)
         revisions = json.loads(response.content)
+        ok_(len(revisions))
         ok_(['fr' in rev['doc_url'] for rev in revisions['aaData']])
         ok_(['en-US' not in rev['doc_url'] for rev in revisions['aaData']])
 
@@ -73,6 +73,7 @@ class RevisionsDashTest(TestCase):
         response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(200, response.status_code)
         revisions = json.loads(response.content)
+        ok_(len(revisions))
         ok_(['testuser' == rev['creator'] for rev in revisions['aaData']])
         ok_(['testuser2' != rev['creator'] for rev in revisions['aaData']])
 
@@ -93,6 +94,7 @@ class RevisionsDashTest(TestCase):
         response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(200, response.status_code)
         revisions = json.loads(response.content)
+        ok_(len(revisions))
         ok_(['lorem' not in rev['slug'] for rev in revisions['aaData']])
 
     @attr('dashboards')
