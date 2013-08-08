@@ -2,9 +2,31 @@
 @import 'mixins'
 @import 'grid'
 
+
+/* wiki classes to be extended */
+.wiki-block
+	padding-top (grid-spacing * 2)
+	margin-top (grid-spacing * 2)
+	border-top 1px solid button-background
+
+
+/* wiki article display */
+article
+	a
+		text-decoration underline
+
+		&:hover, &:focus
+			text-decoration none
+
+.redirected-from
+	margin-top -(grid-spacing)
+	font-size smaller-font-size
+	font-style italic
+	opacity 0.7
+
 .crumbs
 	font-size smaller-font-size
-	margin-bottom 40px
+	margin-bottom (2 * grid-spacing)
 
 	li
 		display inline-block
@@ -12,25 +34,28 @@
 	i
 		color #c1c2c4
 		display inline-block
-		margin 0 10px 0 5px
+		margin 0 7px 0 5px
 		font-size 70%
 	
 	reverse-link-decoration()
 
-.page-buttons
+.page-buttons, #page-buttons
 	float right
 
 	li
 		display inline-block
 		margin-left (grid-spacing / 2)
 
-	a
-		font-size smaller-font-size
+	a, button, input[type='submit'], input[type='button']
+		compat-important(font-size, smaller-font-size)
 		compat-only(font-family, site-font-family)
-		compat-only(letter-spacing, auto)
+		compat-only(letter-spacing, normal)
 
-	i
-		font-size: 16px
+		&.disabled
+			opacity 0.8
+
+	{selector-icon}
+		font-size 16px
 
 .summary
 	background light-background-color
@@ -40,13 +65,51 @@
 
 	prevent-last-child-spacing(p, margin-bottom)
 
-	
+#page-attachments
+	@extend .wiki-block
+	compat-only(background, #fff)
+
+#toc
+	compat-only(margin-left, 0)
+	compat-only(font-size, base-font-size)
+	compat-only(margin-left, 0, 'ol ol, ul ul')
+
+	li
+		compat-important(padding-top, 20px)
+
+	.title
+		compat-only(margin-bottom, 0)
+
+.reviews
+	@extend .message-base
+	background #fbf8e9
+	border-color #f9f3d9
+	font-size smaller-font-size
+
+	p
+		margin 0
+
+	li
+		padding-top list-item-spacing
+
+.warning
+	@extend .message-base
+	font-size smaller-font-size
+	background rgba(193, 56, 50, 0.3)
+	compat-important(border-color, rgba(193, 56, 50, 0.1))
+	compat-only(color, text-color)
+
+	pre
+		white-space normal !important
+		padding (grid-spacing / 2) !important
+		background none repeat scroll 0 0 rgba(255, 255, 255, 0.7) !important
+
 /* tag and file icons under the TOC */
 .tag-attach-list
 	margin-top grid-spacing
 	position relative
 
-	i
+	{selector-icon}
 		left (grid-spacing / 2)
 		position absolute
 		font-weight bold
@@ -89,11 +152,11 @@
 		display block
 		position relative
 		padding-left 20px
-	i
-		margin-right (grid-spacing / 2)
+
+	{selector-icon}
 		font-size 14px
 		position absolute
-		left 3px
+		left -6px
 		top 1px
 
 	reverse-link-decoration()
@@ -103,10 +166,25 @@
 	@extend .column-9
 
 #wiki-column-container.wiki-right-closed #wiki-content
-	margin-right: 0
+	margin-right 0
 
 #wiki-column-container.wiki-left-closed #wiki-content
-	margin-left: 0
+	margin-left 0
 
 #wiki-column-container.wiki-left-closed.wiki-right-closed #wiki-content
 	@extend .column-all
+
+/* wiki new and edit pages */
+.page-meta section, #article-head
+	compat-only(background, none)
+
+#page-tags, #page-comment
+	@extend .wiki-block
+
+#edit-document
+	h1 
+		compat-only(letter-spacing, normal)
+
+		.action
+			display block
+			font-size larger-font-size

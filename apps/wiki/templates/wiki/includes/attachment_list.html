@@ -1,7 +1,12 @@
 {% set show_attach_button = allow_add_attachment %}
 <section class="page-meta">
 <section id="page-attachments">
-  <h2><i class="icon-paper-clip"></i>{{ _('Attachments') }} <bdi>(<span id="page-attachments-count">{{ attachment_data | length}}</span>)</bdi></h2>
+
+  {% if waffle.flag('redesign') %}
+    <h3><i class="icon-paper-clip"></i>{{ _('Attachments') }}</h3>
+  {% else %}
+    <h2><i class="icon-paper-clip"></i>{{ _('Attachments') }} <bdi>(<span id="page-attachments-count">{{ attachment_data | length}}</span>)</bdi></h2>
+  {% endif %}
 
   {% if show_attach_button and attachment_form %}
   <p class="add">
@@ -16,19 +21,22 @@
   <script>
     mdn.wiki.attachments = {{ (attachment_data_json | safe) or '[]' }};
   </script>
-  <table cellpadding="0" cellspacing="0" id="page-attachments-table" class="{% if not attachment_data|length %}hidden{% endif %}">
-    <thead>
-      <th>{{ _('File') }}</th>
-      <th>{{ _('Size') }}</th>
-      <th>{{ _('Date') }}</th>
-      <th>{{ _('Attached by') }}</th>
-    </thead>
-    <tbody>
-      {% for attachment in attachment_data %}
-        {{ attachment.html }}
-      {% endfor %}
-    </tbody>
-  </table>
+
+
+    <table cellpadding="0" cellspacing="0" id="page-attachments-table" class="{% if not attachment_data|length %}hidden{% endif %}">
+      <thead>
+        <th>{{ _('File') }}</th>
+        <th>{{ _('Size') }}</th>
+        <th>{{ _('Date') }}</th>
+        <th>{{ _('Attached by') }}</th>
+      </thead>
+      <tbody>
+        {% for attachment in attachment_data %}
+          {{ attachment.html }}
+        {% endfor %}
+      </tbody>
+    </table>
+
 
   {% if show_attach_button and attachment_form %}
   <form method="post" action="{{ url('wiki.new_attachment') }}" id="page-attachments-form" enctype="multipart/form-data">

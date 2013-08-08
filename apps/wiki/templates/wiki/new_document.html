@@ -51,7 +51,13 @@
 
       <section class="page-meta">
         <section id="page-tags" class="page-tags">
-          <h2><i class="icon-tags"></i>{{ _('Tags') }}</h2>
+
+          {% if waffle.flag('redesign') %}
+            <h3><i class="icon-tags"></i>{{ _('Tags') }}</h3>
+          {% else %}
+            <h2><i class="icon-tags"></i>{{ _('Tags') }}</h2>
+          {% endif %}
+
           <input id="tagit_tags" type="text" name="tags" value="{% for tag in initial_tags %}{{ tag.name }},{% endfor %}" maxlength="255" />
         </section>
       </section>

@@ -94,20 +94,20 @@ document.documentElement.className += ' js';
 		var $navItems = $('header nav > ul > li:not(:last-child)');
 		var $input = $('header .search-wrap input');
 		var width = $input.width();
-		var fadeDuration = 100;
-		var growDuration = 200;
+		var fadeDuration = 80;
+		var growDuration = 160;
 
 		$input.
 			on('focus', function() {
-				$navItems.fadeOut(fadeDuration, function() {
-					$input.animate({ width: $input.attr('data-grow') }, growDuration);
+				$navItems.stop().fadeOut(fadeDuration, function() {
+					$input.stop().animate({ width: $input.attr('data-grow') }, growDuration);
 				});
 			}).
 			on('blur', function() {
-				$input.animate({ width: width }, {
+				$input.stop().animate({ width: width }, {
 					duration: growDuration,
 					complete: function() {
-						$navItems.fadeIn(fadeDuration);
+						$navItems.stop().fadeIn(fadeDuration);
 					}
 				});
 			});
