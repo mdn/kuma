@@ -1,0 +1,192 @@
+{% from "wiki/includes/document_macros.html" import document_watch with context %}
+
+{# get attachments and tags ready for use #}
+{% set tags = document.tags.all() %}
+{% set attachments = document.attachments.all() %}
+{% set num_attachments = attachments|length %}
+{% set is_logged_in = request.user.is_authenticated() %}
+{% set disabled_class = ('disabled' if not is_logged_in else '') %}
+{% set disabled_attr = ('title="%s"' % _('Please log in to use this feature.') if not is_logged_in else '') %}
+
+<!-- action buttons -->
+<ul class="page-buttons">
+	<li><a href="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}" class="button {{ disabled_class }}" {{ disabled_attr }}>{{ _('Edit Page') }}<i class="icon-pencil"></i></a></li>{% if user.is_authenticated() and document %}
+    <li class="page-watch">
+      {% if document.is_watched_by(user) %}
+        <form action="{{ url('wiki.document_unwatch', document.slug) }}" method="post">
+          {{ csrf() }}
+          <button type="submit">{{ _('Stop article emails') }}<i class="icon-eye-close"></i></button>
+        </form>
+      {% else %}
+        <form action="{{ url('wiki.document_watch', document.full_path) }}" method="post">
+          {{ csrf() }}
+          <button type="submit">{{ _('Email me article changes') }}<i class="icon-eye-open"></i></button>
+        </form>
+      {% endif %}
+    </li>{% endif %}<li><a href="javascript:;" class="button only-icon" {{ disabled_attr }}><span>{{ _('Settings') }}</span><i class="icon-cog"></i></a></li>
+</ul>
+
+<!-- crumbs -->
+<nav class="crumbs" role="navigation"><ol>
+	<li><a href="{{ request.locale }}/docs">MDN</a><i class="icon-chevron-right"></i></li>
+	{% for doc in document.parents %}
+		<li class="crumb"><a href="{{ url('wiki.document', doc.full_path) }}">{{ doc.title }}</a><i class="icon-chevron-right"></i></li>
+	{% endfor %}
+	<li class="crumb">{{ document.title }}</li>
+</ol></nav>
+
+<!-- heading -->
+<h1>{{ document.title }}</h1>
+{% if redirected_from %}
+<div class="redirected-from" id="redirected-from">
+	<p>{{ _('Redirected from <a href="{href}">{title}</a>')|fe(href=redirected_from.get_absolute_url()|urlparams(redirect='no'), title=redirected_from.title) }}</p>
+</div>
+{% endif %}
+
+<!-- start the main content container -->
+<div id="wiki-column-container">
+
+	<!-- additional controls row; hidden unless needed -->
+	<div id="wiki-controls" class="column-container">
+		<div class="column-strip quick-links hidden">
+			<a href="#show-quick-links" class="title smaller" id="show-quick-links"><i class="icon-caret-down"></i>{{ _('Show QuickLinks') }}</a>
+		</div>
+		<div class="column-half">
+			&nbsp;
+		</div>
+		<div class="column-strip">
+			<!-- Show TOC "show" link -->
+		</div>
+	</div>
+
+	<!-- content row with three strips -->
+	<div class="column-container">
+
+		<!-- left strip -->
+		<div id="wiki-left" class="column-strip wiki-column">
+			<!-- quick links -->
+			<div class="quick-links" id="quick-links">
+				<a href="#quick-links" class="title" id="quick-links-toggle"><i class="icon-caret-up"></i>{{ _('Hide QuickLinks') }}</a>
+				<ol>
+					<li class="toggleable closed"><a href="" class="toggler"><i class="icon-caret-up"></i>Application Cache API</a>
+						<ol class="toggle-container">
+							<li><a href="">Sub link</a></li>
+							<li><a href="">Sub link</a></li>
+							<li><a href="">Sub link</a></li>
+						</ol>
+					</li>
+					<li><a href="">Something</a></li>
+					<li><a href="">Something</a></li>
+					<li><a href="">Something</a></li>
+				</ol>
+			</div>
+		</div>
+
+		<!-- center: main article content -->
+		<div id="wiki-content" class="column-half wiki-column">
+
+			{% if kumascript_errors %}
+				{% include 'wiki/includes/kumascript_errors.html' %}
+			{% endif %}
+
+			{% if seo_summary %}
+				<div class="summary">
+					<p>{{ seo_summary }}</p>
+				</div>
+			{% endif %}
+
+			<!-- just the article content -->
+			<article>
+				{% if not fallback_reason %}
+					{% if not document_html %}
+						{{ _("This article doesn't have any content yet.") }}
+					{% elif document.is_template %}
+						<pre class="brush: js">{{ document_html }}</pre>
+					{% else %}
+						{{ document_html|safe }}
+					{% endif %}
+				{% elif fallback_reason == 'no_translation' %}
+					{{ document_html|safe }}
+				{% elif fallback_reason == 'translation_not_approved' %}
+					{{ document.parent.html|safe }}
+				{% else %}
+					{{ _("This article doesn't have approved content yet.") }}
+				{% endif %}
+			</article>
+
+			<!-- attachments list -->
+			{% if num_attachments %}
+				{% include 'wiki/includes/attachment_list.html' %}
+			{% endif %}
+		</div>
+
+		<!-- right column, TOC -->
+		<div class="column-strip wiki-column" id="wiki-right">
+
+			<!-- approvals -->
+			{% if request.user.is_authenticated() and document.current_revision and document.allows_revision_by(request.user) %}
+				{% if document.current_revision.needs_technical_review() or document.current_revision.needs_editorial_review() %}
+				<section class="page-meta reviews">
+					<p>{{ _('The following reviews have been requested:') }}</p>
+
+					<form method="post" action="{{ url('wiki.quick_review', document.full_path) }}">
+						{{ csrf() }}
+						<ul>
+						{% if document.current_revision.needs_technical_review() %}
+							<li>
+								<input type="checkbox" value="approve_technical" id="id_approve_technical" name="approve_technical">
+								<label for="id_approve_technical">{{ _('Technical') }}</label>
+							</li>
+						{% endif %}
+						{% if document.current_revision.needs_editorial_review() %}
+							<li>
+								<input type="checkbox" value="approve_editorial" id="id_approve_editorial" name="approve_editorial">
+								<label for="id_approve_editorial">{{ _('Editorial') }}</label>
+							</li>
+						{% endif %}
+						</ul>
+
+						<button type="submit">{{ _('Submit Review') }}</button>
+					</form>
+				</section>
+				{% endif %}
+			{% endif %}
+
+
+
+			{% if toc_html %}
+			<!-- table of contents -->
+			<div id="toc" class="toc toggleable">
+				<a href="#toc" class="title toggler">{{ _('In This Article') }}<i></i></a>
+				<ol class="toggle-container">
+					{{ toc_html|safe }}
+				</ol>
+			</div>
+			{% endif %}
+
+			{% if tags|length %}
+			<!-- tags if present -->
+			<div class="tag-attach-list tags">
+				<i class="icon-tags"></i>
+				<ul>
+					{% for tag in tags %}
+					<li><a href="{{url('wiki.tag', tag.name)}}">{{ tag.name }}</a></li>
+					{% endfor %}
+				</ul>
+			</div>
+			{% endif %}
+
+			{% if num_attachments %}
+			<!-- attachment list, if present -->
+			<div class="tag-attach-list attachments">
+				<i class="icon-paper-clip"></i>
+				<a href="#page-attachments">{{ _('%s Attachment%s' % (num_attachments, 's' if num_attachments > 1 else '')) }}</a>
+			</div>
+			{% endif %}
+
+		</div>
+
+
+	</div>
+
+</div>

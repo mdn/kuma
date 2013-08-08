@@ -1,8 +1,12 @@
 @import 'vars'
 @import 'mixins'
+@import 'grid'
 
 body.search-results
 	create-gradient-background(header-background-color)
+
+	p
+		compat-only(padding-left, 0)
 
 .search-pane
 	background #fff
@@ -10,6 +14,9 @@ body.search-results
 
 h3 i[class^="icon-"]
 	compat-important(margin-right, (grid-spacing * .75))
+
+#search-results-close-container
+	slider()
 
 .search-results-explanation
 	@extend .grid-padding
@@ -49,7 +56,12 @@ h3 i[class^="icon-"]
 		font-style italic
 
 	li
+		slider()
 		margin-bottom (grid-spacing + (grid-spacing / 2))
+
+		&.closed
+			margin-bottom 0
+
 
 .search-meta
 	margin-top (grid-spacing / 2)
@@ -61,8 +73,9 @@ h3 i[class^="icon-"]
 	@extend .smaller
 	font-style italic
 
-	i
-		margin-right 6px
+	{selector-icon}
+		margin-right 6px !important
+		margin-left 0
 
 	a
 		color text-color
@@ -95,3 +108,10 @@ h3 i[class^="icon-"]
 			content attr(data-count)
 			color text-color
 			opacity 0.6
+
+.search-results-no-demo
+	.result-list
+		.column-strip
+			display none
+		.result-list-item
+			@extend .column-7

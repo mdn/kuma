@@ -25,23 +25,34 @@ h4
 	line-height 100%
 	
 /* basic text */
+{selector-icon}
+	display inline-block
+	margin-left (grid-spacing / 2)
+	compat-only(margin-right, 0)
+
+	&:before
+		display inline-block
+		text-decoration none
+
 p
 	margin-bottom grid-spacing
-
 
 /* forms */
 input[type='search']
 	vendorize(appearance, textfield)
+
+label
+	cursor pointer
 
 
 /* links */
 a
 	color link-color
 
-	i[class^='icon-']:before, i[class*=' icon-']:before
+	{selector-icon}:before
 		cursor pointer
 
-a.button
+button, .button, input[type='submit'], input[type='button']
 	text-decoration none
 	display inline-block
 	compat-important(background-color, button-background)
@@ -51,18 +62,33 @@ a.button
 	compat-important(border-radius, 4px)
 	vendorize(box-shadow, inset 0 -1px #bbbfc2)
 	compat-only(background-image, none)
+	compat-only(font-family, site-font-family)
+	compat-only(letter-spacing, normal)
 
-	span 
-		width 0
-		overflow hidden
-		display: block;
-		position: absolute
-		top: -99999px
-		left: -99999px
+	&.only-icon
+		{selector-icon}
+			margin-left 0
+			margin-top -1px
 
-	i
-		display inline-block
-		margin-left (grid-spacing / 2)
+		span
+			@extend .offscreen
 
-	&.icon-only i
-		margin 1px 0
+	&.neutral
+		compat-important(color, #fff)
+		compat-important(background-color, #0095dd)
+		vendorize(box-shadow, inset 0 -1px #00539f)
+
+	&.negative
+		compat-important(color, #fff)
+		compat-important(background-color, #ea3b28)
+		vendorize(box-shadow, inset 0 -1px #c13832)
+
+	&.positive
+		compat-important(color, #fff)
+		compat-important(background-color, #70a300)
+		vendorize(box-shadow, inset 0 -1px #486900)		
+
+button, input[type='submit'], input[type='button']
+	&::-moz-focus-inner
+		margin-top -1px
+		margin-bottom -1px
