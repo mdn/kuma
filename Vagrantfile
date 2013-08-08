@@ -52,7 +52,7 @@ end
 Vagrant::VERSION >= "1.1.0" and Vagrant.configure("2") do |config|
   
     config.vm.box = CONF['box']
-    config.vm.network :private_network, ip: CONF['ip_address']
+    config.vm.network :private_network, :ip => CONF['ip_address']
     config.package.name = CONF['package_name']
   
     # nfs needs to be explicitly enabled to run.
