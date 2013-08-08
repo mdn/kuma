@@ -11,7 +11,7 @@ Development
 
 :Code:          https://github.com/mozilla/kuma
 :Issues:        http://mzl.la/mdn_backlog
-:Dev Docs:      https://kuma.readthedocs.org/installation-vagrant.html
+:Dev Docs:      https://kuma.readthedocs.org/en/latest/installation-vagrant.html
 :CI Server:     https://ci.mozilla.org/job/mdn/
 :Mailing list:  https://lists.mozilla.org/listinfo/dev-mdn
 :IRC:           irc://irc.mozilla.org/mdndev
