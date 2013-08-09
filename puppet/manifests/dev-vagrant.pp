@@ -41,6 +41,7 @@ class dev {
         python: stage => langs;
 
         statsd:         stage => extras;
+        stylus:         stage => extras;
 
         site_config: stage => main;
         dev_hacks_post: stage => hacks_post;
