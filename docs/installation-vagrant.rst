@@ -21,7 +21,7 @@ Getting up and running
 #. Clone your fork of Kuma and update submodules (**don't** try to use the same working
    directory as for the local installation)::
 
-       git clone git://github.com/<your_account>/kuma.git
+       git clone git@github.com:<your_username>/kuma.git
        cd kuma
        git submodule update --init --recursive
 
