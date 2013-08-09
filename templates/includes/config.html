@@ -1,6 +1,5 @@
 <script type="text/javascript">
   // This represents the site configuration
-  // TODO:  Move this to its own module when we're AMD-ready
   window.mdn = {
     build: '{{ BUILD_ID_JS }}',
     ckeditor: {},
@@ -9,4 +8,6 @@
       autosuggestTitleUrl: '{{ url('wiki.autosuggest_documents') }}'
     }
   };
+  // Ensures gettext always returns something, is always set
+  window.gettext = function(x) { return x; }
 </script>

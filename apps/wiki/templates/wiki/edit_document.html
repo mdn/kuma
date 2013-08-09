@@ -93,7 +93,7 @@
         <header id="article-head">
 
           <div class="title">
-            <h1>{{ _('Editing <em>{title}</em>')|fe(title=revision.title) }}</h1>
+            <h1>{{ _('<span class="action">Editing</span> <em>{title}</em>')|fe(title=revision.title) }}</h1>
             <p class="save-state" id="draft-status">
               {% if not section_id %}
                 <a href="" id="btn-properties">{{ _('Edit Page Title and Properties') }}</a><br />

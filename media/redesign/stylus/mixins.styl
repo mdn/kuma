@@ -64,8 +64,23 @@ compat-important(prop, value)
 	{prop}: value !important
 
 /* Used for style which are only present to override other styles -- these will be deleted once legacy design is gone */
-compat-only(prop, value)
+compat-only(prop, value, more-selector='')
 	compat-important(prop, value)
+
+	if more-selector
+		& {more-selector}
+			compat-important(prop, value)
+
+/* Used to create sliding animations */
+slider(duration=animation-duration, maximum-height=10000px)
+	overflow-y hidden
+	max-height maximum-height
+	vendorize(transition-property, all)
+	vendorize(transition-duration, duration)
+	vendorize(transition-timing-function, slide-timing-function)
+
+	&.closed
+		max-height 0
 
 /* 
 	CLASSES TO BE EXTENDED BY OTHER CLASSES
@@ -86,6 +101,8 @@ compat-only(prop, value)
 .offscreen
 	text-indent -9999px
 	overflow hidden
+	position absolute
+	left -99999px
 
 .title
 	font-weight bold
@@ -105,3 +122,13 @@ compat-only(prop, value)
 
 .grid-padding
 	padding grid-spacing
+
+.disabled
+	pointer-events none
+	cursor default
+
+.message-base
+	compat-only(border-width, 5px)
+	compat-only(border-style, solid)
+	padding (grid-spacing / 2)
+	margin-bottom grid-spacing

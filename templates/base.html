@@ -25,7 +25,7 @@
       <link href="{{ MEDIA_URL }}redesign/css/wiki.css" type="text/css" rel="stylesheet" />
       <link href="{{ MEDIA_URL }}redesign/css/zones.css" type="text/css" rel="stylesheet" />
       <link href="{{ MEDIA_URL }}redesign/css/search.css" type="text/css" rel="stylesheet" />
-      <link href="{{ MEDIA_URL }}css/libs/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+      <link href="{{ MEDIA_URL }}redesign/css/demo-studio.css" type="text/css" rel="stylesheet" />
       {% endif %}
 
   {% endblock %}
@@ -109,7 +109,7 @@
     {% include "includes/google_analytics.html" %}
   {% endif %}
 </head>
-<body id="{ pageid() }}" class="html-{{ DIR }} {{ bodyclass() }}" role="document">
+<body id="{{ pageid() }}" class="html-{{ DIR }} {{ bodyclass() }}" role="document">
 
   <!-- Header -->
   <header><div class="center">
