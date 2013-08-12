@@ -1226,6 +1226,22 @@ class Document(NotificationsMixin, models.Model):
             child_title = child.slug.split('/')[-1]
             child._move_tree('/'.join([new_slug, child_title]), user)
 
+    def repair_breadcrumbs(self):
+        """
+        Temporary method while we work out the real issue behind
+        translation/breadcrumb mismatches (bug 900961).
+
+        Basically just walks up the tree of topical parents, calling
+        acquire_translated_topic_parent() for as long as there's a
+        language mismatch.
+        
+        """
+        if not self.parent_topic or \
+           self.parent_topic.locale != self.locale:
+            self.acquire_translated_topic_parent()
+        if self.parent_topic:
+            self.parent_topic.repair_breadcrumbs()
+
     def acquire_translated_topic_parent(self):
         """This normalizes topic breadcrumb paths between locales.
 
@@ -1279,6 +1295,7 @@ class Document(NotificationsMixin, models.Model):
 
         # Finally, assign the new default parent topic
         self.parent_topic = new_pt
+        self.save()
 
     def __setattr__(self, name, value):
         """Trap setting slug and title, recording initial value."""

@@ -22,6 +22,12 @@ def dump_selected_documents(self, request, queryset):
 dump_selected_documents.short_description = "Dump selected documents as JSON"
 
 
+def repair_breadcrumbs(self, request, queryset):
+    for doc in queryset:
+        doc.repair_breadcrumbs()
+repair_breadcrumbs.short_description = "Repair translation breadcrumbs"
+        
+
 def enable_deferred_rendering_for_documents(self, request, queryset):
     queryset.update(defer_rendering=True)
     self.message_user(request, 'Enabled deferred rendering for %s Documents' %
@@ -221,7 +227,8 @@ class DocumentAdmin(admin.ModelAdmin):
                resave_current_revision,
                force_render_documents,
                enable_deferred_rendering_for_documents,
-               disable_deferred_rendering_for_documents)
+               disable_deferred_rendering_for_documents,
+               repair_breadcrumbs)
     change_list_template = 'admin/wiki/document/change_list.html'
     fields = ('locale', 'slug', 'title', 'defer_rendering', 'parent',
               'parent_topic', 'category',)
