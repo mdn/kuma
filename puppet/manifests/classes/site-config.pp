@@ -155,6 +155,11 @@ class kuma_config {
             command => "/usr/bin/python ./manage.py update_feeds",
             onlyif => "/usr/bin/mysql -B -uroot kuma -e'select count(*) from feeder_entry' | grep '0'",
             require => [ Exec["kuma_south_migrate"] ];
+        "kuma_stylus_watch":
+            user => "vagrant",
+            cwd => "/vagrant",
+            command => "/usr/local/bin/stylus -w media/redesign/stylus -o media/redesign/css &",
+            require => File["/usr/local/bin/stylus"];
     }
 }
 
