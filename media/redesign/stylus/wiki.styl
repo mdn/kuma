@@ -10,6 +10,14 @@
 	border-top 1px solid button-background
 
 
+/* general wiki section */
+main > .center
+	margin-top (grid-spacing * 2)
+#content-main
+	compat-only(padding, 0)
+	compat-only(width, auto)
+
+
 /* wiki article display */
 article
 	a
@@ -30,6 +38,7 @@ article
 .crumbs
 	font-size smaller-font-size
 	margin-bottom (2 * grid-spacing)
+	margin-top (grid-spacing * 2)
 
 	li
 		display inline-block
@@ -43,9 +52,11 @@ article
 	reverse-link-decoration()
 
 .page-buttons, #page-buttons
-	float right
-	width 100%
+	position absolute
+	right gutter-width
 	text-align right
+	compat-only(width, auto)
+	compat-only(top, 0)
 
 	li
 		display inline-block
@@ -146,6 +157,9 @@ h1.from-search
 
 	li
 		padding-top list-item-spacing
+
+	button
+		compat-important(font-size, smaller-font-size)
 
 .warning
 	@extend .message-base
@@ -267,17 +281,29 @@ h1.from-search
 #page-tags, #page-comment
 	@extend .wiki-block
 
-.editing
+
+#edit-document, #wiki-page-translate
 	h1 
 		compat-only(letter-spacing, normal)
+		compat-only(padding-left, 0)
 
 		.action
 			display block
 			font-size larger-font-size
+			line-height 20px
+
 		em
 			compat-only(margin-left, -3px)
 
+#wiki-page-translate
+	#page-buttons
+		right 0
+
 #article-head
+	compat-only(margin-top, 0)
+	compat-only(max-width, none)
+	compat-only(padding-top, 0)
+
 	.metadata
 		margin-top (grid-spacing * 2)
 		width auto
@@ -292,5 +318,9 @@ h1.from-search
 
 /* compare page */
 .compare, #revision-list
+	ul
+		compat-only(min-width, 0)
+		font-size smaller-font-size
+
 	input[type='submit'], a.button
 		compat-only(font-size, smaller-font-size)
