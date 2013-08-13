@@ -127,8 +127,53 @@ slider(duration=animation-duration, maximum-height=10000px)
 	pointer-events none
 	cursor default
 
+.reset-font
+	font-family site-font-family
+
 .message-base
 	compat-only(border-width, 5px)
 	compat-only(border-style, solid)
 	padding (grid-spacing / 2)
 	margin-bottom grid-spacing
+	font-size smaller-font-size
+
+	& *:last-child
+		margin-bottom 0
+		padding-bottom 0
+
+.button
+	text-decoration none
+	display inline-block
+	compat-important(background-color, button-background)
+	compat-important(color, button-color)
+	compat-important(text-transform, uppercase)
+	compat-important(padding, 5px 11px)
+	compat-important(border-radius, 4px)
+	vendorize(box-shadow, inset 0 -1px #bbbfc2)
+	compat-only(background-image, none)
+	compat-only(font-family, site-font-family)
+	compat-only(font-size, base-font-size)
+	compat-only(letter-spacing, normal)
+
+	&.only-icon
+		{selector-icon}
+			margin-left 0
+			margin-top -1px
+
+		span
+			@extend .offscreen
+
+	&.neutral
+		compat-important(color, #fff)
+		compat-important(background-color, #0095dd)
+		vendorize(box-shadow, inset 0 -1px #00539f)
+
+	&.negative
+		compat-important(color, #fff)
+		compat-important(background-color, #ea3b28)
+		vendorize(box-shadow, inset 0 -1px #c13832)
+
+	&.positive
+		compat-important(color, #fff)
+		compat-important(background-color, #70a300)
+		vendorize(box-shadow, inset 0 -1px #486900)

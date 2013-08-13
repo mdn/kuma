@@ -13,7 +13,7 @@ document.documentElement.className += ' js';
 		var closeTimeout;
 		var showTimeout;
 		var $openMenu;
-		var $menuItems = $('nav > ul > li > a');
+		var $menuItems = $('#main-nav > ul > li > a');
 
 		$menuItems.each(function() {
 			var $self = $(this);
@@ -91,26 +91,23 @@ document.documentElement.className += ' js';
 		TODO:  What happens on mobile?
 	*/
 	(function() {
-		var $navItems = $('header nav > ul > li:not(:last-child)');
-		var $input = $('header .search-wrap input');
-		var width = $input.width();
-		var fadeDuration = 80;
-		var growDuration = 160;
+		var $nav = $('#main-nav');
+		var $navItems = $nav.find('ul > li:not(:last-child)');
+		var $input = $nav.find('.search-wrap input');
+
+		var timeout;
+		var createExpander = function(action, delay) {
+			return function() {
+				timeout && clearTimeout(timeout);
+				timeout = setTimeout(function() {
+					$nav[action + 'Class']('expand');
+				}, delay);
+			}
+		};
 
 		$input.
-			on('focus', function() {
-				$navItems.stop().fadeOut(fadeDuration, function() {
-					$input.stop().animate({ width: $input.attr('data-grow') }, growDuration);
-				});
-			}).
-			on('blur', function() {
-				$input.stop().animate({ width: width }, {
-					duration: growDuration,
-					complete: function() {
-						$navItems.stop().fadeIn(fadeDuration);
-					}
-				});
-			});
+			on('focus', createExpander('add', 200)).
+			on('blur', createExpander('remove', 600));
 	})();
 
 

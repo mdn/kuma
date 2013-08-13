@@ -18,6 +18,9 @@ article
 		&:hover, &:focus
 			text-decoration none
 
+.document-head
+	position relative
+
 .redirected-from
 	margin-top -(grid-spacing)
 	font-size smaller-font-size
@@ -41,6 +44,8 @@ article
 
 .page-buttons, #page-buttons
 	float right
+	width 100%
+	text-align right
 
 	li
 		display inline-block
@@ -69,6 +74,11 @@ article
 	@extend .wiki-block
 	compat-only(background, #fff)
 
+#page-attachments-button
+	compat-only(font-size, smaller-font-size)
+	compat-only(font-family, site-font-family)
+	compat-only(letter-spacing, normal)
+
 #toc
 	compat-only(margin-left, 0)
 	compat-only(font-size, base-font-size)
@@ -79,6 +89,51 @@ article
 
 	.title
 		compat-only(margin-bottom, 0)
+
+
+/* coming from a search - heading links */
+h1.from-search
+	padding-left (grid-spacing * 2)
+
+.from-search-previous, .from-search-next
+	@extend .button
+	position absolute
+	top (grid-spacing * .75) + 2px
+	display block
+	compat-only(font-size, 24px)
+
+.from-search-previous
+	left 0
+
+.from-search-next
+	right 0
+
+.from-search-navigate
+	font-size larger-font-size
+	position relative
+	color #ced1d2
+	display inline-block
+	height 38px
+	width grid-spacing
+	top 4px
+
+.from-search-navigate-up, .from-search-navigate-down
+	position absolute
+	font-size smaller-font-size
+	left 0
+
+.from-search-navigate-up
+	top 0
+
+.from-search-navigate-down
+	bottom 0
+
+
+
+/* notices */
+.notice
+	@extend .message-base
+	compat-important(border-width, 2px)
 
 .reviews
 	@extend .message-base
@@ -130,11 +185,26 @@ article
 .tags
 	li
 		margin-bottom 7px
-	a
-		padding 1px 4px
-		border 1px solid #cee9f9
-		text-decoration none
-		border-radius 4px
+
+.tags a, .tagit li
+	padding 1px 4px
+	border 1px solid #cee9f9 !important /* overrides plugin selector */
+	text-decoration none
+	border-radius 4px
+	font-size smaller-font-size
+	background light-background-color !important /* overrides plugin selector */
+
+	.close
+		color #cee9f9 !important /* overrides plugin selector */
+
+.tagit li
+	font-size base-font-size
+
+.tagit
+	border 0 !important /* overrides plugin selector */
+
+.tagit-new
+	border 0
 
 /* quick links */
 .quick-links
@@ -178,13 +248,49 @@ article
 .page-meta section, #article-head
 	compat-only(background, none)
 
+
 #page-tags, #page-comment
 	@extend .wiki-block
 
 #edit-document
+	h2
+		@extend .reset-font;
+		font-size 28px /* Change to h3 after redesign launched */
+		compat-only(text-transform, none)
+		margin-bottom grid-spacing
+
+		{selector-icon}
+			margin-left 0 !important
+			margin-right 10px !important;
+
+
+#page-tags, #page-comment
+	@extend .wiki-block
+
+.editing
 	h1 
 		compat-only(letter-spacing, normal)
 
 		.action
 			display block
 			font-size larger-font-size
+		em
+			compat-only(margin-left, -3px)
+
+#article-head
+	.metadata
+		margin-top (grid-spacing * 2)
+		width auto
+		float none
+
+.metadata-choose-parent
+	compat-important(background, light-background-color)
+	compat-important(border, 0)
+	compat-important(padding, grid-spacing)
+	compat-important(margin-top, 20px)
+	compat-only(border-radius, 0)
+
+/* compare page */
+.compare, #revision-list
+	input[type='submit'], a.button
+		compat-only(font-size, smaller-font-size)
