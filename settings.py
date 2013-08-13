@@ -553,14 +553,12 @@ MINIFY_BUNDLES = {
             'css/redesign-transition.css',
         ),
         'popup': (
-            'css/jqueryui/jqueryui.css',
-            'css/jqueryui/jquery-ui-1.8.14.custom.css',
+            'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
             'css/jqueryui/moz-jquery-plugins.css',
         ),
         'demostudio': (
             'css/demos.css',
-            'css/jqueryui/jqueryui.css',
-            'css/jqueryui/jquery-ui-1.8.14.custom.css',
+            'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
             'css/jqueryui/moz-jquery-plugins.css',
         ),
         'devderby': (
@@ -621,7 +619,7 @@ MINIFY_BUNDLES = {
         'popup': (
             'js/libs/jquery-1.9.1.js',
             'js/jquery-upgrade-compat.js',
-            'js/libs/jqueryui.min.js',
+            'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
             'js/modal-control.js',
             'js/init.js',
         ),
@@ -637,7 +635,7 @@ MINIFY_BUNDLES = {
             'js/libs/jquery.hoverIntent.minified.js',
             'js/libs/jquery.scrollTo-1.4.2-min.js',
             'js/demos.js',
-            'js/libs/jqueryui.min.js',
+            'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
             'js/modal-control.js',
         ),
         'demostudio_devderby_landing': (
