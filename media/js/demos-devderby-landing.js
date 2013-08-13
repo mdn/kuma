@@ -51,6 +51,10 @@
   });
 
   $(document).ready(function(){
+    if ($('body').hasClass('derby-closed')) {
+        // On hiatus - no tabs to manage.
+        return;
+    }
     derbyTabs();
 
     $('#upcoming li').hover(
