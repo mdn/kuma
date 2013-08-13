@@ -599,6 +599,19 @@ MINIFY_BUNDLES = {
             'js/prism-mdn/plugins/line-numbering/prism-line-numbering.css',
             'js/prism-mdn/components/prism-json.css',
         ),
+        'redesign-main': (
+            'redesign/css/main.css',
+            'redesign/css/zones.css',
+        ),
+        'redesign-wiki': (
+            'redesign/css/wiki.css',
+        ),
+        'redesign-search': (
+            'redesign/css/search.css',
+        ),
+        'redesign-demos': (
+            'redesign/css/demo-studio.css',
+        ),
     },
     'js': {
         'mdn': (
@@ -684,6 +697,15 @@ MINIFY_BUNDLES = {
             'js/libs/ace/mode-javascript.js',
             'js/libs/ace/theme-dreamweaver.js',
             'js/libs/ace/worker-javascript.js',
+        ),
+        'redesign-main': (
+            'redesign/js/main.js',
+        ),
+        'redesign-wiki': (
+            'redesign/js/wiki.js',
+        ),
+        'redesign-search': (
+            'redesign/js/search.js',
         ),
     },
 }
