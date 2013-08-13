@@ -566,22 +566,15 @@ MINIFY_BUNDLES = {
         'devderby': (
             'css/devderby.css',
         ),
-        # TODO: remove dependency on jquery ui CSS and use our own
-        'jqueryui/jqueryui': (
-            'css/jqueryui/jquery-ui-1.8.14.custom.css',
-            #'css/jqueryui/jqueryui.css',
-        ),
         'search': (
             'css/search.css',
-            'css/jqueryui/jqueryui.css',
-            'css/jqueryui/jquery-ui-1.8.14.custom.css',
+            'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
             'css/jqueryui/moz-jquery-plugins.css',
         ),
         'wiki': (
             'css/wiki.css',
             'css/wiki-screen.css',
-            'css/jqueryui/jqueryui.css',
-            'css/jqueryui/jquery-ui-1.8.14.custom.css',
+            'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
             'css/jqueryui/moz-jquery-plugins.css',
         ),
         'wiki-print': (
@@ -651,17 +644,17 @@ MINIFY_BUNDLES = {
             'js/demos-devderby-landing.js',
         ),
         'libs/jqueryui': (
-            'js/libs/jquery-ui-1.8.14.custom.min.js',
+            'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
         ),
         'libs/tagit': (
             'js/libs/tag-it.js',
         ),
         'search': (
             'js/search.js',
-            'js/libs/jqueryui.min.js',
+            'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
         ),
         'wiki': (
-            'js/libs/jqueryui.min.js',
+            'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
             'js/moz-jquery-plugins.js',
             'js/main.js',
             'js/wiki.js',
@@ -669,7 +662,7 @@ MINIFY_BUNDLES = {
             'js/wiki-tags-edit.js',
         ),
         'dashboards': (
-            'js/libs/jqueryui.min.js',
+            'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
             'js/moz-jquery-plugins.js',
             'js/libs/DataTables-1.9.4/media/js/jquery.dataTables.js',
             'js/libs/DataTables-1.9.4/extras/Scroller/media/js/dataTables.scroller.js',
