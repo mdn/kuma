@@ -2,7 +2,7 @@
 
 {% block pageid %}devderby{% endblock %}
 
-{% block bodyclass %}section-demos devderby landing{% endblock %}
+{% block bodyclass %}section-demos devderby landing {% if waffle.flag('derby_closed') %}derby-closed{% endif %}{% endblock %}
 
 {% block extrahead %}
     {{ css('devderby') }}
@@ -228,6 +228,20 @@
           <p>See you in November!</p>
         </div>
       {% endtrans %}
+
+      <div style="padding-right: 20px;">
+        <header>
+            <h2>{{_("Previous Dev Derby Challenges")}}</h2>
+        </header>
+        <ul class="previous">
+            {% for tag_name in previous_challenge_tag_names %}
+                <li>
+                  <h3><a href="{{ devderby_tag_to_date_url(tag_name) }}"><span>{{ tag_meta(tag_name, 'dateline') }}</span> {{ tag_meta(tag_name, 'short_title') }}</a></h3>
+                  <p class="desc">{{ tag_meta(tag_name, 'summary') }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+      </div>
 
     {% endif %}
     </section><!-- /#current-challenge -->
