@@ -1,10 +1,10 @@
 /* header */
-header, header > .center
-	height 90px
-
-body > header
+#main-header
 	create-gradient-background(header-background-color)
 	border-bottom 1px solid rgba(255, 255, 255, 0.2)
+
+	> .center
+		height 90px
 
 	.logo
 		@extend .offscreen
@@ -16,22 +16,27 @@ body > header
 		left gutter-width
 		bottom 21px
 
-	nav
-		> ul
-			position absolute
-			right gutter-width
-			bottom 21px
+#main-nav
+	> ul
+		position absolute
+		right gutter-width
+		bottom 21px
 
-			> li
-				display inline-block
-				padding-left 47px
-				position relative
+		> li
+			display inline-block
+			padding-left 47px
+			position relative
+			opacity 1
+			max-width 1000px
+			vendorize(transition-property, all)
+			vendorize(transition-duration, animation-duration)
+			vendorize(transition-delay, animation-duration)
 
-				> a
-					compat-important(color, menu-link-color)
-					compat-important(text-transform, uppercase)
-					compat-important(text-decoration, none)
-					compat-important(font-weight, bold)
+			> a
+				compat-important(color, menu-link-color)
+				compat-important(text-transform, uppercase)
+				compat-important(text-decoration, none)
+				compat-important(font-weight, bold)
 
 	button[type='submit']
 		display none
@@ -49,7 +54,7 @@ body > header
 
 		& > div:first-child
 			border-right 1px dotted #d4dde4
-			margin-right grid-spacing
+			margin-right 0g
 
 		.submenu-column
 			min-height 90px
@@ -79,6 +84,16 @@ body > header
 			left 255px
 			z-index 1
 
+	&.expand
+		input 
+			width 500px
+
+		> ul > li:not(:last-child)
+			opacity 0
+			width 0
+			max-width 0
+			overflow hidden
+			vendorize(transition-delay, 0)
 
 
 .search-wrap
@@ -94,6 +109,8 @@ body > header
 		font-weight bold
 		width 180px
 		compat-only(padding, 0)
+		vendorize(transition-property, width)
+		vendorize(transition-duration, animation-duration)
 
 		&::-webkit-input-placeholder
 			color text-color
@@ -106,9 +123,14 @@ body > header
 
 		input
 			width 100px
-		
 
 /* main content area */
+.wrap
+	compat-only(max-width, none)
+	compat-only(min-width, 0)
+	compat-only(width, auto)
+	compat-only(background, pink);
+	
 main
 	padding-top first-content-top-padding
 

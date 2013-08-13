@@ -2,6 +2,7 @@
 {% extends "search/base.html" %}
 {% set meta = (('WT.oss', q),
                ('WT.oss_r', num_results)) %}
+{% set result_fold_limit = 3 %}
 {% block title %}
   {% if search_query %}
     {{ page_title(_('Search Results for "{search_query}"')|f(search_query=search_query)) }}
@@ -14,12 +15,12 @@
 
 {% macro doc_block(doc, index) -%}
   {% set doc_url = '%s%s' % (settings.SITE_URL, url('wiki.document', doc.slug, locale=doc.locale)) %}
-  {% set more_class = 'closed' if index > 3 and current_page == 1 else '' %}
+  {% set more_class = 'closed' if index > result_fold_limit and current_page == 1 else '' %}
   <li class="result-{{ index }} {{ more_class }}">
 		<div class="column-container">
 			<div class="column-1"><i class="icon-file-text-alt"></i></div>
 			<div class="column-5 result-list-item">
-				<h4 class="larger"><a href="{{ doc_url }}">{{ doc.title }}</a></h4>
+				<h4 class="larger"><a href="{{ doc_url }}?search={{ search_query }}">{{ doc.title }}</a></h4>
 				<p>{{ doc.get_excerpt()|safe }}</p>
 				<p class="search-meta"><a href="{{ doc_url }}">{{ doc_url|replace('https://', '') }}</a></p>
 			</div>
@@ -47,6 +48,7 @@
 				</div>
 			</div>
 
+			{% if result_count %}
 			<div class="search-pane seach-results-container">
 				<h3><i class="icon-copy"></i>{{ _('Docs') }}</h3>
 
@@ -56,13 +58,29 @@
 			        {% endfor %}
 				</ul>
 
-				{% if current_page == 1 %}
-				<div class="search-results-more">
+				{% set show_expander = current_page == 1 and result_count > result_fold_limit %}
+				<div class="search-results-more {% if show_expander %}with-view-all{% endif %}">
+
+					{% if show_expander %}
 					{% trans %}
-					<a href="javascript:;">View all {{ result_count }} <i class="icon-caret-down"></i></a>
+						<a href="javascript:;" class="view-all">View all {{ result_count }} <i class="icon-caret-down"></i></a>
 					{% endtrans %}
+					{% endif %}
+
+					<div class="pager">
+				        {% if next_page %}
+				          <a class="button" href="{{ request.get_full_path()|urlparams(page=next_page) }}">
+				          {{ _('Next Page') }}
+				          </a>
+				        {% endif %}
+				        {% if prev_page %}
+				          <a class="button" href="{{ request.get_full_path()|urlparams(page=prev_page) }}">
+				          {{ _('Previous Page') }}
+				          </a>
+				        {% endif %}
+			        </div>
+
 				</div>
-				{% endif %}
 			</div>
 
 			{#
@@ -115,6 +133,7 @@
 				</ul>
 			</div>
 			#}
+			{% endif %}
 		</div>
 
 		<!-- right topics -->
@@ -153,11 +172,14 @@
 			$('#search-results-close-container').addClass('closed');
 		});
 
-		$('.search-results-more a').on('click', function(e) {
+		var $more = $('.search-results-more');
+		$more.find('.view-all').on('click', function(e) {
 			e.preventDefault();
 			var hiddenClass = 'closed';
-			$(this).closest(parentSelector).find('.' + hiddenClass).removeClass(hiddenClass);
-			$(this).parent().addClass('hidden');
+			var $parent = $(this).closest(parentSelector);
+			$parent.find('.' + hiddenClass).removeClass(hiddenClass);
+			$parent.find('.pager').removeClass('hidden');
+			$more.removeClass('with-view-all');
 		});
 	})(jQuery);
 </script>

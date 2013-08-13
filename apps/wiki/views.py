@@ -559,6 +559,9 @@ def document(request, document_slug, document_locale):
     # Retrieve file attachments
     attachments = _format_attachment_obj(doc.attachments)
 
+    # Provide additional information if user came from a search
+    from_search = request.GET.get('search', '')
+
     data = {'document': doc, 'document_html': doc_html, 'toc_html': toc_html,
             'redirected_from': redirected_from,
             'related': related, 'contributors': contributors,
@@ -568,6 +571,7 @@ def document(request, document_slug, document_locale):
             'seo_summary': seo_summary,
             'seo_parent_title': seo_parent_title,
             'attachment_data': attachments,
+            'from_search': from_search,
             'attachment_data_json': json.dumps(attachments)}
     data.update(SHOWFOR_DATA)
 

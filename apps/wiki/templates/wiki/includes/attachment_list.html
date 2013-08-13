@@ -10,7 +10,11 @@
 
   {% if show_attach_button and attachment_form %}
   <p class="add">
-    <a href="javascript:;" id="page-attachments-button"><i class="icon-paper-clip"></i> Attach Files</a>
+    {% if waffle.flag('redesign') %}
+      <a href="javascript:;" id="page-attachments-button" class="button neutral">Attach Files<i class="icon-paper-clip"></i></a>
+    {% else %}
+      <a href="javascript:;" id="page-attachments-button"><i class="icon-paper-clip"></i>Attach Files</a>
+    {% endif %}
   </p>
   {% endif %}
 

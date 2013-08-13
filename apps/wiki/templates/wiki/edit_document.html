@@ -87,7 +87,7 @@
         {% if waffle.flag('external_signup') %}
         <div class="notice" style="margin-bottom:30px;"><p>
           Do you have docs you want to automatically add to MDN from an external source? 
-          <a href="{{ url('wiki.external_signup') }}" class="button">Let us know!</a>
+          <a href="{{ url('wiki.external_signup') }}" class="button neutral" style="margin-left: 10px;">Let us know!</a>
         </p></div>
         {% endif %}
         <header id="article-head">
@@ -145,7 +145,7 @@
               </section>
             </section>
 
-            <section class="page-meta">
+            <section class="page-meta wiki-block">
               <section>
                 <h4>{{_('Review needed?')}}</h4>
                 {{ revision_form.review_tags|safe }}
