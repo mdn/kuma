@@ -56,7 +56,6 @@
       {% for script in scripts %}
         {{ js(script) }}
       {% endfor %}
-
       <script type="text/javascript">
         // Event tracking for the new menu
         $(function() {
@@ -112,11 +111,11 @@
 <body id="{{ pageid() }}" class="html-{{ DIR }} {{ bodyclass() }}" role="document">
 
   <!-- Header -->
-  <header><div class="center">
+  <header id="main-header"><div class="center">
 
     <a href="/" class="logo">{{ _('Mozilla Developer Network') }}</a>
 
-    <nav><ul>
+    <nav id="main-nav"><ul>
       <li><a href="">{{ _('Projects') }}</a>
 
         <div class="submenu">
@@ -190,7 +189,7 @@
       <li><a href="{{ url('demos') }}">{{ _('Demos') }}</a></li>
       <li><form action="{{ url('search') }}">
         <div class="search-wrap">
-          <input type="search" name="q" placeholder="{{ _('Search') }}" data-grow="500px" />
+          <input type="search" name="q" placeholder="{{ _('Search') }}" />
           <i class="icon-search"></i>
           <button type="submit">{{ _('Search') }}</button>
         </div>

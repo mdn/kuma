@@ -1,4 +1,5 @@
 @import 'vars'
+@import 'mixins'
 
 /* headings */
 h1, h2, h3, h4
@@ -52,41 +53,8 @@ a
 	{selector-icon}:before
 		cursor pointer
 
-button, .button, input[type='submit'], input[type='button']
-	text-decoration none
-	display inline-block
-	compat-important(background-color, button-background)
-	compat-important(color, button-color)
-	compat-important(text-transform, uppercase)
-	compat-important(padding, 5px 11px)
-	compat-important(border-radius, 4px)
-	vendorize(box-shadow, inset 0 -1px #bbbfc2)
-	compat-only(background-image, none)
-	compat-only(font-family, site-font-family)
-	compat-only(letter-spacing, normal)
-
-	&.only-icon
-		{selector-icon}
-			margin-left 0
-			margin-top -1px
-
-		span
-			@extend .offscreen
-
-	&.neutral
-		compat-important(color, #fff)
-		compat-important(background-color, #0095dd)
-		vendorize(box-shadow, inset 0 -1px #00539f)
-
-	&.negative
-		compat-important(color, #fff)
-		compat-important(background-color, #ea3b28)
-		vendorize(box-shadow, inset 0 -1px #c13832)
-
-	&.positive
-		compat-important(color, #fff)
-		compat-important(background-color, #70a300)
-		vendorize(box-shadow, inset 0 -1px #486900)		
+button, a.button, input[type='submit'], input[type='button']
+	@extend .button
 
 button, input[type='submit'], input[type='button']
 	&::-moz-focus-inner

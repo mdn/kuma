@@ -36,12 +36,22 @@
 </ol></nav>
 
 <!-- heading -->
-<h1>{{ document.title }}</h1>
-{% if redirected_from %}
-<div class="redirected-from" id="redirected-from">
-	<p>{{ _('Redirected from <a href="{href}">{title}</a>')|fe(href=redirected_from.get_absolute_url()|urlparams(redirect='no'), title=redirected_from.title) }}</p>
+<div class="document-head">
+	<h1{% if from_search %} class="from-search"{% endif %}>
+		{% if from_search %}
+			<a href="" class="from-search-previous only-icon"><i class="icon-chevron-left"></i></a>
+			<a href="" class="from-search-navigate"><span class="from-search-navigate-up"><i class="icon-double-angle-up"></i></span><span class="from-search-navigate-down"><i class="icon-double-angle-down"></i></span></a>
+			<a href="" class="from-search-next only-icon"><i class="icon-chevron-right"></i></a>
+		{% endif %}
+		{{ document.title }}
+	</h1>
+
+	{% if redirected_from %}
+	<div class="redirected-from" id="redirected-from">
+		<p>{{ _('Redirected from <a href="{href}">{title}</a>')|fe(href=redirected_from.get_absolute_url()|urlparams(redirect='no'), title=redirected_from.title) }}</p>
+	</div>
+	{% endif %}
 </div>
-{% endif %}
 
 <!-- start the main content container -->
 <div id="wiki-column-container">
@@ -122,7 +132,6 @@
 
 		<!-- right column, TOC -->
 		<div class="column-strip wiki-column" id="wiki-right">
-
 			<!-- approvals -->
 			{% if request.user.is_authenticated() and document.current_revision and document.allows_revision_by(request.user) %}
 				{% if document.current_revision.needs_technical_review() or document.current_revision.needs_editorial_review() %}

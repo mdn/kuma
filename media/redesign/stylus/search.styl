@@ -85,9 +85,22 @@ h3 i[class^="icon-"]
 	prevent-last-child-spacing(a, margin-right)
 
 .search-results-more
+	@extend .clear
+	padding 0 grid-spacing
+
+	.with-view-all .view-all
+		display block
+
+.view-all
 	reverse-link-decoration()
-	text-align right
-	padding-right grid-spacing
+	float right
+	display none
+
+.search-results-more.with-view-all
+	.view-all
+		display block
+	.pager
+		display none
 
 .search-results-topics
 	reverse-link-decoration()
