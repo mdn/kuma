@@ -36,8 +36,8 @@ document.documentElement.className += ' js';
 				if(!initialized) {
 					initialized = 1;
 
-					// Hide the submenu when the main menu is blurred for hideDelay
-					$self.on('mouseleave', function() {
+					// Hide the submenu when the main menu item is blurred for hideDelay
+					$self.on('mouseleave click', function() {
 						clear(showTimeout);
 						closeSubmenu($submenu);
 					});
