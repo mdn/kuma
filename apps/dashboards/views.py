@@ -152,7 +152,7 @@ def revisions(request):
         display_start = int(request.GET.get('iDisplayStart', 0))
 
         revisions = (Revision.objects.select_related('creator')
-                     .order_by('-creator')
+                     .order_by('-created')
                      .defer('content'))
 
         # Build up a dict of the filter conditions, if any, then apply
@@ -181,7 +181,7 @@ def revisions(request):
 
         if query_kwargs:
             revisions = revisions.filter(**query_kwargs)
-            total = Revision.objects.count()
+            total = revisions.count()
         else:
             # If no filters, just do a straight count(). It's the same
             # result, but much faster to compute.
