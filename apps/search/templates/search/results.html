@@ -62,7 +62,7 @@
     </p>
 
     <div class="search-form boxed">
-      <form action="" method="get" id="search-form">
+      <form action="{{ request.path }}" method="get" id="search-form">
         <input name="q" id="search-q" type="search" value="{{ search_query }}" {% if not search_query %}autofocus{% endif %} />
         <button type="submit" id="search-submit">{{ _('Search!') }}</button>
       </form>
@@ -70,7 +70,7 @@
 
     {% if search_query: %}
       <div class="boxed" id="results-box"><!--RESULTS-->
-      {% if result_count: %}
+      {% if result_count %}
         <h2>{{ _('Search Results For "%s"') % search_query }}</h2>
 
         <ul class="search-results-list">
@@ -90,7 +90,26 @@
           {{ _('Previous Page') }}
           </a>
         {% endif %}
+      </div>
+      {% if facet_counts %}
+        <div class="boxed" id="filter-box">
+          <h2>{{ _('Topics') }}</h2>
+          <ul>
+            {% for facet in facet_counts %}
+              <li>
+              {% if facet.deselect_url %}
+                {{ facet.label }} <span class="facet-count">{{ facet.count }}</span>
+                <a href="{{ facet.deselect_url }}">x</a>
+              {% else %}                
+                <a href="{{ facet.select_url }}">
+                  {{ facet.label }} <span class="facet-count">{{ facet.count }}</span>
+                </a>
+              {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
         </div>
+      {% endif %}
       {% else %}
         <h2>{{ _('Ooops!') }}</h2>
         <p>{{ _('No documents relating to your search could be found.') }}</p>
