@@ -22,8 +22,7 @@
 
 <!-- action buttons -->
 <ul class="page-buttons">
-	<li><a href="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}" class="button {{ disabled_class }}" {{ disabled_attr }}>{{ _('Edit Page') }}<i class="icon-pencil"></i></a></li>{% if user.is_authenticated() and document %}
-    <li class="page-watch">
+	<li><a href="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}" class="button {{ disabled_class }}" {{ disabled_attr }}>{{ _('Edit Page') }}<i class="icon-pencil"></i></a></li>{% if user.is_authenticated() and document %}<li class="page-watch">
       {% if document.is_watched_by(user) %}
         <form action="{{ url('wiki.document_unwatch', document.slug) }}" method="post">
           {{ csrf() }}
