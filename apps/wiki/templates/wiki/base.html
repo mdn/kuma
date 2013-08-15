@@ -4,10 +4,20 @@
 {% block site_css %}
     {{ super() }}
     {{ css('wiki-print', media='print') }}
+    {% if waffle.flag('redesign') %}
+      {{ css('redesign-wiki') }}
+    {% endif %}
     {% if config.KUMA_CUSTOM_CSS_PATH %}
       <link rel="stylesheet" type="text/css"
             href="{{ config.KUMA_CUSTOM_CSS_PATH }}?raw=1" />
     {% endif %}
+{% endblock %}
+
+{% block site_js %}
+  {{ super() }}
+  {% if waffle.flag('redesign') %}
+    {{ js('redesign-wiki') }}
+  {% endif %}
 {% endblock %}
 
 {% if not styles %}
