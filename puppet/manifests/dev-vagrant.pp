@@ -8,6 +8,11 @@ $DB_NAME = "kuma"
 $DB_USER = "kuma"
 $DB_PASS = "kuma"
 
+Exec {
+    # This is what makes all commands spew verbose output
+    logoutput => true
+}
+
 class dev {
 
     stage {
