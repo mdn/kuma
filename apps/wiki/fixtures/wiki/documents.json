@@ -71,6 +71,19 @@
         }
     },
     {
+        "pk": 6,
+        "model": "wiki.document",
+        "fields": {
+            "category": 10,
+            "title": "Article with revisions",
+            "locale": "en-US",
+            "is_template": false,
+            "modified": "2013-06-06 05:54:18",
+            "html": "",
+            "slug": "article-with-revisions"
+        }
+    },
+    {
         "pk": 19,
         "model": "wiki.revision",
         "fields": {
@@ -140,6 +153,114 @@
             "document": 2,
             "creator": 7,
             "slug": "article-title-2"
+        }
+    },
+    {
+        "pk": 24,
+        "model": "wiki.revision",
+        "fields": {
+            "comment": "First revision of the article.",
+            "is_approved": true,
+            "created": "2013-08-15 09:00:00",
+            "summary": "First revision of the article.",
+            "reviewed": "2010-08-15 09:01:00",
+            "content": "First revision of the article.",
+            "significance": 10,
+            "keywords": "barfoo",
+            "reviewer": 10,
+            "document": 6,
+            "creator": 8,
+            "slug": "article-with-revisions"
+        }
+    },
+    {
+        "pk": 25,
+        "model": "wiki.revision",
+        "fields": {
+            "comment": "Second revision of the article.",
+            "is_approved": true,
+            "created": "2013-08-15 09:05:00",
+            "summary": "Second revision of the article.",
+            "reviewed": "2010-08-15 09:06:00",
+            "content": "Second revision of the article.",
+            "significance": 10,
+            "keywords": "barfoo",
+            "reviewer": 10,
+            "document": 6,
+            "creator": 8,
+            "slug": "article-with-revisions"
+        }
+    },
+    {
+        "pk": 26,
+        "model": "wiki.revision",
+        "fields": {
+            "comment": "Third revision of the article.",
+            "is_approved": true,
+            "created": "2013-08-15 09:10:00",
+            "summary": "Third revision of the article.",
+            "reviewed": "2010-08-15 09:11:00",
+            "content": "Third revision of the article.",
+            "significance": 10,
+            "keywords": "barfoo",
+            "reviewer": 10,
+            "document": 6,
+            "creator": 8,
+            "slug": "article-with-revisions"
+        }
+    },
+    {
+        "pk": 27,
+        "model": "wiki.revision",
+        "fields": {
+            "comment": "Fourth revision of the article.",
+            "is_approved": true,
+            "created": "2013-08-15 09:15:00",
+            "summary": "Fourth revision of the article.",
+            "reviewed": "2010-08-15 09:16:00",
+            "content": "Fourth  revision of the article.",
+            "significance": 10,
+            "keywords": "barfoo",
+            "reviewer": 10,
+            "document": 6,
+            "creator": 8,
+            "slug": "article-with-revisions"
+        }
+    },
+    {
+        "pk": 28,
+        "model": "wiki.revision",
+        "fields": {
+            "comment": "Fifth revision of the article.",
+            "is_approved": true,
+            "created": "2013-08-15 09:20:00",
+            "summary": "Fifth revision of the article.",
+            "reviewed": "2010-08-15 09:21:00",
+            "content": "Fifth revision of the article.",
+            "significance": 10,
+            "keywords": "barfoo",
+            "reviewer": 10,
+            "document": 6,
+            "creator": 9,
+            "slug": "article-with-revisions"
+        }
+    },
+    {
+        "pk": 29,
+        "model": "wiki.revision",
+        "fields": {
+            "comment": "Sixth revision of the article.",
+            "is_approved": true,
+            "created": "2013-08-15 09:25:00",
+            "summary": "Sixth revision of the article.",
+            "reviewed": "2010-08-15 09:26:00",
+            "content": "Sixth revision of the article.",
+            "significance": 10,
+            "keywords": "barfoo",
+            "reviewer": 10,
+            "document": 6,
+            "creator": 9,
+            "slug": "article-with-revisions"
         }
     },
     {

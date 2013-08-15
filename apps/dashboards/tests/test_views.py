@@ -9,6 +9,7 @@ from dashboards.readouts import CONTRIBUTOR_READOUTS
 from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
 
+
 class LocalizationDashTests(TestCase):
     def test_redirect_to_contributor_dash(self):
         """Should redirect to Contributor Dash if the locale is the default"""
@@ -47,12 +48,36 @@ class RevisionsDashTest(TestCase):
             [template.name for template in response.templates])
 
     @attr('dashboards')
+    def test_revision_list(self):
+        url = reverse('dashboards.revisions',
+                      locale='en-US')
+        # We only get revisions when requesting via AJAX.
+        response = self.client.get(url,
+                                   HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        eq_(200, response.status_code)
+
+        revision_json = json.loads(response.content)
+        eq_(10, revision_json['iTotalRecords'])
+
+        revisions = revision_json['aaData']
+        eq_(10, len(revisions))
+        # Most recent revision first.
+        eq_(29, revisions[0]['id'])
+        # Second-most-recent revision next.
+        eq_(28, revisions[1]['id'])
+        # Oldest revision last.
+        eq_(19, revisions[-1]['id'])
+        
+
+    @attr('dashboards')
     def test_locale_filter(self):
         url = reverse('dashboards.revisions', locale='fr') + '?locale=fr'
         response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(200, response.status_code)
         revisions = json.loads(response.content)
         ok_(len(revisions))
+        eq_(1, revisions['iTotalRecords'])
+        eq_(1, len(revisions['aaData']))
         ok_(['fr' in rev['doc_url'] for rev in revisions['aaData']])
         ok_(['en-US' not in rev['doc_url'] for rev in revisions['aaData']])
 
@@ -69,12 +94,13 @@ class RevisionsDashTest(TestCase):
     @attr('dashboards')
     def test_creator_filter(self):
         url = reverse('dashboards.revisions',
-                      locale='en-US') + '?user=testuser'
+                      locale='en-US') + '?user=testuser01'
         response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(200, response.status_code)
         revisions = json.loads(response.content)
         ok_(len(revisions))
-        ok_(['testuser' == rev['creator'] for rev in revisions['aaData']])
+        eq_(2, revisions['iTotalRecords'])
+        ok_(['testuser01' == rev['creator'] for rev in revisions['aaData']])
         ok_(['testuser2' != rev['creator'] for rev in revisions['aaData']])
 
     @attr('dashboards')
@@ -90,11 +116,13 @@ class RevisionsDashTest(TestCase):
     @attr('dashboards')
     def test_topic_filter(self):
         url = reverse('dashboards.revisions',
-                      locale='en-US') + '?topic=article'
+                      locale='en-US') + '?topic=article-with-revisions'
         response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(200, response.status_code)
         revisions = json.loads(response.content)
         ok_(len(revisions))
+        eq_(6, revisions['iTotalRecords'])
+        eq_(6, len(revisions['aaData']))
         ok_(['lorem' not in rev['slug'] for rev in revisions['aaData']])
 
     @attr('dashboards')
