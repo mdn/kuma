@@ -7,10 +7,10 @@ nfs: true
 gui: false
 ip_address: 192.168.10.55
 memory_size: 768
-box: "kuma-ubuntu"
-virtual_box_url: "http://people.mozilla.com/~jleidel/vagrant/kuma-precise-virtualbox.box"
+box: "kuma-ubuntu-20130813"
+virtual_box_url: "http://people.mozilla.com/~lorchard/vm/kuma-ubuntu-20130813.box"
 vmware_box_url: "http://people.mozilla.com/~jleidel/vagrant/kuma-precise-vmware.box"
-package_name: "kuma-ubuntu.box"
+package_name: "kuma-ubuntu-20130813.box"
 mount_point: "/vagrant"
 
 aws_region: "us-east-1"
