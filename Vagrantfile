@@ -42,7 +42,7 @@ Vagrant::Config.run do |config|
     config.ssh.max_tries = 50
     config.ssh.timeout   = 300
 
-    config.vm.provision :puppet do |puppet|
+    config.vm.provision :puppet, :options => ['--verbose', '--logdest=console'] do |puppet|
         puppet.manifests_path = "puppet/manifests"
         puppet.manifest_file = "dev-vagrant.pp"
     end
