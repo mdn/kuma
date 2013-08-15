@@ -1,7 +1,14 @@
 import logging
+import warnings
 
 from django.conf import settings
 from django.db.models.signals import pre_delete
+
+# ignore a deprecation warning from elasticutils until the fix is released
+# refs https://github.com/mozilla/elasticutils/pull/160
+warnings.filterwarnings("ignore",
+                        category=DeprecationWarning,
+                        module='celery.decorators')
 
 from elasticutils.contrib.django.tasks import index_objects, unindex_objects
 
