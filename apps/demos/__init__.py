@@ -197,7 +197,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "description": _("Creating rich user experiences for the Web has never been easier. Today's open Web standards put some of the most powerful features right at your fingertips. Animate pages with CSS, validate user input with HTML, and more. What else can you do without JavaScript?"),
         "learn_more": [],
         "tab_copy": _("""<p>Who needs JavaScript? The expanding capabilities of HTML and CSS make it easier than ever to create rich user experiences for the Web. Mark Pilgrim captures this in <cite><a href="http://diveintohtml5.info/index.html">Dive into HTML5</a></cite> when he advises, "Scripting is here to stay, but should be avoided where more convenient declarative markup can be used." Today, declarative markup can be used to accomplish more than ever.</p>
-<p>Dynamically adapt to different screen sizes using CSS <a href="https://developer.mozilla.org/en-US/docs/CSS/Media_queries">media queries</a>. Make a page come alive with CSS <a href="https://developer.mozilla.org/en-US/docs/CSS/Using_CSS_transitions">transitions</a> and <a href="https://developer.mozilla.org/en-US/docs/CSS/Using_CSS_animations">animations</a>. Create eye-popping graphics and animations with <a href="https://developer.mozilla.org/en-US/docs/CSS/Using_CSS_transforms#3D_specific_CSS_properties">3D transforms</a>. Warn users about invalid input with HTML <a href="https://developer.mozilla.org/en-US/docs/HTML/Forms_in_HTML#section_8">form validation</a>. Provide rich media with graceful fallbacks using HTML5 <a href="https://developer.mozilla.org/en-US/docs/Using_HTML5_audio_and_video">video and audio</a>. The open Web lets you do all of this and more, all without a single line of JavaScript.</p>
+<p>Dynamically adapt to different screen sizes using CSS <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Media_queries">media queries</a>. Make a page come alive with CSS <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Using_CSS_transitions">transitions</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Using_CSS_animations">animations</a>. Create eye-popping graphics and animations with <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Using_CSS_transforms#3D_specific_CSS_properties">3D transforms</a>. Warn users about invalid input with HTML <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Forms_in_HTML#Constraint_Validation">form validation</a>. Provide rich media with graceful fallbacks using HTML5 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Using_HTML5_audio_and_video">video and audio</a>. The open Web lets you do all of this and more, all without a single line of JavaScript.</p>
 <p>So hold the JavaScript and show us what you can do this month in the July Dev Derby!</p>"""),
     },
     {
@@ -211,7 +211,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "description": _("The Camera API lets you access (with permission) the cameras of mobile devices. With the Camera API, users can easily take pictures and upload them to your web page."),
         "learn_more": [],
         "tab_copy": _("""<p>The <a href="https://hacks.mozilla.org/2012/04/taking-pictures-with-the-camera-api-part-of-webapi/">Camera API</a> lets you access the cameras of mobile devices (with the user's permission, of course!). By using the Camera API, you can help users take photos (or retrieve existing ones) and upload them to a web page easily. No <em>Browse</em> button and no digging through obscure file names. This is totally seamless photo sharing.</p>
-<p>The Camera API was born out of Mozilla's <a href="https://wiki.mozilla.org/WebAPI">WebAPI</a> project, but has already gained support across browsers. Users of <a href="https://www.mozilla.org/firefox/mobile/features/">Firefox for Android</a>, Chrome for Android, and recent versions of the stock Android Browser can already reap the benefits.</p>
+<p>The Camera API was born out of Mozilla's <a href="https://developer.mozilla.org/en-US/docs/WebAPI">WebAPI</a> project, but has already gained support across browsers. Users of <a href="https://www.mozilla.org/firefox/mobile/features/">Firefox for Android</a>, Chrome for Android, and recent versions of the stock Android Browser can already reap the benefits.</p>
 <p>Mozilla's Robert Nyman has written a great article on <a href="https://hacks.mozilla.org/2012/04/taking-pictures-with-the-camera-api-part-of-webapi/">using the Camera API</a> and a <a href="http://robnyman.github.com/camera-api/">live demo</a> of it. Unfortunately, little other creative work has been done with this powerful technology. That's where you come in. What can you do with the Camera API? Show us this month in the August Dev Derby!</p>"""),
     },
     {
@@ -225,7 +225,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "description": _("With Geolocation, you can get the user's physical location (with permission) and use it to enhance the browsing experience or enable advanced location-aware features."),
         "learn_more": [],
         "tab_copy": _("""<p>The Geolocation API lets you determine the location and movement of a user. What can you do with this information? Maps, social networking, games &mdash; the possibilities are endless. Looking for inspiration? Just take a look at some of the amazing things created for our <a href="https://developer.mozilla.org/en-US/demos/devderby/2011/september">first Geolocation Derby</a>.</p>
-<p>Anyone can learn to use the Geolocation API, especially considering how much documentation we already have on the topic. Beginners might like <a href="https://hacks.mozilla.org/2011/09/where-on-earth-this-months-developer-derby-is-all-about-geolocation/">this blog post</a> from our very own Christian Heilmann (complete with an interactive code sample), and experts might like the <a href="https://developer.mozilla.org/en-US/docs/Using_geolocation">even more detailed documentation</a> available on the MDN.</p>
+<p>Anyone can learn to use the Geolocation API, especially considering how much documentation we already have on the topic. Beginners might like <a href="https://hacks.mozilla.org/2011/09/where-on-earth-this-months-developer-derby-is-all-about-geolocation/">this blog post</a> from our very own Christian Heilmann (complete with an interactive code sample), and experts might like the <a href="https://developer.mozilla.org/en-US/docs/WebAPI/Using_geolocation">even more detailed documentation</a> available on the MDN.</p>
 <p>The best part? You don't need to learn much to start using Geolocation on mobile devices right now. No Java, no Objective-C, no native SDKs. Just the web. And you already know how to use that, right?</p>"""),
     },
     {
@@ -239,7 +239,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "description": _("CSS Media Queries are now a common tool for responsive, mobile-first web design. They are now even a W3C Recommendation! They can tell you a lot more about a display than just its width. What can you do with Media Queries?"),
         "learn_more": [],
         "tab_copy": _("""<p>CSS Media Queries have come a long way in the last year. Now a <a href="http://www.w3.org/TR/css3-mediaqueries/">W3C Recommendation</a>, media queries help you support the ever-expanding variety of screen sizes and resolutions in use today. Smart phones and feature phones, tablets and e-book readers, short screens, tall screens, and super-high-resolution screens -- the Web is growing, shrinking, and changing every day.</p>
-<p>Building a Web app that works well across this spectrum can seem daunting, but we have you covered. Take a look at this <a href="http://css-tricks.com/css-media-queries/">introduction</a> from former Derby judge Chris Coyier and be sure to head over to the MDN for <a href="https://developer.mozilla.org/en-US/docs/CSS/Media_queries">more depth and more up-to-date information</a> after that. Need help testing your creation? The new <a href="https://developer.mozilla.org/en-US/docs/Tools/Responsive_Design_View">Responsive Design View</a> of Firefox Developer Tools makes debugging responsive web designs fast, easy, and fun.</p>
+<p>Building a Web app that works well across this spectrum can seem daunting, but we have you covered. Take a look at this <a href="http://css-tricks.com/css-media-queries/">introduction</a> from former Derby judge Chris Coyier and be sure to head over to the MDN for <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Media_queries">more depth and more up-to-date information</a> after that. Need help testing your creation? The new <a href="https://developer.mozilla.org/en-US/docs/Tools/Responsive_Design_View">Responsive Design View</a> of Firefox Developer Tools makes debugging responsive web designs fast, easy, and fun.</p>
 <p>Some <a href="https://developer.mozilla.org/en-US/demos/devderby/2011/october">great demos</a> were shared in our last Derby on this topic. What can you do with CSS Media Queries?</p>"""),
     },
     {
@@ -254,7 +254,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "learn_more": [],
         "tab_copy": _("""<p>The Fullscreen API lets you make your Web application&mdash;or just part of it&mdash;front and center, free from the toolbars and the menus that usually get in the way. But this is about more than just real estate. The Fullscreen API also also helps you detect when users toggle fullscreen mode and even style your content according to those changes. The possibilities really are endless.</p>
 <p>This important new technology has already been put to good use in desktop applications like <a href="https://developer.mozilla.org/en-US/demos/detail/bananabread">BananaBread</a>, but what about mobile? As our very own Rob Hawkes and Christian Heilmann explain in a recent talk, the Fullscreen API can be used to <a href="https://www.youtube.com/watch?v=seYKzIMRvns#t=28m40s">build mobile apps that feel truly native</a>. Your users may not even know the difference. And because Firefox OS and Firefox for Android already support the Fullscreen API, you can begin using it right now.</p>
-<p>New to all this? No problem. As always, we have you covered with some of the best documentation out there. Beginners might like the <a href="https://hacks.mozilla.org/2012/01/using-the-fullscreen-api-in-web-browsers/">introduction</a> we shared on the Mozilla Hacks blog earlier this year, and those looking for more information will probably appreciate the <a href="https://developer.mozilla.org/en-US/docs/DOM/Using_fullscreen_mode">additional depth</a> provided on Mozilla Developer Network.</p>
+<p>New to all this? No problem. As always, we have you covered with some of the best documentation out there. Beginners might like the <a href="https://hacks.mozilla.org/2012/01/using-the-fullscreen-api-in-web-browsers/">introduction</a> we shared on the Mozilla Hacks blog earlier this year, and those looking for more information will probably appreciate the <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Using_full_screen_mode">additional depth</a> provided on Mozilla Developer Network.</p>
 <p>As web developers, we often talk about building engaging experiences for our users. Doing so has never been more possible. What can you do with the Fullscreen API?</p>"""),
     },
     {
@@ -269,7 +269,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "learn_more": [],
         "tab_copy": _("""<p>Want to learn how to build apps? You've come to the right place. The Mozilla Dev Derby is a monthly Web development contest open to anyone willing to learn. No experience necessary! The Dev Derby provides a different challenge every month. This month, we want to see if you can create apps that work without an internet connection.</p>
 <p>Building apps that work offline has never been easier. With modern Web technologies, you can build amazing offline apps without writing a single line of native code. Support travelers without learning how to build Android apps, improve performance for mobile users without diving deep into iPhone development&mdash;thanks to the Web, you can do all of this and more using only JavaScript, HTML, CSS and other technologies that are easy to learn and use.</p>
-<p>Need help getting started? No problem. The Mozilla Developer Network (MDN) has you covered with <a href="https://developer.mozilla.org/en-US/">some of the best documentation out there</a>. Beginners should appreciate our <a href="https://developer.mozilla.org/en-US/learn">comprehensive documentation on the basics</a> and experts will love the thousands of other articles we provide. When you're ready to learn about offline apps in particular, take a look at Chris Heilmann's <a href="https://hacks.mozilla.org/2012/03/there-is-no-simple-solution-for-local-storage/">excellent article on where things stand</a>. The options can seem overwhelming&mdash;localStorage, IndexedDB, WebSQL, everCookie and more. Which tool is best for the job? Naturally, that depends on what the job is. The Web development community needs examples and patterns for which storage solutions to apply in which kinds of situations.</p>
+<p>Need help getting started? No problem. The Mozilla Developer Network (MDN) has you covered with <a href="https://developer.mozilla.org/">some of the best documentation out there</a>. Beginners should appreciate our <a href="https://developer.mozilla.org/en-US/learn">comprehensive documentation on the basics</a> and experts will love the thousands of other articles we provide. When you're ready to learn about offline apps in particular, take a look at Chris Heilmann's <a href="https://hacks.mozilla.org/2012/03/there-is-no-simple-solution-for-local-storage/">excellent article on where things stand</a>. The options can seem overwhelming&mdash;localStorage, IndexedDB, WebSQL, everCookie and more. Which tool is best for the job? Naturally, that depends on what the job is. The Web development community needs examples and patterns for which storage solutions to apply in which kinds of situations.</p>
 <p>That's where you come in. Can you build great apps that are also snappy? Is code simplicity or the size of your audience more important? We often describe the Dev Derby as a platform for pushing the Web forward. Never has this goal been so within reach.</p>
 <p>Predict the future by inventing it. Show the world what you think offline apps should look like by submitting one of your own to the December Dev Derby.</p>"""),
     },
@@ -284,7 +284,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "description": _("The Drag and Drop API brings an age-old interaction to the Web, making rich, natural, and familiar user experiences possible."),
         "learn_more": [],
         "tab_copy": _("""<p>The Mozilla Dev Derby is a monthly Web development contest open to anyone willing to learn. No experience necessary! This month, we want to see if you can build Web apps that support drag and drop interaction. Simple games, intuitive shopping carts, easier file uploads&mdash;the possibilities are endless.</p>
-<p>Need help getting started? No problem. The <a href="https://developer.mozilla.org/">Mozilla Developer Network</a> (MDN) has you covered with some of the best documentation out there. Beginners will appreciate our <a href="https://developer.mozilla.org/learn">comprehensive documentation on the basics</a>, and more seasoned web developers should love the thousands of other articles provided. When you're ready to get started on your contest entry, take a look at the <a href="https://developer.mozilla.org/docs/DragDrop/Drag_and_Drop">drag and drop documentation</a> in particular. Need some examples? Check out this <a href="http://html5demos.com/drag">simple demo</a> and the <a href="https://developer.mozilla.org/demos/tag/tech:dragndrop">many more demos</a> available on the Mozilla Demo Studio.</p>
+<p>Need help getting started? No problem. The <a href="https://developer.mozilla.org/">Mozilla Developer Network</a> (MDN) has you covered with some of the best documentation out there. Beginners will appreciate our <a href="https://developer.mozilla.org/learn">comprehensive documentation on the basics</a>, and more seasoned web developers should love the thousands of other articles provided. When you're ready to get started on your contest entry, take a look at the <a href="https://developer.mozilla.org/en-US/docs/DragDrop/Drag_and_Drop">drag and drop documentation</a> in particular. Need some examples? Check out this <a href="http://html5demos.com/drag">simple demo</a> and the <a href="https://developer.mozilla.org/demos/tag/tech:dragndrop">many more demos</a> available on the Mozilla Demo Studio.</p>
 <p>There is a lot to learn, but you don't need to be an expert to create something great. What can you do with drag and drop?</p>"""),
     },
     {
@@ -298,7 +298,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "description": _("The Touch Events API lets you track multiple touches at the same time on devices that support them. Build complex games, support pinch-to-zoom and more. By using multi-touch, your app can respond to all the interactions users have come to expect."),
         "learn_more": [],
         "tab_copy": _("""<p>The Mozilla Dev Derby is a monthly Web development contest open to anyone willing to learn. This month, we want to see what you can do with multi-touch interaction. Games, photo galleries, drawing tools and more. With multi-touch, you can build amazing Web experiences that respond to all of the gestures users have come to expect on mobile. Best of all, the experiences you build will work right out of the box on <a href="https://market.android.com/details?id=org.mozilla.firefox">Firefox for Android</a>, <a href="http://www.mozilla.org/en-US/firefoxos/">Firefox OS</a> and many other mobile platforms. No native code needed!</p>
-<p>Need help getting started? No problem. The <a href="https://developer.mozilla.org/en-US/">Mozilla Developer Network (MDN)</a> has you covered with some of the best documentation out there. Beginners will appreciate our <a href="https://developer.mozilla.org/en-US/learn/">comprehensive guide on the basics</a> and more experienced web developers should love the thousands of other articles provided. When you're ready to learn about multi-touch in particular, take a look at our <a href="https://developer.mozilla.org/en-US/docs/DOM/Touch_events">very thorough Touch Events documentation</a>. Need some examples? Check out <a href="https://developer.mozilla.org/en-US/demos/detail/the-face-builder">The Face Builder</a> and the <a href="https://developer.mozilla.org/en-US/demos/tag/tech:multitouch">many other multi-touch demos</a> hosted on the Mozilla Demo Studio.</p>
+<p>Need help getting started? No problem. The <a href="https://developer.mozilla.org/">Mozilla Developer Network (MDN)</a> has you covered with some of the best documentation out there. Beginners will appreciate our <a href="https://developer.mozilla.org/en-US/learn/">comprehensive guide on the basics</a> and more experienced web developers should love the thousands of other articles provided. When you're ready to learn about multi-touch in particular, take a look at our <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Events/Touch_events">very thorough Touch Events documentation</a>. Need some examples? Check out <a href="https://developer.mozilla.org/en-US/demos/detail/the-face-builder">The Face Builder</a> and the <a href="https://developer.mozilla.org/en-US/demos/tag/tech:multitouch">many other multi-touch demos</a> hosted on the Mozilla Demo Studio.</p>
 <p>There is a lot to learn, but you don't need to be an expert to create something great. What can you do with multi-touch?</p>"""),
     },
     {
@@ -312,7 +312,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "description": _("The mobile Web is becoming more important every day. This time, the only limit is your creativity. What amazing experiences can you build for users on the go?"),
         "learn_more": [],
         "tab_copy": _("""<p>The Mozilla Dev Derby is a monthly Web development contest open to anyone willing to learn. This month, we want to see what amazing experiences you can create for mobile users. The only limit is your creativity.</p>
-<p>Need help getting started? No problem. The Mozilla Developer Network (MDN) has you covered with some of the best documentation out there. Beginners will appreciate our <a href="https://developer.mozilla.org/en-US/learn">comprehensive guide on the basics</a> and more experienced Web developers should appreciate the thousands of other articles provided. When you're ready to tackle mobile in particular, take a look at our <a href="https://developer.mozilla.org/en-US/docs/Mobile/Mobile_Web_Development">detailed Mobile Web Development guide</a>. Need some examples? Check out the many <a href="https://developer.mozilla.org/en-US/demos/tag/tech:mobile">mobile-optimized demos</a> already available on the Demo Studio.</p>
+<p>Need help getting started? No problem. The Mozilla Developer Network (MDN) has you covered with some of the best documentation out there. Beginners will appreciate our <a href="https://developer.mozilla.org/en-US/learn">comprehensive guide on the basics</a> and more experienced Web developers should appreciate the thousands of other articles provided. When you're ready to tackle mobile in particular, take a look at our <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/Mobile">detailed Mobile Web Development guide</a>. Need some examples? Check out the many <a href="https://developer.mozilla.org/en-US/demos/tag/tech:mobile">mobile-optimized demos</a> already available on the Demo Studio.</p>
 <p>It may seem like there's a lot to learn, but you don't need to be an expert to create something great. What can you do with the mobile Web?</p>"""),
     },
     {
@@ -326,7 +326,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "description": _("Web Workers make it easy for you to run scripts in the background. By using Web Workers, you can create dazzling user interfaces that are not hindered by even the most computationally-intensive tasks."),
         "learn_more": [],
         "tab_copy": _("""<p>The Mozilla Dev Derby is a monthly Web development contest open to anyone willing to learn. This month, we want to see what you can do with web workers. Web workers let you run scripts in the background, making even the most computationally-intensive applications possible.</p>
-<p>Need help getting started? No problem. The <a href="https://developer.mozilla.org/en-US/">Mozilla Developer Network (MDN)</a> has you covered with some of the best documentation out there. Beginners will appreciate our <a href="https://developer.mozilla.org/en-US/learn">comprehensive guide on the basics</a> and more experienced Web developers should appreciate the thousands of other articles provided. When you're ready to tackle web workers in particular, take a look at our <a href="https://developer.mozilla.org/en-US/docs/DOM/Using_web_workers">detailed web workers guide</a>. Need some examples? The Demo Studio already has a handful of <a href="https://developer.mozilla.org/en-US/demos/tag/tech:webworkers">web worker demos</a> to learn from.</p>
+<p>Need help getting started? No problem. The <a href="https://developer.mozilla.org/">Mozilla Developer Network (MDN)</a> has you covered with some of the best documentation out there. Beginners will appreciate our <a href="https://developer.mozilla.org/en-US/learn">comprehensive guide on the basics</a> and more experienced Web developers should appreciate the thousands of other articles provided. When you're ready to tackle web workers in particular, take a look at our <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/Performance/Using_web_workers">detailed web workers guide</a>. Need some examples? The Demo Studio already has a handful of <a href="https://developer.mozilla.org/en-US/demos/tag/tech:webworkers">web worker demos</a> to learn from.</p>
 <p>It may seem like a lot, but you don't need to be an expert to create something great. What can you do with web workers?</p>"""),
     },
     {
@@ -340,7 +340,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "description": _("The getUserMedia function lets you access (with permission) the cameras and microphones of your users. No plugins needed! What can you do once you have this media? The possibilities are endless."),
         "learn_more": [],
         "tab_copy": _("""<p>The Mozilla Dev Derby is a monthly Web development contest open to anyone willing to learn. This month, we want to see what you can do with getUserMedia. Build your own photo booth application, help your users record their music and more. With the camera and microphone access offered through getUserMedia, anything is possible.</p>
-<p>Need help getting started? No problem. The <a href="https://developer.mozilla.org/en-US/">Mozilla Developer Network (MDN)</a> has you covered with some of the best documentation out there. Beginners will appreciate our <a href="https://developer.mozilla.org/en-US/learn">comprehensive guide on the basics</a> and more experienced Web developers should appreciate the thousands of other articles provided. When you're ready to tackle getUserMedia in particular, check out the wonderful <a href="https://developer.mozilla.org/en-US/docs/WebRTC/Taking_webcam_photos">annotated demo</a> written by our very own Christian Heilmann. Want even more depth? Take a look at our <a href="https://developer.mozilla.org/en-US/docs/WebRTC/navigator.getUserMedia">detailed technical overview</a>.</p>
+<p>Need help getting started? No problem. The <a href="https://developer.mozilla.org/">Mozilla Developer Network (MDN)</a> has you covered with some of the best documentation out there. Beginners will appreciate our <a href="https://developer.mozilla.org/en-US/learn">comprehensive guide on the basics</a> and more experienced Web developers should appreciate the thousands of other articles provided. When you're ready to tackle getUserMedia in particular, check out the wonderful <a href="https://developer.mozilla.org/en-US/docs/WebRTC/Taking_webcam_photos">annotated demo</a> written by our very own Christian Heilmann. Want even more depth? Take a look at our <a href="https://developer.mozilla.org/en-US/docs/Web/API/Navigator.getUserMedia">detailed technical overview</a>.</p>
 <p>It may seem like a lot, but you don't need to be an expert to create something great. What can you do with getUserMedia?</p>"""),
     },
     {
@@ -354,7 +354,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "description": _("WebGL brings the power of OpenGL, for creating interactive 3D graphics, to the Web, with no plug-ins required."),
         "learn_more": [],
         "tab_copy": _("""<p>The Mozilla Dev Derby is a monthly Web development contest open to anyone willing to learn. This month, we want to see what you can do with WebGL. Build 3D games, create interactive data visualizations and more. With the power of WebGL, anything is possible.</p>
-<p>Need help getting started? No problem. The <a href="http://developer.mozilla.org">Mozilla Developer Network (MDN)</a> has you covered with some of the best documentation out there. Beginners will appreciate our <a href="https://developer.mozilla.org/en-US/learn">comprehensive guide on the basics</a> and more experienced Web developers should appreciate the thousands of other articles provided. When you're ready to tackle WebGL in particular, take a look at our <a href="https://developer.mozilla.org/en-US/docs/Web/WebGL">very detailed WebGL documentation</a>. Need some examples? Check out the many <a href="https://developer.mozilla.org/en-US/demos/tag/tech:webgl">WebGL demos</a> already available on the Demo Studio.</p>
+<p>Need help getting started? No problem. The <a href="http://developer.mozilla.org/">Mozilla Developer Network (MDN)</a> has you covered with some of the best documentation out there. Beginners will appreciate our <a href="https://developer.mozilla.org/en-US/learn">comprehensive guide on the basics</a> and more experienced Web developers should appreciate the thousands of other articles provided. When you're ready to tackle WebGL in particular, take a look at our <a href="https://developer.mozilla.org/en-US/docs/Web/WebGL">very detailed WebGL documentation</a>. Need some examples? Check out the many <a href="https://developer.mozilla.org/en-US/demos/tag/tech:webgl">WebGL demos</a> already available on the Demo Studio.</p>
 <p>It may seem like a lot, but you don't need to be an expert to create something great. What can you do with WebGL?</p>"""),
     },
     {
@@ -368,7 +368,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "description": _("The File API lets you read the contents of files submitted by your users, making natural and familiar data operations possible."),
         "learn_more": [],
         "tab_copy": _("""<p>The Mozilla Dev Derby is a monthly web development contest open to anyone willing to learn. This month, we want to see what you can do with the File API.</p>
-<p>Need help getting started? No problem. The <a href="https://developer.mozilla.org">Mozilla Developer Network (MDN)</a> has you covered with some of the best documentation out there. Beginners will appreciate our <a href="https://developer.mozilla.org/en-US/learn">comprehensive guide on the basics</a> and more experienced web developers should appreciate the thousands of other articles provided. When you're ready to tackle the File API in particular, take a look at our <a href="https://developer.mozilla.org/en-US/docs/Using_files_from_web_applications">very detailed File API documentation</a>. Need some examples? Check out the many <a href="https://developer.mozilla.org/en-US/demos/tag/tech:files">File API demos</a> already available on the Demo Studio.</p>
+<p>Need help getting started? No problem. The <a href="https://developer.mozilla.org/">Mozilla Developer Network (MDN)</a> has you covered with some of the best documentation out there. Beginners will appreciate our <a href="https://developer.mozilla.org/en-US/learn">comprehensive guide on the basics</a> and more experienced web developers should appreciate the thousands of other articles provided. When you're ready to tackle the File API in particular, take a look at our <a href="https://developer.mozilla.org/en-US/docs/Using_files_from_web_applications">very detailed File API documentation</a>. Need some examples? Check out the many <a href="https://developer.mozilla.org/en-US/demos/tag/tech:files">File API demos</a> already available on the Demo Studio.</p>
 <p>It may seem like a lot, but you don't need to be an expert to create something great.  What can you do with the File API?</p>"""),
     },
 
@@ -397,7 +397,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "title": _("CSS3"),
         "description": _("Cascading Style Sheets level 3 (CSS3) provide serveral new features and properties to enhance the formatting and look of documents written in different kinds of markup languages like HTML or XML."),
         "learn_more": (
-            (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/CSS')),
+            (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/Web/CSS')),
             (_('Wikipedia Article'), _('http://en.wikipedia.org/wiki/Cascading_Style_Sheets')),
             (_('W3C Spec'),          _('http://www.w3.org/TR/css3-roadmap/')),
         ),
@@ -407,7 +407,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "title": _("Device"),
         "description": _("Media queries and orientation events let authors adjust their layout on hand-held devices such as mobile phones."),
         "learn_more": (
-            (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/Detecting_device_orientation')),
+            (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/WebAPI/Detecting_device_orientation')),
             (_('W3C Spec'),          _('http://www.w3.org/TR/css3-mediaqueries/')),
         ),
     },
@@ -425,7 +425,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "title": _("Fonts & Type"),
         "description": _("The CSS3-Font specification contains enhanced features for fonts and typography like  embedding own fonts via @font-face or controlling OpenType font features directly via CSS."),
         "learn_more": (
-            (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/css/@font-face')),
+            (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face')),
             (_('Wikipedia Article'), _('http://en.wikipedia.org/wiki/Web_typography')),
             (_('W3C Spec'),          _('http://www.w3.org/TR/css3-fonts/')),
         ),
@@ -435,7 +435,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "title": _("Forms"),
         "description": _("Form elements and attributes in HTML5 provide a greater degree of semantic mark-up than HTML4 and remove a great deal of the need for tedious scripting and styling that was required in HTML4."),
         "learn_more": (
-            (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/HTML/Forms_in_HTML')),
+            (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/Web/HTML/Forms_in_HTML')),
             (_('Wikipedia Article'), _('http://en.wikipedia.org/wiki/HTML_forms')),
             (_('W3C Spec'),          _('http://www.w3.org/TR/html5/forms.html')),
         ),
@@ -445,7 +445,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "title": _("Geolocation"),
         "description": _("The Geolocation API allows web applications to access the user's geographical location."),
         "learn_more": (
-            (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/Using_geolocation')),
+            (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/WebAPI/Using_geolocation')),
             (_('Wikipedia Article'), _('http://en.wikipedia.org/wiki/W3C_Geolocation_API')),
             (_('W3C Spec'),          _('http://dev.w3.org/geo/api/spec-source.html')),
         ),
@@ -455,7 +455,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "title": _("JavaScript"),
         "description": _("JavaScript is a lightweight, object-oriented programming language, commonly used for scripting interactive behavior on web pages and in web applications."),
         "learn_more": (
-            (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/javascript')),
+            (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/Web/JavaScript')),
             (_('Wikipedia Article'), _('http://en.wikipedia.org/wiki/JavaScript')),
             (_('ECMA Spec'),         _('http://www.ecma-international.org/publications/standards/Ecma-262.htm')),
         ),
@@ -465,7 +465,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "title": _("HTML5"),
         "description": _("HTML5 is the newest version of the HTML standard, currently under development."),
         "learn_more": (
-            (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/HTML/HTML5')),
+            (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5')),
             (_('Wikipedia Article'), _('http://en.wikipedia.org/wiki/Html5')),
             (_('W3C Spec'),          _('http://dev.w3.org/html5/spec/Overview.html')),
         ),
@@ -495,7 +495,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "title": _("Mobile"),
         "description": _("Firefox Mobile brings the true Web experience to mobile phones and other non-PC devices."),
         "learn_more": (
-            (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/Mobile')),
+            (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/Mozilla/Mobile')),
             (_('Wikipedia Article'), _('http://en.wikipedia.org/wiki/Mobile_web')),
             (_('W3C Spec'),          _('http://www.w3.org/Mobile/')),
         ),
@@ -505,7 +505,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "title": _("Offline Support"),
         "description": _("Offline caching of web applications' resources using the application cache and local storage."),
         "learn_more": (
-            (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/dom/storage#localStorage')),
+            (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Storage#localStorage')),
             (_('Wikipedia Article'), _('http://en.wikipedia.org/wiki/Web_Storage')),
             (_('W3C Spec'),          _('http://dev.w3.org/html5/webstorage/')),
         ),
@@ -515,7 +515,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "title": _("SVG"),
         "description": _("Scalable Vector Graphics (SVG) is an XML based language for describing two-dimensional vector graphics."),
         "learn_more": (
-            (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/SVG')),
+            (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/Web/SVG')),
             (_('Wikipedia Article'), _('http://en.wikipedia.org/wiki/Scalable_Vector_Graphics')),
             (_('W3C Spec'),          _('http://www.w3.org/TR/SVG11/')),
         ),
@@ -525,7 +525,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "title": _("Video"),
         "description": _("The HTML5 video element provides integrated support for playing video media without requiring plug-ins."),
         "learn_more": (
-            (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/Using_HTML5_audio_and_video')),
+            (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/Web/HTML/Using_HTML5_audio_and_video')),
             (_('Wikipedia Article'), _('http://en.wikipedia.org/wiki/HTML5_video')),
             (_('W3C Spec'),          _('http://www.w3.org/TR/html5/video.html')),
         ),
@@ -535,7 +535,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "title": _("WebGL"),
         "description": _("In the context of the HTML canvas element WebGL provides an API for 3D graphics in the browser."),
         "learn_more": (
-            (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/WebGL')),
+            (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/Web/WebGL')),
             (_('Wikipedia Article'), _('http://en.wikipedia.org/wiki/WebGL')),
             (_('Khronos Spec'),      _('http://www.khronos.org/webgl/')),
         ),
@@ -555,7 +555,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "title": _("Web Workers"),
         "description": _("Web Workers provide a simple means for web content to run scripts in background threads."),
         "learn_more": (
-            (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/DOM/Using_web_workers')),
+            (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/Web/Guide/Performance/Using_web_workers')),
             (_('Wikipedia Article'), _('http://en.wikipedia.org/wiki/Web_Workers')),
             (_('W3C Spec'),          _('http://www.w3.org/TR/workers/')),
         ),
@@ -565,7 +565,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "title": _("XMLHttpRequest"),
         "description": _("XMLHttpRequest (XHR) is used to send HTTP requests directly to a webserver and load the response data directly back into the script."),
         "learn_more": (
-            (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/DOM/XMLHttpRequest/Using_XMLHttpRequest')),
+            (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest')),
             (_('Wikipedia Article'), _('http://en.wikipedia.org/wiki/XMLHttpRequest')),
             (_('W3C Spec'),          _('http://www.w3.org/TR/XMLHttpRequest/')),
         ),
@@ -575,7 +575,7 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
         "title": _("Multi-touch"),
         "description": _("Track the movement of the user's finger on a touch screen, monitoring the raw touch events generated by the system."),
         "learn_more": (
-            (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/DOM/Touch_events')),
+            (_('MDN Documentation'), _('https://developer.mozilla.org/en-US/docs/Web/Guide/DOM/Events/Touch_events')),
             (_('Wikipedia Article'), _('http://en.wikipedia.org/wiki/Multi-touch')),
             (_('W3C Spec'),          _('http://www.w3.org/2010/webevents/charter/')),
         ),
