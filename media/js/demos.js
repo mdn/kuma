@@ -29,7 +29,7 @@ $(document).ready(function () {
         var $demo = $(this),
             content = $demo.html(), 
             offs = $demo.offset(),
-            $contentContainer = $('#content'),
+            $contentContainer = $('body'),
             fadeDuration = 200,
             $demoHover;
 
