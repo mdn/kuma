@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 
-{% set title = _('Localization Dashboard') %}
+{% block title %}
+    {{ _("Localization Dashboard") }} -
+    {{ super() }}
+{% endblock %}
+{% set scripts = ('dashboards',) %}
+{% set styles = ('dashboards',) %}
 
 {% block content %}
 <section id="content">

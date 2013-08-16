@@ -16,9 +16,7 @@ from wiki.models import Document, Revision
 from wiki.helpers import format_comment
 
 from . import (DEFAULT_LOCALE, LOCALES, ORDERS, TOPICS, LANGUAGES,
-               WAFFLE_FLAG)
-
-PAGE_SIZE = 100
+               WAFFLE_FLAG, PAGE_SIZE)
 
 
 @require_GET
