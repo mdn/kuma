@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.http import require_GET
 
-import jinja2
+from jinja2 import escape
 from waffle.decorators import waffle_flag
 
 from sumo.urlresolvers import reverse
@@ -120,7 +120,7 @@ def revisions(request):
             doc_url = reverse('wiki.document', args=[rev.document.full_path],
                               locale=rev.document.locale)
             articleUrl = '<a href="%s" target="_blank">%s</a>' % (doc_url,
-                    jinja2.escape(rev.document.slug))
+                    escape(rev.document.slug))
             articleLocale = ('<span class="dash-locale">%s</span>'
                              % rev.document.locale)
             articleComment = ('<span class="dashboard-comment">%s</span>'
@@ -146,7 +146,7 @@ def revisions(request):
                 'history_url': reverse('wiki.document_revisions',
                     args=[rev.document.full_path], locale=rev.document.locale),
                 'creator': ('<a href="" class="creator">%s</a>'
-                            % jinja2.escape(rev.creator.username)),
+                            % escape(rev.creator.username)),
                 'title': rev.title,
                 'richTitle': richTitle,
                 'date': rev.created.strftime('%b %d, %y - %H:%M'),
