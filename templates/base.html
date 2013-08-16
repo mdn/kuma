@@ -21,11 +21,7 @@
       
 
       {% if waffle.flag('redesign') %}
-      <link href="{{ MEDIA_URL }}redesign/css/main.css" type="text/css" rel="stylesheet" />
-      <link href="{{ MEDIA_URL }}redesign/css/wiki.css" type="text/css" rel="stylesheet" />
-      <link href="{{ MEDIA_URL }}redesign/css/zones.css" type="text/css" rel="stylesheet" />
-      <link href="{{ MEDIA_URL }}redesign/css/search.css" type="text/css" rel="stylesheet" />
-      <link href="{{ MEDIA_URL }}redesign/css/demo-studio.css" type="text/css" rel="stylesheet" />
+      {{ css('redesign-main') }}
       {% endif %}
 
   {% endblock %}
