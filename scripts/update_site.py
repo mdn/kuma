@@ -90,6 +90,7 @@ def update_site(env, debug):
         (EXEC, 'python2.6 vendor/src/schematic/schematic migrations/'),
         (EXEC, 'python2.6 manage.py migrate'),
         (EXEC, 'python2.6 manage.py collectstatic --noinput'),
+        (EXEC, './scripts/compile-stylesheets'),
         (EXEC, 'LANG=en_US.UTF-8 python2.6 manage.py compress_assets'),
     ]
  
