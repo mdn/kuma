@@ -1,8 +1,11 @@
 #! /bin/sh
 
 BASEDIR=$(dirname $0)
+CSSDIR=$BASEDIR/../media/redesign/css/
 
-mkdir $BASEDIR/../media/redesign/css/
+if [ ! -d "$CSSDIR" ]; then
+	mkdir $BASEDIR/../media/redesign/css/
+fi
 
 for file in main print wiki demo-studio profile search zones
 do
