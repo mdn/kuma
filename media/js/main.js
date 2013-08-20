@@ -17,7 +17,6 @@
 
         initAutoSubmitSelects();
         disableFormsOnSubmit();
-        lazyLoadScripts();
     });
 
     /*
@@ -54,39 +53,6 @@
                 $this.unbind('ajaxComplete');
             });
         });
-    }
-
-    /*
-     * This lazy loads our jQueryUI script.
-     */
-    function lazyLoadScripts() {
-        var scripts = ['js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js'],
-            styles = [],  // was: ['css/jqueryui/jqueryui-min.css']
-                          // turns out this messes with search
-            i;
-
-        // Don't lazy load scripts that have already been loaded
-        $.each($('script'), function () {
-            var this_src = $(this).attr('src');
-            if (!this_src) return ;
-            remove_item(scripts, this_src);
-        });
-
-        // Don't lazy load stylesheets that have already been loaded
-        $.each($('link[rel="stylesheet"]'), function () {
-            remove_item(styles, $(this).attr('href'));
-        });
-
-        setTimeout(function lazyLoad() {
-            for (i in scripts) {
-                $.get(mdn.mediaPath + scripts[i]);
-            }
-            for (i in styles) {
-                $('head').append(
-                    '<link rel="stylesheet" type="text/css" href="' +
-                    mdn.mediaPath + styles[i] + '">');
-            }
-        }, LAZY_DELAY);
     }
 
     /*
