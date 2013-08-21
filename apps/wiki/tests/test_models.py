@@ -27,7 +27,7 @@ from devmo.tests import override_constance_settings
 
 from wiki.cron import calculate_related_documents
 from wiki.models import (FirefoxVersion, OperatingSystem, Document, Revision,
-                         Attachment,
+                         Attachment, DocumentZone,
                          REDIRECT_CONTENT, REDIRECT_SLUG, REDIRECT_TITLE,
                          MAJOR_SIGNIFICANCE, CATEGORIES,
                          get_current_or_latest_revision,
@@ -1629,3 +1629,42 @@ class PageMoveTests(TestCase):
             eq_(tags, new_rev.tags)
             eq_(['technical'],
                 [str(tag) for tag in new_rev.review_tags.all()])
+
+
+class DocumentZoneTests(TestCase):
+    """Tests for content zones in topic hierarchies"""
+    fixtures = ['test_users.json']
+    
+    def test_find_root(self):
+        """Ensure sub pages can find the content zone root"""
+        root_rev = revision(title='ZoneRoot', slug='ZoneRoot',
+                            content='This is the Zone Root',
+                            is_approved=True, save=True)
+        root_doc = root_rev.document
+
+        sub_rev = revision(title='SubPage', slug='SubPage',
+                           content='This is a subpage',
+                           is_approved=True, save=True)
+        sub_doc = sub_rev.document
+        sub_doc.parent_topic = root_doc
+        sub_doc.save()
+
+        sub_sub_rev = revision(title='SubSubPage', slug='SubSubPage',
+                               content='This is a subsubpage',
+                               is_approved=True, save=True)
+        sub_sub_doc = sub_sub_rev.document
+        sub_sub_doc.parent_topic = sub_doc
+        sub_sub_doc.save()
+
+        other_rev = revision(title='otherPage', slug='otherPage',
+                             content='This is an otherpage',
+                             is_approved=True, save=True)
+        other_doc = other_rev.document
+
+        root_zone = DocumentZone(document=root_doc)
+        root_zone.save()
+
+        eq_(root_zone, root_doc.find_zone())
+        eq_(root_zone, sub_doc.find_zone())
+        eq_(root_zone, sub_sub_doc.find_zone())
+        eq_(None, other_doc.find_zone())

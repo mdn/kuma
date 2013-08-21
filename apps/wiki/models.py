@@ -1482,13 +1482,28 @@ class Document(NotificationsMixin, models.Model):
         # No-op, for now.
         return permissions
 
-    def get_permission_parents(self):
+    def get_topic_parents(self):
         """Build a list of parent topics from self to root"""
         curr, parents = self, []
         while curr.parent_topic:
             curr = curr.parent_topic
             parents.append(curr)
         return parents
+
+    def get_permission_parents(self):
+        return self.get_topic_parents()
+
+    def find_zone(self):
+        try:
+            return DocumentZone.objects.get(document=self)
+        except DocumentZone.DoesNotExist:
+            pass
+        for p in self.get_topic_parents():
+            try:
+                return DocumentZone.objects.get(document=p)
+            except DocumentZone.DoesNotExist:
+                pass
+        return None
 
     def allows_revision_by(self, user):
         """Return whether `user` is allowed to create new revisions of me.
@@ -1703,6 +1718,13 @@ class DocumentType(SearchMappingType, Indexable):
         if not stripped_matches:
             return self.summary
         return u'...'.join(stripped_matches)
+
+
+class DocumentZone(models.Model):
+    """Model object declaring a content zone root at a given Document, provides
+    attributes inherited by the topic hierarchy beneath it."""
+    document = models.ForeignKey(Document, related_name='zones', unique=True)
+    styles = models.TextField(null=True, blank=True)
 
 
 class ReviewTag(TagBase):

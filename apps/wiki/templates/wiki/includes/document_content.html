@@ -40,6 +40,14 @@
           {% elif policy_links['add'] %}
             <li><a target="_blank" href="{{ policy_links['add'] }}">{{ _('Add access policy') }}</a></li>
           {% endif %}
+
+          {% set zone_links = document_zone_management_links(request.user, document) %}
+          {% if zone_links['change'] %}
+            <li><a target="_blank" href="{{ zone_links['change'] }}">{{ _('Manage content zone') }}</a></li>
+          {% endif %}
+          {% if zone_links['add'] %}
+            <li><a target="_blank" href="{{ zone_links['add'] }}">{{ _('Convert to content zone') }}</a></li>
+          {% endif %}
         </ul>
       </li>
       {% if document.is_localizable or document.parent %}

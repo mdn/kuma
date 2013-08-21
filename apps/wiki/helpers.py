@@ -202,3 +202,23 @@ def colorize_diff(diff):
 def wiki_bleach(val):
     from wiki.models import Document
     return jinja2.Markup(Document.objects.clean_content(val))
+
+
+@register.function
+def document_zone_management_links(user, document):
+    links = {'add': None, 'change': None}
+    zone = document.find_zone()
+
+    # Enable "add" link if there is no zone for this document, or if there's a
+    # zone but the document is not itself the root (ie. to add sub-zones).
+    if ((not zone or zone.document != document) and
+            user.has_perm('wiki.add_documentzone')):
+        links['add'] = '%s?document=%s' % (
+            reverse('admin:wiki_documentzone_add'), document.id)
+    
+    # Enable "change" link if there's a zone, and the user has permission.
+    if zone and user.has_perm('wiki.change_documentzone'):
+        links['change'] = reverse('admin:wiki_documentzone_change',
+                                  args=(zone.id,))
+
+    return links

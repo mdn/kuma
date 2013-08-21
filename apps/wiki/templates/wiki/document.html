@@ -16,6 +16,14 @@
   {% set help_link = url('wiki.translate', document_path=document.parent.full_path, locale=document.parent.locale)|urlparams(tolocale=request.locale) %}
 {% endif %}
 
+{% block site_css %}
+    {{ super() }}
+    {% set zone = document.find_zone() %}
+    {% if zone %}
+      <link rel="stylesheet" type="text/css" href="{{ url('wiki.styles', zone.document.full_path) }}" />
+    {% endif %}
+{% endblock %}
+
 {% block extrahead %}
   <link rel="alternate" type="application/json" href="{{ url('wiki.json_slug', document.full_path) }}" />
   <link rel="canonical" href="{{ canonical }}" />

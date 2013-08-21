@@ -63,6 +63,7 @@ from wiki.forms import (DocumentForm, RevisionForm, ReviewForm,
                         RevisionValidationForm, AttachmentRevisionForm,
                         TreeMoveForm)
 from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
+                         DocumentZone,
                          DocumentTag, ReviewTag, Attachment,
                          DocumentRenderedContentNotAvailable,
                          CATEGORIES,
@@ -1848,6 +1849,18 @@ def json_view(request, document_slug=None, document_locale=None):
 
     data = json.dumps(json_obj)
     return HttpResponse(data, mimetype='application/json')
+
+
+@require_GET
+@allow_CORS_GET
+@process_document_path
+@prevent_indexing
+def styles_view(request, document_slug=None, document_locale=None):
+    """Return some basic document info in a JSON blob."""
+    kwargs = {'slug': document_slug, 'locale': document_locale}
+    document = get_object_or_404(Document, **kwargs)
+    zone = get_object_or_404(DocumentZone, document=document)
+    return HttpResponse(zone.styles, mimetype='text/css')
 
 
 @require_GET
