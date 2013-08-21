@@ -832,12 +832,14 @@
         var callback = function() {
             clearTimeout(DRAFT_TIMEOUT_ID);
             DRAFT_TIMEOUT_ID = setTimeout(saveDraft, 3000);
-        };
+        },
+        getCKEditor = $('#id_content').ckeditorGet;
         if(isTemplate) {
             ace_editor.on && ace_editor.on('change', callback);
         }
         else {
-            $('#id_content').ckeditorGet().on('key', callback);
+
+            getCKEditor && getCKEditor().on('key', callback);
         }
 
         // Clear draft upon discard

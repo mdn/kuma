@@ -22,6 +22,10 @@
       <header id="article-head">
         {{ document_form.category|safe }}
 
+        <div class="title">
+            <h1><span class="action">{{ ('Create a ') }}</span><em>{{ _('New Document') }}</em></h1>
+        </div>
+
         <ul class="metadata">
           <li><label>{{_('Title:')}}</label> {{ document_form.title | safe }}</li>
           <li><label><dfn title="{{_('URL segment that identifies the page')}}">{{_('Slug:')}}</dfn></label> {{ document_form.slug | safe }}</li>
