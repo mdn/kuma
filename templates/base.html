@@ -21,7 +21,7 @@
       
 
       {% if waffle.flag('redesign') %}
-      {{ css('redesign-main') }}
+        {{ css('redesign-main') }}
       {% endif %}
 
   {% endblock %}
@@ -52,6 +52,9 @@
       {% for script in scripts %}
         {{ js(script) }}
       {% endfor %}
+      {% if waffle.flag('redesign') %}
+        {{ js('redesign-main') }}
+      {% endif %}
       <script type="text/javascript">
         // Event tracking for the new menu
         $(function() {
@@ -210,9 +213,6 @@
   <!-- Site JavaScript -->
   {{ site_js() }}
   {{ page_js() }}
-
-  <script src="{{ MEDIA_URL }}redesign/js/main.js" async></script>
-  <script src="{{ MEDIA_URL }}redesign/js/wiki.js" async></script>
   <script src="/{{ request.locale }}/waffles.js" async></script>
 </body>
 </html>

@@ -82,6 +82,25 @@ slider(duration=animation-duration, maximum-height=10000px)
 	&.closed
 		max-height 0
 
+/* Sets the base styles for messages (review, warning, error, notice, etc.) */
+set-message-base()
+	compat-only(border-width, 5px)
+	compat-only(border-style, solid)
+	padding (grid-spacing / 2)
+	margin-bottom grid-spacing
+	font-size smaller-font-size
+
+	& *:last-child
+		margin-bottom 0
+		padding-bottom 0
+	
+set-inline-block-list-base(child-font-size=base-font-size)
+	font-size 0
+
+	> li, > div
+		display inline-block
+		font-size child-font-size
+
 /* 
 	CLASSES TO BE EXTENDED BY OTHER CLASSES
 
@@ -130,17 +149,6 @@ slider(duration=animation-duration, maximum-height=10000px)
 .reset-font
 	font-family site-font-family
 
-.message-base
-	compat-only(border-width, 5px)
-	compat-only(border-style, solid)
-	padding (grid-spacing / 2)
-	margin-bottom grid-spacing
-	font-size smaller-font-size
-
-	& *:last-child
-		margin-bottom 0
-		padding-bottom 0
-
 .button
 	text-decoration none
 	display inline-block
@@ -149,7 +157,7 @@ slider(duration=animation-duration, maximum-height=10000px)
 	compat-important(text-transform, uppercase)
 	compat-important(padding, 5px 11px)
 	compat-important(border-radius, 4px)
-	vendorize(box-shadow, inset 0 -1px #bbbfc2)
+	vendorize(box-shadow, inset 0 -1px button-shadow-color)
 	compat-only(background-image, none)
 	compat-only(font-family, site-font-family)
 	compat-only(font-size, base-font-size)

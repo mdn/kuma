@@ -35,7 +35,49 @@
           <button type="submit">{{ _('Email me article changes') }}<i class="icon-eye-open"></i></button>
         </form>
       {% endif %}
-    </li>{% endif %}<li><a href="javascript:;" class="button only-icon" {{ disabled_attr }}><span>{{ _('Settings') }}</span><i class="icon-cog"></i></a></li>
+    </li>{% endif %}<li style="position:relative;"><a href="javascript:;" id="settings-menu" class="button only-icon" {{ disabled_attr }}><span>{{ _('Settings') }}</span><i class="icon-cog"></i></a>
+
+    	<div class="submenu">
+    		<!-- this page -->
+    		<div class="submenu-column">
+    			<div class="title">{{ _('This Page') }}</div>
+    			<ul>
+		    		<li class="page-print"> <a href="#" onclick="return window.print();"  title="{{ _('Print page') }}">{{ _('Print this page') }}</a></li>
+		          {% if not document.is_template %}
+		            <li><a href="{{ url('wiki.new_document') }}?parent={{ document.id }}">{{ _('New sub-page') }}</a></li>
+		            <li><a href="{{ url('wiki.new_document') }}?clone={{ document.id }}">{{ _('Clone this page') }}</a></li>
+		          {% endif %}
+		          {% if waffle.flag('page_move') %}
+		            <li><a href="{{ url('wiki.move', document.slug, locale=document.locale) }}">{{ _('Move this page') }}</a></li>
+		          {% endif %}
+		          {% if user.is_superuser %}
+		            <li><a href="{{ url('admin:wiki_document_change', document.id) }}">{{ _('View in Admin') }}</a></li>
+		          {% endif %}
+
+		          {% set policy_links = build_policy_admin_links(request.user, document) %}
+		          {% if policy_links['change_one'] %}
+		            <li><a target="_blank" href="{{ policy_links['change_one'] }}">{{ _('Manage access policy') }}</a></li>
+		          {% elif policy_links['change_list'] %}
+		            <li><a target="_blank" href="{{ policy_links['change_list'] }}">{{ _('Manage access policies') }}</a></li>
+		          {% elif policy_links['add'] %}
+		            <li><a target="_blank" href="{{ policy_links['add'] }}">{{ _('Add access policy') }}</a></li>
+		          {% endif %}
+		    	</ul>
+    		</div><!-- languages and localization --><div class="submenu-column">
+    			<div class="title">{{ _('Languages') }}</div>
+    			<ul id="translations">
+		          {% for translation in document.other_translations %}
+		            <li><a rel="internal" href="{{ url('wiki.document', translation.full_path, locale=translation.locale) }}" title="{{ translation.title }}">{{ translation.language }}</a></li>
+		          {% endfor %}
+		          
+		          {% if document.is_localizable %}
+		            <li><a href="{{ translate_url }}">{{ _('Add translation') }}</a></li>
+		          {% endif %}
+		        </ul>
+    		</div>
+    	</div>
+
+	</li>
 </ul>
 
 <!-- crumbs -->
