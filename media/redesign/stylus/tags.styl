@@ -53,10 +53,9 @@ a
 	{selector-icon}:before
 		cursor pointer
 
-button, a.button, input[type='submit'], input[type='button']
-	@extend .button
-
 button, input[type='submit'], input[type='button']
+	@extend .button
+	
 	&::-moz-focus-inner
 		margin-top -1px
 		margin-bottom -1px
