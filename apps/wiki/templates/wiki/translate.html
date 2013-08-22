@@ -98,7 +98,7 @@
                 {% set parent_tags = parent.tags.all() %}
               <div id="deki-page-tags">
                 {% if parent_tags | length %}
-                  <ul class="tags tagit ui-widget ui-widget-content">
+                  <ul class="tagit ui-widget ui-widget-content">
                     {% for parent_tag in parent_tags %}
                     <li class="tagit-choice ui-widget-content ui-state-default">
                         <a class="text tagit-label" href="{{url('wiki.tag', parent_tag.name)}}">{{ parent_tag.name }}</a>

@@ -1,5 +1,9 @@
 <section class="page-meta"><section id="page-comment">
-  <h2><i class="icon-comment-alt"></i>{{_('Revision Comment')}}</h2>
+  {% if waffle.flag('redesign') %}
+  	<h3><i class="icon-comment-alt"></i>{{_('Revision Comment')}}</h3>
+  {% else %}
+  	<h2><i class="icon-comment-alt"></i>{{_('Revision Comment')}}</h2>
+  {% endif %}
   <p>{{_('Tell us why you made additions and changes.')}}</p>
   {{ revision_form.comment | safe }}
 </section></section>

@@ -102,6 +102,8 @@
             </p>
           </div>
 
+          {% include 'wiki/includes/page_buttons.html' %}
+
           {% if revision_form and not section_id %}
             <ul class="metadata">
                 <li><label>{{_('Title:')}}</label> {{ revision_form.title | safe }}</li>
@@ -122,8 +124,6 @@
           {% if not collision %}
             {{ revision_form.current_rev | safe }}
           {% endif %}
-
-          {% include 'wiki/includes/page_buttons.html' %}
 
         </header>
     
