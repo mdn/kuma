@@ -285,23 +285,11 @@ h1.from-search
 #page-tags, #page-comment
 	@extend .wiki-block
 
-#edit-document
-	h2
-		@extend .reset-font;
-		font-size 28px /* Change to h3 after redesign launched */
-		compat-only(text-transform, none)
-		margin-bottom grid-spacing
+.right-icons
+	margin-left 0 !important
+	margin-right 10px !important;
 
-		{selector-icon}
-			margin-left 0 !important
-			margin-right 10px !important;
-
-
-#page-tags, #page-comment
-	@extend .wiki-block
-
-
-#edit-document, #wiki-page-translate
+#edit-document, #wiki-page-translate, #wiki-page-edit
 	h1 
 		compat-only(letter-spacing, normal)
 		compat-only(padding-left, 0)
@@ -314,9 +302,30 @@ h1.from-search
 		em
 			compat-only(margin-left, -3px)
 
+	.save-state
+		compat-only(padding-left, 0)
+
+	h2
+		@extend .reset-font;
+		font-size 28px /* Change to h3 after redesign launched */
+		compat-only(text-transform, none)
+		margin-bottom grid-spacing
+
+	h2 {selector-icon}, h3 {selector-icon}
+		@extend .right-icons
+
+
+
+#page-attachments
+	h2 {selector-icon}, h3 {selector-icon}
+		@extend .right-icons
+
 #wiki-page-translate
 	#page-buttons
 		right 0
+
+	.description .approved dt
+		compat-only(padding-top, 0)
 
 #article-head
 	compat-only(margin-top, 0)
@@ -324,9 +333,12 @@ h1.from-search
 	compat-only(padding-top, 0)
 
 	.metadata
-		margin-top (grid-spacing * 2)
+		padding-top (grid-spacing * 2)
 		width auto
 		float none
+
+		li label
+			width auto
 
 .metadata-choose-parent
 	compat-important(background, light-background-color)
