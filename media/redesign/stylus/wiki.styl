@@ -1,6 +1,7 @@
 @import 'vars'
 @import 'mixins'
 @import 'grid'
+@import 'components'
 
 
 /* wiki classes to be extended */
@@ -39,9 +40,7 @@ article
 	font-size smaller-font-size
 	margin-bottom (2 * grid-spacing)
 	margin-top (grid-spacing * 2)
-
-	li
-		display inline-block
+	set-inline-block-list-base()
 
 	i
 		color #c1c2c4
@@ -52,26 +51,43 @@ article
 	reverse-link-decoration()
 
 .page-buttons, #page-buttons
+	set-inline-block-list-base()
+
 	position absolute
 	right gutter-width
 	text-align right
 	compat-only(width, auto)
 	compat-only(top, 0)
 
-	li
-		display inline-block
+	> li
 		margin-left (grid-spacing / 2)
 
-	a, button, input[type='submit'], input[type='button']
-		compat-important(font-size, smaller-font-size)
-		compat-only(font-family, site-font-family)
-		compat-only(letter-spacing, normal)
+		a, button, input[type='submit'], input[type='button']
+			compat-important(font-size, smaller-font-size)
+			compat-only(font-family, site-font-family)
+			compat-only(letter-spacing, normal)
 
-		&.disabled
-			opacity 0.8
+			&.disabled
+				opacity 0.8
 
-	{selector-icon}
-		font-size 16px
+		{selector-icon}
+			font-size 16px
+
+	.submenu
+		component-submenu-method(400px, 2, button-background, button-shadow-color)
+		top 40px
+		right 0
+		z-index 3
+		border-top 1px solid button-shadow-color
+
+		&:before
+			top -18px
+			right 10px
+
+		&:after
+			top -20px
+			right 10px
+
 
 .summary
 	background light-background-color
@@ -143,11 +159,13 @@ h1.from-search
 
 /* notices */
 .notice
-	@extend .message-base
+	set-message-base()
+
 	compat-important(border-width, 2px)
 
 .reviews
-	@extend .message-base
+	set-message-base()
+
 	background #fbf8e9
 	border-color #f9f3d9
 	font-size smaller-font-size
@@ -162,7 +180,8 @@ h1.from-search
 		compat-important(font-size, smaller-font-size)
 
 .warning
-	@extend .message-base
+	set-message-base()
+	
 	font-size smaller-font-size
 	background rgba(193, 56, 50, 0.3)
 	compat-important(border-color, rgba(193, 56, 50, 0.1))
@@ -188,8 +207,8 @@ h1.from-search
 		display block
 		font-size smaller-font-size
 
-		li
-			display inline-block
+	ul
+		set-inline-block-list-base()
 
 	> a
 		text-decoration none

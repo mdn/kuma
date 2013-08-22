@@ -21,9 +21,9 @@
 		position absolute
 		right gutter-width
 		bottom 21px
+		set-inline-block-list-base()
 
 		> li
-			display inline-block
 			padding-left 47px
 			position relative
 			opacity 1
@@ -42,47 +42,24 @@
 		display none
 
 	.submenu
-		position absolute
+		menu-border-width = 5px
+		menu-arrow-top = -19px
+		component-submenu-method(520px, 2, #fff, #333)
+		
 		top 40px
 		left -200px
-		border-top 5px solid #404040
-		background #fff
-		padding (grid-spacing * .75) grid-spacing
-		width 520px
+		border-top menu-border-width solid #404040
 		z-index 9999
-		display none
-
-		& > div:first-child
-			border-right 1px dotted #d4dde4
-			margin-right 0g
 
 		.submenu-column
 			min-height 90px
-			width 225px
-			display inline-block
-			padding-right grid-spacing
 
-		a
-			font-size smaller-font-size
-			padding 5px 0
-			display block
-
-		reverse-link-decoration()
-
-		generate-arrow()
-		&:before
-			border-bottom-color #fff
-			position absolute
-			top -19px
-			left 255px
-			z-index 2
+		&:before, &:after
+			top menu-arrow-top
+			left 269px
 
 		&:after
-			border-bottom-color #333
-			position absolute
-			top -24px
-			left 255px
-			z-index 1
+			top (menu-arrow-top - menu-border-width)
 
 	&.expand
 		input 

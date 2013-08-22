@@ -699,6 +699,7 @@ MINIFY_BUNDLES = {
             'js/libs/ace/worker-javascript.js',
         ),
         'redesign-main': (
+            'redesign/js/components.js',
             'redesign/js/main.js',
         ),
         'redesign-wiki': (
