@@ -1493,17 +1493,20 @@ class Document(NotificationsMixin, models.Model):
     def get_permission_parents(self):
         return self.get_topic_parents()
 
-    def find_zone(self):
+    def find_zone_stack(self):
+        """Assemble the stack of DocumentZones available from this document,
+        moving up the stack of topic parents"""
+        stack = []
         try:
-            return DocumentZone.objects.get(document=self)
+            stack.append(DocumentZone.objects.get(document=self))
         except DocumentZone.DoesNotExist:
             pass
         for p in self.get_topic_parents():
             try:
-                return DocumentZone.objects.get(document=p)
+                stack.append(DocumentZone.objects.get(document=p))
             except DocumentZone.DoesNotExist:
                 pass
-        return None
+        return stack
 
     def allows_revision_by(self, user):
         """Return whether `user` is allowed to create new revisions of me.

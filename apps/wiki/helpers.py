@@ -207,7 +207,8 @@ def wiki_bleach(val):
 @register.function
 def document_zone_management_links(user, document):
     links = {'add': None, 'change': None}
-    zone = document.find_zone()
+    stack = document.find_zone_stack()
+    zone = (len(stack) > 0) and stack[0] or None
 
     # Enable "add" link if there is no zone for this document, or if there's a
     # zone but the document is not itself the root (ie. to add sub-zones).
