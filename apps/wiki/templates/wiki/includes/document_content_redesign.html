@@ -231,7 +231,7 @@
 			<!-- tags if present -->
 			<div class="tag-attach-list tags">
 				<i class="icon-tags"></i>
-				<ul>
+				<ul class="tag-list">
 					{% for tag in tags %}
 					<li><a href="{{url('wiki.tag', tag.name)}}">{{ tag.name }}</a></li>
 					{% endfor %}
