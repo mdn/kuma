@@ -139,3 +139,11 @@
 	</div>
 
 {% endblock %}
+
+
+{% block site_css %}
+    {{ super() }}
+    {% if waffle.flag('redesign') %}
+      {{ css('redesign-search') }}
+    {% endif %}
+{% endblock %}

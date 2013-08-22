@@ -111,10 +111,10 @@
 								<a href="">Design.</a>
 							</td>
 							<td class="column-1">
-								<a href="">Design.</a>
+								<a href="">Build.</a>
 							</td>
 							<td class="column-1">
-								<a href="">Design.</a>
+								<a href="">Publish.</a>
 							</td>
 						</tr>
 					</table>
@@ -153,4 +153,14 @@
 		</div>
 	</div>
 
+{% endblock %}
+
+
+
+{% block site_css %}
+    {{ super() }}
+    {{ css('wiki-print', media='print') }}
+    {% if waffle.flag('redesign') %}
+      {{ css('redesign-wiki') }}
+    {% endif %}
 {% endblock %}
