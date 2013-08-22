@@ -5,7 +5,7 @@
 .zone-landing
 	
 	#main-header
-		create-gradient-background(#0095DD)
+		create-gradient-background(#0095dd)
 
 	#main-nav > ul > li > a
 		compat-important(color, #fff)
@@ -44,14 +44,14 @@
 	padding-bottom grid-spacing
 	color #fff
 	position relative
-	overflow-y hidden
+	overflow hidden
 	padding-top first-content-top-padding
 
-	p
-		@extend .column-5
-		font-size larger-font-size
-		font-weight light-font-weight
-		margin (2 * grid-spacing) 0 0 250px
+	.masthead-text
+		p
+			font-size larger-font-size
+			font-weight light-font-weight
+			margin (2 * grid-spacing) 0 0 0
 
 	img
 		position absolute

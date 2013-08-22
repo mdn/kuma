@@ -51,6 +51,17 @@ generate-grid(grid-increment-desktop, grid-start-desktop, grid-end-desktop)
 generate-center(site-width-desktop)
 
 
+/* Desktop Wide - 1224px */
+@media media-query-desktop-large
+	grid-spacing = grid-spacing-wide
+	generate-center(site-width-desktop-large)
+	generate-grid(grid-increment-desktop-large, grid-start-desktop-large, grid-end-desktop-large)
+
+	.column-container
+		> [class^='column-']
+			margin-right grid-spacing
+
+
 /* Tablet Layout - 760px
 	*
 	* For smaller viewports, the column width drops to 40px with the

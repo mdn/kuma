@@ -12,6 +12,7 @@ generate-grid(increment, start, end)
 	for n, x in 0..((end - start) / increment)
 		.column-{x+1}
 			width total
+
 		total = total + increment
 
 	/* now add a few meaningful names */
@@ -21,6 +22,7 @@ generate-grid(increment, start, end)
 		@extend .column-9
 	.column-half
 		@extend .column-6
+
 
 /* vendorizes a propery */
 vendorize(property, value)
