@@ -119,7 +119,9 @@
             <header>
               <h3>{{ _('{locale} translation:')|f(locale=language) }}</h3>
             </header>
-            {{ content_editor(revision_form.content) }}
+            <div class="ckeditor-container">
+              {{ content_editor(revision_form.content) }}
+            </div>
           </article>
         </div>
         {{ revision_form.hidden_fields()|join|safe }}
