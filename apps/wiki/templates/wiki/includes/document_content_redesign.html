@@ -111,39 +111,83 @@
 <div id="wiki-column-container">
 
 	<!-- additional controls row; hidden unless needed -->
-	<div id="wiki-controls" class="column-container">
-		<div class="column-strip quick-links hidden">
-			<a href="#show-quick-links" class="title smaller" id="show-quick-links"><i class="icon-caret-down"></i>{{ _('Show QuickLinks') }}</a>
+	<div id="wiki-controls" class="column-container column-container-reverse">
+		<div class="column-strip">
+			<!-- Show TOC "show" link -->
+			&nbsp;
 		</div>
 		<div class="column-half">
 			&nbsp;
 		</div>
-		<div class="column-strip">
-			<!-- Show TOC "show" link -->
+		<div class="column-strip quick-links hidden">
+			<a href="#show-quick-links" class="title smaller" id="show-quick-links"><i class="icon-caret-down"></i>{{ _('Show QuickLinks') }}</a>
 		</div>
 	</div>
 
 	<!-- content row with three strips -->
-	<div class="column-container">
+	<div class="column-container column-container-reverse">
 
-		<!-- left strip -->
-		<div id="wiki-left" class="column-strip wiki-column">
-			<!-- quick links -->
-			<div class="quick-links" id="quick-links">
-				<a href="#quick-links" class="title" id="quick-links-toggle"><i class="icon-caret-up"></i>{{ _('Hide QuickLinks') }}</a>
-				<ol>
-					<li class="toggleable closed"><a href="" class="toggler"><i class="icon-caret-up"></i>Application Cache API</a>
-						<ol class="toggle-container">
-							<li><a href="">Sub link</a></li>
-							<li><a href="">Sub link</a></li>
-							<li><a href="">Sub link</a></li>
-						</ol>
-					</li>
-					<li><a href="">Something</a></li>
-					<li><a href="">Something</a></li>
-					<li><a href="">Something</a></li>
+		<!-- TOC, approvals, etc -->
+		<div class="column-strip wiki-column" id="wiki-right">
+			<!-- approvals -->
+			{% if request.user.is_authenticated() and document.current_revision and document.allows_revision_by(request.user) %}
+				{% if document.current_revision.needs_technical_review() or document.current_revision.needs_editorial_review() %}
+				<section class="page-meta reviews">
+					<p>{{ _('The following reviews have been requested:') }}</p>
+
+					<form method="post" action="{{ url('wiki.quick_review', document.full_path) }}">
+						{{ csrf() }}
+						<ul>
+						{% if document.current_revision.needs_technical_review() %}
+							<li>
+								<input type="checkbox" value="approve_technical" id="id_approve_technical" name="approve_technical">
+								<label for="id_approve_technical">{{ _('Technical') }}</label>
+							</li>
+						{% endif %}
+						{% if document.current_revision.needs_editorial_review() %}
+							<li>
+								<input type="checkbox" value="approve_editorial" id="id_approve_editorial" name="approve_editorial">
+								<label for="id_approve_editorial">{{ _('Editorial') }}</label>
+							</li>
+						{% endif %}
+						</ul>
+
+						<button type="submit">{{ _('Submit Review') }}</button>
+					</form>
+				</section>
+				{% endif %}
+			{% endif %}
+
+			{% if toc_html %}
+			<!-- table of contents -->
+			<div id="toc" class="toc toggleable">
+				<a href="#toc" class="title toggler">{{ _('In This Article') }}<i></i></a>
+				<ol class="toggle-container">
+					{{ toc_html|safe }}
 				</ol>
 			</div>
+			{% endif %}
+
+			{% if tags|length %}
+			<!-- tags if present -->
+			<div class="tag-attach-list tags">
+				<i class="icon-tags"></i>
+				<ul class="tag-list">
+					{% for tag in tags %}
+					<li><a href="{{url('wiki.tag', tag.name)}}">{{ tag.name }}</a></li>
+					{% endfor %}
+				</ul>
+			</div>
+			{% endif %}
+
+			{% if num_attachments %}
+			<!-- attachment list, if present -->
+			<div class="tag-attach-list attachments">
+				<i class="icon-paper-clip"></i>
+				<a href="#page-attachments">{{ _('%s Attachment%s' % (num_attachments, 's' if num_attachments > 1 else '')) }}</a>
+			</div>
+			{% endif %}
+
 		</div>
 
 		<!-- center: main article content -->
@@ -184,71 +228,25 @@
 			{% endif %}
 		</div>
 
-		<!-- right column, TOC -->
-		<div class="column-strip wiki-column" id="wiki-right">
-			<!-- approvals -->
-			{% if request.user.is_authenticated() and document.current_revision and document.allows_revision_by(request.user) %}
-				{% if document.current_revision.needs_technical_review() or document.current_revision.needs_editorial_review() %}
-				<section class="page-meta reviews">
-					<p>{{ _('The following reviews have been requested:') }}</p>
-
-					<form method="post" action="{{ url('wiki.quick_review', document.full_path) }}">
-						{{ csrf() }}
-						<ul>
-						{% if document.current_revision.needs_technical_review() %}
-							<li>
-								<input type="checkbox" value="approve_technical" id="id_approve_technical" name="approve_technical">
-								<label for="id_approve_technical">{{ _('Technical') }}</label>
-							</li>
-						{% endif %}
-						{% if document.current_revision.needs_editorial_review() %}
-							<li>
-								<input type="checkbox" value="approve_editorial" id="id_approve_editorial" name="approve_editorial">
-								<label for="id_approve_editorial">{{ _('Editorial') }}</label>
-							</li>
-						{% endif %}
-						</ul>
-
-						<button type="submit">{{ _('Submit Review') }}</button>
-					</form>
-				</section>
-				{% endif %}
-			{% endif %}
-
-
-
-			{% if toc_html %}
-			<!-- table of contents -->
-			<div id="toc" class="toc toggleable">
-				<a href="#toc" class="title toggler">{{ _('In This Article') }}<i></i></a>
-				<ol class="toggle-container">
-					{{ toc_html|safe }}
+		<!-- quick links strip -->
+		<div id="wiki-left" class="column-strip wiki-column">
+			<!-- quick links -->
+			<div class="quick-links" id="quick-links">
+				<a href="#quick-links" class="title" id="quick-links-toggle"><i class="icon-caret-up"></i>{{ _('Hide QuickLinks') }}</a>
+				<ol>
+					<li class="toggleable closed"><a href="" class="toggler"><i class="icon-caret-up"></i>Application Cache API</a>
+						<ol class="toggle-container">
+							<li><a href="">Sub link</a></li>
+							<li><a href="">Sub link</a></li>
+							<li><a href="">Sub link</a></li>
+						</ol>
+					</li>
+					<li><a href="">Something</a></li>
+					<li><a href="">Something</a></li>
+					<li><a href="">Something</a></li>
 				</ol>
 			</div>
-			{% endif %}
-
-			{% if tags|length %}
-			<!-- tags if present -->
-			<div class="tag-attach-list tags">
-				<i class="icon-tags"></i>
-				<ul class="tag-list">
-					{% for tag in tags %}
-					<li><a href="{{url('wiki.tag', tag.name)}}">{{ tag.name }}</a></li>
-					{% endfor %}
-				</ul>
-			</div>
-			{% endif %}
-
-			{% if num_attachments %}
-			<!-- attachment list, if present -->
-			<div class="tag-attach-list attachments">
-				<i class="icon-paper-clip"></i>
-				<a href="#page-attachments">{{ _('%s Attachment%s' % (num_attachments, 's' if num_attachments > 1 else '')) }}</a>
-			</div>
-			{% endif %}
-
 		</div>
-
 
 	</div>
 
