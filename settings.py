@@ -668,6 +668,8 @@ MINIFY_BUNDLES = {
             'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
             'js/moz-jquery-plugins.js',
             'js/main.js',
+        ),
+        'wiki-edit': (
             'js/wiki.js',
             'js/libs/tag-it.js',
             'js/wiki-tags-edit.js',

@@ -838,8 +838,10 @@
             ace_editor.on && ace_editor.on('change', callback);
         }
         else {
-
-            getCKEditor && getCKEditor().on('key', callback);
+            try {
+                getCKEditor && getCKEditor().on('key', callback);
+            }
+            catch(e) {}
         }
 
         // Clear draft upon discard
