@@ -20,6 +20,15 @@
 {% set disabled_class = ('disabled' if not is_logged_in else '') %}
 {% set disabled_attr = ('title="%s"' % _('Please log in to use this feature.') if not is_logged_in else '') %}
 
+{% set show_left = (request.user.is_authenticated() and document.current_revision and document.allows_revision_by(request.user) and (document.current_revision.needs_technical_review() or document.current_revision.needs_editorial_review())) %}
+{% set show_right = (toc_html or tags|length or num_attachments) %}
+{% set content_class = '' %}
+{% if show_left and show_right %}
+	{% set content_class = 'column-half' %}
+{% elif shoe_left or show_right %}
+	{% set content_class = 'column-main' %}
+{% endif %}
+
 <!-- action buttons -->
 <ul class="page-buttons">
 	<li><a href="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}" class="button {{ disabled_class }}" {{ disabled_attr }}>{{ _('Edit Page') }}<i class="icon-pencil"></i></a></li>{% if user.is_authenticated() and document %}
@@ -111,6 +120,7 @@
 <div id="wiki-column-container">
 
 	<!-- additional controls row; hidden unless needed -->
+	{% if show_left or show_right %}
 	<div id="wiki-controls" class="column-container">
 		<div class="column-strip quick-links hidden">
 			<a href="#show-quick-links" class="title smaller" id="show-quick-links"><i class="icon-caret-down"></i>{{ _('Show QuickLinks') }}</a>
@@ -122,12 +132,15 @@
 			<!-- Show TOC "show" link -->
 		</div>
 	</div>
+	{% endif %}
 
 	<!-- content row with three strips -->
 	<div class="column-container">
 
 		<!-- left strip -->
 		<div id="wiki-left" class="column-strip wiki-column">
+
+			{#  Keeping template in place for when this actually works 
 			<!-- quick links -->
 			<div class="quick-links" id="quick-links">
 				<a href="#quick-links" class="title" id="quick-links-toggle"><i class="icon-caret-up"></i>{{ _('Hide QuickLinks') }}</a>
@@ -144,10 +157,40 @@
 					<li><a href="">Something</a></li>
 				</ol>
 			</div>
+			#}
+
+			<!-- approvals -->
+			{% if request.user.is_authenticated() and document.current_revision and document.allows_revision_by(request.user) %}
+				{% if document.current_revision.needs_technical_review() or document.current_revision.needs_editorial_review() %}
+				<section class="page-meta reviews">
+					<p>{{ _('The following reviews have been requested:') }}</p>
+
+					<form method="post" action="{{ url('wiki.quick_review', document.full_path) }}">
+						{{ csrf() }}
+						<ul>
+						{% if document.current_revision.needs_technical_review() %}
+							<li>
+								<input type="checkbox" value="approve_technical" id="id_approve_technical" name="approve_technical">
+								<label for="id_approve_technical">{{ _('Technical') }}</label>
+							</li>
+						{% endif %}
+						{% if document.current_revision.needs_editorial_review() %}
+							<li>
+								<input type="checkbox" value="approve_editorial" id="id_approve_editorial" name="approve_editorial">
+								<label for="id_approve_editorial">{{ _('Editorial') }}</label>
+							</li>
+						{% endif %}
+						</ul>
+
+						<button type="submit">{{ _('Submit Review') }}</button>
+					</form>
+				</section>
+				{% endif %}
+			{% endif %}
 		</div>
 
 		<!-- center: main article content -->
-		<div id="wiki-content" class="column-half wiki-column">
+		<div id="wiki-content" class="{{ content_class }} wiki-column">
 
 			{% if kumascript_errors %}
 				{% include 'wiki/includes/kumascript_errors.html' %}
@@ -185,38 +228,8 @@
 		</div>
 
 		<!-- right column, TOC -->
+		{% if show_right %}
 		<div class="column-strip wiki-column" id="wiki-right">
-			<!-- approvals -->
-			{% if request.user.is_authenticated() and document.current_revision and document.allows_revision_by(request.user) %}
-				{% if document.current_revision.needs_technical_review() or document.current_revision.needs_editorial_review() %}
-				<section class="page-meta reviews">
-					<p>{{ _('The following reviews have been requested:') }}</p>
-
-					<form method="post" action="{{ url('wiki.quick_review', document.full_path) }}">
-						{{ csrf() }}
-						<ul>
-						{% if document.current_revision.needs_technical_review() %}
-							<li>
-								<input type="checkbox" value="approve_technical" id="id_approve_technical" name="approve_technical">
-								<label for="id_approve_technical">{{ _('Technical') }}</label>
-							</li>
-						{% endif %}
-						{% if document.current_revision.needs_editorial_review() %}
-							<li>
-								<input type="checkbox" value="approve_editorial" id="id_approve_editorial" name="approve_editorial">
-								<label for="id_approve_editorial">{{ _('Editorial') }}</label>
-							</li>
-						{% endif %}
-						</ul>
-
-						<button type="submit">{{ _('Submit Review') }}</button>
-					</form>
-				</section>
-				{% endif %}
-			{% endif %}
-
-
-
 			{% if toc_html %}
 			<!-- table of contents -->
 			<div id="toc" class="toc toggleable">
@@ -246,8 +259,8 @@
 				<a href="#page-attachments">{{ _('%s Attachment%s' % (num_attachments, 's' if num_attachments > 1 else '')) }}</a>
 			</div>
 			{% endif %}
-
 		</div>
+		{% endif %}
 
 
 	</div>
