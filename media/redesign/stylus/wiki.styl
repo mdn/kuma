@@ -297,6 +297,7 @@ h1.from-search
 	h1 
 		compat-only(letter-spacing, normal)
 		compat-only(padding-left, 0)
+		line-height 40px
 
 		.action
 			display block
@@ -318,6 +319,17 @@ h1.from-search
 	h2 {selector-icon}, h3 {selector-icon}
 		@extend .right-icons
 
+/* ckeditor / content area styles */
+.ckeditor-container
+	padding 6px
+	border 1px solid #eaeff2
+
+span.cke_skin_kuma
+	padding 0 !important
+
+.cke_skin_kuma .cke_toolbox
+	border-width 0 !important
+	margin 0 !important
 
 
 #page-attachments
@@ -330,6 +342,9 @@ h1.from-search
 
 	.description .approved dt
 		compat-only(padding-top, 0)
+
+	.change-locale
+		margin-top (grid-spacing / 2)
 
 #article-head
 	compat-only(margin-top, 0)
