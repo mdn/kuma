@@ -48,6 +48,7 @@ from authkeys.models import Key
 from wiki.content import get_seo_description
 from wiki.events import EditDocumentEvent
 from wiki.models import (VersionMetadata, Document, Revision, Attachment,
+                         DocumentZone,
                          AttachmentRevision, DocumentAttachment, TOC_DEPTH_H4)
 from wiki.tests import (doc_rev, document, new_document_data, revision,
                         normalize_html, create_template_test_users)
@@ -4055,3 +4056,76 @@ class PageMoveTests(TestCaseBase):
         moved_grandchild = Document.objects.get(slug=moved_grandchild_slug)
         ok_('REDIRECT' in redirected_grandchild.html)
         ok_(moved_grandchild_slug in redirected_grandchild.html)
+
+
+class DocumentZoneTests(TestCaseBase):
+    fixtures = ['test_users.json']
+
+    def setUp(self):
+        super(DocumentZoneTests, self).setUp()
+
+        root_rev = revision(title='ZoneRoot', slug='ZoneRoot',
+                            content='This is the Zone Root',
+                            is_approved=True, save=True)
+        self.root_doc = root_rev.document
+
+        middle_rev = revision(title='middlePage', slug='middlePage',
+                              content='This is a middlepage',
+                              is_approved=True, save=True)
+        self.middle_doc = middle_rev.document
+        self.middle_doc.parent_topic = self.root_doc
+        self.middle_doc.save()
+
+        sub_rev = revision(title='SubPage', slug='SubPage',
+                           content='This is a subpage',
+                           is_approved=True, save=True)
+        self.sub_doc = sub_rev.document
+        self.sub_doc.parent_topic = self.middle_doc
+        self.sub_doc.save()
+
+        self.root_zone = DocumentZone(document=self.root_doc)
+        self.root_zone.styles = """
+            article { color: blue; }
+        """
+        self.root_zone.save()
+
+        self.middle_zone = DocumentZone(document=self.middle_doc)
+        self.middle_zone.styles = """
+            article { font-weight: bold; }
+        """
+        self.middle_zone.save()
+
+    def test_zone_styles(self):
+        """Ensure CSS styles for a zone can be fetched"""
+        url = reverse('wiki.styles', args=(self.root_doc.slug,),
+                      locale=settings.WIKI_DEFAULT_LANGUAGE)
+        response = self.client.get(url, follow=True)
+        eq_(self.root_zone.styles, response.content)
+
+        url = reverse('wiki.styles', args=(self.middle_doc.slug,),
+                      locale=settings.WIKI_DEFAULT_LANGUAGE)
+        response = self.client.get(url, follow=True)
+        eq_(self.middle_zone.styles, response.content)
+
+        url = reverse('wiki.styles', args=(self.sub_doc.slug,),
+                      locale=settings.WIKI_DEFAULT_LANGUAGE)
+        response = self.client.get(url, follow=True)
+        eq_(404, response.status_code)
+
+    def test_zone_styles_links(self):
+        """Ensure link to zone style appears in child document views"""
+        url = reverse('wiki.document', args=(self.sub_doc.slug,),
+                      locale=settings.WIKI_DEFAULT_LANGUAGE)
+        response = self.client.get(url, follow=True)
+
+        styles_url = reverse('wiki.styles', args=(self.root_doc.slug,),
+                             locale=settings.WIKI_DEFAULT_LANGUAGE)
+        root_expected = ('<link rel="stylesheet" type="text/css" href="%s"' %
+                         styles_url)
+        ok_(root_expected in response.content)
+
+        styles_url = reverse('wiki.styles', args=(self.middle_doc.slug,),
+                             locale=settings.WIKI_DEFAULT_LANGUAGE)
+        middle_expected = ('<link rel="stylesheet" type="text/css" href="%s"' %
+                           styles_url)
+        ok_(middle_expected in response.content)

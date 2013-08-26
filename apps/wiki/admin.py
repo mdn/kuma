@@ -7,7 +7,7 @@ from django.core import serializers
 
 from sumo.urlresolvers import reverse, split_path
 
-from wiki.models import (Document, DocumentTag, Revision,
+from wiki.models import (Document, DocumentZone, DocumentTag, Revision,
                          EditorToolbar,
                          Attachment, AttachmentRevision)
 
@@ -271,7 +271,12 @@ class AttachmentRevisionAdmin(admin.ModelAdmin):
     search_fields = ('title', 'description')
 
 
+class DocumentZoneAdmin(admin.ModelAdmin):
+    raw_id_fields = ('document',)
+
+
 admin.site.register(Document, DocumentAdmin)
+admin.site.register(DocumentZone, DocumentZoneAdmin)
 admin.site.register(DocumentTag, admin.ModelAdmin)
 admin.site.register(Revision, RevisionAdmin)
 admin.site.register(EditorToolbar, admin.ModelAdmin)
