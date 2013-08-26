@@ -20,7 +20,7 @@ from wiki.models import (Document, Revision, FirefoxVersion, OperatingSystem,
                          FIREFOX_VERSIONS, OPERATING_SYSTEMS, SIGNIFICANCES,
                          GROUPED_FIREFOX_VERSIONS, GROUPED_OPERATING_SYSTEMS,
                          CATEGORIES, REVIEW_FLAG_TAGS, RESERVED_SLUGS,
-                         TOC_DEPTH_CHOICES)
+                         TOC_DEPTH_CHOICES, LOCALIZATION_FLAG_TAGS)
 from wiki import SLUG_CLEANSING_REGEX
 
 
@@ -224,6 +224,11 @@ class RevisionForm(forms.ModelForm):
         widget=CheckboxSelectMultiple, required=False,
         choices=REVIEW_FLAG_TAGS)
 
+    localization_tags = forms.MultipleChoiceField(
+        label=_("Tag this revision for localization?"),
+        widget=CheckboxSelectMultiple, required=False,
+        choices=LOCALIZATION_FLAG_TAGS)
+
     current_rev = forms.CharField(required=False,
                                   widget=forms.HiddenInput())
 
@@ -267,6 +272,8 @@ class RevisionForm(forms.ModelForm):
 
             self.initial['review_tags'] = [x.name
                 for x in self.instance.review_tags.all()]
+            self.initial['localization_tags'] = [x.name
+                for x in self.instance.localization_tags.all()]
 
         if self.section_id:
             self.fields['toc_depth'].required = False
@@ -400,6 +407,7 @@ class RevisionForm(forms.ModelForm):
         new_rev.toc_depth = self.cleaned_data['toc_depth']
         new_rev.save()
         new_rev.review_tags.set(*self.cleaned_data['review_tags'])
+        new_rev.localization_tags.set(*self.cleaned_data['localization_tags'])
         return new_rev
 
 

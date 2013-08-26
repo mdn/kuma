@@ -274,3 +274,19 @@
 .dashboards details table {
     display: block;  /* Makes collapse animation work */
 }
+
+/* Localization Dashboard */
+
+#dashboard-filter {
+    height: 50px;
+}
+#dashboard-filter li {
+    float: left; height: 50px; margin-right: 25px;
+}
+
+.doc-list {
+    width: 100%;
+}
+.doc-list tr th {
+    font-weight: bold;
+}
