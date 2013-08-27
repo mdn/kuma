@@ -298,6 +298,7 @@ h1.from-search
 		compat-only(letter-spacing, normal)
 		compat-only(padding-left, 0)
 		line-height 40px
+		margin-top (grid-spacing * 1.5)
 
 		.action
 			display block
@@ -330,6 +331,15 @@ span.cke_skin_kuma
 .cke_skin_kuma .cke_toolbox
 	border-width 0 !important
 	margin 0 !important
+
+#content-fields .approved header:after
+	compat-only(background, none)
+	compat-only(width, auto)
+	compat-only(height, 0)
+
+#content-fields header
+	compat-only(background, none)
+	margin-bottom (grid-spacing / 2)
 
 
 #page-attachments
