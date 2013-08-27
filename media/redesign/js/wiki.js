@@ -24,5 +24,11 @@
 		});
 	})();
 
+	// "From Search" submenu click
+	$('.from-search-navigate').mozMenu({
+		submenu: $('.from-search-toc'),
+		brickOnClick: true
+	});
+
 
 })(jQuery);

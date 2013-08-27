@@ -119,8 +119,11 @@ article
 
 
 /* coming from a search - heading links */
-h1.from-search
+.from-search
 	padding-left (grid-spacing * 2)
+
+	h1
+		display inline-block
 
 .from-search-previous, .from-search-next
 	@extend .button
@@ -155,6 +158,24 @@ h1.from-search
 .from-search-navigate-down
 	bottom 0
 
+.from-search-toc
+	border 1px solid button-shadow-color
+	width 200px
+	position absolute
+	left 66px
+	top 0
+	z-index 2
+	background button-background
+	padding (grid-spacing / 2)
+	font-size smaller-font-size
+	color #888
+
+	ol
+		list-style-type decimal
+		padding-left grid-spacing
+
+		li
+			padding 4px 0
 
 
 /* notices */
@@ -298,6 +319,8 @@ h1.from-search
 	h1 
 		compat-only(letter-spacing, normal)
 		compat-only(padding-left, 0)
+		line-height 40px
+		margin-top (grid-spacing * 1.5)
 
 		.action
 			display block
@@ -319,6 +342,26 @@ h1.from-search
 	h2 {selector-icon}, h3 {selector-icon}
 		@extend .right-icons
 
+/* ckeditor / content area styles */
+.ckeditor-container
+	padding 6px
+	border 1px solid #eaeff2
+
+span.cke_skin_kuma
+	padding 0 !important
+
+.cke_skin_kuma .cke_toolbox
+	border-width 0 !important
+	margin 0 !important
+
+#content-fields .approved header:after
+	compat-only(background, none)
+	compat-only(width, auto)
+	compat-only(height, 0)
+
+#content-fields header
+	compat-only(background, none)
+	margin-bottom (grid-spacing / 2)
 
 
 #page-attachments
@@ -331,6 +374,9 @@ h1.from-search
 
 	.description .approved dt
 		compat-only(padding-top, 0)
+
+	.change-locale
+		margin-top (grid-spacing / 2)
 
 #article-head
 	compat-only(margin-top, 0)

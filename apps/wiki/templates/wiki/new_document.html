@@ -46,9 +46,13 @@
 
       </header>
 
-      {{ revision_form.content|safe }}
       {% if is_template %}
+        {{ revision_form.content|safe }}
         <div id="ace_content"></div>
+      {% else %}
+        <div class="ckeditor-container">
+          {{ revision_form.content|safe }}
+        </div>
       {% endif %}
 
       {% include 'wiki/includes/revision_comment.html' %}
@@ -86,5 +90,7 @@
     {% else %}
       {% include 'wiki/includes/ckeditor_scripts.html' %}
     {% endif %}
+
+    {{ js('wiki-edit') }}
 
 {% endblock %}

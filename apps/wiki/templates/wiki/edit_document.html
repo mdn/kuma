@@ -128,10 +128,13 @@
         </header>
     
         {% if revision_form %}
-            {{ revision_form.content | safe }}
             {% if document.is_template %}
+              {{ revision_form.content | safe }}
               <div id="ace_content"></div>
+            {% else %}
+              <div class="ckeditor-container">{{ revision_form.content | safe }}</div>
             {% endif %}
+
             <input type="hidden" name="form" value="rev" />
             {{ revision_form.hidden_fields()|join|safe }}
 
@@ -178,4 +181,6 @@
     {% else %}
       {% include 'wiki/includes/ckeditor_scripts.html' %}
     {% endif %}
+
+    {{ js('wiki-edit') }}
 {% endblock %}

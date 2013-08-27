@@ -99,13 +99,24 @@
 </ol></nav>
 
 <!-- heading -->
-<div class="document-head">
-	<h1{% if from_search %} class="from-search"{% endif %}>
-		{% if from_search %}
-			<a href="" class="from-search-previous only-icon"><i class="icon-chevron-left"></i></a>
-			<a href="" class="from-search-navigate"><span class="from-search-navigate-up"><i class="icon-double-angle-up"></i></span><span class="from-search-navigate-down"><i class="icon-double-angle-down"></i></span></a>
-			<a href="" class="from-search-next only-icon"><i class="icon-chevron-right"></i></a>
-		{% endif %}
+<div class="document-head{% if from_search %} from-search{% endif %}">
+	{% if from_search %}
+		<a href="" class="from-search-previous only-icon"><i class="icon-chevron-left"></i></a>
+		<a href="" class="from-search-navigate"><span class="from-search-navigate-up"><i class="icon-double-angle-up"></i></span><span class="from-search-navigate-down"><i class="icon-double-angle-down"></i></span></a>
+		<div class="from-search-toc hidden">
+			<ol>
+				<li><a href="">Blah blah blah</a></li>
+				<li><a href="">Blah blah blah Blah blah blah Blah blah blah Blah blah blah</a></li>
+				<li><a href="">Blah blah blah</a></li>
+				<li><a href="">Blah blah blah</a></li>
+				<li>Blah blah blah</li>
+				<li><a href="">Blah blah blah</a></li>
+				<li><a href="">Blah blah blah</a></li>
+			</ol>
+		</div>
+		<a href="" class="from-search-next only-icon"><i class="icon-chevron-right"></i></a>
+	{% endif %}
+	<h1>
 		{{ document.title }}
 	</h1>
 
@@ -121,23 +132,98 @@
 
 	<!-- additional controls row; hidden unless needed -->
 	{% if show_left or show_right %}
-	<div id="wiki-controls" class="column-container">
-		<div class="column-strip quick-links hidden">
-			<a href="#show-quick-links" class="title smaller" id="show-quick-links"><i class="icon-caret-down"></i>{{ _('Show QuickLinks') }}</a>
+	<div id="wiki-controls" class="column-container column-container-reverse">
+		<div class="column-strip">
+			&nbsp;
 		</div>
 		<div class="column-half">
 			&nbsp;
 		</div>
-		<div class="column-strip">
-			<!-- Show TOC "show" link -->
+		<div class="column-strip quick-links hidden">
+			<a href="#show-quick-links" class="title smaller" id="show-quick-links"><i class="icon-caret-down"></i>{{ _('Show QuickLinks') }}</a>
 		</div>
 	</div>
 	{% endif %}
 
 	<!-- content row with three strips -->
-	<div class="column-container">
+	<div class="column-container column-container-reverse">
+
+		<!-- right column, TOC -->
+		{% if show_right %}
+		<div class="column-strip wiki-column" id="wiki-right">
+
+			{% if toc_html %}
+			<!-- table of contents -->
+			<div id="toc" class="toc toggleable">
+				<a href="#toc" class="title toggler">{{ _('In This Article') }}<i></i></a>
+				<ol class="toggle-container">
+					{{ toc_html|safe }}
+				</ol>
+			</div>
+			{% endif %}
+
+			{% if tags|length %}
+			<!-- tags if present -->
+			<div class="tag-attach-list tags">
+				<i class="icon-tags"></i>
+				<ul class="tag-list">
+					{% for tag in tags %}
+					<li><a href="{{url('wiki.tag', tag.name)}}">{{ tag.name }}</a></li>
+					{% endfor %}
+				</ul>
+			</div>
+			{% endif %}
+
+			{% if num_attachments %}
+			<!-- attachment list, if present -->
+			<div class="tag-attach-list attachments">
+				<i class="icon-paper-clip"></i>
+				<a href="#page-attachments">{{ _('%s Attachment%s' % (num_attachments, 's' if num_attachments > 1 else '')) }}</a>
+			</div>
+			{% endif %}
+		</div>
+		{% endif %}
+
+		<!-- center: main article content -->
+		<div id="wiki-content" class="{{ content_class }} wiki-column">
+
+			{% if kumascript_errors %}
+				{% include 'wiki/includes/kumascript_errors.html' %}
+			{% endif %}
+
+			{% if seo_summary %}
+				<div class="summary">
+					<p>{{ seo_summary }}</p>
+				</div>
+			{% endif %}
+
+			<!-- just the article content -->
+			<article>
+				{% if not fallback_reason %}
+					{% if not document_html %}
+						{{ _("This article doesn't have any content yet.") }}
+					{% elif document.is_template %}
+						<pre class="brush: js">{{ document_html }}</pre>
+					{% else %}
+						{{ document_html|safe }}
+					{% endif %}
+				{% elif fallback_reason == 'no_translation' %}
+					{{ document_html|safe }}
+				{% elif fallback_reason == 'translation_not_approved' %}
+					{{ document.parent.html|safe }}
+				{% else %}
+					{{ _("This article doesn't have approved content yet.") }}
+				{% endif %}
+			</article>
+
+			<!-- attachments list -->
+			{% if num_attachments %}
+				{% include 'wiki/includes/attachment_list.html' %}
+			{% endif %}
+		</div>
 
 		<!-- left strip -->
+		{% if show_left %}
 		<div id="wiki-left" class="column-strip wiki-column">
 
 			{#  Keeping template in place for when this actually works 
@@ -188,80 +274,7 @@
 				{% endif %}
 			{% endif %}
 		</div>
-
-		<!-- center: main article content -->
-		<div id="wiki-content" class="{{ content_class }} wiki-column">
-
-			{% if kumascript_errors %}
-				{% include 'wiki/includes/kumascript_errors.html' %}
-			{% endif %}
-
-			{% if seo_summary %}
-				<div class="summary">
-					<p>{{ seo_summary }}</p>
-				</div>
-			{% endif %}
-
-			<!-- just the article content -->
-			<article>
-				{% if not fallback_reason %}
-					{% if not document_html %}
-						{{ _("This article doesn't have any content yet.") }}
-					{% elif document.is_template %}
-						<pre class="brush: js">{{ document_html }}</pre>
-					{% else %}
-						{{ document_html|safe }}
-					{% endif %}
-				{% elif fallback_reason == 'no_translation' %}
-					{{ document_html|safe }}
-				{% elif fallback_reason == 'translation_not_approved' %}
-					{{ document.parent.html|safe }}
-				{% else %}
-					{{ _("This article doesn't have approved content yet.") }}
-				{% endif %}
-			</article>
-
-			<!-- attachments list -->
-			{% if num_attachments %}
-				{% include 'wiki/includes/attachment_list.html' %}
-			{% endif %}
-		</div>
-
-		<!-- right column, TOC -->
-		{% if show_right %}
-		<div class="column-strip wiki-column" id="wiki-right">
-			{% if toc_html %}
-			<!-- table of contents -->
-			<div id="toc" class="toc toggleable">
-				<a href="#toc" class="title toggler">{{ _('In This Article') }}<i></i></a>
-				<ol class="toggle-container">
-					{{ toc_html|safe }}
-				</ol>
-			</div>
-			{% endif %}
-
-			{% if tags|length %}
-			<!-- tags if present -->
-			<div class="tag-attach-list tags">
-				<i class="icon-tags"></i>
-				<ul class="tag-list">
-					{% for tag in tags %}
-					<li><a href="{{url('wiki.tag', tag.name)}}">{{ tag.name }}</a></li>
-					{% endfor %}
-				</ul>
-			</div>
-			{% endif %}
-
-			{% if num_attachments %}
-			<!-- attachment list, if present -->
-			<div class="tag-attach-list attachments">
-				<i class="icon-paper-clip"></i>
-				<a href="#page-attachments">{{ _('%s Attachment%s' % (num_attachments, 's' if num_attachments > 1 else '')) }}</a>
-			</div>
-			{% endif %}
-		</div>
-		{% endif %}
-
+		{% endif %}		
 
 	</div>
 
