@@ -37,43 +37,65 @@ document.documentElement.className += ' js';
 
 
 	/*
-		Togglers within articles, TOC for example
+		Togglers within articles, TOC, accordion subnav, etc. for example
 	*/
 	$('.toggleable').each(function() {
 		var $self = $(this);
-		var $container = $self.find('.toggle-container');
-		var $toggler = $self.find('.toggler');
+		var pieces = getTogglerComponents($self);
 		var closedAttribute = 'data-closed';
 
 		// Initialize open / close for the purpose of animation
 		if($self.hasClass('closed')) {
 			$self.attr(closedAttribute, 'true').removeClass('closed');
-			$container.hide();
+			pieces.$container.hide();
 		}
-		setIcon();
+		setIcon(pieces.$toggler, $self);
 
 		// Click event to show/hide
 		$self.on('click', '.toggler', function(e) {
 			e.preventDefault();
 			e.stopPropagation();
 
-			if(getState()) {
-				$self.attr(closedAttribute, '');
-				$container.slideDown();
+			// If I'm an accordion, close the other one
+			var $parent = $self.closest('ol, ul');
+			if($parent.hasClass('accordion')) {
+				var $current = $parent.find('> .current');
+				if($current.length && $current.get(0) != $self.get(0)) {
+					toggle($current, true);
+				}
 			}
-			else {
-				$self.attr(closedAttribute, 'true');
-				$container.slideUp();
-			}
-			setIcon();
+
+			// Handle me
+			toggle($self);
 		});
 
-		function setIcon() {
-			$toggler.find('i').attr('class', 'icon-caret-'  + (getState() ? 'up' : 'down'));
+		function toggle($li, forceClose) {
+			var pieces = getTogglerComponents($li);
+
+			if(!getState($li) || forceClose) {
+				$li.attr(closedAttribute, 'true').removeClass('current');
+				pieces.$container.slideUp();
+			}
+			else {
+				$li.attr(closedAttribute, '').addClass('current');
+				pieces.$container.slideDown();
+			}
+			setIcon(pieces.$toggler, $li);
 		}
 
-		function getState() {
-			return $self.attr(closedAttribute);
+		function getTogglerComponents($li) {
+			return {
+				$container: $li.find('.toggle-container'),
+				$toggler: $li.find('> .toggler')
+			};
+		}
+
+		function setIcon($tog, $li) {
+			$tog.find('i').attr('class', 'icon-caret-'  + (getState($li) ? 'up' : 'down'));
+		}
+
+		function getState($li) {
+			return $li.attr(closedAttribute);
 		}
 	});
 
