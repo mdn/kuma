@@ -90,13 +90,24 @@
 </ol></nav>
 
 <!-- heading -->
-<div class="document-head">
-	<h1{% if from_search %} class="from-search"{% endif %}>
-		{% if from_search %}
-			<a href="" class="from-search-previous only-icon"><i class="icon-chevron-left"></i></a>
-			<a href="" class="from-search-navigate"><span class="from-search-navigate-up"><i class="icon-double-angle-up"></i></span><span class="from-search-navigate-down"><i class="icon-double-angle-down"></i></span></a>
-			<a href="" class="from-search-next only-icon"><i class="icon-chevron-right"></i></a>
-		{% endif %}
+<div class="document-head{% if from_search %} from-search{% endif %}">
+	{% if from_search %}
+		<a href="" class="from-search-previous only-icon"><i class="icon-chevron-left"></i></a>
+		<a href="" class="from-search-navigate"><span class="from-search-navigate-up"><i class="icon-double-angle-up"></i></span><span class="from-search-navigate-down"><i class="icon-double-angle-down"></i></span></a>
+		<div class="from-search-toc hidden">
+			<ol>
+				<li><a href="">Blah blah blah</a></li>
+				<li><a href="">Blah blah blah Blah blah blah Blah blah blah Blah blah blah</a></li>
+				<li><a href="">Blah blah blah</a></li>
+				<li><a href="">Blah blah blah</a></li>
+				<li>Blah blah blah</li>
+				<li><a href="">Blah blah blah</a></li>
+				<li><a href="">Blah blah blah</a></li>
+			</ol>
+		</div>
+		<a href="" class="from-search-next only-icon"><i class="icon-chevron-right"></i></a>
+	{% endif %}
+	<h1>
 		{{ document.title }}
 	</h1>
 
