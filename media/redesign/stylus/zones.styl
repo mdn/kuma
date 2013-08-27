@@ -2,9 +2,8 @@
 @import 'mixins'
 @import 'grid'
 
-.zone-landing
-	
-	#main-header
+.zone
+	#main-header, .zone-article-header
 		create-gradient-background(#0095dd)
 
 	#main-nav > ul > li > a
@@ -20,6 +19,8 @@
 				color #fff
 			&::-moz-input-placeholder
 				color #fff
+
+.zone-landing
 				
 	h1
 		color #fff
@@ -30,14 +31,8 @@
 		a
 			color rgba(255, 255, 255, 0.7)
 
-.zone-content
-	padding-top 38px
-	reverse-link-decoration()
-
-.zone-subnav-container
-	margin-top -220px
-	background #fff
-	min-height 400px
+	.zone-subnav-container
+		margin-top -220px
 
 .zone-landing-header
 	create-gradient-background(#0095dd)
@@ -67,6 +62,34 @@
 .zone-landing-lists li
 	padding list-item-spacing 0
 	prevent-last-child-spacing(padding-bottom)
+
+
+
+/*  Basic zone article pages */
+.zone-article-header
+	padding (grid-spacing * 2) 0
+	overflow hidden
+
+	.zone-title
+		@extend .heading-2
+		color #fff
+		font-style italic
+
+	img
+		position absolute
+		right 0
+		top 0
+		display block
+		width 200px
+
+
+.zone-content
+	padding-top 38px
+	reverse-link-decoration()
+
+.zone-subnav-container
+	background #fff
+	min-height 400px
 
 .zone-callout
 	position relative
