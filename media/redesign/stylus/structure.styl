@@ -4,7 +4,7 @@
 	border-bottom 1px solid rgba(255, 255, 255, 0.2)
 
 	> .center
-		height 90px
+		min-height 110px
 
 	.logo
 		@extend .offscreen
@@ -79,6 +79,66 @@
 			input
 				width 400px
 
+.user-state
+	position absolute
+	right 200px
+	top 12px
+	font-size smaller-font-size
+	compat-only(width, auto)
+
+	li + li
+		border-left 1px solid #bbb
+
+	a, a:hover, a:focus, a:visited
+		color link-color
+
+a.persona-button
+	vendorize(border-radius, 3px)
+
+	span
+		text-decoration none
+		outline none
+		display block
+		float left
+		font-size 14px
+		line-height 24px
+		color white
+		font-weight bold
+		padding 0 10px 0 20px
+		position relative
+
+		&:after
+			content:''
+			position absolute
+			top 0
+			right -12px
+			width 24px
+			height 24px
+			z-index 1
+			vendorize(transform, scale(0.707) rotate(45deg))
+			vendorize(border-radius, 0 3px 0 50px)
+		
+		&.icon
+			padding-left 3px
+			vendorize(border-radius, 3px 0 0 3px)
+			create-gradient(#43a6e2, #287cc2)
+
+			&:after
+				create-gradient(#43a6e2, #287cc2, left top)
+			
+			img
+				position relative
+				top 2px
+				left 5px
+				width 14px
+				height 15px
+			
+		&.signin
+			create-gradient(#56565a, #3a3a3a)
+			text-shadow 0px 1.5px 1px rgba(0, 0, 0, 0.35)
+			&:after
+				create-gradient(#56565a, #3a3a3a)
+				z-index -1
 
 .search-wrap
 	background #fff

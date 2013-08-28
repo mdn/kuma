@@ -20,6 +20,15 @@
 {% set disabled_class = ('disabled' if not is_logged_in else '') %}
 {% set disabled_attr = ('title="%s"' % _('Please log in to use this feature.') if not is_logged_in else '') %}
 
+{% set show_left = (request.user.is_authenticated() and document.current_revision and document.allows_revision_by(request.user) and (document.current_revision.needs_technical_review() or document.current_revision.needs_editorial_review())) %}
+{% set show_right = (toc_html or tags|length or num_attachments) %}
+{% set content_class = '' %}
+{% if show_left and show_right %}
+  {% set content_class = 'column-half' %}
+{% elif show_left or show_right %}
+  {% set content_class = 'column-main' %}
+{% endif %}
+
 <!-- action buttons -->
 <ul class="page-buttons"><li><a href="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}" class="button {{ disabled_class }}" {{ disabled_attr }}>{{ _('Edit Page') }}<i class="icon-pencil"></i></a></li>{% if user.is_authenticated() and document %}<li class="page-watch">
       {% if document.is_watched_by(user) %}
@@ -67,7 +76,7 @@
 		          {% for translation in document.other_translations %}
 		            <li><a rel="internal" href="{{ url('wiki.document', translation.full_path, locale=translation.locale) }}" title="{{ translation.title }}">{{ translation.language }}</a></li>
 		          {% endfor %}
-		          
+
 		          {% if document.is_localizable %}
 		            <li><a href="{{ translate_url }}">{{ _('Add translation') }}</a></li>
 		          {% endif %}
@@ -117,6 +126,7 @@
 <!-- start the main content container -->
 <div id="wiki-column-container">
 
+	{% if show_left or show_right %}
 	<!-- additional controls row; hidden unless needed -->
 	<div id="wiki-controls" class="column-container column-container-reverse">
 		<div class="column-strip">
@@ -130,71 +140,44 @@
 			<a href="#show-quick-links" class="title smaller" id="show-quick-links"><i class="icon-caret-down"></i>{{ _('Show QuickLinks') }}</a>
 		</div>
 	</div>
+	{% endif %}
 
 	<!-- content row with three strips -->
 	<div class="column-container column-container-reverse">
 
-		<!-- TOC, approvals, etc -->
-		<div class="column-strip wiki-column" id="wiki-right">
-			<!-- approvals -->
-			{% if request.user.is_authenticated() and document.current_revision and document.allows_revision_by(request.user) %}
-				{% if document.current_revision.needs_technical_review() or document.current_revision.needs_editorial_review() %}
-				<section class="page-meta reviews">
-					<p>{{ _('The following reviews have been requested:') }}</p>
-
-					<form method="post" action="{{ url('wiki.quick_review', document.full_path) }}">
-						{{ csrf() }}
-						<ul>
-						{% if document.current_revision.needs_technical_review() %}
-							<li>
-								<input type="checkbox" value="approve_technical" id="id_approve_technical" name="approve_technical">
-								<label for="id_approve_technical">{{ _('Technical') }}</label>
-							</li>
-						{% endif %}
-						{% if document.current_revision.needs_editorial_review() %}
-							<li>
-								<input type="checkbox" value="approve_editorial" id="id_approve_editorial" name="approve_editorial">
-								<label for="id_approve_editorial">{{ _('Editorial') }}</label>
-							</li>
-						{% endif %}
-						</ul>
-
-						<button type="submit">{{ _('Submit Review') }}</button>
-					</form>
-				</section>
+		{% if show_right %}
+			<!-- TOC, approvals, etc -->
+			<div class="column-strip wiki-column" id="wiki-right">
+				{% if toc_html %}
+				<!-- table of contents -->
+				<div id="toc" class="toc toggleable">
+					<a href="#toc" class="title toggler">{{ _('In This Article') }}<i></i></a>
+					<ol class="toggle-container">
+						{{ toc_html|safe }}
+					</ol>
+				</div>
 				{% endif %}
-			{% endif %}
 
-			{% if toc_html %}
-			<!-- table of contents -->
-			<div id="toc" class="toc toggleable">
-				<a href="#toc" class="title toggler">{{ _('In This Article') }}<i></i></a>
-				<ol class="toggle-container">
-					{{ toc_html|safe }}
-				</ol>
+  			{% if tags|length %}
+  			<!-- tags if present -->
+  			<div class="tag-attach-list tags">
+  				<i class="icon-tags"></i>
+  				<ul class="tag-list">{% for tag in tags %}<li><a href="{{url('wiki.tag', tag.name)}}">{{ tag.name }}</a></li>{% endfor %}</ul>
+  			</div>
+  			{% endif %}
+
+				{% if num_attachments %}
+				<!-- attachment list, if present -->
+				<div class="tag-attach-list attachments">
+					<i class="icon-paper-clip"></i>
+					<a href="#page-attachments">{{ _('%s Attachment%s' % (num_attachments, 's' if num_attachments > 1 else '')) }}</a>
+				</div>
+				{% endif %}
 			</div>
-			{% endif %}
-
-			{% if tags|length %}
-			<!-- tags if present -->
-			<div class="tag-attach-list tags">
-				<i class="icon-tags"></i>
-				<ul class="tag-list">{% for tag in tags %}<li><a href="{{url('wiki.tag', tag.name)}}">{{ tag.name }}</a></li>{% endfor %}</ul>
-			</div>
-			{% endif %}
-
-			{% if num_attachments %}
-			<!-- attachment list, if present -->
-			<div class="tag-attach-list attachments">
-				<i class="icon-paper-clip"></i>
-				<a href="#page-attachments">{{ _('%s Attachment%s' % (num_attachments, 's' if num_attachments > 1 else '')) }}</a>
-			</div>
-			{% endif %}
-
-		</div>
+		{% endif %}
 
 		<!-- center: main article content -->
-		<div id="wiki-content" class="column-half wiki-column">
+		<div id="wiki-content" class="{{ content_class }} wiki-column">
 
 			{% if kumascript_errors %}
 				{% include 'wiki/includes/kumascript_errors.html' %}
@@ -231,26 +214,58 @@
 			{% endif %}
 		</div>
 
-		<!-- quick links strip -->
-		<div id="wiki-left" class="column-strip wiki-column">
-			<!-- quick links -->
-			<div class="quick-links" id="quick-links">
-				<a href="#quick-links" class="title" id="quick-links-toggle"><i class="icon-caret-up"></i>{{ _('Hide QuickLinks') }}</a>
-				<ol>
-					<li class="toggleable closed"><a href="" class="toggler"><i class="icon-caret-up"></i>Application Cache API</a>
-						<ol class="toggle-container">
-							<li><a href="">Sub link</a></li>
-							<li><a href="">Sub link</a></li>
-							<li><a href="">Sub link</a></li>
-						</ol>
-					</li>
-					<li><a href="">Something</a></li>
-					<li><a href="">Something</a></li>
-					<li><a href="">Something</a></li>
-				</ol>
-			</div>
-		</div>
+		{% if show_left %}
+			<!-- quick links strip -->
+			<div id="wiki-left" class="column-strip wiki-column">
+				{#
+				<!-- quick links -->
+				<div class="quick-links" id="quick-links">
+					<a href="#quick-links" class="title" id="quick-links-toggle"><i class="icon-caret-up"></i>{{ _('Hide QuickLinks') }}</a>
+					<ol>
+						<li class="toggleable closed"><a href="" class="toggler"><i class="icon-caret-up"></i>Application Cache API</a>
+							<ol class="toggle-container">
+								<li><a href="">Sub link</a></li>
+								<li><a href="">Sub link</a></li>
+								<li><a href="">Sub link</a></li>
+							</ol>
+						</li>
+						<li><a href="">Something</a></li>
+						<li><a href="">Something</a></li>
+						<li><a href="">Something</a></li>
+					</ol>
+				</div>
+				#}
 
+				<!-- approvals -->
+				{% if request.user.is_authenticated() and document.current_revision and document.allows_revision_by(request.user) %}
+					{% if document.current_revision.needs_technical_review() or document.current_revision.needs_editorial_review() %}
+					<section class="page-meta reviews">
+						<p>{{ _('The following reviews have been requested:') }}</p>
+
+						<form method="post" action="{{ url('wiki.quick_review', document.full_path) }}">
+							{{ csrf() }}
+							<ul>
+							{% if document.current_revision.needs_technical_review() %}
+								<li>
+									<input type="checkbox" value="approve_technical" id="id_approve_technical" name="approve_technical">
+									<label for="id_approve_technical">{{ _('Technical') }}</label>
+								</li>
+							{% endif %}
+							{% if document.current_revision.needs_editorial_review() %}
+								<li>
+									<input type="checkbox" value="approve_editorial" id="id_approve_editorial" name="approve_editorial">
+									<label for="id_approve_editorial">{{ _('Editorial') }}</label>
+								</li>
+							{% endif %}
+							</ul>
+
+							<button type="submit">{{ _('Submit Review') }}</button>
+						</form>
+					</section>
+					{% endif %}
+				{% endif %}
+			</div>
+		{% endif %}
 	</div>
 
 </div>

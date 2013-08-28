@@ -99,19 +99,18 @@ document.documentElement.className += ' js';
 		}
 	});
 
-
-	/* 
-		Toggle for quick links show/hide
+	/*
+		Persona Login
 	*/
-	(function() {
-		var side = $('#quick-links-toggle').closest('.wiki-column').attr('id');
-		// Quick Link toggles
-		$('#quick-links-toggle, #show-quick-links').on('click', function(e) {
-			e.preventDefault();
-			$('#' + side).toggleClass('column-closed');
-			$('#wiki-column-container').toggleClass(side + '-closed');
-			$('#wiki-controls .quick-links').toggleClass('hidden');
-		});
-	})();
+	$('.persona-login').click(function(e) {
+		if(!$(this).hasClass('toggle')) {
+			navigator.id.get(function(assertion) {
+				if(!assertion) return;
+				$('input[name="assertion"]').val(assertion.toString());
+				$('form.browserid').first().submit();
+			});
+			return false;
+		}
+	});
 
 })(jQuery);

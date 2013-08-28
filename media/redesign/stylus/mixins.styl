@@ -23,12 +23,18 @@ generate-grid(increment, start, end)
 	.column-half
 		@extend .column-6
 
-
 /* vendorizes a propery */
 vendorize(property, value)
 	-webkit-{property} value
 	-moz-{property} value
+	-ms-{property} value
 	{property} value
+
+vendorize-value(property, value, more='')
+	{property} unquote('-webkit-'+value+more)
+	{property} unquote('-moz-'+value+more)
+	{property} unquote('-ms-'+value+more)
+	{property} value+more
 
 /* prevents spacing of a given element if it's the last child */
 prevent-last-child-spacing(element='*', property='padding')
@@ -45,6 +51,14 @@ reverse-link-decoration()
 /* generates a background property for header and zones */
 create-gradient-background(color)
 	background url('/media/redesign/img/header-background.png') 0 0 repeat color;
+
+/* generates a cross-browser gradient */
+create-gradient(start-color, end-color, direction=false)
+	if direction
+		vendorize-value(background, linear-gradient, '(' + direction + ', ' + start-color + ', ' + end-color + ')')
+	else
+		vendorize-value(background, linear-gradient, '(' + start-color + ', ' + end-color + ')')
+	filter unquote("progid:DXImageTransform.Microsoft.gradient(startColorstr='" + start-color + "', endColorstr='" + end-color + "', GradientType=1)") /* IE6-9 */
 
 /* generates the essential "before" and "after" code for pseudo-arrows */
 generate-arrow()
