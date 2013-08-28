@@ -16,9 +16,9 @@
       <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/libs/font-awesome/css/font-awesome.min.css" />
       <link rel="stylesheet" type="text/css" media="print" href="{{ MEDIA_URL }}css/mdn-print.css" />
       <link rel="stylesheet" href="//mozorg.cdn.mozilla.net/media/css/tabzilla-min.css" />
-      
+
       <link rel="search" type="application/opensearchdescription+xml" href="{{ settings.SITE_URL }}/{{ request.locale }}/search/xml" title="{{ _('Mozilla Developer Network') }}" />
-      
+
 
       {% if waffle.flag('redesign') %}
         {{ css('redesign-main') }}
@@ -90,7 +90,7 @@
   <title>{{ page_title_macro() }}</title>
 
   {{ site_css() }}
-  
+
   <link rel="stylesheet" type="text/css" media="print" href="{{ MEDIA_URL }}redesign/css/print.css" />
 
   <meta charset="utf-8">
@@ -117,11 +117,10 @@
 
   <!-- Header -->
   <header id="main-header"><div class="center">
-    
+
     <a href="/" class="logo">{{ _('Mozilla Developer Network') }}</a>
 
-    <nav id="main-nav"><ul>
-      <li><a href="">{{ _('Projects') }}</a>
+    <nav id="main-nav"><ul><li><a href="">{{ _('Projects') }}</a>
 
         <div class="submenu">
           <div class="submenu-column">
@@ -132,8 +131,7 @@
               <li><a href="">Build the web for beginners again</a></li>
               <li><a href="">Build the web for beginners again</a></li>
             </ul>
-          </div>
-          <div class="submenu-column">
+          </div><div class="submenu-column">
             <div class="title">{{ _('Hot Right Now') }}</div>
             <ul>
               <li><a href="">Build the web for beginners again</a></li>
@@ -143,8 +141,7 @@
             </ul>
           </div>
         </div>
-      </li>
-      <li><a href="">{{ _('Tools') }}</a>
+      </li><li><a href="">{{ _('Tools') }}</a>
 
         <div class="submenu">
           <div class="submenu-column">
@@ -155,8 +152,7 @@
               <li><a href="">Build the web for beginners again</a></li>
               <li><a href="">Build the web for beginners again</a></li>
             </ul>
-          </div>
-          <div class="submenu-column">
+          </div><div class="submenu-column">
             <div class="title">{{ _('Hot Right Now') }}</div>
             <ul>
               <li><a href="">Build the web for beginners again</a></li>
@@ -166,8 +162,7 @@
             </ul>
           </div>
         </div>
-      </li>
-      <li>
+      </li><li>
         <a href="{{ url('learn') }}">{{ _('Learn') }}</a>
 
         <div class="submenu">
@@ -179,8 +174,7 @@
               <li><a href="">Build the web for beginners again</a></li>
               <li><a href="">Build the web for beginners again</a></li>
             </ul>
-          </div>
-          <div class="submenu-column">
+          </div><div class="submenu-column">
             <div class="title">{{ _('Hot Right Now') }}</div>
             <ul>
               <li><a href="">Build the web for beginners again</a></li>
@@ -190,26 +184,22 @@
             </ul>
           </div>
         </div>
-      </li>
-      <li><a href="{{ url('demos') }}">{{ _('Demos') }}</a></li>
-      <li><form action="{{ url('search') }}">
+      </li><li><a href="{{ url('demos') }}">{{ _('Demos') }}</a></li><li><form action="{{ url('search') }}">
         <div class="search-wrap">
           <input type="search" name="q" placeholder="{{ _('Search') }}" />
           <i class="icon-search"></i>
           <button type="submit">{{ _('Search') }}</button>
         </div>
-      </form></li>
-    </ul></nav>
+      </form></li></ul></nav>
 
     {% include "includes/login.html" %}
 
     <a href="//www.mozilla.org/" id="tabzilla">mozilla</a>
-    
   </div></header>
 
   <!-- Banner here, if present.  Usually from zone landing -->
   {% block masthead %}{% endblock %}
-  
+
   <!-- Content will go here -->
   <main><div class="center">
   {{ page_content() }}
@@ -265,7 +255,7 @@
     {{ optimizely_script() }}
   {% endif %}
   <title>{{ page_title_macro() }}</title>
-  
+
   <meta charset="utf-8">
   <meta name="robots" content="index, follow">
   <link rel="home" href="{{ url('home') }}">
@@ -306,13 +296,13 @@
         {% endif %}
         <li><a href="#content">{{ _('Skip to main content') }}</a></li>
       </ul>
-    
+
       <div id="branding">
         {% block headerlogo %}
         <div id="logo"><a href="{{ url('home') }}"><img src="{{ MEDIA_URL }}img/mdn-logo-sm.png" alt="{{ _('Mozilla Developer Network') }}" title="{{ _('Mozilla Developer Network') }}" width="62" height="71"> {{ _('Mozilla Developer Network') }}</a></div>
         {% endblock %}
       </div>
-      
+
       {% block headernav %}
         <nav id="nav">
           <ul id="nav-main" role="menubar">
@@ -368,10 +358,10 @@
         </nav>
 
       {% endblock %}
-      
+
       {% if not is_sphinx %}
       {% include "includes/login.html" %}
-      
+
       <form id="site-search" method="get" action="http://www.google.com/search"
               data-url="{{ url('search') }}">
         <p>
