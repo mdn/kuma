@@ -4,12 +4,12 @@
       {% if document.is_watched_by(user) %}
         <form action="{{ url('wiki.document_unwatch', document.slug) }}" method="post">
           {{ csrf() }}
-          <button type="submit" class="link-btn" /><i class='icon-eye-closed'></i>{{ _('Stop article emails') }}</button>
+          <button type="submit" class="link-btn" /><i class='icon-eye-closed'></i>{{ _('Unsubscribe') }}</button>
         </form>
       {% else %}
         <form action="{{ url('wiki.document_watch', document.full_path) }}" method="post">
           {{ csrf() }}
-          <button type="submit" class="link-btn" /><i class='icon-eye-open'></i>{{ _('Email me article changes') }}</button>
+          <button type="submit" class="link-btn" /><i class='icon-eye-open'></i>{{ _('Subscribe') }}</button>
         </form>
       {% endif %}
     </li>
