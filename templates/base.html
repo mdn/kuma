@@ -93,6 +93,12 @@
   
   <link rel="stylesheet" type="text/css" media="print" href="{{ MEDIA_URL }}redesign/css/print.css" />
 
+  <meta charset="utf-8">
+  <meta name="robots" content="index, follow">
+  <link rel="home" href="{{ url('home') }}">
+  <link rel="copyright" href="#copyright">
+  <link rel="shortcut icon" href="{{ MEDIA_URL }}img/favicon.ico">
+
   <!--[if IE]>
   <meta http-equiv="imagetoolbar" content="no" />
   <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
@@ -111,7 +117,7 @@
 
   <!-- Header -->
   <header id="main-header"><div class="center">
-
+    
     <a href="/" class="logo">{{ _('Mozilla Developer Network') }}</a>
 
     <nav id="main-nav"><ul>
@@ -194,6 +200,11 @@
         </div>
       </form></li>
     </ul></nav>
+
+    {% include "includes/login.html" %}
+
+    <a href="//www.mozilla.org/" id="tabzilla">mozilla</a>
+    
   </div></header>
 
   <!-- Banner here, if present.  Usually from zone landing -->

@@ -99,4 +99,18 @@ document.documentElement.className += ' js';
 		}
 	});
 
+	/*
+		Persona Login
+	*/
+	$('.persona-login').click(function(e) {
+		if(!$(this).hasClass('toggle')) {
+			navigator.id.get(function(assertion) {
+				if(!assertion) return;
+				$('input[name="assertion"]').val(assertion.toString());
+				$('form.browserid').first().submit();
+			});
+			return false;
+		}
+	});
+
 })(jQuery);
