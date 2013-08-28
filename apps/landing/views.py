@@ -178,6 +178,8 @@ def common_landing(request, section=None, extra=None):
 
 def redesign_zone(request):
     return render(request, 'redesign-stubs/zone-landing.html')
+def redesign_zone_article(request):
+    return render(request, 'redesign-stubs/zone-article.html')
 def redesign_article(request):
     return render(request, 'redesign-stubs/article.html')
 def redesign_results(request):

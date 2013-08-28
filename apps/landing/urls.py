@@ -19,6 +19,7 @@ urlpatterns = patterns('landing.views',
 
     # Redesign stub helpers
     url(r'^redesign/stub/zone/?$', 'redesign_zone', name='redesign_zone'),
+    url(r'^redesign/stub/zone_article/?$', 'redesign_zone_article', name='redesign_zone_article'),
     url(r'^redesign/stub/article/?$', 'redesign_article', name='redesign_article'),
     url(r'^redesign/stub/search_results/?$', 'redesign_results', name='redesign_results'),
 )
