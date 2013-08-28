@@ -40,7 +40,10 @@ article
 	font-size smaller-font-size
 	margin-bottom (2 * grid-spacing)
 	margin-top (grid-spacing * 2)
-	set-inline-block-list-base()
+
+	li
+		display inline-block
+		margin-right (grid-spacing / 2)
 
 	i
 		color #c1c2c4
@@ -51,8 +54,6 @@ article
 	reverse-link-decoration()
 
 .page-buttons, #page-buttons
-	set-inline-block-list-base()
-
 	position absolute
 	right gutter-width
 	text-align right
@@ -61,6 +62,7 @@ article
 
 	> li
 		margin-left (grid-spacing / 2)
+		display inline-block
 
 		a, button, input[type='submit'], input[type='button']
 			compat-important(font-size, smaller-font-size)
@@ -228,9 +230,6 @@ article
 		display block
 		font-size smaller-font-size
 
-	ul
-		set-inline-block-list-base()
-
 	> a
 		text-decoration none
 		&:hover
@@ -238,6 +237,7 @@ article
 
 .tags
 	li
+		display inline-block
 		margin-bottom 7px
 
 .tags a, .tagit li

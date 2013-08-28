@@ -21,13 +21,13 @@
 		position absolute
 		right gutter-width
 		bottom 21px
-		set-inline-block-list-base()
 
 		> li
 			padding-left 47px
 			position relative
 			opacity 1
 			max-width 1000px
+			display inline-block
 			vendorize(transition-property, all)
 			vendorize(transition-duration, animation-duration)
 			vendorize(transition-delay, animation-duration)
@@ -53,6 +53,7 @@
 
 		.submenu-column
 			min-height 90px
+			display inline-block
 
 		&:before, &:after
 			top menu-arrow-top

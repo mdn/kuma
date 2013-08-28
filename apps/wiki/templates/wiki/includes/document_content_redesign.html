@@ -21,9 +21,7 @@
 {% set disabled_attr = ('title="%s"' % _('Please log in to use this feature.') if not is_logged_in else '') %}
 
 <!-- action buttons -->
-<ul class="page-buttons">
-	<li><a href="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}" class="button {{ disabled_class }}" {{ disabled_attr }}>{{ _('Edit Page') }}<i class="icon-pencil"></i></a></li>{% if user.is_authenticated() and document %}
-    <li class="page-watch">
+<ul class="page-buttons"><li><a href="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}" class="button {{ disabled_class }}" {{ disabled_attr }}>{{ _('Edit Page') }}<i class="icon-pencil"></i></a></li>{% if user.is_authenticated() and document %}<li class="page-watch">
       {% if document.is_watched_by(user) %}
         <form action="{{ url('wiki.document_unwatch', document.slug) }}" method="post">
           {{ csrf() }}
@@ -76,9 +74,7 @@
 		        </ul>
     		</div>
     	</div>
-
-	</li>
-</ul>
+	</li></ul>
 
 <!-- crumbs -->
 <nav class="crumbs" role="navigation"><ol>
@@ -183,11 +179,7 @@
 			<!-- tags if present -->
 			<div class="tag-attach-list tags">
 				<i class="icon-tags"></i>
-				<ul class="tag-list">
-					{% for tag in tags %}
-					<li><a href="{{url('wiki.tag', tag.name)}}">{{ tag.name }}</a></li>
-					{% endfor %}
-				</ul>
+				<ul class="tag-list">{% for tag in tags %}<li><a href="{{url('wiki.tag', tag.name)}}">{{ tag.name }}</a></li>{% endfor %}</ul>
 			</div>
 			{% endif %}
 
