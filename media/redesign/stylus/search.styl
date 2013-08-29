@@ -3,128 +3,128 @@
 @import 'grid'
 
 body.search-results
-	create-gradient-background(header-background-color)
+  create-gradient-background(header-background-color)
 
-	p
-		compat-only(padding-left, 0)
+  p
+    compat-only(padding-left, 0)
 
 .search-pane
-	background #fff
-	margin-bottom (grid-spacing / 2)
+  background #fff
+  margin-bottom (grid-spacing / 2)
 
 h3 i[class^="icon-"]
-	compat-important(margin-right, (grid-spacing * .75))
+  compat-important(margin-right, (grid-spacing * .75))
 
 #search-results-close-container
-	slider()
+  slider()
 
 .search-results-explanation
-	@extend .grid-padding
-	position relative
+  @extend .grid-padding
+  position relative
 
-	p
-		font-style italic
-		margin-bottom 0
+  p
+    font-style italic
+    margin-bottom 0
 
-	a.close
-		font-size (3 * base-font-size)
-		color text-color
-		text-decoration none
-		display block
-		position absolute
-		top 0
-		right grid-spacing
+  a.close
+    font-size (3 * base-font-size)
+    color text-color
+    text-decoration none
+    display block
+    position absolute
+    top 0
+    right grid-spacing
 
 .seach-results-container
-	@extend .grid-padding
-	padding-left 0
-	padding-right 0
+  @extend .grid-padding
+  padding-left 0
+  padding-right 0
 
-	h3
-		margin-left grid-spacing
-		margin-bottom grid-spacing
+  h3
+    margin-left grid-spacing
+    margin-bottom grid-spacing
 
 .result-list
-	reverse-link-decoration()
+  reverse-link-decoration()
 
-	.column-1
-		text-align right
-		color link-color
+  .column-1
+    text-align right
+    color link-color
 
-	p
-		margin-bottom 0
-		font-style italic
+  p
+    margin-bottom 0
+    font-style italic
 
-	li
-		slider()
-		margin-bottom (grid-spacing + (grid-spacing / 2))
+  li
+    slider()
+    margin-bottom (grid-spacing + (grid-spacing / 2))
 
-		&.closed
-			margin-bottom 0
+    &.closed
+      margin-bottom 0
 
 
 .search-meta
-	margin-top (grid-spacing / 2)
-	a
-		color #6a7b86
-		opacity .5
+  margin-top (grid-spacing / 2)
+  a
+    color #6a7b86
+    opacity .5
 
 .result-list-link
-	@extend .smaller
-	font-style italic
+  @extend .smaller
+  font-style italic
 
-	{selector-icon}
-		margin-right 6px !important
-		margin-left 0
+  {selector-icon}
+    margin-right 6px !important
+    margin-left 0
 
-	a
-		color text-color
-		display inline-block
-		margin-right (grid-spacing / 2)
-	
-	prevent-last-child-spacing(a, margin-right)
+  a
+    color text-color
+    display inline-block
+    margin-right (grid-spacing / 2)
+  
+  prevent-last-child-spacing(a, margin-right)
 
 .search-results-more
-	@extend .clear
-	padding 0 grid-spacing
+  @extend .clear
+  padding 0 grid-spacing
 
-	.with-view-all .view-all
-		display block
+  .with-view-all .view-all
+    display block
 
 .view-all
-	reverse-link-decoration()
-	float right
-	display none
+  reverse-link-decoration()
+  float right
+  display none
 
 .search-results-more.with-view-all
-	.view-all
-		display block
-	.pager
-		display none
+  .view-all
+    display block
+  .pager
+    display none
 
 .search-results-topics
-	reverse-link-decoration()
+  reverse-link-decoration()
 
-	h3
-		margin-bottom (grid-spacing * 1.5)
+  h3
+    margin-bottom (grid-spacing * 1.5)
 
-	a
-		display block
-		margin-top grid-spacing
-		padding-right (grid-spacing * 2)
-		position relative
+  a
+    display block
+    margin-top grid-spacing
+    padding-right (grid-spacing * 2)
+    position relative
 
-		&:before
-			position absolute
-			right 0
-			top 0
-			content attr(data-count)
-			color text-color
-			opacity 0.6
+    &:before
+      position absolute
+      right 0
+      top 0
+      content attr(data-count)
+      color text-color
+      opacity 0.6
 
 .search-results-no-demo
-	.result-list
-		.column-strip
-			display none
-		.result-list-item
-			@extend .column-7
+  .result-list
+    .column-strip
+      display none
+    .result-list-item
+      @extend .column-7

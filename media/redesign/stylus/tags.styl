@@ -3,57 +3,57 @@
 
 /* headings */
 h1, h2, h3, h4
-	font-weight light-font-weight
-	margin-bottom (grid-spacing/2)
+  font-weight light-font-weight
+  margin-bottom (grid-spacing/2)
 
 h1
-	@extend .heading-1
-	margin-bottom grid-spacing
+  @extend .heading-1
+  margin-bottom grid-spacing
 h2
-	@extend .heading-2
-	line-height 100%
+  @extend .heading-2
+  line-height 100%
 
 h3
-	font-size 28px
-	letter-spacing -0.5px
-	line-height 100%
+  font-size 28px
+  letter-spacing -0.5px
+  line-height 100%
 
 h4
-	font-size 24px
-	letter-spacing -0.25px
-	line-height 100%
-	
+  font-size 24px
+  letter-spacing -0.25px
+  line-height 100%
+  
 /* basic text */
 {selector-icon}
-	display inline-block
-	margin-left (grid-spacing / 2)
-	compat-only(margin-right, 0)
+  display inline-block
+  margin-left (grid-spacing / 2)
+  compat-only(margin-right, 0)
 
-	&:before
-		display inline-block
-		text-decoration none
+  &:before
+    display inline-block
+    text-decoration none
 
 p
-	margin-bottom grid-spacing
+  margin-bottom grid-spacing
 
 /* forms */
 input[type='search']
-	vendorize(appearance, textfield)
+  vendorize(appearance, textfield)
 
 label
-	cursor pointer
+  cursor pointer
 
 
 /* links */
 a
-	color link-color
+  color link-color
 
-	{selector-icon}:before
-		cursor pointer
+  {selector-icon}:before
+    cursor pointer
 
 button, input[type='submit'], input[type='button']
-	@extend .button
-	
-	&::-moz-focus-inner
-		margin-top -1px
-		margin-bottom -1px
+  @extend .button
+  
+  &::-moz-focus-inner
+    margin-top -1px
+    margin-bottom -1px
