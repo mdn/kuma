@@ -91,6 +91,7 @@
 
   {{ site_css() }}
   
+  <meta charset="utf-8">
   <link rel="stylesheet" type="text/css" media="print" href="{{ MEDIA_URL }}redesign/css/print.css" />
 
   <meta charset="utf-8">
@@ -265,7 +266,7 @@
     {{ optimizely_script() }}
   {% endif %}
   <title>{{ page_title_macro() }}</title>
-  
+
   <meta charset="utf-8">
   <meta name="robots" content="index, follow">
   <link rel="home" href="{{ url('home') }}">
