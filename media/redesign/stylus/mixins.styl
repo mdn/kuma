@@ -7,11 +7,15 @@
 */
 
 /* generates a grid based on min/max and increment */
-generate-grid(increment, start, end)
+generate-grid(increment, start, end, desired-column=false)
   total = start
   for n, x in 0..((end - start) / increment)
-    .column-{x+1}
-      width total
+    if desired-column
+      if x+1 is desired-column
+        return total
+    else
+      .column-{x+1}
+        width total
 
     total = total + increment
 
@@ -22,6 +26,10 @@ generate-grid(increment, start, end)
     @extend .column-9
   .column-half
     @extend .column-6
+
+get-grid-dimension(media-query, column-num)
+  if media-query is media-query-tablet
+    return generate-grid(grid-increment-tablet, grid-start-tablet, grid-end-tablet, column-num)
 
 /* vendorizes a propery */
 vendorize(property, value)
@@ -110,7 +118,7 @@ set-message-base()
     margin-bottom 0
     padding-bottom 0
 
-/* 
+/*
   CLASSES TO BE EXTENDED BY OTHER CLASSES
 
   These are very "general" and non-specific on purpose

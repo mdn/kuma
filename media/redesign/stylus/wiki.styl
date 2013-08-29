@@ -50,7 +50,7 @@ article
     display inline-block
     margin 0 7px 0 5px
     font-size 70%
-  
+
   reverse-link-decoration()
 
 .page-buttons, #page-buttons
@@ -204,7 +204,7 @@ article
 
 .warning
   set-message-base()
-  
+
   font-size smaller-font-size
   background rgba(193, 56, 50, 0.3)
   compat-important(border-color, rgba(193, 56, 50, 0.1))
@@ -290,7 +290,7 @@ article
 
   reverse-link-decoration()
 
-/* adjustments to columns based on show/hide */
+/* adjustments to columns based on show/hide and media query */
 #wiki-column-container.wiki-right-closed #wiki-content, #wiki-column-container.wiki-left-closed #wiki-content
   @extend .column-9
 
@@ -316,7 +316,7 @@ article
   margin-right 10px !important;
 
 #edit-document, #wiki-page-translate, #wiki-page-edit
-  h1 
+  h1
     compat-only(letter-spacing, normal)
     compat-only(padding-left, 0)
     line-height 40px
@@ -406,3 +406,30 @@ span.cke_skin_kuma
 
   input[type='submit'], a.button
     compat-only(font-size, smaller-font-size)
+
+
+
+
+/* legacy overrides */
+.topicpage-table .Documentation, .topicpage-table .Community, .topicpage-table .Tools, .topicpage-table .Related_Topics
+  font-family site-font-family
+  text-transform none
+
+
+
+/* tablet article layout updates */
+@media media-query-tablet
+  #wiki-right
+    float none
+    width auto
+    margin-bottom grid-spacing
+
+    .tag-attach-list
+      display none
+
+    #toc
+      padding (grid-spacing/2) grid-spacing
+
+  #wiki-content
+    margin-right 0
+    width get-grid-dimension(media-query-tablet, 9)
