@@ -1,189 +1,189 @@
 /* header */
 #main-header
-	create-gradient-background(header-background-color)
-	border-bottom 1px solid rgba(255, 255, 255, 0.2)
+  create-gradient-background(header-background-color)
+  border-bottom 1px solid rgba(255, 255, 255, 0.2)
 
-	> .center
-		min-height 110px
+  > .center
+    min-height 110px
 
-	.logo
-		@extend .offscreen
-		width 114px
-		height 26px
-		background url('/media/redesign/img/temporary-logo.png') 0 0 no-repeat
-		display block
-		position absolute
-		left gutter-width
-		bottom 21px
+  .logo
+    @extend .offscreen
+    width 114px
+    height 26px
+    background url('/media/redesign/img/temporary-logo.png') 0 0 no-repeat
+    display block
+    position absolute
+    left gutter-width
+    bottom 21px
 
 #main-nav
-	> ul
-		position absolute
-		right gutter-width
-		bottom 21px
+  > ul
+    position absolute
+    right gutter-width
+    bottom 21px
 
-		> li
-			padding-left 47px
-			position relative
-			opacity 1
-			max-width 1000px
-			display inline-block
-			vendorize(transition-property, all)
-			vendorize(transition-duration, animation-duration)
-			vendorize(transition-delay, animation-duration)
+    > li
+      padding-left 47px
+      position relative
+      opacity 1
+      max-width 1000px
+      display inline-block
+      vendorize(transition-property, all)
+      vendorize(transition-duration, animation-duration)
+      vendorize(transition-delay, animation-duration)
 
-			> a
-				compat-important(color, menu-link-color)
-				compat-important(text-transform, uppercase)
-				compat-important(text-decoration, none)
-				compat-important(font-weight, bold)
+      > a
+        compat-important(color, menu-link-color)
+        compat-important(text-transform, uppercase)
+        compat-important(text-decoration, none)
+        compat-important(font-weight, bold)
 
-	button[type='submit']
-		display none
+  button[type='submit']
+    display none
 
-	.submenu
-		menu-border-width = 5px
-		menu-arrow-top = -19px
-		component-submenu-method(520px, 2, #fff, #333)
-		
-		top 40px
-		left -200px
-		border-top menu-border-width solid #404040
-		z-index 9999
+  .submenu
+    menu-border-width = 5px
+    menu-arrow-top = -19px
+    component-submenu-method(520px, 2, #fff, #333)
+    
+    top 40px
+    left -200px
+    border-top menu-border-width solid #404040
+    z-index 9999
 
-		.submenu-column
-			min-height 90px
-			display inline-block
+    .submenu-column
+      min-height 90px
+      display inline-block
 
-		&:before, &:after
-			top menu-arrow-top
-			left 269px
+    &:before, &:after
+      top menu-arrow-top
+      left 269px
 
-		&:after
-			top (menu-arrow-top - menu-border-width)
+    &:after
+      top (menu-arrow-top - menu-border-width)
 
-	&.expand
-		input 
-			width 500px
+  &.expand
+    input 
+      width 500px
 
-		> ul > li:not(:last-child)
-			opacity 0
-			width 0
-			max-width 0
-			overflow hidden
-			vendorize(transition-delay, 0)
+    > ul > li:not(:last-child)
+      opacity 0
+      width 0
+      max-width 0
+      overflow hidden
+      vendorize(transition-delay, 0)
 
-	@media media-query-tablet
+  @media media-query-tablet
 
-		&.expand
-			input
-				width 400px
+    &.expand
+      input
+        width 400px
 
 .user-state
-	position absolute
-	right 200px
-	top 12px
-	font-size smaller-font-size
-	compat-only(width, auto)
+  position absolute
+  right 200px
+  top 12px
+  font-size smaller-font-size
+  compat-only(width, auto)
 
-	li + li
-		border-left 1px solid #bbb
+  li + li
+    border-left 1px solid #bbb
 
-	a, a:hover, a:focus, a:visited
-		color link-color
+  a, a:hover, a:focus, a:visited
+    color link-color
 
 a.persona-button
-	vendorize(border-radius, 3px)
+  vendorize(border-radius, 3px)
 
-	span
-		text-decoration none
-		outline none
-		display block
-		float left
-		font-size 14px
-		line-height 24px
-		color white
-		font-weight bold
-		padding 0 10px 0 20px
-		position relative
+  span
+    text-decoration none
+    outline none
+    display block
+    float left
+    font-size 14px
+    line-height 24px
+    color white
+    font-weight bold
+    padding 0 10px 0 20px
+    position relative
 
-		&:after
-			content:''
-			position absolute
-			top 0
-			right -12px
-			width 24px
-			height 24px
-			z-index 1
-			vendorize(transform, scale(0.707) rotate(45deg))
-			vendorize(border-radius, 0 3px 0 50px)
-		
-		&.icon
-			padding-left 3px
-			vendorize(border-radius, 3px 0 0 3px)
-			create-gradient(#43a6e2, #287cc2)
+    &:after
+      content:''
+      position absolute
+      top 0
+      right -12px
+      width 24px
+      height 24px
+      z-index 1
+      vendorize(transform, scale(0.707) rotate(45deg))
+      vendorize(border-radius, 0 3px 0 50px)
+    
+    &.icon
+      padding-left 3px
+      vendorize(border-radius, 3px 0 0 3px)
+      create-gradient(#43a6e2, #287cc2)
 
-			&:after
-				create-gradient(#43a6e2, #287cc2, left top)
-			
-			img
-				position relative
-				top 2px
-				left 5px
-				width 14px
-				height 15px
-			
-		&.signin
-			create-gradient(#56565a, #3a3a3a)
-			text-shadow 0px 1.5px 1px rgba(0, 0, 0, 0.35)
-			&:after
-				create-gradient(#56565a, #3a3a3a)
-				z-index -1
+      &:after
+        create-gradient(#43a6e2, #287cc2, left top)
+      
+      img
+        position relative
+        top 2px
+        left 5px
+        width 14px
+        height 15px
+      
+    &.signin
+      create-gradient(#56565a, #3a3a3a)
+      text-shadow 0px 1.5px 1px rgba(0, 0, 0, 0.35)
+      &:after
+        create-gradient(#56565a, #3a3a3a)
+        z-index -1
 
 .search-wrap
-	background #fff
-	padding 4px 8px
-	border-radius 3px
+  background #fff
+  padding 4px 8px
+  border-radius 3px
 
-	input
-		background transparent
-		border 0
-		color menu-link-color
-		text-transform uppercase
-		font-weight bold
-		width 180px
-		compat-only(padding, 0)
-		vendorize(transition-property, width)
-		vendorize(transition-duration, animation-duration)
+  input
+    background transparent
+    border 0
+    color menu-link-color
+    text-transform uppercase
+    font-weight bold
+    width 180px
+    compat-only(padding, 0)
+    vendorize(transition-property, width)
+    vendorize(transition-duration, animation-duration)
 
-		&::-webkit-input-placeholder
-			color text-color
-			text-align right
-		&::-moz-input-placeholder
-			color text-color
-			text-align right
+    &::-webkit-input-placeholder
+      color text-color
+      text-align right
+    &::-moz-input-placeholder
+      color text-color
+      text-align right
 
-	@media media-query-tablet
+  @media media-query-tablet
 
-		input
-			width 100px
+    input
+      width 100px
 
 /* main content area */
 .wrap
-	compat-only(max-width, none)
-	compat-only(min-width, 0)
-	compat-only(width, auto)
-	compat-only(padding, 0)
-	
+  compat-only(max-width, none)
+  compat-only(min-width, 0)
+  compat-only(width, auto)
+  compat-only(padding, 0)
+  
 main
-	padding-top first-content-top-padding
+  padding-top first-content-top-padding
 
 
 .boxed
-	compat-only(border, 0)
-	compat-only(box-shadow, none)
-	compat-only(padding, 0)
-	compat-only(margin, 0)
+  compat-only(border, 0)
+  compat-only(box-shadow, none)
+  compat-only(padding, 0)
+  compat-only(margin, 0)
 
 
 
@@ -194,4 +194,4 @@ main
 
 /* footer */
 footer
-	height 300px
+  height 300px

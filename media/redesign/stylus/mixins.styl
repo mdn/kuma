@@ -2,203 +2,203 @@
 
 /*
 
-	This Stylus file provides man mixins for use within the MDN theme.
+  This Stylus file provides man mixins for use within the MDN theme.
 
 */
 
 /* generates a grid based on min/max and increment */
 generate-grid(increment, start, end)
-	total = start
-	for n, x in 0..((end - start) / increment)
-		.column-{x+1}
-			width total
+  total = start
+  for n, x in 0..((end - start) / increment)
+    .column-{x+1}
+      width total
 
-		total = total + increment
+    total = total + increment
 
-	/* now add a few meaningful names */
-	.column-strip
-		@extend .column-3
-	.column-main
-		@extend .column-9
-	.column-half
-		@extend .column-6
+  /* now add a few meaningful names */
+  .column-strip
+    @extend .column-3
+  .column-main
+    @extend .column-9
+  .column-half
+    @extend .column-6
 
 /* vendorizes a propery */
 vendorize(property, value)
-	-webkit-{property} value
-	-moz-{property} value
-	-ms-{property} value
-	{property} value
+  -webkit-{property} value
+  -moz-{property} value
+  -ms-{property} value
+  {property} value
 
 vendorize-value(property, value, more='')
-	{property} unquote('-webkit-'+value+more)
-	{property} unquote('-moz-'+value+more)
-	{property} unquote('-ms-'+value+more)
-	{property} value+more
+  {property} unquote('-webkit-'+value+more)
+  {property} unquote('-moz-'+value+more)
+  {property} unquote('-ms-'+value+more)
+  {property} value+more
 
 /* prevents spacing of a given element if it's the last child */
 prevent-last-child-spacing(element='*', property='padding')
-	& {element}:last-child
-		{property} 0
+  & {element}:last-child
+    {property} 0
 
 /* text-decoration none, hover text-decoration underline */
 reverse-link-decoration()
-	a
-		text-decoration none
-		&:hover, &:active, &:focus
-			text-decoration underline
+  a
+    text-decoration none
+    &:hover, &:active, &:focus
+      text-decoration underline
 
 /* generates a background property for header and zones */
 create-gradient-background(color)
-	background url('/media/redesign/img/header-background.png') 0 0 repeat color;
+  background url('/media/redesign/img/header-background.png') 0 0 repeat color;
 
 /* generates a cross-browser gradient */
 create-gradient(start-color, end-color, direction=false)
-	if direction
-		vendorize-value(background, linear-gradient, '(' + direction + ', ' + start-color + ', ' + end-color + ')')
-	else
-		vendorize-value(background, linear-gradient, '(' + start-color + ', ' + end-color + ')')
-	filter unquote("progid:DXImageTransform.Microsoft.gradient(startColorstr='" + start-color + "', endColorstr='" + end-color + "', GradientType=1)") /* IE6-9 */
+  if direction
+    vendorize-value(background, linear-gradient, '(' + direction + ', ' + start-color + ', ' + end-color + ')')
+  else
+    vendorize-value(background, linear-gradient, '(' + start-color + ', ' + end-color + ')')
+  filter unquote("progid:DXImageTransform.Microsoft.gradient(startColorstr='" + start-color + "', endColorstr='" + end-color + "', GradientType=1)") /* IE6-9 */
 
 /* generates the essential "before" and "after" code for pseudo-arrows */
 generate-arrow()
-	&:before, &:after
-		content ' '
-		height 0
-		position absolute
-		width 0
-		border 10px solid transparent
+  &:before, &:after
+    content ' '
+    height 0
+    position absolute
+    width 0
+    border 10px solid transparent
 
 /* generates the center property */
 generate-center(media-width)
-	.center
-		width (media-width - 2 * gutter-width)
-		padding 0 gutter-width
+  .center
+    width (media-width - 2 * gutter-width)
+    padding 0 gutter-width
 
 /* use this in the case of having to override styles from old template :( */
 compat-important(prop, value)
-	{prop}: value !important
+  {prop}: value !important
 
 /* Used for style which are only present to override other styles -- these will be deleted once legacy design is gone */
 compat-only(prop, value, more-selector='')
-	compat-important(prop, value)
+  compat-important(prop, value)
 
-	if more-selector
-		& {more-selector}
-			compat-important(prop, value)
+  if more-selector
+    & {more-selector}
+      compat-important(prop, value)
 
 /* Used to create sliding animations */
 slider(duration=animation-duration, maximum-height=10000px)
-	overflow-y hidden
-	max-height maximum-height
-	vendorize(transition-property, all)
-	vendorize(transition-duration, duration)
-	vendorize(transition-timing-function, slide-timing-function)
+  overflow-y hidden
+  max-height maximum-height
+  vendorize(transition-property, all)
+  vendorize(transition-duration, duration)
+  vendorize(transition-timing-function, slide-timing-function)
 
-	&.closed
-		max-height 0
+  &.closed
+    max-height 0
 
 /* Sets the base styles for messages (review, warning, error, notice, etc.) */
 set-message-base()
-	compat-only(border-width, 5px)
-	compat-only(border-style, solid)
-	padding (grid-spacing / 2)
-	margin-bottom grid-spacing
-	font-size smaller-font-size
+  compat-only(border-width, 5px)
+  compat-only(border-style, solid)
+  padding (grid-spacing / 2)
+  margin-bottom grid-spacing
+  font-size smaller-font-size
 
-	& *:last-child
-		margin-bottom 0
-		padding-bottom 0
+  & *:last-child
+    margin-bottom 0
+    padding-bottom 0
 
 /* 
-	CLASSES TO BE EXTENDED BY OTHER CLASSES
+  CLASSES TO BE EXTENDED BY OTHER CLASSES
 
-	These are very "general" and non-specific on purpose
-	There's a good chance these classes wont be used directly in HTML
+  These are very "general" and non-specific on purpose
+  There's a good chance these classes wont be used directly in HTML
 */
 .clear
-	&:before, &:after
-		content "\0020"
-		display block
-		height 0
-		overflow hidden
+  &:before, &:after
+    content "\0020"
+    display block
+    height 0
+    overflow hidden
 
-	&:after
-		clear both
+  &:after
+    clear both
 
 .offscreen
-	text-indent -9999px
-	overflow hidden
-	position absolute
-	left -99999px
+  text-indent -9999px
+  overflow hidden
+  position absolute
+  left -99999px
 
 .title
-	font-weight bold
-	text-transform uppercase
-	color text-color
-	text-decoration none
-	display block
+  font-weight bold
+  text-transform uppercase
+  color text-color
+  text-decoration none
+  display block
 
 .smaller
-	font-size smaller-font-size
+  font-size smaller-font-size
 
 .larger
-	font-size larger-font-size
+  font-size larger-font-size
 
 .hidden
-	display none
+  display none
 
 .grid-padding
-	padding grid-spacing
+  padding grid-spacing
 
 .disabled
-	pointer-events none
-	cursor default
+  pointer-events none
+  cursor default
 
 .reset-font
-	font-family site-font-family
+  font-family site-font-family
 
 .heading-1
-	font-size 48px
-	letter-spacing -2px
+  font-size 48px
+  letter-spacing -2px
 
 .heading-2
-	font-size 32px
-	letter-spacing -1px
+  font-size 32px
+  letter-spacing -1px
 
 .button
-	text-decoration none
-	display inline-block
-	compat-important(background-color, button-background)
-	compat-important(color, button-color)
-	compat-important(text-transform, uppercase)
-	compat-important(padding, 5px 11px)
-	compat-important(border-radius, 4px)
-	vendorize(box-shadow, inset 0 -1px button-shadow-color)
-	compat-only(background-image, none)
-	compat-only(font-family, site-font-family)
-	compat-only(font-size, base-font-size)
-	compat-only(letter-spacing, normal)
+  text-decoration none
+  display inline-block
+  compat-important(background-color, button-background)
+  compat-important(color, button-color)
+  compat-important(text-transform, uppercase)
+  compat-important(padding, 5px 11px)
+  compat-important(border-radius, 4px)
+  vendorize(box-shadow, inset 0 -1px button-shadow-color)
+  compat-only(background-image, none)
+  compat-only(font-family, site-font-family)
+  compat-only(font-size, base-font-size)
+  compat-only(letter-spacing, normal)
 
-	&.only-icon
-		{selector-icon}
-			margin-left 0
-			margin-top -1px
+  &.only-icon
+    {selector-icon}
+      margin-left 0
+      margin-top -1px
 
-		span
-			@extend .offscreen
+    span
+      @extend .offscreen
 
-	&.neutral
-		compat-important(color, #fff)
-		compat-important(background-color, #0095dd)
-		vendorize(box-shadow, inset 0 -1px #00539f)
+  &.neutral
+    compat-important(color, #fff)
+    compat-important(background-color, #0095dd)
+    vendorize(box-shadow, inset 0 -1px #00539f)
 
-	&.negative
-		compat-important(color, #fff)
-		compat-important(background-color, #ea3b28)
-		vendorize(box-shadow, inset 0 -1px #c13832)
+  &.negative
+    compat-important(color, #fff)
+    compat-important(background-color, #ea3b28)
+    vendorize(box-shadow, inset 0 -1px #c13832)
 
-	&.positive
-		compat-important(color, #fff)
-		compat-important(background-color, #70a300)
-		vendorize(box-shadow, inset 0 -1px #486900)
+  &.positive
+    compat-important(color, #fff)
+    compat-important(background-color, #70a300)
+    vendorize(box-shadow, inset 0 -1px #486900)

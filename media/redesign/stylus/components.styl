@@ -3,137 +3,137 @@
 
 /* togglers */
 .toggler
-	position relative
+  position relative
 
-	i
-		position absolute
-		right 10px
-		top 3px
-		color #d4dde4
+  i
+    position absolute
+    right 10px
+    top 3px
+    color #d4dde4
 
 .toggle-container.closed
-	display none
+  display none
 
 
 /* table of contents; uses toggler */
 #toc
-	background light-background-color
-	padding grid-spacing (grid-spacing * .75)
+  background light-background-color
+  padding grid-spacing (grid-spacing * .75)
 
-	> ol
-		padding-left (grid-spacing + (grid-spacing/2))
-		font-size smaller-font-size
+  > ol
+    padding-left (grid-spacing + (grid-spacing/2))
+    font-size smaller-font-size
 
-	a.title
-		position relative
-		&.title
-			text-decoration none
+  a.title
+    position relative
+    &.title
+      text-decoration none
 
-	ol
-		counter-reset toc
+  ol
+    counter-reset toc
 
-	li 
-		position relative
-		counter-increment toc
-		padding-top grid-spacing
+  li 
+    position relative
+    counter-increment toc
+    padding-top grid-spacing
 
-		&:before
-			content counters(toc, '.')
-			text-align right
-			position absolute
-			left -(grid-spacing + (grid-spacing/2))
-			color #484848
+    &:before
+      content counters(toc, '.')
+      text-align right
+      position absolute
+      left -(grid-spacing + (grid-spacing/2))
+      color #484848
 
-	reverse-link-decoration()
+  reverse-link-decoration()
 
 /* subnav */
 .subnav
-	.toggler, > li > a
-		padding grid-spacing
-		border-bottom 1px dotted #d4dde4
-		text-transform uppercase
-		display block
+  .toggler, > li > a
+    padding grid-spacing
+    border-bottom 1px dotted #d4dde4
+    text-transform uppercase
+    display block
 
-	.toggleable.current
-		background #f4f7f8
+  .toggleable.current
+    background #f4f7f8
 
-	i
-		top (grid-spacing + 3px)
-		right grid-spacing
+  i
+    top (grid-spacing + 3px)
+    right grid-spacing
 
-	.toggle-container
-		a
-			@extend .smaller
-			display block
-			padding list-item-spacing grid-spacing
+  .toggle-container
+    a
+      @extend .smaller
+      display block
+      padding list-item-spacing grid-spacing
 
-		.toggleable
-			background #e9eef1
+    .toggleable
+      background #e9eef1
 
-			.toggler
-				@extend .title
-				font-weight normal
-				padding-top (grid-spacing / 2)
-				padding-bottom (grid-spacing / 2)
-				border 0
+      .toggler
+        @extend .title
+        font-weight normal
+        padding-top (grid-spacing / 2)
+        padding-bottom (grid-spacing / 2)
+        border 0
 
-				i
-					top (grid-spacing / 2)
+        i
+          top (grid-spacing / 2)
 
-			.toggle-container a
-				padding-left grid-spacing + (grid-spacing / 2)
+      .toggle-container a
+        padding-left grid-spacing + (grid-spacing / 2)
 
-		.current-page a
-			position relative
-			color text-color
+    .current-page a
+      position relative
+      color text-color
 
-			generate-arrow()
+      generate-arrow()
 
-			&:before
-				border-right-color #fff
-				position absolute
-				top 20%
-				right 0
+      &:before
+        border-right-color #fff
+        position absolute
+        top 20%
+        right 0
 
-	reverse-link-decoration()
+  reverse-link-decoration()
 
 /* Submenu's, like the main menu and settings menu */
 component-submenu-method(menu-width, num-columns, background-color, arrow-border-color)
-	position absolute
-	padding grid-spacing
-	background background-color
-	display none
-	width menu-width
+  position absolute
+  padding grid-spacing
+  background background-color
+  display none
+  width menu-width
 
-	.submenu-column
-		col-width = ((menu-width - (num-columns * grid-spacing) - 1) / num-columns)
+  .submenu-column
+    col-width = ((menu-width - (num-columns * grid-spacing) - 1) / num-columns)
 
-		padding-right grid-spacing
-		vertical-align text-top
-		margin-right grid-spacing
-		border-right 1px dotted #d4dde4
-		width col-width
+    padding-right grid-spacing
+    vertical-align text-top
+    margin-right grid-spacing
+    border-right 1px dotted #d4dde4
+    width col-width
 
-		&:last-child
-			margin-right 0
-			border-right 0
-			padding-right 0
+    &:last-child
+      margin-right 0
+      border-right 0
+      padding-right 0
 
-	a
-		font-size smaller-font-size
-		padding 5px 0
-		display block
+  a
+    font-size smaller-font-size
+    padding 5px 0
+    display block
 
-	reverse-link-decoration()
+  reverse-link-decoration()
 
-	generate-arrow()
+  generate-arrow()
 
-	&:before
-		border-bottom-color background-color
-		position absolute
-		z-index 2
+  &:before
+    border-bottom-color background-color
+    position absolute
+    z-index 2
 
-	&:after
-		border-bottom-color arrow-border-color
-		position absolute
-		z-index 1
+  &:after
+    border-bottom-color arrow-border-color
+    position absolute
+    z-index 1
