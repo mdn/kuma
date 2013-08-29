@@ -3,102 +3,101 @@
 @import 'grid'
 
 .zone
-	#main-header, .zone-article-header
-		create-gradient-background(#0095dd)
+  #main-header, .zone-article-header
+    create-gradient-background(#0095dd)
 
-	#main-nav > ul > li > a
-		compat-important(color, #fff)
+  #main-nav > ul > li > a
+    compat-important(color, #fff)
 
-	.search-wrap
-		create-gradient-background(rgba(255, 255, 255, 0.2))
+  .search-wrap
+    create-gradient-background(rgba(255, 255, 255, 0.2))
 
-		input, i
-			color #fff
+    input, i
+      color #fff
 
-			&::-webkit-input-placeholder
-				color #fff
-			&::-moz-input-placeholder
-				color #fff
+      &::-webkit-input-placeholder
+        color #fff
+      &::-moz-input-placeholder
+        color #fff
 
 .zone-landing
-				
-	h1
-		color #fff
+        
+  h1
+    color #fff
 
-	.crumbs
-		color #fff
+  .crumbs
+    color #fff
 
-		a
-			color rgba(255, 255, 255, 0.7)
+    a
+      color rgba(255, 255, 255, 0.7)
 
-	.zone-subnav-container
-		margin-top -220px
+  .zone-subnav-container
+    margin-top -220px
 
 .zone-landing-header
-	create-gradient-background(#0095dd)
-	padding-bottom grid-spacing
-	color #fff
-	position relative
-	overflow hidden
-	padding-top first-content-top-padding
+  create-gradient-background(#0095dd)
+  padding-bottom grid-spacing
+  color #fff
+  position relative
+  overflow hidden
+  padding-top first-content-top-padding
 
-	.masthead-text
-		p
-			font-size larger-font-size
-			font-weight light-font-weight
-			margin (2 * grid-spacing) 0 0 0
+  .masthead-text
+    p
+      font-size larger-font-size
+      font-weight light-font-weight
+      margin (2 * grid-spacing) 0 0 0
 
-	img
-		position absolute
-		right -140px
-		top 60px
-		display block
+  img
+    position absolute
+    right -140px
+    top 60px
+    display block
 
-	a.button
-		compat-important(color, #fff)
-		compat-important(background-color, rgba(0, 0, 0, 0.1))
-		vendorize(box-shadow, inset 0 -1px #147ba5)
+  a.button
+    compat-important(color, #fff)
+    compat-important(background-color, rgba(0, 0, 0, 0.1))
+    vendorize(box-shadow, inset 0 -1px #147ba5)
 
 .zone-landing-lists li
-	padding list-item-spacing 0
-	prevent-last-child-spacing(padding-bottom)
+  padding list-item-spacing 0
+  prevent-last-child-spacing(padding-bottom)
 
 
 
 /*  Basic zone article pages */
 .zone-article-header
-	padding (grid-spacing * 2) 0
-	overflow hidden
+  padding (grid-spacing * 2) 0
+  overflow hidden
 
-	.zone-title
-		@extend .heading-2
-		color #fff
-		font-style italic
+  .zone-title
+    @extend .heading-2
+    color #fff
+    font-style italic
 
-	img
-		position absolute
-		right 0
-		top 0
-		display block
-		width 200px
-
+  img
+    position absolute
+    right 0
+    top 0
+    display block
+    width 200px
 
 .zone-content
-	padding-top 38px
-	reverse-link-decoration()
+  padding-top 38px
+  reverse-link-decoration()
 
 .zone-subnav-container
-	background #fff
-	min-height 400px
+  background #fff
+  min-height 400px
 
 .zone-callout
-	position relative
-	padding grid-spacing
-	background #f4f7f8
-	margin (grid-spacing + (grid-spacing / 2)) 0
+  position relative
+  padding grid-spacing
+  background #f4f7f8
+  margin (grid-spacing + (grid-spacing / 2)) 0
 
-	table
-		width 100%
-	td
-		vertical-align bottom
-		padding-right grid-spacing
+  table
+    width 100%
+  td
+    vertical-align bottom
+    padding-right grid-spacing
