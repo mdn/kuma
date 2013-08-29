@@ -578,6 +578,13 @@ MINIFY_BUNDLES = {
         'wiki-print': (
             'css/wiki-print.css',
         ),
+        'sphinx': (
+            'css/wiki.css',
+            'css/wiki-screen.css',
+            'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
+            'css/jqueryui/moz-jquery-plugins.css',
+            'css/sphinx.css',
+        ),
         'dashboards': (
             'css/dashboards.css',
             'js/libs/DataTables-1.9.4/media/css/jquery.dataTables.css',
