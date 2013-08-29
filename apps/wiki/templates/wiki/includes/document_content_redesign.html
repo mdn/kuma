@@ -30,9 +30,7 @@
 {% endif %}
 
 <!-- action buttons -->
-<ul class="page-buttons">
-	<li><a href="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}" class="button {{ disabled_class }}" {{ disabled_attr }}>{{ _('Edit Page') }}<i class="icon-pencil"></i></a></li>{% if user.is_authenticated() and document %}
-    <li class="page-watch">
+<ul class="page-buttons"><li><a href="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}" class="button {{ disabled_class }}" {{ disabled_attr }}>{{ _('Edit Page') }}<i class="icon-pencil"></i></a></li>{% if user.is_authenticated() and document %}<li class="page-watch">
       {% if document.is_watched_by(user) %}
         <form action="{{ url('wiki.document_unwatch', document.slug) }}" method="post">
           {{ csrf() }}
@@ -93,9 +91,7 @@
 		        </ul>
     		</div>
     	</div>
-
-	</li>
-</ul>
+	</li></ul>
 
 <!-- crumbs -->
 <nav class="crumbs" role="navigation"><ol>
@@ -160,27 +156,23 @@
 		{% if show_right %}
 			<!-- TOC, approvals, etc -->
 			<div class="column-strip wiki-column" id="wiki-right">
-				{% if toc_html %}
-				<!-- table of contents -->
-				<div id="toc" class="toc toggleable">
-					<a href="#toc" class="title toggler">{{ _('In This Article') }}<i></i></a>
-					<ol class="toggle-container">
-						{{ toc_html|safe }}
-					</ol>
-				</div>
-				{% endif %}
+			{% if toc_html %}
+			<!-- table of contents -->
+			<div id="toc" class="toc toggleable">
+				<a href="#toc" class="title toggler">{{ _('In This Article') }}<i></i></a>
+				<ol class="toggle-container">
+					{{ toc_html|safe }}
+				</ol>
+			</div>
+			{% endif %}
 
-				{% if tags|length %}
-				<!-- tags if present -->
-				<div class="tag-attach-list tags">
-					<i class="icon-tags"></i>
-					<ul class="tag-list">
-						{% for tag in tags %}
-						<li><a href="{{url('wiki.tag', tag.name)}}">{{ tag.name }}</a></li>
-						{% endfor %}
-					</ul>
-				</div>
-				{% endif %}
+			{% if tags|length %}
+			<!-- tags if present -->
+			<div class="tag-attach-list tags">
+				<i class="icon-tags"></i>
+				<ul class="tag-list">{% for tag in tags %}<li><a href="{{url('wiki.tag', tag.name)}}">{{ tag.name }}</a></li>{% endfor %}</ul>
+			</div>
+			{% endif %}
 
 				{% if num_attachments %}
 				<!-- attachment list, if present -->
