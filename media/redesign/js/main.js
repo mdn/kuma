@@ -5,6 +5,8 @@ document.documentElement.className += ' js';
 
 (function($) {
 
+  var isOldIE = $('#oldIE').length;
+
   /*
     Main menu
   */
@@ -15,7 +17,7 @@ document.documentElement.className += ' js';
 
     TODO:  What happens on mobile?
   */
-  (function() {
+  !isOldIE && (function() {
     var $nav = $('#main-nav');
     var $navItems = $nav.find('ul > li:not(:last-child)');
     var $input = $nav.find('.search-wrap input');

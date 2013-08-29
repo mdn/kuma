@@ -87,6 +87,10 @@ compat-only(prop, value, more-selector='')
     & {more-selector}
       compat-important(prop, value)
 
+/* Used to denote an old IE style */
+old-ie(prop, value, important=false)
+  {prop} value (important ? unquote('!important') : '')
+
 /* Used to create sliding animations */
 slider(duration=animation-duration, maximum-height=10000px)
   overflow-y hidden
@@ -110,7 +114,7 @@ set-message-base()
     margin-bottom 0
     padding-bottom 0
 
-/* 
+/*
   CLASSES TO BE EXTENDED BY OTHER CLASSES
 
   These are very "general" and non-specific on purpose
