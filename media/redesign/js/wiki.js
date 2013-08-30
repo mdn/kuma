@@ -1,7 +1,11 @@
 (function($) {
 
   // Settings menu
-  $('#settings-menu').mozMenu();
+  (function() {
+    var $settingsMenu = $('#settings-menu');
+    $settingsMenu.mozMenu();
+    $settingsMenu.parent().find('.submenu').mozKeyboardNav();
+  })();
 
   // New tag placeholder
   // Has to be placed in ready call because the plugin is initialized in one
@@ -10,12 +14,19 @@
   });
 
   // "From Search" submenu click
-  $('.from-search-navigate').mozMenu({
-    submenu: $('.from-search-toc'),
-    brickOnClick: true
-  });
+  (function() {
+    var $fromSearchNav = $('.from-search-navigate');
+    if($fromSearchNav.length) {
+      var $fromSearchList = $('.from-search-toc');
+      $fromSearchNav.mozMenu({
+        submenu: $fromSearchList,
+        brickOnClick: true
+      });
+      $fromSearchList.find('ol').mozKeyboardNav();
+    }
+  })();
 
-  /* 
+  /*
     Toggle for quick links show/hide
   */
   (function() {
