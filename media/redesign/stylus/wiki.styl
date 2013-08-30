@@ -50,7 +50,7 @@ article
     display inline-block
     margin 0 7px 0 5px
     font-size 70%
-  
+
   reverse-link-decoration()
 
 .page-buttons, #page-buttons
@@ -202,9 +202,12 @@ article
   button
     compat-important(font-size, smaller-font-size)
 
+div.bug *:last-child, div.warning *:last-child
+  compat-important(padding-left, inherit)
+
 .warning
   set-message-base()
-  
+
   font-size smaller-font-size
   background rgba(193, 56, 50, 0.3)
   compat-important(border-color, rgba(193, 56, 50, 0.1))
@@ -316,7 +319,7 @@ article
   margin-right 10px !important;
 
 #edit-document, #wiki-page-translate, #wiki-page-edit
-  h1 
+  h1
     compat-only(letter-spacing, normal)
     compat-only(padding-left, 0)
     line-height 40px

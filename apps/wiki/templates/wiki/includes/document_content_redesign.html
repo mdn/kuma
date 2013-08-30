@@ -84,7 +84,7 @@
               {% for translation in document.other_translations %}
                 <li><a rel="internal" href="{{ url('wiki.document', translation.full_path, locale=translation.locale) }}" title="{{ translation.title }}">{{ translation.language }}</a></li>
               {% endfor %}
-              
+
               {% if document.is_localizable %}
                 <li><a href="{{ translate_url }}">{{ _('Add translation') }}</a></li>
               {% endif %}
@@ -185,7 +185,7 @@
     {% endif %}
 
     <!-- center: main article content -->
-    <div id="wiki-content" class="{{ content_class }} wiki-column">
+    <div id="wiki-content" class="{{ content_class }} wiki-column text-content">
 
       {% if kumascript_errors %}
         {% include 'wiki/includes/kumascript_errors.html' %}
