@@ -7,6 +7,10 @@
     <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/new-homepage.css?build={{ BUILD_ID_JS }}"/>
     <meta name="google-site-verification" content="Phj8dHc2oKwic3FGPsKIhdOBk_1wnCTnKwjcjiLgJPc" />
     <meta name="google-site-verification" content="TH9rA27HbfjO_XqYWTIPrW1E7E7Dtgsh7ULzHi3UTVA" />
+
+    {% if waffle.flag('redesign') %}
+      {{ css('redesign-home') }}
+    {% endif %}
 {% endblock %}
 {% if not scripts %}
   {% set scripts = ('mdn_home',) %}
@@ -67,7 +71,7 @@
                 <li><a href="{{ devmo_url('Mozilla/Add-ons') }}">{{ _('Add-ons') }}</a></li>
                 <li><a href="{{ devmo_url('Mozilla/Persona') }}">{{ _('Persona') }}</a></li>
               </ul>
-              
+
             </li>
           </ul>
         </section>
@@ -99,7 +103,7 @@
             </li>
           </ul>
 
-          
+
 
           <ul class="home-community-conversion">
             <li><a href="{{ devmo_url('Project:MDN/Contributing/Join_the_community') }}">{{ _('Join the Community') }}</a></li>
@@ -150,7 +154,7 @@
           <div class="home-demos-featured">
             <strong>{{ _('Featured Demo:') }}</strong><br />
             {{ demos[0].title }}
-            
+
             <ul class="gallery">
             {% set extra_class = cycler(' row-first', '')%}
             {% for submission in demos %}
