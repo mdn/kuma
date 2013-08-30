@@ -1,5 +1,7 @@
 (function($) {
 
+  var focusClass = 'focused';
+
   /*
     Plugin to create nav menus, show/hide delays, etc.
     Accessible by keyboard too!
@@ -19,7 +21,7 @@
     var closeTimeout;
     var showTimeout;
 
-    $(this).each(function() {
+    return $(this).each(function() {
       var $self = $(this);
       var $li = $self.parent();
       var initialized;
@@ -33,7 +35,7 @@
 
       // Find a submenu.  If one doesn't exist, no need to go further
       var $submenu = (settings.submenu || $li.find('.submenu'));
-      
+
       // Add a mouseenter / focus event to get the showing of the submenu in motion
       $self.on('mouseenter focus', function() {
         // If this is a fake focus set by us, ignore this
@@ -103,29 +105,86 @@
 
           // Find the first link for improved usability
           if(settings.focusOnOpen) {
-            var firstLink = $submenu.find('a');
-            try { // Putting in try/catch because of opacity/focus issues in IE
-              firstLink.length && firstLink[0].focus();
+            var firstLink = $submenu.find('a').get(0);
+            if(firstLink) {
+              try { // Putting in try/catch because of opacity/focus issues in IE
+                $(firstLink).addClass(focusClass) && firstLink.focus();
+              }
+              catch(e){
+                console.log('Exception! ', e);
+              }
             }
-            catch(e){}
           }
           settings.onOpen();
         }, settings.showDelay);
       });
     });
-    
-    // Clears the current timeout, interrupting fade-ins and outs as necessary  
+
+    // Clears the current timeout, interrupting fade-ins and outs as necessary
     function clear(timeout) {
       timeout && clearTimeout(timeout);
     }
 
     // Closes a given submenu
     function closeSubmenu($sub) {
-      closeTimeout = setTimeout(function() { 
-        $sub && $sub.removeClass('open').fadeOut(); 
+      closeTimeout = setTimeout(function() {
+        $sub && $sub.removeClass('open').fadeOut();
         settings.onClose();
       }, settings.hideDelay);
     }
+  };
+
+  /*
+    Plugin to listen for special keyboard keys and will fire actions based on them
+  */
+  $.fn.mozKeyboardNav = function(options) {
+    var settings = $.extend({
+      itemSelector: 'a'
+    }, options);
+
+    return $(this).each(function() {
+
+      var $items = $(this).find(settings.itemSelector);
+      if(!$items.length) return;
+
+      var $self = $(this);
+
+      $self.on('keypress', function(e) {
+        var code = e.keyCode;
+        var charCode = e.charCode;
+        var numberKeyStart = 49;
+
+        if(code == 38 || code == 40) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          // Find currently selected item and clear
+          var $selectedItem = $items.filter('.' + focusClass).removeClass(focusClass);
+
+          // If nothing is currently selected, start with first no matter which key
+          var index = $items.index($selectedItem) || 0;
+          var $next = $($items.get(index + 1));
+          var $prev = $($items.get(index - 1));
+
+          if(code == 38) {  // up
+            $prev.length && selectItem($prev);
+          }
+          else if(code == 40) {  // down
+            selectItem($next.length ? $next : $items.first());
+          }
+        }
+        else if(charCode >= numberKeyStart && charCode <= 57) {
+          var item = $items.get(charCode - numberKeyStart);
+          item && selectItem(item);
+        }
+      });
+
+    });
+
+    function selectItem(item) {
+      $(item).addClass(focusClass).get(0).focus();
+    }
+
   };
 
 })(jQuery);
