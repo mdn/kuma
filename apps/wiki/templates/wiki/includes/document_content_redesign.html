@@ -96,7 +96,7 @@
 
 <!-- crumbs -->
 <nav class="crumbs" role="navigation"><ol>
-  <li><a href="{{ request.locale }}/docs">MDN</a><i class="icon-chevron-right"></i></li>
+  <li><a href="/{{ request.locale }}/docs">MDN</a><i class="icon-chevron-right"></i></li>
   {% for doc in document.parents %}
     <li class="crumb"><a href="{{ url('wiki.document', doc.full_path) }}">{{ doc.title }}</a><i class="icon-chevron-right"></i></li>
   {% endfor %}
