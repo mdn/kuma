@@ -422,7 +422,7 @@ INSTALLED_APPS = (
     'grappelli.dashboard',
     'grappelli',
     'django.contrib.admin',
-    
+
     'django.contrib.sitemaps',
     'django.contrib.staticfiles',
 
@@ -618,6 +618,9 @@ MINIFY_BUNDLES = {
         ),
         'redesign-demos': (
             'redesign/css/demo-studio.css',
+        ),
+        'redesign-home': (
+            'redesign/css/home.css',
         ),
     },
     'js': {
