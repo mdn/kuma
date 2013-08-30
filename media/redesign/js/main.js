@@ -8,7 +8,11 @@ document.documentElement.className += ' js';
   /*
     Main menu
   */
-  $('#main-nav > ul > li > a').mozMenu();
+  (function() {
+    var $mainItems = $('#main-nav > ul > li');
+    $mainItems.find('> a').mozMenu();
+    $mainItems.find('.submenu').mozKeyboardNav();
+  })();
 
   /*
     Search animation
