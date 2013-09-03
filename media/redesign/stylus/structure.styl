@@ -65,6 +65,7 @@
   &.expand
     input
       width 500px
+      text-transform none
 
     > ul > li:not(:last-child)
       opacity 0
@@ -162,6 +163,9 @@ a.persona-button
     &::-moz-input-placeholder
       color text-color
       text-align right
+
+    &.has-value
+      text-transform none
 
   @media media-query-tablet
 

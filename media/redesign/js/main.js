@@ -23,20 +23,31 @@ document.documentElement.className += ' js';
     var $nav = $('#main-nav');
     var $navItems = $nav.find('ul > li:not(:last-child)');
     var $input = $nav.find('.search-wrap input');
+    var placeholder = $input.attr('placeholder');
 
     var timeout;
-    var createExpander = function(action, delay) {
+    var createExpander = function(delay, isAdd) {
       return function() {
         timeout && clearTimeout(timeout);
         timeout = setTimeout(function() {
-          $nav[action + 'Class']('expand');
+          if(isAdd) {
+            $nav.addClass('expand');
+            $input.attr('placeholder', '');
+          }
+          else {
+            $nav.removeClass('expand');
+            $input.attr('placeholder', placeholder);
+          }
         }, delay);
       }
     };
 
     $input.
-      on('focus', createExpander('add', 200)).
-      on('blur', createExpander('remove', 600));
+      on('focus', createExpander(200, true)).
+      on('blur', createExpander(600)).
+      on('keypress change', function() {
+        $input[($input.val() != '' ? 'add' : 'remove') + 'Class']('has-value');
+      });
   })();
 
 
