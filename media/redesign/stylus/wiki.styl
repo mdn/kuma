@@ -128,6 +128,12 @@ article
   compat-only(font-size, base-font-size)
   compat-only(margin-left, 0, 'ol ol, ul ul')
 
+  .toggler
+    pointer-events none
+
+    i
+      display none
+
   li
     compat-important(padding-top, 20px)
 
@@ -457,6 +463,12 @@ span.cke_skin_kuma
 
     #toc
       padding (grid-spacing/2) grid-spacing
+
+      .toggler
+        pointer-events auto
+
+        i
+          display inline-block
 
   #wiki-content
     margin-right 0
