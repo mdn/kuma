@@ -2,41 +2,68 @@
 
 {% block content %}
 
-<!-- top toolbar -->
-<section id="nav-toolbar"><div><div class="wrap">
+{% if waffle.flag('redesign') %}
 
-  <!-- left crumb navigation -->
-  <nav class="crumbs" role="navigation">
-    <ol>
-        <li class="crumb"><a href="{{ '{{ pathto(master_doc) }}' }}">{{ '{{ docstitle }}' }}</a></li>
-        <li class="crumb">{{ '{{ title }}' }}</li>
-    </ol>
-  </nav>
+    <!-- left crumb navigation -->
+    <nav class="crumbs" role="navigation"><ol><li class="crumb"><a href="{{ '{{ pathto(master_doc) }}' }}">{{ '{{ docstitle }}' }}</a></li><li class="crumb">{{ '{{ title }}' }}</li></ol></nav>
 
-</div></div></section>
-
-<section id="content">
-    <div class="wrap">
-        <div id="content-main" class="full">
-            <article class="article" role="main">
-                {#
-                <header id="article-head"><div class="title">
-                    <h1 class="page-title">{{ title }}</h1>
-                </div></header>
-                #}
-                <div id="wikiArticle" class="page-content boxed">
-                    <div id="article-nav">
-                      <div class="page-toc">
-                        <h2>Table of Contents</h2>
-                        {{ '{{ toctree(collapse=False) }}' }}
-                      </div>
-                    </div>
-                    {{ '{% block body %}{% endblock %}' }}
-                </div>
-            </article>
+  <div id="wiki-column-container">
+    <div class="column-container column-container-reverse">
+      <div class="column-strip wiki-column" id="wiki-right">
+        <!-- table of contents -->
+        <div id="toc" class="toc toggleable">
+          <a href="#toc" class="title toggler">Table of Contents<i></i></a>
+          <ol class="toggle-container">
+            {{ '{{ toctree(collapse=False) }}' }}
+          </ol>
         </div>
+      </div>
+      <div id="wiki-content" class="column-main wiki-column">
+        {# <h1 class="page-title">{{ title }}</h1> #}
+        {{ '{% block body %}{% endblock %}' }}
+      </div>
     </div>
-</section>
+  </div>
+
+{% else %}
+
+  <!-- top toolbar -->
+  <section id="nav-toolbar"><div><div class="wrap">
+
+    <!-- left crumb navigation -->
+    <nav class="crumbs" role="navigation">
+      <ol>
+          <li class="crumb"><a href="{{ '{{ pathto(master_doc) }}' }}">{{ '{{ docstitle }}' }}</a></li>
+          <li class="crumb">{{ '{{ title }}' }}</li>
+      </ol>
+    </nav>
+
+  </div></div></section>
+
+  <section id="content">
+      <div class="wrap">
+          <div id="content-main" class="full">
+              <article class="article" role="main">
+                  {#
+                  <header id="article-head"><div class="title">
+                      <h1 class="page-title">{{ title }}</h1>
+                  </div></header>
+                  #}
+                  <div id="wikiArticle" class="page-content boxed">
+                      <div id="article-nav">
+                        <div class="page-toc">
+                          <h2>Table of Contents</h2>
+                          {{ '{{ toctree(collapse=False) }}' }}
+                        </div>
+                      </div>
+                      {{ '{% block body %}{% endblock %}' }}
+                  </div>
+              </article>
+          </div>
+      </div>
+  </section>
+
+{% endif %}
 
 {% endblock %}
 
@@ -46,5 +73,8 @@
 {% endblock %}
 
 {% block extrahead %}
-    {{ css('sphinx') }}
+  {% if waffle.flag('redesign') %}
+    {{ css('redesign-wiki') }}
+  {% endif %}
+  {{ css('sphinx') }}
 {% endblock %}

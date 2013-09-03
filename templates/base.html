@@ -184,18 +184,19 @@
             </ul>
           </div>
         </div>
-      </li><li><a href="{{ url('demos') }}">{{ _('Demos') }}</a></li><li class="main-nav-search"><form action="{{ url('search') }}">
+      </li><li><a href="{{ url('demos') }}">{{ _('Demos') }}</a></li>{% if not is_sphinx %}<li class="main-nav-search"><form action="{{ url('search') }}">
         <div class="search-wrap">
           <input type="search" name="q" placeholder="{{ _('Search') }}" />
           <i class="icon-search"></i>
           <button type="submit">{{ _('Search') }}</button>
         </div>
-      </form></li></ul></nav>
+      </form></li>{% endif %}</ul></nav>
 
-    {% include "includes/login.html" %}
+    {% if not is_sphinx %}
+      {% include "includes/login.html" %}
+    {% endif %}
 
     <a href="//www.mozilla.org/" id="tabzilla">mozilla</a>
-
   </div></header>
 
   <!-- Banner here, if present.  Usually from zone landing -->
