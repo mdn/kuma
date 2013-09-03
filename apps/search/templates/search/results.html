@@ -33,7 +33,7 @@
       </ul>
       #}
     </div>
-    <div class="searchHighlight"> 
+    <div class="searchHighlight">
       {# |safe here because get_excerpt uses bleach #}
       <p>{{ doc.get_excerpt()|safe }}</p>
     </div>
@@ -47,12 +47,12 @@
     <div id="content-main" class="full">
 <article id="search-results" class="main">
   <div class="search-results">
-    
+
     <h1>{{ _('Search') }}</h1>
 
     <p id="search-survey-intro">
       {% trans %}
-        We'd like to know how we can improve MDN search.  To help us out, please complete 
+        We'd like to know how we can improve MDN search.  To help us out, please complete
         <a href="javascript:;" id="search-survey-link">this survey</a>.
 
         <div id="search-survey-dialog-content" title="Search Survey">
@@ -279,7 +279,7 @@
 
           return false;
         });
-    
+
         // Occurs upon successful (or cached) result
         function ajaxSuccess(result) {
             var cacheRes = result.substring(result.indexOf('<!--RESULTS-->'), result.indexOf('<!--/RESULTS-->'));
@@ -302,14 +302,14 @@
 
         // Search survey launcher
         $('#search-survey-link').on('click', function() {
-          $('#search-survey-dialog-content').dialog({ 
-            width: 730, 
+          $('#search-survey-dialog-content').dialog({
+            width: 730,
             height: 630,
             modal: true,
-            buttons: { 
-              {{ _('Close') }}: function() { 
-                $(this).dialog('close'); 
-              } 
+            buttons: {
+              {{ _('Close') }}: function() {
+                $(this).dialog('close');
+              }
             }
           });
         });

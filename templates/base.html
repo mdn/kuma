@@ -123,7 +123,7 @@
   <!-- Header -->
   <header id="main-header"><div class="center">
 
-    <a href="/" class="logo">{{ _('Mozilla Developer Network') }}</a>
+    <a href="{{ url('home') }}" class="logo">{{ _('Mozilla Developer Network') }}</a>
 
     <nav id="main-nav"><ul><li><a href="">{{ _('Projects') }}</a>
 
@@ -189,7 +189,7 @@
             </ul>
           </div>
         </div>
-      </li><li><a href="{{ url('demos') }}">{{ _('Demos') }}</a></li><li><form action="{{ url('search') }}">
+      </li><li><a href="{{ url('demos') }}">{{ _('Demos') }}</a></li><li class="main-nav-search"><form action="{{ url('search') }}">
         <div class="search-wrap">
           <input type="search" name="q" placeholder="{{ _('Search') }}" />
           <i class="icon-search"></i>

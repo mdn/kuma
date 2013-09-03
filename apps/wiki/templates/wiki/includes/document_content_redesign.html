@@ -49,7 +49,8 @@
         <div class="submenu-column">
           <div class="title">{{ _('This Page') }}</div>
           <ul>
-            <li class="page-print"> <a href="#" onclick="return window.print();"  title="{{ _('Print page') }}">{{ _('Print this page') }}</a></li>
+            <li class="page-print"><a href="#" onclick="return window.print();"  title="{{ _('Print page') }}">{{ _('Print this page') }}</a></li>
+              <li><a href="{{ url('wiki.document_revisions', document.full_path) }}">{{_('History')}}</a></li>
               {% if not document.is_template %}
                 <li><a href="{{ url('wiki.new_document') }}?parent={{ document.id }}">{{ _('New sub-page') }}</a></li>
                 <li><a href="{{ url('wiki.new_document') }}?clone={{ document.id }}">{{ _('Clone this page') }}</a></li>
@@ -70,21 +71,21 @@
                 <li><a target="_blank" href="{{ policy_links['add'] }}">{{ _('Add access policy') }}</a></li>
               {% endif %}
 
-            {% set zone_links = document_zone_management_links(request.user, document) %}
-            {% if zone_links['change'] %}
-              <li><a target="_blank" href="{{ zone_links['change'] }}">{{ _('Manage content zone') }}</a></li>
-            {% endif %}
-            {% if zone_links['add'] %}
-              <li><a target="_blank" href="{{ zone_links['add'] }}">{{ _('Convert to content zone') }}</a></li>
-            {% endif %}
+              {% set zone_links = document_zone_management_links(request.user, document) %}
+              {% if zone_links['change'] %}
+                <li><a target="_blank" href="{{ zone_links['change'] }}">{{ _('Manage content zone') }}</a></li>
+              {% endif %}
+              {% if zone_links['add'] %}
+                <li><a target="_blank" href="{{ zone_links['add'] }}">{{ _('Convert to content zone') }}</a></li>
+              {% endif %}
           </ul>
-        </div><!-- languages and localization --><div class="submenu-column">
+        </div><div class="submenu-column">
           <div class="title">{{ _('Languages') }}</div>
           <ul id="translations">
               {% for translation in document.other_translations %}
                 <li><a rel="internal" href="{{ url('wiki.document', translation.full_path, locale=translation.locale) }}" title="{{ translation.title }}">{{ translation.language }}</a></li>
               {% endfor %}
-              
+
               {% if document.is_localizable %}
                 <li><a href="{{ translate_url }}">{{ _('Add translation') }}</a></li>
               {% endif %}
@@ -95,7 +96,7 @@
 
 <!-- crumbs -->
 <nav class="crumbs" role="navigation"><ol>
-  <li><a href="{{ request.locale }}/docs">MDN</a><i class="icon-chevron-right"></i></li>
+  <li><a href="/{{ request.locale }}/docs">MDN</a><i class="icon-chevron-right"></i></li>
   {% for doc in document.parents %}
     <li class="crumb"><a href="{{ url('wiki.document', doc.full_path) }}">{{ doc.title }}</a><i class="icon-chevron-right"></i></li>
   {% endfor %}
@@ -113,16 +114,14 @@
         <li><a href="">Blah blah blah Blah blah blah Blah blah blah Blah blah blah</a></li>
         <li><a href="">Blah blah blah</a></li>
         <li><a href="">Blah blah blah</a></li>
-        <li>Blah blah blah</li>
+        <li><a href="" class="current">Blah blah blah</a></li>
         <li><a href="">Blah blah blah</a></li>
         <li><a href="">Blah blah blah</a></li>
       </ol>
     </div>
     <a href="" class="from-search-next only-icon"><i class="icon-chevron-right"></i></a>
   {% endif %}
-  <h1>
-    {{ document.title }}
-  </h1>
+  <h1>{{ document.title }}</h1>
 
   {% if redirected_from %}
   <div class="redirected-from" id="redirected-from">
@@ -185,7 +184,7 @@
     {% endif %}
 
     <!-- center: main article content -->
-    <div id="wiki-content" class="{{ content_class }} wiki-column">
+    <div id="wiki-content" class="{{ content_class }} wiki-column text-content">
 
       {% if kumascript_errors %}
         {% include 'wiki/includes/kumascript_errors.html' %}
@@ -220,6 +219,13 @@
       {% if num_attachments %}
         {% include 'wiki/includes/attachment_list.html' %}
       {% endif %}
+
+      <!-- contributors -->
+      <div class="wiki-block">
+      {% trans contributors=user_list(contributors) %}
+        <strong>Contributors to this page:</strong> {{ contributors }}
+      {% endtrans %}
+      </div>
     </div>
 
     {% if show_left %}
@@ -275,5 +281,4 @@
       </div>
     {% endif %}
   </div>
-
 </div>
