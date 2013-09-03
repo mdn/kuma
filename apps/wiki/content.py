@@ -247,13 +247,15 @@ class ContentSectionTool(object):
         self.stream = EditorSafetyFilter(self.stream)
         return self
 
-    def extractSection(self, id):
-        self.stream = SectionFilter(self.stream, id)
+    def extractSection(self, id, ignore_heading=False):
+        self.stream = SectionFilter(self.stream, id,
+                                    ignore_heading=ignore_heading)
         return self
 
-    def replaceSection(self, id, replace_src):
+    def replaceSection(self, id, replace_src, ignore_heading=False):
         replace_stream = self.walker(self.parser.parseFragment(replace_src))
-        self.stream = SectionFilter(self.stream, id, replace_stream)
+        self.stream = SectionFilter(self.stream, id, replace_stream,
+                                    ignore_heading=ignore_heading)
         return self
 
 class URLAbsolutionFilter(html5lib_Filter):
@@ -701,10 +703,11 @@ class SectionFilter(html5lib_Filter):
     SECTION_TAGS = ('article', 'aside', 'nav', 'section', 'blockquote',
                     'body', 'details', 'fieldset', 'figure', 'table', 'div')
 
-    def __init__(self, source, id, replace_source=None):
+    def __init__(self, source, id, replace_source=None, ignore_heading=False):
         html5lib_Filter.__init__(self, source)
 
         self.replace_source = replace_source
+        self.ignore_heading = ignore_heading
         self.section_id = id
 
         self.heading = None
@@ -712,6 +715,8 @@ class SectionFilter(html5lib_Filter):
         self.open_level = 0
         self.parent_level = None
         self.in_section = False
+        self.heading_to_ignore = None
+        self.already_ignored_header = False
         self.next_in_section = False
         self.replacement_emitted = False
 
@@ -761,6 +766,16 @@ class SectionFilter(html5lib_Filter):
                             self._getHeadingRank(token) <= self.heading_rank):
                         self.in_section = False
 
+                # If this is the first heading of the section and we want to
+                # omit it, note that we've found it
+                if (self.in_section and 
+                        self.ignore_heading and
+                        not self.already_ignored_header and
+                        not self.heading_to_ignore and 
+                        self._isHeading(token)):
+
+                    self.heading_to_ignore = token
+
             if 'EndTag' == token['type']:
                 self.open_level -= 1
 
@@ -771,22 +786,37 @@ class SectionFilter(html5lib_Filter):
                     self.in_section = False
 
             # If there's no replacement source, then this is a section
-            # extraction. So, emit tokens while we're in the section.
+            # extraction. So, emit tokens while we're in the section, as long
+            # as we're also not in the process of ignoring a heading
             if not self.replace_source:
-                if self.in_section:
+                if self.in_section and not self.heading_to_ignore:
                     yield token
 
             # If there is a replacement source, then this is a section
             # replacement. Emit tokens of the source stream until we're in the
             # section, then emit the replacement stream and ignore the rest of
-            # the source stream for the section..
+            # the source stream for the section. Note that an ignored heading
+            # is *not* replaced.
             else:
-                if not self.in_section:
+                if not self.in_section or self.heading_to_ignore:
                     yield token
                 elif not self.replacement_emitted:
                     for r_token in self.replace_source:
                         yield r_token
                     self.replacement_emitted = True
+
+            # If this looks like the end of a heading we were ignoring, clear
+            # the ignoring condition.
+            if ('EndTag' == token['type'] and
+                    self.in_section and
+                    self.ignore_heading and
+                    not self.already_ignored_header and
+                    self.heading_to_ignore and
+                    self._isHeading(token) and
+                    token['name'] == self.heading_to_ignore['name']):
+
+                self.heading_to_ignore = None
+                self.already_ignored_header = True
 
     def _isHeading(self, token):
         """Is this token a heading element?"""

@@ -16,6 +16,7 @@ from django.contrib.contenttypes.models import ContentType
 
 from sumo.urlresolvers import reverse
 import wiki
+import wiki.content
 from wiki import DIFF_WRAP_COLUMN
 
 from teamwork.shortcuts import build_policy_admin_links
@@ -202,6 +203,45 @@ def colorize_diff(diff):
 def wiki_bleach(val):
     from wiki.models import Document
     return jinja2.Markup(Document.objects.clean_content(val))
+
+
+@register.filter
+def section_extract(val, section_id):
+    """
+    Extract a section from the given markup, ignoring the heading (if any)
+    """
+    return (wiki.content.parse(val)
+                        .extractSection(section_id, ignore_heading=True)
+                        .serialize())
+
+
+@register.filter
+def zone_section_extract(document, section_id):
+    """
+    Attempt to extract the given section from the current document, or from one
+    of its parent DocumentZones (if any)
+    """
+    html = section_extract(document.rendered_html, section_id)
+    if html:
+        return html
+
+    for zone in document.find_zone_stack():
+        html = section_extract(zone.document.rendered_html, section_id)
+        if html:
+            return html
+
+    return None
+
+
+@register.filter
+def section_hide(val, *section_ids):
+    """
+    Hide the given section(s) by replacing with an HTML comment
+    """
+    doc = wiki.content.parse(val)
+    for sid in section_ids:
+        doc = doc.replaceSection(sid, '<!-- -->')
+    return doc.serialize()
 
 
 @register.function

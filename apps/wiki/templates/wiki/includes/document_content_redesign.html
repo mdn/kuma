@@ -20,7 +20,10 @@
 {% set disabled_class = ('disabled' if not is_logged_in else '') %}
 {% set disabled_attr = ('title="%s"' % _('Please log in to use this feature.') if not is_logged_in else '') %}
 
-{% set show_left = (request.user.is_authenticated() and document.current_revision and document.allows_revision_by(request.user) and (document.current_revision.needs_technical_review() or document.current_revision.needs_editorial_review())) %}
+{% set quick_links_section_id = 'Quick_Links' %}
+{% set quick_links_html = document|zone_section_extract(quick_links_section_id) %}
+
+{% set show_left = quick_links_html or (request.user.is_authenticated() and document.current_revision and document.allows_revision_by(request.user) and (document.current_revision.needs_technical_review() or document.current_revision.needs_editorial_review())) %}
 {% set show_right = (toc_html or tags|length or num_attachments) %}
 {% set content_class = '' %}
 {% if show_left and show_right %}
@@ -199,6 +202,7 @@
       {% endif %}
 
       <!-- just the article content -->
+      {% set document_html_safe = document_html|section_hide(quick_links_section_id)|safe %}
       <article>
         {% if not fallback_reason %}
           {% if not document_html %}
@@ -206,10 +210,10 @@
           {% elif document.is_template %}
             <pre class="brush: js">{{ document_html }}</pre>
           {% else %}
-            {{ document_html|safe }}
+            {{ document_html_safe }}
           {% endif %}
         {% elif fallback_reason == 'no_translation' %}
-          {{ document_html|safe }}
+          {{ document_html_safe }}
         {% elif fallback_reason == 'translation_not_approved' %}
           {{ document.parent.html|safe }}
         {% else %}
@@ -233,10 +237,12 @@
     {% if show_left %}
       <!-- quick links strip -->
       <div id="wiki-left" class="column-strip wiki-column">
-        {#
+        {% if quick_links_html %}
         <!-- quick links -->
         <div class="quick-links" id="quick-links">
           <a href="#quick-links" class="title" id="quick-links-toggle"><i class="icon-caret-up"></i>{{ _('Hide QuickLinks') }}</a>
+          {{ quick_links_html|safe }}
+          {% if False %}
           <ol>
             <li class="toggleable closed"><a href="" class="toggler"><i class="icon-caret-up"></i>Application Cache API</a>
               <ol class="toggle-container">
@@ -249,8 +255,9 @@
             <li><a href="">Something</a></li>
             <li><a href="">Something</a></li>
           </ol>
+          {% endif %}
         </div>
-        #}
+        {% endif %}
 
         <!-- approvals -->
         {% if request.user.is_authenticated() and document.current_revision and document.allows_revision_by(request.user) %}

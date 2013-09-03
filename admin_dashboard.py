@@ -26,6 +26,7 @@ class CustomIndexDashboard(Dashboard):
             column=1,
             models=(
                 'wiki.models.Document',
+                'wiki.models.DocumentZone',
                 'wiki.models.Revision',
                 'wiki.models.Attachment',
                 'wiki.models.AttachmentRevision',
