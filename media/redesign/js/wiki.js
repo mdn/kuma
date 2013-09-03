@@ -40,5 +40,13 @@
     });
   })();
 
+  /*
+    Subscribe / unsubscribe to an article
+  */
+  $('.page-watch a').on('click', function(e) {
+    e.preventDefault();
+    $(this).closest('form').submit();
+  });
+
 
 })(jQuery);
