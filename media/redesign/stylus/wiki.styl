@@ -476,10 +476,19 @@ span.cke_skin_kuma
 
 
 
-
 /* rtl */
 .html-rtl
 
   .page-buttons, #page-buttons
     left gutter-width
     right auto
+
+  .crumbs
+    li
+      margin-right 0
+      margin-left (grid-spacing / 2)
+    a
+      &:after
+        content "\f053"
+        margin-left 0
+        margin-right 4px
