@@ -128,6 +128,11 @@ article
   .title
     compat-only(margin-bottom, 0)
 
+#kumascript-errors
+  ul
+    list-style-type none
+    padding-left 0 !important
+
 
 /* coming from a search - heading links */
 .from-search
@@ -216,7 +221,7 @@ article
   button
     compat-important(font-size, smaller-font-size)
 
-div.bug *:last-child, div.warning *:last-child
+div.bug > *:last-child, div.warning > *:last-child
   compat-important(padding-left, inherit)
 
 .warning
