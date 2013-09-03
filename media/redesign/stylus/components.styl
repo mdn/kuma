@@ -18,11 +18,11 @@
 /* table of contents; uses toggler */
 #toc
   background light-background-color
-  padding grid-spacing (grid-spacing * .75)
+  compat-important(padding, grid-spacing (grid-spacing * .75))
 
   > ol
-    padding-left (grid-spacing + (grid-spacing/2))
-    font-size smaller-font-size
+    compat-important(padding-left, (grid-spacing + (grid-spacing/2)))
+    compat-important(font-size, smaller-font-size)
 
   a.title
     position relative
