@@ -189,3 +189,26 @@ main
 /* footer */
 footer
   height 300px
+
+
+
+
+  /* rtl */
+.html-rtl
+  #main-header
+    .logo
+      left auto
+      right gutter-width
+
+  #main-nav
+    > ul
+      right auto
+      left gutter-width
+
+  .user-state
+    right 200px
+    left auto
+
+    li + li
+      border-right 1px solid #bbb
+      border-left 0
