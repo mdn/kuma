@@ -1731,9 +1731,13 @@ class DocumentType(SearchMappingType, Indexable):
 class DocumentZone(models.Model):
     """Model object declaring a content zone root at a given Document, provides
     attributes inherited by the topic hierarchy beneath it."""
+
     document = models.ForeignKey(Document, related_name='zones', unique=True)
     styles = models.TextField(null=True, blank=True)
 
+    def __unicode__(self):
+        return u'DocumentZone %s (%s)' % (self.document.get_absolute_url(),
+                                          self.document.title)
 
 class ReviewTag(TagBase):
     """A tag indicating review status, mainly for revisions"""
