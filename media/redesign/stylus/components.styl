@@ -146,3 +146,13 @@ component-submenu-method(menu-width, num-columns, background-color, arrow-border
     i
       left 10px
       right auto
+
+  #toc
+    > ol
+      compat-important(padding-left, 0);
+      compat-important(padding-right, (grid-spacing + (grid-spacing/2)))
+
+    li:before
+      text-align left
+      right -(grid-spacing + (grid-spacing/2))
+      left auto
