@@ -66,6 +66,7 @@ def search(request, page_count=10):
 
     context = {
         'search_form': search_form,
+        'current_page': 1,
     }
 
     if search_form.is_valid():
@@ -88,6 +89,12 @@ def search(request, page_count=10):
 
         result_count = results.count()
 
+        # Pagination
+        current_page = search_form.cleaned_data['page']
+        start = page_count * (current_page - 1)
+        end = start + page_count
+        results = results[start:end]
+
         url = URLObject(request.get_full_path())
 
         # {u'tags': [{u'count': 1, u'term': u'html'}]}
@@ -100,21 +107,19 @@ def search(request, page_count=10):
             if allowed_filter is None:
                 continue
 
+            select_url = merge_param(url, 'topic', result_facet['term'])
+            select_url = pop_param(select_url, 'page', current_page)
+
             facet_updates = {
                 'label': allowed_filter,
-                'select_url': merge_param(url, 'topic', result_facet['term']),
+                'select_url': select_url,
             }
             if result_facet['term'] in url.query.multi_dict.get('topic', []):
-                result_facet['deselect_url'] = pop_param(url, 'topic',
-                                                         result_facet['term'])
+                deselect_url = pop_param(url, 'topic', result_facet['term'])
+                deselect_url = pop_param(deselect_url, 'page', current_page)
+                result_facet['deselect_url'] = deselect_url
 
             facet_counts.append(dict(result_facet, **facet_updates))
-
-        # Pagination
-        current_page = search_form.cleaned_data['page']
-        start = page_count * (current_page - 1)
-        end = start + page_count
-        results = results[start:end]
 
         context.update({
             'results': results,
