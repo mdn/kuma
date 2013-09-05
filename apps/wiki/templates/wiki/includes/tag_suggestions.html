@@ -1,3 +1,4 @@
+{% set suggestions = WIKI_DOCUMENT_TAG_SUGGESTIONS or '[]' %}
 <script type="text/javascript">
-  mdn.wiki.tagSuggestions = {{ WIKI_DOCUMENT_TAG_SUGGESTIONS|safe }} || [];
+  mdn.wiki.tagSuggestions = {{ suggestions|safe }};
 </script>
