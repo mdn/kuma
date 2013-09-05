@@ -334,9 +334,6 @@ div.bug > *:last-child, div.warning > *:last-child
 #wiki-column-container.wiki-left-closed #wiki-content
   margin-left 0
 
-#wiki-column-container.wiki-left-closed.wiki-right-closed #wiki-content
-  @extend .column-all
-
 /* wiki new and edit pages */
 .page-meta section, #article-head
   compat-only(background, none)
@@ -473,7 +470,9 @@ span.cke_skin_kuma
   #wiki-content
     margin-right 0
     width get-grid-dimension(media-query-tablet, 9)
-
+	
+    &.column-all
+      width auto
 
 
 /* rtl */
