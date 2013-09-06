@@ -25,7 +25,8 @@
 
 {% set show_left = quick_links_html or (request.user.is_authenticated() and document.current_revision and document.allows_revision_by(request.user) and (document.current_revision.needs_technical_review() or document.current_revision.needs_editorial_review())) %}
 {% set show_right = (toc_html or tags|length or num_attachments) %}
-{% set content_class = '' %}
+
+{% set content_class = 'column-all' %}
 {% if show_left and show_right %}
   {% set content_class = 'column-half' %}
 {% elif show_left or show_right %}
