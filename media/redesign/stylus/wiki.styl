@@ -32,6 +32,7 @@ article
 
 .document-head
   position relative
+  clear both
 
   h1
     font-family 'Open Sans Light'
@@ -45,26 +46,32 @@ article
 .crumbs
   font-size smaller-font-size
   margin-bottom (2 * grid-spacing)
-  margin-top (grid-spacing * 2)
+  float left
+  width 70%
 
   li
     display inline-block
     margin-right (grid-spacing / 2)
 
-  i
-    color #c1c2c4
-    display inline-block
-    margin 0 7px 0 5px
-    font-size 70%
+  a
+    display block
+
+    &:after
+      display inline-block
+      font-family FontAwesome
+      text-decoration none
+      content "\f054"
+      color #c1c2c4
+      margin-left 4px
+      font-size 70%
 
   reverse-link-decoration()
 
 .page-buttons, #page-buttons
-  position absolute
-  right gutter-width
+  float right
   text-align right
   compat-only(width, auto)
-  compat-only(top, 0)
+  compat-only(top, auto)
 
   > li
     margin-left (grid-spacing / 2)
@@ -122,11 +129,22 @@ article
   compat-only(font-size, base-font-size)
   compat-only(margin-left, 0, 'ol ol, ul ul')
 
+  .toggler
+    pointer-events none
+
+    i
+      display none
+
   li
-    compat-important(padding-top, 20px)
+    compat-important(padding-top, (grid-spacing / 2))
 
   .title
     compat-only(margin-bottom, 0)
+
+#kumascript-errors
+  ul
+    list-style-type none
+    padding-left 0 !important
 
 
 /* coming from a search - heading links */
@@ -216,7 +234,7 @@ article
   button
     compat-important(font-size, smaller-font-size)
 
-div.bug *:last-child, div.warning *:last-child
+div.bug > *:last-child, div.warning > *:last-child
   compat-important(padding-left, inherit)
 
 .warning
@@ -291,7 +309,7 @@ div.bug *:last-child, div.warning *:last-child
     position relative
     padding-top list-item-spacing
 
-  ol ol li
+  li li
     padding-left 20px
 
   a
@@ -304,10 +322,13 @@ div.bug *:last-child, div.warning *:last-child
     position absolute
     left -6px
     top 1px
+    
+  p, div /* don't allow empty paragraphs by CKEditor */
+    display none
 
   reverse-link-decoration()
 
-/* adjustments to columns based on show/hide */
+/* adjustments to columns based on show/hide and media query */
 #wiki-column-container.wiki-right-closed #wiki-content, #wiki-column-container.wiki-left-closed #wiki-content
   @extend .column-9
 
@@ -316,9 +337,6 @@ div.bug *:last-child, div.warning *:last-child
 
 #wiki-column-container.wiki-left-closed #wiki-content
   margin-left 0
-
-#wiki-column-container.wiki-left-closed.wiki-right-closed #wiki-content
-  @extend .column-all
 
 /* wiki new and edit pages */
 .page-meta section, #article-head
@@ -423,3 +441,61 @@ span.cke_skin_kuma
 
   input[type='submit'], a.button
     compat-only(font-size, smaller-font-size)
+
+
+
+
+/* legacy overrides */
+.topicpage-table .Documentation, .topicpage-table .Community, .topicpage-table .Tools, .topicpage-table .Related_Topics
+  font-family site-font-family
+  text-transform none
+
+
+
+/* tablet article layout updates */
+@media media-query-tablet
+  #wiki-right
+    float none
+    width auto
+    margin-bottom grid-spacing
+
+    .tag-attach-list
+      display none
+
+    enable-toc-toggle()
+
+  #wiki-content
+    margin-right 0
+    width get-grid-dimension(media-query-tablet, 9)
+	
+    &.column-all
+      width auto
+
+
+/* mobile */
+@media media-query-mobile
+
+  #wiki-controls
+    display none
+
+  #wiki-right
+    enable-toc-toggle()
+
+
+
+/* rtl */
+.html-rtl
+
+  .page-buttons, #page-buttons
+    left gutter-width
+    right auto
+
+  .crumbs
+    li
+      margin-right 0
+      margin-left (grid-spacing / 2)
+    a
+      &:after
+        content "\f053"
+        margin-left 0
+        margin-right 4px

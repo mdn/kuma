@@ -1,10 +1,25 @@
 @import 'vars'
 @import 'mixins'
+@import 'grid'
+
+aside
+  @extend .column-half
+  float right
+  border 1px solid header-background-color
+  background light-background-color
+  padding grid-spacing
+  margin-left grid-spacing
+  margin-bottom grid-spacing
+
+  *:last-child
+    padding-bottom 0
+    margin-bottom 0
+
 
 /* headings */
 h1, h2, h3, h4
   font-weight light-font-weight
-  margin-bottom (grid-spacing/2)
+  margin-bottom (grid-spacing / 2)
 
 h1
   @extend .heading-1
@@ -33,6 +48,9 @@ h4
     display inline-block
     text-decoration none
 
+img
+  max-width 100%
+
 p
   margin-bottom content-block-margin
 
@@ -57,3 +75,10 @@ button, input[type='submit'], input[type='button']
   &::-moz-focus-inner
     margin-top -1px
     margin-bottom -1px
+
+
+/* rtl */
+.html-rtl
+  {selector-icon}
+    compat-only(margin-right, (grid-spacing / 2))
+    compat-only(margin-left, 0)

@@ -65,6 +65,7 @@
   &.expand
     input
       width 500px
+      text-transform none
 
     > ul > li:not(:last-child)
       opacity 0
@@ -163,6 +164,9 @@ a.persona-button
       color text-color
       text-align right
 
+    &.has-value
+      text-transform none
+
   @media media-query-tablet
 
     input
@@ -189,3 +193,74 @@ main
 /* footer */
 footer
   height 300px
+
+
+
+
+
+/* mobile updates */
+@media media-query-mobile
+
+  #main-header
+    > .center
+      min-height 160px
+
+    .logo
+      bottom auto
+      top grid-spacing
+      left (grid-spacing * 2)
+
+    #tabzilla
+      display none
+
+    .user-state
+      right grid-spacing
+      top grid-spacing
+
+
+  #main-nav
+    > ul
+      bottom 0
+
+      > li
+        vendorize(transition-property, none)
+      
+      .main-nav-search
+        width 100%
+        margin-bottom grid-spacing
+        margin-top grid-spacing
+
+      .search-wrap
+        input
+          width 90%
+
+    &.expand
+      ul
+        > li:not(:last-child)
+          opacity 1
+          width auto
+          max-width none
+          vendorize(transition-property, none)
+          overflow visible
+
+
+
+  /* rtl */
+.html-rtl
+  #main-header
+    .logo
+      left auto
+      right gutter-width
+
+  #main-nav
+    > ul
+      right auto
+      left gutter-width
+
+  .user-state
+    right 200px
+    left auto
+
+    li + li
+      border-right 1px solid #bbb
+      border-left 0

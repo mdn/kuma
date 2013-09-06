@@ -877,6 +877,62 @@ class ContentSectionToolTests(TestCase):
                       .serialize())
         eq_(normalize_html(expected_src), normalize_html(result_src))
 
+    def test_ignore_heading_section_extract(self):
+        doc_src = """
+            <p>test</p>
+            <h1 id="s4">Head 4</h1>
+            <p>test</p>
+            <h2 id="s4-1">Head 4-1</h2>
+            <p>test</p>
+            <h3 id="s4-2">Head 4-1-1</h3>
+            <p>test s4-2</p>
+            <h1 id="s4-next">Head</h1>
+            <p>test</p>
+        """
+        expected = """
+            <p>test</p>
+            <h3 id="s4-2">Head 4-1-1</h3>
+            <p>test s4-2</p>
+        """
+        result = (wiki.content
+                  .parse(doc_src)
+                  .extractSection(id="s4-1", ignore_heading=True)
+                  .serialize())
+        eq_(normalize_html(expected), normalize_html(result))
+
+    def test_ignore_heading_section_replace(self):
+        doc_src = """
+            <h1 id="s1">Head 1</h1>
+            <p>test</p>
+            <p>test</p>
+            <h1 id="s2">Head 2</h1>
+            <p>test</p>
+            <p>test</p>
+            <h1 id="s3">Head 3</h1>
+            <p>test</p>
+            <p>test</p>
+        """
+        replace_src = """
+            <p>replacement worked yay hooray</p>
+        """
+        expected = """
+            <h1 id="s1">Head 1</h1>
+            <p>test</p>
+            <p>test</p>
+            <h1 id="s2">Head 2</h1>
+            <p>replacement worked yay hooray</p>
+            <h1 id="s3">Head 3</h1>
+            <p>test</p>
+            <p>test</p>
+        """
+        result = (wiki.content
+                  .parse(doc_src)
+                  .replaceSection(id="s2",
+                                  replace_src=replace_src,
+                                  ignore_heading=True)
+                  .serialize())
+        eq_(normalize_html(expected), normalize_html(result))
+
 
 class AllowedHTMLTests(TestCase):
     simple_tags = (

@@ -61,7 +61,7 @@ generate-grid(grid-increment-desktop, grid-start-desktop, grid-end-desktop)
 generate-center(site-width-desktop)
 
 
-/* Desktop Wide - 1224px */
+/* Desktop Large - 1224px */
 @media media-query-desktop-large
   grid-spacing = grid-spacing-wide
   generate-center(site-width-desktop-large)
@@ -69,7 +69,17 @@ generate-center(site-width-desktop)
 
   .column-container
     > [class^='column-']
-      margin-right grid-spacing
+      margin-right grid-spacing-wide
+
+/* Desktop Large - 1824px */
+@media media-query-desktop-large
+  grid-spacing = grid-spacing-wide
+  generate-center(site-width-desktop-large)
+  generate-grid(grid-increment-desktop-large, grid-start-desktop-large, grid-end-desktop-large)
+
+  .column-container
+    > [class^='column-']
+      margin-right grid-spacing-wide
 
 
 /* Tablet Layout - 760px
@@ -116,6 +126,16 @@ generate-center(site-width-desktop)
 
   generate-center(site-width-mobile)
   generate-grid(grid-increment-mobile, grid-start-mobile, grid-end-mobile)
+
+  .column-container
+    @extend .clear
+
+    > [class^='column-'], &.column-container-reverse
+      margin-right 0 !important
+      float none
+      margin-bottom grid-spacing
+      width 100%
+
 
  /* Wide Mobile Layout - 480px
  *

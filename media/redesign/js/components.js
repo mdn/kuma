@@ -149,7 +149,7 @@
 
       var $self = $(this);
 
-      $self.on('keypress', function(e) {
+      $self.on('keydown', function(e) {
         var code = e.keyCode;
         var charCode = e.charCode;
         var numberKeyStart = 49;
@@ -185,6 +185,75 @@
       $(item).addClass(focusClass).get(0).focus();
     }
 
+  };
+  
+  /*
+    Plugin to listen for special keyboard keys and will fire actions based on them
+  */
+  $.fn.mozTogglers = function(options) {
+    var settings = $.extend({
+      items: null
+    }, options);
+    
+    $(this).each(function() {
+      var $self = $(this);
+      var pieces = getTogglerComponents($self);
+      var closedAttribute = 'data-closed';
+
+      // Initialize open / close for the purpose of animation
+      if($self.hasClass('closed')) {
+        $self.attr(closedAttribute, 'true').removeClass('closed');
+        pieces.$container.hide();
+      }
+      setIcon(pieces.$toggler, $self);
+
+      // Click event to show/hide
+      $self.on('click', '.toggler', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        // If I'm an accordion, close the other one
+        var $parent = $self.closest('ol, ul');
+        if($parent.hasClass('accordion')) {
+          var $current = $parent.find('> .current');
+          if($current.length && $current.get(0) != $self.get(0)) {
+            toggle($current, true);
+          }
+        }
+
+        // Handle me
+        toggle($self);
+      });
+
+      function toggle($li, forceClose) {
+        var pieces = getTogglerComponents($li);
+
+        if(!getState($li) || forceClose) {
+          $li.attr(closedAttribute, 'true').removeClass('current');
+          pieces.$container.slideUp();
+        }
+        else {
+          $li.attr(closedAttribute, '').addClass('current');
+          pieces.$container.slideDown();
+        }
+        setIcon(pieces.$toggler, $li);
+      }
+
+      function getTogglerComponents($li) {
+        return {
+          $container: $li.find('.toggle-container'),
+          $toggler: $li.find('> .toggler')
+        };
+      }
+
+      function setIcon($tog, $li) {
+        $tog.find('i').attr('class', 'icon-caret-'  + (getState($li) ? 'up' : 'down'));
+      }
+
+      function getState($li) {
+        return $li.attr(closedAttribute);
+      }
+    });
   };
 
 })(jQuery);
