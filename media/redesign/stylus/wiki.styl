@@ -308,7 +308,7 @@ div.bug > *:last-child, div.warning > *:last-child
     position relative
     padding-top list-item-spacing
 
-  ol ol li
+  li li
     padding-left 20px
 
   a
@@ -321,6 +321,9 @@ div.bug > *:last-child, div.warning > *:last-child
     position absolute
     left -6px
     top 1px
+    
+  p, div /* don't allow empty paragraphs by CKEditor */
+    display none
 
   reverse-link-decoration()
 
