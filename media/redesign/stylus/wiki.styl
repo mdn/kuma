@@ -32,6 +32,7 @@ article
 
 .document-head
   position relative
+  clear both
 
   h1
     font-family 'Open Sans Light'
@@ -45,7 +46,8 @@ article
 .crumbs
   font-size smaller-font-size
   margin-bottom (2 * grid-spacing)
-  margin-top (grid-spacing * 2)
+  float left
+  width 70%
 
   li
     display inline-block
@@ -66,11 +68,10 @@ article
   reverse-link-decoration()
 
 .page-buttons, #page-buttons
-  position absolute
-  right gutter-width
+  float right
   text-align right
   compat-only(width, auto)
-  compat-only(top, 0)
+  compat-only(top, auto)
 
   > li
     margin-left (grid-spacing / 2)
