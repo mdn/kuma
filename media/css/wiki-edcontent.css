@@ -9,7 +9,7 @@ body { min-height: 400px; font: 14px/1.286 "Lucida Grande", "Lucida Sans Unicode
 :link:hover, :link:focus, :link:active { color: #25a; text-decoration: underline; }
 :visited:hover, :visited:focus, :visited:active { color: #25a; text-decoration: underline; }
 
-/* seo plugin styles */
+/* seo and callout plugin styles */
 .seoSummary {
 	padding: 3px;
 	border: 1px dotted #ccc;
@@ -27,6 +27,16 @@ body { min-height: 400px; font: 14px/1.286 "Lucida Grande", "Lucida Sans Unicode
 	display: block;
 	opacity: 0.8;
 	cursor: default;
+}
+
+.summary {
+  background: #f4f7f8;
+  font-weight: bold;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.summary p:last-child {
+  margin-bottom: 0;
 }
 
 /* syntax highlighter update */
