@@ -108,7 +108,7 @@ def search(request, page_count=10):
                 continue
 
             select_url = merge_param(url, 'topic', result_facet['term'])
-            select_url = pop_param(select_url, 'page', current_page)
+            select_url = pop_param(select_url, 'page', str(current_page))
 
             facet_updates = {
                 'label': allowed_filter,
@@ -116,7 +116,8 @@ def search(request, page_count=10):
             }
             if result_facet['term'] in url.query.multi_dict.get('topic', []):
                 deselect_url = pop_param(url, 'topic', result_facet['term'])
-                deselect_url = pop_param(deselect_url, 'page', current_page)
+                deselect_url = pop_param(deselect_url, 'page',
+                                         str(current_page))
                 result_facet['deselect_url'] = deselect_url
 
             facet_counts.append(dict(result_facet, **facet_updates))
