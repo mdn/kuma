@@ -849,7 +849,7 @@
         // Submitting the form posts to mystical iframe
         $iframe.bind('load', function(e) {
             running = false;
-            $attachmentsForm.data('disabled', false);
+            $attachmentsForm.data('disabled', false).removeClass('disabled');
 
             // Handle results
             try {
