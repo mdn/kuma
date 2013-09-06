@@ -127,6 +127,16 @@ generate-center(site-width-desktop)
   generate-center(site-width-mobile)
   generate-grid(grid-increment-mobile, grid-start-mobile, grid-end-mobile)
 
+  .column-container
+    @extend .clear
+
+    > [class^='column-'], &.column-container-reverse
+      margin-right 0 !important
+      float none
+      margin-bottom grid-spacing
+      width 100%
+
+
  /* Wide Mobile Layout - 480px
  *
  * For slightly wider viewports (e.g. smartphones in landscape mode),

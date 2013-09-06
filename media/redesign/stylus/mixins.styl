@@ -118,6 +118,18 @@ set-message-base()
     margin-bottom 0
     padding-bottom 0
 
+/* Enables the TOC toggle for small screens */
+enable-toc-toggle()
+  #toc
+    padding (grid-spacing / 2) grid-spacing
+
+    .toggler
+      pointer-events auto
+
+      i
+        display inline-block
+
+
 /*
   CLASSES TO BE EXTENDED BY OTHER CLASSES
 
