@@ -917,6 +917,7 @@ def new_document(request):
                         {'is_template': is_template,
                          'document_form': doc_form,
                          'revision_form': rev_form,
+                         'WIKI_DOCUMENT_TAG_SUGGESTIONS': constance.config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
                          'allow_add_attachment': allow_add_attachment,
                          'attachment_form': AttachmentRevisionForm(),
                          'parent_slug': parent_slug,
