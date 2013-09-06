@@ -195,12 +195,6 @@
         {% include 'wiki/includes/kumascript_errors.html' %}
       {% endif %}
 
-      {% if seo_summary %}
-        <div class="summary">
-          <p>{{ seo_summary }}</p>
-        </div>
-      {% endif %}
-
       <!-- just the article content -->
       {% set document_html_safe = document_html|section_hide(quick_links_section_id)|safe %}
       <article>
