@@ -33,6 +33,15 @@
   {% set content_class = 'column-main' %}
 {% endif %}
 
+<!-- crumbs -->
+<nav class="crumbs" role="navigation"><ol>
+  <li><a href="/{{ request.locale }}/docs">MDN</a></li>
+  {% for doc in document.parents %}
+    <li class="crumb"><a href="{{ url('wiki.document', doc.full_path) }}">{{ doc.title }}</a></li>
+  {% endfor %}
+  <li class="crumb">{{ document.title }}</li>
+</ol></nav>
+
 <!-- action buttons -->
 <ul class="page-buttons"><li><a href="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}" class="button {{ disabled_class }}" {{ disabled_attr }}>{{ _('Edit Page') }}<i class="icon-pencil"></i></a></li><li style="position:relative;"><a href="javascript:;" id="settings-menu" class="button only-icon" {{ disabled_attr }}><span>{{ _('Settings') }}</span><i class="icon-cog"></i></a>
 
@@ -99,15 +108,6 @@
         </div>
       </div>
   </li></ul>
-
-<!-- crumbs -->
-<nav class="crumbs" role="navigation"><ol>
-  <li><a href="/{{ request.locale }}/docs">MDN</a></li>
-  {% for doc in document.parents %}
-    <li class="crumb"><a href="{{ url('wiki.document', doc.full_path) }}">{{ doc.title }}</a></li>
-  {% endfor %}
-  <li class="crumb">{{ document.title }}</li>
-</ol></nav>
 
 <!-- heading -->
 <div class="document-head{% if from_search %} from-search{% endif %}">
