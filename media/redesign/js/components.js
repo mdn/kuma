@@ -149,7 +149,7 @@
 
       var $self = $(this);
 
-      $self.on('keypress', function(e) {
+      $self.on('keydown', function(e) {
         var code = e.keyCode;
         var charCode = e.charCode;
         var numberKeyStart = 49;
