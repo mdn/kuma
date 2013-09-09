@@ -6,7 +6,7 @@
   #main-header, .zone-article-header
     create-gradient-background(#0095dd)
 
-  #main-nav > ul > li > a
+  #main-nav > ul > li > a, .user-state a
     compat-important(color, #fff)
 
   .search-wrap
@@ -24,6 +24,7 @@
 
   h1
     color #fff
+    @extend .column-6
 
   .crumbs
     color #fff
@@ -32,7 +33,7 @@
       color rgba(255, 255, 255, 0.7)
 
   .zone-subnav-container
-    margin-top -220px
+    margin-top -200px
 
 .zone-landing-header
   create-gradient-background(#0095dd)
@@ -40,7 +41,9 @@
   color #fff
   position relative
   overflow hidden
-  padding-top first-content-top-padding
+  
+  > .center
+    padding-top first-content-top-padding
 
   .masthead-text
     p
@@ -51,7 +54,7 @@
   .zone-image
     position absolute
     right -140px
-    top 60px
+    top 100px
     display block
     width 468px
     height 900px
@@ -105,3 +108,11 @@
   td
     vertical-align bottom
     padding-right grid-spacing
+    
+    
+/* right to left */
+.html-rtl
+  .zone-article-header
+    .zone-image
+      right auto
+      left 0
