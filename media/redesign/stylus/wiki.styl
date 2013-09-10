@@ -455,21 +455,16 @@ span.cke_skin_kuma
 /* tablet article layout updates */
 @media media-query-tablet
   #wiki-right
-    float none
-    width auto
-    margin-bottom grid-spacing
-
     .tag-attach-list
       display none
 
     enable-toc-toggle()
 
-  #wiki-content
+  #wiki-content, #wiki-right, #wiki-left
     margin-right 0
-    width get-grid-dimension(media-query-tablet, 9)
-	
-    &.column-all
-      width auto
+    width auto
+    float none
+    margin-bottom (grid-spacing * 2)
 
 
 /* mobile */
