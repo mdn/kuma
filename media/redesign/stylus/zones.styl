@@ -20,6 +20,10 @@
       &::-moz-input-placeholder
         color #fff
 
+  .user-state
+    a, a:hover, a:focus, a:visited
+      color #fff
+
 .zone-landing
 
   h1
@@ -29,6 +33,7 @@
     color #fff
 
     a
+      old-ie(color, #fff)
       color rgba(255, 255, 255, 0.7)
 
   .zone-subnav-container
@@ -58,13 +63,13 @@
 
   a.button
     compat-important(color, #fff)
+    old-ie(background-color, #0095dd, true) /* old ie */
     compat-important(background-color, rgba(0, 0, 0, 0.1))
     vendorize(box-shadow, inset 0 -1px #147ba5)
 
 .zone-landing-lists li
   padding list-item-spacing 0
   prevent-last-child-spacing(padding-bottom)
-
 
 
 /*  Basic zone article pages */
