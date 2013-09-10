@@ -97,6 +97,10 @@ compat-only(prop, value, more-selector='')
     & {more-selector}
       compat-important(prop, value)
 
+/* Used to denote an old IE style */
+old-ie(prop, value, important=false)
+  {prop} value (important ? unquote('!important') : '')
+
 /* Used to create sliding animations */
 slider(duration=animation-duration, maximum-height=10000px)
   overflow-y hidden
@@ -130,7 +134,6 @@ enable-toc-toggle()
 
       i
         display inline-block
-
 
 /*
   CLASSES TO BE EXTENDED BY OTHER CLASSES
