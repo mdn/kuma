@@ -241,7 +241,7 @@
 
       function getTogglerComponents($li) {
         return {
-          $container: $li.find('.toggle-container'),
+          $container: $li.find('> .toggle-container'),
           $toggler: $li.find('> .toggler')
         };
       }

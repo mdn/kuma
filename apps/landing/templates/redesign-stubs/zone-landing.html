@@ -8,7 +8,7 @@
 
 	<nav class="crumbs" role="navigation"><ol><li><a href="">MDN</a></li><li><a href="">Section title</a></li><li><a href="">Design</a></li><li><a href="">Design patterns</a></li><li>Navigation patterns</li></ol></nav>
 
-	<h1 class="column-6">Navigation patterns</h1>
+	<h1>Navigation patterns</h1>
 
 	<div class="column-container">
 		<div class="column-strip">&nbsp;</div>
@@ -23,49 +23,40 @@
 
 	<div class="column-container zone-content">
 
-		<div class="column-strip zone-subnav-container">
-
-			<ol class="subnav accordion">
-				<li class="toggleable current">
-					<a href="#toc" class="title toggler">Design<i></i></a>
-					<ol class="toggle-container">
-						<li><a href="">Concept: a great app</a></li>
-						<li><a href="">UI Guidelines</a></li>
-						<li class="toggleable">
-							<div>
-								<a href="" class="toggler">Design Patterns<i></i></a>
-								<ol class="toggle-container">
-									<li><a href="">UI Guidelines</a></li>
-									<li class="current-page"><a href="">Concept: a great app</a></li>
-									<li><a href="">Layouts</a></li>
-								</ol>
-							</ul>
-						</li>
-						<li><a href="">Style guides</a></li>
-					</ol>
-				</li>
-				<li class="toggleable closed">
-					<a href="#toc" class="toggler">Code<i></i></a>
-					<ol class="toggle-container">
-						<li><a href="">Concept: a great app</a></li>
-						<li><a href="">UI Guidelines</a></li>
-						<li><a href="">Style guides</a></li>
-					</ol>
-				</li>
-				<li>
-					<a href="">Publish</a>
-				</li>
-				<li>
-					<a href="">Tools<i></i></a>
-				</li>
-				<li>
-					<a href="">APIs<i></i></a>
-				</li>
-				<li>
-					<a href="">Support<i></i></a>
-				</li>
-			</ol>
-		</div>
+		<div class="column-strip">
+			<div class="zone-subnav-container">
+        <div class="subnav">
+			  <ol>
+          <li><a href="#toc">Design</a>
+            <ol>
+              <li><a href="">Concept: a great app</a></li>
+              <li><a href="">UI Guidelines</a></li>
+              <li><a class="toggler" href="">Design Patterns</a>
+                <ol>
+                  <li><a href="">UI Guidelines</a></li>
+                  <li><a href="">Concept: a great app</a></li>
+                  <li><a href="/en-US/docs/Zone">Zone Page</a></li>
+                  <li><a href="">Layouts</a></li>
+                </ol>
+              </li>
+              <li><a href="">Style guides</a></li>
+            </ol>
+          </li>
+          <li><a href="#toc">A Heading</a>
+            <ol>
+              <li><a href="">Concept: a great app</a></li>
+              <li><a href="">UI Guidelines</a></li>
+              <li><a href="">Style guides</a></li>
+            </ol>
+          </li>
+          <li><a href="">Publish</a></li>
+          <li><a href="">Tools</a></li>
+          <li><a href="">APIs</a></li>
+          <li><a href="">Support</a></li>
+        </ol>
+        </div>
+      </div>
+    </div>
 
 		<div class="column-main zone-landing-lists">
 
@@ -154,7 +145,10 @@
 {% block site_css %}
     {{ super() }}
     {{ css('wiki-print', media='print') }}
-    {% if waffle.flag('redesign') %}
-      {{ css('redesign-wiki') }}
-    {% endif %}
+    {{ css('redesign-wiki') }}
+{% endblock %}
+
+{% block site_js %}
+  {{ super() }}
+  {{ js('redesign-wiki') }}
 {% endblock %}

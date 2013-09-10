@@ -48,13 +48,16 @@
 
 /* subnav */
 .subnav
-  .toggler, > li > a
+  .toggler, > ol > li > a
     padding grid-spacing
     border-bottom 1px dotted #d4dde4
     text-transform uppercase
     display block
+    
+  ol ol
+    display none /* prevents flash of unstyled content */
 
-  .toggleable.current
+  .toggleable.current, > ol > li.current
     background #f4f7f8
 
   i
@@ -83,7 +86,7 @@
       .toggle-container a
         padding-left grid-spacing + (grid-spacing / 2)
 
-    .current-page a
+    ol .current a
       position relative
       color text-color
 
