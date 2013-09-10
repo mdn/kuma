@@ -1,9 +1,17 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
 {% block title %}{{ page_title(document.title + seo_parent_title) }}{% endblock %}
-{% set classes = 'document' %}
+
+{% from "wiki/includes/document_macros.html" import build_document_crumbs, get_document_buttons, document_watch with context %}
+
 {% set canonical = request.build_absolute_uri(url('wiki.document', document.full_path)) %}
-{% block bodyclass %}document{% endblock %}
+
+{% set zone_stack = document.find_zone_stack() %}
+{% set is_zone = zone_stack|length %}
+{% set is_zone_root = is_zone and zone_stack[0].document == document %}
+
+{% block bodyclass %}document {% if is_zone %}zone{% endif %} {% if is_zone_root %}zone-landing{% endif %}{% endblock %}
+
 {% if document.parent %}
   {# If there is a parent doc, use it for translating. #}
   {% set translate_url = url('wiki.select_locale', document_path=document.parent.full_path) %}
@@ -69,14 +77,45 @@
   {% endif %}
 {% endblock %}
 
-{% block content %}
 
+{% if waffle.flag('redesign') and zone_stack|length %}
+{% block masthead %}
+  {% if is_zone_root %}
+    <div class="zone-landing-header"><div class="center">
+      <!-- edit, settings buttons -->
+      {{ get_document_buttons(document) }}
+      
+      <!-- crumbs -->
+      {{ build_document_crumbs(document) }}
+
+      <h1>{{ document.title }}</h1>
+
+      <div class="column-container">
+        <div class="column-strip">&nbsp;</div>
+        <div class="column-5 masthead-text"><p>Zombie ipsum brains reversus ab cerebellum viral inferno, brein nam rick mend grimes malum cerveau cerebro.</p></div>
+      </div>
+
+      <div class="zone-image"></div>
+    </div></div>
+  {% elif zone_stack|length %}
+    <div class="zone-article-header"><div class="center">
+      <!-- zone title -->
+      <div class="zone-title">{{ zone_stack[0].document.title }}</div>
+      <!-- zone image -->
+      <div class="zone-image"></div>
+    </div></div>
+  {% endif %}
+{% endblock %}
+{% endif %}
+
+
+
+{% block content %}
   {% if waffle.flag('redesign') %}
     {% include 'wiki/includes/document_content_redesign.html' %}
   {% else %}
     {% include 'wiki/includes/document_content.html' %}
   {% endif %}
-
 {% endblock %}
 
 {% block side %}

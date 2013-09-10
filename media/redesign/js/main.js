@@ -54,7 +54,7 @@ document.documentElement.className += ' js';
 
 
   /*
-    Togglers within articles, TOC, accordion subnav, etc. for example
+    Togglers within articles (i.e.)
   */
   $('.toggleable').mozTogglers();
 
