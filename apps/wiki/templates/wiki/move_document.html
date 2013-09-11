@@ -77,7 +77,7 @@
           {% endif %}
 
           <ul id="page-buttons">
-            <li><button class="btn-save" type="submit">Save Changes</button></li>
+            <li><button class="btn-save" type="submit">{{ _('Move {d} Pages')|f(d=descendants_count) if descendants_count else _('Move Page') }}</button></li>
             <li><a class="btn-discard" href="{{ url('wiki.document', document.full_path, locale=document.locale) }}">Cancel</a></li>
           </ul>
 
