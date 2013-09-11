@@ -20,6 +20,11 @@
       {{ csrf() }}
       <fieldset>
       <header id="article-head">
+        
+        {% if waffle.flag('redesign') %}
+          {% include 'wiki/includes/page_buttons.html' %}
+        {% endif %}
+        
         {{ document_form.category|safe }}
 
         <div class="title">
@@ -41,8 +46,10 @@
         </ul>
         <input type="hidden" name="parent_topic" value="{{ parent_id | safe }}" />
         <div class="hidden" id="parentSlugPrefix">{{ parent_slug | safe }}</div>
-
-        {% include 'wiki/includes/page_buttons.html' %}
+        
+        {% if not waffle.flag('redesign') %}
+          {% include 'wiki/includes/page_buttons.html' %}
+        {% endif %}
 
       </header>
 
