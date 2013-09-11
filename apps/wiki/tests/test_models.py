@@ -632,6 +632,38 @@ class DocumentTestsWithFixture(TestCase):
                 ok_('NeedsTranslation' in p.current_revision.tags)
                 ok_('TopicStub' in p.current_revision.tags)
 
+    def test_repair_breadcrumbs(self):
+        english_top = document(locale=settings.WIKI_DEFAULT_LANGUAGE,
+                               title='English top',
+                               save=True)
+        english_mid = document(locale=settings.WIKI_DEFAULT_LANGUAGE,
+                               title='English mid',
+                               parent_topic=english_top,
+                               save=True)
+        english_bottom = document(locale=settings.WIKI_DEFAULT_LANGUAGE,
+                                  title='English bottom',
+                                  parent_topic=english_mid,
+                                  save=True)
+
+        french_top = document(locale='fr',
+                              title='French top',
+                              parent=english_top,
+                              save=True)
+        french_mid = document(locale='fr',
+                              parent=english_mid,
+                              parent_topic=english_mid,
+                              save=True)
+        french_bottom = document(locale='fr',
+                                 parent=english_bottom,
+                                 parent_topic=english_bottom,
+                                 save=True)
+
+        french_bottom.repair_breadcrumbs()
+        french_bottom_fixed = Document.objects.get(locale='fr',
+                                                   title=french_bottom.title)
+        eq_(french_mid.id, french_bottom_fixed.parent_topic.id)
+        eq_(french_top.id, french_bottom_fixed.parent_topic.parent_topic.id)
+
     def test_code_sample_extraction(self):
         """Make sure sample extraction works from the model.
         This is a smaller version of the test from test_content.py"""

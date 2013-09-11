@@ -1251,6 +1251,19 @@ def move(request, document_slug, document_locale):
     })
 
 
+@login_required
+@process_document_path
+@check_readonly
+@transaction.autocommit
+def repair_breadcrumbs(request, document_slug, document_locale):
+    if not request.user.is_superuser:
+        raise PermissionDenied
+    doc = get_object_or_404(
+        Document, locale=document_locale, slug=document_slug)
+    doc.repair_breadcrumbs()
+    return redirect(doc.get_absolute_url())
+
+
 def ckeditor_config(request):
     """Return ckeditor config from database"""
     default_config = EditorToolbar.objects.filter(name='default').all()

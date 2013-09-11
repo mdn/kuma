@@ -29,6 +29,9 @@ document_patterns = patterns('wiki.views',
     url(r'^\$samples/(?P<sample_id>.+)$', 'code_sample', name='wiki.code_sample'),
     url(r'^\$revert/(?P<revision_id>\d+)$', 'revert_document',
         name='wiki.revert_document'),
+    url(r'^\$repair_breadcrumbs$',
+        'repair_breadcrumbs',
+        name='wiki.repair_breadcrumbs'),
 
     # Un/Subscribe to document edit notifications.
     url(r'^\$watch$', 'watch_document', name='wiki.document_watch'),
