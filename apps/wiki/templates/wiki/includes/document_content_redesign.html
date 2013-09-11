@@ -79,7 +79,7 @@
 <!-- start the main content container -->
 <div id="wiki-column-container">
 
-  {% if show_left or show_right %}
+  {% if not is_zone_root and show_left %}
   <!-- additional controls row; hidden unless needed -->
   <div id="wiki-controls" class="column-container column-container-reverse">
     <div class="column-strip">
