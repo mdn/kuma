@@ -138,7 +138,7 @@
 
       <!-- just the article content -->
       {% set document_html_safe = document_html|section_hide(zone_subnav_section_id, quick_links_section_id)|safe %}
-      <article>
+      <article id="wikiArticle">
         {% if not fallback_reason %}
           {% if not document_html %}
             {{ _("This article doesn't have any content yet.") }}
