@@ -30,7 +30,7 @@
 {% set zone_subnav_html = document|zone_section_extract(zone_subnav_section_id) %}
 
 {% set show_left = zone_subnav_html or quick_links_html or (request.user.is_authenticated() and document.current_revision and document.allows_revision_by(request.user) and (document.current_revision.needs_technical_review() or document.current_revision.needs_editorial_review())) %}
-{% set show_right = (toc_html or tags|length or num_attachments) %}
+{% set show_right = (not is_zone_root and (toc_html or tags|length or num_attachments)) %}
 
 {% set content_class = 'column-all' %}
 {% if show_left and show_right %}
@@ -155,18 +155,20 @@
           {{ _("This article doesn't have approved content yet.") }}
         {% endif %}
       </article>
-
-      <!-- attachments list -->
-      {% if num_attachments %}
-        {% include 'wiki/includes/attachment_list.html' %}
+      
+      {% if not is_zone_root %}
+        <!-- attachments list -->
+        {% if num_attachments %}
+          {% include 'wiki/includes/attachment_list.html' %}
+        {% endif %}
+      
+        <!-- contributors -->
+        <div class="wiki-block contributors">
+        {% trans contributors=user_list(contributors) %}
+          <strong>Contributors to this page:</strong> {{ contributors }}
+        {% endtrans %}
+        </div>
       {% endif %}
-
-      <!-- contributors -->
-      <div class="wiki-block">
-      {% trans contributors=user_list(contributors) %}
-        <strong>Contributors to this page:</strong> {{ contributors }}
-      {% endtrans %}
-      </div>
     </div>
 
     {% if show_left %}
