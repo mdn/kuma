@@ -3,6 +3,10 @@ pre[data-number] {
 	padding: 1em 0 1em 3em;
 }
 
+.redesign pre[data-number] {
+  padding-left: 30px;
+}
+
 .line-number {
 	position: absolute;
 	left: 0;

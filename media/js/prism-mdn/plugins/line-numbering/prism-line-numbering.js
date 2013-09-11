@@ -23,8 +23,7 @@ function numberLines(pre) {
 		var line = document.createElement('div');
 		line.className = 'line-number';
 		line.setAttribute('data-start', i);
-		line.style.top = (i - offset - 1) * lineHeight + 'px';
-		
+		line.style.top = ((i - offset - 1) * lineHeight) + 'px';
 		(code || pre).appendChild(line);
 	}
 }
