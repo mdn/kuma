@@ -214,6 +214,18 @@ def section_extract(val, section_id):
                         .extractSection(section_id, ignore_heading=True)
                         .serialize())
 
+@register.filter
+def selector_content_find(document, selector):
+    """
+    Provided a selector, returns the relevant content from the document
+    """
+    summary = ''
+    try:
+      page = pq(document.rendered_html)
+      summary = page.find(selector).text()
+    except:
+      pass
+    return summary
 
 @register.filter
 def zone_section_extract(document, section_id):
