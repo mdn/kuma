@@ -36,7 +36,7 @@
  {% block content %}
  <div class="column-container">
 
-   {% if search_query %}
+    {% if search_query %}
     <!-- left results -->
     <div class="column-main">
 
@@ -136,27 +136,27 @@
       {% endif %}
     </div>
 
+    {% if facet_counts %}
     <!-- right topics -->
     <div class="column-strip search-results-topics">
-      <h3><i class="icon-th-list"></i>Topics</h3>
+      <h3><i class="icon-th-list"></i>{{ _('Topics') }}</h3>
       <ul>
-        <li><a href="" data-count="10">Application Cache API</a></li>
-        <li><a href="" data-count="10">Asynchronous script exception</a></li>
-        <li><a href="" data-count="10">Audio</a></li>
-        <li><a href="" data-count="10">Canvas</a></li>
-        <li><a href="" data-count="10">Channel messaging</a></li>
-        <li><a href="" data-count="10">CSS</a></li>
-        <li><a href="" data-count="10">Drag and drop</a></li>
-        <li><a href="" data-count="10">Efficient script yielding</a></li>
-        <li><a href="" data-count="10">File API</a></li>
-        <li><a href="" data-count="10">Forms</a></li>
-        <li><a href="" data-count="10">Geolocation API</a></li>
-        <li><a href="" data-count="10">History</a></li>
-        <li><a href="" data-count="10">Javascript</a></li>
-        <li><a href="" data-count="10">Navigation timing</a></li>
-        <li><a href="" data-count="10">Page visibility</a></li>
+        {% for facet in facet_counts %}
+        <li>
+        {% if facet.deselect_url %}
+          {#
+            if face.deselect_url is available that means the facet is applied and should somehow indicate that to the user.
+            here I'm using a blasphemous style attribute to make the font bold when a facet is select. PLEASE FIXME!
+          #}
+          <a href="{{ facet.deselect_url }}" data-count="{{ facet.count }}" style="font-weight:bold;color:red;">{{ facet.label }}</a>
+        {% else %}
+          <a href="{{ facet.select_url }}" data-count="{{ facet.count }}">{{ facet.label }}</a>
+        {% endif %}
+        </li>
+        {% endfor %}
       </ul>
     </div>
+    {% endif %}
 
   {% endif %}
 </div>

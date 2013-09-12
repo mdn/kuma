@@ -13,6 +13,7 @@ pylint==0.20.0
 pygments==1.4
 
 django-devserver
+URLObject==2.3.4
 
 -e git://github.com/jbalogh/check.git#egg=check
 -e git://github.com/robhudson/django-debug-toolbar.git#egg=django_debug_toolbar
