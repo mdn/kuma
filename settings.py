@@ -1058,6 +1058,22 @@ CONSTANCE_CONFIG = dict(
         "JSON array listing tag suggestions for documents"
     ),
 
+    SEARCH_FILTER_TAG_OPTIONS = (
+        json.dumps([
+            "Accessibility", "AJAX", "API", "Apps",
+            "Canvas", "CSS", "Device", "DOM", "Events",
+            "Extensions", "Firefox", "Firefox OS", "Games",
+            "Gecko", "Graphics", "Internationalization", "History", "HTML", "HTTP", "JavaScript", "Layout",
+            "Localization", "MDN", "Mobile", "Mozilla",
+            "Networking", "Persona", "Places", "Plugins", "Protocols",
+
+            "Reference", "Tutorial", "Landing",
+
+            "junk", "NeedsMarkupWork", "NeedsContent", "NeedsExample",
+        ]),
+        "JSON array of tags that are enabled for search faceting"
+    ),
+
     EXTERNAL_SIGNUP_EMAIL = (
         '',
         'The email address to receive external docs signup emails.'

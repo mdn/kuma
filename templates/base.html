@@ -191,7 +191,7 @@
         </div>
       </li><li><a href="{{ url('demos') }}">{{ _('Demos') }}</a></li>{% if not is_sphinx %}<li class="main-nav-search"><form action="{{ url('search') }}">
         <div class="search-wrap">
-          <input type="search" name="q" placeholder="{{ _('Search') }}" />
+          <input type="search" name="q" placeholder="{{ _('Search') }}" value="{{ search_query }}" />
           <i class="icon-search"></i>
           <button type="submit">{{ _('Search') }}</button>
         </div>
