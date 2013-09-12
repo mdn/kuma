@@ -22,7 +22,7 @@ def dump_selected_documents(self, request, queryset):
 dump_selected_documents.short_description = "Dump selected documents as JSON"
 
 
-def repair_breadcrumbs(self, request, queryset):
+def repair_breadcrumbs(request, queryset):
     for doc in queryset:
         doc.repair_breadcrumbs()
 repair_breadcrumbs.short_description = "Repair translation breadcrumbs"
