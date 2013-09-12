@@ -2089,6 +2089,49 @@ class DocumentEditingTests(TestCaseBase):
         ok_(d.children.count() == 1)
         ok_(d.children.all()[0].title == 'Replicated local storage')
 
+    def test_repair_breadcrumbs(self):
+        client = LocalizingClient()
+        english_top = document(locale=settings.WIKI_DEFAULT_LANGUAGE,
+                               title='English top',
+                               save=True)
+        english_mid = document(locale=settings.WIKI_DEFAULT_LANGUAGE,
+                               title='English mid',
+                               parent_topic=english_top,
+                               save=True)
+        english_bottom = document(locale=settings.WIKI_DEFAULT_LANGUAGE,
+                                  title='English bottom',
+                                  parent_topic=english_mid,
+                                  save=True)
+
+        french_top = document(locale='fr',
+                              title='French top',
+                              parent=english_top,
+                              save=True)
+        french_mid = document(locale='fr',
+                              title='French mid',
+                              parent=english_mid,
+                              parent_topic=english_mid,
+                              save=True)
+        french_bottom = document(locale='fr',
+                                 title='French bottom',
+                                 parent=english_bottom,
+                                 parent_topic=english_bottom,
+                                 save=True)
+
+        client.login(username='admin', password='testpass')
+
+        resp = client.get(reverse('wiki.repair_breadcrumbs',
+                                  args=[french_bottom.full_path],
+                                  locale='fr'))
+        eq_(302, resp.status_code)
+        ok_(french_bottom.get_absolute_url() in resp['Location'])
+
+        french_bottom_fixed = Document.objects.get(locale='fr',
+                                                   title=french_bottom.title)
+        eq_(french_mid.id, french_bottom_fixed.parent_topic.id)
+        eq_(french_top.id, french_bottom_fixed.parent_topic.parent_topic.id)
+
+
     def test_translate_on_edit(self):
         d1 = document(title="Doc1", locale=settings.WIKI_DEFAULT_LANGUAGE, save=True)
         revision(document=d1, save=True)
