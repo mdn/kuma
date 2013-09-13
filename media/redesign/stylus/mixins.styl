@@ -60,7 +60,10 @@ reverse-link-decoration()
 
 /* generates a background property for header and zones */
 create-gradient-background(color)
-  background url('/media/redesign/img/header-background.png') 0 0 repeat color;
+  background-image url('/media/redesign/img/header-background.png')
+  background-position 0 0
+  background-repeat repeat
+  background-color color
 
 /* generates a cross-browser gradient */
 create-gradient(start-color, end-color, direction=false)
