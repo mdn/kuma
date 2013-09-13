@@ -80,15 +80,11 @@
         </ul>
 
         <div class="pager">
-        {% if next_page %}
-          <a class="button" href="{{ request.get_full_path()|urlparams(page=next_page) }}">
-          {{ _('Next Page') }}
-          </a>
+        {% if next_page_url %}
+          <a class="button" href="{{ next_page_url }}">{{ _('Next Page') }}</a>
         {% endif %}
-        {% if prev_page %}
-          <a class="button" href="{{ request.get_full_path()|urlparams(page=prev_page) }}">
-          {{ _('Previous Page') }}
-          </a>
+        {% if prev_page_url %}
+          <a class="button" href="{{ prev_page_url }}">{{ _('Previous Page') }}</a>
         {% endif %}
       </div>
       {% if facet_counts %}
