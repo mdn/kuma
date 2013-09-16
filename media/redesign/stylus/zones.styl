@@ -7,12 +7,14 @@
 
   #main-header, .zone-article-header
     create-gradient-background(#0095dd)
-  
+
   #main-header
     border-bottom-color rgba(255, 255, 255, 0.2)
 
-  #main-nav > ul > li > a, .user-state a
-    compat-important(color, #fff)
+    .logo
+      background url('/media/redesign/img/mdn_logo-wordmark-full_white.svg') 0 0 no-repeat
+
+  override-main-nav-color(#fff)
 
   .search-wrap
     create-gradient-background(rgba(255, 255, 255, 0.2))
