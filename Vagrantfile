@@ -115,11 +115,6 @@ Vagrant::VERSION >= "1.1.0" and Vagrant.configure("2") do |config|
       rs.flavor = /512MB/
       rs.image = /Ubuntu/
     end
-
-    # Increase vagrant's patience during hang-y CentOS bootup
-    # see: https://github.com/jedi4ever/veewee/issues/14
-    config.ssh.max_tries = 50
-    config.ssh.timeout = 300
   
     config.vm.provision :puppet do |puppet|
         puppet.manifests_path = "puppet/manifests"
