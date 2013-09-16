@@ -320,16 +320,16 @@ div.bug > *:last-child, div.warning > *:last-child
   li li
     padding-left 20px
 
-  a
-    display block
-    position relative
-    padding-left 20px
+.quick-links a, #quick-links-toggle
+  display block
+  position relative
+  padding-left 20px
 
-  {selector-icon}
-    font-size 14px
-    position absolute
-    left -6px
-    top 1px
+.quick-links {selector-icon}, #quick-links-toggle {selector-icon}
+  font-size 14px
+  position absolute
+  left -6px
+  top 1px
     
   p, div /* don't allow empty paragraphs by CKEditor */
     display none
