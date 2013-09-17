@@ -1,28 +1,26 @@
 /* header */
 #main-header
   create-gradient-background(header-background-color)
+  @extend .clear
+  
   border-color transparent
   border-bottom-width 1px
   border-bottom-style solid
 
-  > .center
-    min-height 110px
-
   .logo
-    @extend .offscreen
+    @extend .text-offscreen
     width 114px
     height 26px
     background url('/media/redesign/img/temporary-logo.png') 0 0 no-repeat
     display block
-    position absolute
-    left gutter-width
-    bottom 21px
+    margin-top 20px
+    float left
 
 #main-nav
   > ul
-    position absolute
-    right gutter-width
-    bottom 21px
+    float right
+    margin-top 20px
+    margin-bottom grid-spacing
 
     > li
       padding-left 47px
@@ -195,9 +193,7 @@ main
 
 /* footer */
 footer
-  height 300px
-
-
+  height 300px /* temporary */
 
 
 
@@ -205,14 +201,6 @@ footer
 @media media-query-mobile
 
   #main-header
-    > .center
-      min-height 160px
-
-    .logo
-      bottom auto
-      top grid-spacing
-      left (grid-spacing * 2)
-
     #tabzilla
       display none
 
@@ -223,10 +211,12 @@ footer
 
   #main-nav
     > ul
-      bottom 0
-
+    
       > li
         vendorize(transition-property, none)
+      
+      > li:first-child, .main-nav-search
+          padding-left 0
       
       .main-nav-search
         width 100%
@@ -248,22 +238,25 @@ footer
 
 
 
-  /* rtl */
+/* rtl */
 .html-rtl
   #main-header
     .logo
-      left auto
-      right gutter-width
+      float right
 
   #main-nav
     > ul
-      right auto
-      left gutter-width
+      float left
 
   .user-state
-    right 200px
-    left auto
+    left 200px
+    right auto
 
     li + li
-      border-right 1px solid #bbb
-      border-left 0
+      border-left 1px solid #bbb
+      border-right 0
+      compat-only(padding-left, 10px)
+      compat-only(padding-right, 0)
+      compat-only(margin-left, 8px)
+      compat-only(margin-right, 0)
+      
