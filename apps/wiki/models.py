@@ -1751,6 +1751,9 @@ class DocumentZone(models.Model):
 
     document = models.ForeignKey(Document, related_name='zones', unique=True)
     styles = models.TextField(null=True, blank=True)
+    url_root = models.CharField(
+        max_length=255, null=True, blank=True, db_index=True, unique=True,
+        help_text="alternative URL path root for documents under this zone")
 
     def __unicode__(self):
         return u'DocumentZone %s (%s)' % (self.document.get_absolute_url(),
