@@ -122,6 +122,13 @@
 
   <!-- Header -->
   <header id="main-header"><div class="center">
+    
+    <div class="clear">
+      <a href="//www.mozilla.org/" id="tabzilla">mozilla</a>
+      {% if not is_sphinx %}
+        {% include "includes/login.html" %}
+      {% endif %}
+    </div>
 
     <a href="{{ url('home') }}" class="logo">{{ _('Mozilla Developer Network') }}</a>
 
@@ -196,12 +203,6 @@
           <button type="submit">{{ _('Search') }}</button>
         </div>
       </form></li>{% endif %}</ul></nav>
-
-    {% if not is_sphinx %}
-      {% include "includes/login.html" %}
-    {% endif %}
-
-    <a href="//www.mozilla.org/" id="tabzilla">mozilla</a>
   </div></header>
 
   <!-- Banner here, if present.  Usually from zone landing -->
