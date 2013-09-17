@@ -1052,14 +1052,14 @@ CKEDITOR.dialog.add( 'link', function( editor )
 					url = url.replace(/ /g, '_');
 
 					// Set the link to be used
-					attributes[ 'data-cke-saved-href' ] = attributes.title = (useOriginal ? url : 'http://' + url);
+					attributes[ 'data-cke-saved-href' ] = (useOriginal ? url : 'http://' + url);
 					
 					break;
 				case 'anchor':
 					var name = ( data.anchor && data.anchor.name ),
 						id = ( data.anchor && data.anchor.id ),
 						finalURL = '#' + ( name || id || '' );
-					attributes[ 'data-cke-saved-href' ] = attributes.title = finalURL;
+					attributes[ 'data-cke-saved-href' ] = finalURL;
 					break;
 				case 'email':
 
@@ -1106,7 +1106,7 @@ CKEDITOR.dialog.add( 'link', function( editor )
 						}
 					}
 
-					attributes[ 'data-cke-saved-href' ] = attributes.title = linkHref.join( '' );
+					attributes[ 'data-cke-saved-href' ] = linkHref.join( '' );
 					break;
 			}
 
