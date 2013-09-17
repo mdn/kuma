@@ -79,7 +79,7 @@
 <!-- start the main content container -->
 <div id="wiki-column-container">
 
-  {% if not is_zone_root and show_left %}
+  {% if show_left %}
   <!-- additional controls row; hidden unless needed -->
   <div id="wiki-controls" class="column-container column-container-reverse">
     <div class="column-strip">
@@ -175,6 +175,10 @@
       <!-- quick links and zone subnav strip -->
       <div id="wiki-left" class="column-strip wiki-column">
         
+      {% if not is_zone_root and (zone_subnav_html or quick_links_html) %}
+        <a href="#quick-links" class="title" id="quick-links-toggle"><i class="icon-caret-up"></i>{{ _('Hide Quick Links') }}</a>
+      {% endif %}
+
         {% if zone_subnav_html %}
           <!-- zone subnav -->
           <div class="zone-subnav-container">
@@ -187,7 +191,6 @@
         {% if quick_links_html %}
         <!-- quick links -->
         <div class="quick-links" id="quick-links">
-          <a href="#quick-links" class="title" id="quick-links-toggle"><i class="icon-caret-up"></i>{{ _('Hide QuickLinks') }}</a>
           {{ quick_links_html|safe }}
         </div>
         {% endif %}
