@@ -46,6 +46,12 @@ class ContentSectionToolTests(TestCase):
 
             <h1 class="header3">Header Three</h1>
             <p>test</p>
+
+            <section id="Quick_Links" class="Quick_Links">
+                <ol>
+                    <li>Hey look, quick links</li>
+                </ol>
+            </section>
         """
 
         result_src = (wiki.content
@@ -59,6 +65,7 @@ class ContentSectionToolTests(TestCase):
             ('header2', 'Header_Two'),
             ('hasname', 'Constants'),
             ('hasid',   'This_text_clobbers_the_ID'),
+            ('Quick_Links', 'Quick_Links'),
         )
         for cls, id in expected:
             eq_(id, result_doc.find('.%s' % cls).attr('id'))
