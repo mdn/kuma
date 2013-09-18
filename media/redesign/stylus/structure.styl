@@ -22,17 +22,32 @@
     margin-top 20px
     margin-bottom grid-spacing
 
+    @media media-query-mobile
+      width 100%
+      clear both
+
     > li
       padding-left 47px
       position relative
       opacity 1
       max-width 1000px
       display inline-block
-      vendorize(transition-property, all)
+      vendorize(transition-property, width)
       vendorize(transition-duration, animation-duration)
       vendorize(transition-delay, animation-duration)
 
-      > a
+      @media media-query-tablet
+        &:first-child, &:last-child
+          padding-left 0
+
+        padding-left 28px
+
+      @media media-query-mobile
+        display block
+        padding-left 0
+        padding 5px 0
+
+      > a, .search-trigger
         compat-important(color, menu-link-color)
         compat-important(text-transform, uppercase)
         compat-important(text-decoration, none)
@@ -72,6 +87,7 @@
       width 0
       max-width 0
       overflow hidden
+      padding 0
       vendorize(transition-delay, 0)
 
   @media media-query-tablet
@@ -142,9 +158,15 @@ a.persona-button
         z-index -1
 
 .search-wrap
-  background #fff
+  background transparent
   padding 4px 8px
   border-radius 3px
+
+  &.expanded
+    background #fff
+
+  @media media-query-mobile
+        background #fff
 
   input
     background transparent
@@ -152,7 +174,8 @@ a.persona-button
     color menu-link-color
     text-transform uppercase
     font-weight bold
-    width 180px
+    width 0
+    overflow hidden
     compat-only(padding, 0)
     vendorize(transition-property, width)
     vendorize(transition-duration, animation-duration)
@@ -166,11 +189,6 @@ a.persona-button
 
     &.has-value
       text-transform none
-
-  @media media-query-tablet
-
-    input
-      width 100px
 
 /* main content area */
 .wrap
@@ -230,7 +248,6 @@ footer
     &.expand
       ul
         > li:not(:last-child)
-          opacity 1
           width auto
           max-width none
           vendorize(transition-property, none)
