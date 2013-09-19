@@ -499,8 +499,10 @@ class SectionIDFilter(html5lib_Filter):
 
                 # If this is not a header, then generate a section ID.
                 if token['name'] not in HEAD_TAGS:
-                    attrs['id'] = self.gen_id()
-                    token['data'] = attrs.items()
+                    # But, only generate the ID if there's not already one
+                    if 'id' not in attrs:
+                        attrs['id'] = self.gen_id()
+                        token['data'] = attrs.items()
                     yield token
                     continue
 
