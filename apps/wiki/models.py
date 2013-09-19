@@ -1,11 +1,9 @@
-import logging
 from collections import namedtuple
 from datetime import datetime, timedelta
 from itertools import chain
 from urlparse import urlparse
 import hashlib
 import re
-import time
 import json
 
 from pyquery import PyQuery
@@ -19,7 +17,7 @@ from django.core import serializers
 from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import resolve
-from django.db import models, transaction
+from django.db import models
 from django.db.models import signals
 from django.http import Http404
 from django.utils.html import strip_tags
@@ -44,11 +42,16 @@ from teamwork.models import Team
 
 import waffle
 
-import wiki.content
-from wiki import TEMPLATE_TITLE_PREFIX
-from wiki.signals import render_done
+from . import kumascript, TEMPLATE_TITLE_PREFIX
+from .content import (get_seo_description, get_content_sections,
+                      extract_code_sample, parse as parse_content)
+from .exceptions import (UniqueCollision, SlugCollision,
+                         DocumentRenderingInProgress,
+                         DocumentRenderedContentNotAvailable)
+from .signals import render_done
 
-from . import kumascript
+add_introspection_rules([], ["^utils\.OverwritingFileField"])
+
 
 ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'div', 'span', 'p', 'br', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
@@ -342,16 +345,6 @@ DEKI_FILE_URL = re.compile(r'@api/deki/files/(?P<file_id>\d+)/=')
 KUMA_FILE_URL = re.compile(r'/files/(?P<file_id>\d+)/.+\..+')
 
 
-class UniqueCollision(Exception):
-    """An attempt to create two pages with the same unique metadata"""
-    def __init__(self, existing):
-        self.existing = existing
-
-
-class SlugCollision(UniqueCollision):
-    """An attempt to create two pages of the same slug in one locale"""
-
-
 def _inherited(parent_attr, direct_attr):
     """Return a descriptor delegating to an attr of the original document.
 
@@ -379,9 +372,9 @@ def _inherited(parent_attr, direct_attr):
 class BaseDocumentManager(models.Manager):
     """Manager for Documents, assists for queries"""
     def clean_content(self, content_in, use_constance_bleach_whitelists=False):
-        out = (wiki.content
-               .parse(content_in)
-               .filterIframeHosts(constance.config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS)
+        allowed_hosts = constance.config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS
+        out = (parse_content(content_in)
+               .filterIframeHosts(allowed_hosts)
                .serialize())
 
         if use_constance_bleach_whitelists:
@@ -412,9 +405,10 @@ class BaseDocumentManager(models.Manager):
 
     def filter_for_list(self, locale=None, category=None, tag=None,
                         tag_name=None):
-        docs = (self.filter(is_template=False, is_redirect=False).
-                    exclude(slug__startswith='User:').
-                    exclude(slug__startswith='Talk:').order_by('title'))
+        docs = (self.filter(is_template=False, is_redirect=False)
+                    .exclude(slug__startswith='User:')
+                    .exclude(slug__startswith='Talk:')
+                    .order_by('title'))
         if locale:
             docs = docs.filter(locale=locale)
         if category:
@@ -524,7 +518,6 @@ class BaseDocumentManager(models.Manager):
 class DocumentManager(BaseDocumentManager):
     """
     The actual manager, which filters to show only non-deleted pages.
-    
     """
     def get_query_set(self):
         return super(DocumentManager, self).get_query_set().filter(deleted=False)
@@ -533,7 +526,6 @@ class DocumentManager(BaseDocumentManager):
 class DeletedDocumentManager(BaseDocumentManager):
     """
     Specialized manager for working with deleted pages.
-    
     """
     def get_query_set(self):
         return super(DocumentManager, self).get_query_set().filter(deleted=True)
@@ -570,18 +562,6 @@ class TaggedDocument(ItemBase):
                 taggeddocument__content_object=instance)
         return DocumentTag.objects.filter(
             taggeddocument__content_object__isnull=False).distinct()
-
-
-class DocumentRenderingInProgress(Exception):
-    """An attempt to render a page while a rendering is already in progress is
-    disallowed."""
-    pass
-
-
-class DocumentRenderedContentNotAvailable(Exception):
-    """No rendered content available, and an attempt to render on the spot was
-    denied. So, the view should fall back to presenting raw content for now."""
-    pass
 
 
 @register_live_index
@@ -687,9 +667,9 @@ class Document(NotificationsMixin, models.Model):
 
     # HACK: Migration bookkeeping - index by the old_id of MindTouch revisions
     # so that migrations can be idempotent.
-    mindtouch_page_id = models.IntegerField(
-            help_text="ID for migrated MindTouch page",
-            null=True, db_index=True)
+    mindtouch_page_id = models.IntegerField(null=True, db_index=True,
+                                            help_text="ID for migrated "
+                                                      "MindTouch page")
 
     # Last modified time for the document. Should be equal-to or greater than
     # the current revision's created field
@@ -700,8 +680,7 @@ class Document(NotificationsMixin, models.Model):
         if not section_id:
             content = self.html
         else:
-            content = (wiki.content
-                       .parse(self.html)
+            content = (parse_content(self.html)
                        .extractSection(section_id)
                        .serialize())
         return '"%s"' % hashlib.sha1(content.encode('utf8')).hexdigest()
@@ -852,15 +831,13 @@ class Document(NotificationsMixin, models.Model):
             src = self.rendered_html
         else:
             src = self.html
-        summary = wiki.content.get_seo_description(src, self.locale,
-                                                   strip_markup)
-        return summary
+        return get_seo_description(src, self.locale, strip_markup)
 
     def build_json_data(self):
-        content = (wiki.content.parse(self.html)
-                               .injectSectionIDs()
-                               .serialize())
-        sections = wiki.content.get_content_sections(content)
+        content = (parse_content(self.html)
+                   .injectSectionIDs()
+                   .serialize())
+        sections = get_content_sections(content)
 
         summary = ''
         if self.current_revision:
@@ -875,7 +852,8 @@ class Document(NotificationsMixin, models.Model):
                 translations.append({
                     'locale': translation.locale,
                     'title': translation.title,
-                    'url': reverse('wiki.document', args=[translation.full_path],
+                    'url': reverse('wiki.document',
+                                   args=[translation.full_path],
                                    locale=translation.locale)
                 })
 
@@ -937,7 +915,6 @@ class Document(NotificationsMixin, models.Model):
         # If there's no parsed data or the data is stale & we care, it's time
         # to rebuild the cached JSON data.
         if (not self._json_data) or (not stale and doc_lmod > json_lmod):
-            old_json = self.json
             self._json_data = self.build_json_data()
             self.json = json.dumps(self._json_data)
             # HACK: Update just the json field for the document.
@@ -954,7 +931,7 @@ class Document(NotificationsMixin, models.Model):
                 src = self.html
         except:
             src = self.html
-        return wiki.content.extract_code_sample(id, src)
+        return extract_code_sample(id, src)
 
     def natural_key(self):
         return (self.locale, self.slug,)
@@ -967,8 +944,7 @@ class Document(NotificationsMixin, models.Model):
     def _existing(self, attr, value):
         """Return an existing doc (if any) in this locale whose `attr` attr is
         equal to mine."""
-        return Document.objects.filter(locale=self.locale,
-                                        **{attr: value})
+        return Document.objects.filter(locale=self.locale, **{attr: value})
 
     def _raise_if_collides(self, attr, exception):
         """Raise an exception if a page of this title/slug already exists."""
@@ -1061,8 +1037,8 @@ class Document(NotificationsMixin, models.Model):
         if revision.document.original == self:
             revision.based_on = revision
         revision.id = None
-        revision.comment = "Revert to revision of %s by %s" % (
-                revision.created, revision.creator)
+        revision.comment = ("Revert to revision of %s by %s" %
+                            (revision.created, revision.creator))
         if comment:
             revision.comment += ': "%s"' % comment
         revision.created = datetime.now()
@@ -1113,7 +1089,7 @@ class Document(NotificationsMixin, models.Model):
             if not section_id:
                 new_rev.content = new_html
             else:
-                new_rev.content = (wiki.content.parse(self.html)
+                new_rev.content = (parse_content(self.html)
                                    .replaceSection(section_id, new_html)
                                    .serialize())
 
@@ -1171,7 +1147,8 @@ class Document(NotificationsMixin, models.Model):
     def delete(self, *args, **kwargs):
         if waffle.switch_is_active('wiki_error_on_delete'):
             # bug 863692: Temporary while we investigate disappearing pages.
-            raise Exception("Attempt to delete document %s: %s" % (self.id, self.title))
+            raise Exception("Attempt to delete document %s: %s" %
+                            (self.id, self.title))
         else:
             signals.pre_delete.send(sender=self.__class__,
                                     instance=self)
@@ -1187,10 +1164,12 @@ class Document(NotificationsMixin, models.Model):
     def purge(self):
         if waffle.switch_is_active('wiki_error_on_delete'):
             # bug 863692: Temporary while we investigate disappearing pages.
-            raise Exception("Attempt to purge document %s: %s" % (self.id, self.title))
+            raise Exception("Attempt to purge document %s: %s" %
+                            (self.id, self.title))
         else:
             if not self.deleted:
-                raise Exception("Attempt tp purge non-deleted document %s: %s" % (self.id, self.title))
+                raise Exception("Attempt tp purge non-deleted document %s: %s" %
+                                (self.id, self.title))
             self.delete(purge=True)
 
     def undelete(self):
@@ -1246,8 +1225,8 @@ class Document(NotificationsMixin, models.Model):
         for child in self.get_descendants():
             child_title = child.slug.split('/')[-1]
             try:
-                existing = Document.objects.get(locale=self.locale,
-                                        slug='/'.join([new_slug, child_title]))
+                slug = '/'.join([new_slug, child_title])
+                existing = Document.objects.get(locale=self.locale, slug=slug)
                 if not existing.redirect_url():
                     conflicts.append(existing)
             except Document.DoesNotExist:
@@ -1259,8 +1238,6 @@ class Document(NotificationsMixin, models.Model):
         Move this page and all its children.
 
         """
-        old_slug = self.slug
-
         if user is None:
             user = self.current_revision.creator
 
@@ -1293,7 +1270,6 @@ class Document(NotificationsMixin, models.Model):
         Basically just walks up the tree of topical parents, calling
         acquire_translated_topic_parent() for as long as there's a
         language mismatch.
-        
         """
         if not self.parent_topic or \
            self.parent_topic.locale != self.locale:
@@ -1406,7 +1382,7 @@ class Document(NotificationsMixin, models.Model):
         # file URL patterns.
         mt_files = DEKI_FILE_URL.findall(self.html)
         kuma_files = KUMA_FILE_URL.findall(self.html)
-        mt_q = kuma_q = params = None
+        params = None
 
         if mt_files:
             # We have at least some MindTouch files.
@@ -1639,7 +1615,7 @@ class Document(NotificationsMixin, models.Model):
     def other_translations(self):
         """Return a list of Documents - other translations of this Document"""
         translations = []
-        if self.parent == None:
+        if self.parent is None:
             translations = list(self.translations.all().order_by('locale'))
         else:
             translations = list(self.parent.translations.all().
@@ -1682,8 +1658,8 @@ class Document(NotificationsMixin, models.Model):
         if (limit is None or levels < limit) and self.has_children():
             for child in self.children.all():
                 results.append(child)
-                [results.append(grandchild) for \
-                 grandchild in child.get_descendants(limit, levels + 1)]
+                [results.append(grandchild)
+                 for grandchild in child.get_descendants(limit, levels + 1)]
         return results
 
     def has_voted(self, request):
@@ -1728,11 +1704,9 @@ class Document(NotificationsMixin, models.Model):
 class DocumentDeletionLog(models.Model):
     """
     Log of who deleted a Document, when, and why.
-    
     """
     # We store the locale/slug because it's unique, and also because a
     # ForeignKey would delete this log when the Document gets purged.
-    
     locale = LocaleField(default=settings.WIKI_DEFAULT_LANGUAGE, db_index=True)
     slug = models.CharField(max_length=255, db_index=True)
 
@@ -1746,7 +1720,6 @@ class DocumentDeletionLog(models.Model):
             'slug': self.slug,
             'user': self.user
         }
-
 
 
 @register_mapping_type
@@ -1791,12 +1764,11 @@ class DocumentType(SearchMappingType, Indexable):
     def get_indexable(cls):
         model = cls.get_model()
         return (model.objects
-                    .filter(is_template=0,
-                            is_redirect=0,
-                            deleted=False)
-                    .exclude(slug__icontains='Talk:')
-                    .values_list('id', flat=True)
-               )
+                     .filter(is_template=0,
+                             is_redirect=0,
+                             deleted=False)
+                     .exclude(slug__icontains='Talk:')
+                     .values_list('id', flat=True))
 
     @classmethod
     def get_analysis(cls):
@@ -1814,9 +1786,8 @@ class DocumentType(SearchMappingType, Indexable):
             bleached_matches = []
             for match in matches:
                 bleached_matches.append(bleach.clean(match,
-                                                     tags=['em',],
-                                                     strip=True)
-                                       )
+                                                     tags=['em'],
+                                                     strip=True))
             return bleached_matches
 
         stripped_matches = []
@@ -1839,6 +1810,7 @@ class DocumentZone(models.Model):
     def __unicode__(self):
         return u'DocumentZone %s (%s)' % (self.document.get_absolute_url(),
                                           self.document.title)
+
 
 class ReviewTag(TagBase):
     """A tag indicating review status, mainly for revisions"""
@@ -1968,10 +1940,11 @@ class Revision(models.Model):
                     self.based_on = based_on  # Guess a correct value.
                     locale = LOCALES[settings.WIKI_DEFAULT_LANGUAGE].native
                     # TODO(erik): This error message ignores non-translations.
-                    raise ValidationError(_('A revision must be based on a '
-                        'revision of the %(locale)s document. Revision ID'
-                        ' %(id)s does not fit those criteria.') %
-                        dict(locale=locale, id=old.id))
+                    error = _('A revision must be based on a revision of the '
+                              '%(locale)s document. Revision ID %(id)s does '
+                              'not fit those criteria.')
+                    raise ValidationError(error %
+                                          {'locale': locale, 'id': old.id})
 
     def save(self, *args, **kwargs):
         _, is_clean = self._based_on_is_clean()
@@ -2016,15 +1989,14 @@ class Revision(models.Model):
 
     def __unicode__(self):
         return u'[%s] %s #%s: %s' % (self.document.locale,
-                                      self.document.title,
-                                      self.id, self.content[:50])
+                                     self.document.title,
+                                     self.id, self.content[:50])
 
     def get_section_content(self, section_id):
         """Convenience method to extract the content for a single section"""
-        return(wiki.content
-            .parse(self.content)
-            .extractSection(section_id)
-            .serialize())
+        return (parse_content(self.content)
+                .extractSection(section_id)
+                .serialize())
 
     @property
     def content_cleaned(self):
@@ -2034,13 +2006,11 @@ class Revision(models.Model):
 
     def get_previous(self):
         previous_revisions = self.document.revisions.filter(
-                                is_approved=True,
-                                created__lt=self.created,
-                                ).order_by('-created')
+            is_approved=True,
+            created__lt=self.created,
+        ).order_by('-created')
         if len(previous_revisions):
             return previous_revisions[0]
-        else:
-            return None
 
     def needs_editorial_review(self):
         return 'editorial' in [t.name for t in self.review_tags.all()]
@@ -2093,7 +2063,7 @@ class RelatedDocument(models.Model):
 
 def toolbar_config_upload_to(instance, filename):
     """upload_to builder for toolbar config files"""
-    if (instance.default and instance.default == True):
+    if instance.default:
         return 'js/ckeditor_config.js'
     else:
         return 'js/ckeditor_config_%s.js' % instance.creator.id
@@ -2123,8 +2093,6 @@ def get_current_or_latest_revision(document, reviewed_only=True):
             rev = revs[0]
 
     return rev
-
-add_introspection_rules([], ["^utils\.OverwritingFileField"])
 
 
 def rev_upload_to(instance, filename):
@@ -2219,12 +2187,11 @@ class Attachment(models.Model):
         return ('wiki.attachment_detail', (), {'attachment_id': self.id})
 
     def get_file_url(self):
-        uri = reverse('wiki.raw_file', kwargs={'attachment_id': self.id,
-                               'filename':  self.current_revision.filename()})
-        url = '%s%s%s' % (settings.PROTOCOL,
-                         settings.ATTACHMENT_HOST,
-                         uri)
-        return url
+        uri = reverse('wiki.raw_file', kwargs={
+            'attachment_id': self.id,
+            'filename':  self.current_revision.filename(),
+        })
+        return '%s%s%s' % (settings.PROTOCOL, settings.ATTACHMENT_HOST, uri)
 
     def attach(self, document, user, name):
         if self.id not in document.attachments.values_list('id', flat=True):
@@ -2319,8 +2286,6 @@ class AttachmentRevision(models.Model):
         previous_revisions = self.attachment.revisions.filter(
             is_approved=True,
             created__lt=self.created,
-            ).order_by('-created')
+        ).order_by('-created')
         if len(previous_revisions):
             return previous_revisions[0]
-        else:
-            return None
