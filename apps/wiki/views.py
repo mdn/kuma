@@ -61,10 +61,11 @@ from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,
                          ApproveRevisionInLocaleEvent)
 from wiki.forms import (DocumentForm, RevisionForm, ReviewForm,
                         RevisionValidationForm, AttachmentRevisionForm,
-                        TreeMoveForm)
+                        TreeMoveForm, DocumentDeletionForm)
 from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
                          DocumentZone,
                          DocumentTag, ReviewTag, Attachment,
+                         DocumentDeletionLog,
                          DocumentRenderedContentNotAvailable,
                          CATEGORIES,
                          OPERATING_SYSTEMS, GROUPED_OPERATING_SYSTEMS,
@@ -322,6 +323,20 @@ def document(request, document_slug, document_locale):
             fallback_reason = 'no_content'
 
     except Document.DoesNotExist:
+
+        # Possible the document once existed, but is now deleted.
+        # If so, show that it was deleted.
+        try:
+            deletion_logs = DocumentDeletionLog.objects.filter(
+                locale=document_locale,
+                slug=document_slug
+            )
+            deletion_logs[0]
+            return render(request,
+                          'wiki/deletion_log.html',
+                          {'deletion_logs': deletion_logs})
+        except IndexError:
+            pass
 
         # We can throw a 404 immediately if the request type is HEAD
         if request.method == 'HEAD':
@@ -2030,6 +2045,76 @@ def delete_revision(request, document_path, revision_id):
 
     return HttpResponseRedirect(reverse('wiki.document_revisions',
                                         args=[document.full_path]))
+
+@login_required
+@permission_required('wiki.delete_document')
+@check_readonly
+@process_document_path
+def delete_document(request, document_slug, document_locale):
+    """
+    Delete a Document.
+    
+    """
+    document = get_object_or_404(
+        Document,
+        locale=document_locale,
+        slug=document_slug)
+    if request.method == 'POST':
+        form = DocumentDeletionForm(data=request.POST)
+        if form.is_valid():
+            DocumentDeletionLog.objects.create(
+                locale=document.locale,
+                slug=document.slug,
+                user=request.user,
+                reason=form.cleaned_data['reason']
+            )
+            document.delete()
+            return HttpResponseRedirect(document.get_absolute_url())
+    else:
+        form = DocumentDeletionForm()
+    return render(request,
+                  'wiki/confirm_document_delete.html',
+                  {'document': document, 'form': form})
+
+        
+@login_required
+@permission_required('wiki.restore_document')
+@check_readonly
+@process_document_path
+def restore_document(request, document_slug, document_locale):
+    """
+    Restore a deleted Document.
+    
+    """
+    document = get_object_or_404(Document.deleted.all(),
+                                 slug=document_slug,
+                                 locale=document_locale)
+    document.undelete()
+    return redirect(document.get_absolute_url())
+
+
+@login_required
+@permission_required('wiki.purge_document')
+@check_readonly
+@process_document_path
+def purge_document(request, document_slug, document_locale):
+    """
+    Permanently purge a deleted Document.
+    
+    """
+    document = get_object_or_404(Document.deleted.all(),
+                                 slug=document_slug,
+                                 locale=document_locale)
+    if request.method == 'POST' and \
+       'confirm' in request.POST:
+        document.purge()
+        return redirect(reverse('wiki.document',
+                                args=(document_slug,),
+                                locale=document_locale))
+    else:
+        return render(request,
+                      'wiki/confirm_purge.html',
+                      {'document': document})
 
 
 @login_required

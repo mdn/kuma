@@ -20,6 +20,7 @@ from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import resolve
 from django.db import models, transaction
+from django.db.models import signals
 from django.http import Http404
 from django.utils.html import strip_tags
 
@@ -375,9 +376,8 @@ def _inherited(parent_attr, direct_attr):
     return property(getter, setter)
 
 
-class DocumentManager(models.Manager):
+class BaseDocumentManager(models.Manager):
     """Manager for Documents, assists for queries"""
-
     def clean_content(self, content_in, use_constance_bleach_whitelists=False):
         out = (wiki.content
                .parse(content_in)
@@ -521,6 +521,24 @@ class DocumentManager(models.Manager):
         return counter
 
 
+class DocumentManager(BaseDocumentManager):
+    """
+    The actual manager, which filters to show only non-deleted pages.
+    
+    """
+    def get_query_set(self):
+        return super(DocumentManager, self).get_query_set().filter(deleted=False)
+
+
+class DeletedDocumentManager(BaseDocumentManager):
+    """
+    Specialized manager for working with deleted pages.
+    
+    """
+    def get_query_set(self):
+        return super(DocumentManager, self).get_query_set().filter(deleted=True)
+
+
 class DocumentTag(TagBase):
     """A tag indexing a document"""
     class Meta:
@@ -528,10 +546,18 @@ class DocumentTag(TagBase):
         verbose_name_plural = _("Document Tags")
 
 
+class TaggedDocumentManager(models.Manager):
+    def get_query_set(self):
+        base_qs = super(TaggedDocumentManager, self).get_query_set()
+        return base_qs.filter(content_object__deleted=False)
+
+
 class TaggedDocument(ItemBase):
     """Through model, for tags on Documents"""
     content_object = models.ForeignKey('Document')
     tag = models.ForeignKey(DocumentTag)
+
+    objects = TaggedDocumentManager()
 
     # FIXME: This is copypasta from taggit/models.py#TaggedItemBase, which I
     # don't like. But, it seems to be the only way to get *both* a custom tag
@@ -569,9 +595,12 @@ class Document(NotificationsMixin, models.Model):
             ("add_template_document", "Can add Template:* document"),
             ("change_template_document", "Can change Template:* document"),
             ("move_tree", "Can move a tree of documents"),
+            ("purge_document", "Can permanently delete document"),
+            ("restore_document", "Can restore deleted document"),
         )
 
     objects = DocumentManager()
+    deleted = DeletedDocumentManager()
 
     title = models.CharField(max_length=255, db_index=True)
     slug = models.CharField(max_length=255, db_index=True)
@@ -652,6 +681,9 @@ class Document(NotificationsMixin, models.Model):
 
     # Team to which this document belongs, if any
     team = models.ForeignKey(Team, blank=True, null=True)
+
+    # Whether this page is deleted.
+    deleted = models.BooleanField(default=False)
 
     # HACK: Migration bookkeeping - index by the old_id of MindTouch revisions
     # so that migrations can be idempotent.
@@ -1141,7 +1173,34 @@ class Document(NotificationsMixin, models.Model):
             # bug 863692: Temporary while we investigate disappearing pages.
             raise Exception("Attempt to delete document %s: %s" % (self.id, self.title))
         else:
-            super(Document, self).delete(*args, **kwargs)
+            signals.pre_delete.send(sender=self.__class__,
+                                    instance=self)
+            if self.is_redirect or 'purge' in kwargs:
+                if 'purge' in kwargs:
+                    kwargs.pop('purge')
+                return super(Document, self).delete(*args, **kwargs)
+            if not self.deleted:
+                Document.objects.filter(pk=self.pk).update(deleted=True)
+            signals.post_delete.send(sender=self.__class__,
+                                     instance=self)
+
+    def purge(self):
+        if waffle.switch_is_active('wiki_error_on_delete'):
+            # bug 863692: Temporary while we investigate disappearing pages.
+            raise Exception("Attempt to purge document %s: %s" % (self.id, self.title))
+        else:
+            if not self.deleted:
+                raise Exception("Attempt tp purge non-deleted document %s: %s" % (self.id, self.title))
+            self.delete(purge=True)
+
+    def undelete(self):
+        if not self.deleted:
+            raise Exception("Document is not deleted, cannot be undeleted.")
+        signals.pre_save.send(sender=self.__class__,
+                              instance=self)
+        Document.objects.filter(pk=self.pk).update(deleted=False)
+        signals.post_save.send(sender=self.__class__,
+                               instance=self)
 
     def move(self, new_slug=None, user=None):
         """
@@ -1666,6 +1725,30 @@ class Document(NotificationsMixin, models.Model):
         return DocumentType
 
 
+class DocumentDeletionLog(models.Model):
+    """
+    Log of who deleted a Document, when, and why.
+    
+    """
+    # We store the locale/slug because it's unique, and also because a
+    # ForeignKey would delete this log when the Document gets purged.
+    
+    locale = LocaleField(default=settings.WIKI_DEFAULT_LANGUAGE, db_index=True)
+    slug = models.CharField(max_length=255, db_index=True)
+
+    user = models.ForeignKey(User)
+    timestamp = models.DateTimeField(auto_now=True)
+    reason = models.TextField()
+
+    def __unicode__(self):
+        return "/%(locale)s/%(slug)s deleted by %(user)s" % {
+            'locale': self.locale,
+            'slug': self.slug,
+            'user': self.user
+        }
+
+
+
 @register_mapping_type
 class DocumentType(SearchMappingType, Indexable):
 
@@ -1709,7 +1792,8 @@ class DocumentType(SearchMappingType, Indexable):
         model = cls.get_model()
         return (model.objects
                     .filter(is_template=0,
-                            is_redirect=0)
+                            is_redirect=0,
+                            deleted=False)
                     .exclude(slug__icontains='Talk:')
                     .values_list('id', flat=True)
                )
