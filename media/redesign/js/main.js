@@ -24,21 +24,29 @@ document.documentElement.className += ' js';
   !isOldIE && (function() {
     var $nav = $('#main-nav');
     var $navItems = $nav.find('ul > li:not(:last-child)');
-    var $input = $nav.find('.search-wrap input');
+    var $searchWrap = $nav.find('.search-wrap');
+    var $input = $searchWrap.find('input');
     var placeholder = $input.attr('placeholder');
 
     var timeout;
     var createExpander = function(delay, isAdd) {
-      return function() {
+      return function(e) {
+        e && e.preventDefault();
         timeout && clearTimeout(timeout);
         timeout = setTimeout(function() {
           if(isAdd) {
-            $nav.addClass('expand');
-            $input.attr('placeholder', '');
+            $navItems.fadeOut(100, function() {
+              $navItems.css('display', 'none');
+              $searchWrap.addClass('expanded');
+              $nav.addClass('expand');
+            });
           }
           else {
             $nav.removeClass('expand');
-            $input.attr('placeholder', placeholder);
+            timeout = setTimeout(function() {
+              $searchWrap.removeClass('expanded');
+              $navItems.fadeIn(400);
+            } , 500)
           }
         }, delay);
       }
@@ -50,8 +58,12 @@ document.documentElement.className += ' js';
       on('keypress change', function() {
         $input[($input.val() != '' ? 'add' : 'remove') + 'Class']('has-value');
       });
-  })();
 
+    $nav.find('.search-trigger').on('focus click mouseenter', function() {
+      setTimeout(function() { $input.css('display', '').get(0).focus(); }, 100);
+      createExpander(200, true);
+    });
+  })();
 
   /*
     Togglers within articles (i.e.)
