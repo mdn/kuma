@@ -68,17 +68,17 @@
           {% endif %}
 
           <div class="pager">
-                {% if next_page %}
-                  <a class="button" href="{{ request.get_full_path()|urlparams(page=next_page) }}">
-                  {{ _('Next Page') }}
-                  </a>
-                {% endif %}
-                {% if prev_page %}
-                  <a class="button" href="{{ request.get_full_path()|urlparams(page=prev_page) }}">
-                  {{ _('Previous Page') }}
-                  </a>
-                {% endif %}
-              </div>
+            {% if prev_page %}
+              <a class="button" href="{{ request.get_full_path()|urlparams(page=prev_page) }}">
+              {{ _('Previous Page') }}
+              </a>
+            {% endif %}
+            {% if next_page %}
+              <a class="button" href="{{ request.get_full_path()|urlparams(page=next_page) }}">
+              {{ _('Next Page') }}
+              </a>
+            {% endif %}
+            </div>
 
         </div>
       </div>
