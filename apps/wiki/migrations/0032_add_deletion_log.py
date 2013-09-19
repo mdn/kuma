@@ -19,19 +19,10 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal('wiki', ['DocumentDeletionLog'])
 
-        # Adding field 'Document.deleted'
-        db.add_column('wiki_document', 'deleted',
-                      self.gf('django.db.models.fields.BooleanField')(default=False),
-                      keep_default=False)
-
 
     def backwards(self, orm):
         # Deleting model 'DocumentDeletionLog'
         db.delete_table('wiki_documentdeletionlog')
-
-        # Deleting field 'Document.deleted'
-        db.delete_column('wiki_document', 'deleted')
-
 
     models = {
         'auth.group': {
