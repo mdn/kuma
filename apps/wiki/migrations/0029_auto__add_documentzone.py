@@ -143,7 +143,7 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'DocumentTag'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '100'})
+            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '100', 'db_index': 'True'})
         },
         'wiki.documentzone': {
             'Meta': {'object_name': 'DocumentZone'},
@@ -192,7 +192,7 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'ReviewTag'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '100'})
+            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '100', 'db_index': 'True'})
         },
         'wiki.reviewtaggedrevision': {
             'Meta': {'object_name': 'ReviewTaggedRevision'},
