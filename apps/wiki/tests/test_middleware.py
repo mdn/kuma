@@ -58,15 +58,9 @@ class DocumentZoneMiddlewareTestCase(TestCaseBase):
 
         self.root_zone = DocumentZone(document=self.root_doc)
         self.root_zone.url_root = self.zone_root
-        self.root_zone.styles = """
-            article { color: blue; }
-        """
         self.root_zone.save()
 
         self.middle_zone = DocumentZone(document=self.middle_doc)
-        self.middle_zone.styles = """
-            article { font-weight: bold; }
-        """
         self.middle_zone.save()
 
     def test_url_root_internal_redirect(self):
@@ -88,5 +82,5 @@ class DocumentZoneMiddlewareTestCase(TestCaseBase):
 
         url = '/en-US/docs/%s?raw=1' % self.middle_doc.slug
         response = self.client.get(url, follow=False)
-        eq_(301, response.status_code)
+        eq_(302, response.status_code)
         eq_('http://testserver/en-US/ExtraWiki/Middle?raw=1', response['Location'])

@@ -1,14 +1,14 @@
 import logging
 
 from django.shortcuts import render
-from django.http import HttpResponsePermanentRedirect, HttpResponseForbidden
+from django.http import HttpResponseRedirect
 from django.utils.encoding import iri_to_uri, smart_str, smart_unicode
 
 from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
 
 from wiki import ReadOnlyException
-from wiki.models import (Document, DocumentZone)
+from wiki.models import Document, DocumentZone
 
 
 class ReadOnlyMiddleware(object):
@@ -30,22 +30,26 @@ class DocumentZoneMiddleware(object):
     """
     def process_request(self, request):
         zones = DocumentZone.objects.filter(url_root__isnull=False)
-        for z in zones:
-            root = '/%s' % z.url_root
-            orig_path = '/docs/%s' % (z.document.slug)
+        for zone in zones:
+            root = '/%s' % zone.url_root
+            orig_path = '/docs/%s' % zone.document.slug
 
             if request.path_info.startswith(orig_path):
-                
+                # Is this a request for the "original" wiki path? Redirect to
+                # new URL root, if so.
                 new_path = request.path_info.replace(orig_path, root, 1)
                 new_path = '/%s%s' % (request.locale, new_path)
                 
-                query = dict((smart_str(k), v) for
-                             k, v in request.GET.iteritems() if k != 'lang')
-                new_path = urlparams(new_path, **query)
+                query = request.GET.copy()
+                if 'lang' in query:
+                    query.pop('lang')
+                new_path = urlparams(new_path, query_dict=query)
 
-                return HttpResponsePermanentRedirect(new_path)
+                return HttpResponseRedirect(new_path)
 
-            if request.path_info.startswith(root):
+            elif request.path_info.startswith(root):
+                # Is this a request for the relocated wiki path? If so, rewrite
+                # the path as a request for the proper wiki view.
                 request.path_info = request.path_info.replace(
-                    root, '/docs/%s' % z.document.slug, 1)
+                    root, '/docs/%s' % zone.document.slug, 1)
                 break
