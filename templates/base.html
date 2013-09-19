@@ -132,13 +132,13 @@
 
     <a href="{{ url('home') }}" class="logo">{{ _('Mozilla Developer Network') }}</a>
 
-    <nav id="main-nav"><ul><li><a href="">{{ _('Projects') }}</a>
+    <nav id="main-nav"><ul><li><a href="">{{ _('Zones') }}</a>
 
         <div class="submenu">
           <div class="submenu-column">
             <div class="title">{{ _('Hot Right Now') }}</div>
             <ul>
-              <li><a href="">Build the web for beginners again</a></li>
+              <li><a href="/en-US/docs/Web/Apps/Apps_zone">App Center</a></li>
               <li><a href="">Build the web for beginners again</a></li>
               <li><a href="">Build the web for beginners again</a></li>
               <li><a href="">Build the web for beginners again</a></li>
@@ -153,53 +153,37 @@
             </ul>
           </div>
         </div>
-      </li><li><a href="">{{ _('Tools') }}</a>
+      </li><li><a href="">{{ _('Web Platform') }}</a>
 
         <div class="submenu">
           <div class="submenu-column">
-            <div class="title">{{ _('Hot Right Now') }}</div>
+            <div class="title">{{ _('Technologies') }}</div>
             <ul>
-              <li><a href="">Build the web for beginners again</a></li>
-              <li><a href="">Build the web for beginners again</a></li>
-              <li><a href="">Build the web for beginners again</a></li>
-              <li><a href="">Build the web for beginners again</a></li>
+              <li><a href="/en-US/docs/Web/HTML?menu">HTML</a></li>
+              <li><a href="/en-US/docs/Web/CSS?menu">CSS</a></li>
+              <li><a href="/en-US/docs/Web/JavaScript?menu">JavaScript</a></li>
+              <li><a href="/en-US/docs/Web/Guide/Graphics?menu">Graphics</a></li>
+              <li><a href="/en-US/docs/Web/API?menu">APIs / DOM</a></li>
+              <li><a href="/en-US/docs/Web/Apps?menu">Apps</a></li>
+              <li><a href="/en-US/docs/tools?menu">Dev Tools</a></li>
+              <li><a href="/en-US/docs/Web/MathML?menu">MathML</a></li>
             </ul>
           </div><div class="submenu-column">
-            <div class="title">{{ _('Hot Right Now') }}</div>
+            <div class="title">{{ _('References & Guide') }}</div>
             <ul>
-              <li><a href="">Build the web for beginners again</a></li>
-              <li><a href="">Build the web for beginners again</a></li>
-              <li><a href="">Build the web for beginners again</a></li>
-              <li><a href="">Build the web for beginners again</a></li>
+              <li><a href="/en-US/docs/Web/Tutorials?menu">Tutorials</a></li>
+              <li><a href="/en-US/docs/Web/Reference?menu">References</a></li>
+              <li><a href="/en-US/docs/Web/Guide?menu">Developer Guides</a></li>
+              <li><a href="/en-US/docs/Accessibility?menu">Accessibility</a></li>
+              <li><a href="/en-US/demos/?menu">Demos</a></li>
+              <li><a href="/en-US/docs?menu">...more docs</a></li>
             </ul>
           </div>
         </div>
-      </li><li>
-        <a href="{{ url('learn') }}">{{ _('Learn') }}</a>
-
-        <div class="submenu">
-          <div class="submenu-column">
-            <div class="title">{{ _('Hot Right Now') }}</div>
-            <ul>
-              <li><a href="">Build the web for beginners again</a></li>
-              <li><a href="">Build the web for beginners again</a></li>
-              <li><a href="">Build the web for beginners again</a></li>
-              <li><a href="">Build the web for beginners again</a></li>
-            </ul>
-          </div><div class="submenu-column">
-            <div class="title">{{ _('Hot Right Now') }}</div>
-            <ul>
-              <li><a href="">Build the web for beginners again</a></li>
-              <li><a href="">Build the web for beginners again</a></li>
-              <li><a href="">Build the web for beginners again</a></li>
-              <li><a href="">Build the web for beginners again</a></li>
-            </ul>
-          </div>
-        </div>
-      </li><li><a href="{{ url('demos') }}">{{ _('Demos') }}</a></li>{% if not is_sphinx %}<li class="main-nav-search"><form action="{{ url('search') }}">
+      </li><li><a href="{{ url('learn') }}">{{ _('Tools') }}</a></li><li><a href="{{ url('demos') }}">{{ _('Demos') }}</a></li><li><a href="">{{ _('Developer Program') }}</a></li>{% if not is_sphinx %}<li class="main-nav-search"><form action="{{ url('search') }}">
         <div class="search-wrap">
           <input type="search" name="q" placeholder="{{ _('Search') }}" value="{{ search_query }}" />
-          <i class="icon-search"></i>
+          <a href="javascript:;" class="search-trigger"><i class="icon-search"></i></a>
           <button type="submit">{{ _('Search') }}</button>
         </div>
       </form></li>{% endif %}</ul></nav>
