@@ -148,7 +148,7 @@
             if face.deselect_url is available that means the facet is applied and should somehow indicate that to the user.
             here I'm using a blasphemous style attribute to make the font bold when a facet is select. PLEASE FIXME!
           #}
-          <a href="{{ facet.deselect_url }}" data-count="{{ facet.count }}" style="font-weight:bold;color:red;">{{ facet.label }}</a>
+          <a href="{{ facet.deselect_url }}" data-count="{{ facet.count }}" class="checked">{{ facet.label }}<i class="icon-check"></i></a>
         {% else %}
           <a href="{{ facet.select_url }}" data-count="{{ facet.count }}">{{ facet.label }}</a>
         {% endif %}
