@@ -949,6 +949,11 @@ CONSTANCE_CONFIG = dict(
         'the 4th retry waits 4*.5 = 2 seconds.'
     ),
 
+    BETA_GROUP_NAME = (
+        'Beta Testers',
+        'Name of the django.contrib.auth.models.Group to use as beta testers'
+    ),
+
     KUMA_DOCUMENT_RENDER_TIMEOUT = (
         180.0,
         'Maximum seconds to wait before considering a rendering in progress or '
