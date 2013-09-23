@@ -46,6 +46,14 @@ class ProfileViewsTest(TestCase):
     def tearDown(self):
         settings.DEBUG = self.old_debug
 
+    def _get_current_form_field_values(self, doc):
+        # Scrape out the existing significant form field values.
+        form = dict()
+        for fn in ('email', 'fullname', 'title', 'organization', 'location',
+                   'irc_nickname', 'bio', 'interests'):
+            form[fn] = doc.find('#profile-edit *[name="%s"]' % fn).val()
+        return form
+
     @attr('docs_activity')
     def test_profile_view(self):
         """A user profile can be viewed"""
@@ -126,7 +134,7 @@ class ProfileViewsTest(TestCase):
             doc.find('#profile-edit input[name="irc_nickname"]').val())
 
         new_attrs = dict(
-            email="tester23@example.com",
+            email='testuser@test.com',
             fullname="Another Name",
             title="Another title",
             organization="Another org",
@@ -156,6 +164,28 @@ class ProfileViewsTest(TestCase):
         ok_(reverse('devmo.views.profile_edit', args=(u.username,)) in
             resp['Location'])
 
+    def test_profile_edit_beta(self):
+        user = User.objects.get(username='testuser')
+        self.client.login(username=user.username,
+                          password=TESTUSER_PASSWORD)
+
+        url = reverse('devmo.views.profile_edit',
+                      args=(user.username,))
+        r = self.client.get(url, follow=True)
+        doc = pq(r.content)
+        eq_(None, doc.find('input#id_beta').attr('checked'))
+
+        form = self._get_current_form_field_values(doc)
+        form['beta'] = True
+
+        r = self.client.post(url, form, follow=True)
+
+        url = reverse('devmo.views.profile_edit',
+                      args=(user.username,))
+        r = self.client.get(url, follow=True)
+        doc = pq(r.content)
+        eq_('checked', doc.find('input#id_beta').attr('checked'))
+
     def test_profile_edit_websites(self):
         user = User.objects.get(username='testuser')
         self.client.login(username=user.username,
@@ -173,12 +203,7 @@ class ProfileViewsTest(TestCase):
             u'stackoverflow': u'http://stackoverflow.com/users/lmorchard',
         }
 
-        # Scrape out the existing significant form field values.
-        form = dict()
-        for fn in ('email', 'fullname', 'title', 'organization', 'location',
-                   'irc_nickname', 'bio', 'interests'):
-            form[fn] = doc.find('#profile-edit *[name="%s"]' % fn).val()
-        form['email'] = 'test@example.com'
+        form = self._get_current_form_field_values(doc)
 
         # Fill out the form with websites.
         form.update(dict(('websites_%s' % k, v)
@@ -231,11 +256,7 @@ class ProfileViewsTest(TestCase):
 
         test_tags = ['javascript', 'css', 'canvas', 'html', 'homebrewing']
 
-        form = dict()
-        for fn in ('email', 'fullname', 'title', 'organization', 'location',
-                'irc_nickname', 'bio', 'interests'):
-            form[fn] = doc.find('#profile-edit *[name="%s"]' % fn).val()
-        form['email'] = 'test@example.com'
+        form = self._get_current_form_field_values(doc)
 
         form['interests'] = ', '.join(test_tags)
 
@@ -291,11 +312,7 @@ class ProfileViewsTest(TestCase):
                      u'spirituality,Art,Philosophy,Psychology,Business,Music,'
                      u'Computer Science']
 
-        form = dict()
-        for fn in ('email', 'fullname', 'title', 'organization', 'location',
-                'irc_nickname', 'bio', 'interests'):
-            form[fn] = doc.find('#profile-edit *[name="%s"]' % fn).val()
-        form['email'] = 'test@example.com'
+        form = self._get_current_form_field_values(doc)
 
         form['interests'] = test_tags
 
