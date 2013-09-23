@@ -28,9 +28,6 @@ urlpatterns = patterns('',
     ('', include('docs.urls')),
     (r'^docs', include('wiki.urls')),
 
-    # Kitsune admin (not Django admin).
-    #(r'^admin/', include('kadmin.urls')),
-
     # Javascript translations.
     url(r'^jsi18n/.*$', cache_page(60 * 60 * 24 * 365)(javascript_catalog),
         {'domain': 'javascript', 'packages': [settings.ROOT_PACKAGE]},
@@ -57,6 +54,10 @@ urlpatterns = patterns('',
 
     # Users
     ('', include('users.urls')),
+
+    # BrowserID Realm
+    url(r'^\.well-known/browserid-realm', 'users.views.browserid_realm',
+        name='users.browserid-realm'),
 
     # Auth keys
     (r'^keys/', include('authkeys.urls')),
