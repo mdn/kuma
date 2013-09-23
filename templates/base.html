@@ -120,6 +120,13 @@
 </head>
 <body id="{{ pageid() }}" class="html-{{ DIR }} {{ bodyclass() }}" role="document">
 
+  <!-- temporary beta notice -->
+  {% if waffle.flag('redesign_beta_notice') %}
+  <div class="redesign-beta-notice"><div class="center">
+    {{ _('<strong>Welcome to the new MDN beta!</strong>  See a problem or have a suggestion?  <a href="http://mzl.la/submit-mdn-redesign-blocker">File a bug!</a>') }}
+  </div></div>
+  {% endif %}
+
   <!-- Header -->
   <header id="main-header"><div class="center">
     

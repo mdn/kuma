@@ -101,3 +101,9 @@
     </div>
   </div>&nbsp;
 {%- endmacro %}
+
+{% macro get_document_quick_links(html) %}
+  <div class="quick-links" id="quick-links">
+    {{ html|safe }}
+  </div>
+{%- endmacro %}

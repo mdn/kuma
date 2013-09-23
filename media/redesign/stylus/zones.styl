@@ -38,6 +38,13 @@
   .zone-landing-header-preview
     margin-top grid-spacing
 
+    .column-strip
+      position relative
+
+      .zone-landing-header-preview-base
+        position absolute
+        width 100%
+
   .crumbs
     color #fff
 
@@ -46,9 +53,8 @@
       color rgba(255, 255, 255, 0.7)
 
   .zone-subnav-container
-    position absolute
-    width 100%
-    
+    /* nada */
+
   .summary
     display none
 
@@ -132,11 +138,15 @@
     vertical-align bottom
     padding-right grid-spacing
     
+
+/* tablets */
+@media media-query-tablet
+  .zone-landing
+      .zone-subnav-container
+        margin-top 0
+
 /* mobile */
 @media media-query-mobile
-  .zone-landing
-    .zone-subnav-container
-      margin-top 0
       
   .zone-image
     opacity 0.2

@@ -60,8 +60,12 @@ document.documentElement.className += ' js';
       });
 
     $nav.find('.search-trigger').on('focus click mouseenter', function() {
-      setTimeout(function() { $input.css('display', '').get(0).focus(); }, 100);
-      createExpander(200, true);
+      // Adding timeout so the element isn't too responsive
+      setTimeout(function() {
+        $input.css('display', ''); 
+        createExpander(200, true)();
+        $input.get(0).select();
+      }, 100);
     });
   })();
 

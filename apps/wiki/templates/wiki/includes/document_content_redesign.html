@@ -1,4 +1,4 @@
-{% from "wiki/includes/document_macros.html" import build_document_crumbs, get_document_buttons, get_document_subnav, document_watch with context %}
+{% from "wiki/includes/document_macros.html" import build_document_crumbs, get_document_quick_links, get_document_buttons, get_document_subnav, document_watch with context %}
 
 {% if document.parent %}
   {# If there is a parent doc, use it for translating. #}
@@ -20,8 +20,10 @@
 {% set disabled_class = ('disabled' if not is_logged_in else '') %}
 {% set disabled_attr = ('title="%s"' % _('Please log in to use this feature.') if not is_logged_in else '') %}
 
-{% set quick_links_section_id = 'Quick_Links' %}
-{% set quick_links_html = document.rendered_html|section_extract(quick_links_section_id) %}
+{% if not document.is_template %}
+  {% set quick_links_section_id = 'Quick_Links' %}
+  {% set quick_links_html = document.rendered_html|section_extract(quick_links_section_id) %}
+{% endif %}
 
 {% set zone_stack = document.find_zone_stack() %}
 {% set is_zone = zone_stack|length %}
@@ -51,11 +53,18 @@
       <h1>{{ document.title }}</h1>
 
       <div class="column-container zone-landing-header-preview">
-        <div class="column-strip" style="position:relative;">
-          {% if zone_subnav_html %}
-            <!-- zone subnav -->
-            {{ get_document_subnav(zone_subnav_html) }}
-          {% endif %}
+        <div class="column-strip">
+          <div class="zone-landing-header-preview-base">
+            {% if zone_subnav_html %}
+              <!-- zone subnav -->
+              {{ get_document_subnav(zone_subnav_html) }}
+            {% endif %}
+
+            {% if quick_links_html %}
+              <!-- quick links -->
+              {{ get_document_quick_links(quick_links_html) }}
+            {% endif %}
+          </div>
         </div>
         <div class="column-5 masthead-text"><p>{{ document|selector_content_find('.summary') }}</p></div>
       </div>
@@ -71,17 +80,16 @@
     </div></div>
   {% endif %}
 
+{% endif %}
 
-  {% if not is_zone_root %}
-    <div class="center zone-subpage-meta">
-      <!-- crumbs -->
-      {{ build_document_crumbs(document) }}
+{% if not is_zone_root %}
+  <div class="center zone-subpage-meta">
+    <!-- crumbs -->
+    {{ build_document_crumbs(document) }}
 
-      <!-- action buttons -->
-      {{ get_document_buttons(document) }}
-    </div>
-  {% endif %}
-
+    <!-- action buttons -->
+    {{ get_document_buttons(document) }}
+  </div>
 {% endif %}
 
 <!-- heading -->
@@ -147,6 +155,30 @@
             {{ toc_html|safe }}
           </ol>
         </div>
+      {% endif %}
+
+      <!-- just the article content -->
+      {% if not document.is_template %}
+        {% set document_html_safe = document_html|section_hide(zone_subnav_section_id, quick_links_section_id)|safe %}
+      {% else %}
+        {% set document_html_safe = document_html|safe %}
+      {% endif %}
+      
+      <article id="wikiArticle">
+        {% if not fallback_reason %}
+          {% if not document_html %}
+            {{ _("This article doesn't have any content yet.") }}
+          {% elif document.is_template %}
+            <pre class="brush: js">{{ document_html }}</pre>
+          {% else %}
+            {{ document_html_safe }}
+          {% endif %}
+        {% elif fallback_reason == 'no_translation' %}
+          {{ document_html_safe }}
+        {% elif fallback_reason == 'translation_not_approved' %}
+          {{ document.parent.html|safe }}
+        {% else %}
+          {{ _("This article doesn't have approved content yet.") }}
         {% endif %}
 
         {% if tags|length %}
@@ -222,11 +254,9 @@
             {{ get_document_subnav(zone_subnav_html) }}
           {% endif %}
           
-          {% if quick_links_html %}
+          {% if quick_links_html and not is_zone_root %}
           <!-- quick links -->
-          <div class="quick-links" id="quick-links">
-            {{ quick_links_html|safe }}
-          </div>
+          {{ get_document_quick_links(quick_links_html) }}
           {% endif %}
 
           <!-- approvals -->

@@ -303,7 +303,8 @@ SERVE_MEDIA = False
 
 # Paths that don't require a locale prefix.
 SUPPORTED_NONLOCALES = ('media', 'admin', 'robots.txt', 'services', 'static',
-                        '1', 'files', '@api', 'grappelli')
+                        '1', 'files', '@api', 'grappelli',
+                        '.well-known')
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '#%tc(zja8j01!r#h_y)=hy!^k)9az74k+-ib&ij&+**s3-e^_z'
@@ -357,6 +358,7 @@ MIDDLEWARE_CLASSES = (
     # LocaleURLMiddleware must be before any middleware that uses
     # sumo.urlresolvers.reverse() to add locale prefixes to URLs:
     'sumo.middleware.LocaleURLMiddleware',
+    'wiki.middleware.DocumentZoneMiddleware',
     'wiki.middleware.ReadOnlyMiddleware',
     'sumo.middleware.Forbidden403Middleware',
     'django.middleware.common.CommonMiddleware',
@@ -904,6 +906,14 @@ CONSTANCE_DATABASE_CACHE_BACKEND = None
 
 # Settings and defaults controllable by Constance in admin
 CONSTANCE_CONFIG = dict(
+
+    BROWSERID_REALM_JSON = (
+        json.dumps({
+            'realm': ['https://developer.mozilla.org',
+                      'https://marketplace.firefox.com']
+        }),
+        "Define the other sites belonging to this site's BrowserID realm."
+    ),
 
     DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG = (
         "challenge:2011:september",
