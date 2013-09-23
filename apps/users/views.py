@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib import messages
 from django.contrib.sites.models import Site
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render
 from django.views.decorators.http import (require_http_methods, require_GET,
                                           require_POST)
@@ -27,7 +27,9 @@ from django_browserid.auth import get_audience
 from django_browserid import auth as browserid_auth
 
 from access.decorators import logout_required, login_required
+import constance.config
 from tidings.tasks import claim_watches
+
 from sumo.decorators import ssl_required
 from sumo.urlresolvers import reverse, split_path
 from users.forms import (ProfileForm, AvatarForm, EmailConfirmationForm,
@@ -93,6 +95,13 @@ def browserid_change_email(request):
         user.save()
         return HttpResponseRedirect(reverse('devmo_profile_edit',
                                             args=[user.username, ]))
+
+
+@ssl_required
+def browserid_realm(request):
+    # serve the realm from the environment config
+    return HttpResponse(constance.config.BROWSERID_REALM_JSON,
+                        content_type='application/json')
 
 
 @csrf_exempt
