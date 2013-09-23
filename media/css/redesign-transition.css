@@ -31,3 +31,10 @@ a i[class^='icon-']:before, button i[class^='icon-']:before { cursor: pointer; }
 #article-nav .anchor-tags i, #article-nav .anchor-files i { color: #369; }
 #article-nav .anchor-tags a, #article-nav .anchor-tags span,
 #article-nav .anchor-files a, #article-nav .anchor-files span { background: none !important; padding-left: 0 !important; }
+
+/* Beta notice */
+.redesign-beta-notice {
+  background: #fff;
+  padding: 8px 0;
+  font-size: 12px;
+ }

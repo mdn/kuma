@@ -285,6 +285,21 @@
 {% endtrans %}
 </div></noscript>
 <![endif]-->
+
+<!-- temporary beta notice -->
+{% if waffle.flag('redesign_beta_notice') %}
+  {% if user.is_authenticated() %}
+    <div class="redesign-beta-notice"><div class="wrap">
+      {{ _('We\'re working on new design for MDN! To help beta-test it, <a href="%s">edit your profile</a> a and select the <strong>Beta user</strong> checkbox. You will view MDN with the new design, and be able to give feedback.') % url('devmo.views.profile_edit', username=user.username) }}
+    </div></div>
+  {% else %}
+    <div class="redesign-beta-notice"><div class="wrap">
+      {{ _('MDN is being redesigned! Want to help beta-test it? <a href="%s">(Sign up for and) sign in to your MDN account</a>, and then select <strong>Beta user</strong> in your profile.') % url('users.login') }}
+    </div></div>
+  {% endif %}
+{% endif %}
+
+
   <header id="masthead" class="{% block headerclass %}minor{% endblock %} new-menu">
     <div class="wrap">
       <ul id="nav-access">
