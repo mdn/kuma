@@ -1,20 +1,20 @@
 Welcome to Kuma (developer-dev.mozilla.org)
 
 To update this dev environment:
-    sudo puppet apply /vagrant/puppet/manifests/dev-vagrant.pp
+    sudo puppet apply /home/vagrant/src/puppet/manifests/dev-vagrant.pp
 
 To launch or reattach to a Tmux session running everything:
     ~/bin/go-tmux.sh
 
 To start the Django app:
-    ./manage.py runserver --forked 0.0.0.0:8000
+    ~/src/manage.py runserver --forked 0.0.0.0:8000
 
 To start the kumascript service:
     node kumascript/run.js
 
 To start the celery queue workers:
-    ./manage.py celeryd
+    ~/src/manage.py celeryd
 
 To run tests:
-    (cd / && /vagrant/manage.py test actioncounters contentflagging demos devmo landing users wiki)
-    (cd /vagrant/kumascript && ./node_modules/.bin/nodeunit tests)
+    ~/src/manage.py test actioncounters contentflagging demos devmo landing users wiki
+    (cd ~/src/kumascript && ./node_modules/.bin/nodeunit tests)

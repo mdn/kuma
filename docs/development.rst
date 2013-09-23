@@ -71,11 +71,6 @@ Note that this will try (and fail) to run tests that depend on apps disabled
 via ``INSTALLED_APPS``. You should run a subset of tests specified in
 `scripts/build.sh <../scripts/build.sh>`_, at the bottom of the script.
 
-When using the vagrant VM you must `run the tests from the root folder`_, not from
-``/vagrant``::
-
-    (cd / && /vagrant/manage.py test ...)
-
 For more information, see the :doc:`test documentation <tests>`.
 
 .. _run the tests from the root folder: https://bugzilla.mozilla.org/show_bug.cgi?id=756536#c2

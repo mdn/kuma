@@ -11,7 +11,7 @@ box: "kuma-ubuntu"
 virtual_box_url: "http://people.mozilla.com/~jleidel/vagrant/kuma-precise-virtualbox.box"
 vmware_box_url: "http://people.mozilla.com/~jleidel/vagrant/kuma-precise-vmware.box"
 package_name: "kuma-ubuntu.box"
-mount_point: "/vagrant"
+mount_point: "/home/vagrant/src"
 
 aws_region: "us-east-1"
 # Ubuntu 12.04, 64-bit, ebs, http://cloud-images.ubuntu.com/releases/precise/release-20130624/

@@ -6,8 +6,8 @@ if [ -f ~/.bashrc ]; then
 fi
 
 # User specific environment and startup programs
-PATH=$HOME/bin:/vagrant/kumascript/node_modules/.bin:$PATH
+PATH=$HOME/bin:/home/vagrant/src/kumascript/node_modules/.bin:$PATH
 export PATH
 
 # More useful to start in the project directory than in user home
-cd /vagrant
+cd /home/vagrant/src
