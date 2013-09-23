@@ -72,7 +72,11 @@ label
 
 /* links */
 a
-  color link-color
+  &:link, &:visited, &:focus, &:active
+    color link-color
+
+  &:visited:hover, &:visited:focus, &:visited:active
+    color link-color
 
   {selector-icon}:before
     cursor pointer
