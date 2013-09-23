@@ -77,39 +77,6 @@
   {% endif %}
 {% endblock %}
 
-
-{% if waffle.flag('redesign') and zone_stack|length %}
-{% block masthead %}
-  {% if is_zone_root %}
-    <div class="zone-landing-header"><div class="center">
-      <!-- edit, settings buttons -->
-      {{ get_document_buttons(document) }}
-      
-      <!-- crumbs -->
-      {{ build_document_crumbs(document) }}
-
-      <h1>{{ document.title }}</h1>
-
-      <div class="column-container">
-        <div class="column-strip">&nbsp;</div>
-        <div class="column-5 masthead-text"><p>{{ document|selector_content_find('.summary') }}</p></div>
-      </div>
-
-      <div class="zone-image"></div>
-    </div></div>
-  {% elif zone_stack|length %}
-    <div class="zone-article-header"><div class="center">
-      <!-- zone title -->
-      <div class="zone-title">{{ zone_stack[0].document.title }}</div>
-      <!-- zone image -->
-      <div class="zone-image"></div>
-    </div></div>
-  {% endif %}
-{% endblock %}
-{% endif %}
-
-
-
 {% block content %}
   {% if waffle.flag('redesign') %}
     {% include 'wiki/includes/document_content_redesign.html' %}

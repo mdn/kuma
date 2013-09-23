@@ -8,6 +8,8 @@
 
 .column-all
   width auto
+  float none
+  margin-right 0
   
 
 /* This is a "helper" which automatically formats its column children, clears the floats afterward, removes margin from last item */
@@ -18,24 +20,18 @@
     margin-right grid-spacing
     float left
 
-    &:last-child, &.column-all
+    &:last-child
       margin-right 0
-      
-    &.column-all
-      float none
 
   &.column-container-reverse
     > [class^='column-']
       float right
 
-      &:first-child, &.column-all
+      &:first-child
         margin-right 0
 
       &:last-child
         margin-right grid-spacing
-        
-      &.column-all
-        float none
 
 
 /* Desktop Layout (default)

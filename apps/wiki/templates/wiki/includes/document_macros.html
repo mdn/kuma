@@ -93,3 +93,11 @@
         </div>
   </li></ul>
 {%- endmacro %}
+
+{% macro get_document_subnav(html) %}
+  <div class="zone-subnav-container">
+    <div class="subnav" id="Subnav">
+      {{ html|safe }}
+    </div>
+  </div>&nbsp;
+{%- endmacro %}

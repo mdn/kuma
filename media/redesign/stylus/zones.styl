@@ -3,6 +3,8 @@
 @import 'grid'
 
 .zone
+  remove-main-spacing()
+
   #main-header, .zone-article-header
     create-gradient-background(#0095dd)
   
@@ -33,6 +35,9 @@
     color #fff
     @extend .column-6
 
+  .zone-landing-header-preview
+    margin-top grid-spacing
+
   .crumbs
     color #fff
 
@@ -41,7 +46,8 @@
       color rgba(255, 255, 255, 0.7)
 
   .zone-subnav-container
-    margin-top -140px
+    position absolute
+    width 100%
     
   .summary
     display none
@@ -62,7 +68,6 @@
     p
       font-size larger-font-size
       font-weight light-font-weight
-      padding (2 * grid-spacing) 0 grid-spacing 0
 
 
   .zone-image
@@ -82,6 +87,10 @@
 .zone-landing-lists li
   padding list-item-spacing 0
   prevent-last-child-spacing(padding-bottom)
+
+
+.zone-subpage-meta
+  padding-top first-content-top-padding !important
 
 
 /*  Basic zone article pages */

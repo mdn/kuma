@@ -138,6 +138,12 @@ enable-toc-toggle()
       i
         display inline-block
 
+/* removes the implied "<main>" spacing so page is more customizable */
+remove-main-spacing()
+  main > .center
+    width auto
+    padding 0
+
 /*
   CLASSES TO BE EXTENDED BY OTHER CLASSES
 
