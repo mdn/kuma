@@ -65,6 +65,7 @@
                 {{ user.email }} <a href="{{ url('users.change_email') }}">{{ _('Change') }}</a>
                 <input id="id_email" type="hidden" value="{{ user.email }}" name="email"/>
             </li>
+          {{ li_field(form, 'beta') }}
           {{ li_field(form, 'fullname') }}
           {{ li_field(form, 'title') }}
           {{ li_field(form, 'organization') }}

@@ -12,9 +12,10 @@ from timezones.fields import TimeZoneField, MAX_TIMEZONE_LENGTH
 from django.conf import settings
 from django.contrib.auth.models import User as DjangoUser
 from django.db import models
-from django.core.cache import cache
+from django.utils.functional import cached_property
 
 import caching.base
+import constance.config
 import xml.sax
 from xml.sax.handler import ContentHandler
 
@@ -148,7 +149,13 @@ class UserProfile(ModelBase):
     @property
     def deki_user(self):
         return None
-        
+
+    @cached_property
+    def beta_tester(self):
+        return (constance.config.BETA_GROUP_NAME in
+                self.user.groups.values_list('name', flat=True))
+
+
     def gravatar_url(self, secure=True, size=220, rating='pg',
             default=DEFAULT_AVATAR):
         """Produce a gravatar image URL from email address."""

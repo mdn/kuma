@@ -1,7 +1,7 @@
 from django import forms
-from django.conf import settings
-from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User, Group
 
+import constance.config
 from tower import ugettext_lazy as _
 from taggit.utils import parse_tags
 
@@ -14,6 +14,8 @@ class UserProfileEditForm(forms.ModelForm):
         model = UserProfile
         fields = ('fullname', 'title', 'organization', 'location',
                   'locale', 'timezone', 'bio', 'irc_nickname', 'interests')
+
+    beta = forms.BooleanField(label=_('Beta User'), required=False)
 
     # Email is on the form, but is handled in the view separately
     email = forms.EmailField(label=_('Email'), required=True)
@@ -46,3 +48,17 @@ class UserProfileEditForm(forms.ModelForm):
                 "subset of interests"))
 
         return cleaned_data['expertise']
+
+    def save(self, commit=True):
+        try:
+            user = User.objects.get(email=self.cleaned_data.get('email'))
+            beta_group = Group.objects.get(
+                name=constance.config.BETA_GROUP_NAME)
+            if self.cleaned_data['beta']:
+                beta_group.user_set.add(user)
+            else:
+                beta_group.user_set.remove(user)
+        except Group.DoesNotExist:
+            # If there's no Beta Testers group, ignore that logic
+            pass
+        return super(UserProfileEditForm, self).save(commit=True)

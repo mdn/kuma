@@ -1,5 +1,3 @@
-import logging
-
 from django.conf import settings
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, render
@@ -9,8 +7,6 @@ from devmo.urlresolvers import reverse
 
 from taggit.utils import parse_tags
 
-import waffle
-
 from access.decorators import login_required
 from demos.models import Submission
 from teamwork.models import Team
@@ -18,8 +14,6 @@ from teamwork.models import Team
 from . import INTEREST_SUGGESTIONS
 from .models import Calendar, Event, UserProfile
 from .forms import UserProfileEditForm
-
-from wiki.helpers import format_comment
 
 
 DOCS_ACTIVITY_MAX_ITEMS = getattr(settings,
@@ -102,8 +96,7 @@ def profile_edit(request, username):
     )
 
     if request.method != 'POST':
-
-        initial = dict(email=profile.user.email)
+        initial = dict(email=profile.user.email, beta=profile.beta_tester)
 
         # Load up initial websites with either user data or required base URL
         for name, meta in UserProfile.website_choices:
