@@ -20,8 +20,10 @@
 {% set disabled_class = ('disabled' if not is_logged_in else '') %}
 {% set disabled_attr = ('title="%s"' % _('Please log in to use this feature.') if not is_logged_in else '') %}
 
-{% set quick_links_section_id = 'Quick_Links' %}
-{% set quick_links_html = document.rendered_html|section_extract(quick_links_section_id) %}
+{% if not document.is_template %}
+  {% set quick_links_section_id = 'Quick_Links' %}
+  {% set quick_links_html = document.rendered_html|section_extract(quick_links_section_id) %}
+{% endif %}
 
 {% set zone_stack = document.find_zone_stack() %}
 {% set is_zone = zone_stack|length %}
@@ -137,7 +139,12 @@
       {% endif %}
 
       <!-- just the article content -->
-      {% set document_html_safe = document_html|section_hide(zone_subnav_section_id, quick_links_section_id)|safe %}
+      {% if not document.is_template %}
+        {% set document_html_safe = document_html|section_hide(zone_subnav_section_id, quick_links_section_id)|safe %}
+      {% else %}
+        {% set document_html_safe = document_html|safe %}
+      {% endif %}
+      
       <article id="wikiArticle">
         {% if not fallback_reason %}
           {% if not document_html %}
