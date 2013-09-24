@@ -73,6 +73,17 @@ class DocumentZoneMiddlewareTestCase(TestCaseBase):
         self.other_zone.url_root = ''
         self.other_zone.save()
 
+        # One more doc, just to be sure we can have multiple blank url_roots
+        onemore_rev = revision(title='onemorePage', slug='onemorePage',
+                             content='This is an onemorepage',
+                             is_approved=True, save=True)
+        self.onemore_doc = onemore_rev.document
+        self.onemore_doc.save()
+
+        self.onemore_zone = DocumentZone(document=self.onemore_doc)
+        self.onemore_zone.url_root = ''
+        self.onemore_zone.save()
+
     def test_url_root_internal_redirect(self):
         """Ensure document zone with URL root results in internal redirect"""
 
