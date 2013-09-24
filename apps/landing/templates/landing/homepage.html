@@ -18,6 +18,169 @@
 
 {% block content %}
 
+{% if waffle.flag('redesign') %}
+
+<!-- top search area -->
+<div class="home-masthead"><div class="center">
+
+  <h1>{{ _('Shared knowledge <span>for the Open Web.</span>') }}</h1>
+
+  <div class="home-search-form">
+    <form action="{{ url('search') }}" method="get">
+      <input type="search" name="q" placeholder="{{ _('Search the docs') }}" />
+    </form>
+  </div> 
+
+  <div class="home-features">
+    <div class="column-container">
+      <div class="column-home-features">
+        <h3><i class="icon-file-text-alt"></i><span>{{ _('Web<br />Platform') }}</span></h3>
+        <ul>
+          <li><a href="{{ devmo_url('Web/Reference/API') }}">{{ _('Web APIs &amp; DOM') }}</a></li>
+          <li><a href="{{ devmo_url('Web/HTML') }}">{{ _('HTML') }}</a></li>
+          <li><a href="{{ devmo_url('Web/CSS') }}">{{ _('CSS') }}</a></li>
+          <li><a href="{{ devmo_url('Web/JavaScript') }}">{{ _('JavaScript') }}</a></li>
+          <li><a href="{{ devmo_url('Web') }}">{{ _('more...') }}</a></li>
+        </ul>
+      </div>
+      <div class="column-home-features">
+        <h3 class="zones"><i class="icon-suitcase"></i><span>{{ _('Zones') }}</span></h3>
+        <ul>
+        <li><a href="">{{ _('App Center') }}</a></li>
+        <li><a href="">{{ _('Firefox OS') }}</a></li>
+        <li><a href="">{{ _('Firefox Marketplace') }}</a></li>
+        <li><a href="">{{ _('Web Platform') }}</a></li>
+        <li><a href="">{{ _('all zones...') }}</a></li>
+        </ul>
+      </div>
+      <div class="column-home-features">
+        <h3><i class="icon-wrench"></i><span>{{ _('Developer<br />Tools') }}</span></h3>
+        <ul>
+        <li><a href="{{ devmo_url('Tools/Firefox_OS_Simulator') }}">{{ _('Firefox OS SImulator') }}</a></li>
+        <li><a href="{{ devmo_url('Tools/Page_Inspector') }}">{{ _('Page Inspector') }}</a></li>
+        <li><a href="{{ devmo_url('Tools/Debugger') }}">{{ _('JavaScript Debugger') }}</a></li>
+        <li><a href="{{ devmo_url('Tools/Web_Console') }}">{{ _('Web Console') }}</a></li>
+        <li><a href="{{ devmo_url('Tools') }}">{{ _('all zones...') }}</a></li>
+        </ul>
+      </div>
+      <div class="column-home-features">
+        <h3><i class="icon-certificate"></i><span>{{ _('Developer<br />Program') }}</span></h3>
+        <p>{{ _('More information coming soon.') }}</p>
+      </div>
+    </div>
+  </div>
+
+</div></div>
+
+<!-- callout area -->
+<div class="home-callouts"><div class="column-container center">
+  <div class="column-callout callout-apps">
+    <a href="{{ devmo_url('apps') }}"><span>{{ _('Create<br />Web Apps') }}</span><i></i></a>
+  </div>
+  <div class="column-callout callout-android">
+    <a href="{{ devmo_url('Mozilla/Firefox_for_Android') }}"><span>{{ _('Develop<br />Firefox for Android') }}</span><i></i></a>
+  </div>
+  <div class="column-callout callout-firefoxos">
+    <a href="/en-US/docs/Mozilla/Firefox_OS"><span>{{ _('Build<br />Firefox OS') }}</span><i></i></a>
+  </div>
+</div></div>
+
+<!-- hacks area -->
+<div class="home-hacks"><div class="column-container center">
+  <div class="column-hacks">
+    <h2><i class="icon-star"></i> {{ _('Hacks Blog <a href="">read more at hacks.mozilla.org <i class="icon-arrow-right"></i></a>') }}</h2>
+    {{ newsfeed(updates, section_headers=True) }}
+      
+  </div>
+  <div class="column-involved">
+    <div class="home-involved-card"><a href="{{ devmo_url('Project:MDN/Contributing') }}">
+      <h3 class="title">{{ _('Get Involved') }}</h3>
+      <p class="numbers">{{ _('<span class="row1">Join <span class="number">%s</span> contributors</span> <span class="row2">in <span class="number">%s</span> languages and locales</span> <span class="row3">around the world.</span>') % (num_users, num_languages) }}</p>
+      <p><span class="button">{{ _('Contribute to MDN') }}</span></p>
+    </a></div>
+  </div>
+</div></div>
+
+<!-- demos and dev derby -->
+{% if demos %}
+<div class="home-demos"><div class="center">
+
+{% if not waffle.flag('derby_closed') %}
+  <div class="preview">
+    <span>{{ _('Next Dev Derby: <strong>July 2013</strong>') }}</span>
+    <span>{{ _('Subject: <strong>File API</strong>') }}</span>
+  </div>
+{% endif %}
+
+<h2><i class="icon-magic blue"></i> {{ _('See & submit demos') }} 
+  {% if not waffle.flag('derby_closed') %}
+    <a href="{{ url('demos_devderby_landing') }}">{{ _('MDN Dev Derby <i class="icon-arrow-right"></i>') }}</a>
+  {% else %}
+    <a href="{{ url('demos') }}">{{ _('MDN Demo Studio <i class="icon-arrow-right"></i>') }}</a>
+  {% endif %}
+</h2>
+<ul>
+  {% set extra_class = cycler(' row-first', '')%}
+  {% for submission in demos %}
+      {{ submission_thumb(submission, extra_class, thumb_width="180", thumb_height="133", is_homepage=True) }}
+  {% endfor %}
+  </ul>
+</div></div>
+{% endif %}
+
+<!-- contributions section -->
+<div class="home-contribute"><div class="center">
+  <h2><i class="icon-smile"></i> {{ _('How to contribute to MDN') }}</h2>
+
+  <div class="column-container">
+    <div class="column-half">
+      <p>{{ _('All parts of MDN (docs, demos, and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:') }}</p>
+    </div>
+    <div class="column-half">
+      <div class="column-container">
+        <div class="column-strip">
+          <ul>
+          <li><a href="{{ devmo_url('needs-review/editorial') }}">{{ _('Editorial review') }}</a></li>
+                <li><a href="{{ devmo_url('needs-review/technical') }}">{{ _('Technical review') }}</a></li>
+                <li><a href="{{ devmo_url('Project:Getting_started') }}#Create_a_new_page">{{ _('Creating new docs') }}</a></li>
+          </ul>
+        </div>
+        <div class="column-strip">
+          <ul>
+          <li><a href="{{ devmo_url('Project:Localization_Projects') }}">{{ _('Translating (L10N)') }}</a></li>
+                <li><a href="{{ url('promote') }}">{{ _('Promoting MDN') }}</a></li>
+                <li><a href="https://github.com/mozilla/kuma#readme">{{ _('Contributing to the MDN codebase') }}</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  {# Putting off for after launch 
+  <div class="column-container home-contribute-recent">
+    <div class="column-half">
+      <h3>{{ _('Recent Edits') }}</h3>
+      <ul>
+        <li><a href="">Building the web for beginners</a> <span class="author">by <a href="">David Walsh</a> on August 2, 2013</span></li>
+        <li><a href="">Building the web for beginners</a> <span class="author">by <a href="">David Walsh</a> on August 2, 2013</span></li>
+        <li><a href="">Building the web for beginners</a> <span class="author">by <a href="">David Walsh</a> on August 2, 2013</span></li>
+      </ul>
+    </div>
+    <div class="column-half">
+      <h3>{{ _('Recent Discussions') }}</h3>
+      <ul>
+        <li><a href="">Building the web for beginners</a> <span class="author">by <a href="">David Walsh</a> on August 2, 2013</span></li>
+        <li><a href="">Building the web for beginners</a> <span class="author">by <a href="">David Walsh</a> on August 2, 2013</span></li>
+        <li><a href="">Building the web for beginners</a> <span class="author">by <a href="">David Walsh</a> on August 2, 2013</span></li>
+      </ul>
+    </div>
+  </div>
+  </div>
+</div></div>
+#}
+
+{% else %}
 <section id="content" class="new-home">
 <div class="wrap">
 
@@ -172,9 +335,9 @@
         {% endif %}
       </div>
   </section>
-
 </div>
 </section><!-- /#content -->
+{% endif %}
 {% endblock %}
 
 {% block js %}

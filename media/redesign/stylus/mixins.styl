@@ -65,6 +65,10 @@ create-gradient-background(color)
   background-repeat repeat
   background-color color
 
+create-home-gradient-background(color)
+  create-gradient-background(color)
+  background-image url('/media/redesign/img/header-background.png'), url('/media/redesign/img/blueprint.png')
+
 /* generates a cross-browser gradient */
 create-gradient(start-color, end-color, direction=false)
   if direction
@@ -143,6 +147,11 @@ remove-main-spacing()
   main > .center
     width auto
     padding 0
+
+/* Overrides the navigation menu color - zones and homepage */
+override-main-nav-color(hex)
+  #main-nav > ul > li > a, .user-state a
+    compat-important(color, hex)
 
 /*
   CLASSES TO BE EXTENDED BY OTHER CLASSES
