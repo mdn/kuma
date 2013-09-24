@@ -206,9 +206,22 @@
 
 
   <!-- Footer -->
-  <footer>
+  <footer><div class="center">
+    <div class="column-container">
+      <div class="column-main">
+        <p>
+          {% trans copyright_url=devmo_url('Project:Copyrights'), about_url=devmo_url('Project:About') %}
+          &copy; 2005-2013 Mozilla Developer Network and individual contributors<br />
+          Content is available under <a href="{{ copyright_url }}">these licenses</a> &middot; <a href="{{ about_url }}">About MDN</a> &middot; <a href="//github.com/mozilla/kuma">Contribute to the code</a> &middot; <a href="//www.mozilla.org/en-US/privacy">Privacy policy</a>
+          {% endtrans %}
+        </p>
+      </div>
+      <div class="column-strip">
+        {% include "includes/lang_switcher.html" %}
+      </div>
+    </div>
+  </div></footer>
 
-  </footer>
 
   <!-- Site JavaScript -->
   <script src="{{ url('jsi18n') }}build:{{ BUILD_ID_JS }}"></script>
