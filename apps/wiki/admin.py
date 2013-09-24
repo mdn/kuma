@@ -1,10 +1,7 @@
 from datetime import datetime
 
-from django import forms
 from django.contrib import admin
 from django.http import HttpResponse
-
-from tower import ugettext as _
 
 from sumo.urlresolvers import reverse, split_path
 
@@ -279,16 +276,8 @@ class AttachmentRevisionAdmin(admin.ModelAdmin):
     search_fields = ('title', 'description')
 
 
-class DocumentZoneAdminForm(forms.ModelForm):
-    def clean_url_root(self):
-        if not self.cleaned_data['url_root']:
-            raise forms.ValidationError(_('Must specify a url root'))
-        return self.cleaned_data['url_root']
-
-
 class DocumentZoneAdmin(admin.ModelAdmin):
     raw_id_fields = ('document',)
-    form = DocumentZoneAdminForm
 
 
 admin.site.register(Document, DocumentAdmin)
