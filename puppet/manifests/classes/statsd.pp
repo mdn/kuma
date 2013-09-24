@@ -8,7 +8,7 @@ class statsd {
         require => [Package["nodejs"], Package["npm"]]
     }
     file { '/home/vagrant/statsd-config.js':
-        source => '/vagrant/puppet/files/home/vagrant/statsd-config.js',
+        source => '/home/vagrant/src/puppet/files/home/vagrant/statsd-config.js',
         owner => "vagrant", group => "vagrant", mode => 0664,
         require => Exec['statsd-install']
     }
@@ -19,7 +19,7 @@ class statsd {
     exec { 'graphite-install':
          cwd => '/tmp',
          timeout => 1200, # Too long, but this can take awhile
-         command => '/usr/bin/pip install --download-cache=/vagrant/puppet/cache/pip -r /vagrant/puppet/files/tmp/graphite_reqs.txt',
+         command => '/usr/bin/pip install --download-cache=/home/vagrant/src/puppet/cache/pip -r /home/vagrant/src/puppet/files/tmp/graphite_reqs.txt',
          creates => '/opt/graphite/webapp/graphite/manage.py';
     }
     file { '/opt/graphite/conf/carbon.conf':
@@ -43,17 +43,17 @@ class statsd {
         require => Exec['graphite-install']
     }
     file { '/opt/graphite/conf/storage-schemas.conf':
-        source => '/vagrant/puppet/files/opt/graphite/conf/storage-schemas.conf',
+        source => '/home/vagrant/src/puppet/files/opt/graphite/conf/storage-schemas.conf',
         owner => "root", group => "www-data", mode => 0664,
         require => Exec['graphite-install']
     }
     file { '/etc/init/statsd.conf':
-        source => '/vagrant/puppet/files/etc/init/statsd.conf',
+        source => '/home/vagrant/src/puppet/files/etc/init/statsd.conf',
         owner => "root", group => "www-data", mode => 0775,
         require => Exec['statsd-install']
     }
     file { '/etc/init/carbon-cache.conf':
-        source => '/vagrant/puppet/files/etc/init/carbon-cache.conf',
+        source => '/home/vagrant/src/puppet/files/etc/init/carbon-cache.conf',
         owner => "root", group => "www-data", mode => 0775,
         require => Exec['graphite-install']
     }
@@ -65,7 +65,7 @@ class statsd {
     }
     exec { 'graphite-superuser':
         cwd => '/opt/graphite/webapp/graphite',
-        command => '/usr/bin/python manage.py loaddata /vagrant/puppet/files/tmp/graphite_auth.json',
+        command => '/usr/bin/python manage.py loaddata /home/vagrant/src/puppet/files/tmp/graphite_auth.json',
         unless => "/usr/bin/sqlite3 /opt/graphite/storage/graphite.db 'select * from auth_user' | /bin/grep -q admin",
         require => Exec['graphite-syncdb']
     }

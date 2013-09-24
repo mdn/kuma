@@ -26,11 +26,11 @@ class apache_config {
         ensure => directory, mode => 0644;
     }
     file { "/etc/apache2/ssl/apache.crt":
-        source => "/vagrant/puppet/files/etc/apache2/ssl/apache.crt",
+        source => "/home/vagrant/src/puppet/files/etc/apache2/ssl/apache.crt",
         require => File["/etc/apache2/ssl"],
     }
     file { "/etc/apache2/ssl/apache.key":
-        source => "/vagrant/puppet/files/etc/apache2/ssl/apache.key",
+        source => "/home/vagrant/src/puppet/files/etc/apache2/ssl/apache.key",
         require => File["/etc/apache2/ssl"],
     }
     apache::loadmodule { "ssl": 
@@ -40,7 +40,7 @@ class apache_config {
         ]
     }
     file { "/etc/apache2/conf.d/mozilla-kuma-apache.conf":
-        source => "/vagrant/puppet/files/etc/apache2/conf.d/mozilla-kuma-apache.conf",
+        source => "/home/vagrant/src/puppet/files/etc/apache2/conf.d/mozilla-kuma-apache.conf",
         require => [
             Package['apache2'],
             Apache::Loadmodule['env'],
@@ -68,11 +68,11 @@ class mysql_config {
     # Ensure MySQL answers on 127.0.0.1, and not just unix socket
     file { 
         "/etc/mysql/my.cnf":
-            source => "/vagrant/puppet/files/etc/mysql/my.cnf",
+            source => "/home/vagrant/src/puppet/files/etc/mysql/my.cnf",
             owner => "root", group => "root", mode => 0644;
         "/tmp/init.sql":
             ensure => file,
-            source => "/vagrant/puppet/files/tmp/init.sql",
+            source => "/home/vagrant/src/puppet/files/tmp/init.sql",
             owner => "vagrant", group => "vagrant", mode => 0644;
     }
     service { "mysql": 
@@ -117,21 +117,21 @@ class rabbitmq_config {
 
 class kuma_config {
     file {
-        "/vagrant/media/uploads": 
+        "/home/vagrant/src/media/uploads": 
             target => "/home/vagrant/uploads",
             ensure => link, 
             require => [ File["/home/vagrant/uploads"] ];
-        "/vagrant/webroot/.htaccess":
+        "/home/vagrant/src/webroot/.htaccess":
             ensure => link,
-            target => "/vagrant/configs/htaccess-without-mindtouch";
+            target => "/home/vagrant/src/configs/htaccess-without-mindtouch";
         "/var/www/.htaccess":
             ensure => link,
-            target => "/vagrant/configs/htaccess-without-mindtouch";
+            target => "/home/vagrant/src/configs/htaccess-without-mindtouch";
     }
     exec { 
         "kuma_update_product_details":
             user => "vagrant",
-            cwd => "/vagrant", 
+            cwd => "/home/vagrant/src", 
             command => "/usr/bin/python ./manage.py update_product_details",
             timeout => 1200, # Too long, but this can take awhile
             creates => "/home/vagrant/product_details_json/firefox_versions.json",
@@ -140,24 +140,24 @@ class kuma_config {
             ];
         "kuma_sql_migrate":
             user => "vagrant",
-            cwd => "/vagrant", 
+            cwd => "/home/vagrant/src", 
             command => "/usr/bin/python ./vendor/src/schematic/schematic migrations/",
             require => [ Exec["kuma_update_product_details"],
                 Service["mysql"], File["/home/vagrant/logs"] ];
         "kuma_south_migrate":
             user => "vagrant",
-            cwd => "/vagrant", 
+            cwd => "/home/vagrant/src", 
             command => "/usr/bin/python manage.py migrate",
             require => [ Exec["kuma_sql_migrate"] ];
         "kuma_update_feeds":
             user => "vagrant",
-            cwd => "/vagrant", 
+            cwd => "/home/vagrant/src", 
             command => "/usr/bin/python ./manage.py update_feeds",
             onlyif => "/usr/bin/mysql -B -uroot kuma -e'select count(*) from feeder_entry' | grep '0'",
             require => [ Exec["kuma_south_migrate"] ];
         "kuma_stylus_watch":
             user => "vagrant",
-            cwd => "/vagrant",
+            cwd => "/home/vagrant/src",
             command => "/usr/local/bin/stylus -w media/redesign/stylus -o media/redesign/css &",
             require => File["/usr/local/bin/stylus"];
     }

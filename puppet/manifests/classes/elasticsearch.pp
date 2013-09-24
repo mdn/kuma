@@ -13,7 +13,7 @@ class elasticsearch(
   $logdir = $elasticsearch::params::logdir
 ) inherits elasticsearch::params {
   $tarchive = "elasticsearch-${version}.tar.gz"
-  $tmptarchive = "/vagrant/puppet/cache/${tarchive}"
+  $tmptarchive = "/home/vagrant/src/puppet/cache/${tarchive}"
   $tmpdir = "/tmp/elasticsearch-${version}"
   $sharedirv = "/usr/share/elasticsearch-${version}"
   $sharedir = "/usr/share/elasticsearch"
@@ -65,7 +65,7 @@ class elasticsearch(
   }
 
   exec { "elasticsearch_download":
-    cwd     => "/vagrant/puppet/cache",
+    cwd     => "/home/vagrant/src/puppet/cache",
     timeout => 300,
     command => "/usr/bin/wget http://download.elasticsearch.org/elasticsearch/elasticsearch/${tarchive}",
     creates => "${tmptarchive}";
@@ -122,26 +122,26 @@ class elasticsearch(
 
   file { $configfile:
     ensure => present,
-    source => "/vagrant/puppet/files/etc/elasticsearch/elasticsearch.yml",
+    source => "/home/vagrant/src/puppet/files/etc/elasticsearch/elasticsearch.yml",
     owner  => root,
     group  => root,
   }
 
   file { $logconfigfile:
     ensure => present,
-    source => "/vagrant/puppet/files/etc/elasticsearch/logging.yml",
+    source => "/home/vagrant/src/puppet/files/etc/elasticsearch/logging.yml",
     owner  => root,
     group  => root,
   }
 
   file { $defaultsfile:
     ensure => present,
-    source => "/vagrant/puppet/files/etc/elasticsearch/etc-default-elasticsearch",
+    source => "/home/vagrant/src/puppet/files/etc/elasticsearch/etc-default-elasticsearch",
   }
 
   file { $upstartfile:
     ensure => present,
-    source => "/vagrant/puppet/files/etc/elasticsearch/etc-init-elasticsearch.conf",
+    source => "/home/vagrant/src/puppet/files/etc/elasticsearch/etc-init-elasticsearch.conf",
   }
 
   service { 'elasticsearch':

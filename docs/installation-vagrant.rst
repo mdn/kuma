@@ -91,8 +91,8 @@ What’s next?
    ``vagrant ssh``
 
 -  Edit files as usual on your host machine; the current directory is
-   mounted via NFS at /vagrant within the VM. Update should be reflected
-   without any action on your part.
+   mounted via NFS at /home/vagrant/src within the VM. Update should be
+   reflected without any action on your part.
 
 -  Useful vagrant sub-commands::
 
@@ -113,7 +113,7 @@ What’s next?
 
    -  Inside the VM::
 
-          sudo puppet apply /vagrant/puppet/manifests/dev-vagrant.pp
+          sudo puppet apply /home/vagrant/src/puppet/manifests/dev-vagrant.pp
 
 -  After your first sign in, SSH into the vagrant box and add yourself as an admin::
 

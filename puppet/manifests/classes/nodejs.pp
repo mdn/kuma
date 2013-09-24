@@ -25,10 +25,10 @@ class nodejs {
     }
     
     exec { 'npm-install':
-        cwd => "/vagrant/kumascript",
+        cwd => "/home/vagrant/src/kumascript",
         user => 'vagrant',
         command => "/usr/bin/npm install fibers",
-        creates => "/vagrant/kumascript/node_modules/fibers",
+        creates => "/home/vagrant/src/kumascript/node_modules/fibers",
         require => [
             Package["nodejs"], Package["nodejs-dev"], Package["npm"],
             File["/usr/include/node"], File["/root/.npm"]
