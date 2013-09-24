@@ -56,6 +56,31 @@ def reverse(viewname, urlconf=None, args=None, kwargs=None, prefix=None,
     if prefixer:
         prefix = prefix or '/'
     url = django_reverse(viewname, urlconf, args, kwargs, prefix)
+
+    # HACK: We rewrite URLs in apps/wiki/middleware.py, but don't have a
+    # concept for pluggable middleware in reverse() as far as I know. So, this
+    # is an app-specific override. ABSOLUTE_URL_OVERRIDES doesn't really do the
+    # trick.
+    #
+    # See apps/wiki/tests/test_middleware.py for a test exercising this hack.
+    if url.startswith('/docs/'):
+        # HACK: Import here, because otherwise it's a circular reference
+        from wiki.models import DocumentZone
+        # Work out a current locale, from some source.
+        zone_locale = locale
+        if not zone_locale: 
+            if prefixer:
+                zone_locale = prefixer.locale
+            else:
+                zone_locale = settings.WIKI_DEFAULT_LANGUAGE
+        # Get DocumentZone remaps for the current locale.
+        zones = DocumentZone.objects.get_for_url_remaps(zone_locale)
+        for zone in zones:
+            orig_url = '/docs/%s' % zone.document.slug
+            if url.startswith(orig_url) and zone_locale == zone.document.locale:
+                url = url.replace(orig_url, '/%s' % zone.url_root, 1)
+                break
+
     if prefixer:
         return prefixer.fix(url)
     else:

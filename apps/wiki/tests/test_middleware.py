@@ -111,3 +111,29 @@ class DocumentZoneMiddlewareTestCase(TestCaseBase):
         url = '/en-US/docs/%s?raw=1' % self.other_doc.slug
         response = self.client.get(url, follow=False)
         eq_(200, response.status_code)
+
+    def test_reverse_rewrite(self):
+        """Ensure reverse() URLs are remapped"""
+        # HACK: This actually exercises code in apps/sumo/urlresolvers.py, but
+        # lives here to share fixtures and such with other wiki URL remap code.
+        url = reverse('wiki.document',
+                      args=[self.other_doc.slug],
+                      locale='en-US')
+        eq_('/en-US/docs/otherPage', url)
+        url = reverse('wiki.edit_document',
+                      args=[self.other_doc.slug],
+                      locale='en-US')
+        eq_('/en-US/docs/otherPage$edit', url)
+
+        url = reverse('wiki.document',
+                      args=[self.middle_doc.slug],
+                      locale='en-US')
+        eq_('/en-US/ExtraWiki/Middle', url)
+        url = reverse('wiki.edit_document',
+                      args=[self.middle_doc.slug],
+                      locale='en-US')
+        eq_('/en-US/ExtraWiki/Middle$edit', url)
+
+        url = reverse('wiki.edit_document',
+                      args=[self.middle_doc.slug])
+        eq_('/ExtraWiki/Middle$edit', url)

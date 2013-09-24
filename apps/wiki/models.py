@@ -1800,9 +1800,19 @@ class DocumentType(SearchMappingType, Indexable):
         return u'...'.join(stripped_matches)
 
 
+class DocumentZoneManager(models.Manager):
+    """Manager for DocumentZone objects"""
+
+    def get_for_url_remaps(self, locale):
+        qs = (self.filter(document__locale=locale,
+                          url_root__isnull=False)
+                  .exclude(url_root=''))
+        return qs
+
 class DocumentZone(models.Model):
     """Model object declaring a content zone root at a given Document, provides
     attributes inherited by the topic hierarchy beneath it."""
+    objects = DocumentZoneManager()
 
     document = models.ForeignKey(Document, related_name='zones', unique=True)
     styles = models.TextField(null=True, blank=True)
