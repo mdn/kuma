@@ -12,7 +12,7 @@ class python_prereqs {
             "libpng12-dev", "libtidy-0.99-0", "libtidy-dev" ]:
             ensure => installed;
     }
-    file { "/vagrant/puppet/cache/pip":
+    file { "/home/vagrant/src/puppet/cache/pip":
         ensure => directory
     }
 }
@@ -22,11 +22,11 @@ class python_modules {
          "pip-install-compiled":
              cwd => '/tmp', 
              timeout => 1200, # Too long, but this can take awhile
-             command => "/usr/bin/pip install --download-cache=/vagrant/puppet/cache/pip -r /vagrant/requirements/compiled.txt";
+             command => "/usr/bin/pip install --download-cache=/home/vagrant/src/puppet/cache/pip -r /home/vagrant/src/requirements/compiled.txt";
          "pip-install-dev":
              cwd => '/tmp', 
              timeout => 1200, # Too long, but this can take awhile
-             command => "/usr/bin/pip install --download-cache=/vagrant/puppet/cache/pip -r /vagrant/requirements/dev.txt";
+             command => "/usr/bin/pip install --download-cache=/home/vagrant/src/puppet/cache/pip -r /home/vagrant/src/requirements/dev.txt";
      }
 }
 

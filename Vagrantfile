@@ -54,7 +54,8 @@ Vagrant::VERSION >= "1.1.0" and Vagrant.configure("2") do |config|
     config.vm.box = CONF['box']
     config.vm.network :private_network, :ip => CONF['ip_address']
     config.package.name = CONF['package_name']
-  
+    config.vm.synced_folder ".", "/vagrant", disabled: true 
+
     # nfs needs to be explicitly enabled to run.
     if CONF['nfs'] == false or RUBY_PLATFORM =~ /mswin(32|64)/
         config.vm.synced_folder ".", CONF['mount_point']

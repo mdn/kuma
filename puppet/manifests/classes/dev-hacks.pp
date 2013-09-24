@@ -34,33 +34,33 @@ class dev_hacks {
         owner => "vagrant", group => "vagrant", mode => 0777;
     }
 
-    file { "/vagrant/settings_local.py":
+    file { "/home/vagrant/src/settings_local.py":
         ensure => file,
-        source => "/vagrant/puppet/files/vagrant/settings_local.py";
+        source => "/home/vagrant/src/puppet/files/vagrant/settings_local.py";
     }
         
-    file { "/vagrant/kumascript_settings_local.json":
+    file { "/home/vagrant/src/kumascript_settings_local.json":
         ensure => file,
-        source => "/vagrant/puppet/files/vagrant/kumascript_settings_local.json";
+        source => "/home/vagrant/src/puppet/files/vagrant/kumascript_settings_local.json";
     }
 
     file { "/etc/motd":
-        source => "/vagrant/puppet/files/etc/motd",
+        source => "/home/vagrant/src/puppet/files/etc/motd",
         owner => "root", group => "root", mode => 0644;
     }
             
     file { "/etc/hosts":
-        source => "/vagrant/puppet/files/etc/hosts",
+        source => "/home/vagrant/src/puppet/files/etc/hosts",
         owner => "root", group => "root", mode => 0644;
     }
 
     file { "/etc/hostname":
-        source => "/vagrant/puppet/files/etc/hostname",
+        source => "/home/vagrant/src/puppet/files/etc/hostname",
         owner => "root", group => "root", mode => 0644;
     }
 
     file { "/etc/resolv.conf":
-        source => "/vagrant/puppet/files/etc/resolv.conf",
+        source => "/home/vagrant/src/puppet/files/etc/resolv.conf",
         owner => "root", group => "root", mode => 0644;
     }
 
@@ -73,13 +73,13 @@ class dev_hacks_post {
     # useful things to the $PATH, etc.
     file {
         "/home/vagrant/.bash_profile":
-            source => "/vagrant/puppet/files/home/vagrant/bash_profile",
+            source => "/home/vagrant/src/puppet/files/home/vagrant/bash_profile",
             owner => "vagrant", group => "vagrant", mode => 0664;
         "/home/vagrant/bin":
             ensure => directory,
             owner => "vagrant", group => "vagrant", mode => 0755;
         "/home/vagrant/bin/go-tmux.sh":
-            source => "/vagrant/puppet/files/home/vagrant/bin/go-tmux.sh",
+            source => "/home/vagrant/src/puppet/files/home/vagrant/bin/go-tmux.sh",
             owner => "vagrant", group => "vagrant", mode => 0777;
     }
 }

@@ -31,8 +31,8 @@ yum install -y make git puppet
 /usr/sbin/useradd -u 500 -g 502 -p '$1$bj6IAbmB$5iFUgH3dKx0rimAcn0kWR/' vagrant
 
 # Clone the project from github
-git clone $GIT_REPO_URL /vagrant
-cd /vagrant
+git clone $GIT_REPO_URL /home/vagrant/src
+cd /home/vagrant/src
 git checkout mdn
 git submodule update --init --recursive
 
@@ -45,4 +45,4 @@ chmod +x .git/hooks/post-receive
 chown -R vagrant:vagrant /vagrant /home/vagrant
 
 # Let puppet take it from here...
-puppet /vagrant/puppet/manifests/dev-vagrant.pp
+puppet /home/vagrant/src/puppet/manifests/dev-vagrant.pp
