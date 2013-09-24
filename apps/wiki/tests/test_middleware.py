@@ -63,6 +63,16 @@ class DocumentZoneMiddlewareTestCase(TestCaseBase):
         self.middle_zone = DocumentZone(document=self.middle_doc)
         self.middle_zone.save()
 
+        other_rev = revision(title='otherPage', slug='otherPage',
+                             content='This is an otherpage',
+                             is_approved=True, save=True)
+        self.other_doc = other_rev.document
+        self.other_doc.save()
+
+        self.other_zone = DocumentZone(document=self.other_doc)
+        self.other_zone.url_root = ''
+        self.other_zone.save()
+
     def test_url_root_internal_redirect(self):
         """Ensure document zone with URL root results in internal redirect"""
 
@@ -84,3 +94,9 @@ class DocumentZoneMiddlewareTestCase(TestCaseBase):
         response = self.client.get(url, follow=False)
         eq_(302, response.status_code)
         eq_('http://testserver/en-US/ExtraWiki/Middle?raw=1', response['Location'])
+
+    def test_blank_url_root(self):
+        """Ensure a blank url_root does not trigger URL remap"""
+        url = '/en-US/docs/%s?raw=1' % self.other_doc.slug
+        response = self.client.get(url, follow=False)
+        eq_(200, response.status_code)
