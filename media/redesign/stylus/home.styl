@@ -1,4 +1,361 @@
+@import 'vars'
+@import 'mixins'
+@import 'grid'
+
 #home
+  create-home-gradient-background(#00539f)
+
+  /* general structure adjustments */
+  #main-header
+    background none
+    border-bottom-color rgba(255, 255, 255, 0.2)
+    
+    .logo
+      background url('/media/redesign/img/mdn_logo-wordmark-full_white.svg') 0 0 no-repeat
+
+  /* update main nav menu color */
+  override-main-nav-color(#fff)
 
   .main-nav-search
     display none
+
+   .home-callouts
+    background #4d4e53
+
+   remove-main-spacing()
+
+  /* shared spacing in prominent block*/
+  .home-masthead, .home-hacks, .home-demos, .home-contribute
+    padding first-content-top-padding 0
+
+  /* masthead */
+  .home-masthead
+
+    h1, input
+      width 60%
+
+    h1
+      color #fff
+      margin-bottom 0 
+      margin 0 auto
+
+      span
+        padding-left 20%
+        display block
+
+    .home-search-form
+      padding (grid-spacing * 2) 0
+
+      input
+        display block
+        margin 0 auto
+        font-size larger-font-size
+        background rgba(255, 255, 255, 0.2)
+        color #fff
+        border 0
+        border-radius 3px
+
+        &::-webkit-input-placeholder
+          color #fff
+        &::-moz-input-placeholder
+          color #fff
+
+  .home-features
+    &, a
+      color #fff
+
+    a
+      text-decoration underline
+
+    h3
+      font-weight bold
+      font-size larger-font-size
+
+    li
+      border-bottom 1px solid rgba(255, 255, 255, 0.1)
+      padding 4px 0
+
+    .column-home-features
+      @extend .column-strip
+
+  /* callouts */
+
+  .column-callout 
+    @extend .column-4
+    position relative
+
+    i
+      position absolute
+      top 0
+      display block
+      right 10%
+
+    span
+      padding-right 20px
+
+    a
+      font-size larger-font-size
+      color #fff
+      display block
+      padding 100px grid-spacing grid-spacing grid-spacing
+      position relative
+      overflow-x hidden
+
+      &:before
+        content "\f061"
+        font-family "FontAwesome"
+        bottom grid-spacing
+        right grid-spacing
+        position absolute
+        font-size 24px
+        z-index 4
+
+    &.callout-apps
+      background #e66000
+
+      i
+        width 200px
+        height 130px
+        background url('/media/redesign/img/HTML5_Logo.svg') center -70px no-repeat
+        background-size cover
+
+    &.callout-android
+      background #97c03d
+
+      i
+        width 260px
+        height 140px
+        background url('/media/redesign/img/promo-phone.png') center -190px no-repeat
+        background-size cover
+
+    &.callout-firefoxos
+      background-color #0095dd
+
+      i
+        width 280px
+        height 150px
+        background url('/media/redesign/img/promo-fox.png') center -60px no-repeat
+        background-size cover
+
+  /* shared */
+  h2, h3
+    > i
+      display inline-block
+      position relative
+      margin-left 0
+      background-image url('/media/redesign/img/mdn_blank-grey-document-color.svg') 
+
+  h2 
+    a
+      font-style italic
+      font-size base-font-size
+      font-weight normal
+      display inline-block
+      margin-left (grid-spacing * 2)
+
+    > i
+      width 72px 
+      height 62px 
+      color #6363ce
+      
+      &.blue
+        background-image url('/media/redesign/img/mdn_blank-blue-document-color.svg') 
+        color #fff
+
+      &[class^="icon-"]:before
+        margin 16px 0 0 22px
+
+  h3
+    @extend .clear
+    text-transform uppercase
+
+    i
+      background-size cover
+      width 47px 
+      height 41px
+      color #007bc4
+      margin-right 10px !important
+      float left
+
+      &[class^="icon-"]:before
+        margin 9px 0 0 16px
+
+    &.zones span
+      padding-top 10px
+
+    span
+      float left
+
+  .entry-meta
+      font-size smaller-font-size
+      font-style italic
+
+  /* hacks */
+  .home-hacks
+    background #fff
+
+    .column-hacks
+      @extend .column-main
+
+    .column-involved
+      @extend .column-strip
+
+    li
+      padding-top grid-spacing
+      border-bottom 1px solid #ececec
+
+      &:last-child
+        border-bottom 0
+
+    h2
+      font-weight bold
+      margin-bottom 4px
+
+    h2.entry-title
+      a
+        text-decoration underline
+        compat-only(margin-left, 0)
+        compat-only(font-style, normal)
+        font-size base-font-size
+
+    .hacks
+      margin-bottom (grid-spacing / 2)
+
+    .home-involved-card
+      background url('/media/redesign/img/home-globe.svg') -90px 40px no-repeat #f4f7f8
+      background-size 600px
+
+      a
+        color #fff
+        text-decoration none
+        padding grid-spacing
+        display block
+
+      .numbers
+        padding-bottom 40px
+        line-height 40px
+
+        .row1, .row2, .row3
+          display block
+
+      .number
+        font-size 30px
+        font-weight bold
+
+      h3
+        padding-bottom (grid-spacing / 2)
+        border-bottom 1px solid #e0e2e4
+        margin-bottom 110px
+        margin-right -(grid-spacing)
+        font-weight bold
+        font-size larger-font-size
+
+      p
+        margin 0
+        padding 0
+        text-align center
+
+      .button
+        background-color #48ade4 !important
+        font-size smaller-font-size !important
+        color #fff !important
+        
+/* demos section */
+.home-demos
+  background light-background-color
+
+  ul
+    @extend .clear
+    overflow-x auto
+    position relative
+
+  li
+    display block
+    text-align center
+    margin-right grid-spacing
+    float left
+    font-size smaller-font-size
+    font-style italic
+
+    img
+      border 6px solid #fff
+      display block
+      vendorize(box-shadow, 2px 2px 1px rgba(0 , 0, 0, .1))
+      margin-bottom 6px
+
+  .preview
+    text-transform uppercase
+    float right
+    margin-top -10px
+
+    span
+      display block
+
+
+/* contribute section */
+.home-contribute
+  background #fff
+
+  a
+    text-decoration underline
+
+  h3
+    font-size larger-font-size
+    font-weight bold
+    text-transform uppercase
+
+  li
+    border-bottom 1px solid #ececec
+    padding 4px 0
+
+    &:last-child
+      border-bottom 0
+
+  .home-contribute-recent
+    margin-top (grid-spacing / 2)
+
+
+/* tablet */
+@media media-query-tablet
+  #home
+
+    .home-masthead
+        h1, input
+          width 80%
+
+    h3 i
+      display none
+
+    .column-callout
+      a
+        font-size base-font-size
+
+      &.callout-android, &.callout-apps
+          i
+            right auto
+
+
+/* mobile */
+@media media-query-mobile
+  #home
+
+    .home-masthead
+      h1, input
+        width 100%
+
+        span
+          padding-left 0
+
+    .column-callout, .column-involved, .column-home-features
+      width auto !important
+      float none
+      margin-bottom grid-spacing
+
+/* right to left */
+#home.html-rtl
+    .column-callout
+      a
+        &:before
+          content "\f060"
+          right auto
+          left grid-spacing

@@ -102,7 +102,7 @@ def profile_link(user, show_gravatar=False, gravatar_size=48,
 
 @register.inclusion_tag('demos/elements/submission_thumb.html')
 def submission_thumb(submission, extra_class=None, thumb_width="200",
-                     thumb_height="150"):
+                     thumb_height="150", is_homepage=False):
     vars = locals()
 
     flags = submission.get_flags()
@@ -127,6 +127,7 @@ def submission_thumb(submission, extra_class=None, thumb_width="200",
     if main_flag in flags_meta:
         vars['main_flag_class'] = flags_meta[main_flag][0]
         vars['main_flag_description'] = flags_meta[main_flag][1]
+    vars['is_homepage'] = is_homepage
 
     return vars
 
