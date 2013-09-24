@@ -29,7 +29,8 @@ class DocumentZoneMiddleware(object):
     incoming path_info to point at the internal wiki path
     """
     def process_request(self, request):
-        zones = DocumentZone.objects.filter(url_root__isnull=False)
+        zones = (DocumentZone.objects.filter(url_root__isnull=False)
+                                     .exclude(url_root=''))
         for zone in zones:
             root = '/%s' % zone.url_root
             orig_path = '/docs/%s' % zone.document.slug

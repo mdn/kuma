@@ -1,9 +1,7 @@
 from datetime import datetime
 
 from django.contrib import admin
-from django.core import serializers
 from django.http import HttpResponse
-from django.core import serializers
 
 from sumo.urlresolvers import reverse, split_path
 
