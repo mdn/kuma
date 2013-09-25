@@ -1,6 +1,5 @@
 /* header */
 #main-header
-  create-gradient-background(header-background-color)
   @extend .clear
   
   border-color transparent
@@ -179,12 +178,8 @@ a.persona-button
     vendorize(transition-property, width)
     vendorize(transition-duration, animation-duration)
 
-    &::-webkit-input-placeholder
-      color text-color
-      text-align right
-    &::-moz-input-placeholder
-      color text-color
-      text-align right
+    set-placeholder-style(color, text-color)
+    set-placeholder-style(text-align, right)
 
     &.has-value
       text-transform none
@@ -197,6 +192,8 @@ a.persona-button
   compat-only(padding, 0)
 
 main
+  background #fff
+  
   > .center 
     padding-top first-content-top-padding
 
