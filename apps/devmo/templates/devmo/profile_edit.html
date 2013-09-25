@@ -9,6 +9,7 @@
 {% block site_css %}
     {{ super() }}
     {{ css('demostudio') }}
+    {% if waffle.flag('redesign') %}{{ css('redesign-profile') }}{% endif %}
 {% endblock %}
 
 {% block site_js %}

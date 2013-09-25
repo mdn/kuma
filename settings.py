@@ -624,6 +624,9 @@ MINIFY_BUNDLES = {
         'redesign-home': (
             'redesign/css/home.css',
         ),
+        'redesign-profile': (
+            'redesign/css/profile.css',
+        ),
     },
     'js': {
         'mdn': (
