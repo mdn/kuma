@@ -126,7 +126,7 @@
 <div class="center">
   <div id="wiki-column-container" class="{% if not show_right %}wiki-right-closed{% endif %} {% if not show_left %}wiki-left-closed{% endif %}">
 
-    {% if show_left %}
+    {% if show_left and not is_zone_root %}
     <!-- additional controls row; hidden unless needed -->
     <div id="wiki-controls" class="column-container column-container-reverse">
       <div class="column-strip">
