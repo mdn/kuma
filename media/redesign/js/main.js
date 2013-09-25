@@ -54,10 +54,7 @@ document.documentElement.className += ' js';
 
     $input.
       on('focus', createExpander(200, true)).
-      on('blur', createExpander(600)).
-      on('keypress change', function() {
-        $input[($input.val() != '' ? 'add' : 'remove') + 'Class']('has-value');
-      });
+      on('blur', createExpander(600));
 
     $nav.find('.search-trigger').on('focus click mouseenter', function() {
       // Adding timeout so the element isn't too responsive
