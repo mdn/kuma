@@ -145,18 +145,39 @@
 /* tablets */
 @media media-query-tablet
   .zone-landing
-      .zone-subnav-container
-        margin-top 0
+    .zone-subnav-container
+      margin-top 0
+
+    .zone-landing-header-preview .column-strip, .zone-landing-header-preview .masthead-text
+      width get-grid-dimension(media-query-tablet, 6)
+
+      .zone-landing-header-preview-base
+        position static
+
+    .zone-image
+      opacity 0.2
 
 /* mobile */
 @media media-query-mobile
       
+  .zone-landing
+    .zone-landing-header-preview .column-strip, .zone-landing-header-preview .masthead-text
+      width auto
+      float none
+
+      .zone-landing-header-preview-base
+        position static
+
   .zone-image
     opacity 0.2
     
   .zone-landing-header
     .masthead-text p
       margin-top 0
+
+  #wiki-content
+    width auto
+    float none
     
 /* right to left */
 .html-rtl
