@@ -83,195 +83,196 @@
 
 {% endif %}
 
-{% if not is_zone_root %}
-  <div class="center zone-subpage-meta">
-    <!-- crumbs -->
-    {{ build_document_crumbs(document) }}
+<div class="wiki-main-content"><div class="center">
 
-    <!-- action buttons -->
-    {{ get_document_buttons(document) }}
-  </div>
-{% endif %}
+  {% if not is_zone_root %}
+    <div class="article-meta">
+      <!-- crumbs -->
+      {{ build_document_crumbs(document) }}
 
-<!-- heading -->
-{% if not is_zone_root %}
-<div class="document-head center{% if from_search %} from-search{% endif %}">
-  {% if from_search %}
-    <a href="" class="from-search-previous only-icon"><i class="icon-chevron-left"></i></a>
-    <a href="" class="from-search-navigate"><span class="from-search-navigate-up"><i class="icon-double-angle-up"></i></span><span class="from-search-navigate-down"><i class="icon-double-angle-down"></i></span></a>
-    <div class="from-search-toc hidden">
-      <ol>
-        <li><a href="">Blah blah blah</a></li>
-        <li><a href="">Blah blah blah Blah blah blah Blah blah blah Blah blah blah</a></li>
-        <li><a href="">Blah blah blah</a></li>
-        <li><a href="">Blah blah blah</a></li>
-        <li><a href="" class="current">Blah blah blah</a></li>
-        <li><a href="">Blah blah blah</a></li>
-        <li><a href="">Blah blah blah</a></li>
-      </ol>
+      <!-- action buttons -->
+      {{ get_document_buttons(document) }}
     </div>
-    <a href="" class="from-search-next only-icon"></a>
-  {% endif %}
-  <h1>{{ document.title }}</h1>
 
-  {% if redirected_from %}
-  <div class="redirected-from" id="redirected-from">
-    <p>{{ _('Redirected from <a href="{href}">{title}</a>')|fe(href=redirected_from.get_absolute_url()|urlparams(redirect='no'), title=redirected_from.title) }}</p>
-  </div>
-  {% endif %}
-</div>
-{% endif %}
-
-<!-- start the main content container -->
-<div class="center">
-  <div id="wiki-column-container" class="{% if not show_right %}wiki-right-closed{% endif %} {% if not show_left %}wiki-left-closed{% endif %}">
-
-    {% if show_left %}
-    <!-- additional controls row; hidden unless needed -->
-    <div id="wiki-controls" class="column-container column-container-reverse">
-      <div class="column-strip">
-        <!-- Show TOC "show" link -->
-        &nbsp;
-      </div>
-      <div class="column-half">
-        &nbsp;
-      </div>
-      <div class="column-strip quick-links hidden">
-        <a href="#show-quick-links" class="title smaller" id="show-quick-links"><i class="icon-caret-down"></i>{{ _('Show Column') }}</a>
-      </div>
-    </div>
-    {% endif %}
-
-    <!-- content row with three strips -->
-    <div class="column-container column-container-reverse">
-
-      {% if show_right %}
-        <!-- TOC, approvals, etc -->
-        <div class="column-strip wiki-column" id="wiki-right">
-        {% if toc_html %}
-        <!-- table of contents -->
-        <div id="toc" class="toc toggleable">
-          <a href="#toc" class="title toggler">{{ _('In This Article') }}<i></i></a>
-          <ol class="toggle-container">
-            {{ toc_html|safe }}
+    <!-- heading -->
+    <div class="document-head{% if from_search %} from-search{% endif %}">
+      {% if from_search %}
+        <a href="" class="from-search-previous only-icon"><i class="icon-chevron-left"></i></a>
+        <a href="" class="from-search-navigate"><span class="from-search-navigate-up"><i class="icon-double-angle-up"></i></span><span class="from-search-navigate-down"><i class="icon-double-angle-down"></i></span></a>
+        <div class="from-search-toc hidden">
+          <ol>
+            <li><a href="">Blah blah blah</a></li>
+            <li><a href="">Blah blah blah Blah blah blah Blah blah blah Blah blah blah</a></li>
+            <li><a href="">Blah blah blah</a></li>
+            <li><a href="">Blah blah blah</a></li>
+            <li><a href="" class="current">Blah blah blah</a></li>
+            <li><a href="">Blah blah blah</a></li>
+            <li><a href="">Blah blah blah</a></li>
           </ol>
         </div>
-        {% endif %}
+        <a href="" class="from-search-next only-icon"></a>
+    {% endif %}
 
-        {% if tags|length %}
-        <!-- tags if present -->
-        <div class="tag-attach-list tags">
-          <i class="icon-tags"></i>
-          <ul class="tag-list">{% for tag in tags %}<li><a href="{{url('wiki.tag', tag.name)}}">{{ tag.name }}</a></li>{% endfor %}</ul>
-        </div>
-        {% endif %}
+    <h1>{{ document.title }}</h1>
 
-        {% if num_attachments %}
-        <!-- attachment list, if present -->
-        <div class="tag-attach-list attachments">
-          <i class="icon-paper-clip"></i>
-          <a href="#page-attachments">{{ _('%s Attachment%s' % (num_attachments, 's' if num_attachments > 1 else '')) }}</a>
+    {% if redirected_from %}
+    <div class="redirected-from" id="redirected-from">
+      <p>{{ _('Redirected from <a href="{href}">{title}</a>')|fe(href=redirected_from.get_absolute_url()|urlparams(redirect='no'), title=redirected_from.title) }}</p>
+    </div>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <!-- start the main content container -->
+    <div id="wiki-column-container" class="{% if not show_right %}wiki-right-closed{% endif %} {% if not show_left %}wiki-left-closed{% endif %}">
+
+      {% if show_left %}
+      <!-- additional controls row; hidden unless needed -->
+      <div id="wiki-controls" class="column-container column-container-reverse">
+        <div class="column-strip">
+          <!-- Show TOC "show" link -->
+          &nbsp;
         </div>
-        {% endif %}
+        <div class="column-half">
+          &nbsp;
         </div>
+        <div class="column-strip quick-links hidden">
+          <a href="#show-quick-links" class="title smaller" id="show-quick-links"><i class="icon-caret-down"></i>{{ _('Show Column') }}</a>
+        </div>
+      </div>
       {% endif %}
 
-      <!-- just the article content -->
-      {% if not document.is_template %}
-        {% set document_html_safe = document_html|section_hide(zone_subnav_section_id, quick_links_section_id)|safe %}
-      {% else %}
-        {% set document_html_safe = document_html|safe %}
-      {% endif %}
+      <!-- content row with three strips -->
+      <div class="column-container column-container-reverse">
 
-      <!-- center: main article content -->
-      <div id="wiki-content" class="{{ content_class }} wiki-column text-content">
+        {% if show_right %}
+          <!-- TOC, approvals, etc -->
+          <div class="column-strip wiki-column" id="wiki-right">
+          {% if toc_html %}
+          <!-- table of contents -->
+          <div id="toc" class="toc toggleable">
+            <a href="#toc" class="title toggler">{{ _('In This Article') }}<i></i></a>
+            <ol class="toggle-container">
+              {{ toc_html|safe }}
+            </ol>
+          </div>
+          {% endif %}
 
-        {% if kumascript_errors %}
-          {% include 'wiki/includes/kumascript_errors.html' %}
+          {% if tags|length %}
+          <!-- tags if present -->
+          <div class="tag-attach-list tags">
+            <i class="icon-tags"></i>
+            <ul class="tag-list">{% for tag in tags %}<li><a href="{{url('wiki.tag', tag.name)}}">{{ tag.name }}</a></li>{% endfor %}</ul>
+          </div>
+          {% endif %}
+
+          {% if num_attachments %}
+          <!-- attachment list, if present -->
+          <div class="tag-attach-list attachments">
+            <i class="icon-paper-clip"></i>
+            <a href="#page-attachments">{{ _('%s Attachment%s' % (num_attachments, 's' if num_attachments > 1 else '')) }}</a>
+          </div>
+          {% endif %}
+          </div>
         {% endif %}
 
         <!-- just the article content -->
-        <article id="wikiArticle">
-          {% if not fallback_reason %}
-            {% if not document_html %}
-              {{ _("This article doesn't have any content yet.") }}
-            {% elif document.is_template %}
-              <pre class="brush: js">{{ document_html }}</pre>
-            {% else %}
+        {% if not document.is_template %}
+          {% set document_html_safe = document_html|section_hide(zone_subnav_section_id, quick_links_section_id)|safe %}
+        {% else %}
+          {% set document_html_safe = document_html|safe %}
+        {% endif %}
+
+        <!-- center: main article content -->
+        <div id="wiki-content" class="{{ content_class }} wiki-column text-content">
+
+          {% if kumascript_errors %}
+            {% include 'wiki/includes/kumascript_errors.html' %}
+          {% endif %}
+
+          <!-- just the article content -->
+          <article id="wikiArticle">
+            {% if not fallback_reason %}
+              {% if not document_html %}
+                {{ _("This article doesn't have any content yet.") }}
+              {% elif document.is_template %}
+                <pre class="brush: js">{{ document_html }}</pre>
+              {% else %}
+                {{ document_html_safe }}
+              {% endif %}
+            {% elif fallback_reason == 'no_translation' %}
               {{ document_html_safe }}
+            {% elif fallback_reason == 'translation_not_approved' %}
+              {{ document.parent.html|safe }}
+            {% else %}
+              {{ _("This article doesn't have approved content yet.") }}
             {% endif %}
-          {% elif fallback_reason == 'no_translation' %}
-            {{ document_html_safe }}
-          {% elif fallback_reason == 'translation_not_approved' %}
-            {{ document.parent.html|safe }}
-          {% else %}
-            {{ _("This article doesn't have approved content yet.") }}
+          </article>
+          
+          {% if not is_zone_root %}
+            <!-- attachments list -->
+            {% if num_attachments %}
+              {% include 'wiki/includes/attachment_list.html' %}
+            {% endif %}
+          
+            <!-- contributors -->
+            <div class="wiki-block contributors">
+            {% trans contributors=user_list(contributors) %}
+              <strong>Contributors to this page:</strong> {{ contributors }}
+            {% endtrans %}
+            </div>
           {% endif %}
-        </article>
-        
-        {% if not is_zone_root %}
-          <!-- attachments list -->
-          {% if num_attachments %}
-            {% include 'wiki/includes/attachment_list.html' %}
+        </div>
+
+        {% if show_left %}
+          <!-- quick links and zone subnav strip -->
+          <div id="wiki-left" class="column-strip wiki-column">
+            
+          {% if not is_zone_root and (zone_subnav_html or quick_links_html) %}
+            <a href="#quick-links" class="title" id="quick-links-toggle"><i class="icon-caret-up"></i>{{ _('Hide Column') }}</a>
           {% endif %}
-        
-          <!-- contributors -->
-          <div class="wiki-block contributors">
-          {% trans contributors=user_list(contributors) %}
-            <strong>Contributors to this page:</strong> {{ contributors }}
-          {% endtrans %}
+
+            {% if not is_zone_root and zone_subnav_html %}
+              <!-- zone subnav -->
+              {{ get_document_subnav(zone_subnav_html) }}
+            {% endif %}
+            
+            {% if quick_links_html and not is_zone_root %}
+            <!-- quick links -->
+            {{ get_document_quick_links(quick_links_html) }}
+            {% endif %}
+
+            <!-- approvals -->
+            {% if request.user.is_authenticated() and document.current_revision and document.allows_revision_by(request.user) %}
+              {% if document.current_revision.needs_technical_review() or document.current_revision.needs_editorial_review() %}
+              <section class="page-meta reviews">
+                <p>{{ _('The following reviews have been requested:') }}</p>
+
+                <form method="post" action="{{ url('wiki.quick_review', document.full_path) }}">
+                  {{ csrf() }}
+                  <ul>
+                  {% if document.current_revision.needs_technical_review() %}
+                    <li>
+                      <input type="checkbox" value="approve_technical" id="id_approve_technical" name="approve_technical">
+                      <label for="id_approve_technical">{{ _('Technical') }}</label>
+                    </li>
+                  {% endif %}
+                  {% if document.current_revision.needs_editorial_review() %}
+                    <li>
+                      <input type="checkbox" value="approve_editorial" id="id_approve_editorial" name="approve_editorial">
+                      <label for="id_approve_editorial">{{ _('Editorial') }}</label>
+                    </li>
+                  {% endif %}
+                  </ul>
+
+                  <button type="submit">{{ _('Submit Review') }}</button>
+                </form>
+              </section>
+              {% endif %}
+            {% endif %}
           </div>
         {% endif %}
       </div>
-
-      {% if show_left %}
-        <!-- quick links and zone subnav strip -->
-        <div id="wiki-left" class="column-strip wiki-column">
-          
-        {% if not is_zone_root and (zone_subnav_html or quick_links_html) %}
-          <a href="#quick-links" class="title" id="quick-links-toggle"><i class="icon-caret-up"></i>{{ _('Hide Column') }}</a>
-        {% endif %}
-
-          {% if not is_zone_root and zone_subnav_html %}
-            <!-- zone subnav -->
-            {{ get_document_subnav(zone_subnav_html) }}
-          {% endif %}
-          
-          {% if quick_links_html and not is_zone_root %}
-          <!-- quick links -->
-          {{ get_document_quick_links(quick_links_html) }}
-          {% endif %}
-
-          <!-- approvals -->
-          {% if request.user.is_authenticated() and document.current_revision and document.allows_revision_by(request.user) %}
-            {% if document.current_revision.needs_technical_review() or document.current_revision.needs_editorial_review() %}
-            <section class="page-meta reviews">
-              <p>{{ _('The following reviews have been requested:') }}</p>
-
-              <form method="post" action="{{ url('wiki.quick_review', document.full_path) }}">
-                {{ csrf() }}
-                <ul>
-                {% if document.current_revision.needs_technical_review() %}
-                  <li>
-                    <input type="checkbox" value="approve_technical" id="id_approve_technical" name="approve_technical">
-                    <label for="id_approve_technical">{{ _('Technical') }}</label>
-                  </li>
-                {% endif %}
-                {% if document.current_revision.needs_editorial_review() %}
-                  <li>
-                    <input type="checkbox" value="approve_editorial" id="id_approve_editorial" name="approve_editorial">
-                    <label for="id_approve_editorial">{{ _('Editorial') }}</label>
-                  </li>
-                {% endif %}
-                </ul>
-
-                <button type="submit">{{ _('Submit Review') }}</button>
-              </form>
-            </section>
-            {% endif %}
-          {% endif %}
-        </div>
-      {% endif %}
     </div>
   </div>
-</div>
+</div> <!-- ends "main-content" -->
