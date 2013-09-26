@@ -24,6 +24,9 @@
 
    remove-main-spacing()
 
+  main
+    background transparent
+
   /* shared spacing in prominent block*/
   .home-masthead, .home-hacks, .home-demos, .home-contribute
     padding first-content-top-padding 0
@@ -54,11 +57,10 @@
         color #fff
         border 0
         border-radius 3px
+        font-family 'Open Sans Light', sans-serif
+        letter-spacing -1px
 
-        &::-webkit-input-placeholder
-          color #fff
-        &::-moz-input-placeholder
-          color #fff
+        set-placeholder-style(color, #fff)
 
   .home-features
     &, a
@@ -70,9 +72,9 @@
     h3
       font-weight bold
       font-size larger-font-size
+      font-family 'Open Sans Extra Bold', sans-serif
 
     li
-      border-bottom 1px solid rgba(255, 255, 255, 0.1)
       padding 4px 0
 
     .column-home-features
@@ -132,7 +134,7 @@
       background-color #0095dd
 
       i
-        width 280px
+        width 320px
         height 150px
         background url('/media/redesign/img/promo-fox.png') center -60px no-repeat
         background-size cover
@@ -156,7 +158,7 @@
     > i
       width 72px 
       height 62px 
-      color #6363ce
+      color #0095dd
       
       &.blue
         background-image url('/media/redesign/img/mdn_blank-blue-document-color.svg') 
@@ -173,7 +175,7 @@
       background-size cover
       width 47px 
       height 41px
-      color #007bc4
+      color #0095dd
       margin-right 10px !important
       float left
 
@@ -306,7 +308,7 @@
 
   li
     border-bottom 1px solid #ececec
-    padding 4px 0
+    padding 8px 0
 
     &:last-child
       border-bottom 0
