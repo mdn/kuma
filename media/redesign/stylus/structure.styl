@@ -25,7 +25,7 @@
       clear both
 
     > li
-      padding-left 47px
+      padding-left 31px
       position relative
       opacity 1
       max-width 1000px
@@ -38,7 +38,7 @@
         &:first-child, &:last-child
           padding-left 0
 
-        padding-left 28px
+        padding-left 12px
 
       @media media-query-mobile
         display block
@@ -50,6 +50,9 @@
         compat-important(text-transform, uppercase)
         compat-important(text-decoration, none)
         compat-important(font-weight, bold)
+
+      > a, .search-wrap
+        padding 4px 8px
 
   button[type='submit']
     display none
@@ -76,9 +79,8 @@
       top (menu-arrow-top - menu-border-width)
 
   &.expand
-    input
+    .search-wrap
       width 500px
-      text-transform none
 
     > ul > li:not(:last-child)
       opacity 0
@@ -159,6 +161,10 @@ a.persona-button
   background transparent
   padding 4px 8px
   border-radius 3px
+  position relative
+  vendorize(transition-property, width)
+  vendorize(transition-duration, animation-duration)
+  width 20px
 
   &.expanded
     background #fff
@@ -172,17 +178,23 @@ a.persona-button
     color menu-link-color
     text-transform uppercase
     font-weight bold
-    width 0
+    width 20px
     overflow hidden
     compat-only(padding, 0)
     vendorize(transition-property, width)
     vendorize(transition-duration, animation-duration)
+    position absolute
+    left 8px
+    width 100%
+    z-index 2
+    cursor pointer
 
     set-placeholder-style(color, text-color)
-    set-placeholder-style(text-align, right)
 
-    &.has-value
-      text-transform none
+  .search-trigger
+    position absolute
+    right 12px
+    z-index 1
 
 /* main content area */
 .wrap
