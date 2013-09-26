@@ -59,15 +59,21 @@ reverse-link-decoration()
       text-decoration underline
 
 /* generates a background property for header and zones */
-create-gradient-background(color)
-  background-image url('/media/redesign/img/header-background.png')
-  background-position 0 0
-  background-repeat repeat
-  background-color color
+create-gradient-background(color='', use-gradient=false)
+  if use-gradient
+    background-image url('/media/redesign/img/header-background.png'), url('/media/redesign/img/mdn-header-gradient.png')
+    background-repeat repeat, repeat-x
+  else
+    background-image url('/media/redesign/img/header-background.png')
+    background-repeat repeat
+  background-position 0 0, 0 0, 0 0
+  if color
+    background-color color
 
 create-home-gradient-background(color)
   create-gradient-background(color)
-  background-image url('/media/redesign/img/header-background.png'), url('/media/redesign/img/blueprint.png')
+  background-image url('/media/redesign/img/header-background.png'), url('/media/redesign/img/blueprint.png'), url('/media/redesign/img/mdn-header-gradient.png')
+  background-repeat repeat, repeat, repeat-x
 
 /* generates a cross-browser gradient */
 create-gradient(start-color, end-color, direction=false)
@@ -153,6 +159,14 @@ remove-main-spacing()
 override-main-nav-color(hex)
   #main-nav > ul > li > a, .user-state a
     compat-important(color, hex)
+
+/* Sets an input tag's placeholder styles */
+set-placeholder-style(prop, value)
+  &::-webkit-input-placeholder
+    {prop} value
+  &::-moz-input-placeholder
+    {prop} value
+
 
 /*
   CLASSES TO BE EXTENDED BY OTHER CLASSES

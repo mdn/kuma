@@ -3,10 +3,7 @@
 @import 'grid'
 
 .zone
-  remove-main-spacing()
-
-  #main-header, .zone-article-header
-    create-gradient-background(#0095dd)
+  create-gradient-background('', true)
 
   #main-header
     border-bottom-color rgba(255, 255, 255, 0.2)
@@ -17,19 +14,23 @@
   override-main-nav-color(#fff)
 
   .search-wrap
-    create-gradient-background(rgba(255, 255, 255, 0.2))
+    background-color rgba(255, 255, 255, 0.2)
 
     input, i
       color #fff
-
-      &::-webkit-input-placeholder
-        color #fff
-      &::-moz-input-placeholder
-        color #fff
+      set-placeholder-style(color, #fff)
 
   .user-state
     a, a:hover, a:focus, a:visited
       color #fff
+
+  /* zone content area needs to be adjusted for zone pages */
+  remove-main-spacing()
+  main
+    background transparent
+
+  .wiki-main-content
+    padding-top first-content-top-padding !important
 
 .zone-landing
 
@@ -66,7 +67,7 @@
     margin 6px 0 0 0
 
 .zone-landing-header
-  create-gradient-background(#0095dd)
+  /* create-gradient-background(#0095dd) */
   color #fff
   position relative
   
@@ -77,7 +78,6 @@
     p
       font-size larger-font-size
       font-weight light-font-weight
-
 
   .zone-image
     position absolute
@@ -97,9 +97,6 @@
   padding list-item-spacing 0
   prevent-last-child-spacing(padding-bottom)
 
-
-.zone-subpage-meta
-  padding-top first-content-top-padding !important
 
 
 /*  Basic zone article pages */

@@ -1,7 +1,29 @@
 @import 'vars'
 @import 'mixins'
 
-/* remove ugly button styles */
 .section-demos
+  background #c0c4c8
+
+  main
+    background transparent
+
+  &:not(.devderby) 
+    override-main-nav-color(#fff)
+
+    #main-header
+      .logo
+        background url('/media/redesign/img/mdn_logo-wordmark-full_white.svg') 0 0 no-repeat
+
+      .search-wrap
+        background-color rgba(255, 255, 255, 0.2)
+
+        &, input, .search-trigger
+          color #fff !important
+
+
+  /* remove ugly button styles */
   .button, button
     compat-important(box-shadow, none)
+
+#demostudio.landing, #demostudio.detail
+  compat-important(background-position, center 0px)

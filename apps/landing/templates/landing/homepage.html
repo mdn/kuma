@@ -23,7 +23,7 @@
 <!-- top search area -->
 <div class="home-masthead"><div class="center">
 
-  <h1>{{ _('Shared knowledge <span>for the Open Web.</span>') }}</h1>
+  <h1>{{ _('Shared knowledge <span>for the Open Web</span>') }}</h1>
 
   <div class="home-search-form">
     <form action="{{ url('search') }}" method="get">
@@ -46,11 +46,11 @@
       <div class="column-home-features">
         <h3 class="zones"><i class="icon-suitcase"></i><span>{{ _('Zones') }}</span></h3>
         <ul>
-        <li><a href="">{{ _('App Center') }}</a></li>
-        <li><a href="">{{ _('Firefox OS') }}</a></li>
+        <li><a href="{{ devmo_url('Web/Apps/Apps_Zone') }}">{{ _('App Center') }}</a></li>
+        <li><a href="{{ devmo_url('Mozilla/Firefox_OS') }}">{{ _('Firefox OS') }}</a></li>
         <li><a href="">{{ _('Firefox Marketplace') }}</a></li>
-        <li><a href="">{{ _('Web Platform') }}</a></li>
-        <li><a href="">{{ _('all zones...') }}</a></li>
+        <li><a href="{{ devmo_url('Web') }}">{{ _('Web Platform') }}</a></li>
+        <li><a href="">{{ _('more...') }}</a></li>
         </ul>
       </div>
       <div class="column-home-features">
@@ -60,7 +60,7 @@
         <li><a href="{{ devmo_url('Tools/Page_Inspector') }}">{{ _('Page Inspector') }}</a></li>
         <li><a href="{{ devmo_url('Tools/Debugger') }}">{{ _('JavaScript Debugger') }}</a></li>
         <li><a href="{{ devmo_url('Tools/Web_Console') }}">{{ _('Web Console') }}</a></li>
-        <li><a href="{{ devmo_url('Tools') }}">{{ _('all zones...') }}</a></li>
+        <li><a href="{{ devmo_url('Tools') }}">{{ _('more...') }}</a></li>
         </ul>
       </div>
       <div class="column-home-features">
@@ -97,7 +97,7 @@
       <h3 class="title">{{ _('Get Involved') }}</h3>
 
       <p class="numbers">{{ _('<span class="row1">Join <span class="number">%s</span> contributors</span> <span class="row2">in <span class="number">%s</span> languages and locales</span> <span class="row3">around the world.</span>') % (num_users|intcomma, num_languages) }}</p>
-      <p><span class="button">{{ _('Contribute to MDN') }}</span></p>
+      <p><span class="button">{{ _('Help improve MDN') }}</span></p>
     </a></div>
   </div>
 </div></div>
