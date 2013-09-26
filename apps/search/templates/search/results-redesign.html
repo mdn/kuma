@@ -20,7 +20,8 @@
     <div class="column-container">
       <div class="column-1"><i class="icon-file-text-alt"></i></div>
       <div class="column-5 result-list-item">
-        <h4 class="larger"><a href="{{ doc_url }}?search={{ search_query }}">{{ doc.title }}</a></h4>
+        {# <h4 class="larger"><a href="{{ doc_url }}?search={{ search_query }}">{{ doc.title }}</a></h4> #}
+        <h4 class="larger"><a href="{{ doc_url }}">{{ doc.title }}</a></h4>
         <p>{{ doc.get_excerpt()|safe }}</p>
         <p class="search-meta"><a href="{{ doc_url }}">{{ doc_url|replace('https://', '') }}</a></p>
       </div>
