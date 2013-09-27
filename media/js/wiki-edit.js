@@ -46,6 +46,7 @@
 
         if ($body.is('.edit, .new, .translate')) {
             initMetadataEditButton();
+            initWatchDocumentChange();
             initSaveAndEditButtons();
             initArticlePreview();
             initAttachmentsActions();
@@ -625,7 +626,44 @@
     function hideDraftBox() {
         $draftDiv && $draftDiv.css('display', 'none');
     }
+ 
+    //
+    // Initialize logic that enables save, save-and-edit, and preview buttons 
+    // on document change.
+    //
+    function initWatchDocumentChange () {
+        // List of editable elements we're meant to watch.
+        var watchedElements = '#id_title, #id_slug, #id_toc_depth, ' +
+            '#id_comment, #page-tags, input[name=review_tags], ' +
+            '#parent_text, #page-attachments-upload-target';
 
+        var ckeditor;
+        var $docButtons = $('#btn-save, #btn-preview, #btn-save-and-edit');
+        var enableButtons = function enableButtons() {
+            if ($docButtons.attr('disabled')) {
+                // If the document buttons are still disabled, enable them.
+                $docButtons.removeAttr('disabled');
+
+                // Remove event listeners since we won't need them anymore. 
+                $(watchedElements).off('change', enableButtons);
+                if (ckeditor) {
+                    ckeditor.removeListener('key', enableButtonsCKE);
+                }
+            }
+        };
+        var enableButtonsCKE = function enableButtonsCKE() {
+            if (ckeditor.checkDirty()) {
+                enableButtons();
+            }
+        };
+
+        $(watchedElements).on('change', enableButtons);
+
+        CKEDITOR.instances['id_content'].on('instanceReady', function (e) {
+            ckeditor = e.editor;
+            ckeditor.on('key', enableButtonsCKE);
+        });
+    }
 
     //
     // Initialize logic for save and save-and-edit buttons.
