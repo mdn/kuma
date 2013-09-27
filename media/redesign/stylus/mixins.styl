@@ -6,33 +6,6 @@
 
 */
 
-/* generates a grid based on min/max and increment */
-generate-grid(increment, start, end, desired-column=false)
-  total = start
-  for n, x in 0..((end - start) / increment)
-    if desired-column
-      if x+1 is desired-column
-        return total
-    else
-      .column-{x+1}
-        width total
-
-    total = total + increment
-
-  /* now add a few meaningful names */
-  .column-strip
-    @extend .column-3
-  .column-main
-    @extend .column-9
-  .column-half
-    @extend .column-6
-  .column-all
-    width auto
-
-get-grid-dimension(media-query, column-num)
-  if media-query is media-query-tablet
-    return generate-grid(grid-increment-tablet, grid-start-tablet, grid-end-tablet, column-num)
-
 /* vendorizes a propery */
 vendorize(property, value)
   -webkit-{property} value
@@ -61,10 +34,10 @@ reverse-link-decoration()
 /* generates a background property for header and zones */
 create-gradient-background(color='', use-gradient=false)
   if use-gradient
-    background-image url('/media/redesign/img/header-background.png'), url('/media/redesign/img/mdn-header-gradient.png')
+    background-image url(media-url-dir + 'header-background.png'), url(media-url-dir + 'mdn-header-gradient.png')
     background-repeat repeat, repeat-x
   else
-    background-image url('/media/redesign/img/header-background.png')
+    background-image url(media-url-dir + 'header-background.png')
     background-repeat repeat
   background-position 0 0, 0 0, 0 0
   if color
@@ -72,7 +45,7 @@ create-gradient-background(color='', use-gradient=false)
 
 create-home-gradient-background(color)
   create-gradient-background(color)
-  background-image url('/media/redesign/img/header-background.png'), url('/media/redesign/img/blueprint.png'), url('/media/redesign/img/mdn-header-gradient.png')
+  background-image url(media-url-dir + 'header-background.png'), url(media-url-dir + 'blueprint.png'), url(media-url-dir + 'mdn-header-gradient.png')
   background-repeat repeat, repeat, repeat-x
 
 /* generates a cross-browser gradient */
@@ -115,7 +88,7 @@ old-ie(prop, value, important=false)
   {prop} value (important ? unquote('!important') : '')
 
 /* Used to create sliding animations */
-slider(duration=animation-duration, maximum-height=10000px)
+slider(duration=default-animation-duration, maximum-height=10000px)
   overflow-y hidden
   max-height maximum-height
   vendorize(transition-property, all)
@@ -154,6 +127,12 @@ remove-main-spacing()
   main > .center
     width auto
     padding 0
+    margin 0
+    max-width none
+
+add-main-space()
+  @extend .center
+  
 
 /* Overrides the navigation menu color - zones and homepage */
 override-main-nav-color(hex)
@@ -166,6 +145,11 @@ set-placeholder-style(prop, value)
     {prop} value
   &::-moz-input-placeholder
     {prop} value
+
+/* Uses the white logo instead of color logo */
+use-white-logo()
+  #main-header .logo
+      background url(media-url-dir + 'mdn_logo-wordmark-full_white.svg') 0 0 no-repeat
 
 
 /*

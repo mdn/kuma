@@ -4,12 +4,10 @@
 
 .zone
   create-gradient-background('', true)
+  use-white-logo()
 
   #main-header
     border-bottom-color rgba(255, 255, 255, 0.2)
-
-    .logo
-      background url('/media/redesign/img/mdn_logo-wordmark-full_white.svg') 0 0 no-repeat
 
   override-main-nav-color(#fff)
 
@@ -137,44 +135,22 @@
   td
     vertical-align bottom
     padding-right grid-spacing
-    
+ 
 
-/* tablets */
+    
 @media media-query-tablet
   .zone-landing
-    .zone-subnav-container
-      margin-top 0
+      .zone-subnav-container
+        margin-top 0
 
-    .zone-landing-header-preview .column-strip, .zone-landing-header-preview .masthead-text
-      width get-grid-dimension(media-query-tablet, 6)
+      .zone-landing-header-preview .column-strip, .zone-landing-header-preview .masthead-text
+        width get-grid-dimension(media-query-tablet, 6)
 
-      .zone-landing-header-preview-base
-        position static
+        .zone-landing-header-preview-base
+          position static
 
-    .zone-image
-      opacity 0.2
-
-/* mobile */
-@media media-query-mobile
-      
-  .zone-landing
-    .zone-landing-header-preview .column-strip, .zone-landing-header-preview .masthead-text
-      width auto
-      float none
-
-      .zone-landing-header-preview-base
-        position static
-
-  .zone-image
-    opacity 0.2
-    
-  .zone-landing-header
-    .masthead-text p
-      margin-top 0
-
-  #wiki-content
-    width auto
-    float none
+      .zone-image
+        opacity 0.2
     
 /* right to left */
 .html-rtl
