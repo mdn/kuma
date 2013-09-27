@@ -293,7 +293,7 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #d7eca1), color-stop(100%, #cce390));
   background: linear-gradient(top, #d7eca1 0, #cce390 100%);
 }
-.btn-save:hover, .btn-save:focus {
+.btn-save:hover:enabled, .btn-save:focus:enabled {
   background: #c3e56d; 
   background: -moz-linear-gradient(top, #c3e56d 0, #b3d55b 100%); 
   background: -webkit-linear-gradient(top, #c3e56d 0, #b3d55b 100%);
@@ -314,7 +314,7 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
   background: -webkit-linear-gradient(top, #cce3f4 0, #c0d7ea 100%);
   background: linear-gradient(top, #cce3f4 0, #c0d7ea 100%);
 }
-.btn-preview:hover, .btn-preview:focus {
+.btn-preview:hover:enabled, .btn-preview:focus:enabled {
   background: #abd5f4;
   background: -moz-linear-gradient(top, #abd5f4 0, #a7cee9 100%); 
   background: -webkit-linear-gradient(top, #abd5f4 0, #a7cee9 100%);
@@ -332,6 +332,20 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
   background: -moz-linear-gradient(top, #f8b8a0 0, #f8a688 100%); 
   background: -webkit-linear-gradient(top, #f8b8a0 0, #f8a688 100%);
   background: linear-gradient(top, #f8b8a0 0, #f8a688 100%);
+}
+#page-buttons .btn-save:disabled {
+  color: #B5D170;
+}
+#page-buttons .btn-preview:disabled {
+  color: #AEC7DA;
+}
+#page-buttons button:disabled {
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+#page-buttons button:hover:disabled {
+  cursor: default;
 }
 
 .page-content .talkpage { font-size: .857em; padding: .25em 15px; }
