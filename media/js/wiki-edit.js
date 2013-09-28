@@ -632,32 +632,35 @@
     // on document change.
     //
     function initWatchDocumentChange () {
-        // List of editable elements we're meant to watch.
-        var watchedElements = '#id_title, #id_slug, #id_toc_depth, ' +
-            '#id_comment, #page-tags, input[name=review_tags], ' +
-            '#parent_text, #page-attachments-upload-target';
-
+        // Watch for any changes in the #wiki-page-edit form and 
+        // in #page-attachments (which resides beyond the form).
+        var documentForms = '#wiki-page-edit, #page-attachments';
         var ckeditor;
         var $docButtons = $('#btn-save, #btn-preview, #btn-save-and-edit');
+
+        // Define event listener. Disables itself on change.
         var enableButtons = function enableButtons() {
             if ($docButtons.attr('disabled')) {
                 // If the document buttons are still disabled, enable them.
                 $docButtons.removeAttr('disabled');
 
                 // Remove event listeners since we won't need them anymore. 
-                $(watchedElements).off('change', enableButtons);
+                $(documentForms).children().off('change', enableButtons);
                 if (ckeditor) {
                     ckeditor.removeListener('key', enableButtonsCKE);
                 }
             }
         };
+
+        // Define a special event listener for CKEditor to support the api.
         var enableButtonsCKE = function enableButtonsCKE() {
             if (ckeditor.checkDirty()) {
                 enableButtons();
             }
         };
 
-        $(watchedElements).on('change', enableButtons);
+        // Add event listeners.
+        $(documentForms).children().on('change', enableButtons);
 
         CKEDITOR.instances['id_content'].on('instanceReady', function (e) {
             ckeditor = e.editor;
