@@ -182,12 +182,3 @@ def common_landing(request, section=None, extra=None):
         data.update(extra)
 
     return render(request, 'landing/%s.html' % section.short, data)
-
-def redesign_zone(request):
-    return render(request, 'redesign-stubs/zone-landing.html')
-def redesign_zone_article(request):
-    return render(request, 'redesign-stubs/zone-article.html')
-def redesign_article(request):
-    return render(request, 'redesign-stubs/article.html')
-def redesign_results(request):
-    return render(request, 'redesign-stubs/search-results.html')
