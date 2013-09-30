@@ -34,16 +34,14 @@
         margin-right 3%
 
 
-/* *********************************************************************************************************************
- * Common columns definitions
- */
+/*  Column definitions */
 .column-1
   width 5.5%
 .column-2
   width 14%
-.column-3, .column-strip
+.column-3, .column-strip, .column-quarter
   width 22.5%
-.column-4
+.column-4, .column-third
   width 31%
 .column-5
   width 39.5%
@@ -64,16 +62,14 @@
   margin 0
   float none
 
-/* *********************************************************************************************************************
- * Disable padding left/right 10px if I'm 1024 or gibber - correct percentage math
- */
+/*  Tablet grid width */
 @media media-query-tablet
 
   .center
     max-width 1000px
 
-/* *********************************************************************************************************************
- * Small devices
+/* Mobile phone grid settings
+     Disabled for now as not required for launch
  
 @media media-query-mobile
 
