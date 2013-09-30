@@ -1,23 +1,23 @@
 @import 'vars'
 @import 'mixins'
 
+.center
+  margin 0 auto
+  position relative
+  max-width 1220px
+  padding-left 10px
+  padding-right 10px
 
 /* Column helpers for the grids to be generated */
 .column-closed
   display none
-
-.column-all
-  width auto
-  float none
-  margin-right 0
   
-
 /* This is a "helper" which automatically formats its column children, clears the floats afterward, removes margin from last item */
 .column-container
   @extend .clear
 
   > [class^='column-']
-    margin-right grid-spacing
+    margin-right 3%
     float left
 
     &:last-child
@@ -31,134 +31,53 @@
         margin-right 0
 
       &:last-child
-        margin-right grid-spacing
+        margin-right 3%
 
 
-/* Desktop Layout (default)
-  *
-  * The Sandstone layout is based on a 12 column grid where each column is 60px wide with 20px gutters.
-  * The gutters are achieved with 10px left and right margins on each column.
-  * Blocks can span multiple columns in any number of configurations.
-  *
-  * There are 30px outer page gutters for a total page width of 1000px.
-  *
-  * width = (60px * columns) + (20px * (columns - 1))
-  *
-  * 1 column span - width: 60px;
-  * 2 column span - width: 140px;
-  * 3 column span - width: 220px;
-  * 4 column span - width: 300px;
-  * 5 column span - width: 380px;
-  * 6 column span - width: 460px;
-  * 7 column span - width: 540px;
-  * 8 column span - width: 620px;
-  * 9 column span - width: 700px;
-  * 10 column span - width: 780px;
-  * 11 column span - width: 860px;
-  * 12 column span - width: 940px;
-*/
-generate-grid(grid-increment-desktop, grid-start-desktop, grid-end-desktop)
-.center
-  position relative
-  margin 0 auto
-generate-center(site-width-desktop)
+/* *********************************************************************************************************************
+ * Common columns definitions
+ */
+.column-1
+  width 5.5%
+.column-2
+  width 14%
+.column-3, .column-strip
+  width 22.5%
+.column-4
+  width 31%
+.column-5
+  width 39.5%
+.column-6, .column-half
+  width 48%
+.column-7
+  width 56.5%
+.column-8
+  width 65%
+.column-9, .column-main
+  width 73.5%
+.column-10 
+  width 82%
+.column-11 
+  width 90.5%
+.column-12, .column-all
+  width 99%
+  margin 0
+  float none
 
-
-/* Desktop Large - 1224px */
-@media media-query-desktop-large
-  grid-spacing = grid-spacing-wide
-  generate-center(site-width-desktop-large)
-  generate-grid(grid-increment-desktop-large, grid-start-desktop-large, grid-end-desktop-large)
-
-  .column-container
-    > [class^='column-']
-      margin-right grid-spacing-wide
-
-/* Desktop Large - 1824px */
-@media media-query-desktop-large
-  grid-spacing = grid-spacing-wide
-  generate-center(site-width-desktop-large)
-  generate-grid(grid-increment-desktop-large, grid-start-desktop-large, grid-end-desktop-large)
-
-  .column-container
-    > [class^='column-']
-      margin-right grid-spacing-wide
-
-
-/* Tablet Layout - 760px
-  *
-  * For smaller viewports, the column width drops to 40px with the
-  * same 20px column gutter and 30px page gutters.
-  *
-  * width = (40px * columns) + (20px * (columns - 1))
-  *
-  * 1 column span - width: 40px;
-  * 2 column span - width: 100px;
-  * 3 column span - width: 160px;
-  * 4 column span - width: 220px;
-  * 5 column span - width: 280px;
-  * 6 column span - width: 340px;
-  * 7 column span - width: 400px;
-  * 8 column span - width: 460px;
-  * 9 column span - width: 520px;
-  * 10 column span - width: 580px;
-  * 11 column span - width: 640px;
-  * 12 column span - width: 700px;
-*/
+/* *********************************************************************************************************************
+ * Disable padding left/right 10px if I'm 1024 or gibber - correct percentage math
+ */
 @media media-query-tablet
 
-  generate-center(site-width-tablet)
-  generate-grid(grid-increment-tablet, grid-start-tablet, grid-end-tablet)
+  .center
+    max-width 1000px
 
-/* Mobile Layout - 320px
- *
- * For very small viewports, we switch to a 5 column grid
- * at 40px per column, still with a 20px gutter.
- *
- * The outer page gutter goes from 30px to 20px.
- *
- * width = (40px * columns) + (20px * (columns - 1))
- *
- * 1 column span - width: 40px;
- * 2 column span - width: 100px;
- * 3 column span - width: 160px;
- * 4 column span - width: 220px;
- * 5 column span - width: 280px;
- */
+/* *********************************************************************************************************************
+ * Small devices
+ 
 @media media-query-mobile
 
-  generate-center(site-width-mobile)
-  generate-grid(grid-increment-mobile, grid-start-mobile, grid-end-mobile)
-
-  .column-container
-    @extend .clear
-
-    > [class^='column-'], &.column-container-reverse
-      margin-right 0 !important
-      float none
-      margin-bottom grid-spacing
-      width 100%
-
-
- /* Wide Mobile Layout - 480px
- *
- * For slightly wider viewports (e.g. smartphones in landscape mode),
- * we keep the 40px column but gain two more columns, for a total of 7.
- *
- * The outer page gutter is still 20px for a total page width of 440px.
- *
- * width = (40px * columns) + (20px * (columns - 1))
- *
- * 1 column span - width: 40px;
- * 2 column span - width: 100px;
- * 3 column span - width: 160px;
- * 4 column span - width: 220px;
- * 5 column span - width: 280px;
- * 6 column span - width: 340px;
- * 7 column span - width: 400px;
- */
-
-@media media-query-mobile-wide
-
-  generate-center(site-width-mobile-wide)
-  generate-grid(grid-increment-mobile, grid-start-mobile, grid-end-mobile-wide)
+  .center, .column-1, .column-2, .column-3, .column-4, .column-5, .column-6, .column-7, .column-8, .column-9, .column-10, .column-11
+    float  none
+    width 99%
+*/

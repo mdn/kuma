@@ -11,9 +11,6 @@
   border-top 1px solid button-background
   padding-left 0
   padding-right 0
-  
-  h2, h3
-    font-family 'Open Sans Light'
 
 
 /* general wiki section */
@@ -34,15 +31,9 @@ article
     &:hover, &:focus
       text-decoration none
 
-  h1, h2, h3, h4, h5, h6
-    font-family 'Open Sans Light'
-
 .document-head
   position relative
   clear both
-
-  h1
-    font-family 'Open Sans Light'
 
 .redirected-from
   margin-top -(grid-spacing)
@@ -304,11 +295,8 @@ div.bug > *:last-child, div.warning > *:last-child
 .tagit li
   font-size base-font-size
 
-.tagit
+.tagit, .tagit-new
   border 0 !important /* overrides plugin selector */
-
-.tagit-new
-  border 0
 
 /* quick links */
 .quick-links
@@ -470,13 +458,21 @@ span.cke_skin_kuma
 
 
 
-/* tablet article layout updates */
+
 @media media-query-tablet
+  
+  .zone-landing-header-preview
+    .column-strip, masthead-text
+      width 48%
+
   #wiki-right
     .tag-attach-list
       display inline-block
 
     enable-toc-toggle()
+
+  #wiki-column-container, #wiki-content
+    width auto !important
 
   #wiki-content, #wiki-right, #wiki-left
     margin-right 0
@@ -485,14 +481,14 @@ span.cke_skin_kuma
     margin-bottom (grid-spacing * 2)
 
 
-/* mobile */
-@media media-query-mobile
 
-  #wiki-controls
+
+
+@media media-query-mobile
+  
+  #quick-links-toggle,  #wiki-controls
     display none
 
-  #wiki-right
-    enable-toc-toggle()
 
 
 

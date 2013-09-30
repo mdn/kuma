@@ -92,9 +92,43 @@
 <!-- hacks area -->
 <div class="home-hacks"><div class="column-container center">
   <div class="column-hacks">
-    <h2><i class="icon-star"></i> {{ _('Hacks Blog <a href="">read more at hacks.mozilla.org <i class="icon-arrow-right"></i></a>') }}</h2>
+    <h2><i class="icon-star"></i> {{ _('Hacks Blog <a href="http://hacks.mozilla.org">read more at hacks.mozilla.org <i class="icon-arrow-right"></i></a>') }}</h2>
     {{ newsfeed(updates, section_headers=True) }}
-      
+
+    <ul class="hfeed">
+          <li class="hentry">
+      <h2 class="entry-title"><a href="https://hacks.mozilla.org/2013/09/firefox-os-development-web-components-and-mozilla-brick/" rel="bookmark">Firefox OS Development: Web Components and Mozilla Brick</a></h2>
+      <p class="entry-summary">In this edition of “Firefox OS: The platform HTML5 deserves” (the previous six videos are published here), Mozilla’s Principal Evangelist Chris Heilmann (@codepo8) grilled Mozilla’s “Senior HTML5 Engineer Angle Bracket Coordinator” Matthew Claypotch (@potch) about the exciting new possibilities of Web Components for Web App developers and how Mozilla’s Brick ...</p>
+      <p class="entry-meta vcard">
+      Posted <time class="updated" datetime="2013-09-27" title="2013-09-27">September 27, 2013</time> by <cite class="author fn">Chris Heilmann</cite>            </p>
+    </li>
+              <li class="hentry">
+      <h2 class="entry-title"><a href="https://hacks.mozilla.org/2013/09/new-features-in-the-firefox-developer-tools-episode-26/" rel="bookmark">New Features in the Firefox Developer Tools: Episode 26</a></h2>
+      <p class="entry-summary">Firefox 26 was just uplifted to the Aurora release channel which means we are back to report on new features in Firefox Developer Tools. Here’s a summary of some of the most exciting new features. Inspector: pseudo element support To get more flexibility in the design of an element without ...</p>
+      <p class="entry-meta vcard">
+      Posted <time class="updated" datetime="2013-09-26" title="2013-09-26">September 26, 2013</time> by <cite class="author fn">Paul Rouget</cite>            </p>
+    </li>
+              <li class="hentry">
+      <h2 class="entry-title"><a href="https://hacks.mozilla.org/2013/09/reintroducing-the-firefox-developer-tools-part-1-the-web-console-and-the-javascript-debugger/" rel="bookmark">Reintroducing the Firefox Developer Tools, part 1: the Web Console and the JavaScript Debugger</a></h2>
+      <p class="entry-summary">This is part one, out of 5, focusing on the built-in Developer Tools in Firefox, their features and where we are now with them. The intention is to show you all the possibilities available, the progress and what we are aiming for. Firefox 4 saw the launch of the Web ...</p>
+      <p class="entry-meta vcard">
+      Posted <time class="updated" datetime="2013-09-24" title="2013-09-24">September 24, 2013</time> by <cite class="author fn">Jason Weathersby</cite>            </p>
+    </li>
+              <li class="hentry">
+      <h2 class="entry-title"><a href="https://hacks.mozilla.org/2013/09/firefox-24-for-android-gets-webrtc-support-by-default/" rel="bookmark">Firefox 24 for Android gets WebRTC support by default</a></h2>
+      <p class="entry-summary">WebRTC is now on Firefox for Android as well as Firefox Desktop! Firefox 24 for Android now supports mozGetUserMedia, mozRTCPeerConnection, and DataChannels by default. mozGetUserMedia has been in desktop releases since Firefox 20, and mozPeerConnection and DataChannels since Firefox 22, and we’re excited that Android is now joining Desktop releases ...</p>
+      <p class="entry-meta vcard">
+      Posted <time class="updated" datetime="2013-09-17" title="2013-09-17">September 17, 2013</time> by <cite class="author fn">Maire Reavy</cite>            </p>
+    </li>
+              <li class="hentry">
+      <h2 class="entry-title"><a href="https://hacks.mozilla.org/2013/09/user-agent-detection-history-and-checklist/" rel="bookmark">User-Agent detection, history and checklist</a></h2>
+      <p class="entry-summary">History User-Agent: &lt;something&gt; is a string of characters sent by HTTP clients (browsers, bots, calendar applications, etc.) for each individual HTTP request to a server. The HTTP Protocol as defined in 1991 didn’t have this field, but the next version defined in 1992 added User-Agent in the HTTP requests headers. ...</p>
+      <p class="entry-meta vcard">
+      Posted <time class="updated" datetime="2013-09-12" title="2013-09-12">September 12, 2013</time> by <cite class="author fn">Karl Dubost</cite>            </p>
+    </li>
+      </ul>
+
+    
   </div>
   <div class="column-involved">
     <div class="home-involved-card"><a href="{{ devmo_url('Project:MDN/Contributing') }}">
@@ -143,14 +177,14 @@
     </div>
     <div class="column-half">
       <div class="column-container">
-        <div class="column-strip">
+        <div class="column-half">
           <ul>
           <li><a href="{{ devmo_url('needs-review/editorial') }}">{{ _('Editorial review') }}</a></li>
                 <li><a href="{{ devmo_url('needs-review/technical') }}">{{ _('Technical review') }}</a></li>
                 <li><a href="{{ devmo_url('Project:Getting_started') }}#Create_a_new_page">{{ _('Creating new docs') }}</a></li>
           </ul>
         </div>
-        <div class="column-strip">
+        <div class="column-half">
           <ul>
           <li><a href="{{ devmo_url('Project:Localization_Projects') }}">{{ _('Translating (L10N)') }}</a></li>
                 <li><a href="{{ url('promote') }}">{{ _('Promoting MDN') }}</a></li>

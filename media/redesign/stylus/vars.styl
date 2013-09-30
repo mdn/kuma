@@ -22,49 +22,19 @@ button-shadow-color = #bbbfc2
 
 /* grid and site dimensions */
 grid-spacing = 20px
-grid-spacing-wide = 24px
-
-grid-increment-desktop = 80px
-grid-increment-desktop-large = 99px
-grid-increment-desktop-wide = 125px
-grid-increment-tablet = 60px
-grid-increment-mobile = grid-increment-tablet
-
-grid-start-desktop = 60px
-grid-start-desktop-large = 75px
-grid-start-desktop-wide = 125px
-grid-start-tablet = 40px
-grid-start-mobile = grid-start-tablet
-
-grid-end-desktop = 940px
-grid-end-desktop-large = 1164px
-grid-end-desktop-wide = 1764px
-grid-end-tablet = 700px
-grid-end-mobile = 280px
-grid-end-mobile-wide = 400px
-
-site-width-desktop = 1000px
-site-width-desktop-large = 1224px
-site-width-desktop-wide = 1824px
-site-width-tablet = 760px
-site-width-mobile = 320px
-site-width-mobile-wide = 480px
-
-media-query-desktop-large = 'only screen and/*!YUI Compressor */(min-width: 1224px)'
-media-query-desktop-wide = 'only screen and/*!YUI Compressor */(min-width: 1824px)'
-media-query-tablet = 'only screen and/*!YUI Compressor */(min-width: 760px) and/*!YUI Compressor */(max-width: 1000px)'
-media-query-mobile = 'only screen and/*!YUI Compressor */(max-width: 760px)'
-media-query-mobile-wide = 'only screen and/*!YUI Compressor */(min-width: 480px) and/*!YUI Compressor */(max-width: 760px)'
+media-query-tablet = 'all and/*!YUI */(max-width: 1024px)'
+media-query-mobile = 'all and/*!YUI */(max-width: 768px)'
 
 /* animation */
-animation-duration = .5s
+default-animation-duration = .5s
 slide-timing-function = cubic-bezier(0, 1, 0.5, 1)
 
 /* dimensions */
 gutter-width = 30px
-first-content-top-padding = (grid-spacing * 2) /*grid-spacing*/
+first-content-top-padding = (grid-spacing * 2)
 list-item-spacing = 8px
 content-block-margin = grid-spacing
 
 /* selectors */
 selector-icon = 'i[class^="icon-"]'
+media-url-dir = '/media/redesign/img/'

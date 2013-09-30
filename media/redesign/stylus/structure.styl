@@ -10,7 +10,9 @@
     @extend .text-offscreen
     width 216px
     height 54px
-    background url('/media/redesign/img/mdn_logo-wordmark-full_color.svg') 0 0 no-repeat
+    background-image url(media-url-dir + 'mdn_logo-wordmark-full_color.svg')
+    background-position 0 0
+    background-repeat no-repeat
     display block
     float left
 
@@ -20,10 +22,6 @@
     margin-top 20px
     margin-bottom grid-spacing
 
-    @media media-query-mobile
-      width 100%
-      clear both
-
     > li
       padding-left 31px
       position relative
@@ -31,19 +29,8 @@
       max-width 1000px
       display inline-block
       vendorize(transition-property, width)
-      vendorize(transition-duration, animation-duration)
-      vendorize(transition-delay, animation-duration)
-
-      @media media-query-tablet
-        &:first-child, &:last-child
-          padding-left 0
-
-        padding-left 12px
-
-      @media media-query-mobile
-        display block
-        padding-left 0
-        padding 5px 0
+      vendorize(transition-duration, default-animation-duration)
+      vendorize(transition-delay, default-animation-duration)
 
       > a, .search-trigger
         compat-important(color, menu-link-color)
@@ -98,12 +85,6 @@
       overflow hidden
       padding 0
       vendorize(transition-delay, 0)
-
-  @media media-query-tablet
-
-    &.expand
-      input
-        width 400px
 
 .user-state
   position absolute
@@ -172,14 +153,11 @@ a.persona-button
   border-radius 3px
   position relative
   vendorize(transition-property, width)
-  vendorize(transition-duration, animation-duration)
+  vendorize(transition-duration, default-animation-duration)
   width 20px
 
   &.expanded
     background #fff
-
-  @media media-query-mobile
-        background #fff
 
   input
     background transparent
@@ -191,7 +169,7 @@ a.persona-button
     overflow hidden
     compat-only(padding, 0)
     vendorize(transition-property, width)
-    vendorize(transition-duration, animation-duration)
+    vendorize(transition-duration, default-animation-duration)
     position absolute
     left 8px
     width 100%
@@ -236,7 +214,7 @@ footer
     font-style italic
 
   p
-    background url('/media/redesign/img/mdn_logo-only_color.svg') 0 0 no-repeat
+    background url(media-url-dir + 'mdn_logo-only_color.svg') 0 0 no-repeat
     compat-important(padding, 10px 0 0 92px)
     min-height 62px
 
@@ -261,21 +239,15 @@ footer
 
   #main-nav
     > ul
-    
+      text-align right
+      width 100%
+      clear both
+      
       > li
         vendorize(transition-property, none)
       
-      > li:first-child, .main-nav-search
+      > li:first-child
           padding-left 0
-      
-      .main-nav-search
-        width 100%
-        margin-bottom grid-spacing
-        margin-top grid-spacing
-
-      .search-wrap
-        input
-          width 90%
 
     &.expand
       ul
