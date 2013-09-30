@@ -74,11 +74,11 @@ def reverse(viewname, urlconf=None, args=None, kwargs=None, prefix=None,
             else:
                 zone_locale = settings.WIKI_DEFAULT_LANGUAGE
         # Get DocumentZone remaps for the current locale.
-        zones = DocumentZone.objects.get_for_url_remaps(zone_locale)
-        for zone in zones:
-            orig_url = '/docs/%s' % zone.document.slug
-            if url.startswith(orig_url) and zone_locale == zone.document.locale:
-                url = url.replace(orig_url, '/%s' % zone.url_root, 1)
+        remaps = DocumentZone.objects.get_url_remaps(zone_locale)
+        for remap in remaps:
+            if url.startswith(remap['original_path']):
+                url = url.replace(remap['original_path'],
+                                  remap['new_path'], 1)
                 break
 
     if prefixer:

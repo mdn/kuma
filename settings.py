@@ -73,8 +73,19 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         'TIMEOUT': 60,
         'KEY_PREFIX': 'kuma',
+    },
+    # NOTE: The 'secondary' cache should be the same as 'default' in
+    # settings_local. The only reason it exists is because we had some issues
+    # with caching, disabled 'default', and wanted to selectively re-enable
+    # caching on a case-by-case basis to resolve the issue.
+    'secondary': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'TIMEOUT': 60,
+        'KEY_PREFIX': 'kuma',
     }
 }
+
+SECONDARY_CACHE_ALIAS = 'secondary'
 
 # Addresses email comes from
 DEFAULT_FROM_EMAIL = 'notifications@developer.mozilla.org'

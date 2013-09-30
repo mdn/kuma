@@ -14,7 +14,7 @@ import jingo
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core import serializers
-from django.core.cache import cache
+from django.core.cache import get_cache, cache
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import resolve
 from django.db import models
@@ -343,6 +343,11 @@ DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL = u'kuma:document-last-modified:%s'
 
 DEKI_FILE_URL = re.compile(r'@api/deki/files/(?P<file_id>\d+)/=')
 KUMA_FILE_URL = re.compile(r'/files/(?P<file_id>\d+)/.+\..+')
+
+SECONDARY_CACHE_ALIAS = getattr(settings,
+                                'SECONDARY_CACHE_ALIAS',
+                                'secondary')
+URL_REMAPS_CACHE_KEY_TMPL = 'DocumentZoneUrlRemaps:%s'
 
 
 def _inherited(parent_attr, direct_attr):
@@ -1803,11 +1808,23 @@ class DocumentType(SearchMappingType, Indexable):
 class DocumentZoneManager(models.Manager):
     """Manager for DocumentZone objects"""
 
-    def get_for_url_remaps(self, locale):
-        qs = (self.filter(document__locale=locale,
-                          url_root__isnull=False)
-                  .exclude(url_root=''))
-        return qs
+    def get_url_remaps(self, locale):
+        cache_key = URL_REMAPS_CACHE_KEY_TMPL % locale
+        s_cache = get_cache(SECONDARY_CACHE_ALIAS)
+        remaps = s_cache.get(cache_key)
+        
+        if not remaps:
+            qs = (self.filter(document__locale=locale,
+                              url_root__isnull=False)
+                      .exclude(url_root=''))
+            remaps = [{
+                'original_path': '/docs/%s' % zone.document.slug,
+                'new_path': '/%s' % zone.url_root
+            } for zone in qs]
+            s_cache.set(cache_key, remaps)
+
+        return remaps
+
 
 class DocumentZone(models.Model):
     """Model object declaring a content zone root at a given Document, provides
@@ -1823,6 +1840,15 @@ class DocumentZone(models.Model):
     def __unicode__(self):
         return u'DocumentZone %s (%s)' % (self.document.get_absolute_url(),
                                           self.document.title)
+
+    def save(self, *args, **kwargs):
+        super(DocumentZone, self).save(*args, **kwargs)
+
+        # Invalidate URL remap cache for this zone
+        locale = self.document.locale
+        cache_key = URL_REMAPS_CACHE_KEY_TMPL % locale
+        s_cache = get_cache(SECONDARY_CACHE_ALIAS)
+        s_cache.delete(cache_key)
 
 
 class ReviewTag(TagBase):
