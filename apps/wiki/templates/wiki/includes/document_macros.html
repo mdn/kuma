@@ -27,6 +27,12 @@
 {%- endmacro %}
 
 {% macro get_document_buttons(document) %}
+  {% if document.parent %}
+    {# If there is a parent doc, use it for translating. #}
+    {% set translate_url = url('wiki.select_locale', document_path=document.parent.full_path) %}
+  {% else %}
+    {% set translate_url = url('wiki.select_locale', document_path=document.full_path, locale=document.locale) %}
+  {% endif %}
   <ul class="page-buttons"><li><a href="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}" class="button {{ disabled_class }}" {{ disabled_attr }}>{{ _('Edit Page') }}<i class="icon-pencil"></i></a></li><li style="position:relative;"><a href="javascript:;" id="settings-menu" class="button only-icon" {{ disabled_attr }}><span>{{ _('Settings') }}</span><i class="icon-cog"></i></a>
 
         <div class="submenu">
