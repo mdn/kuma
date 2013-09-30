@@ -36,8 +36,6 @@ def home(request):
 
     return render(request, 'landing/homepage.html',
                   {'demos': demos, 'updates': updates,
-                   'num_languages': len(settings.MDN_LANGUAGES),
-                   'num_users': len(User.objects.all()),
                     'current_challenge_tag_name': 
                     str(constance.config.DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG).strip()})
 
