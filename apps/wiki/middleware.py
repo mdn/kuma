@@ -29,16 +29,14 @@ class DocumentZoneMiddleware(object):
     incoming path_info to point at the internal wiki path
     """
     def process_request(self, request):
-        zones = (DocumentZone.objects.filter(url_root__isnull=False)
-                                     .exclude(url_root=''))
-        for zone in zones:
-            root = '/%s' % zone.url_root
-            orig_path = '/docs/%s' % zone.document.slug
+        remaps = DocumentZone.objects.get_url_remaps(request.locale)
+        for remap in remaps:
 
-            if request.path_info.startswith(orig_path):
+            if request.path_info.startswith(remap['original_path']):
                 # Is this a request for the "original" wiki path? Redirect to
                 # new URL root, if so.
-                new_path = request.path_info.replace(orig_path, root, 1)
+                new_path = request.path_info.replace(remap['original_path'],
+                                                     remap['new_path'], 1)
                 new_path = '/%s%s' % (request.locale, new_path)
                 
                 query = request.GET.copy()
@@ -48,9 +46,9 @@ class DocumentZoneMiddleware(object):
 
                 return HttpResponseRedirect(new_path)
 
-            elif request.path_info.startswith(root):
+            elif request.path_info.startswith(remap['new_path']):
                 # Is this a request for the relocated wiki path? If so, rewrite
                 # the path as a request for the proper wiki view.
                 request.path_info = request.path_info.replace(
-                    root, '/docs/%s' % zone.document.slug, 1)
+                    remap['new_path'], remap['original_path'], 1)
                 break
