@@ -157,7 +157,7 @@ def waffles(request):
 
     flag_json = []
     for flag in flags:
-        if flag.note:
+        if flag_is_active(request, flag.name):
             flag_json.append({
                 'name': str(flag.name),
                 'note': str(flag.note)
