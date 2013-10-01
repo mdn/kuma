@@ -8,6 +8,7 @@ from django.conf import settings
 from django.test.client import Client
 from django.http import Http404
 from django.utils.encoding import smart_str
+from django.core.cache import get_cache
 
 import mock
 from nose import SkipTest
@@ -21,9 +22,7 @@ from sumo.urlresolvers import reverse
 
 from . import TestCaseBase, FakeResponse
 
-from wiki.models import (VersionMetadata, Document, Revision, Attachment,
-                         DocumentZone,
-                         AttachmentRevision, DocumentAttachment, TOC_DEPTH_H4)
+from wiki.models import (Document, Attachment, DocumentZone, SECONDARY_CACHE_ALIAS)
 from wiki.tests import (doc_rev, document, new_document_data, revision,
                         normalize_html, create_template_test_users)
 from wiki.views import _version_groups, DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL
@@ -34,6 +33,10 @@ class DocumentZoneMiddlewareTestCase(TestCaseBase):
 
     def setUp(self):
         super(DocumentZoneMiddlewareTestCase, self).setUp()
+
+        s_cache = get_cache(SECONDARY_CACHE_ALIAS)
+        s_cache.clear()
+
         self.zone_root = 'ExtraWiki'
         self.zone_root_content = 'This is the Zone Root'
 
@@ -97,6 +100,14 @@ class DocumentZoneMiddlewareTestCase(TestCaseBase):
         eq_(200, response.status_code)
         eq_(self.sub_doc.html, response.content)
 
+        self.root_zone.url_root = 'NewRoot'
+        self.root_zone.save()
+
+        url = '/en-US/%s/Middle/SubPage?raw' % 'NewRoot'
+        response = self.client.get(url, follow=False)
+        eq_(200, response.status_code)
+        eq_(self.sub_doc.html, response.content)
+
     def test_actual_wiki_url_redirect(self):
         """Ensure a request for the 'real' path to a document results in a
         redirect to the internal redirect path"""
@@ -106,8 +117,49 @@ class DocumentZoneMiddlewareTestCase(TestCaseBase):
         eq_(302, response.status_code)
         eq_('http://testserver/en-US/ExtraWiki/Middle?raw=1', response['Location'])
 
+        self.root_zone.url_root = 'NewRoot'
+        self.root_zone.save()
+
+        url = '/en-US/docs/%s?raw=1' % self.middle_doc.slug
+        response = self.client.get(url, follow=False)
+        eq_(302, response.status_code)
+        eq_('http://testserver/en-US/NewRoot/Middle?raw=1', response['Location'])
+
     def test_blank_url_root(self):
         """Ensure a blank url_root does not trigger URL remap"""
         url = '/en-US/docs/%s?raw=1' % self.other_doc.slug
         response = self.client.get(url, follow=False)
         eq_(200, response.status_code)
+
+    def test_reverse_rewrite(self):
+        """Ensure reverse() URLs are remapped"""
+        # HACK: This actually exercises code in apps/sumo/urlresolvers.py, but
+        # lives here to share fixtures and such with other wiki URL remap code.
+        url = reverse('wiki.document',
+                      args=[self.other_doc.slug],
+                      locale='en-US')
+        eq_('/en-US/docs/otherPage', url)
+        url = reverse('wiki.edit_document',
+                      args=[self.other_doc.slug],
+                      locale='en-US')
+        eq_('/en-US/docs/otherPage$edit', url)
+
+        url = reverse('wiki.document',
+                      args=[self.middle_doc.slug],
+                      locale='en-US')
+        eq_('/en-US/ExtraWiki/Middle', url)
+        url = reverse('wiki.edit_document',
+                      args=[self.middle_doc.slug],
+                      locale='en-US')
+        eq_('/en-US/ExtraWiki/Middle$edit', url)
+
+        url = reverse('wiki.edit_document',
+                      args=[self.middle_doc.slug])
+        eq_('/ExtraWiki/Middle$edit', url)
+
+        self.root_zone.url_root = 'NewRoot'
+        self.root_zone.save()
+
+        url = reverse('wiki.edit_document',
+                      args=[self.middle_doc.slug])
+        eq_('/NewRoot/Middle$edit', url)
