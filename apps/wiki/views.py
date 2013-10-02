@@ -74,7 +74,7 @@ from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
                          DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL,
                          get_current_or_latest_revision, TOC_DEPTH_H4,
                          REDIRECT_CONTENT)
-from wiki.tasks import send_reviewed_notification
+from wiki.tasks import move_page, send_reviewed_notification
 from wiki.helpers import format_comment
 import wiki.content
 from wiki import kumascript
@@ -1214,7 +1214,6 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
 @process_document_path
 @check_readonly
 @prevent_indexing
-@transaction.autocommit  # For rendering bookkeeping, needs immediate updates
 @waffle_flag('page_move')
 def move(request, document_slug, document_locale):
     """Move a tree of pages"""
@@ -1236,24 +1235,10 @@ def move(request, document_slug, document_locale):
                     'conflicts': conflicts,
                     'SLUG_CLEANSING_REGEX': SLUG_CLEANSING_REGEX,
                 })
-            # Set new parent, if any
-            new_slug_bits = form.cleaned_data['slug'].split('/')
-            new_slug_bits.pop()
-            try:
-                new_parent = Document.objects.get(locale=document_locale,
-                                                  slug='/'.join(new_slug_bits))
-                doc.parent_topic = new_parent
-                doc.save()
-            except Document.DoesNotExist:
-                pass
-
-            doc._move_tree(form.cleaned_data['slug'],
-                           user=request.user,
-                           title=form.cleaned_data['title'])
-
-            return redirect(reverse('wiki.document',
-                                    args=(form.cleaned_data['slug'],),
-                                    locale=doc.locale))
+            move_page.delay(document_locale, document_slug,
+                            form.cleaned_data['slug'],
+                            request.user.email)
+            return redirect(reverse('wiki.move_requested'))
     else:
         form = TreeMoveForm()
 

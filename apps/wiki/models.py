@@ -1259,6 +1259,16 @@ class Document(NotificationsMixin, models.Model):
         if title:
             rev.title = title
 
+        # Set new parent, if any.
+        new_slug_bits = new_slug.split('/')
+        new_slug_bits.pop()
+        try:
+            new_parent = Document.objects.get(locale=self.locale,
+                                              slug='/'.join(new_slug_bits))
+            self.parent_topic = new_parent
+        except Document.DoesNotExist:
+            pass
+
         rev.save(force_insert=True)
 
         rev.review_tags.set(*review_tags)

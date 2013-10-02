@@ -1662,6 +1662,147 @@ class PageMoveTests(TestCase):
             eq_(['technical'],
                 [str(tag) for tag in new_rev.review_tags.all()])
 
+    @attr('move')
+    def test_move_tree_breadcrumbs(self):
+        """Moving a tree of documents under an existing doc updates breadcrumbs"""
+
+        grandpa = revision(title='Top-level parent for breadcrumb move',
+                       slug='grandpa', is_approved=True, save=True)
+        grandpa_doc = grandpa.document
+
+        dad = revision(title='Mid-level parent for breadcrumb move',
+                       slug='grandpa/dad', is_approved=True, save=True)
+        dad_doc = dad.document
+        dad_doc.parent_topic = grandpa_doc
+        dad_doc.save()
+
+        son = revision(title='Bottom-level child for breadcrumb move',
+                       slug='grandpa/dad/son', is_approved=True, save=True)
+        son_doc = son.document
+        son_doc.parent_topic = dad_doc
+        son_doc.save()
+
+        grandma = revision(title='Top-level parent for breadcrumb move',
+                       slug='grandma', is_approved=True, save=True)
+        grandma_doc = grandma.document
+
+        mom = revision(title='Mid-level parent for breadcrumb move',
+                       slug='grandma/mom', is_approved=True, save=True)
+        mom_doc = mom.document
+        mom_doc.parent_topic = grandma_doc
+        mom_doc.save()
+
+        daughter = revision(title='Bottom-level child for breadcrumb move',
+                       slug='grandma/mom/daughter', is_approved=True, save=True)
+        daughter_doc = daughter.document
+        daughter_doc.parent_topic = mom_doc
+        daughter_doc.save()
+
+        # move grandma under grandpa
+        grandma_doc._move_tree('grandpa/grandma')
+
+        # assert the parent_topics are correctly rooted at grandpa
+        # note we have to refetch these to see any DB changes.
+        grandma_moved = Document.objects.get(locale=grandma_doc.locale,
+                                           slug='grandpa/grandma')
+        ok_(grandma_moved.parent_topic == grandpa_doc)
+        mom_moved = Document.objects.get(locale=mom_doc.locale,
+                                         slug='grandpa/grandma/mom')
+        ok_(mom_moved.parent_topic == grandma_moved)
+
+    @attr('move')
+    @attr('top')
+    def test_move_top_level_docs(self):
+        """Moving a top document to a new slug location"""
+        page_to_move_title = 'Page Move Root'
+        page_to_move_slug = 'Page_Move_Root'
+        page_child_slug = 'Page_Move_Root/Page_Move_Child'
+        page_moved_slug = 'Page_Move_Root_Moved'
+        page_child_moved_slug = 'Page_Move_Root_Moved/Page_Move_Child'
+
+        page_to_move_doc = document(title=page_to_move_title,
+                                    slug=page_to_move_slug,
+                                    save=True)
+        rev = revision(document=page_to_move_doc,
+                       title=page_to_move_title,
+                       slug=page_to_move_slug,
+                       save=True)
+        page_to_move_doc.current_revision = rev
+        page_to_move_doc.save()
+
+        page_child = revision(title='child', slug=page_child_slug,
+                         is_approved=True, save=True)
+        page_child_doc = page_child.document
+        page_child_doc.parent_topic = page_to_move_doc
+        page_child_doc.save()
+
+        # move page to new slug
+        new_title = page_to_move_title + ' Moved'
+
+        page_to_move_doc._move_tree(page_moved_slug, user=None,
+                                    title=new_title)
+        
+        page_to_move_doc = Document.objects.get(slug=page_to_move_slug)
+        page_moved_doc = Document.objects.get(slug=page_moved_slug)
+        page_child_doc = Document.objects.get(slug=page_child_slug)
+        page_child_moved_doc = Document.objects.get(slug=page_child_moved_slug)
+
+        ok_('REDIRECT' in page_to_move_doc.html)
+        ok_(page_moved_slug in page_to_move_doc.html)
+        ok_(new_title in page_to_move_doc.html)
+        ok_(page_moved_doc)
+        ok_('REDIRECT' in page_child_doc.html)
+        ok_(page_moved_slug in page_child_doc.html)
+        ok_(page_child_moved_doc)
+        # TODO: Fix this assertion?
+        # eq_('admin', page_moved_doc.current_revision.creator.username)
+
+    @attr('move')
+    def test_mid_move(self):
+        root_title = 'Root'
+        root_slug = 'Root'
+        child_title = 'Child'
+        child_slug = 'Root/Child'
+        moved_child_slug = 'DiffChild'
+        grandchild_title = 'Grandchild'
+        grandchild_slug = 'Root/Child/Grandchild'
+        moved_grandchild_slug = 'DiffChild/Grandchild'
+
+        root_doc = document(title=root_title,
+                            slug=root_slug,
+                            save=True)
+        rev = revision(document=root_doc,
+                       title=root_title,
+                       slug=root_slug,
+                       save=True)
+        root_doc.current_revision = rev
+        root_doc.save()
+
+        child = revision(title=child_title, slug=child_slug,
+                         is_approved=True, save=True)
+        child_doc = child.document
+        child_doc.parent_topic = root_doc
+        child_doc.save()
+
+        grandchild = revision(title=grandchild_title,
+                              slug=grandchild_slug,
+                              is_approved=True, save=True)
+        grandchild_doc = grandchild.document
+        grandchild_doc.parent_topic = child_doc
+        grandchild_doc.save()
+
+        child_doc._move_tree(moved_child_slug)
+
+        redirected_child = Document.objects.get(slug=child_slug)
+        moved_child = Document.objects.get(slug=moved_child_slug)
+        ok_('REDIRECT' in redirected_child.html)
+        ok_(moved_child_slug in redirected_child.html)
+
+        redirected_grandchild = Document.objects.get(slug=grandchild_doc.slug)
+        moved_grandchild = Document.objects.get(slug=moved_grandchild_slug)
+        ok_('REDIRECT' in redirected_grandchild.html)
+        ok_(moved_grandchild_slug in redirected_grandchild.html)
+
 
 class DocumentZoneTests(TestCase):
     """Tests for content zones in topic hierarchies"""
