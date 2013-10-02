@@ -39,12 +39,17 @@ document.documentElement.className += ' js';
               $navItems.css('display', 'none');
               $searchWrap.addClass('expanded');
               $nav.addClass('expand');
-              setTimeout(function() { $input.attr('placeholder', $input.attr('data-placeholder')); }, 100);
+              setTimeout(function() { 
+                $input.attr('placeholder', $input.attr('data-placeholder'));
+                $input.val($input.attr('data-value'));
+              }, 100);
             });
           }
           else {
             $nav.removeClass('expand');
             $input.attr('placeholder', '');
+            $input.attr('data-value', $input.val());
+            $input.val('');
             timeout = setTimeout(function() {
               $searchWrap.removeClass('expanded');
               $navItems.fadeIn(400);
