@@ -40,6 +40,7 @@ RewriteRule ^En/Core_JavaScript_1\.5_Reference/Objects/(.*) en-US/docs/JavaScrip
 RewriteRule ^En/Core_JavaScript_1\.5_Reference/(.*) en-US/docs/JavaScript/Reference/$1 [R=301,L,NC]
 RewriteRule ^([\w\-]*)/HTML5$ $1/docs/HTML/HTML5 [R=301,L,NC]
 RewriteRule web-tech/2008/09/12/css-transforms /docs/CSS/Using_CSS_transforms [R=301,L]
+RewriteRule ^([\w\-]*)/docs/?$ $1/docs/Web [R=301,L,NC]
 
 # Off-site redirects
 RewriteRule ^contests/$ http://labs.mozilla.com/contests/extendfirefox/ [R=302]
