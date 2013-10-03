@@ -1,4 +1,5 @@
 from django.conf.urls import include, patterns, url
+from django.views.generic import TemplateView
 
 from sumo.views import redirect_to
 from wiki.feeds import (DocumentsRecentFeed, DocumentsReviewFeed, RevisionsFeed,
@@ -68,6 +69,10 @@ urlpatterns += patterns('wiki.views',
     url(r'^/new$', 'new_document', name='wiki.new_document'),
     url(r'^/all$', 'list_documents', name='wiki.all_documents'),
     url(r'^/preview-wiki-content$', 'preview_revision', name='wiki.preview'),
+
+    url(r'^/move-requested$',
+        TemplateView.as_view(template_name='wiki/move_requested.html'),
+        name='wiki.move_requested'),
     
     url(r'^/get-documents$', 'autosuggest_documents', name='wiki.autosuggest_documents'),
     url(r'^/external-signup$', 'external_signup', name='wiki.external_signup'),
