@@ -502,6 +502,11 @@ class TreeMoveForm(forms.Form):
                                              'max_length': SLUG_LONG})
 
     def clean_slug(self):
+        # We only want the slug here; inputting a full URL would lead
+        # to disaster.
+        if '://' in self.cleaned_data['slug']:
+            raise forms.ValidationError('Please enter only the slug to move to, not the full URL.')
+
         # Removes leading slash and {locale/docs/} if necessary
         # IMPORTANT: This exact same regex is used on the client side, so
         # update both if doing so
