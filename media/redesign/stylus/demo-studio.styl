@@ -1,5 +1,9 @@
 @import 'vars'
 @import 'mixins'
+@import 'grid'
+
+html
+  background url("/media/img/bg-content.png") repeat fixed 0% 0% #f6f6f1
 
 .section-demos
   background #c0c4c8
@@ -21,6 +25,28 @@
         &, input, .search-trigger
           color #fff !important
 
+
+  /* dev derby landing - legacy offsets */
+  &.devderby.landing
+
+    main 
+      /* background #eaeff2 */
+
+      .center
+        max-width 980px
+
+    .main, .sub
+      float left
+
+    .main
+      @extend .column-main
+
+    .sub
+      @extend .column-strip
+
+    #challenge-prizes
+      padding 0
+      
 
   /* remove ugly button styles */
   .button, button
