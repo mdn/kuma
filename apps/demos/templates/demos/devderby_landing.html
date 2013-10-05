@@ -47,8 +47,9 @@
         <p>{{ _('The Dev Derby will be on hiatus from August to October 2013.  It will return in November.') }}</p>
       {% endif %}
     </header>
-
-  <div class="main">
+    
+    <div class="column-container">
+  <div class="column-main main">
     <section id="upcoming">
       <header>
         {% if not waffle.flag('derby_closed') %}
@@ -247,7 +248,7 @@
     </section><!-- /#current-challenge -->
   </div><!-- /.main -->
       
-  <div class="sub">
+  <div class="column-strip sub">
     {% if previous_winner_qs|count > 0 %}
     {% set submission = previous_winner_qs[0] %}
     <section id="prev-winner">
@@ -280,7 +281,8 @@
       {% endtrans %}
     </section><!-- /#challenge-prizes -->
   </div><!-- /.sub -->
-    
+      
+    </div>
     
     <section id="resources">
       <h3>{{_("Resources")}}</h3>
