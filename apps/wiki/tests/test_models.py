@@ -1803,6 +1803,83 @@ class PageMoveTests(TestCase):
         ok_('REDIRECT' in redirected_grandchild.html)
         ok_(moved_grandchild_slug in redirected_grandchild.html)
 
+    @attr('move')
+    def test_move_special(self):
+        root_slug = 'User:foo'
+        child_slug = '%s/child' % root_slug
+
+        new_root_slug = 'User:foobar'
+        
+        special_root = document(title='User:foo',
+                                slug=root_slug,
+                                save=True)
+        root_rev = revision(document=special_root,
+                            title=special_root.title,
+                            slug=root_slug,
+                            save=True)
+                            
+        special_child = document(title='User:foo child',
+                                 slug=child_slug,
+                                 save=True)
+        child_rev = revision(document=special_child,
+                             title=special_child.title,
+                             slug=child_slug,
+                             save=True)
+
+        special_child.parent_topic = special_root
+        special_child.save()
+
+        original_root_id = special_root.id
+        original_child_id = special_child.id
+        
+        # First move, to new slug.
+        special_root._move_tree(new_root_slug)
+
+        # Appropriate redirects were left behind.
+        root_redirect = Document.objects.get(locale=special_root.locale,
+                                             slug=root_slug)
+        ok_(root_redirect.is_redirect)
+        root_redirect_id = root_redirect.id
+        child_redirect = Document.objects.get(locale=special_child.locale,
+                                              slug=child_slug)
+        ok_(child_redirect.is_redirect)
+        child_redirect_id = child_redirect.id
+
+        # Moved documents still have the same IDs.
+        moved_root = Document.objects.get(locale=special_root.locale,
+                                          slug=new_root_slug)
+        eq_(original_root_id, moved_root.id)
+        moved_child = Document.objects.get(locale=special_child.locale,
+                                           slug='%s/child' % new_root_slug)
+        eq_(original_child_id, moved_child.id)
+
+        # Second move, back to original slug.
+        moved_root._move_tree(root_slug)
+
+        # Once again we left redirects behind.
+        root_second_redirect = Document.objects.get(locale=special_root.locale,
+                                                    slug=new_root_slug)
+        ok_(root_second_redirect.is_redirect)
+        child_second_redirect = Document.objects.get(locale=special_child.locale,
+                                                     slug='%s/child' % new_root_slug)
+        ok_(child_second_redirect.is_redirect)
+
+        # The documents at the original URLs aren't redirects anymore.
+        rerooted_root = Document.objects.get(locale=special_root.locale,
+                                             slug=root_slug)
+        ok_(not rerooted_root.is_redirect)
+        rerooted_child = Document.objects.get(locale=special_child.locale,
+                                              slug=child_slug)
+        ok_(not rerooted_child.is_redirect)
+
+        # The redirects created in the first move no longer exist in the DB.
+        self.assertRaises(Document.DoesNotExist,
+                          Document.objects.get,
+                          id=root_redirect_id)
+        self.assertRaises(Document.DoesNotExist,
+                          Document.objects.get,
+                          id=child_redirect_id)
+
 
 class DocumentZoneTests(TestCase):
     """Tests for content zones in topic hierarchies"""
