@@ -153,9 +153,8 @@ def move_page(locale, slug, new_slug, email):
         but no such document exists.
         """ % {'slug': slug, 'locale': locale}
         logging.error(message)
-        send_mail('Page move failed', message, settings.DEFAULT_FROM_ADDRESS,
+        send_mail('Page move failed', message, settings.DEFAULT_FROM_EMAIL,
                   [user.email])
-                  
         return
     try:
         doc._move_tree(new_slug, user=user)
@@ -166,12 +165,12 @@ def move_page(locale, slug, new_slug, email):
         Move was requested for document with slug %(slug)s in locale %(locale)s,
         but could not be completed. The following error was raised:
 
-        %(info)
+        %(info)s
         """ % {'slug': slug, 'locale': locale, 'info': e}
         logging.error(message)
-        send_mail('Page move failed', message, settings.DEFAULT_FROM_ADDRESS,
+        send_mail('Page move failed', message, settings.DEFAULT_FROM_EMAIL,
                   [user.email])
-
+        return
 
     message = """
     Page move completed.
@@ -181,5 +180,5 @@ def move_page(locale, slug, new_slug, email):
 
     You can now view this document at its new slug, %(new_slug)s.
     """ % {'slug': slug, 'locale': locale, 'new_slug': new_slug}
-    send_mail('Page move completed', message, settings.DEFAULT_FROM_ADDRESS,
+    send_mail('Page move completed', message, settings.DEFAULT_FROM_EMAIL,
               [user.email])

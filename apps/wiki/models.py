@@ -1223,7 +1223,7 @@ class Document(NotificationsMixin, models.Model):
         conflicts = []
         try:
             existing = Document.objects.get(locale=self.locale, slug=new_slug)
-            if not existing.redirect_url():
+            if not existing.is_redirect:
                 conflicts.append(existing)
         except Document.DoesNotExist:
             pass
@@ -1243,6 +1243,23 @@ class Document(NotificationsMixin, models.Model):
         Move this page and all its children.
 
         """
+        # Sanity check: is there an already-existing, non-redirect
+        # document at the new slug?
+        existing = None
+        try:
+            existing = Document.objects.get(locale=self.locale,
+                                            slug=new_slug)
+        except Document.DoesNotExist:
+            pass
+
+        if existing is not None:
+            # If it's a redirect, it's safe to delete. Otherwise, bail
+            # out.
+            if existing.is_redirect:
+                existing.delete()
+            else:
+                raise Exception("Requested move would overwrite a non-redirect page.")
+
         if user is None:
             user = self.current_revision.creator
 
