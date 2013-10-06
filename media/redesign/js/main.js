@@ -53,10 +53,10 @@ document.documentElement.className += ' js';
             timeout = setTimeout(function() {
               $searchWrap.removeClass('expanded');
               $navItems.fadeIn(400);
-            } , 500)
+            } , 500);
           }
         }, delay);
-      }
+      };
     };
 
     $input.
