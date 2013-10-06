@@ -65,12 +65,6 @@ generate-arrow()
     width 0
     border 10px solid transparent
 
-/* generates the center property */
-generate-center(media-width)
-  .center
-    width (media-width - 2 * gutter-width)
-    padding 0 gutter-width
-
 /* use this in the case of having to override styles from old template :( */
 compat-important(prop, value)
   {prop}: value !important
@@ -232,17 +226,17 @@ use-white-logo()
     span
       @extend .offscreen
 
-  &.neutral
+  &.neutral, &.negative, &.positive
     compat-important(color, #fff)
+
+  &.neutral
     compat-important(background-color, #0095dd)
     vendorize(box-shadow, inset 0 -1px #00539f)
 
   &.negative
-    compat-important(color, #fff)
     compat-important(background-color, #ea3b28)
     vendorize(box-shadow, inset 0 -1px #c13832)
 
   &.positive
-    compat-important(color, #fff)
     compat-important(background-color, #70a300)
     vendorize(box-shadow, inset 0 -1px #486900)
