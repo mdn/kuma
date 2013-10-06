@@ -64,7 +64,7 @@ Getting the Source
 First, to follow the instructions from `Webdev Bootcamp <http://mozweb.readthedocs.org/en/latest/git.html#working-on-projects>`_,
 fork the project into your own account. Then get the source using::
 
-    mkdir mdn # you probably want to do this, since you'll have to create 
+    mkdir mdn # you probably want to do this, since you'll have to create
     cd mdn    # product_details_json/ as a sibling of kuma/ later.
     git clone git://github.com/<your_account>/kuma.git
     cd kuma
@@ -159,6 +159,14 @@ set your ``settings_local.py`` with the following::
     DEBUG = True
     TEMPLATE_DEBUG = DEBUG
     SERVE_MEDIA = True
+
+Setting ``DEBUG = False`` will put the installation in production mode
+and ask for minified assets. In that case, you will need to generate
+CSS from stylus and compress resource:
+
+::
+   $ ./scripts/compile_stylesheets
+   $ ./manage.py compress_assets
 
 Configure Persona
 -------------------
