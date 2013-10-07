@@ -85,6 +85,11 @@ class UserProfile(ModelBase):
             prefix='https://www.linkedin.com/in/',
             regex='^https?://www.linkedin.com/in/',
         )),
+        ('mozillians', dict(
+            label=_(u'Mozillians'),
+            prefix='https://mozillians.org/u/',
+            regex='^https?://mozillians.org/u/',
+        ))
     ]
 
     class Meta:
