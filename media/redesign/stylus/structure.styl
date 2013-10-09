@@ -1,7 +1,7 @@
 /* header */
 #main-header
   @extend .clear
-  
+
   border-color transparent
   border-bottom-width 1px
   border-bottom-style solid
@@ -53,6 +53,9 @@
     left -200px
     border-top menu-border-width solid #404040
     z-index 9999
+
+    a:focus
+      outline 0
 
     .submenu-column
       min-height 90px
@@ -195,8 +198,8 @@ a.persona-button
 
 main
   background #fff
-  
-  > .center 
+
+  > .center
     padding-top first-content-top-padding
 
 
@@ -245,10 +248,10 @@ footer
       text-align right
       width 100%
       clear both
-      
+
       > li
         vendorize(transition-property, none)
-      
+
       > li:first-child
           padding-left 0
 
@@ -288,7 +291,7 @@ footer
       compat-only(padding-right, 0)
       compat-only(margin-left, 8px)
       compat-only(margin-right, 0)
-      
+
 
 
 
@@ -313,7 +316,7 @@ footer
 
     @extend .column-strip
 
-    .module 
+    .module
       .mod-title
         compat-only(font, inherit)
 
