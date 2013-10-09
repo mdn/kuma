@@ -261,6 +261,7 @@
                   </ul>
 
                   <button type="submit">{{ _('Submit Review') }}</button>
+                  <input type="hidden" value="{{ document.current_revision.id }}" name="revision_id" />
                 </form>
               </section>
               {% endif %}
