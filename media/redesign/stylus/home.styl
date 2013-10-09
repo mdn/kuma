@@ -36,7 +36,8 @@
 
     h1
       color #fff
-      margin-bottom 0 
+      line-height 1.2
+      margin-bottom 0
       margin 0 auto
 
       span
@@ -46,18 +47,34 @@
     .home-search-form
       padding (grid-spacing * 2) 0
 
+      label
+        display block
+        height 0
+        width 0
+        overflow hidden
+
       input
         display block
         margin 0 auto
         font-size larger-font-size
+        background #4a82b6
         background rgba(255, 255, 255, 0.2)
         color #fff
         border 0
         border-radius 3px
         font-family 'Open Sans Light', sans-serif
-        letter-spacing -1px
-
+        letter-spacing -.025em
+        vendorize(transition, background .2s ease-in-out)
         set-placeholder-style(color, #fff)
+
+        &:hover
+          background rgba(255, 255, 255, 0.25)
+          vendorize(transition, background .2s ease-in-out)
+
+        &:focus
+          background rgba(255, 255, 255, 0.3)
+          vendorize(transition, background .2s ease-in-out)
+
 
   .home-features
     &, a
@@ -79,7 +96,7 @@
 
   /* callouts */
 
-  .column-callout 
+  .column-callout
     @extend .column-4
     position relative
 
@@ -142,9 +159,9 @@
       display inline-block
       position relative
       margin-left 0
-      background-image url(media-url-dir + 'mdn_blank-grey-document-color.svg') 
+      background-image url(media-url-dir + 'mdn_blank-grey-document-color.svg')
 
-  h2 
+  h2
     a
       font-style italic
       font-size base-font-size
@@ -153,12 +170,12 @@
       margin-left (grid-spacing * 2)
 
     > i
-      width 72px 
-      height 62px 
+      width 72px
+      height 62px
       color #0095dd
-      
+
       &.blue
-        background-image url(media-url-dir + 'mdn_blank-blue-document-color.svg') 
+        background-image url(media-url-dir + 'mdn_blank-blue-document-color.svg')
         color #fff
 
       &[class^="icon-"]:before
@@ -170,7 +187,7 @@
 
     i
       background-size cover
-      width 47px 
+      width 47px
       height 41px
       color #0095dd
       margin-right 10px !important
@@ -258,7 +275,7 @@
         background-color #48ade4 !important
         font-size smaller-font-size !important
         color #fff !important
-        
+
 /* demos section */
 .home-demos
   background light-background-color
@@ -355,7 +372,7 @@
 
       .column-involved
         margin-top (grid-spacing * 2)
-      
+
       .home-involved-card p
         text-align left
 
@@ -369,13 +386,13 @@
           right auto
           left grid-spacing
 
-    h2 
+    h2
       > selector-icon:before
         margin-right 22px
 
-    h3 
+    h3
       i, span
-        float right 
+        float right
 
       selector-icon:before
         margin-right 16px
