@@ -978,6 +978,7 @@ transition-property: bottom, opacity, visibility;
 #profile-head .linkedin a, #elsewhere .linkedin label { background-position: 0 -200px; }
 #profile-head .dribbble a, #elsewhere .dribbble label { background-position: 0 -250px; }
 #profile-head .reddit a, #elsewhere .reddit label { background-position: 0 -300px; }
+#profile-head .mozillians a, #elsewhere .mozillians label { background-position: 0 -460px; }
 #profile-head .docs a { background-position: 0 -400px; }
 
 .profile-section { clear: both; margin: 0 0 30px; }
