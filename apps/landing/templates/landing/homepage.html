@@ -27,9 +27,10 @@
 
   <div class="home-search-form">
     <form action="{{ url('search') }}" method="get">
-      <input type="search" name="q" placeholder="{{ _('Search the docs') }}" />
+
+      <input type="search" id="search" name="q" placeholder="{{ _('Search the docs') }}">
     </form>
-  </div> 
+  </div>
 
   <div class="home-features">
     <div class="column-container">
@@ -46,28 +47,27 @@
       <div class="column-home-features">
         <h3 class="zones"><i class="icon-suitcase"></i><span>{{ _('Zones') }}</span></h3>
         <ul>
-        <li><a href="{{ devmo_url('Web/Apps') }}">{{ _('App Center') }}</a></li>
-        <li><a href="{{ devmo_url('Mozilla/Firefox_OS') }}">{{ _('Firefox OS') }}</a></li>
-        <li><a href="{{ devmo_url('Mozilla/Persona') }}">{{ _('Persona') }}</a></li>
+          <li><a href="{{ devmo_url('Web/Apps') }}">{{ _('App Center') }}</a></li>
+          <li><a href="{{ devmo_url('Mozilla/Firefox_OS') }}">{{ _('Firefox OS') }}</a></li>
+          <li><a href="{{ devmo_url('Mozilla/Persona') }}">{{ _('Persona') }}</a></li>
         </ul>
       </div>
       <div class="column-home-features">
         <h3><i class="icon-wrench"></i><span>{{ _('Developer<br />Tools') }}</span></h3>
         <ul>
-        <li><a href="{{ devmo_url('Tools/Firefox_OS_Simulator') }}">{{ _('Firefox OS Simulator') }}</a></li>
-        <li><a href="{{ devmo_url('Tools/Page_Inspector') }}">{{ _('Page Inspector') }}</a></li>
-        <li><a href="{{ devmo_url('Tools/Debugger') }}">{{ _('JavaScript Debugger') }}</a></li>
-        <li><a href="{{ devmo_url('Tools/Web_Console') }}">{{ _('Web Console') }}</a></li>
-        <li><a href="{{ devmo_url('Tools') }}">{{ _('more...') }}</a></li>
+          <li><a href="{{ devmo_url('Tools/Firefox_OS_Simulator') }}">{{ _('Firefox OS Simulator') }}</a></li>
+          <li><a href="{{ devmo_url('Tools/Page_Inspector') }}">{{ _('Page Inspector') }}</a></li>
+          <li><a href="{{ devmo_url('Tools/Debugger') }}">{{ _('JavaScript Debugger') }}</a></li>
+          <li><a href="{{ devmo_url('Tools/Web_Console') }}">{{ _('Web Console') }}</a></li>
+          <li><a href="{{ devmo_url('Tools') }}">{{ _('more...') }}</a></li>
         </ul>
       </div>
       <div class="column-home-features">
         {# <h3><i class="icon-certificate"></i><span>{{ _('Developer<br />Program') }}</span></h3> #}
         <h3><i class="icon-beaker"></i><span>{{ _('MDN<br />Beta') }}</span></h3>
         <ul>
-        <li>{{ _('Welcome to the MDN Beta. ') }}</li>
-        <li><a href="
-https://wiki.mozilla.org/MDN/Development/Redesign/Testing">{{ _('Learn how you can help!') }}</a></li>
+          <li>{{ _('Welcome to the MDN Beta. ') }}</li>
+          <li><a href="https://wiki.mozilla.org/MDN/Development/Redesign/Testing">{{ _('Learn how you can help!') }}</a></li>
         </ul>
       </div>
     </div>
@@ -115,7 +115,7 @@ https://wiki.mozilla.org/MDN/Development/Redesign/Testing">{{ _('Learn how you c
   </div>
 {% endif %}
 
-<h2><i class="icon-magic blue"></i> {{ _('See & submit demos') }} 
+<h2><i class="icon-magic blue"></i> {{ _('See & submit demos') }}
   {% if not waffle.flag('derby_closed') %}
     <a href="{{ url('demos_devderby_landing') }}">{{ _('MDN Dev Derby <i class="icon-arrow-right"></i>') }}</a>
   {% else %}
@@ -160,7 +160,7 @@ https://wiki.mozilla.org/MDN/Development/Redesign/Testing">{{ _('Learn how you c
   </div>
 
 
-  {# Putting off for after launch 
+  {# Putting off for after launch
   <div class="column-container home-contribute-recent">
     <div class="column-half">
       <h3>{{ _('Recent Edits') }}</h3>
