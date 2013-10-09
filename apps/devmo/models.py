@@ -90,9 +90,9 @@ class UserProfile(ModelBase):
             prefix='https://mozillians.org/u/',
             regex='^https?://mozillians.org/u/',
         )),
-        ('mozillians', dict(
-            label=_(u'Mozillians'),
-            prefix='https://wwww.acebook.com/',
+        ('Facebook', dict(
+            label=_(u'Facebook'),
+            prefix='https://wwww.facebook.com/',
             regex='^https?://www.facebook.com/',
         ))
     ]
