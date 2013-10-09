@@ -89,6 +89,11 @@ class UserProfile(ModelBase):
             label=_(u'Mozillians'),
             prefix='https://mozillians.org/u/',
             regex='^https?://mozillians.org/u/',
+        )),
+        ('Facebook', dict(
+            label=_(u'Facebook'),
+            prefix='https://wwww.facebook.com/',
+            regex='^https?://www.facebook.com/',
         ))
     ]
 
