@@ -201,6 +201,9 @@ class ProfileViewsTest(TestCase):
             u'twitter': u'http://twitter.com/lmorchard',
             u'github': u'http://github.com/lmorchard',
             u'stackoverflow': u'http://stackoverflow.com/users/lmorchard',
+            u'linkedin': u'https://www.linkedin.com/in/testuser',
+            u'mozillians': u'https://mozillians.org/u/testuser',
+            u'facebook': u'https://www.facebook.com/test.user'
         }
 
         form = self._get_current_form_field_values(doc)
