@@ -10,13 +10,6 @@
   })();
 
   /*
-    New tag placeholder, needs $.ready because that's when the plugin is set
-  */
-  $.ready(function() {
-    $('.tagit-new input').attr('placeholder', gettext('New tag...'));
-  });
-
-  /*
     Set up the "from search" buttons if user came from search
   */
   (function() {
