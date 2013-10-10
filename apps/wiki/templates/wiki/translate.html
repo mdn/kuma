@@ -139,6 +139,10 @@
                   <input id="tagit_tags" type="text" name="tags" value="" maxlength="255" />
                 {% endif %}
               </section>
+              <section class="page-tags">
+                <h2>{{_('Localization flags')}}</h2>
+                {{ revision_form.localization_tags|safe }}
+              </section>
           </section>
 
           {% include 'wiki/includes/revision_comment.html' %}
