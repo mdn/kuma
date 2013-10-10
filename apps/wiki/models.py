@@ -318,6 +318,10 @@ REVIEW_FLAG_TAGS = (
 )
 REVIEW_FLAG_TAGS_DEFAULT = ['technical', 'editorial']
 
+LOCALIZATION_FLAG_TAGS = (
+    ('inprogress', _('Localization in Progress')),
+)
+
 # TODO: This is info derived from urls.py, but unsure how to DRY it
 RESERVED_SLUGS = (
     'ckeditor_config.js$',
@@ -1885,6 +1889,13 @@ class ReviewTag(TagBase):
         verbose_name_plural = _("Review Tags")
 
 
+class LocalizationTag(TagBase):
+    """A tag indicating localization status, mainly for revisions"""
+    class Meta:
+        verbose_name = _("Localization Tag")
+        verbose_name_plural = _("Localization Tags")
+
+
 class ReviewTaggedRevision(ItemBase):
     """Through model, just for review tags on revisions"""
     content_object = models.ForeignKey('Revision')
@@ -1901,6 +1912,20 @@ class ReviewTaggedRevision(ItemBase):
                 reviewtaggedrevision__content_object=instance)
         return ReviewTag.objects.filter(
             reviewtaggedrevision__content_object__isnull=False).distinct()
+
+
+class LocalizationTaggedRevision(ItemBase):
+    """Through model, just for localization tags on revisions"""
+    content_object = models.ForeignKey('Revision')
+    tag = models.ForeignKey(LocalizationTag)
+
+    @classmethod
+    def tags_for(cls, model, instance=None):
+        if instance is not None:
+            return LocalizationTag.objects.filter(
+                localizationtaggedrevision__content_object=instance)
+        return Localization.objects.filter(
+            localizationtaggedrevision__content_object__isnull=False).distinct()
 
 
 class Revision(models.Model):
@@ -1927,6 +1952,8 @@ class Revision(models.Model):
     # Tags are (ab)used as status flags and for searches, but the through model
     # should constrain things from getting expensive.
     review_tags = TaggableManager(through=ReviewTaggedRevision)
+
+    localization_tags = TaggableManager(through=LocalizationTaggedRevision)
 
     toc_depth = models.IntegerField(choices=TOC_DEPTH_CHOICES,
                                     default=TOC_DEPTH_ALL)

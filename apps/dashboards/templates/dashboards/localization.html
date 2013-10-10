@@ -1,94 +1,137 @@
-{# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "base.html" %}
-{% from "dashboards/includes/macros.html" import print_readout %}
+
 {% set title = _('Localization Dashboard') %}
-{% set scripts = ('wiki',) %}
-{% set styles = ('wiki',) %}
+{% set scripts = ('dashboards',) %}
+{% set styles = ('dashboards', 'wiki') %}
 {% set crumbs = [(None, title)] %}
-{# TODO: Move required dashboard styles/scripts out of wiki.css into their own or refactor up? #}
+{% set classes = 'compare' %}
+
+{% block title %}{{ _("Localization Dashboard") }}{% endblock %}
 
 {% block content %}
-  <article id="localize" class="main dashboards">
-    <h1>{{ title }}</h1>
-
-    <div class="choice-list">
-      <label>{{ _('Show information for:') }}</label>
-      <ul>
-        <li>
-          <a href="{{ url('dashboards.contributors') }}">{{ default_locale_name }}</a>
-        </li>
-        <li>
-          {{ current_locale_name }}
-        </li>
-      </ul>
+<section id="content">
+<div class="wrap">
+    <div id="content-main" class="full">
+        <h1>{{ _("Localization Dashboard") }}</h1>
     </div>
-
-    <details class="h2" open="open">
-      <summary>{{ _('Overview') }}</summary>
-      <table class="overview">
-        {% for row in overview_rows() %}
-          <tr>
-            <td>
-              {% if row.url %}
-                <a href="{{ row.url }}">{{ row.title }}</a>
-              {% else %}
-                {{ row.title }}
-              {% endif %}
-            </td>
-            <td>
-              {{ number(row.numerator) }}
-              <div class="denominator">of {{ number(row.denominator) }}</div>
-            </td>
-            <td>
-              {{ row.percent }}%
-              <div class="percent-graph">
-                <div style="width: {{ row.percent }}%"></div>
-              </div>
-            </td>
-            <td>
-              {{ row.description }}
-            </td>
-          </tr>
-        {% endfor %}
-        <tr>
-          <td>{{ _('User Interface') }}</td>
-          <td></td>
-          <td></td>
-          <td>
-            {% trans url='https://localize.mozilla.org/' %}
-              A fully translated user interface improves the experience for
-              site visitors in your language. Help
-              <a href="{{ url }}">translate the interface</a>.
-            {% endtrans %}
-          </td>
-        </tr>
-      </table>
-      <div id="overview-options" class="choice-list">
-        <label>{{ _('More options:') }}</label>
-        <ul>
-          {% for slug, readout in readouts.iteritems() %}
-            <li><a href="#{{ slug }}">{{ readout.short_title }}</a></li>
-          {% endfor %}
-        </ul>
-      </div>
-    </details>
-
-    {% for readout in readouts.itervalues() %}
-      {{ print_readout(readout, 'dashboards.localization_detail') }}
-    {% endfor %}
-  </article>
+    <div id="wikiArticle" class="page-content boxed">
+        <form id="revision-filter" method="get">
+            <ul id="dashboard-filter">
+                <li>
+                    {{ _("Locale") }}
+                    <select name="locale" id="dash-locale">
+                        <option value="">{{ _("Select a locale") }}</option>
+                        {% for locale, name in filter_data.locales %}
+                        <option value="{{ locale }}"{{ selected(locale, filters['locale']) }}>{{ name }}</option>
+                        {% endfor %}
+                    </select>
+                </li>
+                <li>
+                    {{ _("Topic") }}
+                    <select name="topic">
+                        <option value="">{{ _("All topics") }}</option>
+                        {% for topic in filter_data.topics %}
+                        <option value="{{ topic }}"{{ selected(topic, filters['topic']) }}>{{ topic }}</option>
+                        {% endfor %}
+                    </select>
+                </li>
+                <li>
+                    {{ _("Localization Flags") }}
+                    <select name="localization_flags">
+                        <option value=""></option>
+                        <option value="inprogress"{{ selected('inprogress', filters['localization_flags']) }}>Localization in Progress</option>
+                    </select>
+                </li>
+                <li>
+                    {{ _("Order by") }}
+                    <select name="orderby">
+                        {% for order in filter_data.orderby_list %}
+                        <option value="{{ order[0] }}">{{ order[1] }}</option>
+                        {% endfor %}
+                    </select>
+                </li>
+                <li>
+                    <button type="submit">{{ _("Filter") }}</button>
+                </li>
+            </ul>
+        </form>
+        <table id="revisions-table">
+            <thead>
+                <tr>
+                    <th class="revision-head-locale">{{ _('Locale') }}</th>
+                    <th class="revision-head-article">{{ _('Locale article') }}</th>
+                    <th class="revision-head-rev-date">{{ _('Locale revision date') }}</th>
+                    <th class="revision-head-parent-artile">{{ _('English article') }}</th>
+                    <th class="revision-head-parent-rev-date">{{ _('English revision date') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+</section>
 {% endblock %}
 
-{% block side %}
-  <div id="doc-watch">
-    {% with locale=request.locale %}
-      {% include 'dashboards/includes/watch_locale.html' %}
-      {% include 'dashboards/includes/watch_approved.html' %}
-    {% endwith %}
-    {% if request.locale != settings.WIKI_DEFAULT_LANGUAGE %}
-      {% with locale=settings.WIKI_DEFAULT_LANGUAGE, is_watching_approved=is_watching_approved_default %}
-        {% include 'dashboards/includes/watch_approved.html' %}
-      {% endwith %}
-    {% endif %}
-  </div>
+{% block js %}
+<script>
+$(function() {
+  var $revTable       = $('#revisions-table'),
+      $revisionForm   = $('#revision-filter'),
+      $localeInput    = $('#dash-locale'),
+      currentLocale   = '{{ request.locale }}',
+      localeKey       = '{LOCALE}',
+      baseURL         = '/' + localeKey + '/dashboards/fetch_localization_data';
+
+  function getLocale() {
+    return $localeInput.get(0).value || currentLocale;
+  }
+
+  function getSourceURL() {
+    return baseURL.replace(localeKey, getLocale()) + '?' + $revisionForm.serialize();
+  }
+
+  // Upon form submission, get records
+  $revisionForm.submit(function(e) {
+    e.preventDefault();
+    loadRecords();
+
+    if('pushState' in history) {
+      history.pushState(null, '', location.pathname + '?' + $revisionForm.serialize());
+    }
+  });
+
+  // Triggers a change in record source
+  function loadRecords() {
+    var settings = $revTable.dataTable.settings[0];
+    settings.sAjaxSource = getSourceURL();
+    $revTable.dataTable.ext.oApi._fnAjaxUpdate(settings);
+  }
+
+  // Create the feature-rich table
+  $revTable.dataTable({
+    'bPaginate': false,
+    'bLengthChange': false,
+    'bFilter': false,
+    'bSort': false,
+    'bAutoWidth': false,
+    'aoColumns': [
+      {'mData': 'locale'},
+      {'mData': 'title'},
+      {'mData': 'rev_date'},
+      {'mData': 'parent_title'},
+      {'mData': 'parent_rev_date'}
+    ],
+    'sScrollY': '300px',
+    'sDom': 'frtiS',
+    'oScroller':{
+      'loadingIndicator': true,
+      'serverWait': 500
+    },
+    'bServerSide': true,
+    'bDeferRender': true,
+    'sAjaxSource': getSourceURL()
+  });
+});
+</script>
 {% endblock %}
