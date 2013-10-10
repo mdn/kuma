@@ -54,13 +54,13 @@ def fetch_localization_data(request):
     }
     for doc in docs:
         locale = '%s (%s)' % (doc.language, doc.locale)
-        title = '<a href="%s">%s</a>' % (doc.get_absolute_url(), doc.title)
+        title = '<a href="%s">%s</a>' % (doc.get_absolute_url(), escape(doc.title))
         rev_date = (doc.current_revision.created.strftime('%b %d, %y - %H:%M')
                     if doc.current_revision else '')
         p = doc.parent
         if p:
             p_c = p.current_revision
-            parent_title = '<a href="%s">%s</a>' % (p_c.get_absolute_url(), p_c.title)
+            parent_title = '<a href="%s">%s</a>' % (p_c.get_absolute_url(), escape(p_c.title))
             parent_rev_date = p_c.created.strftime('%b %d, %y - %H:%M')
         else:
             parent_title = parent_rev_date = ''
