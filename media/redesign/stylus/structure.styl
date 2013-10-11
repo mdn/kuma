@@ -93,10 +93,10 @@
       vendorize(transition-delay, 0)
 
 .user-state
+  @extend .smaller
   position absolute
   right 200px
   top 12px
-  font-size smaller-font-size
   compat-only(width, auto)
 
   li + li
@@ -213,8 +213,8 @@ main
 
 /* footer */
 footer
+  @extend .smaller
   background #fff
-  font-size smaller-font-size
   padding  (2 * first-content-top-padding 0)
 
   p, label
@@ -239,8 +239,8 @@ footer
       > li
         > a
           i
+            @extend .larger
             display inline-block
-            font-size larger-font-size
 
 
 /* mobile updates */
@@ -277,8 +277,8 @@ footer
 
 /* redesign beta notice */
 .redesign-beta-notice
+  @extend .smaller
   padding 6px 0
-  font-size smaller-font-size
 
 
 /* rtl */
