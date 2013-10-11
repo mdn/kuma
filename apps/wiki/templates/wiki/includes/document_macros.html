@@ -40,7 +40,6 @@
           <div class="submenu-column">
             <div class="title">{{ _('This Page') }}</div>
             <ul>
-              <li class="page-print"><a href="#" onclick="return window.print();"  title="{{ _('Print page') }}">{{ _('Print this page') }}</a></li>
                 <li><a href="{{ url('wiki.document_revisions', document.full_path) }}">{{_('History')}}</a></li>
                 {% if user.is_authenticated() and document %}
                   <li class="page-watch">
@@ -83,6 +82,7 @@
                 {% if zone_links['add'] %}
                   <li><a target="_blank" href="{{ zone_links['add'] }}">{{ _('Convert to content zone') }}</a></li>
                 {% endif %}
+                <li class="page-print"><a href="#" onclick="return window.print();"  title="{{ _('Print page') }}">{{ _('Print this page') }}</a></li>
             </ul>
           </div><div class="submenu-column">
             <div class="title">{{ _('Languages') }}</div>
