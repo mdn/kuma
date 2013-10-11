@@ -28,7 +28,7 @@ def fetch_localization_data(request):
     orderby = request.GET.get('orderby')
     localization_flags = request.GET.get('localization_flags')
 
-    docs = Document.objects.exclude(locale=DEFAULT_LOCALE)
+    docs = Document.objects.exclude(locale=DEFAULT_LOCALE).exclude(is_redirect=True)
 
     if locale and locale in LANGUAGES:
         docs = docs.filter(locale=locale)
