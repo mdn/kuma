@@ -103,6 +103,9 @@ class TestUserProfile(test_utils.TestCase):
             twitter='http://twitter.com/lmorchard',
             github='http://github.com/lmorchard',
             stackoverflow='http://stackoverflow.com/users/lmorchard',
+            linkedin='https://www.linkedin.com/in/testuser',
+            mozillians='https://mozillians.org/u/testuser',
+            facebook='https://www.facebook.com/test.user'
         )
 
         # Try a mix of assignment cases for the websites property
@@ -113,6 +116,9 @@ class TestUserProfile(test_utils.TestCase):
         profile.websites.update(dict(
             github=test_sites['github'],
             stackoverflow=test_sites['stackoverflow'],
+            linkedin=test_sites['linkedin'],
+            mozillians=test_sites['mozillians'],
+            facebook=test_sites['facebook'],
         ))
 
         # Save and make sure a fresh fetch works as expected
