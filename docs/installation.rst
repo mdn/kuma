@@ -162,11 +162,10 @@ set your ``settings_local.py`` with the following::
 
 Setting ``DEBUG = False`` will put the installation in production mode
 and ask for minified assets. In that case, you will need to generate
-CSS from stylus and compress resource:
+CSS from stylus and compress resource::
 
-::
-   $ ./scripts/compile_stylesheets
-   $ ./manage.py compress_assets
+    ./scripts/compile_stylesheets
+    ./manage.py compress_assets
 
 Configure Persona
 -------------------
