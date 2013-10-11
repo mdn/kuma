@@ -27,9 +27,10 @@
       var initialized;
 
       // Brick on click?
-      if(settings.brickOnClick) {
+      var brick = settings.brickOnClick;
+      if(brick) {
         $self.on('click', function(e) {
-          e.preventDefault();
+          if(typeof brick != 'function' || brick(e)) e.preventDefault();
         });
       }
 

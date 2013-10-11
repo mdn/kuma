@@ -32,6 +32,9 @@
       vendorize(transition-duration, default-animation-duration)
       vendorize(transition-delay, default-animation-duration)
 
+      > a i
+        display none
+
       > a, .search-trigger
         compat-important(color, menu-link-color)
         compat-important(text-decoration, none)
@@ -227,6 +230,16 @@ footer
   label
     padding-right 4px
 
+
+/* tablet updates */
+@media media-query-tablet
+  #main-nav
+    > ul
+      > li
+        > a
+          i
+            display inline-block
+            font-size larger-font-size
 
 
 /* mobile updates */
