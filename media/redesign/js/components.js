@@ -9,8 +9,8 @@
   $.fn.mozMenu = function(options) {
 
     var settings = $.extend({
-      showDelay: 200,
-      hideDelay: 200,
+      showDelay: 100,
+      hideDelay: 100,
       submenu: null,
       focusOnOpen: true,
       brickOnClick: false,
