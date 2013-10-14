@@ -18,7 +18,7 @@
 
 {% macro build_document_crumbs(document) %}
   <nav class="crumbs" role="navigation"><ol>
-    <li><a href="/{{ request.locale }}/docs">MDN</a></li>
+    <li><a href="/{{ request.locale }}">MDN</a></li>
     {% for doc in document.parents %}
       <li class="crumb"><a href="{{ url('wiki.document', doc.full_path) }}">{{ doc.title }}</a></li>
     {% endfor %}
