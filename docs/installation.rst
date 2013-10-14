@@ -162,11 +162,10 @@ set your ``settings_local.py`` with the following::
 
 Setting ``DEBUG = False`` will put the installation in production mode
 and ask for minified assets. In that case, you will need to generate
-CSS from stylus and compress resource:
+CSS from stylus and compress resource::
 
-::
-   $ ./scripts/compile_stylesheets
-   $ ./manage.py compress_assets
+    ./scripts/compile_stylesheets
+    ./manage.py compress_assets
 
 Configure Persona
 -------------------
@@ -209,6 +208,17 @@ What’s next?
 ============
 
 See :doc:`development <development>` for further instructions.
+
+Some site funcationaly require waffle flags.  Waffle flags include:
+
+-  ``kumaediting``:  Allows creation, editing, and translating of documents
+-  ``page_move``:  Allows moving of documents
+-  ``revision-dashboard-newusers``:  Allows searching of new users through the revision dashboard
+-  ``events_map``:  Allows display of map on the events page
+-  ``elasticsearch``:  Enables elastic search for site search
+-  ``redesign``:  Enables the latest MDN redesign styles and layouts (run ``./scripts/compile-stylesheets`` to compile stylesheets)
+
+To create or modify waffle flags, visit "/admin/" and click the "Waffle" link.
 
 Last Steps
 ==========

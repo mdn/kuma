@@ -123,154 +123,18 @@
     font-weight: bold;
 }
 
+/* Localization Dashboard */
 
-/* L10n and Contributor Dashboards */
+#dashboard-filter {
+    height: 50px;
+}
+#dashboard-filter li {
+    float: left; height: 50px; margin-right: 25px;
+}
 
-.dashboards table {
-    border-collapse: collapse;
-    font-family: Helvetica, Arial, sans-serif;
-    text-align: left;
+.doc-list {
     width: 100%;
 }
-
-.dashboards tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-.dashboards td,
-.dashboards th {
-    padding: 7px 12px;
-}
-
-.dashboards td {
-    vertical-align: middle;
-}
-
-.dashboards th {
-    font-size: 90%;
+.doc-list tr th {
     font-weight: bold;
-    padding-bottom: 2px;
-    vertical-align: bottom;
-}
-
-.dashboards .denominator {
-    font-size: 80%;
-    color: #999;
-    white-space: nowrap;
-}
-
-.dashboards div.percent-graph {
-    background-color: #f3f3f3;
-    height: 10px;
-    width: 70px;
-}
-
-.dashboards div.percent-graph div {
-    background-color: #dfdfdf;
-    height: 10px;
-}
-
-.dashboards div.absolute-graph {
-    background-color: #e5e5e5;
-    height: 12px;
-}
-
-.dashboards #overview-options,
-.dashboards .table-footer {
-    font-family: Helvetica, Arial, sans-serif;
-    margin: 0;
-    padding: 7px 12px;
-}
-
-.dashboards #overview-options label {
-    font-weight: bold;
-}
-
-.dashboards .table-footer {
-    font-size: 90%;
-}
-
-.dashboards table.documents .users {
-    font-size: 90%;
-    color: #999;
-}
-
-.dashboards table.overview td:nth-child(2) {
-    text-align: right;
-}
-
-.dashboards table.overview td:nth-child(4) {
-    width: 50%;
-}
-
-.dashboards table.documents td:nth-child(2) {
-    padding-right: 6px;
-    text-align: right;
-    width: 15%;
-}
-
-.dashboards table.documents td:nth-child(3),
-.dashboards table.documents th:nth-child(3) {
-    padding-left: 0;
-    width: 160px;
-}
-
-.dashboards table.documents td:nth-child(4),
-.dashboards table.documents th:nth-child(4) {
-    text-align: right;
-    vertical-align: middle;
-    width: 25%;
-}
-
-.dashboards table.busy {
-    opacity: 0.5;
-}
-
-.dashboards ul.readout-modes {
-    float: right;
-}
-
-.dashboards ul.readout-modes,
-.dashboards ul.readout-modes li {
-    display: inline-block;
-}
-
-.dashboards ul.readout-modes li {
-    background: #cde6f5;
-    border-radius: 10px;
-    cursor: pointer;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    list-style: none;
-    margin: 0 1px;
-    padding: 3px 10px;
-    vertical-align: -6px;
-}
-
-.dashboards ul.readout-modes li:hover {
-    background: #e6f1fb;
-}
-
-.dashboards ul.readout-modes li.active {
-    background: #3862a9;
-}
-
-.dashboards ul.readout-modes li.active:hover {
-    background: #4978bc;
-}
-
-.dashboards ul.readout-modes li.active a {
-    color: #fff;
-}
-
-.dashboards-detail h1 {
-    display: inline-block;
-}
-
-.dashboards summary.with-mode-selectors {
-    display: inline;
-}
-
-.dashboards details table {
-    display: block;  /* Makes collapse animation work */
 }

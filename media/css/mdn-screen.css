@@ -972,12 +972,15 @@ transition-property: bottom, opacity, visibility;
 #profile-head .links a { padding: 1px 0 1px 24px; background: url("../img/icons-links.png") no-repeat; }
 #profile-head .edit { position: absolute; right: 20px; top: 25px; text-align: right; margin: 0; }
 #profile-head .edit a { float: left; margin: 0 1em;}
+
 #profile-head .twitter a, #elsewhere .twitter label { background-position: 0 -50px; }
 #profile-head .github a, #elsewhere .github label { background-position: 0 -100px; }
 #profile-head .stackoverflow a, #elsewhere .stackoverflow label { background-position: 0 -150px; }
 #profile-head .linkedin a, #elsewhere .linkedin label { background-position: 0 -200px; }
 #profile-head .dribbble a, #elsewhere .dribbble label { background-position: 0 -250px; }
 #profile-head .reddit a, #elsewhere .reddit label { background-position: 0 -300px; }
+#profile-head .mozillians a, #elsewhere .mozillians label { background-position: 0 -460px; }
+#profile-head .facebook a, #elsewhere .facebook label { background: url("../img/icon-facebook.png") 0 0 no-repeat; }
 #profile-head .docs a { background-position: 0 -400px; }
 
 .profile-section { clear: both; margin: 0 0 30px; }

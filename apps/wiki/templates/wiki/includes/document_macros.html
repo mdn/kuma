@@ -18,7 +18,7 @@
 
 {% macro build_document_crumbs(document) %}
   <nav class="crumbs" role="navigation"><ol>
-    <li><a href="/{{ request.locale }}/docs">MDN</a></li>
+    <li><a href="/{{ request.locale }}">MDN</a></li>
     {% for doc in document.parents %}
       <li class="crumb"><a href="{{ url('wiki.document', doc.full_path) }}">{{ doc.title }}</a></li>
     {% endfor %}
@@ -40,7 +40,6 @@
           <div class="submenu-column">
             <div class="title">{{ _('This Page') }}</div>
             <ul>
-              <li class="page-print"><a href="#" onclick="return window.print();"  title="{{ _('Print page') }}">{{ _('Print this page') }}</a></li>
                 <li><a href="{{ url('wiki.document_revisions', document.full_path) }}">{{_('History')}}</a></li>
                 {% if user.is_authenticated() and document %}
                   <li class="page-watch">
@@ -83,6 +82,7 @@
                 {% if zone_links['add'] %}
                   <li><a target="_blank" href="{{ zone_links['add'] }}">{{ _('Convert to content zone') }}</a></li>
                 {% endif %}
+                <li class="page-print"><a href="#" onclick="return window.print();"  title="{{ _('Print page') }}">{{ _('Print this page') }}</a></li>
             </ul>
           </div><div class="submenu-column">
             <div class="title">{{ _('Languages') }}</div>
@@ -112,4 +112,34 @@
   <div class="quick-links" id="quick-links">
     {{ html|safe }}
   </div>
+{%- endmacro %}
+
+{% macro get_approvals_html(document, user) %}
+  {% if user.is_authenticated() and document.current_revision and document.allows_revision_by(user) %}
+    {% if document.current_revision.needs_technical_review() or document.current_revision.needs_editorial_review() %}
+    <section class="page-meta reviews">
+      <p>{{ _('The following reviews have been requested:') }}</p>
+
+      <form method="post" action="{{ url('wiki.quick_review', document.full_path) }}">
+        {{ csrf() }}
+        <ul>
+        {% if document.current_revision.needs_technical_review() %}
+          <li>
+            <input type="checkbox" value="approve_technical" id="id_approve_technical" name="approve_technical">
+            <label for="id_approve_technical">{{ _('Technical') }}</label>
+          </li>
+        {% endif %}
+        {% if document.current_revision.needs_editorial_review() %}
+          <li>
+            <input type="checkbox" value="approve_editorial" id="id_approve_editorial" name="approve_editorial">
+            <label for="id_approve_editorial">{{ _('Editorial') }}</label>
+          </li>
+        {% endif %}
+        </ul>
+        <input type="hidden" value="{{ document.current_revision.id }}" name="revision_id" />
+        <button type="submit">{{ _('Submit Review') }}</button>
+      </form>
+    </section>
+    {% endif %}
+  {% endif %}
 {%- endmacro %}

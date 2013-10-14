@@ -41,10 +41,6 @@ h4
   line-height 100%
 
 /* basic text */
-dl a[name]
-  color inherit
-  text-decoration none
-
 {selector-icon}
   display inline-block
   margin-left (grid-spacing / 2)
@@ -85,6 +81,10 @@ a
 
   {selector-icon}:before
     cursor pointer
+
+  &[name]
+    color inherit
+    text-decoration none
 
 button, input[type='submit'], input[type='button']
   @extend .button

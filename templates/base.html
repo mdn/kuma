@@ -107,7 +107,7 @@
   <!--[if IE]>
   <meta http-equiv="imagetoolbar" content="no" />
   <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-  <script src="{{ settings.SITE_URL }}{{ MEDIA_URL }}js/libs/html5.js"></script>
+  <script src="{{ MEDIA_URL }}js/libs/html5.js"></script>
   <![endif]-->
 
   {% include "includes/config.html" %}
@@ -138,7 +138,7 @@ https://wiki.mozilla.org/MDN/Development/Redesign/Testing">Here\'s how you can h
 
     <a href="{{ url('home') }}" class="logo">{{ _('Mozilla Developer Network') }}</a>
 
-    <nav id="main-nav"><ul><li><a href="javascript:;">{{ _('Zones') }}</a>
+    <nav id="main-nav"><ul><li><a href="javascript:;">{{ _('Zones') }}<i class="icon-caret-down"></i></a>
 
         <div class="submenu submenu-single">
           <div class="submenu-column">
@@ -149,7 +149,7 @@ https://wiki.mozilla.org/MDN/Development/Redesign/Testing">Here\'s how you can h
             </ul>
           </div>
         </div>
-      </li><li><a href="{{ devmo_url('Web') }}">{{ _('Web Platform') }}</a>
+      </li><li><a href="{{ devmo_url('Web') }}">{{ _('Web Platform') }}<i class="icon-caret-down"></i></a>
 
         <div class="submenu">
           <div class="submenu-column">

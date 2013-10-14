@@ -47,9 +47,9 @@
       padding (grid-spacing * 2) 0
 
       input
+        @extend .larger
         display block
         margin 0 auto
-        font-size larger-font-size
         background rgba(255, 255, 255, 0.2)
         color #fff
         border 0
@@ -67,8 +67,8 @@
       text-decoration underline
 
     h3
+      @extend .larger
       font-weight bold
-      font-size larger-font-size
       font-family 'Open Sans Extra Bold', sans-serif
 
     li
@@ -93,7 +93,7 @@
       padding-right 20px
 
     a
-      font-size larger-font-size
+      @extend .larger
       color #fff
       display block
       padding 100px grid-spacing grid-spacing grid-spacing
@@ -101,8 +101,8 @@
       overflow-x hidden
 
       &:before
-        content "\f061"
-        font-family "FontAwesome"
+        content '\f061'
+        font-family 'FontAwesome'
         bottom grid-spacing
         right grid-spacing
         position absolute
@@ -161,8 +161,10 @@
         background-image url(media-url-dir + 'mdn_blank-blue-document-color.svg') 
         color #fff
 
-      &[class^="icon-"]:before
-        margin 16px 0 0 22px
+      &[class^='icon-']:before
+        margin 16px 0 0 0
+        display block
+        text-align center
 
   h3
     @extend .clear
@@ -177,7 +179,9 @@
       float left
 
       &:before
-        margin 9px 0 0 16px
+        margin 9px 0 0 0
+        display block
+        text-align center
 
     &.zones span
       padding-top 10px
@@ -186,8 +190,8 @@
       float left
 
   .entry-meta
-      font-size smaller-font-size
-      font-style italic
+    @extend .smaller
+    font-style italic
 
   /* hacks */
   .home-hacks
@@ -242,12 +246,12 @@
         font-weight bold
 
       h3
+        @extend .larger
         padding-bottom (grid-spacing / 2)
         border-bottom 1px solid #e0e2e4
         margin-bottom 110px
         margin-right -(grid-spacing)
         font-weight bold
-        font-size larger-font-size
 
       p
         margin 0
@@ -269,12 +273,14 @@
     position relative
 
   li
+    @extend .smaller
     display block
     text-align center
     margin-right grid-spacing
     float left
-    font-size smaller-font-size
     font-style italic
+    overflow hidden
+    width 194px
 
     img
       border 6px solid #fff
@@ -299,7 +305,7 @@
     text-decoration underline
 
   h3
-    font-size larger-font-size
+    @extend .larger
     font-weight bold
     text-transform uppercase
 
@@ -365,7 +371,7 @@
     .column-callout
       a
         &:before
-          content "\f060"
+          content '\f060'
           right auto
           left grid-spacing
 
@@ -381,7 +387,7 @@
         margin-right 16px
 
     i.icon-arrow-right:before
-      content "\f060"
+      content '\f060'
 
     .home-hacks .home-involved-card h3
       margin-right 0

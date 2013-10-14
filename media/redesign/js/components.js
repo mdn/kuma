@@ -9,8 +9,8 @@
   $.fn.mozMenu = function(options) {
 
     var settings = $.extend({
-      showDelay: 500,
-      hideDelay: 500,
+      showDelay: 100,
+      hideDelay: 100,
       submenu: null,
       focusOnOpen: true,
       brickOnClick: false,
@@ -27,9 +27,10 @@
       var initialized;
 
       // Brick on click?
-      if(settings.brickOnClick) {
+      var brick = settings.brickOnClick;
+      if(brick) {
         $self.on('click', function(e) {
-          e.preventDefault();
+          if(typeof brick != 'function' || brick(e)) e.preventDefault();
         });
       }
 

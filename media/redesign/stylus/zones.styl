@@ -77,7 +77,7 @@
 
   .masthead-text
     p
-      font-size larger-font-size
+      @extend .larger
       font-weight light-font-weight
 
   .zone-image
@@ -102,13 +102,15 @@
 
 /*  Basic zone article pages */
 .zone-article-header
-  padding (grid-spacing * 2) 0
+  padding grid-spacing 0
   overflow hidden
 
   .zone-title
     @extend .heading-2
-    color #fff
-    font-style italic
+
+    a
+      color #fff
+      font-style italic
 
   .zone-image
     position absolute

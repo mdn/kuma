@@ -24,6 +24,8 @@
       margin-right 0
 
   &.column-container-reverse
+    margin-left -1%
+
     > [class^='column-']
       float right
 
@@ -64,7 +66,11 @@
 
 /*  Tablet grid width */
 @media media-query-tablet
-
+  
+  .column-container
+    &.column-container-reverse
+      margin-left 0
+  
   .center
     max-width 1000px
 

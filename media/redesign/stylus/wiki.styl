@@ -36,13 +36,13 @@ article
   clear both
 
 .redirected-from
+  @extend .smaller
   margin-top -(grid-spacing)
-  font-size smaller-font-size
   font-style italic
   opacity 0.7
 
 .crumbs
-  font-size smaller-font-size
+  @extend .smaller
   margin-bottom (2 * grid-spacing)
   float left
   width 70%
@@ -123,7 +123,8 @@ article
   compat-only(letter-spacing, normal)
   
 .contributors
-  font-size smaller-font-size
+  @extend .smaller
+  color #777
 
 #toc
   compat-only(margin-left, 0)
@@ -170,7 +171,7 @@ article
   right 0
 
 .from-search-navigate
-  font-size larger-font-size
+  @extend .larger
   position relative
   color #ced1d2
   display inline-block
@@ -179,8 +180,8 @@ article
   top 4px
 
 .from-search-navigate-up, .from-search-navigate-down
+  @extend .smaller
   position absolute
-  font-size smaller-font-size
   left 0
 
 .from-search-navigate-up
@@ -190,6 +191,7 @@ article
   bottom 0
 
 .from-search-toc
+  @extend .smaller
   border 1px solid button-shadow-color
   width 200px
   position absolute
@@ -198,7 +200,6 @@ article
   z-index 2
   background button-background
   padding (grid-spacing / 2)
-  font-size smaller-font-size
   color #888
 
   ol
@@ -222,10 +223,10 @@ article
 
 .reviews
   set-message-base()
+  @extend .smaller
 
   background #fbf8e9
   border-color #f9f3d9
-  font-size smaller-font-size
 
   p
     margin 0
@@ -241,8 +242,8 @@ div.bug > *:last-child, div.warning > *:last-child
 
 .warning
   set-message-base()
+  @extend .smaller
 
-  font-size smaller-font-size
   background rgba(193, 56, 50, 0.3)
   compat-important(border-color, rgba(193, 56, 50, 0.1))
   compat-only(color, text-color)
@@ -263,9 +264,9 @@ div.bug > *:last-child, div.warning > *:last-child
     font-weight bold
 
   ul, > a
+    @extend .smaller
     margin-left 40px
     display block
-    font-size smaller-font-size
 
   > a
     text-decoration none
@@ -278,11 +279,11 @@ div.bug > *:last-child, div.warning > *:last-child
     margin-bottom 7px
 
 .tags a, .tagit li
+  @extend .smaller
   padding 1px 4px
   border 1px solid #cee9f9 !important /* overrides plugin selector */
   text-decoration none
   border-radius 4px
-  font-size smaller-font-size
   background light-background-color !important /* overrides plugin selector */
 
   .close
@@ -300,8 +301,8 @@ div.bug > *:last-child, div.warning > *:last-child
 
 /* quick links */
 .quick-links
+  @extend .smaller
   position relative
-  font-size smaller-font-size
   margin-bottom grid-spacing
 
   li
@@ -361,8 +362,8 @@ div.bug > *:last-child, div.warning > *:last-child
     margin-top (grid-spacing * 1.5)
 
     .action
+      @extend .larger
       display block
-      font-size larger-font-size
       line-height 20px
 
     em
@@ -440,8 +441,8 @@ span.cke_skin_kuma
 /* compare page */
 .compare, #revision-list
   ul
+    @extend .smaller
     compat-only(min-width, 0)
-    font-size smaller-font-size
 
   input[type='submit'], a.button
     compat-only(font-size, smaller-font-size)
@@ -468,6 +469,13 @@ span.cke_skin_kuma
   #wiki-right
     .tag-attach-list
       display inline-block
+      
+      {selector-icon}
+        left 0
+        margin-left 0
+
+      ul
+        margin-left 20px
 
     enable-toc-toggle()
 
@@ -478,14 +486,8 @@ span.cke_skin_kuma
     margin-right 0
     width auto
     float none
-    margin-bottom (grid-spacing * 2)
+    padding-bottom (grid-spacing * 2)
 
-
-
-
-
-@media media-query-mobile
-  
   #quick-links-toggle,  #wiki-controls
     display none
 
