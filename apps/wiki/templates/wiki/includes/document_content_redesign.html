@@ -25,7 +25,8 @@
 {% set zone_subnav_section_id = 'Subnav' %}
 {% set zone_subnav_html = document|zone_section_extract(zone_subnav_section_id) %}
 
-{% if (user.is_authenticated() and document.current_revision and document.allows_revision_by(user)) and (document.current_revision.needs_technical_review() or document.current_revision.needs_editorial_review()) %}
+{% set current_revision = document.current_revision %}
+{% if (user.is_authenticated() and current_revision and document.allows_revision_by(user)) and (current_revision.needs_technical_review() or current_revision.needs_editorial_review()) %}
   {% set approvals_html = get_approvals_html(document, request.user) %}
 {% endif %}
 
@@ -216,9 +217,23 @@
           
             <!-- contributors -->
             <div class="wiki-block contributors">
-            {% trans contributors=user_list(contributors) %}
-              <strong>Contributors to this page:</strong> {{ contributors }}
-            {% endtrans %}
+              <p>
+                {% trans contributors=user_list(contributors) %}
+                  <strong>Contributors to this page:</strong> {{ contributors }}
+                {% endtrans %}
+                {% if current_revision.creator %}
+                  <br />
+                  {{ _('Last updated by:') }}  
+                  <a href="{{ url('devmo.views.profile_view', username=current_revision.creator) }}">{{ current_revision.creator }}</a>, 
+                  {{ datetimeformat(current_revision.created, format='datetime') }}
+                  {% if current_revision.reviewer and current_revision.reviewed %}
+                    <br />
+                    {{ _('Last reviewed by:') }}  
+                    <a href="{{ url('devmo.views.profile_view', username=current_revision.reviewer) }}">{{ current_revision.reviewer }}</a>, 
+                    {{ datetimeformat(current_revision.reviewed, format='datetime') }}
+                  {% endif %}
+                {% endif %}
+              </p>
             </div>
           {% endif %}
         </div>
