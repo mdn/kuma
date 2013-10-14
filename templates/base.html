@@ -27,6 +27,14 @@
   {% endblock %}
 {% endmacro %}
 
+{% macro lang_switcher() %}
+{% if not is_sphinx %}
+  {% block lang_switcher %}
+      {% include "includes/lang_switcher.html" %}
+  {% endblock %}
+{% endif %}
+{% endmacro %}
+
 {% macro extrahead() %}
 {% block extrahead %}{% endblock %}
 {% endmacro %}
@@ -206,7 +214,7 @@ https://wiki.mozilla.org/MDN/Development/Redesign/Testing">Here\'s how you can h
         </p>
       </div>
       <div class="column-strip">
-        {% include "includes/lang_switcher.html" %}
+        {{ lang_switcher() }}
       </div>
     </div>
   </div></footer>
@@ -421,11 +429,7 @@ https://wiki.mozilla.org/MDN/Development/Redesign/Testing">Here\'s how you can h
       &bull; <a href="//github.com/mozilla/kuma">{{ _('Contribute to the code') }}</a>
       &bull; <a href="//www.mozilla.org/en-US/privacy">{{ _('Privacy Policy') }}</a>
     </div>
-    {% if not is_sphinx %}
-      {% block lang_switcher %}
-          {% include "includes/lang_switcher.html" %}
-      {% endblock %}
-    {% endif %}
+    {{ lang_switcher() }}
 </div>
 </footer>
 
