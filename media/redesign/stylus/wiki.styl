@@ -131,6 +131,12 @@ article
   compat-only(font-size, base-font-size)
   compat-only(margin-left, 0, 'ol ol, ul ul')
 
+  &.fixed
+    position fixed
+    top 0
+    z-index 2
+    overflow-y auto
+
   .toggler
     pointer-events none
     color inherit
