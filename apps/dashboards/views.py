@@ -16,7 +16,7 @@ from users.helpers import ban_link
 from wiki.models import Document, Revision
 from wiki.helpers import format_comment
 
-from . import (DEFAULT_LOCALE, LOCALES, ORDERS, TOPICS, LANGUAGES,
+from . import (DEFAULT_LOCALE, LOCALES, ORDERS, LANGUAGES,
                LOCALIZATION_FLAGS, WAFFLE_FLAG, PAGE_SIZE)
 
 
@@ -24,7 +24,7 @@ from . import (DEFAULT_LOCALE, LOCALES, ORDERS, TOPICS, LANGUAGES,
 @login_required
 def fetch_localization_data(request):
     locale = request.GET.get('locale')
-    topic = request.GET.get('topic')
+    topic = request.GET.get('topic', '')
     orderby = request.GET.get('orderby')
     localization_flags = request.GET.get('localization_flags')
 
@@ -37,7 +37,7 @@ def fetch_localization_data(request):
         localization_flags in LOCALIZATION_FLAGS):
         docs = docs.filter(current_revision__localization_tags__name=localization_flags)
 
-    if topic and topic in TOPICS:
+    if topic:
         docs = docs.filter(slug__icontains=topic)
 
     if orderby and orderby in ORDERS:
@@ -82,19 +82,17 @@ def fetch_localization_data(request):
 @login_required
 def localization(request):
     locale = request.GET.get('locale')
-    topic = request.GET.get('topic')
+    topic = request.GET.get('topic', None)
     orderby = request.GET.get('orderby')
     localization_flags = request.GET.get('localization_flags')
 
     filters = {
         'locale': locale,
-        'topic': topic,
         'localization_flags': localization_flags,
         'orderby': orderby,
     }
     filter_data = {
         'locales': LOCALES,
-        'topics': TOPICS,
         'orderby_list': ORDERS,
     }
     params = {

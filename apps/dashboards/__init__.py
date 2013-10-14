@@ -4,8 +4,6 @@ ORDERS = (
     ('last-update', 'Last update'),
 )
 
-TOPICS = ('HTML', 'CSS', 'JavaScript',)
-
 LOCALIZATION_FLAGS = (
     ('inprogress', 'Localization in Progress'),
 )
