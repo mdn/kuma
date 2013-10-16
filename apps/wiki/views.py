@@ -8,6 +8,7 @@ import re
 from urllib import urlencode
 from string import ascii_letters
 import jinja2
+import mime_types
 
 try:
     from cStringIO import cStringIO as StringIO
@@ -2424,9 +2425,12 @@ def new_attachment(request):
             return HttpResponseRedirect(attachment.get_absolute_url())
     else:
         if request.POST.get('is_ajax', ''):
+            allowed_types = ', '.join(map(mime_types.guess_extension,
+                                constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES.split()))
             error_obj = {
                 'title': request.POST.get('is_ajax', ''),
-                'error': _(u'The file provided is not valid')
+                'error': _(u'The file provided is not valid. '
+                           u'File must be one of these types: ' + allowed_types + u'.')
             }
             response = render(
                 request,
