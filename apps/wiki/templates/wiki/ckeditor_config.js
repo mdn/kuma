@@ -103,15 +103,10 @@ CKEDITOR.editorConfig = function(config) {
     config.extraPlugins = 'definitionlist,mdn-buttons,mdn-link,mdn-syntaxhighlighter,mdn-keystrokes,mdn-attachments,mdn-image,mdn-enterkey,mdn-wrapstyle,mdn-table,tablesort,mdn-sampler,mdn-sample-finder,mdn-maximize,mdn-redirect,youtube';
     config.removePlugins = 'link,image,tab,enterkey,table,maximize';
     config.entities = false;
-
-    if(window.mdn.waffles.redesign_editor && !$('body').hasClass('translate')) {
-        config.height = (window.innerHeight - 150) + 'px';
-    }
-    else {
-        config.extraPlugins += ',autogrow';
-        var inlineHeight = CKEDITOR.inlineHeight;
-        config.autoGrow_minHeight = (!inlineHeight || inlineHeight < 150 ? 500 : inlineHeight);
-    }
+    config.extraPlugins += ',autogrow';
+  
+    var inlineHeight = CKEDITOR.inlineHeight;
+    config.autoGrow_minHeight = (!inlineHeight || inlineHeight < 150 ? 500 : inlineHeight);
     
     config.toolbar_MDN = [
         ['Source', 'mdnSave', 'mdnSaveExit', '-', 'PasteText', 'PasteFromWord', '-', 'SpellChecker', 'Scayt', '-', 'Find', 'Replace', '-', 'ShowBlocks'],
