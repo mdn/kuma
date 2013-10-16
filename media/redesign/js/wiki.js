@@ -101,7 +101,6 @@
         var scroll = window.scrollY;
         var maxHeight = window.innerHeight - parseInt($toc.css('padding-top'), 10) - parseInt($toc.css('padding-bottom'), 10);
         
-        console.log($toc.css('pointer-events'));
         if(scroll > tocOffset && $toggler.css('pointer-events') == 'none') {
           $toc.css({
             width: $toc.css('width'),
