@@ -37,7 +37,7 @@
  {% block content %}
  <div class="column-container">
 
-    {% if search_query %}
+  {% if search_query %}
     <!-- left results -->
     <div class="column-main">
 
@@ -171,7 +171,18 @@
       </ul>
     </div>
     {% endif %}
-
+  
+  {% else %}
+   
+    <div id="search-results-close-container">
+      <div class="search-pane search-results-explanation">
+        <h2>{{ _('Ooops!') }}</h2>
+        {% trans search_url = url('search') %}
+        <p>You didn't provide a search term.  <a href="{{ search_url }}" class="new-search">Try a new search!</a></p>
+        {% endtrans %}
+      </div>
+    </div>
+   
   {% endif %}
 </div>
 {% endblock %}

@@ -5,32 +5,29 @@
 body.search-results
   create-gradient-background(header-background-color)
 
-  p
-    padding inherit
-
 main
   background transparent
 
 .search-pane
+  @extend .grid-padding
   background #fff
   margin-bottom (grid-spacing / 2)
 
-h3 i[class^='icon-']
+h3 {selector-icon}
   compat-important(margin-right, (grid-spacing * .75))
 
-#search-results-close-container
-  slider()
+p
+  compat-only(padding-left, 0)
 
 .search-results-explanation
-  @extend .grid-padding
   position relative
 
   p
     font-style italic
     margin-bottom 0
 
-  a
-    color link-color !important
+#search-results-close-container
+  slider()
 
 .seach-results-container
   @extend .grid-padding
