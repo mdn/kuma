@@ -5,6 +5,19 @@ from datetime import datetime
 # Remember when mod_wsgi loaded this file so we can track it in nagios.
 wsgi_loaded = datetime.now()
 
+# For New Relic.
+try:
+    import newrelic.agent
+except ImportError:
+    newrelic = False
+
+if newrelic:
+    newrelic_ini = os.getenv('NEWRELIC_PYTHON_INI_FILE', False)
+    if newrelic_ini:
+        newrelic.agent.initialize(newrelic_ini)
+    else:
+        newrelic = False
+
 # Add the zamboni dir to the python path so we can import manage.
 wsgidir = os.path.dirname(__file__)
 site.addsitedir(os.path.abspath(os.path.join(wsgidir, '../')))
