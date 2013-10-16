@@ -232,12 +232,6 @@
                   {{ _('Last updated by:') }}  
                   <a href="{{ url('devmo.views.profile_view', username=current_revision.creator) }}">{{ current_revision.creator }}</a>, 
                   {{ datetimeformat(current_revision.created, format='datetime') }}
-                  {% if current_revision.reviewer and current_revision.reviewed %}
-                    <br />
-                    {{ _('Last reviewed by:') }}  
-                    <a href="{{ url('devmo.views.profile_view', username=current_revision.reviewer) }}">{{ current_revision.reviewer }}</a>, 
-                    {{ datetimeformat(current_revision.reviewed, format='datetime') }}
-                  {% endif %}
                 {% endif %}
               </p>
             </div>
