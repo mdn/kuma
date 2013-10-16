@@ -87,6 +87,55 @@
       }
     });
   }
-
-
+  
+  /*
+    Set up the scrolling TOC effect
+  */
+  (function() {
+    var $toc = $('#toc');
+    if($toc.length) {
+      var tocOffset = $toc.offset().top;
+      var $toggler = $toc.find('.toggler');
+      
+      $(window).on('scroll resize', debounce(function() {
+        var scroll = window.scrollY;
+        var maxHeight = window.innerHeight - parseInt($toc.css('padding-top'), 10) - parseInt($toc.css('padding-bottom'), 10);
+        
+        console.log($toc.css('pointer-events'));
+        if(scroll > tocOffset && $toggler.css('pointer-events') == 'none') {
+          $toc.css({
+            width: $toc.css('width'),
+            maxHeight: maxHeight
+          });
+          
+          if(!$toc.hasClass('fixed')){
+            $toc.addClass('fixed');
+          }
+        }
+        else {
+          $toc.css({
+            width: 'auto',
+            maxHeight: 'none'
+          });
+          $toc.removeClass('fixed');
+        }
+      }, 10));
+    }
+  })();
+  
+  function debounce(func, wait, immediate) {
+    var timeout;
+    return function() {
+      var context = this, args = arguments;
+      var later = function() {
+        timeout = null;
+        if (!immediate) func.apply(context, args);
+      };
+      var callNow = immediate && !timeout;
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+      if (callNow) func.apply(context, args);
+    };
+  };
+  
 })(jQuery);

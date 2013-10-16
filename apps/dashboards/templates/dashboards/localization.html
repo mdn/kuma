@@ -11,50 +11,44 @@
 {% block content %}
 <section id="content">
 <div class="wrap">
-    <div id="content-main" class="full">
-        <h1>{{ _("Localization Dashboard") }}</h1>
-    </div>
-    <div id="wikiArticle" class="page-content boxed">
+  <div id="content-main" class="full">
+    <article class="dashboard">
+      <h1>{{ _("Localization Dashboard") }}</h1>
+      <section> 
+
+        <h3>{{ _('Filter') }}</h3>
         <form id="revision-filter" method="get">
-            <ul id="dashboard-filter">
-                <li>
-                    {{ _("Locale") }}
-                    <select name="locale" id="dash-locale">
-                        <option value="">{{ _("Select a locale") }}</option>
-                        {% for locale, name in filter_data.locales %}
-                        <option value="{{ locale }}"{{ selected(locale, filters['locale']) }}>{{ name }}</option>
-                        {% endfor %}
-                    </select>
-                </li>
-                <li>
-                    {{ _("Topic") }}
-                    <select name="topic">
-                        <option value="">{{ _("All topics") }}</option>
-                        {% for topic in filter_data.topics %}
-                        <option value="{{ topic }}"{{ selected(topic, filters['topic']) }}>{{ topic }}</option>
-                        {% endfor %}
-                    </select>
-                </li>
-                <li>
-                    {{ _("Localization Flags") }}
-                    <select name="localization_flags">
-                        <option value=""></option>
-                        <option value="inprogress"{{ selected('inprogress', filters['localization_flags']) }}>Localization in Progress</option>
-                    </select>
-                </li>
-                <li>
-                    {{ _("Order by") }}
-                    <select name="orderby">
-                        {% for order in filter_data.orderby_list %}
-                        <option value="{{ order[0] }}">{{ order[1] }}</option>
-                        {% endfor %}
-                    </select>
-                </li>
-                <li>
-                    <button type="submit">{{ _("Filter") }}</button>
-                </li>
-            </ul>
+        
+          <label for="dash-locale">{{ _('Locale') }}:</label>
+          <select name="locale" id="dash-locale">
+            <option value="">{{ _('All Locales') }}</option>
+            {% for code, name in settings.LANGUAGE_CHOICES -%}
+              <option value="{{ code }}" {{ code|ifeq(request.GET.locale, "selected") }}>
+                {{ name }}
+              </option>
+            {%- endfor %}
+          </select>
+          
+          <label for="l10n-dashboard-topic">{{ _('Topic') }}:</label>
+          <input name="topic" id="l10n-dashboard-topic" value="{{ request.GET.topic }}" />
+          
+          <label for="localization-flags">{{ _("Localization Flags") }}:</label>
+          <select name="localization_flags" id="localization-flags">
+            <option value=""></option>
+            <option value="inprogress"{{ selected('inprogress', filters['localization_flags']) }}>Localization in Progress</option>
+          </select>
+          
+          <label for="orderby">{{ _("Order by") }}:</label>
+          <select name="orderby" id="orderby">
+            {% for order in filter_data.orderby_list %}
+              <option value="{{ order[0] }}">{{ order[1] }}</option>
+            {% endfor %}
+          </select>
+          
+          <input type="submit" value="{{ _('Filter') }}" />
+          
         </form>
+        
         <table id="revisions-table">
             <thead>
                 <tr>
@@ -68,7 +62,10 @@
             <tbody>
             </tbody>
         </table>
-    </div>
+        
+      </section>
+    </article>
+  </div>
 </div>
 </section>
 {% endblock %}
@@ -81,7 +78,25 @@ $(function() {
       $localeInput    = $('#dash-locale'),
       currentLocale   = '{{ request.locale }}',
       localeKey       = '{LOCALE}',
-      baseURL         = '/' + localeKey + '/dashboards/fetch_localization_data';
+      baseURL         = '/' + localeKey + '/dashboards/fetch_localization_data',
+      $l10nDashboardTopic = $('#l10n-dashboard-topic');
+
+  // Create the autocomplete for topic
+  $l10nDashboardTopic.mozillaAutocomplete({
+    minLength: 3,
+    labelField: 'label',
+    autocompleteUrl: '{{ url('dashboards.topic_lookup') }}',
+    onSelect: function(item, isSilent) {
+      // Do something upon selection
+      if(!isSilent) loadRecords();
+    },
+    buildRequestData: function(req) {
+      // Should add locale value here
+      req.locale = getLocale();
+      req.topic = req.term;
+      return req;
+    }
+  });
 
   function getLocale() {
     return $localeInput.get(0).value || currentLocale;

@@ -2,14 +2,12 @@
 
   // CKEditor setup method
   var $body = $('body');
-  var setup = function() {};
-  
-  if($body.hasClass('translate')) {
-    setup = function() {
+  var setup = function() {
       var $appBoxes = $('.approved .boxed');
       var $tools = $('div.cke_toolbox');
       var $wikiArt = $('#cke_wikiArticle');
-      var contentTop = $('.ckeditor-container').offset().top;
+      var $container = $('.ckeditor-container');
+      var contentTop = $container.offset().top;
       var fixed = false;
 
       // Switch header and toolbar styles on scroll to keep them on screen
@@ -20,12 +18,12 @@
         if (scrollTop >= contentTop) {
 
           // Need to display or hide the toolbar depending on scroll position
-           if(scrollTop > $('.ckeditor-container').height() + 250) {
-            $tools.css("display", "none");
+           if(scrollTop > $container.height() + contentTop - 200 /* offset to ensure toolbar doesn't reach content bottom */) {
+            $tools.css('display', 'none');
             return; // Cut off at some point
            }
            else {
-            $tools.css("display", "");
+            $tools.css('display', '');
            }
 
            // Fixed position toolbar if scrolled down to the editor
@@ -61,9 +59,7 @@
           }); // Readjust toolbox to fit
         }
       });
-
    };
-  }
 
   // Renders the WYSIWYG editor
   $('#id_content').each(function () {

@@ -69,7 +69,7 @@ Getting up and running
 
 #. Add some hostnames to the end of your hosts file with this shell command::
 
-       echo '192.168.10.55 developer-local.allizom.org mdn-local.mozillademos.org' | sudo tee /etc/hosts
+       echo '192.168.10.55 developer-local.allizom.org mdn-local.mozillademos.org' | sudo tee -a /etc/hosts
 
 #. Everything should be working now, from the host side::
 
