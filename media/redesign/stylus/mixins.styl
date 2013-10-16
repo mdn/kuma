@@ -7,143 +7,180 @@
 */
 
 /* vendorizes a propery */
-vendorize(property, value)
-  -webkit-{property} value
-  -moz-{property} value
-  -ms-{property} value
-  {property} value
+vendorize(property, value) {
+  -webkit-{property}: value;
+  -moz-{property}: value;
+  -ms-{property}: value;
+  {property}: value;
+}
 
-vendorize-value(property, value, more='')
-  {property} unquote('-webkit-'+value+more)
-  {property} unquote('-moz-'+value+more)
-  {property} unquote('-ms-'+value+more)
-  {property} value+more
+vendorize-value(property, value, more='') {
+  {property}: unquote('-webkit-'+value+more);
+  {property}: unquote('-moz-'+value+more);
+  {property}: unquote('-ms-'+value+more);
+  {property}: value+more;
+}
 
 /* prevents spacing of a given element if it's the last child */
-prevent-last-child-spacing(element='*', property='padding')
-  & {element}:last-child
-    {property} 0
+prevent-last-child-spacing(element='*', property='padding') {
+  & {element}:last-child {
+    {property}: 0;
+  }
+}
 
 /* text-decoration none, hover text-decoration underline */
-reverse-link-decoration()
-  a
-    text-decoration none
-    &:hover, &:active, &:focus
-      text-decoration underline
+reverse-link-decoration() {
+  a {
+    text-decoration: none;
+    &:hover, &:active, &:focus {
+      text-decoration: underline;
+    }
+  }
+}
 
 /* generates a background property for header and zones */
-create-gradient-background(color='', use-gradient=false)
-  if use-gradient
-    background-image url(media-url-dir + 'header-background.png'), url(media-url-dir + 'mdn-header-gradient.png')
-    background-repeat repeat, repeat-x
-  else
-    background-image url(media-url-dir + 'header-background.png')
-    background-repeat repeat
-  background-position 0 0, 0 0, 0 0
-  if color
-    background-color color
+create-gradient-background(color='', use-gradient=false) {
+  if use-gradient {
+    background-image: url(media-url-dir + 'header-background.png'), url(media-url-dir + 'mdn-header-gradient.png');
+    background-repeat: repeat, repeat-x;
+  } else {
+    background-image: url(media-url-dir + 'header-background.png');
+    background-repeat: repeat;
+  }
+  background-position: 0 0, 0 0, 0 0;
+  if color {
+    background-color: color;
+  }
+}
 
-create-home-gradient-background(color)
-  create-gradient-background(color)
-  background-image url(media-url-dir + 'header-background.png'), url(media-url-dir + 'blueprint.png'), url(media-url-dir + 'mdn-header-gradient.png')
-  background-repeat repeat, repeat, repeat-x
+create-home-gradient-background(color) {
+  create-gradient-background(color);
+  background-image: url(media-url-dir + 'header-background.png'), url(media-url-dir + 'blueprint.png'), url(media-url-dir + 'mdn-header-gradient.png');
+  background-repeat: repeat, repeat, repeat-x;
+}
 
 /* generates a cross-browser gradient */
-create-gradient(start-color, end-color, direction=false)
-  if direction
-    vendorize-value(background, linear-gradient, '(' + direction + ', ' + start-color + ', ' + end-color + ')')
-  else
-    vendorize-value(background, linear-gradient, '(' + start-color + ', ' + end-color + ')')
-  filter unquote("progid:DXImageTransform.Microsoft.gradient(startColorstr='" + start-color + "', endColorstr='" + end-color + "', GradientType=1)") /* IE6-9 */
+create-gradient(start-color, end-color, direction=false) {
+  if direction {
+    vendorize-value(background, linear-gradient, '(' + direction + ', ' + start-color + ', ' + end-color + ')');
+  } else {
+    vendorize-value(background, linear-gradient, '(' + start-color + ', ' + end-color + ')');
+  }
+  filter: unquote("progid:DXImageTransform.Microsoft.gradient(startColorstr='" + start-color + "', endColorstr='" + end-color + "', GradientType=1)"); /* IE6-9 */
+}
 
 /* generates the essential "before" and "after" code for pseudo-arrows */
-generate-arrow()
-  &:before, &:after
-    content ' '
-    height 0
-    position absolute
-    width 0
-    border 10px solid transparent
+generate-arrow() {
+  &:before, &:after {
+    content: ' ';
+    height: 0;
+    position: absolute;
+    width: 0;
+    border: 10px solid transparent;
+  }
+}
 
 /* use this in the case of having to override styles from old template :( */
-compat-important(prop, value)
-  {prop}: value !important
+compat-important(prop, value) {
+  {prop}: value !important;
+}
 
 /* Used for style which are only present to override other styles -- these will be deleted once legacy design is gone */
-compat-only(prop, value, more-selector='')
-  compat-important(prop, value)
+compat-only(prop, value, more-selector='') {
+  compat-important(prop, value);
 
-  if more-selector
-    & {more-selector}
-      compat-important(prop, value)
+  if more-selector {
+    & {more-selector} {
+      compat-important(prop, value);
+    }
+  }
+}
 
 /* Used to denote an old IE style */
-old-ie(prop, value, important=false)
-  {prop} value (important ? unquote('!important') : '')
+old-ie(prop, value, important=false) {
+  {prop}: value (important ? unquote('!important') : '');
+}
 
 /* Used to create sliding animations */
-slider(duration=default-animation-duration, maximum-height=10000px)
-  overflow-y hidden
-  max-height maximum-height
-  vendorize(transition-property, all)
-  vendorize(transition-duration, duration)
-  vendorize(transition-timing-function, slide-timing-function)
+slider(duration=default-animation-duration, maximum-height=10000px) {
+  overflow-y: hidden;
+  max-height: maximum-height;
+  vendorize(transition-property, all);
+  vendorize(transition-duration, duration);
+  vendorize(transition-timing-function, slide-timing-function);
 
-  &.closed
-    max-height 0
+  &.closed {
+    max-height: 0;
+  }
+}
 
 /* Sets the base styles for messages (review, warning, error, notice, etc.) */
-set-message-base()
-  compat-only(border-width, 5px)
-  compat-only(border-style, solid)
-  padding (grid-spacing / 2)
-  margin-bottom grid-spacing
-  font-size smaller-font-size
+set-message-base() {
+  compat-only(border-width, 5px);
+  compat-only(border-style, solid);
+  padding: (grid-spacing / 2);
+  margin-bottom: grid-spacing;
+  font-size: smaller-font-size;
 
-  & *:last-child
-    margin-bottom 0
-    padding-bottom 0
+  & *:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+}
 
 /* Enables the TOC toggle for small screens */
-enable-toc-toggle()
-  #toc
-    padding (grid-spacing / 2) grid-spacing
+enable-toc-toggle() {
+  #toc {
+    padding: (grid-spacing / 2) grid-spacing;
 
-    .toggler
-      pointer-events auto
-      color link-color
+    .toggler {
+      pointer-events: auto;
+      color: link-color;
 
-      i
-        display inline-block
+      i {
+        display: inline-block;
+      }
+    }
+  }
+}
 
 /* removes the implied "<main>" spacing so page is more customizable */
-remove-main-spacing()
-  main > .center
-    width auto
-    padding 0
-    margin 0
-    max-width none
+remove-main-spacing() {
+  main > .center {
+    width: auto;
+    padding: 0;
+    margin: 0;
+    max-width: none;
+  }
+}
 
-add-main-space()
-  @extend .center
-  
+add-main-space() {
+  @extend .center;
+}
 
 /* Overrides the navigation menu color - zones and homepage */
-override-main-nav-color(hex)
-  #main-nav > ul > li > a, .user-state a
-    compat-important(color, hex)
+override-main-nav-color(hex) {
+  #main-nav > ul > li > a, .user-state a {
+    compat-important(color, hex);
+  }
+}
 
 /* Sets an input tag's placeholder styles */
-set-placeholder-style(prop, value)
-  &::-webkit-input-placeholder
-    {prop} value
-  &::-moz-input-placeholder
-    {prop} value
+set-placeholder-style(prop, value) {
+  &::-webkit-input-placeholder {
+    {prop}: value;
+  }
+  &::-moz-input-placeholder {
+    {prop}: value;
+  }
+}
 
 /* Uses the white logo instead of color logo */
-use-white-logo()
-  #main-header .logo
-      background url(media-url-dir + 'mdn_logo-wordmark-full_white.svg') 0 0 no-repeat
+use-white-logo() {
+  #main-header .logo {
+      background: url(media-url-dir + 'mdn_logo-wordmark-full_white.svg') 0 0 no-repeat;
+  }
+}
 
 
 /*
@@ -152,103 +189,125 @@ use-white-logo()
   These are very "general" and non-specific on purpose
   There's a good chance these classes wont be used directly in HTML
 */
-.clear
-  &:before, &:after
-    content "\0020"
-    display block
-    height 0
-    overflow hidden
+.clear {
+  &:before, &:after {
+    content: "\0020";
+    display: block;
+    height: 0;
+    overflow: hidden;
+  }
 
-  &:after
-    clear both
+  &:after {
+    clear: both;
+  }
+}
 
-.offscreen
-  position absolute
-  left -99999px
-  
-.text-offscreen
-  text-indent -9999px
-  overflow hidden
+.offscreen {
+  position: absolute;
+  left: -99999px;
+}
 
-.title
-  font-weight bold
-  text-transform uppercase
-  color text-color
-  text-decoration none
-  display block
+.text-offscreen {
+  text-indent: -9999px;
+  overflow: hidden;
+}
 
-.smaller
-  font-size smaller-font-size
+.title {
+  font-weight: bold;
+  text-transform: uppercase;
+  color: text-color;
+  text-decoration: none;
+  display: block;
+}
 
-.larger
-  font-size larger-font-size
+.smaller {
+  font-size: smaller-font-size;
+}
 
-.hidden
-  display none
+.larger {
+  font-size: larger-font-size;
+}
 
-.grid-padding
-  padding grid-spacing
+.hidden {
+  display: none;
+}
 
-.disabled
-  pointer-events none
-  cursor default
+.grid-padding {
+  padding: grid-spacing;
+}
 
-.reset-font
-  font-family site-font-family
+.disabled {
+  pointer-events: none;
+  cursor: default;
+}
 
-.heading-1
-  font-size 48px
-  letter-spacing -2px
+.reset-font {
+  font-family: site-font-family;
+}
 
-.heading-2
-  font-size 32px
-  letter-spacing -1px
+.heading-1 {
+  font-size: 48px;
+  letter-spacing: -2px;
+}
 
-.button
-  text-decoration none
-  display inline-block
-  compat-important(background-color, button-background)
-  compat-important(color, button-color)
-  compat-important(text-transform, uppercase)
-  compat-important(padding, 5px 11px)
-  compat-important(border-radius, 4px)
-  vendorize(box-shadow, inset 0 -1px button-shadow-color)
-  compat-only(background-image, none)
-  compat-only(font-family, site-font-family)
-  compat-only(font-size, base-font-size)
-  compat-only(letter-spacing, normal)
+.heading-2 {
+  font-size: 32px;
+  letter-spacing: -1px;
+}
 
-  &.only-icon
-    {selector-icon}
-      margin-left 0
-      margin-top -1px
+.button {
+  text-decoration: none;
+  display: inline-block;
+  compat-important(background-color, button-background);
+  compat-important(color, button-color);
+  compat-important(text-transform, uppercase);
+  compat-important(padding, 5px 11px);
+  compat-important(border-radius, 4px);
+  vendorize(box-shadow, inset 0 -1px button-shadow-color);
+  compat-only(background-image, none);
+  compat-only(font-family, site-font-family);
+  compat-only(font-size, base-font-size);
+  compat-only(letter-spacing, normal);
 
-    span
-      @extend .offscreen
+  &.only-icon {
+    {selector-icon} {
+      margin-left: 0;
+      margin-top: -1px;
+    }
 
-  &.neutral, &.negative, &.positive
-    compat-important(color, #fff)
+    span {
+      @extend .offscreen;
+    }
+  }
 
-  &.neutral
-    compat-important(background-color, #0095dd)
-    vendorize(box-shadow, inset 0 -1px #00539f)
+  &.neutral, &.negative, &.positive {
+    compat-important(color, #fff);
+  }
 
-  &.negative
-    compat-important(background-color, #ea3b28)
-    vendorize(box-shadow, inset 0 -1px #c13832)
+  &.neutral {
+    compat-important(background-color, #0095dd);
+    vendorize(box-shadow, inset 0 -1px #00539f);
+  }
 
-  &.positive
-    compat-important(background-color, #70a300)
-    vendorize(box-shadow, inset 0 -1px #486900)
+  &.negative {
+    compat-important(background-color, #ea3b28);
+    vendorize(box-shadow, inset 0 -1px #c13832);
+  }
 
-.big-search
-  @extend .larger
-  display block
-  margin 0 auto
-  background rgba(255, 255, 255, 0.2)
-  border 0
-  border-radius 3px
-  font-family 'Open Sans Light', sans-serif
-  letter-spacing -1px
-  width 60%
-  
+  &.positive {
+    compat-important(background-color, #70a300);
+    vendorize(box-shadow, inset 0 -1px #486900);
+  }
+}
+
+.big-search {
+  @extend .larger;
+  display: block;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.2);
+  border: 0;
+  border-radius: 3px;
+  font-family: 'Open Sans Light', sans-serif;
+  letter-spacing: -1px;
+  width: 60%;
+}

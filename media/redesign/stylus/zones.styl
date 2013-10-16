@@ -2,174 +2,223 @@
 @import 'mixins'
 @import 'grid'
 
-.zone
-  create-gradient-background('', true)
-  use-white-logo()
+.zone {
+  create-gradient-background('', true);
+  use-white-logo();
 
-  #main-header
-    border-bottom-color rgba(255, 255, 255, 0.2)
+  #main-header {
+    border-bottom-color: rgba(255, 255, 255, 0.2);
+  }
 
-  override-main-nav-color(#fff)
+  override-main-nav-color(#fff);
 
-  .search-wrap
-    background-color rgba(255, 255, 255, 0.2)
+  .search-wrap {
+    background-color: rgba(255, 255, 255, 0.2);
 
-    input, i
-      color #fff
-      set-placeholder-style(color, #fff)
+    input, i {
+      color: #fff;
+      set-placeholder-style(color, #fff);
+    }
+  }
 
-  .user-state
-    a, a:hover, a:focus, a:visited
-      color #fff
+  .user-state {
+    a, a:hover, a:focus, a:visited {
+      color: #fff;
+    }
+  }
 
   /* zone content area needs to be adjusted for zone pages */
-  remove-main-spacing()
-  main
-    background transparent
+  remove-main-spacing();
+  main {
+    background: transparent;
+  }
 
-  .wiki-main-content
-    padding-top first-content-top-padding !important
+  .wiki-main-content {
+    padding-top: first-content-top-padding !important;
+  }
+}
 
-.zone-landing
+.zone-landing {
 
-  main
-    overflow-x hidden
+  main {
+    overflow-x: hidden;
+  }
 
-  h1
-    color #fff
-    @extend .column-6
+  h1 {
+    color: #fff;
+    @extend .column-6;
+  }
 
-  .zone-landing-header-preview
-    margin-top grid-spacing
+  .zone-landing-header-preview {
+    margin-top: grid-spacing;
 
-    .column-strip
-      position relative
+    .column-strip {
+      position: relative;
 
-      .zone-landing-header-preview-base
-        position absolute
-        width 100%
-        z-index 2
+      .zone-landing-header-preview-base {
+        position: absolute;
+        width: 100%;
+        z-index: 2;
+      }
 
-      .zone-landing-header-spacing
-        float left
+      .zone-landing-header-spacing {
+        float: left;
+      }
+    }
+  }
 
-  .crumbs
-    color #fff
+  .crumbs {
+    color: #fff;
 
-    a
-      old-ie(color, #fff)
-      color rgba(255, 255, 255, 0.7)
+    a {
+      old-ie(color, #fff);
+      color: rgba(255, 255, 255, 0.7);
+    }
+  }
 
-  .zone-subnav-container
+  .zone-subnav-container {
     /* nada */
+  }
 
-  .summary
-    display none
+  .summary {
+    display: none;
+  }
 
-  h3.title
-    font-size base-font-size
-    margin 6px 0 0 0
+  h3.title {
+    font-size: base-font-size;
+    margin: 6px 0 0 0;
+  }
+}
 
-.zone-landing-header
+.zone-landing-header {
   /* create-gradient-background(#0095dd) */
-  color #fff
-  position relative
-  
-  > .center
-    padding-top first-content-top-padding
+  color: #fff;
+  position: relative;
 
-  .masthead-text
-    p
-      @extend .larger
-      font-weight light-font-weight
-      margin-right 50px
+  > .center {
+    padding-top: first-content-top-padding;
+  }
 
-  .zone-image
-    position absolute
-    right -140px
-    top 100px
-    display block
-    width 468px
-    bottom 0
+  .masthead-text {
+    p {
+      @extend .larger;
+      font-weight: light-font-weight;
+      margin-right: 50px;
+    }
+  }
 
-  a.button
-    compat-important(color, #fff)
-    old-ie(background-color, #0095dd, true) /* old ie */
-    compat-important(background-color, rgba(0, 0, 0, 0.1))
-    vendorize(box-shadow, inset 0 -1px rgba(0, 0, 0, .1))
+  .zone-image {
+    position: absolute;
+    right: -140px;
+    top: 100px;
+    display: block;
+    width: 468px;
+    bottom: 0;
+  }
 
-.zone-landing-lists li
-  padding list-item-spacing 0
-  prevent-last-child-spacing(padding-bottom)
+  a.button {
+    compat-important(color, #fff);
+    old-ie(background-color, #0095dd, true); /* old ie */
+    compat-important(background-color, rgba(0, 0, 0, 0.1));
+    vendorize(box-shadow, inset 0 -1px rgba(0, 0, 0, .1));
+  }
+}
+
+.zone-landing-lists li {
+  padding: list-item-spacing 0;
+  prevent-last-child-spacing(padding-bottom);
+}
 
 
 
 /*  Basic zone article pages */
-.zone-article-header
-  padding grid-spacing 0
-  overflow hidden
+.zone-article-header {
+  padding: grid-spacing 0;
+  overflow: hidden;
 
-  .zone-title
-    @extend .heading-2
+  .zone-title {
+    @extend .heading-2;
 
-    a
-      color #fff
-      font-style italic
+    a {
+      color: #fff;
+      font-style: italic;
+    }
+  }
 
-  .zone-image
-    position absolute
-    right 0
-    top 0
-    display block
-    width 200px
-    height 400px
-    background-size contain
+  .zone-image {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: block;
+    width: 200px;
+    height: 400px;
+    background-size: contain;
+  }
+}
 
-.zone-content
-  padding-top 38px
+.zone-content {
+  padding-top: 38px;
   reverse-link-decoration()
+}
 
-.zone-subnav-container
-  background #fff
-  margin-bottom grid-spacing
+.zone-subnav-container {
+  background: #fff;
+  margin-bottom: grid-spacing;
+}
 
-.zone-callout
-  position relative
-  padding grid-spacing
-  background #f4f7f8
-  margin (grid-spacing + (grid-spacing / 2)) 0
+.zone-callout {
+  position: relative;
+  padding: grid-spacing;
+  background: #f4f7f8;
+  margin: (grid-spacing + (grid-spacing / 2)) 0;
 
-  table
-    width 100%
-  td
-    vertical-align bottom
-    padding-right grid-spacing
- 
+  table {
+    width: 100%;
+  }
+  td {
+    vertical-align: bottom;
+    padding-right: grid-spacing;
+  }
+}
 
-    
-@media media-query-tablet
-  .zone-landing
-      .zone-subnav-container
+
+
+@media media-query-tablet {
+  .zone-landing {
+      .zone-subnav-container {
         margin-top 0
+      }
 
-      .zone-landing-header-preview .column-strip, .zone-landing-header-preview .masthead-text
-        width get-grid-dimension(media-query-tablet, 6)
+      .zone-landing-header-preview .column-strip, .zone-landing-header-preview .masthead-text {
+        width: get-grid-dimension(media-query-tablet, 6);
 
-        .zone-landing-header-preview-base
-          position static
+        .zone-landing-header-preview-base {
+          position: static;
+        }
+      }
 
-      .zone-image
-        opacity 0.2
+      .zone-image {
+        opacity: 0.2;
+      }
+  }
 
-  .zone-landing-header
+  .zone-landing-header {
 
-    .masthead-text
-      p
-        margin-right 0
-    
+    .masthead-text {
+      p {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
 /* right to left */
-.html-rtl
-  .zone-article-header
-    .zone-image
-      right auto
-      left 0
+.html-rtl {
+  .zone-article-header {
+    .zone-image {
+      right: auto;
+      left: 0;
+    }
+  }
+}
+

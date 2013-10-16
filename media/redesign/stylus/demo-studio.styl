@@ -2,55 +2,70 @@
 @import 'mixins'
 @import 'grid'
 
-html
-  background url('/media/img/bg-content.png') repeat fixed 0% 0% #f6f6f1
+html {
+  background: url('/media/img/bg-content.png') repeat fixed 0% 0% #f6f6f1;
+}
 
-.section-demos
-  background #c0c4c8
-  min-width 0
+.section-demos {
+  background: #c0c4c8;
+  min-width: 0;
 
-  use-white-logo()
+  use-white-logo();
 
-  main
-    background transparent
+  main {
+    background: transparent;
+  }
 
-  &:not(.devderby) 
-    override-main-nav-color(#fff)
+  &:not(.devderby) {
+    override-main-nav-color(#fff);
 
-    #main-header
+    #main-header {
 
-      .search-wrap
-        background-color rgba(255, 255, 255, 0.2)
+      .search-wrap {
+        background-color: rgba(255, 255, 255, 0.2);
 
-        &, input, .search-trigger
-          color #fff !important
+        &, input, .search-trigger {
+          color: #fff !important;
+        }
+      }
+    }
+  }
 
 
   /* dev derby landing - legacy offsets */
-  &.devderby.landing
+  &.devderby.landing {
 
-    main 
-      /* background #eaeff2 */
+    main {
+      /* background: #eaeff2; */
 
-      .center
-        max-width 980px
+      .center {
+        max-width: 980px;
+      }
+    }
 
-    .main, .sub
-      float left
+    .main, .sub {
+      float: left;
+    }
 
-    .main
-      @extend .column-main
+    .main {
+      @extend .column-main;
+    }
 
-    .sub
-      @extend .column-strip
+    .sub {
+      @extend .column-strip;
+    }
 
-    #challenge-prizes
-      padding 0
-      
+    #challenge-prizes {
+      padding: 0;
+    }
+  }
 
   /* remove ugly button styles */
-  .button, button
-    compat-important(box-shadow, none)
+  .button, button {
+    compat-important(box-shadow, none);
+  }
+}
 
-#demostudio.landing, #demostudio.detail
-  compat-important(background-position, center 0px)
+#demostudio.landing, #demostudio.detail {
+  compat-important(background-position, center 0px);
+}
