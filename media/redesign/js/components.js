@@ -248,7 +248,7 @@
       }
 
       function setIcon($tog, $li) {
-        $tog.find('i').attr('class', 'icon-caret-'  + (getState($li) ? 'up' : 'down'));
+        $tog.find('i').attr('class', 'icon-caret-'  + (getState($li) ? 'right' : 'down'));
       }
 
       function getState($li) {
