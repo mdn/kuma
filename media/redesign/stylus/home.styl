@@ -31,7 +31,7 @@
   /* masthead */
   .home-masthead
 
-    h1, input
+    h1
       width 60%
 
     h1
@@ -47,16 +47,8 @@
       padding (grid-spacing * 2) 0
 
       input
-        @extend .larger
-        display block
-        margin 0 auto
-        background rgba(255, 255, 255, 0.2)
+        @extend .big-search
         color #fff
-        border 0
-        border-radius 3px
-        font-family 'Open Sans Light', sans-serif
-        letter-spacing -1px
-
         set-placeholder-style(color, #fff)
 
   .home-features
