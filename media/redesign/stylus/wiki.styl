@@ -5,516 +5,640 @@
 
 
 /* wiki classes to be extended */
-.wiki-block
-  padding-top (grid-spacing * 2)
-  margin-top (grid-spacing * 2)
-  border-top 1px solid button-background
-  padding-left 0
-  padding-right 0
+.wiki-block {
+  padding-top: (grid-spacing * 2);
+  margin-top: (grid-spacing * 2);
+  border-top: 1px solid button-background;
+  padding-left: 0;
+  padding-right: 0;
+}
 
 
 /* general wiki section */
-#content-main
-  compat-only(padding, 0)
-  compat-only(width, auto)
+#content-main {
+  compat-only(padding, 0);
+  compat-only(width, auto);
+}
 
-.wiki-main-content
-  background #fff
+.wiki-main-content {
+  background: #fff;
+}
 
 /* wiki article display */
-article
-  position relative
-  
-  a
-    text-decoration underline
+article {
+  position: relative;
 
-    &:hover, &:focus
-      text-decoration none
+  a {
+    text-decoration: underline;
 
-.document-head
-  position relative
-  clear both
+    &:hover, &:focus {
+      text-decoration: none;
+    }
+  }
+}
 
-.redirected-from
-  @extend .smaller
-  margin-top -(grid-spacing)
-  font-style italic
-  opacity 0.7
+.document-head {
+  position: relative;
+  clear: both;
+}
 
-.crumbs
-  @extend .smaller
-  margin-bottom (2 * grid-spacing)
-  float left
-  width 70%
+.redirected-from {
+  @extend .smaller;
+  margin-top: -(grid-spacing);
+  font-style: italic;
+  opacity: 0.7;
+}
 
-  li
-    display inline-block
-    margin-right (grid-spacing / 2)
+.crumbs {
+  @extend .smaller;
+  margin-bottom: (2 * grid-spacing);
+  float: left;
+  width: 70%;
 
-  a
-    display block
+  li {
+    display: inline-block;
+    margin-right: (grid-spacing / 2);
+  }
 
-    &:after
-      display inline-block
-      font-family FontAwesome
-      text-decoration none
-      content "\f054"
-      color #c1c2c4
-      margin-left 4px
-      font-size 70%
+  a {
+    display: block;
 
-  reverse-link-decoration()
+    &:after {
+      display: inline-block;
+      font-family: FontAwesome;
+      text-decoration: none;
+      content: "\f054";
+      color: #c1c2c4;
+      margin-left: 4px;
+      font-size: 70%;
+    }
+  }
 
-.page-buttons, #page-buttons
-  float right
-  text-align right
-  compat-only(width, auto)
-  compat-only(top, auto)
+  reverse-link-decoration();
+}
 
-  > li
-    margin-left (grid-spacing / 2)
-    display inline-block
+.page-buttons, #page-buttons {
+  float: right;
+  text-align: right;
+  compat-only(width, auto);
+  compat-only(top, auto);
 
-    a, button, input[type='submit'], input[type='button']
-      compat-important(font-size, smaller-font-size)
-      compat-only(font-family, site-font-family)
-      compat-only(letter-spacing, normal)
+  > li {
+    margin-left: (grid-spacing / 2);
+    display: inline-block;
 
-      &.disabled
-        opacity 0.8
+    a, button, input[type='submit'], input[type='button'] {
+      compat-important(font-size, smaller-font-size);
+      compat-only(font-family, site-font-family);
+      compat-only(letter-spacing, normal);
 
-    {selector-icon}
-      font-size 16px
+      &.disabled {
+        opacity: 0.8;
+      }
+    }
 
-  .submenu
-    component-submenu-method(400px, 2, button-background, button-shadow-color)
-    top 40px
-    right 0
-    z-index 3
-    border-top 1px solid button-shadow-color
+    {selector-icon} {
+      font-size: 16px;
+    }
+  }
 
-    .submenu-column
-      float left
+  .submenu {
+    component-submenu-method(400px, 2, button-background, button-shadow-color);
+    top: 40px;
+    right: 0;
+    z-index: 3;
+    border-top: 1px solid button-shadow-color;
 
-    &:before
-      top -18px
-      right 10px
+    .submenu-column {
+      float: left;
+    }
 
-    &:after
-      top -20px
-      right 10px
+    &:before {
+      top: -18px;
+      right: 10px;
+    }
+
+    &:after {
+      top: -20px;
+      right: 10px;
+    }
+  }
+}
 
 
-.summary
-  background light-background-color
-  font-weight bold
-  padding grid-spacing
-  margin-bottom grid-spacing
+.summary {
+  background: light-background-color;
+  font-weight: bold;
+  padding: grid-spacing;
+  margin-bottom: grid-spacing;
 
-  prevent-last-child-spacing(p, margin-bottom)
+  prevent-last-child-spacing(p, margin-bottom);
+}
 
-#page-attachments
-  @extend .wiki-block
-  compat-only(background, #fff)
+#page-attachments {
+  @extend .wiki-block;
+  compat-only(background, #fff);
+}
 
-#page-attachments-button
-  compat-only(font-size, smaller-font-size)
-  compat-only(font-family, site-font-family)
-  compat-only(letter-spacing, normal)
-  
-.contributors
-  @extend .smaller
-  color #777
+#page-attachments-button {
+  compat-only(font-size, smaller-font-size);
+  compat-only(font-family, site-font-family);
+  compat-only(letter-spacing, normal);
+}
 
-#wiki-right
-  min-height 1px /* ensures that when TOC becomes fixed, the column has width */
+.contributors {
+  @extend .smaller;
+  color: #777;
+}
 
-#toc
-  compat-only(margin-left, 0)
-  compat-only(font-size, base-font-size)
-  compat-only(margin-left, 0, 'ol ol, ul ul')
+#wiki-right {
+  min-height: 1px; /* ensures that when TOC becomes fixed, the column has width */
+}
 
-  &.fixed
-    position fixed
-    top 0
-    z-index 2
-    overflow-y auto
+#toc {
+  compat-only(margin-left, 0);
+  compat-only(font-size, base-font-size);
+  compat-only(margin-left, 0, 'ol ol, ul ul');
 
-  .toggler
-    pointer-events none
-    color inherit
+  &.fixed {
+    position: fixed;
+    top: 0;
+    z-index: 2;
+    overflow-y: auto;
+  }
 
-    i
-      display none
+  .toggler {
+    pointer-events: none;
+    color: inherit;
 
-  li
-    compat-important(padding-top, (grid-spacing / 2))
+    i {
+      display: none;
+    }
+  }
 
-  .title
-    compat-only(margin-bottom, 0)
+  li {
+    compat-important(padding-top, (grid-spacing / 2));
+  }
 
-#kumascript-errors
-  ul
-    list-style-type none
-    padding-left 0 !important
+  .title {
+    compat-only(margin-bottom, 0);
+  }
+}
+
+#kumascript-errors {
+  ul {
+    list-style-type: none;
+    padding-left: 0 !important;
+  }
+}
 
 
 /* coming from a search - heading links */
-.from-search
-  padding-left (grid-spacing * 2)
+.from-search {
+  padding-left: (grid-spacing * 2);
 
-  h1
-    display inline-block
+  h1 {
+    display: inline-block;
+  }
+}
 
-.from-search-previous, .from-search-next
-  @extend .button
-  position absolute
-  top (grid-spacing * .75) + 2px
-  display block
-  compat-only(font-size, 24px)
+.from-search-previous, .from-search-next {
+  @extend .button;
+  position: absolute;
+  top: (grid-spacing * .75) + 2px;
+  display: block;
+  compat-only(font-size, 24px);
+}
 
-.from-search-previous
-  left 0
+.from-search-previous {
+  left: 0;
+}
 
-.from-search-next
-  right 0
+.from-search-next {
+  right: 0;
+}
 
-.from-search-navigate
-  @extend .larger
-  position relative
-  color #ced1d2
-  display inline-block
-  height 38px
-  width grid-spacing
-  top 4px
+.from-search-navigate {
+  @extend .larger;
+  position: relative;
+  color: #ced1d2;
+  display: inline-block;
+  height: 38px;
+  width: grid-spacing;
+  top: 4px;
+}
 
-.from-search-navigate-up, .from-search-navigate-down
-  @extend .smaller
-  position absolute
-  left 0
+.from-search-navigate-up, .from-search-navigate-down {
+  @extend .smaller;
+  position: absolute;
+  left: 0;
+}
 
-.from-search-navigate-up
-  top 0
+.from-search-navigate-up {
+  top: 0;
+}
 
-.from-search-navigate-down
-  bottom 0
+.from-search-navigate-down {
+  bottom: 0;
+}
 
-.from-search-toc
-  @extend .smaller
-  border 1px solid button-shadow-color
-  width 200px
-  position absolute
-  left 66px
-  top 0
-  z-index 2
-  background button-background
-  padding (grid-spacing / 2)
-  color #888
+.from-search-toc {
+  @extend .smaller;
+  border: 1px solid button-shadow-color;
+  width: 200px;
+  position: absolute;
+  left: 66px;
+  top: 0;
+  z-index: 2;
+  background: button-background;
+  padding: (grid-spacing / 2);
+  color: #888;
 
-  ol
-    list-style-type decimal
-    padding-left grid-spacing
+  ol {
+    list-style-type: decimal;
+    padding-left: grid-spacing;
+  }
 
-  li
-    padding 4px 0
+  li {
+    padding: 4px 0;
+  }
 
-  a.current
-    color #888
-    pointer-events none
-    cursor default
+  a.current {
+    color: #888;
+    pointer-events: none;
+    cursor: default;
+  }
+}
 
 
 /* notices */
-.notice
-  set-message-base()
+.notice {
+  set-message-base();
 
-  compat-important(border-width, 2px)
+  compat-important(border-width, 2px);
+}
 
-.reviews
-  set-message-base()
-  @extend .smaller
+.reviews {
+  set-message-base();
+  @extend .smaller;
 
-  background #fbf8e9
-  border-color #f9f3d9
+  background: #fbf8e9;
+  border-color: #f9f3d9;
 
-  p
-    margin 0
+  p {
+    margin: 0;
+  }
 
-  li
-    padding-top list-item-spacing
+  li {
+    padding-top: list-item-spacing;
+  }
 
-  button
-    compat-important(font-size, smaller-font-size)
+  button {
+    compat-important(font-size, smaller-font-size);
+  }
+}
 
-div.bug > *:last-child, div.warning > *:last-child
-  compat-important(padding-left, inherit)
+div.bug > *:last-child, div.warning > *:last-child {
+  compat-important(padding-left, inherit);
+}
 
-.warning
-  set-message-base()
-  @extend .smaller
+.warning {
+  set-message-base();
+  @extend .smaller;
 
-  background rgba(193, 56, 50, 0.3)
-  compat-important(border-color, rgba(193, 56, 50, 0.1))
-  compat-only(color, text-color)
+  background: rgba(193, 56, 50, 0.3);
+  compat-important(border-color, rgba(193, 56, 50, 0.1));
+  compat-only(color, text-color);
 
-  pre
-    padding (grid-spacing / 2) !important
-    background none repeat scroll 0 0 rgba(255, 255, 255, 0.7) !important
+  pre {
+    padding: (grid-spacing / 2) !important;
+    background: none repeat scroll 0 0 rgba(255, 255, 255, 0.7) !important;
+  }
+}
 
 /* tag and file icons under the TOC */
-.tag-attach-list
-  margin-top grid-spacing
-  position relative
+.tag-attach-list {
+  margin-top: grid-spacing;
+  position: relative;
 
-  {selector-icon}
-    left (grid-spacing / 2)
-    position absolute
-    font-weight bold
+  {selector-icon} {
+    left: (grid-spacing / 2);
+    position: absolute;
+    font-weight: bold;
+  }
 
-  ul, > a
-    @extend .smaller
-    margin-left 40px
-    display block
+  ul, > a {
+    @extend .smaller;
+    margin-left: 40px;
+    display: block;
+  }
 
-  > a
-    text-decoration none
-    &:hover
-      text-decoration underline
+  > a {
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
 
-.tags
-  li
-    display inline-block
-    margin-bottom 7px
+.tags {
+  li {
+    display: inline-block;
+    margin-bottom: 7px;
+  }
+}
 
-.tags a, .tagit li
-  @extend .smaller
-  padding 1px 4px
-  border 1px solid #cee9f9 !important /* overrides plugin selector */
-  text-decoration none
-  border-radius 4px
-  background light-background-color !important /* overrides plugin selector */
+.tags a, .tagit li {
+  @extend .smaller;
+  padding: 1px 4px;
+  border: 1px solid #cee9f9 !important; /* overrides plugin selector */
+  text-decoration: none;
+  border-radius: 4px;
+  background: light-background-color !important; /* overrides plugin selector */
 
-  .close
-    color #cee9f9 !important /* overrides plugin selector */
+  .close {
+    color: #cee9f9 !important; /* overrides plugin selector */
+  }
+}
 
-.tag-list li
-  margin-right 6px
-  compat-only(margin-right, 6px)
+.tag-list li {
+  margin-right: 6px;
+  compat-only(margin-right, 6px);
+}
 
-.tagit li
-  font-size base-font-size
+.tagit li {
+  font-size: base-font-size;
+}
 
-.tagit, .tagit-new
-  border 0 !important /* overrides plugin selector */
+.tagit, .tagit-new {
+  border: 0 !important; /* overrides plugin selector */
+}
 
 /* quick links */
-.quick-links
-  @extend .smaller
-  position relative
-  margin-bottom grid-spacing
+.quick-links {
+  @extend .smaller;
+  position: relative;
+  margin-bottom: grid-spacing;
 
-  li
-    position relative
-    padding-top list-item-spacing
+  li {
+    position: relative;
+    padding-top: list-item-spacing;
+  }
 
-  li li
-    padding-left 20px
+  li li {
+    padding-left: 20px;
+  }
+}
 
-.quick-links a, #quick-links-toggle
-  display block
-  position relative
-  padding-left 20px
-  color inherit
+.quick-links a, #quick-links-toggle {
+  display: block;
+  position: relative;
+  padding-left: 20px;
+  color: inherit;
+}
 
-.quick-links {selector-icon}, #quick-links-toggle {selector-icon}
-  font-size 14px
-  position absolute
-  left -6px
-  top 1px
-    
-  p, div /* don't allow empty paragraphs by CKEditor */
-    display none
+.quick-links {selector-icon}, #quick-links-toggle {selector-icon} {
+  font-size: 14px;
+  position: absolute;
+  left: -6px;
+  top: 1px;
 
-  reverse-link-decoration()
+  /* don't allow empty paragraphs by CKEditor */
+  p, div {
+    display: none;
+  }
+
+  reverse-link-decoration();
+}
 
 /* adjustments to columns based on show/hide and media query */
-#wiki-column-container.wiki-right-closed #wiki-content, #wiki-column-container.wiki-left-closed #wiki-content
-  @extend .column-9
+#wiki-column-container.wiki-right-closed #wiki-content, #wiki-column-container.wiki-left-closed #wiki-content {
+  @extend .column-9;
+}
 
-#wiki-column-container.wiki-right-closed.wiki-left-closed  #wiki-content
-  @extend .column-all
-  float none
+#wiki-column-container.wiki-right-closed.wiki-left-closed  #wiki-content {
+  @extend .column-all;
+  float: none;
+}
 
-#wiki-column-container.wiki-right-closed #wiki-content
-  margin-right 0
+#wiki-column-container.wiki-right-closed #wiki-content {
+  margin-right: 0;
+}
 
-#wiki-column-container.wiki-left-closed #wiki-content
-  margin-left 0
+#wiki-column-container.wiki-left-closed #wiki-content {
+  margin-left: 0;
+}
 
 /* wiki new and edit pages */
-.page-meta section, #article-head
-  compat-only(background, none)
+.page-meta section, #article-head {
+  compat-only(background, none);
+}
 
-#page-tags, #page-comment
-  @extend .wiki-block
+#page-tags, #page-comment {
+  @extend .wiki-block;
+}
 
-.right-icons
-  margin-left 0 !important
-  margin-right 10px !important;
+.right-icons {
+  margin-left: 0 !important;
+  margin-right: 10px !important;
+}
 
-#edit-document, #wiki-page-translate, #wiki-page-edit
-  h1
-    compat-only(letter-spacing, normal)
-    compat-only(padding-left, 0)
-    line-height 40px
-    margin-top (grid-spacing * 1.5)
+#edit-document, #wiki-page-translate, #wiki-page-edit {
+  h1 {
+    compat-only(letter-spacing, normal);
+    compat-only(padding-left, 0);
+    line-height: 40px;
+    margin-top: (grid-spacing * 1.5);
 
-    .action
-      @extend .larger
-      display block
-      line-height 20px
+    .action {
+      @extend .larger;
+      display: block;
+      line-height: 20px;
+    }
 
-    em
-      compat-only(margin-left, -3px)
-      text-transform none
+    em {
+      compat-only(margin-left, -3px);
+      text-transform: none;
+    }
+  }
 
-  .save-state
-    compat-only(padding-left, 0)
+  .save-state {
+    compat-only(padding-left, 0);
+  }
 
-  h2
+  h2 {
     @extend .reset-font;
-    font-size 28px /* Change to h3 after redesign launched */
-    compat-only(text-transform, none)
-    margin-bottom grid-spacing
+    font-size: 28px; /* Change to h3 after redesign launched */
+    compat-only(text-transform, none);
+    margin-bottom: grid-spacing;
+  }
 
-  h2 {selector-icon}, h3 {selector-icon}
-    @extend .right-icons
+  h2 {selector-icon}, h3 {selector-icon} {
+    @extend .right-icons;
+  }
+}
 
 /* ckeditor / content area styles */
-.ckeditor-container
-  padding 6px
-  border 1px solid #eaeff2
+.ckeditor-container {
+  padding: 6px;
+  border: 1px solid #eaeff2;
+}
 
-span.cke_skin_kuma
-  padding 0 !important
+span.cke_skin_kuma {
+  padding: 0 !important;
+}
 
-.cke_skin_kuma .cke_toolbox
-  border-width 0 !important
-  margin 0 !important
+.cke_skin_kuma .cke_toolbox {
+  border-width: 0 !important;
+  margin: 0 !important;
+}
 
-#content-fields .approved header:after
-  compat-only(background, none)
-  compat-only(width, auto)
-  compat-only(height, 0)
+#content-fields .approved header:after {
+  compat-only(background, none);
+  compat-only(width, auto);
+  compat-only(height, 0);
+}
 
-#content-fields header
-  compat-only(background, none)
-  margin-bottom (grid-spacing / 2)
+#content-fields header {
+  compat-only(background, none);
+  margin-bottom: (grid-spacing / 2);
+}
 
 
-#page-attachments
-  h2 {selector-icon}, h3 {selector-icon}
-    @extend .right-icons
+#page-attachments {
+  h2 {selector-icon}, h3 {selector-icon} {
+    @extend .right-icons;
+  }
+}
 
-#wiki-page-translate
-  #page-buttons
-    right 0
+#wiki-page-translate {
+  #page-buttons {
+    right: 0;
+  }
 
-  .description .approved dt
-    compat-only(padding-top, 0)
+  .description .approved dt {
+    compat-only(padding-top, 0);
+  }
 
-  .change-locale
-    margin-top (grid-spacing / 2)
+  .change-locale {
+    margin-top: (grid-spacing / 2);
+  }
+}
 
-#article-head
-  compat-only(margin-top, 0)
-  compat-only(max-width, none)
-  compat-only(padding-top, 0)
+#article-head {
+  compat-only(margin-top, 0);
+  compat-only(max-width, none);
+  compat-only(padding-top, 0);
 
-  .metadata
-    padding-top (grid-spacing * 2)
-    width auto
-    float none
+  .metadata {
+    padding-top: (grid-spacing * 2);
+    width: auto;
+    float: none;
 
-    li label
-      width auto
+    li label {
+      width: auto;
+    }
+  }
+}
 
-.metadata-choose-parent
-  compat-important(background, light-background-color)
-  compat-important(border, 0)
-  compat-important(padding, grid-spacing)
-  compat-important(margin-top, 20px)
-  compat-only(border-radius, 0)
+.metadata-choose-parent {
+  compat-important(background, light-background-color);
+  compat-important(border, 0);
+  compat-important(padding, grid-spacing);
+  compat-important(margin-top, 20px);
+  compat-only(border-radius, 0);
+}
 
 /* compare page */
-.compare, #revision-list
-  ul
-    @extend .smaller
-    compat-only(min-width, 0)
+.compare, #revision-list {
+  ul {
+    @extend .smaller;
+    compat-only(min-width, 0);
+  }
 
-  input[type='submit'], a.button
-    compat-only(font-size, smaller-font-size)
+  input[type='submit'], a.button {
+    compat-only(font-size, smaller-font-size);
+  }
+}
 
 /* move page */
-.move-page #page-buttons
-  float none
+.move-page #page-buttons {
+  float: none;
+}
 
 
 /* legacy overrides */
-.topicpage-table .Documentation, .topicpage-table .Community, .topicpage-table .Tools, .topicpage-table .Related_Topics
-  font-family site-font-family
-  text-transform none
+.topicpage-table .Documentation, .topicpage-table .Community, .topicpage-table .Tools, .topicpage-table .Related_Topics {
+  font-family: site-font-family;
+  text-transform: none;
+}
 
 
 
 
-@media media-query-tablet
-  
-  .zone-landing-header-preview
-    .column-strip, masthead-text
-      width 48%
+@media media-query-tablet {
 
-  #wiki-right
-    .tag-attach-list
-      display inline-block
-      
-      {selector-icon}
-        left 0
-        margin-left 0
+  .zone-landing-header-preview {
+    .column-strip, masthead-text {
+      width: 48%;
+    }
+  }
 
-      ul
-        margin-left 20px
+  #wiki-right {
+    .tag-attach-list {
+      display: inline-block;
 
-    enable-toc-toggle()
+      {selector-icon} {
+        left: 0;
+        margin-left: 0;
+      }
 
-  #wiki-column-container, #wiki-content
-    width auto !important
+      ul {
+        margin-left: 20px;
+      }
+    }
 
-  #wiki-content, #wiki-right, #wiki-left
-    margin-right 0
-    width auto
-    float none
-    padding-bottom (grid-spacing * 2)
+    enable-toc-toggle();
+  }
 
-  #quick-links-toggle,  #wiki-controls
-    display none
+  #wiki-column-container, #wiki-content {
+    width: auto !important;
+  }
+
+  #wiki-content, #wiki-right, #wiki-left {
+    margin-right: 0;
+    width: auto;
+    float: none;
+    padding-bottom: (grid-spacing * 2);
+  }
+
+  #quick-links-toggle,  #wiki-controls {
+    display: none;
+  }
+}
 
 
 
 
 /* rtl */
-.html-rtl
+.html-rtl {
 
-  .page-buttons, #page-buttons
-    left gutter-width
-    right auto
+  .page-buttons, #page-buttons {
+    left: gutter-width;
+    right: auto;
+  }
 
-  .crumbs
-    li
-      margin-right 0
-      margin-left (grid-spacing / 2)
-    a
-      &:after
-        content "\f053"
-        margin-left 0
-        margin-right 4px
+  .crumbs {
+    li {
+      margin-right: 0;
+      margin-left: (grid-spacing / 2);
+    }
+    a {
+      &:after {
+        content: "\f053";
+        margin-left: 0;
+        margin-right: 4px;
+      }
+    }
+  }
+}

@@ -2,385 +2,480 @@
 @import 'mixins'
 @import 'grid'
 
-#home
-  create-home-gradient-background(#00539f)
-  remove-main-spacing()
-  use-white-logo()
+#home {
+  create-home-gradient-background(#00539f);
+  remove-main-spacing();
+  use-white-logo();
 
   /* general structure adjustments */
-  #main-header
-    background none
-    border-bottom-color rgba(255, 255, 255, 0.2)
+  #main-header {
+    background: none;
+    border-bottom-color: rgba(255, 255, 255, 0.2);
+  }
 
   /* update main nav menu color */
-  override-main-nav-color(#fff)
+  override-main-nav-color(#fff);
 
-  .main-nav-search
-    display none
+  .main-nav-search {
+    display: none;
+  }
 
-   .home-callouts
-    background #4d4e53
+  .home-callouts {
+    background: #4d4e53;
+  }
 
-  main
-    background transparent
+  main {
+    background: transparent;
+  }
 
   /* shared spacing in prominent block*/
-  .home-masthead, .home-hacks, .home-demos, .home-contribute
-    padding first-content-top-padding 0
+  .home-masthead, .home-hacks, .home-demos, .home-contribute {
+    padding: first-content-top-padding 0;
+  }
 
   /* masthead */
-  .home-masthead
+  .home-masthead {
 
-    h1
-      width 60%
+    h1 {
+      width: 60%;
+    }
 
-    h1
-      color #fff
-      margin-bottom 0 
-      margin 0 auto
+    h1 {
+      color: #fff;
+      margin-bottom: 0;
+      margin: 0 auto;
 
-      span
-        padding-left 20%
-        display block
+      span {
+        padding-left: 20%;
+        display: block;
+      }
+    }
 
-    .home-search-form
-      padding (grid-spacing * 2) 0
+    .home-search-form {
+      padding: (grid-spacing * 2) 0;
 
-      input
-        @extend .big-search
-        color #fff
-        set-placeholder-style(color, #fff)
+      input {
+        @extend .big-search;
+        color: #fff;
 
-  .home-features
-    &, a
-      color #fff
+        set-placeholder-style(color, #fff);
+      }
+    }
+  }
 
-    a
-      text-decoration underline
+  .home-features {
+    &, a {
+      color: #fff;
+    }
 
-    h3
-      @extend .larger
-      font-weight bold
-      font-family 'Open Sans Extra Bold', sans-serif
+    a {
+      text-decoration: underline;
+    }
 
-    li
-      padding 4px 0
+    h3 {
+      @extend .larger;
+      font-weight: bold;
+      font-family: 'Open Sans Extra Bold', sans-serif;
+    }
 
-    .column-home-features
-      @extend .column-strip
+    li {
+      padding: 4px 0;
+    }
+
+    .column-home-features {
+      @extend .column-strip;
+    }
+  }
 
   /* callouts */
 
-  .column-callout 
-    @extend .column-4
-    position relative
+  .column-callout  {
+    @extend .column-4;
+    position: relative;
 
-    i
-      position absolute
-      top 0
-      display block
-      right 5%
+    i {
+      position: absolute;
+      top: 0;
+      display: block;
+      right: 5%;
+    }
 
-    span
-      padding-right 20px
+    span {
+      padding-right: 20px;
+    }
 
-    a
-      @extend .larger
-      color #fff
-      display block
-      padding 100px grid-spacing grid-spacing grid-spacing
-      position relative
-      overflow-x hidden
+    a {
+      @extend .larger;
+      color: #fff;
+      display: block;
+      padding: 100px grid-spacing grid-spacing grid-spacing;
+      position: relative;
+      overflow-x: hidden;
 
-      &:before
-        content '\f061'
-        font-family 'FontAwesome'
-        bottom grid-spacing
-        right grid-spacing
-        position absolute
-        font-size 24px
-        z-index 4
+      &:before {
+        content: '\f061';
+        font-family: 'FontAwesome';
+        bottom: grid-spacing;
+        right: grid-spacing;
+        position: absolute;
+        font-size: 24px;
+        z-index: 4;
+      }
+    }
 
-    &.callout-apps
-      background #e66000
+    &.callout-apps {
+      background: #e66000;
 
-      i
-        width 200px
-        height 130px
-        background url(media-url-dir + 'HTML5_Logo.svg') center -70px no-repeat
-        background-size cover
+      i {
+        width: 200px;
+        height: 130px;
+        background: url(media-url-dir + 'HTML5_Logo.svg') center -70px no-repeat;
+        background-size: cover;
+      }
+    }
 
-    &.callout-android
-      background #97c03d
+    &.callout-android {
+      background: #97c03d;
 
-      i
-        width 260px
-        height 140px
-        background url(media-url-dir + 'promo-phone.png') center -190px no-repeat
-        background-size cover
+      i {
+        width: 260px;
+        height: 140px;
+        background: url(media-url-dir + 'promo-phone.png') center -190px no-repeat;
+        background-size: cover;
+      }
+    }
 
-    &.callout-firefoxos
-      background-color #0095dd
+    &.callout-firefoxos {
+      background-color: #0095dd;
 
-      i
-        width 320px
-        height 150px
-        background url(media-url-dir + 'promo-fox.png') center -60px no-repeat
-        background-size cover
+      i {
+        width: 320px;
+        height: 150px;
+        background: url(media-url-dir + 'promo-fox.png') center -60px no-repeat;
+        background-size: cover;
+      }
+    }
+  }
 
   /* shared */
-  h2, h3
-    > i
-      display inline-block
-      position relative
-      margin-left 0
-      background-image url(media-url-dir + 'mdn_blank-grey-document-color.svg') 
+  h2, h3 {
+    > i {
+      display: inline-block;
+      position: relative;
+      margin-left: 0;
+      background-image: url(media-url-dir + 'mdn_blank-grey-document-color.svg');
+    }
+  }
 
-  h2 
-    a
-      font-style italic
-      font-size base-font-size
-      font-weight normal
-      display inline-block
-      margin-left (grid-spacing * 2)
+  h2 {
+    a {
+      font-style: italic;
+      font-size: base-font-size;
+      font-weight: normal;
+      display: inline-block;
+      margin-left: (grid-spacing * 2);
+    }
 
-    > i
-      width 72px 
-      height 62px 
-      color #0095dd
-      
-      &.blue
-        background-image url(media-url-dir + 'mdn_blank-blue-document-color.svg') 
-        color #fff
+    > i {
+      width: 72px;
+      height: 62px;
+      color: #0095dd;
 
-      &[class^='icon-']:before
-        margin 16px 0 0 0
-        display block
-        text-align center
+      &.blue {
+        background-image: url(media-url-dir + 'mdn_blank-blue-document-color.svg');
+        color: #fff;
+      }
 
-  h3
-    @extend .clear
-    text-transform uppercase
+      &[class^='icon-']:before {
+        margin: 16px 0 0 0;
+        display: block;
+        text-align: center;
+      }
+    }
+  }
 
-    i
-      background-size cover
-      width 47px 
-      height 41px
-      color #0095dd
-      margin-right 10px !important
-      float left
+  h3 {
+    @extend .clear;
+    text-transform: uppercase;
 
-      &:before
-        margin 9px 0 0 0
-        display block
-        text-align center
+    i {
+      background-size: cover;
+      width: 47px;
+      height: 41px;
+      color: #0095dd;
+      margin-right: 10px !important;
+      float: left;
 
-    &.zones span
-      padding-top 10px
+      &:before {
+        margin: 9px 0 0 0;
+        display: block;
+        text-align: center;
+      }
+    }
 
-    span
-      float left
+    &.zones span {
+      padding-top: 10px;
+    }
 
-  .entry-meta
-    @extend .smaller
-    font-style italic
+    span {
+      float: left;
+    }
+  }
+
+  .entry-meta {
+    @extend .smaller;
+    font-style: italic;
+  }
 
   /* hacks */
-  .home-hacks
-    background #fff
+  .home-hacks {
+    background: #fff;
 
-    .column-hacks
-      @extend .column-main
+    .column-hacks {
+      @extend .column-main;
+    }
 
-    .column-involved
-      @extend .column-strip
+    .column-involved {
+      @extend .column-strip;
+    }
 
-    li
-      padding-top grid-spacing
-      border-bottom 1px solid #ececec
+    li {
+      padding-top: grid-spacing;
+      border-bottom: 1px solid #ececec;
 
-      &:last-child
-        border-bottom 0
+      &:last-child {
+        border-bottom: 0;
+      }
+    }
 
-    h2.entry-title
-      letter-spacing 0
-      line-height normal
-      margin-bottom 0
-      font-size base-font-size
+    h2.entry-title {
+      letter-spacing: 0;
+      line-height: normal;
+      margin-bottom: 0;
+      font-size: base-font-size;
 
-      a
-        text-decoration underline
-        compat-only(margin-left, 0)
-        compat-only(font-style, normal)
+      a {
+        text-decoration: underline;
+        compat-only(margin-left, 0);
+        compat-only(font-style, normal);
+      }
+    }
 
-    .hacks
-      margin-bottom (grid-spacing / 2)
+    .hacks {
+      margin-bottom: (grid-spacing / 2);
+    }
 
-    .home-involved-card
-      background url(media-url-dir + 'home-globe.svg') -90px 40px no-repeat #f4f7f8
-      background-size 600px
+    .home-involved-card {
+      background: url(media-url-dir + 'home-globe.svg') -90px 40px no-repeat #f4f7f8;
+      background-size: 600px;
 
-      a
-        color #fff
-        text-decoration none
-        padding grid-spacing
-        display block
+      a {
+        color: #fff;
+        text-decoration: none;
+        padding: grid-spacing;
+        display: block;
+      }
 
-      .numbers
-        padding-bottom 40px
-        line-height 40px
+      .numbers {
+        padding-bottom: 40px;
+        line-height: 40px;
 
-        .row1, .row2, .row3
-          display block
+        .row1, .row2, .row3 {
+          display: block;
+        }
+      }
 
-      .number
-        font-size 30px
-        font-weight bold
+      .number {
+        font-size: 30px;
+        font-weight: bold;
+      }
 
-      h3
-        @extend .larger
-        padding-bottom (grid-spacing / 2)
-        border-bottom 1px solid #e0e2e4
-        margin-bottom 110px
-        margin-right -(grid-spacing)
-        font-weight bold
+      h3 {
+        @extend .larger;
+        padding-bottom: (grid-spacing / 2);
+        border-bottom: 1px solid #e0e2e4;
+        margin-bottom: 110px;
+        margin-right: -(grid-spacing);
+        font-weight: bold;
+      }
 
-      p
-        margin 0
-        padding 0
-        text-align center
+      p {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
 
-      .button
-        background-color #48ade4 !important
-        font-size smaller-font-size !important
-        color #fff !important
-        
+      .button {
+        background-color: #48ade4 !important;
+        font-size: smaller-font-size !important;
+        color: #fff !important;
+      }
+    }
+  }
+}
+
 /* demos section */
-.home-demos
-  background light-background-color
+.home-demos {
+  background: light-background-color;
 
-  ul
-    @extend .clear
-    overflow-x auto
-    position relative
+  ul {
+    @extend .clear;
+    overflow-x: auto;
+    position: relative;
+  }
 
-  li
-    @extend .smaller
-    display block
-    text-align center
-    margin-right grid-spacing
-    float left
-    font-style italic
-    overflow hidden
-    width 194px
+  li {
+    @extend .smaller;
+    display: block;
+    text-align: center;
+    margin-right: grid-spacing;
+    float: left;
+    font-style: italic;
+    overflow: hidden;
+    width: 194px;
 
-    img
-      border 6px solid #fff
-      display block
-      vendorize(box-shadow, 2px 2px 1px rgba(0 , 0, 0, .1))
-      margin-bottom 6px
+    img {
+      border: 6px solid #fff;
+      display: block;
+      vendorize(box-shadow, 2px 2px 1px rgba(0 , 0, 0, .1));
+      margin-bottom: 6px;
+    }
+  }
 
-  .preview
-    text-transform uppercase
-    float right
-    margin-top -10px
+  .preview {
+    text-transform: uppercase;
+    float: right;
+    margin-top: -10px;
 
-    span
-      display block
+    span {
+      display: block;
+    }
+  }
+}
 
 
 /* contribute section */
-.home-contribute
-  background #fff
+.home-contribute {
+  background: #fff;
 
-  a
-    text-decoration underline
+  a {
+    text-decoration: underline;
+  }
 
-  h3
-    @extend .larger
-    font-weight bold
-    text-transform uppercase
+  h3 {
+    @extend .larger;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
 
-  li
-    border-bottom 1px solid #ececec
-    padding list-item-spacing 0
+  li {
+    border-bottom: 1px solid #ececec;
+    padding: list-item-spacing 0;
 
-    &:last-child
-      border-bottom 0
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
 
-  .home-contribute-recent
-    margin-top (grid-spacing / 2)
-
+  .home-contribute-recent {
+    margin-top: (grid-spacing / 2);
+  }
+}
 
 /* tablet */
-@media media-query-tablet
-  #home
-
-    .home-masthead
-        h1, input
-          width 90%
-
+@media media-query-tablet {
+  #home {
+    .home-masthead {
+      h1, input {
+        width: 90%;
+      }
+    }
+  }
+}
 
 /* mobile */
-@media media-query-mobile
-  #home
+@media media-query-mobile {
+  #home {
 
-    .home-masthead
-      h1, input
-        width 90%
+    .home-masthead {
+      h1, input {
+        width: 90%;
 
-        span
-          padding-left 0
+        span {
+          padding-left: 0;
+        }
+      }
+    }
 
-    .column-callout, .column-home-features
-      width auto !important
-      float none
-      margin-bottom grid-spacing
-      margin-right 0
+    .column-callout, .column-home-features {
+      width: auto !important;
+      float: none;
+      margin-bottom: grid-spacing;
+      margin-right: 0;
+    }
 
-    .home-callouts
-      padding-top 20px
+    .home-callouts {
+      padding-top: 20px;
+    }
 
-    .column-home-features
-      li
-        display inline-block
-        padding-right grid-spacing
+    .column-home-features {
+      li {
+        display: inline-block;
+        padding-right: grid-spacing;
+      }
+    }
 
-    .home-hacks
-      .column-hacks, .column-involved
-        float none
-        width auto
+    .home-hacks {
+      .column-hacks, .column-involved {
+        float: none;
+        width: auto;
+      }
 
-      .column-involved
-        margin-top (grid-spacing * 2)
-      
-      .home-involved-card p
-        text-align left
+      .column-involved {
+        margin-top: (grid-spacing * 2);
+      }
 
+      .home-involved-card p {
+        text-align: left;
+      }
+    }
+  }
+}
 
 /* right to left */
-#home.html-rtl
-    .column-callout
-      a
-        &:before
-          content '\f060'
-          right auto
-          left grid-spacing
+#home.html-rtl {
+  .column-callout {
+    a {
+      &:before {
+        content: '\f060';
+        right: auto;
+        left: grid-spacing;
+      }
+    }
+  }
 
-    h2 
-      > selector-icon:before
-        margin-right 22px
+  h2 {
+    > selector-icon:before {
+      margin-right: 22px;
+    }
+  }
 
-    h3 
-      i, span
-        float right 
+  h3 {
+    i, span {
+      float: right;
+    }
 
-      selector-icon:before
-        margin-right 16px
+    selector-icon:before {
+      margin-right: 16px;
+    }
+  }
 
-    i.icon-arrow-right:before
-      content '\f060'
+  i.icon-arrow-right:before {
+    content: '\f060';
+  }
 
-    .home-hacks .home-involved-card h3
-      margin-right 0
-      margin-left -20px
+  .home-hacks .home-involved-card h3 {
+    margin-right: 0;
+    margin-left: -20px;
+  }
+}
