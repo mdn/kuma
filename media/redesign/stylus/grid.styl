@@ -1,84 +1,110 @@
 @import 'vars'
 @import 'mixins'
 
-.center
-  margin 0 auto
-  position relative
-  max-width 1220px
-  padding-left 10px
-  padding-right 10px
+.center {
+  margin: 0 auto;
+  position: relative;
+  max-width: 1220px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
 
 /* Column helpers for the grids to be generated */
-.column-closed
-  display none
-  
+.column-closed {
+  display: none;
+}
+
 /* This is a "helper" which automatically formats its column children, clears the floats afterward, removes margin from last item */
-.column-container
-  @extend .clear
+.column-container {
+  @extend .clear;
 
-  > [class^='column-']
-    margin-right 3%
-    float left
+  > [class^='column-'] {
+    margin-right: 3%;
+    float: left;
 
-    &:last-child
-      margin-right 0
+    &:last-child {
+      margin-right: 0;
+    }
+  }
 
-  &.column-container-reverse
+  &.column-container-reverse {
 
-    > [class^='column-']
-      float right
+    > [class^='column-'] {
+      float: right;
 
-      &:first-child
-        margin-right 0
+      &:first-child {
+        margin-right: 0;
+      }
 
-      &:last-child
-        margin-right 3%
-
+      &:last-child {
+        margin-right: 3%;
+      }
+    }
+  }
+}
 
 /*  Column definitions */
-.column-1
-  width 5.5%
-.column-2
-  width 14%
-.column-3, .column-strip, .column-quarter
-  width 22.5%
-.column-4, .column-third
-  width 31%
-.column-5
-  width 39.5%
-.column-6, .column-half
-  width 48%
-.column-7
-  width 56.5%
-.column-8
-  width 65%
-.column-9, .column-main
-  width 73.5%
-.column-10 
-  width 82%
-.column-11 
-  width 90.5%
-.column-12, .column-all
-  width 99%
-  margin 0
-  float none
+.column-1 {
+  width: 5.5%;
+}
+.column-2 {
+  width: 14%;
+}
+.column-3, .column-strip, .column-quarter {
+  width: 22.5%;
+}
+.column-4, .column-third {
+  width: 31%;
+}
+.column-5 {
+  width: 39.5%;
+}
+.column-6, .column-half {
+  width: 48%;
+}
+.column-7 {
+  width: 56.5%;
+}
+.column-8 {
+  width: 65%;
+}
+.column-9, .column-main {
+  width: 73.5%;
+}
+.column-10 {
+  width: 82%;
+}
+.column-11 {
+  width: 90.5%;
+}
+.column-12, .column-all {
+  width: 99%;
+  margin: 0;
+  float: none;
+}
 
 /*  Tablet grid width */
-@media media-query-tablet
-  
-  .column-container
-    &.column-container-reverse
-      margin-left 0
-  
-  .center
-    max-width 1000px
+@media media-query-tablet {
+
+  .column-container {
+    &.column-container-reverse {
+      margin-left: 0;
+    }
+  }
+
+  .center {
+    max-width: 1000px;
+  }
+}
 
 /* Mobile phone grid settings
      Disabled for now as not required for launch
- 
-@media media-query-mobile
 
-  .center, .column-1, .column-2, .column-3, .column-4, .column-5, .column-6, .column-7, .column-8, .column-9, .column-10, .column-11
-    float  none
-    width 99%
+@media media-query-mobile {
+
+  .center, .column-1, .column-2, .column-3, .column-4, .column-5, .column-6, .column-7, .column-8, .column-9, .column-10, .column-11 {
+    float:  none;
+    width: 99%;
+  }
+}
 */

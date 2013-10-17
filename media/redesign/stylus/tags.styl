@@ -2,100 +2,123 @@
 @import 'mixins'
 @import 'grid'
 
-aside
-  @extend .column-half
-  float right
-  border 1px solid header-background-color
-  background light-background-color
-  padding grid-spacing
-  margin-left grid-spacing
-  margin-bottom grid-spacing
+aside {
+  @extend .column-half;
+  float: right;
+  border: 1px solid header-background-color;
+  background: light-background-color;
+  padding: grid-spacing;
+  margin-left: grid-spacing;
+  margin-bottom: grid-spacing;
 
-  *:last-child
-    padding-bottom 0
-    margin-bottom 0
+  *:last-child {
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+}
 
 
 /* headings */
-h1, h2, h3, h4
-  font-weight light-font-weight
-  margin-bottom (grid-spacing / 2)
-  font-family heading-font-family
+h1, h2, h3, h4 {
+  font-weight: light-font-weight;
+  margin-bottom: (grid-spacing / 2);
+  font-family: heading-font-family;
+}
 
-h1
-  @extend .heading-1
-  margin-bottom grid-spacing
+h1 {
+  @extend .heading-1;
+  margin-bottom: grid-spacing;
+}
 
-h2
-  @extend .heading-2
-  line-height 100%
+h2 {
+  @extend .heading-2;
+  line-height: 100%;
+}
 
-h3
-  font-size 28px
-  letter-spacing -0.5px
-  line-height 100%
+h3 {
+  font-size: 28px;
+  letter-spacing: -0.5px;
+  line-height: 100%;
+}
 
-h4
-  font-size 24px
-  letter-spacing -0.25px
-  line-height 100%
+h4 {
+  font-size: 24px;
+  letter-spacing: -0.25px;
+  line-height: 100%;
+}
 
 /* basic text */
-{selector-icon}
-  display inline-block
-  margin-left (grid-spacing / 2)
-  compat-only(margin-right, 0)
+{selector-icon} {
+  display: inline-block;
+  margin-left: (grid-spacing / 2);
+  compat-only(margin-right, 0);
 
-  &:before
-    display inline-block
-    text-decoration none
+  &:before {
+    display: inline-block;
+    text-decoration: none;
+  }
+}
 
-img
-  max-width 100%
+img {
+  max-width: 100%;
+}
 
-p, dl
-  margin-bottom content-block-margin
-  
-pre
-  compat-only(line-height, 19px)
+p, dl {
+  margin-bottom: content-block-margin;
+}
 
+pre {
+  compat-only(line-height, 19px);
+}
 
 /* forms */
-input[type='search']
-  vendorize(appearance, textfield)
+input[type='search'] {
+  vendorize(appearance, textfield);
 
-  &::-webkit-search-decoration, &::-webkit-search-cancel-button, &::-webkit-search-results-button, &::-webkit-search-results-decoration
-    display none
+  &::-webkit-search-decoration, &::-webkit-search-cancel-button, &::-webkit-search-results-button, &::-webkit-search-results-decoration {
+    display: none;
+  }
+}
 
-label
-  cursor pointer
+label {
+  cursor: pointer;
+}
 
 
 /* links */
-a
-  &:link, &:visited, &:focus, &:active
-    color link-color
+a {
+  &:link, &:visited, &:focus, &:active {
+    color: link-color;
+  }
 
-  &:visited:hover, &:visited:focus, &:visited:active
-    color link-color
+  &:visited:hover, &:visited:focus, &:visited:active {
+    color: link-color;
+  }
 
-  {selector-icon}:before
-    cursor pointer
+  {selector-icon}:before {
+    cursor: pointer;
+  }
 
-  &[name]
-    color inherit
-    text-decoration none
+  &[name] {
+    color: inherit;
+    text-decoration: none;
+  }
+}
 
-button, input[type='submit'], input[type='button']
-  @extend .button
+button, input[type='submit'], input[type='button'] {
+  @extend .button;
 
-  &::-moz-focus-inner
-    margin-top -1px
-    margin-bottom -1px
+  &::-moz-focus-inner {
+    margin-top: -1px;
+    margin-bottom: -1px;
+  }
+}
 
 
 /* rtl */
-.html-rtl
-  {selector-icon}
-    compat-only(margin-right, (grid-spacing / 2))
-    compat-only(margin-left, 0)
+.html-rtl {
+  {selector-icon} {
+    compat-only(margin-right, (grid-spacing / 2));
+    compat-only(margin-left, 0);
+  }
+}
