@@ -35,8 +35,16 @@
 
 
  {% block content %}
- <div class="column-container">
 
+  <div class="results-search-form">
+    <form action="{{ url('search') }}" method="get">
+      <input type="search" name="q" placeholder="{{ _('Search the docs') }}" value="{{ search_query }}" {% if not search_query %}autofocus{% endif %} />
+    </form>
+  </div>
+  
+  
+ <div class="column-container">
+  
   {% if search_query %}
     <!-- left results -->
     <div class="column-main">
@@ -56,8 +64,6 @@
               {% endtrans %}
             </a>
           {% endif %}
-            &middot;
-            <a href="{{ url('search') }}" class="new-search">{{ _('New Search') }}</a>
           </p>
         </div>
       </div>
@@ -171,41 +177,7 @@
       </ul>
     </div>
     {% endif %}
-  
-  {% else %}
-   
-    <div id="search-results-close-container">
-      <div class="search-pane search-results-explanation">
-        <h2>{{ _('Ooops!') }}</h2>
-        {% trans search_url = url('search') %}
-        <p>You didn't provide a search term.  <a href="{{ search_url }}" class="new-search">Try a new search!</a></p>
-        {% endtrans %}
-      </div>
-    </div>
    
   {% endif %}
 </div>
-{% endblock %}
-
-
-{% block js %}
-<script>
-  (function($) {
-    var parentSelector = '.search-pane';
-    $(parentSelector + ' .close').on('click', function(e) {
-      e.preventDefault();
-      $('#search-results-close-container').addClass('closed');
-    });
-
-    var $more = $('.search-results-more');
-    $more.find('.view-all').on('click', function(e) {
-      e.preventDefault();
-      var hiddenClass = 'closed';
-      var $parent = $(this).closest(parentSelector);
-      $parent.find('.' + hiddenClass).removeClass(hiddenClass);
-      $parent.find('.pager').removeClass('hidden');
-      $more.removeClass('with-view-all');
-    });
-  })(jQuery);
-</script>
 {% endblock %}
