@@ -624,11 +624,33 @@ span.cke_skin_kuma {
 .html-rtl {
 
   .page-buttons, #page-buttons {
-    left: gutter-width;
-    right: auto;
+    float: left;
+    
+    .submenu {
+      right: auto;
+      left: 0;
+      
+      &:before {
+        right: auto;
+        left: 10px
+      }
+  
+      &:after {
+        right: auto;
+        left: 10px;
+      }
+    }
+  }
+  
+  #settings-menu {
+    .icon-cog {
+      margin-right: 0 !important;
+    }
   }
 
   .crumbs {
+    float: right;
+    
     li {
       margin-right: 0;
       margin-left: (grid-spacing / 2);
