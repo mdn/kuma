@@ -27,25 +27,45 @@ def fetch_localization_data(request):
     topic = request.GET.get('topic', '')
     orderby = request.GET.get('orderby')
     localization_flags = request.GET.get('localization_flags')
+    
+    display_start = int(request.GET.get('iDisplayStart', 0))
 
-    docs = Document.objects.exclude(locale=DEFAULT_LOCALE).exclude(is_redirect=True)
-
-    if locale and locale in LANGUAGES:
-        docs = docs.filter(locale=locale)
-
-    if (localization_flags and
-        localization_flags in LOCALIZATION_FLAGS):
-        docs = docs.filter(current_revision__localization_tags__name=localization_flags)
-
-    if topic:
-        docs = docs.filter(slug__icontains=topic)
-
+    docs = (Document.objects.exclude(locale=DEFAULT_LOCALE)
+            .exclude(is_redirect=True)
+            .defer('html', 'rendered_html'))
+            
     if orderby and orderby in ORDERS:
         docs = docs.order_by('-' + orderby)
     else:
         docs = docs.order_by('-modified')
 
-    total = docs.count()
+    # Build up a dict of the filter conditions, if any, then apply
+    # them all in one go.
+    query_kwargs = {}
+    
+    if locale and locale in LANGUAGES:
+        query_kwargs['locale'] = locale
+
+    if (localization_flags and
+        localization_flags in LOCALIZATION_FLAGS):
+        query_kwargs['current_revision__localization_tags__name'] = localization_flags
+
+    if topic:
+        query_kwargs['slug__icontains'] = topic
+        
+    if query_kwargs:
+            docs = docs.filter(**query_kwargs)
+            total = docs.count()
+    else:
+        # If no filters, just do a straight count(). It's the same
+        # result, but much faster to compute.
+        total = docs.count()
+        
+    if total >= display_start:
+        # Only bother with this if we're actually going to get
+        # some documents from it. Otherwise it's a pointless but
+        # potentially complex query.
+        docs = docs[display_start:display_start + PAGE_SIZE]
 
     json_response = {
         'iTotalRecords': total,
