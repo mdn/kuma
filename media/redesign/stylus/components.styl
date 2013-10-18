@@ -146,6 +146,12 @@ component-submenu-method(menu-width, num-columns, background-color, arrow-border
       padding-right: 0;
     }
   }
+  
+  .title {
+    compat-only(font-size, base-font-size);
+    compat-only(padding-left, 0);
+    compat-only(background, none);
+  }
 
   a {
     @extend .smaller;
