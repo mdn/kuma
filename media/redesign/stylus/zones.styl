@@ -40,10 +40,6 @@
 
 .zone-landing {
 
-  main {
-    overflow-x: hidden;
-  }
-
   h1 {
     color: #fff;
     @extend .column-6;
@@ -76,10 +72,6 @@
     }
   }
 
-  .zone-subnav-container {
-    /* nada */
-  }
-
   .summary {
     display: none;
   }
@@ -103,17 +95,18 @@
     p {
       @extend .larger;
       font-weight: light-font-weight;
-      margin-right: 50px;
+      margin-right: 80px;
     }
   }
 
   .zone-image {
     position: absolute;
-    right: -140px;
+    right: 0;
     top: 100px;
     display: block;
     width: 468px;
     bottom: 0;
+    background-repeat: no-repeat;
   }
 
   a.button {
@@ -153,6 +146,7 @@
     width: 200px;
     height: 400px;
     background-size: contain;
+    background-repeat: no-repeat;
   }
 }
 
