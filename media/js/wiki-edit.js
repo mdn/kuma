@@ -628,27 +628,33 @@
     }
  
     //
-    // Initialize logic that enables save, save-and-edit, and preview buttons 
-    // on document change.
+    // Initialize logic that checks for user's changes in the document.
+    // Asks the user if they really intend to close the page without saving.
     //
     function initWatchDocumentChange () {
         // Watch for any changes in the #wiki-page-edit form and 
         // in #page-attachments (which resides beyond the form).
-        var documentForms = '#wiki-page-edit, #page-attachments';
+        var documentForms = '#' + formId + ', #page-attachments';
         var ckeditor;
+        var watching;
         var $docButtons = $('#btn-save, #btn-preview, #btn-save-and-edit');
+        var formIsDirty = false;
 
         // Define event listener. Disables itself on change.
         var enableButtons = function enableButtons() {
-            if ($docButtons.attr('disabled')) {
+            if (formIsDirty === false) {
                 // If the document buttons are still disabled, enable them.
-                $docButtons.removeAttr('disabled');
+                $docButtons.removeClass('btn-disabled');
 
                 // Remove event listeners since we won't need them anymore. 
+                watching = false;
                 $(documentForms).children().off('change', enableButtons);
                 if (ckeditor) {
                     ckeditor.removeListener('key', enableButtonsCKE);
                 }
+
+                // Document now has unsaved changes.
+                formIsDirty = true;
             }
         };
 
@@ -659,13 +665,41 @@
             }
         };
 
-        // Add event listeners.
-        $(documentForms).children().on('change', enableButtons);
+        // Add event listeners for document changes.
+        function addChangeListeners () {
+            watching = true;
+            $(documentForms).children().on('change', enableButtons);
 
-        CKEDITOR.instances['id_content'].on('instanceReady', function (e) {
-            ckeditor = e.editor;
-            ckeditor.on('key', enableButtonsCKE);
+            CKEDITOR.instances['id_content'].on('instanceReady', function (e) {
+                ckeditor = e.editor;
+                ckeditor.on('key', enableButtonsCKE);
+            });
+        }
+        addChangeListeners();
+
+        $docButtons.on('click', function () {
+            // Form saved or previewed.
+            formIsDirty = false;
         });
+        $('#btn-save-and-edit').on('click', function () {
+            // Re-init the buttons & listeners for 'Save and Edit' clicks.
+            if (watching === false) {
+                $(this).addClass('btn-disabled');
+                addChangeListeners();
+            }
+        });
+
+        // Send out a warning message if changes are unsaved 
+        // and the user is leaving.
+        window.onbeforeunload = function (e) {
+            if (formIsDirty) {
+                var message = 'This page contains unsaved changes.';
+                if (e) {
+                    e.returnValue = message;
+                }
+                return message;
+            }
+        }
     }
 
     //
