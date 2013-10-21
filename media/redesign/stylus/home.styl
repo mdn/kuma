@@ -452,6 +452,11 @@
         left: grid-spacing;
       }
     }
+    
+    i {
+      right: auto;
+      left: 5%;
+    }
   }
 
   h2 {
@@ -464,9 +469,10 @@
     i, span {
       float: right;
     }
-
-    selector-icon:before {
-      margin-right: 16px;
+    
+    {selector-icon} {
+      compat-only(margin-right, 0);
+      compat-only(margin-left, 10px);
     }
   }
 
