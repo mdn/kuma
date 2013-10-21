@@ -100,10 +100,9 @@ mdn.ckeditor.redirectPattern = '{{ redirect_pattern|safe }}';
 CKEDITOR.timestamp = '{{ BUILD_ID_JS }}';
 CKEDITOR.editorConfig = function(config) {
 
-    config.extraPlugins = 'definitionlist,mdn-buttons,mdn-link,mdn-syntaxhighlighter,mdn-keystrokes,mdn-attachments,mdn-image,mdn-enterkey,mdn-wrapstyle,mdn-table,tablesort,mdn-sampler,mdn-sample-finder,mdn-maximize,mdn-redirect,youtube';
+    config.extraPlugins = 'definitionlist,mdn-buttons,mdn-link,mdn-syntaxhighlighter,mdn-keystrokes,mdn-attachments,mdn-image,mdn-enterkey,mdn-wrapstyle,mdn-table,tablesort,mdn-sampler,mdn-sample-finder,mdn-maximize,mdn-redirect,youtube,autogrow';
     config.removePlugins = 'link,image,tab,enterkey,table,maximize';
     config.entities = false;
-    config.extraPlugins += ',autogrow';
   
     var inlineHeight = CKEDITOR.inlineHeight;
     config.autoGrow_minHeight = (!inlineHeight || inlineHeight < 150 ? 500 : inlineHeight);
@@ -123,17 +122,20 @@ CKEDITOR.editorConfig = function(config) {
     config.toolbar = 'MDN';
     config.tabSpaces = 2;
     config.contentsCss = [
-        mdn.mediaPath + 'css/wiki-screen.css', 
-        mdn.mediaPath + 'css/wiki-edcontent.css', 
-        mdn.mediaPath + 'css/libs/font-awesome/css/font-awesome.min.css',
-        '/en-US/docs/Template:CustomCSS?raw=1'
+      mdn.waffles.redesign ? mdn.mediaPath + 'redesign/css/main.css' : mdn.mediaPath + 'css/wiki-screen.css',
+      mdn.mediaPath + 'css/wiki-edcontent.css', 
+      mdn.mediaPath + 'css/libs/font-awesome/css/font-awesome.min.css',
+      '/en-US/docs/Template:CustomCSS?raw=1'
     ];
+    
     config.toolbarCanCollapse = false;
     config.resize_enabled = false;
     config.dialog_backgroundCoverColor = 'black';
     config.dialog_backgroundCoverOpacity = 0.3;
     config.docType = '<!DOCTYPE html>';
     config.bodyClass = 'page-content';
+    if(mdn.waffles.redesign) config.bodyClass += ' redesign-content';
+  
     
     if(!CKEDITOR.stylesSet.registered['default']) {
             CKEDITOR.stylesSet.add('default', [
