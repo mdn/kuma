@@ -67,7 +67,7 @@ article {
       display: inline-block;
       font-family: FontAwesome;
       text-decoration: none;
-      content: "\f054";
+      content: '\f054';
       color: #c1c2c4;
       margin-left: 4px;
       font-size: 70%;
@@ -642,10 +642,20 @@ span.cke_skin_kuma {
     }
     a {
       &:after {
-        content: "\f053";
+        content: '\f053';
         margin-left: 0;
         margin-right: 4px;
       }
     }
+  }
+}
+
+
+/* print styling */
+@media print {
+  
+  /* wiki section */
+  #wiki-left, #wiki-right, #wiki-controls, .crumbs, .page-buttons, #page-attachments {
+    display: none;
   }
 }

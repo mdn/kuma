@@ -14,7 +14,7 @@ vendorize(property, value) {
   {property}: value;
 }
 
-vendorize-value(property, value, more='') {
+vendorize-value(property, value, more = '') {
   {property}: unquote('-webkit-'+value+more);
   {property}: unquote('-moz-'+value+more);
   {property}: unquote('-ms-'+value+more);
@@ -22,7 +22,7 @@ vendorize-value(property, value, more='') {
 }
 
 /* prevents spacing of a given element if it's the last child */
-prevent-last-child-spacing(element='*', property='padding') {
+prevent-last-child-spacing(element = '*', property = 'padding') {
   & {element}:last-child {
     {property}: 0;
   }
@@ -39,7 +39,7 @@ reverse-link-decoration() {
 }
 
 /* generates a background property for header and zones */
-create-gradient-background(color='', use-gradient=false) {
+create-gradient-background(color = '', use-gradient = false) {
   if use-gradient {
     background-image: url(media-url-dir + 'header-background.png'), url(media-url-dir + 'mdn-header-gradient.png');
     background-repeat: repeat, repeat-x;
@@ -60,7 +60,7 @@ create-home-gradient-background(color) {
 }
 
 /* generates a cross-browser gradient */
-create-gradient(start-color, end-color, direction=false) {
+create-gradient(start-color, end-color, direction = false) {
   if direction {
     vendorize-value(background, linear-gradient, '(' + direction + ', ' + start-color + ', ' + end-color + ')');
   } else {
@@ -86,7 +86,7 @@ compat-important(prop, value) {
 }
 
 /* Used for style which are only present to override other styles -- these will be deleted once legacy design is gone */
-compat-only(prop, value, more-selector='') {
+compat-only(prop, value, more-selector = '') {
   compat-important(prop, value);
 
   if more-selector {
@@ -97,12 +97,12 @@ compat-only(prop, value, more-selector='') {
 }
 
 /* Used to denote an old IE style */
-old-ie(prop, value, important=false) {
+old-ie(prop, value, important = false) {
   {prop}: value (important ? unquote('!important') : '');
 }
 
 /* Used to create sliding animations */
-slider(duration=default-animation-duration, maximum-height=10000px) {
+slider(duration=default-animation-duration, maximum-height = 10000px) {
   overflow-y: hidden;
   max-height: maximum-height;
   vendorize(transition-property, all);
@@ -191,7 +191,7 @@ use-white-logo() {
 */
 .clear {
   &:before, &:after {
-    content: "\0020";
+    content: '\0020';
     display: block;
     height: 0;
     overflow: hidden;

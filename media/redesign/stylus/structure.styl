@@ -371,51 +371,10 @@ footer {
 }
 
 
+/* print styling */
+@media print {
 
-
-
-
-/* legacy crap for the docs page to get rid of when possible */
-#docs {
-
-  #content-main {
-    @extend .column-main;
-
-    #doc-search #q-docs {
-      width: 80%;
-    }
-  }
-
-  #content-sub {
-    compat-only(float, left);
-    compat-only(border, 0);
-    compat-only(margin-left, 0);
-    compat-only(margin-bottom, 0);
-    compat-only(border, 0);
-    compat-only(background, transparent);
-
-    @extend .column-strip;
-
-    .module  {
-      .mod-title {
-        compat-only(font, inherit);
-      }
-
-      .hfeed h4 {
-        compat-only(font-size, base-font-size);
-      }
-    }
-  }
-
-  #other-sections {
-    compat-only(margin-top, grid-spacing);
-  }
-
-  .section h4 a {
-    compat-only(font, inherit);
-  }
-
-  .wrap.sidebar {
-    compat-only(background, none);
+  header, footer {
+    display: none;
   }
 }
