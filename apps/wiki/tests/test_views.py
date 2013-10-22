@@ -51,7 +51,8 @@ from wiki.models import (VersionMetadata, Document, Revision, Attachment,
                          DocumentZone,
                          AttachmentRevision, DocumentAttachment, TOC_DEPTH_H4)
 from wiki.tests import (doc_rev, document, new_document_data, revision,
-                        normalize_html, create_template_test_users)
+                        normalize_html, create_template_test_users,
+                        make_translation)
 from wiki.views import _version_groups, DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL
 from wiki.forms import MIDAIR_COLLISION
 
@@ -1618,6 +1619,38 @@ class DocumentEditingTests(TestCaseBase):
         response = client.post(translate_url, child_data)
         eq_(302, response.status_code)
         self.assertRedirects(response, reverse('wiki.document', args=['length/' + child_data['slug']], locale='es'))
+
+    def test_translate_keeps_topical_parent(self):
+        client = self.client
+        client.login(username='admin', password='testpass')
+
+        en_doc, de_doc = make_translation()
+
+        en_child_doc = document(parent_topic=en_doc, slug='en-child', save=True)
+        en_child_rev = revision(document=en_child_doc, save=True)
+        de_child_doc = document(parent_topic=de_doc, locale='de', slug='de-child',
+                                parent=en_child_doc, save=True)
+        revision(document=de_child_doc, save=True)
+
+        post_data = {}
+        post_data['slug'] = de_child_doc.slug
+        post_data['title'] = 'New title'
+        post_data['form'] = 'both'
+        post_data['content'] = 'New translation'
+        post_data['tolocale'] = 'de'
+        post_data['toc_depth'] = 0
+        post_data['based_on'] = en_child_rev.id
+        post_data['parent_id'] = en_child_doc.id
+
+        translate_url = reverse('wiki.edit_document', args=[de_child_doc.slug],
+                               locale='de')
+        client.post(translate_url, post_data)
+
+        de_child_doc = Document.objects.get(locale='de', slug='de-child')
+        eq_(en_child_doc, de_child_doc.parent)
+        eq_(de_doc, de_child_doc.parent_topic)
+        eq_('New translation', de_child_doc.current_revision.content)
+
 
     def test_translate_keeps_toc_depth(self):
         client = self.client
