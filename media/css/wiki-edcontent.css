@@ -4,7 +4,7 @@ html.maximized { overflow-y: auto !important; }
 body { min-height: 400px; font: 14px/1.286 "Lucida Grande", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif; margin: 0 auto; color: #333; padding: 0 20px; }
 
 body.redesign-content {
-  background: #fff;
+  background: #fff !important;
   font: 14px/1.5 'Open Sans', sans-serif;
 }
 
