@@ -1723,9 +1723,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
                         try:
                             parent_doc = get_object_or_404(Document, id=parent_id)
                             rev_form.instance.document.parent = parent_doc
-                            rev_form.instance.document.parent_topic = parent_doc
                             doc.parent = parent_doc
-                            doc.parent_topic = parent_doc
                             rev_form.instance.based_on.document = doc.original
                         except Document.DoesNotExist:
                             pass
