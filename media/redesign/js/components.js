@@ -248,7 +248,9 @@
       }
 
       function setIcon($tog, $li) {
-        $tog.find('i').attr('class', 'icon-caret-'  + (getState($li) ? 'right' : 'down'));
+        var openIcon = $tog.attr('data-open-icon') || 'icon-caret-right';
+        var closedIcon = $tog.attr('data-closed-icon') || 'icon-caret-down';
+        $tog.find('i').attr('class', (getState($li) ? openIcon : closedIcon));
       }
 
       function getState($li) {
