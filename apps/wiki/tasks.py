@@ -136,16 +136,18 @@ def build_json_data_handler(sender, instance, **kwargs):
 
 
 @task
-@transaction.commit_on_success
+@transaction.commit_manually
 def move_page(locale, slug, new_slug, email):
     try:
         user = User.objects.get(email=email)
     except User.DoesNotExist:
+        transaction.rollback()
         logging.error('Page move failed: no user with email address %s' % email)
         return
     try:
         doc = Document.objects.get(locale=locale, slug=slug)
     except Document.DoesNotExist:
+        transaction.rollback()
         message = """
         Page move failed.
 
@@ -159,6 +161,7 @@ def move_page(locale, slug, new_slug, email):
     try:
         doc._move_tree(new_slug, user=user)
     except Exception as e:
+        transaction.rollback()
         message = """
         Page move failed.
 
@@ -172,6 +175,7 @@ def move_page(locale, slug, new_slug, email):
                   [user.email])
         return
 
+    transaction.commit()
     message = """
     Page move completed.
 
