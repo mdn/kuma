@@ -1,12 +1,19 @@
 @import 'vars'
 @import 'mixins'
 
+/* centers pieces of the page, mostly the header, footer, and main elements */
 .center {
   margin: 0 auto;
   position: relative;
   max-width: 1220px;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 24px;
+  padding-right: 24px;
+
+  /* don't compound padding with nested centering */
+  .center {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 /* Column helpers for the grids to be generated */
