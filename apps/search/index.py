@@ -313,6 +313,7 @@ def es_reindex_cmd(percent=100, mapping_types=None):
     :arg mapping_types: list of mapping types to index
 
     """
+    CHUNK_SIZE = getattr(settings, 'ES_CHUNK_SIZE', 1000.0)
     es = get_indexing_es()
 
     log.info('Wiping and recreating %s....', get_index())
@@ -336,15 +337,16 @@ def es_reindex_cmd(percent=100, mapping_types=None):
                  cls.get_mapping_type_name(), total)
 
         i = 0
-        for chunk in chunked(indexable, 1000):
+        for chunk in chunked(indexable, CHUNK_SIZE):
             index_chunk(cls, chunk, es=es)
 
             i += len(chunk)
             time_to_go = (total - i) * ((time.time() - start_time) / i)
-            per_1000 = (time.time() - start_time) / (i / 1000.0)
-            log.info('%s/%s... (%s to go, %s per 1000 docs)', i, total,
+            per_chunk = (time.time() - start_time) / (i / CHUNK_SIZE)
+            log.info('%s/%s... (%s to go, %s per %s docs)', i, total,
                      format_time(time_to_go),
-                     format_time(per_1000))
+                     format_time(per_chunk),
+                     CHUNK_SIZE)
 
             # We call this every 1000 or so because we're
             # essentially loading the whole db and if DEBUG=True,
@@ -354,9 +356,10 @@ def es_reindex_cmd(percent=100, mapping_types=None):
             reset_queries()
 
         delta_time = time.time() - cls_start_time
-        log.info('Done! (%s, %s per 1000 docs)',
+        log.info('Done! (%s, %s per %s docs)',
                  format_time(delta_time),
-                 format_time(delta_time / (total / 1000.0)))
+                 format_time(delta_time / (total / CHUNK_SIZE)),
+                 CHUNK_SIZE)
 
     delta_time = time.time() - start_time
     log.info('Done! (total time: %s)', format_time(delta_time))

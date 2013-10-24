@@ -72,15 +72,45 @@ def search(request, page_count=10):
     if search_form.is_valid():
         search_query = search_form.cleaned_data.get('q', None)
 
-        or_dict = {}
-        for field in ['title', 'content', 'summary']:
-            or_dict[field + '__text'] = search_query
+        # Perform some primitive !command parsing for specialized searches
+        # TODO: Account for quoted arguments, more complex commands
+        parts_in = search_query.split(' ')
+        parts_out = []
+        cmds = []
+        while len(parts_in):
+            part = parts_in.pop(0)
+            if part.startswith('!'):
+                try:
+                    arg = parts_in.pop(0)
+                except IndexError:
+                    arg = ''
+                cmds.append((part[1:].lower(), arg))
+            else:
+                parts_out.append(part)
+        plain_search_query = ' '.join(parts_out)
 
-        results = (DocumentType.search()
-                               .query(or_=or_dict)
-                               .filter(locale=request.locale)
-                               .highlight(*DocumentType.excerpt_fields)
-                               .facet('tags'))
+        # Start composing the search...
+        s = DocumentType.search()
+
+        if plain_search_query:
+            or_dict = {}
+            for field in ['title', 'content', 'summary']:
+                or_dict[field + '__text'] = plain_search_query
+            s = s.query(or_=or_dict)
+
+        # Process the search commands, if any.
+        for cmd, arg in cmds:
+            if 'kumascript' == cmd:
+                s = s.query(kumascript_macros=arg)
+            if 'classnames' == cmd:
+                s = s.query(css_classnames=arg)
+            if 'attributes' == cmd:
+                s = s.query(html_attributes=arg)
+
+        # Complete the search query
+        results = (s.filter(locale=request.locale)
+                    .highlight(*DocumentType.excerpt_fields)
+                    .facet('tags'))
 
         filtered_topics = search_form.cleaned_data.get('topic', [])
 
