@@ -44,7 +44,9 @@ import waffle
 
 from . import kumascript, TEMPLATE_TITLE_PREFIX
 from .content import (get_seo_description, get_content_sections,
-                      extract_code_sample, parse as parse_content)
+                      extract_code_sample, parse as parse_content,
+                      extract_css_classnames, extract_html_attributes,
+                      extract_kumascript_macro_names)
 from .exceptions import (UniqueCollision, SlugCollision,
                          DocumentRenderingInProgress,
                          DocumentRenderedContentNotAvailable)
@@ -942,6 +944,15 @@ class Document(NotificationsMixin, models.Model):
             src = self.html
         return extract_code_sample(id, src)
 
+    def extract_kumascript_macro_names(self):
+        return extract_kumascript_macro_names(self.html)
+
+    def extract_css_classnames(self):
+        return extract_css_classnames(self.rendered_html)
+
+    def extract_html_attributes(self):
+        return extract_html_attributes(self.rendered_html)
+
     def natural_key(self):
         return (self.locale, self.slug,)
 
@@ -1780,7 +1791,10 @@ class DocumentType(SearchMappingType, Indexable):
             'locale': obj.locale,
             'modified': obj.modified,
             'content': strip_tags(obj.rendered_html),
-            'tags': [tag.name for tag in obj.tags.all()]
+            'tags': [tag.name for tag in obj.tags.all()],
+            'kumascript_macros': obj.extract_kumascript_macro_names(),
+            'css_classnames': obj.extract_css_classnames(),
+            'html_attributes': obj.extract_html_attributes(),
         }
 
     @classmethod
@@ -1794,6 +1808,9 @@ class DocumentType(SearchMappingType, Indexable):
             'modified': {'type': 'date'},
             'content': {'type': 'string', 'analyzer': 'wikiMarkup'},
             'tags': {'type': 'string', 'analyzer': 'snowball'},
+            'kumascript_macros': {'type': 'string', 'analyzer': 'caseInsensitiveKeyword'},
+            'css_classnames': {'type': 'string', 'analyzer': 'caseInsensitiveKeyword'},
+            'html_attributes': {'type': 'string', 'analyzer': 'keyword'},
         }
 
     @classmethod
@@ -1813,6 +1830,10 @@ class DocumentType(SearchMappingType, Indexable):
                 'wikiMarkup': {
                     'type': 'standard',
                     'char_filter': 'html_strip'
+                },
+                'caseInsensitiveKeyword': {
+                    'type': 'keyword',
+                    'char_filter': 'lowercase'
                 }
             }
         }
