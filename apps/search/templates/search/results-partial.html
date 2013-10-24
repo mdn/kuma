@@ -1,0 +1,14 @@
+{% macro doc_block(doc, index) -%}
+  {% set doc_url = '%s%s' % (settings.SITE_URL, url('wiki.document', doc.slug, locale=doc.locale)) %}
+  <li class="result-box-{{ index }}">
+    <a href="{{ doc_url }}?{{ current_query }}"{% if current_doc == doc.id %} class="current"{% endif %}>
+      {{ doc.title }}
+    </a>
+  </li>
+ {% endmacro %}
+
+<ol>
+{% for doc in results %}
+  {{ doc_block(doc, loop.index) }}
+{% endfor %}
+</ol>

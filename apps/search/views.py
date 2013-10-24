@@ -2,7 +2,7 @@ import re
 import json
 
 from django.contrib.sites.models import Site
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.shortcuts import render
 from django.views.decorators.cache import cache_page
 
@@ -54,7 +54,7 @@ def merge_param(url, name, value):
     return url.set_query_params(param_dict)
 
 
-def search(request, page_count=10):
+def search(request, page_count=10, template_name='search/results.html'):
     """Performs search or displays the search form."""
 
     # Google Custom Search results page
@@ -63,10 +63,18 @@ def search(request, page_count=10):
         return render(request, 'landing/searchresults.html', {'query': query})
 
     search_form = SearchForm(request.GET or None)
+    url = URLObject(request.get_full_path())
+
+    # build the current request's query but remove the doc id since
+    # we need the query to render to url to *other* search results
+    # that have a differing doc id
+    query = url.query.del_param('doc')
 
     context = {
-        'search_form': search_form,
+        'current_url': url,
+        'current_query': query,
         'current_page': 1,
+        'search_form': search_form,
     }
 
     if search_form.is_valid():
@@ -95,8 +103,6 @@ def search(request, page_count=10):
         end = start + page_count
         results = results[start:end]
 
-        url = URLObject(request.get_full_path())
-
         # {u'tags': [{u'count': 1, u'term': u'html'}]}
         # then we go through the returned facets and match the items with
         # the allowed filters
@@ -122,25 +128,40 @@ def search(request, page_count=10):
 
             facet_counts.append(dict(result_facet, **facet_updates))
 
+        prev_page = current_page - 1 if start > 0 else None
+        next_page = current_page + 1 if end < result_count else None
+        if prev_page:
+            context['prev_page_url'] = url.set_query_param('page',
+                                                           str(prev_page))
+        if next_page:
+            context['next_page_url'] = url.set_query_param('page',
+                                                           str(next_page))
+
         context.update({
             'results': results,
             'search_query': search_query,
             'result_count': result_count,
             'facet_counts': facet_counts,
             'current_page': current_page,
-            'prev_page': current_page - 1 if start > 0 else None,
-            'next_page': current_page + 1 if end < result_count else None,
+            'current_doc': search_form.cleaned_data.get('doc', None),
+            'prev_page': prev_page,
+            'next_page': next_page,
         })
 
     else:
         search_query = ''
         result_count = 0
 
-    template = 'results.html'
     if flag_is_active(request, 'redesign'):
-        template = 'results-redesign.html'
+        template_name = 'search/results-redesign.html'
 
-    return render(request, 'search/%s' % template, context)
+    if True:#request.is_ajax():
+        if result_count == 0:
+            # Return a 404 response if no search results can be found
+            raise Http404
+        template_name = 'search/results-partial.html'
+
+    return render(request, template_name, context)
 
 
 @cache_page(60 * 15)  # 15 minutes.

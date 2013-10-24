@@ -17,6 +17,8 @@ class SearchForm(forms.Form):
 
     page = forms.CharField(required=False, widget=forms.HiddenInput)
 
+    doc = forms.IntegerField(required=False, widget=forms.HiddenInput)
+
     def __init__(self, *args, **kwargs):
         super(SearchForm, self).__init__(*args, **kwargs)
         self.fields['topic'].choices = self.topic_choices().items()
