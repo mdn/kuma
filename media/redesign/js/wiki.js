@@ -95,9 +95,12 @@
     var $toc = $('#toc');
     if($toc.length) {
       var tocOffset = $toc.offset().top;
-      var $toggler = $toc.find('.toggler');
+      var $toggler = $toc.find('> .toggler');
+      var fixedClass = 'fixed';
+      var $wikiRight = $('#wiki-right');
       
-      $(window).on('scroll resize', debounce(function() {
+      var resizeFn = debounce(function(e) {
+        // Set forth the pinned or static positioning of the table of contents
         var scroll = window.scrollY;
         var maxHeight = window.innerHeight - parseInt($toc.css('padding-top'), 10) - parseInt($toc.css('padding-bottom'), 10);
         
@@ -107,8 +110,8 @@
             maxHeight: maxHeight
           });
           
-          if(!$toc.hasClass('fixed')){
-            $toc.addClass('fixed');
+          if(!$toc.hasClass(fixedClass)){
+            $toc.addClass(fixedClass);
           }
         }
         else {
@@ -116,9 +119,25 @@
             width: 'auto',
             maxHeight: 'none'
           });
-          $toc.removeClass('fixed');
+          $toc.removeClass(fixedClass);
         }
-      }, 10));
+        
+        // Should the TOC be one-column (auto-closed) or sidebar'd
+        if(!e || e.type == 'resize') {
+          if($wikiRight.css('float') == 'none') {
+            if(!$toc.attr('data-closed')) {
+              $toggler.trigger('click');
+            }
+          }
+          else if($toc.attr('data-closed')) { // Changes width, should be opened (i.e. mobile to desktop width)
+            $toggler.trigger('click');
+          }
+        }
+      }, 10);
+      
+      // Set it forth!
+      resizeFn();
+      $(window).on('scroll resize', resizeFn);
     }
   })();
   
