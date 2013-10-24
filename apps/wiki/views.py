@@ -1239,7 +1239,10 @@ def move(request, document_slug, document_locale):
             move_page.delay(document_locale, document_slug,
                             form.cleaned_data['slug'],
                             request.user.email)
-            return redirect(reverse('wiki.move_requested'))
+            return render(request, 'wiki/move_requested.html', {
+                'form': form,
+                'document': doc
+            })
     else:
         form = TreeMoveForm()
 
