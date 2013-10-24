@@ -86,6 +86,7 @@ article {
   > li {
     margin-left: (grid-spacing / 2);
     display: inline-block;
+    position: relative;
 
     a, button, input[type='submit'], input[type='button'] {
       compat-important(font-size, smaller-font-size);
@@ -103,7 +104,7 @@ article {
   }
 
   .submenu {
-    component-submenu-method(400px, 2, button-background, button-shadow-color);
+    component-submenu-method(160px, 1, button-background, button-shadow-color);
     top: 40px;
     right: 0;
     z-index: 3;

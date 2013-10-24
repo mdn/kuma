@@ -1,12 +1,12 @@
 (function($) {
 
   /*
-    Create the settings menu
+    Create the settings and languages menu
   */
   (function() {
-    var $settingsMenu = $('#settings-menu');
-    $settingsMenu.mozMenu();
-    $settingsMenu.parent().find('.submenu').mozKeyboardNav();
+    var $menus = $('#settings-menu, #languages-menu');
+    $menus.mozMenu();
+    $menus.parent().find('.submenu').mozKeyboardNav();
   })();
 
   /*
