@@ -638,6 +638,9 @@ MINIFY_BUNDLES = {
         'redesign-profile': (
             'redesign/css/profile.css',
         ),
+        'redesign-wiki-syntax': (
+          'redesign/css/wiki-syntax.css',
+        ),
     },
     'js': {
         'mdn': (

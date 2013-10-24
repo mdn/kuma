@@ -716,3 +716,68 @@ tr.release td.stepLabel { padding: 0 5px 15px 25px; width: 12%; text-align: righ
 .html-rtl .deki-pagination .next a:before, .html-rtl .pagination .next a:before { content: "\00AB\00A0"; font-size: 1.1em; } /* raquo space */
 
 .html-rtl .change-locale { clear: right; }
+
+
+
+
+
+/* REDESIGN SPECIFIC; these should be kept with redesign and moved */
+.redesign div.note, .redesign div.warning.review-technical, .redesign div.warning.review-editorial { 
+  background: rgba(231, 228, 157, 0.25);
+  color: rgba(0, 0, 0, 0.65);
+  font-style: italic;
+  border-color: rgba(231,228,157,0.15);
+  border-style: solid !important;
+  border-width: 5px !important;
+}
+
+.redesign pre[class*="language-"].twopartsyntaxbox, .redesign pre[class*="language-"].syntaxbox {
+  background: rgba(212, 221, 228, 0.5);
+}
+
+.redesign table.compat-table td.header, .redesign table.compat-table th {
+  background: rgba(212, 221, 228, 0.5);
+  font-weight: 700;
+}
+
+.redesign table.standard-table { 
+  border: 2px solid rgba(255, 255, 255, 1);
+  border-collapse: collapse;
+}
+
+.redesign table.standard-table td {
+  border: 2px solid rgba(255, 255, 255, 1);
+  font-size: 12px;
+  box-shadow: inset 0 -1px 0 0 rgba(212, 221, 228, 0.5);
+  background-color: rgba(212, 221, 228, 0.15);
+  padding: 6px 8px 8px;
+}
+
+.redesign table.standard-table td.header, .redesign table.standard-table th {
+  border: 2px solid rgba(255, 255, 255, 1);
+  border-bottom: 2px solid rgba(212, 221, 228, 1);
+  background: rgba(212, 221, 228, 0.5);
+  text-align: left;
+  font-family: 'Open Sans Light', sans-serif;
+  font-size: 14px;
+  padding: 2px 8px 4px;
+}
+
+.redesign table.fullwidth-table {
+  border: 1px solid rgba(212, 221, 228, 0.5);
+}
+
+.redesign table.fullwidth-table td.header,.redesign table.fullwidth-table th {
+  border: 1px solid rgba(212, 221, 228, 1); 
+  background: rgba(212, 221, 228, 0.5);
+}
+
+.redesign div.bug, .redesign div.warning {
+  background-color: rgba(193, 56, 50, 0.85);
+  font-style: italic;
+  color: rgba(193, 56, 50, 1);
+}
+
+.redesign div.bug, .redesign div.warning p {
+  color: rgba(255, 255, 255, 1);
+}

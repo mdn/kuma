@@ -21,12 +21,21 @@ aside {
 /* headings */
 h1, h2, h3, h4 {
   font-weight: light-font-weight;
-  margin-bottom: (grid-spacing / 2);
+  margin-bottom: (content-block-margin / 2);
+  margin-top: (content-block-margin * 2);
   font-family: heading-font-family;
+}
+
+h2, h3 {
+  font-family: 'Open Sans', sans-serif;
 }
 
 h2, h3, h4 {
   line-height: 100%;
+}
+
+h3, h4 {
+  font-weight: 200;
 }
 
 h1 {
@@ -36,15 +45,16 @@ h1 {
 
 h2 {
   @extend .heading-2;
+  font-weight: 700;
 }
 
 h3 {
-  font-size: 28px;
+  font-size: 24px;
   letter-spacing: -0.5px;
 }
 
 h4 {
-  font-size: 24px;
+  font-size: 18px;
   letter-spacing: -0.25px;
 }
 
@@ -70,6 +80,7 @@ p, dl {
 
 pre {
   compat-only(line-height, 19px);
+  font-size: smaller-font-size !important;
 }
 
 /* forms */
