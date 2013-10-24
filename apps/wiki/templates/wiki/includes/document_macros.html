@@ -110,6 +110,7 @@
 
 {% macro get_document_quick_links(html) %}
   <div class="quick-links" id="quick-links">
+    <div class="title">{{ _('See Also') }}</div>
     {{ html|safe }}
   </div>
 {%- endmacro %}
