@@ -381,6 +381,10 @@ div.bug > *:last-child, div.warning > *:last-child {
   position: relative;
   margin-bottom: grid-spacing;
 
+  .title {
+    margin-bottom: 0;
+  }
+
   li {
     position: relative;
     padding-top: list-item-spacing;
@@ -391,7 +395,7 @@ div.bug > *:last-child, div.warning > *:last-child {
   }
 }
 
-.quick-links a, #quick-links-toggle {
+.quick-links a, .quick-links .title, #quick-links-toggle {
   display: block;
   position: relative;
   padding-left: 20px;
