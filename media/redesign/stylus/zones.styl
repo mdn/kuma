@@ -5,6 +5,7 @@
 .zone {
   create-gradient-background('', true);
   use-white-logo();
+  remove-main-spacing();
 
   #main-header {
     border-bottom-color: rgba(255, 255, 255, 0.2);
@@ -28,13 +29,16 @@
   }
 
   /* zone content area needs to be adjusted for zone pages */
-  remove-main-spacing();
   main {
     background: transparent;
   }
 
   .wiki-main-content {
     padding-top: first-content-top-padding !important;
+
+    .center {
+      add-center-spacing();
+    }
   }
 }
 

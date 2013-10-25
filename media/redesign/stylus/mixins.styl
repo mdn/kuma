@@ -154,8 +154,14 @@ remove-main-spacing() {
   }
 }
 
-add-main-space() {
-  @extend .center;
+add-center-spacing() {
+  padding-left: gutter-width;
+  padding-right: gutter-width;
+}
+
+remove-center-spacing() {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 /* Overrides the navigation menu color - zones and homepage */
