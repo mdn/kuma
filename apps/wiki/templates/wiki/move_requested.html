@@ -5,7 +5,10 @@
 {% block bodyclass %}move-page{% endblock %}
 
 {% block content %}
-{% trans %}
-<p>The requested page move has been queued, and will complete shortly. You'll receive an email when it finishes, or if any errors occur during the move.</p>
+{% set old_slug=document.slug %}
+{% set new_slug=form.slug.value() %}
+{% trans new_url=url('wiki.document', new_slug, locale=document.locale) %}
+<p>Moving {{ old_slug }} to <a href="{{ new_url }}">{{ new_slug }}</a></p>
+<p> You'll receive an email when it finishes, or if any errors occur during the move.</p>
 {% endtrans %}
 {% endblock %}

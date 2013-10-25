@@ -481,7 +481,7 @@ class BaseDocumentManager(models.Manager):
             'summary', 'content', 'comment',
             'keywords', 'tags', 'toc_depth', 'significance', 'is_approved',
             'creator',  # HACK: Replaced on import, but deserialize needs it
-            'mindtouch_page_id', 'mindtouch_old_id', 'is_mindtouch_migration',
+            'is_mindtouch_migration',
         )
         serializers.serialize('json', objects, indent=2, stream=stream,
                               fields=fields, use_natural_keys=True)
@@ -673,12 +673,6 @@ class Document(NotificationsMixin, models.Model):
 
     # Whether this page is deleted.
     deleted = models.BooleanField(default=False)
-
-    # HACK: Migration bookkeeping - index by the old_id of MindTouch revisions
-    # so that migrations can be idempotent.
-    mindtouch_page_id = models.IntegerField(null=True, db_index=True,
-                                            help_text="ID for migrated "
-                                                      "MindTouch page")
 
     # Last modified time for the document. Should be equal-to or greater than
     # the current revision's created field
@@ -1974,11 +1968,6 @@ class Revision(models.Model):
     # TODO: limit_choices_to={'document__locale':
     # settings.WIKI_DEFAULT_LANGUAGE} is a start but not sufficient.
 
-    # HACK: Migration bookkeeping - index by the old_id of MindTouch revisions
-    # so that migrations can be idempotent.
-    mindtouch_old_id = models.IntegerField(
-            help_text="ID for migrated MindTouch revision (null for current)",
-            null=True, db_index=True, unique=True)
     is_mindtouch_migration = models.BooleanField(default=False, db_index=True,
             help_text="Did this revision come from MindTouch?")
 
