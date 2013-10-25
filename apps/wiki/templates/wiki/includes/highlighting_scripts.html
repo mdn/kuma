@@ -1,4 +1,9 @@
 <!-- include syntax highlighting scripts -->
 {{ css('syntax-prism') }}
+
+{% if waffle.flag('redesign') %}
+  {{ css('redesign-wiki-syntax') }}
+{% endif %}
+
 <script type="text/javascript" src="{{ MEDIA_URL }}js/libs/prism/prism.js" data-manual></script>
 {{ js('syntax-prism') }}

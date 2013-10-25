@@ -7,7 +7,7 @@ if [ ! -d "$CSSDIR" ]; then
 	mkdir $BASEDIR/../media/redesign/css/
 fi
 
-for file in main wiki demo-studio profile search zones home
+for file in main wiki demo-studio profile search zones home wiki-syntax
 do
 	stylus $BASEDIR/../media/redesign/stylus/$file.styl --out $BASEDIR/../media/redesign/css --compress
 done
