@@ -143,7 +143,7 @@ a.persona-button {
     position: relative;
 
     &:after {
-      content:'';
+      content: '';
       position: absolute;
       top: 0;
       right: -12px;
@@ -173,11 +173,14 @@ a.persona-button {
     }
 
     &.signin {
-      create-gradient(#56565a, #3a3a3a);
       text-shadow: 0px 1.5px 1px rgba(0, 0, 0, 0.35);
+      
       &:after {
-        create-gradient(#56565a, #3a3a3a);
         z-index: -1;
+      }
+      
+      &, &:after {
+        create-gradient(#56565a, #3a3a3a);
       }
     }
   }
