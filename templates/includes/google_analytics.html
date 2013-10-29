@@ -3,6 +3,9 @@
 
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', '{{ config.GOOGLE_ANALYTICS_ACCOUNT }}']);
+  {% if not request.user.is_anonymous() %}
+  _gaq.push(['_setCustomVar', 7, 'Signed-In', 'Yes', 1]);
+  {% endif %}
   {% if waffle.flag('redesign') %}
   _gaq.push(['_setCustomVar', 6, 'Redesign', 'Yes', 1]);
   {% endif %}
