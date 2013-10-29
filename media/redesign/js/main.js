@@ -5,7 +5,18 @@ document.documentElement.className += ' js';
 
 (function($) {
 
-  var isOldIE = $('#oldIE').length;
+  /*
+    Some quick feature testing up front
+  */
+  var isOldIE = $('#feature-test-old-ie').length;
+  (function() {
+    // This DIV will have a different z-index based on device width
+    // This is changed via media queries supported via MDN
+    var $div = $('<div id="feature-test-element"></div>').appendTo(document.body);
+    window.mdn.features.getDeviceState = function() {
+      return $div.css('z-index');
+    };
+  })();
 
   /*
     Main menu

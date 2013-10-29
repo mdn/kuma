@@ -2,12 +2,17 @@
   // This represents the site configuration
   window.mdn = {
     build: '{{ BUILD_ID_JS }}',
+    // Properties and settings for CKEditor will go here
     ckeditor: {},
+    // Feature test results and methods will be placed here
+    features: {},
+    // Ensures gettext always returns something, is always set
+    gettext: function(x) { return x; },
+    // The path to media (images, CSS, JS) in MDN
     mediaPath: '{{ MEDIA_URL }}',
+    // Wiki-specific settings will be placed here
     wiki: {
       autosuggestTitleUrl: '{{ url('wiki.autosuggest_documents') }}'
     }
   };
-  // Ensures gettext always returns something, is always set
-  window.gettext = function(x) { return x; }
 </script>
