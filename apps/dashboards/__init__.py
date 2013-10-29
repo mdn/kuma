@@ -1,11 +1,16 @@
 from django.conf import settings
 
 ORDERS = (
-    ('last-update', 'Last update'),
+    ('-modified', 'Recent locale document'),
+    ('modified', 'Oldest locale document'),
+    ('-parent__modified', 'Recent En document'),
+    ('parent__modified', 'Oldest En document'),
 )
 
 LOCALIZATION_FLAGS = (
-    ('inprogress', 'Localization in Progress'),
+    ('update-needed', 'Update needed'),
+    ('missing-parent', 'Missing parent'),
+    ('inprogress', 'Localization in progress'),
 )
 
 # TODO: fix this

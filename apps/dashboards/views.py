@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.http import require_GET
+from django.db.models import F
 
 from jinja2 import escape
 from waffle.decorators import waffle_flag
@@ -25,17 +26,17 @@ from . import (DEFAULT_LOCALE, LOCALES, ORDERS, LANGUAGES,
 def fetch_localization_data(request):
     locale = request.GET.get('locale')
     topic = request.GET.get('topic', '')
-    orderby = request.GET.get('orderby')
-    localization_flags = request.GET.get('localization_flags')
+    orderby = request.GET.get('orderby', '-modified')
+    localization_flags = request.GET.get('localization_flags', 'update-needed')
     
     display_start = int(request.GET.get('iDisplayStart', 0))
 
     docs = (Document.objects.exclude(locale=DEFAULT_LOCALE)
             .exclude(is_redirect=True)
             .defer('html', 'rendered_html'))
-            
-    if orderby and orderby in ORDERS:
-        docs = docs.order_by('-' + orderby)
+
+    if orderby and orderby in dict(ORDERS):
+        docs = docs.order_by(orderby)
     else:
         docs = docs.order_by('-modified')
 
@@ -45,9 +46,17 @@ def fetch_localization_data(request):
     
     if locale and locale in LANGUAGES:
         query_kwargs['locale'] = locale
+        
+    # Filter out documents where we can't compare to a parent (English) document
+    query_kwargs['parent__isnull'] = False
 
-    if (localization_flags and
-        localization_flags in LOCALIZATION_FLAGS):
+    # We want to see outdated locale documents
+    if localization_flags == 'update-needed':
+        query_kwargs['modified__lt'] = F('parent__modified')
+    # We want to see docs with missing parents explicitly
+    elif localization_flags == 'missing-parent':
+        query_kwargs['parent__isnull'] = True
+    elif (localization_flags and localization_flags in LOCALIZATION_FLAGS):
         query_kwargs['current_revision__localization_tags__name'] = localization_flags
 
     if topic:
@@ -114,6 +123,7 @@ def localization(request):
     filter_data = {
         'locales': LOCALES,
         'orderby_list': ORDERS,
+        'flag_list': LOCALIZATION_FLAGS,
     }
     params = {
         'filters': filters,

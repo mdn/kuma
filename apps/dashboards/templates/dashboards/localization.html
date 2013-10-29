@@ -32,10 +32,11 @@
           <label for="l10n-dashboard-topic">{{ _('Topic') }}:</label>
           <input name="topic" id="l10n-dashboard-topic" value="{{ request.GET.topic }}" />
           
-          <label for="localization-flags">{{ _("Localization Flags") }}:</label>
+          <label for="localization-flags">{{ _("Filter mode") }}:</label>
           <select name="localization_flags" id="localization-flags">
-            <option value=""></option>
-            <option value="inprogress"{{ selected('inprogress', filters['localization_flags']) }}>Localization in Progress</option>
+            {% for flags in filter_data.flag_list %}
+                <option value="{{ flags[0] }}"{{ selected(flags[0], filters['localization_flags']) }}>{{ flags[1] }}</option>
+            {% endfor %}
           </select>
           
           <label for="orderby">{{ _("Order by") }}:</label>
