@@ -2,7 +2,6 @@
 {% extends "search/base.html" %}
 {% set meta = (('WT.oss', q),
                ('WT.oss_r', num_results)) %}
-{% set result_fold_limit = 3 %}
 {% block title %}
   {% if search_query %}
     {{ page_title(_('Search Results for "{search_query}"')|f(search_query=search_query)) }}
@@ -15,8 +14,7 @@
 
 {% macro doc_block(doc, index) -%}
   {% set doc_url = '%s%s' % (settings.SITE_URL, url('wiki.document', doc.slug, locale=doc.locale)) %}
-  {% set more_class = 'closed' if index > result_fold_limit and current_page == 1 else '' %}
-  <li class="result-{{ index }} {{ more_class }}">
+  <li class="result-{{ index }}">
     <div class="column-container">
       <div class="column-1"><i class="icon-file-text-alt"></i></div>
       <div class="column-5 result-list-item">
@@ -78,14 +76,7 @@
               {% endfor %}
         </ul>
 
-        {% set show_expander = current_page == 1 and result_count > result_fold_limit %}
         <div class="search-results-more {% if show_expander %}with-view-all{% endif %}">
-
-          {% if show_expander %}
-          {% trans %}
-            <a href="javascript:;" class="view-all">View all {{ result_count }} <i class="icon-caret-down"></i></a>
-          {% endtrans %}
-          {% endif %}
 
           <div class="pager">
             {% if prev_page %}
@@ -103,56 +94,6 @@
         </div>
       </div>
 
-      {#
-      <div class="search-pane seach-results-container">
-        <h3><i class="icon-copy"></i>Demos</h3>
-
-        <ul class="result-list">
-          <li>
-            <div class="column-container">
-              <div class="column-1"><i class="icon-file-text-alt"></i></div>
-              <div class="column-5 result-list-item">
-                <h4 class="larger"><a href="">Drag and Drop - DragDrop | MDN</a></h4>
-                <p>3 days ago ... Firefox and other Mozilla applications support a number of features for handling drag and drop. This allows the user to click and hold the mouse ...</p>
-                <p class="search-meta"><a href="">developer.mozilla.org/en-US/docs/DragDrop/Drag_and_Drop</a></p>
-              </div>
-              <div class="column-strip result-list-link">
-                <a href=""><i class="icon-code"></i>Code Sample</a>
-                <a href=""><i class="icon-play-circle"></i>Demo Sample</a>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="column-container">
-              <div class="column-1"><i class="icon-file-text-alt"></i></div>
-              <div class="column-5 result-list-item">
-                <h4 class="larger"><a href="">Drag and Drop - DragDrop | MDN</a></h4>
-                <p>3 days ago ... Firefox and other Mozilla applications support a number of features for handling drag and drop. This allows the user to click and hold the mouse ...</p>
-                <p class="search-meta"><a href="">developer.mozilla.org/en-US/docs/DragDrop/Drag_and_Drop</a></p>
-              </div>
-              <div class="column-strip result-list-link">
-                <a href=""><i class="icon-code"></i>Code Sample</a>
-                <a href=""><i class="icon-play-circle"></i>Demo Sample</a>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="column-container">
-              <div class="column-1"><i class="icon-file-text-alt"></i></div>
-              <div class="column-5 result-list-item">
-                <h4 class="larger"><a href="">Drag and Drop - DragDrop | MDN</a></h4>
-                <p>3 days ago ... Firefox and other Mozilla applications support a number of features for handling drag and drop. This allows the user to click and hold the mouse ...</p>
-                <p class="search-meta"><a href="">developer.mozilla.org/en-US/docs/DragDrop/Drag_and_Drop</a></p>
-              </div>
-              <div class="column-strip result-list-link">
-                <a href=""><i class="icon-code"></i>Code Sample</a>
-                <a href=""><i class="icon-play-circle"></i>Demo Sample</a>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
-      #}
       {% endif %}
     </div>
 
