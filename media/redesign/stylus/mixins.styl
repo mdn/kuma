@@ -306,6 +306,15 @@ use-white-logo() {
   &.positive {
     compat-important(background-color, #70a300);
     vendorize(box-shadow, inset 0 -1px #486900);
+
+  }
+
+  &.positive.btn-disabled {
+    compat-important(color, #acca6e);
+  }
+
+  &.btn-disabled {
+    compat-important(color, #a7a8ad);
   }
 
   &.transparent {

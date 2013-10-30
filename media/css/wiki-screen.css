@@ -333,6 +333,12 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
   background: -webkit-linear-gradient(top, #f8b8a0 0, #f8a688 100%);
   background: linear-gradient(top, #f8b8a0 0, #f8a688 100%);
 }
+#page-buttons .btn-save.btn-disabled {
+  color: #84A338;
+}
+#page-buttons .btn-preview.btn-disabled {
+  color: #8097A8;
+}
 
 .page-content .talkpage { font-size: .857em; padding: .25em 15px; }
 
