@@ -162,5 +162,6 @@ ES_INDEXES = {'default': 'main_index'}
 ES_INDEX_PREFIX = 'mdn'
 ES_LIVE_INDEX = True
 ES_INDEXING_TIMEOUT = 30
+ES_CHUNK_SIZE = 100.0
 
 SENTRY_DSN = 'https://mana.mozilla.org/wiki/display/websites/Developer+Cluster#DeveloperCluster-Sentry'
