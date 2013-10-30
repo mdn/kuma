@@ -132,6 +132,11 @@ class DocumentType(SearchMappingType, Indexable):
                 'case_sensitive': {
                     'type': 'custom',
                     'tokenizer': 'keyword'
+                },
+                'caseInsensitiveKeyword': {
+                    'type': 'custom',
+                    'tokenizer': 'keyword',
+                    'filter': 'lowercase'
                 }
             },
         }
@@ -148,6 +153,7 @@ class DocumentType(SearchMappingType, Indexable):
                 # faster highlighting
                 'term_vector': 'with_positions_offsets',
             },
+            'raw': strip_tags(obj.html),
             'id': {'type': 'long', 'index': 'not_analyzed'},
             'locale': {'type': 'string', 'index': 'not_analyzed'},
             'modified': {'type': 'date'},
@@ -163,6 +169,18 @@ class DocumentType(SearchMappingType, Indexable):
                 'type': 'string',
                 'analyzer': 'kuma_title',
                 'boost': 1.2,  # the title usually has the best description
+            },
+            'kumascript_macros': {
+                'type': 'string',
+                'analyzer': 'caseInsensitiveKeyword'
+            },
+            'css_classnames': {
+                'type': 'string',
+                'analyzer': 'caseInsensitiveKeyword'
+            },
+            'html_attributes': {
+                'type': 'string',
+                'analyzer': 'caseInsensitiveKeyword'
             },
         }
 
@@ -180,6 +198,9 @@ class DocumentType(SearchMappingType, Indexable):
             'modified': obj.modified,
             'content': strip_tags(obj.rendered_html),
             'tags': list(obj.tags.values_list('name', flat=True))
+            'kumascript_macros': obj.extract_kumascript_macro_names(),
+            'css_classnames': obj.extract_css_classnames(),
+            'html_attributes': obj.extract_html_attributes(),
         }
         if obj.zones.exists():
             # boost all documents that are a zone
