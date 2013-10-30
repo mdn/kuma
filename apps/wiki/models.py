@@ -1281,6 +1281,7 @@ class Document(NotificationsMixin, models.Model):
             new_parent = Document.objects.get(locale=self.locale,
                                               slug='/'.join(new_slug_bits))
             self.parent_topic = new_parent
+            self.save()
         except Document.DoesNotExist:
             pass
 
