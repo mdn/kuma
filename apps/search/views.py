@@ -128,6 +128,8 @@ def search(request, page_count=10):
             'result_count': result_count,
             'facet_counts': facet_counts,
             'current_page': current_page,
+            'start_index': start + 1,
+            'end_index': start + len(results),
             'prev_page': current_page - 1 if start > 0 else None,
             'next_page': current_page + 1 if end < result_count else None,
         })
