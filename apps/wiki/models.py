@@ -1135,18 +1135,6 @@ class Document(NotificationsMixin, models.Model):
                      self.natural_cache_key)
         cache.delete(cache_key)
 
-        # Make redirects if there's an approved revision and title or slug
-        # changed. Allowing redirects for unapproved docs would (1) be of
-        # limited use and (2) require making Revision.creator nullable.
-        slug_changed = hasattr(self, 'old_slug')
-        title_changed = hasattr(self, 'old_title')
-        if self.current_revision and slug_changed:
-            self.move()
-            if slug_changed:
-                del self.old_slug
-        if title_changed:
-            del self.old_title
-
     def delete(self, *args, **kwargs):
         if waffle.switch_is_active('wiki_error_on_delete'):
             # bug 863692: Temporary while we investigate disappearing pages.
@@ -1184,32 +1172,91 @@ class Document(NotificationsMixin, models.Model):
         signals.post_save.send(sender=self.__class__,
                                instance=self)
 
-    def move(self, new_slug=None, user=None):
+    def _post_move_redirects(self, new_slug, user, title):
         """
-        Complete the process of moving a page by leaving a redirect
-        behind.
-
+        Create and return a Document and a Revision to serve as
+        redirects once this page has been moved.
+        
         """
-        if new_slug is None:
-            new_slug = self.slug
-        if user is None:
-            user = self.current_revision.creator
-        self.slug = new_slug
-        doc = Document.objects.create(locale=self.locale,
-                                      title=self._attr_for_redirect(
-                                          'title', REDIRECT_TITLE),
-                                      slug=self._attr_for_redirect(
-                                          'slug', REDIRECT_SLUG),
-                                      category=self.category,
-                                      is_localizable=False)
-        Revision.objects.create(document=doc,
-                                content=REDIRECT_CONTENT % dict(
-                                    href=self.get_absolute_url(),
-                                    title=self.title),
+        redirect_doc = Document(locale=self.locale,
+                                title=self.title,
+                                slug=self.slug,
+                                category=self.category,
+                                is_localizable=False)
+        redirect_rev = Revision(content=REDIRECT_CONTENT % {
+                                  'href': reverse('wiki.document',
+                                                  args=[new_slug],
+                                                  locale=self.locale),
+                                  'title': title,
+                                },
                                 is_approved=True,
                                 toc_depth=self.current_revision.toc_depth,
                                 reviewer=self.current_revision.creator,
                                 creator=user)
+        return (redirect_doc, redirect_rev)
+
+    def _moved_revision(self, new_slug, user, title=None):
+        """
+        Create and return a Revision which is a copy of this
+        Document's current Revision, as it will exist at a moved
+        location.
+        
+        """
+        moved_rev = self.current_revision
+
+        # Shortcut trick for getting an object with all the same
+        # values, but making Django think it's new.
+        moved_rev.id = None
+
+        moved_rev.creator = user
+        moved_rev.created = datetime.now()
+        moved_rev.slug = new_slug
+        if title:
+            moved_rev.title = title
+        return moved_rev
+
+    def _post_move_breadcrumbs(self, new_slug, save=True):
+        """
+        Post-move, update this Document's parent_topic if a Document
+        exists at the appropriate slug and locale.
+        
+        """
+        new_slug_bits = new_slug.split('/')
+        new_slug_bits.pop()
+        new_parent = None
+        
+        try:
+            new_parent = Document.objects.get(locale=self.locale,
+                                              slug='/'.join(new_slug_bits))
+        except Document.DoesNotExist:
+            pass
+
+        return new_parent
+        
+    def _move_conflicts(self, new_slug):
+        """
+        Given a new slug to be assigned to this document, check
+        whether there is an existing, non-redirect, Document at that
+        slug in this locale. Any redirect existing there will be
+        deleted.
+
+        This is necessary since page moving is a background task, and
+        a Document may come into existence at the target slug after
+        the move is requested.
+        
+        """
+        existing = None
+        try:
+            existing = Document.objects.get(locale=self.locale,
+                                            slug=new_slug)
+        except Document.DoesNotExist:
+            pass
+
+        if existing is not None:
+            if existing.is_redirect:
+                existing.delete()
+            else:
+                raise Exception("Requested move would overwrite a non-redirect page.")
 
     def _tree_conflicts(self, new_slug):
         """
@@ -1241,53 +1288,56 @@ class Document(NotificationsMixin, models.Model):
         Move this page and all its children.
 
         """
-        # Sanity check: is there an already-existing, non-redirect
-        # document at the new slug?
-        existing = None
-        try:
-            existing = Document.objects.get(locale=self.locale,
-                                            slug=new_slug)
-        except Document.DoesNotExist:
-            pass
-
-        if existing is not None:
-            # If it's a redirect, it's safe to delete. Otherwise, bail
-            # out.
-            if existing.is_redirect:
-                existing.delete()
-            else:
-                raise Exception("Requested move would overwrite a non-redirect page.")
+        # Page move is a 10-step process.
+        #
+        # Step 1: Sanity check. Has a page been created at this slug
+        # since the move was requested? If not, OK to go ahead and
+        # change our slug.
+        self._move_conflicts(new_slug)
 
         if user is None:
             user = self.current_revision.creator
+        if title is None:
+            title = self.title
 
-        rev = self.current_revision
-        review_tags = [str(tag) for tag in rev.review_tags.all()]
+        # Step 2: stash our current review tags, since we want to
+        # preserve them.
+        review_tags = [str(tag) for tag in self.current_revision.review_tags.all()]
 
-        # Shortcut trick for getting an object with all the same
-        # values, but making Django think it's new.
-        rev.id = None
+        # Step 3: Create (but don't yet save) a copy of our current
+        # revision, but with the new slug and title (if title is
+        # changing too).
+        moved_rev = self._moved_revision(new_slug, user, title)
 
-        rev.creator = user
-        rev.created = datetime.now()
-        rev.slug = new_slug
-        if title:
-            rev.title = title
+        # Step 4: Create (but don't yet save) a Document and Revision
+        # to leave behind as a redirect from old location to new.
+        redirect_doc, redirect_rev = self._post_move_redirects(new_slug, user, title)
+        
+        # Step 5: Update our breadcrumbs.
+        new_parent = self._post_move_breadcrumbs(new_slug)
 
-        # Set new parent, if any.
-        new_slug_bits = new_slug.split('/')
-        new_slug_bits.pop()
-        try:
-            new_parent = Document.objects.get(locale=self.locale,
-                                              slug='/'.join(new_slug_bits))
-            self.parent_topic = new_parent
-        except Document.DoesNotExist:
-            pass
+        # If we found a Document at what will be our parent slug, set
+        # it as our parent_topic. If we didn't find one, then we no
+        # longer have a parent_topic (since our original parent_topic
+        # would already have moved if it were going to).
+        self.parent_topic = new_parent
 
-        rev.save(force_insert=True)
+        # Step 6: Save this Document.
+        self.slug = new_slug
+        self.save()
 
-        rev.review_tags.set(*review_tags)
+        # Step 7: Save the Revision that actually moves us.
+        moved_rev.save(force_insert=True)
 
+        # Step 8: Save the review tags.
+        moved_rev.review_tags.set(*review_tags)
+
+        # Step 9: Save the redirect.
+        redirect_doc.save()
+        redirect_rev.document = redirect_doc
+        redirect_rev.save()
+
+        # Finally, step 10: recurse through all of our children.
         for child in self.children.all():
             child_title = child.slug.split('/')[-1]
             child._move_tree('/'.join([new_slug, child_title]), user)
@@ -1361,24 +1411,6 @@ class Document(NotificationsMixin, models.Model):
         # Finally, assign the new default parent topic
         self.parent_topic = new_pt
         self.save()
-
-    def __setattr__(self, name, value):
-        """Trap setting slug and title, recording initial value."""
-        # Public API: delete the old_title or old_slug attrs after changing
-        # title or slug (respectively) to suppress redirect generation.
-        if getattr(self, 'id', None):
-            # I have been saved and so am worthy of a redirect.
-            if name in ('slug', 'title') and hasattr(self, name):
-                old_name = 'old_' + name
-                if not hasattr(self, old_name):
-                    # Case insensitive comparison:
-                    if getattr(self, name).lower() != value.lower():
-                        # Save original value:
-                        setattr(self, old_name, getattr(self, name))
-                elif value == getattr(self, old_name):
-                    # They changed the attr back to its original value.
-                    delattr(self, old_name)
-        super(Document, self).__setattr__(name, value)
 
     @property
     def content_parsed(self):

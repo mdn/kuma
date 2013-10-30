@@ -286,52 +286,6 @@ class DocumentTests(TestCase):
         self._test_int_sets_and_descriptors(OperatingSystem,
                                             'operating_systems')
 
-    def _test_remembering_setter_unsaved(self, field):
-        """A remembering setter shouldn't kick in until the doc is saved."""
-        old_field = 'old_' + field
-        d = document()
-        setattr(d, field, 'Foo')
-        assert not hasattr(d, old_field), "Doc shouldn't have %s until it's" \
-                                          "saved." % old_field
-
-    def test_slug_setter_unsaved(self):
-        self._test_remembering_setter_unsaved('slug')
-
-    def test_title_setter_unsaved(self):
-        self._test_remembering_setter_unsaved('title')
-
-    def _test_remembering_setter(self, field):
-        old_field = 'old_' + field
-        d = document()
-        d.save()
-        old = getattr(d, field)
-
-        # Changing the field makes old_field spring into life:
-        setattr(d, field, 'Foo')
-        eq_(old, getattr(d, old_field))
-
-        # Changing it back makes old_field disappear:
-        setattr(d, field, old)
-        assert not hasattr(d, old_field)
-
-        # Change it again once:
-        setattr(d, field, 'Foo')
-
-        # And twice:
-        setattr(d, field, 'Bar')
-
-        # And old_field should remain as it was, since it hasn't been saved
-        # between the two changes:
-        eq_(old, getattr(d, old_field))
-
-    def test_slug_setter(self):
-        """Make sure changing a slug remembers its old value."""
-        self._test_remembering_setter('slug')
-
-    def test_title_setter(self):
-        """Make sure changing a title remembers its old value."""
-        self._test_remembering_setter('title')
-
     def test_only_localizable_allowed_children(self):
         """You can't have children for a non-localizable document."""
         # Make English rev:
@@ -685,75 +639,6 @@ class DocumentTestsWithFixture(TestCase):
         eq_(sample_html.strip(), result['html'].strip())
         eq_(sample_css.strip(), result['css'].strip())
         eq_(sample_js.strip(), result['js'].strip())
-
-
-class RedirectCreationTests(TestCase):
-    """Tests for automatic creation of redirects when slug or title changes"""
-    fixtures = ['test_users.json']
-
-    def setUp(self):
-        self.d, self.r = doc_rev()
-        self.old_title = self.d.title
-        self.old_slug = self.d.slug
-
-    def test_change_slug(self):
-        """Test proper redirect creation on slug change."""
-        self.d.slug = 'new-slug'
-        self.d.save()
-        redirect = Document.objects.get(slug=self.old_slug)
-        # "uncached" isn't necessary, but someday a worse caching layer could
-        # make it so.
-        attrs = dict(title=self.d.title, href=self.d.get_absolute_url())
-        eq_(REDIRECT_CONTENT % attrs, redirect.current_revision.content)
-        eq_(REDIRECT_TITLE % dict(old=self.d.title, number=1), redirect.title)
-
-    def test_change_slug_and_title(self):
-        """Assert only one redirect is made when both slug and title change."""
-        self.d.title = 'New Title'
-        self.d.slug = 'new-slug'
-        self.d.save()
-        attrs = dict(title=self.d.title, href=self.d.get_absolute_url())
-        eq_(REDIRECT_CONTENT % attrs,
-            Document.objects.get(
-                slug=self.old_slug,
-                title=self.old_title).current_revision.content)
-
-    def test_no_redirect_on_unsaved_change(self):
-        """No redirect should be made when an unsaved doc's title or slug is
-        changed."""
-        d = document(title='Gerbil')
-        d.title = 'Weasel'
-        d.save()
-        # There should be no redirect from Gerbil -> Weasel:
-        assert not Document.objects.filter(title='Gerbil').exists()
-
-    def _test_collision_avoidance(self, attr, other_attr, template):
-        """When creating redirects, dodge existing docs' titles and slugs."""
-        # Create a doc called something like Whatever Redirect 1:
-        document(locale=self.d.locale,
-                **{other_attr: template % dict(old=getattr(self.d, other_attr),
-                                               number=1)}).save()
-
-        # Trigger creation of a redirect of a new title or slug:
-        setattr(self.d, attr, 'new')
-        self.d.save()
-
-        # It should be called something like Whatever Redirect 2:
-        redirect = Document.objects.get(**{attr: getattr(self,
-                                                          'old_' + attr)})
-        eq_(template % dict(old=getattr(self.d, other_attr),
-                            number=2), getattr(redirect, other_attr))
-
-    def test_slug_collision_avoidance(self):
-        """Dodge existing slugs when making redirects due to title changes."""
-        self._test_collision_avoidance('slug', 'title', REDIRECT_TITLE)
-
-    def test_redirects_unlocalizable(self):
-        """Auto-created redirects should be marked unlocalizable."""
-        self.d.slug = 'new-slug'
-        self.d.save()
-        redirect = Document.objects.get(slug=self.old_slug)
-        eq_(False, redirect.is_localizable)
 
 
 class TaggedDocumentTests(TestCase):
@@ -1446,24 +1331,6 @@ class PageMoveTests(TestCase):
 
         ok_(parent.has_children())
     
-    @attr('move')
-    def test_move(self):
-        """Changing title/slug leaves behind a redirect document"""
-        rev = revision(title='Page that will be moved',
-                       slug='page-that-will-be-moved')
-        rev.is_approved = True
-        rev.save()
-
-        moved = revision(document=rev.document,
-                         title='Page that has been moved',
-                         slug='page-that-has-been-moved')
-        moved.is_approved = True
-        moved.save()
-
-        d = Document.objects.get(slug='page-that-will-be-moved')
-        ok_(d.id != rev.document.id)
-        ok_('page-that-has-been-moved' in d.redirect_url())
-
     @attr('move')
     def test_move_tree(self):
         """Moving a tree of documents does the correct thing"""
