@@ -34,12 +34,21 @@
     $quickLinks.find('.toggleable').mozTogglers();
     
     var side = $('#quick-links-toggle').closest('.wiki-column').attr('id');
+    var $columnContainer = $('#wiki-column-container');
+    var $quickLinksControl = $('#wiki-controls .quick-links');
+
     // Quick Link toggles
     $('#quick-links-toggle, #show-quick-links').on('click', function(e) {
+      var $side = $('#' + side);
+
       e.preventDefault();
-      $('#' + side).toggleClass('column-closed');
-      $('#wiki-column-container').toggleClass(side + '-closed');
-      $('#wiki-controls .quick-links').toggleClass('hidden');
+      $side.toggleClass('column-closed');
+      $columnContainer.toggleClass(side + '-closed');
+      $quickLinksControl.toggleClass('hidden');
+
+      if($side.hasClass('column-closed')) {
+        $(window).trigger('resize');
+      }
     });
   })();
   
@@ -124,7 +133,7 @@
         
         // Should the TOC be one-column (auto-closed) or sidebar'd
         if(!e || e.type == 'resize') {
-          if($wikiRight.css('float') == 'none') {
+          if($toggler.css('pointer-events') == 'auto'  || $toggler.find('i').css('display') != 'none') { /* icon check is for old IEs that don't support pointer-events */
             if(!$toc.attr('data-closed')) {
               $toggler.trigger('click');
             }

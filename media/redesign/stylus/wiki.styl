@@ -3,6 +3,15 @@
 @import 'grid'
 @import 'components'
 
+/* mixins applying only to the wiki */
+make-wiki-blocks-flat() {
+  #wiki-content, #wiki-right, #wiki-left {
+    margin-right: 0;
+    width: auto !important;
+    float: none;
+    padding-bottom: (grid-spacing * 2);
+  }
+}
 
 /* wiki classes to be extended */
 .wiki-block {
@@ -26,6 +35,10 @@
   .center {
     remove-center-spacing();
   }
+}
+
+#wiki-left {
+  position: relative;
 }
 
 /* wiki article display */
@@ -401,9 +414,20 @@ div.bug > *:last-child, div.warning > *:last-child {
 
 .quick-links a, .quick-links .title, #quick-links-toggle {
   display: block;
-  position: relative;
   padding-left: 20px;
   color: inherit;
+}
+
+.quick-links a, .quick-links .title {
+  position: relative;
+}
+
+.quick-links .title {
+  display: inline-block;
+}
+
+#quick-links-toggle {
+  height: 30px;
 }
 
 .quick-links {selector-icon}, #quick-links-toggle {selector-icon} {
@@ -591,9 +615,30 @@ span.cke_skin_kuma {
 }
 
 
+/*
+  Small desktop.  We go to a two-column layout 
+*/
+@media media-query-small-desktop {
+
+  /* when there's a left sidebar, we need to adjust the layout to look like:  |= */
+  .wiki-left-present:not(.wiki-left-closed) {
+    #wiki-right, #wiki-content {
+      width: grid-width-column-main;
+      margin-right: 0;
+    }
+    #wiki-right {
+      enable-toc-toggle();
+      padding-bottom: (grid-spacing * 2);
+    }
+    #wiki-left {
+      float: none;
+    }
+  }
+}
 
 
 @media media-query-tablet {
+  make-wiki-blocks-flat();
 
   .zone-landing-header-preview {
     .column-strip, masthead-text {
@@ -602,6 +647,8 @@ span.cke_skin_kuma {
   }
 
   #wiki-right {
+    enable-toc-toggle();
+
     .tag-attach-list {
       display: inline-block;
 
@@ -614,19 +661,10 @@ span.cke_skin_kuma {
         margin-left: 20px;
       }
     }
-
-    enable-toc-toggle();
   }
 
-  #wiki-column-container, #wiki-content {
+  #wiki-column-container, #wiki-content, $wiki {
     width: auto !important;
-  }
-
-  #wiki-content, #wiki-right, #wiki-left {
-    margin-right: 0;
-    width: auto;
-    float: none;
-    padding-bottom: (grid-spacing * 2);
   }
 
   #quick-links-toggle,  #wiki-controls {

@@ -280,6 +280,21 @@ footer {
   }
 }
 
+/* feature testing */
+#feature-test-element {
+  position: absolute;
+  left: 0;
+  top: -999999px;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  z-index: 1;
+
+  @media media-query-small-desktop { z-index: 2; }
+  @media media-query-tablet { z-index: 3; }
+}
+
+
 
 /* tablet updates */
 @media media-query-tablet {
