@@ -92,11 +92,11 @@
 
   {% if not is_zone_root %}
   <div class="article-meta">
-    <!-- crumbs -->
-    {{ build_document_crumbs(document) }}
-
     <!-- action buttons -->
     {{ get_document_buttons(document) }}
+
+    <!-- crumbs -->
+    {{ build_document_crumbs(document) }}
   </div>
 
   <!-- heading -->
