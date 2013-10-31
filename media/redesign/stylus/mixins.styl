@@ -128,22 +128,6 @@ set-message-base() {
   }
 }
 
-/* Enables the TOC toggle for small screens */
-enable-toc-toggle() {
-  #toc {
-    padding: (grid-spacing / 2) grid-spacing;
-
-    .toggler {
-      pointer-events: auto;
-      color: link-color;
-
-      i {
-        display: inline-block;
-      }
-    }
-  }
-}
-
 /* removes the implied "<main>" spacing so page is more customizable */
 remove-main-spacing() {
   main > .center {

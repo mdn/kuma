@@ -13,6 +13,21 @@ make-wiki-blocks-flat() {
   }
 }
 
+enable-toc-toggle() {
+  #toc {
+    padding: (grid-spacing / 2) grid-spacing;
+
+    .toggler {
+      pointer-events: auto;
+      color: link-color;
+
+      i {
+        display: inline-block;
+      }
+    }
+  }
+}
+
 /* wiki classes to be extended */
 .wiki-block {
   padding-top: (grid-spacing * 2);
