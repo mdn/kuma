@@ -84,8 +84,6 @@ article {
 .crumbs {
   @extend .smaller;
   margin-bottom: (2 * grid-spacing);
-  float: left;
-  width: 70%;
 
   li {
     display: inline-block;
@@ -647,6 +645,11 @@ span.cke_skin_kuma {
     #wiki-left {
       float: none;
     }
+  }
+
+  /* hide redirected from info on small screens */
+  .redirected-from {
+    display: none;
   }
 }
 
