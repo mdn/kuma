@@ -52,10 +52,17 @@
       <div id="search-results-close-container">
         <div class="search-pane search-results-explanation">
           <h2>{{ _('Results') }}</h2>
-          <p>
-          {% trans locale_native = settings.LOCALES[request.locale].native %}
-            {{ result_count }} Results for "{{ search_query }}" in {{ locale_native }}
-          {% endtrans %}
+          <p>{{ _('%s result%s for "%s" in %s.') % (result_count, 's' if result_count > 1 else '', search_query, settings.LOCALES[request.locale].native) }}
+
+          {% if result_count %}
+            &middot;
+            {% if not prev_page and not next_page %}
+              {{ _('Displaying all results.') }}
+            {% else %}
+              {{ _('Displaying %s-%s of %s results.') % (start_index, end_index, result_count) }}
+            {% endif %}
+          {% endif %}
+
           {% if request.locale != settings.LANGUAGE_CODE %}
             &middot;
             <a href="{{ url('search', locale=settings.LANGUAGE_CODE, ) }}?q={{ search_query }}">
