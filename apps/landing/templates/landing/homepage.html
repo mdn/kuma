@@ -27,7 +27,9 @@
 
   <div class="home-search-form">
     <form action="{{ url('search') }}" method="get">
-      <input type="search" name="q" placeholder="{{ _('Search the docs') }}" />
+      <label for="home-q" class="offscreen">{{ _('Search') }}</label>
+      <input type="search" id="home-q" name="q" placeholder="{{ _('Search the docs') }}" />
+      <button type="submit" class="offscreen">{{ _('Search') }}</button>
     </form>
   </div> 
 

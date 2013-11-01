@@ -36,7 +36,9 @@
 
   <div class="results-search-form">
     <form action="{{ url('search') }}" method="get">
-      <input type="search" name="q" placeholder="{{ _('Search the docs') }}" value="{{ search_query }}" {% if not search_query %}autofocus{% endif %} />
+      <label for="search-q" class="offscreen">{{ _('Search') }}</label>
+      <input type="search" name="q" id="search-q" placeholder="{{ _('Search the docs') }}" value="{{ search_query }}" {% if not search_query %}autofocus{% endif %} />
+      <button type="submit" class="offscreen">{{ _('Search') }}</button>
     </form>
   </div>
   

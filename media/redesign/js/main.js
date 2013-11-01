@@ -98,4 +98,10 @@ document.documentElement.className += ' js';
     }
   });
 
+  /* Skip to search is better done with JS because it's sometimes hidden and shown */
+  $('#skip-search').on('click', function(e) {
+    e.preventDefault();
+    $('input[name=q]').last().get(0).focus();
+  });
+
 })(jQuery);
