@@ -230,7 +230,7 @@ class DocumentAdmin(admin.ModelAdmin):
                disable_deferred_rendering_for_documents,
                repair_breadcrumbs)
     change_list_template = 'admin/wiki/document/change_list.html'
-    fields = ('locale', 'slug', 'title', 'defer_rendering', 'parent',
+    fields = ('locale', 'title', 'defer_rendering', 'parent',
               'parent_topic', 'category',)
     list_display = ('id', 'locale', 'slug', 'title',
                     document_link,
@@ -253,7 +253,7 @@ class DocumentAdmin(admin.ModelAdmin):
 
 
 class RevisionAdmin(admin.ModelAdmin):
-    fields = ('title', 'slug', 'summary', 'content', 'keywords', 'tags',
+    fields = ('title', 'summary', 'content', 'keywords', 'tags',
               'reviewed', 'comment', 'is_approved')
     list_display = ('id', 'slug', 'title', 'is_approved', 'created',
                     'creator',)

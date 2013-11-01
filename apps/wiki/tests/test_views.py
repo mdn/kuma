@@ -2087,6 +2087,8 @@ class DocumentEditingTests(TestCaseBase):
         ok_(Document.objects.get(slug=d.slug, locale=d.locale).show_toc)
         data['form'] = 'rev'
         data['toc_depth'] = 0
+        data['slug'] = d.slug
+        data['title'] = d.title
         client.post(reverse('wiki.edit_document', args=[d.full_path]), data)
         eq_(0, Document.objects.get(slug=d.slug, locale=d.locale).current_revision.toc_depth)
 
@@ -2102,6 +2104,8 @@ class DocumentEditingTests(TestCaseBase):
         ok_(not Document.objects.get(slug=d.slug, locale=d.locale).show_toc)
         data = new_document_data()
         data['form'] = 'rev'
+        data['slug'] = d.slug
+        data['title'] = d.title
         client.post(reverse('wiki.edit_document', args=[d.full_path]), data)
         ok_(Document.objects.get(slug=d.slug, locale=d.locale).show_toc)
 
