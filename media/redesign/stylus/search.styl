@@ -174,3 +174,38 @@ p {
     }
   }
 }
+
+
+
+/* right to left */
+.html-rtl {
+  h3 {selector-icon} {
+    compat-important(margin-right, 0);
+    compat-important(margin-left, (grid-spacing * .75));
+  }
+
+  .seach-results-container {
+    h3 {
+      margin-left: 0;
+      margin-right: grid-spacing;
+    }
+  }
+
+  .result-list {
+    .column-1 {
+      text-align: left;
+    }
+  }
+
+  .search-results-topics {
+    a {
+      padding-right: 0;
+      padding-left: (grid-spacing * 2);
+
+      &:before {
+        right: auto;
+        left: 0;
+      }
+    }
+  }
+}
