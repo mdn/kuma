@@ -18,8 +18,8 @@
 .column-container {
   @extend .clear;
 
-  > [class^='column-'] {
-    margin-right: 3%;
+  {grid-column-selector} {
+    margin-right: grid-margin;
     float: left;
 
     &:last-child {
@@ -30,7 +30,7 @@
   &.column-container-reverse {
     margin-left: -1%;
 
-    > [class^='column-'] {
+    {grid-column-selector} {
       float: right;
 
       &:first-child {
@@ -38,13 +38,44 @@
       }
 
       &:last-child {
-        margin-right: 3%;
+        margin-right: grid-margin;
       }
     }
   }
 }
 
-/*  Column definitions */
+/* adjustments to reverse the column containers in RTL */
+.html-rtl .column-container {
+
+  {grid-column-selector} {
+    float: right;
+
+    &:first-child {
+      margin-right: 0;
+    } 
+    &:last-child {
+      margin-right: grid-margin;
+    }
+  }
+}
+
+.html-rtl .column-container-reverse {
+  margin-left: 0;
+
+  {grid-column-selector} {
+    float: left;
+
+    &:first-child {
+      margin-right: grid-margin;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+/*  Column width definitions */
 .column-1 {
   width: 5.5%;
 }
@@ -97,15 +128,3 @@
     max-width: 1000px;
   }
 }
-
-/* Mobile phone grid settings
-     Disabled for now as not required for launch
-
-@media media-query-mobile {
-
-  .center, .column-1, .column-2, .column-3, .column-4, .column-5, .column-6, .column-7, .column-8, .column-9, .column-10, .column-11 {
-    float:  none;
-    width: 99%;
-  }
-}
-*/

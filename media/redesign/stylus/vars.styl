@@ -23,7 +23,8 @@ button-shadow-color = #bbbfc2;
 
 /* grid and site dimensions */
 grid-spacing = 20px;
-
+grid-margin = 3%;
+grid-column-selector = '> [class^="column-"]';
 grid-width-column-main = 73.5%;
 
 max-width-default = 1400px;
@@ -40,7 +41,7 @@ slide-timing-function = cubic-bezier(0, 1, 0.5, 1);
 gutter-width = 24px;
 first-content-top-padding = (grid-spacing * 2);
 list-item-spacing = 8px;
-content-block-margin = 24px;
+content-block-margin = gutter-width;
 
 /* selectors */
 selector-icon = 'i[class^="icon-"]';
