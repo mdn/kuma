@@ -1817,6 +1817,7 @@ class DocumentType(SearchMappingType, Indexable):
             'locale': obj.locale,
             'modified': obj.modified,
             'content': strip_tags(obj.rendered_html),
+            'raw': strip_tags(obj.html),
             'tags': [tag.name for tag in obj.tags.all()],
             'kumascript_macros': obj.extract_kumascript_macro_names(),
             'css_classnames': obj.extract_css_classnames(),
@@ -1834,9 +1835,10 @@ class DocumentType(SearchMappingType, Indexable):
             'modified': {'type': 'date'},
             'content': {'type': 'string', 'analyzer': 'wikiMarkup'},
             'tags': {'type': 'string', 'analyzer': 'snowball'},
+            'raw': {'type': 'string', 'analyzer': 'caseInsensitiveKeyword'},
             'kumascript_macros': {'type': 'string', 'analyzer': 'caseInsensitiveKeyword'},
             'css_classnames': {'type': 'string', 'analyzer': 'caseInsensitiveKeyword'},
-            'html_attributes': {'type': 'string', 'analyzer': 'keyword'},
+            'html_attributes': {'type': 'string', 'analyzer': 'caseInsensitiveKeyword'},
         }
 
     @classmethod
@@ -1858,8 +1860,9 @@ class DocumentType(SearchMappingType, Indexable):
                     'char_filter': 'html_strip'
                 },
                 'caseInsensitiveKeyword': {
-                    'type': 'keyword',
-                    'char_filter': 'lowercase'
+                    'type': 'custom',
+                    'tokenizer': 'keyword',
+                    'filter': 'lowercase'
                 }
             }
         }

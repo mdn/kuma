@@ -1,5 +1,6 @@
 import re
 import json
+from urllib import urlencode
 
 from django.contrib.sites.models import Site
 from django.http import HttpResponse, HttpResponseBadRequest
@@ -10,9 +11,11 @@ from waffle import flag_is_active
 
 from urlobject import URLObject
 
+from sumo.urlresolvers import reverse
+
 from wiki.models import DocumentType
 
-from .forms import SearchForm
+from .forms import SearchForm, RawSearchForm
 
 
 def jsonp_is_valid(func):
@@ -166,3 +169,69 @@ def plugin(request):
     return render(request, 'search/plugin.html',
                         {'site': site, 'locale': request.locale},
                         content_type='application/opensearchdescription+xml')
+
+
+def raw(request, format="html"):
+    """Crude search against raw indexes"""
+    json_params = {}
+
+    search_form = RawSearchForm(request.GET or None)
+    if not search_form.is_valid():
+        results = None
+        result_count = 0
+    else:
+        or_dict = dict()
+        for field in search_form.search_field_names:
+            terms = search_form.cleaned_data.get(field, None)
+            if terms:
+                json_params[field] = terms
+                or_dict[field + '__text'] = terms.lower()
+
+        results = DocumentType.search().query(or_=or_dict)
+
+        for field in search_form.filter_field_names:
+            terms = search_form.cleaned_data.get(field, None)
+            if terms:
+                json_params[field] = terms
+                args = {field: terms.lower().split(' ')}
+                results = results.filter(**args)
+
+        result_count = results.count()
+        # TODO: Expose this in the UI, somehow?
+        limit = request.GET.get('limit', result_count)
+        order_by = request.GET.get('order_by', '-modified')
+
+        results = results.order_by(order_by)[:limit]
+
+    if 'json' == format:
+        urls = (
+            ('view', 'wiki.document'),
+            ('edit', 'wiki.edit_document')
+        )
+        skip_fields = ['content', 'raw']
+        mapping = DocumentType.get_mapping()
+        results_out = []
+        for result in results:
+            result_out = dict(
+                (x, getattr(result, x, None))
+                for x in mapping.keys()
+                if x not in skip_fields
+            )
+            result_out['urls'] = {}
+            for key, view in urls:
+                result_out['urls'][key] = request.build_absolute_uri(
+                    reverse(view, locale=result.locale, args=[result.slug]))
+            results_out.append(result_out)
+        return HttpResponse(json.dumps(results_out),
+                            mimetype='application/json')
+
+    json_url = '%s?%s' % (
+        reverse('search.raw_json'),
+        urlencode(json_params)
+    )
+    return render(request, 'search/raw.html', dict(
+        search_form=search_form,
+        results=results,
+        result_count=result_count,
+        json_url=json_url
+    ))

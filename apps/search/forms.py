@@ -44,3 +44,39 @@ class SearchForm(forms.Form):
             raise ValidationError('Search requires a query string.')
 
         return self.cleaned_data
+
+
+class RawSearchForm(forms.Form):
+
+    locale = forms.CharField(max_length=255, required=False,
+        label="Locale (filter)")
+
+    tags = forms.CharField(max_length=255, required=False,
+        label='Tags (filter)')
+
+    kumascript_macros = forms.CharField(max_length=255, required=False,
+        label='KumaScript macros')
+    
+    css_classnames = forms.CharField(max_length=255, required=False,
+        label='CSS classes')
+    
+    html_attributes = forms.CharField(max_length=255, required=False,
+        label='HTML attributes')
+
+    filter_field_names = (
+        'locale', 'tags'
+    )
+    search_field_names = (
+        'kumascript_macros', 'css_classnames',
+        'html_attributes'
+    )
+    
+    def clean(self):
+        at_least_one = False
+        for field in self.search_field_names:
+            if self.cleaned_data.get(field, None):
+                at_least_one = True
+        if not at_least_one:
+            raise ValidationError('Search terms in at least one field is'
+                                  ' required')
+        return self.cleaned_data
