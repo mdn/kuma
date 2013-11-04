@@ -1,22 +1,19 @@
 from datetime import datetime
 
 from django.contrib import admin
-from django.core import serializers
 from django.http import HttpResponse
-from django.core import serializers
 
-from sumo.urlresolvers import reverse, split_path
+from sumo.urlresolvers import reverse
 
 from wiki.models import (Document, DocumentZone, DocumentTag, Revision,
-                         EditorToolbar,
-                         Attachment, AttachmentRevision)
+                         EditorToolbar, Attachment, AttachmentRevision)
 
 
 def dump_selected_documents(self, request, queryset):
     filename = "documents_%s.json" % (datetime.now().isoformat(),)
     response = HttpResponse(mimetype="text/plain")
     response['Content-Disposition'] = 'attachment; filename=%s' % filename
-    Document.objects.dump_json(queryset, response) 
+    Document.objects.dump_json(queryset, response)
     return response
 
 dump_selected_documents.short_description = "Dump selected documents as JSON"
@@ -26,12 +23,12 @@ def repair_breadcrumbs(self, request, queryset):
     for doc in queryset:
         doc.repair_breadcrumbs()
 repair_breadcrumbs.short_description = "Repair translation breadcrumbs"
-        
+
 
 def enable_deferred_rendering_for_documents(self, request, queryset):
     queryset.update(defer_rendering=True)
     self.message_user(request, 'Enabled deferred rendering for %s Documents' %
-                               queryset.count()) 
+                               queryset.count())
 enable_deferred_rendering_for_documents.short_description = (
     "Enable deferred rendering for selected documents")
 
@@ -39,12 +36,12 @@ enable_deferred_rendering_for_documents.short_description = (
 def disable_deferred_rendering_for_documents(self, request, queryset):
     queryset.update(defer_rendering=False)
     self.message_user(request, 'Disabled deferred rendering for %s Documents' %
-                               queryset.count()) 
+                               queryset.count())
 disable_deferred_rendering_for_documents.short_description = (
     "Disable deferred rendering for selected documents")
 
 
-def force_render_documents(self, request,queryset):
+def force_render_documents(self, request, queryset):
     count, bad_count = 0, 0
     for doc in queryset:
         try:
@@ -58,7 +55,7 @@ def force_render_documents(self, request,queryset):
 force_render_documents.short_description = (
     "Perform rendering for selected documents")
 
-        
+
 def resave_current_revision(self, request, queryset):
     count, bad_count = 0, 0
     for doc in queryset:
@@ -160,7 +157,7 @@ def document_link(self):
     """Public link to the document"""
     link = self.get_absolute_url()
     return ('<a target="_blank" href="%s">'
-            '<img src="/media/img/icons/link_external.png"> View</a>' % 
+            '<img src="/media/img/icons/link_external.png"> View</a>' %
             (link,))
 
 document_link.allow_tags = True
@@ -199,7 +196,7 @@ revision_links.short_description = "Revisions"
 
 def rendering_info(self):
     """Combine the rendering times into one block"""
-    return '<ul>%s</ul>' % ''.join('<li>%s</li>' %  (x % y) for x, y in (
+    return '<ul>%s</ul>' % ''.join('<li>%s</li>' % (x % y) for x, y in (
         ('<img src="/admin-media/img/admin/icon-yes.gif" alt="%s"> '
          'Deferred rendering', self.defer_rendering),
         ('%s (last)',        self.last_rendered_at),
@@ -278,13 +275,19 @@ class AttachmentRevisionAdmin(admin.ModelAdmin):
     search_fields = ('title', 'description')
 
 
+class DocumentTagAdmin(admin.ModelAdmin):
+    list_display = ('name', 'slug')
+    search_fields = ('name',)
+    ordering = ('name',)
+
+
 class DocumentZoneAdmin(admin.ModelAdmin):
     raw_id_fields = ('document',)
 
 
 admin.site.register(Document, DocumentAdmin)
 admin.site.register(DocumentZone, DocumentZoneAdmin)
-admin.site.register(DocumentTag, admin.ModelAdmin)
+admin.site.register(DocumentTag, DocumentTagAdmin)
 admin.site.register(Revision, RevisionAdmin)
 admin.site.register(EditorToolbar, admin.ModelAdmin)
 admin.site.register(Attachment, AttachmentAdmin)
