@@ -12,7 +12,7 @@
       showDelay: 100,
       hideDelay: 100,
       submenu: null,
-      focusOnOpen: true,
+      focusOnOpen: false,
       brickOnClick: false,
       onOpen: function(){},
       onClose: function() {}
@@ -102,7 +102,7 @@
 
         // Show my submenu after the showDelay
         showTimeout = setTimeout(function() {
-          $submenu.addClass('open').fadeIn();
+          $submenu.addClass('open').attr('aria-hidden', 'false').fadeIn();
 
           // Find the first link for improved usability
           if(settings.focusOnOpen) {
@@ -129,7 +129,7 @@
     // Closes a given submenu
     function closeSubmenu($sub) {
       closeTimeout = setTimeout(function() {
-        $sub && $sub.removeClass('open').fadeOut();
+        $sub && $sub.removeClass('open').attr('aria-hidden', 'true').fadeOut();
         settings.onClose();
       }, settings.hideDelay);
     }
