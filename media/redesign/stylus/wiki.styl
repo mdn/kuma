@@ -86,20 +86,20 @@ article {
   margin-bottom: (2 * grid-spacing);
 
   li {
+    bidi-style(margin-right, (grid-spacing / 2), margin-left, 0);
     display: inline-block;
-    margin-right: (grid-spacing / 2);
   }
 
   a {
     display: block;
 
     &:after {
+      bidi-style(margin-left, 4px, margin-right, 0, true);
+      bidi-style(content, '\f054', content, '\f053');
       display: inline-block;
       font-family: FontAwesome;
       text-decoration: none;
-      content: '\f054';
       color: #c1c2c4;
-      margin-left: 4px;
       font-size: 70%;
     }
   }
@@ -108,7 +108,9 @@ article {
 }
 
 .page-buttons, #page-buttons {
+  bidi-value(float, right, left);
   float: right;
+
   text-align: right;
   compat-only(width, auto);
   compat-only(top, auto);
@@ -135,8 +137,8 @@ article {
 
   .submenu {
     component-submenu-method(160px, 1, button-background, button-shadow-color);
+    bidi-style(right, 0, left, auto);
     top: 40px;
-    right: 0;
     z-index: 3;
     border-top: 1px solid button-shadow-color;
 
@@ -145,13 +147,13 @@ article {
     }
 
     &:before {
+      bidi-style(right, 10px, left, auto);
       top: -18px;
-      right: 10px;
     }
 
     &:after {
+      bidi-style(right, 10px, left, auto);
       top: -20px;
-      right: 10px;
     }
   }
 }
@@ -420,13 +422,13 @@ div.bug > *:last-child, div.warning > *:last-child {
   }
 
   li li {
-    padding-left: 20px;
+    bidi-style(padding-left, 20px, padding-right, 0);
   }
 }
 
 .quick-links a, .quick-links .title, #quick-links-toggle {
+  bidi-style(padding-left, 20px, padding-right, 0);
   display: block;
-  padding-left: 20px;
   color: inherit;
 }
 
@@ -443,9 +445,9 @@ div.bug > *:last-child, div.warning > *:last-child {
 }
 
 .quick-links {selector-icon}, #quick-links-toggle {selector-icon} {
+  bidi-style(left, -6px, right, auto);
   font-size: 14px;
   position: absolute;
-  left: -6px;
   top: 1px;
 
   /* don't allow empty paragraphs by CKEditor */
@@ -690,49 +692,11 @@ span.cke_skin_kuma {
 }
 
 
-
-
 /* rtl */
 .html-rtl {
-
-  .page-buttons, #page-buttons {
-    float: left;
-    
-    .submenu {
-      right: auto;
-      left: 0;
-      
-      &:before {
-        right: auto;
-        left: 10px
-      }
-  
-      &:after {
-        right: auto;
-        left: 10px;
-      }
-    }
-  }
-  
   #settings-menu {
     .icon-cog {
       margin-right: 0 !important;
-    }
-  }
-
-  .crumbs {
-    float: right;
-    
-    li {
-      margin-right: 0;
-      margin-left: (grid-spacing / 2);
-    }
-    a {
-      &:after {
-        content: '\f053';
-        margin-left: 0;
-        margin-right: 4px;
-      }
     }
   }
 }

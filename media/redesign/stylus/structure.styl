@@ -8,14 +8,18 @@
 
   .logo {
     @extend .text-offscreen;
+    bidi-value(float, left, right);
     width: 216px;
     height: 54px;
     background-image: url(media-url-dir + 'mdn_logo-wordmark-full_color.svg');
     background-position: -5px 0;
     background-repeat: no-repeat;
     display: block;
-    float: left;
   }
+}
+
+#tabzilla {
+  bidi-value(float, right, left);
 }
 
 #nav-access {
@@ -24,7 +28,7 @@
 
 #main-nav {
   > ul {
-    float: right;
+    bidi-value(float, right, left);
     margin-top: 20px;
     margin-bottom: grid-spacing;
 
@@ -117,12 +121,16 @@
 
 .user-state {
   @extend .smaller;
+  bidi-style(right, 200px, left, auto);
   position: absolute;
   right: 200px;
   top: 12px;
   compat-only(width, auto);
 
   li + li {
+    bidi-style(border-left, 1px solid #bbb, border-right, 0);
+    bidi-style(padding-right, 10px, padding-left, 10px, true); /* compat-important */
+    bidi-style(margin-right, 8px, margin-left, 0, true); /* compat-important */
     border-left: 1px solid #bbb;
   }
 
@@ -259,15 +267,21 @@ main {
 footer {
   @extend .smaller;
   background: #fff;
-  padding:  (2 * first-content-top-padding 0);
+  padding:  (2 * first-content-top-padding) 0;
 
   p, label {
     font-style: italic;
   }
 
   p {
-    background: url(media-url-dir + 'mdn_logo-only_color.svg') -5px 0 no-repeat;
-    compat-important(padding, 10px 0 0 92px);
+    bidi-style(padding-left, 92px, padding-right, 0, true);
+    bidi-style(background-position, -5px 0, background-position, right 0);
+    background-image: url(media-url-dir + 'mdn_logo-only_color.svg');
+    background-position: -5px 0;
+    background-repeat: no-repeat;
+    compat-important(padding-top, 10px);
+    padding-bottom: 0;
+
     min-height: 62px;
   }
 
@@ -365,45 +379,7 @@ footer {
 }
 
 
-/* rtl */
-.html-rtl {
-  #main-header {
-    .logo {
-      float: right;
-    }
 
-    #tabzilla {
-      float: left;
-    }
-  }
-
-  #main-nav {
-    > ul {
-      float: left;
-    }
-  }
-
-  .user-state {
-    left: 200px;
-    right: auto;
-
-    li + li {
-      border-left: 1px solid #bbb;
-      border-right: 0;
-      compat-only(padding-left, 10px);
-      compat-only(padding-right, 0);
-      compat-only(margin-left, 8px);
-      compat-only(margin-right, 0);
-    }
-  }
-
-  footer {
-    p {
-      background: url(media-url-dir + 'mdn_logo-only_color.svg') right 0 no-repeat;
-      compat-important(padding, 10px 92px 0 0);
-    }
-  }
-}
 
 
 /* print styling */

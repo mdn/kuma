@@ -43,7 +43,7 @@
       width: 60%;
 
       span {
-        padding-left: 20%;
+        bidi-style(padding-left, 20%, padding-right, 0);
         display: block;
       }
     }
@@ -91,10 +91,10 @@
     position: relative;
 
     i {
+      bidi-style(right, 5%, left, auto);
       position: absolute;
       top: 0;
       display: block;
-      right: 5%;
     }
 
     span {
@@ -110,10 +110,10 @@
       overflow-x: hidden;
 
       &:before {
-        content: '\f061';
+        bidi-style(content, '\f061', content, '\f060');
+        bidi-style(right, grid-spacing, left, 0);
         font-family: 'FontAwesome';
         bottom: grid-spacing;
-        right: grid-spacing;
         position: absolute;
         font-size: 24px;
         z-index: 4;
@@ -295,7 +295,7 @@
         padding-bottom: (grid-spacing / 2);
         border-bottom: 1px solid #e0e2e4;
         margin-bottom: 110px;
-        margin-right: -(grid-spacing);
+        bidi-style(margin-right, -(grid-spacing), margin-left, 0);
         font-weight: bold;
       }
 
@@ -442,32 +442,9 @@
   }
 }
 
+
 /* right to left */
 #home.html-rtl {
-
-    .home-masthead {
-      h1 {
-        span {
-          padding-right: 20%;
-          padding-left: 0;
-        }
-      }
-    }
-
-  .column-callout {
-    a {
-      &:before {
-        content: '\f060';
-        right: auto;
-        left: grid-spacing;
-      }
-    }
-    
-    i {
-      right: auto;
-      left: 5%;
-    }
-  }
 
   h2 {
     > selector-icon:before {
@@ -488,10 +465,5 @@
 
   i.icon-arrow-right:before {
     content: '\f060';
-  }
-
-  .home-hacks .home-involved-card h3 {
-    margin-right: 0;
-    margin-left: -20px;
   }
 }
