@@ -2,13 +2,13 @@ from nose.tools import eq_
 
 from search.tests import ElasticTestCase
 
-from wiki.models import DocumentType
 from wiki.tests import revision
+
+from search.models import DocumentType
 
 
 class TestLiveIndexing(ElasticTestCase):
-
-    fixtures = ['test_users.json',]
+    fixtures = ['test_users.json']
 
     def test_live_indexing_docs(self):
         S = DocumentType.search

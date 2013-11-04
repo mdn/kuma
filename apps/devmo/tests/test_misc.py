@@ -92,7 +92,7 @@ class TestDevMoRobots(test_utils.TestCase):
 
 
 class TestDevMoHelpers(test_utils.TestCase):
-    fixtures = ['wiki/documents.json']
+    fixtures = ['test_users.json', 'wiki/documents.json']
 
     def test_devmo_url(self):
 

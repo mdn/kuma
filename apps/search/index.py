@@ -306,7 +306,7 @@ def requires_good_connection(fun):
 
 
 @requires_good_connection
-def es_reindex_cmd(percent=100, mapping_types=None):
+def es_reindex_cmd(percent=100, mapping_types=None, chunk_size=1000):
     """Rebuild ElasticSearch indexes.
 
     :arg percent: 1 to 100--the percentage of the db to index
@@ -336,15 +336,16 @@ def es_reindex_cmd(percent=100, mapping_types=None):
                  cls.get_mapping_type_name(), total)
 
         i = 0
-        for chunk in chunked(indexable, 1000):
+        for chunk in chunked(indexable, chunk_size):
             index_chunk(cls, chunk, es=es)
 
             i += len(chunk)
             time_to_go = (total - i) * ((time.time() - start_time) / i)
-            per_1000 = (time.time() - start_time) / (i / 1000.0)
-            log.info('%s/%s... (%s to go, %s per 1000 docs)', i, total,
+            per_chunk_size = (time.time() - start_time) / (i / float(chunk_size))
+            log.info('%s/%s... (%s to go, %s per %s docs)', i, total,
                      format_time(time_to_go),
-                     format_time(per_1000))
+                     format_time(per_chunk_size),
+                     chunk_size)
 
             # We call this every 1000 or so because we're
             # essentially loading the whole db and if DEBUG=True,
@@ -354,9 +355,10 @@ def es_reindex_cmd(percent=100, mapping_types=None):
             reset_queries()
 
         delta_time = time.time() - cls_start_time
-        log.info('Done! (%s, %s per 1000 docs)',
+        log.info('Done! (%s, %s per %s docs)',
                  format_time(delta_time),
-                 format_time(delta_time / (total / 1000.0)))
+                 format_time(delta_time / (total / float(per_chunk_size))),
+                 chunk_size)
 
     delta_time = time.time() - start_time
     log.info('Done! (total time: %s)', format_time(delta_time))

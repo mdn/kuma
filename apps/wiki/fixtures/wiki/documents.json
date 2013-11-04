@@ -264,11 +264,43 @@
         }
     },
     {
+        "pk": 1,
+        "model": "search.filtergroup",
+        "fields": {
+            "name": "Group"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "search.filter",
+        "fields": {
+            "name": "Tagged",
+            "slug": "tagged",
+            "group": 1
+        }
+    },
+    {
         "pk": 100,
-        "model": "taggit.tag",
+        "model": "wiki.documenttag",
         "fields": {
             "name": "extant",
             "slug": "extant"
+        }
+    },
+    {
+        "pk": 101,
+        "model": "wiki.documenttag",
+        "fields": {
+            "name": "tagged",
+            "slug": "tagged"
+        }
+    },
+    {
+        "pk": 102,
+        "model": "wiki.documenttag",
+        "fields": {
+            "name": "foobar",
+            "slug": "foobar"
         }
     },
     {
@@ -280,74 +312,68 @@
         }
     },
     {
-        "pk": 102,
-        "model": "taggit.tag",
-        "fields": {
-            "name": "foobar",
-            "slug": "foobar"
-        }
-    },
-    {
         "pk": 1000,
-        "model": "taggit.taggeditem",
+        "model": "wiki.taggeddocument",
         "fields": {
             "tag": 100,
-            "content_type": ["wiki", "document"],
-            "object_id": 1
+            "content_object": 1
         }
     },
     {
         "pk": 1001,
-        "model": "taggit.taggeditem",
+        "model": "wiki.taggeddocument",
         "fields": {
             "tag": 100,
-            "content_type": ["wiki", "document"],
-            "object_id": 2
+            "content_object": 2
         }
     },
     {
         "pk": 1002,
-        "model": "taggit.taggeditem",
+        "model": "wiki.taggeddocument",
         "fields": {
             "tag": 100,
-            "content_type": ["wiki", "document"],
-            "object_id": 3
+            "content_object": 3
         }
     },
     {
         "pk": 1003,
-        "model": "taggit.taggeditem",
+        "model": "wiki.taggeddocument",
         "fields": {
             "tag": 100,
-            "content_type": ["wiki", "document"],
-            "object_id": 4
+            "content_object": 4
         }
     },
     {
         "pk": 1004,
-        "model": "taggit.taggeditem",
+        "model": "wiki.taggeddocument",
         "fields": {
             "tag": 100,
-            "content_type": ["wiki", "document"],
-            "object_id": 5
+            "content_object": 5
         }
     },
     {
         "pk": 1005,
-        "model": "taggit.taggeditem",
+        "model": "wiki.taggeddocument",
         "fields": {
             "tag": 101,
-            "content_type": ["wiki", "document"],
-            "object_id": 1
+            "content_object": 1
         }
     },
     {
         "pk": 1006,
+        "model": "wiki.taggeddocument",
+        "fields": {
+            "tag": 101,
+            "content_object": 2
+        }
+    },
+    {
+        "pk": 1007,
         "model": "taggit.taggeditem",
         "fields": {
             "tag": 101,
-            "content_type": ["wiki", "document"],
-            "object_id": 2
+            "content_type": ["search", "filter"],
+            "object_id": 1
         }
     }
 ]

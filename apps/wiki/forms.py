@@ -522,7 +522,7 @@ class TreeMoveForm(forms.Form):
         # IMPORTANT: This exact same regex is used on the client side, so
         # update both if doing so
         self.cleaned_data['slug'] = re.sub(re.compile(SLUG_CLEANSING_REGEX),
-                                      '', self.cleaned_data['slug'])
+                                           '', self.cleaned_data['slug'])
 
         return self.cleaned_data['slug']
 
@@ -535,6 +535,7 @@ class TreeMoveForm(forms.Form):
             except Exception, e:
                 raise forms.ValidationError(e.message)
         return cleaned_data
+
 
 class DocumentDeletionForm(forms.Form):
     reason = forms.CharField(widget=forms.Textarea)

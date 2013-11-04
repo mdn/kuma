@@ -1,4 +1,3 @@
-import re
 import json
 
 from django.contrib.sites.models import Site
@@ -6,143 +5,65 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render
 from django.views.decorators.cache import cache_page
 
+from rest_framework.generics import ListAPIView
+from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from waffle import flag_is_active
 
-from urlobject import URLObject
-
-from wiki.models import DocumentType
-
-from .forms import SearchForm
-
-
-def jsonp_is_valid(func):
-    func_regex = re.compile(r'^[a-zA-Z_\$][a-zA-Z0-9_\$]*'
-        + r'(\[[a-zA-Z0-9_\$]*\])*(\.[a-zA-Z0-9_\$]+(\[[a-zA-Z0-9_\$]*\])*)*$')
-    return func_regex.match(func)
+from .filters import (LanguageFilterBackend, DatabaseFilterBackend,
+                      SearchQueryBackend, HighlightFilterBackend)
+from .models import Filter, DocumentType
+from .serializers import SearchSerializer, DocumentSerializer, FilterSerializer
+from .queries import DocumentS
 
 
-def pop_param(url, name, value):
-    """
-    Takes an URLObject instance and removes the parameter with the given
-    name and value -- if it exists.
-    """
-    param_dict = {}
-    for param_name, param_values in url.query.multi_dict.items():
-        if param_name == name:
-            for param_value in param_values:
-                if param_value != value:
-                    param_dict.setdefault(param_name, []).append(param_value)
-        else:
-            param_dict[param_name] = param_values
-    return url.del_query_param(name).set_query_params(param_dict)
+class SearchView(ListAPIView):
+    http_method_names = ['get']
+    serializer_class = DocumentSerializer
+    renderer_classes = (
+        TemplateHTMLRenderer,
+        JSONRenderer,
+    )
+    #: list of filters to applies in order of listing, each implementing
+    #: the specific search feature
+    filter_backends = (
+        LanguageFilterBackend,
+        SearchQueryBackend,
+        HighlightFilterBackend,
+        DatabaseFilterBackend,
+    )
+    paginate_by = 10
+    max_paginate_by = 100
+    paginate_by_param = 'per_page'
+    pagination_serializer_class = SearchSerializer
+    topic_param = 'topic'
 
+    def initial(self, request, *args, **kwargs):
+        super(SearchView, self).initial(request, *args, **kwargs)
+        self.drilldown_faceting = flag_is_active(request,
+                                                 'search_drilldown_faceting')
+        self.available_filters = (Filter.objects.prefetch_related('tags',
+                                                                  'group')
+                                                .filter(enabled=True))
+        self.serialized_filters = FilterSerializer(self.available_filters,
+                                                   many=True).data
+        self.current_page = self.request.QUERY_PARAMS.get(self.page_kwarg, 1)
+        topics = self.request.QUERY_PARAMS.getlist(self.topic_param, [])
+        seen_topics = set()
+        self.current_topics = [topic for topic in topics
+                               if (topic not in seen_topics and
+                                   not seen_topics.add(topic))]
 
-def merge_param(url, name, value):
-    """
-    Takes an URLObject instance and adds a query parameter with the
-    given name and value -- but prevents duplication.
-    """
-    param_dict = url.query.multi_dict
-    if name in param_dict:
-        for param_name, param_values in param_dict.items():
-            if param_name == name:
-                if value not in param_values:
-                    param_values.append(value)
-            param_dict[param_name] = param_values
-    else:
-        param_dict[name] = value
-    return url.set_query_params(param_dict)
+    def get_template_names(self):
+        return ['search/results-redesign.html']
 
+    def get_queryset(self):
+        return DocumentS(DocumentType,
+                         url=self.request.get_full_path(),
+                         current_page=self.current_page,
+                         serialized_filters=self.serialized_filters,
+                         topics=self.current_topics)
 
-def search(request, page_count=10):
-    """Performs search or displays the search form."""
-
-    # Google Custom Search results page
-    if not flag_is_active(request, 'elasticsearch'):
-        query = request.GET.get('q', '')
-        return render(request, 'landing/searchresults.html', {'query': query})
-
-    search_form = SearchForm(request.GET or None)
-
-    context = {
-        'search_form': search_form,
-        'current_page': 1,
-    }
-
-    if search_form.is_valid():
-        search_query = search_form.cleaned_data.get('q', None)
-
-        or_dict = {}
-        for field in ['title', 'content', 'summary']:
-            or_dict[field + '__text'] = search_query
-
-        results = (DocumentType.search()
-                               .query(or_=or_dict)
-                               .filter(locale=request.locale)
-                               .highlight(*DocumentType.excerpt_fields)
-                               .facet('tags'))
-
-        filtered_topics = search_form.cleaned_data.get('topic', [])
-
-        if filtered_topics:
-            results = results.filter(tags=filtered_topics)
-
-        result_count = results.count()
-
-        # Pagination
-        current_page = search_form.cleaned_data['page']
-        start = page_count * (current_page - 1)
-        end = start + page_count
-        results = results[start:end]
-
-        url = URLObject(request.get_full_path())
-
-        # {u'tags': [{u'count': 1, u'term': u'html'}]}
-        # then we go through the returned facets and match the items with
-        # the allowed filters
-        facet_counts = []
-        topic_choices = search_form.topic_choices()
-        for result_facet in results.facet_counts().get('tags', []):
-            allowed_filter = topic_choices.get(result_facet['term'], None)
-            if allowed_filter is None:
-                continue
-
-            select_url = merge_param(url, 'topic', result_facet['term'])
-            select_url = pop_param(select_url, 'page', str(current_page))
-
-            facet_updates = {
-                'label': allowed_filter,
-                'select_url': select_url,
-            }
-            if result_facet['term'] in url.query.multi_dict.get('topic', []):
-                deselect_url = pop_param(url, 'topic', result_facet['term'])
-                deselect_url = pop_param(deselect_url, 'page',
-                                         str(current_page))
-                result_facet['deselect_url'] = deselect_url
-
-            facet_counts.append(dict(result_facet, **facet_updates))
-
-        context.update({
-            'results': results,
-            'search_query': search_query,
-            'result_count': result_count,
-            'facet_counts': facet_counts,
-            'current_page': current_page,
-            'start_index': start + 1,
-            'end_index': start + len(results),
-            'prev_page': current_page - 1 if start > 0 else None,
-            'next_page': current_page + 1 if end < result_count else None,
-        })
-
-    else:
-        search_query = ''
-        result_count = 0
-
-    template = 'results.html'
-    if flag_is_active(request, 'redesign'):
-        template = 'results-redesign.html'
-
-    return render(request, 'search/%s' % template, context)
+search = SearchView.as_view()
 
 
 @cache_page(60 * 15)  # 15 minutes.
@@ -163,6 +84,7 @@ def suggestions(request):
 def plugin(request):
     """Render an OpenSearch Plugin."""
     site = Site.objects.get_current()
-    return render(request, 'search/plugin.html',
-                        {'site': site, 'locale': request.locale},
-                        content_type='application/opensearchdescription+xml')
+    return render(request, 'search/plugin.html', {
+        'site': site,
+        'locale': request.locale
+    }, content_type='application/opensearchdescription+xml')

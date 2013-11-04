@@ -7,15 +7,72 @@ TODO:
 - Permissions for tag namespaces (eg. system:* is superuser-only)
 - Machine tag assists
 """
+import operator
+from django.db import router
+
 from django.db.models.fields import BLANK_CHOICE_DASH
-from django.contrib.auth.models import User, AnonymousUser
+from django.contrib.auth.models import AnonymousUser
 
 from taggit.managers import TaggableManager, _TaggableManager
-from taggit.models import (TaggedItem, GenericTaggedItemBase,
-                           TaggedItemBase, Tag)
-from taggit.utils import (parse_tags, edit_string_for_tags,
-                          require_instance_manager)
-from taggit.forms import TagField
+from taggit.models import GenericTaggedItemBase, Tag
+from taggit.utils import edit_string_for_tags, require_instance_manager
+
+
+class _PrefetchTaggableManager(_TaggableManager):
+
+    def __init__(self, through, model, instance, prefetch_cache_name):
+        super(_PrefetchTaggableManager, self).__init__(through, model, instance)
+        self.prefetch_cache_name = prefetch_cache_name
+        self._db = None
+
+    def is_cached(self, instance):
+        return self.prefetch_cache_name in instance._prefetched_objects_cache
+
+    def get_query_set(self):
+        try:
+            return self.instance._prefetched_objects_cache[self.prefetch_cache_name]
+        except (AttributeError, KeyError):
+            return self.through.tags_for(self.model, self.instance)
+
+    def get_prefetch_query_set(self, instances):
+        instance = instances[0]
+        from django.db import connections
+        db = self._db or router.db_for_read(instance.__class__,
+                                            instance=instance)
+
+        fk = self.through._meta.get_field('object_id'
+                                          if issubclass(self.through,
+                                                        GenericTaggedItemBase)
+                                          else 'content_object')
+        pk_set = set(obj._get_pk_val() for obj in instances)
+        query = {'%s__%s__in' % (self.through.tag_relname(), fk.name): pk_set}
+        join_table = self.through._meta.db_table
+        source_col = fk.column
+        connection = connections[db]
+        qn = connection.ops.quote_name
+        qs = self.get_query_set().using(db)._next_is_sticky().filter(
+            **query
+        ).extra(select={
+            '_prefetch_related_val': '%s.%s' % (qn(join_table), qn(source_col))
+        })
+        return (qs,
+                operator.attrgetter('_prefetch_related_val'),
+                operator.attrgetter(instance._meta.pk.name),
+                False,
+                self.prefetch_cache_name)
+
+
+class PrefetchTaggableManager(TaggableManager):
+    def __get__(self, instance, model):
+        if instance is not None and instance.pk is None:
+            raise ValueError("%s objects need to have a primary key value "
+                             "before you can access their tags." %
+                             model.__name__)
+        manager = _PrefetchTaggableManager(through=self.through,
+                                           model=model,
+                                           instance=instance,
+                                           prefetch_cache_name=self.name)
+        return manager
 
 
 class NamespacedTaggableManager(TaggableManager):

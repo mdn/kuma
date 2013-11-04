@@ -5,9 +5,13 @@ from django.conf import settings
 from nose import SkipTest
 from pyelasticsearch.exceptions import (Timeout, ConnectionError,
                                         ElasticHttpNotFoundError)
+from rest_framework.test import APIRequestFactory
 from test_utils import TestCase
 
 from search.index import get_index, get_indexing_es
+
+
+factory = APIRequestFactory()
 
 
 class ElasticTestCase(TestCase):

@@ -20,14 +20,11 @@ from django.core.urlresolvers import resolve
 from django.db import models
 from django.db.models import signals
 from django.http import Http404
-from django.utils.html import strip_tags
 
 from south.modelsinspector import add_introspection_rules
 import constance.config
-from elasticutils.contrib.django import Indexable
 
 from tidings.models import NotificationsMixin
-from search.index import SearchMappingType, register_mapping_type
 from search.tasks import register_live_index
 from sumo import ProgrammingError
 from sumo_locales import LOCALES
@@ -635,7 +632,7 @@ class Document(NotificationsMixin, models.Model):
     current_revision = models.ForeignKey('Revision', null=True,
                                          related_name='current_for+')
 
-    # The Document I was translated from. NULL iff this doc is in the default
+    # The Document I was translated from. NULL if this doc is in the default
     # locale or it is nonlocalizable. TODO: validate against
     # settings.WIKI_DEFAULT_LANGUAGE.
     parent = models.ForeignKey('self', related_name='translations',
@@ -1764,6 +1761,7 @@ class Document(NotificationsMixin, models.Model):
         return EditDocumentEvent.is_notifying(user, self)
 
     def get_mapping_type(self):
+        from search.models import DocumentType
         return DocumentType
 
 
@@ -1788,105 +1786,6 @@ class DocumentDeletionLog(models.Model):
         }
 
 
-@register_mapping_type
-class DocumentType(SearchMappingType, Indexable):
-
-    excerpt_fields = ['summary', 'content']
-
-    @classmethod
-    def get_model(cls):
-        return Document
-
-    @classmethod
-    def extract_document(cls, obj_id, obj=None):
-        if obj is None:
-            obj = cls.get_model().objects.get(pk=obj_id)
-
-        return {
-            'id': obj.id,
-            'title': obj.title,
-            'slug': obj.slug,
-            'summary': obj.get_summary(strip_markup=True),
-            'locale': obj.locale,
-            'modified': obj.modified,
-            'content': strip_tags(obj.rendered_html),
-            'tags': [tag.name for tag in obj.tags.all()]
-        }
-
-    @classmethod
-    def get_mapping(cls):
-        return {
-            'id': {'type': 'integer'},
-            'title': {'type': 'string'},
-            'slug': {'type': 'string'},
-            'summary': {'type': 'string', 'analyzer': 'snowball'},
-            'locale': {'type': 'string', 'index': 'not_analyzed'},
-            'modified': {'type': 'date'},
-            'content': {'type': 'string', 'analyzer': 'wikiMarkup'},
-            'tags': {'type': 'string', 'analyzer': 'snowball'},
-        }
-
-    @classmethod
-    def get_indexable(cls):
-        """
-        For this mapping type return a list of model IDs that should be
-        indexed with the management command, in a full reindex.
-
-        WARNING: When changing this code make sure to update the
-                 ``should_update`` method below, too!
-        """
-        model = cls.get_model()
-        return (model.objects
-                     .filter(is_template=False,
-                             is_redirect=False,
-                             deleted=False)
-                     .exclude(slug__icontains='Talk:')
-                     .values_list('id', flat=True))
-
-    @classmethod
-    def should_update(cls, obj):
-        """
-        Given a Document instance should return boolean value
-        whether the instance should be indexed or not.
-
-        WARNING: This *must* mirror the logic of the ``get_indexable``
-                 method above!
-        """
-        return (not obj.is_template and
-                not obj.is_redirect and
-                not obj.deleted and
-                'Talk:' not in obj.slug)
-
-    @classmethod
-    def get_analysis(cls):
-        return {
-            'analyzer': {
-                'wikiMarkup': {
-                    'type': 'standard',
-                    'char_filter': 'html_strip'
-                }
-            }
-        }
-
-    def get_excerpt(self):
-        def bleach_matches(matches):
-            bleached_matches = []
-            for match in matches:
-                bleached_matches.append(bleach.clean(match,
-                                                     tags=['em'],
-                                                     strip=True))
-            return bleached_matches
-
-        stripped_matches = []
-        for field in self.excerpt_fields:
-            if field in self._highlight:
-                stripped_matches = bleach_matches(self._highlight[field])
-                return u'...'.join(stripped_matches)
-        if not stripped_matches:
-            return self.summary
-        return u'...'.join(stripped_matches)
-
-
 class DocumentZoneManager(models.Manager):
     """Manager for DocumentZone objects"""
 
@@ -1894,7 +1793,7 @@ class DocumentZoneManager(models.Manager):
         cache_key = URL_REMAPS_CACHE_KEY_TMPL % locale
         s_cache = get_cache(SECONDARY_CACHE_ALIAS)
         remaps = s_cache.get(cache_key)
-        
+
         if not remaps:
             qs = (self.filter(document__locale=locale,
                               url_root__isnull=False)
