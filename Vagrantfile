@@ -29,6 +29,7 @@ Vagrant::Config.run do |config|
 
     # This thing can be a little hungry for memory
     config.vm.customize ["modifyvm", :id, "--memory", CONF['memory_size']]
+    config.vm.customize ['modifyvm', :id, '--cpus', CONF['number_cpus']]
 
     # uncomment to enable VM GUI console, mainly for troubleshooting
     if CONF['gui'] == true
@@ -50,11 +51,11 @@ Vagrant::Config.run do |config|
 end
 
 Vagrant::VERSION >= "1.1.0" and Vagrant.configure("2") do |config|
-  
+
     config.vm.box = CONF['box']
     config.vm.network :private_network, :ip => CONF['ip_address']
     config.package.name = CONF['package_name']
-    config.vm.synced_folder ".", "/vagrant", disabled: true 
+    config.vm.synced_folder ".", "/vagrant", disabled: true
 
     # nfs needs to be explicitly enabled to run.
     if CONF['nfs'] == false or RUBY_PLATFORM =~ /mswin(32|64)/
@@ -64,7 +65,8 @@ Vagrant::VERSION >= "1.1.0" and Vagrant.configure("2") do |config|
     end
 
     config.vm.provider :vmware_fusion do |vmware, override|
-        vmware.vmx["memsize"] = CONF['memory_size']
+        vmware.vmx['memsize'] = CONF['memory_size']
+        vmware.vmx['numvcpus'] = CONF['number_cpus']
         override.vm.box_url =  CONF['vmware_box_url']
         # don't use nfs for vmware, since it didn't work for me -- @jezdez
         override.vm.synced_folder ".", CONF['mount_point']
@@ -72,6 +74,7 @@ Vagrant::VERSION >= "1.1.0" and Vagrant.configure("2") do |config|
 
     config.vm.provider :vmware_workstation do |vmware, override|
         vmware.vmx["memsize"] = CONF['memory_size']
+        vmware.vmx['numvcpus'] = CONF['number_cpus']
         override.vm.box_url =  CONF['vmware_box_url']
         # don't use nfs for vmware, since it didn't work for me -- @jezdez
         override.vm.synced_folder ".", CONF['mount_point']
@@ -81,6 +84,8 @@ Vagrant::VERSION >= "1.1.0" and Vagrant.configure("2") do |config|
         override.vm.box_url = CONF['virtual_box_url']
         vb.customize ["modifyvm", :id, "--memory", CONF['memory_size']]
         vb.customize ['modifyvm', :id, '--ostype', 'Ubuntu_64']
+        vb.customize ['modifyvm', :id, '--cpus', CONF['number_cpus']]
+
         # This thing can be a little hungry for memory
         # uncomment to enable VM GUI console, mainly for troubleshooting
         if CONF['gui'] == true
