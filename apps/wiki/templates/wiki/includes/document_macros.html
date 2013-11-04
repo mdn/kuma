@@ -33,31 +33,31 @@
   {% else %}
     {% set translate_url = url('wiki.select_locale', document_path=document.full_path, locale=document.locale) %}
   {% endif %}
-  <ul class="page-buttons"><li><a href="javascript:;" id="languages-menu" class="button only-icon transparent" aria-haspopup="true"><span>{{ _('Languages') }}</span><i class="icon-comments"></i></a>
+  <ul class="page-buttons"><li><a href="javascript:;" id="languages-menu" class="button only-icon transparent" aria-haspopup="true" aria-owns="languages-menu-submenu" aria-expanded="false"><span>{{ _('Languages') }}</span><i class="icon-comments"></i></a>
   
-        <div class="submenu" role="menu" aria-hidden="true">
+        <div class="submenu" id="languages-menu-submenu">
           <div class="submenu-column">
             <div class="title">{{ _('Languages') }}</div>
             <ul id="translations">
                 {% for translation in document.other_translations %}
-                  <li role="menuitem" tabindex="-1"><a rel="internal" href="{{ url('wiki.document', translation.full_path, locale=translation.locale) }}" title="{{ translation.title }}">{{ translation.language }}</a></li>
+                  <li><a rel="internal" href="{{ url('wiki.document', translation.full_path, locale=translation.locale) }}" title="{{ translation.title }}">{{ translation.language }}</a></li>
                 {% endfor %}
 
                 {% if document.is_localizable %}
-                  <li role="menuitem" tabindex="-1"><a href="{{ translate_url }}">{{ _('Add translation') }}</a></li>
+                  <li><a href="{{ translate_url }}">{{ _('Add translation') }}</a></li>
                 {% endif %}
               </ul>
           </div>
-        </div></li><li><a href="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}" class="button {{ disabled_class }}" {{ disabled_attr }}>{{ _('Edit Page') }}<i class="icon-pencil"></i></a></li><li><a href="javascript:;" id="settings-menu" class="button only-icon" aria-haspopup="true" {{ disabled_attr }}><span>{{ _('Settings') }}</span><i class="icon-cog"></i></a>
+        </div></li><li><a href="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}" class="button {{ disabled_class }}" {{ disabled_attr }}>{{ _('Edit Page') }}<i class="icon-pencil"></i></a></li><li><a href="javascript:;" id="settings-menu" class="button only-icon" {{ disabled_attr }} aria-haspopup="true" aria-owns="settings-menu-submenu" aria-expanded="false"><span>{{ _('Settings') }}</span><i class="icon-cog"></i></a>
 
-        <div class="submenu" role="menu" aria-hidden="true">
+        <div class="submenu" id="settings-menu-submenu">
           <!-- this page -->
           <div class="submenu-column">
             <div class="title">{{ _('This Page') }}</div>
             <ul>
-                <li role="menuitem" tabindex="-1"><a href="{{ url('wiki.document_revisions', document.full_path) }}">{{_('History')}}</a></li>
+                <li><a href="{{ url('wiki.document_revisions', document.full_path) }}">{{_('History')}}</a></li>
                 {% if user.is_authenticated() and document %}
-                  <li class="page-watch" role="menuitem" tabindex="-1">
+                  <li class="page-watch">
                   {% if document.is_watched_by(user) %}
                     <form action="{{ url('wiki.document_unwatch', document.slug) }}" method="post">
                       {{ csrf() }}
@@ -71,33 +71,33 @@
                   {% endif %}
                 </li>{% endif %}
                 {% if not document.is_template %}
-                  <li role="menuitem" tabindex="-1"><a href="{{ url('wiki.new_document') }}?parent={{ document.id }}">{{ _('New sub-page') }}</a></li>
-                  <li role="menuitem" tabindex="-1"><a href="{{ url('wiki.new_document') }}?clone={{ document.id }}">{{ _('Clone this page') }}</a></li>
+                  <li><a href="{{ url('wiki.new_document') }}?parent={{ document.id }}">{{ _('New sub-page') }}</a></li>
+                  <li><a href="{{ url('wiki.new_document') }}?clone={{ document.id }}">{{ _('Clone this page') }}</a></li>
                 {% endif %}
                 {% if waffle.flag('page_move') %}
-                  <li role="menuitem" tabindex="-1"><a href="{{ url('wiki.move', document.slug, locale=document.locale) }}">{{ _('Move this page') }}</a></li>
+                  <li><a href="{{ url('wiki.move', document.slug, locale=document.locale) }}">{{ _('Move this page') }}</a></li>
                 {% endif %}
                 {% if user.is_superuser %}
-                  <li role="menuitem" tabindex="-1"><a href="{{ url('admin:wiki_document_change', document.id) }}">{{ _('View in Admin') }}</a></li>
+                  <li><a href="{{ url('admin:wiki_document_change', document.id) }}">{{ _('View in Admin') }}</a></li>
                 {% endif %}
 
                 {% set policy_links = build_policy_admin_links(request.user, document) %}
                 {% if policy_links['change_one'] %}
-                  <li role="menuitem" tabindex="-1"><a target="_blank" href="{{ policy_links['change_one'] }}">{{ _('Manage access policy') }}</a></li>
+                  <li><a target="_blank" href="{{ policy_links['change_one'] }}">{{ _('Manage access policy') }}</a></li>
                 {% elif policy_links['change_list'] %}
-                  <li role="menuitem" tabindex="-1"><a target="_blank" href="{{ policy_links['change_list'] }}">{{ _('Manage access policies') }}</a></li>
+                  <li><a target="_blank" href="{{ policy_links['change_list'] }}">{{ _('Manage access policies') }}</a></li>
                 {% elif policy_links['add'] %}
-                  <li role="menuitem" tabindex="-1"><a target="_blank" href="{{ policy_links['add'] }}">{{ _('Add access policy') }}</a></li>
+                  <li><a target="_blank" href="{{ policy_links['add'] }}">{{ _('Add access policy') }}</a></li>
                 {% endif %}
 
                 {% set zone_links = document_zone_management_links(request.user, document) %}
                 {% if zone_links['change'] %}
-                  <li role="menuitem" tabindex="-1"><a target="_blank" href="{{ zone_links['change'] }}">{{ _('Manage content zone') }}</a></li>
+                  <li><a target="_blank" href="{{ zone_links['change'] }}">{{ _('Manage content zone') }}</a></li>
                 {% endif %}
                 {% if zone_links['add'] %}
-                  <li role="menuitem" tabindex="-1"><a target="_blank" href="{{ zone_links['add'] }}">{{ _('Convert to content zone') }}</a></li>
+                  <li><a target="_blank" href="{{ zone_links['add'] }}">{{ _('Convert to content zone') }}</a></li>
                 {% endif %}
-                <li role="menuitem" tabindex="-1" class="page-print"><a href="#" onclick="return window.print();"  title="{{ _('Print page') }}">{{ _('Print this page') }}</a></li>
+                <li class="page-print"><a href="#" onclick="return window.print();"  title="{{ _('Print page') }}">{{ _('Print this page') }}</a></li>
             </ul>
           </div>
         </div>
