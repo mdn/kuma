@@ -154,41 +154,41 @@ https://wiki.mozilla.org/MDN/Development/Redesign/Testing">Here\'s how you can h
 
     <a href="{{ url('home') }}" class="logo">{{ _('Mozilla Developer Network') }}</a>
 
-    <nav id="main-nav"><ul><li><a href="javascript:;">{{ _('Zones') }}<i class="icon-caret-down"></i></a>
+    <nav id="main-nav" role="navigation"><ul role="menubar"><li><a href="javascript:;" aria-haspopup="true">{{ _('Zones') }}<i class="icon-caret-down"></i></a>
 
-        <div class="submenu submenu-single">
+        <div class="submenu submenu-single" role="menu" aria-hidden="true">
           <div class="submenu-column">
             <ul>
-              <li><a href="{{ devmo_url('Web/Apps') }}?menu">App Center</a></li>
-              <li><a href="{{ devmo_url('Mozilla/Firefox_OS') }}?menu">Firefox OS</a></li>
-              <li><a href="{{ devmo_url('Mozilla/Persona') }}?menu">Persona</a></li>
+              <li role="menuitem" tabindex="-1"><a href="{{ devmo_url('Web/Apps') }}?menu">App Center</a></li>
+              <li role="menuitem" tabindex="-1"><a href="{{ devmo_url('Mozilla/Firefox_OS') }}?menu">Firefox OS</a></li>
+              <li role="menuitem" tabindex="-1"><a href="{{ devmo_url('Mozilla/Persona') }}?menu">Persona</a></li>
             </ul>
           </div>
         </div>
-      </li><li><a href="{{ devmo_url('Web') }}">{{ _('Web Platform') }}<i class="icon-caret-down"></i></a>
+      </li><li><a href="{{ devmo_url('Web') }}" aria-haspopup="true">{{ _('Web Platform') }}<i class="icon-caret-down"></i></a>
 
-        <div class="submenu">
+        <div class="submenu" role="menu" aria-hidden="true">
           <div class="submenu-column">
             <div class="title">{{ _('Technologies') }}</div>
             <ul>
-              <li><a href="{{ devmo_url('Web/HTML') }}?menu">HTML</a></li>
-              <li><a href="{{ devmo_url('Web/CSS') }}?menu">CSS</a></li>
-              <li><a href="{{ devmo_url('Web/JavaScript') }}?menu">JavaScript</a></li>
-              <li><a href="{{ devmo_url('Web/Guide/Graphics') }}?menu">Graphics</a></li>
-              <li><a href="{{ devmo_url('Web/API') }}?menu">APIs / DOM</a></li>
-              <li><a href="{{ devmo_url('Web/App') }}?menu">Apps</a></li>
-              <li><a href="{{ devmo_url('Tools') }}?menu">Dev Tools</a></li>
-              <li><a href="{{ devmo_url('Web/MathML') }}?menu">MathML</a></li>
+              <li role="menuitem" tabindex="-1"><a href="{{ devmo_url('Web/HTML') }}?menu">HTML</a></li>
+              <li role="menuitem" tabindex="-1"><a href="{{ devmo_url('Web/CSS') }}?menu">CSS</a></li>
+              <li role="menuitem" tabindex="-1"><a href="{{ devmo_url('Web/JavaScript') }}?menu">JavaScript</a></li>
+              <li role="menuitem" tabindex="-1"><a href="{{ devmo_url('Web/Guide/Graphics') }}?menu">Graphics</a></li>
+              <li role="menuitem" tabindex="-1"><a href="{{ devmo_url('Web/API') }}?menu">APIs / DOM</a></li>
+              <li role="menuitem" tabindex="-1"><a href="{{ devmo_url('Web/App') }}?menu">Apps</a></li>
+              <li role="menuitem" tabindex="-1"><a href="{{ devmo_url('Tools') }}?menu">Dev Tools</a></li>
+              <li role="menuitem" tabindex="-1"><a href="{{ devmo_url('Web/MathML') }}?menu">MathML</a></li>
             </ul>
           </div><div class="submenu-column">
             <div class="title">{{ _('References & Guides') }}</div>
             <ul>
-              <li><a href="{{ devmo_url('Web/Tutorials') }}?menu">Tutorials</a></li>
-              <li><a href="{{ devmo_url('Web/Reference') }}?menu">References</a></li>
-              <li><a href="{{ devmo_url('Web/Guide') }}?menu">Developer Guides</a></li>
-              <li><a href="{{ devmo_url('Web/Accessibility') }}?menu">Accessibility</a></li>
-              <li><a href="{{ url('demos') }}?menu">Demos</a></li>
-              <li><a href="{{ url('docs') }}?menu">...more docs</a></li>
+              <li role="menuitem" tabindex="-1"><a href="{{ devmo_url('Web/Tutorials') }}?menu">Tutorials</a></li>
+              <li role="menuitem" tabindex="-1"><a href="{{ devmo_url('Web/Reference') }}?menu">References</a></li>
+              <li role="menuitem" tabindex="-1"><a href="{{ devmo_url('Web/Guide') }}?menu">Developer Guides</a></li>
+              <li role="menuitem" tabindex="-1"><a href="{{ devmo_url('Web/Accessibility') }}?menu">Accessibility</a></li>
+              <li role="menuitem" tabindex="-1"><a href="{{ url('demos') }}?menu">Demos</a></li>
+              <li role="menuitem" tabindex="-1"><a href="{{ url('docs') }}?menu">...more docs</a></li>
             </ul>
           </div>
         </div>
