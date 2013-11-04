@@ -680,6 +680,7 @@ MINIFY_BUNDLES = {
             'js/libs/tag-it.js',
         ),
         'search': (
+            'js/store.js',
             'redesign/js/search.js',
         ),
         'wiki-edit': (
@@ -705,6 +706,8 @@ MINIFY_BUNDLES = {
             'js/syntax-prism.js',
         ),
         'wiki': (
+            'js/store.js',
+            'redesign/js/search.js',
             'redesign/js/wiki.js',
         ),
         'newsletter': (

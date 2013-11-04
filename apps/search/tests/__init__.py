@@ -9,6 +9,9 @@ from rest_framework.test import APIRequestFactory
 from test_utils import TestCase
 
 from devmo.tests import LocalizingMixin
+from sumo.urlresolvers import reset_url_prefixer
+from sumo.middleware import LocaleURLMiddleware
+
 from search.index import get_index, get_indexing_es
 
 
@@ -71,6 +74,7 @@ class ElasticTestCase(TestCase):
     def tearDown(self):
         super(ElasticTestCase, self).tearDown()
         self.teardown_indexes()
+        reset_url_prefixer()
 
     def refresh(self, timesleep=0):
         index = get_index()
@@ -111,3 +115,9 @@ class ElasticTestCase(TestCase):
             # If we get this error, it means the index didn't exist
             # so there's nothing to delete.
             pass
+
+    def get_request(self, *args, **kwargs):
+        request = factory.get(*args, **kwargs)
+        # setting request.locale correctly
+        LocaleURLMiddleware().process_request(request)
+        return request

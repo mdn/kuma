@@ -21,10 +21,10 @@
     <div class="column-container">
       <div class="column-1"><i aria-hidden="true" class="icon-file-text-alt"></i></div>
       <div class="column-5 result-list-item">
-        <h4><a href="{{ doc.url }}"{% if index == 1 %} tabindex="1"{% endif %}>{{ doc.title }}</a></h4>
+        <h4><a href="{{ doc.url }}"{% if index == 1 %} tabindex="1"{% endif %} data-slug="{{ doc.slug }}" data-docid="{{ doc.id }}">{{ doc.title }}</a></h4>
         <p>{{ doc.excerpt|safe }}</p>
         <p class="search-meta"><a href="{{ doc.url }}">{{ doc.url|replace('https://', '') }}</a>
-        {% if user.is_superuser %}Score: <span title="explanation: {{ doc.explanation }}">{{ doc.score }}</span>{% endif%}
+        {% if waffle.flag('search_explanation') %}Score: <span title="explanation: {{ doc.explanation }}">{{ doc.score }}</span>{% endif%}
         </p>
       </div>
       {# Hiding until search has this capability #}{#
@@ -51,8 +51,7 @@
     </form>
   </div>
 
-
- <div class="column-container">
+  <div class="column-container">
     <!-- left results -->
     <div class="column-main">
 
@@ -128,12 +127,12 @@
 
           <div class="pager">
             {% if previous %}
-              <a class="button" href="{{ previous }}">
+              <a class="button" href="{{ previous }}" id="search-result-previous">
               {{ _('Previous') }}
               </a>
             {% endif %}
             {% if next %}
-              <a class="button" href="{{ next }}">
+              <a class="button" href="{{ next }}" id="search-result-next">
               {{ _('Next') }}
               </a>
             {% endif %}
@@ -170,3 +169,14 @@
     {% endif %}
 </div>
 {% endblock %}
+
+
+{% block js %}
+  {% if waffle.flag('search_doc_navigator') and count and search_ref %}
+  <script>
+  $(document).ready(function() {
+    $('.result-list-item h4 a').mozSearchStore('{{ search_ref }}');
+  });
+  </script>
+  {% endif %}
+{% endblock js %}

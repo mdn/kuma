@@ -1,10 +1,9 @@
 from nose.tools import eq_
 
-from sumo.middleware import LocaleURLMiddleware
 from waffle.models import Flag
 
 from search.models import Filter, FilterGroup
-from search.tests import ElasticTestCase, factory
+from search.tests import ElasticTestCase
 from search.views import SearchView
 
 
@@ -47,7 +46,7 @@ class ViewTests(ElasticTestCase):
                       'group': {'name': 'Group', 'order': 1}}])
 
         test_view1 = Test1SearchView.as_view()
-        test_view1(factory.get('/'))
+        test_view1(self.get_request('/en-US/'))
 
         group = FilterGroup.objects.create(name='Group')
         Filter.objects.create(name='Serializer', slug='serializer', group=group)
@@ -70,7 +69,7 @@ class ViewTests(ElasticTestCase):
                       'group': {'name': 'Group', 'order': 1}}])
 
         test_view2 = Test2SearchView.as_view()
-        test_view2(factory.get('/'))
+        test_view2(self.get_request('/en-US/'))
 
     def test_current_topics(self):
 
@@ -83,12 +82,12 @@ class ViewTests(ElasticTestCase):
                 eq_(self.current_topics, self.expected)
 
         view = TopicSearchView.as_view(expected=['spam'])
-        view(factory.get('/?topic=spam'))
+        view(self.get_request('/en-US/?topic=spam'))
 
         # the topics are deduplicated
         view = TopicSearchView.as_view(expected=['spam', 'eggs'])
-        view(factory.get('/?topic=spam&topic=eggs'))
-        view(factory.get('/?topic=spam&topic=eggs&topic=spam'))
+        view(self.get_request('/en-US/?topic=spam&topic=eggs'))
+        view(self.get_request('/en-US/?topic=spam&topic=eggs&topic=spam'))
 
     def test_queryset(self):
 
@@ -115,9 +114,7 @@ class ViewTests(ElasticTestCase):
                 return response
 
         view = QuerysetSearchView.as_view()
-        request = factory.get('/en-US/search?q=article&topic=tagged')
-        # setting request.locale correctly
-        LocaleURLMiddleware().process_request(request)
+        request = self.get_request('/en-US/search?q=article&topic=tagged')
         view(request)
 
     def test_allowed_methods(self):
@@ -131,13 +128,11 @@ class ViewTests(ElasticTestCase):
         eq_(response.status_code, 405)
 
     def test_paginate_by_param(self):
-        request = factory.get('/en-US/search')
-        LocaleURLMiddleware().process_request(request)
+        request = self.get_request('/en-US/search')
         view = SearchView.as_view(paginate_by=1)
         response = view(request)
         eq_(response.data['pages'], 5)
 
-        request = factory.get('/en-US/search?per_page=4')
-        LocaleURLMiddleware().process_request(request)
+        request = self.get_request('/en-US/search?per_page=4')
         response = view(request)
         eq_(response.data['pages'], 2)

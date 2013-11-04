@@ -2,8 +2,8 @@ import operator
 from django.conf import settings
 from elasticutils import Q
 from elasticutils.contrib.django import F
-
 from rest_framework.filters import BaseFilterBackend
+from waffle import flag_is_active
 
 from search.models import DocumentType, Filter
 
@@ -49,7 +49,7 @@ class SearchQueryBackend(BaseFilterBackend):
                 boosts[operation] = boost
             queryset = (queryset.query(Q(should=True, **queries))
                                 .boost(**boosts))
-        if request.user.is_superuser:
+        if flag_is_active(request, 'search_explanation'):
             queryset = queryset.explain()  # adds scoring explaination
         return queryset
 

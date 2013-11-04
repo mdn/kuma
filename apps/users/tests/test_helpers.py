@@ -12,6 +12,7 @@ from sumo.tests import TestCase
 from users.helpers import (profile_url, profile_avatar, public_email,
                            display_name, user_list)
 from devmo.models import UserProfile
+from devmo.urlresolvers import _prefixes
 
 
 class HelperTestCase(TestCase):
@@ -21,8 +22,12 @@ class HelperTestCase(TestCase):
         super(HelperTestCase, self).setUp()
         self.u = User.objects.get(username=u'testuser')
 
+    def tearDown(self):
+        super(HelperTestCase, self).tearDown()
+        _prefixes.clear()
+
     def test_profile_url(self):
-        eq_(u'/profiles/testuser', profile_url(self.u))
+        eq_('/profiles/testuser', profile_url(self.u))
 
     def test_profile_default_gravatar(self):
         d_param = urllib.urlencode({'d': settings.DEFAULT_AVATAR})

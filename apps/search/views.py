@@ -7,13 +7,14 @@ from django.views.decorators.cache import cache_page
 from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework.generics import ListAPIView
-from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
+from rest_framework.renderers import JSONRenderer
 from waffle import flag_is_active
 
 from .filters import (LanguageFilterBackend, DatabaseFilterBackend,
                       SearchQueryBackend, HighlightFilterBackend,
                       AdvancedSearchQueryBackend)
 from .models import Filter, DocumentType
+from .renderers import ExtendedTemplateHTMLRenderer
 from .serializers import SearchSerializer, DocumentSerializer, FilterSerializer
 from .queries import DocumentS
 
@@ -22,7 +23,7 @@ class SearchView(ListAPIView):
     http_method_names = ['get']
     serializer_class = DocumentSerializer
     renderer_classes = (
-        TemplateHTMLRenderer,
+        ExtendedTemplateHTMLRenderer,
         JSONRenderer,
     )
     #: list of filters to applies in order of listing, each implementing
@@ -39,7 +40,6 @@ class SearchView(ListAPIView):
     paginate_by_param = 'per_page'
     pagination_serializer_class = SearchSerializer
     topic_param = 'topic'
-    result_page = 'search/results.html'
 
     @csrf_exempt
     def dispatch(self, request, *args, **kwargs):
@@ -65,9 +65,6 @@ class SearchView(ListAPIView):
         self.current_topics = [topic for topic in topics
                                if (topic not in seen_topics and
                                    not seen_topics.add(topic))]
-
-    def get_template_names(self):
-        return [self.result_page]
 
     def get_queryset(self):
         return DocumentS(DocumentType,

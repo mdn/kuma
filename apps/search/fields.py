@@ -1,15 +1,38 @@
 from rest_framework import serializers
 
 
-class SearchQueryField(serializers.Field):
-    """
-    Field that returns a link to the next page in paginated results.
-    """
-    search_param = 'q'
+class QueryParameterField(serializers.Field):
+    param_name = None
+    method = 'get'
+    empty_value = None
 
     def to_native(self, value):
         request = self.context.get('request')
-        return request.QUERY_PARAMS.get(self.search_param, None)
+        getter = getattr(request.QUERY_PARAMS, self.method)
+        return getter(self.param_name, self.empty_value)
+
+
+class SearchQueryField(QueryParameterField):
+    """
+    Field that returns the search query of the current request.
+    """
+    param_name = 'q'
+
+
+class TopicQueryField(QueryParameterField):
+    """
+    Field that returns the topic list of the current request.
+    """
+    param_name = 'topic'
+    method = 'getlist'
+    empty_value = []
+
+
+class LocaleField(serializers.Field):
+
+    def to_native(self, value):
+        request = self.context.get('request')
+        return request.locale
 
 
 class DocumentExcerptField(serializers.Field):
