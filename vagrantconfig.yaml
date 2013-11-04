@@ -7,6 +7,7 @@ nfs: true
 gui: false
 ip_address: 192.168.10.55
 memory_size: 768
+number_cpus: 2
 box: "kuma-ubuntu"
 virtual_box_url: "http://people.mozilla.com/~jleidel/vagrant/kuma-precise-virtualbox.box"
 vmware_box_url: "http://people.mozilla.com/~jleidel/vagrant/kuma-precise-vmware.box"
