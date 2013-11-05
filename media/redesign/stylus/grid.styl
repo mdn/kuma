@@ -20,25 +20,27 @@
 
   {grid-column-selector} {
     margin-right: grid-margin;
-    float: left;
+    bidi-value(float, left, right);
 
     &:last-child {
       margin-right: 0;
+      bidi-value(margin-right, 0, grid-margin);
     }
   }
 
   &.column-container-reverse {
-    margin-left: -1%;
+    bidi-value(margin-left, -1%, 0);
 
     {grid-column-selector} {
-      float: right;
+      bidi-value(float, right, left);
 
       &:first-child {
-        margin-right: 0;
+        bidi-value(margin-right, 0, grid-margin);
       }
 
       &:last-child {
         margin-right: grid-margin;
+        bidi-value(margin-right, grid-margin, 0);
       }
     }
   }
@@ -46,32 +48,10 @@
 
 /* adjustments to reverse the column containers in RTL */
 .html-rtl .column-container {
-
   {grid-column-selector} {
-    float: right;
-
     &:first-child {
       margin-right: 0;
     } 
-    &:last-child {
-      margin-right: grid-margin;
-    }
-  }
-}
-
-.html-rtl .column-container-reverse {
-  margin-left: 0;
-
-  {grid-column-selector} {
-    float: left;
-
-    &:first-child {
-      margin-right: grid-margin;
-    }
-
-    &:last-child {
-      margin-right: 0;
-    }
   }
 }
 

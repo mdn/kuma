@@ -59,9 +59,8 @@ h4 {
 
 /* basic text */
 {selector-icon} {
+  bidi-style(margin-left, (grid-spacing / 2), margin-right, 0, true); /* compat-only */
   display: inline-block;
-  margin-left: (grid-spacing / 2);
-  compat-only(margin-right, 0);
 
   &:before {
     display: inline-block;
@@ -126,10 +125,4 @@ button, input[type='submit'], input[type='button'] {
 }
 
 
-/* rtl */
-.html-rtl {
-  {selector-icon} {
-    compat-only(margin-right, (grid-spacing / 2));
-    compat-only(margin-left, 0);
-  }
-}
+

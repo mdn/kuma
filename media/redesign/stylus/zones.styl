@@ -146,8 +146,8 @@
   }
 
   .zone-image {
+    bidi-style(right, 0, left, auto);
     position: absolute;
-    right: 0;
     top: 0;
     display: block;
     width: 200px;
@@ -212,15 +212,3 @@
     }
   }
 }
-
-/* right to left */
-.html-rtl {
-
-  .zone-article-header {
-    .zone-image {
-      right: auto;
-      left: 0;
-    }
-  }
-}
-
