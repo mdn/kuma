@@ -1,3 +1,26 @@
+/* global notices (via soapbox) */
+.global-notice {
+  background: #fff;
+  background: light-background-color;
+  compat-only(font-size, base-font-size);
+  compat-only(border, 0);
+  compat-only(color, text-color);
+  compat-only(padding, 0);
+
+  .wrap {
+    @extend .center;
+    @extend .smaller;
+    compat-important(padding-left, 24px);
+    compat-important(padding-right, 24px);
+    compat-important(padding-top, 10px);
+    compat-important(padding-bottom, 10px);
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
 /* header */
 #main-header {
   @extend .clear;
