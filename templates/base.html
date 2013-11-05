@@ -192,12 +192,12 @@ https://wiki.mozilla.org/MDN/Development/Redesign/Testing">Here\'s how you can h
             </ul>
           </div>
         </div>
-      </li><li><a href="{{ devmo_url('Tools') }}">{{ _('Tools') }}</a></li><li><a href="{{ url('demos') }}">{{ _('Demos') }}</a></li>{#<li><a href="">{{ _('Developer Program') }}</a></li>#}{% if not is_sphinx %}<li class="main-nav-search"><form action="{{ url('search') }}">
+      </li><li><a href="{{ devmo_url('Tools') }}">{{ _('Tools') }}</a></li><li><a href="{{ url('demos') }}">{{ _('Demos') }}</a></li>{#<li><a href="">{{ _('Developer Program') }}</a></li>#}{% if not is_sphinx %}<li class="main-nav-search"><form action="{{ url('search') }}" method="get" role="search">
         <div class="search-wrap">
-          <label for="q" class="offscreen">{{ _('Search') }}</label>
+          <label for="main-q" class="offscreen">{{ _('Search') }}</label>
           <input type="search" id="main-q" name="q" data-placeholder="{{ _('SEARCH') }}" data-value="{{ search_query }}" value="" />
           <span class="search-trigger"><i class="icon-search"></i></span>&nbsp;
-          <button type="submit">{{ _('Search') }}</button>
+          <button type="submit" class="offscreen">{{ _('Search') }}</button>
         </div>
       </form></li>{% endif %}</ul></nav>
   </div></header>
