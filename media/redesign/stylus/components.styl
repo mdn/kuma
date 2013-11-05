@@ -109,17 +109,21 @@
       }
     }
 
-    ol .current a {
-      position: relative;
-      color: text-color;
+    ol .current {
+      background-color: text-color;
 
-      generate-arrow();
+      a {
+        position: relative;
+        color: #fff;
 
-      &:before {
-        border-right-color: #fff;
-        position: absolute;
-        top: 20%;
-        right: 0;
+        generate-arrow();
+
+        &:before {
+          border-right-color: #fff;
+          position: absolute;
+          top: 20%;
+          right: 0;
+        }
       }
     }
   }
