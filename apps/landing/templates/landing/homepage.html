@@ -26,7 +26,7 @@
   <h1>{{ _('Shared knowledge <span>for the Open Web</span>') }}</h1>
 
   <div class="home-search-form">
-    <form action="{{ url('search') }}" method="get">
+    <form action="{{ url('search') }}" method="get" role="search">
       <label for="home-q" class="offscreen">{{ _('Search') }}</label>
       <input type="search" id="home-q" name="q" placeholder="{{ _('Search the docs') }}" />
       <button type="submit" class="offscreen">{{ _('Search') }}</button>
