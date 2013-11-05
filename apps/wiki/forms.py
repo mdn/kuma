@@ -16,7 +16,7 @@ from sumo.form_fields import StrippedCharField
 
 import wiki.content
 from wiki.models import (Document, Revision, FirefoxVersion, OperatingSystem,
-                         AttachmentRevision,
+                         AttachmentRevision, valid_slug_parent,
                          FIREFOX_VERSIONS, OPERATING_SYSTEMS, SIGNIFICANCES,
                          GROUPED_FIREFOX_VERSIONS, GROUPED_OPERATING_SYSTEMS,
                          CATEGORIES, REVIEW_FLAG_TAGS, RESERVED_SLUGS,
@@ -508,21 +508,33 @@ class TreeMoveForm(forms.Form):
                              error_messages={'required': SLUG_REQUIRED,
                                              'min_length': SLUG_SHORT,
                                              'max_length': SLUG_LONG})
+    locale = StrippedCharField(min_length=2, max_length=5,
+                               widget=forms.HiddenInput())
 
     def clean_slug(self):
         # We only want the slug here; inputting a full URL would lead
         # to disaster.
         if '://' in self.cleaned_data['slug']:
-            raise forms.ValidationError('Please enter only the slug to move to, not the full URL.')
+            raise forms.ValidationError('Please enter only the slug to move '
+                                        'to, not the full URL.')
 
         # Removes leading slash and {locale/docs/} if necessary
         # IMPORTANT: This exact same regex is used on the client side, so
         # update both if doing so
-        self.cleaned_data['slug'] = re.sub(re.compile(SLUG_CLEANSING_REGEX), 
+        self.cleaned_data['slug'] = re.sub(re.compile(SLUG_CLEANSING_REGEX),
                                       '', self.cleaned_data['slug'])
 
         return self.cleaned_data['slug']
 
+    def clean(self):
+        cleaned_data = super(TreeMoveForm, self).clean()
+        if set(['slug', 'locale']).issubset(cleaned_data):
+            slug, locale = cleaned_data['slug'], cleaned_data['locale']
+            try:
+                valid_slug_parent(slug, locale)
+            except Exception, e:
+                raise forms.ValidationError(e.message)
+        return cleaned_data
 
 class DocumentDeletionForm(forms.Form):
     reason = forms.CharField(widget=forms.Textarea)
