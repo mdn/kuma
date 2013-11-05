@@ -1950,7 +1950,7 @@ class LocalizationTaggedRevision(ItemBase):
         if instance is not None:
             return LocalizationTag.objects.filter(
                 localizationtaggedrevision__content_object=instance)
-        return Localization.objects.filter(
+        return LocalizationTag.objects.filter(
             localizationtaggedrevision__content_object__isnull=False).distinct()
 
 
