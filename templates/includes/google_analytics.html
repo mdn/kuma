@@ -1,15 +1,27 @@
 {% if config.GOOGLE_ANALYTICS_ACCOUNT != '0' %}
 <script type="text/javascript">
-
+  // http://cfsimplicity.com/61/removing-analytics-clutter-from-campaign-urls
+  var removeUtms  =   function(){
+      var l = window.location;
+      if( l.hash.indexOf( "utm" ) != -1 ){
+          if( window.history.replaceState ){
+              history.replaceState({},'', l.pathname + l.search);
+          } else {
+              l.hash = "";
+          }
+      };
+  };
   var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', '{{ config.GOOGLE_ANALYTICS_ACCOUNT }}']);
+  _gaq.push(['_setAccount', '{{ config.GOOGLE_ANALYTICS_ACCOUNT }}'],
+            ['_setAllowAnchor', true],
   {% if not request.user.is_anonymous() %}
-  _gaq.push(['_setCustomVar', 7, 'Signed-In', 'Yes', 1]);
+            ['_setCustomVar', 7, 'Signed-In', 'Yes', 1],
   {% endif %}
   {% if waffle.flag('redesign') %}
-  _gaq.push(['_setCustomVar', 6, 'Redesign', 'Yes', 1]);
+            ['_setCustomVar', 6, 'Redesign', 'Yes', 1],
   {% endif %}
-  _gaq.push(['_trackPageview']);
+            ['_trackPageview']);
+  _gaq.push( removeUtms );
 
   (function(a, d) {
     var ga = d.createElement(a); ga.type = 'text/javascript'; ga.async = true;
