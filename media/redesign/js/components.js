@@ -37,9 +37,7 @@
       // Find a submenu.  If one doesn't exist, no need to go further
       var $submenu = (settings.submenu || $li.find('.submenu'));
 
-      // ARIA: Initialize as closed, tell if there's a submenu
-      $self.attr('aria-expanded', 'false');
-
+      // add some ARIA
       if($submenu.length) {
         $self.attr({
           'aria-expanded': 'false',
