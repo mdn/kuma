@@ -195,6 +195,33 @@ bidi-value(prop, ltr, rtl, make-important = false) {
   bidi-style(prop, ltr, prop, rtl, make-important);
 }
 
+/*
+  MIXINS LIKE CLASSES
+
+  These are not dynamic but serve as mixins so that styles wont be repeated throughout files
+*/
+heading-1() {
+  font-size: (content-block-margin * 2);
+  letter-spacing: -2px;
+}
+
+heading-2() {
+  font-size: 30px;
+  letter-spacing: -1px;
+}
+
+big-search() {
+  @extend .larger;
+  display: block;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.2);
+  border: 0;
+  border-radius: 3px;
+  font-family: 'Open Sans Light', sans-serif;
+  letter-spacing: -1px;
+  width: 60%;
+}
+
 
 /*
   CLASSES TO BE EXTENDED BY OTHER CLASSES
@@ -260,20 +287,6 @@ bidi-value(prop, ltr, rtl, make-important = false) {
   cursor: default;
 }
 
-.reset-font {
-  font-family: site-font-family;
-}
-
-.heading-1 {
-  font-size: (content-block-margin * 2);
-  letter-spacing: -2px;
-}
-
-.heading-2 {
-  font-size: 30px;
-  letter-spacing: -1px;
-}
-
 .button {
   text-decoration: none;
   display: inline-block;
@@ -322,16 +335,4 @@ bidi-value(prop, ltr, rtl, make-important = false) {
     vendorize(box-shadow, none);
     compat-important(background-color, transparent);
   }
-}
-
-.big-search {
-  @extend .larger;
-  display: block;
-  margin: 0 auto;
-  background: rgba(255, 255, 255, 0.2);
-  border: 0;
-  border-radius: 3px;
-  font-family: 'Open Sans Light', sans-serif;
-  letter-spacing: -1px;
-  width: 60%;
 }
