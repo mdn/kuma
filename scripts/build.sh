@@ -90,5 +90,16 @@ if [[ $1 = '--with-coverage' ]]; then
 else
     python manage.py test actioncounters contentflagging dashboards demos devmo kpi landing search users wiki -v 2 --noinput
 fi
+echo "tests complete" `date`
+
+pip install pep8
+echo "Starting pep8..." `date`
+pep8 apps/ > pep8_report.txt
+echo "pep8 complete" `date`
+
+pip install pylint
+echo "Starting pylint..." `date`
+find apps/ -iname "*.py" | xargs pylint -f parseable > pylint_report.txt
+echo "pylint complete" `date`
 
 echo 'shazam!'
