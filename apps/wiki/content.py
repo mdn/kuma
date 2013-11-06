@@ -280,11 +280,12 @@ class URLAbsolutionFilter(html5lib_Filter):
                 if desired_attr in attrs:
                     address = attrs[desired_attr]
                     if not address.startswith('http'):
-                        # Starts with "/", so just add the base url
-                        if address.startswith('//'):
-                            #do nothing
+                        if address.startswith('//') or address.startswith('{{'):
+                            # Do nothing for absolute addresses or apparent
+                            # template variable output
                             attrs[desired_attr] = address
                         elif address.startswith('/'):
+                            # Starts with "/", so just add the base url
                             attrs[desired_attr] = self.base_url + address
                         else:
                             attrs[desired_attr] = self.base_url + '/' + address

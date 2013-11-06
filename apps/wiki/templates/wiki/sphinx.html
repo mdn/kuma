@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% block title %}{{ '{{ docstitle|e }} &mdash; MDN' }}{% endblock %}
+
 {% block content %}
 
 {% if waffle.flag('redesign') %}
@@ -34,6 +36,9 @@
     <nav class="crumbs" role="navigation">
       <ol>
           <li class="crumb"><a href="{{ '{{ pathto(master_doc) }}' }}">{{ '{{ docstitle }}' }}</a></li>
+          {{ '{%- for parent in parents %}' }}
+              <li class="crumb"><a href="{{ '{{ parent.link|e }}' }}">{{ '{{ parent.title }}' }}</a></li>
+          {{ '{%- endfor %}' }}
           <li class="crumb">{{ '{{ title }}' }}</li>
       </ol>
     </nav>
@@ -67,6 +72,28 @@
 
 {% endblock %}
 
+{% block footer_copyright %}
+    <p>
+      {% trans copyright_url=devmo_url('Project:Copyrights'), about_url=devmo_url('Project:About') %}
+      Content is available under a license specific to this project.
+      &middot; <a href="{{ about_url }}">About MDN</a>
+      &middot; <a href="//github.com/mozilla/kuma">Contribute to the code</a>
+      &middot; <a href="//www.mozilla.org/en-US/privacy">Privacy policy</a>
+      {% endtrans %}
+    </p>
+{% endblock %}
+
+{% block footer_copyright_redesign %}
+    <p>
+      {% trans copyright_url=devmo_url('Project:Copyrights'), about_url=devmo_url('Project:About') %}
+      &copy; 2005-2013 Mozilla Developer Network and individual contributors<br />
+      Content is available under a license specific to this project.
+      &middot; <a href="{{ about_url }}">About MDN</a>
+      &middot; <a href="//github.com/mozilla/kuma">Contribute to the code</a>
+      &middot; <a href="//www.mozilla.org/en-US/privacy">Privacy policy</a>
+      {% endtrans %}
+    </p>
+{% endblock %}
 
 {% block js %}
     {{ js('wiki') }}

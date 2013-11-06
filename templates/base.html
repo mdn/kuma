@@ -217,12 +217,14 @@ https://wiki.mozilla.org/MDN/Development/Redesign/Testing">Here\'s how you can h
   <footer><div class="center">
     <div class="column-container">
       <div class="column-main">
+        {% block footer_copyright_redesign %}
         <p>
           {% trans copyright_url=devmo_url('Project:Copyrights'), about_url=devmo_url('Project:About') %}
           &copy; 2005-2013 Mozilla Developer Network and individual contributors<br />
           Content is available under <a href="{{ copyright_url }}">these licenses</a> &middot; <a href="{{ about_url }}">About MDN</a> &middot; <a href="//github.com/mozilla/kuma">Contribute to the code</a> &middot; <a href="//www.mozilla.org/en-US/privacy">Privacy policy</a>
           {% endtrans %}
         </p>
+        {% endblock %}
       </div>
       <div class="column-strip">
         {{ lang_switcher() }}
@@ -432,6 +434,7 @@ https://wiki.mozilla.org/MDN/Development/Redesign/Testing">Here\'s how you can h
     <div id="legal">
       <img src="{{ MEDIA_URL }}img/mdn-logo-tiny.png" alt="" width="42" height="48">
       <p id="copyright">&copy; 2005 - {{ thisyear() }} Mozilla Developer Network {{ _('and individual contributors') }}</p>
+      {% block footer_copyright %}
       <p>
       {% trans copyright_url=devmo_url('Project:Copyrights') %}
       Content is available under <a href="{{ copyright_url }}">these licenses</a>
@@ -439,6 +442,8 @@ https://wiki.mozilla.org/MDN/Development/Redesign/Testing">Here\'s how you can h
       &bull; <a href="{{ devmo_url('Project:About') }}">{{ _('About MDN') }}</a>
       &bull; <a href="//github.com/mozilla/kuma">{{ _('Contribute to the code') }}</a>
       &bull; <a href="//www.mozilla.org/en-US/privacy">{{ _('Privacy Policy') }}</a>
+      </p>
+      {% endblock %}
     </div>
     {{ lang_switcher() }}
 </div>
