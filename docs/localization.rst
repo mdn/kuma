@@ -272,16 +272,26 @@ update the data on `Verbatim <http://localize.mozilla.org/>`_. If you commit
 new strings to SVN and they are not updated right away on Verbatim, there will
 be big merging headaches.
 
-Updating strings is pretty easy. Check out the localizations as above, then::
+Updating strings is pretty easy. Check out the localizations as above, then run
+the following in the virtual machine (see :doc:`installation-vagrant <installation-vagrant>`
+for more on setting up the virtual machine)::
 
     $ python manage.py extract
 
-Congratulations! You've now updated the POT file.
+Congratulations! You've now updated the POT file. Now commit the POT file.
 
-Now commit the POT file to svn::
+If you used ``svn checkout`` above::
 
     $ cd locale
     $ svn up
     $ svn ci -m "MDN string update YYYY-MM-DD"
+
+If you used ``git svn clone`` above::
+
+    $ cd locale
+    $ git svn fetch
+    $ git add -A
+    $ git commit -m "MDN string update YYYY-MM-DD"
+    $ git svn dcommit
 
 After committing, send an email to Milos Dinic to update verbatim.
