@@ -5,7 +5,6 @@
  */
 (function ($) {
     var DRAFT_NAME, DRAFT_TIMEOUT_ID;
-
     var supportsLocalStorage = ('localStorage' in window),
         formId = 'wiki-page-edit',
         formSelector,
@@ -242,7 +241,6 @@
                 }
 
                 // Anything else error-wise is probably recoverable.
-                alert('Error saving section, please try again.');
                 ui.removeClass('.edited-section-ui-saving');
 
             },
@@ -735,7 +733,6 @@
     function initDrafting() {
         var editor;
         DRAFT_NAME = getStorageKey();
-
         if (supportsLocalStorage) {
             var prev_draft = localStorage.getItem(DRAFT_NAME),
                 treatDraft = function(content) {
@@ -758,16 +755,17 @@
         var callback = function() {
             clearTimeout(DRAFT_TIMEOUT_ID);
             DRAFT_TIMEOUT_ID = setTimeout(saveDraft, 3000);
-        },
-        getCKEditor = $('#id_content').ckeditorGet;
+        };
         if(isTemplate) {
             ace_editor.on && ace_editor.on('change', callback);
         }
         else {
             try {
-                getCKEditor && getCKEditor().on('key', callback);
+                $('#id_content').ckeditorGet && $('#id_content').ckeditorGet().on('key', callback);
             }
-            catch(e) {}
+            catch(e) {
+                console.log(e);
+            }
         }
 
         // Clear draft upon discard
