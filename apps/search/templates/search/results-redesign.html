@@ -16,7 +16,7 @@
   {% set doc_url = '%s%s' % (settings.SITE_URL, url('wiki.document', doc.slug, locale=doc.locale)) %}
   <li class="result-{{ index }}">
     <div class="column-container">
-      <div class="column-1"><i class="icon-file-text-alt"></i></div>
+      <div class="column-1"><i aria-hidden="true" class="icon-file-text-alt"></i></div>
       <div class="column-5 result-list-item">
         {# <h4 class="larger"><a href="{{ doc_url }}?search={{ search_query }}">{{ doc.title }}</a></h4> #}
         <h4 class="larger"><a href="{{ doc_url }}">{{ doc.title }}</a></h4>
@@ -24,8 +24,8 @@
         <p class="search-meta"><a href="{{ doc_url }}">{{ doc_url|replace('https://', '') }}</a></p>
       </div>
       <div class="column-strip result-list-link">
-        <a href=""><i class="icon-code"></i>{{ _('Code Sample') }}</a>
-        <a href=""><i class="icon-play-circle"></i>{{ _('Demo Sample') }}</a>
+        <a href=""><i aria-hidden="true" class="icon-code"></i>{{ _('Code Sample') }}</a>
+        <a href=""><i aria-hidden="true" class="icon-play-circle"></i>{{ _('Demo Sample') }}</a>
       </div>
     </div>
   </li>
@@ -41,10 +41,10 @@
       <button type="submit" class="offscreen">{{ _('Search') }}</button>
     </form>
   </div>
-  
-  
+
+
  <div class="column-container">
-  
+
   {% if search_query %}
     <!-- left results -->
     <div class="column-main">
@@ -77,7 +77,7 @@
 
       {% if result_count %}
       <div class="search-pane seach-results-container">
-        <h3><i class="icon-copy"></i>{{ _('Docs') }}</h3>
+        <h3><i aria-hidden="true" class="icon-copy"></i>{{ _('Docs') }}</h3>
 
         <ul class="result-list">
           {% for doc in results %}
@@ -109,7 +109,7 @@
     {% if facet_counts %}
     <!-- right topics -->
     <div class="column-strip search-results-topics">
-      <h3><i class="icon-th-list"></i>{{ _('Topics') }}</h3>
+      <h3><i aria-hidden="true" class="icon-th-list"></i>{{ _('Topics') }}</h3>
       <ul>
         {% for facet in facet_counts %}
         <li>
@@ -118,7 +118,7 @@
             if face.deselect_url is available that means the facet is applied and should somehow indicate that to the user.
             here I'm using a blasphemous style attribute to make the font bold when a facet is select. PLEASE FIXME!
           #}
-          <a href="{{ facet.deselect_url }}" data-count="{{ facet.count }}" class="checked">{{ facet.label }}<i class="icon-check"></i></a>
+          <a href="{{ facet.deselect_url }}" data-count="{{ facet.count }}" class="checked">{{ facet.label }}<i aria-hidden="true" class="icon-check"></i></a>
         {% else %}
           <a href="{{ facet.select_url }}" data-count="{{ facet.count }}">{{ facet.label }}</a>
         {% endif %}
@@ -127,7 +127,7 @@
       </ul>
     </div>
     {% endif %}
-   
+
   {% endif %}
 </div>
 {% endblock %}
