@@ -33,21 +33,27 @@
     setupTogglers($quickLinks.find('> ul > li, > ol > li'));
     $quickLinks.find('.toggleable').mozTogglers();
     
-    var side = $('#quick-links-toggle').closest('.wiki-column').attr('id');
     var $columnContainer = $('#wiki-column-container');
     var $quickLinksControl = $('#wiki-controls .quick-links');
 
+    var child = $('#wiki-left').get(0);
+    if(child) {
+      var parent = child.parentNode;
+    }
+
     // Quick Link toggles
     $('#quick-links-toggle, #show-quick-links').on('click', function(e) {
-      var $side = $('#' + side);
-
       e.preventDefault();
-      $side.toggleClass('column-closed');
-      $columnContainer.toggleClass(side + '-closed');
+      $(child).toggleClass('column-closed');
+      $columnContainer.toggleClass('wiki-left-closed');
       $quickLinksControl.toggleClass('hidden');
 
-      if($side.hasClass('column-closed')) {
+      if($(child).hasClass('column-closed')) {
         $(window).trigger('resize');
+        parent.removeChild(child);
+      }
+      else {
+        parent.appendChild(child);
       }
     });
   })();
