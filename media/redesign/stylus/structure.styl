@@ -65,6 +65,10 @@
       vendorize(transition-duration, default-animation-duration);
       vendorize(transition-delay, default-animation-duration);
 
+      &:first-child {
+        padding-left: 0;
+      }
+
       > a i {
         display: none;
       }
