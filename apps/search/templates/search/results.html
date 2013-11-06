@@ -15,7 +15,7 @@
   <li class="doc-result">
     <h3><a href="{{ doc_url }}">{{ doc.title }}</a></h3>
     {% if doc.tags|length %}
-    <i class="icon-tags"></i>
+    <i aria-hidden="true" class="icon-tags"></i>
     <ul class="tags">
       {% for tag in doc.tags %}
         {% set tag_url = url('wiki.tag', tag) %}
@@ -100,7 +100,7 @@
               {% if facet.deselect_url %}
                 {{ facet.label }} <span class="facet-count">{{ facet.count }}</span>
                 <a href="{{ facet.deselect_url }}">x</a>
-              {% else %}                
+              {% else %}
                 <a href="{{ facet.select_url }}">
                   {{ facet.label }} <span class="facet-count">{{ facet.count }}</span>
                 </a>

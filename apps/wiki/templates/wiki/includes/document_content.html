@@ -57,7 +57,7 @@
           {% for translation in document.other_translations %}
             <li><a rel="internal" href="{{ url('wiki.document', translation.full_path, locale=translation.locale) }}" title="{{ translation.title }}">{{ translation.language }}</a></li>
           {% endfor %}
-          
+
           {% if document.is_localizable %}
             <li><a href="{{ translate_url }}">{{ _('Add translation') }}</a></li>
           {% endif %}
@@ -66,7 +66,7 @@
       {% endif %}
     </ul>
   </nav>
-  
+
   <!-- left crumb navigation -->
   <nav class="crumbs" role="navigation">
     <ol>
@@ -76,7 +76,7 @@
       <li class="crumb">{{ document.title }}</li>
     </ol>
   </nav>
-  
+
 </div></div></section>
 
 
@@ -84,7 +84,7 @@
 <section id="content">
   <div class="wrap">
     <div id="content-main" class="full">
-      <article class="article" role="main" 
+      <article class="article" role="main"
           data-current-revision="{{ document.current_revision.id }}"
           data-refresh-message="{{ _('Your changes were merged. However, something else has been edited, so this page will be refreshed to reflect the changes.') }}"
           data-cancel-edit-message="{{ _('Abort editing in progress? Your unsaved changes will be discarded.') }}">
@@ -93,7 +93,7 @@
             <h1 class="page-title">{{ document.title }}</h1>
             {% if waffle.flag('offline_notice') %}
             <div class="offline-notice">
-              <a href="javascript:;" id="offline-notice-link"><i class="icon-book"></i>{{ _('Read content offline') }}</a>
+              <a href="javascript:;" id="offline-notice-link"><i aria-hidden="true" class="icon-book"></i>{{ _('Read content offline') }}</a>
             </div>
 
             <div id="offline-dialog-content" title="{{ _('Read MDN Offline') }}">
@@ -102,10 +102,10 @@
                 <img src="{{ request.build_absolute_uri('/media/img/dash-app.png') }}" alt="Dash App" />
               </a>
               <a href="http://zealdocs.org" target="_blank" class="offline-dialog-others" data-title="Zeal">
-                <i class="icon-book" style="font-size: 160px;"></i>
+                <i aria-hidden="true" class="icon-book" style="font-size: 160px;"></i>
               </a>
             </div>
-            
+
             {% endif %}
             {% if redirected_from %}
             <div class="redirected-from" id="redirected-from">
@@ -114,16 +114,16 @@
           {% endif %}
         </div>
         <ul id="page-buttons">
-            <li class="page-history"><a href="{{ url('wiki.document_revisions', document.full_path) }}"><i class="icon-book"></i>{{_('History')}}</a></li>
+            <li class="page-history"><a href="{{ url('wiki.document_revisions', document.full_path) }}"><i aria-hidden="true" class="icon-book"></i>{{_('History')}}</a></li>
             {{ document_watch(document, request.user) }}
             {% if document.allows_revision_by(request.user) %}
               {% if fallback_reason %}
                 {% set edit_label = _('Edit English')  %}
-                <li class="page-edit"><a href="{{ help_link }}"><i class="icon-pencil"></i>{{ _('Translate') }}</a></li>
+                <li class="page-edit"><a href="{{ help_link }}"><i aria-hidden="true" class="icon-pencil"></i>{{ _('Translate') }}</a></li>
               {% else %}
                 {% set edit_label = _('Edit')  %}
               {% endif %}
-              <li class="page-edit"><a href="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}"><i class="icon-pencil"></i>{{ edit_label }}</a></li>
+              <li class="page-edit"><a href="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}"><i aria-hidden="true" class="icon-pencil"></i>{{ edit_label }}</a></li>
             {% endif %}
         </ul>
 
@@ -148,7 +148,7 @@
           {% elif document.is_rendering_scheduled and not kumascript_errors %}
             <div id="doc-rendering-scheduled" class="warning">
             {% trans url=document.get_absolute_url(), scheduled_at=document.render_scheduled_at %}
-              An update to this document 
+              An update to this document
               <abbr title="{{ scheduled_at }}">has been scheduled</abbr>.
               If the content below seems stale or if something is missing,
               please <a href="{{ url }}">reload this page</a> in a few minutes.
@@ -176,7 +176,7 @@
       </div>
     {% endif %}
     #}
-    
+
       {% if document.current_revision %}
         {% if document.current_revision.needs_technical_review() %}
           <div class="warning review-technical">{% trans %}
@@ -213,16 +213,16 @@
           <ul class="page-anchors">
             <li class="anchor-tags">
               {% if tags|length %}
-                <i class="icon-tags"></i><a href="#document-tags">{{ _('Tags') }}</a>
+                <i aria-hidden="true" class="icon-tags"></i><a href="#document-tags">{{ _('Tags') }}</a>
               {% else %}
-                <i class="icon-tags off"></i><span title="{{ _('This document has no tags') }}">{{ _('Tags') }}</span>
+                <i aria-hidden="true" class="icon-tags off"></i><span title="{{ _('This document has no tags') }}">{{ _('Tags') }}</span>
               {% endif %}
             </li>
             <li class="anchor-files">
               {% if attachments|length %}
-                <i class="icon-paper-clip"></i><a href="#page-attachments">Files</a>
+                <i aria-hidden="true" class="icon-paper-clip"></i><a href="#page-attachments">Files</a>
               {% else %}
-                <i class="icon-paper-clip off"></i><span title="{{ _('This document has no attachments') }}">{{ _('Files') }}</span>
+                <i aria-hidden="true" class="icon-paper-clip off"></i><span title="{{ _('This document has no attachments') }}">{{ _('Files') }}</span>
               {% endif %}
             </li>
           </ul>
@@ -244,11 +244,11 @@
         {{ _("This article doesn't have approved content yet.") }}
       {% endif %}
     </div>
-    
+
     <section class="page-meta">
       {% if tags | length %}
       <section class="page-tags" id="document-tags">
-        <h2><i class="icon-tags"></i>{{ _('Tags') }} ({{ tags | length}})</h2>
+        <h2><i aria-hidden="true" class="icon-tags"></i>{{ _('Tags') }} ({{ tags | length}})</h2>
         <div id="deki-page-tags">
           <ul class="tags tagit ui-widget ui-widget-content">
             {% for tag in tags %}
@@ -299,13 +299,13 @@
         {% set current_revision = document.current_revision %}
         {% if current_revision.creator %}
           <br />
-          {{ _('Last updated by:') }}  
-          <a href="{{ url('devmo.views.profile_view', username=current_revision.creator) }}">{{ current_revision.creator }}</a>, 
+          {{ _('Last updated by:') }}
+          <a href="{{ url('devmo.views.profile_view', username=current_revision.creator) }}">{{ current_revision.creator }}</a>,
           {{ datetimeformat(current_revision.created, format='datetime') }}
           {% if current_revision.reviewer and current_revision.reviewed %}
             <br />
-            {{ _('Last reviewed by:') }}  
-            <a href="{{ url('devmo.views.profile_view', username=current_revision.reviewer) }}">{{ current_revision.reviewer }}</a>, 
+            {{ _('Last reviewed by:') }}
+            <a href="{{ url('devmo.views.profile_view', username=current_revision.reviewer) }}">{{ current_revision.reviewer }}</a>,
             {{ datetimeformat(current_revision.reviewed, format='datetime') }}
           {% endif %}
         {% endif %}
