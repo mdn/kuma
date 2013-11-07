@@ -1,6 +1,8 @@
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 
+from django import forms
+
 from sumo.tests import TestCase
 from wiki.forms import RevisionForm, RevisionValidationForm, TreeMoveForm
 from wiki.tests import doc_rev, normalize_html
@@ -99,6 +101,7 @@ class RevisionValidationTests(TestCase):
 
 
 class TreeMoveFormTests(TestCase):
+    fixtures = ['wiki/documents.json',]
 
     def test_form_properly_strips_leading_cruft(self):
         """ Tests that leading slash and {locale}/docs/ is removed if included """
@@ -107,14 +110,22 @@ class TreeMoveFormTests(TestCase):
         comparisons = [
             ['/somedoc', 'somedoc'], # leading slash
             ['/en-US/docs/mynewplace', 'mynewplace'], # locale and docs
-            ['something/else/more/docs/more', 'something/else/more/docs/more'], # valid
-            ['/docs/one/two', 'one/two'], # leading docs
-            ['docs/one/two', 'one/two'], # leading docs without slash
-            ['fr/docs/one/two', 'one/two'], # foreign locale with docs
-            ['docs/project/docs', 'project/docs'] # docs with later docs
+            ['/docs/one', 'one'], # leading docs
+            ['docs/one', 'one'], # leading docs without slash
+            ['fr/docs/one', 'one'], # foreign locale with docs
+            ['docs/article-title/docs', 'article-title/docs'] # docs with later docs
         ]
 
         for comparison in comparisons:
-            form = TreeMoveForm({ 'slug': comparison[0] })
+            form = TreeMoveForm({ 'locale': 'en-US', 'title': 'Article',
+                                 'slug': comparison[0] })
             form.is_valid()
             eq_(comparison[1], form.cleaned_data['slug'])
+
+    def test_form_enforces_parent_doc_to_exist(self):
+        form = TreeMoveForm({ 'locale': 'en-US', 'title': 'Article',
+                             'slug': 'nothing/article' })
+        form.is_valid()
+        ok_(form.errors)
+        ok_(u'Parent' in form.errors.as_text())
+        ok_(u'does not exist' in form.errors.as_text())

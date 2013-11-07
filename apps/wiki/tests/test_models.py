@@ -1375,6 +1375,14 @@ class PageMoveTests(TestCase):
         grandchild_doc.parent_topic = child2_doc
         grandchild_doc.save()
 
+        new_top = revision(title='New Top-level bucket for tree moves',
+                       slug='new-prefix',
+                       is_approved=True,
+                       save=True)
+        new_level = revision(title='New first-level parent for tree moves',
+                       slug='new-prefix/first-level',
+                       is_approved=True,
+                       save=True)
         # Now we do a simple move: inserting a prefix that needs to be
         # inherited by the whole tree.
         top_doc._move_tree('new-prefix/first-level/parent')
@@ -1412,32 +1420,7 @@ class PageMoveTests(TestCase):
         ok_(moved_grandchild.current_revision.slug in \
             Document.objects.get(slug='first-level/second-level/third-level/grandchild').redirect_url())
 
-    @attr('move')
-    def test_move_prepend(self):
-        """Test the special-case prepend logic."""
-        top = revision(title='Top-level parent for testing moves with prependings',
-                       slug='parent',
-                       is_approved=True,
-                       save=True)
-        top_doc = top.document
 
-        child1 = revision(title='First child of tree-move-prepending parent',
-                          slug='first-level/child1',
-                          is_approved=True,
-                          save=True)
-        child1_doc = child1.document
-        child1_doc.parent_topic = top_doc
-        child1_doc.save()
-
-        top_doc._move_tree('new-prefix/parent')
-        moved_top = Document.objects.get(pk=top_doc.id)
-        eq_('new-prefix/parent',
-            moved_top.current_revision.slug)
-
-        moved_child1 = Document.objects.get(pk=child1_doc.id)
-        eq_('new-prefix/parent/child1',
-            moved_child1.current_revision.slug)
-            
     @attr('move')
     def test_conflicts(self):
         top = revision(title='Test page-move conflict detection',
@@ -1520,8 +1503,13 @@ class PageMoveTests(TestCase):
             rev.review_tags.set('technical')
             rev = Revision.objects.get(pk=rev.id)
 
+            new_top = revision(title='New Top-level parent for tree moves',
+                           slug='new-top',
+                           is_approved=True,
+                           save=True)
+
             doc = rev.document
-            doc._move_tree('move/page-move-tags')
+            doc._move_tree('new-top/page-move-tags')
 
             moved_doc = Document.objects.get(pk=doc.id)
             new_rev = moved_doc.current_revision
@@ -1576,6 +1564,21 @@ class PageMoveTests(TestCase):
         mom_moved = Document.objects.get(locale=mom_doc.locale,
                                          slug='grandpa/grandma/mom')
         ok_(mom_moved.parent_topic == grandma_moved)
+
+    @attr('move')
+    def test_move_tree_no_new_parent(self):
+        """Moving a tree to a slug that doesn't exist throws error."""
+
+        rev = revision(title='doc to move',
+                       slug='doc1', is_approved=True, save=True)
+        doc = rev.document
+
+        try:
+            doc._move_tree('slug-that-doesnt-exist/doc1')
+            ok_(False, "Moving page under non-existing doc should error.")
+        except:
+            pass
+
 
     @attr('move')
     @attr('top')
