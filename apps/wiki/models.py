@@ -378,6 +378,21 @@ def _inherited(parent_attr, direct_attr):
     return property(getter, setter)
 
 
+def valid_slug_parent(slug, locale):
+    slug_bits = slug.split('/')
+    slug_bits.pop()
+    parent = None
+    if slug_bits:
+        parent_slug = '/'.join(slug_bits)
+        try:
+            parent = Document.objects.get(locale=locale, slug=parent_slug)
+        except Document.DoesNotExist:
+            raise Exception(_("Parent %s/%s does not exist." % (locale,
+                                                         parent_slug)))
+
+    return parent
+
+
 class BaseDocumentManager(models.Manager):
     """Manager for Documents, assists for queries"""
     def clean_content(self, content_in, use_constance_bleach_whitelists=False):
@@ -1215,24 +1230,13 @@ class Document(NotificationsMixin, models.Model):
             moved_rev.title = title
         return moved_rev
 
-    def _post_move_breadcrumbs(self, new_slug, save=True):
+    def _get_new_parent(self, new_slug):
         """
-        Post-move, update this Document's parent_topic if a Document
+        Get this moved Document's parent doc if a Document
         exists at the appropriate slug and locale.
-        
         """
-        new_slug_bits = new_slug.split('/')
-        new_slug_bits.pop()
-        new_parent = None
-        
-        try:
-            new_parent = Document.objects.get(locale=self.locale,
-                                              slug='/'.join(new_slug_bits))
-        except Document.DoesNotExist:
-            pass
+        return valid_slug_parent(new_slug, self.locale)
 
-        return new_parent
-        
     def _move_conflicts(self, new_slug):
         """
         Given a new slug to be assigned to this document, check
@@ -1314,7 +1318,7 @@ class Document(NotificationsMixin, models.Model):
         redirect_doc, redirect_rev = self._post_move_redirects(new_slug, user, title)
         
         # Step 5: Update our breadcrumbs.
-        new_parent = self._post_move_breadcrumbs(new_slug)
+        new_parent = self._get_new_parent(new_slug)
 
         # If we found a Document at what will be our parent slug, set
         # it as our parent_topic. If we didn't find one, then we no

@@ -31,6 +31,12 @@
         </div>
         {% endif %}
 
+        {% if form.errors %}
+        <div class="warning">
+          {{ form.errors.as_ul() }}
+        </div>
+        {% endif %}
+
         <form action="" method="post">
           {{ csrf() }}
           <ul class="description">
@@ -52,7 +58,7 @@
                 <dd>
                   <input type="text" name="slug" id="moveSlug" value="" required="required" data-validator="{{ SLUG_CLEANSING_REGEX }}" />
                   <input type="hidden" value="{{ document.slug }}" id="currentSlug" />
-                  <input type="hidden" value="{{ document.locale }}" id="moveLocale" />
+                  <input type="hidden" value="{{ document.locale }}" id="locale" name="locale"/>
                 </dd>
                 <dd class="parentSuggestContainer">
                   <a href="javascript:;" class="moveLookupLink">{{ _('Lookup by Document Title') }}</a>
