@@ -59,7 +59,8 @@ h4 {
 
 /* basic text */
 {selector-icon} {
-  bidi-style(margin-left, (grid-spacing / 2), margin-right, 0, true); /* compat-only */
+  bidi-style(margin-left, (grid-spacing / 2), margin-right, 0); /* compat-only */
+  bidi-style(margin-right, 0, margin-left, (grid-spacing / 2)); /* compat-only */
   display: inline-block;
 
   &:before {

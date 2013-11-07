@@ -16,9 +16,8 @@
   /* update main nav menu color */
   override-main-nav-color(#fff);
 
-  .main-nav-search {
-    display: none;
-  }
+  /* update the homepage search size */
+  minimize-header-search();
 
   .home-callouts {
     background: #4d4e53;
@@ -143,6 +142,10 @@
     @extend .larger;
     font-weight: bold;
     font-family: 'Open Sans Extra Bold', sans-serif;
+
+    i {
+      bidi-style(margin-right, 10px, margin-left, 0);
+    }
   }
 
   li {
