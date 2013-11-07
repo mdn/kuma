@@ -1342,7 +1342,7 @@ class Document(NotificationsMixin, models.Model):
         redirect_rev.save()
 
         # Finally, step 10: recurse through all of our children.
-        for child in self.children.all():
+        for child in self.children.all().filter(locale=self.locale):
             child_title = child.slug.split('/')[-1]
             child._move_tree('/'.join([new_slug, child_title]), user)
 
@@ -1722,7 +1722,7 @@ class Document(NotificationsMixin, models.Model):
         results = []
 
         if (limit is None or levels < limit) and self.has_children():
-            for child in self.children.all():
+            for child in self.children.all().filter(locale=self.locale):
                 results.append(child)
                 [results.append(grandchild)
                  for grandchild in child.get_descendants(limit, levels + 1)]
