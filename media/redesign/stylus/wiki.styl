@@ -417,14 +417,6 @@ div.bug > *:last-child, div.warning > *:last-child {
     display: inline-block;
   }
 
-  .see-also {
-    background: light-background-color !important;
-    padding-left: 0;
-    margin-left: 0;
-    display: block;
-    padding: 4px 20px;
-  }
-
   li {
     position: relative;
     padding-top: list-item-spacing;
@@ -447,6 +439,16 @@ div.bug > *:last-child, div.warning > *:last-child {
 
 #quick-links-toggle {
   height: 30px;
+}
+
+.quick-links .see-also {
+  background: light-background-color !important;
+  padding-left: 0;
+  margin-left: 0;
+  display: inline-block !important;
+  padding: 4px 20px;
+  width: 100%;
+  vendorize(box-sizing, border-box);
 }
 
 .quick-links {selector-icon}, #quick-links-toggle {selector-icon} {
