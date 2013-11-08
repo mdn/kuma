@@ -40,7 +40,7 @@
             <div class="title">{{ _('Languages') }}</div>
             <ul id="translations">
                 {% for translation in document.other_translations %}
-                  <li><a rel="internal" href="{{ url('wiki.document', translation.full_path, locale=translation.locale) }}" title="{{ translation.title }}">{{ translation.language }}</a></li>
+                  <li><bdi><a rel="internal" href="{{ url('wiki.document', translation.full_path, locale=translation.locale) }}" title="{{ translation.title }}">{{ translation.language }}</a></bdi></li>
                 {% endfor %}
 
                 {% if document.is_localizable %}

@@ -129,10 +129,10 @@
 <body id="{{ pageid() }}" class="html-{{ DIR }} {{ bodyclass() }}">
 
   <!-- temporary beta notice -->
-  <div class="redesign-beta-notice"><div class="center">
+  <div class="redesign-beta-notice"><div class="center"><bdi>
     {{ _('<strong>Welcome to the new MDN beta!</strong>  See a problem or have a suggestion?  <a href="
 https://wiki.mozilla.org/MDN/Development/Redesign/Testing">Here\'s how you can help!</a>') }}
-  </div></div>
+  </bdi></div></div>
 
   {{ soapbox_messages(get_soapbox_messages(request.path)) }}
 
@@ -220,8 +220,8 @@ https://wiki.mozilla.org/MDN/Development/Redesign/Testing">Here\'s how you can h
         {% block footer_copyright_redesign %}
         <p>
           {% trans copyright_url=devmo_url('Project:Copyrights'), about_url=devmo_url('Project:About') %}
-          &copy; 2005-2013 Mozilla Developer Network and individual contributors<br />
-          Content is available under <a href="{{ copyright_url }}">these licenses</a> &middot; <a href="{{ about_url }}">About MDN</a> &middot; <a href="//github.com/mozilla/kuma">Contribute to the code</a> &middot; <a href="//www.mozilla.org/en-US/privacy">Privacy policy</a>
+          <bdi>&copy; 2005-2013 Mozilla Developer Network and individual contributors<br />
+          Content is available under <a href="{{ copyright_url }}">these licenses</a> &middot; <a href="{{ about_url }}">About MDN</a> &middot; <a href="//github.com/mozilla/kuma">Contribute to the code</a> &middot; <a href="//www.mozilla.org/en-US/privacy">Privacy policy</a></bdi>
           {% endtrans %}
         </p>
         {% endblock %}
