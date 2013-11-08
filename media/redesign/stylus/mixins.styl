@@ -153,6 +153,24 @@ override-main-nav-color(hex) {
   #main-nav > ul > li > a, .user-state a {
     compat-important(color, hex);
   }
+
+  #main-nav > ul > li {
+    .search-wrap {
+      background-color: rgba(255, 255, 255, 0.4);
+
+      input, i, .search-trigger {
+        color: hex !important;
+      }
+    }
+  }
+
+}
+
+/* Overrides the size of the navigation search box on certain pages */
+minimize-header-search(size = 20px) {
+  .search-wrap {
+    width: size;
+  }
 }
 
 /* Sets an input tag's placeholder styles */

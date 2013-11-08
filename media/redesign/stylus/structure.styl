@@ -74,10 +74,13 @@
       }
 
       > a, .search-trigger {
-        compat-important(color, menu-link-color);
         compat-important(text-decoration, none);
         compat-important(text-transform, uppercase);
         compat-important(font-weight, bold);
+      }
+
+      > a {
+        compat-important(color, menu-link-color);
       }
 
       > a, .search-wrap {
@@ -228,7 +231,8 @@ a.persona-button {
   position: relative;
   vendorize(transition-property, width);
   vendorize(transition-duration, default-animation-duration);
-  width: 20px;
+  width: 60px;
+  background-color: rgba(255, 255, 255, 0.9);
 
   &.expanded {
     background: #fff;
