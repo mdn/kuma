@@ -52,7 +52,7 @@
       <div id="search-results-close-container">
         <div class="search-pane search-results-explanation">
           <h2>{{ _('Results') }}</h2>
-          <p>{{ _('%s result%s for "%s" in %s.') % (result_count, 's' if result_count > 1 else '', search_query, settings.LOCALES[request.locale].native) }}
+          <p><bdi>{{ _('%s result%s for "%s" in %s.') % (result_count, 's' if result_count > 1 else '', search_query, settings.LOCALES[request.locale].native) }}
 
           {% if result_count %}
             &middot;
@@ -71,7 +71,7 @@
               {% endtrans %}
             </a>
           {% endif %}
-          </p>
+          </bdi></p>
         </div>
       </div>
 
