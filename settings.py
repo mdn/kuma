@@ -862,6 +862,15 @@ CELERY_IMPORTS = (
     'elasticutils.contrib.django.tasks',
 )
 
+CELERY_ANNOTATIONS = {
+    "elasticutils.contrib.django.tasks.index_objects": {
+        "rate_limit": "100/m",
+    },
+    "elasticutils.contrib.django.tasks.unindex_objects": {
+        "rate_limit": "100/m",
+    }
+}
+
 # Wiki rebuild settings
 WIKI_REBUILD_TOKEN = 'sumo:wiki:full-rebuild'
 WIKI_REBUILD_ON_DEMAND = False
