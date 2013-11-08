@@ -150,6 +150,20 @@ p {
     display: block;
     margin-top: grid-spacing;
     position: relative;
+    color: #999;
+
+    {selector-icon} {
+      margin-left: 0;
+      bidi-style(margin-right, icon-margin, margin-left, 0);
+    }
+
+    &.checked {
+      color: link-color;
+
+      {selector-icon} {
+
+      }
+    }
 
     &:before {
       bidi-style(right, 0, left, auto);
@@ -159,10 +173,6 @@ p {
       content: attr(data-count);
       color: text-color;
       opacity: 0.6;
-    }
-
-    &.checked {
-      color: #999;
     }
   }
 }
