@@ -157,6 +157,8 @@
 .zone-subnav-container {
   background: #fff;
   margin-bottom: grid-spacing;
+  position: relative;
+  z-index: 10;
 }
 
 .zone-callout {
@@ -174,12 +176,16 @@
   }
 }
 
-
+@media media-query-mobile {
+    .zone-landing-header .zone-image {
+        display: none;
+    }
+}
 
 @media media-query-tablet {
   .zone-landing {
       .zone-subnav-container {
-        margin-top 0
+        margin-top: 0;
       }
 
       .zone-landing-header-preview .column-strip, .zone-landing-header-preview .masthead-text {
