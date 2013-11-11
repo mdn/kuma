@@ -15,7 +15,10 @@ import wiki.content
 from wiki.content import (CodeSyntaxFilter, DekiscriptMacroFilter,
                           SectionTOCFilter, SectionIDFilter, IframeHostFilter,
                           H2TOCFilter, H3TOCFilter,
-                          SECTION_TAGS, get_seo_description, get_content_sections)
+                          SECTION_TAGS, get_seo_description,
+                          get_content_sections, extract_css_classnames,
+                          extract_html_attributes,
+                          extract_kumascript_macro_names)
 from wiki.models import ALLOWED_TAGS, ALLOWED_ATTRIBUTES, Document
 from wiki.tests import normalize_html, doc_rev, document, revision
 from wiki.helpers import bugize_text
@@ -1013,6 +1016,45 @@ class AllowedHTMLTests(TestCase):
         """
         result = Document.objects.clean_content(content)
         eq_(normalize_html(expected), normalize_html(result))
+
+
+class SearchParserTests(TestCase):
+    """Tests for document parsers that extract content for search indexing"""
+
+    def test_css_classname_extraction(self):
+        expected = ('foobar', 'barfoo', 'bazquux')
+        content = """
+            <p class="%s">Test</p>
+            <p class="%s">Test</p>
+            <div class="%s">Test</div>
+        """ % expected
+        result = extract_css_classnames(content)
+        eq_(sorted(expected), sorted(list(result)))
+
+    def test_html_attribute_extraction(self):
+        expected = (
+            'class="foobar"',
+            'id="frazzy"',
+            'data-boof="farb"'
+        )
+        content = """
+            <p %s>Test</p>
+            <p %s>Test</p>
+            <div %s>Test</div>
+        """ % expected
+        result = extract_html_attributes(content)
+        eq_(sorted(expected), sorted(list(result)))
+
+    def test_kumascript_macro_extraction(self):
+        expected = ('foobar', 'barfoo', 'bazquux', 'banana')
+        content = """
+            <p>{{ %s }}</p>
+            <p>{{ %s("foo", "bar", "baz") }}</p>
+            <p>{{ %s    ("quux") }}</p>
+            <p>{{%s}}</p>
+        """ % expected
+        result = extract_kumascript_macro_names(content)
+        eq_(sorted(expected), sorted(list(result)))
 
 
 class GetSEODescriptionTests(TestCase):
