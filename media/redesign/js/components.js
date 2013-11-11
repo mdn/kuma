@@ -233,9 +233,14 @@
           }
         }
 
-        // Handle me
+        // Open or close the item, set the icon, etc.
         toggle($self);
       });
+
+      // The toggler can be initially opened via a data- attribute
+      if($self.attr('data-default-state') == 'open') {
+        toggle($self);
+      }
 
       function toggle($li, forceClose) {
         var pieces = getTogglerComponents($li);

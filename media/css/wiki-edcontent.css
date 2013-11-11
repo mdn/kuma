@@ -92,3 +92,13 @@ pre[class^="brush:sql"]:before, pre[class^="brush: sql"]:before {
 pre[class^="brush:xml"]:before, pre[class^="brush: xml"]:before {
 	content: "XML";
 }
+
+li[data-default-state="open"] > a:after {
+	content: "(defaults to 'open')";
+	color: #666;
+	font-size: 12px;
+	font-family: arial, sans-serif;
+	font-style: italic;
+	display: inline-block;
+	padding-left: 6px;
+}

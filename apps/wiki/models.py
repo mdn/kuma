@@ -115,6 +115,7 @@ ALLOWED_ATTRIBUTES.update(dict((x, ['style', 'class', 'id', 'lang', 'dir', 'titl
 ALLOWED_ATTRIBUTES.update(dict((x, ['cite']) for x in (
     'blockquote', 'del', 'ins', 'q'
 )))
+ALLOWED_ATTRIBUTES['li'] += ['data-default-state']
 ALLOWED_ATTRIBUTES['time'] += ['datetime']
 ALLOWED_ATTRIBUTES['ins'] = ['datetime']
 ALLOWED_ATTRIBUTES['del'] = ['datetime']
