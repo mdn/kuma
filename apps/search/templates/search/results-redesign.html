@@ -90,12 +90,12 @@
           <div class="pager">
             {% if prev_page %}
               <a class="button" href="{{ request.get_full_path()|urlparams(page=prev_page) }}">
-              {{ _('Previous Page') }}
+              {{ _('Previous') }}
               </a>
             {% endif %}
             {% if next_page %}
               <a class="button" href="{{ request.get_full_path()|urlparams(page=next_page) }}">
-              {{ _('Next Page') }}
+              {{ _('Next') }}
               </a>
             {% endif %}
             </div>
