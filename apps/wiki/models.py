@@ -1828,13 +1828,34 @@ class DocumentType(SearchMappingType, Indexable):
 
     @classmethod
     def get_indexable(cls):
+        """
+        For this mapping type return a list of model IDs that should be
+        indexed with the management command, in a full reindex.
+
+        WARNING: When changing this code make sure to update the
+                 ``should_update`` method below, too!
+        """
         model = cls.get_model()
         return (model.objects
-                     .filter(is_template=0,
-                             is_redirect=0,
+                     .filter(is_template=False,
+                             is_redirect=False,
                              deleted=False)
                      .exclude(slug__icontains='Talk:')
                      .values_list('id', flat=True))
+
+    @classmethod
+    def should_update(cls, obj):
+        """
+        Given a Document instance should return boolean value
+        whether the instance should be indexed or not.
+
+        WARNING: This *must* mirror the logic of the ``get_indexable``
+                 method above!
+        """
+        return (not obj.is_template and
+                not obj.is_redirect and
+                not obj.deleted and
+                'Talk:' not in obj.slug)
 
     @classmethod
     def get_analysis(cls):
