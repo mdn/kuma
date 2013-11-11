@@ -62,6 +62,14 @@ class SearchMappingType(MappingType):
     def get_index(cls):
         return get_index()
 
+    @classmethod
+    def unindex(cls, id_, es=None, index=None):
+        try:
+            super(SearchMappingType, cls).unindex(cls, id_, es, index)
+        except ElasticHttpNotFoundError, e:
+            if not settings.ES_SILENCE_UNINDEX_ERRORS:
+                raise
+
 
 def format_time(time_to_go):
     """Return minutes and seconds string for given time in seconds.
