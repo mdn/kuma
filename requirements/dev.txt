@@ -13,6 +13,7 @@ pylint==0.20.0
 pygments==1.4
 
 django-devserver
+django-dbgettext==0.1
 URLObject==2.3.4
 
 -e git://github.com/jbalogh/check.git#egg=check

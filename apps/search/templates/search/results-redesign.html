@@ -3,8 +3,8 @@
 {% set meta = (('WT.oss', q),
                ('WT.oss_r', num_results)) %}
 {% block title %}
-  {% if search_query %}
-    {{ page_title(_('Search Results for "{search_query}"')|f(search_query=search_query)) }}
+  {% if query %}
+    {{ page_title(_('Search Results for "{query}"')|f(query=query)) }}
   {% else %}
     {{ page_title(_('Search')) }}
   {% endif %}
@@ -13,15 +13,15 @@
 {% block bodyclass %}search-results search-results-no-demo{% endblock %}
 
 {% macro doc_block(doc, index) -%}
-  {% set doc_url = '%s%s' % (settings.SITE_URL, url('wiki.document', doc.slug, locale=doc.locale)) %}
   <li class="result-{{ index }}">
     <div class="column-container">
       <div class="column-1"><i class="icon-file-text-alt"></i></div>
       <div class="column-5 result-list-item">
-        {# <h4 class="larger"><a href="{{ doc_url }}?search={{ search_query }}">{{ doc.title }}</a></h4> #}
-        <h4 class="larger"><a href="{{ doc_url }}">{{ doc.title }}</a></h4>
-        <p>{{ doc.get_excerpt()|safe }}</p>
-        <p class="search-meta"><a href="{{ doc_url }}">{{ doc_url|replace('https://', '') }}</a></p>
+        <h4 class="larger" title=""><a href="{{ doc.url }}">{{ doc.title }}</a></h4>
+        <p>{{ doc.excerpt|safe }}</p>
+        <p class="search-meta"><a href="{{ doc.url }}">{{ doc.url|replace('https://', '') }}</a>
+        {% if user.is_superuser %}Score: <span title="explanation: {{ doc.explanation }}">{{ doc.score }}</span>{% endif%}
+        </p>
       </div>
       <div class="column-strip result-list-link">
         <a href=""><i class="icon-code"></i>{{ _('Code Sample') }}</a>
@@ -37,35 +37,49 @@
   <div class="results-search-form">
     <form action="{{ url('search') }}" method="get" role="search">
       <label for="search-q" class="offscreen">{{ _('Search') }}</label>
-      <input type="search" name="q" id="search-q" placeholder="{{ _('Search the docs') }}" value="{{ search_query }}" {% if not search_query %}autofocus{% endif %} />
+      <input type="search" name="q" id="search-q" placeholder="{{ _('Search the docs') }}" value="{{ query }}" {% if not query %}autofocus{% endif %} />
       <button type="submit" class="offscreen">{{ _('Search') }}</button>
     </form>
   </div>
   
   
  <div class="column-container">
-  
-  {% if search_query %}
     <!-- left results -->
     <div class="column-main">
 
       <div id="search-results-close-container">
         <div class="search-pane search-results-explanation">
           <h2>{{ _('Results') }}</h2>
-          <p><bdi>{{ _('%s result%s for "%s" in %s.') % (result_count, 's' if result_count > 1 else '', search_query, settings.LOCALES[request.locale].native) }}
-
-          {% if result_count %}
+          <p>
+          {% if query %}
+            {% trans count=count, locale_native=settings.LOCALES[request.locale].native %}
+              {{ count }} documents found for "{{ query }}" in {{ locale_native }}.
+            {% pluralize %}
+              {{ count }} documents found for "{{ query }}" in {{ locale_native }}.
+            {% endtrans %}
+          {% else %}
+            {% trans count=count, locale_native=settings.LOCALES[request.locale].native %}
+              {{ count }} documents found in {{ locale_native }}.
+            {% pluralize %}
+              {{ count }} documents found in {{ locale_native }}.
+            {% endtrans %}
+          {% endif %}
+          {% if count %}
             &middot;
-            {% if not prev_page and not next_page %}
+            {% if not previous and not next %}
               {{ _('Displaying all results.') }}
             {% else %}
-              {{ _('Displaying %s-%s of %s results.') % (start_index, end_index, result_count) }}
+              {% trans count=count %}
+                Displaying {{ count }} search result.
+              {% pluralize %}
+                Displaying {{ start }}-{{ end }} of {{ count }} search results.
+              {% endtrans %}
             {% endif %}
           {% endif %}
 
           {% if request.locale != settings.LANGUAGE_CODE %}
             &middot;
-            <a href="{{ url('search', locale=settings.LANGUAGE_CODE, ) }}?q={{ search_query }}">
+            <a href="{{ url('search', locale=settings.LANGUAGE_CODE, ) }}?q={{ query }}">
               {% trans default_locale_native = settings.LOCALES[settings.LANGUAGE_CODE].native %}
               Search again in {{ default_locale_native }}
               {% endtrans %}
@@ -75,26 +89,26 @@
         </div>
       </div>
 
-      {% if result_count %}
+      {% if count %}
       <div class="search-pane seach-results-container">
         <h3><i class="icon-copy"></i>{{ _('Docs') }}</h3>
 
         <ul class="result-list">
-          {% for doc in results %}
-                {{ doc_block(doc, loop.index) }}
-              {% endfor %}
+          {% for doc in documents %}
+            {{ doc_block(doc, loop.index) }}
+          {% endfor %}
         </ul>
 
         <div class="search-results-more {% if show_expander %}with-view-all{% endif %}">
 
           <div class="pager">
-            {% if prev_page %}
-              <a class="button" href="{{ request.get_full_path()|urlparams(page=prev_page) }}">
+            {% if previous %}
+              <a class="button" href="{{ previous }}">
               {{ _('Previous') }}
               </a>
             {% endif %}
-            {% if next_page %}
-              <a class="button" href="{{ request.get_full_path()|urlparams(page=next_page) }}">
+            {% if next %}
+              <a class="button" href="{{ next }}">
               {{ _('Next') }}
               </a>
             {% endif %}
@@ -106,24 +120,28 @@
       {% endif %}
     </div>
 
-    {% if facet_counts %}
+    {% if filters %}
     <!-- right topics -->
     <div class="column-strip search-results-topics">
-      <h3><i class="icon-th-list"></i>{{ _('Topics') }}</h3>
+      {% for filter_group in filters %}
+      <h3><i class="icon-th-list"></i>{{ filter_group.name }}</h3>
       <ul>
-        {% for facet in facet_counts %}
+        {% for filter in filter_group.options %}
         <li>
-        {% if facet.deselect_url %}
-          <a href="{{ facet.deselect_url }}" data-count="{{ facet.count }}" class="checked"><i class="icon-check"></i>{{ facet.label }}</a>
+        {% if filter.count == 0 %}
+        <span class="inactive"><i class="icon-check-empty"></i> {{ filter.name }}</span>
         {% else %}
-          <a href="{{ facet.select_url }}" data-count="{{ facet.count }}"><i class="icon-check-empty"></i>{{ facet.label }}</a>
+          {% if filter.active %}
+            <a href="{{ filter.urls.inactive }}" data-count="{{ filter.count }}" class="checked"><i class="icon-check"></i>{{ filter.name }}</a>
+          {% else %}
+            <a href="{{ filter.urls.active }}" data-count="{{ filter.count }}"><i class="icon-check-empty"></i>{{ filter.name }}</a>
+          {% endif %}
         {% endif %}
         </li>
         {% endfor %}
       </ul>
+      {% endfor %}
     </div>
     {% endif %}
-   
-  {% endif %}
 </div>
 {% endblock %}

@@ -86,7 +86,7 @@
         "model": "wiki.revision",
         "fields": {
             "comment": "",
-            "based_on": 11,
+            "based_on": null,
             "is_approved": true,
             "created": "2010-09-14 15:09:35",
             "summary": "\u30d8\u30eb\u30d7\u3068\u30c1\u30e5\u30fc\u30c8\u30ea\u30a2\u30eb\u4eba\u6c17\u306e\u30b5\u30dd\u30fc\u30c8\u8a18\u4e8b",
@@ -94,9 +94,9 @@
             "content": "\u30d8\u30eb\u30d7\u3068\u30c1\u30e5\u30fc\u30c8\u30ea\u30a2\u30eb\u4eba\u6c17\u306e\u30b5\u30dd\u30fc\u30c8\u8a18\u4e8b\r\n\r\n",
             "significance": 10,
             "keywords": "\u30d8\u30eb\u30d7\u3068\u30c1\u30e5\u30fc\u30c8\u30ea\u30a2\u30eb",
-            "reviewer": 118533,
+            "reviewer": 7,
             "document": 2,
-            "creator": 118533
+            "creator": 7
         }
     },
     {
@@ -104,7 +104,7 @@
         "model": "wiki.revision",
         "fields": {
             "comment": "",
-            "based_on": 5,
+            "based_on": null,
             "is_approved": true,
             "created": "2010-09-17 07:32:11",
             "summary": "yeah OK whatever",
@@ -112,9 +112,9 @@
             "content": "anothero summario goello har",
             "significance": 40,
             "keywords": "this is the only place that says foobar",
-            "reviewer": 118533,
+            "reviewer": 7,
             "document": 3,
-            "creator": 118533
+            "creator": 7
         }
     },
     {
@@ -122,7 +122,7 @@
         "model": "wiki.revision",
         "fields": {
             "comment": "",
-            "based_on": 18,
+            "based_on": null,
             "is_approved": true,
             "created": "2010-09-23 08:18:56",
             "summary": "ceci n'est pas une pipe!",
@@ -130,9 +130,9 @@
             "content": "ceci n'est pas une pipe\r\n\r\nmon dieu!",
             "significance": 30,
             "keywords": "boulot",
-            "reviewer": 118533,
+            "reviewer": 7,
             "document": 4,
-            "creator": 118533
+            "creator": 7
         }
     },
     {
@@ -140,7 +140,7 @@
         "model": "wiki.revision",
         "fields": {
             "comment": "",
-            "based_on": 20,
+            "based_on": null,
             "is_approved": true,
             "created": "2010-09-29 09:09:52",
             "summary": "the keyword audio only appears in the summary of this article",
@@ -148,9 +148,9 @@
             "content": "the keyword video only appears in the body of this article",
             "significance": 10,
             "keywords": "barfoo",
-            "reviewer": 118533,
+            "reviewer": 7,
             "document": 1,
-            "creator": 118533
+            "creator": 7
         }
     },
     {
@@ -166,9 +166,9 @@
             "content": "audio is in this <strong>but the word for tough things</strong> will be ignored",
             "significance": 30,
             "keywords": "ghosts",
-            "reviewer": 118533,
+            "reviewer": 7,
             "document": 5,
-            "creator": 118533
+            "creator": 7
         }
     },
     {
@@ -184,9 +184,26 @@
             "content": "REDIRECT [[foo|bar]]",
             "significance": 30,
             "keywords": "ghosts",
-            "reviewer": 118533,
+            "reviewer": 7,
             "document": 6,
-            "creator": 118533
+            "creator": 7
+        }
+    },
+    {
+        "pk": 1,
+        "model": "search.filtergroup",
+        "fields": {
+            "name": "Group"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "search.filter",
+        "fields": {
+            "name": "Tagged",
+            "slug": "tagged",
+            "advanced": false,
+            "group": 1
         }
     },
     {
@@ -229,6 +246,15 @@
         "fields": {
             "tag": 101,
             "content_type": ["wiki", "document"],
+            "object_id": 1
+        }
+    },
+    {
+        "pk": 1003,
+        "model": "taggit.taggeditem",
+        "fields": {
+            "tag": 101,
+            "content_type": ["search", "filter"],
             "object_id": 1
         }
     },

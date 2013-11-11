@@ -16,5 +16,5 @@ To start the celery queue workers:
     ~/src/manage.py celeryd
 
 To run tests:
-    ~/src/manage.py test actioncounters contentflagging demos devmo landing users wiki
+    ~/src/manage.py test actioncounters contentflagging demos devmo landing users search wiki
     (cd ~/src/kumascript && ./node_modules/.bin/nodeunit tests)

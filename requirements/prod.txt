@@ -14,7 +14,7 @@ South==0.7.3
 feedparser==4.1
 jsonpickle==0.3.1
 lockfile==0.8
-
+django-dbgettext==0.1
 
 -e git://github.com/jbalogh/django-multidb-router.git@25ca0c68929144ed9020d89f2ea1e941c7f9aeca#egg=django-multidb-router
 -e git://github.com/jbalogh/django-cache-machine.git#egg=django-cache-machine
