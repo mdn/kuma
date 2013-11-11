@@ -19,18 +19,28 @@ def render_done_handler(**kwargs):
     if not settings.ES_LIVE_INDEX or 'instance' not in kwargs:
         return
     instance = kwargs['instance']
-    try:
-        index_objects.delay(instance.get_mapping_type(), [instance.id])
-    except:
-        logging.error('Search indexing task failed',
-                      exc_info=True)
+    mappping_type = instance.get_mapping_type()
+    if mappping_type.should_update(instance):
+        try:
+            index_objects.delay(mappping_type, [instance.id])
+        except:
+            logging.error('Search indexing task failed',
+                          exc_info=True)
+    else:
+        logging.info('Ignoring wiki document %r while updating search index',
+                     instance.id, exc_info=True)
 
 
 def pre_delete_handler(**kwargs):
     if not settings.ES_LIVE_INDEX or 'instance' not in kwargs:
         return
     instance = kwargs['instance']
-    unindex_objects.delay(instance.get_mapping_type(), [instance.id])
+    mappping_type = instance.get_mapping_type()
+    if mappping_type.should_update(instance):
+        unindex_objects.delay(mappping_type, [instance.id])
+    else:
+        logging.info('Ignoring wiki document %r while updating search index',
+                     instance.id, exc_info=True)
 
 
 def register_live_index(model_cls):
