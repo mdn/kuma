@@ -9,12 +9,12 @@
   add-center-spacing();
 }
 
-/* Column helpers for the grids to be generated */
+/* column helpers for the grids to be generated */
 .column-closed {
   display: none;
 }
 
-/* This is a "helper" which automatically formats its column children, clears the floats afterward, removes margin from last item */
+/* this is a "helper" which automatically formats its column children, clears the floats afterward, removes margin from last item */
 .column-container {
   @extend .clear;
 
@@ -53,7 +53,7 @@
   }
 }
 
-/*  Column width definitions */
+/*  column width definitions */
 .column-1 {
   width: 5.5%;
 }
@@ -88,12 +88,12 @@
   width: 90.5%;
 }
 .column-12, .column-all {
-  width: 99%;
+  width: auto;
   margin: 0;
   float: none;
 }
 
-/*  Tablet grid width */
+/*  tablet grid width */
 @media media-query-tablet {
 
   .column-container {
@@ -108,8 +108,8 @@
 }
 
 /* 
-  Mobile (phone) - just make everything its own column 
-  Preemtpively using !important so we don't run into css precedence issues -- we absolutely always want one-column view
+  mobile (phone) - just make everything its own column 
+  preemtpively using !important so we don't run into css precedence issues -- we absolutely always want one-column view
 */
 @media media-query-mobile {
   .column-1, .column-2, .column-3, .column-4, .column-5, .column-6, .column-7, .column-8, .column-9, .column-10, .column-11, .column-12,

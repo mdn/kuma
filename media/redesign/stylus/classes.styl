@@ -1,5 +1,7 @@
 /* real page content displays */
 .text-content {
+
+  /* tables */
   table {
     border-collapse: collapse;
     border: solid #e0e0dc;
@@ -23,6 +25,7 @@
     margin-bottom: content-block-margin;
   }
 
+  /* lists */
   ul {
     list-style: disc;
 
@@ -47,11 +50,8 @@
 
   li {
     padding-bottom: 6px;
-
-    &:last-child {
-      padding-bottom: 0;
-    }
   }
+  prevent-last-child-spacing(li, padding-bottom);
 
   dt {
     font-style: normal;
@@ -63,8 +63,13 @@
     padding-left: grid-spacing;
   }
   
+  /* code blocks */
   pre, code {
     font: 100% 'Courier New', 'Andale Mono', monospace;
+  }
+
+  code {
+    font-weight: inherit;
   }
 
   pre {
@@ -75,10 +80,7 @@
     margin-bottom: content-block-margin;
   }
 
-  code {
-    font-weight: inherit;
-  }
-
+  /* misc */
   caption {
     font-weight: bold;
   }

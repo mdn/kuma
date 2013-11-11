@@ -11,10 +11,8 @@ aside {
   margin-left: grid-spacing;
   margin-bottom: grid-spacing;
 
-  *:last-child {
-    padding-bottom: 0;
-    margin-bottom: 0;
-  }
+  prevent-last-child-spacing('*', padding-bottom);
+  prevent-last-child-spacing('*', margin-bottom);
 }
 
 
@@ -96,7 +94,7 @@ label {
 }
 
 
-/* links */
+/* links and buttons */
 a {
   &:link, &:visited, &:focus, &:active {
     color: link-color;
