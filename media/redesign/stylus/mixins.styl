@@ -15,15 +15,15 @@ vendorize(property, value) {
 }
 
 vendorize-value(property, value, more = '') {
-  {property}: unquote('-webkit-'+value+more);
-  {property}: unquote('-moz-'+value+more);
-  {property}: unquote('-ms-'+value+more);
-  {property}: value+more;
+  {property}: unquote('-webkit-' + value + more);
+  {property}: unquote('-moz-' + value + more);
+  {property}: unquote('-ms-' + value + more);
+  {property}: value + more;
 }
 
 /* prevents spacing of a given element if it's the last child */
 prevent-last-child-spacing(element = '*', property = 'padding') {
-  & {element}:last-child {
+  & unquote(element):last-child {
     {property}: 0;
   }
 }
@@ -70,13 +70,13 @@ create-gradient(start-color, end-color, direction = false) {
 }
 
 /* generates the essential "before" and "after" code for pseudo-arrows */
-generate-arrow() {
+generate-arrow(arrow-width = 10px) {
   &:before, &:after {
     content: ' ';
     height: 0;
     position: absolute;
     width: 0;
-    border: 10px solid transparent;
+    border: arrow-width solid transparent;
   }
 }
 
@@ -195,11 +195,7 @@ use-white-logo() {
     example:   bidi-style(left, 20px, right, auto)
 */
 bidi-style(ltr-prop, value, inverse-prop, inverse-value, make-important = false) {
-  if make-important {
-    make-important = unquote('!important');
-  } else {
-    make-important = unquote(';');
-  }
+  make-important = make-important ? unquote('!important') : unquote('')
 
   {ltr-prop}: value make-important;
 
@@ -235,7 +231,7 @@ big-search() {
   background: rgba(255, 255, 255, 0.2);
   border: 0;
   border-radius: 3px;
-  font-family: 'Open Sans Light', sans-serif;
+  font-family: heading-font-family;
   letter-spacing: -1px;
   width: 60%;
 }
