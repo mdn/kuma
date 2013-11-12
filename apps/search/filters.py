@@ -1,4 +1,5 @@
 import operator
+from django.conf import settings
 from elasticutils import Q
 from elasticutils.contrib.django import F
 
@@ -9,11 +10,17 @@ from search.models import DocumentType, Filter
 
 class LanguageFilterBackend(BaseFilterBackend):
     """
-    A django-rest-framework filter backend that filters the given
-    queryset based on the current request's locale
+    A django-rest-framework filter backend that filters the given queryset
+    based on the current request's locale, or a different locale (or none at
+    all) specified by query parameter
     """
     def filter_queryset(self, request, queryset, view):
-        return queryset.filter(locale=request.locale)
+        locale = request.GET.get('locale', None)
+        if '*' == locale:
+            return queryset
+        if not locale or locale not in settings.MDN_LANGUAGES:
+            locale = request.locale
+        return queryset.filter(locale=locale)
 
 
 class SearchQueryBackend(BaseFilterBackend):

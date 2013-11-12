@@ -1,5 +1,9 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "search/base.html" %}
+{% set locale = request.GET.get('locale', request.locale) %}
+{% if locale in settings.LOCALES %}
+  {% set locale_native = settings.LOCALES[locale].native %}
+{% endif %}
 {% set meta = (('WT.oss', q),
                ('WT.oss_r', num_results)) %}
 {% block title %}
@@ -56,18 +60,34 @@
         <div class="search-pane search-results-explanation">
           <h2>{{ _('Results') }}</h2>
           <p>
-          {% if query %}
-            {% trans count=count, locale_native=settings.LOCALES[request.locale].native %}
-              {{ count }} documents found for "{{ query }}" in {{ locale_native }}.
-            {% pluralize %}
-              {{ count }} documents found for "{{ query }}" in {{ locale_native }}.
-            {% endtrans %}
+          {% if locale_native %}
+            {% if query %}
+              {% trans count=count, locale_native=locale_native %}
+                {{ count }} documents found for "{{ query }}" in {{ locale_native }}.
+              {% pluralize %}
+                {{ count }} documents found for "{{ query }}" in {{ locale_native }}.
+              {% endtrans %}
+            {% else %}
+              {% trans count=count, locale_native=locale_native %}
+                {{ count }} documents found in {{ locale_native }}.
+              {% pluralize %}
+                {{ count }} documents found in {{ locale_native }}.
+              {% endtrans %}
+            {% endif %}
           {% else %}
-            {% trans count=count, locale_native=settings.LOCALES[request.locale].native %}
-              {{ count }} documents found in {{ locale_native }}.
-            {% pluralize %}
-              {{ count }} documents found in {{ locale_native }}.
-            {% endtrans %}
+            {% if query %}
+              {% trans count=count %}
+                {{ count }} documents found for "{{ query }}".
+              {% pluralize %}
+                {{ count }} documents found for "{{ query }}".
+              {% endtrans %}
+            {% else %}
+              {% trans count=count %}
+                {{ count }} documents found.
+              {% pluralize %}
+                {{ count }} documents found.
+              {% endtrans %}
+            {% endif %}
           {% endif %}
           {% if count %}
             &middot;
@@ -82,7 +102,7 @@
             {% endif %}
           {% endif %}
 
-          {% if request.locale != settings.LANGUAGE_CODE %}
+          {% if locale != settings.LANGUAGE_CODE %}
             &middot;
             <a href="{{ url('search', locale=settings.LANGUAGE_CODE, ) }}?q={{ query }}">
               {% trans default_locale_native = settings.LOCALES[settings.LANGUAGE_CODE].native %}
