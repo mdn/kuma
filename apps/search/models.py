@@ -153,7 +153,6 @@ class DocumentType(SearchMappingType, Indexable):
                 # faster highlighting
                 'term_vector': 'with_positions_offsets',
             },
-            'raw': strip_tags(obj.html),
             'id': {'type': 'long', 'index': 'not_analyzed'},
             'locale': {'type': 'string', 'index': 'not_analyzed'},
             'modified': {'type': 'date'},
@@ -253,3 +252,9 @@ class DocumentType(SearchMappingType, Indexable):
     def get_url(self):
         path = reverse('wiki.document', locale=self.locale, args=[self.slug])
         return '%s%s' % (settings.SITE_URL, path)
+    
+    def get_edit_url(self):
+        path = reverse('wiki.edit_document', locale=self.locale,
+                       args=[self.slug])
+        return '%s%s' % (settings.SITE_URL, path)
+
