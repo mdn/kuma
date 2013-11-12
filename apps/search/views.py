@@ -4,6 +4,7 @@ from django.contrib.sites.models import Site
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render
 from django.views.decorators.cache import cache_page
+from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework.generics import ListAPIView
 from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
@@ -36,6 +37,15 @@ class SearchView(ListAPIView):
     paginate_by_param = 'per_page'
     pagination_serializer_class = SearchSerializer
     topic_param = 'topic'
+
+    @csrf_exempt
+    def dispatch(self, request, *args, **kwargs):
+        # Google Custom Search results page
+        if not flag_is_active(request, 'elasticsearch'):
+            query = request.GET.get('q', '')
+            return render(request, 'landing/searchresults.html',
+                          {'query': query})
+        return super(SearchView, self).dispatch(request, *args, **kwargs)
 
     def initial(self, request, *args, **kwargs):
         super(SearchView, self).initial(request, *args, **kwargs)

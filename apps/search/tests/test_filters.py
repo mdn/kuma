@@ -1,6 +1,7 @@
 from nose.tools import ok_
 
 from sumo.middleware import LocaleURLMiddleware
+from waffle.models import Flag
 
 from search.tests import ElasticTestCase, factory
 from search.views import SearchView
@@ -11,6 +12,10 @@ from search.filters import (SearchQueryBackend, HighlightFilterBackend,
 
 class FilterTests(ElasticTestCase):
     fixtures = ['test_users.json', 'wiki/documents.json']
+
+    def setUp(self):
+        super(FilterTests, self).setUp()
+        Flag.objects.create(name='elasticsearch', everyone=True)
 
     def test_search_query(self):
         class SearchQueryView(SearchView):
