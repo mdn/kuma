@@ -3,8 +3,8 @@
 {% set meta = (('WT.oss', q),
                ('WT.oss_r', num_results)) %}
 {% block title %}
-  {% if search_query %}
-    {{ page_title(_('Search Results for "{search_query}"')|f(search_query=search_query)) }}
+  {% if query %}
+    {{ page_title(_('Search Results for "{query}"')|f(query=query)) }}
   {% else %}
     {{ page_title(_('Search')) }}
   {% endif %}
@@ -23,19 +23,8 @@
       {% endfor %}
     </ul>
     {% endif %}
-    <div class="searchMeta">
-      {#
-      <ul class="crumbs">
-        {% for doc in doc.parents %}
-        <li class="crumb"><a href="{{ url('wiki.document', doc.full_path) }}">{{ doc.title }}</a></li>
-        {% endfor %}
-        <li class="crumb">{{ doc.title }}</li>
-      </ul>
-      #}
-    </div>
     <div class="searchHighlight">
-      {# |safe here because get_excerpt uses bleach #}
-      <p>{{ doc.get_excerpt()|safe }}</p>
+      <p>{{ doc.excerpt|safe }}</p>
     </div>
     <p><!-- match content here --></p>
   </li>
@@ -63,18 +52,18 @@
 
     <div class="search-form boxed">
       <form action="{{ request.path }}" method="get" id="search-form">
-        <input name="q" id="search-q" type="search" value="{{ search_query }}" {% if not search_query %}autofocus{% endif %} />
+        <input name="q" id="search-q" type="search" value="{{ query }}" {% if not query %}autofocus{% endif %} />
         <button type="submit" id="search-submit">{{ _('Search!') }}</button>
       </form>
     </div>
 
-    {% if search_query %}
+    {% if query %}
       <div class="boxed" id="results-box"><!--RESULTS-->
-      {% if result_count %}
-        <h2>{{ _('Search Results For "%s"') % search_query }}</h2>
+      {% if count %}
+        <h2>{{ _('Search Results For "%s"') % query }}</h2>
 
         <ul class="search-results-list">
-        {% for doc in results %}
+        {% for doc in documents %}
           {{ doc_block(doc) }}
         {% endfor %}
         </ul>
@@ -313,7 +302,7 @@
         }
 
         // Initial action
-        {% if search_query and result_count: %}
+        {% if query and count: %}
            Mousetrap.trigger('down');
         {% else %}
           $searchInput.get(0).focus();

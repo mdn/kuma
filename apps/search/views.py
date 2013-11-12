@@ -36,6 +36,7 @@ class SearchView(ListAPIView):
     paginate_by_param = 'per_page'
     pagination_serializer_class = SearchSerializer
     topic_param = 'topic'
+    result_page = 'search/results.html'
 
     def initial(self, request, *args, **kwargs):
         super(SearchView, self).initial(request, *args, **kwargs)
@@ -52,9 +53,11 @@ class SearchView(ListAPIView):
         self.current_topics = [topic for topic in topics
                                if (topic not in seen_topics and
                                    not seen_topics.add(topic))]
+        if flag_is_active(request, 'redesign'):
+            self.result_page = 'search/results-redesign.html'
 
     def get_template_names(self):
-        return ['search/results-redesign.html']
+        return [self.result_page]
 
     def get_queryset(self):
         return DocumentS(DocumentType,
