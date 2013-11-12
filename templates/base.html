@@ -138,7 +138,7 @@ https://wiki.mozilla.org/MDN/Development/Redesign/Testing">Here\'s how you can h
 
   <!-- Header -->
   <header id="main-header"><div class="center">
-    
+
     <ul class="offscreen">
       <li><a href="#language">{{ _('Select language') }}</a></li>
       {% if not is_sphinx %}
@@ -146,7 +146,7 @@ https://wiki.mozilla.org/MDN/Development/Redesign/Testing">Here\'s how you can h
       {% endif %}
       <li><a href="#content">{{ _('Skip to main content') }}</a></li>
     </ul>
-    
+
     <div class="clear header-login">
       <a href="//www.mozilla.org/" id="tabzilla">mozilla</a>
       {% if not is_sphinx %}
@@ -156,7 +156,7 @@ https://wiki.mozilla.org/MDN/Development/Redesign/Testing">Here\'s how you can h
 
     <a href="{{ url('home') }}" class="logo">{{ _('Mozilla Developer Network') }}</a>
 
-    <nav id="main-nav" role="navigation"><ul><li><a href="javascript:;" aria-haspopup="true" aria-owns="nav-zones-submenu" aria-expanded="false">{{ _('Zones') }}<i class="icon-caret-down"></i></a>
+    <nav id="main-nav" role="navigation"><ul><li><a href="javascript:;" aria-haspopup="true" aria-owns="nav-zones-submenu" aria-expanded="false">{{ _('Zones') }}<i aria-hidden="true" class="icon-caret-down"></i></a>
 
         <div class="submenu submenu-single" id="nav-zones-submenu">
           <div class="submenu-column">
@@ -167,7 +167,7 @@ https://wiki.mozilla.org/MDN/Development/Redesign/Testing">Here\'s how you can h
             </ul>
           </div>
         </div>
-      </li><li><a href="{{ devmo_url('Web') }}" aria-haspopup="true" aria-owns="nav-platform-submenu" aria-expanded="false">{{ _('Web Platform') }}<i class="icon-caret-down"></i></a>
+      </li><li><a href="{{ devmo_url('Web') }}" aria-haspopup="true" aria-owns="nav-platform-submenu" aria-expanded="false">{{ _('Web Platform') }}<i aria-hidden="true" class="icon-caret-down"></i></a>
 
         <div class="submenu" id="nav-platform-submenu">
           <div class="submenu-column">
@@ -198,7 +198,7 @@ https://wiki.mozilla.org/MDN/Development/Redesign/Testing">Here\'s how you can h
         <div class="search-wrap">
           <label for="main-q" class="offscreen">{{ _('Search') }}</label>
           <input type="search" id="main-q" name="q" data-placeholder="{{ _('SEARCH') }}" data-value="{{ query }}" value="" />
-          <span class="search-trigger"><i class="icon-search"></i></span>&nbsp;
+          <span class="search-trigger"><i aria-hidden="true" class="icon-search"></i></span>&nbsp;
           <button type="submit" class="offscreen">{{ _('Search') }}</button>
         </div>
       </form></li>{% endif %}</ul></nav>
