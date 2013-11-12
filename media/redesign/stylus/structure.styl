@@ -332,6 +332,7 @@ footer {
 
   @media media-query-small-desktop { z-index: 2; }
   @media media-query-tablet { z-index: 3; }
+  @media media-query-mobile { z-index: 4; }
 }
 
 
@@ -377,10 +378,21 @@ footer {
       
       > li {
         vendorize(transition-property, none);
-      }
-      
-      > li:first-child {
+
+        &:first-child {
           padding-left: 0;
+        }
+      }
+    }
+
+    .main-nav-search {
+      display: block;
+      padding: 0px;
+      margin-top: 10px;
+      width: auto;
+
+      .search-wrap {
+        width: auto;
       }
     }
 
