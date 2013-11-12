@@ -872,6 +872,8 @@ CELERY_ANNOTATIONS = {
     }
 }
 
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+
 # Wiki rebuild settings
 WIKI_REBUILD_TOKEN = 'sumo:wiki:full-rebuild'
 WIKI_REBUILD_ON_DEMAND = False
