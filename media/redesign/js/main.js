@@ -39,6 +39,7 @@ document.documentElement.className += ' js';
   !isOldIE && (function() {
     var $nav = $('#main-nav');
     var $navItems = $nav.find('ul > li:not(:last-child)');
+    var $mainNavSearch = $nav.find('.main-nav-search');
     var $searchWrap = $nav.find('.search-wrap');
     var $input = $searchWrap.find('input');
     var placeholder = $input.attr('placeholder');
@@ -46,6 +47,11 @@ document.documentElement.className += ' js';
     var timeout;
     var createExpander = function(delay, isAdd) {
       return function(e) {
+        // If we're on mobile, just let everything be
+        if($mainNavSearch.css('display') == 'block') {
+          return;
+        }
+
         e && e.preventDefault();
         timeout && clearTimeout(timeout);
         timeout = setTimeout(function() {
