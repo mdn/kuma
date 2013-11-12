@@ -29,3 +29,56 @@
       letter-spacing: -1px;
   }
 }
+
+/* just for the display page (not the edit page) */
+.profile-display {
+
+  #profile-head {
+    min-height: 200px;
+
+    .main {
+      float: none;
+      width: auto;
+      margin-left: 160px;
+    }
+
+    .extra {
+      position: absolute;
+      top: 20px;
+    }
+  }
+}
+
+/* API key pages */
+.profile-api-page {
+  label {
+    display: block; 
+  }
+
+  #section-head { /* this can all be removed after launch */
+    compat-only(background, none);
+    compat-only(border-bottom, none);
+    compat-only(border-top, none);
+    compat-only(color, inherit);
+    compat-only(text-shadow, none);
+    compat-only(box-shadow, none);
+    compat-only(padding, 0);
+    compat-only(margin-top, 0);
+
+    h1 {
+      heading-1();
+      compat-only(width, auto);
+      compat-only(float, none);
+      compat-only(margin, 0);
+
+      b {
+        heading-1();
+        compat-only(display, inline);
+        compat-only(margin-top, 0);
+        compat-only(color, inherit);
+      }
+    }
+  }
+}
+
+
