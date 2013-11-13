@@ -49,13 +49,9 @@ p {
   slider();
 }
 
-.seach-results-container {
+.search-results-container {
   @extend .grid-padding;
-  padding-left: 0;
-  padding-right: 0;
-
   h3 {
-    bidi-style(margin-left, grid-spacing, margin-right, 0);
     margin-bottom: grid-spacing;
   }
 }
@@ -64,7 +60,7 @@ p {
   reverse-link-decoration();
 
   .column-1 {
-    bidi-value(text-align, right, left);
+    text-align: center;
     color: link-color;
   }
 
@@ -206,13 +202,27 @@ p {
   }
 }
 
+/* we're hiding the last column */
 .search-results-no-demo {
   .result-list {
     .column-strip {
       display: none;
     }
     .result-list-item {
-      @extend .column-7;
+      @extend .column-11;
     }
+  }
+}
+
+
+
+/* mobile media page */
+@media media-query-mobile {
+  .result-list .column-1 {
+    display: none;
+  }
+
+  .search-results-topics {
+    margin-top: grid-spacing;
   }
 }

@@ -23,10 +23,12 @@
         {% if user.is_superuser %}Score: <span title="explanation: {{ doc.explanation }}">{{ doc.score }}</span>{% endif%}
         </p>
       </div>
+      {# Hiding until search has this capability #}{#
       <div class="column-strip result-list-link">
         <a href=""><i aria-hidden="true" class="icon-code"></i>{{ _('Code Sample') }}</a>
         <a href=""><i aria-hidden="true" class="icon-play-circle"></i>{{ _('Demo Sample') }}</a>
       </div>
+      #}
     </div>
   </li>
  {% endmacro %}
@@ -93,7 +95,7 @@
       </div>
 
       {% if count %}
-      <div class="search-pane seach-results-container">
+      <div class="search-pane search-results-container">
         <h3><i aria-hidden="true" class="icon-copy"></i>{{ _('Docs') }}</h3>
 
         <ul class="result-list">
