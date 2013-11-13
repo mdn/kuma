@@ -1,5 +1,12 @@
 {% extends "base.html" %}
 
+{% block bodyclass %}profile-api-page{% endblock %}
+
+{% block site_css %}
+    {{ super() }}
+    {% if waffle.flag('redesign') %}{{ css('redesign-profile') }}{% endif %}
+{% endblock %}
+
 {% block content %}
 <header id="section-head">
 <div class="wrap">
