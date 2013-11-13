@@ -105,11 +105,11 @@
 {%- endmacro %}
 
 {% macro get_document_subnav(html) %}
-  <div class="zone-subnav-container">
+  <nav class="zone-subnav-container" role="navigation">
     <div class="subnav" id="Subnav">
       {{ html|safe }}
     </div>
-  </div>&nbsp;
+  </nav>&nbsp;
 {%- endmacro %}
 
 {% macro get_document_quick_links(html) %}
