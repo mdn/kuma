@@ -166,6 +166,7 @@
 
           {% if tags|length %}
           <!-- tags if present -->
+          <h2 class="offscreen">{{ _('Document Tags') }}</h2>
           <div class="tag-attach-list tags">
             <i class="icon-tags"></i>
             <ul class="tag-list">{% for tag in tags %}<li><a href="{{url('wiki.tag', tag.name)}}">{{ tag.name }}</a></li>{% endfor %}</ul>
