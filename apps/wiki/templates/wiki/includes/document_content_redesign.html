@@ -120,6 +120,22 @@
 
     <h1>{{ document.title }}</h1>
 
+     {% if waffle.flag('offline_notice') %}
+      <div class="offline-notice">
+        <a href="javascript:;" id="offline-notice-link"><i class="icon-book"></i>{{ _('Read content offline') }}</a>
+      </div>
+
+      <div id="offline-dialog-content" title="{{ _('Read MDN Offline') }}">
+        <p>{{ _('Did you know that you can read content offline by using one of these tools?  If you would like to read offline MDN content in another format, let us know by commenting on <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=665750" data-title="Bug 665750">Bug 665750</a>.') }}</p>
+        <a href="http://kapeli.com/dash?ref=mdn" class="offline-dialog-mac" data-title="Dash App">
+          <img src="{{ request.build_absolute_uri('/media/img/dash-app.png') }}" alt="Dash App" />
+        </a>
+        <a href="http://zealdocs.org" target="_blank" class="offline-dialog-others" data-title="Zeal">
+          <i class="icon-book" style="font-size: 160px;"></i>
+        </a>
+      </div>
+    {% endif %}
+
     {% if redirected_from %}
     <div class="redirected-from" id="redirected-from">
       <p>{{ _('Redirected from <a href="{href}">{title}</a>')|fe(href=redirected_from.get_absolute_url()|urlparams(redirect='no'), title=redirected_from.title) }}</p>
