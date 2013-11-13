@@ -17,7 +17,7 @@
     <div class="column-container">
       <div class="column-1"><i class="icon-file-text-alt"></i></div>
       <div class="column-5 result-list-item">
-        <h4 class="larger" title=""><a href="{{ doc.url }}">{{ doc.title }}</a></h4>
+        <h4><a href="{{ doc.url }}">{{ doc.title }}</a></h4>
         <p>{{ doc.excerpt|safe }}</p>
         <p class="search-meta"><a href="{{ doc.url }}">{{ doc.url|replace('https://', '') }}</a>
         {% if user.is_superuser %}Score: <span title="explanation: {{ doc.explanation }}">{{ doc.score }}</span>{% endif%}
@@ -34,7 +34,10 @@
 
  {% block content %}
 
+ <h1 class="offscreen">{{ _('MDN Site Search') }}</h1>
+
   <div class="results-search-form">
+    <h2 class="offscreen">{{ _('Search') }}</h2>
     <form action="{{ url('search') }}" method="get" role="search">
       <label for="search-q" class="offscreen">{{ _('Search') }}</label>
       <input type="search" name="q" id="search-q" placeholder="{{ _('Search the docs') }}" value="{{ query }}" {% if not query %}autofocus{% endif %} />
