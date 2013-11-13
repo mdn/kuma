@@ -68,6 +68,15 @@ p {
     color: link-color;
   }
 
+  h4 {
+    @extend .larger
+  }
+
+  h4, {selector-icon} { /* bug #938074 */
+    line-height: 30px;
+    margin-bottom: 0;
+  }
+
   p {
     margin-bottom: 0;
     font-style: italic;
