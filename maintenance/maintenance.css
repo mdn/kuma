@@ -1,0 +1,29 @@
+.maintenance .logo {
+  margin: 10px 0;
+}
+
+.maintenance p, .maintenance ul {
+  margin: 20px 0;
+}
+
+.maintenance a {
+  text-decoration: underline;
+}
+
+.maintenance body, .maintenance #content {
+  min-height: 0;
+}
+
+.maintenance #content {
+  background-color: #fff;
+}
+
+.maintenance ul {
+  list-style-type: disc;
+  list-style-position: inside;
+}
+
+#disclaimer {
+  font-size: .85em;
+  margin-top: -15px;
+}
