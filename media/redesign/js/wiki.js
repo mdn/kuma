@@ -32,7 +32,7 @@
     var $quickLinks = $('#quick-links');
     setupTogglers($quickLinks.find('> ul > li, > ol > li'));
     $quickLinks.find('.toggleable').mozTogglers();
-    
+
     var $columnContainer = $('#wiki-column-container');
     var $quickLinksControl = $('#wiki-controls .quick-links');
 
@@ -57,26 +57,26 @@
       }
     });
   })();
-  
+
   /*
     Set up the zone subnav accordion
   */
   $('.zone-subnav-container').each(function() {
     var $subnavList = $(this).find('.subnav > ol');
     if(!$subnavList.length) return; // Exit if the subnav isn't set up properly
-    
+
     // Set the list items as togglers where needed
     setupTogglers($subnavList.find('li'));
-    
+
     // Make them toggleable!
     $subnavList.find('.toggleable').mozTogglers();
-    
+
     // Try to find the current page in the list, if found, open it
     var $selected = $subnavList.find('a[href$="' + document.location.pathname + '"]');
     $selected.each(function() {
       $(this).parents('.toggleable').find('.toggler').trigger('click');
     }).parent().addClass('current');
-    
+
     // Mark this is an accordion so the togglers open/close properly
     $subnavList.addClass('accordion');
   });
@@ -88,21 +88,21 @@
     e.preventDefault();
     $(this).closest('form').submit();
   });
-  
+
   // Utility method for the togglers
   function setupTogglers($elements) {
     $elements.each(function() {
       var $li = $(this);
       var $sublist = $li.find('> ul, > ol');
-      
+
       if($sublist.length) {
         $li.addClass('toggleable closed');
-        $li.find('> a').addClass('toggler').prepend('<i class="icon-caret-up"></i>');
+        $li.find('> a').addClass('toggler').prepend('<i aria-hidden="true" class="icon-caret-up"></i>');
         $sublist.addClass('toggle-container');
       }
     });
   }
-  
+
   /*
     Set up the scrolling TOC effect
   */
@@ -113,18 +113,18 @@
       var $toggler = $toc.find('> .toggler');
       var fixedClass = 'fixed';
       var $wikiRight = $('#wiki-right');
-      
+
       var resizeFn = debounce(function(e) {
         // Set forth the pinned or static positioning of the table of contents
         var scroll = window.scrollY;
         var maxHeight = window.innerHeight - parseInt($toc.css('padding-top'), 10) - parseInt($toc.css('padding-bottom'), 10);
-        
+
         if(scroll > tocOffset && $toggler.css('pointer-events') == 'none') {
           $toc.css({
             width: $toc.css('width'),
             maxHeight: maxHeight
           });
-          
+
           if(!$toc.hasClass(fixedClass)){
             $toc.addClass(fixedClass);
           }
@@ -136,7 +136,7 @@
           });
           $toc.removeClass(fixedClass);
         }
-        
+
         // Should the TOC be one-column (auto-closed) or sidebar'd
         if(!e || e.type == 'resize') {
           if($toggler.css('pointer-events') == 'auto'  || $toggler.find('i').css('display') != 'none') { /* icon check is for old IEs that don't support pointer-events */
@@ -149,13 +149,13 @@
           }
         }
       }, 10);
-      
+
       // Set it forth!
       resizeFn();
       $(window).on('scroll resize', resizeFn);
     }
   })();
-  
+
   function debounce(func, wait, immediate) {
     var timeout;
     return function() {
@@ -170,5 +170,5 @@
       if (callNow) func.apply(context, args);
     };
   };
-  
+
 })(jQuery);

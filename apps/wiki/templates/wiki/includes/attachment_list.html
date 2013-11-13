@@ -3,17 +3,17 @@
 <section id="page-attachments">
 
   {% if waffle.flag('redesign') %}
-    <h3><i class="icon-paper-clip"></i>{{ _('Attachments') }}</h3>
+    <h3><i aria-hidden="true" class="icon-paper-clip"></i>{{ _('Attachments') }}</h3>
   {% else %}
-    <h2><i class="icon-paper-clip"></i>{{ _('Attachments') }} <bdi>(<span id="page-attachments-count">{{ attachment_data | length}}</span>)</bdi></h2>
+    <h2><i aria-hidden="true" class="icon-paper-clip"></i>{{ _('Attachments') }} <bdi>(<span id="page-attachments-count">{{ attachment_data | length}}</span>)</bdi></h2>
   {% endif %}
 
   {% if show_attach_button and attachment_form %}
   <p class="add">
     {% if waffle.flag('redesign') %}
-      <a href="javascript:;" id="page-attachments-button" class="button neutral">Attach Files<i class="icon-paper-clip"></i></a>
+      <a href="javascript:;" id="page-attachments-button" class="button neutral">Attach Files<i aria-hidden="true" class="icon-paper-clip"></i></a>
     {% else %}
-      <a href="javascript:;" id="page-attachments-button"><i class="icon-paper-clip"></i>Attach Files</a>
+      <a href="javascript:;" id="page-attachments-button"><i aria-hidden="true" class="icon-paper-clip"></i>Attach Files</a>
     {% endif %}
   </p>
   {% endif %}

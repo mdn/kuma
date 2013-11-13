@@ -15,7 +15,7 @@
 {% macro doc_block(doc, index) -%}
   <li class="result-{{ index }}">
     <div class="column-container">
-      <div class="column-1"><i class="icon-file-text-alt"></i></div>
+      <div class="column-1"><i aria-hidden="true" class="icon-file-text-alt"></i></div>
       <div class="column-5 result-list-item">
         <h4 class="larger" title=""><a href="{{ doc.url }}">{{ doc.title }}</a></h4>
         <p>{{ doc.excerpt|safe }}</p>
@@ -24,8 +24,8 @@
         </p>
       </div>
       <div class="column-strip result-list-link">
-        <a href=""><i class="icon-code"></i>{{ _('Code Sample') }}</a>
-        <a href=""><i class="icon-play-circle"></i>{{ _('Demo Sample') }}</a>
+        <a href=""><i aria-hidden="true" class="icon-code"></i>{{ _('Code Sample') }}</a>
+        <a href=""><i aria-hidden="true" class="icon-play-circle"></i>{{ _('Demo Sample') }}</a>
       </div>
     </div>
   </li>
@@ -41,8 +41,8 @@
       <button type="submit" class="offscreen">{{ _('Search') }}</button>
     </form>
   </div>
-  
-  
+
+
  <div class="column-container">
     <!-- left results -->
     <div class="column-main">
@@ -91,7 +91,7 @@
 
       {% if count %}
       <div class="search-pane seach-results-container">
-        <h3><i class="icon-copy"></i>{{ _('Docs') }}</h3>
+        <h3><i aria-hidden="true" class="icon-copy"></i>{{ _('Docs') }}</h3>
 
         <ul class="result-list">
           {% for doc in documents %}
@@ -124,17 +124,17 @@
     <!-- right topics -->
     <div class="column-strip search-results-topics">
       {% for filter_group in filters %}
-      <h3><i class="icon-th-list"></i>{{ filter_group.name }}</h3>
+      <h3><i aria-hidden="true" class="icon-th-list"></i>{{ filter_group.name }}</h3>
       <ul>
         {% for filter in filter_group.options %}
         <li>
         {% if filter.count == 0 %}
-        <span class="inactive"><i class="icon-check-empty"></i> {{ filter.name }}</span>
+        <span class="inactive"><i aria-hidden="true" class="icon-check-empty"></i> {{ filter.name }}</span>
         {% else %}
           {% if filter.active %}
-            <a href="{{ filter.urls.inactive }}" data-count="{{ filter.count }}" class="checked"><i class="icon-check"></i>{{ filter.name }}</a>
+            <a href="{{ filter.urls.inactive }}" data-count="{{ filter.count }}" class="checked"><i aria-hidden="true" class="icon-check"></i>{{ filter.name }}</a>
           {% else %}
-            <a href="{{ filter.urls.active }}" data-count="{{ filter.count }}"><i class="icon-check-empty"></i>{{ filter.name }}</a>
+            <a href="{{ filter.urls.active }}" data-count="{{ filter.count }}"><i aria-hidden="true" class="icon-check-empty"></i>{{ filter.name }}</a>
           {% endif %}
         {% endif %}
         </li>

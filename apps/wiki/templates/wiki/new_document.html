@@ -20,11 +20,11 @@
       {{ csrf() }}
       <fieldset>
       <header id="article-head">
-        
+
         {% if waffle.flag('redesign') %}
           {% include 'wiki/includes/page_buttons.html' %}
         {% endif %}
-        
+
         {{ document_form.category|safe }}
 
         <div class="title">
@@ -35,7 +35,7 @@
           <li><label>{{_('Title:')}}</label> {{ document_form.title | safe }}</li>
           <li><label><dfn title="{{_('URL segment that identifies the page')}}">{{_('Slug:')}}</dfn></label> {{ document_form.slug | safe }}</li>
           {% if parent_slug and not is_template %}
-            <li><label>{{_('Parent:')}}</label> 
+            <li><label>{{_('Parent:')}}</label>
                 <a href="{{ parent_path }}" class="metadataDisplay" target="_blank">{{ parent_slug }}</a></li>
           {% endif %}
           {% if is_template %}
@@ -46,7 +46,7 @@
         </ul>
         <input type="hidden" name="parent_topic" value="{{ parent_id | safe }}" />
         <div class="hidden" id="parentSlugPrefix">{{ parent_slug | safe }}</div>
-        
+
         {% if not waffle.flag('redesign') %}
           {% include 'wiki/includes/page_buttons.html' %}
         {% endif %}
@@ -68,20 +68,20 @@
         <section id="page-tags" class="page-tags">
 
           {% if waffle.flag('redesign') %}
-            <h3><i class="icon-tags"></i>{{ _('Tags') }}</h3>
+            <h3><i aria-hidden="true" class="icon-tags"></i>{{ _('Tags') }}</h3>
           {% else %}
-            <h2><i class="icon-tags"></i>{{ _('Tags') }}</h2>
+            <h2><i aria-hidden="true" class="icon-tags"></i>{{ _('Tags') }}</h2>
           {% endif %}
 
           <input id="tagit_tags" type="text" name="tags" value="{% for tag in initial_tags %}{{ tag.name }},{% endfor %}" maxlength="255" />
         </section>
       </section>
-      
+
     </fieldset>
     </form>
 
     {% include 'wiki/includes/attachment_list.html' %}
-    
+
     </article>
     </div>
    </div>

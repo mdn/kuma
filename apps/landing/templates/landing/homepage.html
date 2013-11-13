@@ -37,7 +37,7 @@
     <h2 class="offscreen">{{ _('Web Technologies') }}</h2>
     <div class="column-container">
       <div class="column-home-features">
-        <h3><i class="icon-file-text-alt"></i><span>{{ _('Web<br />Platform') }}</span></h3>
+        <h3><i aria-hidden="true" class="icon-file-text-alt"></i><span>{{ _('Web<br />Platform') }}</span></h3>
         <ul>
           <li><a href="{{ devmo_url('Web/Reference/API') }}">{{ _('Web APIs &amp; DOM') }}</a></li>
           <li><a href="{{ devmo_url('Web/HTML') }}">{{ _('HTML') }}</a></li>
@@ -47,7 +47,7 @@
         </ul>
       </div>
       <div class="column-home-features">
-        <h3 class="zones"><i class="icon-suitcase"></i><span>{{ _('Zones') }}</span></h3>
+        <h3 class="zones"><i aria-hidden="true" class="icon-suitcase"></i><span>{{ _('Zones') }}</span></h3>
         <ul>
         <li><a href="{{ devmo_url('Web/Apps') }}">{{ _('App Center') }}</a></li>
         <li><a href="{{ devmo_url('Mozilla/Firefox_OS') }}">{{ _('Firefox OS') }}</a></li>
@@ -55,7 +55,7 @@
         </ul>
       </div>
       <div class="column-home-features">
-        <h3><i class="icon-wrench"></i><span>{{ _('Developer<br />Tools') }}</span></h3>
+        <h3><i aria-hidden="true" class="icon-wrench"></i><span>{{ _('Developer<br />Tools') }}</span></h3>
         <ul>
         <li><a href="{{ devmo_url('Tools/Firefox_OS_Simulator') }}">{{ _('Firefox OS Simulator') }}</a></li>
         <li><a href="{{ devmo_url('Tools/Page_Inspector') }}">{{ _('Page Inspector') }}</a></li>
@@ -65,8 +65,8 @@
         </ul>
       </div>
       <div class="column-home-features">
-        {# <h3><i class="icon-certificate"></i><span>{{ _('Developer<br />Program') }}</span></h3> #}
-        <h3><i class="icon-beaker"></i><span>{{ _('MDN<br />Beta') }}</span></h3>
+        {# <h3><i aria-hidden="true" class="icon-certificate"></i><span>{{ _('Developer<br />Program') }}</span></h3> #}
+        <h3><i aria-hidden="true" class="icon-beaker"></i><span>{{ _('MDN<br />Beta') }}</span></h3>
         <ul>
         <li>{{ _('Welcome to the MDN Beta. ') }}</li>
         <li><a href="
@@ -97,7 +97,7 @@ https://wiki.mozilla.org/MDN/Development/Redesign/Testing">{{ _('Learn how you c
 <!-- hacks area -->
 <div class="home-hacks"><div class="column-container center">
   <div class="column-hacks">
-    <h2><i class="icon-star"></i> {{ _('Hacks Blog <a href="http://hacks.mozilla.org">read more at hacks.mozilla.org <i class="icon-arrow-right"></i></a>') }}</h2>
+    <h2><i aria-hidden="true" class="icon-star"></i> {{ _('Hacks Blog <a href="http://hacks.mozilla.org">read more at hacks.mozilla.org <i aria-hidden="true" class="icon-arrow-right"></i></a>') }}</h2>
     {{ newsfeed(updates, section_headers=True) }}
   </div>
   <div class="column-involved">
@@ -121,11 +121,11 @@ https://wiki.mozilla.org/MDN/Development/Redesign/Testing">{{ _('Learn how you c
   </div>
 {% endif %}
 
-<h2><i class="icon-magic blue"></i> {{ _('See & submit demos') }} 
+<h2><i aria-hidden="true" class="icon-magic blue"></i> {{ _('See & submit demos') }}
   {% if not waffle.flag('derby_closed') %}
-    <a href="{{ url('demos_devderby_landing') }}">{{ _('MDN Dev Derby <i class="icon-arrow-right"></i>') }}</a>
+    <a href="{{ url('demos_devderby_landing') }}">{{ _('MDN Dev Derby <i aria-hidden="true" class="icon-arrow-right"></i>') }}</a>
   {% else %}
-    <a href="{{ url('demos') }}">{{ _('MDN Demo Studio <i class="icon-arrow-right"></i>') }}</a>
+    <a href="{{ url('demos') }}">{{ _('MDN Demo Studio <i aria-hidden="true" class="icon-arrow-right"></i>') }}</a>
   {% endif %}
 </h2>
 <ul>
@@ -139,7 +139,7 @@ https://wiki.mozilla.org/MDN/Development/Redesign/Testing">{{ _('Learn how you c
 
 <!-- contributions section -->
 <div class="home-contribute"><div class="center">
-  <h2><i class="icon-smile"></i> {{ _('Help improve MDN') }}</h2>
+  <h2><i aria-hidden="true" class="icon-smile"></i> {{ _('Help improve MDN') }}</h2>
 
   <div class="column-container">
     <div class="column-half">
@@ -166,7 +166,7 @@ https://wiki.mozilla.org/MDN/Development/Redesign/Testing">{{ _('Learn how you c
   </div>
 
 
-  {# Putting off for after launch 
+  {# Putting off for after launch
   <div class="column-container home-contribute-recent">
     <div class="column-half">
       <h3>{{ _('Recent Edits') }}</h3>

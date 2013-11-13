@@ -23,7 +23,7 @@
       <div class="title">
         <h1>{{ _('<span class="action">Translating</span> <em>{title}</em>')|fe(title=parent.title) }}</h1>
       </div>
-      
+
       <div class="change-locale">
         {{ _('Translating article to {locale}' )|f(locale=language) }}.
         <a id="change-locale-link" class="toggle" href="#change-locale">{{ _('Change') }}</a>
@@ -35,9 +35,9 @@
         {% endfor %}
         </ul>
       </div>
-      
+
     {% include 'wiki/includes/page_buttons.html' %}
-          
+
     {% if not based_on.reviewed or not based_on.is_approved %}
       <p class="trans-note">{{ _('You are translating an unreviewed or rejected English document.') }}</p>
     {% endif %}
@@ -82,7 +82,7 @@
             {# TODO: 'change revisions' link and modal selector #}
           {% endif %}
         {% endif %}
-        
+
         <div id="content-fields">
           <article class="approved">
             <header>
@@ -94,7 +94,7 @@
 
             <section class="page-meta">
             <section class="page-tags">
-              <h3><i class="icon-tag"></i>{{ _('Tags') }}</h3>
+              <h3><i aria-hidden="true" class="icon-tag"></i>{{ _('Tags') }}</h3>
                 {% set parent_tags = parent.tags.all() %}
               <div id="deki-page-tags">
                 {% if parent_tags | length %}
@@ -114,7 +114,7 @@
 
 
           </article>
-          
+
           <article class="localized">
             <header>
               <h3>{{ _('{locale} translation:')|f(locale=language) }}</h3>
@@ -126,12 +126,12 @@
         </div>
         {{ revision_form.hidden_fields()|join|safe }}
 
-        
+
         <div class="approved">&nbsp;</div>
         <div class="localized">
           <section class="page-meta">
               <section id="page-tags" class="page-tags">
-                <h2><i class="icon-tag"></i>{{ _('Tags') }}</h2>
+                <h2><i aria-hidden="true" class="icon-tag"></i>{{ _('Tags') }}</h2>
                 {% if document.tags %}
                   {% set tags = document.tags.all() %}
                   <input id="tagit_tags" type="text" name="tags" value="{% for tag in tags %}{{ tag.name }},{% endfor %}" maxlength="255" />
@@ -154,7 +154,7 @@
     <div id="preview"></div>
   </div>
 </form>
-  
+
     {% include 'wiki/includes/attachment_list.html' %}
 
     </div>
@@ -164,10 +164,10 @@
 
 {% block js %}
   {% include 'wiki/includes/tag_suggestions.html' %}
-  
+
   <script src="{{ MEDIA_URL }}js/libs/ckeditor/ckeditor.js?build={{ BUILD_ID_JS }}"></script>
   <script src="{{ MEDIA_URL }}js/libs/ckeditor/adapters/jquery.js?build={{ BUILD_ID_JS }}"></script>
-  <script src="{{ MEDIA_URL }}redesign/js/wiki-editor.js?build={{ BUILD_ID_JS }}"></script> 
-  
+  <script src="{{ MEDIA_URL }}redesign/js/wiki-editor.js?build={{ BUILD_ID_JS }}"></script>
+
   {{ js('wiki-edit') }}
 {% endblock %}

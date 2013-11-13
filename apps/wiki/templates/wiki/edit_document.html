@@ -86,7 +86,7 @@
 
         {% if waffle.flag('external_signup') %}
         <div class="notice" style="margin-bottom:30px;"><p>
-          Do you have docs you want to automatically add to MDN from an external source? 
+          Do you have docs you want to automatically add to MDN from an external source?
           <a href="{{ url('wiki.external_signup') }}">Let us know!</a>
         </p></div>
         {% endif %}
@@ -126,7 +126,7 @@
           {% endif %}
 
         </header>
-    
+
         {% if revision_form %}
             {% if document.is_template %}
               {{ revision_form.content | safe }}
@@ -143,7 +143,7 @@
             <section class="page-meta">
               {% set tags = document.tags.all() %}
               <section id="page-tags" class="page-tags">
-                <h2><i class="icon-tags"></i>{{ _('Tags') }}</h2>
+                <h2><i aria-hidden="true" class="icon-tags"></i>{{ _('Tags') }}</h2>
                 <input id="tagit_tags" type="text" name="tags" value="{% for tag in tags %}{{ tag.name }},{% endfor %}" maxlength="255" />
               </section>
             </section>
@@ -164,7 +164,7 @@
     <script type="text/javascript">
       documentInfo = {{ docInfo|safe }};
     </script>
-    
+
   </article>
     </div>
    </div>
