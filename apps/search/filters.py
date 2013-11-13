@@ -54,6 +54,43 @@ class SearchQueryBackend(BaseFilterBackend):
         return queryset
 
 
+class AdvancedSearchQueryBackend(BaseFilterBackend):
+    """
+    A django-rest-framework filter backend that filters the given queryset
+    based on additional query parameters that correspond to advanced search
+    indexes.
+    """
+    search_params = (
+        'kumascript_macros',
+        'css_classnames',
+        'html_attributes',
+    )
+    search_operations = [
+        ('%s__match', 10.0),
+        ('%s__prefix', 5.0),
+    ]
+
+    def filter_queryset(self, request, queryset, view):
+        queries = {}
+        boosts = {}
+
+        for name in self.search_params:
+
+            search_param = request.QUERY_PARAMS.get(name, None)
+            if not search_param:
+                continue
+
+            for operation_tmpl, boost in self.search_operations:
+                operation = operation_tmpl % name
+                queries[operation] = search_param.lower()
+                boosts[operation] = boost
+
+        queryset = (queryset.query(Q(should=True, **queries))
+                            .boost(**boosts))
+
+        return queryset
+
+
 class HighlightFilterBackend(BaseFilterBackend):
     """
     A django-rest-framework filter backend that applies highlighting

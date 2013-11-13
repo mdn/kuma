@@ -196,7 +196,7 @@ class DocumentType(SearchMappingType, Indexable):
             'locale': obj.locale,
             'modified': obj.modified,
             'content': strip_tags(obj.rendered_html),
-            'tags': list(obj.tags.values_list('name', flat=True))
+            'tags': list(obj.tags.values_list('name', flat=True)),
             'kumascript_macros': obj.extract_kumascript_macro_names(),
             'css_classnames': obj.extract_css_classnames(),
             'html_attributes': obj.extract_html_attributes(),

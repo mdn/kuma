@@ -63,13 +63,13 @@
           {% if locale_native %}
             {% if query %}
               {% trans count=count, locale_native=locale_native %}
-                {{ count }} documents found for "{{ query }}" in {{ locale_native }}.
+                {{ count }} document found for "{{ query }}" in {{ locale_native }}.
               {% pluralize %}
                 {{ count }} documents found for "{{ query }}" in {{ locale_native }}.
               {% endtrans %}
             {% else %}
               {% trans count=count, locale_native=locale_native %}
-                {{ count }} documents found in {{ locale_native }}.
+                {{ count }} document found in {{ locale_native }}.
               {% pluralize %}
                 {{ count }} documents found in {{ locale_native }}.
               {% endtrans %}
@@ -77,13 +77,13 @@
           {% else %}
             {% if query %}
               {% trans count=count %}
-                {{ count }} documents found for "{{ query }}".
+                {{ count }} document found for "{{ query }}".
               {% pluralize %}
                 {{ count }} documents found for "{{ query }}".
               {% endtrans %}
             {% else %}
               {% trans count=count %}
-                {{ count }} documents found.
+                {{ count }} document found.
               {% pluralize %}
                 {{ count }} documents found.
               {% endtrans %}

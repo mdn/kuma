@@ -196,7 +196,7 @@ def extract_css_classnames(content):
 
 
 def extract_html_attributes(content):
-    """Extract the unique set of class names used in the content"""
+    """Extract the unique set of HTML attributes used in the content"""
     try:
         attribs = set()
         for token in parse(content).stream:
