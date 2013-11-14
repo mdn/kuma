@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr" id="developer-mozilla-org" xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:og="http://ogp.me/ns#" class="redesign maintenance">
+
+  <head>
+    <title>Mozilla Developer Network</title>
+
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-site-verification" content="Phj8dHc2oKwic3FGPsKIhdOBk_1wnCTnKwjcjiLgJPc" />
+    <meta name="google-site-verification" content="TH9rA27HbfjO_XqYWTIPrW1E7E7Dtgsh7ULzHi3UTVA" />
+    <!--[if IE]>
+    <meta http-equiv="imagetoolbar" content="no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <![endif]-->
+
+    <link rel="shortcut icon" href="media/img/favicon.ico">
+    <link rel="copyright" href="#copyright">
+
+    <link rel="stylesheet" href="//mozorg.cdn.mozilla.net/media/css/tabzilla-min.css" />
+    <link rel="stylesheet" type="text/css" media="screen,projection,tv" href="media/css/redesign-main-min.css" />
+    <link rel="stylesheet" type="text/css" media="screen,projection,tv" href="media/css/redesign-home-min.css" />
+    <link rel="stylesheet" type="text/css" href="maintenance.css"/>
+    <!--[if !IE 6]><!--><link rel="stylesheet" media="screen,projection,tv" href="media/css/mdn-min.css" /><!--<![endif]-->
+    <!--[if IE]><link rel="stylesheet" type="text/css" media="all" href="media/css/ie.css" /><![endif]-->
+    <!--[if lte IE 6]><link rel="stylesheet" type="text/css" media="all" href="media/css/ie6.css" /><![endif]-->
+    <!--[if lte IE 7]><link rel="stylesheet" type="text/css" media="all" href="media/css/ie7.css" /><![endif]-->
+
+    <script type="text/javascript">
+      // http://cfsimplicity.com/61/removing-analytics-clutter-from-campaign-urls
+      var removeUtms  =   function(){
+          var l = window.location;
+          if( l.hash.indexOf( "utm" ) != -1 ){
+              if( window.history.replaceState ){
+                  history.replaceState({},'', l.pathname + l.search);
+              } else {
+                  l.hash = "";
+              }
+          };
+      };
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-36116321-5'],
+                ['_setAllowAnchor', true],
+                  ['_setCustomVar', 7, 'Signed-In', 'Yes', 1],
+                    ['_setCustomVar', 6, 'Redesign', 'Yes', 1],
+                  ['_trackPageview']);
+      _gaq.push( removeUtms );
+
+      (function(a, d) {
+        var ga = d.createElement(a); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == d.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = d.getElementsByTagName(a)[0]; s.parentNode.insertBefore(ga, s);
+      })('script', document);
+    </script>
+    <!--[if IE]><script src="media/js/libs/html5.js"></script><![endif]-->
+  </head>
+
+  <body id="home" class="html-ltr">
+    <!-- Header -->
+    <header id="main-header"><div class="center">
+      <a href="//www.mozilla.org/" id="tabzilla">mozilla</a>
+      <ul class="offscreen">
+        <li><a href="#language">Select language</a></li>
+        <li><a href="#q" id="skip-search">Skip to search</a></li>
+        <li><a href="#content">Skip to main content</a></li>
+      </ul>
+      <a href="/" class="logo">Mozilla Developer Network</a>
+    </div></header>
+
+    <!-- Content will go here -->
+    <main id="content" role="main"><div class="center">
+      <div class="column-container center">
+        <p>The Mozilla Developer Network (MDN) is currently offline for maintenance, so that we can improve service. Select portions of MDN's content are available from these value-added third party services:</p>
+        <ul>
+          <li><a href="http://dochub.io/">DocHub</a>: An online tool for browsing copies of various reference documentation, including MDN's.</li>
+          <li><a href="http://kapeli.com/dash?ref=mdn">Dash</a>: A Mac application for browsing a wide variety of documentation, including MDN.</li>
+          <li><a href="http://zealdocs.org/?ref=mdn">Zeal</a>: A Windows and Linux application for browsing assorted documentation, including MDN.</li>
+        </ul>
+        <p id="disclaimer"><em>Note: Mozilla is not responsible for the content of any of these sites; we suggest them only as a service to you, and not as a recommendation or sponsorship thereof.</em></p>
+        <p>MDN should return to normal operations by 22:00 UTC.</p>
+      </div>
+    </div></main>
+
+    <script src="//mozorg.cdn.mozilla.net/tabzilla/tabzilla.js" async=""></script>
+    <!--[if lte IE 8]><script src="media/redesign/js/libs/selectivizr-1.0.2/selectivizr-build.js"></script><div id="feature-test-old-ie"></div><![endif]-->
+  </body>
+
+</html>
