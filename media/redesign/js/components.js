@@ -37,14 +37,6 @@
       // Find a submenu.  If one doesn't exist, no need to go further
       var $submenu = (settings.submenu || $li.find('.submenu'));
 
-      // add some ARIA
-      if($submenu.length) {
-        $self.attr({
-          'aria-expanded': 'false',
-          'aria-haspopup': 'true'
-        });
-      }
-
       // Add a mouseenter / focus event to get the showing of the submenu in motion
       $self.on('mouseenter focus', function() {
         // If this is a fake focus set by us, ignore this
@@ -111,7 +103,6 @@
         // Show my submenu after the showDelay
         showTimeout = setTimeout(function() {
           $submenu.addClass('open').attr('aria-hidden', 'false').fadeIn();
-          $.fn.mozMenu.$openMenu.attr('aria-expanded', 'true');
 
           // Find the first link for improved usability
           if(settings.focusOnOpen) {
@@ -137,9 +128,7 @@
 
     // Closes a given submenu
     function closeSubmenu($sub) {
-      var $menu = $.fn.mozMenu.$openMenu;
       closeTimeout = setTimeout(function() {
-        $menu && $menu.attr('aria-expanded', 'false');
         $sub && $sub.removeClass('open').attr('aria-hidden', 'true').fadeOut();
         settings.onClose();
       }, settings.hideDelay);
@@ -198,7 +187,7 @@
     }
 
   };
-  
+
   /*
     Plugin to listen for special keyboard keys and will fire actions based on them
   */
@@ -206,7 +195,7 @@
     var settings = $.extend({
       items: null
     }, options);
-    
+
     $(this).each(function() {
       var $self = $(this);
       var pieces = getTogglerComponents($self);
