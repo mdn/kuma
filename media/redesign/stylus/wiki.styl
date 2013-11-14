@@ -331,8 +331,13 @@ article {
   }
 }
 
-div.bug > *:last-child, div.warning > *:last-child {
-  compat-important(padding-left, inherit);
+div.bug, div.warning, div.overheadIndicator {
+  prevent-last-child-spacing('*', margin-bottom);
+  prevent-last-child-spacing('*', padding-bottom);
+
+  & > *:last-child {
+    compat-important(padding-left, inherit);
+  }
 }
 
 .warning {
