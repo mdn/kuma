@@ -12,6 +12,15 @@ class SearchQueryField(serializers.Field):
         return request.QUERY_PARAMS.get(self.search_param, None)
 
 
+class TopicQueryField(serializers.Field):
+    """
+    Field that returns a link to the next page in paginated results.
+    """
+    def to_native(self, value):
+        view = self.context.get('view')
+        return view.current_topics
+
+
 class DocumentExcerptField(serializers.Field):
     """
     A serializer field that given a wiki DocumentType object returns

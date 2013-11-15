@@ -22,7 +22,6 @@ class SearchQueryBackend(BaseFilterBackend):
     queryset based on the search query found in the current request's
     query parameters.
     """
-    search_param = 'q'
     search_operations = [
         ('title__match', 6.0),
         ('summary__match', 2.0),
@@ -32,13 +31,12 @@ class SearchQueryBackend(BaseFilterBackend):
     ]
 
     def filter_queryset(self, request, queryset, view):
-        search_param = request.QUERY_PARAMS.get(self.search_param, None)
 
-        if search_param:
+        if view.search_query:
             queries = {}
             boosts = {}
             for operation, boost in self.search_operations:
-                queries[operation] = search_param
+                queries[operation] = view.search_query
                 boosts[operation] = boost
             queryset = (queryset.query(Q(should=True, **queries))
                                 .boost(**boosts))
@@ -58,7 +56,7 @@ class HighlightFilterBackend(BaseFilterBackend):
         return queryset.highlight(*self.highlight_fields)
 
 
-class DatabaseFilterBackend(BaseFilterBackend):
+class SearchFilterBackend(BaseFilterBackend):
     """
     A django-rest-framework filter backend that filters the given
     queryset based on the filters stored in the database.

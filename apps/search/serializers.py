@@ -1,6 +1,6 @@
 from rest_framework import serializers, pagination
 
-from .fields import SearchQueryField, DocumentExcerptField
+from .fields import SearchQueryField, TopicQueryField, DocumentExcerptField
 from .models import Filter
 
 
@@ -26,6 +26,7 @@ class SearchSerializer(pagination.PaginationSerializer):
     results_field = 'documents'
 
     query = SearchQueryField(source='*')
+    topics = TopicQueryField(source='*')
     page = serializers.Field(source='number')
     pages = serializers.Field(source='paginator.num_pages')
     start = serializers.Field(source='start_index')
