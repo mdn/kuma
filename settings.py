@@ -610,6 +610,9 @@ MINIFY_BUNDLES = {
         'users': (
             'css/users.css',
         ),
+        'redesign-users': (
+            'redesign/css/users.css',
+        ),
         'tagit': (
             'css/jquery.tagit.css',
         ),

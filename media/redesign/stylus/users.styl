@@ -1,0 +1,29 @@
+@import 'vars'
+
+/*
+ * Users app CSS
+ */
+
+article.main {
+    form {
+        margin: (gutter-width * 1.5) 0 !important; /* Using !important to override the compat-important() call being made from .boxed. */
+
+        ul, li {
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+        }
+
+        button {
+            margin: 5px 0;
+        }
+    }
+}

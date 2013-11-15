@@ -1,7 +1,10 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "base.html" %}
-{% set styles = ('users',) %}
 {% set scripts = ('users',) %}
-
+{% if waffle.flag('redesign') %}
+  {% set styles = ('redesign-users',) %}
+{% else %}
+  {% set styles = ('users',) %}
+{% endif %}
 {% block breadcrumbs %}
 {% endblock %}
