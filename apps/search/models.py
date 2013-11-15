@@ -110,10 +110,10 @@ class DocumentType(SearchMappingType, Indexable):
                     'tokenizer': 'standard',
                     'char_filter': ['html_strip'],
                     'filter': [
-                        'standard',
-                        'kuma_word_delimiter',
                         'elision',
                         'lowercase',
+                        'kuma_word_delimiter',
+                        'standard',
                         'stop',
                         'snowball',
                     ],
@@ -122,10 +122,10 @@ class DocumentType(SearchMappingType, Indexable):
                     'type': 'custom',
                     'tokenizer': 'standard',
                     'filter': [
-                        'standard',
-                        'kuma_word_delimiter',
                         'elision',
                         'lowercase',
+                        'kuma_word_delimiter',
+                        'standard',
                         'snowball',
                     ],
                 }
