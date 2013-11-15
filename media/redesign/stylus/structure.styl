@@ -410,6 +410,41 @@ footer {
   }
 }
 
+/* small mobiles like Firefox OS */
+@media media-query-small-mobile {
+
+  #main-header {
+    .user-state {
+      position: relative;
+      right: auto;
+      top: auto;
+      float: none;
+      width: auto;
+      margin-top: 10px;
+    }
+
+    .logo {
+      margin: (grid-spacing / 2) 0;
+      float: none;
+    }
+  }
+
+  #main-nav {
+    > ul {
+      float: none;
+      text-align: left;
+
+      > li {
+        display: block;
+        width: auto;
+        padding-left: 0;
+        margin: 10px 0;
+      }
+    }
+  }
+}
+
+
 
 /* redesign beta notice */
 .redesign-beta-notice {
