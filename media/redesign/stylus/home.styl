@@ -32,7 +32,7 @@
     padding: first-content-top-padding 0;
   }
 
-  /* shared */
+  /* shared basic tag updates throughout the homepage */
   h2, h3 {
     > i {
       display: inline-block;
@@ -103,7 +103,7 @@
   }
 }
 
-/* masthead */
+/* homepage masthead (search, feature callouts) */
 .home-masthead {
 
   h1 {
@@ -129,6 +129,7 @@
   }
 }
 
+/* List of four feature columns within the masthead */
 .home-features {
   &, a {
     color: #fff !important;
@@ -158,7 +159,7 @@
   }
 }
 
-/* callouts */
+/* three colorful callouts */
 .column-callout  {
   @extend .column-4;
   position: relative;
@@ -230,7 +231,7 @@
   }
 }
 
-/* hacks */
+/* homepage hacks block of blog post summaries */
 .home-hacks {
   background: #fff;
 
@@ -442,7 +443,6 @@
     }
   }
 }
-
 
 /* right to left */
 #home.html-rtl {

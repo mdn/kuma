@@ -52,8 +52,85 @@ enable-toc-toggle() {
   }
 }
 
+/* the subnav and quick link column of the layout */
 #wiki-left {
   position: relative;
+}
+
+/* quick links */
+.quick-links {
+  @extend .smaller;
+  position: relative;
+  margin-bottom: grid-spacing;
+
+  .title {
+    margin-bottom: 0;
+    display: inline-block;
+  }
+
+  li {
+    position: relative;
+    padding-top: list-item-spacing;
+  }
+
+  li li {
+    bidi-style(padding-left, 20px, padding-right, 0);
+  }
+}
+
+.quick-links a, .quick-links .title, #quick-links-toggle {
+  bidi-style(padding-left, 20px, padding-right, 0);
+  color: text-color;
+  display: inline-block;
+}
+
+.quick-links a, .quick-links .title {
+  position: relative;
+}
+
+.quick-links .see-also {
+  background: light-background-color !important;
+  padding-left: 0;
+  margin-left: 0;
+  display: inline-block !important;
+  padding: 4px 20px;
+  width: 100%;
+  vendorize(box-sizing, border-box);
+}
+
+.quick-links {selector-icon}, #quick-links-toggle {selector-icon} {
+  bidi-style(left, -6px, right, auto);
+  font-size: 14px;
+  position: absolute;
+  top: 1px;
+
+  /* don't allow empty paragraphs by CKEditor */
+  p, div {
+    display: none;
+  }
+
+  reverse-link-decoration();
+}
+
+/* document review form stuff */
+.reviews {
+  set-message-base();
+  @extend .smaller;
+
+  background: #fbf8e9;
+  border-color: #f9f3d9;
+
+  p {
+    margin: 0;
+  }
+
+  li {
+    padding-top: list-item-spacing;
+  }
+
+  button {
+    compat-important(font-size, smaller-font-size);
+  }
 }
 
 /* wiki article display */
@@ -69,164 +146,13 @@ article {
   }
 }
 
+/* header and draft notices */
 .document-head {
   position: relative;
   clear: both;
 }
 
-.redirected-from {
-  @extend .smaller;
-  margin-top: -(grid-spacing);
-  font-style: italic;
-  opacity: 0.7;
-}
-
-.crumbs {
-  @extend .smaller;
-  margin-bottom: (2 * grid-spacing);
-
-  li {
-    bidi-style(margin-right, (grid-spacing / 2), margin-left, 0);
-    display: inline-block;
-  }
-
-  a {
-    display: block;
-
-    &:after {
-      bidi-style(margin-left, 4px, margin-right, 0, true);
-      bidi-style(content, '\f054', content, '\f053');
-      display: inline-block;
-      font-family: FontAwesome;
-      text-decoration: none;
-      color: #c1c2c4;
-      font-size: 70%;
-    }
-  }
-
-  reverse-link-decoration();
-}
-
-.page-buttons, #page-buttons {
-  bidi-value(float, right, left);
-  float: right;
-
-  text-align: right;
-  compat-only(width, auto);
-  compat-only(top, auto);
-
-  > li {
-    margin-left: (grid-spacing / 2);
-    display: inline-block;
-    position: relative;
-
-    a, button, input[type='submit'], input[type='button'] {
-      compat-important(font-size, smaller-font-size);
-      compat-only(font-family, site-font-family);
-      compat-only(letter-spacing, normal);
-
-      &.disabled {
-        opacity: 0.8;
-      }
-    }
-
-    {selector-icon} {
-      font-size: 16px;
-    }
-  }
-
-  .submenu {
-    component-submenu-method(160px, 1, button-background, button-shadow-color);
-    bidi-style(right, 0, left, auto);
-    top: 40px;
-    z-index: 3;
-    border-top: 1px solid button-shadow-color;
-
-    .submenu-column {
-      float: left;
-    }
-
-    &:before {
-      bidi-style(right, 10px, left, auto);
-      top: -18px;
-    }
-
-    &:after {
-      bidi-style(right, 10px, left, auto);
-      top: -20px;
-    }
-  }
-}
-
-
-.summary {
-  background: light-background-color;
-  font-weight: bold;
-  padding: grid-spacing;
-  margin-bottom: grid-spacing;
-
-  prevent-last-child-spacing(p, margin-bottom);
-}
-
-#page-attachments {
-  @extend .wiki-block;
-  compat-only(background, #fff);
-}
-
-#page-attachments-button {
-  compat-only(font-size, smaller-font-size);
-  compat-only(font-family, site-font-family);
-  compat-only(letter-spacing, normal);
-}
-
-.contributors {
-  @extend .smaller;
-  color: #777;
-}
-
-#wiki-right {
-  min-height: 1px; /* ensures that when TOC becomes fixed, the column has width */
-}
-
-#toc {
-  compat-only(margin-left, 0);
-  compat-only(font-size, base-font-size);
-  compat-only(margin-left, 0, 'ol ol, ul ul');
-
-  &.fixed {
-    position: fixed;
-    top: 0;
-    z-index: 2;
-    overflow-y: auto;
-  }
-
-  .toggler {
-    pointer-events: none;
-    color: inherit;
-
-    i {
-      display: none;
-    }
-  }
-
-  li {
-    compat-important(padding-top, (grid-spacing / 2));
-  }
-
-  .title {
-    compat-only(margin-bottom, 0);
-  }
-}
-
-#kumascript-errors {
-  ul {
-    list-style-type: none;
-    padding-left: 0 !important;
-  }
-}
-
-
-/* coming from a search - heading links */
+/* search navigator near article heading */
 .from-search {
   padding-left: (grid-spacing * 2);
 
@@ -303,38 +229,117 @@ article {
   }
 }
 
+.redirected-from {
+  @extend .smaller;
+  margin-top: -(grid-spacing);
+  font-style: italic;
+  opacity: 0.7;
+}
 
-/* notices */
+/* wiki article cookie crumbs */
+.crumbs {
+  @extend .smaller;
+  margin-bottom: (2 * grid-spacing);
+
+  li {
+    bidi-style(margin-right, (grid-spacing / 2), margin-left, 0);
+    display: inline-block;
+  }
+
+  a {
+    display: block;
+
+    &:after {
+      bidi-style(margin-left, 4px, margin-right, 0, true);
+      bidi-style(content, '\f054', content, '\f053');
+      display: inline-block;
+      font-family: FontAwesome;
+      text-decoration: none;
+      color: #c1c2c4;
+      font-size: 70%;
+    }
+  }
+
+  reverse-link-decoration();
+}
+
+/* edit, language, settings, save, and cancel buttons */
+.page-buttons, #page-buttons {
+  bidi-value(float, right, left);
+  float: right;
+
+  text-align: right;
+  compat-only(width, auto);
+  compat-only(top, auto);
+
+  > li {
+    margin-left: (grid-spacing / 2);
+    display: inline-block;
+    position: relative;
+
+    a, button, input[type='submit'], input[type='button'] {
+      compat-important(font-size, smaller-font-size);
+      compat-only(font-family, site-font-family);
+      compat-only(letter-spacing, normal);
+
+      &.disabled {
+        opacity: 0.8;
+      }
+    }
+
+    {selector-icon} {
+      font-size: 16px;
+    }
+  }
+
+  .submenu {
+    component-submenu-method(160px, 1, button-background, button-shadow-color);
+    bidi-style(right, 0, left, auto);
+    top: 40px;
+    z-index: 3;
+    border-top: 1px solid button-shadow-color;
+
+    .submenu-column {
+      float: left;
+    }
+
+    &:before {
+      bidi-style(right, 10px, left, auto);
+      top: -18px;
+    }
+
+    &:after {
+      bidi-style(right, 10px, left, auto);
+      top: -20px;
+    }
+  }
+}
+
+/* kumascript errors block at the top of an article */
+#kumascript-errors {
+  ul {
+    list-style-type: none;
+    padding-left: 0 !important;
+  }
+}
+
+/* wiki summary, usually displays at the top of the article */
+.summary {
+  background: light-background-color;
+  font-weight: bold;
+  padding: grid-spacing;
+  margin-bottom: grid-spacing;
+
+  prevent-last-child-spacing(p, margin-bottom);
+}
+
+/* notice at the top of the article */
 .notice {
   set-message-base();
-
   compat-important(border-width, 2px);
 }
 
-.reviews {
-  set-message-base();
-  @extend .smaller;
-
-  background: #fbf8e9;
-  border-color: #f9f3d9;
-
-  p {
-    margin: 0;
-  }
-
-  li {
-    padding-top: list-item-spacing;
-  }
-
-  button {
-    compat-important(font-size, smaller-font-size);
-  }
-}
-
-div.bug > *:last-child, div.warning > *:last-child {
-  compat-important(padding-left, inherit);
-}
-
+/* warning elements */
 .warning {
   set-message-base();
   @extend .smaller;
@@ -347,6 +352,34 @@ div.bug > *:last-child, div.warning > *:last-child {
     padding: (grid-spacing / 2) !important;
     background: none repeat scroll 0 0 rgba(255, 255, 255, 0.7) !important;
   }
+}
+
+/* document warnings, bugs, etc. */
+div.bug > *:last-child, div.warning > *:last-child {
+  compat-important(padding-left, inherit);
+}
+
+/* page attachments block at the bottom of the article */
+#page-attachments {
+  @extend .wiki-block;
+  compat-only(background, #fff);
+}
+
+#page-attachments-button {
+  compat-only(font-size, smaller-font-size);
+  compat-only(font-family, site-font-family);
+  compat-only(letter-spacing, normal);
+}
+
+/* contributors block at the bottom of the article */
+.contributors {
+  @extend .smaller;
+  color: #777;
+}
+
+/* table of contents column */
+#wiki-right, #wiki-left, #wiki-content {
+  min-height: 1px; /* ensures that when TOC becomes fixed, the column has width */
 }
 
 /* tag and file icons under the TOC */
@@ -406,60 +439,70 @@ div.bug > *:last-child, div.warning > *:last-child {
   border: 0 !important; /* overrides plugin selector */
 }
 
-/* quick links */
-.quick-links {
-  @extend .smaller;
-  position: relative;
-  margin-bottom: grid-spacing;
+#toc {
+  reverse-link-decoration();
+  compat-only(margin-left, 0);
+  compat-only(font-size, base-font-size);
+  compat-only(margin-left, 0, 'ol ol, ul ul');
+  background: light-background-color;
+  compat-important(padding, grid-spacing (grid-spacing * .75));
 
-  .title {
-    margin-bottom: 0;
-    display: inline-block;
+  &.fixed {
+    position: fixed;
+    top: 0;
+    z-index: 2;
+    overflow-y: auto;
+  }
+
+  > ol {
+    bidi-style(padding-left, (grid-spacing * 1.5), padding-right, 0, true); /* compat-important */
+    compat-important(padding-left, (grid-spacing * 1.5));
+    compat-important(font-size, smaller-font-size);
+  }
+
+  ol {
+    counter-reset: toc;
   }
 
   li {
+    compat-important(padding-top, (grid-spacing / 2));
     position: relative;
-    padding-top: list-item-spacing;
+    counter-increment: toc;
+    padding-top: grid-spacing;
+
+    &:before {
+      bidi-value(text-align, left, right);
+      bidi-style(left, -(grid-spacing * 1.5), right, auto);
+
+      content: counters(toc, '.');
+      text-align: right;
+      position: absolute;
+      left: -(grid-spacing + (grid-spacing/2));
+      color: #484848;
+    }
   }
 
-  li li {
-    bidi-style(padding-left, 20px, padding-right, 0);
+  .toggler {
+    pointer-events: none;
+    color: inherit;
+
+    i {
+      display: none;
+    }
+  }
+
+  .title {
+    compat-only(margin-bottom, 0);
+  }
+
+  a.title {
+    position: relative;
+    &.title {
+      text-decoration: none;
+    }
   }
 }
 
-.quick-links a, .quick-links .title, #quick-links-toggle {
-  bidi-style(padding-left, 20px, padding-right, 0);
-  color: text-color;
-  display: inline-block;
-}
-
-.quick-links a, .quick-links .title {
-  position: relative;
-}
-
-.quick-links .see-also {
-  background: light-background-color !important;
-  padding-left: 0;
-  margin-left: 0;
-  display: inline-block !important;
-  padding: 4px 20px;
-  width: 100%;
-  vendorize(box-sizing, border-box);
-}
-
-.quick-links {selector-icon}, #quick-links-toggle {selector-icon} {
-  bidi-style(left, -6px, right, auto);
-  font-size: 14px;
-  position: absolute;
-  top: 1px;
-
-  /* don't allow empty paragraphs by CKEditor */
-  p, div {
-    display: none;
-  }
-
-  reverse-link-decoration();
-}
 
 /* adjustments to columns based on show/hide and media query */
 #wiki-column-container.wiki-right-closed #wiki-content, #wiki-column-container.wiki-left-closed #wiki-content {
@@ -528,6 +571,7 @@ div.bug > *:last-child, div.warning > *:last-child {
   }
 }
 
+
 /* ckeditor / content area styles */
 .ckeditor-container {
   padding: 6px;
@@ -561,6 +605,8 @@ span.cke_skin_kuma {
   }
 }
 
+
+/* adjustments for the translation page */
 #wiki-page-translate {
   #page-buttons {
     right: 0;
@@ -615,7 +661,6 @@ span.cke_skin_kuma {
 .move-page #page-buttons {
   float: none;
 }
-
 
 /* legacy overrides */
 .topicpage-table .Documentation, .topicpage-table .Community, .topicpage-table .Tools, .topicpage-table .Related_Topics {
@@ -707,7 +752,7 @@ span.cke_skin_kuma {
 /* print styling */
 @media print {
   
-  /* wiki section */
+  /* hide sections not important to the article */
   #wiki-left, #wiki-right, #wiki-controls, .crumbs, .page-buttons, #page-attachments {
     display: none;
   }
