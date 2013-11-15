@@ -128,6 +128,10 @@ class DocumentType(SearchMappingType, Indexable):
                         'lowercase',
                         'snowball',
                     ],
+                },
+                'case_sensitive': {
+                    'type': 'custom',
+                    'tokenizer': 'keyword'
                 }
             },
         }
@@ -154,7 +158,7 @@ class DocumentType(SearchMappingType, Indexable):
                 # faster highlighting
                 'term_vector': 'with_positions_offsets',
             },
-            'tags': {'type': 'string', 'index': 'not_analyzed'},
+            'tags': {'type': 'string', 'analyzer': 'case_sensitive'},
             'title': {
                 'type': 'string',
                 'analyzer': 'kuma_title',
@@ -175,7 +179,7 @@ class DocumentType(SearchMappingType, Indexable):
             'locale': obj.locale,
             'modified': obj.modified,
             'content': strip_tags(obj.rendered_html),
-            'tags': [tag.slug for tag in obj.tags.all()]
+            'tags': list(obj.tags.values_list('name', flat=True))
         }
         # let's boost the main sections
         if obj.slug.split('/') == 1:
