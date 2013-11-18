@@ -181,8 +181,11 @@ class DocumentType(SearchMappingType, Indexable):
             'content': strip_tags(obj.rendered_html),
             'tags': list(obj.tags.values_list('name', flat=True))
         }
-        # let's boost the main sections
-        if obj.slug.split('/') == 1:
+        if obj.zones.exists():
+            # boost all documents that are a zone
+            doc['_boost'] = 8.0
+        elif obj.slug.split('/') == 1:
+            # a little boost if no zone but still first level
             doc['_boost'] = 4.0
         else:
             doc['_boost'] = 1.0
