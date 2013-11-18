@@ -182,7 +182,17 @@ article {
 .contributors {
   @extend .smaller;
   color: #777;
+
+  {selector-icon} {
+    bidi-style(margin-left, 0, margin-right, icon-margin);
+    bidi-style(margin-right, icon-margin, margin-left, 0);
+  }
 }
+
+.contributor-sub {
+  padding: 4px 0;
+}
+
 
 #wiki-right {
   min-height: 1px; /* ensures that when TOC becomes fixed, the column has width */
@@ -351,18 +361,20 @@ div.bug > *:last-child, div.warning > *:last-child {
 
 /* tag and file icons under the TOC */
 .tag-attach-list {
-  margin-top: grid-spacing;
   position: relative;
-
-  {selector-icon} {
-    bidi-style(left, icon-margin, right, auto);
-    position: absolute;
-  }
 
   ul, > a {
     @extend .smaller;
-    margin-left: 40px;
-    display: block;
+    display: inline-block;
+  }
+
+  ul {
+    bidi-style(padding-left, 6px, padding-right, 0);
+    margin-bottom: 0;
+
+    li {
+      margin-bottom: 0;
+    }
   }
 
   > a {
