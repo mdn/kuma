@@ -82,16 +82,16 @@ class DatabaseFilterBackend(BaseFilterBackend):
                 if len(filter_tags) > 1:
                     tag_filters = []
                     for filter_tag in filter_tags:
-                        tag_filters.append(F(tags=filter_tag.lower()))
+                        tag_filters.append(F(tags=filter_tag))
                     active_filters.append(reduce(filter_operator, tag_filters))
                 else:
-                    active_filters.append(F(tags=filter_tags[0].lower()))
+                    active_filters.append(F(tags=filter_tags[0]))
 
             if len(filter_tags) > 1:
                 facet_params = {
                     'or': {
                         'filters': [
-                            {'term': {'tags': tag.lower()}}
+                            {'term': {'tags': tag}}
                             for tag in filter_tags
                         ],
                         '_cache': True,
@@ -99,7 +99,7 @@ class DatabaseFilterBackend(BaseFilterBackend):
                 }
             else:
                 facet_params = {
-                    'term': {'tags': filter_tags[0].lower()}
+                    'term': {'tags': filter_tags[0]}
                 }
             active_facets.append((serialized_filter['slug'], facet_params))
 

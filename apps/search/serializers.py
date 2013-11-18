@@ -52,8 +52,11 @@ class FilterGroupSerializer(serializers.Serializer):
 
 
 class FilterSerializer(serializers.ModelSerializer):
-    tags = serializers.ChoiceField(source='tags.all', read_only=True)
+    tags = serializers.SerializerMethodField('tag_names')
     group = FilterGroupSerializer(source='group', read_only=True)
+
+    def tag_names(self, obj):
+        return obj.tags.values_list('name', flat=True)
 
     class Meta:
         model = Filter
