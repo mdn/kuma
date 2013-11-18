@@ -37,7 +37,7 @@
 {% endif %}
 
 {% set show_left = zone_subnav_html or quick_links_html or approvals_html %}
-{% set show_right = (not is_zone_root and (toc_html or tags|length or num_attachments)) %}
+{% set show_right = (not is_zone_root and toc_html) %}
 
 {% set content_class = 'column-all' %}
 {% if show_left and show_right %}
@@ -179,23 +179,6 @@
             </ol>
           </div>
           {% endif %}
-
-          {% if tags|length %}
-          <!-- tags if present -->
-          <h2 class="offscreen">{{ _('Document Tags') }}</h2>
-          <div class="tag-attach-list tags">
-            <i aria-hidden="true" class="icon-tags"></i>
-            <ul class="tag-list">{% for tag in tags %}<li><a href="{{url('wiki.tag', tag.name)}}">{{ tag.name }}</a></li>{% endfor %}</ul>
-          </div>
-          {% endif %}
-
-          {% if num_attachments %}
-          <!-- attachment list, if present -->
-          <div class="tag-attach-list attachments">
-            <i aria-hidden="true" class="icon-paper-clip"></i>
-            <a href="#page-attachments">{{ _('%s Attachment%s' % (num_attachments, 's' if num_attachments > 1 else '')) }}</a>
-          </div>
-          {% endif %}
           </div>
         {% endif %}
 
@@ -240,15 +223,26 @@
 
             <!-- contributors -->
             <div class="wiki-block contributors">
+              <h2 class="offscreen">{{ _('Document Tags and Contributors') }}</h2>
               <p>
+                {% if tags|length %}
+                <!-- tags if present -->
+                <div class="tag-attach-list tags contributor-sub">
+                  <i aria-hidden="true" class="icon-tags"></i><strong>{{ _('Tags:') }}</strong>
+                  <ul class="tag-list">{% for tag in tags %}<li><a href="{{url('wiki.tag', tag.name)}}">{{ tag.name }}</a></li>{% endfor %}</ul>
+                </div>
+                {% endif %}
                 {% trans contributors=user_list(contributors) %}
-                  <strong>Contributors to this page:</strong> {{ contributors }}
+                <div class="contributor-sub">
+                  <i aria-hidden="true" class="icon-group"></i><strong>Contributors to this page:</strong> {{ contributors }}
+                </div>
                 {% endtrans %}
                 {% if current_revision.creator %}
-                  <br />
-                  {{ _('Last updated by:') }}
-                  <a href="{{ url('devmo.views.profile_view', username=current_revision.creator) }}">{{ current_revision.creator }}</a>,
-                  {{ datetimeformat(current_revision.created, format='datetime') }}
+                  <div class="contributor-sub">
+                    <i aria-hidden="true" class="icon-time"></i><strong>{{ _('Last updated by:') }}</strong>
+                    <a href="{{ url('devmo.views.profile_view', username=current_revision.creator) }}">{{ current_revision.creator }}</a>,
+                    {{ datetimeformat(current_revision.created, format='datetime') }}
+                  </div>
                 {% endif %}
               </p>
             </div>
