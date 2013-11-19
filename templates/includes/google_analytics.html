@@ -4,10 +4,12 @@
   var removeUtms  =   function(){
       var l = window.location;
       if( l.hash.indexOf( "utm" ) != -1 ){
-          if( window.history.replaceState ){
+          var anchor = l.hash.match(/#(?!utm)[^&]+/);
+          anchor  =   anchor? anchor[0]: '';
+          if(!anchor && window.history.replaceState){
               history.replaceState({},'', l.pathname + l.search);
           } else {
-              l.hash = "";
+              l.hash = anchor;
           }
       };
   };
