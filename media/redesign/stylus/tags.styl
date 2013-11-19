@@ -4,18 +4,18 @@
 
 aside {
   @extend .column-half;
+  prevent-last-child-bottom-spacing();
+
   float: right;
   border: 1px solid header-background-color;
   background: light-background-color;
   padding: grid-spacing;
   margin-left: grid-spacing;
   margin-bottom: grid-spacing;
-
-  prevent-last-child-spacing('*', padding-bottom);
-  prevent-last-child-spacing('*', margin-bottom);
 }
 
 blockquote {
+  prevent-last-child-bottom-spacing();
   padding: 0 25px;
   border-left: 5px solid #ccc;
   margin-bottom: content-block-margin;
