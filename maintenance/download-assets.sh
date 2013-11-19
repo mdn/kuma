@@ -21,7 +21,7 @@ function download {
 
 function download_referenced {
   # All additional assets referenced with url()
-  REFERENCED=`grep -Pro "url\(.*?\)" $LOCAL | sed -r "s/url\((\"|')?(.*?)(\?.*$|#.*$|\".*$|'.*$|\).*$)/\2/" | sort | uniq`
+  REFERENCED=`find . -name '*.css' | xargs grep -Pro "url\(.*?\)" | sed -r "s/url\((\"|')?(.*?)(\?.*$|#.*$|\".*$|'.*$|\).*$)/\2/" | sort | uniq`
 
   while read -r REFERENCE_INFO; do
     REFERENCED_FROM=`echo $REFERENCE_INFO | sed -r "s/(.*?\/?)+\/.*?:.*$/\1/"`
