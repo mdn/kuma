@@ -10,7 +10,7 @@ from rest_framework.generics import ListAPIView
 from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from waffle import flag_is_active
 
-from .filters import (LanguageFilterBackend, DatabaseFilterBackend,
+from .filters import (LanguageFilterBackend, SearchFilterBackend,
                       SearchQueryBackend, HighlightFilterBackend)
 from .models import Filter, DocumentType
 from .serializers import SearchSerializer, DocumentSerializer, FilterSerializer
@@ -30,7 +30,7 @@ class SearchView(ListAPIView):
         LanguageFilterBackend,
         SearchQueryBackend,
         HighlightFilterBackend,
-        DatabaseFilterBackend,
+        SearchFilterBackend,
     )
     paginate_by = 10
     max_paginate_by = 100
@@ -38,6 +38,7 @@ class SearchView(ListAPIView):
     pagination_serializer_class = SearchSerializer
     topic_param = 'topic'
     result_page = 'search/results.html'
+    search_param = 'q'
 
     @csrf_exempt
     def dispatch(self, request, *args, **kwargs):
@@ -47,6 +48,21 @@ class SearchView(ListAPIView):
             return render(request, 'landing/searchresults.html',
                           {'query': query})
         return super(SearchView, self).dispatch(request, *args, **kwargs)
+
+    def get_parse_query(self):
+        query = self.request.QUERY_PARAMS.get(self.search_param, None)
+        allowed_slugs = map(lambda slug: slug.lower(),
+                            self.available_filters.values_list('slug',
+                                                               flat=True))
+        token_filters = []
+        token_query = []
+        if query:
+            for token in query.split(' '):
+                if token.startswith('#') and token[1:] in allowed_slugs:
+                    token_filters.append(token[1:])
+                else:
+                    token_query.append(token)
+        return 'u '.join(token_query), token_filters
 
     def initial(self, request, *args, **kwargs):
         super(SearchView, self).initial(request, *args, **kwargs)
@@ -58,9 +74,10 @@ class SearchView(ListAPIView):
         self.serialized_filters = FilterSerializer(self.available_filters,
                                                    many=True).data
         self.current_page = self.request.QUERY_PARAMS.get(self.page_kwarg, 1)
+        self.search_query, self.token_filters = self.get_parse_query()
         topics = self.request.QUERY_PARAMS.getlist(self.topic_param, [])
         seen_topics = set()
-        self.current_topics = [topic for topic in topics
+        self.current_topics = [topic for topic in topics + self.token_filters
                                if (topic not in seen_topics and
                                    not seen_topics.add(topic))]
         if flag_is_active(request, 'redesign'):

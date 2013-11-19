@@ -7,7 +7,7 @@ from search.tests import ElasticTestCase, factory
 from search.views import SearchView
 
 from search.filters import (SearchQueryBackend, HighlightFilterBackend,
-                            LanguageFilterBackend, DatabaseFilterBackend)
+                            LanguageFilterBackend, SearchFilterBackend)
 
 
 class FilterTests(ElasticTestCase):
@@ -60,11 +60,11 @@ class FilterTests(ElasticTestCase):
         self.assertEqual(len(response.data['documents']), 5)
         self.assertEqual(response.data['documents'][0]['locale'], 'en-US')
 
-    def test_database_filter(self):
-        class DatabaseFilterView(SearchView):
-            filter_backends = (DatabaseFilterBackend,)
+    def test_search_filter(self):
+        class SearchFilterView(SearchView):
+            filter_backends = (SearchFilterBackend,)
 
-        view = DatabaseFilterView.as_view()
+        view = SearchFilterView.as_view()
         request = factory.get('/en-US/search?topic=tagged')
         response = view(request)
         self.assertEqual(response.data['count'], 2)

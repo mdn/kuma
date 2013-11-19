@@ -44,6 +44,16 @@
       <label for="search-q" class="offscreen">{{ _('Search') }}</label>
       <input type="search" name="q" id="search-q" placeholder="{{ _('Search the docs') }}" value="{{ query }}" {% if not query %}autofocus{% endif %} />
       <button type="submit" class="offscreen">{{ _('Search') }}</button>
+      <script>
+      var search_filters = [
+      {% for filter_group in filters %}
+        {% for filter in filter_group.options %}
+          {id: '#{{ filter.slug }}', text: "{{ filter.name|safe }}"{% if filter.enabled %}, disabled: true{% endif %}},
+        {% endfor %}
+      {% endfor %}
+      ];
+      </script>
+
     </form>
   </div>
 

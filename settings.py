@@ -632,6 +632,7 @@ MINIFY_BUNDLES = {
         ),
         'redesign-search': (
             'redesign/css/search.css',
+            'js/libs/select2/select2.css',
         ),
         'redesign-demos': (
             'redesign/css/demo-studio.css',
@@ -742,6 +743,7 @@ MINIFY_BUNDLES = {
             'redesign/js/wiki.js',
         ),
         'redesign-search': (
+            'js/libs/select2/select2.js',
             'redesign/js/search.js',
         ),
     },
