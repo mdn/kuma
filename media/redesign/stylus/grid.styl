@@ -1,3 +1,18 @@
+/*
+  12-column grid system.  HTML structure should be:
+
+    <div class="column-container">
+      <!-- any number of columns -->
+      <div class="column-x"></div>
+      <div class="column-x"></div>
+      <div class="column-x"></div>
+    </div>
+
+  .column-x elements is automatically floated and assigned a right margin.
+  .column-container clears the .column-x floats and removes margin from the last column
+  .column-container-reverse reverses the floats so that the last visual element appears first in the child list for a11y
+*/
+
 @import 'vars'
 @import 'mixins'
 
@@ -95,15 +110,10 @@
 
 /*  tablet grid width */
 @media media-query-tablet {
-
   .column-container {
     &.column-container-reverse {
       margin-left: 0;
     }
-  }
-
-  .center {
-    max-width: 1000px;
   }
 }
 

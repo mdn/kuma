@@ -6,19 +6,21 @@ body.search-results {
   create-gradient-background(header-background-color);
 }
 
-/* update the homepage search size */
-minimize-header-search();
-
 main {
   background: transparent;
 }
 
+/* update the header search size */
+minimize-header-search();
+
+/* search pane used by multiple blocks */
 .search-pane {
   @extend .grid-padding;
   background: #fff;
   margin-bottom: (grid-spacing / 2);
 }
 
+/* block mentioning the number of results returned */
 h3 {selector-icon} {
   bidi-style(margin-right, (grid-spacing * .75), margin-left, 0);
 }
@@ -36,6 +38,7 @@ p {
   }
 }
 
+/* search form */
 .results-search-form {
   margin-bottom: (grid-spacing * 2);
 
@@ -45,6 +48,7 @@ p {
   }
 }
 
+/* search results container and child elements */
 #search-results-close-container {
   slider();
 }
@@ -87,7 +91,6 @@ p {
     }
   }
 }
-
 
 .search-meta {
   margin-top: (grid-spacing / 2);
@@ -139,6 +142,7 @@ p {
   }
 }
 
+/* sidebar topic listings */
 .search-results-topics {
   reverse-link-decoration();
 
@@ -206,8 +210,6 @@ p {
     }
   }
 }
-
-
 
 /* mobile media page */
 @media media-query-mobile {

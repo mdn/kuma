@@ -17,15 +17,12 @@
     compat-important(max-width, max-width-default);
   }
 
-  p:last-child {
-    margin-bottom: 0;
-  }
+  prevent-last-child-spacing(p, margin-bottom);
 }
 
 /* header */
 #main-header {
   @extend .clear;
-
   border-color: transparent;
   border-bottom-width: 1px;
   border-bottom-style: solid;
@@ -454,10 +451,6 @@ footer {
 }
 
 
-
-
-
-/* print styling */
 @media print {
 
   header, footer {

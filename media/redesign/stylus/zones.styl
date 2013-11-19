@@ -1,18 +1,21 @@
+/*
+  These styles compliment the wiki styles when the page is a zone landing page or is simply in the zone.
+*/
+
 @import 'vars'
 @import 'mixins'
 @import 'grid'
 
+/* Settings which apply to _all_ zone pages */
 .zone {
   create-gradient-background(#00539f, true);
   use-white-logo();
   remove-main-spacing();
+  override-main-nav-color(#fff);
 
   #main-header {
     border-bottom-color: rgba(255, 255, 255, 0.2);
   }
-
-  /* update main nav menu color */
-  override-main-nav-color(#fff);
 
   .user-state {
     a, a:hover, a:focus, a:visited {
@@ -34,6 +37,7 @@
   }
 }
 
+/* zone landing pages only */
 .zone-landing {
 
   h1 {
@@ -79,8 +83,8 @@
   }
 }
 
+/* the zone landing page masthead  */
 .zone-landing-header {
-  /* create-gradient-background(#0095dd) */
   color: #fff;
   position: relative;
 
@@ -176,12 +180,6 @@
   }
 }
 
-@media media-query-mobile {
-    .zone-landing-header .zone-image {
-        display: none;
-    }
-}
-
 @media media-query-tablet {
   .zone-landing {
       .zone-subnav-container {
@@ -209,4 +207,10 @@
       }
     }
   }
+}
+
+@media media-query-mobile {
+    .zone-landing-header .zone-image {
+        display: none;
+    }
 }

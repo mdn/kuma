@@ -1,10 +1,8 @@
-@import 'vars'
-
 /*
-
-  This Stylus file provides man mixins for use within the MDN theme.
-
+  Provides man mixins for use within the MDN theme.
 */
+
+@import 'vars'
 
 /* vendorizes a propery */
 vendorize(property, value) {
@@ -85,7 +83,7 @@ compat-important(prop, value) {
   {prop}: value !important;
 }
 
-/* Used for style which are only present to override other styles -- these will be deleted once legacy design is gone */
+/* used for style which are only present to override other styles -- these will be deleted once legacy design is gone */
 compat-only(prop, value, more-selector = '') {
   compat-important(prop, value);
 
@@ -96,12 +94,12 @@ compat-only(prop, value, more-selector = '') {
   }
 }
 
-/* Used to denote an old IE style */
+/* used to denote an old IE style */
 old-ie(prop, value, important = false) {
   {prop}: value (important ? unquote('!important') : '');
 }
 
-/* Used to create sliding animations */
+/* used to create sliding animations */
 slider(duration=default-animation-duration, maximum-height = 10000px) {
   overflow-y: hidden;
   max-height: maximum-height;
@@ -114,7 +112,7 @@ slider(duration=default-animation-duration, maximum-height = 10000px) {
   }
 }
 
-/* Sets the base styles for messages (review, warning, error, notice, etc.) */
+/* sets the base styles for messages (review, warning, error, notice, etc.) */
 set-message-base() {
   compat-only(border-width, 5px);
   compat-only(border-style, solid);
@@ -148,7 +146,7 @@ remove-center-spacing() {
   padding-right: 0;
 }
 
-/* Overrides the navigation menu color - zones and homepage */
+/* overrides the navigation menu color - zones and homepage */
 override-main-nav-color(hex) {
   #main-nav > ul > li > a, .user-state a {
     compat-important(color, hex);
@@ -166,14 +164,14 @@ override-main-nav-color(hex) {
 
 }
 
-/* Overrides the size of the navigation search box on certain pages */
+/* overrides the size of the navigation search box on certain pages */
 minimize-header-search(size = 20px) {
   .search-wrap {
     width: size;
   }
 }
 
-/* Sets an input tag's placeholder styles */
+/* sets an input tag's placeholder styles */
 set-placeholder-style(prop, value) {
   &::-webkit-input-placeholder {
     {prop}: value;
@@ -183,14 +181,17 @@ set-placeholder-style(prop, value) {
   }
 }
 
-/* Uses the white logo instead of color logo */
+/* uses the white logo instead of color logo */
 use-white-logo() {
   #main-header .logo {
       background-image: url(media-url-dir + 'mdn_logo-wordmark-full_white.svg');
   }
 }
 
-/* Allows setting of a property for LTR and RTL without having to deal with duplicating and maintaining selectors 
+/* for use 
+
+/* 
+  Allows setting of a property for LTR and RTL without having to deal with duplicating and maintaining selectors:
 
     example:   bidi-style(left, 20px, right, auto)
 */

@@ -1,7 +1,12 @@
+/*
+  "Components" used throughout the site in varying ways.
+  For example, .toggler is used in a few different widgets (TOC, subnav, etc.)
+*/
+
 @import 'vars'
 @import 'mixins'
 
-/* togglers */
+/* toggler component: a basic slide up and slide now system*/
 .toggler {
   position: relative;
 
@@ -17,50 +22,7 @@
   display: none;
 }
 
-
-/* table of contents; uses toggler */
-#toc {
-  background: light-background-color;
-  compat-important(padding, grid-spacing (grid-spacing * .75));
-
-  > ol {
-    bidi-style(padding-left, (grid-spacing * 1.5), padding-right, 0, true); /* compat-important */
-    compat-important(padding-left, (grid-spacing * 1.5));
-    compat-important(font-size, smaller-font-size);
-  }
-
-  a.title {
-    position: relative;
-    &.title {
-      text-decoration: none;
-    }
-  }
-
-  ol {
-    counter-reset: toc;
-  }
-
-  li {
-    position: relative;
-    counter-increment: toc;
-    padding-top: grid-spacing;
-
-    &:before {
-      bidi-value(text-align, left, right);
-      bidi-style(left, -(grid-spacing * 1.5), right, auto);
-
-      content: counters(toc, '.');
-      text-align: right;
-      position: absolute;
-      left: -(grid-spacing + (grid-spacing/2));
-      color: #484848;
-    }
-  }
-
-  reverse-link-decoration();
-}
-
-/* subnav */
+/* subnav component:  used within the wiki */
 .subnav {
   .toggler, > ol > li > a {
     padding: grid-spacing (2 * grid-spacing) grid-spacing grid-spacing;
@@ -131,7 +93,7 @@
   reverse-link-decoration();
 }
 
-/* Submenu's, like the main menu and settings menu */
+/* submenu generator: used in the main navigation and wiki */
 component-submenu-method(menu-width, num-columns, background-color, arrow-border-color) {
   position: absolute;
   padding: grid-spacing;
@@ -167,11 +129,9 @@ component-submenu-method(menu-width, num-columns, background-color, arrow-border
     padding: 5px 0;
     display: block;
   }
-
   reverse-link-decoration();
 
   generate-arrow();
-
   &:before {
     border-bottom-color: background-color;
     position: absolute;
@@ -183,10 +143,4 @@ component-submenu-method(menu-width, num-columns, background-color, arrow-border
     position: absolute;
     z-index: 1;
   }
-}
-
-#content {
-    table {
-        margin-bottom: content-block-margin;
-    }
 }

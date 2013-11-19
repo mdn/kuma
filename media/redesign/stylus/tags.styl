@@ -15,6 +15,15 @@ aside {
   prevent-last-child-spacing('*', margin-bottom);
 }
 
+blockquote {
+  padding: 0 25px;
+  border-left: 5px solid #ccc;
+  margin-bottom: content-block-margin;
+}
+
+caption {
+  font-weight: bold;
+}
 
 /* headings */
 h1, h2, h3, h4 {
@@ -71,13 +80,25 @@ img, iframe, video {
   max-width: 100%;
 }
 
-p, dl {
+p, dl, table, pre {
   margin-bottom: content-block-margin;
 }
 
 pre {
   compat-only(line-height, 19px);
   font-size: smaller-font-size !important;
+  border: 0;
+  background: #f6f6f2;
+  padding: 15px;
+  overflow: auto;
+}
+
+pre, code {
+  font: 100% 'Courier New', 'Andale Mono', monospace;
+}
+
+code {
+  font-weight: inherit;
 }
 
 /* forms */
@@ -92,7 +113,6 @@ input[type='search'] {
 label {
   cursor: pointer;
 }
-
 
 /* links and buttons */
 a {
@@ -122,6 +142,3 @@ button, input[type='submit'], input[type='button'] {
     margin-bottom: -1px;
   }
 }
-
-
-
