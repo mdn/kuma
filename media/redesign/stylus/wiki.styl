@@ -355,8 +355,8 @@ article {
 }
 
 /* document warnings, bugs, etc. */
-div.bug > *:last-child, div.warning > *:last-child {
-  compat-important(padding-left, inherit);
+div.bug, div.warning, div.overheadIndicator {
+  prevent-last-child-bottom-spacing();
 }
 
 /* page attachments block at the bottom of the article */

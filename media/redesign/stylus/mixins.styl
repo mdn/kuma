@@ -21,9 +21,18 @@ vendorize-value(property, value, more = '') {
 
 /* prevents spacing of a given element if it's the last child */
 prevent-last-child-spacing(element = '*', property = 'padding') {
-  & unquote(element):last-child {
+  if (element is '*') {
+    element = unquote(element);
+  }
+
+  & > {element}:last-child {
     {property}: 0;
   }
+}
+
+prevent-last-child-bottom-spacing(element = '*') {
+  prevent-last-child-spacing(element, margin-bottom);
+  prevent-last-child-spacing(element, padding-bottom);
 }
 
 /* text-decoration none, hover text-decoration underline */
