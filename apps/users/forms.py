@@ -19,7 +19,6 @@ USERNAME_SHORT = _lazy(u'Username is too short (%(show_value)s characters). '
                        'It must be at least %(limit_value)s characters.')
 USERNAME_LONG = _lazy(u'Username is too long (%(show_value)s characters). '
                       'It must be %(limit_value)s characters or less.')
-USERNAME_PLACEHOLDER = _lazy(u'john_smith')
 EMAIL_REQUIRED = _lazy(u'Email address is required.')
 EMAIL_SHORT = _lazy(u'Email address is too short (%(show_value)s characters). '
                     'It must be at least %(limit_value)s characters.')
@@ -38,7 +37,7 @@ class UsernameField(forms.RegexField):
             regex=r'^[\w.-]+$',
             help_text=_lazy(u'Required. 30 characters or fewer. '
                             'Letters, digits and ./-/_ only.'),
-            widget=forms.TextInput(attrs={'placeholder': USERNAME_PLACEHOLDER}),
+            widget=forms.TextInput(),
             error_messages={'invalid': USERNAME_INVALID,
                             'required': USERNAME_REQUIRED,
                             'min_length': USERNAME_SHORT,
