@@ -1,13 +1,27 @@
-#! /bin/sh
+#!/bin/bash
 
 BASEDIR=$(dirname $0)
-CSSDIR=$BASEDIR/../media/redesign/css/
+CSSDIR=$BASEDIR/../media/redesign/css
+STYLUSDIR=$BASEDIR/../media/redesign/stylus
+
+for opt in "$@"; do
+  case $opt in
+    --watch|-w) WATCH=true;;
+  esac
+done
 
 if [ ! -d "$CSSDIR" ]; then
-	mkdir $BASEDIR/../media/redesign/css/
+  mkdir $CSSDIR
 fi
 
-for file in main wiki demo-studio profile search zones home wiki-syntax
-do
-	stylus $BASEDIR/../media/redesign/stylus/$file.styl --out $BASEDIR/../media/redesign/css --compress
-done
+STYLESHEETS=(main wiki demo-studio profile search zones home wiki-syntax)
+if [ $WATCH ]; then
+  for ss in ${STYLESHEETS[@]}; do
+    (stylus $STYLUSDIR/$ss.styl --out $CSSDIR --compress --watch &) &> /dev/null
+  done
+  echo Watching and automatically compiling stylesheets
+else
+  for ss in ${STYLESHEETS[@]}; do
+    stylus $STYLUSDIR/$ss.styl --out $CSSDIR --compress
+  done
+fi
