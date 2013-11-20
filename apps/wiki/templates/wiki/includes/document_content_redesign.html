@@ -192,8 +192,59 @@
         <!-- center: main article content -->
         <div id="wiki-content" class="{{ content_class }} wiki-column text-content">
 
+          {% if request.user.is_authenticated() and document_html %}
+            {% if render_raw_fallback %}
+              <div id="doc-render-raw-fallback" class="warning">
+              {% trans url=document.get_absolute_url() %}
+                This document is being rendered for the first time by the system.
+                Please <a href="{{ url }}">reload this page</a> in a few minutes
+                to see full content.
+              {% endtrans %}
+              </div>
+            {% elif document.is_rendering_in_progress %}
+              <div id="doc-rendering-in-progress" class="warning">
+              {% trans url=document.get_absolute_url(), started_at=document.render_started_at %}
+                An update to this document
+                <abbr title="{{ started_at }}">is currently in progress</abbr>.
+                If the content below seems stale or if something is missing,
+                please <a href="{{ url }}">reload this page</a> in a few minutes.
+              {% endtrans %}
+              </div>
+            {% elif document.is_rendering_scheduled and not kumascript_errors %}
+              <div id="doc-rendering-scheduled" class="warning">
+              {% trans url=document.get_absolute_url(), scheduled_at=document.render_scheduled_at %}
+                An update to this document
+                <abbr title="{{ scheduled_at }}">has been scheduled</abbr>.
+                If the content below seems stale or if something is missing,
+                please <a href="{{ url }}">reload this page</a> in a few minutes.
+              {% endtrans %}
+              </div>
+            {% endif %}
+          {% endif %}
+
           {% if kumascript_errors %}
             {% include 'wiki/includes/kumascript_errors.html' %}
+          {% endif %}
+
+          {% if document.current_revision %}
+            {% if document.current_revision.needs_technical_review() %}
+              <div class="warning">{% trans %}
+                <p>This article is in need of a technical review.</p>
+              {% endtrans %}</div>
+            {% endif %}
+            {% if document.current_revision.needs_editorial_review() %}
+              <div class="warning">{% trans %}
+                <p>This article is in need of an editorial review.</p>
+              {% endtrans %}</div>
+            {% endif %}
+          {% endif %}
+          {% if fallback_reason %}
+            <div id="doc-pending-fallback" class="warning">
+              {% trans help_link=help_link, locale=settings.LOCALES[request.locale].native %}
+                Our volunteers haven't translated this article into {{ locale }} yet.
+                <a href="{{ help_link }}">Join us and help get the job done!</a>
+              {% endtrans %}
+            </div>
           {% endif %}
 
           <!-- just the article content -->
