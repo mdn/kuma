@@ -346,7 +346,7 @@ article {
 
   background: rgba( 193, 56, 50, 0.85);
   compat-important(border-color, rgba(0, 0, 0, 0.1));
-  compat-only(color, text-color);
+  compat-only(color, #fff);
 
   pre {
     padding: (grid-spacing / 2) !important;
@@ -357,6 +357,10 @@ article {
 /* document warnings, bugs, etc. */
 div.bug, div.warning, div.overheadIndicator {
   prevent-last-child-bottom-spacing();
+  
+  pre {
+    color: text-color;
+  }
 }
 
 /* page attachments block at the bottom of the article */
