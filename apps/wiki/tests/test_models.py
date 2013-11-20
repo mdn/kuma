@@ -1275,6 +1275,21 @@ class RenderExpiresTests(TestCase):
 
     @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0)
     @mock.patch('wiki.kumascript.get')
+    def test_update_expires_without_max_age(self, mock_kumascript_get):
+        mock_kumascript_get.return_value = ('MOCK CONTENT', None)
+
+        max_age = 1000
+        now = datetime.now()
+        
+        d1 = document(title='Aged 1')
+        d1.render_expires = now - timedelta(seconds=100)
+        d1.save()
+        d1.render()
+
+        ok_(not d1.render_expires)
+
+    @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0)
+    @mock.patch('wiki.kumascript.get')
     @mock.patch_object(tasks.render_document, 'delay')
     def test_render_stale(self, mock_render_document_delay,
                           mock_kumascript_get):

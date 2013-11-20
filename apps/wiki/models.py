@@ -860,10 +860,13 @@ class Document(NotificationsMixin, models.Model):
         # time falls under the limit? Probably safer to require manual
         # intervention to free docs from deferred jail.
 
-        # If there's a render_max_age, automatically update render_expires
         if self.render_max_age:
+            # If there's a render_max_age, automatically update render_expires
             self.render_expires = (datetime.now() +
                                    timedelta(seconds=self.render_max_age))
+        else:
+            # Otherwise, just clear the expiration time as a one-shot
+            self.render_expires = None
 
         self.save()
         render_done.send(sender=self.__class__, instance=self)
