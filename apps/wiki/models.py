@@ -422,6 +422,16 @@ class BaseDocumentManager(models.Manager):
         return (self.exclude(render_expires__isnull=True)
                     .filter(render_expires__lte=datetime.now()))
 
+    def render_stale(self, immediate=False):
+        """Perform rendering for stale documents"""
+        from . import tasks
+        stale_docs = self.get_by_stale_rendering()
+        for doc in stale_docs:
+            if immediate:
+                doc.render('no-cache', settings.SITE_URL)
+            else:
+                tasks.render_document.delay(doc, 'no-cache', settings.SITE_URL)
+
     def allows_add_by(self, user, slug):
         """Determine whether the user can create a document with the given
         slug. Mainly for enforcing Template: editing permissions"""

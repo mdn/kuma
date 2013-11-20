@@ -1258,7 +1258,7 @@ class RenderExpiresTests(TestCase):
     @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0)
     @mock.patch('wiki.kumascript.get')
     def test_update_expires_with_max_age(self, mock_kumascript_get):
-        mock_kumascript_get.return_value = ('MOCK CONTENT', [])
+        mock_kumascript_get.return_value = ('MOCK CONTENT', None)
 
         max_age = 1000
         now = datetime.now()
@@ -1272,6 +1272,50 @@ class RenderExpiresTests(TestCase):
         later = now + timedelta(seconds=max_age)
         ok_(d1.render_expires > later - timedelta(seconds=1))
         ok_(d1.render_expires < later + timedelta(seconds=1))
+
+    @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0)
+    @mock.patch('wiki.kumascript.get')
+    @mock.patch_object(tasks.render_document, 'delay')
+    def test_render_stale(self, mock_render_document_delay,
+                          mock_kumascript_get):
+        mock_kumascript_get.return_value = ('MOCK CONTENT', None)
+
+        now = datetime.now()
+        earlier = now - timedelta(seconds=1000)
+
+        d1 = document(title='Aged 3')
+        d1.last_rendered_at = earlier
+        d1.render_expires = now - timedelta(seconds=100)
+        d1.save()
+
+        Document.objects.render_stale()
+
+        d1_fresh = Document.objects.get(pk=d1.pk)
+        ok_(mock_render_document_delay.called)
+        # HACK: Exact time comparisons suck, because database
+        ok_(d1_fresh.last_rendered_at > earlier - timedelta(seconds=1))
+        ok_(d1_fresh.last_rendered_at < earlier + timedelta(seconds=1))
+
+    @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0)
+    @mock.patch('wiki.kumascript.get')
+    @mock.patch_object(tasks.render_document, 'delay')
+    def test_render_stale_immediate(self, mock_render_document_delay,
+                                    mock_kumascript_get):
+        mock_kumascript_get.return_value = ('MOCK CONTENT', None)
+
+        now = datetime.now()
+        earlier = now - timedelta(seconds=1000)
+
+        d1 = document(title='Aged 3')
+        d1.last_rendered_at = earlier
+        d1.render_expires = now - timedelta(seconds=100)
+        d1.save()
+
+        Document.objects.render_stale(immediate=True)
+
+        d1_fresh = Document.objects.get(pk=d1.pk)
+        ok_(not mock_render_document_delay.called)
+        ok_(d1_fresh.last_rendered_at > earlier)
 
 
 class PageMoveTests(TestCase):
