@@ -14,7 +14,7 @@ if [ ! -d "$CSSDIR" ]; then
   mkdir $CSSDIR
 fi
 
-STYLESHEETS=(main wiki demo-studio profile search zones home wiki-syntax users)
+STYLESHEETS=(main wiki demo-studio profile search zones home wiki-syntax users no-js)
 if [ $WATCH ]; then
   for ss in ${STYLESHEETS[@]}; do
     (stylus $STYLUSDIR/$ss.styl --out $CSSDIR --compress --watch &) &> /dev/null

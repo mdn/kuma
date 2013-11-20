@@ -25,6 +25,10 @@ enable-toc-toggle() {
         display: inline-block;
       }
     }
+
+    .toggle-container {
+      requires-javascript(display, none);
+    }
   }
 }
 
@@ -75,6 +79,10 @@ enable-toc-toggle() {
 
   li li {
     bidi-style(padding-left, 20px, padding-right, 0);
+  }
+
+  ul ul { /* hides submenus by default */
+    requires-javascript(display, none);
   }
 }
 
