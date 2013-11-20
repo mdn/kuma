@@ -1228,6 +1228,52 @@ class DeferredRenderingTests(TestCase):
         r_rendered, r_errors = self.d1.get_rendered(None, 'http://testserver/')
         ok_(errors, r_errors)
 
+
+class RenderExpiresTests(TestCase):
+    """Tests for max-age and automatic document rebuild"""
+    fixtures = ['test_users.json']
+     
+    def test_find_stale_documents(self):
+        now = datetime.now()
+
+        # Fresh
+        d1 = document(title='Aged 1')
+        d1.render_expires = now + timedelta(seconds=100)
+        d1.save()
+
+        # Stale, exactly now
+        d2 = document(title='Aged 2')
+        d2.render_expires = now
+        d2.save()
+
+        # Stale, a little while ago
+        d3 = document(title='Aged 3')
+        d3.render_expires = now - timedelta(seconds=100)
+        d3.save()
+
+        stale_docs = Document.objects.get_by_stale_rendering()
+        eq_(sorted([d2.pk, d3.pk]),
+            sorted([x.pk for x in stale_docs]))
+
+    @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0)
+    @mock.patch('wiki.kumascript.get')
+    def test_update_expires_with_max_age(self, mock_kumascript_get):
+        mock_kumascript_get.return_value = ('MOCK CONTENT', [])
+
+        max_age = 1000
+        now = datetime.now()
+        
+        d1 = document(title='Aged 1')
+        d1.render_max_age = max_age
+        d1.save()
+        d1.render()
+
+        # HACK: Exact time comparisons suck, because execution time.
+        later = now + timedelta(seconds=max_age)
+        ok_(d1.render_expires > later - timedelta(seconds=1))
+        ok_(d1.render_expires < later + timedelta(seconds=1))
+
+
 class PageMoveTests(TestCase):
     """Tests for page-moving and associated functionality."""
 

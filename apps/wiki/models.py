@@ -417,6 +417,11 @@ class BaseDocumentManager(models.Manager):
     def get_by_natural_key(self, locale, slug):
         return self.get(locale=locale, slug=slug)
 
+    def get_by_stale_rendering(self):
+        """Find documents whose renderings have gone stale"""
+        return (self.exclude(render_expires__isnull=True)
+                    .filter(render_expires__lte=datetime.now()))
+
     def allows_add_by(self, user, slug):
         """Determine whether the user can create a document with the given
         slug. Mainly for enforcing Template: editing permissions"""
@@ -679,6 +684,12 @@ class Document(NotificationsMixin, models.Model):
     # Timestamp when this document was last rendered
     last_rendered_at = models.DateTimeField(null=True, db_index=True)
 
+    # Maximum age (in seconds) before this document needs re-rendering
+    render_max_age = models.IntegerField(blank=True, null=True)
+
+    # Time after which this document needs re-rendering
+    render_expires = models.DateTimeField(null=True, db_index=True)
+
     # A document's category much always be that of its parent. If it has no
     # parent, it can do what it wants. This invariant is enforced in save().
     category = models.IntegerField(choices=CATEGORIES, db_index=True)
@@ -838,6 +849,11 @@ class Document(NotificationsMixin, models.Model):
         # TODO: Automatically clear the defer_rendering flag if the rendering
         # time falls under the limit? Probably safer to require manual
         # intervention to free docs from deferred jail.
+
+        # If there's a render_max_age, automatically update render_expires
+        if self.render_max_age:
+            self.render_expires = (datetime.now() +
+                                   timedelta(seconds=self.render_max_age))
 
         self.save()
         render_done.send(sender=self.__class__, instance=self)
