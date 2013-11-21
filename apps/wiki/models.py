@@ -426,6 +426,8 @@ class BaseDocumentManager(models.Manager):
         """Perform rendering for stale documents"""
         from . import tasks
         stale_docs = self.get_by_stale_rendering()
+        if log:
+            log.info("Found %s stale documents" % stale_docs.count())
         for doc in stale_docs:
             if immediate:
                 doc.render('no-cache', settings.SITE_URL)
