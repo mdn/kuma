@@ -39,14 +39,18 @@
           <div class="submenu-column">
             <div class="title">{{ _('Languages') }}</div>
             <ul id="translations">
+              {% if document.other_translations|length %}
                 {% for translation in document.other_translations %}
                   <li><bdi><a rel="internal" href="{{ url('wiki.document', translation.full_path, locale=translation.locale) }}" title="{{ translation.title }}">{{ translation.language }}</a></bdi></li>
                 {% endfor %}
+              {% else %}
+                <li class="smaller">{{ _('No translations exist for this document.') }}</li>
+              {% endif %}
 
-                {% if document.is_localizable %}
-                  <li><a href="{{ translate_url }}">{{ _('Add translation') }}</a></li>
-                {% endif %}
-              </ul>
+              {% if document.is_localizable %}
+                <li><a href="{{ translate_url }}">{{ _('Add a translation') }}</a></li>
+              {% endif %}
+            </ul>
           </div>
         </div></li>{% endif %}<li><a href="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}" class="button {{ disabled_class }}" {{ disabled_attr }}>{{ _('Edit Page') }}<i aria-hidden="true" class="icon-pencil"></i></a></li><li><a href="javascript:;" id="settings-menu" class="button only-icon" {{ disabled_attr }} aria-haspopup="true" aria-owns="settings-menu-submenu" aria-expanded="false"><span>{{ _('Settings') }}</span><i aria-hidden="true" class="icon-cog"></i></a>
 
