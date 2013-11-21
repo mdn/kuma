@@ -1114,7 +1114,7 @@ class Document(NotificationsMixin, models.Model):
         revise this document"""
         curr_rev = self.current_revision
         new_rev = Revision(creator=user, document=self, content=self.html)
-        for n in ('title', 'slug', 'category'):
+        for n in ('title', 'slug', 'category', 'render_max_age'):
             setattr(new_rev, n, getattr(self, n))
         if curr_rev:
             new_rev.toc_depth = curr_rev.toc_depth
@@ -1953,6 +1953,9 @@ class Revision(models.Model):
     toc_depth = models.IntegerField(choices=TOC_DEPTH_CHOICES,
                                     default=TOC_DEPTH_ALL)
 
+    # Maximum age (in seconds) before this document needs re-rendering
+    render_max_age = models.IntegerField(blank=True, null=True)
+
     created = models.DateTimeField(default=datetime.now, db_index=True)
     reviewed = models.DateTimeField(null=True)
     significance = models.IntegerField(choices=SIGNIFICANCES, null=True)
@@ -2062,6 +2065,7 @@ class Revision(models.Model):
         self.document.title = self.title
         self.document.slug = self.slug
         self.document.html = self.content_cleaned
+        self.document.render_max_age = self.render_max_age
         self.document.current_revision = self
 
         # Since Revision stores tags as a string, we need to parse them first
