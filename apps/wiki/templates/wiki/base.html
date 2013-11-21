@@ -5,7 +5,7 @@
     {{ super() }}
     {{ css('wiki-print', media='print') }}
     {% if waffle.flag('redesign') %}
-      {{ css('redesign-wiki') }}
+      {{ css('redesign-wiki', 'all') }}
     {% endif %}
     {% if config.KUMA_CUSTOM_CSS_PATH %}
       <link rel="stylesheet" type="text/css"
