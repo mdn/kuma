@@ -113,10 +113,16 @@ def _rebuild_kb_chunk(data, **kwargs):
     unpin_this_thread()  # Not all tasks need to do use the master.
 
 
-@task
+@task(rate_limit='10/m')
 def render_document(doc, cache_control, base_url):
     """Simple task wrapper for the render() method of the Document model"""
     doc.render(cache_control, base_url)
+
+
+@task(rate_limit='6/h')
+def render_stale_documents(immediate=False):
+    """Simple task wrapper for rendering stale documents"""
+    Document.objects.render_stale(immediate=immediate, log=log)
 
 
 @task

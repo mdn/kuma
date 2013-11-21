@@ -422,15 +422,19 @@ class BaseDocumentManager(models.Manager):
         return (self.exclude(render_expires__isnull=True)
                     .filter(render_expires__lte=datetime.now()))
 
-    def render_stale(self, immediate=False):
+    def render_stale(self, immediate=False, log=None):
         """Perform rendering for stale documents"""
         from . import tasks
         stale_docs = self.get_by_stale_rendering()
         for doc in stale_docs:
             if immediate:
                 doc.render('no-cache', settings.SITE_URL)
+                if log:
+                    log.info("Rendered stale %s" % doc)
             else:
                 tasks.render_document.delay(doc, 'no-cache', settings.SITE_URL)
+                if log:
+                    log.info("Deferred rendering for stale %s" % doc)
 
     def allows_add_by(self, user, slug):
         """Determine whether the user can create a document with the given
@@ -698,7 +702,7 @@ class Document(NotificationsMixin, models.Model):
     render_max_age = models.IntegerField(blank=True, null=True)
 
     # Time after which this document needs re-rendering
-    render_expires = models.DateTimeField(null=True, db_index=True)
+    render_expires = models.DateTimeField(blank=True, null=True, db_index=True)
 
     # A document's category much always be that of its parent. If it has no
     # parent, it can do what it wants. This invariant is enforced in save().
