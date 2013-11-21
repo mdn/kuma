@@ -17,7 +17,7 @@
 {% block bodyclass %}search-results search-results-no-demo{% endblock %}
 
 {% macro doc_block(doc, index) -%}
-  <li class="result-{{ index }}"{% if index = 1%} tabindex="1"{% endif %}>
+  <li class="result-{{ index }}"{% if index == 1%} tabindex="1"{% endif %}>
     <div class="column-container">
       <div class="column-1"><i aria-hidden="true" class="icon-file-text-alt"></i></div>
       <div class="column-5 result-list-item">
