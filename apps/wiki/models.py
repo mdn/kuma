@@ -41,7 +41,9 @@ import waffle
 
 from . import kumascript, TEMPLATE_TITLE_PREFIX
 from .content import (get_seo_description, get_content_sections,
-                      extract_code_sample, parse as parse_content)
+                      extract_code_sample, parse as parse_content,
+                      extract_css_classnames, extract_html_attributes,
+                      extract_kumascript_macro_names)
 from .exceptions import (UniqueCollision, SlugCollision,
                          DocumentRenderingInProgress,
                          DocumentRenderedContentNotAvailable)
@@ -948,6 +950,15 @@ class Document(NotificationsMixin, models.Model):
         except:
             src = self.html
         return extract_code_sample(id, src)
+
+    def extract_kumascript_macro_names(self):
+        return extract_kumascript_macro_names(self.html)
+
+    def extract_css_classnames(self):
+        return extract_css_classnames(self.rendered_html)
+
+    def extract_html_attributes(self):
+        return extract_html_attributes(self.rendered_html)
 
     def natural_key(self):
         return (self.locale, self.slug,)

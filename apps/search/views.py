@@ -11,7 +11,8 @@ from rest_framework.renderers import TemplateHTMLRenderer, JSONRenderer
 from waffle import flag_is_active
 
 from .filters import (LanguageFilterBackend, DatabaseFilterBackend,
-                      SearchQueryBackend, HighlightFilterBackend)
+                      SearchQueryBackend, HighlightFilterBackend,
+                      AdvancedSearchQueryBackend)
 from .models import Filter, DocumentType
 from .serializers import SearchSerializer, DocumentSerializer, FilterSerializer
 from .queries import DocumentS
@@ -29,6 +30,7 @@ class SearchView(ListAPIView):
     filter_backends = (
         LanguageFilterBackend,
         SearchQueryBackend,
+        AdvancedSearchQueryBackend,
         HighlightFilterBackend,
         DatabaseFilterBackend,
     )

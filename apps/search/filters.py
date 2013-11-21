@@ -1,4 +1,5 @@
 import operator
+from django.conf import settings
 from elasticutils import Q
 from elasticutils.contrib.django import F
 
@@ -9,11 +10,17 @@ from search.models import DocumentType, Filter
 
 class LanguageFilterBackend(BaseFilterBackend):
     """
-    A django-rest-framework filter backend that filters the given
-    queryset based on the current request's locale
+    A django-rest-framework filter backend that filters the given queryset
+    based on the current request's locale, or a different locale (or none at
+    all) specified by query parameter
     """
     def filter_queryset(self, request, queryset, view):
-        return queryset.filter(locale=request.locale)
+        locale = request.GET.get('locale', None)
+        if '*' == locale:
+            return queryset
+        if not locale or locale not in settings.MDN_LANGUAGES:
+            locale = request.locale
+        return queryset.filter(locale=locale)
 
 
 class SearchQueryBackend(BaseFilterBackend):
@@ -44,6 +51,43 @@ class SearchQueryBackend(BaseFilterBackend):
                                 .boost(**boosts))
         if request.user.is_superuser:
             queryset = queryset.explain()  # adds scoring explaination
+        return queryset
+
+
+class AdvancedSearchQueryBackend(BaseFilterBackend):
+    """
+    A django-rest-framework filter backend that filters the given queryset
+    based on additional query parameters that correspond to advanced search
+    indexes.
+    """
+    search_params = (
+        'kumascript_macros',
+        'css_classnames',
+        'html_attributes',
+    )
+    search_operations = [
+        ('%s__match', 10.0),
+        ('%s__prefix', 5.0),
+    ]
+
+    def filter_queryset(self, request, queryset, view):
+        queries = {}
+        boosts = {}
+
+        for name in self.search_params:
+
+            search_param = request.QUERY_PARAMS.get(name, None)
+            if not search_param:
+                continue
+
+            for operation_tmpl, boost in self.search_operations:
+                operation = operation_tmpl % name
+                queries[operation] = search_param.lower()
+                boosts[operation] = boost
+
+        queryset = (queryset.query(Q(should=True, **queries))
+                            .boost(**boosts))
+
         return queryset
 
 

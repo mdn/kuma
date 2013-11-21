@@ -132,6 +132,11 @@ class DocumentType(SearchMappingType, Indexable):
                 'case_sensitive': {
                     'type': 'custom',
                     'tokenizer': 'keyword'
+                },
+                'caseInsensitiveKeyword': {
+                    'type': 'custom',
+                    'tokenizer': 'keyword',
+                    'filter': 'lowercase'
                 }
             },
         }
@@ -164,6 +169,18 @@ class DocumentType(SearchMappingType, Indexable):
                 'analyzer': 'kuma_title',
                 'boost': 1.2,  # the title usually has the best description
             },
+            'kumascript_macros': {
+                'type': 'string',
+                'analyzer': 'caseInsensitiveKeyword'
+            },
+            'css_classnames': {
+                'type': 'string',
+                'analyzer': 'caseInsensitiveKeyword'
+            },
+            'html_attributes': {
+                'type': 'string',
+                'analyzer': 'caseInsensitiveKeyword'
+            },
         }
 
     @classmethod
@@ -179,7 +196,10 @@ class DocumentType(SearchMappingType, Indexable):
             'locale': obj.locale,
             'modified': obj.modified,
             'content': strip_tags(obj.rendered_html),
-            'tags': list(obj.tags.values_list('name', flat=True))
+            'tags': list(obj.tags.values_list('name', flat=True)),
+            'kumascript_macros': obj.extract_kumascript_macro_names(),
+            'css_classnames': obj.extract_css_classnames(),
+            'html_attributes': obj.extract_html_attributes(),
         }
         if obj.zones.exists():
             # boost all documents that are a zone
@@ -232,3 +252,9 @@ class DocumentType(SearchMappingType, Indexable):
     def get_url(self):
         path = reverse('wiki.document', locale=self.locale, args=[self.slug])
         return '%s%s' % (settings.SITE_URL, path)
+    
+    def get_edit_url(self):
+        path = reverse('wiki.edit_document', locale=self.locale,
+                       args=[self.slug])
+        return '%s%s' % (settings.SITE_URL, path)
+

@@ -180,6 +180,49 @@ def extract_code_sample(id, src):
     return data
 
 
+def extract_css_classnames(content):
+    """Extract the unique set of class names used in the content"""
+    classnames = set()
+    try:
+        elements = pq(content).find('*')
+        def process_el(e):
+            cls = e.attr('class')
+            if cls:
+                classnames.update(cls.split(' '))
+        elements.each(process_el)
+    except:
+        pass
+    return classnames
+
+
+def extract_html_attributes(content):
+    """Extract the unique set of HTML attributes used in the content"""
+    try:
+        attribs = set()
+        for token in parse(content).stream:
+            if 'StartTag' == token['type']:
+                attribs.update(token['data'])
+        return ['%s="%s"' % x for x in attribs]
+    except:
+        return []
+
+
+def extract_kumascript_macro_names(content):
+    """Extract a unique set of KumaScript macro names used in the content"""
+    names = set()
+    try:
+        txt = []
+        for token in parse(content).stream:
+            if token['type'] in ('Characters', 'SpaceCharacters'):
+                txt.append(token['data'])
+        txt = ''.join(txt)
+        macro_re = re.compile('\{\{\s*([^\(\} ]+)', re.MULTILINE)
+        names.update(macro_re.findall(txt))
+    except:
+        pass
+    return names
+
+
 class ContentSectionTool(object):
 
     def __init__(self, src=None, is_full_document=False):
@@ -257,6 +300,7 @@ class ContentSectionTool(object):
         self.stream = SectionFilter(self.stream, id, replace_stream,
                                     ignore_heading=ignore_heading)
         return self
+
 
 class URLAbsolutionFilter(html5lib_Filter):
     """Filter which turns relative links into absolute links.
