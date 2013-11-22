@@ -176,12 +176,12 @@
   }
 
   a {
-    @extend .larger;
     color: #fff !important;
     display: block;
     padding: 100px grid-spacing grid-spacing grid-spacing;
     position: relative;
     overflow-x: hidden;
+    font-size: larger-font-size;
 
     &:before {
       bidi-style(content, '\f061', content, '\f060');
@@ -195,39 +195,15 @@
   }
 
   &.callout-apps {
-    background: #e66000;
-
-    i {
-      width: 200px;
-      height: 130px;
-      background: url(media-url-dir + 'HTML5_Logo.svg') center -70px no-repeat;
-    }
+    background: url(media-url-dir + 'HTML5_Logo.svg') 95% -70px no-repeat #e66000;
   }
 
   &.callout-android {
-    background: #97c03d;
-
-    i {
-      width: 260px;
-      height: 140px;
-      background: url(media-url-dir + 'promo-phone.png') center 0 no-repeat;
-    }
+    background: url(media-url-dir + 'promo-phone.png') 95% 0 no-repeat #97c03d;
   }
 
   &.callout-firefoxos {
-    background-color: #0095dd;
-
-    i {
-      width: 320px;
-      height: 150px;
-      background: url(media-url-dir + 'promo-fox.png') center 0 no-repeat;
-    }
-  }
-
-  &.callout-apps, &.callout-android, &.callout-firefoxos {
-    i {
-      background-size: cover;
-    }
+    background: url(media-url-dir + 'promo-fox.png') 95% 0 no-repeat #0095dd;
   }
 }
 
@@ -393,6 +369,12 @@
       }
     }
   }
+
+  .column-callout {
+    a {
+      font-size: base-bump-font-size;
+    }
+  }
 }
 
 /* mobile */
@@ -414,6 +396,12 @@
       float: none;
       margin-bottom: grid-spacing;
       margin-right: 0;
+    }
+
+    .column-callout {
+      a {
+        font-size: larger-font-size;
+      }
     }
 
     .home-callouts {
