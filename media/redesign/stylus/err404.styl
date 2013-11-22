@@ -1,0 +1,93 @@
+@import 'mixins'
+
+/* 404 - Animate the tumbeast's eyes. Original animation by J Zeller. */
+@-moz-keyframes crazylefteye {
+    0%   {left:125px; top:65px;}
+    10%  {left:118px; top:56px;}
+    20%  {left:118px; top:56px;}
+    40%  {left:148px; top:62px;}
+    50%  {left:145px; top:72px;}
+    60%  {left:121px; top:70px;}
+    70%  {left:125px; top:65px;}
+    100% {left:125px; top:65px;}
+}
+
+@-moz-keyframes crazyrighteye {
+    0%   {left:231px; top:68px;}
+    10%  {left:212px; top:62px;}
+    20%  {left:212px; top:62px;}
+    40%  {left:239px; top:64px;}
+    50%  {left:240px; top:80px;}
+    60%  {left:215px; top:73px;}
+    70%  {left:231px; top:68px;}
+    100% {left:231px; top:68px;}
+}
+
+@-webkit-keyframes crazylefteye {
+    0%   {left:125px; top:65px;}
+    10%  {left:118px; top:56px;}
+    20%  {left:118px; top:56px;}
+    40%  {left:148px; top:62px;}
+    50%  {left:145px; top:72px;}
+    60%  {left:121px; top:70px;}
+    70%  {left:125px; top:65px;}
+    100% {left:125px; top:65px;}
+}
+
+@-webkit-keyframes crazyrighteye {
+    0%   {left:231px; top:68px;}
+    10%  {left:212px; top:62px;}
+    20%  {left:212px; top:62px;}
+    40%  {left:239px; top:64px;}
+    50%  {left:240px; top:80px;}
+    60%  {left:215px; top:73px;}
+    70%  {left:231px; top:68px;}
+    100% {left:231px; top:68px;}
+}
+
+@keyframes crazylefteye {
+    0%   {left:125px; top:65px;}
+    10%  {left:118px; top:56px;}
+    20%  {left:118px; top:56px;}
+    40%  {left:148px; top:62px;}
+    50%  {left:145px; top:72px;}
+    60%  {left:121px; top:70px;}
+    70%  {left:125px; top:65px;}
+    100% {left:125px; top:65px;}
+}
+
+@keyframes crazyrighteye {
+    0%   {left:231px; top:68px;}
+    10%  {left:212px; top:62px;}
+    20%  {left:212px; top:62px;}
+    40%  {left:239px; top:64px;}
+    50%  {left:240px; top:80px;}
+    60%  {left:215px; top:73px;}
+    70%  {left:231px; top:68px;}
+    100% {left:231px; top:68px;}
+}
+
+#beastainer {
+    float: right;
+    position: relative;
+}
+
+#beast404re, #beast404le {
+    position: absolute;
+    vendorize(animation-delay, 6s);
+    vendorize(animation-duration, 7s);
+    vendorize(animation-iteration-count, infinite);
+    vendorize(animation-play-state, running);
+}
+
+#beast404re {
+    left: 231px;
+    top: 68px;
+    vendorize(animation-name, crazyrighteye);
+}
+
+#beast404le {
+    left: 125px;
+    top: 65px;
+    vendorize(animation-name, crazylefteye);
+}

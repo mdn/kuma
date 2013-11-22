@@ -578,6 +578,9 @@ MINIFY_BUNDLES = {
         'devderby': (
             'css/devderby.css',
         ),
+        'err404': (
+            'css/err404.css',
+        ),
         'search': (
             'css/search.css',
             'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
@@ -635,6 +638,9 @@ MINIFY_BUNDLES = {
         ),
         'redesign-demos': (
             'redesign/css/demo-studio.css',
+        ),
+        'redesign-err404': (
+            'redesign/css/err404.css',
         ),
         'redesign-home': (
             'redesign/css/home.css',
