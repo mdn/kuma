@@ -6,6 +6,7 @@ from django.http import (HttpResponseRedirect, HttpResponseForbidden)
 from devmo.urlresolvers import reverse
 
 from taggit.utils import parse_tags
+from waffle import flag_is_active
 
 from access.decorators import login_required
 from demos.models import Submission
@@ -13,7 +14,7 @@ from teamwork.models import Team
 
 from . import INTEREST_SUGGESTIONS
 from .models import Calendar, Event, UserProfile
-from .forms import UserProfileEditForm
+from .forms import UserProfileEditForm, SubscriptionForm
 
 
 DOCS_ACTIVITY_MAX_ITEMS = getattr(settings,
@@ -86,6 +87,7 @@ def my_profile(request):
 def profile_edit(request, username):
     """View and edit user profile"""
     profile = get_object_or_404(UserProfile, user__username=username)
+    context = {'profile': profile}
     if not profile.allows_editing_by(request.user):
         return HttpResponseForbidden()
 
@@ -94,6 +96,7 @@ def profile_edit(request, username):
         ('interests', 'profile:interest:'),
         ('expertise', 'profile:expertise:')
     )
+
 
     if request.method != 'POST':
         initial = dict(email=profile.user.email, beta=profile.beta_tester)
@@ -107,8 +110,13 @@ def profile_edit(request, username):
             initial[field] = ', '.join(t.name.replace(ns, '')
                                        for t in profile.tags.all_ns(ns))
 
-        # Finally, set up the form.
+        # Finally, set up the forms.
         form = UserProfileEditForm(instance=profile, initial=initial)
+
+        initial_sub = dict(email=profile.user.email)
+        subscription_form = SubscriptionForm(request.locale,
+                                             initial=initial_sub)
+        context['subscription_form'] = subscription_form
 
     else:
         form = UserProfileEditForm(request.POST, request.FILES,
@@ -137,10 +145,10 @@ def profile_edit(request, username):
 
             return HttpResponseRedirect(reverse(
                     'devmo.views.profile_view', args=(profile.user.username,)))
+    context['form'] = form
+    context['INTEREST_SUGGESTIONS'] = INTEREST_SUGGESTIONS
 
-    return render(request, 'devmo/profile_edit.html', dict(
-        profile=profile, form=form, INTEREST_SUGGESTIONS=INTEREST_SUGGESTIONS
-    ))
+    return render(request, 'devmo/profile_edit.html', context)
 
 
 @login_required

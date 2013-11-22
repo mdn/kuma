@@ -1,0 +1,55 @@
+<div class="apps-newsletter-subscribe module">
+<h3 class="mod-title">{{ _('Firefox Apps & Hacks Newsletter') }}</h3>
+{% if subscription_form %}
+<form id="newsletter-sub" class="fm-subscribe" action="{{ url('apps_newsletter') }}" method="POST">
+  {{ csrf() }}
+  <p class="mod-intro">{% trans %}
+    Sign up now for news about Firefox OS, Firefox Marketplace and the Open Web apps ecosystem.  <strong>Join us!</strong>
+  {% endtrans %}</p>
+
+  {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+        <li {% if message.tags %} class="notice {{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+    <fieldset>
+      <ol>
+        <li>
+          {{ subscription_form.email.errors }}
+          <label for="email">{{ subscription_form.email.label }}</label>
+          {{ subscription_form.email }}
+        </li>
+        <li>
+          {{ subscription_form.country.errors }}
+          <label for="country">{{ subscription_form.country.label }}</label>
+          {{ subscription_form.country }}
+        </li>
+        <li class="check">
+          {{ subscription_form.format.errors }}
+          <span class="label">{{ subscription_form.format.label }}</span>
+          <fieldset class="inline">
+            {% for c in subscription_form.fields.format.choices %}
+              <label for="sub-{{ c[0] }}"><input type="radio" name="format" value="{{ c[0] }}" id="sub-{{ c[0] }}" checked>{{ c[1] }}</label>
+            {% endfor %}
+          </fieldset>
+        </li>
+        <li class="agree">
+          {{ subscription_form.agree.errors }}
+          <label for="id_agree">
+            {{ subscription_form.agree }} {{subscription_form.agree.label}}
+            {% trans privacy_url='http://www.mozilla.org/en-US/privacy' %}
+              to the <a href="{{ privacy_url }}">Privacy Policy</a>
+            {% endtrans %}
+          </label>
+        </li>
+        <li class="fm-submit"><button type="submit" class="button positive">{{ _('Sign me up!') }}</button></li>
+      </ol>
+    </fieldset>
+    </form>
+{% else %}
+  <p>{{ _('Thank you for signing up for the Apps & Hacks newsletter!') }}</p>
+{% endif %}
+</div>

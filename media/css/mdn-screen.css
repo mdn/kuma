@@ -846,7 +846,7 @@ section.boxed:after, div.boxed:after, form.boxed:after { content: "."; display: 
 #apps #newsletter { margin-right: 0; }
 #apps .boxed .head { border-color: #e44d26; }
 
-.apps-newsletter-subscribe { width: 260px; margin: 0; border: 0; min-height: 300px; }
+.apps-newsletter-subscribe { margin: 0; border: 0; min-height: 300px; }
 #wait-modal, #error-modal { display: none; }
 
 /* @Learning pages *********/
@@ -1003,8 +1003,8 @@ table.activity tfoot td { text-align: right; padding: .5em 20px; }
 table.activity tfoot .feed { padding-left: 20px; background: url("../img/icons-links.png") 0 -349px no-repeat; }
 
 /* @Edit @Profile *********/
-#profile-edit { padding-left: 165px; position: relative; }
-#profile-edit .extra { width: 130px; position: absolute; left: 0; top: 0; font-size: .857em; }
+#profile-edit { padding-left: 265px; position: relative; }
+#profile-edit .extra { width: 260px; position: absolute; left: 0; top: 0; font-size: .857em; }
 #profile-edit .avatar { background: #fff; padding: 5px; -moz-box-shadow: 3px 3px 0 rgba(0,0,0,.1); -webkit-box-shadow: 3px 3px 0 rgba(0,0,0,.1); box-shadow: 3px 3px 0 rgba(0,0,0,.1); }
 #profile-edit .extra figcaption { margin: .5em 0 1.5em; }
 #profile-edit .extra li { margin: 0 0 .5em; }

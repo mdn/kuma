@@ -40,8 +40,7 @@
 
   <section id="content-main" class="full">
 
-    <form id="profile-edit" class="submission" method="post" action="">
-        {{ csrf() }}
+    <div id="profile-edit">
         <h1 class="page-title">{{ profile.user.username }}</h1>
       
       <div class="extra">
@@ -57,8 +56,15 @@
           {# TODO: Implement account deletion #}
           {# <li class="delete"><a href="#">{{ _('Delete my account') }}</a></li> #}
         </ul>
+
+        {% if waffle.flag('profile_subscription') %}
+            {% include "includes/newsletter_widget.html" %}
+        {% endif %}
+
       </div>
       
+      <form class="submission" method="post" action="">
+      {{ csrf() }}
       <fieldset class="section notitle" id="personal">
         <ul>
             <li id="field_email" class="field type_email required">
@@ -120,6 +126,7 @@
 
     </form>
 
+    </div>
 
 
   </section><!-- /#content-main -->
