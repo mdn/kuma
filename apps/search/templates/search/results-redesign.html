@@ -21,7 +21,7 @@
     <div class="column-container">
       <div class="column-1"><i aria-hidden="true" class="icon-file-text-alt"></i></div>
       <div class="column-5 result-list-item">
-        <h4><a href="{{ doc.url }}">{{ doc.title }}</a></h4>
+        <h4><a href="{{ doc.url }}"{% if index == 1 %} tabindex="1"{% endif %}>{{ doc.title }}</a></h4>
         <p>{{ doc.excerpt|safe }}</p>
         <p class="search-meta"><a href="{{ doc.url }}">{{ doc.url|replace('https://', '') }}</a>
         {% if user.is_superuser %}Score: <span title="explanation: {{ doc.explanation }}">{{ doc.score }}</span>{% endif%}
