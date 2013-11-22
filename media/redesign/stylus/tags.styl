@@ -142,3 +142,19 @@ button, input[type='submit'], input[type='button'] {
     margin-bottom: -1px;
   }
 }
+
+
+@media print {
+  /* Not a pretty selector but needed to keep Prism in check */
+  pre, pre[class*="language-"], code {
+    white-space: pre-wrap;
+
+    &, & span {
+      color: text-color !important;
+    }
+
+    span {
+      display: inline-block !important;
+    }
+  }
+}
