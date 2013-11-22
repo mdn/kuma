@@ -626,6 +626,9 @@ MINIFY_BUNDLES = {
             'js/prism-mdn/plugins/line-numbering/prism-line-numbering.css',
             'js/prism-mdn/components/prism-json.css',
         ),
+        'promote': (
+            'css/promote.css',
+        ),
         'redesign-main': (
             'redesign/css/main.css',
             'redesign/css/zones.css',
@@ -650,6 +653,9 @@ MINIFY_BUNDLES = {
         ),
         'redesign-wiki-syntax': (
           'redesign/css/wiki-syntax.css',
+        ),
+        'redesign-promote': (
+          'redesign/css/promote.css',
         ),
     },
     'js': {

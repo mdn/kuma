@@ -4,9 +4,11 @@
 
 {% block title %}{{ page_title(_('Promote MDN')) }}{% endblock %}
 
-{% block extrahead %}
-<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/promote.css" />
-{% endblock %}
+{% if waffle.flag('redesign') %}
+  {% set styles = ('redesign-promote',) %}
+{% else %}
+  {% set styles = ('promote',) %}
+{% endif %}
 
 {% block content %}
 
@@ -15,9 +17,12 @@
 
   <header id="page-head">
     <div class="wrap">
-      {# <nav class="crumb"><a href="{{ url('promote') }}">{{ _('Back to Home') }}</a></nav> #}
-      <h1 class="page-title">{{ _('Promote MDN') }}</h1>
-      <h2 class="page-subtitle">{{ _('Spread some developer love.') }}</h2>
+      {% if waffle.flag('redesign') %}
+        <h1>{{ _('Promote MDN') }}</h1>
+      {% else %}
+        <h1 class="page-title">{{ _('Promote MDN') }}</h1>
+      {% endif %}
+      <h2>{{ _('Spread some developer love.') }}</h2>
       {% trans %}
       <ol>
           <li><strong>Get Buttons:</strong> Use our simple form below to create a custom button and source code to promote MDN on your website or blog.</li>
@@ -38,7 +43,7 @@
             </div>
 
             <fieldset id="step-design" class="step">
-                <h3><b>1</b> {{_('Pick your button style')}}</h3>
+                <h3>{{_('Choose a button style')}}</h3>
                 <ul>
                     <li>
                         <label for="button-design-betterdocs">
@@ -68,7 +73,7 @@
             </fieldset>
 
             <fieldset id="step-color" class="step">
-                <h3><b>2</b> {{_('Choose a color')}}</h3>
+                <h3>{{_('Choose a color')}}</h3>
                 <ul>
                     <li class="gray">
                         <label for="button-color-gray">
@@ -92,7 +97,7 @@
             </fieldset>
 
             <fieldset id="step-topic" class="step">
-                <h3><b>3</b>{{_('Replace <FOO> with')}}</h3>
+                <h3>{{_('Replace &lt;FOO&gt; with')}}</h3>
                 <ul>
                     <li>
                         <label for="button-topic-css">
@@ -122,7 +127,7 @@
             </fieldset>
 
             <section id="step-code" class="step">
-                <h3><b>4</b> {{_('Add your custom button to your website')}}</h3>
+                <h3>{{_('Add your custom button to your website')}}</h3>
                 <h4>{{_('Your source code:')}}</h4>
                     <textarea id="button-code" cols="40" rows="7"></textarea>
                 <h4>{{_('Your button will take people to:')}}</h4>

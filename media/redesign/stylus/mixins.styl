@@ -92,6 +92,12 @@ compat-important(prop, value) {
   {prop}: value !important;
 }
 
+/* Override an !important set by compat-important() with another !important.
+   This should be removed after all CSS has been migrated to Stylus. */
+override-compat-important(prop, value) {
+    compat-important(prop, value);
+}
+
 /* used for style which are only present to override other styles -- these will be deleted once legacy design is gone */
 compat-only(prop, value, more-selector = '') {
   compat-important(prop, value);
