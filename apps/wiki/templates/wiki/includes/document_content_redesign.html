@@ -228,12 +228,12 @@
 
           {% if document.current_revision %}
             {% if document.current_revision.needs_technical_review() %}
-              <div class="warning">{% trans %}
+              <div class="warning warning-review">{% trans %}
                 <p>This article is in need of a technical review.</p>
               {% endtrans %}</div>
             {% endif %}
             {% if document.current_revision.needs_editorial_review() %}
-              <div class="warning">{% trans %}
+              <div class="warning warning-review">{% trans %}
                 <p>This article is in need of an editorial review.</p>
               {% endtrans %}</div>
             {% endif %}

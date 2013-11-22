@@ -41,6 +41,12 @@ enable-toc-toggle() {
   padding-right: 0;
 }
 
+.review-base {
+  compat-important(background, #fbf8e9);
+  compat-important(border-color, #f9f3d9);
+  compat-only(color, text-color);
+}
+
 
 /* general wiki section */
 #content-main {
@@ -127,9 +133,7 @@ enable-toc-toggle() {
 .reviews {
   set-message-base();
   @extend .smaller;
-
-  background: #fbf8e9;
-  border-color: #f9f3d9;
+  @extend .review-base
 
   p {
     margin: 0;
@@ -362,6 +366,10 @@ article {
   pre {
     padding: (grid-spacing / 2) !important;
     background: none repeat scroll 0 0 rgba(255, 255, 255, 0.7) !important;
+  }
+
+  &.warning-review, p {
+    @extend .review-base;
   }
 }
 
