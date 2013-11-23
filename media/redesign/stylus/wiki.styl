@@ -368,8 +368,12 @@ article {
     background: none repeat scroll 0 0 rgba(255, 255, 255, 0.7) !important;
   }
 
-  &.warning-review, p {
+  &.warning-review {
     @extend .review-base;
+
+    p {
+      compat-important(color, text-color);
+    }
   }
 }
 
