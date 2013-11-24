@@ -7,6 +7,8 @@ from devmo.urlresolvers import reverse
 
 from taggit.utils import parse_tags
 
+from waffle import flag_is_active
+
 from access.decorators import login_required
 from demos.models import Submission
 from teamwork.models import Team
@@ -68,7 +70,11 @@ def profile_view(request, username):
                                                                user)
         show_manage_roles_button = (len(roles_by_team) > 0)
 
-    return render(request, 'devmo/profile.html', dict(
+    template = 'devmo/profile.html'
+    if flag_is_active(request, 'redesign'):
+            template = 'devmo/profile_redesign.html'
+
+    return render(request, template, dict(
         profile=profile, demos=demos, demos_paginator=demos_paginator,
         demos_page=demos_page, docs_feed_items=docs_feed_items,
         wiki_activity=wiki_activity,
