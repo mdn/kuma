@@ -351,17 +351,17 @@ article {
 /* notice at the top of the article */
 .notice {
   set-message-base();
+  font-size: base-font-size;
   compat-important(border-width, 2px);
 }
 
 /* warning elements */
 .warning {
   set-message-base();
-  @extend .smaller;
-
   background: rgba( 193, 56, 50, 0.85);
   compat-important(border-color, rgba(0, 0, 0, 0.1));
   compat-only(color, #fff);
+  font-size: base-font-size;
 
   pre {
     padding: (grid-spacing / 2) !important;
