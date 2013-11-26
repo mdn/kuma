@@ -227,17 +227,12 @@ class DocumentAdmin(admin.ModelAdmin):
                disable_deferred_rendering_for_documents,
                repair_breadcrumbs)
     change_list_template = 'admin/wiki/document/change_list.html'
-    fields = ('locale', 'title', 'defer_rendering', 'parent',
-              'parent_topic', 'category',)
+    fields = ('locale', 'title', 'defer_rendering', 'render_expires',
+              'render_max_age', 'parent', 'parent_topic', 'category',)
     list_display = ('id', 'locale', 'slug', 'title',
                     document_link,
                     'modified',
-                    # HACK: This is temporary, just to help us see & sort
-                    # documents by an empty reviewed field on current revision.
-                    # This is symptomatic of a migration issue, and this field
-                    # should be removed from the admin list after bug 769129 is
-                    # resolved.
-                    current_revision_reviewed,
+                    'render_expires', 'render_max_age',
                     rendering_info,
                     document_nav_links,
                     revision_links,)

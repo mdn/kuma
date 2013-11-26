@@ -942,7 +942,6 @@ SOUTH_MIGRATION_MODULES = {
     'taggit': 'migrations.south.taggit',
     # HACK: South treats "database" as the name of constance.backends.database
     'database': 'migrations.south.constance',
-    'djcelery': 'migrations.south.djcelery',
 }
 
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'

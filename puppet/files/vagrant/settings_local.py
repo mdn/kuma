@@ -30,7 +30,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #EMAIL_FILE_PATH = '/home/vagrant/logs/kuma-email.log'
 
 # Uncomment to enable a real celery queue
-#CELERY_ALWAYS_EAGER = False
+CELERY_ALWAYS_EAGER = False
 
 INSTALLED_APPS = INSTALLED_APPS + (
     "django_extensions",

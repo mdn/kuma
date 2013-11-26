@@ -417,6 +417,27 @@ class BaseDocumentManager(models.Manager):
     def get_by_natural_key(self, locale, slug):
         return self.get(locale=locale, slug=slug)
 
+    def get_by_stale_rendering(self):
+        """Find documents whose renderings have gone stale"""
+        return (self.exclude(render_expires__isnull=True)
+                    .filter(render_expires__lte=datetime.now()))
+
+    def render_stale(self, immediate=False, log=None):
+        """Perform rendering for stale documents"""
+        from . import tasks
+        stale_docs = self.get_by_stale_rendering()
+        if log:
+            log.info("Found %s stale documents" % stale_docs.count())
+        for doc in stale_docs:
+            if immediate:
+                doc.render('no-cache', settings.SITE_URL)
+                if log:
+                    log.info("Rendered stale %s" % doc)
+            else:
+                tasks.render_document.delay(doc, 'no-cache', settings.SITE_URL)
+                if log:
+                    log.info("Deferred rendering for stale %s" % doc)
+
     def allows_add_by(self, user, slug):
         """Determine whether the user can create a document with the given
         slug. Mainly for enforcing Template: editing permissions"""
@@ -679,6 +700,12 @@ class Document(NotificationsMixin, models.Model):
     # Timestamp when this document was last rendered
     last_rendered_at = models.DateTimeField(null=True, db_index=True)
 
+    # Maximum age (in seconds) before this document needs re-rendering
+    render_max_age = models.IntegerField(blank=True, null=True)
+
+    # Time after which this document needs re-rendering
+    render_expires = models.DateTimeField(blank=True, null=True, db_index=True)
+
     # A document's category much always be that of its parent. If it has no
     # parent, it can do what it wants. This invariant is enforced in save().
     category = models.IntegerField(choices=CATEGORIES, db_index=True)
@@ -838,6 +865,14 @@ class Document(NotificationsMixin, models.Model):
         # TODO: Automatically clear the defer_rendering flag if the rendering
         # time falls under the limit? Probably safer to require manual
         # intervention to free docs from deferred jail.
+
+        if self.render_max_age:
+            # If there's a render_max_age, automatically update render_expires
+            self.render_expires = (datetime.now() +
+                                   timedelta(seconds=self.render_max_age))
+        else:
+            # Otherwise, just clear the expiration time as a one-shot
+            self.render_expires = None
 
         self.save()
         render_done.send(sender=self.__class__, instance=self)
@@ -1081,7 +1116,7 @@ class Document(NotificationsMixin, models.Model):
         revise this document"""
         curr_rev = self.current_revision
         new_rev = Revision(creator=user, document=self, content=self.html)
-        for n in ('title', 'slug', 'category'):
+        for n in ('title', 'slug', 'category', 'render_max_age'):
             setattr(new_rev, n, getattr(self, n))
         if curr_rev:
             new_rev.toc_depth = curr_rev.toc_depth
@@ -1920,6 +1955,9 @@ class Revision(models.Model):
     toc_depth = models.IntegerField(choices=TOC_DEPTH_CHOICES,
                                     default=TOC_DEPTH_ALL)
 
+    # Maximum age (in seconds) before this document needs re-rendering
+    render_max_age = models.IntegerField(blank=True, null=True)
+
     created = models.DateTimeField(default=datetime.now, db_index=True)
     reviewed = models.DateTimeField(null=True)
     significance = models.IntegerField(choices=SIGNIFICANCES, null=True)
@@ -2029,6 +2067,7 @@ class Revision(models.Model):
         self.document.title = self.title
         self.document.slug = self.slug
         self.document.html = self.content_cleaned
+        self.document.render_max_age = self.render_max_age
         self.document.current_revision = self
 
         # Since Revision stores tags as a string, we need to parse them first
