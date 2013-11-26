@@ -85,7 +85,7 @@
   $('#id_content').each(function() {
     if (!$('body').is('.edit.is-template')) {
       $(this).ckeditor(setup_ckeditor, {
-        customConfig: '/docs/ckeditor_config.js'
+        customConfig : '/docs/ckeditor_config.js?' + ($('html').hasClass('redesign') ? 'redesign' : 'old')
       });
     }
   });
