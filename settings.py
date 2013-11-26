@@ -617,7 +617,7 @@ MINIFY_BUNDLES = {
             'redesign/css/users.css',
         ),
         'tagit': (
-            'css/jquery.tagit.css',
+            'css/libs/jquery.tagit.css',
         ),
         'syntax-prism': (
             'js/libs/prism/prism.css',
