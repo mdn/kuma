@@ -15,7 +15,7 @@ if [ ! -d "$CSSDIR" ]; then
   mkdir $CSSDIR
 fi
 
-FILENAMES=(main wiki demo-studio profile search zones home wiki-syntax users no-js err404 promote)
+FILENAMES=(main wiki demo-studio profile search zones home wiki-syntax users no-js err404 promote sphinx)
 STYLESHEETS=$(printf "$STYLUSDIR/%s.styl " "${FILENAMES[@]}")
 if [ $WATCH ]; then
   echo Watching and automatically compiling stylesheets
