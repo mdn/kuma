@@ -142,12 +142,12 @@ https://wiki.mozilla.org/MDN/Development/Redesign/Testing">Here\'s how you can h
   <!-- Header -->
   <header id="main-header"><div class="center">
 
-    <ul class="offscreen">
+    <ul id="nav-access">
+      <li><a href="#content">{{ _('Skip to main content') }}</a></li>
       <li><a href="#language">{{ _('Select language') }}</a></li>
       {% if not is_sphinx %}
         <li><a href="#q" id="skip-search">{{ _('Skip to search') }}</a></li>
       {% endif %}
-      <li><a href="#content">{{ _('Skip to main content') }}</a></li>
     </ul>
 
     <div class="clear header-login">

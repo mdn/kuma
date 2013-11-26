@@ -51,6 +51,27 @@
 
 #nav-access {
   width: 0;
+  position: absolute;
+  top: -20em;
+  width: 100%;
+  z-index: 999;
+
+  a {
+    compat-important(color, #fff);
+    compat-important(background, text-color);
+    width: 200px;
+    padding: 4px 10px;
+    outline: 0; 
+    display: inline-block;
+    position: absolute;
+    box-shadow: 2px 2px 3px rgba(0,0,0,.5);
+
+    &:hover, &:focus {
+      top: 19em;
+      compat-important(background, text-color);
+      text-decoration: none;
+    }
+  }
 }
 
 #main-nav {
