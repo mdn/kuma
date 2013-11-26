@@ -119,7 +119,7 @@ def render_document(doc, cache_control, base_url):
     doc.render(cache_control, base_url)
 
 
-@task(rate_limit='6/h')
+@task
 def render_stale_documents(immediate=False):
     """Simple task wrapper for rendering stale documents"""
     Document.objects.render_stale(immediate=immediate, log=log)
