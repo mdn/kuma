@@ -563,7 +563,6 @@ MINIFY_BUNDLES = {
             'css/fonts.css',
             'css/mdn-screen.css',
             'css/video-player.css',
-            'css/mdn-calendar.css',
             'css/redesign-transition.css',
         ),
         'popup': (
@@ -580,6 +579,9 @@ MINIFY_BUNDLES = {
         ),
         'err404': (
             'css/err404.css',
+        ),
+        'mdn-calendar': (
+            'css/mdn-calendar.css',
         ),
         'search': (
             'css/search.css',
@@ -653,6 +655,9 @@ MINIFY_BUNDLES = {
         ),
         'redesign-home': (
             'redesign/css/home.css',
+        ),
+        'redesign-mdn-calendar': (
+            'redesign/css/mdn-calendar.css',
         ),
         'redesign-profile': (
             'redesign/css/profile.css',

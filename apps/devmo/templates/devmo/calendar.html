@@ -1,10 +1,14 @@
 {% extends "base.html" %}
 
 {% block pageid %}calendar{% endblock %}
-
 {% block bodyclass %}section-community calendar{% endblock %}
-
 {% block title %}{{ page_title(_('Where is Mozilla?')) }}{% endblock %}
+
+{% if waffle.flag('redesign') %}
+  {% set styles = ('redesign-mdn-calendar',) %}
+{% else %}
+  {% set styles = ('mdn-calendar',) %}
+{% endif %}
 
 {% block content %}
 
@@ -13,7 +17,11 @@
 
   <section id="content-main" class="full" role="main">
     <header id="page-head">
-      <h1 class="page-title">{{ _('Where is Mozilla?') }}</h1>
+      {% if waffle.flag('redesign') %}
+        <h1>{{ _('Where is Mozilla?') }}</h1>
+      {% else %}
+        <h1 class="page-title">{{ _('Where is Mozilla?') }}</h1>
+      {% endif %}
       <p>
         {% trans %}
         Here you can see some of the developer events at which Mozilla will be
