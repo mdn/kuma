@@ -98,7 +98,7 @@ https://wiki.mozilla.org/MDN/Development/Redesign/Testing">{{ _('Learn how you c
 <!-- hacks area -->
 <div class="home-hacks"><div class="column-container center">
   <div class="column-hacks">
-    <h2><i aria-hidden="true" class="icon-star"></i> {{ _('Hacks Blog <a href="http://hacks.mozilla.org">read more at hacks.mozilla.org <i aria-hidden="true" class="icon-arrow-right"></i></a>') }}</h2>
+    <h2><i aria-hidden="true" class="icon-star"></i> Hacks Blog<span class="heading-link">{{ _('<a href="http://hacks.mozilla.org">read more at hacks.mozilla.org <i aria-hidden="true" class="icon-arrow-right"></i></a></span>') }}</h2>
     {{ newsfeed(updates, section_headers=True) }}
   </div>
   <div class="column-involved">
@@ -124,9 +124,9 @@ https://wiki.mozilla.org/MDN/Development/Redesign/Testing">{{ _('Learn how you c
 
 <h2><i aria-hidden="true" class="icon-magic blue"></i> {{ _('See & submit demos') }}
   {% if not waffle.flag('derby_closed') %}
-    <a href="{{ url('demos_devderby_landing') }}">{{ _('MDN Dev Derby <i aria-hidden="true" class="icon-arrow-right"></i>') }}</a>
+    <a href="{{ url('demos_devderby_landing') }}" class="heading-link">{{ _('MDN Dev Derby <i aria-hidden="true" class="icon-arrow-right"></i>') }}</a>
   {% else %}
-    <a href="{{ url('demos') }}">{{ _('MDN Demo Studio <i aria-hidden="true" class="icon-arrow-right"></i>') }}</a>
+    <a href="{{ url('demos') }}" class="heading-link">{{ _('MDN Demo Studio <i aria-hidden="true" class="icon-arrow-right"></i>') }}</a>
   {% endif %}
 </h2>
 <ul>
