@@ -2,7 +2,11 @@
 {% extends "base.html" %}
 {% set title = _('Revision Dashboard') %}
 {% set scripts = ('dashboards',) %}
-{% set styles = ('dashboards', 'wiki') %}
+{% if waffle.flag('redesign') %}
+  {% set styles = ('redesign-dashboards', 'redesign-wiki') %}
+{% else %}
+  {% set styles = ('dashboards', 'wiki') %}
+{% endif %}
 {% set crumbs = [(None, title)] %}
 {% set classes = 'compare' %}
 
@@ -57,13 +61,23 @@
     </section>
     <section id="revisions-compare">
       <section id="action-bar">
+      {% if waffle.flag('redesign') %}
       <ul id="page-buttons">
-        <li> <a id="revert" href="#"><i aria-hidden="true" class="icon-undo"></i>{{ _('Revert') }}</a> </li>
-        <li> <a id="view" href="#"><i aria-hidden="true" class="icon-circle-arrow-right"></i>{{ _('View Page') }}</a> </li>
-        <li class="page-edit"><a id="edit" href="#"><i aria-hidden="true" class="icon-pencil"></i>{{ _('Edit Page') }}</a> </li>
-        <li class="page-history"><a id="history" href="#"><i aria-hidden="true" class="icon-book"></i>{{ _('History') }}</a> </li>
+        <li><a id="revert" href="#" class="button">{{ _('Revert') }}<i aria-hidden="true" class="icon-undo"></i></a></li>
+        <li><a id="view" href="#" class="button">{{ _('View Page') }}<i aria-hidden="true" class="icon-circle-arrow-right"></i></a></li>
+        <li class="page-edit"><a id="edit" href="#" class="button">{{ _('Edit Page') }}<i aria-hidden="true" class="icon-pencil"></i></a></li>
+        <li class="page-history"><a id="history" href="#" class="button">{{ _('History') }}<i aria-hidden="true" class="icon-book"></i></a></li>
         <li id="ban-user"></li>
       </ul>
+      {% else %}
+        <ul id="page-buttons">
+          <li><a id="revert" href="#"><i aria-hidden="true" class="icon-undo"></i>{{ _('Revert') }}</a> </li>
+          <li><a id="view" href="#"><i aria-hidden="true" class="icon-circle-arrow-right"></i>{{ _('View Page') }}</a> </li>
+          <li class="page-edit"><a id="edit" href="#"><i aria-hidden="true" class="icon-pencil"></i>{{ _('Edit Page') }}</a> </li>
+          <li class="page-history"><a id="history" href="#"><i aria-hidden="true" class="icon-book"></i>{{ _('History') }}</a> </li>
+          <li id="ban-user"></li>
+        </ul>
+      {% endif %}
       </section>
 
       <h2>{{ _('Revision Diff') }}</h2>
