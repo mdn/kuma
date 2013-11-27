@@ -102,6 +102,7 @@
 {% block extrahead %}
   {% if waffle.flag('redesign') %}
     {{ css('redesign-sphinx') }}
+  {% else %}
+    {{ css('sphinx') }}
   {% endif %}
-  {{ css('sphinx') }}
 {% endblock %}
