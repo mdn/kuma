@@ -48,6 +48,9 @@
 
 {% if is_zone %}
   {% if is_zone_root %}
+
+    {% set show_zone_landing_subnav = (zone_subnav_html or quick_links_html)  %}
+
     <div class="zone-landing-header"><div class="center">
       <!-- edit, settings buttons -->
       {{ get_document_buttons(document) }}
@@ -57,6 +60,7 @@
 
       <h1>{{ document.title }}</h1>
 
+      {% if show_zone_landing_subnav %}
       <div class="column-container zone-landing-header-preview">
         <div class="column-strip">
           <div class="zone-landing-header-preview-base">
@@ -74,6 +78,9 @@
         </div>
         <div class="column-5 masthead-text"><p>{{ document|selector_content_find('.summary') }}</p></div>
       </div>
+      {% else %}
+        <div class="column-5 masthead-text"><p>{{ document|selector_content_find('.summary') }}</p></div>
+      {% endif %}
 
       <div class="zone-image"></div>
     </div></div>
