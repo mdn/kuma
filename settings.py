@@ -635,6 +635,9 @@ MINIFY_BUNDLES = {
         ),
         'redesign-wiki': (
             'redesign/css/wiki.css',
+            'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
+            'css/jqueryui/moz-jquery-plugins.css',
+            'redesign/css/diff.css',
         ),
         'redesign-search': (
             'redesign/css/search.css',
@@ -656,6 +659,12 @@ MINIFY_BUNDLES = {
         ),
         'redesign-promote': (
           'redesign/css/promote.css',
+        ),
+        'redesign-dashboards': (
+            'redesign/css/dashboards.css',
+            'redesign/css/diff.css',
+            'js/libs/DataTables-1.9.4/media/css/jquery.dataTables.css',
+            'js/libs/DataTables-1.9.4/extras/Scroller/media/css/dataTables.scroller.css',
         ),
     },
     'js': {
