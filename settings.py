@@ -636,6 +636,12 @@ MINIFY_BUNDLES = {
         'redesign-wiki': (
             'redesign/css/wiki.css',
         ),
+        'redesign-sphinx': (
+            'redesign/css/wiki.css',
+            'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
+            'css/jqueryui/moz-jquery-plugins.css',
+            'redesign/css/sphinx.css',
+        ),
         'redesign-search': (
             'redesign/css/search.css',
         ),
