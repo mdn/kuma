@@ -54,7 +54,7 @@
           initialized = 1;
 
           // Hide the submenu when the main menu is blurred for hideDelay
-          $self.on('mouseleave', function() {
+          $self.on('mouseleave focusout', function() {
             clear(showTimeout);
             closeSubmenu($submenu);
           });
@@ -66,7 +66,7 @@
           });
 
           // Cancel the close timeout if moving from main menu item to submenu
-          $submenu.on('mouseenter', function() {
+          $submenu.on('mouseenter focusin', function() {
             clear(closeTimeout);
           });
 
@@ -77,11 +77,6 @@
               $submenu.ignoreFocus = true;
               setTimeout(function() { $submenu.ignoreFocus = false; }, 10);
               $self[0].focus();
-            }
-            else if(e.keyCode == 9) { // Tab
-              if(e.target == $submenu.find('a').last().get(0)) {
-                closeSubmenu($submenu);
-              }
             }
           });
         }
