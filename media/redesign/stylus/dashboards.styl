@@ -1,0 +1,140 @@
+/*
+  Used to style the dashboard widgets in the dashboard apps
+*/
+
+@import 'vars'
+@import 'mixins'
+
+
+.dashboard {
+
+  tbody { 
+    white-space: no-wrap;
+    overflow: hidden;
+  }
+
+  #action-bar { 
+    position: relative; 
+  }
+
+  #revisions-compare { 
+    width: 100%; 
+  }
+
+  #revisions-table {
+    tr {
+      vendorize(transition-property, all);
+      vendorize(transition-duration, .5s);
+      cursor: pointer;
+
+      &:hover {
+        create-gradient(#cae1f4, #eee, top); /* "to bottom" as the standard */
+      }
+
+      &.selected {
+        create-gradient(#d7d3c8, #f6f4ec, top); /* "to bottom" as the standard */
+        font-weight: bold;
+      }
+    }
+  }
+
+  div.DTS div.dataTables_scrollHead {
+    create-gradient(#424f5a, #6a7b86, top); /* "to bottom" as the standard */
+    color: #fff;
+  }
+
+  table.dataTable {
+    tr.odd {
+      create-gradient(#d4dde4, #eaeff2, top); /* "to bottom" as the standard */
+    }
+
+    td {
+      border-right: 1px solid #ccc;
+      white-space: normal;
+      vertical-align: top;
+    }
+  }
+
+  #revisions-table {
+    .revision-head-date, .revision-head-author {
+      width: 20% !important;
+    }
+    .dashboard-comment {
+      color: #666;
+      display: block;
+      font-style: italic;
+      margin-right: 50px;
+      padding-top: 3px;
+
+      .selected & {
+        font-weight: normal;
+      }
+    }
+    .dash-locale {
+      float: right;
+      padding-top: 3px;
+    }
+    .dashboard-new {
+        font-weight: bold;
+    }
+  }
+
+  .dataTables_info {
+      float: none;
+      text-align: right;
+      padding: 10px 20px;
+  }
+
+  table.dataTable {
+    thead {
+      th {
+        pointer-events: none;
+      }
+    }
+  }
+
+  #page-buttons {
+    position: static;
+    margin: 20px 0;
+    width: 100%;
+  }
+
+  #revision-address {
+    color: #666;
+    margin: -10px 0 20px;
+  }
+
+  #revision-filter {
+    display: block;
+    margin: 0 0 20px 0;
+
+    select, input {
+      margin-right: 30px;
+      display: inline-block;
+    }
+
+    label {
+      font-weight: bold;
+    }
+  }
+
+  #dashboard-filter {
+    height: 50px;
+
+    li {
+      float: left;
+      height: 50px;
+      margin-right: 25px;
+    }
+  }
+
+  .doc-list {
+      width: 100%;
+
+      tr {
+        th {
+          font-weight: bold;
+        }
+      }
+  }
+}

@@ -2,7 +2,11 @@
 
 {% set title = _('Localization Dashboard') %}
 {% set scripts = ('dashboards',) %}
-{% set styles = ('dashboards', 'wiki') %}
+{% if waffle.flag('redesign') %}
+  {% set styles = ('redesign-dashboards', 'redesign-wiki') %}
+{% else %}
+  {% set styles = ('dashboards', 'wiki') %}
+{% endif %}
 {% set crumbs = [(None, title)] %}
 {% set classes = 'compare' %}
 
