@@ -75,7 +75,8 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'mi', 'mlabeledtr', 'mmultiscripts', 'mn', 'mo', 'mover', 'mpadded',
     'mphantom', 'mroot', 'mrow', 'ms', 'mspace', 'msqrt', 'mstyle',
     'msub', 'msup', 'msubsup', 'mtable', 'mtd', 'mtext', 'mtr', 'munder',
-    'munderover', 'none', 'mprescripts',
+    'munderover', 'none', 'mprescripts', 'semantics', 'annotation',
+    'annotation-xml',
 ]
 ALLOWED_ATTRIBUTES = bleach.ALLOWED_ATTRIBUTES
 # Note: <iframe> is allowed, but src="" is pre-filtered before bleach
@@ -119,6 +120,8 @@ ALLOWED_ATTRIBUTES['time'] += ['datetime']
 ALLOWED_ATTRIBUTES['ins'] = ['datetime']
 ALLOWED_ATTRIBUTES['del'] = ['datetime']
 # MathML
+ALLOWED_ATTRIBUTES.update(dict((x, ['encoding', 'src']) for x in (
+    'annotation', 'annotation-xml')))
 ALLOWED_ATTRIBUTES.update(dict((x, ['href', 'mathbackground', 'mathcolor',
     'id', 'class', 'style']) for x in (
     'math', 'maction', 'menclose', 'merror', 'mfenced', 'mfrac', 'mglyph',
@@ -133,7 +136,8 @@ ALLOWED_ATTRIBUTES['math'] += ['display', 'dir', 'selection', 'notation',
     'columnlines', 'frame', 'rowalign', 'rowspacing', 'rowspan', 'columnspan',
     'accent', 'accentunder', 'dir', 'mathsize', 'mathvariant',
     'subscriptshift', 'supscriptshift', 'scriptlevel', 'displaystyle',
-    'scriptsizemultiplier', 'scriptminsize']
+    'scriptsizemultiplier', 'scriptminsize', 'altimg', 'altimg-width',
+    'altimg-height', 'altimg-valign', 'alttext']
 ALLOWED_ATTRIBUTES['maction'] += ['actiontype', 'selection']
 ALLOWED_ATTRIBUTES['menclose'] += ['notation']
 ALLOWED_ATTRIBUTES['mfenced'] += ['close', 'open', 'separators']
