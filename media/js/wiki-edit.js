@@ -183,7 +183,7 @@
             .data('edit_url', section_edit_url)
             .data('editor',
                 CKEDITOR.replace(ui.find('.src')[0], {
-                    customConfig : '/docs/ckeditor_config.js'
+                    customConfig : '/docs/ckeditor_config.js?' + ($('html').hasClass('redesign') ? 'redesign' : 'old')
                 }))
             .find('.btn-save').data('save_cb', saveSectionEdit).end();
     }

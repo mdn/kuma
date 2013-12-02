@@ -66,9 +66,8 @@
     var $el = $(this);
     if (!$body.is('.is-template')) {
       $el.removeAttr('required').ckeditor(setup, {
-        customConfig : '/docs/ckeditor_config.js'
+        customConfig : '/docs/ckeditor_config.js?' + ($('html').hasClass('redesign') ? 'redesign' : 'old')
       });
     }
   });
-
 })(jQuery);
