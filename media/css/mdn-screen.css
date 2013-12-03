@@ -838,6 +838,9 @@ section.boxed:after, div.boxed:after, form.boxed:after { content: "."; display: 
   margin: 3px -10px 1em;
   text-shadow: 1px 2px 0 rgba(0, 0, 0, 0.15);
 }
+#apps p {
+  min-height: 410px; /* The height of the background image. */
+}
 
 #apps .modules:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
 #apps .modules .boxed { font-size: .857em; word-wrap: break-word; position: relative; padding-bottom: 3.75em; float: left; width: 254px; margin: 0 30px 2em 0; }

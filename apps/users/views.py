@@ -37,10 +37,10 @@ from users.forms import (ProfileForm, AvatarForm, EmailConfirmationForm,
                          BrowserIDRegisterForm,
                          EmailReminderForm, UserBanForm)
 from users.models import Profile, RegistrationProfile, EmailChange, UserBan
-from devmo.models import UserProfile
 from users.utils import (handle_login, handle_register, send_reminder_email,
                          statsd_waffle_incr)
-
+from devmo.models import UserProfile
+from devmo.forms import SubscriptionForm
 
 SESSION_VERIFIED_EMAIL = getattr(settings, 'BROWSERID_SESSION_VERIFIED_EMAIL',
                                  'browserid_verified_email')
@@ -204,9 +204,13 @@ def browserid_register(request):
     # for the next request.
     request.session.modified = True
 
+    initial_sub = dict(email=email)
+    subscription_form = SubscriptionForm(request.locale,
+                                         initial=initial_sub)
     return render(request, 'users/browserid_register.html',
                         {'login_form': login_form,
-                         'register_form': register_form})
+                         'register_form': register_form,
+                         'subscription_form': subscription_form})
 
 
 @ssl_required

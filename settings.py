@@ -677,6 +677,9 @@ MINIFY_BUNDLES = {
             'js/libs/DataTables-1.9.4/media/css/jquery.dataTables.css',
             'js/libs/DataTables-1.9.4/extras/Scroller/media/css/dataTables.scroller.css',
         ),
+        'newsletter-widget': (
+            'redesign/css/newsletter-widget.css',
+        ),
     },
     'js': {
         'mdn': (
@@ -775,6 +778,9 @@ MINIFY_BUNDLES = {
         ),
         'redesign-search': (
             'redesign/js/search.js',
+        ),
+        'newsletter-widget': (
+            'redesign/js/newsletter-widget.js',
         ),
     },
 }
