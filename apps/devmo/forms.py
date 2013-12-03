@@ -21,13 +21,16 @@ class SubscriptionForm(forms.Form):
     """
     Form to capture and validate email subscriptions
     """
-    email = forms.EmailField(label=_(u'Your e-mail address'),
+    email = forms.EmailField(label=_(u'E-mail address'),
                              error_messages={'required': EMAIL_REQUIRED,
                                              'min_length': EMAIL_SHORT,
                                              'max_length': EMAIL_LONG})
+
+    formatChoices = [('html', 'HTML'), ('text', 'Plain text')]
     format = forms.ChoiceField(
-        label=_(u'Your preferred format'),
-        choices=[('html', 'HTML'), ('text', 'Plain text')],
+        label=_(u'Preferred format'),
+        choices=formatChoices,
+        initial=formatChoices[0],
         widget=forms.RadioSelect()
     )
     agree = forms.BooleanField(

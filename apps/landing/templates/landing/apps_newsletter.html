@@ -9,14 +9,11 @@
 {% block content %}
 
 <section id="content">
-<div class="wrap">
-
-  <section id="content-main" class="full" role="main">
-
-  {% include "includes/newsletter_widget.html" %}
-
-</section>
-</div>
+  <div class="wrap">
+    <section id="content-main" class="full" role="main">
+      <p>{{ _('<a href="/profile/edit">Edit your profile</a> to join the newsletter.') }}</p>
+    </section>
+  </div>
 </section>
 
 {% endblock %}

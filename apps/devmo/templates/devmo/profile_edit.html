@@ -10,6 +10,7 @@
     {{ super() }}
     {{ css('demostudio') }}
     {% if waffle.flag('redesign') %}{{ css('redesign-profile') }}{% endif %}
+    {% if waffle.flag('profile_subscription') %}{{ css('newsletter-widget',) }}{% endif %}
 {% endblock %}
 
 {% block site_js %}
@@ -18,6 +19,9 @@
     {{ js('demostudio') }}
     {{ js('libs/tagit') }}
     {{ js('profile') }}
+    {% if waffle.flag('profile_subscription') %}
+      {{ js('newsletter-widget',) }}
+    {% endif %}
 {% endblock %}
 
 {% macro li_field(form, field_name, label='', id='', classes='', note='', image=False, show_label=True) %}
@@ -56,11 +60,6 @@
           {# TODO: Implement account deletion #}
           {# <li class="delete"><a href="#">{{ _('Delete my account') }}</a></li> #}
         </ul>
-
-        {% if waffle.flag('profile_subscription') %}
-            {% include "includes/newsletter_widget.html" %}
-        {% endif %}
-
       </div>
       
       <form class="submission" method="post" action="">
@@ -121,7 +120,11 @@
         </ul>
 
       </fieldset>
-      
+
+      {% if waffle.flag('profile_subscription') %}
+        {% include "includes/newsletter_widget.html" %}
+      {% endif %}
+
       <p class="fm-submit"><button type="submit">{{ _('Save Changes') }}</button></p>
 
     </form>

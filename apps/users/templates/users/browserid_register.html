@@ -4,6 +4,20 @@
 {% set title = _('Register') %}
 {% set classes = 'register' %}
 
+{% block site_css %}
+    {{ super() }}
+    {% if waffle.flag('profile_subscription') %}
+      {{ css('newsletter-widget',) }}
+    {% endif %}
+{% endblock %}
+
+{% block site_js %}
+    {{ super() }}
+    {% if waffle.flag('profile_subscription') %}
+      {{ js('newsletter-widget',) }}
+    {% endif %}
+{% endblock %}
+
 {% block content %}
 <section id="content">
   <div class="wrap">
@@ -23,7 +37,7 @@
           </p>
         </div>
 
-        <form id="create_user" class="boxed" method="post" action="">
+        <form id="create_user" class="boxed submission" method="post" action="">
           <h2>{{ _('New MDN Members') }}</h2>
           <p>{% trans %}
             We couldn't find an MDN profile for your Persona. If you're new here,
@@ -45,6 +59,11 @@
                 {{ register_form.username|safe }}
                 <p class="field-explanation"><small>{{ _("Please enter the name you'd like to display to other users to identify your contributions.") }}</small></p>
               </li>
+
+              {% if waffle.flag('profile_subscription') %}
+                {% include "includes/newsletter_widget.html" %}
+              {% endif %}
+
               <li class="submit">
                 <button type="submit" name="create">{{ _('Create a New Profile') }}</button>
               </li>
