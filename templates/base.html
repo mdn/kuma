@@ -113,7 +113,17 @@
   <meta name="robots" content="index, follow">
   <link rel="home" href="{{ url('home') }}">
   <link rel="copyright" href="#copyright">
-  <link rel="shortcut icon" href="{{ MEDIA_URL }}img/favicon.ico">
+
+  <!-- For third-generation iPad with high-resolution Retina display: -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ MEDIA_URL }}redesign/img/favicon144.png">
+  <!-- For iPhone with high-resolution Retina display: -->
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ MEDIA_URL }}redesign/img/favicon114.png">
+  <!-- For first- and second-generation iPad: -->
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ MEDIA_URL }}redesign/img/favicon72.png">
+  <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+  <link rel="apple-touch-icon-precomposed" href="{{ MEDIA_URL }}redesign/img/favicon57.png">
+  <!-- Basic favicon -->
+  <link rel="shortcut icon" href="{{ MEDIA_URL }}redesign/img/favicon32.png">
 
   <!--[if IE]>
   <meta http-equiv="imagetoolbar" content="no" />
