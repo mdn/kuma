@@ -162,7 +162,7 @@
     ex: http://stackoverflow.com/search?q=[firefox]+or+[firefox-os]+or+[html5-apps]+foobar
   */
 
-  $('.stack-form').html('<form action="http://stackoverflow.com/search"><i class="stack-icon" aria-hidden="true"></i><label for="stack-search" class="offscreen"></label><input id="stack-search" placeholder="' + gettext('Search StackOverflow') + '" /><button type="submit" class="offscreen">Submit Search</button></form>').find('form').on('submit', function(e) {
+  $('.stack-form').html('<form action="http://stackoverflow.com/search"><i class="stack-icon" aria-hidden="true"></i><label for="stack-search" class="offscreen">' + gettext('Search StackOverflow') + '</label><input id="stack-search" placeholder="' + gettext('Search StackOverflow') + '" /><button type="submit" class="offscreen">Submit Search</button></form>').find('form').on('submit', function(e) {
     e.preventDefault();
 
     var value = $(this).find('#stack-search').val();
@@ -171,7 +171,7 @@
       window.location = 'http://stackoverflow.com/search?q=[firefox]+or+[firefox-os]+or+[html5-apps]+' + value;
     }
   });
-  
+
 
   function debounce(func, wait, immediate) {
     var timeout;
