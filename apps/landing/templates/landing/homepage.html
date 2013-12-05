@@ -49,11 +49,11 @@
       <div class="column-home-features">
         <h3 class="zones"><i aria-hidden="true" class="icon-suitcase"></i><span>{{ _('Zones') }}</span></h3>
         <ul>
-          <li><a href="{{ devmo_url('Apps') }}">App Center</a></li>
-          <li><a href="{{ devmo_url('Firefox') }}">Firefox</a></li>
-          <li><a href="{{ devmo_url('Firefox_OS') }}">Firefox OS</a></li>
-          <li><a href="{{ devmo_url('Mozilla/Marketplace') }}">Firefox Marketplace</a></li>
-          <li><a href="{{ devmo_url('Persona') }}">Persona</a></li>
+          <li><a href="{{ devmo_url('Apps') }}">{{ _('App Center') }}</a></li>
+          <li><a href="{{ devmo_url('Firefox') }}">{{ _('Firefox') }}</a></li>
+          <li><a href="{{ devmo_url('Firefox_OS') }}">{{ _('Firefox OS') }}</a></li>
+          <li><a href="{{ devmo_url('Mozilla/Marketplace') }}">{{ _('Firefox Marketplace') }}</a></li>
+          <li><a href="{{ devmo_url('Persona') }}">{{ _('Persona') }}</a></li>
         </ul>
       </div>
       <div class="column-home-features">
@@ -67,12 +67,10 @@
         </ul>
       </div>
       <div class="column-home-features">
-        {# <h3><i aria-hidden="true" class="icon-certificate"></i><span>{{ _('Developer<br />Program') }}</span></h3> #}
-        <h3><i aria-hidden="true" class="icon-beaker"></i><span>{{ _('MDN<br />Beta') }}</span></h3>
-        <ul>
-        <li>{{ _('Welcome to the MDN Beta. ') }}</li>
-        <li><a href="
-https://wiki.mozilla.org/MDN/Development/Redesign/Testing">{{ _('Learn how you can help!') }}</a></li>
+        <h3><i aria-hidden="true" class="icon-certificate"></i><span>{{ _('Developer<br />Program') }}</span></h3>
+        {# <h3><i aria-hidden="true" class="icon-beaker"></i><span>{{ _('MDN<br />Beta') }}</span></h3> #}
+        <p>{{ _('Get Web technology news from Mozilla, get help from other developers, and more, to become an even more awesome Web developer.') }}</p>
+        <p><a href="{{ devmo_url('Mozilla/Developer_Program') }}">{{ _('Learn more and sign up!') }}</a></p>
         </ul>
       </div>
     </div>
