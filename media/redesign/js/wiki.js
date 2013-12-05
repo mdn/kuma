@@ -72,9 +72,19 @@
     $subnavList.find('.toggleable').mozTogglers();
 
     // Try to find the current page in the list, if found, open it
+    // Need to keep track of the elements we've found so they aren't found twice
+    var used = [];
     var $selected = $subnavList.find('a[href$="' + document.location.pathname + '"]');
     $selected.each(function() {
-      $(this).parents('.toggleable').find('.toggler').trigger('click');
+      var self = this;
+      var $togglers = $(this).parents('.toggleable').find('.toggler');
+
+      $togglers.each(function() {
+        if($.contains($(this).parent('li').get(0), self) && used.indexOf(this) === -1) {
+          $(this).trigger('click');
+          used.push(this);
+        }
+      });
     }).parent().addClass('current');
 
     // Mark this is an accordion so the togglers open/close properly
