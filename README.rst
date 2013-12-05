@@ -20,3 +20,14 @@ Development
                 https://developer.allizom.org/ (stage)
 
                 https://developer.mozilla.org/ (prod)
+
+Getting Started
+===============
+
+We're trying to make it easier for new contributors to help with MDN code. Here
+are some options:
+
+1. We can always use help with `our selenium test suite
+   <https://github.com/mozilla/mdn-tests>`_
+2. Right now the best way to start on Kuma code is outlined in the 
+   `Dev Docs <https://kuma.readthedocs.org/en/latest/installation-vagrant.html>`_
