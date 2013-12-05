@@ -45,6 +45,31 @@
       width: auto;
       margin-left: 150px;
     }
+
+    .links {
+      display: table;
+      border-spacing: (grid-spacing / 2);
+      margin: -(@border-spacing); // Offset outer border
+
+      li {
+        display: table-row;
+      }
+
+      i, a {
+        display: table-cell;
+        vertical-align: middle;
+      }
+
+      i {
+        font-size: 14px;
+        text-align: center;
+      }
+
+      a {
+        compat-only(background, none);
+        padding: 0;
+      }
+    }
   }
 }
 
@@ -79,5 +104,3 @@
     }
   }
 }
-
-
