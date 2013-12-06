@@ -71,12 +71,11 @@
       }
     }
 
-    ol .current {
-      background-color: text-color;
-
-      a {
+    li.current {
+      > a:not(.toggler) {
         position: relative;
         color: #fff;
+        background-color: text-color;
 
         generate-arrow();
 
