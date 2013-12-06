@@ -1,4 +1,4 @@
-var checkbox = '#apps-newsletter-subscribe #newsletter-signup';
+var checkbox = '#apps-newsletter-subscribe #id_newsletter';
 var settings = '#apps-newsletter-subscribe .newsletter-setting';
 var agree = '#apps-newsletter-subscribe #id_agree';
 

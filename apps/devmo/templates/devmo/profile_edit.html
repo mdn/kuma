@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% from 'includes/common_macros.html' import newsletter_widget, li_field %}
 {% block pageid %}{% endblock %}
 
 {% block bodyclass %}profile{% endblock %}
@@ -23,20 +23,6 @@
       {{ js('newsletter-widget',) }}
     {% endif %}
 {% endblock %}
-
-{% macro li_field(form, field_name, label='', id='', classes='', note='', image=False, show_label=True) %}
-    {% set field = form[field_name] %}
-    <li id="field_{{field_name}}" class="field {{ 'type_%s' % field.field.widget.input_type if field.field.widget.input_type }}{{ ' required' if field.field.required }}{{ ' error' if field.errors }} {{classes}}">
-        {% if show_label %}
-            <label for="id_{{field_name}}">{{label or field.label}}</label>
-        {% endif %}
-        {{ field|safe }}
-        {% if note %}
-            <p class="note">{{ note }}</p>
-        {% endif %}
-        {{ field.errors|safe }}
-    </li>
-{% endmacro %}
 
 {% block content %}
 <section id="content">
@@ -122,7 +108,7 @@
       </fieldset>
 
       {% if waffle.flag('profile_subscription') %}
-        {% include "includes/newsletter_widget.html" %}
+        {{ newsletter_widget(form) }}
       {% endif %}
 
       <p class="fm-submit"><button type="submit">{{ _('Save Changes') }}</button></p>

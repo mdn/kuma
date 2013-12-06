@@ -1027,6 +1027,10 @@ CONSTANCE_CONFIG = dict(
         'We typically multiply this value by the retry number so, e.g., '
         'the 4th retry waits 4*.5 = 2 seconds.'
     ),
+    BASKET_API_KEY = (
+        '',
+        'API Key to use for basket requests'
+    ),
 
     BETA_GROUP_NAME = (
         'Beta Testers',

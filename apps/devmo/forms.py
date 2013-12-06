@@ -1,6 +1,12 @@
-from django import forms
-from django.contrib.auth.models import User, Group
+import time
 
+from django import forms
+from django.conf import settings
+from django.contrib.auth.models import User, Group
+from django.http import HttpResponseServerError
+
+import basket
+from basket.base import BasketException
 import constance.config
 from tower import ugettext_lazy as _
 from taggit.utils import parse_tags
@@ -73,7 +79,32 @@ class UserProfileEditForm(forms.ModelForm):
     expertise = forms.CharField(label=_('Expertise'),
                                 max_length=255, required=False)
 
-    def __init__(self, *args, **kwargs):
+    newsletter = forms.BooleanField(label=_('Send me the newsletter'),
+                                    required=False)
+
+    # Newsletter fields copied from SubscriptionForm
+    formatChoices = [('html', 'HTML'), ('text', 'Plain text')]
+    format = forms.ChoiceField(
+        label=_(u'Preferred format'),
+        choices=formatChoices,
+        initial=formatChoices[0],
+        widget=forms.RadioSelect()
+    )
+    agree = forms.BooleanField(
+        label=_(u'I agree'),
+        error_messages={'required': PRIVACY_REQUIRED},
+        required=False
+    )
+
+    def __init__(self, locale, *args, **kwargs):
+        regions = product_details.get_regions(locale)
+        regions = sorted(regions.iteritems(), key=lambda x: x[1])
+        self.locale = locale
+
+        lang = country = locale.lower()
+        if '-' in lang:
+            lang, country = lang.split('-', 1)
+
         super(UserProfileEditForm, self).__init__(*args, **kwargs)
 
         # Dynamically add URLFields for all sites defined in the model.
@@ -82,6 +113,17 @@ class UserProfileEditForm(forms.ModelForm):
             self.fields['websites_%s' % name] = forms.RegexField(
                     regex=meta['regex'], required=False)
             self.fields['websites_%s' % name].widget.attrs['placeholder'] = meta['prefix']
+
+        # Newsletter field copied from SubscriptionForm
+        # FIXME: this is extra dupe nasty here because we already have a locale field
+        # on the profile
+        self.fields['country'] = forms.ChoiceField(
+            label=_(u'Your country'),
+            choices=regions,
+            initial=country,
+            required=False
+        )
+
 
     def clean_expertise(self):
         """Enforce expertise as a subset of interests"""
@@ -98,14 +140,49 @@ class UserProfileEditForm(forms.ModelForm):
         return cleaned_data['expertise']
 
     def save(self, commit=True):
+        email = self.cleaned_data.get('email')
         try:
-            user = User.objects.get(email=self.cleaned_data.get('email'))
+            # Beta
+            user = User.objects.get(email=email)
             beta_group = Group.objects.get(
                 name=constance.config.BETA_GROUP_NAME)
             if self.cleaned_data['beta']:
                 beta_group.user_set.add(user)
             else:
                 beta_group.user_set.remove(user)
+
+            # Newsletter
+            if self.cleaned_data['newsletter']:
+                if not self.cleaned_data['agree']:
+                    raise forms.ValidationError(_("To subscribe to the newsletter "
+                                                  "you must agree to our privacy "
+                                                  "policy."))
+                optin = 'N'
+                if self.locale == 'en-US':
+                    optin = 'Y'
+                for i in range(constance.config.BASKET_RETRIES):
+                    try:
+                        result = basket.subscribe(
+                                email=email,
+                                newsletters=settings.BASKET_APPS_NEWSLETTER,
+                                country=self.cleaned_data['country'],
+                                format=self.cleaned_data['format'],
+                                lang=self.locale,
+                                optin=optin)
+                        if result.get('status') != 'error':
+                            break
+                    except BasketException:
+                        if i == constance.config.BASKET_RETRIES:
+                            return HttpResponseServerError()
+                        else:
+                            time.sleep(constance.config.BASKET_RETRY_WAIT * i)
+            else:
+                subscription_details = basket.lookup_user(
+                                            email=email,
+                                            api_key=constance.config.BASKET_API_KEY)
+                resp = basket.unsubscribe(subscription_details['token'], email,
+                                   newsletters=settings.BASKET_APPS_NEWSLETTER)
+
         except Group.DoesNotExist:
             # If there's no Beta Testers group, ignore that logic
             pass

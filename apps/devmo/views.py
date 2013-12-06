@@ -5,6 +5,8 @@ from django.http import (HttpResponseRedirect, HttpResponseForbidden)
 
 from devmo.urlresolvers import reverse
 
+import constance.config
+import basket
 from taggit.utils import parse_tags
 from waffle import flag_is_active
 
@@ -16,7 +18,7 @@ from teamwork.models import Team
 
 from . import INTEREST_SUGGESTIONS
 from .models import Calendar, Event, UserProfile
-from .forms import UserProfileEditForm, SubscriptionForm
+from .forms import UserProfileEditForm
 
 
 DOCS_ACTIVITY_MAX_ITEMS = getattr(settings,
@@ -116,16 +118,20 @@ def profile_edit(request, username):
             initial[field] = ', '.join(t.name.replace(ns, '')
                                        for t in profile.tags.all_ns(ns))
 
-        # Finally, set up the forms.
-        form = UserProfileEditForm(instance=profile, initial=initial)
+        subscription_details = basket.lookup_user(email=profile.user.email,
+                                          api_key=constance.config.BASKET_API_KEY)
+        if settings.BASKET_APPS_NEWSLETTER in subscription_details['newsletters']:
+            initial['newsletter'] = True
 
-        initial_sub = dict(email=profile.user.email)
-        subscription_form = SubscriptionForm(request.locale,
-                                             initial=initial_sub)
-        context['subscription_form'] = subscription_form
+        # Finally, set up the forms.
+        form = UserProfileEditForm(request.locale,
+                                   instance=profile,
+                                   initial=initial)
 
     else:
-        form = UserProfileEditForm(request.POST, request.FILES,
+        form = UserProfileEditForm(request.locale,
+                                   request.POST,
+                                   request.FILES,
                                    instance=profile)
         if form.is_valid():
             profile_new = form.save(commit=False)

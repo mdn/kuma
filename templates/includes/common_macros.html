@@ -1,4 +1,18 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
+{% macro li_field(form, field_name, label='', id='', classes='', note='', image=False, show_label=True) %}
+    {% set field = form[field_name] %}
+    <li id="field_{{field_name}}" class="field {{ 'type_%s' % field.field.widget.input_type if field.field.widget.input_type }}{{ ' required' if field.field.required }}{{ ' error' if field.errors }} {{classes}}">
+        {% if show_label %}
+            <label for="id_{{field_name}}">{{label or field.label}}</label>
+        {% endif %}
+        {{ field|safe }}
+        {% if note %}
+            <p class="note">{{ note }}</p>
+        {% endif %}
+        {{ field.errors|safe }}
+    </li>
+{% endmacro %}
+
 {% macro search_box(settings, id=False, prefix=None, target=None,
                     placeholder=None) %}
   {% if placeholder is none %}
@@ -50,4 +64,50 @@
   {% if config.OPTIMIZELY_PROJECT_ID > 0 %}
   <script src="//cdn.optimizely.com/js/{{ config.OPTIMIZELY_PROJECT_ID }}.js"></script>
   {% endif %}
+{% endmacro %}
+
+{% macro newsletter_widget(form) %}
+<fieldset id="apps-newsletter-subscribe" class="section">
+  {{ csrf() }}
+  <legend><b>{{ _('Firefox Apps & Hacks Newsletter') }}</b></legend>
+
+
+  {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="notice {{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  <ol>
+    {{ li_field(form, 'newsletter') }}
+    <li class="newsletter-setting">
+      {{ form.country.errors }}
+      <label for="country">{{ form.country.label }}</label>
+      {{ form.country }}
+    </li>
+    <li class="newsletter-setting check">
+      {{ form.format.errors }}
+      <span class="label">{{ form.format.label }}</span>
+      <fieldset class="inline">
+        {% for c in form.fields.format.choices %}
+        <label for="sub-{{ c[0] }}"><input type="radio" name="format" value="{{ c[0] }}" id="sub-{{ c[0] }}" {% if form.fields.format.initial == c %}checked="checked"{% endif %}>{{ c[1] }}</label>
+        {% endfor %}
+      </fieldset>
+    </li>
+    <li class="newsletter-setting agree">
+      {{ form.agree.errors }}
+      <label for="id_agree">
+        {{ form.agree }} {{form.agree.label}}
+        {% trans privacy_url='http://www.mozilla.org/en-US/privacy' %}
+          to the <a href="{{ privacy_url }}">Privacy Policy</a>
+        {% endtrans %}
+      </label>
+    </li>
+  </ol>
+  <p>{% trans %}
+    Sign up now for news about Firefox OS, Firefox Marketplace and the Open Web apps ecosystem. <strong>Join us!</strong>
+  {% endtrans %}</p>
+</fieldset>
 {% endmacro %}
