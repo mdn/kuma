@@ -1,4 +1,5 @@
 @import 'vars'
+@import 'mixins'
 
 /*
  * Users app CSS
@@ -6,7 +7,7 @@
 
 article.main {
     form {
-        margin: (gutter-width * 1.5) 0 !important; /* Using !important to override the compat-important() call being made from .boxed. */
+        override-compat-important(margin, (gutter-width * 1.5) 0);
 
         ul, li {
             padding: 0;
@@ -24,6 +25,21 @@ article.main {
 
         button {
             margin: 5px 0;
+        }
+
+        newsletter-gutter = (gutter-width / 2);
+        #apps-newsletter-subscribe {
+            margin-top: newsletter-gutter;
+            margin-bottom: 0;
+
+            p, ol {
+                margin-bottom: newsletter-gutter;
+            }
+
+            li {
+                margin-top: 5px;
+                margin-bottom: 5px;
+            }
         }
     }
 }

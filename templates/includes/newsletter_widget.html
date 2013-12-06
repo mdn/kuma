@@ -1,0 +1,43 @@
+<fieldset id="apps-newsletter-subscribe" class="section">
+  {{ csrf() }}
+  <legend><b>{{ _('Firefox Apps & Hacks Newsletter') }}</b></legend>
+
+  <p>{% trans %}
+    Sign up now for news about Firefox OS, Firefox Marketplace and the Open Web apps ecosystem. <strong>Join us!</strong>
+  {% endtrans %}</p>
+
+  {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="notice {{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  <ol>
+    <li><input id="newsletter-signup" type="checkbox" {% if subscription_form %}checked="checked"{% endif %}>{{ _('Send me the newsletter') }}</input></li>
+    <li class="newsletter-setting">
+      {{ subscription_form.country.errors }}
+      <label for="country">{{ subscription_form.country.label }}</label>
+      {{ subscription_form.country }}
+    </li>
+    <li class="newsletter-setting check">
+      {{ subscription_form.format.errors }}
+      <span class="label">{{ subscription_form.format.label }}</span>
+      <fieldset class="inline">
+        {% for c in subscription_form.fields.format.choices %}
+        <label for="sub-{{ c[0] }}"><input type="radio" name="format" value="{{ c[0] }}" id="sub-{{ c[0] }}" {% if subscription_form.fields.format.initial == c %}checked="checked"{% endif %}>{{ c[1] }}</label>
+        {% endfor %}
+      </fieldset>
+    </li>
+    <li class="newsletter-setting agree">
+      {{ subscription_form.agree.errors }}
+      <label for="id_agree">
+        {{ subscription_form.agree }} {{subscription_form.agree.label}}
+        {% trans privacy_url='http://www.mozilla.org/en-US/privacy' %}
+          to the <a href="{{ privacy_url }}">Privacy Policy</a>
+        {% endtrans %}
+      </label>
+    </li>
+  </ol>
+</fieldset>
