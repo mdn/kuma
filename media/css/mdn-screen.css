@@ -115,7 +115,7 @@ input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, in
 .wrap { position: relative; width: 940px; padding: 0 10px; margin: 0 auto; }
 .wrap:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; } /* clear floats */
 
-#content { min-height: 400px; }
+section#content, div#content { min-height: 400px; }
 #content .wrap { padding-bottom: 1em; }
 #content .wrap.sidebar { min-height: 400px; padding-bottom: 3em; background: transparent url("../img/bg-sidebar.png") 695px 0 no-repeat; }
 .section-demos #content { border-top: 0; }
