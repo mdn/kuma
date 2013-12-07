@@ -564,6 +564,9 @@ MINIFY_BUNDLES = {
             'css/mdn-screen.css',
             'css/redesign-transition.css',
         ),
+        'mdn-old': (
+            'css/mdn-screen-old.css',
+        ),
         'popup': (
             'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
             'css/jqueryui/moz-jquery-plugins.css',

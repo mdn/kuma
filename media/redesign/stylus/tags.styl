@@ -124,8 +124,17 @@ a {
     color: link-color;
   }
 
+  &:link, &:visited {
+      text-decoration: none;
+  }
+
+  &:link:hover, &:link:focus, &:link:active {
+      text-decoration: underline;
+  }
+
   &:visited:hover, &:visited:focus, &:visited:active {
     color: link-color;
+    text-decoration: underline;
   }
 
   {selector-icon}:before {
