@@ -80,7 +80,7 @@ img.rwrap { background: #fff; padding: 0 0 .75em 20px; }
 
 /* @Layout (wiki is liquid) *********/
 .wrap { position: relative; width: 95%; min-width: 760px; max-width: 1200px; padding: 0 10px; margin: 0 auto; }
-#content { border-top: 0; }
+section#content, div#content { border-top: 0; }
 .page-content { background: #fff; min-height: 300px; }
 
 textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
