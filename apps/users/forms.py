@@ -6,7 +6,9 @@ from django.contrib.auth import authenticate, forms as auth_forms
 from django.contrib.auth.models import User
 
 from tower import ugettext as _, ugettext_lazy as _lazy
+from product_details import product_details
 
+from devmo.forms import PRIVACY_REQUIRED
 from sumo.widgets import ImageWidget
 from users.models import Profile
 from users.widgets import FacebookURLWidget, TwitterURLWidget
@@ -108,6 +110,23 @@ class BrowserIDRegisterForm(forms.ModelForm):
 
     username = UsernameField()
 
+    newsletter = forms.BooleanField(label=_('Send me the newsletter'),
+                                    required=False)
+
+    # Newsletter fields copied from SubscriptionForm
+    formatChoices = [('html', 'HTML'), ('text', 'Plain text')]
+    format = forms.ChoiceField(
+        label=_(u'Preferred format'),
+        choices=formatChoices,
+        initial=formatChoices[0],
+        widget=forms.RadioSelect()
+    )
+    agree = forms.BooleanField(
+        label=_(u'I agree'),
+        error_messages={'required': PRIVACY_REQUIRED},
+        required=False
+    )
+
     class Meta(object):
         model = User
         fields = ('username',)
@@ -119,10 +138,23 @@ class BrowserIDRegisterForm(forms.ModelForm):
                                           ' already exists.'))
         return username
 
-    def __init__(self,  request=None, *args, **kwargs):
-        super(BrowserIDRegisterForm, self).__init__(request,
-                                                    auto_id='id_for_%s',
-                                                    *args, **kwargs)
+    def __init__(self, locale, request=None, *args, **kwargs):
+        regions = product_details.get_regions(locale)
+        regions = sorted(regions.iteritems(), key=lambda x: x[1])
+        self.locale = locale
+
+        lang = country = locale.lower()
+        if '-' in lang:
+            lang, country = lang.split('-', 1)
+        super(BrowserIDRegisterForm, self).__init__(request, *args, **kwargs)
+
+        # Newsletter field copied from SubscriptionForm
+        self.fields['country'] = forms.ChoiceField(
+            label=_(u'Your country'),
+            choices=regions,
+            initial=country,
+            required=False
+        )
 
 
 class AuthenticationForm(auth_forms.AuthenticationForm):

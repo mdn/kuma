@@ -40,7 +40,7 @@ from users.models import Profile, RegistrationProfile, EmailChange, UserBan
 from users.utils import (handle_login, handle_register, send_reminder_email,
                          statsd_waffle_incr)
 from devmo.models import UserProfile
-from devmo.forms import SubscriptionForm
+from devmo.forms import newsletter_subscribe
 
 SESSION_VERIFIED_EMAIL = getattr(settings, 'BROWSERID_SESSION_VERIFIED_EMAIL',
                                  'browserid_verified_email')
@@ -167,7 +167,7 @@ def browserid_register(request):
         return HttpResponseRedirect(redirect_to)
 
     # Set up the initial forms
-    register_form = BrowserIDRegisterForm()
+    register_form = BrowserIDRegisterForm(request.locale)
     login_form = AuthenticationForm()
 
     if request.method == 'POST':
@@ -175,7 +175,7 @@ def browserid_register(request):
 
         # If the profile creation form was submitted...
         if 'register' == request.POST.get('action', None):
-            register_form = BrowserIDRegisterForm(request.POST)
+            register_form = BrowserIDRegisterForm(request.locale, request.POST)
             if register_form.is_valid():
                 # If the registration form is valid, then create a new
                 # Django user.
@@ -196,6 +196,9 @@ def browserid_register(request):
                 # might want to review & edit.
                 statsd_waffle_incr('users.browserid_register.POST.SUCCESS',
                                    'signin_metrics')
+
+                newsletter_subscribe(request.locale, email,
+                                     register_form.cleaned_data)
                 redirect_to = request.session.get(SESSION_REDIRECT_TO,
                                                   profile.get_absolute_url())
                 return set_browserid_explained(HttpResponseRedirect(redirect_to))
@@ -204,13 +207,9 @@ def browserid_register(request):
     # for the next request.
     request.session.modified = True
 
-    initial_sub = dict(email=email)
-    subscription_form = SubscriptionForm(request.locale,
-                                         initial=initial_sub)
     return render(request, 'users/browserid_register.html',
                         {'login_form': login_form,
-                         'register_form': register_form,
-                         'subscription_form': subscription_form})
+                         'register_form': register_form})
 
 
 @ssl_required

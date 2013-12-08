@@ -18,7 +18,7 @@ from teamwork.models import Team
 
 from . import INTEREST_SUGGESTIONS
 from .models import Calendar, Event, UserProfile
-from .forms import UserProfileEditForm
+from .forms import UserProfileEditForm, newsletter_subscribe
 
 
 DOCS_ACTIVITY_MAX_ITEMS = getattr(settings,
@@ -122,6 +122,7 @@ def profile_edit(request, username):
                                           api_key=constance.config.BASKET_API_KEY)
         if settings.BASKET_APPS_NEWSLETTER in subscription_details['newsletters']:
             initial['newsletter'] = True
+            initial['agree'] = True
 
         # Finally, set up the forms.
         form = UserProfileEditForm(request.locale,
@@ -155,6 +156,8 @@ def profile_edit(request, username):
                                             form.cleaned_data.get(field, ''))]
                 profile_new.tags.set_ns(tag_ns, *tags)
 
+            newsletter_subscribe(request.locale, profile_new.user.email,
+                                 form.cleaned_data)
             return HttpResponseRedirect(reverse(
                     'devmo.views.profile_view', args=(profile.user.username,)))
     context['form'] = form

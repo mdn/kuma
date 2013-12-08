@@ -115,8 +115,8 @@ class UserProfileEditForm(forms.ModelForm):
             self.fields['websites_%s' % name].widget.attrs['placeholder'] = meta['prefix']
 
         # Newsletter field copied from SubscriptionForm
-        # FIXME: this is extra dupe nasty here because we already have a locale field
-        # on the profile
+        # FIXME: this is extra dupe nasty here because we already have a locale
+        # field on the profile
         self.fields['country'] = forms.ChoiceField(
             label=_(u'Your country'),
             choices=regions,
@@ -151,39 +151,40 @@ class UserProfileEditForm(forms.ModelForm):
             else:
                 beta_group.user_set.remove(user)
 
-            # Newsletter
-            if self.cleaned_data['newsletter']:
-                if not self.cleaned_data['agree']:
-                    raise forms.ValidationError(_("To subscribe to the newsletter "
-                                                  "you must agree to our privacy "
-                                                  "policy."))
-                optin = 'N'
-                if self.locale == 'en-US':
-                    optin = 'Y'
-                for i in range(constance.config.BASKET_RETRIES):
-                    try:
-                        result = basket.subscribe(
-                                email=email,
-                                newsletters=settings.BASKET_APPS_NEWSLETTER,
-                                country=self.cleaned_data['country'],
-                                format=self.cleaned_data['format'],
-                                lang=self.locale,
-                                optin=optin)
-                        if result.get('status') != 'error':
-                            break
-                    except BasketException:
-                        if i == constance.config.BASKET_RETRIES:
-                            return HttpResponseServerError()
-                        else:
-                            time.sleep(constance.config.BASKET_RETRY_WAIT * i)
-            else:
-                subscription_details = basket.lookup_user(
-                                            email=email,
-                                            api_key=constance.config.BASKET_API_KEY)
-                resp = basket.unsubscribe(subscription_details['token'], email,
-                                   newsletters=settings.BASKET_APPS_NEWSLETTER)
-
         except Group.DoesNotExist:
             # If there's no Beta Testers group, ignore that logic
             pass
         return super(UserProfileEditForm, self).save(commit=True)
+
+
+def newsletter_subscribe(locale, email, cleaned_data):
+    subscription_details = basket.lookup_user(email=email,
+                                    api_key=constance.config.BASKET_API_KEY)
+    subscribed = (settings.BASKET_APPS_NEWSLETTER in
+                  subscription_details['newsletters'])
+    if cleaned_data['newsletter'] and not subscribed:
+        if not cleaned_data['agree']:
+            raise forms.ValidationError(PRIVACY_REQUIRED)
+        optin = 'N'
+        if locale == 'en-US':
+            optin = 'Y'
+        for i in range(constance.config.BASKET_RETRIES):
+            try:
+                result = basket.subscribe(
+                        email=email,
+                        newsletters=settings.BASKET_APPS_NEWSLETTER,
+                        country=cleaned_data['country'],
+                        format=cleaned_data['format'],
+                        lang=locale,
+                        optin=optin)
+                if result.get('status') != 'error':
+                    break
+            except BasketException:
+                if i == constance.config.BASKET_RETRIES:
+                    return HttpResponseServerError()
+                else:
+                    time.sleep(constance.config.BASKET_RETRY_WAIT * i)
+    else:
+        basket.unsubscribe(subscription_details['token'], email,
+                           newsletters=settings.BASKET_APPS_NEWSLETTER)
+

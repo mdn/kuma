@@ -71,6 +71,9 @@
   {{ csrf() }}
   <legend><b>{{ _('Firefox Apps & Hacks Newsletter') }}</b></legend>
 
+  <p>{% trans %}
+    Sign up now for news about Firefox OS, Firefox Marketplace and the Open Web apps ecosystem. <strong>Join us!</strong>
+  {% endtrans %}</p>
 
   {% if messages %}
   <ul class="messages">
@@ -106,8 +109,5 @@
       </label>
     </li>
   </ol>
-  <p>{% trans %}
-    Sign up now for news about Firefox OS, Firefox Marketplace and the Open Web apps ecosystem. <strong>Join us!</strong>
-  {% endtrans %}</p>
 </fieldset>
 {% endmacro %}

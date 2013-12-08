@@ -1,6 +1,7 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "users/base.html" %}
 {% from "layout/errorlist.html" import errorlist %}
+{% from 'includes/common_macros.html' import newsletter_widget %}
 {% set title = _('Register') %}
 {% set classes = 'register' %}
 
@@ -61,7 +62,7 @@
               </li>
 
               {% if waffle.flag('profile_subscription') %}
-                {% include "includes/newsletter_widget.html" %}
+                {{ newsletter_widget(register_form) }}
               {% endif %}
 
               <li class="submit">
