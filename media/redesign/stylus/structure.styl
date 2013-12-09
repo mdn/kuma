@@ -361,7 +361,6 @@ footer {
 }
 
 
-
 /* tablet updates */
 @media media-query-tablet {
   #main-nav {
@@ -380,18 +379,12 @@ footer {
   }
 }
 
-
-/* mobile updates */
-@media media-query-mobile {
+/* custom nav menu movement */  
+@media media-query-navigation-break {
 
   #main-header {
-    #tabzilla {
-      display: none;
-    }
-
-    .user-state {
-      right: grid-spacing;
-      top: grid-spacing;
+    .logo {
+      margin-top: -40px;
     }
   }
 
@@ -409,7 +402,50 @@ footer {
         }
       }
     }
+  }
+}
 
+/* break nav into blocks (own line) */
+@media media-query-navigation-block {
+  #main-nav {
+    > ul {
+      float: none;
+      text-align: left;
+
+      > li {
+        display: block;
+        width: auto;
+        padding-left: 0;
+        margin: 10px 0;
+      }
+    }
+  }
+
+  #tabzilla {
+    display: none;
+  }
+
+  #main-header {
+    .user-state {
+      position: relative;
+      right: auto;
+      top: auto;
+      float: none;
+      width: auto;
+      margin-top: 10px;
+    }
+
+    .logo {
+      margin: (grid-spacing / 2) 0;
+      float: none;
+    }
+  }
+}
+
+/* for mobile, move the search box under the nav */
+@media media-query-mobile {
+
+  #main-header {
     .main-nav-search {
       display: block;
       padding: 0px;
@@ -433,41 +469,6 @@ footer {
     }
   }
 }
-
-/* small mobiles like Firefox OS */
-@media media-query-small-mobile {
-
-  #main-header {
-    .user-state {
-      position: relative;
-      right: auto;
-      top: auto;
-      float: none;
-      width: auto;
-      margin-top: 10px;
-    }
-
-    .logo {
-      margin: (grid-spacing / 2) 0;
-      float: none;
-    }
-  }
-
-  #main-nav {
-    > ul {
-      float: none;
-      text-align: left;
-
-      > li {
-        display: block;
-        width: auto;
-        padding-left: 0;
-        margin: 10px 0;
-      }
-    }
-  }
-}
-
 
 
 /* redesign beta notice */
