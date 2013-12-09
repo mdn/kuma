@@ -29,6 +29,7 @@ from django_browserid import auth as browserid_auth
 from access.decorators import logout_required, login_required
 import constance.config
 from tidings.tasks import claim_watches
+from waffle import flag_is_active
 
 from sumo.decorators import ssl_required
 from sumo.urlresolvers import reverse, split_path
@@ -197,8 +198,9 @@ def browserid_register(request):
                 statsd_waffle_incr('users.browserid_register.POST.SUCCESS',
                                    'signin_metrics')
 
-                newsletter_subscribe(request.locale, email,
-                                     register_form.cleaned_data)
+                if flag_is_active(request, 'profile_subscription'):
+                    newsletter_subscribe(request.locale, email,
+                                         register_form.cleaned_data)
                 redirect_to = request.session.get(SESSION_REDIRECT_TO,
                                                   profile.get_absolute_url())
                 return set_browserid_explained(HttpResponseRedirect(redirect_to))
