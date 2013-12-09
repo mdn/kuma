@@ -22,6 +22,7 @@ from django.core.paginator import PageNotAnInteger
 
 from soapbox.models import Message
 
+from devmo.tests import mock_lookup_user
 from devmo.models import UserProfile
 
 from devmo.cron import devmo_calendar_reload
@@ -50,8 +51,10 @@ class ProfileViewsTest(TestCase):
         # Scrape out the existing significant form field values.
         form = dict()
         for fn in ('email', 'fullname', 'title', 'organization', 'location',
-                   'irc_nickname', 'bio', 'interests'):
+                   'irc_nickname', 'bio', 'interests', 'country', 'format'):
             form[fn] = doc.find('#profile-edit *[name="%s"]' % fn).val()
+        form['country'] = 'us'
+        form['format'] = 'html'
         return form
 
     @attr('docs_activity')
@@ -99,7 +102,16 @@ class ProfileViewsTest(TestCase):
         except PageNotAnInteger:
             ok_(False, "Non-numeric page number should not cause an error")
 
-    def test_profile_edit(self):
+    @mock.patch('basket.lookup_user')
+    @mock.patch('basket.subscribe')
+    @mock.patch('basket.unsubscribe')
+    def test_profile_edit(self,
+                            unsubscribe,
+                            subscribe,
+                            lookup_user):
+        lookup_user.return_value = mock_lookup_user()
+        subscribe.return_value = True
+        unsubscribe.return_value = True
         profile = UserProfile.objects.get(user__username='testuser')
         user = profile.user
         url = reverse('devmo.views.profile_view', args=(user.username,))
@@ -138,6 +150,8 @@ class ProfileViewsTest(TestCase):
             fullname="Another Name",
             title="Another title",
             organization="Another org",
+            country="us",
+            format="html"
         )
 
         r = self.client.post(url, new_attrs, follow=True)
@@ -164,7 +178,16 @@ class ProfileViewsTest(TestCase):
         ok_(reverse('devmo.views.profile_edit', args=(u.username,)) in
             resp['Location'])
 
-    def test_profile_edit_beta(self):
+    @mock.patch('basket.lookup_user')
+    @mock.patch('basket.subscribe')
+    @mock.patch('basket.unsubscribe')
+    def test_profile_edit_beta(self,
+                                unsubscribe,
+                                subscribe,
+                                lookup_user):
+        lookup_user.return_value = mock_lookup_user()
+        subscribe.return_value = True
+        unsubscribe.return_value = True
         user = User.objects.get(username='testuser')
         self.client.login(username=user.username,
                           password=TESTUSER_PASSWORD)
@@ -186,7 +209,17 @@ class ProfileViewsTest(TestCase):
         doc = pq(r.content)
         eq_('checked', doc.find('input#id_beta').attr('checked'))
 
-    def test_profile_edit_websites(self):
+    @mock.patch('basket.lookup_user')
+    @mock.patch('basket.subscribe')
+    @mock.patch('basket.unsubscribe')
+    def test_profile_edit_websites(self,
+                                    unsubscribe,
+                                    subscribe,
+                                    lookup_user):
+        lookup_user.return_value = mock_lookup_user()
+        subscribe.return_value = True
+        unsubscribe.return_value = True
+
         user = User.objects.get(username='testuser')
         self.client.login(username=user.username,
                 password=TESTUSER_PASSWORD)
@@ -247,7 +280,17 @@ class ProfileViewsTest(TestCase):
         for n in ('website', 'twitter', 'stackoverflow'):
             eq_(1, doc.find(tmpl % n).length)
 
-    def test_profile_edit_interests(self):
+    @mock.patch('basket.lookup_user')
+    @mock.patch('basket.subscribe')
+    @mock.patch('basket.unsubscribe')
+    def test_profile_edit_interests(self,
+                                    unsubscribe,
+                                    subscribe,
+                                    lookup_user):
+        lookup_user.return_value = mock_lookup_user()
+        subscribe.return_value = True
+        unsubscribe.return_value = True
+
         user = User.objects.get(username='testuser')
         self.client.login(username=user.username,
                 password=TESTUSER_PASSWORD)
@@ -298,7 +341,13 @@ class ProfileViewsTest(TestCase):
 
         eq_(1, doc.find('.error #id_expertise').length)
 
-    def test_bug_709938_interests(self):
+    @mock.patch('basket.lookup_user')
+    @mock.patch('basket.subscribe')
+    @mock.patch('basket.unsubscribe')
+    def test_bug_709938_interests(self, unsubscribe, subscribe, lookup_user):
+        lookup_user.return_value = mock_lookup_user()
+        subscribe.return_value = True
+        unsubscribe.return_value = True
         user = User.objects.get(username='testuser')
         self.client.login(username=user.username,
                 password=TESTUSER_PASSWORD)
@@ -327,8 +376,14 @@ class ProfileViewsTest(TestCase):
                 in doc.find('ul.errorlist li').text())
 
 
-    def test_bug_698126_l10n(self):
+    @mock.patch('basket.lookup_user')
+    @mock.patch('basket.subscribe')
+    @mock.patch('basket.unsubscribe')
+    def test_bug_698126_l10n(self, unsubscribe, subscribe, lookup_user):
         """Test that the form field names are localized"""
+        lookup_user.return_value = mock_lookup_user()
+        subscribe.return_value = True
+        unsubscribe.return_value = True
         user = User.objects.get(username='testuser')
         self.client.login(username=user.username,
             password=TESTUSER_PASSWORD)

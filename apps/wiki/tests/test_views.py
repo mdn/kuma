@@ -558,8 +558,7 @@ class KumascriptIntegrationTests(TestCaseBase):
                            args=(self.d.slug,),
                            locale=self.d.locale)
 
-        # NOTE: We could do this instead of using the @patch decorator over and
-        # over, but it requires an upgrade of mock to 0.8.0
+        # TODO: upgrade mock to 0.8.0 so we can do this.
 
         # self.mock_kumascript_get = (
         #         mock.patch('wiki.kumascript.get'))
@@ -568,8 +567,7 @@ class KumascriptIntegrationTests(TestCaseBase):
     def tearDown(self):
         super(KumascriptIntegrationTests, self).tearDown()
 
-        # NOTE: We could do this instead of using the @patch decorator over and
-        # over, but it requires an upgrade of mock to 0.8.0
+        # TODO: upgrade mock to 0.8.0 so we can do this.
 
         # self.mock_kumascript_get.stop()
 
