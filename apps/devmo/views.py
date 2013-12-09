@@ -10,8 +10,6 @@ import basket
 from taggit.utils import parse_tags
 from waffle import flag_is_active
 
-from waffle import flag_is_active
-
 from access.decorators import login_required
 from demos.models import Submission
 from teamwork.models import Team
@@ -156,8 +154,9 @@ def profile_edit(request, username):
                                             form.cleaned_data.get(field, ''))]
                 profile_new.tags.set_ns(tag_ns, *tags)
 
-            newsletter_subscribe(request.locale, profile_new.user.email,
-                                 form.cleaned_data)
+            if flag_is_active(request, 'profile_subscription'):
+                newsletter_subscribe(request.locale, profile_new.user.email,
+                                     form.cleaned_data)
             return HttpResponseRedirect(reverse(
                     'devmo.views.profile_view', args=(profile.user.username,)))
     context['form'] = form
