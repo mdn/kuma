@@ -18,7 +18,7 @@ from devmo import (SECTION_USAGE, SECTION_ADDONS, SECTION_APPS, SECTION_MOBILE,
                    SECTION_WEB, SECTION_MOZILLA, SECTION_HACKS)
 from feeder.models import Bundle, Feed
 from demos.models import Submission
-from landing.forms import SubscriptionForm
+from devmo.forms import SubscriptionForm
 
 def home(request):
     """Home page."""
@@ -87,7 +87,7 @@ def apps(request):
 def apps_newsletter(request):
     if request.method == 'POST':
         form = SubscriptionForm(request.locale, data=request.POST)
-        context = {'form': form}
+        context = {'subscription_form': form}
         if form.is_valid():
             optin = 'N'
             if request.locale == 'en-US':
@@ -107,10 +107,10 @@ def apps_newsletter(request):
                         return HttpResponseServerError()
                     else:
                         time.sleep(constance.config.BASKET_RETRY_WAIT * i)
-            del context['form']
+            del context['subscription_form']
 
     else:
-        context = {'form': SubscriptionForm(request.locale)}
+        context = {'subscription_form': SubscriptionForm(request.locale)}
 
     return render(request, 'landing/apps_newsletter.html', context)
 

@@ -1,8 +1,6 @@
-import logging
+from django.conf import settings
 
-from mock import patch
-from nose.tools import assert_equal, eq_, ok_
-from nose.plugins.attrib import attr
+from nose.tools import eq_
 import test_utils
 
 from devmo.forms import UserProfileEditForm
@@ -28,10 +26,10 @@ class TestUserProfileEditForm(test_utils.TestCase):
         for proto, expected_valid in protos:
             for name, site in sites:
                 url = '%s%s' % (proto, site)
-                form = UserProfileEditForm({
+                form = UserProfileEditForm(settings.WIKI_DEFAULT_LANGUAGE, {
                     "email": "lorchard@mozilla.com",
+                    "format": "html",
                     "websites_%s" % name: url
                 })
                 result_valid = form.is_valid()
                 eq_(expected_valid, result_valid)
-

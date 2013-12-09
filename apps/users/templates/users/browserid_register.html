@@ -1,8 +1,23 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "users/base.html" %}
 {% from "layout/errorlist.html" import errorlist %}
+{% from 'includes/common_macros.html' import newsletter_widget %}
 {% set title = _('Register') %}
 {% set classes = 'register' %}
+
+{% block site_css %}
+    {{ super() }}
+    {% if waffle.flag('profile_subscription') %}
+      {{ css('newsletter-widget',) }}
+    {% endif %}
+{% endblock %}
+
+{% block site_js %}
+    {{ super() }}
+    {% if waffle.flag('profile_subscription') %}
+      {{ js('newsletter-widget',) }}
+    {% endif %}
+{% endblock %}
 
 {% block content %}
 <section id="content">
@@ -23,7 +38,7 @@
           </p>
         </div>
 
-        <form id="create_user" class="boxed" method="post" action="">
+        <form id="create_user" class="boxed submission" method="post" action="">
           <h2>{{ _('New MDN Members') }}</h2>
           <p>{% trans %}
             We couldn't find an MDN profile for your Persona. If you're new here,
@@ -45,6 +60,11 @@
                 {{ register_form.username|safe }}
                 <p class="field-explanation"><small>{{ _("Please enter the name you'd like to display to other users to identify your contributions.") }}</small></p>
               </li>
+
+              {% if waffle.flag('profile_subscription') %}
+                {{ newsletter_widget(register_form) }}
+              {% endif %}
+
               <li class="submit">
                 <button type="submit" name="create">{{ _('Create a New Profile') }}</button>
               </li>

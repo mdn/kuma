@@ -677,6 +677,9 @@ MINIFY_BUNDLES = {
             'js/libs/DataTables-1.9.4/media/css/jquery.dataTables.css',
             'js/libs/DataTables-1.9.4/extras/Scroller/media/css/dataTables.scroller.css',
         ),
+        'newsletter-widget': (
+            'redesign/css/newsletter-widget.css',
+        ),
     },
     'js': {
         'mdn': (
@@ -775,6 +778,9 @@ MINIFY_BUNDLES = {
         ),
         'redesign-search': (
             'redesign/js/search.js',
+        ),
+        'newsletter-widget': (
+            'redesign/js/newsletter-widget.js',
         ),
     },
 }
@@ -1020,6 +1026,10 @@ CONSTANCE_CONFIG = dict(
         'How long to wait between basket api request retries. '
         'We typically multiply this value by the retry number so, e.g., '
         'the 4th retry waits 4*.5 = 2 seconds.'
+    ),
+    BASKET_API_KEY = (
+        '',
+        'API Key to use for basket requests'
     ),
 
     BETA_GROUP_NAME = (

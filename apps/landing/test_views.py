@@ -9,6 +9,7 @@ import basket
 import constance.config
 from waffle.models import Switch
 
+from devmo.tests import SkippedTestCase
 from sumo.tests import LocalizingClient
 from sumo.urlresolvers import reverse
 
@@ -96,10 +97,11 @@ class LandingViewsTest(test_utils.TestCase):
         eq_(200, r.status_code)
 
 
-class AppsViewsTest(test_utils.TestCase):
+class AppsViewsTest(SkippedTestCase):
 
     def setUp(self):
         self.client = LocalizingClient()
+        super(AppsViewsTest, self).setUp()
 
     def _good_newsletter_post(self):
         url = reverse('landing.views.apps_newsletter')

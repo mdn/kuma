@@ -5,7 +5,10 @@ from django.http import (HttpResponseRedirect, HttpResponseForbidden)
 
 from devmo.urlresolvers import reverse
 
+import constance.config
+import basket
 from taggit.utils import parse_tags
+from waffle import flag_is_active
 
 from waffle import flag_is_active
 
@@ -15,7 +18,7 @@ from teamwork.models import Team
 
 from . import INTEREST_SUGGESTIONS
 from .models import Calendar, Event, UserProfile
-from .forms import UserProfileEditForm
+from .forms import UserProfileEditForm, newsletter_subscribe
 
 
 DOCS_ACTIVITY_MAX_ITEMS = getattr(settings,
@@ -92,6 +95,7 @@ def my_profile(request):
 def profile_edit(request, username):
     """View and edit user profile"""
     profile = get_object_or_404(UserProfile, user__username=username)
+    context = {'profile': profile}
     if not profile.allows_editing_by(request.user):
         return HttpResponseForbidden()
 
@@ -100,6 +104,7 @@ def profile_edit(request, username):
         ('interests', 'profile:interest:'),
         ('expertise', 'profile:expertise:')
     )
+
 
     if request.method != 'POST':
         initial = dict(email=profile.user.email, beta=profile.beta_tester)
@@ -113,11 +118,21 @@ def profile_edit(request, username):
             initial[field] = ', '.join(t.name.replace(ns, '')
                                        for t in profile.tags.all_ns(ns))
 
-        # Finally, set up the form.
-        form = UserProfileEditForm(instance=profile, initial=initial)
+        subscription_details = basket.lookup_user(email=profile.user.email,
+                                          api_key=constance.config.BASKET_API_KEY)
+        if settings.BASKET_APPS_NEWSLETTER in subscription_details['newsletters']:
+            initial['newsletter'] = True
+            initial['agree'] = True
+
+        # Finally, set up the forms.
+        form = UserProfileEditForm(request.locale,
+                                   instance=profile,
+                                   initial=initial)
 
     else:
-        form = UserProfileEditForm(request.POST, request.FILES,
+        form = UserProfileEditForm(request.locale,
+                                   request.POST,
+                                   request.FILES,
                                    instance=profile)
         if form.is_valid():
             profile_new = form.save(commit=False)
@@ -141,12 +156,14 @@ def profile_edit(request, username):
                                             form.cleaned_data.get(field, ''))]
                 profile_new.tags.set_ns(tag_ns, *tags)
 
+            newsletter_subscribe(request.locale, profile_new.user.email,
+                                 form.cleaned_data)
             return HttpResponseRedirect(reverse(
                     'devmo.views.profile_view', args=(profile.user.username,)))
+    context['form'] = form
+    context['INTEREST_SUGGESTIONS'] = INTEREST_SUGGESTIONS
 
-    return render(request, 'devmo/profile_edit.html', dict(
-        profile=profile, form=form, INTEREST_SUGGESTIONS=INTEREST_SUGGESTIONS
-    ))
+    return render(request, 'devmo/profile_edit.html', context)
 
 
 @login_required

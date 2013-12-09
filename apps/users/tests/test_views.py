@@ -13,6 +13,7 @@ from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 from test_utils import RequestFactory
 
+from devmo.tests import mock_lookup_user
 from sumo.helpers import urlparams
 from sumo.tests import TestCase, LocalizingClient
 from sumo.urlresolvers import reverse
@@ -308,6 +309,26 @@ class BrowserIDTestCase(TestCase):
         settings.SITE_URL = 'http://testserver'
         self.client = LocalizingClient()
 
+        # TODO: upgrade mock to 0.8.0 so we can do this.
+        """
+        self.lookup = mock.patch('basket.lookup_user')
+        self.subscribe = mock.patch('basket.subscribe')
+        self.unsubscribe = mock.patch('basket.unsubscribe')
+
+        self.lookup.return_value = mock_lookup_user()
+        self.subscribe.return_value = True
+        self.unsubscribe.return_value = True
+
+        self.lookup.start()
+        self.subscribe.start()
+        self.unsubscribe.start()
+
+    def tearDown(self):
+        self.lookup.stop()
+        self.subscribe.stop()
+        self.unsubscribe.stop()
+        """
+
     def test_invalid_post(self):
         resp = self.client.post(reverse('users.browserid_verify',
                                         locale='en-US'))
@@ -359,11 +380,20 @@ class BrowserIDTestCase(TestCase):
         resp = self.client.get(reverse('home', locale='en-US'))
         eq_('1', self.client.cookies.get('browserid_explained').value)
 
+    @mock.patch('basket.lookup_user')
+    @mock.patch('basket.subscribe')
+    @mock.patch('basket.unsubscribe')
     @mock.patch('users.views._verify_browserid')
     def test_valid_assertion_with_new_account_creation(self,
-                                                       _verify_browserid):
+                                                       _verify_browserid,
+                                                       unsubscribe,
+                                                       subscribe,
+                                                       lookup_user):
         new_username = 'neverbefore'
         new_email = 'never.before.seen@example.com'
+        lookup_user.return_value = mock_lookup_user()
+        subscribe.return_value = True
+        unsubscribe.return_value = True
         _verify_browserid.return_value = {'email': new_email}
 
         try:
@@ -400,7 +430,9 @@ class BrowserIDTestCase(TestCase):
 
         # Submit the create_user form, with a chosen username
         resp = self.client.post(redir_url, {'username': 'neverbefore',
-                                            'action': 'register'})
+                                            'action': 'register',
+                                            'country': 'us',
+                                            'format': 'html'})
 
         # The submission should result in a redirect to the session's redirect
         # value
@@ -459,11 +491,20 @@ class BrowserIDTestCase(TestCase):
         form = page.find('form#existing_user')
         eq_(0, form.length)
 
+    @mock.patch('basket.lookup_user')
+    @mock.patch('basket.subscribe')
+    @mock.patch('basket.unsubscribe')
     @mock.patch('users.views._verify_browserid')
-    def test_valid_assertion_changing_email(self, _verify_browserid):
+    def test_valid_assertion_changing_email(self, _verify_browserid,
+                                                        unsubscribe,
+                                                        subscribe,
+                                                        lookup_user):
         # just need to be authenticated, not necessarily BrowserID
         self.client.login(username='testuser', password='testpass')
 
+        lookup_user.return_value = mock_lookup_user()
+        subscribe.return_value = True
+        unsubscribe.return_value = True
         _verify_browserid.return_value = {'email': 'testuser+changed@test.com'}
 
         resp = self.client.post(reverse('users.browserid_change_email',
@@ -478,11 +519,20 @@ class BrowserIDTestCase(TestCase):
         doc = pq(resp.content)
         ok_('testuser+changed@test.com' in doc.find('li#field_email').text())
 
+    @mock.patch('basket.lookup_user')
+    @mock.patch('basket.subscribe')
+    @mock.patch('basket.unsubscribe')
     @mock.patch('users.views._verify_browserid')
-    def test_valid_assertion_doesnt_steal_email(self, _verify_browserid):
+    def test_valid_assertion_doesnt_steal_email(self, _verify_browserid,
+                                                        unsubscribe,
+                                                        subscribe,
+                                                        lookup_user):
         # just need to be authenticated, not necessarily BrowserID
         self.client.login(username='testuser', password='testpass')
 
+        lookup_user.return_value = mock_lookup_user()
+        subscribe.return_value = True
+        unsubscribe.return_value = True
         _verify_browserid.return_value = {'email': 'testuser2@test.com'}
 
         # doesn't change email if the new email already belongs to another user
