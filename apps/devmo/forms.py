@@ -7,6 +7,7 @@ from django.http import HttpResponseServerError
 
 import basket
 from basket.base import BasketException
+from basket.errors import BASKET_UNKNOWN_EMAIL
 import constance.config
 from tower import ugettext_lazy as _
 from taggit.utils import parse_tags
@@ -158,10 +159,9 @@ class UserProfileEditForm(forms.ModelForm):
 
 
 def newsletter_subscribe(locale, email, cleaned_data):
-    subscription_details = basket.lookup_user(email=email,
-                                    api_key=constance.config.BASKET_API_KEY)
-    subscribed = (settings.BASKET_APPS_NEWSLETTER in
-                  subscription_details['newsletters'])
+    subscription_details = get_subscription_details(email)
+    subscribed = subscribed_to_newsletter(subscription_details)
+
     if cleaned_data['newsletter'] and not subscribed:
         if not cleaned_data['agree']:
             raise forms.ValidationError(PRIVACY_REQUIRED)
@@ -184,7 +184,25 @@ def newsletter_subscribe(locale, email, cleaned_data):
                     return HttpResponseServerError()
                 else:
                     time.sleep(constance.config.BASKET_RETRY_WAIT * i)
-    else:
+    elif subscription_details:
         basket.unsubscribe(subscription_details['token'], email,
                            newsletters=settings.BASKET_APPS_NEWSLETTER)
 
+
+def get_subscription_details(email):
+    subscription_details = None
+    try:
+        subscription_details = basket.lookup_user(email=email,
+                                        api_key=constance.config.BASKET_API_KEY)
+    except BasketException, e:
+        if e.code == BASKET_UNKNOWN_EMAIL:
+            # pass - unknown email is just a new subscriber
+            pass
+    return subscription_details
+
+
+def subscribed_to_newsletter(subscription_details):
+    subscribed = (settings.BASKET_APPS_NEWSLETTER in
+                  subscription_details['newsletters'] if
+                  subscription_details else False)
+    return subscribed

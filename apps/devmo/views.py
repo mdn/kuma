@@ -18,7 +18,8 @@ from teamwork.models import Team
 
 from . import INTEREST_SUGGESTIONS
 from .models import Calendar, Event, UserProfile
-from .forms import UserProfileEditForm, newsletter_subscribe
+from .forms import (UserProfileEditForm, newsletter_subscribe,
+                    get_subscription_details, subscribed_to_newsletter)
 
 
 DOCS_ACTIVITY_MAX_ITEMS = getattr(settings,
@@ -118,9 +119,8 @@ def profile_edit(request, username):
             initial[field] = ', '.join(t.name.replace(ns, '')
                                        for t in profile.tags.all_ns(ns))
 
-        subscription_details = basket.lookup_user(email=profile.user.email,
-                                          api_key=constance.config.BASKET_API_KEY)
-        if settings.BASKET_APPS_NEWSLETTER in subscription_details['newsletters']:
+        subscription_details = get_subscription_details(profile.user.email)
+        if subscribed_to_newsletter(subscription_details):
             initial['newsletter'] = True
             initial['agree'] = True
 
