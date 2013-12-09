@@ -104,3 +104,18 @@
     }
   }
 }
+
+#profile-edit {
+    #field_beta, #field_newsletter {
+        @extend .clear;
+
+        input[type="checkbox"] {
+            bidi-value(float, left, right);
+        }
+
+        label {
+            position: absolute;
+            bidi-style(margin-left, 25px, margin-right, 0);
+        }
+    }
+}
