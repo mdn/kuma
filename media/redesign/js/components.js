@@ -97,7 +97,8 @@
 
         // Show my submenu after the showDelay
         showTimeout = setTimeout(function() {
-          $submenu.addClass('open').attr('aria-hidden', 'false').fadeIn();
+          // Setting z-index here so that current menu is always on top
+          $submenu.css('z-index', 99999).addClass('open').attr('aria-hidden', 'false').fadeIn();
 
           // Find the first link for improved usability
           if(settings.focusOnOpen) {
@@ -124,7 +125,8 @@
     // Closes a given submenu
     function closeSubmenu($sub) {
       closeTimeout = setTimeout(function() {
-        $sub && $sub.removeClass('open').attr('aria-hidden', 'true').fadeOut();
+        // Set the z-index to one less so another menu would get top spot if overlapping and opening
+        $sub && $sub.css('z-index', 99998).removeClass('open').attr('aria-hidden', 'true').fadeOut();
         settings.onClose();
       }, settings.hideDelay);
     }
