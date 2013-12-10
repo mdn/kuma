@@ -122,7 +122,6 @@
     top: 40px;
     left: -186px;
     border-top: menu-border-width solid #404040;
-    z-index: 9999;
 
     .submenu-column {
       min-height: 90px;
@@ -465,6 +464,23 @@ footer {
           vendorize(transition-property, none);
           overflow: visible;
         }
+      }
+    }
+  }
+
+  /* make submenus full width */
+  #main-nav {
+    .submenu {
+      left: 0;
+      right: 0;
+      width: auto;
+
+      &:before, &:after {
+        left: 10px;
+      }
+      .submenu-column {
+        width: 40%;
+        border-right: 0;
       }
     }
   }
