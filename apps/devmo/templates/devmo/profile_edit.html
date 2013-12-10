@@ -10,7 +10,7 @@
     {{ super() }}
     {{ css('demostudio') }}
     {% if waffle.flag('redesign') %}{{ css('redesign-profile') }}{% endif %}
-    {% if waffle.flag('profile_subscription') %}{{ css('newsletter-widget',) }}{% endif %}
+    {% if waffle.flag('profile_subscription') %}{{ css('newsletter',) }}{% endif %}
 {% endblock %}
 
 {% block site_js %}
@@ -20,7 +20,7 @@
     {{ js('libs/tagit') }}
     {{ js('profile') }}
     {% if waffle.flag('profile_subscription') %}
-      {{ js('newsletter-widget',) }}
+      {{ js('newsletter',) }}
     {% endif %}
 {% endblock %}
 
@@ -50,7 +50,13 @@
       
       <form class="submission" method="post" action="">
       {{ csrf() }}
-      <fieldset class="section notitle" id="personal">
+
+      {% if waffle.flag('profile_subscription') %}
+        {{ newsletter_widget(form) }}
+      {% endif %}
+
+      <fieldset class="section" id="personal">
+          <legend><b>Basic information</b></legend>
         <ul>
             <li id="field_email" class="field type_email required">
                 <label for="id_email">{{ _('Email') }}</label>
@@ -106,10 +112,6 @@
         </ul>
 
       </fieldset>
-
-      {% if waffle.flag('profile_subscription') %}
-        {{ newsletter_widget(form) }}
-      {% endif %}
 
       <p class="fm-submit"><button type="submit">{{ _('Save Changes') }}</button></p>
 

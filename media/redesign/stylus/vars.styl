@@ -30,11 +30,15 @@ grid-column-selector = '> [class^="column-"]';
 grid-width-column-main = 73.5%;
 
 max-width-default = 1400px;
+max-width-small-desktop = 1200px;
+max-width-tablet = 1024px;
+max-width-mobile = 768px;
+max-width-small-mobile = 480px;
 
-media-query-small-desktop = 'all and/*!YUI */(max-width: 1200px)';
-media-query-tablet = 'all and/*!YUI */(max-width: 1024px)';
-media-query-mobile = 'all and/*!YUI */(max-width: 768px)';
-media-query-small-mobile = 'all and/*!YUI */(max-width : 480px)';
+media-query-small-desktop = 'all and/*!YUI */(max-width: ' + max-width-small-desktop + ')';
+media-query-tablet = 'all and/*!YUI */(max-width: ' + max-width-tablet + ')';
+media-query-mobile = 'all and/*!YUI */(max-width: ' + max-width-mobile + ')';
+media-query-small-mobile = 'all and/*!YUI */(max-width: ' + max-width-small-mobile + ')';
 
 media-query-navigation-break = 'all and/*!YUI */(max-width: 970px)';
 media-query-navigation-block = 'all and/*!YUI */(max-width: 660px)';
