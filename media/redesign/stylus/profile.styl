@@ -106,6 +106,48 @@
 }
 
 #profile-edit {
+    width: max-width-small-desktop; /* One fewer breakpoint to worry about. */
+    padding-left: 265px; /* Temporarily copied from legacy CSS for later reference. */
+
+    form-width = @width - @padding-left;
+    newsletter-width = 400px;
+
+    form {
+        position: relative;
+        width: form-width;
+    }
+
+    fieldset {
+        width: (form-width - grid-spacing - newsletter-width); /* Leave room for the newsletter. This is overridden in the newsletter itself. */
+    }
+
+    fieldset#apps-newsletter-subscribe {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: newsletter-width;
+
+        ol {
+            margin-bottom: 0;
+        }
+
+        @media media-query-small-desktop {
+            position: static;
+
+            fieldset {
+                margin: grid-spacing 0;
+            }
+
+            p {
+                margin-bottom: (grid-spacing / 2);
+            }
+        }
+    }
+
+    #field_newsletter {
+        margin-bottom: 0;
+    }
+
     #field_beta, #field_newsletter {
         @extend .clear;
 
