@@ -584,9 +584,7 @@ MINIFY_BUNDLES = {
             'css/mdn-calendar.css',
         ),
         'search': (
-            'css/search.css',
-            'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
-            'css/jqueryui/moz-jquery-plugins.css',
+            'redesign/css/search.css',
         ),
         'wiki': (
             'css/wiki.css',
@@ -647,9 +645,6 @@ MINIFY_BUNDLES = {
             'css/jqueryui/moz-jquery-plugins.css',
             'redesign/css/sphinx.css',
         ),
-        'redesign-search': (
-            'redesign/css/search.css',
-        ),
         'redesign-demos': (
             'redesign/css/demo-studio.css',
         ),
@@ -686,7 +681,6 @@ MINIFY_BUNDLES = {
             'js/libs/jquery-1.9.1.js',
             'js/jquery-upgrade-compat.js',
             'js/init.js',
-            'js/gsearch.js',
 
             # Home Page
             # cycle and slideshow only needed on the home page (or any page
@@ -729,8 +723,7 @@ MINIFY_BUNDLES = {
             'js/libs/tag-it.js',
         ),
         'search': (
-            'js/search.js',
-            'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
+            'redesign/js/search.js',
         ),
         'wiki': (
             'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
@@ -775,9 +768,6 @@ MINIFY_BUNDLES = {
         ),
         'redesign-wiki': (
             'redesign/js/wiki.js',
-        ),
-        'redesign-search': (
-            'redesign/js/search.js',
         ),
         'newsletter-widget': (
             'redesign/js/newsletter-widget.js',
