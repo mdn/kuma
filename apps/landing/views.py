@@ -152,20 +152,6 @@ def forum_archive(request):
     """Forum Archive from phpbb-static landing page."""
     return render(request, 'landing/forum_archive.html')
 
-def waffles(request):
-    flags = Flag.objects.all()
-
-    flag_json = []
-    for flag in flags:
-        if flag_is_active(request, flag.name):
-            flag_json.append({
-                'name': str(flag.name),
-                'note': str(flag.note)
-            })
-
-    context = { 'flags': flag_json }
-    return render(request, 'landing/waffles.js', context,
-                       content_type='application/x-javascript')
 
 def common_landing(request, section=None, extra=None):
     """Common code for landing pages."""
