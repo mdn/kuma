@@ -16,8 +16,8 @@
         {% endif %}
 
         {% if waffle.flag('redesign') %}
-          <a href="#" id="create_profile" class="persona-button persona-login" title="{{ _('Sign in with Persona') }}" data-next="{{ next_url }}">
-            <span class="persona-icon"><img src="{{ MEDIA_URL }}redesign/img/persona-person-white.png" alt="persona icon"></span>
+          <a href="#" class="persona-button persona-login" data-next="{{ next_url }}">
+            <span class="persona-icon"><img src="{{ MEDIA_URL }}redesign/img/persona-person-white.png" alt=""></span>
             <span class="signin">{{ _('Sign in with Persona') }}</span>
           </a>
         {% else %}
