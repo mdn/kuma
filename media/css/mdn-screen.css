@@ -1,14 +1,3 @@
-/*** @Buttons *********/
-button, .button, input[type=submit], input[type=button] { padding: .35em .75em .2em; display: inline-block; background: #bd5642 url("../img/button-shade.png") 0 .75em repeat-x; color: #fff; font: 200 1em/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-decoration: none; text-transform: uppercase; letter-spacing: .5px; border: 0; -moz-border-radius: .2em; -webkit-border-radius: .2em; border-radius: .2em; -moz-box-shadow: 1px 1px 0 rgba(0,0,0,.25); -webkit-box-shadow: 1px 1px 0 rgba(0,0,0,.25); box-shadow: 1px 1px 0 rgba(0,0,0,.25); }
-button:hover, input[type=submit]:hover, input[type=button]:hover, 
-button:focus, input[type=submit]:focus, input[type=button]:focus, 
-.button:hover, .button:focus, .button:active { background-color: #ae4935; color: #fff; cursor: pointer; text-decoration: none; }
-
-.button.positive { background-color: #689032; }
-.button.positive:hover, .button.positive:focus, .button.positive:active { background-color: #78a935; }
-
-.choices .button { font-size: 1.714em; margin-right: 20px; }
-
 /*** @Basics *********/
 .page-title + p { margin-top: -1em; }
 #content-main blockquote { padding: 0 25px; border-left: 5px solid #ccc; }
@@ -85,14 +74,10 @@ p.notice { padding-bottom: 10px; top: 0; margin-bottom: 15px; }
 #site-search-gg .gsc-branding-text { width: 60px; display: block; color: #666; position: absolute; top: 0; }
 
 /* @Tabbed boxes *********/
-.tabbed-on { border: 1px solid #aba9a5; padding-top: 3em; position: relative; }
-.tabbed-on ul.index { position: absolute; top: 0; left: 0; border-bottom: 1px solid #aba9a5; background: rgba(0,0,0,.04) url("../img/light-shade.png") 0 1.5em repeat-x; }
 ul.index { width: 100%; height: 3em; list-style: none; margin: 0; }
 #content-main ul.index li { border: 1px solid #aba9a5; border-bottom: 0; cursor: pointer; float: left; margin-right: -1px; text-align: center; color: #4e4f52; background: #eee url("../img/light-shade.png") 0 1.25em repeat-x; padding: .75em 20px; min-width: 80px; font: 200 1.2em/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
 #content-main ul.index li:hover { background: #fff none; }
 #content-main ul.index li.active { background: #fff none; color: #333; border-bottom: 1px solid #fff; padding-bottom: .85em; }
-#content-main .tabbed-on ul.index li { border-width: 0 1px 0 0; margin-right: 0; }
-.tabbed-on .hidden, .folder { display: none; visibility: hidden; }
 .folder:after { content: "."; clear: both; display: block; height: 0; visibility: hidden; }
 .folder.visible { display: block; visibility: visible; background: #fbfbfa; padding: 20px; height: auto; overflow: visible; }
 ul.index a { color: #2f2f2f; text-decoration: none; }

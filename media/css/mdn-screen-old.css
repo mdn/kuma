@@ -471,3 +471,20 @@ html[lang="en-US"] #promo-social div { background: url("../img/bg-social-promo-n
 .html-rtl #welcome-open { right: auto; left: 10px; }
 
 .html-rtl.hasJS #nav-main #nav-sub-docs, .html-rtl #nav-main .menu:hover #nav-sub-docs { right: -50px; }
+
+/* @Tabbed boxes *********/
+.tabbed-on { border: 1px solid #aba9a5; padding-top: 3em; position: relative; }
+.tabbed-on ul.index { position: absolute; top: 0; left: 0; border-bottom: 1px solid #aba9a5; background: rgba(0,0,0,.04) url("../img/light-shade.png") 0 1.5em repeat-x; }
+#content-main .tabbed-on ul.index li { border-width: 0 1px 0 0; margin-right: 0; }
+.tabbed-on .hidden, .folder { display: none; visibility: hidden; }
+
+/*** @Buttons *********/
+button, .button, input[type=submit], input[type=button] { padding: .35em .75em .2em; display: inline-block; background: #bd5642 url("../img/button-shade.png") 0 .75em repeat-x; color: #fff; font: 200 1em/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-decoration: none; text-transform: uppercase; letter-spacing: .5px; border: 0; -moz-border-radius: .2em; -webkit-border-radius: .2em; border-radius: .2em; -moz-box-shadow: 1px 1px 0 rgba(0,0,0,.25); -webkit-box-shadow: 1px 1px 0 rgba(0,0,0,.25); box-shadow: 1px 1px 0 rgba(0,0,0,.25); }
+button:hover, input[type=submit]:hover, input[type=button]:hover,
+button:focus, input[type=submit]:focus, input[type=button]:focus,
+.button:hover, .button:focus, .button:active { background-color: #ae4935; color: #fff; cursor: pointer; text-decoration: none; }
+
+.button.positive { background-color: #689032; }
+.button.positive:hover, .button.positive:focus, .button.positive:active { background-color: #78a935; }
+
+.choices .button { font-size: 1.714em; margin-right: 20px; }
