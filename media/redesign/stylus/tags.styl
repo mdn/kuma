@@ -80,6 +80,10 @@ img, iframe, video {
   max-width: 100%;
 }
 
+img, video {
+  height: auto !important; /* always constrain to width, fixes CKEditor issue of autopopulating dimensions */
+}
+
 p, dl, table, pre {
   margin-bottom: content-block-margin;
 }
