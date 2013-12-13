@@ -34,7 +34,6 @@
   border-top: 2px solid #fff;
 
   .logo {
-    @extend .text-offscreen;
     bidi-value(float, left, right);
     width: 216px;
     height: 54px;
@@ -42,6 +41,8 @@
     background-position: -5px 0;
     background-repeat: no-repeat;
     display: block;
+    text-indent: -9999px;
+    overflow: hidden;
   }
 }
 
@@ -360,6 +361,23 @@ footer {
   @media media-query-mobile { z-index: 4; }
 }
 
+/* simple hiding of elements */
+.hidden {
+  display: none;
+}
+
+/* disabling of elements */
+.disabled {
+  pointer-events: none;
+  cursor: default;
+}
+
+/* redesign beta notice */
+.redesign-beta-notice {
+  @extend .smaller;
+  padding: 6px 0;
+}
+
 
 /* tablet updates */
 @media media-query-tablet {
@@ -487,13 +505,6 @@ footer {
       }
     }
   }
-}
-
-
-/* redesign beta notice */
-.redesign-beta-notice {
-  @extend .smaller;
-  padding: 6px 0;
 }
 
 
