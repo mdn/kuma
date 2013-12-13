@@ -752,9 +752,6 @@ MINIFY_BUNDLES = {
         'users': (
             'js/empty.js',
         ),
-        'mdn_home': (
-            'js/empty.js',
-        ),
         'framebuster': (
             'js/framebuster.js',
         ),
