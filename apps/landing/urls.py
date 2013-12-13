@@ -15,5 +15,4 @@ urlpatterns = patterns('landing.views',
     url(r'^promote/?$', 'promote_buttons', name='promote'),
     url(r'^promote/buttons/?$', 'promote_buttons', name='promote_buttons'),
     url(r'^forum-archive/?$', 'forum_archive', name='forum_archive'),
-    url(r'^waffles.js$', 'waffles', name='waffles'),
 )
