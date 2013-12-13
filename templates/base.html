@@ -53,7 +53,6 @@
 {% macro site_js() %}
   {% block site_js %}
       <script src="//mozorg.cdn.mozilla.net/{{ request.locale }}/tabzilla/tabzilla.js" async></script>
-      <script src="//www.google.com/jsapi" type="text/javascript"></script>
       <script src="https://login.persona.org/include.js" type="text/javascript"></script>
 
       {% if waffle.flag('redesign') %}

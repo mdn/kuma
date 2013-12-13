@@ -1,5 +1,9 @@
 {# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "search/base.html" %}
+{% set locale = request.GET.get('locale', request.locale) %}
+{% if locale in settings.LOCALES %}
+  {% set locale_native = settings.LOCALES[locale].native %}
+{% endif %}
 {% set meta = (('WT.oss', q),
                ('WT.oss_r', num_results)) %}
 {% block title %}
@@ -10,318 +14,159 @@
   {% endif %}
 {% endblock %}
 
-{% macro doc_block(doc) -%}
-  {% set doc_url = '%s%s' % (settings.SITE_URL, url('wiki.document', doc.slug, locale=doc.locale)) %}
-  <li class="doc-result">
-    <h3><a href="{{ doc_url }}">{{ doc.title }}</a></h3>
-    {% if doc.tags|length %}
-    <i aria-hidden="true" class="icon-tags"></i>
-    <ul class="tags">
-      {% for tag in doc.tags %}
-        {% set tag_url = url('wiki.tag', tag) %}
-      <li><a href="{{ tag_url }}">{{ tag }}</a></li>
-      {% endfor %}
-    </ul>
-    {% endif %}
-    <div class="searchHighlight">
-      <p>{{ doc.excerpt|safe }}</p>
-    </div>
-    <p><!-- match content here --></p>
-  </li>
-{% endmacro %}
+{% block bodyclass %}search-results search-results-no-demo{% endblock %}
 
-{% block content %}
-<section id="content">
-  <div class="wrap">
-    <div id="content-main" class="full">
-<article id="search-results" class="main">
-  <div class="search-results">
-
-    <h1>{{ _('Search') }}</h1>
-
-    <p id="search-survey-intro">
-      {% trans %}
-        We'd like to know how we can improve MDN search.  To help us out, please complete
-        <a href="javascript:;" id="search-survey-link">this survey</a>.
-
-        <div id="search-survey-dialog-content" title="Search Survey">
-          <iframe src="http://www.surveygizmo.com/s3/iframe/1302591/fbb74ad279ed" frameborder="0" width="700" height="500"></iframe>
-        </div>
-      {% endtrans %}
-    </p>
-
-    <div class="search-form boxed">
-      <form action="{{ request.path }}" method="get" id="search-form">
-        <input name="q" id="search-q" type="search" value="{{ query }}" {% if not query %}autofocus{% endif %} />
-        <button type="submit" id="search-submit">{{ _('Search!') }}</button>
-      </form>
-    </div>
-
-    {% if query %}
-      <div class="boxed" id="results-box"><!--RESULTS-->
-      {% if count %}
-        <h2>{{ _('Search Results For "%s"') % query }}</h2>
-
-        <ul class="search-results-list">
-        {% for doc in documents %}
-          {{ doc_block(doc) }}
-        {% endfor %}
-        </ul>
-
-        <div class="pager">
-        {% if next_page %}
-          <a class="button" href="{{ request.get_full_path()|urlparams(page=next_page) }}">
-          {{ _('Next') }}
-          </a>
-        {% endif %}
-        {% if prev_page %}
-          <a class="button" href="{{ request.get_full_path()|urlparams(page=prev_page) }}">
-          {{ _('Previous') }}
-          </a>
-        {% endif %}
+{% macro doc_block(doc, index) -%}
+  <li class="result-{{ index }}">
+    <div class="column-container">
+      <div class="column-1"><i aria-hidden="true" class="icon-file-text-alt"></i></div>
+      <div class="column-5 result-list-item">
+        <h4><a href="{{ doc.url }}"{% if index == 1 %} tabindex="1"{% endif %}>{{ doc.title }}</a></h4>
+        <p>{{ doc.excerpt|safe }}</p>
+        <p class="search-meta"><a href="{{ doc.url }}">{{ doc.url|replace('https://', '') }}</a>
+        {% if user.is_superuser %}Score: <span title="explanation: {{ doc.explanation }}">{{ doc.score }}</span>{% endif%}
+        </p>
       </div>
-      {% if facet_counts %}
-        <div class="boxed" id="filter-box">
-          <h2>{{ _('Topics') }}</h2>
-          <ul>
-            {% for facet in facet_counts %}
-              <li>
-              {% if facet.deselect_url %}
-                {{ facet.label }} <span class="facet-count">{{ facet.count }}</span>
-                <a href="{{ facet.deselect_url }}">x</a>
-              {% else %}
-                <a href="{{ facet.select_url }}">
-                  {{ facet.label }} <span class="facet-count">{{ facet.count }}</span>
-                </a>
-              {% endif %}
-              </li>
-            {% endfor %}
-          </ul>
-        </div>
-      {% endif %}
-      {% else %}
-        <h2>{{ _('Ooops!') }}</h2>
-        <p>{{ _('No documents relating to your search could be found.') }}</p>
-        {% include 'search/popular.html' %}
-      {% endif %}
-    {% else %}
-      {% include 'search/popular.html' %}
-    {% endif %}
-    <!--/RESULTS--></div>
+      {# Hiding until search has this capability #}{#
+      <div class="column-strip result-list-link">
+        <a href=""><i aria-hidden="true" class="icon-code"></i>{{ _('Code Sample') }}</a>
+        <a href=""><i aria-hidden="true" class="icon-play-circle"></i>{{ _('Demo Sample') }}</a>
+      </div>
+      #}
+    </div>
+  </li>
+ {% endmacro %}
 
 
-    <style type="text/css">
-    #results-box { opacity: 1; transition-property: opacity; transition-duration: .5s; -webkit-transition-property: opacity; -webkit-transition-duration: .5s;  }
-    #results-box.searching { opacity: 0.5; }
+ {% block content %}
 
-    /* basic result styling */
-    .doc-result { padding: 10px; margin: 0 -10px; }
-    .doc-result.selected { background: rgba(0, 0, 0, 0.05); cursor: pointer; }
-    .doc-result h3 { margin-bottom: 0; }
-    .doc-result p { padding-left: 0; margin-bottom: 0; font-size: 0.9em; }
-    .doc-result em { background: rgb(255,255,212); }
+ <h1 class="offscreen">{{ _('MDN Site Search') }}</h1>
 
-    /* tag styling */
-    .doc-result .tags { margin-bottom: 0.3em; display:inline-block; }
-    .doc-result .tags li { display: inline; }
-    .doc-result .tags li:after { content: ","; color: #666; }
-    .doc-result .tags li:last-child:after { content: ""; }
-    .doc-result .tags a { font-style: italic; }
-    .search-results-list i[class='icon-tags'], .doc-result .tags a { color: #090; }
-    .search-results-list i[class='icon-tags'], .doc-result .tags li { font-size: 0.8em; }
-
-    /* crumb styling */
-    .doc-result .searchMeta .crumbs { margin: 0 0 0.3em 0; }
-    .doc-result .searchMeta .crumbs li { display: inline; padding-left: 13px; margin-left: 6px; background: url("{{ MEDIA_URL }}/img/nav-arrows.png") -15px -698px no-repeat; font-size: 0.8em; }
-    .doc-result .searchMeta .crumbs li:first-child { padding-left: 0; margin-left: 0; background: none; }
-    .doc-result .searchMeta .crumbs li a { text-decoration: underline; color: #090; }
-
-    /* search form styling */
-    .search-form  { margin-bottom: 30px; }
-    #search-q     { width: 80%; -webkit-appearance: textfield; }
-    #search-submit { display: inline-block; }
-
-    /* search survey */
-    #search-survey-dialog-content { display: none; }
-    #search-survey-intro  { padding-left: 0; }
-    #search-survey-intro a { color: #369; }
-    button, .button, input[type=submit], input[type=button] { padding: .35em .75em .2em; display: inline-block; background: #bd5642 url("/media/img/button-shade.png") 0 .75em repeat-x !important; color: #fff !important; font: 200 1em/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-decoration: none; text-transform: uppercase; letter-spacing: .5px; border: 0; -moz-border-radius: .2em; -webkit-border-radius: .2em; border-radius: .2em; -moz-box-shadow: 1px 1px 0 rgba(0,0,0,.25); -webkit-box-shadow: 1px 1px 0 rgba(0,0,0,.25); box-shadow: 1px 1px 0 rgba(0,0,0,.25); }
-
-    /* not yet used styles -- popular / sidebar */
-    .search-popular { width: 49%; float: left; margin-top: 20px; }
-    .search-popular ul { list-style-type: circle; padding-left: 30px; }
-    .search-popular ul li { padding-bottom: 10px; }
-    .search-popular-col1{ margin-right: 1%; }
-    </style>
-
+  <div class="results-search-form">
+    <h2 class="offscreen">{{ _('Search') }}</h2>
+    <form action="{{ url('search') }}" method="get">
+      <label for="search-q" class="offscreen">{{ _('Search') }}</label>
+      <input type="search" name="q" id="search-q" placeholder="{{ _('Search the docs') }}" value="{{ query }}" {% if not query %}autofocus{% endif %} />
+      <button type="submit" class="offscreen">{{ _('Search') }}</button>
+    </form>
   </div>
 
-</article>
+
+ <div class="column-container">
+    <!-- left results -->
+    <div class="column-main">
+
+      <div id="search-results-close-container">
+        <div class="search-pane search-results-explanation">
+          <h2>{{ _('Results') }}</h2>
+          <p>
+          {% if locale_native %}
+            {% if query %}
+              {% trans count=count, locale_native=locale_native %}
+                {{ count }} document found for "{{ query }}" in {{ locale_native }}.
+              {% pluralize %}
+                {{ count }} documents found for "{{ query }}" in {{ locale_native }}.
+              {% endtrans %}
+            {% else %}
+              {% trans count=count, locale_native=locale_native %}
+                {{ count }} document found in {{ locale_native }}.
+              {% pluralize %}
+                {{ count }} documents found in {{ locale_native }}.
+              {% endtrans %}
+            {% endif %}
+          {% else %}
+            {% if query %}
+              {% trans count=count %}
+                {{ count }} document found for "{{ query }}".
+              {% pluralize %}
+                {{ count }} documents found for "{{ query }}".
+              {% endtrans %}
+            {% else %}
+              {% trans count=count %}
+                {{ count }} document found.
+              {% pluralize %}
+                {{ count }} documents found.
+              {% endtrans %}
+            {% endif %}
+          {% endif %}
+          {% if count %}
+            &middot;
+            {% if not previous and not next %}
+              {{ _('Displaying all results.') }}
+            {% else %}
+              {% trans count=count %}
+                Displaying {{ count }} search result.
+              {% pluralize %}
+                Displaying {{ start }}-{{ end }} of {{ count }} search results.
+              {% endtrans %}
+            {% endif %}
+          {% endif %}
+
+          {% if locale != settings.LANGUAGE_CODE %}
+            &middot;
+            <a href="{{ url('search', locale=settings.LANGUAGE_CODE, ) }}?q={{ query }}">
+              {% trans default_locale_native = settings.LOCALES[settings.LANGUAGE_CODE].native %}
+              Search again in {{ default_locale_native }}
+              {% endtrans %}
+            </a>
+          {% endif %}
+          </bdi></p>
+        </div>
+      </div>
+
+      {% if count %}
+      <div class="search-pane search-results-container">
+        <h3><i aria-hidden="true" class="icon-copy"></i>{{ _('Docs') }}</h3>
+
+        <ul class="result-list">
+          {% for doc in documents %}
+            {{ doc_block(doc, loop.index) }}
+          {% endfor %}
+        </ul>
+
+        <div class="search-results-more {% if show_expander %}with-view-all{% endif %}">
+
+          <div class="pager">
+            {% if previous %}
+              <a class="button" href="{{ previous }}">
+              {{ _('Previous') }}
+              </a>
+            {% endif %}
+            {% if next %}
+              <a class="button" href="{{ next }}">
+              {{ _('Next') }}
+              </a>
+            {% endif %}
+            </div>
+
+        </div>
+      </div>
+
+      {% endif %}
     </div>
-   </div>
-</section>
-{% endblock %}
 
-{% block js %}
-  <!-- TODO:  MOVE THIS TO ENTIRE SITE PACKAGE WITH REDESIGN -->
-  <script src="{{ MEDIA_URL }}js/libs/mousetrap/mousetrap.js"></script>
-  <script>
-      // new stuff
-      (function($) {
-        var $searchResults;
-        var $searchInput = $('#search-q');
-        var cache = {};
-        var cacheValue = $searchInput.val().toLowerCase();
-        var $resultParent = $('#results-box');
-
-        // Populate $searchResults
-        updateResults();
-
-        // Keep mouseover selection in sync with keyboard selection
-        $('.search-results-list')
-          .on('mouseenter', '.doc-result', handleMouseEvent)
-          .on('mouseleave', '.doc-result', handleMouseEvent)
-          .on('click', '.doc-result', function(e) {
-            if(e.target.tagName != 'a') window.location = $(e.currentTarget).find('h3 a').attr('href');
-          });
-
-        // Generates callback for mouseenter and mouseout
-        function handleMouseEvent(e) {
-            selectItem(e.type == 'mouseenter' ? e.currentTarget : null);
-        }
-
-        // Down Key
-        Mousetrap.bind('down', function(e) {
-          var item = getItem(true);
-          if(item.next.length) {
-            if(e.preventDefault) e.preventDefault();
-            selectItem(item.next);
-          }
-        });
-
-        // Up Key
-        Mousetrap.bind('up', function(e) {
-          var item = getItem();
-          if(item.prev.length) {
-            if(e.preventDefault) e.preventDefault();
-            selectItem(item.prev);
-          }
-        });
-
-
-        // Get the result list at any time
-        // Useful because we'll implement ajax search
-        function updateResults() {
-          $searchResults = $('.doc-result');
-        }
-
-        // Returns the currently selected item, if any
-        function getSelected() {
-          return $('.search-results-list .selected');
-        }
-
-        // Selects an item in the list of results
-        function selectItem(item) {
-          var selected = getSelected();
-          selected && selected.removeClass('selected');
-          if(item) $(item).addClass('selected').find('h3 a').get(0).focus();
-        }
-
-        // Retrieves the selected search item, as well
-        // as the other relevant item
-        function getItem(isDown) {
-          var selected = getSelected(),
-              hasSelected = selected.length,
-              first = $($searchResults.get(0));
-
-          return {
-            selected: selected,
-            // Conditional depending on up or down
-            next: hasSelected ? selected.next() : first,
-            prev: hasSelected ? selected.prev() : (isDown ? first : [])
-          };
-        }
-
-        // Call onSuccess on this page now to save current result
-        ajaxSuccess(document.body.innerHTML);
-
-        $('#search-form').on('submit', function(e) {
-          e.preventDefault();
-
-          var value = $searchInput.val(), url;
-
-          // Save the cacheValue for use within ajaxSuccess
-          cacheValue = value.toLowerCase()
-
-          if(value) {
-            url = '{{ url("search") }}?q=' + value;
-            history.pushState && history.pushState({ value: value, cacheValue: cacheValue }, '', url);
-
-            // Add this new value to history, only doing so if there's a value
-            // In here to prevent the original page from being pushed
-            window.addEventListener("popstate", function(info) {
-              var oldValue = info.state.cacheValue || info.state.value;
-              ajaxSuccess(cache[oldValue]);
-              ajaxComplete();
-              $searchInput.val(oldValue);
-            });
-
-            // Pull stuff from cache if we have it
-            if(cache[cacheValue]) {
-              ajaxSuccess(cache[cacheValue]);
-              ajaxComplete();
-            }
-            // Go get the new stuff!
-            else {
-              $resultParent.addClass('searching');
-              $.ajax(url, {
-                complete: ajaxComplete,
-                success: ajaxSuccess,
-                error: function() {
-                  // error case - just window.location to the url?
-                  window.location = url;
-                }
-              });
-            }
-          }
-
-          return false;
-        });
-
-        // Occurs upon successful (or cached) result
-        function ajaxSuccess(result) {
-            var cacheRes = result.substring(result.indexOf('<!--RESULTS-->'), result.indexOf('<!--/RESULTS-->'));
-            cache[cacheValue] = result;
-            $resultParent.html(cacheRes);
-            updateResults();
-        }
-
-        // Occurs regardless of success or failure
-        function ajaxComplete() {
-          $resultParent.removeClass('searching');
-        }
-
-        // Initial action
-        {% if query and count: %}
-           Mousetrap.trigger('down');
+    {% if filters %}
+    <!-- right topics -->
+    <div class="column-strip search-results-topics">
+      {% for filter_group in filters %}
+      <h3><i aria-hidden="true" class="icon-th-list"></i>{{ filter_group.name }}</h3>
+      <ul>
+        {% for filter in filter_group.options %}
+        <li>
+        {% if filter.count == 0 %}
+        <span class="inactive"><i aria-hidden="true" class="icon-check-empty"></i> {{ filter.name }}</span>
         {% else %}
-          $searchInput.get(0).focus();
+          {% if filter.active %}
+            <a href="{{ filter.urls.inactive }}" data-count="{{ filter.count }}" class="checked"><i aria-hidden="true" class="icon-check"></i>{{ filter.name }}</a>
+          {% else %}
+            <a href="{{ filter.urls.active }}" data-count="{{ filter.count }}"><i aria-hidden="true" class="icon-check-empty"></i>{{ filter.name }}</a>
+          {% endif %}
         {% endif %}
-
-        // Search survey launcher
-        $('#search-survey-link').on('click', function() {
-          $('#search-survey-dialog-content').dialog({
-            width: 730,
-            height: 630,
-            modal: true,
-            buttons: {
-              {{ _('Close') }}: function() {
-                $(this).dialog('close');
-              }
-            }
-          });
-        });
-
-      })(jQuery);
-  </script>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endfor %}
+    </div>
+    {% endif %}
+</div>
 {% endblock %}

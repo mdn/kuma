@@ -12,14 +12,8 @@
 
 {% block site_css %}
     {{ super() }}
-    {% if waffle.flag('redesign') %}
-      {{ css('redesign-search') }}
-    {% endif %}
 {% endblock %}
 
 {% block site_js %}
     {{ super() }}
-    {% if waffle.flag('redesign') %}
-      {{ js('redesign-search') }}
-    {% endif %}
 {% endblock %}
