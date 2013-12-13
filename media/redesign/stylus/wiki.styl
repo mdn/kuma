@@ -493,26 +493,21 @@ div.bug, div.warning, div.overheadIndicator {
   }
 
   > ol {
-    bidi-style(padding-left, (grid-spacing * 1.5), padding-right, 0, true); /* compat-important */
-    compat-important(padding-left, (grid-spacing * 1.5));
     compat-important(font-size, smaller-font-size);
   }
 
-  ol {
-    counter-reset: toc;
+  ol ol {
+    padding-left: grid-spacing;
   }
 
   li {
     compat-important(padding-top, (grid-spacing / 2));
     position: relative;
-    counter-increment: toc;
-    padding-top: grid-spacing;
 
     &:before {
       bidi-value(text-align, left, right);
       bidi-style(left, -(grid-spacing * 1.5), right, auto);
 
-      content: counters(toc, '.');
       text-align: right;
       position: absolute;
       left: -(grid-spacing + (grid-spacing/2));
