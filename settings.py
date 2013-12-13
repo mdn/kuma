@@ -562,7 +562,6 @@ MINIFY_BUNDLES = {
         'mdn': (
             'css/fonts.css',
             'css/mdn-screen.css',
-            'css/video-player.css',
             'css/redesign-transition.css',
         ),
         'popup': (
@@ -635,8 +634,8 @@ MINIFY_BUNDLES = {
         ),
         'redesign-wiki': (
             'redesign/css/wiki.css',
-            'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
-            'css/jqueryui/moz-jquery-plugins.css',
+            #'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
+            #'css/jqueryui/moz-jquery-plugins.css',
             'redesign/css/diff.css',
         ),
         'redesign-sphinx': (
@@ -687,9 +686,6 @@ MINIFY_BUNDLES = {
             # featuring the slide show widget).
             'js/libs/jquery.cycle.js',
             'js/libs/slideshow.js',
-
-            # Used only on pages with video popups
-            'js/libs/video-player.js',
         ),
         'popup': (
             'js/libs/jquery-1.9.1.js',
