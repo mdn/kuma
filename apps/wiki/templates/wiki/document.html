@@ -91,31 +91,4 @@
 
 {% block js %}
     {% include 'wiki/includes/highlighting_scripts.html' %}
-
-    {% if waffle.flag('offline_notice') %}
-    <script type="text/javascript">
-      (function($, ga) {
-        $('#offline-notice-link').on('click', function() {
-          // Open the dialog first
-          $('#offline-dialog-content').dialog({ 
-            width: 540, 
-            modal: true, 
-            buttons: { 
-              Ok: function() { 
-                $(this).dialog('close'); 
-              } 
-            } 
-          });
-          // Record opening of the menu
-          ga.push(['_trackEvent', 'Offline Content Dialog - Open', 'Click', 'Offline content link', '1']);
-        });
-
-        $('#offline-dialog-content').on('click', 'a', function(e, c) {
-          // Record if they go to any of the links (bug link or either option)
-          var title = $(e.currentTarget).attr('data-title');
-          ga.push(['_trackEvent', 'Offline Content Dialog - ' + title, 'Click', title, '1']);
-        });
-      })(jQuery, window._gaq || []);
-    </script>
-    {% endif %}
 {% endblock %}
