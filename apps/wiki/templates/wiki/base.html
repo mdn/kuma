@@ -3,7 +3,6 @@
 
 {% block site_css %}
     {{ super() }}
-    {{ css('wiki-print', media='print') }}
     {% if waffle.flag('redesign') %}
       {{ css('redesign-wiki', 'all') }}
     {% endif %}

@@ -592,9 +592,6 @@ MINIFY_BUNDLES = {
             'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
             'css/jqueryui/moz-jquery-plugins.css',
         ),
-        'wiki-print': (
-            'css/wiki-print.css',
-        ),
         'sphinx': (
             'css/wiki.css',
             'css/wiki-screen.css',
