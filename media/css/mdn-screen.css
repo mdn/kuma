@@ -931,7 +931,7 @@ transition-property: bottom, opacity, visibility;
 /* @Submission @Form *********/
 .submission .section { position: relative; padding: 2.75em 0 0; margin: 0 0 1.286em; font-size: .928em; }
 .submission .section > legend { margin: 0 -18px; padding: 0; }
-.submission .section > legend b { display: block; width: 632px; position: absolute; margin: 0; font-size: 1.234em; }
+.submission .section > legend b { display: block; position: absolute; margin: 0; font-size: 1.234em; }
 .submission .section.notitle { padding-top: 0; }
 
 .submission li { margin: 0 0 .75em; }
