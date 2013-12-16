@@ -27,7 +27,7 @@
 
 /* header */
 #main-header {
-  @extend .clear;
+  clear();
   border-color: transparent;
   border-bottom-width: 1px;
   border-bottom-style: solid;
@@ -376,6 +376,16 @@ footer {
 .redesign-beta-notice {
   @extend .smaller;
   padding: 6px 0;
+}
+
+/* clears its children */
+.clear {
+  clear();  
+}
+
+/* moves text offscreen */
+.offscreen {
+  offscreen();
 }
 
 

@@ -258,14 +258,7 @@ big-search() {
   width: 60%;
 }
 
-
-/*
-  CLASSES TO BE EXTENDED BY OTHER CLASSES
-
-  These are very "general" and non-specific on purpose
-  There's a good chance these classes wont be used directly in HTML
-*/
-.clear {
+clear() {
   &:before, &:after {
     content: ' ';
     display: table;
@@ -276,7 +269,8 @@ big-search() {
   }
 }
 
-.offscreen {
+/* used so that text is read by screen readers but appears off screen */
+offscreen() {
   border: 0;
   clip: rect(0 0 0 0);
   height: 1px;
@@ -286,6 +280,14 @@ big-search() {
   position: absolute;
   width: 1px;
 }
+
+
+/*
+  CLASSES TO BE EXTENDED BY OTHER CLASSES
+
+  These are very "general" and non-specific on purpose
+  There's a good chance these classes wont be used directly in HTML
+*/
 
 .title {
   font-weight: bold;
