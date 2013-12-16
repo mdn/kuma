@@ -1849,10 +1849,10 @@ class DocumentEditingTests(TestCaseBase):
                                           args=[doc.full_path]), data)
             page = pq(response.content)
             for t in yes_tags:
-                eq_(1, page.find('.page-tags li a:contains("%s")' % t).length,
+                eq_(1, page.find('.tag-list li a:contains("%s")' % t).length,
                     '%s should NOT appear in document view tags' % t)
             for t in no_tags:
-                eq_(0, page.find('.page-tags li a:contains("%s")' % t).length,
+                eq_(0, page.find('.tag-list li a:contains("%s")' % t).length,
                     '%s should appear in document view tags' % t)
 
             # Check for the document slug (title in feeds) in the tag listing
@@ -1918,8 +1918,7 @@ class DocumentEditingTests(TestCaseBase):
         # Now, ensure that warning boxes appear for the review tags.
         response = client.get(reverse('wiki.document', args=[doc.full_path]), data)
         page = pq(response.content)
-        eq_(1, page.find('.warning.review-technical').length)
-        eq_(1, page.find('.warning.review-editorial').length)
+        eq_(2, page.find('.warning.warning-review').length)
 
         # Ensure the page appears on the listing pages
         response = client.get(reverse('wiki.list_review'))
@@ -1956,8 +1955,7 @@ class DocumentEditingTests(TestCaseBase):
         # Ensure only one of the tags' warning boxes appears, now.
         response = client.get(reverse('wiki.document', args=[doc.full_path]), data)
         page = pq(response.content)
-        eq_(0, page.find('.warning.review-technical').length)
-        eq_(1, page.find('.warning.review-editorial').length)
+        eq_(1, page.find('.warning.warning-review').length)
 
         # Ensure the page appears on the listing pages
         response = client.get(reverse('wiki.list_review'))

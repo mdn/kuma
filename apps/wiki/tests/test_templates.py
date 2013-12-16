@@ -79,8 +79,8 @@ class DocumentTests(TestCaseBase):
         response = self.client.get(r.document.get_absolute_url())
         eq_(200, response.status_code)
         doc = pq(response.content)
-        eq_(r.document.title, doc('article header h1.page-title').text())
-        eq_(r.document.html, doc('div#wikiArticle').text())
+        eq_(r.document.title, doc('main#content div.document-head h1').text())
+        eq_(r.document.html, doc('article#wikiArticle').text())
 
     @attr("breadcrumbs")
     def test_document_breadcrumbs(self):
@@ -89,13 +89,13 @@ class DocumentTests(TestCaseBase):
         response = self.client.get(d1.get_absolute_url())
         eq_(200, response.status_code)
         doc = pq(response.content)
-        eq_(d1.title, doc('article header h1.page-title').text())
-        eq_(d1.title, doc('nav.crumbs').text())
+        eq_(d1.title, doc('main#content div.document-head h1').text())
+        eq_(d1.title, doc('nav.crumbs li:last-child').text())
         response = self.client.get(d2.get_absolute_url())
         eq_(200, response.status_code)
         doc = pq(response.content)
-        eq_(d2.title, doc('article header h1.page-title').text())
-        crumbs = "%s %s" % (d1.title, d2.title)
+        eq_(d2.title, doc('main#content div.document-head h1').text())
+        crumbs = "MDN %s %s" % (d1.title, d2.title)
         eq_(crumbs, doc('nav.crumbs').text())
 
     def test_english_document_no_approved_content(self):
@@ -104,9 +104,9 @@ class DocumentTests(TestCaseBase):
         response = self.client.get(r.document.get_absolute_url())
         eq_(200, response.status_code)
         doc = pq(response.content)
-        eq_(r.document.title, doc('article header h1.page-title').text())
+        eq_(r.document.title, doc('main#content div.document-head h1').text())
         eq_("This article doesn't have approved content yet.",
-            doc('div#wikiArticle').text())
+            doc('article#wikiArticle').text())
 
     def test_translation_document_no_approved_content(self):
         """Load a non-English document with no approved content, with a parent
@@ -117,14 +117,14 @@ class DocumentTests(TestCaseBase):
         response = self.client.get(d2.get_absolute_url())
         eq_(200, response.status_code)
         doc = pq(response.content)
-        eq_(d2.title, doc('article header h1.page-title').text())
+        eq_(d2.title, doc('main#content div.document-head h1').text())
         # HACK: fr doc has different message if locale/ is updated
         ok_(
             ("This article doesn't have approved content yet." in
-                doc('div#wikiArticle').text())
+                doc('article#wikiArticle').text())
             or
             ("Cet article n'a pas encore de contenu" in
-                doc('div#wikiArticle').text())
+                doc('article#wikiArticle').text())
            )
 
     def test_document_fallback_with_translation(self):
@@ -136,7 +136,7 @@ class DocumentTests(TestCaseBase):
         url = reverse('wiki.document', args=[d2.slug], locale='fr')
         response = self.client.get(url)
         doc = pq(response.content)
-        eq_(d2.title, doc('article header h1.page-title').text())
+        eq_(d2.title, doc('main#content div.document-head h1').text())
 
         # Fallback message is shown.
         eq_(1, len(doc('#doc-pending-fallback')))
@@ -144,7 +144,7 @@ class DocumentTests(TestCaseBase):
         # on its localization.
         doc('#doc-pending-fallback').remove()
         # Included content is English.
-        eq_(pq(r.document.html).text(), doc('div#wikiArticle').text())
+        eq_(pq(r.document.html).text(), doc('article#wikiArticle').text())
 
     def test_document_fallback_no_translation(self):
         """The document template falls back to English if no translation
@@ -153,7 +153,7 @@ class DocumentTests(TestCaseBase):
         url = reverse('wiki.document', args=[r.document.slug], locale='fr')
         response = self.client.get(url)
         doc = pq(response.content)
-        eq_(r.document.title, doc('article header h1.page-title').text())
+        eq_(r.document.title, doc('main#content div.document-head h1').text())
 
         # Fallback message is shown.
         eq_(1, len(doc('#doc-pending-fallback')))
@@ -161,7 +161,7 @@ class DocumentTests(TestCaseBase):
         # on its localization.
         doc('#doc-pending-fallback').remove()
         # Included content is English.
-        eq_(pq(r.document.html).text(), doc('div#wikiArticle').text())
+        eq_(pq(r.document.html).text(), doc('article#wikiArticle').text())
 
     def test_redirect(self):
         """Make sure documents with REDIRECT directives redirect properly.
@@ -210,14 +210,14 @@ class DocumentTests(TestCaseBase):
         d = document(is_localizable=True, save=True)
         resp = self.client.get(d.get_absolute_url())
         doc = pq(resp.content)
-        assert 'Add translation' in doc('#tool-menus .menu li').text()
+        assert 'Add a translation' in doc('.page-buttons #translations li').text()
 
         # Make it non-localizable
         d.is_localizable = False
         d.save()
         resp = self.client.get(d.get_absolute_url())
         doc = pq(resp.content)
-        assert 'Add translation' not in doc('#tool-menus .menu li').text()
+        assert 'Add a translation' not in doc('.page-buttons #translations li').text()
 
     @attr('toc')
     def test_toc_depth(self):
@@ -232,7 +232,7 @@ class DocumentTests(TestCaseBase):
         r = revision(save=True, content=doc_content, is_approved=True)
         response = self.client.get(r.document.get_absolute_url())
         eq_(200, response.status_code)
-        ok_('<div class="page-toc">' in response.content)
+        ok_('<div id="toc"' in response.content)
         new_r = revision(document=r.document, content=r.content,
                          toc_depth=0, is_approved=True)
         new_r.save()
