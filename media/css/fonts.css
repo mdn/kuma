@@ -59,11 +59,11 @@
 }
 @font-face {
   font-family: 'MozTT';
-  src: url('../fonts/moztt-regular-webfont.eot');
-    src: url('../fonts/moztt-regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/moztt-regular-webfont.woff') format('woff'),
-         url('../fonts/moztt-regular-webfont.ttf') format('truetype'),
-         url('../fonts/moztt-regular-webfont.svg#mozttregular') format('svg');
+  src: url('../fonts/MozTT-regular-webfont.eot');
+    src: url('../fonts/MozTT-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/MozTT-regular-webfont.woff') format('woff'),
+         url('../fonts/MozTT-regular-webfont.ttf') format('truetype'),
+         url('../fonts/MozTT-regular-webfont.svg#mozttregular') format('svg');
 }
 @font-face {
   font-family: 'MozTT';
