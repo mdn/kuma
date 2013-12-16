@@ -70,7 +70,7 @@ class UserProfileEditForm(forms.ModelForm):
         fields = ('fullname', 'title', 'organization', 'location',
                   'locale', 'timezone', 'bio', 'irc_nickname', 'interests')
 
-    beta = forms.BooleanField(label=_('Beta User'), required=False)
+    beta = forms.BooleanField(label=_('Beta tester'), required=False)
 
     # Email is on the form, but is handled in the view separately
     email = forms.EmailField(label=_('Email'), required=True)

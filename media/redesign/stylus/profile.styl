@@ -5,6 +5,8 @@
 @import 'vars'
 @import 'mixins'
 
+beta-spacing = (grid-spacing * 2.5);
+
 .profile {
 
   /* off-settings some old styles for now */
@@ -117,5 +119,31 @@
             position: absolute;
             bidi-style(margin-left, 25px, margin-right, 0);
         }
+    }
+
+    .section li > input[type="text"], select, textarea, #tagit-interests, #tags-expertise {
+        vendorize(box-sizing, border-box);
+        width: 100%;
+    }
+
+    #field_beta {
+        height: beta-spacing;
+        margin-bottom: 0;
+    }
+    #apps-newsletter-subscribe {
+        margin-top: beta-spacing;
+        @media media-query-mobile {
+            & + .fm-submit {
+                display: none;
+            }
+            margin-top: 0;
+        }
+    }
+}
+
+#elsewhere {
+    label {
+        compat-only(background, none);
+        compat-only(padding-left, 0);
     }
 }

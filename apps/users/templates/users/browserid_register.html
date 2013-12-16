@@ -8,14 +8,14 @@
 {% block site_css %}
     {{ super() }}
     {% if waffle.flag('profile_subscription') %}
-      {{ css('newsletter-widget',) }}
+      {{ css('newsletter',) }}
     {% endif %}
 {% endblock %}
 
 {% block site_js %}
     {{ super() }}
     {% if waffle.flag('profile_subscription') %}
-      {{ js('newsletter-widget',) }}
+      {{ js('newsletter',) }}
     {% endif %}
 {% endblock %}
 
