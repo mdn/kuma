@@ -1,6 +1,5 @@
 /*** @Basics *********/
 .page-title + p { margin-top: -1em; }
-#content-main blockquote { padding: 0 25px; border-left: 5px solid #ccc; }
 ol.prose { padding-left: 22px; }
 ul.prose li { padding-left: 22px; margin: 0 0 .25em; background: url("../img/bullet.png") 0 .5em no-repeat; }
 ul.prose ul li { background-image: url("../img/bullet-sub.png"); }

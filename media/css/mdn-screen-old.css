@@ -32,6 +32,9 @@ Font sizes -
 14px *  .642 = 9px
 -----------------------------------------------------------------------------*/
 
+/*** @Basics *********/
+#content-main blockquote { padding: 0 25px; border-left: 5px solid #ccc; }
+
 /* @Reset *********/
 header, hgroup, nav, section, article, aside, footer, figure, details, summary { display: block; }
 html, body, form, fieldset, legend, figure,
