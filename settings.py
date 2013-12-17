@@ -579,6 +579,9 @@ MINIFY_BUNDLES = {
         'err404': (
             'css/err404.css',
         ),
+        'home': (
+            'redesign/css/home.css',
+        ),
         'search': (
             'redesign/css/search.css',
         ),
@@ -643,9 +646,6 @@ MINIFY_BUNDLES = {
         ),
         'redesign-err404': (
             'redesign/css/err404.css',
-        ),
-        'redesign-home': (
-            'redesign/css/home.css',
         ),
         'calendar': (
             'redesign/css/calendar.css',
