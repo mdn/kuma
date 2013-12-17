@@ -5,6 +5,7 @@ from urlparse import urlparse
 import hashlib
 import re
 import json
+import newrelic.agent
 
 from pyquery import PyQuery
 from tower import ugettext_lazy as _lazy, ugettext as _
@@ -775,6 +776,7 @@ class Document(NotificationsMixin, models.Model):
         # render, then we have one in progress.
         return self.render_started_at > self.last_rendered_at
 
+    @newrelic.agent.function_trace()
     def get_rendered(self, cache_control=None, base_url=None):
         """Attempt to get rendered content for this document"""
         # No rendered content yet, so schedule the first render.
