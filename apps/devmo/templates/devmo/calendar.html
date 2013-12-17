@@ -4,11 +4,7 @@
 {% block bodyclass %}section-community calendar{% endblock %}
 {% block title %}{{ page_title(_('Where is Mozilla?')) }}{% endblock %}
 
-{% if waffle.flag('redesign') %}
-  {% set styles = ('redesign-mdn-calendar',) %}
-{% else %}
-  {% set styles = ('mdn-calendar',) %}
-{% endif %}
+{% set styles = ('calendar',) %}
 
 {% block content %}
 
