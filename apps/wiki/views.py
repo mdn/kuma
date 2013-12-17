@@ -9,6 +9,7 @@ from urllib import urlencode
 from string import ascii_letters
 import jinja2
 import mime_types
+import newrelic.agent
 
 try:
     from cStringIO import cStringIO as StringIO
@@ -129,6 +130,7 @@ SHOWFOR_DATA = {
 }
 
 
+@newrelic.agent.function_trace()
 def process_document_path(func, reverse_name='wiki.document'):
     """Decorator to process document_path into locale and slug, with
     auto-redirect if necessary."""
@@ -183,6 +185,7 @@ def process_document_path(func, reverse_name='wiki.document'):
     return process
 
 
+@newrelic.agent.function_trace()
 def _document_last_modified(request, document_slug, document_locale):
     """Utility function to derive the last modified timestamp of a document.
     Mainly for the @condition decorator."""
@@ -297,6 +300,7 @@ def _join_slug(parent_split, slug):
 @process_document_path
 @condition(last_modified_func=_document_last_modified)
 @transaction.autocommit  # For rendering bookkeeping, needs immediate updates
+@newrelic.agent.function_trace()
 def document(request, document_slug, document_locale):
     """View a wiki document."""
 
@@ -711,6 +715,7 @@ def _document_PUT(request, document_slug, document_locale):
 
 @prevent_indexing
 @process_document_path
+@newrelic.agent.function_trace()
 def revision(request, document_slug, document_locale, revision_id):
     """View a wiki document revision."""
     rev = get_object_or_404(Revision, pk=revision_id,
@@ -802,6 +807,7 @@ def list_documents_for_review(request, tag=None):
 @check_readonly
 @prevent_indexing
 @transaction.autocommit  # For rendering bookkeeping, needs immediate updates
+@newrelic.agent.function_trace()
 def new_document(request):
     """Create a new wiki document."""
 
@@ -947,6 +953,7 @@ def new_document(request):
 @check_readonly
 @prevent_indexing
 @transaction.autocommit  # For rendering bookkeeping, needs immediate updates
+@newrelic.agent.function_trace()
 def edit_document(request, document_slug, document_locale, revision_id=None):
     """Create a new revision of a wiki document, or edit document metadata."""
     doc = get_object_or_404_or_403('wiki.add_revision', request.user,
@@ -1351,6 +1358,7 @@ def get_children(request, document_slug, document_locale):
 
 @require_GET
 @allow_CORS_GET
+@newrelic.agent.function_trace()
 def autosuggest_documents(request):
     """Returns the closest title matches for front-end autosuggests"""
     partial_title = request.GET.get('term', '')
