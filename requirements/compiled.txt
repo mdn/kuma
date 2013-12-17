@@ -6,3 +6,4 @@ coverage==3.2b4
 pylibmc==0.9
 django-pylibmc
 librabbitmq==1.0.1
+newrelic==2.8.0.7
