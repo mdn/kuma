@@ -580,9 +580,6 @@ MINIFY_BUNDLES = {
         'err404': (
             'css/err404.css',
         ),
-        'mdn-calendar': (
-            'css/mdn-calendar.css',
-        ),
         'search': (
             'redesign/css/search.css',
         ),
@@ -651,8 +648,8 @@ MINIFY_BUNDLES = {
         'redesign-home': (
             'redesign/css/home.css',
         ),
-        'redesign-mdn-calendar': (
-            'redesign/css/mdn-calendar.css',
+        'calendar': (
+            'redesign/css/calendar.css',
         ),
         'redesign-profile': (
             'redesign/css/profile.css',
