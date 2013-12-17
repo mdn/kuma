@@ -12,6 +12,8 @@ import html5lib
 from html5lib.filters._base import Filter as html5lib_Filter
 from pyquery import PyQuery as pq
 
+import newrelic.agent
+
 from tower import ugettext as _
 
 from sumo.urlresolvers import reverse
@@ -42,10 +44,12 @@ TAGS_IN_TOC = ('code')
 DOC_SPECIAL_PATHS = ('new', 'tag', 'feeds', 'templates', 'needs-review')
 
 
+@newrelic.agent.function_trace()
 def parse(src, is_full_document = False):
     return ContentSectionTool(src, is_full_document)
 
 
+@newrelic.agent.function_trace()
 def get_content_sections(src=''):
     """Gets sections in a document, """
     sections = []
@@ -65,6 +69,7 @@ def get_content_sections(src=''):
     return sections
 
 
+@newrelic.agent.function_trace()
 def get_seo_description(content, locale=None, strip_markup=True):
     # Create an SEO summary
     # TODO:  Google only takes the first 180 characters, so maybe we find a
@@ -128,6 +133,7 @@ def get_seo_description(content, locale=None, strip_markup=True):
     return seo_summary
 
 
+@newrelic.agent.function_trace()
 def filter_out_noinclude(src):
     """Quick and dirty filter to remove <div class="noinclude"> blocks"""
     # NOTE: This started as an html5lib filter, but it started getting really
@@ -140,6 +146,7 @@ def filter_out_noinclude(src):
     return doc.html()
 
 
+@newrelic.agent.function_trace()
 def extract_code_sample(id, src):
     """Extract a dict containing the html, css, and js listings for a given
     code sample identified by ID.
@@ -180,6 +187,7 @@ def extract_code_sample(id, src):
     return data
 
 
+@newrelic.agent.function_trace()
 def extract_css_classnames(content):
     """Extract the unique set of class names used in the content"""
     classnames = set()
@@ -195,6 +203,7 @@ def extract_css_classnames(content):
     return classnames
 
 
+@newrelic.agent.function_trace()
 def extract_html_attributes(content):
     """Extract the unique set of HTML attributes used in the content"""
     try:
@@ -207,6 +216,7 @@ def extract_html_attributes(content):
         return []
 
 
+@newrelic.agent.function_trace()
 def extract_kumascript_macro_names(content):
     """Extract a unique set of KumaScript macro names used in the content"""
     names = set()
@@ -245,6 +255,7 @@ class ContentSectionTool(object):
         if (src):
             self.parse(src, is_full_document)
 
+    @newrelic.agent.function_trace()
     def parse(self, src, is_full_document):
         self.src = src
         if is_full_document:
@@ -266,35 +277,43 @@ class ContentSectionTool(object):
         self.stream = filter_cls(self.stream)
         return self
 
+    @newrelic.agent.function_trace()
     def injectSectionIDs(self):
         self.stream = SectionIDFilter(self.stream)
         return self
 
+    @newrelic.agent.function_trace()
     def injectSectionEditingLinks(self, full_path, locale):
         self.stream = SectionEditLinkFilter(self.stream, full_path, locale)
         return self
 
+    @newrelic.agent.function_trace()
     def absolutizeAddresses(self, base_url, tag_attributes):
         self.stream = URLAbsolutionFilter(self.stream, base_url, tag_attributes)
         return self
 
+    @newrelic.agent.function_trace()
     def annotateLinks(self, base_url):
         self.stream = LinkAnnotationFilter(self.stream, base_url)
         return self
 
+    @newrelic.agent.function_trace()
     def filterIframeHosts(self, hosts):
         self.stream = IframeHostFilter(self.stream, hosts)
         return self
 
+    @newrelic.agent.function_trace()
     def filterEditorSafety(self):
         self.stream = EditorSafetyFilter(self.stream)
         return self
 
+    @newrelic.agent.function_trace()
     def extractSection(self, id, ignore_heading=False):
         self.stream = SectionFilter(self.stream, id,
                                     ignore_heading=ignore_heading)
         return self
 
+    @newrelic.agent.function_trace()
     def replaceSection(self, id, replace_src, ignore_heading=False):
         replace_stream = self.walker(self.parser.parseFragment(replace_src))
         self.stream = SectionFilter(self.stream, id, replace_stream,
