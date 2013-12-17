@@ -2,9 +2,7 @@ from django.conf.urls import patterns, url
 
 urlpatterns = patterns('landing.views',
     url(r'^$', 'home', name='home'),
-    url(r'^addons/?$', 'addons', name='addons'),
     url(r'^mozilla/?$', 'mozilla', name='mozilla'),
-    url(r'^mobile/?$', 'mobile', name='mobile'),
     url(r'^web/?$', 'web', name='web'),
     url(r'^newsletter/?$', 'apps_newsletter', name='apps_newsletter'),
     url(r'^learn/?$', 'learn', name='learn'),

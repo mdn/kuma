@@ -33,6 +33,10 @@ RewriteRule ^sitemaps/([\w\-]*)/sitemap.xml$ media/sitemaps/$1/sitemap.xml [L]
 # Bug 887428 - Misprinted URL in promo materials
 RewriteRule ^Firefox_OS/Security$ docs/Mozilla/Firefox_OS/Security [R=301,L,NC]
 
+# Old landing pages. The regex, adapted from Bedrock, captures locale prefixes.
+RewriteRule ^(\w{2,3}(?:-\w{2})?/)?mobile/?$ /docs/Mozilla/Mobile [R=301,L]
+RewriteRule ^(\w{2,3}(?:-\w{2})?/)?addons/?$ /Add-ons [R=301,L]
+
 # Some blanket section moves / renames
 RewriteRule ^En/JavaScript/Reference/Objects/Array$ en-US/docs/JavaScript/Reference/Global_Objects/Array [R=301,L,NC]
 RewriteRule ^En/JavaScript/Reference/Objects$ en-US/docs/JavaScript/Reference/Global_Objects/Object [R=301,L,NC]

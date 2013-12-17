@@ -65,18 +65,8 @@ class LandingViewsTest(test_utils.TestCase):
         dev_mdc_link = doc.find('a#dev-mdc-link')
         ok_(dev_mdc_link)
 
-    def test_addons(self):
-        url = reverse('landing.views.addons')
-        r = self.client.get(url, follow=True)
-        eq_(200, r.status_code)
-
     def test_mozilla(self):
         url = reverse('landing.views.mozilla')
-        r = self.client.get(url, follow=True)
-        eq_(200, r.status_code)
-
-    def test_mobile(self):
-        url = reverse('landing.views.mobile')
         r = self.client.get(url, follow=True)
         eq_(200, r.status_code)
 
