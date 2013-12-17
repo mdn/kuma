@@ -6,6 +6,10 @@
   {% block site_css %}
       <!--[if !IE 6]><!-->
       {{ css('mdn') }}
+      {% if not waffle.flag('css_migration') %}
+        {{ css('mdn-old') }}
+      {% endif %}
+
       {% for style in styles %}
         {{ css(style) }}
       {% endfor %}

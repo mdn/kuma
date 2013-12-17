@@ -25,6 +25,10 @@ caption {
   font-weight: bold;
 }
 
+caption, th {
+  text-align: left;
+}
+
 /* headings */
 h1, h2, h3, h4 {
   font-weight: light-font-weight;
@@ -124,8 +128,19 @@ a {
     color: link-color;
   }
 
-  &:visited:hover, &:visited:focus, &:visited:active {
-    color: link-color;
+  &:link, &:visited {
+      text-decoration: none;
+  }
+
+  &:not('.button') {
+    &:link:hover, &:link:focus, &:link:active {
+        text-decoration: underline;
+    }
+
+    &:visited:hover, &:visited:focus, &:visited:active {
+      color: link-color;
+      text-decoration: underline;
+    }
   }
 
   {selector-icon}:before {
