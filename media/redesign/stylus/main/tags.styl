@@ -25,6 +25,10 @@ caption {
   font-weight: bold;
 }
 
+caption, th {
+  text-align: left;
+}
+
 /* headings */
 h1, h2, h3, h4 {
   font-weight: light-font-weight;
@@ -114,6 +118,19 @@ input[type='search'] {
   }
 }
 
+input[type=text], input[type=password], input[type=search], input[type=email], input[type=url], textarea {
+  background: #fff;
+  border: 1px solid #cbc8b9;
+  padding: 6px 8px;
+}
+
+input, button, textarea, select, optgroup, option {
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+}
+
 label {
   cursor: pointer;
 }
@@ -124,8 +141,17 @@ a {
     color: link-color;
   }
 
+  &:link, &:visited {
+    text-decoration: none;
+  }
+
+  &:link:hover, &:link:focus, &:link:active {
+    text-decoration: underline;
+  }
+
   &:visited:hover, &:visited:focus, &:visited:active {
     color: link-color;
+    text-decoration: underline;
   }
 
   {selector-icon}:before {
@@ -138,9 +164,14 @@ a {
   }
 }
 
-.button, button, input[type='submit'], input[type='button'] {
+a.button, a.button:link, a.button:visited {
   text-decoration: none;
+}
+
+.button, button, input[type='submit'], input[type='button'] {
+  border: 0;
   display: inline-block;
+  line-height: 1;
   compat-important(background-color, button-background);
   compat-important(color, button-color);
   compat-important(text-transform, uppercase);

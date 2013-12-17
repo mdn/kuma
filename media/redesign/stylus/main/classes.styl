@@ -1,4 +1,4 @@
-/* 
+/*
   Additional formatting for the real page content; i.e. text in the <main> element
   We cannot put these styles in the tags.styl file because they don't apply to the entire layout
 */
@@ -65,3 +65,116 @@
     padding-left: grid-spacing;
   }
 }
+
+.notice {
+  position: relative;
+  top: -(grid-spacing / 2);
+  background: #fcf6d4;
+  border: 1px solid #e5d5c1;
+  box-shadow: 1px 1px 0 rgba(0,0,0,.1);
+  clear: both;
+  margin: (grid-spacing / 2) 0 (grid-spacing / 4);
+  padding: (grid-spacing / 2) (grid-spacing * .75) 0;
+
+  p, ul {
+    margin-bottom: (grid-spacing / 2);
+  }
+
+  &.success {
+    background: #effdfb;
+    border-color: #beede5;
+  }
+
+  &.error {
+    border-color: #e1a696;
+  }
+}
+
+ul.tagit {
+    li.tagit-new {
+        display: inline-block;
+        input {
+            background: transparent;
+            border: 0;
+            padding: 0;
+        }
+    }
+
+    li.tagit-choice {
+        background: #f9f9f9;
+        border: 1px solid #dbd9d1;
+        border-radius: 2px;
+        display: inline-block;
+        margin: 0 10px 10px 0;
+        padding: 3px 4px 4px 10px;
+
+        .close {
+            margin-left: 4px;
+
+            .text-icon {
+                display: none;
+            }
+
+            .ui-icon-close {
+                background: url("../img/icn-delete.png") center -96px no-repeat;
+                cursor: pointer;
+                display: inline-block;
+                height: 15px;
+                margin: 0 0 -3px 0;
+                margin-left: 3px;
+                overflow: hidden;
+                text-indent: -9999px;
+                width: 15px;
+            }
+
+            &:hover, &:focus, &:active {
+                .ui-icon-close {
+                    background-position: center -146px;
+                }
+            }
+        }
+    }
+}
+
+.ui-helper-hidden-accessible {
+    display: none;
+}
+
+.ui-autocomplete {
+    background: #fff;
+    border: 1px solid #e3e3e3;
+    border-top: 0;
+    cursor: default;
+    padding-top: 2px;
+    position: absolute;
+    vendorize(box-shadow, 1px 1px 1px rgba(0,0,0,.08));
+}
+
+.ui-menu {
+    float: left;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    .ui-menu-item {
+        clear: left;
+        float: left;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        zoom: 1;
+
+        a {
+            display: block;
+            line-height: 1.5;
+            text-decoration: none;
+            zoom: 1;
+        }
+    }
+
+    .ui-state-hover, .ui-state-focus, .ui-state-highlight, .ui-state-active {
+        background: #e4e4d9;
+        background: rgba(198,198,175,.2);
+    }
+}
+

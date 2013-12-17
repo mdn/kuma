@@ -2,7 +2,7 @@
 {% from 'includes/common_macros.html' import newsletter_widget, li_field %}
 {% block body_attributes %}{% endblock %}
 
-{% block bodyclass %}profile{% endblock %}
+{% block bodyclass %}profile profile-edit{% endblock %}
 
 {% block title %}{{ page_title(_('Edit Your Profile')) }}{% endblock %}
 
@@ -12,6 +12,7 @@
     {{ css('jquery-ui') }}
     {{ css('profile') }}
     {{ css('newsletter') }}
+    {{ css('submission') }}
 {% endblock %}
 
 {% block site_js %}
@@ -120,6 +121,7 @@
       <div class="column-half">
         <p class="fm-submit"><button type="submit">{{ _('Save Changes') }}</button></p>
       </div>
+    </div>
 
   </form>
 {% endblock %}

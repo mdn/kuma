@@ -4,6 +4,11 @@
 
 {% block title %}{{ page_title(_('Permission Denied')) }}{% endblock %}
 
+{% block site_css %}
+    {{ super() }}
+    {{ css('error-403-alternate') }}
+{% endblock %}
+
 {% block content %}
 
 <section id="content">

@@ -23,119 +23,123 @@
 <div class="wrap">
 
   <section id="content-main" class="full" role="main">
-  
-    <div id="intro-level" class="learn-module boxed">
-      <h2>{{ _('Introductory Level') }}</h2>
-      <ul class="link-list">
-        <li>
-          <h3 class="title"><a href="http://dev.opera.com/articles/view/12-the-basics-of-html/" rel="external">{{ _('The Basics of HTML') }}</a></h3>
-          <h4 class="source">Dev.Opera</h4>
-          <p>{{ _('What HTML is, what it does, its history in brief, and what the structure of an HTML document looks like. The articles that follow this one look at each individual part of HTML in much greater depth.') }}</p>
-        </li>
-        <li>
-          <h3 class="title"><a href="http://reference.sitepoint.com/html/page-structure" rel="external">{{ _('Basic Structure of a Web Page') }}</a></h3>
-          <h4 class="source">SitePoint</h4>
-          <p>{{ _('Learn how HTML elements fit together into the bigger picture.') }}</p>
-        </li>
-        <li>
-          <h3 class="title"><a href="http://reference.sitepoint.com/html/elements" rel="external">{{ _('Fundamental HTML Elements') }}</a></h3>
-          <h4 class="source">SitePoint</h4>
-          <p>{{ _('Describes the different types of elements you can use to write an HTML document.') }}</p>
-        </li>
-        <li>
-          <h3 class="title"><a href="http://htmldog.com/guides/htmlbeginner/" rel="external">{{ _('HTML Beginner Tutorial') }}</a></h3>
-          <h4 class="source">HTML Dog</h4>
-          <p>{{ _('A tutorial and exercises that take you through the basics.') }}</p>
-        </li>
-        <li>
-          <h3 class="title"><a href="http://code.google.com/edu/submissions/html-css-javascript/#html" rel="external">{{ _('HTML From the Ground Up') }}</a></h3>
-          <h4 class="source">{{ _('Google Code University') }}</h4>
-          <p>{{ _('Video tutorial on best practices and approaches for how to write good HTML code.') }}</p>
-        </li>
-        <li>
-          <h3 class="title"><a href="http://wikiversity.org/wiki/Web_Design/HTML_Challenges" rel="external">{{ _('HTML Challenges') }}</a></h3>
-          <h4 class="source">Wikiversity</h4>
-          <p>{{ _('Use these challenges to hone your HTML skills (for example, "Should I use an &lt;h2&gt; element or a &lt;strong&gt; element?"), focusing on meaningful mark-up.') }}</p>
-        </li>
-        <li>
-          <h3 class="title"><a href="{{ devmo_url('HTML/Element') }}">MDN HTML Element Reference</a></h3>
-          <h4 class="source">{{ _('MDN') }}</h4>
-          <p>{{ _('A comprehensive reference for HTML elements, and how Firefox and other browsers support them.') }}</p>
-        </li>
-      </ul>
+
+    <div class="column-container">
+      <div id="intro-level" class="column-half learn-module">
+        <h2>{{ _('Introductory Level') }}</h2>
+        <ul class="link-list">
+          <li>
+            <h3 class="title"><a href="http://dev.opera.com/articles/view/12-the-basics-of-html/" rel="external">{{ _('The Basics of HTML') }}</a></h3>
+            <h4 class="source">Dev.Opera</h4>
+            <p>{{ _('What HTML is, what it does, its history in brief, and what the structure of an HTML document looks like. The articles that follow this one look at each individual part of HTML in much greater depth.') }}</p>
+          </li>
+          <li>
+            <h3 class="title"><a href="http://reference.sitepoint.com/html/page-structure" rel="external">{{ _('Basic Structure of a Web Page') }}</a></h3>
+            <h4 class="source">SitePoint</h4>
+            <p>{{ _('Learn how HTML elements fit together into the bigger picture.') }}</p>
+          </li>
+          <li>
+            <h3 class="title"><a href="http://reference.sitepoint.com/html/elements" rel="external">{{ _('Fundamental HTML Elements') }}</a></h3>
+            <h4 class="source">SitePoint</h4>
+            <p>{{ _('Describes the different types of elements you can use to write an HTML document.') }}</p>
+          </li>
+          <li>
+            <h3 class="title"><a href="http://htmldog.com/guides/htmlbeginner/" rel="external">{{ _('HTML Beginner Tutorial') }}</a></h3>
+            <h4 class="source">HTML Dog</h4>
+            <p>{{ _('A tutorial and exercises that take you through the basics.') }}</p>
+          </li>
+          <li>
+            <h3 class="title"><a href="http://code.google.com/edu/submissions/html-css-javascript/#html" rel="external">{{ _('HTML From the Ground Up') }}</a></h3>
+            <h4 class="source">{{ _('Google Code University') }}</h4>
+            <p>{{ _('Video tutorial on best practices and approaches for how to write good HTML code.') }}</p>
+          </li>
+          <li>
+            <h3 class="title"><a href="http://wikiversity.org/wiki/Web_Design/HTML_Challenges" rel="external">{{ _('HTML Challenges') }}</a></h3>
+            <h4 class="source">Wikiversity</h4>
+            <p>{{ _('Use these challenges to hone your HTML skills (for example, "Should I use an &lt;h2&gt; element or a &lt;strong&gt; element?"), focusing on meaningful mark-up.') }}</p>
+          </li>
+          <li>
+            <h3 class="title"><a href="{{ devmo_url('HTML/Element') }}">MDN HTML Element Reference</a></h3>
+            <h4 class="source">{{ _('MDN') }}</h4>
+            <p>{{ _('A comprehensive reference for HTML elements, and how Firefox and other browsers support them.') }}</p>
+          </li>
+        </ul>
+      </div>
+      
+      <div id="adv-level" class="column-half learn-module">
+        <h2>{{ _('Advanced Level') }}</h2>
+        <ul class="link-list">
+          <li>
+            <h3 class="title"><a href="{{ devmo_url('Tips_for_Authoring_Fast-loading_HTML_Pages') }}">{{ _('Tips for Authoring Fast-loading HTML Pages') }}</a></h3>
+            <h4 class="source">{{ _('MDN') }}</h4>
+            <p>{{ _('Optimize web pages to provide a more responsive site for visitors and reduce the load on your web server and Internet connection.') }}</p>
+          </li>
+          <li>
+            <h3 class="title"><a href="http://diveintohtml5.info/" rel="external">{{ _('Dive into HTML5') }}</a> <span class="tag html5" title="{{ _('This site features HTML5') }}">(HTML5)</span></h3>
+            <h4 class="source">{{ _('From Mark Pilgrim') }}</h4>
+            <p>{{ _('Learn about a selection of features of HTML5, the newest version of the HTML specification.') }}</p>
+          </li>
+          <li>
+            <h3 class="title"><a href="http://www.alistapart.com/articles/get-ready-for-html-5/" rel="external">{{ _('Get Ready for HTML5') }}</a> <span class="tag html5" title="{{ _('This site features HTML5') }}">(HTML5)</span></h3>
+            <h4 class="source">{{ _('A List Apart') }}</h4>
+            <p>{{ _('Some suggestions to help you get on board with HTML5.') }}</p>
+          </li>
+          <li>
+            <h3 class="title"><a href="http://www.html5rocks.com/tutorials/" rel="external">{{ _('HTML5 Tutorials') }}</a> <span class="tag html5" title="{{ _('This site features HTML5') }}">(HTML5)</span></h3>
+            <h4 class="source">{{ _('HTML5 Rocks') }}</h4>
+            <p>{{ _('Take a guided tour through code that uses HTML5 features.') }}</p>
+          </li>
+          <li>
+            <h3 class="title"><a href="http://www.alistapart.com/articles/semanticsinhtml5/" rel="external">{{ _('Semantics in HTML5') }}</a> <span class="tag html5" title="{{ _('This site features HTML5') }}">(HTML5)</span></h3>
+            <h4 class="source">{{ _('A List Apart') }}</h4>
+            <p>{{ _('Learn meaningful mark-up that is extensible and backwards- and forwards-compatible.') }}</p>
+          </li>
+          <li>
+            <h3 class="title"><a href="{{ devmo_url('Canvas_tutorial') }}">{{ _('Canvas Tutorial') }}</a> <span class="tag html5" title="{{ _('This site features HTML5') }}">(HTML5)</span></h3>
+            <h4 class="source">{{ _('MDN') }}</h4>
+            <p>{{ _('Learn how to draw graphics using scripting using the &lt;canvas&gt; element.') }}</p>
+          </li>
+          <li>
+            <h3 class="title"><a href="http://html5doctor.com/" rel="external">{{ _('HTML5 Doctor') }}</a> <span class="tag html5" title="{{ _('This site features HTML5') }}">(HTML5)</span></h3>
+            <p>{{ _('Articles about using HTML5 right now.') }}</p>
+          </li>
+          <li>
+            <h3 class="title"><a href="http://www.elated.com/articles/html5-audio/" rel="external">{{ _('The Joy of HTML5 Audio') }}</a> <span class="tag html5" title="{{ _('This site features HTML5') }}">(HTML5)</span></h3>
+            <h4 class="source">Elated</h4>
+            <p>{{ _('Learn how to use the HTML audio element to embed sounds in your web pages easily. Lots of code examples are included in the tutorial.') }}</p>
+          </li>
+        </ul>
+      </div>
     </div>
-    
-    <div id="adv-level" class="learn-module boxed">
-      <h2>{{ _('Advanced Level') }}</h2>
-      <ul class="link-list">
-        <li>
-          <h3 class="title"><a href="{{ devmo_url('Tips_for_Authoring_Fast-loading_HTML_Pages') }}">{{ _('Tips for Authoring Fast-loading HTML Pages') }}</a></h3>
-          <h4 class="source">{{ _('MDN') }}</h4>
-          <p>{{ _('Optimize web pages to provide a more responsive site for visitors and reduce the load on your web server and Internet connection.') }}</p>
-        </li>
-        <li>
-          <h3 class="title"><a href="http://diveintohtml5.info/" rel="external">{{ _('Dive into HTML5') }}</a> <span class="tag html5" title="{{ _('This site features HTML5') }}">(HTML5)</span></h3>
-          <h4 class="source">{{ _('From Mark Pilgrim') }}</h4>
-          <p>{{ _('Learn about a selection of features of HTML5, the newest version of the HTML specification.') }}</p>
-        </li>
-        <li>
-          <h3 class="title"><a href="http://www.alistapart.com/articles/get-ready-for-html-5/" rel="external">{{ _('Get Ready for HTML5') }}</a> <span class="tag html5" title="{{ _('This site features HTML5') }}">(HTML5)</span></h3>
-          <h4 class="source">{{ _('A List Apart') }}</h4>
-          <p>{{ _('Some suggestions to help you get on board with HTML5.') }}</p>
-        </li>
-        <li>
-          <h3 class="title"><a href="http://www.html5rocks.com/tutorials/" rel="external">{{ _('HTML5 Tutorials') }}</a> <span class="tag html5" title="{{ _('This site features HTML5') }}">(HTML5)</span></h3>
-          <h4 class="source">{{ _('HTML5 Rocks') }}</h4>
-          <p>{{ _('Take a guided tour through code that uses HTML5 features.') }}</p>
-        </li>
-        <li>
-          <h3 class="title"><a href="http://www.alistapart.com/articles/semanticsinhtml5/" rel="external">{{ _('Semantics in HTML5') }}</a> <span class="tag html5" title="{{ _('This site features HTML5') }}">(HTML5)</span></h3>
-          <h4 class="source">{{ _('A List Apart') }}</h4>
-          <p>{{ _('Learn meaningful mark-up that is extensible and backwards- and forwards-compatible.') }}</p>
-        </li>
-        <li>
-          <h3 class="title"><a href="{{ devmo_url('Canvas_tutorial') }}">{{ _('Canvas Tutorial') }}</a> <span class="tag html5" title="{{ _('This site features HTML5') }}">(HTML5)</span></h3>
-          <h4 class="source">{{ _('MDN') }}</h4>
-          <p>{{ _('Learn how to draw graphics using scripting using the &lt;canvas&gt; element.') }}</p>
-        </li>
-        <li>
-          <h3 class="title"><a href="http://html5doctor.com/" rel="external">{{ _('HTML5 Doctor') }}</a> <span class="tag html5" title="{{ _('This site features HTML5') }}">(HTML5)</span></h3>
-          <p>{{ _('Articles about using HTML5 right now.') }}</p>
-        </li>
-        <li>
-          <h3 class="title"><a href="http://www.elated.com/articles/html5-audio/" rel="external">{{ _('The Joy of HTML5 Audio') }}</a> <span class="tag html5" title="{{ _('This site features HTML5') }}">(HTML5)</span></h3>
-          <h4 class="source">Elated</h4>
-          <p>{{ _('Learn how to use the HTML audio element to embed sounds in your web pages easily. Lots of code examples are included in the tutorial.') }}</p>
-        </li>
-      </ul>
-    </div>
   
-    <div id="examples" class="learn-module boxed">
+    <div id="examples" class="learn-module">
       <h2>{{ _('HTML5 Examples') }}</h2>
-      <ul class="link-list col1">
-        <li>
-          <h3 class="title"><a href="https://demos.mozilla.org/" rel="external">{{ _('Web o\' Wonder') }}</a></h3>
-          <h4 class="source">{{ _('Mozilla') }}</h4>
-          <p>{{ _('Demos from Mozilla developers and evangelists.') }}</p>
-        </li>
-        <li>
-          <h3 class="title"><a href="{{ url('demos') }}">{{ _('MDN Demo Studio') }}</a></h3>
-          <h4 class="source">{{ _('Mozilla') }}</h4>
-          <p>{{ _('Run, inspect, and submit demos that show what HTML, CSS, and JavaScript can do.') }}</p>
-        </li>
-      </ul>
-      <ul class="link-list col2">
-        <li>
-          <h3 class="title"><a href="http://html5demos.com/" rel="external">{{ _('HTML5 Demos and Examples') }}</a> <span class="tag html5" title="{{ _('This site features HTML5') }}">(HTML5)</span></h3>
-          <h4 class="source">{{ _('Remy Sharp') }}</h4>
-          <p>{{ _('Demos that you can filter by technology or browser support.') }}</p>
-        </li>
-        <li>
-          <h3 class="title"><a href="http://html5gallery.com/" rel="external">{{ _('HTML5 Gallery') }}</a> <span class="tag html5" title="{{ _('This site features HTML5') }}">(HTML5)</span></h3>
-          <h4 class="source">{{ _('Richard Clark') }}</h4>
-          <p>{{ _('Showcase of sites that use HTML5 to help you learn about how it should be used.') }}</p>
-        </li>
-      </ul>
+      <div class="column-container">
+        <ul class="column-half link-list">
+          <li>
+            <h3 class="title"><a href="https://demos.mozilla.org/" rel="external">{{ _('Web o\' Wonder') }}</a></h3>
+            <h4 class="source">{{ _('Mozilla') }}</h4>
+            <p>{{ _('Demos from Mozilla developers and evangelists.') }}</p>
+          </li>
+          <li>
+            <h3 class="title"><a href="{{ url('demos') }}">{{ _('MDN Demo Studio') }}</a></h3>
+            <h4 class="source">{{ _('Mozilla') }}</h4>
+            <p>{{ _('Run, inspect, and submit demos that show what HTML, CSS, and JavaScript can do.') }}</p>
+          </li>
+        </ul>
+        <ul class="column_half link-list">
+          <li>
+            <h3 class="title"><a href="http://html5demos.com/" rel="external">{{ _('HTML5 Demos and Examples') }}</a> <span class="tag html5" title="{{ _('This site features HTML5') }}">(HTML5)</span></h3>
+            <h4 class="source">{{ _('Remy Sharp') }}</h4>
+            <p>{{ _('Demos that you can filter by technology or browser support.') }}</p>
+          </li>
+          <li>
+            <h3 class="title"><a href="http://html5gallery.com/" rel="external">{{ _('HTML5 Gallery') }}</a> <span class="tag html5" title="{{ _('This site features HTML5') }}">(HTML5)</span></h3>
+            <h4 class="source">{{ _('Richard Clark') }}</h4>
+            <p>{{ _('Showcase of sites that use HTML5 to help you learn about how it should be used.') }}</p>
+          </li>
+        </ul>
+      </div>
     </div>
   </section><!-- /#content-main -->
 
