@@ -121,21 +121,14 @@ CKEDITOR.editorConfig = function(config) {
     config.startupFocus = true;
     config.toolbar = 'MDN';
     config.tabSpaces = 2;
-    config.contentsCss = [mdn.mediaPath + 'css/wiki-screen.css?{{ BUILD_ID_JS }}'];
-    if(mdn.waffles.redesign) config.contentsCss.push(mdn.mediaPath + 'redesign/css/main.css?{{ BUILD_ID_JS }}');
-    config.contentsCss.push(
-      mdn.mediaPath + 'css/wiki-edcontent.css?{{ BUILD_ID_JS }}',
-      mdn.mediaPath + 'css/libs/font-awesome/css/font-awesome.min.css?{{ BUILD_ID_JS }}',
-      '/en-US/docs/Template:CustomCSS?raw=1'
-    );
+    config.contentsCss = [ mdn.mediaPath + 'css/wiki-screen.css?{{ BUILD_ID_JS }}', mdn.mediaPath + 'redesign/css/main.css?{{ BUILD_ID_JS }}', mdn.mediaPath + 'css/wiki-edcontent.css?{{ BUILD_ID_JS }}', mdn.mediaPath + 'css/libs/font-awesome/css/font-awesome.min.css?{{ BUILD_ID_JS }}', '/en-US/docs/Template:CustomCSS?raw=1'];
     
     config.toolbarCanCollapse = false;
     config.resize_enabled = false;
     config.dialog_backgroundCoverColor = 'black';
     config.dialog_backgroundCoverOpacity = 0.3;
     config.docType = '<!DOCTYPE html>';
-    config.bodyClass = 'page-content';
-    if(mdn.waffles.redesign) config.bodyClass = 'text-content redesign-content redesign';
+    config.bodyClass = 'page-content text-content redesign-content redesign';
   
     
     if(!CKEDITOR.stylesSet.registered['default']) {
