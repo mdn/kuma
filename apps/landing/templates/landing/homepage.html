@@ -3,18 +3,13 @@
 {% block pageid %}home{% endblock %}
 
 {% block extrahead %}
-    <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/demos.css?build={{ BUILD_ID_JS }}"/>
-    <meta name="google-site-verification" content="Phj8dHc2oKwic3FGPsKIhdOBk_1wnCTnKwjcjiLgJPc" />
-    <meta name="google-site-verification" content="TH9rA27HbfjO_XqYWTIPrW1E7E7Dtgsh7ULzHi3UTVA" />
+  <meta name="google-site-verification" content="Phj8dHc2oKwic3FGPsKIhdOBk_1wnCTnKwjcjiLgJPc" />
+  <meta name="google-site-verification" content="TH9rA27HbfjO_XqYWTIPrW1E7E7Dtgsh7ULzHi3UTVA" />
 
-    {% if waffle.flag('redesign') %}
-      {{ css('redesign-home') }}
-    {% endif %}
+  {{ css('home') }}
 {% endblock %}
 
 {% block content %}
-
-{% if waffle.flag('redesign') %}
 
 <!-- top search area -->
 <div class="home-masthead"><div class="center">
@@ -186,164 +181,6 @@
 </div></div>
 #}
 
-{% else %}
-<section id="content" class="new-home">
-<div class="wrap">
-
-  <section id="content-main" role="main" class="full">
-
-      <div class="home-left">
-        <!-- search -->
-        <section class="home-search outline-block">
-          <form action="search">
-            <input type="text" name="q" value="" placeholder="{{ _('Search MDN') }}" />
-          </form>
-        </section>
-
-        <!-- popular docs block -->
-        <section class="home-popular outline-block">
-          <h2>{{ _('The Docs <span>Popular Topics</span>') }}</h2>
-          <ul>
-            <li class="home-popular-docs">
-              <h3>{{ _('Web Basics') }}</h3>
-              <ul>
-                <li><a href="{{ devmo_url('Web/HTML') }}">{{ _('HTML') }}</a></li>
-                <li><a href="{{ devmo_url('Web/CSS') }}">{{ _('CSS') }}</a></li>
-                <li><a href="{{ devmo_url('Web/JavaScript') }}">{{ _('JavaScript') }}</a></li>
-                <li><a href="{{ devmo_url('Web/API') }}">{{ _('APIs / DOM') }}</a></li>
-                <li><a href="{{ devmo_url('Web/Guide/Graphics') }}">{{ _('Graphics') }}</a></li>
-                <li><a href="{{ devmo_url('Web/MathML') }}">{{ _('MathML') }}</a></li>
-                <li>&nbsp;</li>
-                <li><a href="{{ url('docs') }}">{{ _('Browse All Docs') }}</a></li>
-              </ul>
-            </li>
-            <li class="home-popular-mozilla">
-              <h3>{{ _('In Depth') }}</h3>
-              <ul>
-                <li><a href="{{ devmo_url('Web/Tutorials') }}">{{ _('Tutorials') }}</a></li>
-                <li><a href="{{ devmo_url('Web/Reference') }}">{{ _('References') }}</a></li>
-                <li><a href="{{ devmo_url('Web/Guide') }}">{{ _('Developer Guides') }}</a></li>
-                <li>&nbsp;</li>
-                <li><a href="{{ devmo_url('Accessibility') }}">{{ _('Accessibility') }}</a></li>
-                <li><a href="{{ devmo_url('tools') }}">{{ _('Developer Tools') }}</a></li>
-                <li><a href="{{ devmo_url('Web/Apps') }}">{{ _('Apps') }}</a></li>
-                <li><a href="{{ url('demos') }}">{{ _('Demos') }}</a></li>
-              </ul>
-            </li>
-            <li class="home-popular-features">
-              <h3>{{ _('Mozilla For Developers') }}</h3>
-              <ul>
-                <li><a href="{{ devmo_url('Mozilla/Firefox') }}">{{ _('Firefox for Developers') }}</a></li>
-                <li><a href="{{ devmo_url('Mozilla/Mobile') }}">{{ _('Firefox for Android') }}</a></li>
-                <li><a href="{{ devmo_url('Mozilla/Firefox_OS') }}">{{ _('Firefox OS') }}</a></li>
-                <li><a href="https://marketplace.firefox.com/developers/">{{ _('Firefox OS Marketplace') }}</a></li>
-                <li><a href="{{ devmo_url('Mozilla/Add-ons') }}">{{ _('Add-ons') }}</a></li>
-                <li><a href="{{ devmo_url('Mozilla/Persona') }}">{{ _('Persona') }}</a></li>
-              </ul>
-
-            </li>
-          </ul>
-        </section>
-
-        <!-- community -->
-        <section class="home-community outline-block">
-          <h2>{{ _('Get Involved <span>MDN Community</span>') }}</h2>
-          <p>{{ _('All parts of MDN (docs, demos, and the site itself) are created by an open community of developers. Please join us! Pick one of these ways to help:') }}</p>
-
-          <ul class="home-community-list">
-            <li>
-              <ul>
-                <li><a href="{{ devmo_url('needs-review/editorial') }}">{{ _('Editorial review') }}</a></li>
-                <li><a href="{{ devmo_url('needs-review/technical') }}">{{ _('Technical review') }}</a></li>
-                <li><a href="{{ devmo_url('Project:Getting_started') }}#Create_a_new_page">{{ _('Creating new docs') }}</a></li>
-                <li>
-                  {% trans demo_url=url('demos_submit'),samples_url=devmo_url('tag/NeedsExample') %}
-                  <a href="{{ demo_url }}">Demos</a> &amp; <a href="{{ samples_url }}">code samples</a>
-                  {% endtrans %}
-                </li>
-              </ul>
-            </li>
-            <li>
-              <ul>
-                <li><a href="{{ devmo_url('Project:Localization_Projects') }}">{{ _('Translating (L10N)') }}</a></li>
-                <li><a href="{{ url('promote') }}">{{ _('Promoting MDN') }}</a></li>
-                <li><a href="https://github.com/mozilla/kuma#readme">{{ _('Contributing to the MDN codebase') }}</a></li>
-              </ul>
-            </li>
-          </ul>
-
-
-
-          <ul class="home-community-conversion">
-            <li><a href="{{ devmo_url('Project:MDN/Contributing/Join_the_community') }}">{{ _('Join the Community') }}</a></li>
-            <li><a href="{{ devmo_url('Project:MDN/Contributing') }}">{{ _('Contribute to MDN') }}</a></li>
-            <li><a href="{{ url('dashboards.revisions') }}">{{ _('See Recent Edits') }}</a></li>
-          </ul>
-        </section>
-
-        <!-- hacks -->
-        <section class="home-hacks outline-block">
-          <h2 class="new-heading">{{ _('Hacks Blog <span>hacks.mozilla.org</span>') | safe }}</h2>
-          {{ newsfeed(updates, section_headers=True) }}
-        </section>
-      </div>
-
-      <div class="home-right">
-
-        <section id="home-promos" class="home-promos">
-          <div class="promo" id="promo-fosdev">
-            <a href="/en-US/docs/Mozilla/Firefox_OS">
-              <h2>{{ _('Firefox OS<br>for developers') }}</h2>
-              <p>{{ _('Open source mobile OS built with HTML, JavaScript, &amp; WebAPIs') }}</p>
-            </a>
-            <div></div>
-          </div>
-          <div class="promo" id="promo-webapps">
-            <a href="{{ devmo_url('apps') }}">
-              <h2>{{ _('Create<br />Web Apps') | safe}}</h2>
-              <p>{{ _('Develop apps using Web standards and open technologies') }}</p>
-            </a>
-            <div></div>
-          </div>
-          <div class="promo" id="promo-fosmob">
-            <a href="{{ devmo_url('Mozilla/Firefox_for_Android')}}">
-              <h2>{{ _('Firefox MOBILE<br />for developers') | safe }}</h2>
-              <p>{{ _('How to use device APIs, test sites, & build mobile add-ons') }}</p>
-            </a>
-            <div></div>
-          </div>
-        </section>
-
-        {% if demos %}
-        <section class="home-demos">
-          <h2 class="new-heading">{{ _('Demo Studio') }}</h2>
-          <div class="home-demos-conversion">
-            <a href="{{ url('demos') }}">{{ _('View All Demos') }}</a> | <a href="{{ url('demos_submit') }}">{{ _('Submit a Demo') }}</a>
-          </div>
-          <div class="home-demos-featured">
-            <strong>{{ _('Featured Demo:') }}</strong><br />
-            {{ demos[0].title }}
-
-            <ul class="gallery">
-            {% set extra_class = cycler(' row-first', '')%}
-            {% for submission in demos %}
-                {{ submission_thumb(submission, extra_class, thumb_width="180", thumb_height="133") }}
-            {% endfor %}
-            </ul>
-
-            {% if not waffle.flag('derby_closed') and current_challenge_tag_name %}
-            <strong>{{ _('This month\'s') }} <a href="{{ url('demos_devderby_landing') }}">{{ _('Dev Derby') }}</a>:</strong><br />
-            <strong class="derby-topic" style="color:#995C00">{{ tag_meta(current_challenge_tag_name, 'short_title') }}</strong><br />
-            <span class="derby-explain">{{ _('Submit your demo to the Derby to win an Android phone or other prizes.') }}</span>
-            {% endif %}
-          </div>
-        </section>
-        {% endif %}
-      </div>
-  </section>
-</div>
-</section><!-- /#content -->
-{% endif %}
 {% endblock %}
 
 {% block js %}
