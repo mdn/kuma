@@ -542,8 +542,13 @@ MINIFY_BUNDLES = {
     'css': {
         'mdn': (
             'css/fonts.css',
-            'css/mdn-screen.css',
             'css/redesign-transition.css',
+        ),
+        'mdn-screen': (
+            'css/mdn-screen.css',
+        ),
+        'mdn-screen-migration': (
+            'css/mdn-screen-migration.css',
         ),
         'jquery-ui': (
             'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
