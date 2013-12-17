@@ -108,17 +108,8 @@ beta-spacing = (grid-spacing * 2.5);
 }
 
 #profile-edit {
-    #field_beta, #field_newsletter {
-        @extend .clear;
-
-        input[type="checkbox"] {
-            bidi-value(float, left, right);
-        }
-
-        label {
-            position: absolute;
-            bidi-style(margin-left, 25px, margin-right, 0);
-        }
+    #field_beta {
+        @extend $checkbox-label-container;
     }
 
     .section li > input[type="text"], select, textarea, #tagit-interests, #tags-expertise {

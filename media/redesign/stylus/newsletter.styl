@@ -1,6 +1,11 @@
+@import 'mixins'
 @import 'vars'
 
 #apps-newsletter-subscribe {
+    #field_newsletter {
+      @extend $checkbox-label-container;
+    }
+
     .newsletter-setting {
         display: none; /* Avoid FOUC. Overridden in noscript.styl. */
         padding-left: grid-spacing;

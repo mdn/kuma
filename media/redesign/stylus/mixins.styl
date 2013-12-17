@@ -314,3 +314,19 @@ big-search() {
   display: inline-block;
   margin-left: (grid-spacing * 2);
 }
+
+/* When an element contains a label and a checkbox in order (as on the edit
+   profile page and elsewhere) make them appear on the same line, with the
+   checkbox to the left of the label. */
+$checkbox-label-container {
+    @extend .clear;
+
+    input[type="checkbox"] {
+        bidi-value(float, left, right);
+    }
+
+    label {
+        position: absolute;
+        bidi-style(margin-left, 25px, margin-right, 0);
+    }
+}
