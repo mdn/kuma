@@ -1,6 +1,5 @@
 /*** @Basics *********/
 .page-title + p { margin-top: -1em; }
-#content-main blockquote { padding: 0 25px; border-left: 5px solid #ccc; }
 ol.prose { padding-left: 22px; }
 ul.prose li { padding-left: 22px; margin: 0 0 .25em; background: url("../img/bullet.png") 0 .5em no-repeat; }
 ul.prose ul li { background-image: url("../img/bullet-sub.png"); }
@@ -335,16 +334,6 @@ section.boxed:after, div.boxed:after, form.boxed:after { content: "."; display: 
 #videos .hentry h3 a:hover, #videos .hentry h3 a:focus, #videos .hentry h3 a:active { text-decoration: none; }
 #videos .hentry h3 a:hover img, #videos .hentry h3 a:focus img, #videos .hentry h3 a:active img { border-color: inherit; }
 
-#search-results .gs-result { margin: 0 0 1.2em; padding: 0 2px 1.2em; border-bottom: 1px dotted #d8d4ca; }
-#search-results .gs-title { font-size: 1em; font-weight: bold; margin: 0 0 .25em; }
-#search-results .gs-snippet { font-size: .857em; margin: 0 0 .25em; }
-#search-results .gs-visibleUrl { font-size: .786em; display: inline; margin-right: 10px; color: #aaa; }
-#search-results .gs-visibleUrl-short { font-weight: bold; }
-#search-results div.gs-watermark { display: none; }
-
-#search-results .gsc-thumbnail-inside,
-#search-results .gsc-url-top { display: none; }
-
 /*** @Apps landing page *********/
 #apps #content > .wrap { background: url("../img/bg-starburst-five.png") 100% 1px no-repeat; }
 #apps .page-title { margin: 0 0 0 -10px; padding: 10px 0 10px 20px; font: 200 72px/.9 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; letter-spacing: 1px; text-transform: uppercase; text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.25); 
@@ -674,9 +663,6 @@ li.tag-expert label:hover { border-color: #bbb; }
 
 #learn-html5 .more { margin-top: .5em; text-align: right; }
 #learn-html5 #mdn-docs .mod-title { background-position: 96% -100px; }
-
-/* @Utility Classes *********/
-.hidden { display: none; }
 
 /* @Waffle Classes *********/
 .waffle-beta { position: relative; }
