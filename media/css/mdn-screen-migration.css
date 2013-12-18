@@ -43,15 +43,9 @@ section#content, div#content { min-height: 400px; }
 .section-community #masthead { border-bottom-color: #00b6f0; }
 
 .section-web #masthead,
-.section-mobile #masthead,
-.section-addons #masthead,
-.section-mozilla #masthead,
-.section-apps #masthead { border-bottom-color: #f8d575; }
+.section-mozilla #masthead { border-bottom-color: #f8d575; }
 
 #branding { position: absolute; left: 10px; top: 10px; width: 50%; padding: 2px 0 0 70px; margin: 0 0 10px; }
-#logo { margin: 0; font: normal 32px/1 "Bebas Neue", "League Gothic", Haettenschweiler, Impact, "Arial Narrow", sans-serif; text-transform: uppercase; color: #fff; letter-spacing: 1px; }
-#logo a { color: #fff; text-decoration: none; }
-#logo img { position: absolute; left: -3px; top: -4px; }
 
 .global-notice { position: relative; border: solid #3c0000; border-width: 3px 0; color: #fff; background: #450000; padding: 15px 20px 0; margin: 0 0 -1px; font-size: .857em; }
 
@@ -60,17 +54,6 @@ section#content, div#content { min-height: 400px; }
 .notice.success { background: #effdfb; border-color: #beede5; }
 .notice.error { border-color: #e1a696; }
 p.notice { padding-bottom: 10px; top: 0; margin-bottom: 15px; }
-
-/*** @Search *********/
-#site-search { width: 260px; float: right; text-align: left; padding-left: 0; margin: -8px 140px 0 0; position: relative; }
-#site-search p { margin: 0; }
-#site-search #q { width: 150px; padding: 3px 4px 3px 28px; margin: 0 0 0 4px; float: right; background: #555; background: rgba(80,80,80,.9) url("../img/search-icons.png") 6px -96px no-repeat; border: 1px solid #666; color: #aaa; font-size: .857em; -webkit-appearance: textfield; appearance: textfield; -moz-box-sizing: content-box; box-sizing: content-box; }
-#site-search #q:hover, #site-search #q:focus { border-color: #9c0d10; background-color: #fff; color: #333; }
-#site-search button { font-size: 12px; width: 60px; position: absolute; right: -70px; }
-#site-search-gg { width: 60px; height: 28px; font-size: .642em; float: right; text-align: right; position: relative; }
-#site-search-gg * { margin: 0; padding: 0; }
-#site-search-gg img { height: 12px; display: block; position: absolute; top: 13px; right: 0; }
-#site-search-gg .gsc-branding-text { width: 60px; display: block; color: #666; position: absolute; top: 0; }
 
 /* @Tabbed boxes *********/
 ul.index { width: 100%; height: 3em; list-style: none; margin: 0; }
@@ -222,21 +205,6 @@ ol.pagination li.selected a:hover { text-decoration:none; }
 #contact input, #contact textarea { border: 1px solid #bfbbad; background: #fff; padding: 4px 8px; margin-left: -1px; width: 182px; font-size: .857em; }
 #contact input:hover, #contact input:focus, #contact textarea:hover, #contact textarea:focus { border-color: #8d846f; }
 #contact .fm-submit { text-align: right; }
-
-/* @Footer *********/
-#footbar { padding: 1.3em 0 0; background: #450000; border-bottom: 6px solid #3c0000; color: #f5f5f0; font: italic .928em/1.1 Georgia, Times, "Times New Roman", serif; text-align: right; }
-#footbar .wrap { background: #450000; }
-#footbar p { text-align: right; margin: 0 0 1em; }
-#footbar a:link, #footbar a:visited, 
-#site-info a:link, #site-info a:visited { color: #eb9f81; }
-#footbar a:hover, #footbar a:focus, #footbar a:active, 
-#site-info a:hover, #site-info a:focus, #site-info a:active { color: #fff; }
-
-#site-info { background: #000; padding: 30px 0 50px; border-top: 1px solid #5d0900; color: #f1f1ec; font-size: .786em; }
-#site-info .wrap { background: #000; }
-#site-info #legal { position: relative; width: 615px; float: left; padding-left: 55px; }
-#site-info #legal img { position: absolute; left: -3px; top: -10px; }
-#site-info p { margin: 0 0 .5em; }
 
 /* @Boxes *********/
 section.boxed, div.boxed, form.boxed { background: #fff; padding: 18px; margin: 0 4px 26px 0; border: 1px solid #ecece7;
