@@ -154,8 +154,10 @@ a {
 }
 
 .button, button, input[type='submit'], input[type='button'] {
-  text-decoration: none;
+  border: 0;
   display: inline-block;
+  line-height: 1;
+  text-decoration: none;
   compat-important(background-color, button-background);
   compat-important(color, button-color);
   compat-important(text-transform, uppercase);
@@ -166,8 +168,6 @@ a {
   compat-only(font-family, site-font-family);
   compat-only(font-size, base-font-size);
   compat-only(letter-spacing, normal);
-  border: 0;
-  line-height: 1;
 
   &.only-icon {
     {selector-icon} {
