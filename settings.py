@@ -576,9 +576,6 @@ MINIFY_BUNDLES = {
         'devderby': (
             'css/devderby.css',
         ),
-        'err404': (
-            'css/err404.css',
-        ),
         'home': (
             'redesign/css/home.css',
         ),
@@ -644,8 +641,12 @@ MINIFY_BUNDLES = {
         'redesign-demos': (
             'redesign/css/demo-studio.css',
         ),
-        'redesign-err404': (
-            'redesign/css/err404.css',
+        'error': (
+            'redesign/css/error.css',
+        ),
+        'error-404': (
+            'redesign/css/error.css',
+            'redesign/css/error-404.css',
         ),
         'calendar': (
             'redesign/css/calendar.css',
