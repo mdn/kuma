@@ -98,7 +98,7 @@
                 {% if zone_links['change'] %}
                   <li><a target="_blank" href="{{ zone_links['change'] }}">{{ _('Manage content zone') }}</a></li>
                 {% endif %}
-                {% if zone_links['add'] %}
+                {% if zone_links['add'] and not document.is_template %}
                   <li><a target="_blank" href="{{ zone_links['add'] }}">{{ _('Convert to content zone') }}</a></li>
                 {% endif %}
                 <li class="page-print"><a href="#" onclick="return window.print();"  title="{{ _('Print page') }}">{{ _('Print this page') }}</a></li>
