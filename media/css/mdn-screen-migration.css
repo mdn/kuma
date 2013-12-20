@@ -1,50 +1,9 @@
 /*** @Basics *********/
-.page-title + p { margin-top: -1em; }
-ol.prose { padding-left: 22px; }
-ul.prose li { padding-left: 22px; margin: 0 0 .25em; background: url("../img/bullet.png") 0 .5em no-repeat; }
-ul.prose ul li { background-image: url("../img/bullet-sub.png"); }
 
-.cols-2 { -moz-column-count: 2; -moz-column-gap: 10px; -webkit-column-count: 2; -webkit-column-gap: 10px; column-count: 2; column-gap: 10px; }
-.cols-3 { -moz-column-count: 3; -moz-column-gap: 10px; -webkit-column-count: 3; -webkit-column-gap: 10px; column-count: 3; column-gap: 10px; }
-.cols-4 { -moz-column-count: 4; -moz-column-gap: 10px; -webkit-column-count: 4; -webkit-column-gap: 10px; column-count: 4; column-gap: 10px; }
-.cols-5 { -moz-column-count: 5; -moz-column-gap: 10px; -webkit-column-count: 5; -webkit-column-gap: 10px; column-count: 5; column-gap: 10px; }
-
-/*** @Forms *********/
-form ul li { padding: 0; background: none; }
-form ol { padding: 0; }
-
-input[type=text], input[type=password], input[type=search], input[type=email], input[type=url], textarea { padding: 6px 8px; background: #fff; border: 1px solid #cbc8b9; }
-input[type=text]:hover, input[type=password]:hover, input[type=search]:hover, input[type=email]:hover, input[type=url]:hover, textarea:hover,
-input[type=text]:focus, input[type=password]:focus, input[type=search]:focus, input[type=email]:focus, input[type=url]:focus, textarea:focus { border-color: #b6b2a0; }
-
-/* @Layout *********/
-.wrap { position: relative; width: 940px; padding: 0 10px; margin: 0 auto; }
-.wrap:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; } /* clear floats */
-
-section#content, div#content { min-height: 400px; }
-#content .wrap { padding-bottom: 1em; }
-#content .wrap.sidebar { min-height: 400px; padding-bottom: 3em; background: transparent url("../img/bg-sidebar.png") 695px 0 no-repeat; }
-.section-demos #content { border-top: 0; }
-
-#content-main { width: 670px; float: left; padding: 20px 0 0; }
-#content-main.full { width: 100%; float: none; clear: both; }
-#content-sub { width: 235px; float: right; padding: 20px 0 0 20px; }
-
-.main { width: 670px; float: left; }
-
-/* @Header *********/
-#masthead { background: #000 url("../img/bg-pinstripe.png") center top repeat-x; border-top: 2px solid #fff; border-bottom: 4px solid #f8d575; color: #ccc; min-height: 70px; -moz-box-shadow: 0 1px 0 rgba(0,0,0,.25); -webkit-box-shadow: 0 1px 0 rgba(0,0,0,.25); box-shadow: 0 1px 0 rgba(0,0,0,.25); }
-#masthead .wrap { padding-top: 55px; background: #000 url("../img/bg-pinstripe.png") center top repeat-x; }
-
-.section-docs #masthead { border-bottom-color: #fb9500; }
-.section-demos #masthead { border-bottom-color: #ed2024; }
-.section-learning #masthead { border-bottom-color: #8dc434; }
-.section-community #masthead { border-bottom-color: #00b6f0; }
-
-.section-web #masthead,
-.section-mozilla #masthead { border-bottom-color: #f8d575; }
-
-.global-notice { position: relative; border: solid #3c0000; border-width: 3px 0; color: #fff; background: #450000; padding: 15px 20px 0; margin: 0 0 -1px; font-size: .857em; }
+// TODO: Move to error.styl once it lands
+ol.prose {
+  list-style-type: disc;
+}
 
 .notice { clear: both; position: relative; top: -10px; margin: 10px 0 5px; padding: 10px 15px 0; background: #fcf6d4; border: 1px solid #e5d5c1; box-shadow: 1px 1px 0 rgba(0,0,0,.1); }
 .notice p, .notice ul { margin-bottom: 10px; }
