@@ -31,7 +31,6 @@ section#content, div#content { min-height: 400px; }
 #content-sub { width: 235px; float: right; padding: 20px 0 0 20px; }
 
 .main { width: 670px; float: left; }
-.aside { width: 235px; float: right; }
 
 /* @Header *********/
 #masthead { background: #000 url("../img/bg-pinstripe.png") center top repeat-x; border-top: 2px solid #fff; border-bottom: 4px solid #f8d575; color: #ccc; min-height: 70px; -moz-box-shadow: 0 1px 0 rgba(0,0,0,.25); -webkit-box-shadow: 0 1px 0 rgba(0,0,0,.25); box-shadow: 0 1px 0 rgba(0,0,0,.25); }
@@ -44,8 +43,6 @@ section#content, div#content { min-height: 400px; }
 
 .section-web #masthead,
 .section-mozilla #masthead { border-bottom-color: #f8d575; }
-
-#branding { position: absolute; left: 10px; top: 10px; width: 50%; padding: 2px 0 0 70px; margin: 0 0 10px; }
 
 .global-notice { position: relative; border: solid #3c0000; border-width: 3px 0; color: #fff; background: #450000; padding: 15px 20px 0; margin: 0 0 -1px; font-size: .857em; }
 
