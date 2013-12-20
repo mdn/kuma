@@ -26,7 +26,7 @@
 {% endif %}
 
 {% if document.is_template %}
-  {% set macro_name = document.title|replace('Template:','', 1) %}
+  {% set macro_name = document.slug|replace('Template:','', 1) %}
   {% set template_search_link = url('search', locale=document.locale)|urlparams(locale=request.locale, kumascript_macros=macro_name) %}
 {% endif %}
 
