@@ -1,12 +1,12 @@
 (function($) {
 
   // CKEditor setup method
-  var $body = $('body');
   var setup = function() {
       var $appBoxes = $('.approved .boxed');
       var $tools = $('div.cke_toolbox');
       var $wikiArt = $('#cke_wikiArticle');
       var $container = $('.ckeditor-container');
+      var $content = $('#cke_id_content');
       var contentTop = $container.offset().top;
       var fixed = false;
 
@@ -33,7 +33,7 @@
             $tools.css({
               position: 'fixed',
               top: 0,
-              width: $('#cke_id_content').width() - 11
+              width: $content.width() - 11
             });
           }
 
@@ -63,9 +63,8 @@
 
   // Renders the WYSIWYG editor
   $('#id_content').each(function () {
-    var $el = $(this);
-    if (!$body.is('.is-template')) {
-      $el.removeAttr('required').ckeditor(setup, {
+    if (!$('body').is('.is-template')) {
+      $(this).removeAttr('required').ckeditor(setup, {
         customConfig : '/docs/ckeditor_config.js'
       });
     }
