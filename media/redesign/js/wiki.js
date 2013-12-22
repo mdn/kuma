@@ -1,10 +1,12 @@
 (function($) {
 
+  var win = window;
+
   /*
     Create the settings and languages menu
   */
   (function() {
-    var $menus = $('#settings-menu, #languages-menu');
+    var $menus = $('#settings-menu,#languages-menu');
     $menus.mozMenu();
     $menus.parent().find('.submenu').mozKeyboardNav();
   })();
@@ -49,7 +51,7 @@
       $quickLinksControl.toggleClass('hidden');
 
       if($(child).hasClass('column-closed')) {
-        $(window).trigger('resize');
+        $(win).trigger('resize');
         parent.removeChild(child);
       }
       else {
@@ -126,8 +128,8 @@
 
       var resizeFn = debounce(function(e) {
         // Set forth the pinned or static positioning of the table of contents
-        var scroll = window.scrollY;
-        var maxHeight = window.innerHeight - parseInt($toc.css('padding-top'), 10) - parseInt($toc.css('padding-bottom'), 10);
+        var scroll = win.scrollY;
+        var maxHeight = win.innerHeight - parseInt($toc.css('padding-top'), 10) - parseInt($toc.css('padding-bottom'), 10);
 
         if(scroll > tocOffset && $toggler.css('pointer-events') == 'none') {
           $toc.css({
@@ -162,7 +164,7 @@
 
       // Set it forth!
       resizeFn();
-      $(window).on('scroll resize', resizeFn);
+      $(win).on('scroll resize', resizeFn);
     }
   })();
 
@@ -178,7 +180,7 @@
     var value = $(this).find('#stack-search').val();
 
     if(value != '') {
-      window.location = 'http://stackoverflow.com/search?q=[firefox]+or+[firefox-os]+or+[html5-apps]+' + value;
+      win.location = 'http://stackoverflow.com/search?q=[firefox]+or+[firefox-os]+or+[html5-apps]+' + value;
     }
   });
 
