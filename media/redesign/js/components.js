@@ -205,6 +205,18 @@
       }
       setIcon(pieces.$toggler, $self);
 
+      // Add aria to indicate dropdown menu
+      pieces.$toggler.attr('aria-haspopup', true);
+
+      // Close on ESC
+      $self.on('keyup', '.toggle-container', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if(e.keyCode == 27) {
+          $(this).siblings('a').trigger('click').focus();
+        };
+      }); 
+
       // Click event to show/hide
       $self.on('click', '.toggler', function(e) {
         e.preventDefault();
@@ -233,10 +245,12 @@
 
         if(!getState($li) || forceClose) {
           $li.attr(closedAttribute, 'true').removeClass('current');
+          pieces.$container.attr('aria-expanded', false);
           pieces.$container.slideUp();
         }
         else {
           $li.attr(closedAttribute, '').addClass('current');
+          pieces.$container.attr('aria-expanded', true);
           pieces.$container.slideDown();
         }
         setIcon(pieces.$toggler, $li);
