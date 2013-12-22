@@ -739,9 +739,15 @@ MINIFY_BUNDLES = {
             'js/framebuster.js',
         ),
         'syntax-prism': (
+            'js/libs/prism/prism.js',
             'js/prism-mdn/components/prism-json.js',
             'js/prism-mdn/plugins/line-numbering/prism-line-numbering.js',
             'js/syntax-prism.js',
+        ),
+        'ckeditor': (
+            'js/libs/ckeditor/ckeditor.js',
+            'js/libs/ckeditor/adapters/jquery.js',
+            'redesign/js/wiki-editor.js',
         ),
         'ace-editor': (
             'js/libs/ace/ace.js',
