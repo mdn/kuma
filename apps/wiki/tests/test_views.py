@@ -1855,17 +1855,17 @@ class DocumentEditingTests(TestCaseBase):
                 eq_(0, page.find('.page-tags li a:contains("%s")' % t).length,
                     '%s should appear in document view tags' % t)
 
-            # Check for the document title in the tag listing
+            # Check for the document slug (title in feeds) in the tag listing
             for t in yes_tags:
                 response = client.get(reverse('wiki.tag', args=[t]))
-                ok_(doc.title in response.content.decode('utf-8'))
+                ok_(doc.slug in response.content.decode('utf-8'))
                 response = client.get(reverse('wiki.feeds.recent_documents',
                                       args=['atom', t]))
                 ok_(doc.title in response.content.decode('utf-8'))
 
             for t in no_tags:
                 response = client.get(reverse('wiki.tag', args=[t]))
-                ok_(doc.title not in response.content.decode('utf-8'))
+                ok_(doc.slug not in response.content.decode('utf-8'))
                 response = client.get(reverse('wiki.feeds.recent_documents',
                                       args=['atom', t]))
                 ok_(doc.title not in response.content.decode('utf-8'))

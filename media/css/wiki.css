@@ -650,19 +650,6 @@ article.main div.tags input.adder {
   position: relative;
 }
 
-/* Document list pages */
-#document-list ul.documents {
-    margin: 10px 0;
-}
-
-#document-list ul.documents li {
-    font-size: 14px;
-    list-style: none;
-    padding: 5px 0;
-    display: block;
-    overflow: hidden;
-}
-
 /* Revision history */
 #revision-history {
     color: #666;
