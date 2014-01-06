@@ -192,6 +192,11 @@
 a.persona-button {
   vendorize(border-radius, 3px);
   z-index: 2;
+  display: none;
+
+  &.persona-loaded {
+    display: inline-block;
+  }
 
   &:focus{
     span{
