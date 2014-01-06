@@ -132,12 +132,7 @@
           <section class="page-meta">
               <section id="page-tags" class="page-tags">
                 <h2><i aria-hidden="true" class="icon-tag"></i>{{ _('Tags') }}</h2>
-                {% if document.tags %}
-                  {% set tags = document.tags.all() %}
-                  <input id="tagit_tags" type="text" name="tags" value="{% for tag in tags %}{{ tag.name }},{% endfor %}" maxlength="255" />
-                {% else %}
-                  <input id="tagit_tags" type="text" name="tags" value="" maxlength="255" />
-                {% endif %}
+                <input id="tagit_tags" type="text" name="tags" value="{% if document.tags %}{% for tag in document.tags.all() %}{{ tag.name }},{% endfor %}{% endif %}" maxlength="255" />
               </section>
               <section class="page-tags">
                 <h2>{{_('Localization flags')}}</h2>
