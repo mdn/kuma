@@ -670,17 +670,6 @@ MINIFY_BUNDLES = {
         ),
     },
     'js': {
-        'mdn': (
-            'js/libs/jquery-1.9.1.js',
-            'js/jquery-upgrade-compat.js',
-            'js/init.js',
-
-            # Home Page
-            # cycle and slideshow only needed on the home page (or any page
-            # featuring the slide show widget).
-            'js/libs/jquery.cycle.js',
-            'js/libs/slideshow.js',
-        ),
         'popup': (
             'js/libs/jquery-1.9.1.js',
             'js/jquery-upgrade-compat.js',
@@ -750,6 +739,16 @@ MINIFY_BUNDLES = {
             'js/libs/ace/worker-javascript.js',
         ),
         'redesign-main': (
+            'js/libs/jquery-1.9.1.js',
+            'js/jquery-upgrade-compat.js',
+            'js/init.js',
+
+            # Home Page
+            # cycle and slideshow only needed on the home page (or any page
+            # featuring the slide show widget).
+            'js/libs/jquery.cycle.js',
+            'js/libs/slideshow.js',
+            
             'redesign/js/components.js',
             'redesign/js/main.js',
         ),
