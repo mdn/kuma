@@ -61,10 +61,6 @@ class LandingViewsTest(test_utils.TestCase):
         r = self.client.get(url, follow=True)
         eq_(200, r.status_code)
 
-        doc = pq(r.content)
-        dev_mdc_link = doc.find('a#dev-mdc-link')
-        ok_(dev_mdc_link)
-
     def test_mozilla(self):
         url = reverse('landing.views.mozilla')
         r = self.client.get(url, follow=True)

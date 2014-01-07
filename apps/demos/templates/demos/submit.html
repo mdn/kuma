@@ -1,7 +1,7 @@
 {% extends "demos/base.html" %}
 {% set obj = submission %}
 
-{% block pageid %}submit{% endblock %}
+{% block body_attributes %}id="submit"{% endblock %}
 {% block bodyclass %}section-demos{% endblock %}
 {% block title %}
     {% if edit %}

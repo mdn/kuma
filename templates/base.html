@@ -1,103 +1,35 @@
-{% macro page_title_macro(t) %}
-{% block title %}{{ _('Mozilla Developer Network') }}{% endblock %}
-{% endmacro %}
-
-{% macro site_css() %}
-  {% block site_css %}
-      <!--[if !IE 6]><!-->
-      {{ css('mdn') }}
-      {% for style in styles %}
-        {{ css(style) }}
-      {% endfor %}
-      <!--<![endif]-->
-      <!--[if IE]><link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/ie.css" /><![endif]-->
-      <!--[if lte IE 7]><link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/ie7.css" /><![endif]-->
-      <!--[if lte IE 6]><link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/ie6.css" /><![endif]-->
-      <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/libs/font-awesome/css/font-awesome.min.css" />
-      <link rel="stylesheet" href="//mozorg.cdn.mozilla.net/media/css/tabzilla-min.css" />
-
-      <link rel="search" type="application/opensearchdescription+xml" href="{{ settings.SITE_URL }}/{{ request.locale }}/search/xml" title="{{ _('Mozilla Developer Network') }}" />
-
-      {% if waffle.flag('redesign') %}
-        {{ css('redesign-main', 'all') }}
-      {% endif %}
-
-  {% endblock %}
-{% endmacro %}
-
-{% macro lang_switcher() %}
-{% if not is_sphinx %}
-  {% block lang_switcher %}
-      {% include "includes/lang_switcher.html" %}
-  {% endblock %}
-{% endif %}
-{% endmacro %}
-
-{% macro extrahead() %}
-{% block extrahead %}{% endblock %}
-{% endmacro %}
-
-{% macro pageid() %}
-{% block pageid %}{% endblock %}
-{% endmacro %}
-
-{% macro bodyclass() %}
-{% block bodyclass %}{% endblock %}
-{% endmacro %}
-
-{% macro page_content() %}
-{% block content %}{% endblock %}
-{% endmacro %}
-
-{% macro site_js() %}
-  {% block site_js %}
-      {% if waffle.flag('redesign') %}
-        <!--[if lte IE 8]><script src="/media/redesign/js/libs/selectivizr-1.0.2/selectivizr-build.js?build={{ BUILD_ID_JS }}"></script><div id="feature-test-old-ie"></div><![endif]-->
-      {% endif %}
-
-      {{ js('redesign-main') }}
-      <script src="//mozorg.cdn.mozilla.net/{{ request.locale }}/tabzilla/tabzilla.js" async></script>
-      
-      {% for script in scripts %}
-        {{ js(script) }}
-      {% endfor %}
-  {% endblock %}
-{% endmacro %}
-
-{% macro page_js() %}
-  {% block js %}{% endblock %}
-{% endmacro %}
-
-
-
-
-
 {% from "includes/common_macros.html" import optimizely_script with context %}
-
-
-
-
-
-
-{% if waffle.flag('redesign') %}
-
-
 <!DOCTYPE html>
 <html lang="{{ LANG }}" dir="{{ DIR }}" id="developer-mozilla-org" xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:og="http://ogp.me/ns#" class="redesign">
 <head>
+  {% if not is_sphinx %}
+    {{ optimizely_script() }}
+  {% endif %}
   <meta charset="utf-8">
-  <title>{{ page_title_macro() }}</title>
-
-  {{ site_css() }}
-  
-  <noscript>
-    <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}redesign/css/noscript.css" />
-  </noscript>
+  <title>{% block title %}{{ _('Mozilla Developer Network') }}{% endblock %}</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="index, follow">
   <link rel="home" href="{{ url('home') }}">
   <link rel="copyright" href="#copyright">
+
+  {% block site_css %}
+    {{ css('mdn') }}
+    {{ css('redesign-main', 'all') }}
+    {% for style in styles %}
+      {{ css(style) }}
+    {% endfor %}
+  {% endblock %}
+  <noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}redesign/css/noscript.css" />
+  </noscript>
+  <!--[if IE]><link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/ie.css" /><![endif]-->
+  <!--[if lte IE 7]><link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/ie7.css" /><![endif]-->
+  <!--[if lte IE 6]><link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/ie6.css" /><![endif]-->
+  <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/libs/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="//mozorg.cdn.mozilla.net/media/css/tabzilla-min.css" />
+
+  <link rel="search" type="application/opensearchdescription+xml" href="{{ settings.SITE_URL }}/{{ request.locale }}/search/xml" title="{{ _('Mozilla Developer Network') }}" />
 
   <!-- For third-generation iPad with high-resolution Retina display: -->
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ MEDIA_URL }}redesign/img/favicon144.png">
@@ -116,15 +48,15 @@
   <script src="{{ MEDIA_URL }}js/libs/html5.js"></script>
   <![endif]-->
 
-  {% include "includes/config.html" %}
-
-  {{ extrahead() }}
+  {% block extrahead %}{% endblock %}
 
   {% if not is_sphinx %}
     {% include "includes/google_analytics.html" %}
   {% endif %}
 </head>
-<body id="{{ pageid() }}" class="html-{{ DIR }} {{ bodyclass() }}">
+<body {% block body_attributes %}{% endblock %} class="html-{{ DIR }} {% block bodyclass %}{% endblock %}">
+
+  {% include "includes/config.html" %}
 
   <!-- temporary beta notice -->
   <div class="redesign-beta-notice"><div class="center"><bdi>
@@ -203,14 +135,10 @@
       </form></li>{% endif %}</ul></nav>
   </div></header>
 
-  <!-- Banner here, if present.  Usually from zone landing -->
-  {% block masthead %}{% endblock %}
-
   <!-- Content will go here -->
   <main id="content" role="main"><div class="center">
-  {{ page_content() }}
+  {% block content %}{% endblock %}
   </div></main>
-
 
   <!-- Footer -->
   <footer><div class="center">
@@ -226,236 +154,28 @@
         {% endblock %}
       </div>
       <div class="column-strip">
-        {{ lang_switcher() }}
+        {% if not is_sphinx %}
+          {% block lang_switcher %}
+              {% include "includes/lang_switcher.html" %}
+          {% endblock %}
+        {% endif %}
       </div>
     </div>
   </div></footer>
 
-
-  <!-- Site JavaScript -->
+  <!-- site js -->
   <script src="{{ url('jsi18n') }}build:{{ BUILD_ID_JS }}"></script>
-  {{ site_js() }}
-  {{ page_js() }}
+  {% block site_js %}
+    <!--[if lte IE 8]><script src="/media/redesign/js/libs/selectivizr-1.0.2/selectivizr-build.js?build={{ BUILD_ID_JS }}"></script><div id="feature-test-old-ie"></div><![endif]-->
+
+    {{ js('redesign-main') }}
+    <script src="//mozorg.cdn.mozilla.net/{{ request.locale }}/tabzilla/tabzilla.js" async></script>
+    
+    {% for script in scripts %}
+      {{ js(script) }}
+    {% endfor %}
+  {% endblock %}
+
+  {% block js %}{% endblock %}
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{% else %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!DOCTYPE html>
-<html lang="{{ LANG }}" dir="{{ DIR }}" id="developer-mozilla-org" xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:og="http://ogp.me/ns#">
-<head>
-  {% if not is_sphinx %}
-    {{ optimizely_script() }}
-  {% endif %}
-  <title>{{ page_title_macro() }}</title>
-
-  <meta charset="utf-8">
-  <meta name="robots" content="index, follow">
-  <link rel="home" href="{{ url('home') }}">
-  <link rel="copyright" href="#copyright">
-  <link rel="shortcut icon" href="{{ MEDIA_URL }}img/favicon.ico">
-
-  {{ site_css() }}
-
-  <!--[if IE]>
-  <meta http-equiv="imagetoolbar" content="no">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-  <script src="{{ settings.SITE_URL }}/{{ MEDIA_URL }}js/libs/html5.js"></script>
-  <![endif]-->
-
-  {% include "includes/config.html" %}
-
-  {{ extrahead() }}
-
-  {% if not is_sphinx %}
-    {% include "includes/google_analytics.html" %}
-  {% endif %}
-</head>
-
-<body id="{{ pageid() }}" class="html-{{ DIR }} {{ bodyclass() }}" role="document">
-<!--[if lte IE 8]>
-<noscript><div class="global-notice">
-{% trans %}
-<p><strong>Warning:</strong> The Mozilla Developer Network website employs emerging web standards that may not be fully supported in some versions of Microsoft Internet Explorer. You can improve your experience of this website by enabling JavaScript.</p>
-{% endtrans %}
-</div></noscript>
-<![endif]-->
-
-<!-- temporary beta notice -->
-{% if waffle.flag('redesign_beta_notice') %}
-  {% if user.is_authenticated() %}
-    <div class="redesign-beta-notice"><div class="wrap">
-      {{ _('We\'re working on new design for MDN! To help beta-test it, <a href="%s">edit your profile</a> a and select the <strong>Beta user</strong> checkbox. You will view MDN with the new design, and be able to give feedback.') % url('devmo.views.profile_edit', username=user.username) }}
-    </div></div>
-  {% else %}
-    <div class="redesign-beta-notice"><div class="wrap">
-      {{ _('MDN is being redesigned! Want to help beta-test it? <a href="%s">(Sign up for and) sign in to your MDN account</a>, and then select <strong>Beta user</strong> in your profile.') % url('users.login') }}
-    </div></div>
-  {% endif %}
-{% endif %}
-
-
-  <header id="masthead" class="{% block headerclass %}minor{% endblock %} new-menu">
-    <div class="wrap">
-      <ul id="nav-access">
-        <li><a href="#language">{{ _('Select language') }}</a></li>
-        {% if not is_sphinx %}
-          <li><a href="#q">{{ _('Skip to search') }}</a></li>
-        {% endif %}
-        <li><a href="#content">{{ _('Skip to main content') }}</a></li>
-      </ul>
-
-      <div id="branding">
-        {% block headerlogo %}
-        <div id="logo"><a href="{{ url('home') }}"><img src="{{ MEDIA_URL }}img/mdn-logo-sm.png" alt="{{ _('Mozilla Developer Network') }}" title="{{ _('Mozilla Developer Network') }}" width="62" height="71"> {{ _('Mozilla Developer Network') }}</a></div>
-        {% endblock %}
-      </div>
-
-      {% block headernav %}
-        <nav id="nav">
-          <ul id="nav-main" role="menubar">
-            <li id="nav-main-docs" class="menu" rel="menuitem"><a href="#nav-sub-docs" class="toggle" aria-haspopup="true" aria-labelledby="nav-main-docs" title="{{ _('Read Documentation') }}">{{ _('Read<br /><em>Docs</em>') }}</a>
-              <div id="nav-sub-docs" class="sub-menu" aria-hidden="true">
-                <ul>
-                  <li>
-                    <ul>
-
-                      <li><a href="{{ devmo_url('Web/HTML') }}">{{ _('HTML') }}</a></li>
-                      <li><a href="{{ devmo_url('Web/CSS') }}">{{ _('CSS') }}</a></li>
-                      <li><a href="{{ devmo_url('Web/JavaScript') }}">{{ _('JavaScript') }}</a></li>
-                      <li><a href="{{ devmo_url('Web/Guide/Graphics') }}">{{ _('Graphics') }}</a></li>
-                      <li><a href="{{ devmo_url('Web/API') }}">{{ _('APIs / DOM') }}</a></li>
-                      <li><a href="{{ devmo_url('Web/Apps') }}">{{ _('Apps') }}</a></li>
-                      <li><a href="{{ devmo_url('tools') }}">{{ _('Dev Tools') }}</a></li>
-                      <li><a href="{{ devmo_url('Web/MathML') }}">{{ _('MathML') }}</a></li>
-                    </ul>
-                  </li>
-                  <li>
-                    <ul>
-                      <li><a href="{{ devmo_url('Web/Tutorials') }}">{{ _('Tutorials') }}</a></li>
-                      <li><a href="{{ devmo_url('Web/Reference') }}">{{ _('References') }}</a></li>
-                      <li><a href="{{ devmo_url('Web/Guide') }}">{{ _('Developer Guides') }}</a></li>
-                      <li><a href="{{ devmo_url('Accessibility') }}">{{ _('Accessibility') }}</a></li>
-                      <li><a href="{{ url('demos') }}">{{ _('Demos') }}</a></li>
-                      <li><br /><br /><a href="{{ url('docs') }}">{{ _('...more docs') }}</a></li>
-                    </ul>
-                  </li>
-                </ul>
-              </div>
-            </li>
-            <li id="nav-main-apps"><a href="https://marketplace.firefox.com/developers/">{{ _('Make<br /><em>Apps</em>') }}</a>
-            </li>
-            <li id="nav-main-firefox" class="menu" role="menuitem"><a href="#nav-sub-firefox" class="firefox toggle" aria-haspopup="true" aria-labelledby="nav-main-firefox">{{ _('Build & Use<br /><em>Firefox</em>') }}</a>
-              <ul id="nav-sub-firefox" class="sub-menu">
-                <li><a href="{{ devmo_url('Mozilla/Firefox_OS') }}">{{ _('Firefox OS') }}</a></li>
-                <li><a href="{{ devmo_url('Mozilla/Firefox') }}">{{ _('Firefox Desktop') }}</a></li>
-                <li><a href="{{ devmo_url('Mozilla/Mobile') }}">{{ _('Mobile') }}</a></li>
-                <li><a href="{{ devmo_url('Mozilla/Add-ons') }}">{{ _('Add-ons') }}</a></li>
-              </ul>
-            </li>
-            <li id="nav-main-demos" role="menuitem"><a href="{{ url('demos') }}" class="demos">{{ _('See & Submit<br /><em>Demos</em>') }}</a></li>
-            <li id="nav-main-community" class="menu" role="menuitem"><a href="#nav-sub-community" class="community toggle" aria-haspopup="true" aria-labelledby="nav-main-community">{{ _('Get<br /><em>Involved</em>') }}</a>
-              <ul id="nav-sub-community" class="sub-menu">
-                <li><a href="{{ devmo_url('Project:MDN/Contributing/Join_the_community') }}">{{ _('Join the Community') }}</a></li>
-                <li><a href="{{ devmo_url('Project:MDN/Contributing') }}">{{ _('Contribute to MDN') }}</a></li>
-                <li><a href="{{ url('events') }}">{{ _('Events') }}</a></li>
-                <li><a href="{{ devmo_url('Project:MDN/Contributing/Follow_what_s_happening') }}">{{ _('Tweets, Blogs, and More') }}</a></li>
-              </ul>
-            </li>
-          </ul>
-        </nav>
-
-      {% endblock %}
-
-      {% if not is_sphinx %}
-      {% include "includes/login.html" %}
-
-      <form id="site-search" method="get" action="http://www.google.com/search"
-              data-url="{{ url('search') }}">
-        <p>
-          <input type="search" role="search" placeholder="{{ _('Search MDN') }}" id="q" name="q" value="{{ query }}">
-          <noscript><button type="submit">{{ _('Search') }}</button></noscript>
-        </p>
-        <input type="hidden" name="sitesearch" value="developer.mozilla.org">
-        {% if not waffle.flag('elasticsearch') %}
-        <div id="site-search-gg"></div>
-        {% endif %}
-      </form>
-      {% endif %}
-
-      <a href="//www.mozilla.org/" id="tabzilla">mozilla</a>
-    </div>
-  </header>
-{# end head #}
-
-    {{ soapbox_messages(get_soapbox_messages(request.path)) }}
-{{ page_content() }}
-
-{# footer #}
-<section id="footbar">
-<div class="wrap">
-  <p>
-  {% trans feedback_url=devmo_url('Project:Feedback') %}
-  Is MDN helpful to you? Please  <a href="{{ feedback_url }}">share your feedback</a> with us. Or join our  <a id="dev-mdc-link" href="//lists.mozilla.org/listinfo/dev-mdc">mailing list about improving MDN content</a>.
-  {% endtrans %}
-  </p>
-</div>
-</section>
-<footer id="site-info" class="footer" role="contentinfo">
-<div class="wrap">
-    <div id="legal">
-      <img src="{{ MEDIA_URL }}img/mdn-logo-tiny.png" alt="" width="42" height="48">
-      <p id="copyright">&copy; 2005 - {{ thisyear() }} Mozilla Developer Network {{ _('and individual contributors') }}</p>
-      {% block footer_copyright %}
-      <p>
-      {% trans copyright_url=devmo_url('Project:Copyrights') %}
-      Content is available under <a href="{{ copyright_url }}">these licenses</a>
-      {% endtrans %}
-      &bull; <a href="{{ devmo_url('Project:About') }}">{{ _('About MDN') }}</a>
-      &bull; <a href="//github.com/mozilla/kuma">{{ _('Contribute to the code') }}</a>
-      &bull; <a href="//www.mozilla.org/en-US/privacy">{{ _('Privacy Policy') }}</a>
-      </p>
-      {% endblock %}
-    </div>
-    {{ lang_switcher() }}
-</div>
-</footer>
-
-<script src="{{ url('jsi18n') }}build:{{ BUILD_ID_JS }}"></script>
-
-{{ site_js() }}
-{{ page_js() }}
-
-{# end js #}
-</body>
-</html>
-
-
-
-{% endif %} {# ends redesign flag #}

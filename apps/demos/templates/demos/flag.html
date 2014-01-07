@@ -5,7 +5,7 @@
     {% extends "demos/base_popup.html" %}
 {% endif %}
 
-{% block pageid %}{% endblock %}
+{% block body_attributes %}{% endblock %}
 {% block bodyclass %}section-demos{% endblock %}
 {% block title %}{{ page_title(_('{subtitle} | Demo Studio') | f(subtitle=submission.title)) }}{% endblock %}
 

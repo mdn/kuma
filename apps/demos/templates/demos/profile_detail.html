@@ -3,7 +3,7 @@
 {% set display_name = profile_user.first_name | default(profile_user.username, true) %}
 {% set username  = profile_user.username %}
 
-{% block pageid %}demos{% endblock %}
+{% block body_attributes %}id="demos"{% endblock %}
 {% block bodyclass %}section-demos plain{% endblock %}
 {% block title %}{{ page_title(_('{subtitle} | Demo Studio') | f(subtitle=_('{display_name}') | f(display_name=display_name))) }}{% endblock %}
 

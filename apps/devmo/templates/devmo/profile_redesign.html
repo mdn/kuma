@@ -3,7 +3,7 @@
 {% set display_name = profile.name | default(profile.user.username, true) %}
 {% set username  = profile.user.username %}
 
-{% block pageid %}{% endblock %}
+{% block body_attributes %}{% endblock %}
 
 {% block bodyclass %}profile profile-display{% endblock %}
 
