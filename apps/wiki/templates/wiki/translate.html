@@ -9,6 +9,11 @@
                  (None, _('Translate Article'))] %}
 {% block bodyclass%}translate{% endblock %}
 
+{% block site_css %}
+    {{ super() }}
+    {{ css('jquery-ui') }}
+{% endblock %}
+
 {% block content %}
   {% set language = settings.LANGUAGES[locale.lower()] %}
 <section id="content">
@@ -158,6 +163,8 @@
 {% endblock %}
 
 {% block js %}
+  {{ js('jquery-ui') }}
+
   {% include 'wiki/includes/tag_suggestions.html' %}
   
   {{ js('ckeditor') }}

@@ -9,13 +9,14 @@
 {% block site_css %}
     {{ super() }}
     {{ css('demostudio') }}
+    {{ css('jquery-ui') }}
     {% if waffle.flag('redesign') %}{{ css('redesign-profile') }}{% endif %}
     {% if waffle.flag('profile_subscription') %}{{ css('newsletter',) }}{% endif %}
 {% endblock %}
 
 {% block site_js %}
     {{ super() }}
-    {{ js('libs/jqueryui') }}
+    {{ js('jquery-ui') }}
     {{ js('demostudio') }}
     {{ js('libs/tagit') }}
     {{ js('profile') }}

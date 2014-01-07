@@ -10,6 +10,11 @@
 {% set classes = 'edit' %}
 {% block bodyclass %}edit{% if document.is_template %} is-template{% endif %}{% endblock %}
 
+{% block site_css %}
+    {{ super() }}
+    {{ css('jquery-ui') }}
+{% endblock %}
+
 {% block content %}
 <section id="content">
   <div class="wrap">
@@ -174,6 +179,7 @@
 
 {% block site_js %}
     {{ super() }}
+    {{ js('jquery-ui') }}
     {{ js('framebuster') }}
     {% include 'wiki/includes/tag_suggestions.html' %}
 

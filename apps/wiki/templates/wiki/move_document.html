@@ -7,6 +7,11 @@
                  (document.get_absolute_url(), document.title)] %}
 {% block bodyclass %}move-page{% endblock %}
 
+{% block site_css %}
+    {{ super() }}
+    {{ css('jquery-ui') }}
+{% endblock %}
+
 {% block content %}
 <section id="content">
   <div class="wrap">
@@ -95,5 +100,6 @@
 {% endblock %}
 
 {% block js %}
+  {{ js('jquery-ui') }}
   <script src="{{ MEDIA_URL }}js/wiki-move.js?build={{ BUILD_ID_JS }}"></script>
 {% endblock %}

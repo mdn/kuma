@@ -2,11 +2,7 @@
 
 {% set title = _('Localization Dashboard') %}
 {% set scripts = ('dashboards',) %}
-{% if waffle.flag('redesign') %}
-  {% set styles = ('redesign-dashboards', 'redesign-wiki') %}
-{% else %}
-  {% set styles = ('dashboards', 'wiki') %}
-{% endif %}
+{% set styles = ('redesign-dashboards', 'redesign-wiki', 'jquery-ui') %}
 {% set crumbs = [(None, title)] %}
 {% set classes = 'compare' %}
 
@@ -76,6 +72,8 @@
 {% endblock %}
 
 {% block js %}
+{{ js('jquery-ui') }}
+
 <script>
 $(function() {
   var $revTable       = $('#revisions-table'),
