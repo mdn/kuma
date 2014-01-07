@@ -93,16 +93,21 @@ document.documentElement.className += ' js';
   /*
     Persona Login
   */
-  $('.persona-login').click(function(e) {
-    if(!$(this).hasClass('toggle')) {
-      navigator.id.get(function(assertion) {
-        if(!assertion) return;
-        $('input[name="assertion"]').val(assertion.toString());
-        $('form.browserid').first().submit();
+  (function() {
+    var $loginButton = $('.persona-login');
+    $loginButton.length && $.getScript('https://login.persona.org/include.js', function() {
+      $loginButton.addClass('persona-loaded').on('click', function(e) {
+        if(!$(this).hasClass('toggle')) {
+          navigator.id.get(function(assertion) {
+            if(!assertion) return;
+            $('input[name="assertion"]').val(assertion.toString());
+            $('form.browserid').first().submit();
+          });
+          return false;
+        }
       });
-      return false;
-    }
-  });
+    });
+  })();
 
   /* Skip to search is better done with JS because it's sometimes hidden and shown */
   $('#skip-search').on('click', function(e) {
