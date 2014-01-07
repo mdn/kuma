@@ -52,7 +52,7 @@
 {% macro site_js() %}
   {% block site_js %}
       {% if waffle.flag('redesign') %}
-        <!--[if lte IE 8]><script src="/media/redesign/js/libs/selectivizr-1.0.2/selectivizr-build.js?build={{ BUILD_JS }}"></script><div id="feature-test-old-ie"></div><![endif]-->
+        <!--[if lte IE 8]><script src="/media/redesign/js/libs/selectivizr-1.0.2/selectivizr-build.js?build={{ BUILD_ID_JS }}"></script><div id="feature-test-old-ie"></div><![endif]-->
       {% endif %}
 
       {{ js('redesign-main') }}
