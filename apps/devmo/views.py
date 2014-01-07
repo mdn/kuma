@@ -8,9 +8,6 @@ from devmo.urlresolvers import reverse
 import constance.config
 import basket
 from taggit.utils import parse_tags
-from waffle import flag_is_active
-
-from waffle import flag_is_active
 
 from access.decorators import login_required
 from demos.models import Submission
@@ -75,8 +72,6 @@ def profile_view(request, username):
         show_manage_roles_button = (len(roles_by_team) > 0)
 
     template = 'devmo/profile.html'
-    if flag_is_active(request, 'redesign'):
-            template = 'devmo/profile_redesign.html'
 
     return render(request, template, dict(
         profile=profile, demos=demos, demos_paginator=demos_paginator,
