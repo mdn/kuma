@@ -612,6 +612,7 @@ MINIFY_BUNDLES = {
             'js/libs/prism/plugins/ie8/prism-ie8.css',
             'js/prism-mdn/plugins/line-numbering/prism-line-numbering.css',
             'js/prism-mdn/components/prism-json.css',
+            'redesign/css/wiki-syntax.css',
         ),
         'promote': (
             'css/promote.css',
@@ -643,9 +644,6 @@ MINIFY_BUNDLES = {
         ),
         'redesign-profile': (
             'redesign/css/profile.css',
-        ),
-        'redesign-wiki-syntax': (
-          'redesign/css/wiki-syntax.css',
         ),
         'redesign-promote': (
           'redesign/css/promote.css',
