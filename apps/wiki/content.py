@@ -44,7 +44,22 @@ TAGS_IN_TOC = ('code')
 DOC_SPECIAL_PATHS = ('new', 'tag', 'feeds', 'templates', 'needs-review')
 
 
+# http://code.activestate.com/recipes/578231-probably-the-fastest-memoization-decorator-in-the-/#c1
+def memoize(f):
+    """ Memoization decorator for functions taking one or more arguments. """
+    class memodict(dict):
+        def __init__(self, f):
+            self.f = f
+        def __call__(self, *args):
+            return self[args]
+        def __missing__(self, key):
+            ret = self[key] = self.f(*key)
+            return ret
+    return memodict(f)
+
+
 @newrelic.agent.function_trace()
+@memoize
 def parse(src, is_full_document = False):
     return ContentSectionTool(src, is_full_document)
 
