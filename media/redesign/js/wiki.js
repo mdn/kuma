@@ -1,5 +1,8 @@
 (function($) {
 
+  var doc = document;
+  var win = window;
+
   /*
     Create the settings and languages menu
   */
@@ -49,7 +52,7 @@
       $quickLinksControl.toggleClass('hidden');
 
       if($(child).hasClass('column-closed')) {
-        $(window).trigger('resize');
+        $(win).trigger('resize');
         parent.removeChild(child);
       }
       else {
@@ -74,7 +77,7 @@
     // Try to find the current page in the list, if found, open it
     // Need to keep track of the elements we've found so they aren't found twice
     var used = [];
-    var $selected = $subnavList.find('a[href$="' + document.location.pathname + '"]');
+    var $selected = $subnavList.find('a[href$="' + doc.location.pathname + '"]');
     $selected.each(function() {
       var self = this;
       var $togglers = $(this).parents('.toggleable').find('.toggler');
@@ -113,6 +116,23 @@
     });
   }
 
+  /* Syntax highlighting scripts */
+  $('pre').length && (function() {
+    var mediaPath = win.mdn.mediaPath;
+    $('<link />').attr({
+      type: 'text/css',
+      rel: 'stylesheet',
+      href: mediaPath + 'css/syntax-prism-min.css'
+    }).appendTo(doc.head);
+
+    var syntaxScript = doc.createElement('script');
+    syntaxScript.setAttribute('data-manual', '');
+    syntaxScript.async = 'true';
+    syntaxScript.src = mediaPath + 'js/syntax-prism-min.js';
+    doc.body.appendChild(syntaxScript);
+  })();
+
+
   /*
     Set up the scrolling TOC effect
   */
@@ -126,8 +146,8 @@
 
       var resizeFn = debounce(function(e) {
         // Set forth the pinned or static positioning of the table of contents
-        var scroll = window.scrollY;
-        var maxHeight = window.innerHeight - parseInt($toc.css('padding-top'), 10) - parseInt($toc.css('padding-bottom'), 10);
+        var scroll = win.scrollY;
+        var maxHeight = win.innerHeight - parseInt($toc.css('padding-top'), 10) - parseInt($toc.css('padding-bottom'), 10);
 
         if(scroll > tocOffset && $toggler.css('pointer-events') == 'none') {
           $toc.css({
@@ -162,7 +182,7 @@
 
       // Set it forth!
       resizeFn();
-      $(window).on('scroll resize', resizeFn);
+      $(win).on('scroll resize', resizeFn);
     }
   })();
 
@@ -178,7 +198,7 @@
     var value = $(this).find('#stack-search').val();
 
     if(value != '') {
-      window.location = 'http://stackoverflow.com/search?q=[firefox]+or+[firefox-os]+or+[html5-apps]+' + value;
+      win.location = 'http://stackoverflow.com/search?q=[firefox]+or+[firefox-os]+or+[html5-apps]+' + value;
     }
   });
 

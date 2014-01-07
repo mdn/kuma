@@ -9,7 +9,7 @@
     // Ensures gettext always returns something, is always set
     gettext: function(x) { return x; },
     // The path to media (images, CSS, JS) in MDN
-    mediaPath: '{{ MEDIA_URL }}',
+    mediaPath: ((window.location.host == 'developer.mozilla.org' ? '//developer.cdn.mozilla.net' : '') + '{{ MEDIA_URL }}'),
     // Wiki-specific settings will be placed here
     wiki: {
       autosuggestTitleUrl: '{{ url('wiki.autosuggest_documents') }}'
