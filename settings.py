@@ -709,11 +709,6 @@ MINIFY_BUNDLES = {
             'js/prism-mdn/plugins/line-numbering/prism-line-numbering.js',
             'js/syntax-prism.js',
         ),
-        'ckeditor': (
-            'js/libs/ckeditor/ckeditor.js',
-            'js/libs/ckeditor/adapters/jquery.js',
-            'redesign/js/wiki-editor.js',
-        ),
         'ace-editor': (
             'js/libs/ace/ace.js',
             'js/libs/ace/mode-javascript.js',

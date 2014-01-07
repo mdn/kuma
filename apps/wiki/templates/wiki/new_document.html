@@ -102,7 +102,7 @@
     {% if is_template %}
       {{ js('ace-editor') }}
     {% else %}
-      {{ js('ckeditor') }}
+      {% include 'wiki/includes/ckeditor_scripts.html' %}
     {% endif %}
 
     {{ js('wiki-edit') }}
