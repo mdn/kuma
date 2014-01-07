@@ -7,6 +7,7 @@
 {% block site_css %}
     {{ super() }}
     {{ css('demostudio') }}
+    {{ css('jquery-ui') }}
     {% if waffle.flag('redesign') %}
 	  {{ css('redesign-demos') }}
 	{% endif %}

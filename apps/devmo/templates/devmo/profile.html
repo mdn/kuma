@@ -12,11 +12,13 @@
 {% block site_css %}
     {{ super() }}
     {{ css('demostudio') }}
+    {{ css('jquery-ui') }}
     {% if waffle.flag('redesign') %}{{ css('redesign-profile') }}{% endif %}
 {% endblock %}
 
 {% block site_js %}
     {{ super() }}
+    {{ js('jquery-ui') }}
     {{ js('demostudio') }}
 {% endblock %}
 

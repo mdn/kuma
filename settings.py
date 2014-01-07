@@ -555,14 +555,12 @@ MINIFY_BUNDLES = {
             'css/mdn-screen.css',
             'css/redesign-transition.css',
         ),
-        'popup': (
+        'jquery-ui': (
             'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
             'css/jqueryui/moz-jquery-plugins.css',
         ),
         'demostudio': (
             'css/demos.css',
-            'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
-            'css/jqueryui/moz-jquery-plugins.css',
         ),
         'devderby': (
             'css/devderby.css',
@@ -579,14 +577,10 @@ MINIFY_BUNDLES = {
         'wiki': (
             'css/wiki.css',
             'css/wiki-screen.css',
-            'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
-            'css/jqueryui/moz-jquery-plugins.css',
         ),
         'sphinx': (
             'css/wiki.css',
             'css/wiki-screen.css',
-            'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
-            'css/jqueryui/moz-jquery-plugins.css',
             'css/sphinx.css',
         ),
         'dashboards': (
@@ -622,14 +616,10 @@ MINIFY_BUNDLES = {
         'redesign-wiki': (
             'redesign/css/wiki.css',
             'redesign/css/zones.css',
-            #'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
-            #'css/jqueryui/moz-jquery-plugins.css',
             'redesign/css/diff.css',
         ),
         'redesign-sphinx': (
             'redesign/css/wiki.css',
-            'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
-            'css/jqueryui/moz-jquery-plugins.css',
             'redesign/css/sphinx.css',
         ),
         'redesign-demos': (
@@ -686,8 +676,9 @@ MINIFY_BUNDLES = {
         'demostudio_devderby_landing': (
             'js/demos-devderby-landing.js',
         ),
-        'libs/jqueryui': (
+        'jquery-ui': (
             'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
+            'js/moz-jquery-plugins.js',
         ),
         'libs/tagit': (
             'js/libs/tag-it.js',
@@ -696,8 +687,6 @@ MINIFY_BUNDLES = {
             'redesign/js/search.js',
         ),
         'wiki': (
-            'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
-            'js/moz-jquery-plugins.js',
             'js/main.js',
             'js/wiki.js',
         ),
@@ -707,8 +696,6 @@ MINIFY_BUNDLES = {
             'js/wiki-tags-edit.js',
         ),
         'dashboards': (
-            'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
-            'js/moz-jquery-plugins.js',
             'js/libs/DataTables-1.9.4/media/js/jquery.dataTables.js',
             'js/libs/DataTables-1.9.4/extras/Scroller/media/js/dataTables.scroller.js',
         ),
