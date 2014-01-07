@@ -257,12 +257,14 @@ class ContentSectionTool(object):
 
     @newrelic.agent.function_trace()
     def parse(self, src, is_full_document):
-        self.src = src
-        if is_full_document:
-            self.doc = self.parser.parse(self.src, parseMeta=True)
-        else:
-            self.doc = self.parser.parseFragment(self.src)
-        self.stream = self.walker(self.doc)
+        if not self.doc:
+            self.src = src
+            if is_full_document:
+                self.doc = self.parser.parse(self.src, parseMeta=True)
+            else:
+                self.doc = self.parser.parseFragment(self.src)
+        if not self.stream:
+            self.stream = self.walker(self.doc)
         return self
 
     def serialize(self, stream=None):
