@@ -131,11 +131,6 @@ SECRET_KEY = 'jenny8675309'
 DEBUG_PROPAGATE_EXCEPTIONS = DEBUG
 
 LOG_LEVEL = logging.DEBUG
-logging.basicConfig(
-    level = logging.DEBUG,
-    format = '%(asctime)s %(levelname)s %(message)s',
-    # filename = '/home/vagrant/logs/kuma-django.log',
-)
 
 SPHINX_INDEXER = '/usr/local/bin/indexer'
 SPHINX_SEARCHD = '/usr/local/bin/searchd'
