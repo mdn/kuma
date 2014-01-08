@@ -8,7 +8,7 @@ from django.conf import settings
 from django.test.client import Client
 from django.http import Http404
 from django.utils.encoding import smart_str
-from django.core.cache import get_cache
+from django.core.cache import cache
 
 import mock
 from nose import SkipTest
@@ -22,7 +22,7 @@ from sumo.urlresolvers import reverse
 
 from . import TestCaseBase, FakeResponse
 
-from wiki.models import (Document, Attachment, DocumentZone, SECONDARY_CACHE_ALIAS)
+from wiki.models import (Document, Attachment, DocumentZone)
 from wiki.tests import (doc_rev, document, new_document_data, revision,
                         normalize_html, create_template_test_users)
 from wiki.views import _version_groups, DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL
@@ -33,9 +33,7 @@ class DocumentZoneMiddlewareTestCase(TestCaseBase):
 
     def setUp(self):
         super(DocumentZoneMiddlewareTestCase, self).setUp()
-
-        s_cache = get_cache(SECONDARY_CACHE_ALIAS)
-        s_cache.clear()
+        cache.clear()
 
         self.zone_root = 'ExtraWiki'
         self.zone_root_content = 'This is the Zone Root'
