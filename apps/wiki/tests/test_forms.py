@@ -101,7 +101,7 @@ class RevisionValidationTests(TestCase):
 
 
 class TreeMoveFormTests(TestCase):
-    fixtures = ['wiki/documents.json',]
+    fixtures = ['test_users.json', 'wiki/documents.json']
 
     def test_form_properly_strips_leading_cruft(self):
         """ Tests that leading slash and {locale}/docs/ is removed if included """
