@@ -1,6 +1,6 @@
 [MASTER]
 
-ignore=migrations,settings_local.py,sphinxapi.py,sumo_locales.py
+ignore=migrations,settings_local.py,sumo_locales.py
 
 [REPORTS]
 

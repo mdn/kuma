@@ -336,7 +336,7 @@ class SubmissionManager(models.Manager):
 
     def search(self, query_string, sort):
         """Quick and dirty keyword search on submissions"""
-        # TODO: Someday, replace this with something like Sphinx or another real search engine
+        # TODO: Someday, replace this with a real search engine
         strip_qs = query_string.strip()
         if not strip_qs:
             return self.all_sorted(sort).order_by('-modified')

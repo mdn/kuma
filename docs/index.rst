@@ -11,7 +11,7 @@ Contents:
    celery
    wsgi
    email
-   sphinx-search
+   search
 
    development
    localization

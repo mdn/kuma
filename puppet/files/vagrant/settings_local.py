@@ -137,10 +137,6 @@ logging.basicConfig(
     # filename = '/home/vagrant/logs/kuma-django.log',
 )
 
-SPHINX_INDEXER = '/usr/local/bin/indexer'
-SPHINX_SEARCHD = '/usr/local/bin/searchd'
-SEARCH_CACHE_PERIOD = 0 
-
 SITE_URL = 'https://developer-local.allizom.org'
 PROTOCOL = 'https://'
 DOMAIN = 'developer-local.allizom.org'
