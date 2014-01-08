@@ -84,8 +84,6 @@ def _rebuild_kb_chunk(data, **kwargs):
     """Re-render a chunk of documents."""
     log.info('Rebuilding %s documents.' % len(data))
 
-    pin_this_thread()  # Stick to master.
-
     messages = []
     for pk in data:
         message = None
@@ -108,8 +106,6 @@ def _rebuild_kb_chunk(data, **kwargs):
         subject = ('[%s] Exceptions raised in _rebuild_kb_chunk()' %
                    settings.PLATFORM_NAME)
         mail_admins(subject=subject, message='\n'.join(messages))
-
-    unpin_this_thread()  # Not all tasks need to do use the master.
 
 
 @task(rate_limit='10/m')
