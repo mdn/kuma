@@ -33,11 +33,10 @@
   {% else %}
     {% set translate_url = url('wiki.select_locale', document_path=document.full_path, locale=document.locale) %}
   {% endif %}
-  <ul class="page-buttons">{% if not document.is_template %}<li><a href="javascript:;" id="languages-menu" class="button only-icon transparent" aria-haspopup="true" aria-owns="languages-menu-submenu" aria-expanded="false"><span>{{ _('Languages') }}</span><i aria-hidden="true" class="icon-comments"></i></a>
+  <ul class="page-buttons">{% if not document.is_template %}<li><a href="javascript:;" id="languages-menu" class="button transparent" aria-haspopup="true" aria-owns="languages-menu-submenu" aria-expanded="false"><span>{{ _('Languages') }}</span><i aria-hidden="true" class="icon-comments"></i></a>
 
         <div class="submenu" id="languages-menu-submenu">
           <div class="submenu-column">
-            <div class="title">{{ _('Languages') }}</div>
             <ul id="translations">
               {% if document.other_translations|length %}
                 {% for translation in document.other_translations %}
