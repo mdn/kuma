@@ -13,7 +13,6 @@ from django.template import Context, loader
 import celery.conf
 from celery.task import task
 from celery.messaging import establish_connection
-from multidb.pinning import pin_this_thread, unpin_this_thread
 from tower import ugettext as _
 
 from sumo.urlresolvers import reverse

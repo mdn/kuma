@@ -26,7 +26,6 @@ class ReadOnlyModeTest(test_utils.TestCase):
         models.signals.pre_save.connect(self.db_error)
         models.signals.pre_delete.connect(self.db_error)
         self.old_settings = copy.deepcopy(settings._wrapped.__dict__)
-        settings.SLAVE_DATABASES = ['default']
         settings_module = importlib.import_module(settings.SETTINGS_MODULE)
         settings_module.read_only_mode(settings._wrapped.__dict__)
         self.client.handler.load_middleware()
