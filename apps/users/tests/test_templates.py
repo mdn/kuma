@@ -184,9 +184,6 @@ class PasswordReset(TestCaseBase):
                        args=[self.uidb36, self.token])
 
     def test_bad_reset_url(self):
-        r = self.client.get('/users/pwreset/junk/', follow=True)
-        eq_(r.status_code, 404)
-
         r = self.client.get(reverse('users.pw_reset_confirm',
                                     args=[self.uidb36, '12-345']))
         eq_(200, r.status_code)
