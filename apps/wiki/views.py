@@ -482,12 +482,8 @@ def document(request, document_slug, document_locale):
     toc_html = None
     if not doc.is_template:
 
-        doc_html = (wiki.content.parse(doc_html)
-                                .injectSectionIDs()
-                                .serialize())
-
         # Start applying some filters to the document HTML
-        tool = (wiki.content.parse(doc_html))
+        tool = wiki.content.parse(doc_html).injectSectionIDs()
 
         # Generate a TOC for the document using the sections provided by
         # SectionEditingLinks
