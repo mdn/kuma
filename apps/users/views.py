@@ -197,7 +197,7 @@ def browserid_register(request):
                 statsd_waffle_incr('users.browserid_register.POST.SUCCESS',
                                    'signin_metrics')
 
-                newsletter_subscribe(request.locale, email,
+                newsletter_subscribe(request, email,
                                      register_form.cleaned_data)
                 redirect_to = request.session.get(SESSION_REDIRECT_TO,
                                                   profile.get_absolute_url())

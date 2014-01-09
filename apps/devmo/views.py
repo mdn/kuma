@@ -156,7 +156,7 @@ def profile_edit(request, username):
                                             form.cleaned_data.get(field, ''))]
                 profile_new.tags.set_ns(tag_ns, *tags)
 
-            newsletter_subscribe(request.locale, profile_new.user.email,
+            newsletter_subscribe(request, profile_new.user.email,
                                  form.cleaned_data)
             return HttpResponseRedirect(reverse(
                     'devmo.views.profile_view', args=(profile.user.username,)))

@@ -158,7 +158,7 @@ class UserProfileEditForm(forms.ModelForm):
         return super(UserProfileEditForm, self).save(commit=True)
 
 
-def newsletter_subscribe(locale, email, cleaned_data):
+def newsletter_subscribe(request, email, cleaned_data):
     subscription_details = get_subscription_details(email)
     subscribed = subscribed_to_newsletter(subscription_details)
 
@@ -166,7 +166,7 @@ def newsletter_subscribe(locale, email, cleaned_data):
         if not cleaned_data['agree']:
             raise forms.ValidationError(PRIVACY_REQUIRED)
         optin = 'N'
-        if locale == 'en-US':
+        if request.locale == 'en-US':
             optin = 'Y'
         for i in range(constance.config.BASKET_RETRIES):
             try:
@@ -175,8 +175,9 @@ def newsletter_subscribe(locale, email, cleaned_data):
                         newsletters=settings.BASKET_APPS_NEWSLETTER,
                         country=cleaned_data['country'],
                         format=cleaned_data['format'],
-                        lang=locale,
-                        optin=optin)
+                        lang=request.locale,
+                        optin=optin,
+                        source_url=request.build_absolute_uri())
                 if result.get('status') != 'error':
                     break
             except BasketException:
