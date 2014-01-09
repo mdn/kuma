@@ -29,32 +29,32 @@
     {% set zone_stack = document.find_zone_stack() %}
     {% if zone_stack %}
       {% for zone in zone_stack|reverse() %}
-        <link rel="stylesheet" type="text/css" href="{{ url('wiki.styles', zone.document.full_path) }}" />
+        <link rel="stylesheet" type="text/css" href="{{ url('wiki.styles', zone.document.full_path) }}">
       {% endfor %}
     {% endif %}
 {% endblock %}
 
 {% block extrahead %}
-  <link rel="alternate" type="application/json" href="{{ url('wiki.json_slug', document.full_path) }}" />
-  <link rel="canonical" href="{{ canonical }}" />
+  <link rel="alternate" type="application/json" href="{{ url('wiki.json_slug', document.full_path) }}">
+  <link rel="canonical" href="{{ canonical }}" >
 
-  <meta property="og:title" content="{{ document.title }}" />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="{{ request.build_absolute_uri('/media/img/mdn-logo-sm.png') }}" />
-  <meta property="og:site_name" content="Mozilla Developer Network" />
-  <meta property="og:url" content="{{ request.build_absolute_uri(url('wiki.document', document.full_path)) }}" />
+  <meta property="og:title" content="{{ document.title }}">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="{{ request.build_absolute_uri('/media/img/mdn-logo-sm.png') }}">
+  <meta property="og:site_name" content="Mozilla Developer Network">
+  <meta property="og:url" content="{{ request.build_absolute_uri(url('wiki.document', document.full_path)) }}">
 
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:url" content="{{ canonical }}" />
-  <meta name="twitter:title" content="{{ document.title }}" />
-  <meta name="twitter:image" content="{{ MEDIA_URL }}img/mdn-logo-sm.png" />
-  <meta name="twitter:site" content="@mozhacks" />
-  <meta name="twitter:creator" content="@mozhacks" />
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="{{ canonical }}">
+  <meta name="twitter:title" content="{{ document.title }}">
+  <meta name="twitter:image" content="{{ MEDIA_URL }}img/mdn-logo-sm.png">
+  <meta name="twitter:site" content="@mozhacks">
+  <meta name="twitter:creator" content="@mozhacks">
 
   {% if seo_summary %}
-  <meta property="og:description" content="{{ seo_summary }}"/>
-  <meta name="description" content="{{ seo_summary }}" />
-  <meta name="twitter:description" content="{{ seo_summary }}" />
+  <meta property="og:description" content="{{ seo_summary }}">
+  <meta name="description" content="{{ seo_summary }}">
+  <meta name="twitter:description" content="{{ seo_summary }}">
   {% endif %}
 {% endblock %}
 
