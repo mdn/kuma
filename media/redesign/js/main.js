@@ -95,17 +95,23 @@ document.documentElement.className += ' js';
   */
   (function() {
     var $loginButton = $('.persona-login');
-    $loginButton.length && $.getScript('https://login.persona.org/include.js', function() {
-      $loginButton.addClass('persona-loaded').on('click', function(e) {
-        if(!$(this).hasClass('toggle')) {
-          navigator.id.get(function(assertion) {
-            if(!assertion) return;
-            $('input[name="assertion"]').val(assertion.toString());
-            $('form.browserid').first().submit();
-          });
-          return false;
-        }
-      });
+
+    $.ajax({
+      url: 'https://login.persona.org/include.js',
+      dataType: 'script',
+      cache: true,
+      success: function() {
+        $loginButton.addClass('persona-loaded').on('click', function(e) {
+          if(!$(this).hasClass('toggle')) {
+            navigator.id.get(function(assertion) {
+              if(!assertion) return;
+              $('input[name="assertion"]').val(assertion.toString());
+              $('form.browserid').first().submit();
+            });
+            return false;
+          }
+        });
+      }
     });
   })();
 
