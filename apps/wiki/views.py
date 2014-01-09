@@ -479,22 +479,11 @@ def document(request, document_slug, document_locale):
                 # content
                 render_raw_fallback = True
 
-    toc_html = None
     if not doc.is_template:
 
         # Start applying some filters to the document HTML
         tool = wiki.content.parse(doc_html).injectSectionIDs()
 
-        # Generate a TOC for the document using the sections provided by
-        # SectionEditingLinks
-        if doc.show_toc and not show_raw:
-            toc_filter = {1: wiki.content.SectionTOCFilter,
-                          2: wiki.content.H2TOCFilter,
-                          3: wiki.content.H3TOCFilter,
-                          4: wiki.content.SectionTOCFilter}[doc.current_revision.toc_depth]
-            toc_html = (wiki.content.parse(tool.serialize())
-                                    .filter(toc_filter)
-                                    .serialize())
 
         # If a section ID is specified, extract that section.
         if section_id:
@@ -579,7 +568,8 @@ def document(request, document_slug, document_locale):
     # Provide additional information if user came from a search
     from_search = request.GET.get('search', '')
 
-    data = {'document': doc, 'document_html': doc_html, 'toc_html': toc_html,
+    data = {'document': doc, 'document_html': doc_html, 
+            'toc_html': doc.get_toc_html(),
             'redirected_from': redirected_from,
             'related': related, 'contributors': contributors,
             'fallback_reason': fallback_reason,
@@ -1888,7 +1878,7 @@ def styles_view(request, document_slug=None, document_locale=None):
 @process_document_path
 @prevent_indexing
 def toc_view(request, document_slug=None, document_locale=None):
-    """Return some basic document info in a JSON blob."""
+    """Return the table of contents HTML for a document"""
     kwargs = {'locale': request.locale, 'current_revision__isnull': False}
     if document_slug is not None:
         kwargs['slug'] = document_slug
@@ -1901,12 +1891,7 @@ def toc_view(request, document_slug=None, document_locale=None):
         return HttpResponseBadRequest()
 
     document = get_object_or_404(Document, **kwargs)
-    tool = wiki.content.parse(wiki.content.parse(document.html)
-                                .injectSectionIDs()
-                                .serialize())
-    toc_html = (wiki.content.parse(tool.serialize())
-                            .filter(wiki.content.SectionTOCFilter)
-                            .serialize())
+    toc_html = document.get_toc_html()
     if toc_html:
         toc_html = '<ol>' + toc_html + '</ol>'
 

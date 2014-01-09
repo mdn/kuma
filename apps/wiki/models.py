@@ -1,3 +1,5 @@
+import logging
+
 from collections import namedtuple
 from datetime import datetime, timedelta
 from itertools import chain
@@ -44,7 +46,9 @@ from . import kumascript, TEMPLATE_TITLE_PREFIX
 from .content import (get_seo_description, get_content_sections,
                       extract_code_sample, parse as parse_content,
                       extract_css_classnames, extract_html_attributes,
-                      extract_kumascript_macro_names)
+                      extract_kumascript_macro_names,
+                      SectionTOCFilter, H2TOCFilter,
+                      H3TOCFilter, SectionTOCFilter)
 from .exceptions import (UniqueCollision, SlugCollision,
                          DocumentRenderingInProgress,
                          DocumentRenderedContentNotAvailable)
@@ -254,6 +258,14 @@ TOC_DEPTH_ALL = 1
 TOC_DEPTH_H2 = 2
 TOC_DEPTH_H3 = 3
 TOC_DEPTH_H4 = 4
+
+TOC_DEPTH_FILTERS = (
+    None,
+    SectionTOCFilter,
+    H2TOCFilter,
+    H3TOCFilter,
+    SectionTOCFilter
+)
 
 TOC_DEPTH_CHOICES = (
     (TOC_DEPTH_NONE, _lazy(u'No table of contents')),
@@ -687,6 +699,9 @@ class Document(NotificationsMixin, models.Model):
     # Raw HTML of approved revision's wiki markup
     html = models.TextField(editable=False)
 
+    # Table of contents HTML extracted from rendered doc
+    toc_html = models.TextField(editable=False, blank=True, null=True)
+
     # Cached result of kumascript and other offline processors (if any)
     rendered_html = models.TextField(editable=False, blank=True, null=True)
 
@@ -881,6 +896,8 @@ class Document(NotificationsMixin, models.Model):
             # Otherwise, just clear the expiration time as a one-shot
             self.render_expires = None
 
+        self.get_toc_html(force_fresh=True)
+
         self.save()
         render_done.send(sender=self.__class__, instance=self)
 
@@ -892,6 +909,26 @@ class Document(NotificationsMixin, models.Model):
         else:
             src = self.html
         return get_seo_description(src, self.locale, strip_markup)
+
+    def get_toc_html(self, force_fresh=False):
+        if not self.toc_html or force_fresh:
+            self.toc_html = self.extract_toc_html()
+        return self.toc_html
+
+    def extract_toc_html(self):
+        toc_html = ''
+        if not self.is_template and self.show_toc:
+            try:
+                depth = self.current_revision.toc_depth
+                toc_filter = TOC_DEPTH_FILTERS[depth]
+                src = self.rendered_html and self.rendered_html or self.html
+                toc_html = (parse_content(src)
+                            .injectSectionIDs()
+                            .filter(toc_filter)
+                            .serialize())
+            except IndexError:
+                pass
+        return toc_html
 
     def build_json_data(self):
         content = (parse_content(self.html)
@@ -2075,6 +2112,7 @@ class Revision(models.Model):
         self.document.slug = self.slug
         self.document.html = self.content_cleaned
         self.document.render_max_age = self.render_max_age
+        self.document.toc_html = None # HACK: Force fresh on next view
         self.document.current_revision = self
 
         # Since Revision stores tags as a string, we need to parse them first
