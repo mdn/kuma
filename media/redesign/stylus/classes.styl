@@ -65,3 +65,33 @@
     padding-left: grid-spacing;
   }
 }
+
+.notice {
+  clear: both;
+  position: relative;
+  top: -10px;
+  margin: (grid-spacing / 2) 0 (grid-spacing / 4);
+  padding: (grid-spacing / 2) (grid-spacing * .75) 0;
+  background: #fcf6d4;
+  border: 1px solid #e5d5c1;
+  box-shadow: 1px 1px 0 rgba(0,0,0,.1);
+
+  p, ul {
+    margin-bottom: (grid-spacing / 2);
+  }
+
+  &.success {
+    background: #effdfb;
+    border-color: #beede5;
+  }
+
+  &.error {
+    border-color: #e1a696;
+  }
+
+  p& {
+    padding-bottom: 10px;
+    top: 0;
+    margin-bottom: 15px;
+  }
+}

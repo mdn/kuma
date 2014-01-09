@@ -5,12 +5,6 @@ ol.prose {
   list-style-type: disc;
 }
 
-.notice { clear: both; position: relative; top: -10px; margin: 10px 0 5px; padding: 10px 15px 0; background: #fcf6d4; border: 1px solid #e5d5c1; box-shadow: 1px 1px 0 rgba(0,0,0,.1); }
-.notice p, .notice ul { margin-bottom: 10px; }
-.notice.success { background: #effdfb; border-color: #beede5; }
-.notice.error { border-color: #e1a696; }
-p.notice { padding-bottom: 10px; top: 0; margin-bottom: 15px; }
-
 /* @Tabbed boxes *********/
 ul.index { width: 100%; height: 3em; list-style: none; margin: 0; }
 #content-main ul.index li { border: 1px solid #aba9a5; border-bottom: 0; cursor: pointer; float: left; margin-right: -1px; text-align: center; color: #4e4f52; background: #eee url("../img/light-shade.png") 0 1.25em repeat-x; padding: .75em 20px; min-width: 80px; font: 200 1.2em/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
