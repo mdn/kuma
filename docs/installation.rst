@@ -21,8 +21,7 @@ following things (in addition to Git, of course).
 
 * Memcached Server and ``libmemcached``.
 
-* `Sphinx <http://sphinxsearch.com/>`_ 0.9.9, compiled with the
-  ``--enable-id64`` flag.
+* `Elasticsearch <http://elasticsearch.org/>`_ 0.90.9.
 
 * RabbitMQ.
 
@@ -226,5 +225,5 @@ Last Steps
 Setting Up Search
 -----------------
 
-See the :doc:`search documentation <sphinx-search>` for steps to get Sphinx
+See the :doc:`search documentation <search>` for steps to get Elasticsearch
 search working.

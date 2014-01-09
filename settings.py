@@ -742,32 +742,6 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 # Cookie prefix from PHPBB settings.
 PHPBB_COOKIE_PREFIX = 'phpbb3_jzxvr'
 
-#
-# Connection information for Sphinx search
-SPHINX_HOST = '127.0.0.1'
-SPHINX_PORT = 3381
-SPHINXQL_PORT = 3382
-
-SPHINX_INDEXER = '/usr/bin/indexer'
-SPHINX_SEARCHD = '/usr/bin/searchd'
-SPHINX_CONFIG_PATH = path('configs/sphinx/sphinx.conf')
-
-TEST_SPHINX_PATH = path('tmp/test/sphinx')
-TEST_SPHINX_PORT = 3416
-TEST_SPHINXQL_PORT = 3418
-
-SEARCH_MAX_RESULTS = 1000
-SEARCH_RESULTS_PER_PAGE = 10
-
-# Search default settings
-# comma-separated tuple of included category IDs. Negative IDs are excluded.
-SEARCH_DEFAULT_CATEGORIES = (10, 20,)
-SEARCH_SUMMARY_LENGTH = 275
-
-# The length for which we would like the user to cache search forms and
-# results, in minutes.
-SEARCH_CACHE_PERIOD = 15
-
 # Maximum length of the filename. Forms should use this and raise
 # ValidationError if the length is exceeded.
 # @see http://code.djangoproject.com/ticket/9893

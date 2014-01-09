@@ -132,10 +132,6 @@ DEBUG_PROPAGATE_EXCEPTIONS = DEBUG
 
 LOG_LEVEL = logging.DEBUG
 
-SPHINX_INDEXER = '/usr/local/bin/indexer'
-SPHINX_SEARCHD = '/usr/local/bin/searchd'
-SEARCH_CACHE_PERIOD = 0 
-
 SITE_URL = 'https://developer-local.allizom.org'
 PROTOCOL = 'https://'
 DOMAIN = 'developer-local.allizom.org'

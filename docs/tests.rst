@@ -46,7 +46,7 @@ like::
 
 You can also exclude tests that match a regular expression with ``-e``::
 
-    ./manage.py test -e"sphinx"
+    ./manage.py test -e "search"
 
 See the output of ``./manage.py test --help`` for more arguments.
 

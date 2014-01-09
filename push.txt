@@ -11,8 +11,3 @@ Every Time
 7. schematic migrations
 8. kill and restart celeryd
 9. restart apache
-
-This Time
-=========
-
-1. Update Sphinx config.
