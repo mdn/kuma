@@ -5,7 +5,7 @@
 {% set login_url='%s?next=%s' % (url('users.login'), submit_url) %}
 {% set signup_url=login_url %}
 
-{% block pageid %}demos-submit{% endblock %}
+{% block body_attributes %}id="demos-submit"{% endblock %}
 {% block bodyclass %}section-demos plain{% endblock %}
 {% block title %}
     {{ page_title(_('{subtitle} | Demo Studio') | f(subtitle=_('Submit a New Demo'))) }}

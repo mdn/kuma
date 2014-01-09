@@ -1,6 +1,6 @@
 {% extends "demos/base.html" %}
 
-{% block pageid %}devderby{% endblock %}
+{% block body_attributes %}id="devderby"{% endblock %}
 
 {% block bodyclass %}section-demos devderby landing {% if waffle.flag('derby_closed') %}derby-closed{% endif %}{% endblock %}
 

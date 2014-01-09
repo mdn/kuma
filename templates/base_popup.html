@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="{{ LANG }}" dir="{{ DIR }}" id="developer-mozilla-org">
 <head>
+  <meta charset="utf-8">
   <title>{% block title %}{{ _('Mozilla Developer Network') }}{% endblock %}</title>
-
-	<meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta name="MSSmartTagsPreventParsing" content="true">
   <meta name="ROBOTS" content="ALL">
@@ -30,7 +29,7 @@
   {% block extrahead %}{% endblock %}
 </head>
 
-<body id="{% block pageid %}{% endblock %}" class="html-{{ DIR }} popup {% block bodyclass %}{% endblock %}" role="document">
+<body id="{% block body_attributes %}{% endblock %}" class="html-{{ DIR }} popup {% block bodyclass %}{% endblock %}" role="document">
 {% block content %}{% endblock %}
 
 {# js #}
