@@ -1,7 +1,7 @@
 {% from "includes/common_macros.html" import optimizely_script with context %}
 <!DOCTYPE html>
-<html lang="{{ LANG }}" dir="{{ DIR }}" id="developer-mozilla-org" xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:og="http://ogp.me/ns#" class="redesign">
-<head>
+<html lang="{{ LANG }}" dir="{{ DIR }}" id="developer-mozilla-org" class="redesign">
+<head prefix="og: http://ogp.me/ns#">
   {% if not is_sphinx %}
     {{ optimizely_script() }}
   {% endif %}
@@ -170,7 +170,7 @@
 
     {{ js('redesign-main') }}
     <script src="//mozorg.cdn.mozilla.net/{{ request.locale }}/tabzilla/tabzilla.js" async></script>
-    
+
     {% for script in scripts %}
       {{ js(script) }}
     {% endfor %}
