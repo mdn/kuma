@@ -15,7 +15,7 @@ import jingo
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core import serializers
-from django.core.cache import get_cache, cache
+from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import resolve
 from django.db import models
@@ -353,9 +353,6 @@ DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL = u'kuma:document-last-modified:%s'
 DEKI_FILE_URL = re.compile(r'@api/deki/files/(?P<file_id>\d+)/=')
 KUMA_FILE_URL = re.compile(r'/files/(?P<file_id>\d+)/.+\..+')
 
-SECONDARY_CACHE_ALIAS = getattr(settings,
-                                'SECONDARY_CACHE_ALIAS',
-                                'secondary')
 URL_REMAPS_CACHE_KEY_TMPL = 'DocumentZoneUrlRemaps:%s'
 
 
@@ -1845,8 +1842,7 @@ class DocumentZoneManager(models.Manager):
 
     def get_url_remaps(self, locale):
         cache_key = URL_REMAPS_CACHE_KEY_TMPL % locale
-        s_cache = get_cache(SECONDARY_CACHE_ALIAS)
-        remaps = s_cache.get(cache_key)
+        remaps = cache.get(cache_key)
 
         if not remaps:
             qs = (self.filter(document__locale=locale,
@@ -1856,7 +1852,7 @@ class DocumentZoneManager(models.Manager):
                 'original_path': '/docs/%s' % zone.document.slug,
                 'new_path': '/%s' % zone.url_root
             } for zone in qs]
-            s_cache.set(cache_key, remaps)
+            cache.set(cache_key, remaps)
 
         return remaps
 
@@ -1882,8 +1878,7 @@ class DocumentZone(models.Model):
         # Invalidate URL remap cache for this zone
         locale = self.document.locale
         cache_key = URL_REMAPS_CACHE_KEY_TMPL % locale
-        s_cache = get_cache(SECONDARY_CACHE_ALIAS)
-        s_cache.delete(cache_key)
+        cache.delete(cache_key)
 
 
 class ReviewTag(TagBase):

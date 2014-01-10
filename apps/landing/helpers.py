@@ -10,17 +10,17 @@ import re
 from decimal import Decimal
 from django.utils.formats import number_format
 
-
 from devmo import SECTIONS, SECTION_USAGE
+from devmo.helpers import register_cached_inclusion_tag
 
 
-@register.inclusion_tag('landing/newsfeed.html')
+@register_cached_inclusion_tag('landing/newsfeed.html')
 def newsfeed(entries, section_headers=False):
     """Landing page news feed."""
     return {'updates': entries, 'section_headers': section_headers}
 
 
-@register.inclusion_tag('landing/discussions.html')
+@register_cached_inclusion_tag('landing/discussions.html')
 def discussions_feed(entries):
     """Landing page news feed."""
     return {'updates': entries}
