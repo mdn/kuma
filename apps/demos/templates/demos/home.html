@@ -182,7 +182,7 @@
      * and does DOM juggling to page through the items.
      */
     var featured_demos_feed_url =
-        '{{ request.build_absolute_uri(url('demos_feed_featured', format='json')) }}';
+        '{{ url('demos_feed_featured', format='json') }}';
 
     // Hide buttons until feed loaded.
     $(".nav-slide .next, .nav-slide .prev").hide(); 
