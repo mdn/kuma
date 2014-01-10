@@ -13,6 +13,7 @@
   <link rel="home" href="{{ url('home') }}">
   <link rel="copyright" href="#copyright">
 
+  <link rel="stylesheet" href="//mozorg.cdn.mozilla.net/media/css/tabzilla-min.css">
   {% block site_css %}
     {{ css('mdn') }}
     {{ css('redesign-main', 'all') }}
@@ -20,6 +21,7 @@
       {{ css(style) }}
     {% endfor %}
   {% endblock %}
+
   <noscript>
     <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}redesign/css/noscript.css">
   </noscript>
@@ -27,8 +29,6 @@
   <!--[if lte IE 7]><link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/ie7.css"><![endif]-->
   <!--[if lte IE 6]><link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/ie6.css"><![endif]-->
   <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/libs/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="//mozorg.cdn.mozilla.net/media/css/tabzilla-min.css">
-
   <link rel="search" type="application/opensearchdescription+xml" href="{{ settings.SITE_URL }}/{{ request.locale }}/search/xml" title="{{ _('Mozilla Developer Network') }}">
 
   <!-- For third-generation iPad with high-resolution Retina display: -->
