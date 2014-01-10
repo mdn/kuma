@@ -699,8 +699,11 @@ class Document(NotificationsMixin, models.Model):
     # Raw HTML of approved revision's wiki markup
     html = models.TextField(editable=False)
 
-    # Table of contents HTML extracted from rendered doc
+    # Table of contents HTML extracted from rendered HTML
     toc_html = models.TextField(editable=False, blank=True, null=True)
+
+    # Summary HTML extracted from rendered HTML
+    summary_html = models.TextField(editable=False, blank=True, null=True)
 
     # Cached result of kumascript and other offline processors (if any)
     rendered_html = models.TextField(editable=False, blank=True, null=True)
@@ -897,18 +900,21 @@ class Document(NotificationsMixin, models.Model):
             self.render_expires = None
 
         self.get_toc_html(force_fresh=True)
+        self.get_summary(force_fresh=True)
 
         self.save()
         render_done.send(sender=self.__class__, instance=self)
 
-    def get_summary(self, strip_markup=True, use_rendered=True):
+    def get_summary(self, strip_markup=True, use_rendered=True, force_fresh=False):
         """Attempt to get the document summary from rendered content, with
         fallback to raw HTML"""
-        if use_rendered and self.rendered_html:
-            src = self.rendered_html
-        else:
-            src = self.html
-        return get_seo_description(src, self.locale, strip_markup)
+        if not self.summary_html or force_fresh:
+            if use_rendered and self.rendered_html:
+                src = self.rendered_html
+            else:
+                src = self.html
+            self.summary_html = get_seo_description(src, self.locale, strip_markup)
+        return self.summary_html
 
     def get_toc_html(self, force_fresh=False):
         if not self.toc_html or force_fresh:
@@ -2112,8 +2118,11 @@ class Revision(models.Model):
         self.document.slug = self.slug
         self.document.html = self.content_cleaned
         self.document.render_max_age = self.render_max_age
-        self.document.toc_html = None # HACK: Force fresh on next view
         self.document.current_revision = self
+
+        # HACK: Force fresh on next view or rendering
+        self.document.toc_html = None
+        self.document.summary_html = None
 
         # Since Revision stores tags as a string, we need to parse them first
         # before setting on the Document.
