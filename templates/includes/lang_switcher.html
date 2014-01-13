@@ -1,6 +1,6 @@
 <form class="languages go" method="get" action="#">
   <label for="language">{{ _('Other languages:') }}</label>
-  <select id="language" name="lang" dir="ltr">
+  <select id="language" class="autosubmit" name="lang">
     {% for code, name in settings.LANGUAGE_CHOICES -%}
       <option value="{{ code }}" {{ code|ifeq(LANG, "selected") }}>
         {{ name }}

@@ -54,6 +54,6 @@
      // Help on the client side for validating slugs to be moved
      var moveRegex = new RegExp($moveSlug.attr('data-validator'), 'i');
      $moveSlug.on('change keyup focus blur', function() {
-        this.value = this.value.replace(moveRegex, '');
+        this.value = $.slugifyString(this.value.replace(moveRegex, ''), true);
      });
 })(jQuery);
