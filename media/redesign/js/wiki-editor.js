@@ -65,9 +65,51 @@
   $('#id_content').each(function () {
     if (!$('body').is('.is-template')) {
       $(this).removeAttr('required').ckeditor(setup, {
-        customConfig : '/docs/ckeditor_config.js'
+        customConfig : '/en-US/docs/ckeditor_config.js'
       });
     }
   });
+
+  /* 
+    Plugin for prepopulating the slug fields
+  */
+  $.fn.prepopulate = function(dependencies, maxLength) {
+      var _changed = '_changed';
+
+      return this.each(function() {
+          var $field = $(this);
+
+          $field.data(_changed, false);
+          $field.on(_changed, function() {
+              $field.data(_changed, true);
+          });
+
+          var populate = function () {
+              // Bail if the fields value has changed
+              if ($field.data(_changed) == true) return;
+
+              var values = [], field_val, field_val_raw, split;
+              dependencies.each(function() {
+                  if ($(this).val().length > 0) {
+                      values.push($(this).val());
+                  }
+              });
+
+              s = values.join(' ');
+              
+              s = $.slugifyString(s);
+
+              // Trim to first num_chars chars
+              s = s.substring(0, maxLength);
+
+              // Only replace the last piece (don't replace slug heirarchy)
+              split = $field.val().split('/');
+              split[split.length - 1] = s;
+              $field.val(split.join('/'));
+          };
+          
+          dependencies.on('keyup change focus', populate);
+      });
+  };
 
 })(jQuery);

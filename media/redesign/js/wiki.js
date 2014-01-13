@@ -4,6 +4,11 @@
   var win = window;
 
   /*
+    Togglers within articles (i.e.)
+  */
+  $('.toggleable').mozTogglers();
+
+  /*
     Create the settings and languages menu
   */
   (function() {
@@ -191,7 +196,6 @@
 
     ex: http://stackoverflow.com/search?q=[firefox]+or+[firefox-os]+or+[html5-apps]+foobar
   */
-
   $('.stack-form').html('<form action="http://stackoverflow.com/search"><i class="stack-icon" aria-hidden="true"></i><label for="stack-search" class="offscreen">' + gettext('Search Stack Overflow') + '</label><input id="stack-search" placeholder="' + gettext('Search Stack Overflow') + '" /><button type="submit" class="offscreen">Submit Search</button></form>').find('form').on('submit', function(e) {
     e.preventDefault();
 
@@ -199,6 +203,35 @@
 
     if(value != '') {
       win.location = 'http://stackoverflow.com/search?q=[firefox]+or+[firefox-os]+or+[html5-apps]+' + value;
+    }
+  });
+
+  /* 
+    jQuery extensions used within the wiki.
+  */
+  $.extend({
+    // Currently used within CKEDitor YouTube plugin
+    parseQuerystring: function(str){
+      var nvpair = {};
+      var qs = (str || window.location.search).replace('?', '');
+      var pairs = qs.split('&');
+
+      $.each(pairs, function(i, v){
+        var pair = v.split('=');
+        nvpair[pair[0]] = pair[1];
+      });
+
+      return nvpair;
+    },
+    // Used within the wiki new/move pages
+    slugifyString: function(str, allowSlash) {
+      var regex = new RegExp('[\?\&\"\'\#\*\$' + (allowSlash ? '' : '\/') + ' +?]', 'g');
+      // Remove anything from the slug that could cause big problems
+      return str.replace(regex, '_')
+        // "$" is used for verb delimiter in URLs
+        .replace(/\$/g, '')
+        // Don't allow "_____" mess
+        .replace(/\_+/g, '_');
     }
   });
 

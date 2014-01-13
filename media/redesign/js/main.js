@@ -1,8 +1,3 @@
-/*
-  INITIALIZE THAT WE HAVE JAVASCRIPT
-*/
-document.documentElement.className += ' js';
-
 (function($) {
 
   /*
@@ -24,19 +19,15 @@ document.documentElement.className += ' js';
   (function() {
     var $mainItems = $('#main-nav > ul > li');
     $mainItems.find('> a').mozMenu({
-      brickOnClick: function(e) {
-        return e.target.tagName == 'I';
-      }
+      brickOnClick: function(e) { return e.target.tagName == 'I'; }
     });
     $mainItems.find('.submenu').mozKeyboardNav();
   })();
 
   /*
     Search animation
-
-    TODO:  What happens on mobile?
   */
-  !isOldIE && (function() {
+  (function() {
     var $nav = $('#main-nav');
     var $navItems = $nav.find('ul > li:not(:last-child)');
     var $mainNavSearch = $nav.find('.main-nav-search');
@@ -86,11 +77,6 @@ document.documentElement.className += ' js';
   })();
 
   /*
-    Togglers within articles (i.e.)
-  */
-  $('.toggleable').mozTogglers();
-
-  /*
     Persona Login
   */
   (function() {
@@ -115,7 +101,82 @@ document.documentElement.className += ' js';
     });
   })();
 
-  /* Skip to search is better done with JS because it's sometimes hidden and shown */
+  /*
+    Account for the footer language change dropdown and other dropdowns marked as autosubmit
+  */
+  $('select.autosubmit').on('change', function(){
+      this.form.submit();
+  });
+
+  /*
+    Disable forms when submitted
+  */
+  (function() {
+    var disabled = 'disabled';
+
+    $('form').on('submit', function(ev) {
+      var $this = $(this);
+
+      // Allow for a special CSS class to prevent this functionality
+      if($this.hasClass('nodisable')) return;
+
+      if ($this.data(disabled)) {
+        ev.preventDefault();
+      } else {
+        $this.data(disabled, true).addClass(disabled);
+      }
+
+      $this.ajaxComplete(function(){
+        $this.data(disabled, false).removeClass(disabled);
+        $this.unbind('ajaxComplete');
+      });
+    });
+  })();
+
+  /*
+    Send Django CSRF with all AJAX requests
+  */
+  $(document).ajaxSend(function(event, xhr, settings) {
+    function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = jQuery.trim(cookies[i]);
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) == (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+    function sameOrigin(url) {
+      // url could be relative or scheme relative or absolute
+      var host = document.location.host; // host + port
+      var protocol = document.location.protocol;
+      var sr_origin = '//' + host;
+      var origin = protocol + sr_origin;
+      // Allow absolute or scheme relative URLs to same origin
+      return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+        (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+        // or any other URL that isn't scheme relative or absolute i.e relative.
+        !(/^(\/\/|http:|https:).*/.test(url));
+    }
+    function safeMethod(method) {
+      return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+
+    if (!safeMethod(settings.type) && sameOrigin(settings.url)) {
+      xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+    }
+  });
+  
+
+  /* 
+    Skip to search is better done with JS because it's sometimes hidden and shown 
+  */
   $('#skip-search').on('click', function(e) {
     e.preventDefault();
     $('input[name=q]').last().get(0).focus();

@@ -621,12 +621,17 @@ MINIFY_BUNDLES = {
         ),
     },
     'js': {
+        'redesign-main': (
+            'js/libs/jquery-1.9.1.js',
+            'js/jquery-upgrade-compat.js',
+            'redesign/js/components.js',
+            'redesign/js/main.js',
+        ),
         'popup': (
             'js/libs/jquery-1.9.1.js',
             'js/jquery-upgrade-compat.js',
             'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
             'js/modal-control.js',
-            'js/init.js',
         ),
         'profile': (
             'js/profile.js',
@@ -657,7 +662,6 @@ MINIFY_BUNDLES = {
             'redesign/js/search.js',
         ),
         'wiki': (
-            'js/main.js',
             'js/wiki.js',
         ),
         'wiki-edit': (
@@ -686,13 +690,6 @@ MINIFY_BUNDLES = {
             'js/libs/ace/mode-javascript.js',
             'js/libs/ace/theme-dreamweaver.js',
             'js/libs/ace/worker-javascript.js',
-        ),
-        'redesign-main': (
-            'js/libs/jquery-1.9.1.js',
-            'js/jquery-upgrade-compat.js',
-            'js/init.js',
-            'redesign/js/components.js',
-            'redesign/js/main.js',
         ),
         'redesign-wiki': (
             'redesign/js/wiki.js',
