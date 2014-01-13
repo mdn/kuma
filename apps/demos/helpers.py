@@ -19,8 +19,8 @@ from threadedcomments.forms import ThreadedCommentForm
 from threadedcomments.templatetags import threadedcommentstags
 import threadedcomments.views
 
-from .models import Submission, TAG_DESCRIPTIONS, DEMO_LICENSES
-from . import DEMOS_CACHE_NS_KEY
+from .models import Submission
+from . import DEMOS_CACHE_NS_KEY, TAG_DESCRIPTIONS, DEMO_LICENSES
 
 # Monkeypatch threadedcomments URL reverse() to use devmo's
 from devmo.urlresolvers import reverse
