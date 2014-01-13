@@ -1,8 +1,9 @@
 # Ensure some handy dev tools are available.
 class dev_tools {
-    package { 
+    package {
         [ "build-essential", "git", "subversion", "mercurial", "vim",
-            "nfs-common", "openjdk-7-jdk", "tmux", "translate-toolkit", "gettext", ]:
+            "nfs-common", "openjdk-7-jdk", "tmux", "translate-toolkit",
+            "gettext", "htop", "ack-grep", "locate"]:
             ensure => installed;
     }
 }
