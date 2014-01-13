@@ -2,10 +2,12 @@
 <!DOCTYPE html>
 <html lang="{{ LANG }}" dir="{{ DIR }}" id="developer-mozilla-org" class="redesign">
 <head prefix="og: http://ogp.me/ns#">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   {% if not is_sphinx %}
     {{ optimizely_script() }}
   {% endif %}
-  <meta charset="utf-8">
+
   <title>{% block title %}{{ _('Mozilla Developer Network') }}{% endblock %}</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -44,7 +46,6 @@
 
   <!--[if IE]>
   <meta http-equiv="imagetoolbar" content="no">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <script src="{{ MEDIA_URL }}js/libs/html5.js"></script>
   <![endif]-->
 
