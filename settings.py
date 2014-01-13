@@ -185,8 +185,9 @@ def lazy_langs():
     return dict([(lang.lower(), product_details.languages[lang]['native'])
                 for lang in langs])
 
-LANGUAGES = lazy(lazy_langs, dict)()
-LANGUAGE_CHOICES = sorted(tuple([(i, LOCALES[i].native) for i in MDN_LANGUAGES]), key=lambda lang:lang[0])
+LANGUAGES_DICT = lazy(lazy_langs, dict)()
+LANGUAGES = sorted(tuple([(i, LOCALES[i].native) for i in MDN_LANGUAGES]),
+                   key=lambda lang:lang[0])
 
 # DEKI uses different locale keys
 def lazy_language_deki_map():
@@ -461,6 +462,7 @@ INSTALLED_APPS = (
 
     'dashboards',
     'kpi',
+    'statici18n',
 
     # migrations
     'south',

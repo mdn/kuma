@@ -14,7 +14,7 @@ LOCALIZATION_FLAGS = (
 )
 
 # TODO: fix this
-_langugage_choices = settings.LANGUAGE_CHOICES[:]
+_langugage_choices = settings.LANGUAGES[:]
 try:
     _langugage_choices.remove(('en-US', u'English'))
 except ValueError:

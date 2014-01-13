@@ -9,7 +9,7 @@
     <div>
       <label for="flang">{{ _('Other Languages') }}</label>
       <select id="flang" class="autosubmit" name="lang" dir="ltr">
-        {% for locale in settings.LANGUAGE_CHOICES %}
+        {% for locale in settings.LANGUAGES %}
           <option value="{{ locale[0] }}" {% if request.locale == locale[0] %}selected="selected"{% endif %}>{{ locale[1] }}</option>
         {% endfor %}
       </select>

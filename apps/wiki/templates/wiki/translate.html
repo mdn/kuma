@@ -18,7 +18,7 @@
 {% endblock %}
 
 {% block content %}
-  {% set language = settings.LANGUAGES[locale.lower()] %}
+  {% set language = settings.LANGUAGES_DICT[locale.lower()] %}
 
       <form action="" method="post" data-json-url="{{ url('wiki.json') }}" id="wiki-page-translate">
         {{ csrf() }}
@@ -34,7 +34,7 @@
         {{ _('Translating article to {locale}' )|f(locale=language) }}.
         <a id="change-locale-link" class="toggle" href="#change-locale">{{ _('Change') }}</a>
         <ul id="change-locale" class="sub-menu menu" data-target="#change-locale-link" data-modal="true" data-close-on-out-click="true">
-        {% for lcl in settings.LANGUAGE_CHOICES %}
+        {% for lcl in settings.LANGUAGES %}
           {% if lcl[0] not in [settings.WIKI_DEFAULT_LANGUAGE, locale] %}
             <li><a href="{{ url('wiki.translate', document_path=parent.full_path)|urlparams(tolocale=lcl[0]) }}">{{ lcl[1] }} ({{ lcl[0] }})</a></li>
           {% endif %}
@@ -88,7 +88,7 @@
         <div id="content-fields">
           <article class="approved">
             <header>
-              <h3>{{ _('Approved {default_locale} version:')|f(default_locale=settings.LANGUAGES[settings.WIKI_DEFAULT_LANGUAGE.lower()]) }}</h3>
+              <h3>{{ _('Approved {default_locale} version:')|f(default_locale=settings.LANGUAGES_DICT[settings.WIKI_DEFAULT_LANGUAGE.lower()]) }}</h3>
             </header>
             <div class="boxed translate-display">
               {{ based_on.content|safe }}

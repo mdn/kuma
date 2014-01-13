@@ -159,15 +159,6 @@ class TestDateTimeFormat(TestCase):
         eq_('{"foo": "bar"}', json({'foo': 'bar'}))
 
 
-class TestUrlHelper(TestCase):
-    """Tests for the url helper."""
-
-    def test_with_locale(self):
-        """Passing a locale to url creates a URL for that locale."""
-        u = url('jsi18n', locale='es')
-        eq_(u'/es/jsi18n/', u)
-
-
 class TimesinceTests(TestCase):
     """Tests for the timesince filter"""
 
