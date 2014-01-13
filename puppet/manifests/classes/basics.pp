@@ -42,3 +42,11 @@ class rabbitmq {
         require => [ Package["rabbitmq-server"] ]
     }
 }
+
+# Get foreman up and running
+class foreman {
+    package { "foreman":
+        ensure   => 'installed',
+        provider => 'gem',
+    }
+}

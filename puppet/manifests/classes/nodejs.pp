@@ -1,4 +1,4 @@
-# Get node.js and npm installed under CentOS 
+# Get node.js and npm installed under CentOS
 class nodejs {
     package {
         [ "nodejs", "nodejs-dev", "npm" ]:
@@ -23,7 +23,6 @@ class nodejs {
         owner => "root", group => "root", mode => 0777,
         require => File["/root"];
     }
-    
     exec { 'npm-install':
         cwd => "/home/vagrant/src/kumascript",
         user => 'vagrant',

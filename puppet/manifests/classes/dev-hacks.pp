@@ -25,7 +25,7 @@ class dev_hacks {
         owner => "vagrant", group => "vagrant", mode => 0755;
     }
 
-    file { 
+    file {
         [ "/home/vagrant/logs",
             "/home/vagrant/uploads",
             "/home/vagrant/product_details_json",
@@ -38,7 +38,7 @@ class dev_hacks {
         ensure => file,
         source => "/home/vagrant/src/puppet/files/vagrant/settings_local.py";
     }
-        
+
     file { "/home/vagrant/src/kumascript_settings_local.json":
         ensure => file,
         source => "/home/vagrant/src/puppet/files/vagrant/kumascript_settings_local.json";
@@ -48,7 +48,7 @@ class dev_hacks {
         source => "/home/vagrant/src/puppet/files/etc/motd",
         owner => "root", group => "root", mode => 0644;
     }
-            
+
     file { "/etc/hosts":
         source => "/home/vagrant/src/puppet/files/etc/hosts",
         owner => "root", group => "root", mode => 0644;
@@ -64,6 +64,15 @@ class dev_hacks {
         owner => "root", group => "root", mode => 0644;
     }
 
+    # adds /opt/ruby/bin to $PATH
+    exec { 'executable-vagrantruby-profile':
+        command => "/bin/chmod +x /etc/profile.d/vagrantruby.sh"
+    }
+
+    # remove $PATH restrictions for running sudo
+    exec { 'allow-ruby-with-sudo':
+        command => "/bin/sed -i '/secure_path/c\\Defaults\t!secure_path' /etc/sudoers"
+    }
 }
 
 # Last few things that need doing...

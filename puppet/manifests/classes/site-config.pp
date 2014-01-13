@@ -1,4 +1,4 @@
-# 
+#
 # Configure everything necessary for the site.
 #
 
@@ -17,7 +17,7 @@ class apache_config {
     apache::loadmodule { "alias": }
     apache::loadmodule { "rewrite": }
     apache::loadmodule { "proxy": }
-    apache::loadmodule { "proxy_http": 
+    apache::loadmodule { "proxy_http":
         require => Apache::Loadmodule['proxy']
     }
     apache::loadmodule { "vhost_alias": }
@@ -33,7 +33,7 @@ class apache_config {
         source => "/home/vagrant/src/puppet/files/etc/apache2/ssl/apache.key",
         require => File["/etc/apache2/ssl"],
     }
-    apache::loadmodule { "ssl": 
+    apache::loadmodule { "ssl":
         require => [
             File["/etc/apache2/ssl/apache.crt"],
             File["/etc/apache2/ssl/apache.key"],
@@ -66,7 +66,7 @@ class apache_config {
 
 class mysql_config {
     # Ensure MySQL answers on 127.0.0.1, and not just unix socket
-    file { 
+    file {
         "/etc/mysql/my.cnf":
             source => "/home/vagrant/src/puppet/files/etc/mysql/my.cnf",
             owner => "root", group => "root", mode => 0644;
@@ -75,26 +75,26 @@ class mysql_config {
             source => "/home/vagrant/src/puppet/files/tmp/init.sql",
             owner => "vagrant", group => "vagrant", mode => 0644;
     }
-    service { "mysql": 
-        ensure => running, 
-        enable => true, 
+    service { "mysql":
+        ensure => running,
+        enable => true,
         require => [ Package['mysql-server'], File["/etc/mysql/my.cnf"] ],
         subscribe => [ File["/etc/mysql/my.cnf"] ]
     }
-    exec { 
+    exec {
         "setup_mysql_databases_and_users":
             command => "/usr/bin/mysql -u root < /tmp/init.sql",
             unless => "/usr/bin/mysql -uroot -B -e 'show databases' 2>&1 | grep -q 'kuma'",
-            require => [ 
+            require => [
                 File["/tmp/init.sql"],
-                Service["mysql"] 
+                Service["mysql"]
             ];
     }
-    
+
 }
 
 class rabbitmq_config {
-    exec { 
+    exec {
         'rabbitmq-kuma-user':
             require => [ Package['rabbitmq-server'], Service['rabbitmq-server'] ],
             command => "/usr/sbin/rabbitmqctl add_user kuma kuma",
@@ -117,9 +117,9 @@ class rabbitmq_config {
 
 class kuma_config {
     file {
-        "/home/vagrant/src/media/uploads": 
+        "/home/vagrant/src/media/uploads":
             target => "/home/vagrant/uploads",
-            ensure => link, 
+            ensure => link,
             require => [ File["/home/vagrant/uploads"] ];
         "/home/vagrant/src/webroot/.htaccess":
             ensure => link,
@@ -128,10 +128,10 @@ class kuma_config {
             ensure => link,
             target => "/home/vagrant/src/configs/htaccess-without-mindtouch";
     }
-    exec { 
+    exec {
         "kuma_update_product_details":
             user => "vagrant",
-            cwd => "/home/vagrant/src", 
+            cwd => "/home/vagrant/src",
             command => "/usr/bin/python ./manage.py update_product_details",
             timeout => 1200, # Too long, but this can take awhile
             creates => "/home/vagrant/product_details_json/firefox_versions.json",
@@ -140,18 +140,18 @@ class kuma_config {
             ];
         "kuma_sql_migrate":
             user => "vagrant",
-            cwd => "/home/vagrant/src", 
+            cwd => "/home/vagrant/src",
             command => "/usr/bin/python ./vendor/src/schematic/schematic migrations/",
             require => [ Exec["kuma_update_product_details"],
                 Service["mysql"], File["/home/vagrant/logs"] ];
         "kuma_south_migrate":
             user => "vagrant",
-            cwd => "/home/vagrant/src", 
+            cwd => "/home/vagrant/src",
             command => "/usr/bin/python manage.py migrate",
             require => [ Exec["kuma_sql_migrate"] ];
         "kuma_update_feeds":
             user => "vagrant",
-            cwd => "/home/vagrant/src", 
+            cwd => "/home/vagrant/src",
             command => "/usr/bin/python ./manage.py update_feeds",
             onlyif => "/usr/bin/mysql -B -uroot kuma -e'select count(*) from feeder_entry' | grep '0'",
             require => [ Exec["kuma_south_migrate"] ];
