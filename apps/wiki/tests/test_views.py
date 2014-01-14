@@ -911,7 +911,7 @@ class DocumentSEOTests(TestCaseBase):
         make_page_and_compare_seo('nine',
           u'<p>I <em>am</em> awesome.'
               ' <a href="blah">A link</a> is also &lt;cool&gt;</p>',
-          'I am awesome. A link is also cool')
+          u'I am awesome. A link is also cool')
 
 
 class DocumentEditingTests(TestCaseBase):
@@ -2351,6 +2351,8 @@ class SectionEditingResourceTests(TestCaseBase):
     def test_raw_with_editing_links_source(self):
         """The raw source for a document can be requested, with section editing
         links"""
+        raise SkipTest("Section editing is disabled & broken for now")
+
         client = LocalizingClient()
         client.login(username='admin', password='testpass')
         d, r = doc_rev("""
@@ -2470,6 +2472,8 @@ class SectionEditingResourceTests(TestCaseBase):
         """If a page was changed while someone was editing, but the changes
         didn't affect the specific section being edited, then ignore the midair
         warning"""
+        raise SkipTest("Section editing is disabled & broken for now")
+
         client = LocalizingClient()
         client.login(username='admin', password='testpass')
 
@@ -3146,7 +3150,7 @@ class DeferredRenderingViewTests(TestCaseBase):
         # Expected result filtered through old/current Bleach rules
         expected_content_old = """
             <p id="foo">
-                <a style="position: absolute; border: 1px;" href="http://example.com">This is a test</a>
+                <a class="external" style="position: absolute; border: 1px;" href="http://example.com">This is a test</a>
                 <textarea name="foo"></textarea>
             </p>
         """
@@ -3164,7 +3168,7 @@ class DeferredRenderingViewTests(TestCaseBase):
             "a", "p"
         ])
         constance.config.BLEACH_ALLOWED_ATTRIBUTES = json.dumps({
-            "a": ['href', 'style'],
+            "a": ['href', 'style', 'class'],
             "p": ['id']
         })
         constance.config.BLEACH_ALLOWED_STYLES = json.dumps([

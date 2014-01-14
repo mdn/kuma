@@ -416,6 +416,7 @@ class BaseDocumentManager(models.Manager):
         allowed_hosts = constance.config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS
         out = (parse_content(content_in)
                .filterIframeHosts(allowed_hosts)
+               .filterEditorSafety()
                .serialize())
 
         if use_constance_bleach_whitelists:
@@ -699,17 +700,26 @@ class Document(NotificationsMixin, models.Model):
     # Raw HTML of approved revision's wiki markup
     html = models.TextField(editable=False)
 
+    # Cached result of kumascript and other offline processors (if any)
+    rendered_html = models.TextField(editable=False, blank=True, null=True)
+
+    # Errors (if any) from the last rendering run
+    rendered_errors = models.TextField(editable=False, blank=True, null=True)
+
+    # Main body HTML extracted from rendered HTML
+    body_html = models.TextField(editable=False, blank=True, null=True)
+
     # Table of contents HTML extracted from rendered HTML
     toc_html = models.TextField(editable=False, blank=True, null=True)
 
     # Summary HTML extracted from rendered HTML
     summary_html = models.TextField(editable=False, blank=True, null=True)
 
-    # Cached result of kumascript and other offline processors (if any)
-    rendered_html = models.TextField(editable=False, blank=True, null=True)
+    # Quick links HTML extracted from rendered HTML
+    quick_links_html = models.TextField(editable=False, blank=True, null=True)
 
-    # Errors (if any) from the last rendering run
-    rendered_errors = models.TextField(editable=False, blank=True, null=True)
+    # Summary HTML extracted from rendered HTML
+    zone_nav_html = models.TextField(editable=False, blank=True, null=True)
 
     # Whether or not to automatically defer rendering of this page to a queued
     # offline task. Generally used for complex pages that need time
@@ -876,6 +886,16 @@ class Document(NotificationsMixin, models.Model):
                                                         timeout=timeout)
             self.rendered_errors = errors and json.dumps(errors) or None
 
+        if not self.is_template:
+            self.rendered_html = (parse_content(self.rendered_html)
+                .annotateLinks(base_url=base_url)
+                .serialize())
+            self.get_toc_html(force_fresh=True)
+            self.get_summary(force_fresh=True)
+            self.get_body_html(force_fresh=True)
+            self.get_quick_links_html(force_fresh=True)
+            self.get_zone_nav_html(force_fresh=True)
+
         # Finally, note the end time of rendering and update the document.
         self.last_rendered_at = datetime.now()
 
@@ -899,9 +919,6 @@ class Document(NotificationsMixin, models.Model):
             # Otherwise, just clear the expiration time as a one-shot
             self.render_expires = None
 
-        self.get_toc_html(force_fresh=True)
-        self.get_summary(force_fresh=True)
-
         self.save()
         render_done.send(sender=self.__class__, instance=self)
 
@@ -918,23 +935,54 @@ class Document(NotificationsMixin, models.Model):
 
     def get_toc_html(self, force_fresh=False):
         if not self.toc_html or force_fresh:
-            self.toc_html = self.extract_toc_html()
+            self.toc_html = ''
+            if not self.is_template and self.show_toc:
+                try:
+                    depth = self.current_revision.toc_depth
+                    toc_filter = TOC_DEPTH_FILTERS[depth]
+                    src = self.rendered_html and self.rendered_html or self.html
+                    self.toc_html = (parse_content(src)
+                                     .injectSectionIDs()
+                                     .filter(toc_filter)
+                                     .serialize())
+                except IndexError:
+                    pass
         return self.toc_html
 
-    def extract_toc_html(self):
-        toc_html = ''
-        if not self.is_template and self.show_toc:
-            try:
-                depth = self.current_revision.toc_depth
-                toc_filter = TOC_DEPTH_FILTERS[depth]
-                src = self.rendered_html and self.rendered_html or self.html
-                toc_html = (parse_content(src)
-                            .injectSectionIDs()
-                            .filter(toc_filter)
-                            .serialize())
-            except IndexError:
-                pass
-        return toc_html
+    def get_body_html(self, force_fresh=False):
+        if not self.body_html or force_fresh:
+            sections_to_hide = ('Quick_Links', 'Subnav')
+            doc = parse_content(self.rendered_html)
+            for sid in sections_to_hide:
+                doc = doc.replaceSection(sid, '<!-- -->')
+            self.body_html = doc.serialize()
+        return self.body_html
+
+    def get_rendered_section_content(self, section_id):
+        """Convenience method to extract the rendered content for a single section"""
+        return (parse_content(self.rendered_html)
+                .extractSection(section_id)
+                .serialize())
+
+    def get_quick_links_html(self, force_fresh=False):
+        if not self.quick_links_html or force_fresh:
+            sid = 'Quick_Links'
+            self.quick_links_html = self.get_rendered_section_content(sid)
+        return self.quick_links_html
+
+    def get_zone_nav_html(self, force_fresh=False):
+        if not self.zone_nav_html or force_fresh:
+            sid = 'Subnav'
+            html = self.get_rendered_section_content(sid)
+            if html:
+                self.zone_nav_html = html
+            else:
+                for zone in self.find_zone_stack():
+                    html = zone.document.get_rendered_section_content(sid)
+                    if html:
+                        self.zone_nav_html = html
+                        break
+        return self.zone_nav_html
 
     def build_json_data(self):
         content = (parse_content(self.html)

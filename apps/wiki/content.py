@@ -384,7 +384,7 @@ class LinkAnnotationFilter(html5lib_Filter):
                     continue
 
                 href = attrs['href']
-                if href.startswith(self.base_url):
+                if self.base_url and href.startswith(self.base_url):
                     # Squash site-absolute URLs to site-relative paths.
                     href = '/%s' % href[len(self.base_url):]
 
@@ -458,7 +458,7 @@ class LinkAnnotationFilter(html5lib_Filter):
                 if 'href' in attrs:
 
                     href = attrs['href']
-                    if href.startswith(self.base_url):
+                    if self.base_url and href.startswith(self.base_url):
                         # Squash site-absolute URLs to site-relative paths.
                         href = '/%s' % href[len(self.base_url):]
 

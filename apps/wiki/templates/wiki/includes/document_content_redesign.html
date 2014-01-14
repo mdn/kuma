@@ -20,28 +20,17 @@
 {% set disabled_class = ('disabled' if not is_logged_in else '') %}
 {% set disabled_attr = ('title="%s"' % _('Please log in to use this feature.') if not is_logged_in else '') %}
 
-{% if not document.is_template %}
-  {% set quick_links_section_id = 'Quick_Links' %}
-  {% set quick_links_html = document.rendered_html|section_extract(quick_links_section_id) %}
-{% endif %}
-
 {% if document.is_template %}
   {% set macro_name = document.slug|replace('Template:','', 1) %}
   {% set template_search_link = url('search', locale=document.locale)|urlparams(locale=request.locale, kumascript_macros=macro_name) %}
 {% endif %}
-
-{% set zone_stack = document.find_zone_stack() %}
-{% set is_zone = zone_stack|length %}
-{% set is_zone_root = is_zone and zone_stack[0].document == document %}
-{% set zone_subnav_section_id = 'Subnav' %}
-{% set zone_subnav_html = document|zone_section_extract(zone_subnav_section_id) %}
 
 {% set current_revision = document.current_revision %}
 {% if (user.is_authenticated() and current_revision and document.allows_revision_by(user)) and (current_revision.needs_technical_review() or current_revision.needs_editorial_review()) %}
   {% set approvals_html = get_approvals_html(document, request.user) %}
 {% endif %}
 
-{% set show_left = zone_subnav_html or quick_links_html or approvals_html %}
+{% set show_left = zone_nav_html or quick_links_html or approvals_html %}
 {% set show_right = (not is_zone_root and toc_html) %}
 
 {% set content_class = 'column-all' %}
@@ -54,7 +43,7 @@
 {% if is_zone %}
   {% if is_zone_root %}
 
-    {% set show_zone_landing_subnav = (zone_subnav_html or quick_links_html)  %}
+    {% set show_zone_landing_subnav = (zone_nav_html or quick_links_html)  %}
 
     <div class="zone-landing-header"><div class="center">
       <!-- edit, settings buttons -->
@@ -69,9 +58,9 @@
       <div class="column-container zone-landing-header-preview">
         <div class="column-strip">
           <div class="zone-landing-header-preview-base">
-            {% if zone_subnav_html %}
+            {% if zone_nav_html %}
               <!-- zone subnav -->
-              {{ get_document_subnav(zone_subnav_html) }}
+              {{ get_document_subnav(zone_nav_html) }}
             {% endif %}
 
             {% if quick_links_html %}
@@ -180,9 +169,9 @@
 
         <!-- just the article content -->
         {% if not document.is_template %}
-          {% set document_html_safe = document_html|section_hide(zone_subnav_section_id, quick_links_section_id)|safe %}
+          {% set body_html_safe = body_html|safe %}
         {% else %}
-          {% set document_html_safe = document_html|safe %}
+          {% set body_html_safe = document_html|safe %}
         {% endif %}
 
         <!-- center: main article content -->
@@ -256,10 +245,10 @@
                   to see example use cases and how many pages use this macro.
                 {% endtrans %}
               {% else %}
-                {{ document_html_safe }}
+                {{ body_html_safe }}
               {% endif %}
             {% elif fallback_reason == 'no_translation' %}
-              {{ document_html_safe }}
+              {{ body_html_safe }}
             {% elif fallback_reason == 'translation_not_approved' %}
               {{ document.parent.html|safe }}
             {% else %}
@@ -307,9 +296,9 @@
 
             <a href="#quick-links" class="title smaller" id="quick-links-toggle"><i aria-hidden="true" class="icon-caret-up"></i>{{ _('Hide Sidebar') }}</a>
 
-            {% if zone_subnav_html %}
+            {% if zone_nav_html %}
               <!-- zone subnav -->
-              {{ get_document_subnav(zone_subnav_html) }}
+              {{ get_document_subnav(zone_nav_html) }}
             {% endif %}
 
             {% if quick_links_html %}

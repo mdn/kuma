@@ -481,34 +481,15 @@ def document(request, document_slug, document_locale):
 
     if not doc.is_template:
 
-        # Start applying some filters to the document HTML
-        tool = wiki.content.parse(doc_html).injectSectionIDs()
-
-
         # If a section ID is specified, extract that section.
         if section_id:
-            tool.extractSection(section_id)
-
-        # Annotate links within the page, but only if not sending raw source.
-        if not show_raw:
-            tool.annotateLinks(base_url=base_url)
-
-        # If this user can edit the document, inject some section editing
-        # links.
-        if ((need_edit_links or not show_raw) and
-                request.user.is_authenticated() and
-                doc.allows_revision_by(request.user)):
-            tool.injectSectionEditingLinks(doc.full_path, doc.locale)
-
-        # ?raw view is often used for editors - apply safety filtering.
-        if show_raw:
-            tool.filterEditorSafety()
-
-        doc_html = tool.serialize()
+            doc_html = (wiki.content.parse(doc_html)
+                .extractSection(section_id)
+                .serialize())
 
         # If this is an include, filter out the class="noinclude" blocks.
         if is_include:
-            doc_html = (wiki.content.filter_out_noinclude(doc_html))
+            doc_html = wiki.content.filter_out_noinclude(doc_html)
     
     # If ?summary is on, just serve up the summary as doc HTML
     if show_summary:
@@ -570,6 +551,9 @@ def document(request, document_slug, document_locale):
 
     data = {'document': doc, 'document_html': doc_html, 
             'toc_html': doc.get_toc_html(),
+            'body_html': doc.get_body_html(),
+            'quick_links_html': doc.get_quick_links_html(),
+            'zone_nav_html': doc.get_zone_nav_html(),
             'redirected_from': redirected_from,
             'related': related, 'contributors': contributors,
             'fallback_reason': fallback_reason,
