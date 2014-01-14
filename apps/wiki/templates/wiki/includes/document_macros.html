@@ -73,11 +73,11 @@
                     </form>
                   {% endif %}
                 </li>{% endif %}
-                {% if not document.is_template %}
+                {% if user.is_authenticated() and not document.is_template %}
                   <li><a href="{{ url('wiki.new_document') }}?parent={{ document.id }}">{{ _('New sub-page') }}</a></li>
                   <li><a href="{{ url('wiki.new_document') }}?clone={{ document.id }}">{{ _('Clone this page') }}</a></li>
                 {% endif %}
-                {% if waffle.flag('page_move') %}
+                {% if user.is_authenticated() and waffle.flag('page_move') %}
                   <li><a href="{{ url('wiki.move', document.slug, locale=document.locale) }}">{{ _('Move this page') }}</a></li>
                 {% endif %}
                 {% if user.is_superuser %}
