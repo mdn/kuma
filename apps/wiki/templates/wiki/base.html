@@ -12,13 +12,6 @@
     {% endif %}
 {% endblock %}
 
-{% block site_js %}
-  {{ super() }}
-  {% if waffle.flag('redesign') %}
-    {{ js('redesign-wiki') }}
-  {% endif %}
-{% endblock %}
-
 {% if not styles %}
   {% set styles = ('wiki',) %}
 {% endif %}
