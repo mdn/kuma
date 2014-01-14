@@ -161,7 +161,8 @@
 .column-callout  {
   @extend .column-4;
   position: relative;
-
+  background-image: url(media-url-dir + 'promo-sprite.png');
+  background-repeat: no-repeat;
   i {
     bidi-style(right, 5%, left, auto);
     position: absolute;
@@ -193,15 +194,18 @@
   }
 
   &.callout-apps {
-    background: url(media-url-dir + 'HTML5_Logo.svg') 95% -70px no-repeat #e66000;
+    background-position: 100% 0;
+    background-color: #e66000;
   }
 
   &.callout-android {
-    background: url(media-url-dir + 'promo-phone.png') 95% 0 no-repeat #97c03d;
+    background-position: 100% -300px;
+    background-color: #97c03d;
   }
 
   &.callout-firefoxos {
-    background: url(media-url-dir + 'promo-fox.png') 95% 0 no-repeat #0095dd;
+    background-position: 100% -600px;
+    background-color: #0095dd;
   }
 }
 
