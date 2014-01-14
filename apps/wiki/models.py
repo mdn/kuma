@@ -9,6 +9,11 @@ import re
 import json
 import newrelic.agent
 
+try:
+    from functools import wraps
+except ImportError:
+    from django.utils.functional import wraps
+
 from pyquery import PyQuery
 from tower import ugettext_lazy as _lazy, ugettext as _
 import bleach
@@ -628,6 +633,35 @@ class TaggedDocument(ItemBase):
             taggeddocument__content_object__isnull=False).distinct()
 
 
+def cache_with_field(field_name):
+    """Decorator for some get_{field} methods.
+    
+    If the named backing model field is not null, return the value.
+
+    Otherwise, call the wrapped method to regenerate the content, update the
+    database column, return the value.
+    
+    If the optional kwarg force_fresh is True, regenerate the content without
+    updating the database column. This is useful for a whole-object update, eg.
+    render()
+    """
+    def decorator(fn):
+        def wrapper(self, *args, **kwargs):
+            force_fresh = kwargs.get('force_fresh', False)
+            field_val = getattr(self, field_name)
+            if not field_val is None and not force_fresh:
+                return field_val
+            field_val = fn(self, *args, **kwargs)
+            setattr(self, field_name, field_val)
+            if not force_fresh and self.pk:
+                # HACK: Just update the single column, but this seems dirty
+                manager = self._default_manager
+                manager.filter(pk=self.pk).update(**{field_name: field_val})
+            return field_val
+        return wraps(fn)(wrapper)
+    return decorator
+
+
 @register_live_index
 class Document(NotificationsMixin, models.Model):
     """A localized knowledgebase document, not revision-specific."""
@@ -922,67 +956,61 @@ class Document(NotificationsMixin, models.Model):
         self.save()
         render_done.send(sender=self.__class__, instance=self)
 
-    def get_summary(self, strip_markup=True, use_rendered=True, force_fresh=False):
-        """Attempt to get the document summary from rendered content, with
-        fallback to raw HTML"""
-        if not self.summary_html or force_fresh:
-            if use_rendered and self.rendered_html:
-                src = self.rendered_html
-            else:
-                src = self.html
-            self.summary_html = get_seo_description(src, self.locale, strip_markup)
-        return self.summary_html
-
-    def get_toc_html(self, force_fresh=False):
-        if not self.toc_html or force_fresh:
-            self.toc_html = ''
-            if not self.is_template and self.show_toc:
-                try:
-                    depth = self.current_revision.toc_depth
-                    toc_filter = TOC_DEPTH_FILTERS[depth]
-                    src = self.rendered_html and self.rendered_html or self.html
-                    self.toc_html = (parse_content(src)
-                                     .injectSectionIDs()
-                                     .filter(toc_filter)
-                                     .serialize())
-                except IndexError:
-                    pass
-        return self.toc_html
-
-    def get_body_html(self, force_fresh=False):
-        if not self.body_html or force_fresh:
-            sections_to_hide = ('Quick_Links', 'Subnav')
-            doc = parse_content(self.rendered_html)
-            for sid in sections_to_hide:
-                doc = doc.replaceSection(sid, '<!-- -->')
-            self.body_html = doc.serialize()
-        return self.body_html
-
     def get_rendered_section_content(self, section_id):
         """Convenience method to extract the rendered content for a single section"""
         return (parse_content(self.rendered_html)
                 .extractSection(section_id)
                 .serialize())
 
-    def get_quick_links_html(self, force_fresh=False):
-        if not self.quick_links_html or force_fresh:
-            sid = 'Quick_Links'
-            self.quick_links_html = self.get_rendered_section_content(sid)
-        return self.quick_links_html
+    @cache_with_field('summary_html')
+    def get_summary(self, strip_markup=True, use_rendered=True, force_fresh=False):
+        """Attempt to get the document summary from rendered content, with
+        fallback to raw HTML"""
+        if use_rendered and self.rendered_html:
+            src = self.rendered_html
+        else:
+            src = self.html
+        return get_seo_description(src, self.locale, strip_markup)
 
-    def get_zone_nav_html(self, force_fresh=False):
-        if not self.zone_nav_html or force_fresh:
-            sid = 'Subnav'
-            html = self.get_rendered_section_content(sid)
+    @cache_with_field('toc_html')
+    def get_toc_html(self, force_fresh=False):
+        if not self.is_template and self.show_toc:
+            try:
+                depth = self.current_revision.toc_depth
+                toc_filter = TOC_DEPTH_FILTERS[depth]
+                src = self.rendered_html and self.rendered_html or self.html
+                return (parse_content(src)
+                        .injectSectionIDs()
+                        .filter(toc_filter)
+                        .serialize())
+            except IndexError:
+                pass
+        return ''
+
+    @cache_with_field('body_html')
+    def get_body_html(self, force_fresh=False):
+        sections_to_hide = ('Quick_Links', 'Subnav')
+        doc = parse_content(self.rendered_html)
+        for sid in sections_to_hide:
+            doc = doc.replaceSection(sid, '<!-- -->')
+        return doc.serialize()
+
+    @cache_with_field('quick_links_html')
+    def get_quick_links_html(self, force_fresh=False):
+        return self.get_rendered_section_content('Quick_Links')
+
+    @cache_with_field('zone_nav_html')
+    def get_local_zone_nav_html(self, force_fresh=False):
+        return self.get_rendered_section_content('Subnav')
+
+    def get_zone_nav_html(self, force_fresh=False, lookup_stack=True):
+        local_html = self.get_local_zone_nav_html()
+        if local_html:
+            return local_html
+        for zone in self.find_zone_stack():
+            html = zone.document.get_local_zone_nav_html(force_fresh=force_fresh)
             if html:
-                self.zone_nav_html = html
-            else:
-                for zone in self.find_zone_stack():
-                    html = zone.document.get_rendered_section_content(sid)
-                    if html:
-                        self.zone_nav_html = html
-                        break
-        return self.zone_nav_html
+                return html
 
     def build_json_data(self):
         content = (parse_content(self.html)
@@ -2171,6 +2199,9 @@ class Revision(models.Model):
         # HACK: Force fresh on next view or rendering
         self.document.toc_html = None
         self.document.summary_html = None
+        self.document.body_html = None
+        self.document.quick_links_html = None
+        self.document.zone_nav_html = None
 
         # Since Revision stores tags as a string, we need to parse them first
         # before setting on the Document.
