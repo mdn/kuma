@@ -662,9 +662,6 @@ MINIFY_BUNDLES = {
         'search': (
             'redesign/js/search.js',
         ),
-        'wiki': (
-            'js/wiki.js',
-        ),
         'wiki-edit': (
             'js/wiki-edit.js',
             'js/libs/tag-it.js',
@@ -684,6 +681,7 @@ MINIFY_BUNDLES = {
             'js/libs/prism/prism.js',
             'js/prism-mdn/components/prism-json.js',
             'js/prism-mdn/plugins/line-numbering/prism-line-numbering.js',
+            'js/libs/prism/plugins/line-highlight/prism-line-highlight.js',
             'js/syntax-prism.js',
         ),
         'ace-editor': (
@@ -692,7 +690,7 @@ MINIFY_BUNDLES = {
             'js/libs/ace/theme-dreamweaver.js',
             'js/libs/ace/worker-javascript.js',
         ),
-        'redesign-wiki': (
+        'wiki': (
             'redesign/js/wiki.js',
         ),
         'newsletter': (

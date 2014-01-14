@@ -122,7 +122,7 @@
   }
 
   /* Syntax highlighting scripts */
-  $('pre').length && (function() {
+  $('article pre').length && (function() {
     var mediaPath = win.mdn.mediaPath;
     $('<link />').attr({
       type: 'text/css',
@@ -190,6 +190,24 @@
       $(win).on('scroll resize', resizeFn);
     }
   })();
+
+  /*
+    Compat table table setup
+  */
+  $('.htab').each(function(index) {
+      var $htab = $(this);
+      var $items = $htab.find('>ul>li');
+
+      $htab.append($('div[id=compat-desktop]')[index]);
+      $htab.append($('div[id=compat-mobile]')[index]);
+
+      $items.find('a').on('click', function() {
+          var $this = $(this)
+          $items.removeClass('selected');
+          $this.parent().addClass('selected');
+          $htab.find('>div').hide().eq($items.index($this.parent())).show();
+      }).eq(0).trigger('click');
+  });
 
   /*
     Stack overflow search form, used for dev program
