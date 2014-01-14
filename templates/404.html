@@ -1,10 +1,6 @@
 {% extends "base.html" %}
 
-{% if waffle.flag('redesign') %}
-  {% set styles = ('redesign-err404',) %}
-{% else %}
-  {% set styles = ('err404',) %}
-{% endif %}
+{% set styles = ('error-404',) %}
 
 {% block bodyclass %}error{% endblock %}
 {% block title %}{{ page_title(_('Not Found')) }}{% endblock %}
