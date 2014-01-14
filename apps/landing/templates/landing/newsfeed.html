@@ -1,3 +1,4 @@
+{% cache updates %}
 <ul class="hfeed">
   {% for entry in updates %}
     {% with e = entry.parsed %}
@@ -18,3 +19,4 @@
     {% endwith %}
   {% endfor %}
 </ul>
+{% endcache %}

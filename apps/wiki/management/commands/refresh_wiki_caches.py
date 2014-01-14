@@ -21,7 +21,7 @@ from django.contrib.sites.models import Site
 from django.core.management.base import (BaseCommand, NoArgsCommand,
                                          CommandError)
 
-from wiki.models import Document, Revision
+from wiki.models import (Document, Revision)
 
 
 PAGE_EXISTS_KEY_TMPL = getattr(settings, 'wiki_page_exists_key_tmpl',
@@ -40,6 +40,7 @@ class Command(BaseCommand):
     )
 
     def handle(self, *args, **options):
+        
         base_url = options['baseurl']
         if not base_url:
             from django.contrib.sites.models import Site

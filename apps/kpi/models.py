@@ -1,13 +1,14 @@
-from django.db import models
 from django.db.models import (CharField, DateField, ForeignKey,
                               PositiveIntegerField)
+
+from sumo.models import ModelBase
 
 
 L10N_METRIC_CODE = 'general wiki:l10n:coverage'
 KB_L10N_CONTRIBUTORS_METRIC_CODE = 'general wiki:l10n:contributors'
 
 
-class MetricKind(models.Model):
+class MetricKind(ModelBase):
     """A programmer-readable identifier of a metric, like 'clicks: search'"""
     code = CharField(max_length=255, unique=True)
 
@@ -15,7 +16,7 @@ class MetricKind(models.Model):
         return self.code
 
 
-class Metric(models.Model):
+class Metric(ModelBase):
     """A single numeric measurement aggregated over a span of time.
 
     For example, the number of hits to a page during a specific week.

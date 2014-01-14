@@ -98,7 +98,18 @@ MIGRATION_DATABASES = {
 
 CACHES = {
     'default': {
-        'BACKEND': 'memcached_hashring.backend.MemcachedHashRingCache',
+        # HACK: We currently have 'default' memcache disabled in production.
+        # This reflects that in local dev.
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        #'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        #'LOCATION': [
+        #    '127.0.0.1:11211',
+        #],
+        'TIMEOUT': 3600,
+        'KEY_PREFIX': 'kuma',
+    },
+    'secondary': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
         'LOCATION': [
             '127.0.0.1:11211',
         ],
@@ -107,7 +118,12 @@ CACHES = {
     }
 }
 
-CONSTANCE_DATABASE_CACHE_BACKEND = 'default'
+# TODO: Switch this to 'default' when main cache issues are resolved
+SECONDARY_CACHE_ALIAS = 'secondary'
+
+# Use IP:PORT pairs separated by semicolons.
+CACHE_BACKEND = 'memcached://localhost:11211?timeout=60'
+CONSTANCE_DATABASE_CACHE_BACKEND = CACHE_BACKEND
 
 # This is used to hash some things in Django.
 SECRET_KEY = 'jenny8675309'

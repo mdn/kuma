@@ -5,7 +5,7 @@ from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 
-from sumo.models import LocaleField
+from sumo.models import ModelBase, LocaleField
 from sumo.urlresolvers import reverse
 
 
@@ -31,7 +31,7 @@ def multi_raw(query, params, models):
                for model_class in models]
 
 
-class EventWatch(models.Model):
+class EventWatch(ModelBase):
     """
     Allows anyone to watch a specific item for changes. Uses email instead of
     user ID so anonymous visitors can also watch things eventually.
@@ -74,7 +74,7 @@ class EventWatch(models.Model):
         return urlparams(url_, email=self.email)
 
 
-class Watch(models.Model):
+class Watch(ModelBase):
     """Watch events."""
     # Key used by an Event to find watches it manages:
     event_type = models.CharField(max_length=30, db_index=True)
@@ -108,7 +108,7 @@ class Watch(models.Model):
         return self
 
 
-class WatchFilter(models.Model):
+class WatchFilter(ModelBase):
     """Additional key/value pairs that pare down the scope of a watch"""
     watch = models.ForeignKey(Watch, related_name='filters')
     name = models.CharField(max_length=20)

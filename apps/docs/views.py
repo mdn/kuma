@@ -3,9 +3,10 @@ import os.path
 import random
 
 from django.conf import settings
-from django.http import HttpResponseRedirect
+from django.http import (HttpResponseRedirect)
 from django.shortcuts import render
 
+from caching.base import cached
 import commonware
 from dateutil.parser import parse as date_parse
 from tower import ugettext as _
@@ -28,6 +29,9 @@ def docs(request):
         # Only accept site-relative paths, not absolute URLs to anywhere.
         if next.startswith('/'):
             return HttpResponseRedirect(next)
+
+    # Doc of the day
+    dotd = cached(_get_popular_item, 'kuma_docs_dotd', 24*60*60)
 
     # Recent updates
     active_docs = []
@@ -58,3 +62,10 @@ def docs(request):
             'review_flag_docs': review_flag_docs,
             'dotd': dotd}
     return render(request, 'docs/docs.html', data)
+
+
+def _get_popular_item():
+    """Get a single, random item off the popular pages list."""
+    # MindTouch is gone, and so is popular.json. Returning None for
+    # historical compatibility.
+    return None

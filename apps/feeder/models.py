@@ -1,12 +1,14 @@
 from django.db import models
-from django.utils.functional import cached_property
 
+import caching.base
 import jsonpickle
 
 from devmo import SECTIONS_TWITTER, SECTIONS_UPDATES
+from devmo.models import ModelBase
+import utils
 
 
-class BundleManager(models.Manager):
+class BundleManager(caching.base.CachingManager):
     """Custom manager for bundles."""
 
     def recent_entries(self, bundles):
@@ -20,7 +22,7 @@ class BundleManager(models.Manager):
                 feed__bundles__shortname__in=bundles)
 
 
-class Bundle(models.Model):
+class Bundle(ModelBase):
     """A bundle of several feeds. A feed can be in several (or no) bundles."""
 
     shortname = models.SlugField(
@@ -34,7 +36,7 @@ class Bundle(models.Model):
         return self.shortname
 
 
-class Feed(models.Model):
+class Feed(ModelBase):
     """A feed holds the metadata of an RSS feed."""
 
     shortname = models.SlugField(
@@ -76,7 +78,7 @@ class Feed(models.Model):
             item.delete()
 
 
-class Entry(models.Model):
+class Entry(ModelBase):
     """An entry is an item representing feed content."""
 
     feed = models.ForeignKey(Feed, related_name='entries')
@@ -102,12 +104,12 @@ class Entry(models.Model):
     def __unicode__(self):
         return '%s: %s' % (self.feed.shortname, self.guid)
 
-    @cached_property
+    @utils.cached_property
     def parsed(self):
         """Unpickled feed data."""
         return jsonpickle.decode(self.raw)
 
-    @cached_property
+    @utils.cached_property
     def section(self):
         """The section this entry is associated with."""
         try:

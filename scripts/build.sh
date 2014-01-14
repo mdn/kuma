@@ -59,6 +59,7 @@ DATABASES['default']['USER'] = 'hudson'
 DATABASES['default']['TEST_NAME'] = '$DB'
 DATABASES['default']['TEST_CHARSET'] = 'utf8'
 DATABASES['default']['TEST_COLLATION'] = 'utf8_general_ci'
+CACHE_BACKEND = 'caching.backends.locmem://'
 
 ASYNC_SIGNALS = False
 

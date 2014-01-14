@@ -15,6 +15,7 @@ from tower import ugettext as _
 from tower import ugettext_lazy as _lazy
 
 from countries import COUNTRIES
+from sumo.models import ModelBase
 from sumo.urlresolvers import reverse
 from devmo.models import UserProfile
 
@@ -22,7 +23,7 @@ from devmo.models import UserProfile
 SHA1_RE = re.compile('^[a-f0-9]{40}$')
 
 
-class Profile(models.Model):
+class Profile(ModelBase):
     """Profile model for django users, get it with user.get_profile()."""
 
     user = models.OneToOneField(User, primary_key=True,
