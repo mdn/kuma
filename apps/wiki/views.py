@@ -2081,7 +2081,7 @@ def restore_document(request, document_slug, document_locale):
     Restore a deleted Document.
     
     """
-    document = get_object_or_404(Document.deleted.all(),
+    document = get_object_or_404(Document.deleted_objects.all(),
                                  slug=document_slug,
                                  locale=document_locale)
     document.undelete()
@@ -2097,7 +2097,7 @@ def purge_document(request, document_slug, document_locale):
     Permanently purge a deleted Document.
     
     """
-    document = get_object_or_404(Document.deleted.all(),
+    document = get_object_or_404(Document.deleted_objects.all(),
                                  slug=document_slug,
                                  locale=document_locale)
     if request.method == 'POST' and \
