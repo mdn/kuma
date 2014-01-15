@@ -1,10 +1,9 @@
 import datetime
-import functools
-import httplib
 import re
-import socket
+import httplib
 import urllib
 import urlparse
+import socket
 
 from django.conf import settings
 from django.core.cache import cache
@@ -12,7 +11,7 @@ from django.template import defaultfilters
 from django.utils.html import strip_tags
 
 import bleach
-from jingo import register, env
+from jingo import register
 import jinja2
 import pytz
 from soapbox.models import Message
@@ -28,10 +27,6 @@ register.filter(defaultfilters.timesince)
 register.filter(defaultfilters.truncatewords)
 
 register.filter(utils.entity_decode)
-
-
-TEMPLATE_INCLUDE_CACHE_EXPIRES = getattr(settings,
-                                         'TEMPLATE_INCLUDE_CACHE_EXPIRES', 300)
 
 
 @register.function
@@ -151,35 +146,3 @@ def get_soapbox_messages(url):
 @register.inclusion_tag('devmo/elements/soapbox_messages.html')
 def soapbox_messages(soapbox_messages):
     return {'soapbox_messages': soapbox_messages}
-
-
-def register_cached_inclusion_tag(template, key_fn=None,
-                                  expires=TEMPLATE_INCLUDE_CACHE_EXPIRES):
-    """Decorator for inclusion tags with output caching.
-
-    Accepts a string or function to generate a cache key based on the incoming
-    parameters, along with an expiration time configurable as
-    INCLUDE_CACHE_EXPIRES or an explicit parameter"""
-
-    if key_fn is None:
-        key_fn = template
-
-    def decorator(f):
-        @functools.wraps(f)
-        def wrapper(*args, **kw):
-
-            if isinstance(key_fn, basestring):
-                cache_key = key_fn
-            else:
-                cache_key = key_fn(*args, **kw)
-
-            out = cache.get(cache_key)
-            if out is None:
-                context = f(*args, **kw)
-                t = env.get_template(template).render(context)
-                out = jinja2.Markup(t)
-                cache.set(cache_key, out, expires)
-            return out
-
-        return register.function(wrapper)
-    return decorator

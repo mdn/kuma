@@ -16,6 +16,7 @@ jsonpickle==0.3.1
 lockfile==0.8
 django-dbgettext==0.1
 
+-e git://github.com/jbalogh/django-cache-machine.git#egg=django-cache-machine
 -e git://github.com/django-extensions/django-extensions.git#egg=django_extensions
 -e git://github.com/jbalogh/jingo.git#egg=jingo
 -e git://github.com/jsocol/jingo-minify.git#egg=jingo-minify
