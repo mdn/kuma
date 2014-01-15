@@ -2,15 +2,11 @@
 {% extends "wiki/base.html" %}
 {% set title = _('Select language | {document}')|f(document=document.title) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
-{% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
-                 (document.get_absolute_url(), document.title),
-                 (None, _('Select language'))] %}
 
 {% block content %}
-<section id="content">
-  <div class="wrap">
-    <div id="content-main" class="full">
-  <article id="select-locale" class="main">
+
+  <article id="select-locale">
+
     <h1>{{ _('Select a language to translate to:') }}</h1>
     <ul class="locales">
       {% for locale in settings.LANGUAGE_CHOICES %}
@@ -19,8 +15,7 @@
         {% endif %}
       {% endfor %}
     </ul>
+
   </article>
-    </div>
-   </div>
-</section>
+  
 {% endblock %}

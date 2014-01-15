@@ -2,30 +2,21 @@
 {% extends "wiki/base.html" %}
 {% set title = _('All Tags') %}
 {% block title %}{{ page_title(title) }}{% endblock %}
-{% set crumbs = [(None, title)] %}
 
 {% block content %}
-<section id="content">
-  <div class="wrap">
-    <div id="content-main" class="full">
-
-      <div id="document-list" class="boxed">
-        <h1>{{ title }}</h1>
-        {% if tags.object_list %}
-          <ul class="documents cols-3">
-            {% for tag in tags.object_list %}
-              <li>
-                <a href="{{url('wiki.tag', tag.name)}}">{{ tag.name }}</a>
-              </li>
-            {% endfor %}
-          </ul>
-          {{ tags|paginator }}
-        {% else %}
-          <p>{{ _('There are no tags.') }}</p>
-        {% endif %}
-      </div>
-
+    <div id="document-list">
+      <h1>{{ title }}</h1>
+      {% if tags.object_list %}
+        <ul class="documents cols-3">
+          {% for tag in tags.object_list %}
+            <li>
+              <a href="{{url('wiki.tag', tag.name)}}">{{ tag.name }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+        {{ tags|paginator }}
+      {% else %}
+        <p>{{ _('There are no tags.') }}</p>
+      {% endif %}
     </div>
-   </div>
-</section>
 {% endblock %}

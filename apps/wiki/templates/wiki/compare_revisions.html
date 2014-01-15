@@ -2,25 +2,19 @@
 {% extends "wiki/base.html" %}
 {% set title = _('Compare Revisions | {document}')|f(document=document.title) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
-{% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
-                 (document.get_absolute_url(), document.title),
-                 (None, _('Compare Revisions'))] %}
 {% set classes = 'compare' %}
 
 {% block content %}
-<section id="content">
-  <div class="wrap">
-    <div id="content-main" class="full">
-        <article id="compare-revisions" role="main">
-        <hgroup>
-          <h1>{{ _('Compare Revisions') }}</h1>
-          <h2><a href="{{ url('wiki.document', document.full_path, locale=document.locale) }}">{{ document.title }}</a></h2>
-        </hgroup>
-        {% include 'wiki/includes/revision_diff.html' %}
-        <p><a href="{{ url('wiki.document_revisions', document.slug) }}">{{ _('Back to History') }}</a></p>
-        </article>
-    </div>
-  </div>
-</section>
+
+  <article id="compare-revisions">
+  
+    <h1>{{ _('Compare Revisions') }}</h1>
+    <h2><a href="{{ url('wiki.document', document.full_path, locale=document.locale) }}">{{ document.title }}</a></h2>
+    
+    {% include 'wiki/includes/revision_diff.html' %}
+    <p><a href="{{ url('wiki.document_revisions', document.slug) }}">{{ _('Back to History') }}</a></p>
+  
+  </article>
+
 {% endblock %}
 

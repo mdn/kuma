@@ -3,8 +3,6 @@
 {% set title = _('Move "{t}"')|f(t=document.title) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
 {% set meta = [('robots', 'noindex, nofollow')] %}
-{% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
-                 (document.get_absolute_url(), document.title)] %}
 {% block bodyclass %}move-page{% endblock %}
 
 {% block site_css %}
@@ -13,90 +11,84 @@
 {% endblock %}
 
 {% block content %}
-<section id="content">
-  <div class="wrap">
-    <div id="content-main" class="full">
-        
-        <h1>{{ title }}</h1>
-        <p>{{ _('Please provide a new slug for this page using the field below.') }}</p>
 
-        {% if conflicts: %}
-        <div class="warning">
-          <p>{{ _('Your requested move cannot be completed due to slug conflicts:') }}</p>
+      <h1>{{ title }}</h1>
+      <p>{{ _('Please provide a new slug for this page using the field below.') }}</p>
 
-          <div class="moveDescendants">
-            <ul>
+      {% if conflicts: %}
+      <div class="warning">
+        <p>{{ _('Your requested move cannot be completed due to slug conflicts:') }}</p>
+
+        <div class="moveDescendants">
+          <ul>
+          {% for doc in descendants %}
+            <li>{{ doc }}</li>
+          {% endfor %}
+          </ul>
+        </div>
+
+        <p>{{ _('Please choose a different slug value.') }}</p>
+      </div>
+      {% endif %}
+
+      {% if form.errors %}
+      <div class="warning">
+        {{ form.errors.as_ul() }}
+      </div>
+      {% endif %}
+
+      <form action="" method="post">
+        {{ csrf() }}
+        <ul class="description">
+          <li>
+            <dl>
+              <dt>{{ _('Current Slug:') }} </dt>
+              <dd>{{ document.slug }}</dd>
+            </dl>
+          </li>
+          <li>
+            <dl>
+              <dt><label for="title">{{ _('Title:') }}</label> </dt>
+              <dd><input id="title" type="text" name="title" value="{{ document.title }}" autofocus /></dd>
+            </dl>
+          </li>
+          <li>
+            <dl>
+              <dt><label for="moveSlug">{{ _('New Slug:') }}</label> </dt>
+              <dd>
+                <input type="text" name="slug" id="moveSlug" value="" required="required" data-validator="{{ SLUG_CLEANSING_REGEX }}" />
+                <input type="hidden" value="{{ document.slug }}" id="currentSlug" />
+                <input type="hidden" value="{{ document.locale }}" id="locale" name="locale"/>
+              </dd>
+              <dd class="parentSuggestContainer">
+                <a href="javascript:;" class="moveLookupLink">{{ _('Lookup by Document Title') }}</a>
+
+                <div id="parentSuggestionInputContainer">
+                    <input type="text" placeholder="{{ _('Parent Title') }}" id="parentSuggestion" disabled />
+                </div>
+              </dd>
+            </dl>
+          </li>
+        </ul>
+
+        {% if descendants_count: %}
+          <p><strong>{{ _('The following {d} subpages will be affected by this move:')|f(d=descendants_count) }}</strong></p>
+          <div class="moveDescendants"><ul>
             {% for doc in descendants %}
               <li>{{ doc }}</li>
             {% endfor %}
-            </ul>
-          </div>
-
-          <p>{{ _('Please choose a different slug value.') }}</p>
-        </div>
+          </ul></div>
+        {% else %}
+          <p><strong>{{ _('No other documents will be affected by this change.') }}</strong></p>
         {% endif %}
 
-        {% if form.errors %}
-        <div class="warning">
-          {{ form.errors.as_ul() }}
-        </div>
-        {% endif %}
+        <ul id="page-buttons">
+          <li><button class="btn-save" type="submit">{{ _('Move {d} Pages')|f(d=descendants_count) if descendants_count else _('Move Page') }}</button></li>
+          <li><a class="btn-discard" href="{{ url('wiki.document', document.full_path, locale=document.locale) }}">Cancel</a></li>
+        </ul>
 
-        <form action="" method="post">
-          {{ csrf() }}
-          <ul class="description">
-            <li>
-              <dl>
-                <dt>{{ _('Current Slug:') }} </dt>
-                <dd>{{ document.slug }}</dd>
-              </dl>
-            </li>
-            <li>
-              <dl>
-                <dt><label for="title">{{ _('Title:') }}</label> </dt>
-                <dd><input id="title" type="text" name="title" value="{{ document.title }}" autofocus /></dd>
-              </dl>
-            </li>
-            <li>
-              <dl>
-                <dt><label for="moveSlug">{{ _('New Slug:') }}</label> </dt>
-                <dd>
-                  <input type="text" name="slug" id="moveSlug" value="" required="required" data-validator="{{ SLUG_CLEANSING_REGEX }}" />
-                  <input type="hidden" value="{{ document.slug }}" id="currentSlug" />
-                  <input type="hidden" value="{{ document.locale }}" id="locale" name="locale"/>
-                </dd>
-                <dd class="parentSuggestContainer">
-                  <a href="javascript:;" class="moveLookupLink">{{ _('Lookup by Document Title') }}</a>
+      </form>
 
-                  <div id="parentSuggestionInputContainer">
-                      <input type="text" placeholder="{{ _('Parent Title') }}" id="parentSuggestion" disabled />
-                  </div>
-                </dd>
-              </dl>
-            </li>
-          </ul>
-
-          {% if descendants_count: %}
-            <p><strong>{{ _('The following {d} subpages will be affected by this move:')|f(d=descendants_count) }}</strong></p>
-            <div class="moveDescendants"><ul>
-              {% for doc in descendants %}
-                <li>{{ doc }}</li>
-              {% endfor %}
-            </ul></div>
-          {% else %}
-            <p><strong>{{ _('No other documents will be affected by this change.') }}</strong></p>
-          {% endif %}
-
-          <ul id="page-buttons">
-            <li><button class="btn-save" type="submit">{{ _('Move {d} Pages')|f(d=descendants_count) if descendants_count else _('Move Page') }}</button></li>
-            <li><a class="btn-discard" href="{{ url('wiki.document', document.full_path, locale=document.locale) }}">Cancel</a></li>
-          </ul>
-
-        </form>
-
-    </div>
-   </div>
-</section>
 {% endblock %}
 
 {% block js %}

@@ -3,10 +3,6 @@
 {% from "layout/errorlist.html" import errorlist %}
 {% set title = _(document.title + ' | Edit {title}')|fe(title=('Template' if document.is_template else 'Article')) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
-{# TODO: Change KB url to landing page when we have one #}
-{% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
-                 (document.get_absolute_url(), document.title),
-                 (None, _('Edit Article'))] %}
 {% set classes = 'edit' %}
 {% block bodyclass %}edit{% if document.is_template %} is-template{% endif %}{% endblock %}
 
@@ -16,10 +12,7 @@
 {% endblock %}
 
 {% block content %}
-<section id="content">
-  <div class="wrap">
-    <div id="content-main" class="full">
-  <article id="edit-document" class="article" role="main">
+  <article id="edit-document">
     <form id="wiki-page-edit" class="editing" method="post" action="">
       {{ csrf() }}
       <fieldset>
@@ -172,9 +165,7 @@
     </script>
 
   </article>
-    </div>
-   </div>
-</section>
+
 {% endblock %}
 
 {% block site_js %}

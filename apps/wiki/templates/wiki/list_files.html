@@ -2,7 +2,6 @@
 {% extends "wiki/base.html" %}
 {% set title = _('All Files') %}
 {% block title %}{{ page_title(title) }}{% endblock %}
-{% set crumbs = [(None, title)] %}
 
 {% block extrahead %}
 <link rel="alternate" type="application/atom+xml" title="{{title}}" 
@@ -10,11 +9,7 @@
 {% endblock %}
 
 {% block content %}
-<section id="content">
-  <div class="wrap">
-    <div id="content-main" class="full">
-
-      <div id="document-list" class="boxed">
+      <div id="document-list">
         <h1>{{ title }}</h1>
         {% if files.object_list %}
           <ul class="documents cols-3">
@@ -29,8 +24,4 @@
           <p>{{ _('There are no files.') }}</p>
         {% endif %}
       </div>
-
-    </div>
-   </div>
-</section>
 {% endblock %}

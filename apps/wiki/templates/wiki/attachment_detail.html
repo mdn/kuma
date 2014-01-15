@@ -7,11 +7,11 @@
 {% set classes = 'document' %}
 
 {% block content %}
-<section id="content">
-  <div class="wrap">
-    <div id="content-main" class="full">
+
   <article id="wiki-doc">
-    <h1 class="title">{{ attachment.title }}</h1>
+    
+    <h1>{{ attachment.title }}</h1>
+
     <details class="h2" open="open">
       <summary>{{ _('Attachment Information') }}</summary>
       <div class="revision-info">
@@ -66,6 +66,7 @@
         </ul>
       </div>
     </details>
+
     <details class="h2">
       <summary>{{ _('Attachment Preview') }}</summary>
       <div id="doc-content">
@@ -76,8 +77,7 @@
         {% endif %}
       </div>
     </details>
+
   </article>
-    </div>
-   </div>
-</section>
+    
 {% endblock %}
