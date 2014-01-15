@@ -631,7 +631,7 @@ class Document(NotificationsMixin, models.Model):
         )
 
     objects = DocumentManager()
-    deleted = DeletedDocumentManager()
+    deleted_object = DeletedDocumentManager()
 
     title = models.CharField(max_length=255, db_index=True)
     slug = models.CharField(max_length=255, db_index=True)
