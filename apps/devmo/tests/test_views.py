@@ -511,7 +511,7 @@ class LoggingTests(test_utils.TestCase):
     urls = 'devmo.tests.logging_urls'
 
     def setUp(self):
-        self.old_logging = settings.LOGGING
+        self.old_logging = settings.LOGGING.copy()
 
     def tearDown(self):
         settings.LOGGING = self.old_logging

@@ -246,7 +246,7 @@ class Event(object):
             return Watch.objects.none()
 
         # Filter by stuff in the Watch row:
-        watches = Watch.uncached.filter(
+        watches = Watch.objects.filter(
             user_condition,
             Q(content_type=ContentType.objects.get_for_model(cls.content_type))
                 if cls.content_type
