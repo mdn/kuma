@@ -14,7 +14,6 @@ from django.contrib.auth.models import User as DjangoUser
 from django.db import models
 from django.utils.functional import cached_property
 
-import caching.base
 import constance.config
 import xml.sax
 from xml.sax.handler import ContentHandler
@@ -38,16 +37,7 @@ DEFAULT_AVATAR = getattr(settings,
         'DEFAULT_AVATAR', settings.MEDIA_URL + 'img/avatar-default.png')
 
 
-class ModelBase(caching.base.CachingMixin, models.Model):
-    """Common base model for all MDN models: Implements caching."""
-
-    objects = caching.base.CachingManager()
-
-    class Meta:
-        abstract = True
-
-
-class UserProfile(ModelBase):
+class UserProfile(models.Model):
     """
     The UserProfile *must* exist for each
     django.contrib.auth.models.User object. This may be relaxed
@@ -281,7 +271,7 @@ def parse_header_line(header_line):
                 FIELD_MAP[field_name][1] = ''
 
 
-class Calendar(ModelBase):
+class Calendar(models.Model):
     """The Calendar spreadsheet"""
 
     shortname = models.CharField(max_length=255)
@@ -367,7 +357,7 @@ class Calendar(ModelBase):
         return self.shortname
 
 
-class Event(ModelBase):
+class Event(models.Model):
     """An event"""
 
     date = models.DateField()

@@ -122,9 +122,3 @@ class ActionCounterManager(object):
         # race condition. A subsequent save() could clobber concurrent counter
         # changes.
         self.total = self.total + delta
-
-        # HACK: Invalidate this object in cache-machine, if the method is available.
-        if hasattr(m_cls.objects, 'invalidate'):
-            m_cls.objects.invalidate(self.instance)
-
-

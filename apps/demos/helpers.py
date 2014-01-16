@@ -1,5 +1,4 @@
 import datetime
-import functools
 import hashlib
 import random
 
@@ -22,52 +21,16 @@ import threadedcomments.views
 from .models import Submission
 from . import DEMOS_CACHE_NS_KEY, TAG_DESCRIPTIONS, DEMO_LICENSES
 
+from devmo.helpers import register_cached_inclusion_tag
 # Monkeypatch threadedcomments URL reverse() to use devmo's
 from devmo.urlresolvers import reverse
 threadedcommentstags.reverse = reverse
-
-
-TEMPLATE_INCLUDE_CACHE_EXPIRES = getattr(settings,
-                                         'TEMPLATE_INCLUDE_CACHE_EXPIRES', 300)
 
 
 def new_context(context, **kw):
     c = dict(context.items())
     c.update(kw)
     return c
-
-
-# TODO:liberate ?
-def register_cached_inclusion_tag(template, key_fn=None,
-                                  expires=TEMPLATE_INCLUDE_CACHE_EXPIRES):
-    """Decorator for inclusion tags with output caching.
-
-    Accepts a string or function to generate a cache key based on the incoming
-    parameters, along with an expiration time configurable as
-    INCLUDE_CACHE_EXPIRES or an explicit parameter"""
-
-    if key_fn is None:
-        key_fn = template
-
-    def decorator(f):
-        @functools.wraps(f)
-        def wrapper(*args, **kw):
-
-            if type(key_fn) is str:
-                cache_key = key_fn
-            else:
-                cache_key = key_fn(*args, **kw)
-
-            out = cache.get(cache_key)
-            if out is None:
-                context = f(*args, **kw)
-                t = jingo.env.get_template(template).render(context)
-                out = jinja2.Markup(t)
-                cache.set(cache_key, out, expires)
-            return out
-
-        return register.function(wrapper)
-    return decorator
 
 
 def submission_key(prefix):

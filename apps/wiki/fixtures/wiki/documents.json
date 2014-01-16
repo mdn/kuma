@@ -10,7 +10,8 @@
             "modified": "2013-06-06 05:54:18",
             "is_template": false,
             "html": "<p>the keyword video only appears in the body of this article\n</p>",
-            "slug": "article-title"
+            "slug": "article-title",
+            "render_max_age": null
         }
     },
     {
@@ -24,7 +25,8 @@
             "modified": "2013-06-06 05:54:18",
             "is_template": false,
             "html": "<p>the keyword video only appears in the body of this article\n</p>",
-            "slug": "article-title-2"
+            "slug": "article-title-2",
+            "render_max_age": null
         }
     },
     {
@@ -37,7 +39,8 @@
             "is_template": false,
             "modified": "2013-06-06 05:54:18",
             "html": "",
-            "slug": "article-title-3"
+            "slug": "article-title-3",
+            "render_max_age": null
         }
     },
     {
@@ -52,7 +55,8 @@
             "modified": "2013-06-06 05:54:18",
             "is_template": false,
             "html": "<p>ceci n'est pas une pipe\n</p><p>mon dieu!\n</p>",
-            "slug": "le-title"
+            "slug": "le-title",
+            "render_max_age": null
         }
     },
     {
@@ -67,7 +71,8 @@
             "current_revision": 22,
             "is_template": false,
             "rendered_html": "<p>audio is in this <strong>but the word for tough things</strong> will be ignored\n</p>",
-            "slug": "lorem-ipsum"
+            "slug": "lorem-ipsum",
+            "render_max_age": null
         }
     },
     {
@@ -80,7 +85,8 @@
             "is_template": false,
             "modified": "2013-06-06 05:54:18",
             "html": "",
-            "slug": "article-with-revisions"
+            "slug": "article-with-revisions",
+            "render_max_age": null
         }
     },
     {

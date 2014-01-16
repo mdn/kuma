@@ -836,7 +836,7 @@ class ReviewRevisionTests(SkippedTestCase):
                         args=[self.document.slug, self.revision.id])
 
         eq_(200, response.status_code)
-        r = Revision.uncached.get(pk=self.revision.id)
+        r = Revision.objects.get(pk=self.revision.id)
         eq_(significance, r.significance)
         assert r.reviewed
         assert r.is_approved
@@ -863,7 +863,7 @@ class ReviewRevisionTests(SkippedTestCase):
                          'comment': comment},
                         args=[self.document.slug, self.revision.id])
         eq_(200, response.status_code)
-        r = Revision.uncached.get(pk=self.revision.id)
+        r = Revision.objects.get(pk=self.revision.id)
         assert r.reviewed
         assert not r.is_approved
         delay.assert_called_with(r, r.document, comment)
@@ -931,7 +931,7 @@ class ReviewRevisionTests(SkippedTestCase):
                                     follow=True)
         eq_(200, response.status_code)
         d = Document.objects.get(pk=doc_es.id)
-        r = Revision.uncached.get(pk=rev_es2.id)
+        r = Revision.objects.get(pk=rev_es2.id)
         eq_(d.current_revision, r)
         assert r.reviewed
         assert r.is_approved
