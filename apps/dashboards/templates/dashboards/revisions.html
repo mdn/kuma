@@ -3,20 +3,17 @@
 {% set title = _('Revision Dashboard') %}
 {% set scripts = ('dashboards',) %}
 {% set styles = ('redesign-dashboards', 'redesign-wiki', 'jquery-ui') %}
-{% set crumbs = [(None, title)] %}
 {% set classes = 'compare' %}
 
 {% block title %}{{ page_title(title) }}{% endblock %}
 
 {% block content %}
-<section id="content">
-  <div class="wrap">
-    <div id="content-main" class="full">
-  <article class="dashboard">
-    <h1>{{ title }}</h1>
-    <section>
 
-    <h3>{{ _('Revision Filter') }}</h3>
+  <div class="dashboard">
+
+    <h1>{{ title }}</h1>
+
+    <h2>{{ _('Revision Filter') }}</h2>
     <form method="get" id="revision-filter">
       <label for="dash-locale">{{ _('Locale') }}:</label>
       <select name="locale" id="dash-locale">
@@ -54,38 +51,26 @@
       <tbody>
       </tbody>
     </table>
-    </section>
-    <section id="revisions-compare">
-      <section id="action-bar">
-      {% if waffle.flag('redesign') %}
-      <ul id="page-buttons">
-        <li><a id="revert" href="#" class="button">{{ _('Revert') }}<i aria-hidden="true" class="icon-undo"></i></a></li>
-        <li><a id="view" href="#" class="button">{{ _('View Page') }}<i aria-hidden="true" class="icon-circle-arrow-right"></i></a></li>
-        <li class="page-edit"><a id="edit" href="#" class="button">{{ _('Edit Page') }}<i aria-hidden="true" class="icon-pencil"></i></a></li>
-        <li class="page-history"><a id="history" href="#" class="button">{{ _('History') }}<i aria-hidden="true" class="icon-book"></i></a></li>
-        <li id="ban-user"></li>
-      </ul>
-      {% else %}
+    
+
+    <div id="revisions-compare">
+      <div id="action-bar">
         <ul id="page-buttons">
-          <li><a id="revert" href="#"><i aria-hidden="true" class="icon-undo"></i>{{ _('Revert') }}</a> </li>
-          <li><a id="view" href="#"><i aria-hidden="true" class="icon-circle-arrow-right"></i>{{ _('View Page') }}</a> </li>
-          <li class="page-edit"><a id="edit" href="#"><i aria-hidden="true" class="icon-pencil"></i>{{ _('Edit Page') }}</a> </li>
-          <li class="page-history"><a id="history" href="#"><i aria-hidden="true" class="icon-book"></i>{{ _('History') }}</a> </li>
+          <li><a id="revert" href="#" class="button">{{ _('Revert') }}<i aria-hidden="true" class="icon-undo"></i></a></li>
+          <li><a id="view" href="#" class="button">{{ _('View Page') }}<i aria-hidden="true" class="icon-circle-arrow-right"></i></a></li>
+          <li class="page-edit"><a id="edit" href="#" class="button">{{ _('Edit Page') }}<i aria-hidden="true" class="icon-pencil"></i></a></li>
+          <li class="page-history"><a id="history" href="#" class="button">{{ _('History') }}<i aria-hidden="true" class="icon-book"></i></a></li>
           <li id="ban-user"></li>
         </ul>
-      {% endif %}
-      </section>
+      </div>
 
       <h2>{{ _('Revision Diff') }}</h2>
       <div id="revision-address"></div>
-      <section id="diff-view">
+      <div id="diff-view">
         <p>{{ _('Click an item in the revision list above to see details.') }}</p>
-      </section>
-    </section>
-  </article>
+      </div>
     </div>
   </div>
-</section>
 {% endblock %}
 
 
