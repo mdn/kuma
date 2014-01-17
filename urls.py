@@ -7,8 +7,12 @@ from django.views.i18n import javascript_catalog
 from django.views.decorators.cache import cache_page
 
 import jingo
+import badger
+
 
 admin.autodiscover()
+badger.autodiscover()
+
 
 urlpatterns = patterns('',
    # Home / landing pages:
@@ -61,6 +65,9 @@ urlpatterns = patterns('',
 
     # Auth keys
     (r'^keys/', include('authkeys.urls')),
+
+    # Badges
+    (r'^badges/', include('badger.urls_simple')),
 
     # Services and sundry.
     (r'^', include('tidings.urls')),

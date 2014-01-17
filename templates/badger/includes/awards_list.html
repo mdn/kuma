@@ -1,0 +1,20 @@
+{% import 'badger/includes/macros.html' as macros %}
+<ul class="awards cf">
+    {% for award in award_list %}
+        <li class="award">
+            <a href="{{ award.get_absolute_url() }}" class="award_image">{{ macros.badge_image(badge, MEDIA_URL) }}</a>
+            <a href="{{ award.get_absolute_url() }}" class="label">
+                {% trans title=award.badge.title, user=award.user %}
+                    <span class="badge_title">{{ title }}</span>
+                    <span class="relation">awarded to</span>
+                    <span class="user">{{ user }}</span>
+                {% endtrans %}
+            </a>
+            <a href="{{ award.get_absolute_url() }}" class="avatar_image"><img src="{{ user_avatar(award.user) }}"
+                alt="{{ award.badge.title }}" width="128" height="128" /></a>            
+        </li>
+    {% endfor %}
+</ul>
+{% if not hide_pagination %}
+    {% include "badger/includes/pagination.html" %}
+{% endif %}

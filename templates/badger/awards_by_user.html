@@ -1,0 +1,20 @@
+{% extends "badger/base.html" %}
+
+{% block pageid %}badge_awards_by_user{% endblock %}
+
+{% block extrahead %}
+    <link rel="alternate" type="application/atom+xml"
+        title="{{ _('Recent awards') }}"
+        href="{{ url('badger.feeds.awards_by_user', 'atom', user.username) }}" />
+{% endblock %}
+
+{% block intro %}
+    {{ _('Badges:') }}
+    <b>{{ _("Awards for {user}") | f(user=user) }}</b>
+{% endblock %}
+
+{% block subcontent %}
+<section class="awards_list">
+    {% include "badger/includes/awards_as_badges_list.html" %}
+</section>
+{% endblock %}

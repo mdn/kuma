@@ -1,0 +1,5 @@
+{% set badge = award.badge %}
+<div class="award by_badge">
+    {% include "badger/includes/badge_full.html" %}
+    <a href="{{award.get_absolute_url()}}">{{ _('Award details') }}</a>
+</div>

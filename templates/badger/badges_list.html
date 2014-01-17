@@ -1,0 +1,24 @@
+{% extends "badger/base.html" %}
+
+{% block pageid %}badges{% endblock %}
+
+{% block intro %}
+    {{ _('Badges:') }}
+    {% if tag_name %}
+        <b>{% trans %}Badges tagged <a href="" class="tag"><i class="icon-tag icon-white"></i> {{tag_name}}</a>{% endtrans %}</b>
+    {% elif query_string %}
+        <b>{{ _('Badges matching "{query_string}"') | f(query_string=query_string) }}</b>
+    {% else %}
+        <b>{{ _("All badges") }}</b>
+    {% endif %}
+{% endblock %}
+
+{% block subcontent %}
+    {% include "badger/includes/badges_list.html" %}
+    {% if award_list %}
+        <h2>{{ _('Recent awards for these badges') }}</h2>
+        {% set award_list = award_list[:12] %}
+        {% set hide_pagination = True %}
+        {% include "badger/includes/awards_list.html" %}
+    {% endif %}
+{% endblock %}

@@ -15,6 +15,7 @@ from waffle import flag_is_active
 from access.decorators import login_required
 from demos.models import Submission
 from teamwork.models import Team
+from badger.models import Award
 
 from . import INTEREST_SUGGESTIONS
 from .models import Calendar, Event, UserProfile
@@ -66,6 +67,8 @@ def profile_view(request, username):
     wiki_activity, docs_feed_items = None, None
     wiki_activity = profile.wiki_activity()
 
+    awards = Award.objects.filter(user=user)
+
     if request.user.is_anonymous():
         show_manage_roles_button = False
     else:
@@ -79,7 +82,7 @@ def profile_view(request, username):
     return render(request, template, dict(
         profile=profile, demos=demos, demos_paginator=demos_paginator,
         demos_page=demos_page, docs_feed_items=docs_feed_items,
-        wiki_activity=wiki_activity,
+        wiki_activity=wiki_activity, award_list=awards,
         show_manage_roles_button=show_manage_roles_button,
     ))
 

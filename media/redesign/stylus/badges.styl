@@ -1,0 +1,79 @@
+.cf:before, .cf:after { content: ""; display: table; }
+.cf:after { clear: both; }
+.cf { zoom: 1; }
+
+ul.badges li { border-radius: 8px 8px 8px 8px; border: 1px solid #EEEEEE; list-style: none outside none; margin: 0pt 0.75em 0.75em 0pt; padding: 0pt; }
+ul.badges li img { border-radius: 8px 8px 8px 8px; display: block; }
+
+/* HACK: Undo what bootstrap does */
+.badge, .badge:hover { padding: 0; font-size: inherit; font-weight: inherit; color: inherit; background-color: transparent; border-radius: inherit; cursor: default; white-space: inherit }
+
+li.badge { display: block; float: left; position: relative; }
+li.badge a.image { display: block; }
+li.badge a.label { background: #222222; border-radius: 0pt 0pt 8px 8px; bottom: 0pt; color: #FFFFFF; display: block; opacity: 0.85; padding: 0.25em 0pt; position: absolute; text-align: center; white-space: normal; font-size: 0.85em; text-decoration: none; width: 128px; }
+li.badge a.label:before { content: "✸ "; font-size: 1.5em; }
+li.badge a.label .title { display: inline; color: #fff; font-weight: normal }
+li.badge span.badge_title, li.badge span.relation, li.badge span.user { display: block; padding: 2px; }
+
+ul.awards { margin: 0pt; padding: 0pt; }
+ul.awards li.award { border-radius: 8px 8px 8px 8px; border: 1px solid #DDDDDD; float: left; height: 128px; list-style: none outside none; margin: 0pt 0.75em 0.75em 0pt; position: relative; width: 256px; }
+ul.awards li.award img { border-radius: 8px 8px 8px 8px; }
+ul.awards li.award a.avatar_image { position: absolute; right: 0pt; }
+ul.awards li.award a.award_image { position: absolute; left: 0pt; }
+ul.awards li.award span.badge_title, li.award span.relation, li.award span.user { background: none repeat scroll 0pt 0pt #000000; border-radius: 8px 8px 8px 8px; font-size: 0.85em; color: #FFFFFF; display: block; opacity: 0.75; padding: 0.25em 0pt; position: absolute; text-align: center; text-decoration: none; z-index: 10; }
+
+ul.awards li.award span.badge_title { border-radius: 0pt 0pt 8px 8px; bottom: 0pt; left: 0pt; width: 128px; white-space: normal }
+
+ul.awards li.award span.badge_title:before { content: "✸ "; font-size: 1.25em; }
+
+ul.awards li.award span.relation { border-radius: 8px 8px 8px 8px; top: 0.25em; left: 80px; opacity: 0.75; width: 96px; }
+
+ul.awards li.award span.relation:after { content: " ⇨"; font-size: 1.25em; }
+ul.awards li.award span.user { border-radius: 0pt 0pt 8px 8px; bottom: 0pt; right: 0pt; width: 128px; white-space: normal }
+ul.awards li.award span.user:before { content: "☺ "; font-size: 1.25em; }
+ul.awardees { margin: 0pt; padding: 0pt; }
+
+ul.awardees li.awardee {
+     float: left;
+     height: 128px;
+     list-style: none outside none;
+     margin: 0pt 0.75em 0.75em 0pt;
+     position: relative;
+     width: 128px;
+}
+
+ul.awardees li.awardee .avatar_image img { border-radius: 8px 8px 8px 8px; }
+ul.awardees li.awardee a.label span.user { white-space: normal; }
+
+ul.awardees li.awardee .label {
+     font-size: 0.85em;
+     background: none repeat scroll 0pt 0pt #000000;
+     border-radius: 0pt 0pt 8px 8px;
+     bottom: 0pt;
+     color: #FFFFFF;
+     left: 0pt;
+     opacity: 0.8;
+     padding: 0.25em 0pt;
+     position: absolute;
+     text-align: center;
+     text-decoration: none;
+     width: 128px;
+     z-index: 10;
+}
+
+ul.awardees li.awardee .label:before { content: "☺ "; font-size: 1.25em; }
+
+dl.badge a.image img, dl.profile img.avatar { border-radius: 8px; }
+
+dl.badge img.avatar, dl.award img.avatar, dl.nomination img.avatar { width: 64px; height: 64px; border-radius: 4px; margin: 0.5em 0.5em 0 0; padding: 0; vertical-align: text-top; display: block } 
+dl.award dd.awarded_to a {  }
+dl.award dd.awarded_to img.avatar { width: 160px; height: 160px; }
+
+#recent_badge_awards { position: absolute; left: 25%; width: 50%; z-index: 100; opacity: 0.9; background: #000; color: #fff; text-align: center; }
+#recent_badge_awards .inner { position: relative; }
+#recent_badge_awards h2 { width: 100%; margin: 1em;}
+#recent_badge_awards .close { position: absolute; padding: 0; margin: 0; top: 0em; right: 0em; font-size: 2em; }
+#recent_badge_awards .badges { padding: 0.5em; }
+#recent_badge_awards .badges .badge { float: left; margin: 0.125em; }
+#recent_badge_awards .badges .badge .image { display: block; }
+#recent_badge_awards .more { clear: both; }

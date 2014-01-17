@@ -1,0 +1,35 @@
+{% extends "badger/base.html" %}
+
+{% block pageid %}badge_awards_by_badge{% endblock %}
+
+{% block extrahead %}
+    <link rel="alternate" type="application/atom+xml"
+        title="{{ _('Recent awards') }}"
+        href="{{ url('badger.feeds.awards_by_badge', 'atom', badge.slug) }}" />
+{% endblock %}
+
+{% block intro %}
+    {{ _('Badges:') }}
+    <b>{{ _("Awards for {title}") | f(title=badge.title) }}</b>
+{% endblock %}
+
+{% block subcontent %}
+<section class="row-fluid">
+    <section>
+        {% include "badger/includes/badge_full.html" %}
+    </section>
+
+    <section>
+        <header class="page-header">
+            <h2>{{_("Awards")}}</h2>
+        </header>
+        <ul class="awards">
+            {% for award in awards %}
+            <li>
+                {% include "badger/includes/award_as_user.html" %}
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+</section>
+{% endblock %}

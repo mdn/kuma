@@ -1,0 +1,31 @@
+{% import 'badger/includes/macros.html' as macros %}
+<dl class="badge" data-slug="{{ badge.slug }}">
+    {% if badge_show_title %}
+        <dt>{{_("Title:")}}</dt>
+            <dd class="title"><strong>{{ badge.title }}</strong></dd>
+    {% endif %}
+    <dt>{{_("Image:")}}</dt>
+        <dd class="image"><a href="{{ badge.get_absolute_url() }}" class="image">{{ macros.badge_image(badge, MEDIA_URL, 256) }}</a></dd>
+    {% if badge.description %}
+        <dt>{{_("Description:")}}</dt>
+            <dd class="description">{{ badge.description }}</dd>
+    {% endif %}
+    {% if badge.tags and badge.tags.count() %}
+        <dt>{{ _("Tags:") }}</dt>
+        <dd><ul class="tags">
+            {% for tag in badge.tags.all() %}
+                <li><a class="tag" href="{{ url('badger.badges_list', tag_name=tag.name) }}"><i class="icon-tag icon-white"></i> {{ tag.name }}</a></li>
+            {% endfor %}
+        </ul></dd>
+    {% endif %}
+    {% if badge.creator %}
+    <dt>{{_("Creator:")}}</dt>
+        <dd><a href="{{ badge.creator.get_absolute_url() }}"><img src="{{ user_avatar(badge.creator) }}" class="avatar" alt="{{ badge.creator }}" width="28" height="28" />{{ badge.creator }}</a></dd>
+    {% endif %}
+    {% if False %}
+    <dt>{{_("Created:")}}</dt>
+        <dd>{{ badge.created }}</dd>
+    <dt>{{_("Modified:")}}</dt>
+        <dd>{{ badge.modified }}</dd>
+    {% endif %}
+</dl>
