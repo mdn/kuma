@@ -603,6 +603,7 @@ MINIFY_BUNDLES = {
             'css/promote.css',
         ),
         'redesign-main': (
+            'css/libs/font-awesome/css/font-awesome.css',
             'redesign/css/main.css',
         ),
         'redesign-wiki': (
