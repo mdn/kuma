@@ -579,7 +579,7 @@ class DeletedDocumentManager(BaseDocumentManager):
     Specialized manager for working with deleted pages.
     """
     def get_query_set(self):
-        return super(DocumentManager, self).get_query_set().filter(deleted=True)
+        return super(DeletedDocumentManager, self).get_query_set().filter(deleted=True)
 
 
 class DocumentTag(TagBase):
