@@ -237,7 +237,7 @@ class ContentSectionTool(object):
 
     def __init__(self, src=None, is_full_document=False):
 
-        self.tree = html5lib.treebuilders.getTreeBuilder("simpletree")
+        self.tree = html5lib.treebuilders.getTreeBuilder("lxml")
 
         self.parser = html5lib.HTMLParser(tree=self.tree,
             namespaceHTMLElements=False)
@@ -246,7 +246,7 @@ class ContentSectionTool(object):
             omit_optional_tags=False, quote_attr_values=True,
             escape_lt_in_attrs=True)
 
-        self.walker = html5lib.treewalkers.getTreeWalker("simpletree")
+        self.walker = html5lib.treewalkers.getTreeWalker("lxml")
 
         self.src = ''
         self.doc = None
