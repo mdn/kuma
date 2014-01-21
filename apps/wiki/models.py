@@ -28,6 +28,7 @@ from django.core.urlresolvers import resolve
 from django.db import models
 from django.db.models import signals
 from django.http import Http404
+from django.utils.decorators import available_attrs
 
 from south.modelsinspector import add_introspection_rules
 import constance.config
@@ -636,16 +637,13 @@ class TaggedDocument(ItemBase):
 def cache_with_field(field_name):
     """Decorator for some get_{field} methods.
     
-    If the named backing model field is not null, return the value.
+    If the backing model field is null, or kwarg force_fresh is True, call the
+    decorated method to regenerate and return the content.
 
-    Otherwise, call the wrapped method to regenerate the content, update the
-    database column, return the value.
-    
-    If the optional kwarg force_fresh is True, regenerate the content without
-    updating the database column. This is useful for a whole-object update, eg.
-    render()
+    Otherwise, just return the value in the backing model field.
     """
     def decorator(fn):
+        @wraps(fn, assigned=available_attrs(fn))
         def wrapper(self, *args, **kwargs):
             force_fresh = kwargs.get('force_fresh', False)
             field_val = getattr(self, field_name)
@@ -653,12 +651,8 @@ def cache_with_field(field_name):
                 return field_val
             field_val = fn(self, *args, **kwargs)
             setattr(self, field_name, field_val)
-            if not force_fresh and self.pk:
-                # HACK: Just update the single column, but this seems dirty
-                manager = self._default_manager
-                manager.filter(pk=self.pk).update(**{field_name: field_val})
             return field_val
-        return wraps(fn)(wrapper)
+        return wrapper
     return decorator
 
 
@@ -2195,13 +2189,6 @@ class Revision(models.Model):
         self.document.html = self.content_cleaned
         self.document.render_max_age = self.render_max_age
         self.document.current_revision = self
-
-        # HACK: Force fresh on next view or rendering
-        self.document.toc_html = None
-        self.document.summary_html = None
-        self.document.body_html = None
-        self.document.quick_links_html = None
-        self.document.zone_nav_html = None
 
         # Since Revision stores tags as a string, we need to parse them first
         # before setting on the Document.

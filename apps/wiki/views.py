@@ -549,13 +549,15 @@ def document(request, document_slug, document_locale):
     # Provide additional information if user came from a search
     from_search = request.GET.get('search', '')
 
-    data = {'document': doc, 'document_html': doc_html, 
+    data = {'document': doc,
+            'document_html': doc_html, 
             'toc_html': doc.get_toc_html(),
             'body_html': doc.get_body_html(),
             'quick_links_html': doc.get_quick_links_html(),
             'zone_nav_html': doc.get_zone_nav_html(),
             'redirected_from': redirected_from,
-            'related': related, 'contributors': contributors,
+            'related': related,
+            'contributors': contributors,
             'fallback_reason': fallback_reason,
             'kumascript_errors': ks_errors,
             'render_raw_fallback': render_raw_fallback,
