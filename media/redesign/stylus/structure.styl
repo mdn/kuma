@@ -35,11 +35,13 @@
 
   .logo {
     bidi-value(float, left, right);
-    width: 216px;
-    height: 54px;
-    background-image: url(media-url-dir + 'mdn_logo-wordmark-full_color.svg');
-    background-position: -5px 0;
+    width: 205px;
+    height: 40px;
+    margin-top: 7px;
+    background-image: url(media-url-dir + 'logo_sprite.svg');
+    background-position: 0 0;
     background-repeat: no-repeat;
+    background-size:100% auto;
     display: block;
     text-indent: -9999px;
     overflow: hidden;
@@ -62,7 +64,7 @@
     compat-important(background, text-color);
     width: 200px;
     padding: 4px 10px;
-    outline: 0; 
+    outline: 0;
     display: inline-block;
     position: absolute;
     box-shadow: 2px 2px 3px rgba(0,0,0,.5);
@@ -252,11 +254,11 @@ a.persona-button {
 
     &.signin {
       text-shadow: 0px 1.5px 1px rgba(0, 0, 0, 0.35);
-      
+
       &:after {
         z-index: 2;
       }
-      
+
       &, &:after {
         create-gradient(#56565a, #3a3a3a);
       }
@@ -343,8 +345,9 @@ footer {
   p {
     bidi-style(padding-left, 92px, padding-right, 0, true);
     bidi-style(background-position, -5px 0, background-position, right 0);
-    background-image: url(media-url-dir + 'mdn_logo-only_color.svg');
-    background-position: -5px 0;
+    background-image: url(media-url-dir + 'logo_sprite.svg');
+    background-position: 0px -83px;
+    background-size: 205px auto;
     background-repeat: no-repeat;
     compat-important(padding-top, 10px);
     padding-bottom: 0;
@@ -400,7 +403,7 @@ footer {
     > ul {
       > li {
         bidi-style(padding-left, 21px, padding-right, 0);
-        
+
         > a {
           i {
             @extend .larger;
@@ -412,12 +415,12 @@ footer {
   }
 }
 
-/* custom nav menu movement */  
+/* custom nav menu movement */
 @media media-query-navigation-break {
 
   #main-header {
     .logo {
-      margin-top: -40px;
+      margin-top: -33px;
     }
   }
 
@@ -426,7 +429,7 @@ footer {
       text-align: right;
       width: 100%;
       clear: both;
-      
+
       > li {
         vendorize(transition-property, none);
 

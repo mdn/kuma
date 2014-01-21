@@ -44,18 +44,25 @@
       display: inline-block;
       position: relative;
       margin-left: 0;
-      background-image: url(media-url-dir + 'mdn_blank-grey-document-color.svg');
+      background-image: url(media-url-dir + 'logo_sprite.svg');
+      background-size: 132px;
+      background-position: 0 -143px;
+      background-repeat: no-repeat;
     }
   }
 
   h2 {
     > i {
-      width: 72px;
-      height: 62px;
+      width: 64px;
+      height: 64px;
       color: #0095dd;
+      background-position: 0 -222px;
+      background-size: 205px auto;
+      font-size: 30px;
+      margin-right: 5px;
 
       &.blue {
-        background-image: url(media-url-dir + 'mdn_blank-blue-document-color.svg');
+        background-position: 0 -340px;
         color: #fff;
       }
 
@@ -72,9 +79,10 @@
     text-transform: uppercase;
 
     i {
-      background-size: cover;
-      width: 47px;
-      height: 41px;
+      width: 42px;
+      height: 39px;
+      background-position: 0 -147px;
+      background-size: 134px auto;
       color: #0095dd;
       margin-left: 0 !important;
       float: left;
