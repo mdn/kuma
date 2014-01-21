@@ -5,7 +5,7 @@
 nfs: true
 gui: false
 
-# Add to /etc/hosts: 192.168.10.55 developer-dev.mozilla.org
+# Add to /etc/hosts: 192.168.10.55 developer-local.allizom.org
 ip_address: 192.168.10.55
 
 # Define custom AWS config options here
