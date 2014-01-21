@@ -18,13 +18,13 @@ class python_prereqs {
 }
 
 class python_modules {
-    exec { 
+    exec {
          "pip-install-compiled":
-             cwd => '/tmp', 
+             cwd => '/tmp',
              timeout => 1200, # Too long, but this can take awhile
              command => "/usr/bin/pip install --download-cache=/home/vagrant/src/puppet/cache/pip -r /home/vagrant/src/requirements/compiled.txt";
          "pip-install-dev":
-             cwd => '/tmp', 
+             cwd => '/tmp',
              timeout => 1200, # Too long, but this can take awhile
              command => "/usr/bin/pip install --download-cache=/home/vagrant/src/puppet/cache/pip -r /home/vagrant/src/requirements/dev.txt";
      }

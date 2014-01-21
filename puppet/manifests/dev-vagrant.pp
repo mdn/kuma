@@ -16,7 +16,6 @@ Exec {
 class dev {
 
     stage {
-        
         hacks:  before => Stage[pre];
         pre:    before => Stage[tools];
         tools:  before => Stage[basics];
@@ -41,6 +40,7 @@ class dev {
         memcache:       stage => basics;
         rabbitmq:       stage => basics;
         elasticsearch:  stage => basics;
+        foreman:        stage => basics;
 
         nodejs: stage => langs;
         python: stage => langs;

@@ -1,8 +1,9 @@
 # Ensure some handy dev tools are available.
 class dev_tools {
-    package { 
+    package {
         [ "build-essential", "git", "subversion", "mercurial", "vim",
-            "nfs-common", "openjdk-7-jdk", "tmux", "translate-toolkit", "gettext", ]:
+            "nfs-common", "openjdk-7-jdk", "tmux", "translate-toolkit",
+            "gettext", "htop", "ack-grep", "locate"]:
             ensure => installed;
     }
 }
@@ -25,7 +26,7 @@ class dev_hacks {
         owner => "vagrant", group => "vagrant", mode => 0755;
     }
 
-    file { 
+    file {
         [ "/home/vagrant/logs",
             "/home/vagrant/uploads",
             "/home/vagrant/product_details_json",
@@ -38,7 +39,7 @@ class dev_hacks {
         ensure => file,
         source => "/home/vagrant/src/puppet/files/vagrant/settings_local.py";
     }
-        
+
     file { "/home/vagrant/src/kumascript_settings_local.json":
         ensure => file,
         source => "/home/vagrant/src/puppet/files/vagrant/kumascript_settings_local.json";
@@ -48,7 +49,7 @@ class dev_hacks {
         source => "/home/vagrant/src/puppet/files/etc/motd",
         owner => "root", group => "root", mode => 0644;
     }
-            
+
     file { "/etc/hosts":
         source => "/home/vagrant/src/puppet/files/etc/hosts",
         owner => "root", group => "root", mode => 0644;
