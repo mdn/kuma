@@ -1,7 +1,7 @@
 Welcome to Kuma (developer-dev.mozilla.org)
 
 To update this dev environment:
-    sudo /opt/ruby/bin/puppet apply /home/vagrant/src/puppet/manifests/dev-vagrant.pp
+    sudo puppet apply /home/vagrant/src/puppet/manifests/dev-vagrant.pp
 
 To launch or reattach to a Tmux session running everything:
     ~/bin/go-tmux.sh

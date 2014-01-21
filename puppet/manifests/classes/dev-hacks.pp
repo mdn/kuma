@@ -65,15 +65,6 @@ class dev_hacks {
         owner => "root", group => "root", mode => 0644;
     }
 
-    # adds /opt/ruby/bin to $PATH
-    exec { 'executable-vagrantruby-profile':
-        command => "/bin/chmod +x /etc/profile.d/vagrantruby.sh"
-    }
-
-    # remove $PATH restrictions for running sudo
-    exec { 'allow-ruby-with-sudo':
-        command => "/bin/sed -i '/secure_path/c\\Defaults\t!secure_path' /etc/sudoers"
-    }
 }
 
 # Last few things that need doing...
