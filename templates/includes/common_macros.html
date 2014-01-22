@@ -61,7 +61,7 @@
 {% endmacro %}
 
 {% macro optimizely_script() %}
-  {% if config.OPTIMIZELY_PROJECT_ID > 0 %}
+  {% if config.OPTIMIZELY_PROJECT_ID and config.OPTIMIZELY_PROJECT_ID != '0' %}
   <script src="//cdn.optimizely.com/js/{{ config.OPTIMIZELY_PROJECT_ID }}.js"></script>
   {% endif %}
 {% endmacro %}
