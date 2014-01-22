@@ -4,9 +4,6 @@
 {% from "includes/common_macros.html" import content_editor %}
 {% set title = _('Translate Article | {document}')|f(document=parent.title) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
-{% set crumbs = [(url('wiki.category', parent.category), parent.get_category_display()),
-                 (parent.get_absolute_url(), parent.title),
-                 (None, _('Translate Article'))] %}
 {% block bodyclass%}translate{% endblock %}
 
 {% block site_css %}
@@ -16,9 +13,7 @@
 
 {% block content %}
   {% set language = settings.LANGUAGES[locale.lower()] %}
-<section id="content">
-  <div class="wrap">
-    <div id="content-main" class="full">
+
       <form action="" method="post" data-json-url="{{ url('wiki.json') }}" id="wiki-page-translate">
         {{ csrf() }}
         <input type="hidden" name="form" value="both" />
@@ -151,15 +146,11 @@
       </details>
     {% endif %}
 
-    <div id="preview"></div>
   </div>
 </form>
 
     {% include 'wiki/includes/attachment_list.html' %}
 
-    </div>
-   </div>
-</section>
 {% endblock %}
 
 {% block js %}

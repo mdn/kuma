@@ -3,16 +3,12 @@
 {% set title = _('Revert Revision | {document}')|f(document=document.title) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
 {% block bodyclass %}revert-document{% endblock %}
-{% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
-                 (document.get_absolute_url(), document.title),
-                 (None, _('Revert Revision'))] %}
 
 {% block content %}
-<section id="content">
-  <div class="wrap">
-    <div id="content-main" class="full">
-      <article id="delete-revision" class="main">
-        <h1 class="title">{{ _('Are you sure you want to revert to this revision?') }}</h1>
+
+      <article id="delete-revision">
+      
+        <h1>{{ _('Are you sure you want to revert to this revision?') }}</h1>
 
         <label><strong>{{ _('Document') }}</strong></label>
         <div>{{ document.title }}</div>
@@ -40,7 +36,5 @@
           </div>
         </form>
       </article>
-    </div>
-  </div>
-</section>
+    
 {% endblock %}

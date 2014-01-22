@@ -2,8 +2,6 @@
 {% extends "wiki/base.html" %}
 {% set title = _('Review Translation {id} | {document}')|f(document=document.parent.title, id=revision.id) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
-{% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
-                 (document.get_absolute_url(), document.title), (None, 'Review Translation')] %}
 {% set classes = 'review' %}
 
 {% block content %}
@@ -107,8 +105,4 @@
 
     {% include 'wiki/includes/review_form.html' %}
   </article>
-{% endblock %}
-
-{% block side %}
-  {% include 'wiki/includes/support_for_selectors.html' %}
 {% endblock %}

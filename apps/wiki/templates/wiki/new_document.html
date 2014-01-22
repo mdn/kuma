@@ -4,8 +4,6 @@
 {% from "includes/common_macros.html" import content_editor %}
 {% set title = _('Create a New {title}')|fe(title=('Template' if is_template else 'Article')) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
-{# TODO: Change KB url to landing page when we have one #}
-{% set crumbs = [(None, _('New Article'))] %}
 {% set classes = 'new' %}
 {% block bodyclass %}new{% if is_template %} is-template{% endif %}{% endblock %}
 
@@ -15,10 +13,7 @@
 {% endblock %}
 
 {% block content %}
-<section id="content">
-  <div class="wrap">
-    <div id="content-main" class="full">
-    <article class="article" role="main">
+    <article>
     {{ errorlist(document_form) }}
     {{ errorlist(revision_form) }}
     <form id="wiki-page-edit" class="editing" method="post" action="">
@@ -88,9 +83,7 @@
     {% include 'wiki/includes/attachment_list.html' %}
 
     </article>
-    </div>
-   </div>
-</section>
+    
 {% endblock %}
 
 {% block site_js %}

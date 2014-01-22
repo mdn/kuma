@@ -315,7 +315,7 @@ class RevisionTests(TestCaseBase):
         doc = pq(response.content)
         eq_('Revision id: %s' % r.id,
             doc('#wiki-doc div.revision-info li.revision-id').text())
-        eq_(d.title, doc('#wiki-doc h1.title').text())
+        eq_(d.title, doc('#wiki-doc h1').text())
         eq_(r.content,
             doc('#doc-source textarea').text())
         eq_('Created: Jan 1, 2011 12:00:00 AM',
@@ -406,7 +406,7 @@ class NewDocumentTests(TestCaseBase):
         response = self.client.post(reverse('wiki.new_document'), data,
                                     follow=True)
         doc = pq(response.content)
-        ul = doc('article.article > ul.errorlist')
+        ul = doc('article > ul.errorlist')
         ok_(len(ul) > 0)
         ok_('Please provide a title.' in ul('li').text())
 
@@ -418,7 +418,7 @@ class NewDocumentTests(TestCaseBase):
         response = self.client.post(reverse('wiki.new_document'), data,
                                     follow=True)
         doc = pq(response.content)
-        ul = doc('article.article > ul.errorlist')
+        ul = doc('article > ul.errorlist')
         eq_(1, len(ul))
         eq_('Please provide content.', ul('li').text())
 
@@ -430,7 +430,7 @@ class NewDocumentTests(TestCaseBase):
         response = self.client.post(reverse('wiki.new_document'), data,
                                     follow=True)
         doc = pq(response.content)
-        ul = doc('article.article > ul.errorlist')
+        ul = doc('article > ul.errorlist')
         eq_(1, len(ul))
         assert ('Select a valid choice. 963 is not one of the available '
                 'choices.' in ul('li').text())
@@ -460,7 +460,7 @@ class NewDocumentTests(TestCaseBase):
         response = self.client.post(reverse('wiki.new_document'), data)
         eq_(200, response.status_code)
         doc = pq(response.content)
-        ul = doc('article.article > ul.errorlist')
+        ul = doc('article > ul.errorlist')
         eq_(1, len(ul))
         eq_('Document with this Slug and Locale already exists.',
             ul('li').text())

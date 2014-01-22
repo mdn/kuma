@@ -4,17 +4,12 @@
 {% set title = _('Revision {n} | {t} | {c}')|f(n=revision.id, t=document.title, c=document.get_category_display()) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
 {% set meta = [('robots', 'noindex, nofollow')] %}
-{% set crumbs = [(url('wiki.category', document.category), document.get_category_display()),
-                 (document.get_absolute_url(), document.title),
-                 (None, _('Revision {num}')|f(num=revision.id))] %}
 {% set classes = 'document' %}
 
 {% block content %}
-<section id="content">
-  <div class="wrap">
-    <div id="content-main" class="full">
+
   <article id="wiki-doc">
-    <h1 class="title">{{ document.title }}</h1>
+    <h1>{{ document.title }}</h1>
     <details class="h2" open="open">
       <summary>{{ _('Revision Information') }}</summary>
       <div class="revision-info">
@@ -74,25 +69,20 @@
         </ul>
       </div>
     </details>
-    <details class="h2">
-      <summary>{{ _('Revision Source') }}</summary>
+    
+    <details>
+      <h2><summary>{{ _('Revision Source') }}</summary></h2>
       <div id="doc-source">
         <textarea readonly="readonly">{{ revision.content }}</textarea>
       </div>
     </details>
-    <details class="h2">
-      <summary>{{ _('Revision Content') }}</summary>
+
+    <details>
+      <h2><summary>{{ _('Revision Content') }}</summary></h2>
       <div id="doc-content">
         <div class="page-content boxed">{{ revision.content|wiki_bleach }}</div>
       </div>
     </details>
   </article>
-    </div>
-   </div>
-</section>
-{% endblock %}
-
-
-{% block side %}
-  {% include 'wiki/includes/support_for_selectors.html' %}
+    
 {% endblock %}

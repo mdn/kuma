@@ -4,11 +4,7 @@
 {% block title %}{{ page_title(title) }}{% endblock %}
 
 {% block content %}
-<section id="content">
-  <div class="wrap">
-    <div id="content-main" class="full">
   <article class="main-full" id="mvp-signup">
-    <div id="wikiArticle" class="page-content boxed">
 
       {% if not submitted %}
         {% trans %}
@@ -52,7 +48,6 @@
             color: #900;
           }
         </style>
-        </div>
 
       {% else %}
 
@@ -63,7 +58,4 @@
 
       {% endif %}
   </article>
-    </div>
-   </div>
-</section>
 {% endblock %}
