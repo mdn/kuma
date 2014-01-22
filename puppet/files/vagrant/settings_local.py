@@ -154,4 +154,10 @@ ES_INDEX_PREFIX = 'mdn'
 ES_LIVE_INDEX = True
 ES_INDEXING_TIMEOUT = 30
 
-SENTRY_DSN = 'https://mana.mozilla.org/wiki/display/websites/Developer+Cluster#DeveloperCluster-Sentry'
+# See https://mana.mozilla.org/wiki/display/websites/Developer+Cluster#DeveloperCluster-Sentry
+SENTRY_DSN = ''
+
+if SENTRY_DSN:
+    INSTALLED_APPS = INSTALLED_APPS + (
+        'raven.contrib.django.raven_compat',
+    )
