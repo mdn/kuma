@@ -5,6 +5,7 @@ class stylus {
         creates => "/usr/local/bin/stylus",
         require => [
             Package["nodejs"], Package["nodejs-dev"], Package["npm"],
+            File["/usr/share/npm/npmrc"]
         ]
     }
     file { "/usr/local/bin/stylus":

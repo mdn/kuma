@@ -23,6 +23,12 @@ class nodejs {
         owner => "root", group => "root", mode => 0777,
         require => File["/root"];
     }
+    file { "/usr/share/npm/npmrc":
+        ensure => file,
+        owner => "root", group => "root", mode => 0755,
+        source => "/home/vagrant/src/puppet/files/usr/share/npm/npmrc",
+        require => Package["npm"]
+    }
     exec { 'npm-install':
         cwd => "/home/vagrant/src/kumascript",
         user => 'vagrant',
@@ -30,7 +36,8 @@ class nodejs {
         creates => "/home/vagrant/src/kumascript/node_modules/fibers",
         require => [
             Package["nodejs"], Package["nodejs-dev"], Package["npm"],
-            File["/usr/include/node"], File["/root/.npm"]
+            File["/usr/include/node"], File["/root/.npm"],
+            File["/usr/share/npm/npmrc"]
         ]
     }
 }
