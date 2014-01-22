@@ -1,26 +1,15 @@
+
 Welcome to Kuma (developer-dev.mozilla.org)
 
 To update this dev environment:
     sudo puppet apply /home/vagrant/src/puppet/manifests/dev-vagrant.pp
 
-To launch or reattach to a Tmux session running everything:
-    ~/bin/go-tmux.sh
-
-To use Foreman instead to start all of the below:
+Use Foreman to start & monitor services necessary for development:
     foreman start
 
-To start the Django app:
-    ~/src/manage.py runserver --forked 0.0.0.0:8000
-
-To start the kumascript service:
-    node kumascript/run.js
-
-To start a Stylus watcher which compiles when files change:
-    scripts/compile-stylesheets --watch
-
-To start the celery queue workers:
-    ~/src/manage.py celeryd
+Consult ~/src/Procfile to see what services are managed by Foreman.
 
 To run tests:
     ~/src/manage.py test actioncounters contentflagging demos devmo landing users search wiki
     (cd ~/src/kumascript && ./node_modules/.bin/nodeunit tests)
+

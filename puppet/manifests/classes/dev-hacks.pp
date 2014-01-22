@@ -79,8 +79,5 @@ class dev_hacks_post {
         "/home/vagrant/bin":
             ensure => directory,
             owner => "vagrant", group => "vagrant", mode => 0755;
-        "/home/vagrant/bin/go-tmux.sh":
-            source => "/home/vagrant/src/puppet/files/home/vagrant/bin/go-tmux.sh",
-            owner => "vagrant", group => "vagrant", mode => 0777;
     }
 }
