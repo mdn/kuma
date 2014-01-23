@@ -2,6 +2,8 @@ from django.conf import settings
 from django.db.models import Sum
 from django.db.models.signals import post_save
 
+import waffle
+
 from .models import (Document, Revision)
 
 import badger
@@ -39,6 +41,8 @@ badges = [
 class BadgeAwardingMiddleware(object):
 
     def process_request(self, request):
+        if not waffle.flag_is_active(request, 'badger'):
+            return None
         if not hasattr(request, 'user'):
             return None
         if not request.user.is_authenticated():
@@ -63,6 +67,9 @@ def register_signals():
 
 
 def on_revision_save(sender, **kwargs):
+    if not waffle.switch_is_active('badger'):
+        return
+
     o = kwargs['instance']
     created = kwargs['created']
 
