@@ -1,0 +1,8 @@
+# DO NOT MODIFY THIS FILE - use /etc/npmrc instead.
+globalconfig=/etc/npmrc
+globalignorefile=/etc/npmignore
+prefix=/usr/local
+
+# HACK: Yeah, I know it said not to modify this file, but globalconfig seems
+# not to be working since /etc/npmrc is not used
+strict-ssl = false
