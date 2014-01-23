@@ -1,2 +1,2 @@
 Sphinx
-mdn-sphinx-theme
+mdn-sphinx-theme>=0.4
