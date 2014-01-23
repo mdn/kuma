@@ -459,7 +459,6 @@ INSTALLED_APPS = (
     'teamwork',
     'djcelery',
     'taggit',
-    'raven.contrib.django.raven_compat',
     'dbgettext',
 
     'dashboards',
@@ -1129,7 +1128,6 @@ LOGGING = {
 CSRF_COOKIE_SECURE = True
 X_FRAME_OPTIONS = 'DENY'
 
-SENTRY_DSN = 'set this in settings_local.py'
 TEAMWORK_BASE_POLICIES = {
     'anonymous': (
         'wiki.view_document',),
