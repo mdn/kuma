@@ -144,11 +144,16 @@ class kuma_config {
             command => "/usr/bin/python ./vendor/src/schematic/schematic migrations/",
             require => [ Exec["kuma_update_product_details"],
                 Service["mysql"], File["/home/vagrant/logs"] ];
+        "djcelery_migrate_2":
+            user => "vagrant",
+            cwd => "/home/vagrant/src",
+            command => "/usr/bin/python manage.py migrate djcelery 0002 --fake",
+            require => [ Exec["kuma_sql_migrate"] ];
         "kuma_south_migrate":
             user => "vagrant",
             cwd => "/home/vagrant/src",
             command => "/usr/bin/python manage.py migrate",
-            require => [ Exec["kuma_sql_migrate"] ];
+            require => [ Exec["djcelery_migrate_2"] ];
         "kuma_update_feeds":
             user => "vagrant",
             cwd => "/home/vagrant/src",
