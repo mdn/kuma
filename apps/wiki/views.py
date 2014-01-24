@@ -479,51 +479,17 @@ def document(request, document_slug, document_locale):
                 # content
                 render_raw_fallback = True
 
-    toc_html = None
     if not doc.is_template:
-
-        doc_html = (wiki.content.parse(doc_html)
-                                .injectSectionIDs()
-                                .serialize())
-
-        # Start applying some filters to the document HTML
-        tool = (wiki.content.parse(doc_html))
-
-        # Generate a TOC for the document using the sections provided by
-        # SectionEditingLinks
-        if doc.show_toc and not show_raw:
-            toc_filter = {1: wiki.content.SectionTOCFilter,
-                          2: wiki.content.H2TOCFilter,
-                          3: wiki.content.H3TOCFilter,
-                          4: wiki.content.SectionTOCFilter}[doc.current_revision.toc_depth]
-            toc_html = (wiki.content.parse(tool.serialize())
-                                    .filter(toc_filter)
-                                    .serialize())
 
         # If a section ID is specified, extract that section.
         if section_id:
-            tool.extractSection(section_id)
-
-        # Annotate links within the page, but only if not sending raw source.
-        if not show_raw:
-            tool.annotateLinks(base_url=base_url)
-
-        # If this user can edit the document, inject some section editing
-        # links.
-        if ((need_edit_links or not show_raw) and
-                request.user.is_authenticated() and
-                doc.allows_revision_by(request.user)):
-            tool.injectSectionEditingLinks(doc.full_path, doc.locale)
-
-        # ?raw view is often used for editors - apply safety filtering.
-        if show_raw:
-            tool.filterEditorSafety()
-
-        doc_html = tool.serialize()
+            doc_html = (wiki.content.parse(doc_html)
+                .extractSection(section_id)
+                .serialize())
 
         # If this is an include, filter out the class="noinclude" blocks.
         if is_include:
-            doc_html = (wiki.content.filter_out_noinclude(doc_html))
+            doc_html = wiki.content.filter_out_noinclude(doc_html)
     
     # If ?summary is on, just serve up the summary as doc HTML
     if show_summary:
@@ -583,9 +549,15 @@ def document(request, document_slug, document_locale):
     # Provide additional information if user came from a search
     from_search = request.GET.get('search', '')
 
-    data = {'document': doc, 'document_html': doc_html, 'toc_html': toc_html,
+    data = {'document': doc,
+            'document_html': doc_html, 
+            'toc_html': doc.get_toc_html(),
+            'body_html': doc.get_body_html(),
+            'quick_links_html': doc.get_quick_links_html(),
+            'zone_nav_html': doc.get_zone_nav_html(),
             'redirected_from': redirected_from,
-            'related': related, 'contributors': contributors,
+            'related': related,
+            'contributors': contributors,
             'fallback_reason': fallback_reason,
             'kumascript_errors': ks_errors,
             'render_raw_fallback': render_raw_fallback,
@@ -1892,7 +1864,7 @@ def styles_view(request, document_slug=None, document_locale=None):
 @process_document_path
 @prevent_indexing
 def toc_view(request, document_slug=None, document_locale=None):
-    """Return some basic document info in a JSON blob."""
+    """Return the table of contents HTML for a document"""
     kwargs = {'locale': request.locale, 'current_revision__isnull': False}
     if document_slug is not None:
         kwargs['slug'] = document_slug
@@ -1905,12 +1877,7 @@ def toc_view(request, document_slug=None, document_locale=None):
         return HttpResponseBadRequest()
 
     document = get_object_or_404(Document, **kwargs)
-    tool = wiki.content.parse(wiki.content.parse(document.html)
-                                .injectSectionIDs()
-                                .serialize())
-    toc_html = (wiki.content.parse(tool.serialize())
-                            .filter(wiki.content.SectionTOCFilter)
-                            .serialize())
+    toc_html = document.get_toc_html()
     if toc_html:
         toc_html = '<ol>' + toc_html + '</ol>'
 

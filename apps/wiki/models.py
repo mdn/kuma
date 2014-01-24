@@ -1,3 +1,5 @@
+import logging
+
 from collections import namedtuple
 from datetime import datetime, timedelta
 from itertools import chain
@@ -6,6 +8,11 @@ import hashlib
 import re
 import json
 import newrelic.agent
+
+try:
+    from functools import wraps
+except ImportError:
+    from django.utils.functional import wraps
 
 from pyquery import PyQuery
 from tower import ugettext_lazy as _lazy, ugettext as _
@@ -21,6 +28,7 @@ from django.core.urlresolvers import resolve
 from django.db import models
 from django.db.models import signals
 from django.http import Http404
+from django.utils.decorators import available_attrs
 
 from south.modelsinspector import add_introspection_rules
 import constance.config
@@ -44,7 +52,9 @@ from . import kumascript, TEMPLATE_TITLE_PREFIX
 from .content import (get_seo_description, get_content_sections,
                       extract_code_sample, parse as parse_content,
                       extract_css_classnames, extract_html_attributes,
-                      extract_kumascript_macro_names)
+                      extract_kumascript_macro_names,
+                      SectionTOCFilter, H2TOCFilter,
+                      H3TOCFilter, SectionTOCFilter)
 from .exceptions import (UniqueCollision, SlugCollision,
                          DocumentRenderingInProgress,
                          DocumentRenderedContentNotAvailable)
@@ -255,6 +265,14 @@ TOC_DEPTH_H2 = 2
 TOC_DEPTH_H3 = 3
 TOC_DEPTH_H4 = 4
 
+TOC_DEPTH_FILTERS = (
+    None,
+    SectionTOCFilter,
+    H2TOCFilter,
+    H3TOCFilter,
+    SectionTOCFilter
+)
+
 TOC_DEPTH_CHOICES = (
     (TOC_DEPTH_NONE, _lazy(u'No table of contents')),
     (TOC_DEPTH_ALL, _lazy(u'All levels')),
@@ -404,6 +422,7 @@ class BaseDocumentManager(models.Manager):
         allowed_hosts = constance.config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS
         out = (parse_content(content_in)
                .filterIframeHosts(allowed_hosts)
+               .filterEditorSafety()
                .serialize())
 
         if use_constance_bleach_whitelists:
@@ -615,6 +634,28 @@ class TaggedDocument(ItemBase):
             taggeddocument__content_object__isnull=False).distinct()
 
 
+def cache_with_field(field_name):
+    """Decorator for some get_{field} methods.
+    
+    If the backing model field is null, or kwarg force_fresh is True, call the
+    decorated method to regenerate and return the content.
+
+    Otherwise, just return the value in the backing model field.
+    """
+    def decorator(fn):
+        @wraps(fn, assigned=available_attrs(fn))
+        def wrapper(self, *args, **kwargs):
+            force_fresh = kwargs.get('force_fresh', False)
+            field_val = getattr(self, field_name)
+            if not field_val is None and not force_fresh:
+                return field_val
+            field_val = fn(self, *args, **kwargs)
+            setattr(self, field_name, field_val)
+            return field_val
+        return wrapper
+    return decorator
+
+
 @register_live_index
 class Document(NotificationsMixin, models.Model):
     """A localized knowledgebase document, not revision-specific."""
@@ -692,6 +733,21 @@ class Document(NotificationsMixin, models.Model):
 
     # Errors (if any) from the last rendering run
     rendered_errors = models.TextField(editable=False, blank=True, null=True)
+
+    # Main body HTML extracted from rendered HTML
+    body_html = models.TextField(editable=False, blank=True, null=True)
+
+    # Table of contents HTML extracted from rendered HTML
+    toc_html = models.TextField(editable=False, blank=True, null=True)
+
+    # Summary HTML extracted from rendered HTML
+    summary_html = models.TextField(editable=False, blank=True, null=True)
+
+    # Quick links HTML extracted from rendered HTML
+    quick_links_html = models.TextField(editable=False, blank=True, null=True)
+
+    # Summary HTML extracted from rendered HTML
+    zone_nav_html = models.TextField(editable=False, blank=True, null=True)
 
     # Whether or not to automatically defer rendering of this page to a queued
     # offline task. Generally used for complex pages that need time
@@ -858,6 +914,16 @@ class Document(NotificationsMixin, models.Model):
                                                         timeout=timeout)
             self.rendered_errors = errors and json.dumps(errors) or None
 
+        if not self.is_template:
+            self.rendered_html = (parse_content(self.rendered_html)
+                .annotateLinks(base_url=base_url)
+                .serialize())
+            self.get_toc_html(force_fresh=True)
+            self.get_summary(force_fresh=True)
+            self.get_body_html(force_fresh=True)
+            self.get_quick_links_html(force_fresh=True)
+            self.get_zone_nav_html(force_fresh=True)
+
         # Finally, note the end time of rendering and update the document.
         self.last_rendered_at = datetime.now()
 
@@ -884,7 +950,14 @@ class Document(NotificationsMixin, models.Model):
         self.save()
         render_done.send(sender=self.__class__, instance=self)
 
-    def get_summary(self, strip_markup=True, use_rendered=True):
+    def get_rendered_section_content(self, section_id):
+        """Convenience method to extract the rendered content for a single section"""
+        return (parse_content(self.rendered_html)
+                .extractSection(section_id)
+                .serialize())
+
+    @cache_with_field('summary_html')
+    def get_summary(self, strip_markup=True, use_rendered=True, force_fresh=False):
         """Attempt to get the document summary from rendered content, with
         fallback to raw HTML"""
         if use_rendered and self.rendered_html:
@@ -892,6 +965,46 @@ class Document(NotificationsMixin, models.Model):
         else:
             src = self.html
         return get_seo_description(src, self.locale, strip_markup)
+
+    @cache_with_field('toc_html')
+    def get_toc_html(self, force_fresh=False):
+        if not self.is_template and self.show_toc:
+            try:
+                depth = self.current_revision.toc_depth
+                toc_filter = TOC_DEPTH_FILTERS[depth]
+                src = self.rendered_html and self.rendered_html or self.html
+                return (parse_content(src)
+                        .injectSectionIDs()
+                        .filter(toc_filter)
+                        .serialize())
+            except IndexError:
+                pass
+        return ''
+
+    @cache_with_field('body_html')
+    def get_body_html(self, force_fresh=False):
+        sections_to_hide = ('Quick_Links', 'Subnav')
+        doc = parse_content(self.rendered_html)
+        for sid in sections_to_hide:
+            doc = doc.replaceSection(sid, '<!-- -->')
+        return doc.serialize()
+
+    @cache_with_field('quick_links_html')
+    def get_quick_links_html(self, force_fresh=False):
+        return self.get_rendered_section_content('Quick_Links')
+
+    @cache_with_field('zone_nav_html')
+    def get_local_zone_nav_html(self, force_fresh=False):
+        return self.get_rendered_section_content('Subnav')
+
+    def get_zone_nav_html(self, force_fresh=False, lookup_stack=True):
+        local_html = self.get_local_zone_nav_html()
+        if local_html:
+            return local_html
+        for zone in self.find_zone_stack():
+            html = zone.document.get_local_zone_nav_html(force_fresh=force_fresh)
+            if html:
+                return html
 
     def build_json_data(self):
         content = (parse_content(self.html)
