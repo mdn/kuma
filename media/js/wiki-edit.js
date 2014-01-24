@@ -3,15 +3,142 @@
  * Scripts for the wiki app.
  * 
  */
-(function ($) {
-    var DRAFT_NAME, DRAFT_TIMEOUT_ID;
-    var supportsLocalStorage = ('localStorage' in window),
-        formId = 'wiki-page-edit',
-        formSelector,
-        isTranslation,
-        isTemplate;
+(function ($, win, doc) {
+
+    /*  
+        Initialization of the CKEditor widget
+    */
+    (function() {
+        var $textarea = $('#id_content');
+
+        // CKEditor setup method
+        var setup = function() {
+          var $appBoxes = $('.approved .boxed');
+          var $tools = $('div.cke_toolbox');
+          var $wikiArt = $('#cke_wikiArticle');
+          var $container = $('.ckeditor-container');
+          var $content = $('#cke_id_content');
+          var contentTop = $container.offset().top;
+          var fixed = false;
+
+          // Switch header and toolbar styles on scroll to keep them on screen
+          $(doc).on('scroll', function() {
+
+            // If top of the window is betwen top of #content and top of metadata (first .page-meta) blocks, the header is fixed
+            var scrollTop = $(this).scrollTop();
+            if (scrollTop >= contentTop) {
+
+              // Need to display or hide the toolbar depending on scroll position
+               if(scrollTop > $container.height() + contentTop - 200 /* offset to ensure toolbar doesn't reach content bottom */) {
+                $tools.css('display', 'none');
+                return; // Cut off at some point
+               }
+               else {
+                $tools.css('display', '');
+               }
+
+               // Fixed position toolbar if scrolled down to the editor
+               // Wrapped in IF to cut down on processing
+              if (!fixed) {
+                fixed = true;
+                $tools.css({
+                  position: 'fixed',
+                  top: 0,
+                  width: $content.width() - 11
+                });
+              }
+
+            } else { // If not, header is relative, put it back
+              if (fixed) {
+                fixed = false;
+                $tools.css({
+                  position: 'relative',
+                  top: 'auto',
+                  width: 'auto'
+                });
+              }
+            }
+          });
+
+          $(win).resize(function() { // Recalculate box width on resize
+            if (fixed) {
+              $tools.css({
+                width: $wikiArt.width() - 10
+              }); // Readjust toolbox to fit
+            }
+          });
+       };
+
+      // Renders the WYSIWYG editor
+      $textarea.each(function () {
+        if (!$('body').is('.is-template')) {
+          $(this).removeAttr('required').ckeditor(setup, {
+            customConfig : '/en-US/docs/ckeditor_config.js'
+          });
+        }
+      });
+    })();
+    
+    
+
+  /* 
+    Plugin for prepopulating the slug fields
+  */
+  $.fn.prepopulate = function(dependencies, maxLength) {
+      var _changed = '_changed';
+
+      return this.each(function() {
+          var $field = $(this);
+
+          $field.data(_changed, false);
+          $field.on(_changed, function() {
+              $field.data(_changed, true);
+          });
+
+          var populate = function () {
+              // Bail if the fields value has changed
+              if ($field.data(_changed) == true) return;
+
+              var values = [], field_val, field_val_raw, split;
+              dependencies.each(function() {
+                  if ($(this).val().length > 0) {
+                      values.push($(this).val());
+                  }
+              });
+
+              s = values.join(' ');
+              
+              s = $.slugifyString(s);
+
+              // Trim to first num_chars chars
+              s = s.substring(0, maxLength);
+
+              // Only replace the last piece (don't replace slug heirarchy)
+              split = $field.val().split('/');
+              split[split.length - 1] = s;
+              $field.val(split.join('/'));
+          };
+          
+          dependencies.on('keyup change focus', populate);
+      });
+  };
+
+  /* 
+    Functionality to set up the new, edit, and translate pages
+  */
+    var DRAFT_NAME;
+    var DRAFT_TIMEOUT_ID;
+
+    var supportsLocalStorage = ('localStorage' in win);
+    var formId = 'wiki-page-edit';
+    var formSelector;
+    var isTranslation;
+    var isTemplate;
 
     function init() {
+        var $body = $('body');
+        var HEADERS = [ 'HGROUP', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6' ];
+
         $('select.enable-if-js').removeAttr('disabled');
 
         // If the form is a translate form, update the formId
@@ -22,8 +149,6 @@
         }
         formSelector = '#' + formId;
 
-        var $body = $('body');
-
         if($body.hasClass('is-template')) {
             isTemplate = 1;
         }
@@ -33,14 +158,8 @@
         }
         initDetailsTags();
 
-        if ($body.is('.document') || $body.is('.home')) {  // Document page
-            initSectionEditing();
-        } else if ($body.is('.review')) { // Review pages
+        if ($body.is('.review')) { // Review pages
             initApproveReject();
-        }
-
-        if ($body.is('.home')) {
-            initClearOddSections();
         }
 
         if ($body.is('.edit, .new, .translate')) {
@@ -52,14 +171,12 @@
                 initDrafting();
             }
             initMetadataParentTranslation();
-            // initTitleAndSlugCheck();
-            // initDrafting();
         }
         if ($body.is('.edit.is-template') || $body.is('.new.is-template')) {
 
             var textarea = $('textarea#id_content').hide();
 
-            var editor = window.ace_editor = ace.edit('ace_content');
+            var editor = win.ace_editor = ace.edit('ace_content');
             editor.setTheme('ace/theme/dreamweaver');
             editor.setBehavioursEnabled(false);
             
@@ -74,243 +191,17 @@
             $('.ace_text-input').focus();
             initDrafting();
         }
-    }
-    
-    var HEADERS = [ 'HGROUP', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6' ];
-
-    /**
-     * Set up for inline section editing.
-     */
-    function initSectionEditing () {
-        // If we don't have a #wikiArticle, bail out.
-        var wiki_article = $('body.document #wikiArticle');
-        if (!wiki_article.length) { return; }
-        
-        // Wire up the wiki article with an event delegation handler
-        wiki_article.click(function (ev) {
-            var target = $(ev.target);
-            if (target.is('a.edit-section')) { 
-                // Caught a section edit link click.
-                return handleSectionEditClick(ev, target);
-            }
-            if (target.is('.edited-section-ui.current .btn-save')) {
-                // Caught a section edit save click.
-                saveSectionEdit();
-                return false;
-            }
-            if (target.is('.edited-section-ui.current .btn-cancel')) {
-                // Caught a section edit cancel click.
-                cancelSectionEdit();
-                return false;
-            }
-        });
-    }
-
-    /**
-     * Handle a click on a section editing link.
-     */
-    function handleSectionEditClick (ev, link) {
-        // Any modifiers while clicking an edit link reverts to default
-        // behavior (eg. open in new window)
-        if (ev.metaKey || ev.altKey || ev.ctrlKey || ev.shiftKey) {
-            return;
-        }
-
-        // Look up some details about the section refered to by the link
-        var section_id = link.attr('data-section-id'),
-            section_edit_url = link.attr('href'),
-            section_src_url = link.attr('data-section-src-url'),
-            section_el = $('#'+section_id),
-            section_tag = section_el[0].tagName.toUpperCase();
-
-        // Bail if the referenced section element doesn't exist.
-        if (!section_el.length) { return; }
-        
-        // Bail if the referenced section element is not a header.
-        if (-1 == HEADERS.indexOf(section_tag)) { return; }
-
-        // If there's a current editor, cancel it.
-        if ($('.edited-section-ui.current').length) {
-            if (!cancelSectionEdit()) {
-                // The user cancelled the cancellation, so just ignore the
-                // section edit click.
-                return false; 
-            }
-        }
-
-        // Bail if the referenced section already appears to an edit in
-        // progress. But, cancel the link click
-        if (section_el.parents('div.edited-section').length) { 
-            return false;
-        }
-
-        // Build a stop selector from headers equal to or higher in rank
-        var stop_pos = HEADERS.indexOf(section_tag)+1,
-            stop_selector = HEADERS.slice(0, stop_pos).join(',');
-
-        // Scoop up all the elements considered part of the section, wrap them
-        // in a container while editing. Style it as loading, initially.
-        var section_kids = section_el.nextUntil(stop_selector).andSelf();
-        section_kids.wrapAll('<div class="edited-section edited-section-loading" ' +
-                                   'id="edited-section"/>');
-
-        // Start loading the current section source, launch editor when loaded.
-        $.get(section_src_url, function (html_data) {
-            launchSectionEditor(section_id, section_edit_url, html_data);
-        });
-
-        return false;
-    }
-
-    /**
-     * Launch the section editor with HTML data.
-     */
-    function launchSectionEditor (section_id, section_edit_url, html_data) {
-        // Clone and setup the editing UI from template
-        var ui = $('.edited-section-ui.template').clone()
-            .removeClass('template').addClass('current')
-            .find('.src').html(html_data).end();
-        // Inject the source block, and remove the edit block loading style.
-        $('#edited-section')
-            .before(ui)
-            .removeClass('edited-section-loading');
-        // Fire up the CKEditor, stash it in the UI's data store
-        CKEDITOR.inlineHeight = ui.find('.src').height();
-        CKEDITOR.inlineCallback = function() {
-            ui.find('.edited-section-buttons').addClass('loaded');
-        };
-        $('.edited-section-ui.current')
-            .data('edit_url', section_edit_url)
-            .data('editor',
-                CKEDITOR.replace(ui.find('.src')[0], {
-                    customConfig : '/docs/ckeditor_config.js'
-                }))
-            .find('.btn-save').data('save_cb', saveSectionEdit).end();
-    }
-
-    /**
-     * Cancel any current section editing.
-     */
-    function cancelSectionEdit () {
-        // Make sure the user wants this to happen.
-        var msg = $('#content-main > article')
-                    .attr('data-cancel-edit-message'),
-            rv = confirm(msg);
-        if (!rv) { return false; }
-        // We're sure, so clean up without committing.
-        cleanupSectionEdit();
-        return true;
-    }
-
-    /**
-     * Save the results of section editing.
-     */
-    function saveSectionEdit () {
-        var ui = $('.edited-section-ui.current'),
-            edit_url = ui.data('edit_url'), 
-            editor = ui.data('editor'),
-            article = $('#content-main > article'),
-            current_rev = article.attr('data-current-revision'),
-            refresh_msg = article.attr('data-refresh-message');
-            
-        ui.addClass('edited-section-ui-saving');
-        editor.updateElement();
-        var src = $('.edited-section-ui.current .src').html();
-
-        $.ajax({
-            type: 'POST', url: edit_url + '&raw=1',
-            data: { 
-                'form': 'rev',
-                'content': src,
-                'current_rev': current_rev
-            },
-            error: function (xhr, status, err) {
-
-                if ('409' == xhr.status) {
-                    // We detected a conflict, most likely from a mid-air edit
-                    // collision. So, use the hidden conflict-bouncer form to
-                    // transition to a full-page resolution UI.
-                    $('form.conflict-bouncer')
-                        .attr('action', edit_url)
-                        .find('input[name=current_rev]')
-                            .val(current_rev).end()
-                        .find('input[name=content]')
-                            .val(src).end()
-                        .submit();
-                    return;
-                }
-
-                // Anything else error-wise is probably recoverable.
-                ui.removeClass('.edited-section-ui-saving');
-
-            },
-            success: function (data, status, xhr) {
-
-                if ('205' == xhr.status) {
-                    // There wasn't a conflict after the edit, but something
-                    // else on the page changed. So, we should refresh rather
-                    // than just updating the edited section. That will help
-                    // prevent conflicts in future section edits and alert the
-                    // user that someone else is touching the page.
-                    alert(refresh_msg);
-                    window.location.reload();
-                    return;
-                }
-
-                // Looks like we were the only editor so far, so carry on and
-                // update the content inline.
-                $('#edited-section').html(data)
-                cleanupSectionEdit();
-
-                // Also, since this should have been the only change, we can
-                // update the local current revision ID to what the server
-                // reported in a header.
-                article.attr('data-current-revision', 
-                             xhr.getResponseHeader('x-kuma-revision'))
-            
-            }
-        });
-    }
-
-    /**
-     * Clean up the changes made to support inline section editing.
-     */
-    function cleanupSectionEdit () {
-        $('.edited-section-ui.current').each(function () {
-            var ui = $(this);
-            ui.data('editor').destroy();
-            ui.remove();
-        });
-        $('#edited-section').children().unwrap();
-    }
-
-    // Add `odd` CSS class to home page content sections for older browsers.
-    function initClearOddSections() {
-        clearOddSections();
-        $('#os, #browser').change(clearOddSections);
-    }
-
-    function clearOddSections() {
-        var odd = true;
-        $('#home-content-explore section').removeClass('odd');
-        $('#home-content-explore section:visible').each(function(){
-            // I can't use :nth-child(odd) because of showfor
-            if (odd) {
-                $(this).addClass('odd');
-            }
-            odd = !odd;
-        });
-    }
+    }    
 
     // Make <summary> and <details> tags work even if the browser doesn't support them.
     // From http://mathiasbynens.be/notes/html5-details-jquery
     function initDetailsTags() {
-        var supportsDetails = ('open' in document.createElement('details'));
+        var supportsDetails = ('open' in doc.createElement('details'));
 
         // Execute the fallback only if there's no native `details` support
         if (!supportsDetails) {
             // Note <details> tag support. Modernizr doesn't do this properly as of 1.5; it thinks Firefox 4 can do it, even though the tag has no "open" attr.
-            document.documentElement.className += ' no-details';
+            doc.documentElement.className += ' no-details';
 
             // Loop through all `details` elements
             $('details').each(function() {
@@ -326,7 +217,7 @@
                 // If there is no `summary` in the current `details` element...
                 if (!$detailsSummary.length) {
                     // ...create one with default text
-                    $detailsSummary = $(document.createElement('summary')).text('Details').prependTo($details);
+                    $detailsSummary = $(doc.createElement('summary')).text('Details').prependTo($details);
                 }
 
                 // Look for direct child text nodes
@@ -349,7 +240,7 @@
                 }
 
                 // Set the `tabindex` attribute of the `summary` element to 0 to make it keyboard accessible
-                $detailsSummary.attr('tabindex', 0).click(function() {
+                $detailsSummary.attr('tabindex', 0).on('click', function() {
                     // Focus on the `summary` element
                     $detailsSummary.focus();
                     // Toggle the `open` attribute of the `details` element
@@ -362,7 +253,7 @@
                     // Toggle the additional information in the `details` element
                     $detailsNotSummary.slideToggle();
                     $details.toggleClass('open');
-                }).keyup(function(event) {
+                }).on('keyup', function(event) {
                     if (13 === event.keyCode || 32 === event.keyCode) {
                         // Enter or Space is pressed -- trigger the `click` event on the `summary` element
                         // Opera already seems to trigger the `click` event when Enter is pressed
@@ -398,13 +289,13 @@
      * Initialize the article preview functionality.
      */
     function initArticlePreview() {
-        $('#btn-preview').click(function(e) {
+        $('#btn-preview').on('click', function(e) {
             e.preventDefault();
             
             // Ensure that content is available and exists
-            var title = ' ', 
-                $titleNode = $('#id_title'),
-                data;
+            var title = ' ';
+            var $titleNode = $('#id_title');
+            var data;
                 
             if(CKEDITOR.instances['id_content']) {
                 data = $.trim(CKEDITOR.instances['id_content'].getSnapshot());
@@ -438,74 +329,12 @@
         });
     }
 
-    function initTitleAndSlugCheck() {
-        $('#id_title').change(function() {
-            var $this = $(this),
-                $form = $this.closest('form'),
-                title = $this.val(),
-                slug = $('#id_slug').val();
-            verifyTitleUnique(title, $form);
-            // Check slug too, since it auto-updates and doesn't seem to fire
-            // off change event.
-            verifySlugUnique(slug, $form);
-        });
-        $('#id_slug').change(function() {
-            var $this = $(this),
-                $form = $this.closest('form'),
-                slug = $('#id_slug').val();
-            verifySlugUnique(slug, $form);
-        });
-
-        function verifyTitleUnique(title, $form) {
-            var errorMsg = gettext('A document with this title already exists in this locale.');
-            verifyUnique('title', title, $('#id_title'), $form, errorMsg);
-        }
-
-        function verifySlugUnique(slug, $form) {
-            var errorMsg = gettext('A document with this slug already exists in this locale.');
-            verifyUnique('slug', slug, $('#id_slug'), $form, errorMsg);
-        }
-
-        function verifyUnique(fieldname, value, $field, $form, errorMsg) {
-            $field.removeClass('error');
-            $field.parent().find('ul.errorlist').remove();
-            var data = {};
-            data[fieldname] = value;
-            $.ajax({
-                url: $form.data('json-url'),
-                type: 'GET',
-                data: data,
-                dataType: 'json',
-                success: function(json) {
-                    // Success means we found an existing doc
-                    var docId = $form.data('document-id');
-                    if (!docId || (json.id && json.id !== parseInt(docId))) {
-                        // Collision !!
-                        $field.addClass('error');
-                        $field.before(
-                            $('<ul class="errorlist"><li/></ul>')
-                                .find('li').text(errorMsg).end()
-                        );
-                    }
-                },
-                error: function(xhr, error) {
-                    if(xhr.status === 404) {
-                        // We are good!!
-                    } else {
-                        // Something went wrong, just fallback to server-side
-                        // validation.
-                    }
-                }
-            });
-        }
-    }
-
     //
     // Initialize logic for metadata edit button.
     //
     function initMetadataEditButton () {
-        if ($('#article-head .metadata').length > 0) {
 
+        if ($('#article-head .metadata').length) {
             var show_meta = function (ev) {
                 // Disable and hide the save-and-edit button when editing
                 // metadata, since that can change the URL of the page and
@@ -517,7 +346,7 @@
             }
 
             // Properties button reveals the metadata fields
-            $('#btn-properties').click(show_meta);
+            $('#btn-properties').on('click', show_meta);
             // Form errors reveal the metadata fields, since they're the most
             // likely culprits
             $('#edit-document .errorlist').each(show_meta);
@@ -526,13 +355,14 @@
             $('#btn-properties').hide();
         }
     }
+
     // 
     // Initialize logic for metadata parent translation
     // 
     function initMetadataParentTranslation() {
-        var $parentLis = $('#article-head .metadata .metadata-choose-parent, ' +
-                           '#trans-description .description .metadata-choose-parent'),
-            $parentInput = $('#parent_id');
+        var $parentLis = $('.metadata-choose-parent');
+        var $parentInput = $('#parent_id');
+
         $parentLis.each(function(index) {
             $(this).css('display', 'block');
             $('#parent_text').mozillaAutocomplete({
@@ -561,8 +391,9 @@
     // slug can be prevented
     // 
     function getStorageKey() {
-        var noEdit = location.pathname.replace('$edit', ''),
-            finalKey;
+        var noEdit = location.pathname.replace('$edit', '');
+        var finalKey;
+
         if(isTranslation) { // Translation interface
             finalKey = 'draft/translate' + noEdit + '/' + location.search.replace('?tolocale=', '');
             finalKey = finalKey.replace('$translate', '');
@@ -587,15 +418,15 @@
     // This takes the place of an ugly, ugly confirmation box :(
     var $draftDiv;
     function displayDraftBox(content) {
-        var text = gettext('You have a draft in progress.  <a href="" class="restoreLink">Restore the draft content</a> or <a href="" class="discardLink">discard the draft</a>.'),
-            $contentNode = $('#id_content'),
-            editor;
+        var text = gettext('You have a draft in progress.  <a href="" class="restoreLink">Restore the draft content</a> or <a href="" class="discardLink">discard the draft</a>.');
+        var $contentNode = $('#id_content');
+        var editor;
 
         // Plan the draft into the page
         $draftDiv = $('<div class="notice"><p>' + text + '</p></div>').insertBefore($contentNode);
 
         // Hook up the "restore" link
-        $draftDiv.find('.restoreLink').click(function(e) {
+        $draftDiv.find('.restoreLink').on('click', function(e) {
             e.preventDefault();
             $contentNode.val(content);
 
@@ -614,7 +445,7 @@
         });
 
         // Hook up the "dispose" link 
-        $draftDiv.find('.discardLink').click(function(e) {
+        $draftDiv.find('.discardLink').on('click', function(e) {
             e.preventDefault();
             hideDraftBox();
             clearDraft();
@@ -630,7 +461,7 @@
     // 
     function initSaveAndEditButtons () {
         // Save button submits to top-level
-        $('#btn-save').click(function () {
+        $('#btn-save').on('click', function () {
             if (supportsLocalStorage) {
                 // Clear any preserved content.
                 clearDraft();
@@ -644,7 +475,7 @@
 
         // Save-and-edit submits to a hidden iframe, style the button with a
         // loading anim.
-        $('#btn-save-and-edit').click(function () {
+        $('#btn-save-and-edit').on('click', function () {
             var savedTa = $(formSelector + ' textarea[name=content]').val();
             if (supportsLocalStorage) {
                 // Preserve editor content, because saving to the iframe can
@@ -663,9 +494,9 @@
         });
         $('#btn-save-and-edit').show();
 
-        $('#save-and-edit-target').load(function () {
+        $('#save-and-edit-target').on('load', function () {
             if (supportsLocalStorage) {
-                var if_doc = $('#save-and-edit-target')[0].contentDocument;
+                var if_doc = $(this).get(0).contentDocument;
                 if (typeof(if_doc) != 'undefined') {
 
                     var ir = $('#iframe-response', if_doc);
@@ -761,7 +592,8 @@
         }
         else {
             try {
-                $('#id_content').ckeditorGet && $('#id_content').ckeditorGet().on('key', callback);
+                var $content = $('#id_content');
+                $content.ckeditorGet && $content.ckeditorGet().on('key', callback);
             }
             catch(e) {
                 console.log(e);
@@ -769,7 +601,7 @@
         }
 
         // Clear draft upon discard
-       $('#btn-discard').click(function() {
+       $('#btn-discard').on('click', function() {
             clearTimeout(DRAFT_TIMEOUT_ID);
            clearDraft();
        });
@@ -777,15 +609,15 @@
 
     function initApproveReject() {
 
-        var approveModal = $('#approve-modal'),
-            rejectModal = $('#reject-modal');
+        var approveModal = $('#approve-modal');
+        var rejectModal = $('#reject-modal');
 
-        $('#btn-approve').click(function() {
+        $('#btn-approve').on('click', function() {
             approveModal.show();
             rejectModal.hide();
         });
         approveModal.hide();
-        $('#btn-reject').click(function() {
+        $('#btn-reject').on('click', function() {
             rejectModal.show();
             approveModal.hide();
         });
@@ -793,18 +625,18 @@
     }
 
     function initAttachmentsActions() {
-        var $attachmentsTable = $('#page-attachments-table'),
-            $attachmentsCount = $('#page-attachments-count'),
-            $attachmentsButton = $('#page-attachments-button'),
-            $attachmentsNoMessage = $('#page-attachments-no-message'),
-            $attachmentsNewTable = $('#page-attachments-new-table'),
-            $attachmentsForm = $('#page-attachments-form'),
-            $attachmentsFormCloneRow = $attachmentsNewTable.find('tbody tr').first(),
-            $attachmentsNewTableActions = $attachmentsNewTable.find('tbody tr').last(),
-            $pageAttachmentsSpinner = $('#page-attachments-spinner'),
-            $iframe = $('#page-attachments-upload-target'),
-            uploadFormTarget = $attachmentsForm.length && $attachmentsForm.attr('action'),
-            running = false;
+        var $attachmentsTable = $('#page-attachments-table');
+        var $attachmentsCount = $('#page-attachments-count');
+        var $attachmentsButton = $('#page-attachments-button');
+        var $attachmentsNoMessage = $('#page-attachments-no-message');
+        var $attachmentsNewTable = $('#page-attachments-new-table');
+        var $attachmentsForm = $('#page-attachments-form');
+        var $attachmentsFormCloneRow = $attachmentsNewTable.find('tbody tr').first();
+        var $attachmentsNewTableActions = $attachmentsNewTable.find('tbody tr').last();
+        var $pageAttachmentsSpinner = $('#page-attachments-spinner');
+        var $iframe = $('#page-attachments-upload-target');
+        var uploadFormTarget = $attachmentsForm.length && $attachmentsForm.attr('action');
+        var running = false;
 
         // If no attachments table, get out -- no permissions
         if(!$attachmentsTable.length) {
@@ -812,7 +644,7 @@
         }
 
         // Upon click of the 'Attach Files' button, toggle display of upload table
-        $attachmentsButton.bind('click', function(e) {
+        $attachmentsButton.on('click', function(e) {
             e.preventDefault();
             $attachmentsNewTable.toggleClass('hidden');
             if(!$attachmentsNewTable.hasClass('hidden')) {
@@ -821,12 +653,12 @@
         });
 
         // Clicking the 'AMF' button adds more rows
-        $('#page-attachments-more').bind('click', function() {
+        $('#page-attachments-more').on('click', function() {
             // Don't add boxes during submission
             if(running) return;
             function clone() {
                 // Create and insert clone
-                $clone = $attachmentsFormCloneRow.clone();
+                var $clone = $attachmentsFormCloneRow.clone();
                 $clone.find('input, textarea').val('');
                 $clone.find('.attachment-error').remove();
                 $clone.insertBefore($attachmentsNewTableActions);
@@ -845,17 +677,18 @@
         $("<input type='hidden' name='is_ajax' value='1' />").appendTo($attachmentsForm);
 
         // Submitting the form posts to mystical iframe
-        $iframe.bind('load', function(e) {
+        $iframe.on('load', function(e) {
             running = false;
             $attachmentsForm.data('disabled', false).removeClass('disabled');
 
             // Handle results
             try {
-                var $textarea = $iframe.contents().find('textarea').first(),
-                    validIndexes = [],
-                    invalidIndexes = [],
-                    dynamicRows,
-                    result;
+                var $textarea = $iframe.contents().find('textarea').first();
+                var validIndexes = [];
+                var invalidIndexes = [];
+                var dynamicRows;
+                var result;
+
                 if($textarea.length) {
                     // Get JSON
                     result = JSON.parse($.trim($textarea.val()));
@@ -926,7 +759,7 @@
         });
 
         // Form submission, upload, and response handling
-        $attachmentsForm.attr('target', 'page-attachments-upload-target').bind('submit', function(e) {
+        $attachmentsForm.attr('target', 'page-attachments-upload-target').on('submit', function(e) {
             // Stop concurrent submissions
             if(running) return;
             // Hide all error messages
@@ -956,6 +789,6 @@
         });
     }
 
-    $(document).ready(init);
+    $(doc).ready(init);
 
- }(jQuery));
+ }(jQuery, window, document));
