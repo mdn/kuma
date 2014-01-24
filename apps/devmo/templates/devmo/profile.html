@@ -18,7 +18,6 @@
 
 {% block site_js %}
     {{ super() }}
-    {{ js('jquery-ui') }}
     {{ js('demostudio') }}
 {% endblock %}
 
@@ -27,8 +26,25 @@
 <div class="wrap">
 
   <section id="content-main" class="full">
-
     <section id="profile-head" class="vcard">
+
+      <div class="extra">
+        <figure class="avatar">
+          <img src="{{ profile.gravatar }}" alt="{{ profile.user.username }}" width="120" height="120" class="photo" />
+        </figure>
+        
+        <ul class="links">
+        {% for site in profile.website_choices %}
+            {% set site_name = site[0] %}
+            {% set site_meta = site[1] %}
+            {% set href = profile.websites[site_name] %}
+            {% if href %}
+                <li class="{{site_name}}"><i class="{{site_meta['fa_icon']}}" aria-hidden="true"></i><a href="{{href}}" rel="me external" class="url">{{site_meta['label']}}</a></li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+
       <div class="main">
         <h1 class="page-title"><span class="nickname">{{ profile.user.username }}</span> {% if profile.fullname %}<b>(<span class="fn">{{ profile.fullname }}</span>)</b>{% endif %}</h1>
   
@@ -72,23 +88,6 @@
         {% endif %}
 
         <div class="memberSince">{{ _('Member since {date}') | f(date=profile.user.date_joined.strftime('%B %d, %Y')) }}</div>
-      </div>
-      
-      <div class="extra">
-        <figure class="avatar">
-          <img src="{{ profile.gravatar }}" alt="{{ profile.user.username }}" width="120" height="120" class="photo" />
-        </figure>
-        
-        <ul class="links">
-        {% for site in profile.website_choices %}
-            {% set site_name = site[0] %}
-            {% set site_meta = site[1] %}
-            {% set href = profile.websites[site_name] %}
-            {% if href %}
-                <li class="{{site_name}}"><a href="{{href}}" rel="me external" class="url">{{site_meta['label']}}</a></li>
-            {% endif %}
-          {% endfor %}
-        </ul>
       </div>
 
       <p class="edit">

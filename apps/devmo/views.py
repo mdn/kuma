@@ -75,8 +75,6 @@ def profile_view(request, username):
         show_manage_roles_button = (len(roles_by_team) > 0)
 
     template = 'devmo/profile.html'
-    if flag_is_active(request, 'redesign'):
-            template = 'devmo/profile_redesign.html'
 
     return render(request, template, dict(
         profile=profile, demos=demos, demos_paginator=demos_paginator,

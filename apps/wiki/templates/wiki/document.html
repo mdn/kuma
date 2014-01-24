@@ -78,9 +78,5 @@
 {% endblock %}
 
 {% block content %}
-  {% if waffle.flag('redesign') %}
-    {% include 'wiki/includes/document_content_redesign.html' %}
-  {% else %}
-    {% include 'wiki/includes/document_content.html' %}
-  {% endif %}
+  {% include 'wiki/includes/document_content.html' %}
 {% endblock %}

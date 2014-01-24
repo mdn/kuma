@@ -1,4 +1,4 @@
-{% from "wiki/includes/document_macros.html" import document_watch with context %}
+{% from "wiki/includes/document_macros.html" import build_document_crumbs, get_document_quick_links, get_document_buttons, get_document_subnav, get_approvals_html, document_watch with context %}
 
 {% if document.parent %}
   {# If there is a parent doc, use it for translating. #}
@@ -12,331 +12,321 @@
   {% set help_link = url('wiki.translate', document_path=document.parent.full_path, locale=document.parent.locale)|urlparams(tolocale=request.locale) %}
 {% endif %}
 
-<!-- top toolbar -->
-<section id="nav-toolbar"><div><div class="wrap">
-  <!-- right floated navigation -->
-  <nav id="tool-menus" role="navigation">
-    <ul id="tools">
-      <li class="menu">
-        <a href="#page-tools" class="toggle">{{ _('This page') }}</a>
-        <ul id="page-tools" class="sub-menu">
-          <li class="page-print"> <a href="#" onclick="return window.print();"  title="{{ _('Print page') }}">{{ _('Print this page') }}</a></li>
-          {% if not document.is_template %}
-            <li><a href="{{ url('wiki.new_document') }}?parent={{ document.id }}">{{ _('New sub-page') }}</a></li>
-            <li><a href="{{ url('wiki.new_document') }}?clone={{ document.id }}">{{ _('Clone this page') }}</a></li>
-          {% endif %}
-          {% if waffle.flag('page_move') %}
-            <li><a href="{{ url('wiki.move', document.slug, locale=document.locale) }}">{{ _('Move this page') }}</a></li>
-          {% endif %}
-          {% if user.is_superuser %}
-            <li><a href="{{ url('admin:wiki_document_change', document.id) }}">{{ _('View in Admin') }}</a></li>
-          {% endif %}
+{# get attachments and tags ready for use #}
+{% set tags = document.tags.all() %}
+{% set attachments = document.attachments.all() %}
+{% set num_attachments = attachments|length %}
+{% set is_logged_in = request.user.is_authenticated() %}
+{% set disabled_class = ('disabled' if not is_logged_in else '') %}
+{% set disabled_attr = ('title="%s"' % _('Please log in to use this feature.') if not is_logged_in else '') %}
 
-          {% set policy_links = build_policy_admin_links(request.user, document) %}
-          {% if policy_links['change_one'] %}
-            <li><a target="_blank" href="{{ policy_links['change_one'] }}">{{ _('Manage access policy') }}</a></li>
-          {% elif policy_links['change_list'] %}
-            <li><a target="_blank" href="{{ policy_links['change_list'] }}">{{ _('Manage access policies') }}</a></li>
-          {% elif policy_links['add'] %}
-            <li><a target="_blank" href="{{ policy_links['add'] }}">{{ _('Add access policy') }}</a></li>
-          {% endif %}
+{% if not document.is_template %}
+  {% set quick_links_section_id = 'Quick_Links' %}
+  {% set quick_links_html = document.rendered_html|section_extract(quick_links_section_id) %}
+{% endif %}
 
-          {% set zone_links = document_zone_management_links(request.user, document) %}
-          {% if zone_links['change'] %}
-            <li><a target="_blank" href="{{ zone_links['change'] }}">{{ _('Manage content zone') }}</a></li>
-          {% endif %}
-          {% if zone_links['add'] %}
-            <li><a target="_blank" href="{{ zone_links['add'] }}">{{ _('Convert to content zone') }}</a></li>
-          {% endif %}
-        </ul>
-      </li>
-      {% if document.is_localizable or document.parent %}
-      <li class="menu">
-        <a href="#" class="toggle">{{ _('Languages') }}</a>
-        <ul id="translations">
-          {% for translation in document.other_translations %}
-            <li><a rel="internal" href="{{ url('wiki.document', translation.full_path, locale=translation.locale) }}" title="{{ translation.title }}">{{ translation.language }}</a></li>
-          {% endfor %}
+{% if document.is_template %}
+  {% set macro_name = document.slug|replace('Template:','', 1) %}
+  {% set template_search_link = url('search', locale=document.locale)|urlparams(locale='*', kumascript_macros=macro_name) %}
+{% endif %}
 
-          {% if document.is_localizable %}
-            <li><a href="{{ translate_url }}">{{ _('Add translation') }}</a></li>
-          {% endif %}
-        </ul>
-      </li>
-      {% endif %}
-    </ul>
-  </nav>
+{% set zone_stack = document.find_zone_stack() %}
+{% set is_zone = zone_stack|length %}
+{% set is_zone_root = is_zone and zone_stack[0].document == document %}
+{% set zone_subnav_section_id = 'Subnav' %}
+{% set zone_subnav_html = document|zone_section_extract(zone_subnav_section_id) %}
 
-  <!-- left crumb navigation -->
-  <nav class="crumbs" role="navigation">
-    <ol>
-      {% for doc in document.parents %}
-        <li class="crumb"><a href="{{ url('wiki.document', doc.full_path) }}">{{ doc.title }}</a></li>
-      {% endfor %}
-      <li class="crumb">{{ document.title }}</li>
-    </ol>
-  </nav>
+{% set current_revision = document.current_revision %}
+{% if (user.is_authenticated() and current_revision and document.allows_revision_by(user)) and (current_revision.needs_technical_review() or current_revision.needs_editorial_review()) %}
+  {% set approvals_html = get_approvals_html(document, request.user) %}
+{% endif %}
 
-</div></div></section>
+{% set show_left = zone_subnav_html or quick_links_html or approvals_html %}
+{% set show_right = (not is_zone_root and toc_html) %}
 
+{% set content_class = 'column-all' %}
+{% if show_left and show_right %}
+  {% set content_class = 'column-half' %}
+{% elif show_left or show_right %}
+  {% set content_class = 'column-main' %}
+{% endif %}
 
+{% if is_zone %}
+  {% if is_zone_root %}
 
-<section id="content">
-  <div class="wrap">
-    <div id="content-main" class="full">
-      <article class="article" role="main"
-          data-current-revision="{{ document.current_revision.id }}"
-          data-refresh-message="{{ _('Your changes were merged. However, something else has been edited, so this page will be refreshed to reflect the changes.') }}"
-          data-cancel-edit-message="{{ _('Abort editing in progress? Your unsaved changes will be discarded.') }}">
-      <header id="article-head">
-        <div class="title">
-            <h1 class="page-title">{{ document.title }}</h1>
-            {% if waffle.flag('offline_notice') %}
-            <div class="offline-notice">
-              <a href="javascript:;" id="offline-notice-link"><i aria-hidden="true" class="icon-book"></i>{{ _('Read content offline') }}</a>
-            </div>
+    {% set show_zone_landing_subnav = (zone_subnav_html or quick_links_html)  %}
 
-            <div id="offline-dialog-content" title="{{ _('Read MDN Offline') }}">
-              <p>{{ _('Did you know that you can read content offline by using one of these tools?  If you would like to read offline MDN content in another format, let us know by commenting on <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=665750" data-title="Bug 665750">Bug 665750</a>.') }}</p>
-              <a href="http://kapeli.com/dash?ref=mdn" class="offline-dialog-mac" data-title="Dash App">
-                <img src="{{ request.build_absolute_uri('/media/img/dash-app.png') }}" alt="Dash App" />
-              </a>
-              <a href="http://zealdocs.org" target="_blank" class="offline-dialog-others" data-title="Zeal">
-                <i aria-hidden="true" class="icon-book" style="font-size: 160px;"></i>
-              </a>
-            </div>
+    <div class="zone-landing-header"><div class="center">
+      <!-- edit, settings buttons -->
+      {{ get_document_buttons(document) }}
 
+      <!-- crumbs -->
+      {{ build_document_crumbs(document) }}
+
+      <h1>{{ document.title }}</h1>
+
+      {% if show_zone_landing_subnav %}
+      <div class="column-container zone-landing-header-preview">
+        <div class="column-strip">
+          <div class="zone-landing-header-preview-base">
+            {% if zone_subnav_html %}
+              <!-- zone subnav -->
+              {{ get_document_subnav(zone_subnav_html) }}
             {% endif %}
-            {% if redirected_from %}
-            <div class="redirected-from" id="redirected-from">
-              <p>{{ _('Redirected from <a href="{href}">{title}</a>')|fe(href=redirected_from.get_absolute_url()|urlparams(redirect='no'), title=redirected_from.title) }}</p>
-            </div>
-          {% endif %}
+
+            {% if quick_links_html %}
+              <!-- quick links -->
+              {{ get_document_quick_links(quick_links_html) }}
+            {% endif %}
+          </div>
+          <div class="zone-landing-header-spacing">&nbsp;</div>
         </div>
-        <ul id="page-buttons">
-            <li class="page-history"><a href="{{ url('wiki.document_revisions', document.full_path) }}"><i aria-hidden="true" class="icon-book"></i>{{_('History')}}</a></li>
-            {{ document_watch(document, request.user) }}
-            {% if document.allows_revision_by(request.user) %}
-              {% if fallback_reason %}
-                {% set edit_label = _('Edit English')  %}
-                <li class="page-edit"><a href="{{ help_link }}"><i aria-hidden="true" class="icon-pencil"></i>{{ _('Translate') }}</a></li>
-              {% else %}
-                {% set edit_label = _('Edit')  %}
-              {% endif %}
-              <li class="page-edit"><a href="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}"><i aria-hidden="true" class="icon-pencil"></i>{{ edit_label }}</a></li>
-            {% endif %}
-        </ul>
-
-        {% if request.user.is_authenticated() and document_html %}
-          {% if render_raw_fallback %}
-            <div id="doc-render-raw-fallback" class="warning">
-            {% trans url=document.get_absolute_url() %}
-              This document is being rendered for the first time by the system.
-              Please <a href="{{ url }}">reload this page</a> in a few minutes
-              to see full content.
-            {% endtrans %}
-            </div>
-          {% elif document.is_rendering_in_progress %}
-            <div id="doc-rendering-in-progress" class="warning">
-            {% trans url=document.get_absolute_url(), started_at=document.render_started_at %}
-              An update to this document
-              <abbr title="{{ started_at }}">is currently in progress</abbr>.
-              If the content below seems stale or if something is missing,
-              please <a href="{{ url }}">reload this page</a> in a few minutes.
-            {% endtrans %}
-            </div>
-          {% elif document.is_rendering_scheduled and not kumascript_errors %}
-            <div id="doc-rendering-scheduled" class="warning">
-            {% trans url=document.get_absolute_url(), scheduled_at=document.render_scheduled_at %}
-              An update to this document
-              <abbr title="{{ scheduled_at }}">has been scheduled</abbr>.
-              If the content below seems stale or if something is missing,
-              please <a href="{{ url }}">reload this page</a> in a few minutes.
-            {% endtrans %}
-            </div>
-          {% endif %}
-        {% endif %}
-
-        {% if kumascript_errors %}
-          {% include 'wiki/includes/kumascript_errors.html' %}
-        {% endif %}
-       </header>
-
-       {#
-    {% if document.is_majorly_outdated() %}
-      <div class="warning-box">
-        {% trans url=document.parent.get_absolute_url(), title=document.parent.title %}
-          <p>This article may be out of date.</p>
-          <p>
-            An important change has been made to the English article on which
-            this is based. Until this page is updated, you might find this
-            helpful: <a href="{{ url }}">{{ title }}</a>
-          </p>
-        {% endtrans %}
+        <div class="column-5 masthead-text"><p>{{ document|selector_content_find('.summary') }}</p></div>
       </div>
+      {% else %}
+        <div class="column-5 masthead-text"><p>{{ document|selector_content_find('.summary') }}</p></div>
+      {% endif %}
+
+      <div class="zone-image"></div>
+    </div></div>
+  {% elif zone_stack|length %}
+    <div class="zone-article-header"><div class="center">
+      <!-- zone title -->
+      <div class="zone-title"><a href="{{ zone_stack[0].document.get_absolute_url() }}">{{ zone_stack[0].document.title }}</a></div>
+      <!-- zone image -->
+      <div class="zone-image"></div>
+    </div></div>
+  {% endif %}
+
+{% endif %}
+
+<div class="wiki-main-content"><div class="center">
+
+  {% if not is_zone_root %}
+  <div class="article-meta">
+    <!-- action buttons -->
+    {{ get_document_buttons(document) }}
+
+    <!-- crumbs -->
+    {{ build_document_crumbs(document) }}
+  </div>
+
+  <!-- heading -->
+  <div class="document-head{% if from_search %} from-search{% endif %}">
+    {% if from_search %}
+      <a href="" class="button from-search-previous only-icon"><i aria-hidden="true" class="icon-chevron-left"></i></a>
+      <a href="" class="from-search-navigate"><span class="from-search-navigate-up"><i aria-hidden="true" class="icon-double-angle-up"></i></span><span class="from-search-navigate-down"><i aria-hidden="true" class="icon-double-angle-down"></i></span></a>
+      <div class="from-search-toc hidden">
+        <ol>
+          <li><a href="">Blah blah blah</a></li>
+          <li><a href="">Blah blah blah Blah blah blah Blah blah blah Blah blah blah</a></li>
+          <li><a href="">Blah blah blah</a></li>
+          <li><a href="">Blah blah blah</a></li>
+          <li><a href="" class="current">Blah blah blah</a></li>
+          <li><a href="">Blah blah blah</a></li>
+          <li><a href="">Blah blah blah</a></li>
+        </ol>
+      </div>
+      <a href="" class="button from-search-next only-icon"><i aria-hidden="true" class="icon-chevron-right"></i></a>
     {% endif %}
-    #}
 
-      {% if document.current_revision %}
-        {% if document.current_revision.needs_technical_review() %}
-          <div class="warning review-technical">{% trans %}
-            <p>This article is in need of a technical review.</p>
-          {% endtrans %}</div>
-        {% endif %}
-        {% if document.current_revision.needs_editorial_review() %}
-          <div class="warning review-editorial">{% trans %}
-            <p>This article is in need of an editorial review.</p>
-          {% endtrans %}</div>
-        {% endif %}
-      {% endif %}
-      {% if fallback_reason %}
-        <div id="doc-pending-fallback" class="warning">
-          {% trans help_link=help_link, locale=settings.LOCALES[request.locale].native %}
-            Our volunteers haven't translated this article into {{ locale }} yet.
-            <a href="{{ help_link }}">Join us and help get the job done!</a>
-          {% endtrans %}
+    <h1>{{ document.title }}</h1>
+
+    {% if redirected_from %}
+    <div class="redirected-from" id="redirected-from">
+      <p>{{ _('Redirected from <a href="{href}">{title}</a>')|fe(href=redirected_from.get_absolute_url()|urlparams(redirect='no'), title=redirected_from.title) }}</p>
+    </div>
+    {% endif %}
+
+  </div>
+  {% endif %}
+
+  <!-- start the main content container -->
+    <div id="wiki-column-container" class="{% if show_right %}wiki-right-present{% else %}wiki-right-closed wiki-right-none{% endif %} {% if show_left %}wiki-left-present{% else %}wiki-left-closed wiki-left-none{% endif %}">
+
+      {% if show_left and not is_zone_root %}
+      <!-- additional controls row; hidden unless needed -->
+      <div id="wiki-controls" class="column-container column-container-reverse">
+        <div class="column-strip">
+          <!-- Show TOC "show" link -->
+          &nbsp;
         </div>
+        <div class="column-half">
+          &nbsp;
+        </div>
+        <div class="column-strip quick-links hidden">
+          <a href="#show-quick-links" class="title smaller" id="show-quick-links"><i aria-hidden="true" class="icon-caret-down"></i>{{ _('Show Sidebar') }}</a>
+        </div>
+      </div>
       {% endif %}
 
-      {% set tags = document.tags.all() %}
-      {% set attachments = document.attachments.all() %}
+      <!-- content row with three strips -->
+      <div class="column-container column-container-reverse">
 
-      <div id="wikiArticle" class="page-content boxed">
-        {% if toc_html %}
-        <div id="article-nav">
-          <div class="page-toc">
-            <h2>{{ _('Table of Contents') }}</h2>
-            <ol>
+        {% if show_right %}
+          <!-- TOC, approvals, etc -->
+          <div class="column-strip wiki-column" id="wiki-right">
+          {% if toc_html %}
+          <!-- table of contents -->
+          <div id="toc" class="toc toggleable">
+            <a href="#toc" class="title toggler" data-open-icon="icon-plus" data-closed-icon="icon-minus">{{ _('In This Article') }}<i></i></a>
+            <ol class="toggle-container">
               {{ toc_html|safe }}
             </ol>
           </div>
-          <ul class="page-anchors">
-            <li class="anchor-tags">
-              {% if tags|length %}
-                <i aria-hidden="true" class="icon-tags"></i><a href="#document-tags">{{ _('Tags') }}</a>
-              {% else %}
-                <i aria-hidden="true" class="icon-tags off"></i><span title="{{ _('This document has no tags') }}">{{ _('Tags') }}</span>
-              {% endif %}
-            </li>
-            <li class="anchor-files">
-              {% if attachments|length %}
-                <i aria-hidden="true" class="icon-paper-clip"></i><a href="#page-attachments">Files</a>
-              {% else %}
-                <i aria-hidden="true" class="icon-paper-clip off"></i><span title="{{ _('This document has no attachments') }}">{{ _('Files') }}</span>
-              {% endif %}
-            </li>
-          </ul>
-        </div>
-        {% endif %}
-      {% if not fallback_reason %}
-        {% if not document_html %}
-          {{ _("This article doesn't have any content yet.") }}
-        {% elif document.is_template %}
-          <pre class="brush: js">{{ document_html }}</pre>
-        {% else %}
-          {{ document_html|safe }}
-        {% endif %}
-      {% elif fallback_reason == 'no_translation' %}
-        {{ document_html|safe }}
-      {% elif fallback_reason == 'translation_not_approved' %}
-        {{ document.parent.html|safe }}
-      {% else %}
-        {{ _("This article doesn't have approved content yet.") }}
-      {% endif %}
-    </div>
-
-    <section class="page-meta">
-      {% if tags | length %}
-      <section class="page-tags" id="document-tags">
-        <h2><i aria-hidden="true" class="icon-tags"></i>{{ _('Tags') }} ({{ tags | length}})</h2>
-        <div id="deki-page-tags">
-          <ul class="tags tagit ui-widget ui-widget-content">
-            {% for tag in tags %}
-            <li class="tagit-choice ui-widget-content ui-state-default">
-                <a class="text tagit-label" href="{{url('wiki.tag', tag.name)}}">{{ tag.name }}</a>
-            </li>
-            {% endfor %}
-          </ul>
-        </div>
-      </section>
-      {% endif %}
-
-      {% if attachments | length %}
-      {% include 'wiki/includes/attachment_list.html' %}
-      {% endif %}
-
-      {% if request.user.is_authenticated() and document.current_revision and document.allows_revision_by(request.user) %}
-        {% if document.current_revision.needs_technical_review() or document.current_revision.needs_editorial_review() %}
-          <section class="page-meta">
-            <h2>{{ _('Quick review') }}</h2>
-            <section id="quick-review">
-              <form method="post" action="{{url('wiki.quick_review', document.full_path)}}">
-                {{ csrf() }}
-                <input type="hidden" name="revision_id" value="{{ document.current_revision.id }}"/>
-                <p>{% trans %}The following review(s) have been requested for this article:{% endtrans %}
-                <dl>
-                  {% if document.current_revision.needs_technical_review() %}
-                    <dt>{% trans %}Technical review:{% endtrans %}</dt>
-                    <dd><input type="checkbox" value="approve_technical" id="id_approve_technical" name="approve_technical"> <label for="id_approve_technical">{% trans %}I have completed this review{% endtrans %}</label></dd>
-                  {% endif %}
-                  {% if document.current_revision.needs_editorial_review() %}
-                    <dt>{% trans %}Editorial review:{% endtrans %}</dt>
-                    <dd><input type="checkbox" value="approve_editorial" id="id_approve_editorial" name="approve_editorial"> <label for="id_approve_editorial">{% trans %}I have completed this review{% endtrans %}</label></dd>
-                  {% endif %}
-                </dl>
-                <p><input type="submit" value="{{ _('Confirm reviews') }}"></p>
-              </form>
-            </section>
-          </section>
-        {% endif %}
-      {% endif %}
-
-      <section id="doc-contributors" role="contentinfo">
-        {% trans contributors=user_list(contributors) %}
-          Contributors to this page: {{ contributors }}
-        {% endtrans %}
-
-        {% set current_revision = document.current_revision %}
-        {% if current_revision.creator %}
-          <br />
-          {{ _('Last updated by:') }}
-          <a href="{{ url('devmo.views.profile_view', username=current_revision.creator) }}">{{ current_revision.creator }}</a>,
-          {{ datetimeformat(current_revision.created, format='datetime') }}
-          {% if current_revision.reviewer and current_revision.reviewed %}
-            <br />
-            {{ _('Last reviewed by:') }}
-            <a href="{{ url('devmo.views.profile_view', username=current_revision.reviewer) }}">{{ current_revision.reviewer }}</a>,
-            {{ datetimeformat(current_revision.reviewed, format='datetime') }}
           {% endif %}
+          </div>
         {% endif %}
-      </section>
-    </section>
-  </article>
-  <form id="wiki-page-edit" class="editing" method="post" action="{{ url('wiki.edit_document', document_path=document.full_path) }}">
-      <input type="hidden" name="form" id="form" value="rev" />
-      <input type="hidden" name="content" id="content" value="" />
-  </form>
-  {#
-  {% include 'wiki/includes/helpful_form.html' %}
-  {% include 'wiki/includes/more_help.html' %}
-  #}
-    </div>
-   </div>
-    {% if document.allows_revision_by(request.user) and request.user.is_authenticated() %}
-      <div class="edited-section-ui template">
-        <div class="edited-section-buttons">
-          <a class="btn-save" href="#">{{ _('Save') }}</a>
-          <a class="btn-cancel" href="#">{{ _('Cancel') }}</a>
+
+        <!-- just the article content -->
+        {% if not document.is_template %}
+          {% set document_html_safe = document_html|section_hide(zone_subnav_section_id, quick_links_section_id)|safe %}
+        {% else %}
+          {% set document_html_safe = document_html|safe %}
+        {% endif %}
+
+        <!-- center: main article content -->
+        <div id="wiki-content" class="{{ content_class }} wiki-column text-content">
+
+          {% if request.user.is_authenticated() and document_html %}
+            {% if render_raw_fallback %}
+              <div id="doc-render-raw-fallback" class="warning">
+              {% trans url=document.get_absolute_url() %}
+                This document is being rendered for the first time by the system.
+                Please <a href="{{ url }}">reload this page</a> in a few minutes
+                to see full content.
+              {% endtrans %}
+              </div>
+            {% elif document.is_rendering_in_progress %}
+              <div id="doc-rendering-in-progress" class="warning">
+              {% trans url=document.get_absolute_url(), started_at=document.render_started_at %}
+                An update to this document
+                <abbr title="{{ started_at }}">is currently in progress</abbr>.
+                If the content below seems stale or if something is missing,
+                please <a href="{{ url }}">reload this page</a> in a few minutes.
+              {% endtrans %}
+              </div>
+            {% elif document.is_rendering_scheduled and not kumascript_errors %}
+              <div id="doc-rendering-scheduled" class="warning">
+              {% trans url=document.get_absolute_url(), scheduled_at=document.render_scheduled_at %}
+                An update to this document
+                <abbr title="{{ scheduled_at }}">has been scheduled</abbr>.
+                If the content below seems stale or if something is missing,
+                please <a href="{{ url }}">reload this page</a> in a few minutes.
+              {% endtrans %}
+              </div>
+            {% endif %}
+          {% endif %}
+
+          {% if kumascript_errors %}
+            {% include 'wiki/includes/kumascript_errors.html' %}
+          {% endif %}
+
+          {% if document.current_revision %}
+            {% if document.current_revision.needs_technical_review() %}
+              <div class="warning warning-review">{% trans %}
+                <p>This article is in need of a technical review.</p>
+              {% endtrans %}</div>
+            {% endif %}
+            {% if document.current_revision.needs_editorial_review() %}
+              <div class="warning warning-review">{% trans %}
+                <p>This article is in need of an editorial review.</p>
+              {% endtrans %}</div>
+            {% endif %}
+          {% endif %}
+          {% if fallback_reason %}
+            <div id="doc-pending-fallback" class="warning">
+              {% trans help_link=help_link, locale=settings.LOCALES[request.locale].native %}
+                Our volunteers haven't translated this article into {{ locale }} yet.
+                <a href="{{ help_link }}">Join us and help get the job done!</a>
+              {% endtrans %}
+            </div>
+          {% endif %}
+
+          <!-- just the article content -->
+          <article id="wikiArticle">
+            {% if not fallback_reason %}
+              {% if not document_html %}
+                {{ _("This article doesn't have any content yet.") }}
+              {% elif document.is_template %}
+                <pre class="brush: js">{{ document_html }}</pre>
+                {% trans search_link=template_search_link, title=document.title %}
+                  Search for
+                  <a href="{{ search_link }}">pages that use {{ title }}</a>
+                  to see example use cases and how many pages use this macro.
+                {% endtrans %}
+              {% else %}
+                {{ document_html_safe }}
+              {% endif %}
+            {% elif fallback_reason == 'no_translation' %}
+              {{ document_html_safe }}
+            {% elif fallback_reason == 'translation_not_approved' %}
+              {{ document.parent.html|safe }}
+            {% else %}
+              {{ _("This article doesn't have approved content yet.") }}
+            {% endif %}
+          </article>
+
+          {% if not is_zone_root %}
+            <!-- attachments list -->
+            {% if num_attachments %}
+              {% include 'wiki/includes/attachment_list.html' %}
+            {% endif %}
+
+            <!-- contributors -->
+            <div class="wiki-block contributors">
+              <h2 class="offscreen">{{ _('Document Tags and Contributors') }}</h2>
+              {% if tags|length %}
+              <!-- tags if present -->
+              <div class="tag-attach-list tags contributor-sub">
+                <i aria-hidden="true" class="icon-tags"></i><strong>{{ _('Tags:') }}</strong>
+                <ul class="tag-list">{% for tag in tags %}<li><a href="{{url('wiki.tag', tag.name)}}">{{ tag.name }}</a></li>{% endfor %}</ul>
+              </div>
+              {% endif %}
+              {% trans contributors=user_list(contributors) %}
+              <div class="contributor-sub">
+                <i aria-hidden="true" class="icon-group"></i><strong>Contributors to this page:</strong> {{ contributors }}
+              </div>
+              {% endtrans %}
+              {% if current_revision.creator %}
+                <div class="contributor-sub">
+                  <i aria-hidden="true" class="icon-time"></i><strong>{{ _('Last updated by:') }}</strong>
+                  <a href="{{ url('devmo.views.profile_view', username=current_revision.creator) }}">{{ current_revision.creator }}</a>,
+                  {{ datetimeformat(current_revision.created, format='datetime') }}
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
         </div>
-        <div class="src"></div>
+
+        {% if show_left %}
+          <!-- quick links and zone subnav strip -->
+          <div id="wiki-left" class="column-strip wiki-column">
+
+          {% if not is_zone_root %}
+
+            <a href="#quick-links" class="title smaller" id="quick-links-toggle"><i aria-hidden="true" class="icon-caret-up"></i>{{ _('Hide Sidebar') }}</a>
+
+            {% if zone_subnav_html %}
+              <!-- zone subnav -->
+              {{ get_document_subnav(zone_subnav_html) }}
+            {% endif %}
+
+            {% if quick_links_html %}
+              <!-- quick links -->
+              {{ get_document_quick_links(quick_links_html) }}
+            {% endif %}
+
+            <!-- approvals -->
+            {% if approvals_html %}
+              {{ approvals_html }}
+            {% endif %}
+
+          {% endif %}
+
+          </div>
+        {% endif %}
       </div>
-      {# This form gets filled out and used by the inline editor when a
-         conflict is detected. It needs to be server side in order to get supplied
-         with a CSRF token. #}
-      <form class="conflict-bouncer template" method="POST" action="">
-        <input type="hidden" name="form" value="rev">
-        <input type="hidden" name="current_rev" value="">
-        <input type="hidden" name="content" value="">
-      </form>
-    {% endif %}
-</section>
+    </div>
+  </div>
+</div> <!-- ends "main-content" -->
