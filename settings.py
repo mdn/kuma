@@ -336,6 +336,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'devmo.context_processors.i18n',
     'devmo.context_processors.next_url',
 
+    'wiki.context_processors.custom_css',
+
     'jingo_minify.helpers.build_ids',
 
     'constance.context_processors.config',
@@ -948,12 +950,11 @@ CONSTANCE_CONFIG = dict(
         'which tells kumascript whether or not to serve up a cached response.'
     ),
 
-    KUMA_CUSTOM_CSS_PATH = (
-        '/en-US/docs/Template:CustomCSS',
-        'Path to a wiki document whose raw content will be loaded as a CSS '
-        'stylesheet for the wiki base template. Will also cause the ?raw '
-        'parameter for this path to send a Content-Type: text/css header. Empty '
-        'value disables the feature altogether.',
+    KUMA_CUSTOM_CSS_DOC = (
+        'Template:CustomCSS',
+        'Slug of a wiki document whose raw content will be loaded as a CSS '
+        'style block for the wiki base template. Empty value disables the '
+        'feature altogether.',
     ),
 
     KUMA_CUSTOM_SAMPLE_CSS_PATH = (

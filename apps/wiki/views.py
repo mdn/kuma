@@ -538,8 +538,7 @@ def document(request, document_slug, document_locale):
         response['X-Frame-Options'] = 'Allow'
         response['X-Robots-Tag'] = 'noindex'
         absolute_url = doc.get_absolute_url()
-        if (constance.config.KUMA_CUSTOM_CSS_PATH == absolute_url or
-            constance.config.KUMA_CUSTOM_SAMPLE_CSS_PATH == absolute_url):
+        if constance.config.KUMA_CUSTOM_SAMPLE_CSS_PATH == absolute_url:
             response['Content-Type'] = 'text/css; charset=utf-8'
         elif doc.is_template:
             # Treat raw, un-bleached template source as plain text, not HTML.

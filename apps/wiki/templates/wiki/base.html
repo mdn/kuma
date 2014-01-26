@@ -6,9 +6,10 @@
     {% if waffle.flag('redesign') %}
       {{ css('redesign-wiki', 'all') }}
     {% endif %}
-    {% if config.KUMA_CUSTOM_CSS_PATH %}
-      <link rel="stylesheet" type="text/css"
-            href="{{ config.KUMA_CUSTOM_CSS_PATH }}?raw=1" />
+    {% if KUMA_CUSTOM_CSS %}
+      <style type="text/css">
+        {{ KUMA_CUSTOM_CSS }}
+      </style>
     {% endif %}
 {% endblock %}
 
