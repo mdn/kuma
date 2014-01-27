@@ -1,10 +1,5 @@
 /*** @Basics *********/
 
-// TODO: Move to error.styl once it lands
-ol.prose {
-  list-style-type: disc;
-}
-
 /* @Tabbed boxes *********/
 ul.index { width: 100%; height: 3em; list-style: none; margin: 0; }
 #content-main ul.index li { border: 1px solid #aba9a5; border-bottom: 0; cursor: pointer; float: left; margin-right: -1px; text-align: center; color: #4e4f52; background: #eee url("../img/light-shade.png") 0 1.25em repeat-x; padding: .75em 20px; min-width: 80px; font: 200 1.2em/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
