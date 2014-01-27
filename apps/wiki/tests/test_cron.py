@@ -28,7 +28,9 @@ class SitemapsTestCase(TestCase):
                                 (settings.MEDIA_ROOT, locale),
                                'r').read()
 
-            docs = Document.objects.filter(locale=locale)
+            docs = (Document.objects.filter(locale=locale)
+                                    .exclude(title__startswith='User:')
+                                    .exclude(slug__icontains='Talk:'))
 
             ok_(docs[0].modified.strftime('%Y-%m-%d') in sitemap_xml)
             for doc in docs:
