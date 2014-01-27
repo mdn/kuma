@@ -145,7 +145,7 @@ class elasticsearch(
   }
 
   service { 'elasticsearch':
-    ensure   => running, 
+    ensure   => running,
     enable   => true,
     provider => upstart,
   }
