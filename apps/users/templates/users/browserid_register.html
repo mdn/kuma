@@ -7,16 +7,12 @@
 
 {% block site_css %}
     {{ super() }}
-    {% if waffle.flag('profile_subscription') %}
-      {{ css('newsletter',) }}
-    {% endif %}
+    {{ css('newsletter',) }}
 {% endblock %}
 
 {% block site_js %}
     {{ super() }}
-    {% if waffle.flag('profile_subscription') %}
-      {{ js('newsletter',) }}
-    {% endif %}
+    {{ js('newsletter',) }}
 {% endblock %}
 
 {% block content %}
@@ -61,9 +57,7 @@
                 <p class="field-explanation"><small>{{ _("Please enter the name you'd like to display to other users to identify your contributions.") }}</small></p>
               </li>
 
-              {% if waffle.flag('profile_subscription') %}
-                {{ newsletter_widget(register_form) }}
-              {% endif %}
+              {{ newsletter_widget(register_form) }}
 
               <li class="submit">
                 <button type="submit" name="create">{{ _('Create a New Profile') }}</button>
