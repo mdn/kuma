@@ -932,6 +932,10 @@ class Document(NotificationsMixin, models.Model):
         else:
             modified = datetime.now().isoformat()
 
+        last_edit = ''
+        if self.current_revision:
+            last_edit = self.current_revision.created.isoformat()
+
         return {
             'title': self.title,
             'label': self.title,
@@ -945,7 +949,8 @@ class Document(NotificationsMixin, models.Model):
             'summary': summary,
             'translations': translations,
             'modified': modified,
-            'json_modified': datetime.now().isoformat()
+            'json_modified': datetime.now().isoformat(),
+            'last_edit': last_edit
         }
 
     def get_json_data(self, stale=True):
