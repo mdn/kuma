@@ -6,7 +6,6 @@ from django.template.loader import render_to_string
 
 from tower import ugettext as _
 import waffle
-from django_statsd.clients import statsd
 
 from users.forms import RegisterForm, AuthenticationForm
 from users.models import RegistrationProfile
@@ -50,8 +49,3 @@ def send_reminder_email(user):
     send_to = user.email
     if send_to:
         send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [send_to])
-
-
-def statsd_waffle_incr(key, waffle_switch):
-    if waffle.switch_is_active(waffle_switch):
-        statsd.incr(key)

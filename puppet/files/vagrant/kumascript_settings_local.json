@@ -6,11 +6,6 @@
             "maxsize": 500000
         }
     },
-    "statsd": {
-        "enabled": true,
-        "host": "127.0.0.1",
-        "port": 8125
-    },
     "server": {
         "port": 9080,
         "numWorkers": 4,

@@ -14,7 +14,6 @@ from django.core.cache import cache
 from django.contrib.sites.models import Site
 
 import constance.config
-from django_statsd.clients import statsd
 
 from wiki import KUMASCRIPT_TIMEOUT_ERROR
 
@@ -55,12 +54,10 @@ def post(request, content, locale=settings.LANGUAGE_CODE,
     )
     add_env_headers(headers, env_vars)
     data = content.encode('utf8')
-    statsd.incr('wiki.ks_post')
-    with statsd.timer('wiki.ks_post'):
-        resp = requests.post(ks_url,
-                             timeout=constance.config.KUMASCRIPT_TIMEOUT,
-                             data=data,
-                             headers=headers)
+    resp = requests.post(ks_url,
+                         timeout=constance.config.KUMASCRIPT_TIMEOUT,
+                         data=data,
+                         headers=headers)
     if resp:
         resp_body = process_body(resp, use_constance_bleach_whitelists)
         resp_errors = process_errors(resp)
@@ -158,9 +155,7 @@ def get(document, cache_control, base_url, timeout=None):
             headers['If-Modified-Since'] = c_meta[ck_modified]
 
         # Finally, fire off the request.
-        statsd.incr('wiki.ks_get')
-        with statsd.timer('wiki.ks_get'):
-            resp = requests.get(url, headers=headers, timeout=timeout)
+        resp = requests.get(url, headers=headers, timeout=timeout)
 
         if resp.status_code == 304:
             # Conditional GET was a pass, so use the cached content.
