@@ -37,8 +37,7 @@ from users.forms import (ProfileForm, AvatarForm, EmailConfirmationForm,
                          BrowserIDRegisterForm,
                          EmailReminderForm, UserBanForm)
 from users.models import Profile, RegistrationProfile, EmailChange, UserBan
-from users.utils import (handle_login, handle_register, send_reminder_email,
-                         statsd_waffle_incr)
+from users.utils import handle_login, handle_register, send_reminder_email
 from devmo.models import UserProfile
 from devmo.forms import newsletter_subscribe
 
@@ -157,7 +156,6 @@ def browserid_verify(request):
 @sensitive_post_parameters('password')
 def browserid_register(request):
     """Handle user creation when assertion is valid, but no existing user"""
-    statsd_waffle_incr('users.browserid_register', 'signin_metrics')
     redirect_to = request.session.get(SESSION_REDIRECT_TO,
         getattr(settings, 'LOGIN_REDIRECT_URL', reverse('home')))
     email = request.session.get(SESSION_VERIFIED_EMAIL, None)
@@ -171,8 +169,6 @@ def browserid_register(request):
     login_form = AuthenticationForm()
 
     if request.method == 'POST':
-        statsd_waffle_incr('users.browserid_register.POST', 'signin_metrics')
-
         # If the profile creation form was submitted...
         if 'register' == request.POST.get('action', None):
             register_form = BrowserIDRegisterForm(request.locale, request.POST)
@@ -181,21 +177,16 @@ def browserid_register(request):
                 # Django user.
                 # TODO: This all belongs in model classes
                 username = register_form.cleaned_data['username']
-                
+
                 user = User.objects.create(username=username, email=email)
                 user.set_unusable_password()
                 user.save()
-                
+
                 profile = UserProfile.objects.create(user=user)
                 profile.save()
-                
+
                 user.backend = 'django_browserid.auth.BrowserIDBackend'
                 auth.login(request, user)
-                
-                # Bounce to the newly created profile page, since the user
-                # might want to review & edit.
-                statsd_waffle_incr('users.browserid_register.POST.SUCCESS',
-                                   'signin_metrics')
 
                 newsletter_subscribe(request, email,
                                      register_form.cleaned_data)
@@ -297,9 +288,7 @@ def resend_confirmation(request):
 
 def send_email_reminder(request):
     """Send reminder email."""
-    statsd_waffle_incr('users.send_email_reminder', 'signin_metrics')
     if request.method == 'POST':
-        statsd_waffle_incr('users.send_email_reminder.POST', 'signin_metrics')
         form = EmailReminderForm(request.POST)
         if form.is_valid():
             error = None
@@ -307,18 +296,12 @@ def send_email_reminder(request):
             try:
                 user = User.objects.get(username=username, is_active=True)
                 if user.email:
-                    # TODO: should this be on a model or manager instead?
-                    statsd_waffle_incr('users.send_email_reminder.SUCCESS',
-                                      'signin_metrics')
                     send_reminder_email(user)
                 else:
-                    statsd_waffle_incr('users.send_email_reminder.NOEMAIL',
-                                      'signin_metrics')
                     error = 'no_email'
             except User.DoesNotExist:
                 # Don't leak existence of email addresses.
-                statsd_waffle_incr('users.send_email_reminder.NOUSER',
-                                  'signin_metrics')
+                pass
             return render(request, 'users/send_email_reminder_done.html',
                           {'username': username, 'error': error})
     else:
@@ -592,7 +575,7 @@ def _clean_next_url(request):
 def ban_user(request, user_id):
     """
     Ban a user.
-    
+
     """
     try:
         user = User.objects.get(pk=user_id)

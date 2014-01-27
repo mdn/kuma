@@ -45,7 +45,6 @@ class dev {
         nodejs: stage => langs;
         python: stage => langs;
 
-        statsd:         stage => extras;
         stylus:         stage => extras;
 
         site_config: stage => main;
