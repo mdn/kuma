@@ -43,7 +43,7 @@ as::
     $ git fetch origin
     $ git checkout <REFSPEC>
     $ cd ../..
-    $ git add vendor/src/$LIBRARY
+    $ git add src/$LIBRARY
     $ git ci -m "Updating $LIBRARY"
 
 Easy! Just like updating any other git submodule.
