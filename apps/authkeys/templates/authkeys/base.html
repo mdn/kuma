@@ -4,7 +4,7 @@
 
 {% block site_css %}
     {{ super() }}
-    {% if waffle.flag('redesign') %}{{ css('redesign-profile') }}{% endif %}
+    {{ css('profile') }}
 {% endblock %}
 
 {% block content %}

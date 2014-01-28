@@ -3,11 +3,11 @@
   // http://cfsimplicity.com/61/removing-analytics-clutter-from-campaign-urls
   var removeUtms  =   function(){
       var l = window.location;
-      if( l.hash.indexOf( "utm" ) != -1 ){
+      if( l.hash.indexOf( 'utm' ) != -1 ){
           var anchor = l.hash.match(/#(?!utm)[^&]+/);
-          anchor  =   anchor? anchor[0]: '';
+          anchor  =   anchor ? anchor[0] : '';
           if(!anchor && window.history.replaceState){
-              history.replaceState({},'', l.pathname + l.search);
+              history.replaceState({}, '', l.pathname + l.search);
           } else {
               l.hash = anchor;
           }
@@ -18,9 +18,6 @@
             ['_setAllowAnchor', true],
   {% if not request.user.is_anonymous() %}
             ['_setCustomVar', 7, 'Signed-In', 'Yes', 1],
-  {% endif %}
-  {% if waffle.flag('redesign') %}
-            ['_setCustomVar', 6, 'Redesign', 'Yes', 1],
   {% endif %}
             ['_trackPageview']);
   _gaq.push( removeUtms );

@@ -552,6 +552,7 @@ MINIFY_BUNDLES = {
         ),
         'demostudio': (
             'css/demos.css',
+            'redesign/css/demo-studio.css',
         ),
         'devderby': (
             'css/devderby.css',
@@ -567,9 +568,8 @@ MINIFY_BUNDLES = {
             'css/wiki-screen.css',
         ),
         'sphinx': (
-            'css/wiki.css',
-            'css/wiki-screen.css',
-            'css/sphinx.css',
+            'redesign/css/wiki.css',
+            'redesign/css/sphinx.css',
         ),
         'dashboards': (
             'css/dashboards.css',
@@ -580,9 +580,6 @@ MINIFY_BUNDLES = {
             'css/ie.css',
         ),
         'users': (
-            'css/users.css',
-        ),
-        'redesign-users': (
             'redesign/css/users.css',
         ),
         'tagit': (
@@ -597,7 +594,7 @@ MINIFY_BUNDLES = {
             'redesign/css/wiki-syntax.css',
         ),
         'promote': (
-            'css/promote.css',
+            'redesign/css/promote.css',
         ),
         'redesign-main': (
             'css/libs/font-awesome/css/font-awesome.css',
@@ -607,13 +604,6 @@ MINIFY_BUNDLES = {
             'redesign/css/wiki.css',
             'redesign/css/zones.css',
             'redesign/css/diff.css',
-        ),
-        'redesign-sphinx': (
-            'redesign/css/wiki.css',
-            'redesign/css/sphinx.css',
-        ),
-        'redesign-demos': (
-            'redesign/css/demo-studio.css',
         ),
         'error': (
             'redesign/css/error.css',
@@ -625,11 +615,8 @@ MINIFY_BUNDLES = {
         'calendar': (
             'redesign/css/calendar.css',
         ),
-        'redesign-profile': (
+        'profile': (
             'redesign/css/profile.css',
-        ),
-        'redesign-promote': (
-          'redesign/css/promote.css',
         ),
         'redesign-dashboards': (
             'redesign/css/dashboards.css',

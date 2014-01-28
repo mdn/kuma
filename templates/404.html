@@ -24,16 +24,12 @@
         <input id="next" name="next" type="hidden" value="{{ next_url }}"/>
         {{ browserid_form }}
 
-         {% if waffle.flag('redesign') %}
-          <p class="clear">
-            <a href="#" class="persona-button persona-login" data-next="{{ next_url }}">
-              <span class="persona-icon"><i aria-hidden="true"></i></span>
-              <span class="signin">{{ _('Sign in with Persona') }}</span>
-            </a>
-          </p>
-        {% else %}
-        <p><a href="#" target="_blank" class="browserid-signin" title="{{_('Sign in with Persona')}}">{{ _('Sign in') }}</a></p>
-      {% endif %}
+        <p class="clear">
+          <a href="#" class="persona-button persona-login" data-next="{{ next_url }}">
+            <span class="persona-icon"><i aria-hidden="true"></i></span>
+            <span class="signin">{{ _('Sign in with Persona') }}</span>
+          </a>
+        </p>
 
     </form>
 

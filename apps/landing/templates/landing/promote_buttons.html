@@ -4,11 +4,7 @@
 
 {% block title %}{{ page_title(_('Promote MDN')) }}{% endblock %}
 
-{% if waffle.flag('redesign') %}
-  {% set styles = ('redesign-promote',) %}
-{% else %}
-  {% set styles = ('promote',) %}
-{% endif %}
+{% set styles = ('promote',) %}
 
 {% block content %}
 
@@ -17,11 +13,9 @@
 
   <header id="page-head">
     <div class="wrap">
-      {% if waffle.flag('redesign') %}
-        <h1>{{ _('Promote MDN') }}</h1>
-      {% else %}
-        <h1 class="page-title">{{ _('Promote MDN') }}</h1>
-      {% endif %}
+
+      <h1>{{ _('Promote MDN') }}</h1>
+
       <h2>{{ _('Spread some developer love.') }}</h2>
       {% trans %}
       <ol>

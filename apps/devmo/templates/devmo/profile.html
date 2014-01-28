@@ -13,7 +13,7 @@
     {{ super() }}
     {{ css('demostudio') }}
     {{ css('jquery-ui') }}
-    {% if waffle.flag('redesign') %}{{ css('redesign-profile') }}{% endif %}
+    {{ css('profile') }}
 {% endblock %}
 
 {% block site_js %}
