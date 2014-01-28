@@ -11,7 +11,7 @@
     {{ css('demostudio') }}
     {{ css('jquery-ui') }}
     {% if waffle.flag('redesign') %}{{ css('redesign-profile') }}{% endif %}
-    {% if waffle.flag('profile_subscription') %}{{ css('newsletter',) }}{% endif %}
+    {{ css('newsletter',) }}
 {% endblock %}
 
 {% block site_js %}
@@ -20,9 +20,7 @@
     {{ js('demostudio') }}
     {{ js('libs/tagit') }}
     {{ js('profile') }}
-    {% if waffle.flag('profile_subscription') %}
-      {{ js('newsletter',) }}
-    {% endif %}
+    {{ js('newsletter',) }}
 {% endblock %}
 
 {% block content %}
@@ -113,9 +111,7 @@
           </div>
 
           <div class="column-half">
-            {% if waffle.flag('profile_subscription') %}
-              {{ newsletter_widget(form) }}
-            {% endif %}
+            {{ newsletter_widget(form) }}
 
             <p class="fm-submit"><button type="submit">{{ _('Save Changes') }}</button></p>
           </div>
