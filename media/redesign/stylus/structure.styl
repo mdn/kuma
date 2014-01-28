@@ -189,11 +189,12 @@
 a.persona-button {
   vendorize(border-radius, 3px);
   z-index: 2;
-  display: none;
+  display: inline-block;
+  visibility: hidden;
   font-weight: bold;
 
   &.persona-loaded {
-    display: inline-block;
+    visibility: visible;
   }
 
   &:focus{
