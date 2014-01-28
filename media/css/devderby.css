@@ -13,8 +13,8 @@
 .devderby .sub { padding-top: 265px; width: 315px; float: right; }
 
 /* @Branding *********/
-#devderby.landing { background: url("../img/devderby/bg-devderby.jpg") center 25px no-repeat; }
-#devderby { background: url("../img/devderby/bg-devderby-plain.jpg") center 25px no-repeat; min-width: 960px; }
+#devderby.landing { background: url("../img/devderby/bg-devderby.jpg") center 0 no-repeat; }
+#devderby { background: url("../img/devderby/bg-devderby-plain.jpg") center 0 no-repeat; min-width: 960px; }
 #devderby #content-main { padding-top: 0; }
 
 #devderby #page-head { padding: 0; margin: 10px 0 0; overflow: hidden; }
