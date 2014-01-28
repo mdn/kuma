@@ -84,37 +84,6 @@ section.boxed:after, div.boxed:after, form.boxed:after { content: "."; display: 
 
 /* @Section @Landing pages *********/
 
-/*** @Apps landing page *********/
-#apps #content > .wrap { background: url("../img/bg-starburst-five.png") 100% 1px no-repeat; }
-#apps .page-title { margin: 0 0 0 -10px; padding: 10px 0 10px 20px; font: 200 72px/.9 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; letter-spacing: 1px; text-transform: uppercase; text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.25); 
-  background: -moz-linear-gradient(left, #e44d26 0%, #e44d26 25%, rgba(228,77,38,0) 60%, rgba(228,77,38,0) 100%);
-  background: -webkit-linear-gradient(left, #e44d26 0%, #e44d26 25%, rgba(228,77,38,0) 60%, rgba(228,77,38,0) 100%);
-  background: -o-linear-gradient(left, #e44d26 0%, #e44d26 25%, rgba(228,77,38,0) 60%, rgba(228,77,38,0) 100%);
-  background: linear-gradient(left, #e44d26 0%, #e44d26 25%, rgba(228,77,38,0) 60%, rgba(228,77,38,0) 100%);
-  color: #000; /* Old browsers don't support rgba or gradients, so will fall back to black and no background (white is hard to read and a solid background covers the artwork) */
-  color: rgba(255,255,255,1); 
-}
-#apps .intro { font: bold italic 16px Georgia, Times, "Times New Roman", serif; 
-  background: -moz-linear-gradient(left, #fff 0%, #fff 25%, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 100%);
-  background: -webkit-linear-gradient(left, #fff 0%, #fff 25%, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 100%);
-  background: -o-linear-gradient(left, #fff 0%, #fff 25%, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 100%);
-  background: linear-gradient(left, #fff 0%, #fff 25%, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 100%);
-  padding: .75em 20px;
-  margin: 3px -10px 1em;
-  text-shadow: 1px 2px 0 rgba(0, 0, 0, 0.15);
-}
-#apps p {
-  min-height: 410px; /* The height of the background image. */
-}
-
-#apps .modules:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
-#apps .modules .boxed { font-size: .857em; word-wrap: break-word; position: relative; padding-bottom: 3.75em; float: left; width: 254px; margin: 0 30px 2em 0; }
-#apps .modules h2 { color: #000; border-bottom: 3px solid #e44d26; font: 200 22px/1.1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; letter-spacing: 1px; text-transform: uppercase; }
-#apps .modules .more { position: absolute; bottom: 20px; margin: 0; font: bold italic 1.12em Georgia, Times, "Times New Roman", serif; }
-#apps .boxed .head { border-color: #e44d26; }
-
-.apps-newsletter-subscribe { margin: 0; border: 0; min-height: 300px; }
-
 /* @Learning pages *********/
 #blackboard { width: 940px; padding: 60px 0 0; margin: -20px auto 20px; background: #242424 url("../img/boardframe-top.jpg") center top no-repeat; box-shadow: 0 2px 3px rgba(0,0,0,.25); }
 #blackboard ul { margin: 0; padding: 0 60px 50px 0; overflow: auto; background: url("../img/boardframe-btm.png") center bottom no-repeat; }
