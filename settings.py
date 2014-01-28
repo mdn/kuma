@@ -538,6 +538,7 @@ STANDALONE_DOMAINS = [
 TOWER_ADD_HEADERS = True
 
 # Bundles for JS/CSS Minification
+JINGO_MINIFY_USE_STATIC = False
 MINIFY_BUNDLES = {
     'css': {
         'mdn': (
