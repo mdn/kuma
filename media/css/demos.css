@@ -535,3 +535,11 @@ body.popup .page-title { font: 200 1.714em/1 "Bebas Neue", "League Gothic", Haet
 #flag-confirm textarea { display: block; width: 96%; height: 8em; }
 #flag-confirm .submit { margin: 1em 0 0; }
 #flag-confirm .submit button { font-size: 1.142em; }
+
+#before-begin .mod-title { background-position: 100% -300px; }
+#prepare-demo .mod-title { background-position: 100% -200px; }
+
+#flag-confirm label { display: block; }
+#flag-confirm textarea { display: block; width: 500px; height: 8em; }
+#flag-confirm .submit { margin: 1em 0 0; }
+#flag-confirm .submit button { font-size: 1.142em; }
