@@ -703,12 +703,6 @@ MINIFY_BUNDLES = {
             'js/libs/prism/plugins/line-highlight/prism-line-highlight.js',
             'js/syntax-prism.js',
         ),
-        'ace-editor': (
-            'js/libs/ace/ace.js',
-            'js/libs/ace/mode-javascript.js',
-            'js/libs/ace/theme-dreamweaver.js',
-            'js/libs/ace/worker-javascript.js',
-        ),
         'wiki': (
             'redesign/js/wiki.js',
         ),
