@@ -5,8 +5,6 @@ ul.index { width: 100%; height: 3em; list-style: none; margin: 0; }
 #content-main ul.index li { border: 1px solid #aba9a5; border-bottom: 0; cursor: pointer; float: left; margin-right: -1px; text-align: center; color: #4e4f52; background: #eee url("../img/light-shade.png") 0 1.25em repeat-x; padding: .75em 20px; min-width: 80px; font: 200 1.2em/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
 #content-main ul.index li:hover { background: #fff none; }
 #content-main ul.index li.active { background: #fff none; color: #333; border-bottom: 1px solid #fff; padding-bottom: .85em; }
-.folder:after { content: "."; clear: both; display: block; height: 0; visibility: hidden; }
-.folder.visible { display: block; visibility: visible; background: #fbfbfa; padding: 20px; height: auto; overflow: visible; }
 ul.index a { color: #2f2f2f; text-decoration: none; }
 ul.index a:hover, ul.index a:focus, ul.index a:active { color: #2f2f2f; text-decoration: none; }
 
@@ -29,10 +27,6 @@ ul.index a:hover, ul.index a:focus, ul.index a:active { color: #2f2f2f; text-dec
 .module .hentry h5, .module .hentry h4, .module .hentry p { margin: 0 0 .2em; }
 .module .hentry a { font-weight: bold; }
 .module .hentry .entry-meta { font-size: .857em; font-weight: bold; }
-
-#content-sub .banner { margin: 0 0 1.5em; }
-#content-sub .banner a img { border: 2px solid #dcd8c9; margin-left: -2px; -moz-transition: border-color 0.15s ease; -webkit-transition: border-color 0.15s ease; transition: border-color 0.15s ease; }
-#content-sub .banner a:hover img { border-color: #bfcfd7; -moz-transition: border-color 0.15s ease; -webkit-transition: border-color 0.15s ease; transition: border-color 0.15s ease; }
 
 /* for module-style boxes in the main content */
 .modules { clear: both; overflow: hidden; }
@@ -82,10 +76,6 @@ section.boxed:after, div.boxed:after, form.boxed:after { content: "."; display: 
 .boxed .head h2, .boxed .head h3 { margin-bottom: 0; color: #000; font: 200 1.857em/1.2 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
 .boxed .head p { margin: -2px 0 1em; font: bold italic .857em/1.1 Georgia, Times, "Times New Roman", serif; }
 
-.boxed .subhead { margin: 0 0 1.4em; border-bottom: 3px solid #f8d475; }
-.boxed .subhead h2, .boxed .subhead h3 { margin-bottom: 0; color: #000; font: 200 1.714em/1.2 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
-.boxed .subhead p { font: italic .857em/1.1 Georgia, Times, "Times New Roman", serif; }
-
 .section h4 a { display: block; padding: 8px 18px 8px 60px; min-height: 30px; margin: -18px -18px 1em; background: transparent url("../img/icons-sections.png") no-repeat; font: 200 2em/1.4 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
 .section h4 a.web { background-position: 0 -100px; }
 .section h4 a.mobile { background-position: 0 -300px; }
@@ -121,11 +111,9 @@ section.boxed:after, div.boxed:after, form.boxed:after { content: "."; display: 
 #apps .modules .boxed { font-size: .857em; word-wrap: break-word; position: relative; padding-bottom: 3.75em; float: left; width: 254px; margin: 0 30px 2em 0; }
 #apps .modules h2 { color: #000; border-bottom: 3px solid #e44d26; font: 200 22px/1.1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; letter-spacing: 1px; text-transform: uppercase; }
 #apps .modules .more { position: absolute; bottom: 20px; margin: 0; font: bold italic 1.12em Georgia, Times, "Times New Roman", serif; }
-#apps #newsletter { margin-right: 0; }
 #apps .boxed .head { border-color: #e44d26; }
 
 .apps-newsletter-subscribe { margin: 0; border: 0; min-height: 300px; }
-#wait-modal, #error-modal { display: none; }
 
 /* @Learning pages *********/
 #blackboard { width: 940px; padding: 60px 0 0; margin: -20px auto 20px; background: #242424 url("../img/boardframe-top.jpg") center top no-repeat; box-shadow: 0 2px 3px rgba(0,0,0,.25); }
@@ -317,19 +305,6 @@ li.tag-expert label:hover { border-color: #bbb; }
 /* @Discussion @Forum-Archive page *********/
 #forum_archive_iframe { width: 940px; padding: 0; margin: 0; border: 0; height: 400px;}
 
-/* @Subscription @Form *********/
-#content-sub .fm-subscribe { background: #cdc9bb; border-bottom-color: #afa894; }
-#content-sub .fm-subscribe .mod-title { color: #f8d575; }
-.fm-subscribe li { margin-bottom: 1em; font-size: .857em; }
-.fm-subscribe label, .fm-subscribe .label { display: block; margin: 0 0 .25em; font: 200 1.25em/1.2 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
-.fm-subscribe input { border: 1px solid #bfbbad; background: #fff; padding: 4px 8px; width: 182px; font-size: .857em; }
-.fm-subscribe select { width: 200px; }
-.fm-subscribe input:hover, .fm-subscribe input:focus { border-color: #8d846f; }
-.fm-subscribe .fm-submit { text-align: right; font-size: 1.143em; }
-.fm-subscribe .inline label, .fm-subscribe .inline .label { width: auto; display: inline; font-family: inherit; font-size: 1em; text-transform: none; }
-.fm-subscribe .inline input, .fm-subscribe .agree input { width: auto; border: 0; padding: 0; }
-.fm-subscribe .agree label { width: auto; display: inline; font-family: inherit; font-size: 1em; text-transform: none; }
-
 /* @HTML5 page *********/
 #learn-html5 #content { background: url("../img/bg-starburst.png") center top no-repeat; }
 #learn-html5 #content-main { float: right; margin-right: -5px; }
@@ -354,7 +329,6 @@ li.tag-expert label:hover { border-color: #bbb; }
 #topics #topic-performance.block:after { left: 420px; }
 #topics #topic-graphics.block:after { left: 500px; }
 #topics #topic-devices.block:after { left: 580px; }
-#topics #topic-more.block:after { left: 618px; }
 
 #topic-tabs { margin: 0 0 15px; }
 #topic-tabs:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
@@ -380,8 +354,6 @@ li.tag-expert label:hover { border-color: #bbb; }
 #tab-graphics.current a { background-position: -600px -100px; }
 #tab-devices a { background-position: -700px 0; }
 #tab-devices.current a { background-position: -700px -100px; }
-#tab-more a { background-position: -800px 0; }
-#tab-more.current a { background-position: -800px -100px; }
 
 #topic-tabs .label { position: absolute; display: none; padding: .5em 8px; width: 100px; left: 50%; top: 68px; margin-left: -60px; text-indent: 0; text-align: center; font-size: .857em;
   background: #fff; 
