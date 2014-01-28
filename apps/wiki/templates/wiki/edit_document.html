@@ -175,9 +175,10 @@
     {% include 'wiki/includes/tag_suggestions.html' %}
 
     {% if document.is_template %}
-      {{ js('ace-editor') }}
+      {% include 'wiki/includes/ace_scripts.html' %}
     {% else %}
       {% include 'wiki/includes/ckeditor_scripts.html' %}
     {% endif %}
+    {{ js('wiki-edit') }}
 
 {% endblock %}
