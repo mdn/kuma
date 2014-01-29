@@ -16,6 +16,11 @@
   {% block site_css %}
   <!--[if !IE 6]><!-->
   {{ css('mdn') }}
+  {% if waffle.flag('css_migration') %}
+    {{ css('mdn-screen-migration') }}
+  {% else %}
+    {{ css('mdn-screen') }}
+  {% endif %}
   <!--<![endif]-->
   {% endblock %}
 

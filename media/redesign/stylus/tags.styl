@@ -25,6 +25,10 @@ caption {
   font-weight: bold;
 }
 
+caption, th {
+  text-align: left;
+}
+
 /* headings */
 h1, h2, h3, h4 {
   font-weight: light-font-weight;
@@ -114,6 +118,12 @@ input[type='search'] {
   }
 }
 
+input[type=text], input[type=password], input[type=search], input[type=email], input[type=url], textarea {
+  background: #fff;
+  border: 1px solid #cbc8b9;
+  padding: 6px 8px;
+}
+
 label {
   cursor: pointer;
 }
@@ -124,8 +134,17 @@ a {
     color: link-color;
   }
 
+  &:link, &:visited {
+      text-decoration: none;
+  }
+
+  &:link:hover, &:link:focus, &:link:active {
+      text-decoration: underline;
+  }
+
   &:visited:hover, &:visited:focus, &:visited:active {
     color: link-color;
+    text-decoration: underline;
   }
 
   {selector-icon}:before {
@@ -138,63 +157,71 @@ a {
   }
 }
 
-.button, button, input[type='submit'], input[type='button'] {
-  text-decoration: none;
-  display: inline-block;
-  compat-important(background-color, button-background);
-  compat-important(color, button-color);
-  compat-important(text-transform, uppercase);
-  compat-important(padding, 5px 11px);
-  compat-important(border-radius, 4px);
-  vendorize(box-shadow, inset 0 -1px button-shadow-color);
-  compat-only(background-image, none);
-  compat-only(font-family, site-font-family);
-  compat-only(font-size, base-font-size);
-  compat-only(letter-spacing, normal);
+a.button {
+  /* Only a.button needs these pseudo-classes */
+  &, &:link, &:visited {
+    text-decoration: none;
+  }
 
-  &.only-icon {
-    {selector-icon} {
-      margin-left: 0 !important;
-      margin-right: 0 !important;
-      margin-top: -1px !important;
+  &, button, input[type='submit'], input[type='button'] {
+    border: 0;
+    display: inline-block;
+    line-height: 1;
+    compat-important(background-color, button-background);
+    compat-important(color, button-color);
+    compat-important(text-transform, uppercase);
+    compat-important(padding, 5px 11px);
+    compat-important(border-radius, 4px);
+    vendorize(box-shadow, inset 0 -1px button-shadow-color);
+    compat-only(background-image, none);
+    compat-only(font-family, site-font-family);
+    compat-only(font-size, base-font-size);
+    compat-only(letter-spacing, normal);
+
+    &.only-icon {
+      {selector-icon} {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        margin-top: -1px !important;
+      }
+
+      span {
+        @extend .offscreen;
+      }
     }
 
-    span {
-      @extend .offscreen;
+    &.neutral, &.negative, &.positive {
+      compat-important(color, #fff);
     }
-  }
 
-  &.neutral, &.negative, &.positive {
-    compat-important(color, #fff);
-  }
+    &.neutral {
+      compat-important(background-color, #0095dd);
+      vendorize(box-shadow, inset 0 -1px #00539f);
+    }
 
-  &.neutral {
-    compat-important(background-color, #0095dd);
-    vendorize(box-shadow, inset 0 -1px #00539f);
-  }
+    &.negative {
+      compat-important(background-color, #ea3b28);
+      vendorize(box-shadow, inset 0 -1px #c13832);
+    }
 
-  &.negative {
-    compat-important(background-color, #ea3b28);
-    vendorize(box-shadow, inset 0 -1px #c13832);
-  }
+    &.positive {
+      compat-important(background-color, #70a300);
+      vendorize(box-shadow, inset 0 -1px #486900);
+    }
 
-  &.positive {
-    compat-important(background-color, #70a300);
-    vendorize(box-shadow, inset 0 -1px #486900);
-  }
+    &.transparent {
+      vendorize(box-shadow, none);
+      compat-important(background-color, transparent);
+    }
 
-  &.transparent {
-    vendorize(box-shadow, none);
-    compat-important(background-color, transparent);
-  }
+    &::-moz-focus-inner {
+      margin-top: -1px;
+      margin-bottom: -1px;
+    }
 
-  &::-moz-focus-inner {
-    margin-top: -1px;
-    margin-bottom: -1px;
-  }
-
-  {selector-icon}:before {
-    cursor: pointer;
+    {selector-icon}:before {
+      cursor: pointer;
+    }
   }
 }
 

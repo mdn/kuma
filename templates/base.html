@@ -18,6 +18,11 @@
   <link rel="stylesheet" href="//mozorg.cdn.mozilla.net/media/css/tabzilla-min.css">
   {% block site_css %}
     {{ css('mdn') }}
+    {% if waffle.flag('css_migration') %}
+      {{ css('mdn-screen-migration') }}
+    {% else %}
+      {{ css('mdn-screen') }}
+    {% endif %}
     {{ css('redesign-main', 'all') }}
     {% for style in styles %}
       {{ css(style) }}

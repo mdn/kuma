@@ -305,6 +305,7 @@ a.persona-button {
 
 /* main content area */
 .wrap {
+  @extend .clear;
   compat-only(max-width, none);
   compat-only(min-width, 0);
   compat-only(width, auto);
@@ -533,4 +534,41 @@ p.field-explanation {
 label {selector-icon} {
     margin-left: 0;
     margin-right: 10px;
+}
+
+/* Login links */
+.user-state {
+  li {
+    display: inline;
+
+    & + li {
+      padding-left: 10px;
+      margin-left: 8px;
+    }
+  }
+}
+
+/* TODO: Remove when referencing templates (Demo Studio, user, and a few others) are updated. */
+for i in (2 3 4 5) {
+  .cols-{i} {
+    vendorize(column-count, i);
+    vendorize(column-gap, 10px);
+  }
+}
+
+#content-main.full {
+  clear: both;
+  float: none;
+  width: 100%;
+}
+
+/* TODO: Remove when referencing templates (Demo Studio, user, and a few others) are updated. */
+.main {
+  width: 670px;
+  float: left;
+}
+
+.global-notice {
+  position: relative;
+  margin: 0 0 -1px;
 }

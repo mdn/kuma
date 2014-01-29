@@ -571,9 +571,6 @@ ul.index a:hover, ul.index a:focus, ul.index a:active { color: #2f2f2f; text-dec
 .modules { clear: both; overflow: hidden; }
 .modules .module { width: 275px; float: left; margin-right: 20px; }
 
-#before-begin .mod-title { background-position: 100% -300px; }
-#prepare-demo .mod-title { background-position: 100% -200px; }
-
 #content .module.notes ul { font-size: .785em; }
 #content .module.notes li { margin: 0 0 10px; padding: 0 0 10px; background: none; border-bottom: 1px dotted #b9b6a7; }
 #content .module.notes li:last-child { padding: 0; border: 0; margin: 0; }
@@ -922,11 +919,6 @@ transition-property: bottom, opacity, visibility;
 .tag-popup p { margin: 0; padding: 10px; border-radius: 5px; background: #000; background: rgba(0,0,0,.85); color: #ccc; font-size: .785em; -moz-box-shadow: 0 2px 2px rgba(0,0,0,.15); -moz-box-shadow: 0 2px 2px rgba(0,0,0,.15); -moz-box-shadow: 0 2px 2px rgba(0,0,0,.15); text-shadow: 0 0 1px #000; }
 .tag-popup strong { color: #fff; }
 .tag-popup span { display: block; width: 0; height: 0; margin: 0 auto; border-top: 10px solid rgba(0,0,0,.85); border-left: 10px solid transparent; border-right: 10px solid transparent; }
-
-#flag-confirm label { display: block; }
-#flag-confirm textarea { display: block; width: 500px; height: 8em; }
-#flag-confirm .submit { margin: 1em 0 0; }
-#flag-confirm .submit button { font-size: 1.142em; }
 
 /* @Submission @Form *********/
 .submission .section { position: relative; padding: 2.75em 0 0; margin: 0 0 1.286em; font-size: .928em; }
