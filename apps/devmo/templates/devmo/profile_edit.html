@@ -10,8 +10,8 @@
     {{ super() }}
     {{ css('demostudio') }}
     {{ css('jquery-ui') }}
-    {% if waffle.flag('redesign') %}{{ css('redesign-profile') }}{% endif %}
-    {{ css('newsletter',) }}
+    {{ css('profile') }}
+    {{ css('newsletter') }}
 {% endblock %}
 
 {% block site_js %}
@@ -122,7 +122,6 @@
     </form>
 
     </div>
-
 
   </section><!-- /#content-main -->
 </div>

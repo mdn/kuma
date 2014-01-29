@@ -15,20 +15,10 @@
           {% set toggle = '' %}
         {% endif %}
 
-        {% if waffle.flag('redesign') %}
           <a href="#" class="persona-button persona-login" data-next="{{ next_url }}">
             <span class="persona-icon"><i aria-hidden="true"></i></span>
             <span class="signin">{{ _('Sign in with Persona') }}</span>
           </a>
-        {% else %}
-          <a href="#" target="_blank" class="browserid-signin {{ toggle }}" aria-haspopup="true" title="{{_('Sign in with Persona')}}">{{ _('Sign in') }}</a>
-          {% if toggle %}
-            <div class="browserid-info sub-menu" aria-hidden="true">
-            {% include "users/browserid_explanation.html" %}
-              <p><a href="#" target="_blank" class="browserid-signin" title="{{_('Sign in with Persona')}}">{{ _('Sign in') }}</a></p>
-            </div>
-          {% endif %}
-        {% endif %}
 
       </form>
     </li>

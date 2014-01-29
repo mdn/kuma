@@ -2,19 +2,11 @@
 <section class="page-meta">
 <section id="page-attachments">
 
-  {% if waffle.flag('redesign') %}
-    <h3><i aria-hidden="true" class="icon-paper-clip"></i>{{ _('Attachments') }}</h3>
-  {% else %}
-    <h2><i aria-hidden="true" class="icon-paper-clip"></i>{{ _('Attachments') }} <bdi>(<span id="page-attachments-count">{{ attachment_data | length}}</span>)</bdi></h2>
-  {% endif %}
+  <h3><i aria-hidden="true" class="icon-paper-clip"></i>{{ _('Attachments') }}</h3>
 
   {% if show_attach_button and attachment_form %}
   <p class="add">
-    {% if waffle.flag('redesign') %}
       <a href="javascript:;" id="page-attachments-button" class="button neutral">Attach Files<i aria-hidden="true" class="icon-paper-clip"></i></a>
-    {% else %}
-      <a href="javascript:;" id="page-attachments-button"><i aria-hidden="true" class="icon-paper-clip"></i>Attach Files</a>
-    {% endif %}
   </p>
   {% endif %}
 
@@ -65,7 +57,7 @@
           <td colspan="4">
             <input type="submit" name="submit" value="Upload" />
 
-            {% set spinner_path = '/media/redesign/img/upload-spinner.gif' if waffle.flag('redesign') else '/media/img/wiki/upload-spinner.gif' %}
+            {% set spinner_path = '/media/redesign/img/upload-spinner.gif' %}
             <img src="{{ spinner_path }}" id="page-attachments-spinner" alt="{{ _('Uploading') }}" />
           </td>
         </tr>

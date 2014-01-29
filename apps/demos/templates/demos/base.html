@@ -8,9 +8,7 @@
     {{ super() }}
     {{ css('demostudio') }}
     {{ css('jquery-ui') }}
-    {% if waffle.flag('redesign') %}
-	  {{ css('redesign-demos') }}
-	{% endif %}
+    
 {% endblock %}
 
 {% block site_js %}
