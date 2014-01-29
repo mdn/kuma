@@ -843,8 +843,6 @@ SKIP_SOUTH_TESTS = True
 # TODO: Move migrations for our apps here, rather than living with the app?
 SOUTH_MIGRATION_MODULES = {
     'taggit': 'migrations.south.taggit',
-    # HACK: South treats "database" as the name of constance.backends.database
-    'database': 'migrations.south.constance',
     'djcelery': 'migrations.south.djcelery',
 }
 

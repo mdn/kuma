@@ -1,0 +1,39 @@
+language: python
+
+python:
+    - "2.7"
+
+env:
+    - DB=mysql DJANGO_VERSION=1.4.8
+
+before_install:
+    - sudo apt-get update -qq
+    - sudo apt-get install build-essential axel python-dev python-virtualenv libxml2-dev libxslt-dev libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev zlib1g-dev sqlite3 libtidy-dev python-mysqldb python-jinja2 python-imaging python-lxml python-coverage python-pylibmc python-pyquery
+    - sudo ln -s /usr/lib/`uname -i`-linux-gnu/libfreetype.so /usr/lib
+    - sudo ln -s /usr/lib/`uname -i`-linux-gnu/libz.so /usr/lib
+    - axel -a http://people.mozilla.org/~lorchard/kuma/wheels-prod.tar.gz
+    - axel -a http://people.mozilla.org/~lorchard/kuma/wheels-dev.tar.gz
+    - axel -a http://people.mozilla.org/~lorchard/kuma/product_details_json.tar.gz
+    - tar -zxf wheels-prod.tar.gz
+    - tar -zxf wheels-dev.tar.gz
+    - tar -C .. -zxf product_details_json.tar.gz
+
+install:
+    - pip install -U pip wheel
+    - pip install --allow-unverified PIL --allow-external PIL -r requirements/compiled.txt
+    - pip install --no-index --find-links=wheels-prod -r requirements/prod.txt
+    - pip install --no-index --find-links=wheels-dev -r requirements/dev.txt
+    - mysql -e 'create database kuma;'
+    - ./manage.py update_product_details
+
+script: 
+    - FORCE_DB=1 python manage.py test --noinput -v2 actioncounters contentflagging dashboards demos devmo kpi landing search users wiki
+
+notifications:
+    email:
+        - lorchard@mozilla.com
+#    irc:
+#        channels:
+#            - "irc.mozilla.org#mdndev"
+#        on_success: always
+#        on_failure: always
