@@ -1240,7 +1240,7 @@ class Document(NotificationsMixin, models.Model):
             raise Exception("Document is not deleted, cannot be undeleted.")
         signals.pre_save.send(sender=self.__class__,
                               instance=self)
-        Document.objects.filter(pk=self.pk).update(deleted=False)
+        Document.deleted_objects.filter(pk=self.pk).update(deleted=False)
         signals.post_save.send(sender=self.__class__,
                                instance=self)
 

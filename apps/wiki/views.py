@@ -338,10 +338,10 @@ def document(request, document_slug, document_locale):
                 locale=document_locale,
                 slug=document_slug
             )
-            deletion_logs[0]
+            
             return render(request,
                           'wiki/deletion_log.html',
-                          {'deletion_logs': deletion_logs})
+                          {'deletion_log': deletion_logs[0]})
         except IndexError:
             pass
 
@@ -2055,6 +2055,9 @@ def delete_document(request, document_slug, document_locale):
         Document,
         locale=document_locale,
         slug=document_slug)
+
+    first_revision = document.revisions.all()[0]
+
     if request.method == 'POST':
         form = DocumentDeletionForm(data=request.POST)
         if form.is_valid():
@@ -2070,7 +2073,8 @@ def delete_document(request, document_slug, document_locale):
         form = DocumentDeletionForm()
     return render(request,
                   'wiki/confirm_document_delete.html',
-                  {'document': document, 'form': form})
+                  {'document': document, 'form': form, 'request': request, 
+                  'revision': first_revision})
 
         
 @login_required
