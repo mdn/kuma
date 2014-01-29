@@ -1,10 +1,3 @@
-# Make sure the repos get updated
-class update_repos {
-    exec { "apt-update":
-        command => '/usr/bin/apt-get update'
-    }
-}
-
 # Get apache up and running
 class apache {
     package { [ "apache2" ]:
