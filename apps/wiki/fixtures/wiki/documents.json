@@ -84,6 +84,19 @@
         }
     },
     {
+        "pk": 7,
+        "model": "wiki.document",
+        "fields": {
+            "category": 10,
+            "title": "User:jezdez",
+            "locale": "en-US",
+            "is_template": false,
+            "modified": "2014-01-27 18:12:10",
+            "html": "",
+            "slug": "User:jezdez"
+        }
+    },
+    {
         "pk": 19,
         "model": "wiki.revision",
         "fields": {

@@ -80,6 +80,8 @@ class Filter(models.Model):
 @register_mapping_type
 class DocumentType(SearchMappingType, Indexable):
     excerpt_fields = ['summary', 'content']
+    exclude_slugs = ['Talk:', 'User:', 'User_talk:', 'Template_talk:',
+                     'Project_talk:']
 
     @classmethod
     def get_model(cls):
@@ -222,11 +224,14 @@ class DocumentType(SearchMappingType, Indexable):
                  ``should_update`` method below, too!
         """
         model = cls.get_model()
+
+        excludes = []
+        for exclude in cls.exclude_slugs:
+            excludes.append(models.Q(slug__icontains=exclude))
+
         return (model.objects
-                     .filter(is_template=False,
-                             is_redirect=False,
-                             deleted=False)
-                     .exclude(slug__icontains='Talk:')
+                     .filter(is_template=False, is_redirect=False, deleted=False)
+                     .exclude(reduce(operator.or_, excludes))
                      .values_list('id', flat=True))
 
     @classmethod
@@ -241,7 +246,8 @@ class DocumentType(SearchMappingType, Indexable):
         return (not obj.is_template and
                 not obj.is_redirect and
                 not obj.deleted and
-                'Talk:' not in obj.slug)
+                not any([exclude in obj.slug
+                         for exclude in cls.exclude_slugs]))
 
     def get_excerpt(self):
         for field in self.excerpt_fields:
@@ -252,9 +258,8 @@ class DocumentType(SearchMappingType, Indexable):
     def get_url(self):
         path = reverse('wiki.document', locale=self.locale, args=[self.slug])
         return '%s%s' % (settings.SITE_URL, path)
-    
+
     def get_edit_url(self):
         path = reverse('wiki.edit_document', locale=self.locale,
                        args=[self.slug])
         return '%s%s' % (settings.SITE_URL, path)
-
