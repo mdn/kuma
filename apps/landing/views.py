@@ -23,7 +23,7 @@ def home(request):
     """Home page."""
 
     if flag_is_active(request, 'redesign'):
-        demos = (Submission.objects.all_sorted('upandcoming').exclude(hidden=True))[:4]
+        demos = (Submission.objects.all_sorted('upandcoming').exclude(hidden=True))[:12]
     else:
         demos = Submission.objects.filter(id=constance.config.DEMOS_DEVDERBY_HOMEPAGE_FEATURED_DEMO)\
                     .exclude(hidden=True)\

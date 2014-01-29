@@ -306,10 +306,11 @@
 .home-demos {
   background: light-background-color;
 
-  ul {
+  .home-demos-list {
     @extend .clear;
-    overflow-x: auto;
     position: relative;
+    height: 150px;
+    overflow: hidden;
   }
 
   li {
@@ -328,6 +329,10 @@
       vendorize(box-shadow, 2px 2px 1px rgba(0 , 0, 0, .1));
       margin-bottom: 6px;
     }
+  }
+
+  .owl-theme .owl-controls {
+    margin-top: grid-spacing;
   }
 
   .preview {
