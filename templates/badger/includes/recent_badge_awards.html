@@ -1,0 +1,15 @@
+{% set recent_awards = request.recent_badge_awards.get_queryset() %}
+{% if recent_awards %}
+    {% set award_ct = recent_awards | count %}
+    <section id="recent_badge_awards"><div class="inner">
+        <a class="close" href="#">X</a>
+        <h2>{{ _("You've earned some new badges!") }}</h2>
+        {% set award_list = recent_awards[:5] %}
+        {% include "badger/includes/awards_as_badges_list.html" %}
+        <div class="more">
+            {% if award_ct > 5 %}
+            <p><a href="{{ url('badger.views.awards_by_user', request.user.username) }}">And {{ award_ct - 5 }} more...</a></p>
+            {% endif %}
+        </div>
+    </div></section>
+{% endif %}

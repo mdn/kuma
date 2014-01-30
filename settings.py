@@ -368,6 +368,9 @@ MIDDLEWARE_CLASSES = (
     'sumo.middleware.PlusToSpaceMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'users.middleware.BanMiddleware',
+
+    'badger.middleware.RecentBadgeAwardsMiddleware',
+    'wiki.badges.BadgeAwardingMiddleware',
 )
 
 # Auth
@@ -471,6 +474,8 @@ INSTALLED_APPS = (
 
     # other
     'humans',
+
+    'badger',
 )
 
 TEST_RUNNER = 'test_utils.runner.RadicalTestSuiteRunner'
@@ -599,6 +604,7 @@ MINIFY_BUNDLES = {
         'redesign-main': (
             'css/libs/font-awesome/css/font-awesome.css',
             'redesign/css/main.css',
+            'redesign/css/badges.css',
         ),
         'redesign-wiki': (
             'redesign/css/wiki.css',
@@ -634,6 +640,7 @@ MINIFY_BUNDLES = {
             'js/jquery-upgrade-compat.js',
             'redesign/js/components.js',
             'redesign/js/main.js',
+            'redesign/js/badges.js',
         ),
         'popup': (
             'js/libs/jquery-1.9.1.js',
@@ -1110,3 +1117,13 @@ GRAPPELLI_INDEX_DASHBOARD = 'admin_dashboard.CustomIndexDashboard'
 
 DBGETTEXT_PATH = 'apps/'
 DBGETTEXT_ROOT = 'translations'
+
+def get_user_url(user):
+    from sumo.urlresolvers import reverse
+    return reverse('devmo.views.profile_view', args=[user.username])
+
+ABSOLUTE_URL_OVERRIDES = {
+    'auth.user': get_user_url
+}
+
+OBI_BASE_URL = 'https://backpack.openbadges.org/'

@@ -1,0 +1,42 @@
+{% extends "badger/base.html" %}
+
+{% set user = award.user %}
+{% set award_url = request.build_absolute_uri(url('badger.views.award_detail', award.badge.slug, award.id)) %}
+{% if award.image %}
+    {% set image_url = award.image.url %}
+{% elif badge.image %}
+    {% set image_url = badge.image.url %}
+{% else %}
+    {# TODO: Put the URL for default badge image in settings #}
+    {% set image_url = "/media/img/default-badge.png" %}
+{% endif %}
+
+{% block pageid %}award_delete{% endblock %}
+
+{% block intro %}
+    {{ _('Badges:') }}
+    <b>{{ _("Delete Award") }}</b>
+{% endblock %}
+
+{% block subcontent %}
+<section class="row-fluid">
+
+    <section class="badge span4">
+        {% include "badger/includes/badge_full.html" %}
+    </section>
+
+    <section class="award span8">
+
+        <form id="delete_award" method="POST" action="" enctype="multipart/form-data">
+            {{ csrf() }}
+            <p><strong>{{ _("Delete this award, are you sure?") }}</strong></p>
+            <ul>
+                <li><input type="submit" class="btn btn-large btn-danger submit" value="{{ _("Yes, delete award") }}"></li>
+            </ul>
+        </form>
+
+        {% include "badger/includes/award_full.html" %}
+    </section>
+
+</section>
+{% endblock %}

@@ -1,0 +1,16 @@
+{%- macro badge_image_url(badge, MEDIA_URL, request=None) -%}
+    {%- if badge.image -%}
+        {%- set img_url = badge.image.url -%}
+    {%- else -%}
+        {%- set img_url = MEDIA_URL + "img/badges/" + badge.slug + '.png' -%}
+    {%- endif -%}
+    {%- if request -%}
+        {{ request.build_absolute_uri(img_url) }}
+    {%- else -%}
+        {{ img_url }}
+    {%- endif -%}
+{%- endmacro -%}
+{% macro badge_image(badge, MEDIA_URL, size=128) -%}
+    <img src="{{ badge_image_url(badge, MEDIA_URL) }}" alt="{{ badge.title }}"
+        width="{{ size }}" height="{{ size }}" /></a>
+{%- endmacro %}

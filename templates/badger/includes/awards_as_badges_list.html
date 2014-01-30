@@ -1,0 +1,10 @@
+{% import 'badger/includes/macros.html' as macros %}
+<ul class="badges cf">
+    {% for award in award_list %}
+        <li class="badge">
+            <a href="{{ award.get_absolute_url() }}" class="image">{{ macros.badge_image(award.badge, MEDIA_URL) }}</a>
+            <a href="{{ award.get_absolute_url() }}" class="label"><span class="title">{{ award.badge.title }}</span></a>
+        </li>
+    {% endfor %}
+</ul>
+{% include "badger/includes/pagination.html" %}

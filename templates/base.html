@@ -60,6 +60,10 @@
 
   {{ soapbox_messages(get_soapbox_messages(request.path)) }}
 
+  {% if waffle.flag('badger') %}
+    {% include "badger/includes/recent_badge_awards.html" %}
+  {% endif %}
+
   <!-- Header -->
   <header id="main-header"><div class="center">
 

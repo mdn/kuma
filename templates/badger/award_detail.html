@@ -1,0 +1,117 @@
+{% extends "badger/base.html" %}
+
+{% set user = award.user %}
+{% set award_url = request.build_absolute_uri(url('badger.views.award_detail', award.badge.slug, award.id)) %}
+{% if award.image %}
+    {% set image_url = award.image.url %}
+{% elif badge.image %}
+    {% set image_url = badge.image.url %}
+{% else %}
+    {# TODO: Put the URL for default badge image in settings #}
+    {% set image_url = "/media/img/default-badge.png" %}
+{% endif %}
+
+{% block pageid %}award_detail{% endblock %}
+
+{% block extrahead %}
+    <link rel="alternate" type="application/json"
+        title="{{ _('{title} (JSON)') | f(title=award) }}"
+        href="{{ request.build_absolute_uri(url('badger.award_detail_json', badge.slug, award.pk)) }}" />
+
+     <meta property="og:type" content="article"> 
+     <meta property="og:url" content="{{ award_url }}">
+     <meta property="og:site_name" content="{{ settings.SITE_TITLE }}">
+     <meta property="og:image" content="{{ request.build_absolute_uri(image_url) }}">
+     <meta property="og:title" content="{{ badge.title }}">
+     <meta property="og:description" content="{{ award.user }} earned the badge &quot;{{ badge.title }}&quot; on {{ settings.SITE_TITLE }}!"> 
+     <meta property="og:updated_time" content="{{ award.created.isoformat() }}Z"> 
+     <meta property="article:published_time" content="{{ award.created.isoformat() }}Z"> 
+     {% if award.creator %}
+         <meta property="article:author" content="{{ request.build_absolute_uri(award.creator.get_absolute_url()) }}">
+     {% endif %}
+     {% for tag in badge.tags.all() %}
+     <meta property="article:tag" content="{{ tag.name }}">
+     {% endfor %}
+{% endblock %}
+
+{% block intro %}
+    {{ _('Badge award:') }} <b>{{ badge.title }}</b>
+{% endblock %}
+
+{% block subcontent %}
+<section class="row-fluid">
+
+    <section class="badge span4">
+        {% include "badger/includes/badge_full.html" %}
+    </section>
+
+    <section class="award span8">
+        {% include "badger/includes/award_full.html" %}
+        <dl class="share">
+            <dt>{{ _('Share:') }}</dt>
+            <dd><ul>
+
+                {% if award.user == request.user %}
+                    <li><form class="obi_issuer">
+                        <button class="btn issue" style="width: 18em"><img class="obi_icons" width="32" style="margin: 0 0em 0em 0; float: left" src="http://openbadges.org/wp-content/themes/openbadges2/media/images/content-background.png" />
+                            <strong>{{_("Add this to your Mozilla&nbsp;Badge&nbsp;Backpack") | safe}}</strong></button>
+                    </form></li>
+                {% endif %}
+
+                {% if award.user == request.user %}
+                    <li><a href="https://twitter.com/share" class="twitter-share-button"
+                           data-text="I earned the badge &quot;{{ badge.title }}&quot; on {{ settings.SITE_TITLE }}!" 
+                           data-size="large"
+                           data-url="{{ award_url }}" data-hashtags="badgus">...</a></li>
+                {% else %}
+                    <li><a href="https://twitter.com/share" class="twitter-share-button" 
+                           data-text="{{ award.user }} earned the badge &quot;{{ badge.title }}&quot; on {{ settings.SITE_TITLE }}!" 
+                           data-size="large"
+                           data-url="{{ award_url }}" data-hashtags="badgus">...</a></li>
+                {% endif %}
+
+                <li><div class="g-plus" data-href="{{ award_url }}" data-action="share"
+                         data-annotation="bubble" data-height="24"></div></li>
+
+                <li><div class="fb-like" data-href="{{ award_url }}" data-send="true"
+                         data-width="450" data-show-faces="false"></div></li>
+
+            </ul></dd>
+        </dl>
+    </section>
+
+</section>
+
+<div id="fb-root"></div>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '235454449896211', // App ID
+      channelUrl : '{{ request.build_absolute_uri('/media/fb-channel.html') }}', // Channel File
+      status     : true, // check login status
+      cookie     : true, // enable cookies to allow the server to access the session
+      xfbml      : true  // parse XFBML
+    });
+    // Additional initialization code here
+  };
+
+  // Load the SDK Asynchronously
+  (function(d){
+     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement('script'); js.id = id; js.async = true;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     ref.parentNode.insertBefore(js, ref);
+   }(document));
+</script>
+
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript"
+        src="{{ settings.OBI_BASE_URL }}issuer.js"></script>
+    <script type="text/javascript"
+        src="//platform.twitter.com/widgets.js"></script>
+    <script type="text/javascript"
+        src="https://apis.google.com/js/plusone.js"></script>
+{% endblock %}
