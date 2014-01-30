@@ -10,12 +10,10 @@ from search.views import SearchView
 
 class ViewTests(ElasticTestCase):
     fixtures = ['test_users.json', 'wiki/documents.json']
-    waffle_flags = ['elasticsearch', 'redesign']
 
     def setUp(self):
         super(ViewTests, self).setUp()
-        for flag in self.waffle_flags:
-            Flag.objects.create(name=flag, everyone=True)
+        Flag.objects.create(name='elasticsearch', everyone=True)
 
     def test_search_rendering(self):
         """The search view """
