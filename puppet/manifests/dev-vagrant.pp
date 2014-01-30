@@ -31,8 +31,6 @@ class dev {
     class {
         dev_hacks: stage => hacks;
 
-        update_repos: stage => pre;
-
         dev_tools: stage => tools;
 
         apache:         stage => basics;

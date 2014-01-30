@@ -29,11 +29,9 @@ class nodejs {
         source => "/home/vagrant/src/puppet/files/usr/share/npm/npmrc",
         require => Package["npm"]
     }
-    exec { 'npm-install':
-        cwd => "/home/vagrant/src/kumascript",
-        user => 'vagrant',
-        command => "/usr/bin/npm install fibers",
-        creates => "/home/vagrant/src/kumascript/node_modules/fibers",
+    exec { 'npm-fibers-install':
+        command => "/usr/bin/npm install -g fibers@0.6.4",
+        creates => "/usr/local/lib/node_modules/fibers",
         require => [
             Package["nodejs"], Package["nodejs-dev"], Package["npm"],
             File["/usr/include/node"], File["/root/.npm"],
