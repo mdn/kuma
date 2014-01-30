@@ -118,7 +118,7 @@
     <a href="{{ url('demos') }}" class="heading-link">{{ _('MDN Demo Studio <i aria-hidden="true" class="icon-arrow-right"></i>') }}</a>
   {% endif %}
 </h2>
-<ul>
+<ul class="home-demos-list">
   {% set extra_class = cycler(' row-first', '')%}
   {% for submission in demos %}
       {{ submission_thumb(submission, extra_class, thumb_width="180", thumb_height="133", is_homepage=True) }}
@@ -182,6 +182,9 @@
 
 {% endblock %}
 
+
+
 {% block js %}
-{{ super() }}
+  {{ super() }}
+  {{ js('home') }}
 {% endblock %}

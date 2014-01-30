@@ -564,6 +564,8 @@ MINIFY_BUNDLES = {
         ),
         'home': (
             'redesign/css/home.css',
+            'js/libs/owl.carousel/owl-carousel/owl.carousel.css',
+            'js/libs/owl.carousel/owl-carousel/owl.theme.css',
         ),
         'search': (
             'redesign/css/search.css',
@@ -641,6 +643,10 @@ MINIFY_BUNDLES = {
             'redesign/js/components.js',
             'redesign/js/main.js',
             'redesign/js/badges.js',
+        ),
+        'home': (
+            'js/libs/owl.carousel/owl-carousel/owl.carousel.js',
+            'redesign/js/home.js'
         ),
         'popup': (
             'js/libs/jquery-1.9.1.js',
