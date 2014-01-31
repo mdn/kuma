@@ -24,7 +24,6 @@ install:
     - pip install --no-index --find-links=wheels-prod -r requirements/prod.txt
     - pip install --no-index --find-links=wheels-dev -r requirements/dev.txt
     - mysql -e 'create database kuma;'
-    - ./manage.py update_product_details
 
 script: 
     - FORCE_DB=1 python manage.py test --noinput -v2 actioncounters contentflagging dashboards demos devmo kpi landing search users wiki

@@ -106,14 +106,6 @@ class SubmissionEditForm(MyModelForm):
         label = "Dev Derby Challenge tag",
         widget = RadioSelect,
         required = False,
-        choices = (
-            (TAG_DESCRIPTIONS[x]['tag_name'], TAG_DESCRIPTIONS[x]['title'])
-            for x in parse_tags(
-                'challenge:none %s' %
-                constance.config.DEMOS_DEVDERBY_CHALLENGE_CHOICE_TAGS, 
-                sorted=False)
-            if x in TAG_DESCRIPTIONS
-        )
     )
 
     def __init__(self, *args, **kwargs):
@@ -123,6 +115,15 @@ class SubmissionEditForm(MyModelForm):
 
         # Hit up the super class for init
         super(SubmissionEditForm, self).__init__(*args, **kwargs)
+
+        self.fields['challenge_tags'].choices = (
+            (TAG_DESCRIPTIONS[x]['tag_name'], TAG_DESCRIPTIONS[x]['title'])
+            for x in parse_tags(
+                'challenge:none %s' %
+                constance.config.DEMOS_DEVDERBY_CHALLENGE_CHOICE_TAGS, 
+                sorted=False)
+            if x in TAG_DESCRIPTIONS
+        )
 
         # If this is being used to edit a submission, we need to do
         # the following:
