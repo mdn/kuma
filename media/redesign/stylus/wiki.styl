@@ -788,6 +788,33 @@ span.cke_skin_kuma {
       left: 10px;
     }
   }
+
+  /* display the attachments table as inline */
+  #page-attachments {
+
+    table {
+      border: 0;
+    }
+
+    thead {
+      display: none;
+    }
+
+    tr {
+      border-bottom: 1px solid #e0e0dc;
+
+      &:last-child {
+        border-bottom: 0;
+      }
+    }
+
+    td {
+      display: block;  
+      border-bottom: 0;
+      border-right: 0;
+    }
+    
+  }
 }
 
 
