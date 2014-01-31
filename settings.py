@@ -774,6 +774,7 @@ CELERYD_LOG_LEVEL = logging.INFO
 CELERYD_CONCURRENCY = 4
 
 CELERY_IMPORTS = (
+    'devmo.tasks',
     'wiki.tasks',
     'search.tasks',
     'tidings.events',
@@ -1043,6 +1044,13 @@ CONSTANCE_CONFIG = dict(
         '',
         'The email address to receive external docs signup emails.'
     ),
+
+    SESSION_CLEANUP_CHUNK_SIZE = (
+        1000,
+        'Number of expired sessions to cleanup up in one go.',
+    ),
+
+
 )
 
 BROWSERID_VERIFICATION_URL = 'https://verifier.login.persona.org/verify'
