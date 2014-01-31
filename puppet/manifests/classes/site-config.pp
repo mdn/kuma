@@ -155,6 +155,12 @@ class kuma_config {
             command => "/usr/bin/python ./manage.py update_feeds",
             onlyif => "/usr/bin/mysql -B -uroot kuma -e'select count(*) from feeder_entry' | grep '0'",
             require => [ Exec["kuma_south_migrate"] ];
+        "kuma_index_database":
+            user => "vagrant",
+            cwd => "/home/vagrant/src",
+            command => "/usr/bin/python manage.py reindex -p 5",
+            timeout => 600,
+            require => [ Service["elasticsearch"] ];
     }
 }
 
