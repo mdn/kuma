@@ -89,11 +89,12 @@ def update_site(env, debug):
         (CHDIR, os.path.join(here)),
         (EXEC, 'python2.6 vendor/src/schematic/schematic migrations/'),
         (EXEC, 'python2.6 manage.py migrate'),
+        (EXEC, 'python2.6 manage.py update_badges'),
         (EXEC, 'python2.6 manage.py collectstatic --noinput'),
         (EXEC, './scripts/compile-stylesheets'),
         (EXEC, 'LANG=en_US.UTF-8 python2.6 manage.py compress_assets'),
     ]
- 
+
     for cmd, cmd_args in commands:
         if CHDIR == cmd:
             if debug:
