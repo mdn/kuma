@@ -215,7 +215,6 @@ Some site funcationaly require waffle flags.  Waffle flags include:
 -  ``revision-dashboard-newusers``:  Allows searching of new users through the revision dashboard
 -  ``events_map``:  Allows display of map on the events page
 -  ``elasticsearch``:  Enables elastic search for site search
--  ``redesign``:  Enables the latest MDN redesign styles and layouts (run ``./scripts/compile-stylesheets`` to compile stylesheets)
 
 To create or modify waffle flags, visit "/admin/" and click the "Waffle" link.
 
