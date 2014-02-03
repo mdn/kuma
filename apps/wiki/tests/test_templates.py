@@ -181,19 +181,14 @@ class DocumentTests(TestCaseBase):
         redirect_url = redirect.get_absolute_url()
         response = self.client.get(redirect_url)
         response = self.client.get(redirect_url, follow=True)
-        self.assertRedirects(response, urlparams(target_url,
-                                                redirectlocale=redirect.locale,
-                                                redirectslug=redirect.slug),
-                                                status_code=301)
+        self.assertRedirects(response, urlparams(target_url), status_code=301)
         self.assertContains(response, redirect_url + '?redirect=no')
 
     def test_redirect_from_nonexistent(self):
         """The template shouldn't crash or print a backlink if the "from" page
         doesn't exist."""
         d = document(save=True)
-        response = self.client.get(urlparams(d.get_absolute_url(),
-                                             redirectlocale='en-US',
-                                             redirectslug='nonexistent'))
+        response = self.client.get(urlparams(d.get_absolute_url()))
         self.assertNotContains(response, 'Redirected from ')
 
     def test_watch_includes_csrf(self):

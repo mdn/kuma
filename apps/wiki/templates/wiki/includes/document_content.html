@@ -132,11 +132,15 @@
 
     <h1>{{ document.title }}</h1>
 
-    {% if redirected_from %}
-    <div class="redirected-from" id="redirected-from">
-      <p>{{ _('Redirected from <a href="{href}">{title}</a>')|fe(href=redirected_from.get_absolute_url()|urlparams(redirect='no'), title=redirected_from.title) }}</p>
-    </div>
-    {% endif %}
+      {% if messages %}
+        {% for message in messages %}
+          {% if 'wiki_redirect' in message.tags %}
+            <div class="redirected-from" id="redirected-from">
+              <p>{{ message | safe }}</p>
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
 
   </div>
   {% endif %}
