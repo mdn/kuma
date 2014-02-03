@@ -80,8 +80,11 @@
               $self[0].focus();
             }
           });
+          
+          $submenu.find('.submenu-close').on('click', function(){
+            closeSubmenu($(this).parent());
+          });
         }
-
         // If there's an open submenu and it's not this one, close it
         // Used for tab navigation from submenu to the next menu item
         if($.fn.mozMenu.$openMenu && $.fn.mozMenu.$openMenu != $self) {
