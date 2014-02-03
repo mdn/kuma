@@ -82,7 +82,7 @@
   (function() {
     var $loginButton = $('.persona-login');
 
-    $.ajax({
+    $loginButton.length && $.ajax({
       url: 'https://login.persona.org/include.js',
       dataType: 'script',
       cache: true,
@@ -169,7 +169,7 @@
     }
 
     if (!safeMethod(settings.type) && sameOrigin(settings.url)) {
-      xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+      xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));
     }
   });
   
