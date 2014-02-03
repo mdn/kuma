@@ -47,7 +47,7 @@ django-constance==0.6
 # 2010-11-11 (current?)
 -e git://github.com/countergram/pytidylib.git@15f8f734e761485d79556c03266353534c987601#egg=pytidylib
 # 2013-11-01 (Current.)
--e git://github.com/mozilla/django-badger.git@c04372aa76dfaa2de7db838359cba2cc10cd61cd#egg=django-badger
+-e git://github.com/mozilla/django-badger.git@1a41701179df11df8ca8ca44898b70b6352623d3#egg=django-badger
 
 ## Formerly vendor/src - converted to versions from git refs
 python-magic==0.4.6
