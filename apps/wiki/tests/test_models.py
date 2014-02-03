@@ -348,12 +348,14 @@ class DocumentTests(TestCase):
         bambino = document(locale='es', title='el test', parent=parent,
                            save=True)
 
-        children = Document.objects.filter(parent=parent)
-        eq_(list(children), parent.other_translations)
+        children = Document.objects.filter(parent=parent).order_by('locale').values_list('pk', flat=True)
+        eq_(list(children),
+            list(parent.other_translations.values_list('pk', flat=True)))
 
-        ok_(parent in enfant.other_translations)
-        ok_(bambino in enfant.other_translations)
-        eq_(False, enfant in enfant.other_translations)
+        enfant_translation_pks = enfant.other_translations.values_list('pk', flat=True)
+        ok_(parent.pk in enfant_translation_pks)
+        ok_(bambino.pk in enfant_translation_pks)
+        eq_(False, enfant.pk in enfant_translation_pks)
 
     def test_topical_parents(self):
         d1, d2 = create_topical_parents_docs()
