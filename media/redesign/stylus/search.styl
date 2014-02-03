@@ -15,7 +15,7 @@ minimize-header-search();
 
 /* search pane used by multiple blocks */
 .search-pane {
-  @extend .grid-padding;
+  padding: grid-spacing;
   background: #fff;
   margin-bottom: (grid-spacing / 2);
 }
@@ -54,7 +54,8 @@ p {
 }
 
 .search-results-container {
-  @extend .grid-padding;
+  padding: grid-spacing;
+  
   h3 {
     margin-bottom: grid-spacing;
   }
@@ -120,7 +121,7 @@ p {
 }
 
 .search-results-more {
-  @extend .clear;
+  clear();
   padding: 0 grid-spacing;
 
   .with-view-all .view-all {

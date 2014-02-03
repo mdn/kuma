@@ -1,3 +1,34 @@
+/* 
+  Classes which should be mirror extensions and mixins - mixins.styl 
+  These classes are used within wiki content so we must have them available as classes as well
+*/
+.offscreen { 
+  offscreen();
+}
+
+.clear { 
+  clear(); 
+}
+
+.title { 
+  title-header(); 
+}
+
+.grid-padding {
+  padding: grid-spacing;
+}
+
+.heading-link { 
+  font-style: italic;
+  font-size: base-font-size;
+  font-weight: normal;
+  display: inline-block;
+  margin-left: (grid-spacing * 2);
+}
+
+
+
+
 /* global notices (via soapbox) */
 .global-notice {
   background: #fff;
@@ -22,7 +53,7 @@
 
 /* header */
 #main-header {
-  @extend .clear;
+  clear();
   border-color: transparent;
   border-bottom-width: 1px;
   border-bottom-style: solid;

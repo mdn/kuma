@@ -258,25 +258,7 @@ big-search() {
   width: 60%;
 }
 
-
-/*
-  CLASSES TO BE EXTENDED BY OTHER CLASSES
-
-  These are very "general" and non-specific on purpose
-  There's a good chance these classes wont be used directly in HTML
-*/
-.clear {
-  &:before, &:after {
-    content: ' ';
-    display: table;
-  }
-
-  &:after {
-    clear: both;
-  }
-}
-
-.offscreen {
+offscreen() {
   border: 0;
   clip: rect(0 0 0 0);
   height: 1px;
@@ -287,7 +269,18 @@ big-search() {
   width: 1px;
 }
 
-.title {
+clear() {
+  &:before, &:after {
+    content: ' ';
+    display: table;
+  }
+
+  &:after {
+    clear: both;
+  }
+}
+
+title-header() {
   font-weight: bold;
   text-transform: uppercase;
   color: text-color;
@@ -295,6 +288,13 @@ big-search() {
   display: block;
 }
 
+
+/*
+  CLASSES TO BE EXTENDED BY OTHER CLASSES
+
+  These are very "general" and non-specific on purpose
+  There's a good chance these classes wont be used directly in HTML
+*/
 .smaller {
   font-size: smaller-font-size;
 }
@@ -303,25 +303,15 @@ big-search() {
   font-size: larger-font-size;
 }
 
-.grid-padding {
-  padding: grid-spacing;
-}
 
-.heading-link { /* used in wiki content as well as the homepage */
-  font-style: italic;
-  font-size: base-font-size;
-  font-weight: normal;
-  display: inline-block;
-  margin-left: (grid-spacing * 2);
-}
 
 /* When an element contains a label and a checkbox in order (as on the edit
    profile page and elsewhere) make them appear on the same line, with the
    checkbox to the left of the label. */
 $checkbox-label-container {
-    @extend .clear;
+    clear();
 
-    input[type="checkbox"] {
+    input[type='checkbox'] {
         bidi-value(float, left, right);
     }
 
