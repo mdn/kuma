@@ -1,13 +1,3 @@
 {% extends "base.html" %}
 
-{% block headernav_current %}
-  <h2 class="current"><a href="{{ url('learn') }}">{{ _('Learning') }}</a></h2>
-{% endblock %}
-
-{% block headernav_others %}
-<li id="nav-extra-docs"><a href="{{ url('docs') }}">{{ _('Docs') }}</a></li>
-<li id="nav-extra-demos"><a href="/demos">{{ _('Demos') }}</a>
-<li id="nav-extra-forums"><a href="/forums">{{ _('Forums') }}</a></li>
-{% endblock %}      
-
 {% block bodyclass %}section-learning{% endblock %}

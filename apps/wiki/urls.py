@@ -51,11 +51,7 @@ document_patterns = patterns('wiki.views',
     url(r'^\$vote', 'helpful_vote', name="wiki.document_vote"),
 )
 
-urlpatterns = patterns('docs.views',
-    url(r'^/?$', 'docs', name='docs'),
-)
-
-urlpatterns += patterns('wiki.views',
+urlpatterns = patterns('wiki.views',
     # Un/Subscribe to locale 'ready for review' notifications.
     url(r'^/ckeditor_config.js$', 'ckeditor_config',
         name='wiki.ckeditor_config'),

@@ -1,9 +1,5 @@
 {% extends "base.html" %}
 
-{% block headernav_current %}
-  <h2 class="current"><a href="{{ url('demos') }}">{{ _('Demos') }}</a></h2>
-{% endblock %}
-
 {% block site_css %}
     {{ super() }}
     {{ css('demostudio') }}

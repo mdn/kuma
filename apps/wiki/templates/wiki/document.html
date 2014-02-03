@@ -60,7 +60,7 @@
 
 {% block lang_switcher %}
   {% if (document.is_localizable or document.parent) and document.other_translations|length %}
-    <form class="languages go" method="get" action="{{ url('docs') }}">
+    <form class="languages go" method="get" action="{{ devmo_url('Web') }}">
       <label for="language">{{ _('Other languages:') }}</label>
       <select id="language" class="wiki-l10n" name="next" dir="ltr">
         <option value="{{ url('wiki.document', document.full_path, locale=document.locale) }}" selected>

@@ -29,16 +29,6 @@ class LearnViewsTest(test_utils.TestCase):
         r = self.client.get(url, follow=True)
         eq_(200, r.status_code)
 
-    def test_learn_html5(self):
-        url = reverse('landing.views.learn_html5')
-        r = self.client.get(url, follow=True)
-        eq_(404, r.status_code)
-        s = Switch.objects.create(name='html5_landing', active=True)
-        s.save()
-        r = self.client.get(url, follow=True)
-        eq_(200, r.status_code)
-        s.delete()
-
     def test_learn_css(self):
         url = reverse('landing.views.learn_css')
         r = self.client.get(url, follow=True)
@@ -58,16 +48,6 @@ class LandingViewsTest(test_utils.TestCase):
 
     def test_home(self):
         url = reverse('landing.views.home')
-        r = self.client.get(url, follow=True)
-        eq_(200, r.status_code)
-
-    def test_mozilla(self):
-        url = reverse('landing.views.mozilla')
-        r = self.client.get(url, follow=True)
-        eq_(200, r.status_code)
-
-    def test_web(self):
-        url = reverse('landing.views.web')
         r = self.client.get(url, follow=True)
         eq_(200, r.status_code)
 

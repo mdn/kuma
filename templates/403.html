@@ -42,7 +42,7 @@
           <li><a href="{{ register_url }}">Register</a> to edit docs and submit demos.</li>
         {% endtrans %}
       {% endif %}
-        {% trans demos_url=url('demos'), docs_url=url('docs') %}
+        {% trans demos_url=url('demos'), docs_url=devmo_url('Web') %}
           <li><a href="{{ demos_url }}">View demos</a> or <a href="{{ docs_url }}">browse docs</a></li>
         {% endtrans %}
       </ul>

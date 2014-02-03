@@ -183,7 +183,7 @@
             <h2>{{_('Recent Docs Activity')}}</h2>
           </header>
           {% if profile.user == request.user %}
-            {% trans docs_url=url('docs.views.docs') %}
+            {% trans docs_url=devmo_url('Project:MDN/Contributing/Creating_and_editing_pages') %}
             <p class="none">You haven't contributed to any MDN docs. <a href="{{docs_url}}">Pitch in!</a></p>
             {% endtrans %}
           {% endif %}

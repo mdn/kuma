@@ -36,6 +36,9 @@ RewriteRule ^Firefox_OS/Security$ docs/Mozilla/Firefox_OS/Security [R=301,L,NC]
 # Old landing pages. The regex, adapted from Bedrock, captures locale prefixes.
 RewriteRule ^(\w{2,3}(?:-\w{2})?/)?mobile/?$ /docs/Mozilla/Mobile [R=301,L]
 RewriteRule ^(\w{2,3}(?:-\w{2})?/)?addons/?$ /Add-ons [R=301,L]
+RewriteRule ^(\w{2,3}(?:-\w{2})?/)?mozilla/?$ /docs/Mozilla [R=301,L]
+RewriteRule ^(\w{2,3}(?:-\w{2})?/)?web/?$ /docs/Web [R=301,L]
+RewriteRule ^(\w{2,3}(?:-\w{2})?/)?learn/html5/?$ /docs/Web/Guide/HTML/HTML5 [R=301,L]
 
 # Some blanket section moves / renames
 RewriteRule ^En/JavaScript/Reference/Objects/Array$ en-US/docs/JavaScript/Reference/Global_Objects/Array [R=301,L,NC]

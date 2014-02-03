@@ -39,42 +39,15 @@ def home(request):
                     str(constance.config.DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG).strip()})
 
 
-def addons(request):
-    """Add-ons landing page."""
-    extra = {
-        'discussions': Feed.objects.get(
-            shortname='amo-forums').entries.all()[:4],
-        'comments': Feed.objects.get(
-            shortname='amo-blog-comments').entries.all()[:4],
-    }
-    return common_landing(request, section=SECTION_ADDONS, extra=extra)
-
-
-def mozilla(request):
-    """Mozilla Applications landing page."""
-    return common_landing(request, section=SECTION_MOZILLA)
-
-
 def search(request):
     """Google Custom Search results page."""
     query = request.GET.get('q', '')
     return render(request, 'landing/searchresults.html',
                   {'query': query})
 
-
-def mobile(request):
-    """Mobile landing page."""
-    return common_landing(request, section=SECTION_MOBILE)
-
-
 def hacks(request):
     """Hacks landing page."""
     return common_landing(request, section=SECTION_HACKS)
-
-
-def web(request):
-    """Web landing page."""
-    return common_landing(request, section=SECTION_WEB)
 
 
 def apps(request):
@@ -122,14 +95,6 @@ def learn(request):
 def learn_html(request):
     """HTML landing page."""
     return render(request, 'landing/learn_html.html')
-
-
-@waffle_switch('html5_landing')
-def learn_html5(request):
-    """HTML5 landing page."""
-    demos = (Submission.objects.all_sorted()
-             .filter(featured=True, taggit_tags__name__in=['tech:html5']))[:6]
-    return render(request, 'landing/learn_html5.html', {'demos': demos})
 
 
 def learn_css(request):

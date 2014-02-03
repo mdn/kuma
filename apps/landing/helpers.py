@@ -26,30 +26,6 @@ def discussions_feed(entries):
     return {'updates': entries}
 
 
-@register.inclusion_tag('sidebar/twitter.html')
-@jinja2.contextfunction
-def twitter(context, tweets, title=None):
-    """Twitter box in the sidebar."""
-    tweet_data = []
-    for tweet in tweets:
-        (nick, status) = tweet.parsed.summary.split(':', 1)
-        published = datetime.datetime(*tweet.parsed.updated_parsed[:6],
-                                      tzinfo=pytz.utc)
-
-        tweet_data.append({
-            'nick': nick,
-            'status': status,
-            'section': tweet.section,
-            'link': tweet.parsed.link,
-            'published': published,
-        })
-
-    c = dict(context.items())
-    c.update({'tweets': tweet_data, 'tweet_qs': tweets,
-              'title': title})
-    return c
-
-
 @register.filter()
 def intcomma(value, use_l10n=True):
     """
