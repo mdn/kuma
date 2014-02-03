@@ -30,9 +30,9 @@ script:
 
 notifications:
     email:
-        - lorchard@mozilla.com
-#    irc:
-#        channels:
-#            - "irc.mozilla.org#mdndev"
-#        on_success: always
-#        on_failure: always
+        - mdndev@mozilla.com
+    irc:
+        channels:
+            - "irc.mozilla.org#mdndev"
+        on_success: always
+        on_failure: always
