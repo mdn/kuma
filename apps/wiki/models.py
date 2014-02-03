@@ -440,7 +440,7 @@ class BaseDocumentManager(models.Manager):
                 if log:
                     log.info("Rendered stale %s" % doc)
             else:
-                tasks.render_document.delay(doc, 'no-cache', settings.SITE_URL)
+                tasks.render_document.delay(doc.pk, 'no-cache', settings.SITE_URL)
                 if log:
                     log.info("Deferred rendering for stale %s" % doc)
 
@@ -835,7 +835,7 @@ class Document(NotificationsMixin, models.Model):
             # Attempt to queue a rendering. If celery.conf.ALWAYS_EAGER is
             # True, this is also an immediate rendering.
             from . import tasks
-            tasks.render_document.delay(self, cache_control, base_url)
+            tasks.render_document.delay(self.pk, cache_control, base_url)
 
     def render(self, cache_control=None, base_url=None, timeout=None):
         """Render content using kumascript and any other services necessary."""
@@ -1122,6 +1122,7 @@ class Document(NotificationsMixin, models.Model):
         if old_review_tags:
             revision.review_tags.set(*old_review_tags)
         revision.make_current()
+        self.schedule_rendering('max-age=0')
         return revision
 
     def revise(self, user, data, section_id=None):

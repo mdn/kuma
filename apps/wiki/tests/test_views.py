@@ -2238,8 +2238,13 @@ class DocumentEditingTests(TestCaseBase):
             reverse('wiki.new_document',
                     locale=settings.WIKI_DEFAULT_LANGUAGE))
 
-    def test_revert(self):
+    @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0)
+    @mock.patch('wiki.kumascript.get')
+    def test_revert(self, mock_kumascript_get):
         self.client.login(username='admin', password='testpass')
+
+        mock_kumascript_get.return_value = (
+            'lorem ipsum dolor sit amet', None)
 
         data = new_document_data()
         data['title'] = 'A Test Article For Reverting'
@@ -2256,15 +2261,19 @@ class DocumentEditingTests(TestCaseBase):
         response = self.client.post(reverse('wiki.edit_document',
                                        args=[doc.full_path]), data)
 
+        mock_kumascript_get.called = False
         response = self.client.post(reverse('wiki.revert_document',
                                        args=[doc.full_path, rev.id]),
                                {'revert': True, 'comment': 'Blah blah'})
+        ok_(mock_kumascript_get.called,
+            "kumascript should have been used")
 
         ok_(302 == response.status_code)
         rev = doc.revisions.order_by('-id').all()[0]
         ok_('lorem ipsum dolor sit amet' == rev.content)
         ok_('Blah blah' in rev.comment)
 
+        mock_kumascript_get.called = False
         rev = doc.revisions.order_by('-id').all()[1]
         response = self.client.post(reverse('wiki.revert_document',
                                        args=[doc.full_path, rev.id]),
@@ -2272,6 +2281,8 @@ class DocumentEditingTests(TestCaseBase):
         ok_(302 == response.status_code)
         rev = doc.revisions.order_by('-id').all()[0]
         ok_(not ': ' in rev.comment)
+        ok_(mock_kumascript_get.called,
+            "kumascript should have been used")
 
 
 class DocumentWatchTests(TestCaseBase):
