@@ -38,6 +38,12 @@
   <link rel="alternate" type="application/json" href="{{ url('wiki.json_slug', document.full_path) }}">
   <link rel="canonical" href="{{ canonical }}" >
 
+  {% if document.other_translations|length %}
+    {% for translation in document.other_translations %}
+      <link rel="alternate" hreflang="{{ translation.locale }}" href="{{ url('wiki.document', translation.full_path, locale=translation.locale) }}" title="{{ translation.title }}">
+    {% endfor %}
+  {% endif %}
+
   <meta property="og:title" content="{{ document.title }}">
   <meta property="og:type" content="website">
   <meta property="og:image" content="{{ request.build_absolute_uri('/media/img/mdn-logo-sm.png') }}">
