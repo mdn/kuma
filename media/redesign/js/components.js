@@ -1,6 +1,7 @@
 (function($) {
 
   var focusClass = 'focused';
+  var noop = function(){};
 
   /*
     Plugin to create nav menus, show/hide delays, etc.
@@ -14,8 +15,8 @@
       submenu: null,
       focusOnOpen: false,
       brickOnClick: false,
-      onOpen: function(){},
-      onClose: function() {}
+      onOpen: noop,
+      onClose: noop
     }, options);
 
     var closeTimeout;
@@ -190,7 +191,9 @@
   */
   $.fn.mozTogglers = function(options) {
     var settings = $.extend({
-      items: null
+      onOpen: noop,
+      slideCallback: noop,
+      duration: 200 /* 400 is the default for jQuery */
     }, options);
 
     $(this).each(function() {
@@ -221,6 +224,7 @@
       $self.on('click', '.toggler', function(e) {
         e.preventDefault();
         e.stopPropagation();
+        settings.onOpen.call(this);
 
         // If I'm an accordion, close the other one
         var $parent = $self.closest('ol, ul');
@@ -246,12 +250,12 @@
         if(!getState($li) || forceClose) {
           $li.attr(closedAttribute, 'true').removeClass('current');
           pieces.$container.attr('aria-expanded', false);
-          pieces.$container.slideUp();
+          pieces.$container.slideUp(settings.duration, settings.slideCallback);
         }
         else {
           $li.attr(closedAttribute, '').addClass('current');
           pieces.$container.attr('aria-expanded', true);
-          pieces.$container.slideDown();
+          pieces.$container.slideDown(settings.duration, settings.slideCallback);
         }
         setIcon(pieces.$toggler, $li);
       }

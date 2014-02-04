@@ -1,7 +1,4 @@
-(function($) {
-
-  var doc = document;
-  var win = window;
+(function(win, doc, $) {
 
   /*
     Togglers within articles (i.e.)
@@ -69,15 +66,20 @@
   /*
     Set up the zone subnav accordion
   */
-  $('.zone-subnav-container').each(function() {
-    var $subnavList = $(this).find('.subnav > ol');
+  $('.zone-landing-header-preview-base').each(function() {
+    var $base = $(this);
+    var $subnav = $base.find('.subnav');
+    var $subnavList = $subnav.find(' > ol');
+
     if(!$subnavList.length) return; // Exit if the subnav isn't set up properly
 
     // Set the list items as togglers where needed
     setupTogglers($subnavList.find('li'));
 
     // Make them toggleable!
-    $subnavList.find('.toggleable').mozTogglers();
+    $subnavList.find('.toggleable').mozTogglers({
+      slideCallback: setMinHeight
+    });
 
     // Try to find the current page in the list, if found, open it
     // Need to keep track of the elements we've found so they aren't found twice
@@ -97,6 +99,15 @@
 
     // Mark this is an accordion so the togglers open/close properly
     $subnavList.addClass('accordion');
+
+    
+    function setMinHeight() {
+      if($base.css('position') == 'absolute') {
+        $('.wiki-main-content').css('min-height', $subnav.height());
+      }
+    }
+
+    setMinHeight();
   });
 
   /*
@@ -269,4 +280,4 @@
     };
   };
 
-})(jQuery);
+})(window, document, jQuery);
