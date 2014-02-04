@@ -20,7 +20,7 @@ before_install:
 
 install:
     - pip install -U pip wheel
-    - pip install --allow-unverified PIL --allow-external PIL -r requirements/compiled.txt
+    - pip install -r requirements/compiled.txt
     - pip install --no-index --find-links=wheels-prod -r requirements/prod.txt
     - pip install --no-index --find-links=wheels-dev -r requirements/dev.txt
     - mysql -e 'create database kuma;'
