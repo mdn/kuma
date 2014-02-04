@@ -18,7 +18,7 @@ URLObject==2.3.4
 
 -e git://github.com/jbalogh/check.git@1c73813fcd085020decc6f72caf232f71150db0a#egg=check
 # 2010-04-07
--e git://github.com/robhudson/django-debug-toolbar.git@ee1811238e91ae0ad33413b0d40d2f8482101951#egg=django-debug-toolbar
+-e git://github.com/django-debug-toolbar/django-debug-toolbar.git@ee1811238e91ae0ad33413b0d40d2f8482101951#egg=django-debug-toolbar
 -e git://github.com/jbalogh/django-debug-cache-panel@a6b0f248b721bdd759ee5b5eb843fedc9c33da09#egg=cache-panel
 -e git://github.com/jbalogh/django-nose.git#egg=django_nose
 # 2012-11-19
