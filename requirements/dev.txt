@@ -4,20 +4,22 @@
 Werkzeug==0.5.1
 ipython==0.10
 sqlparse==0.1.1
-nose==1.3.0
 selenium==1.0.1
-mock==0.6.0
-pyquery==0.5
 translate-toolkit==1.6.0
 pylint==0.20.0
 pygments==1.4
+pep8==0.5.0
+mock==0.6.0
+nose==1.3.0
 
 django-devserver
 django-dbgettext==0.1
 URLObject==2.3.4
 
--e git://github.com/jbalogh/check.git#egg=check
--e git://github.com/robhudson/django-debug-toolbar.git#egg=django_debug_toolbar
--e git://github.com/jbalogh/django-debug-cache-panel#egg=cache_panel
+-e git://github.com/jbalogh/check.git@1c73813fcd085020decc6f72caf232f71150db0a#egg=check
+# 2010-04-07
+-e git://github.com/django-debug-toolbar/django-debug-toolbar.git@ee1811238e91ae0ad33413b0d40d2f8482101951#egg=django-debug-toolbar
+-e git://github.com/jbalogh/django-debug-cache-panel@a6b0f248b721bdd759ee5b5eb843fedc9c33da09#egg=cache-panel
 -e git://github.com/jbalogh/django-nose.git#egg=django_nose
--e git://github.com/jbalogh/test-utils.git#egg=test-utils
+# 2012-11-19
+-e git://github.com/jbalogh/test-utils.git@ce5136a257cd44a1c663319124a255c1d10a9834#egg=test-utils

@@ -8,12 +8,11 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         
-        # Adding field 'Revision.is_mindtouch_migration'
         db.add_column('wiki_revision', 'is_mindtouch_migration', self.gf('django.db.models.fields.BooleanField')(default=True, db_index=True), keep_default=False)
 
+        # Bug: This was already done in migration 0007 with unique=True
         # Adding unique constraint on 'Revision', fields ['mindtouch_old_id']
-        db.create_unique('wiki_revision', ['mindtouch_old_id'])
-
+        # db.create_unique('wiki_revision', ['mindtouch_old_id'])
 
     def backwards(self, orm):
         

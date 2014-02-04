@@ -41,6 +41,10 @@ filters = (
 
 class Migration(DataMigration):
 
+    depends_on = (
+        ("taggit", "0002_auto"),
+    )
+
     def forwards(self, orm):
         ContentType = orm['contenttypes.contenttype']
         Tag = orm['taggit.tag']

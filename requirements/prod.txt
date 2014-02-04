@@ -1,40 +1,138 @@
--e git://github.com/django/django@b8ac1085#egg=django
+## Formerly vendor/python/lib
+django-picklefield==0.1.9
+django-taggit==0.9.3
+pytz==2011h
+httplib2==0.7.3
+South==0.8.2
 
+## Formerly vendor/packages
+Babel==0.9.6
 GitPython==0.1.7
-python-memcached==1.45
-Babel>=0.9.4
-django-celery==2.1.4
-celery==2.1.4
-python-dateutil==1.5
-django-taggit==0.8.0
-pytz
-South==0.7.3
-
-# Feeds and cron jobs
-feedparser==4.1
-jsonpickle==0.3.1
-lockfile==0.8
-django-dbgettext==0.1
-
--e git://github.com/jbalogh/django-cache-machine.git#egg=django-cache-machine
--e git://github.com/django-extensions/django-extensions.git#egg=django_extensions
--e git://github.com/jbalogh/jingo.git#egg=jingo
--e git://github.com/jsocol/jingo-minify.git#egg=jingo-minify
--e git://github.com/jsocol/bleach.git#egg=bleach
--e git://github.com/jbalogh/schematic.git#egg=schematic
--e git://github.com/jsocol/django-cronjobs.git#egg=django_cronjobs
--e git://github.com/fwenzel/django-mozilla-product-details#egg=django-mozilla-product-details
--e git://github.com/clouserw/tower.git#egg=tower
--e git://github.com/jsocol/commonware.git#egg=commonware
--e git://github.com/pcraciunoiu/py-wikimarkup.git#egg=py-wikimarkup
--e hg+http://bitbucket.org/danfairs/django-authority#egg=django_authority
-
-#-e git://github.com/joshthecoder/tweepy.git#egg=tweepy
-
-# Adds TimeZoneField
--e git://github.com/brosner/django-timezones.git@2b903a38da1ff9df4b2aba8e4f5429d967f73881#egg=django-timezones
-
-# Demo Room dependencies
--e git://github.com/mozilla/django-recaptcha.git#egg=django-recaptcha
+amqplib==0.6.1
+anyjson==0.3.1
+beautifulsoup==3.2.1
+billiard==0.3.1
+carrot==0.10.7
+celery==2.5.5
+django-celery==2.5.5
 django-threadedcomments==0.5.2
--e git://github.com/ahupp/python-magic.git#egg=python-magic
+feedparser==4.1
+html5lib==0.90
+jsonpickle==0.3.1
+kombu==2.2.0
+lockfile==0.8
+logilab-astng==0.20.1
+logilab-common==0.50.3
+ordereddict==1.1
+pyes==0.16.0
+pyflakes==0.4.0
+pyparsing==1.5.5
+python-dateutil==1.5
+recaptcha-client==1.0.6
+six==1.3.0
+sqlalchemy==0.6.4
+django-pylibmc
+django-constance==0.6
+
+## Forked, temporary or otherwise
+# 2012-08-02
+-e git://github.com/lmorchard/bleach.git@2906726af82ed0063a559124cee610bcd2e5859c#egg=bleach
+# 2011-11-23
+
+## Advance version, not yet on pypi
+# basket-client==0.3.9
+-e git://github.com/mozilla/basket-client.git@1ca127a17e17f5e67c2d9f9a500d85e97460f13d#egg=basket-client
+# 2013-08-25 (current?)
+-e git+https://github.com/linsomniac/python-memcached@794b02811d8c6fdad304955a4602fb1324270f95#egg=python-memcached
+# 2010-11-11 (current?)
+-e git://github.com/countergram/pytidylib.git@15f8f734e761485d79556c03266353534c987601#egg=pytidylib
+# 2013-11-01 (Current.)
+-e git://github.com/mozilla/django-badger.git@1a41701179df11df8ca8ca44898b70b6352623d3#egg=django-badger
+
+## Formerly vendor/src - converted to versions from git refs
+python-magic==0.4.6
+# -e git://github.com/django/django@6903d1690a92aa040adfb0c8eb37cf62e4206714#egg=django
+Django==1.4.8 
+# -e git://github.com/jsocol/commonware.git@b5544185b2d24adc1eb512735990752400ce9cbd#egg=commonware
+commonware==0.4.2 
+# -e git://github.com/jsocol/django-authority@543c39a889444488de2b16be72da61b1845b9141#egg=django-authority
+django-authority==0.4
+# -e git://github.com/jsocol/django-cronjobs.git@fa411be81d26619c973ec281c5cce2ce5219bd9c#egg=django-cronjobs
+django-cronjobs==0.1
+# -e git://github.com/brosner/django-timezones.git@adf2fb3dcb353733bc8f8742388e2e34f17e3d70#egg=django-timezones
+django-timezones==0.2
+# -e git://github.com/kennethreitz/requests.git@1a7c91f6581c80122ed8cd1fdf4a8ca38c842453#egg=requests
+requests==1.1.0
+# -e git://github.com/andymckay/django-statsd.git@d77e1c60ae07d9a253e084f11969c2803f1800d3#egg=django-statsd
+django-statsd-mozilla==0.3.8.5
+# -e git://github.com/rhec/pyelasticsearch.git@0fdecc5317a9e1a443cb1f6eaaa2db32900181fd#egg=pyelasticsearch
+pyelasticsearch==0.6.1
+# -e git://github.com/erikrose/django-tidings.git@6ee3ac5069dfa76cd85b8fb43def72919731b05e#egg=django-tidings
+django-tidings==0.4
+# -e git://github.com/getsentry/raven-python.git@edd9b1f4fb0ca85b09c1859a228c54f18d6e7d95#egg=raven-python
+raven==3.3.12
+# -e git+https://github.com/sehmaschine/django-grappelli.git@95558ba99f656ba9bd0736e93317b280c05f4237#egg=django-grappelli
+django-grappelli==2.4.5
+# -e git+https://github.com/tomchristie/django-rest-framework.git@195790e60b117eff421eb8f04a9f9f3527e797b8#egg=django-rest-framework
+djangorestframework==2.3.8
+# -e git+https://github.com/jezdez/django-memcached-hashring.git@e66d2cd9255cb802428872360b7fc7071496c063#egg=django-memcached-hashring
+django-memcached-hashring==0.1.2
+# -e git+https://github.com/Doist/hash_ring.git@40e7a260eea6387bfa5855457ee85b7939ce6ab8#egg=hash_ring
+hash_ring==1.3.1
+
+## Formerly vendor/src - arbitrary commits not matched to versions
+# 2011-12-29
+-e git://github.com/mozilla/django-browserid.git@351481325f3dd554a340e416a29df35975f0d590#egg=django-browserid
+# 2011-02-18
+-e git://github.com/jbalogh/django-cache-machine.git@ec5ad09a94b2ec6205d1b1e00b96803bf0a69fcc#egg=django-cache-machine
+# 2010-07-31
+-e git://github.com/django-extensions/django-extensions.git@1610e1e59124071e1d01b3814b6f17ff72b526bb#egg=django-extensions
+# 2011-11-13
+-e git://github.com/fwenzel/django-mozilla-product-details@5a59a50b2f49f4ff555e87ebecc4fe690e71e7b0#egg=django-mozilla-product-details
+# 2010-06-18
+-e git://github.com/jbalogh/django-multidb-router.git@25ca0c68929144ed9020d89f2ea1e941c7f9aeca#egg=django-multidb-router
+# 2013-04-22
+-e git://github.com/jbalogh/jingo.git@327dd865b6c350f02ce40092f2983be19de71303#egg=jingo
+# 2010-11-05
+-e git://github.com/jsocol/jingo-minify.git@95f24e9ecdbeb5d1d88029896b3d53ae8828e533#egg=jingo-minify
+# 2011-09-09
+-e git://github.com/pcraciunoiu/py-wikimarkup.git@bf2046e42a2f2aaae8df233407efbce803342d04#egg=py-wikimarkup
+# 2010-11-04
+-e git://github.com/jbalogh/schematic.git@e749978cc06bda8ba655faf8d672ae270e25b5f5#egg=schematic
+# 2013-02-07
+-e git://github.com/clouserw/tower.git@ce2eba049a5146918fa5239d827bdde9e36eadb7#egg=tower
+# 2010-09-28
+-e git://github.com/mozilla/django-csp.git@5c5f5a6b55fb78e99db939c79f0f0d8003a62c98#egg=django-csp
+# 2010-08-15
+-e git://github.com/tweepy/tweepy.git@179debf197d443c85d73d6e837aa990f9ff6acd2#egg=tweepy
+# 2013-12-18
+-e git://github.com/jsocol/django-waffle.git@74290c8b5ec1321a50613a475acceaf843405268#egg=django-waffle
+# 2011-02-03
+-e git://github.com/jbalogh/django-mobility@e9fc5f7587311350326f044378d5b51b5257afa3#egg=django-mobility
+# 2011-05-17
+-e git://github.com/semente/django-smuggler.git@f2ca1ca3e1e092b0fb426558b124a1f2b6eed23b#egg=smuggler
+# 2011-08-24
+-e git://github.com/mozilla/funfactory.git@19b0cc4fd64f8e8f468876951bfe5350caca10d9#egg=funfactory
+# 2011-08-10
+-e git://github.com/praekelt/django-recaptcha.git@bbb40d4e5f9ec463ac9015450b87d2f073a0315b#egg=django-recaptcha
+# 2012-01-26
+-e git://github.com/mozilla/nuggets.git@96e80a64aa4bfcfef4f43fc3ab6966450ccd7325#egg=nuggets
+# 2011-12-08
+-e git://github.com/ubernostrum/django-soapbox.git@e6c48818913b5afae0d366740e1ab306a3a28aff#egg=soapbox
+# 2013-10-12
+-e git://github.com/mozilla/elasticutils.git@3b355f010771ffbab8b5b19aecb3ede3b2c05c9c#egg=elasticutils
+# 2013-05-31
+-e git://github.com/mozilla/django-session-csrf@f00ad913c62e139d36078e8a7e07dab65a021386#egg=django-session-csrf
+# 2013-06-26
+-e git://github.com/lmorchard/django-teamwork.git@b7dc818d39c92f733cb933814698cedfbbde3622#egg=django-teamwork
+# 2012-05-11
+-e git://github.com/jsocol/pystatsd.git@3e78169def352792ace04317096208fb782fc348#egg=pystatsd
+# 2013-02-21
+-e git://github.com/simplejson/simplejson.git@062aa98fe19c9536b6ede4c0b84f5f3e6711b768#egg=simplejson
+
+## Obsoleted / no longer needed
+
+# -e git://github.com/mozilla/phpbb3-static.git@61b0f3a6b019a9a32291587d7bf87122ead7fb27#egg=phpbb3-static
+# -e git://github.com/jsocol/sphinxapi@4aa6eb3da4bf4dc900a50b3174a1c6edb3f3bdc2#egg=sphinxapi
+# importlib==1.0.2 # included in Python 2.7 and newer for 2.x
+# setuptools==0.6c12dev-r80622
