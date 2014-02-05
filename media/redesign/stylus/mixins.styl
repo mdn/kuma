@@ -269,7 +269,7 @@ offscreen() {
   width: 1px;
 }
 
-clear() {
+clearfix() {
   &:before, &:after {
     content: ' ';
     display: table;
@@ -309,7 +309,7 @@ title-header() {
    profile page and elsewhere) make them appear on the same line, with the
    checkbox to the left of the label. */
 $checkbox-label-container {
-    clear();
+    clearfix();
 
     input[type='checkbox'] {
         bidi-value(float, left, right);
