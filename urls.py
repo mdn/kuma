@@ -28,8 +28,6 @@ urlpatterns = patterns('',
 
     (r'^search', include('search.urls')),
 
-    # Docs landing page and next-gen kuma wiki
-    ('', include('docs.urls')),
     (r'^docs', include('wiki.urls')),
 
     # Javascript translations.
