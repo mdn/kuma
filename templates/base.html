@@ -64,16 +64,16 @@
     {% include "badger/includes/recent_badge_awards.html" %}
   {% endif %}
 
+  <ul id="nav-access">
+    <li><a href="#content">{{ _('Skip to main content') }}</a></li>
+    <li><a href="#language">{{ _('Select language') }}</a></li>
+    {% if not is_sphinx %}
+      <li><a href="#q" id="skip-search">{{ _('Skip to search') }}</a></li>
+    {% endif %}
+  </ul>
+
   <!-- Header -->
   <header id="main-header"><div class="center">
-
-    <ul id="nav-access">
-      <li><a href="#content">{{ _('Skip to main content') }}</a></li>
-      <li><a href="#language">{{ _('Select language') }}</a></li>
-      {% if not is_sphinx %}
-        <li><a href="#q" id="skip-search">{{ _('Skip to search') }}</a></li>
-      {% endif %}
-    </ul>
 
     <div class="clear header-login">
       <a href="//www.mozilla.org/" id="tabzilla">mozilla</a>
