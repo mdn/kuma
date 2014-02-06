@@ -1,10 +1,12 @@
-=======
+====
 Kuma
-=======
+====
+
+.. image:: https://travis-ci.org/mozilla/kuma.png?branch=master
+    :target: https://travis-ci.org/mozilla/kuma
 
 Kuma is the platform that powers `MDN (developer.mozilla.org)
 <https://developer.mozilla.org>`_
-
 
 Development
 ===========
@@ -24,10 +26,10 @@ Development
 Getting Started
 ===============
 
-We're trying to make it easier for new contributors to help with MDN code. Here
-are some options:
+We're trying to make it easier for new contributors to help with MDN code.
+Here are some options:
 
 1. We can always use help with `our selenium test suite
    <https://github.com/mozilla/mdn-tests>`_
-2. Right now the best way to start on Kuma code is outlined in the 
+2. Right now the best way to start on Kuma code is outlined in the
    `Dev Docs <https://kuma.readthedocs.org/en/latest/installation-vagrant.html>`_
