@@ -1,24 +1,24 @@
-/* 
-  Classes which should be mirror extensions and mixins - mixins.styl 
+/*
+  Classes which should be mirror extensions and mixins - mixins.styl
   These classes are used within wiki content so we must have them available as classes as well
 */
-.offscreen { 
+.offscreen {
   offscreen();
 }
 
-.clear { 
-  clearfix(); 
+.clear {
+  clearfix();
 }
 
-.title { 
-  title-header(); 
+.title {
+  title-header();
 }
 
 .grid-padding {
   padding: grid-spacing;
 }
 
-.heading-link { 
+.heading-link {
   font-style: italic;
   font-size: base-font-size;
   font-weight: normal;
@@ -79,25 +79,24 @@
 }
 
 #nav-access {
-  compat-only(width, 0);
+  compat-only(width, 100%);
   position: absolute;
   top: -20em;
-  width: 100%;
-  z-index: 999;
+  z-index: 1001;
 
   a {
-    compat-important(color, #fff);
-    compat-important(background, text-color);
-    width: 200px;
-    padding: 4px 10px;
-    outline: 0;
-    display: inline-block;
+    compat-important(color, link-color);
+    compat-important(background, rgba(255, 255, 255, 0.9));
+    compat-important(padding, 12px 10px);
     position: absolute;
-    box-shadow: 2px 2px 3px rgba(0,0,0,.5);
+    left: 0;
+    right: 0;
+    font-weight: bold;
+    text-align: center;
 
     &:hover, &:focus {
-      top: 19em;
-      compat-important(background, text-color);
+      box-shadow: 3px 3px 5px #aaa;
+      top: 20em;
       text-decoration: none;
     }
   }
