@@ -57,7 +57,6 @@
       $quickLinksControl.toggleClass('hidden');
 
       if($(child).hasClass('column-closed')) {
-        $(win).trigger('resize');
         parent.removeChild(child);
       }
       else {
@@ -149,7 +148,7 @@
       var fixedClass = 'fixed';
       var $wikiRight = $('#wiki-right');
 
-      var resizeFn = debounce(function(e) {
+      var scrollFn = debounce(function(e) {
         // Set forth the pinned or static positioning of the table of contents
         var scroll = win.scrollY;
         var maxHeight = win.innerHeight - parseInt($toc.css('padding-top'), 10) - parseInt($toc.css('padding-bottom'), 10);
@@ -186,8 +185,8 @@
       }, 10);
 
       // Set it forth!
-      resizeFn();
-      $(win).on('scroll resize', resizeFn);
+      scrollFn();
+      $(win).on('scroll', scrollFn);
     }
   })();
 
