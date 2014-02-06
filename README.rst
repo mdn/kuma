@@ -3,7 +3,12 @@ Kuma
 ====
 
 .. image:: https://travis-ci.org/mozilla/kuma.png?branch=master
-    :target: https://travis-ci.org/mozilla/kuma
+   :target: https://travis-ci.org/mozilla/kuma
+   :alt: Build Status
+
+.. image:: https://requires.io/github/mozilla/kuma/requirements.png?branch=master
+   :target: https://requires.io/github/mozilla/kuma/requirements/?branch=master
+   :alt: Requirements Status
 
 Kuma is the platform that powers `MDN (developer.mozilla.org)
 <https://developer.mozilla.org>`_
