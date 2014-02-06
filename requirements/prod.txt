@@ -1,3 +1,5 @@
+Django==1.4.9
+
 ## Formerly vendor/python/lib
 django-picklefield==0.1.9
 django-taggit==0.9.3
@@ -51,8 +53,6 @@ django-constance==0.6
 
 ## Formerly vendor/src - converted to versions from git refs
 python-magic==0.4.6
-# -e git://github.com/django/django@6903d1690a92aa040adfb0c8eb37cf62e4206714#egg=django
-Django==1.4.8 
 # -e git://github.com/jsocol/commonware.git@b5544185b2d24adc1eb512735990752400ce9cbd#egg=commonware
 commonware==0.4.2 
 # -e git://github.com/jsocol/django-authority@543c39a889444488de2b16be72da61b1845b9141#egg=django-authority
