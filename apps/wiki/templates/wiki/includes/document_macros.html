@@ -38,7 +38,7 @@
         <div class="submenu" id="languages-menu-submenu">
           <div class="submenu-column">
             <ul id="translations">
-              {% if document.other_translations|length %}
+              {% if document.other_translations.exists() %}
                 {% for translation in document.other_translations %}
                   <li><bdi><a rel="internal" href="{{ url('wiki.document', translation.full_path, locale=translation.locale) }}" title="{{ translation.title }}">{{ translation.language }}</a></bdi></li>
                 {% endfor %}

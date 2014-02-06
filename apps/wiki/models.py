@@ -21,6 +21,7 @@ from django.core.urlresolvers import resolve
 from django.db import models
 from django.db.models import signals
 from django.http import Http404
+from django.utils.functional import cached_property
 
 from south.modelsinspector import add_introspection_rules
 import constance.config
@@ -720,7 +721,7 @@ class Document(NotificationsMixin, models.Model):
     team = models.ForeignKey(Team, blank=True, null=True)
 
     # Whether this page is deleted.
-    deleted = models.BooleanField(default=False)
+    deleted = models.BooleanField(default=False, db_index=True)
 
     # Last modified time for the document. Should be equal-to or greater than
     # the current revision's created field
@@ -1733,17 +1734,16 @@ class Document(NotificationsMixin, models.Model):
         """Return the document I was translated from or, if none, myself."""
         return self.parent or self
 
-    @property
+    @cached_property
     def other_translations(self):
         """Return a list of Documents - other translations of this Document"""
-        translations = []
         if self.parent is None:
-            translations = list(self.translations.all().order_by('locale'))
+            return self.translations.all().order_by('locale')
         else:
-            translations = list(self.parent.translations.all().
-                                exclude(id=self.id).order_by('locale'))
-            translations.insert(0, self.parent)
-        return translations
+            translations = (self.parent.translations.all()
+                                .exclude(id=self.id).order_by('locale'))
+            pks = list(translations.values_list('pk', flat=True))
+            return Document.objects.filter(pk__in=[self.parent.pk] + pks)
 
     @property
     def parents(self):
