@@ -33,7 +33,12 @@
     var $mainNavSearch = $nav.find('.main-nav-search');
     var $searchWrap = $nav.find('.search-wrap');
     var $input = $searchWrap.find('input');
+    var $searchTrigger = $searchWrap.find('.search-trigger');
     var placeholder = $input.attr('placeholder');
+
+    $searchTrigger.on('click', function(e) {
+      $input.get(0).focus();
+    });
 
     var timeout;
     var createExpander = function(delay, isAdd) {
