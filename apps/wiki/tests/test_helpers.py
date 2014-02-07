@@ -4,47 +4,8 @@ from django.contrib.auth.models import User
 
 from wiki.tests import TestCaseBase, revision, normalize_html
 from wiki.helpers import (revisions_unified_diff,
-                          section_extract, section_hide,
-                          zone_section_extract,
                           document_zone_management_links)
 from wiki.models import DocumentZone
-
-
-class ContentHelperTests(TestCaseBase):
-
-    def test_section_extract(self):
-        src = """
-            <h2>Foo</h2>
-            <p>Bar</p>
-            <h3 id="Quick_Links">Quick Links</h3>
-            <p>Foo, yay</p>
-            <h2>Baz</h2>
-            <p>Baz</p>
-        """
-        expected = """
-            <p>Foo, yay</p>
-        """
-        result = section_extract(src, 'Quick_Links')
-        eq_(normalize_html(expected), normalize_html(result))
-
-    def test_section_hide(self):
-        src = """
-            <h2>Foo</h2>
-            <p>Bar</p>
-            <h3 id="Quick_Links">Quick Links</h3>
-            <p>Foo, yay</p>
-            <h2>Baz</h2>
-            <p>Baz</p>
-        """
-        expected = """
-            <h2>Foo</h2>
-            <p>Bar</p>
-            <!-- -->
-            <h2>Baz</h2>
-            <p>Baz</p>
-        """
-        result = section_hide(src, 'Quick_Links')
-        eq_(normalize_html(expected), normalize_html(result))
 
 
 class RevisionsUnifiedDiffTests(TestCaseBase):
@@ -113,19 +74,6 @@ class DocumentZoneTests(TestCaseBase):
                             is_approved=True, save=True)
         self.other_doc = other_rev.document
         self.other_doc.save()
-
-    def test_zone_section_extract(self):
-        root_result = zone_section_extract(self.root_doc, 'links')
-        eq_(normalize_html(root_result),
-            normalize_html(self.root_links_content))
-
-        sub_result = zone_section_extract(self.sub_doc, 'links')
-        eq_(normalize_html(sub_result),
-            normalize_html(self.root_links_content))
-
-        sub_sub_result = zone_section_extract(self.sub_sub_doc, 'links')
-        eq_(normalize_html(sub_sub_result),
-            normalize_html(self.sub_sub_links_content))
 
     def test_document_zone_links(self):
         admin = User.objects.filter(is_superuser=True)[0]

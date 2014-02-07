@@ -900,7 +900,7 @@ class DocumentSEOTests(TestCaseBase):
         make_page_and_compare_seo('nine',
           u'<p>I <em>am</em> awesome.'
               ' <a href="blah">A link</a> is also &lt;cool&gt;</p>',
-          'I am awesome. A link is also cool')
+          u'I am awesome. A link is also cool')
 
 
 class DocumentEditingTests(TestCaseBase):

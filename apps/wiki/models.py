@@ -23,6 +23,13 @@ from django.db.models import signals
 from django.http import Http404
 from django.utils.functional import cached_property
 
+from django.utils.decorators import available_attrs
+
+try:
+    from functools import wraps
+except ImportError:
+    from django.utils.functional import wraps
+
 from south.modelsinspector import add_introspection_rules
 import constance.config
 
@@ -358,6 +365,33 @@ SECONDARY_CACHE_ALIAS = getattr(settings,
                                 'SECONDARY_CACHE_ALIAS',
                                 'secondary')
 URL_REMAPS_CACHE_KEY_TMPL = 'DocumentZoneUrlRemaps:%s'
+
+
+def cache_with_field(field_name):
+    """Decorator for generated content methods.
+    
+    If the backing model field is null, or kwarg force_fresh is True, call the
+    decorated method to generate and return the content.
+
+    Otherwise, just return the value in the backing model field.
+    """
+    def decorator(fn):
+        @wraps(fn, assigned=available_attrs(fn))
+        def wrapper(self, *args, **kwargs):
+            force_fresh = kwargs.pop('force_fresh', False)
+
+            # Try getting the value using the DB field.
+            field_val = getattr(self, field_name)
+            if not field_val is None and not force_fresh:
+                return field_val
+
+            # DB field is blank, or we're forced to generate it fresh.
+            field_val = fn(self, force_fresh=force_fresh)
+            setattr(self, field_name, field_val)
+            return field_val
+
+        return wrapper
+    return decorator
 
 
 def _inherited(parent_attr, direct_attr):
@@ -727,6 +761,46 @@ class Document(NotificationsMixin, models.Model):
     # the current revision's created field
     modified = models.DateTimeField(auto_now=True, null=True, db_index=True)
 
+    body_html = models.TextField(editable=False, blank=True, null=True)
+    
+    quick_links_html = models.TextField(editable=False, blank=True, null=True)
+
+    zone_subnav_local_html = models.TextField(editable=False,
+                                              blank=True, null=True)
+
+    @cache_with_field('body_html')
+    def get_body_html(self, *args, **kwargs):
+        html = self.rendered_html and self.rendered_html or self.html
+        sections_to_hide = ('Quick_Links', 'Subnav')
+        doc = parse_content(html)
+        for sid in sections_to_hide:
+            doc = doc.replaceSection(sid, '<!-- -->')
+        return doc.serialize()
+
+    @cache_with_field('quick_links_html')
+    def get_quick_links_html(self, *args, **kwargs):
+        return self.get_section_content('Quick_Links')
+
+    @cache_with_field('zone_subnav_local_html')
+    def get_zone_subnav_local_html(self, *args, **kwargs):
+        return self.get_section_content('Subnav')
+
+    def get_zone_subnav_html(self):
+        """Search from self up through DocumentZone stack, returning the first
+        zone nav HTML found."""
+        src = self.get_zone_subnav_local_html()
+        if src:
+            return src
+        for zone in self.find_zone_stack():
+            src = zone.document.get_zone_subnav_local_html()
+            if src:
+                return src
+
+    def get_section_content(self, section_id):
+        """Convenience method to extract the rendered content for a single section"""
+        html = self.rendered_html and self.rendered_html or self.html
+        return parse_content(html).extractSection(section_id).serialize()
+
     def calculate_etag(self, section_id=None):
         """Calculate an etag-suitable hash for document content or a section"""
         if not section_id:
@@ -858,6 +932,11 @@ class Document(NotificationsMixin, models.Model):
                                                         base_url,
                                                         timeout=timeout)
             self.rendered_errors = errors and json.dumps(errors) or None
+
+        # Regenerate the cached content fields
+        self.get_body_html(force_fresh=True)
+        self.get_quick_links_html(force_fresh=True)
+        self.get_zone_subnav_local_html(force_fresh=True)
 
         # Finally, note the end time of rendering and update the document.
         self.last_rendered_at = datetime.now()
