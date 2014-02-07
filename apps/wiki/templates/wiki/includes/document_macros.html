@@ -81,7 +81,7 @@
                   <li><a href="{{ url('wiki.move', document.slug, locale=document.locale) }}">{{ _('Move this page') }}</a></li>
                 {% endif %}
                 {% if user.is_superuser %}
-                  <li><a href="{{ url('admin:wiki_document_change', document.id) }}">{{ _('View in Admin') }}</a></li>
+                  <li><a href="{{ url('admin:wiki_document_change', document.id) }}">{{ _('View in admin') }}</a></li>
                 {% endif %}
 
                 {% set policy_links = build_policy_admin_links(request.user, document) %}
