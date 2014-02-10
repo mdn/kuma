@@ -3,9 +3,6 @@ language: python
 python:
     - "2.7"
 
-env:
-    - DB=mysql DJANGO_VERSION=1.4.8
-
 before_install:
     - sudo apt-get update -qq
     - sudo apt-get install build-essential axel python-dev python-virtualenv libxml2-dev libxslt-dev libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev zlib1g-dev sqlite3 libtidy-dev python-mysqldb python-jinja2 python-imaging python-lxml python-coverage python-pylibmc python-pyquery
@@ -23,6 +20,8 @@ install:
     - pip install -r requirements/compiled.txt
     - pip install --no-index --find-links=wheels-prod -r requirements/prod.txt
     - pip install --no-index --find-links=wheels-dev -r requirements/dev.txt
+
+before_script:
     - mysql -e 'create database kuma;'
 
 script: 
