@@ -1,18 +1,8 @@
 /* styles for the WYSIWYG editor which we cannot take directly from screen.css */
-html { background: #fff; }
+html, body { background: #fff; }
 html.maximized { overflow-y: auto !important; }
-body { min-height: 400px; font: 14px/1.286 "Lucida Grande", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif; margin: 0 auto; color: #333; padding: 0 20px; }
+body { font: 14px/1.5 'Open Sans', sans-serif; padding: 0 20px; }
 
-body.redesign-content {
-  background: #fff !important;
-  font: 14px/1.5 'Open Sans', sans-serif;
-}
-
-/* links */
-:link { color: #369; text-decoration: none; }
-:visited { color: #69c; text-decoration: none; }
-:link:hover, :link:focus, :link:active { color: #25a; text-decoration: underline; }
-:visited:hover, :visited:focus, :visited:active { color: #25a; text-decoration: underline; }
 
 /* seo and callout plugin styles */
 .seoSummary {
