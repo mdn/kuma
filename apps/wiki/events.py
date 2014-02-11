@@ -1,5 +1,7 @@
 import logging
 
+from urlobject import URLObject
+
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core.mail import EmailMessage
@@ -17,6 +19,13 @@ from wiki.models import Document
 log = logging.getLogger('mdn.wiki.events')
 
 
+EMAIL_URL_TRACKING_PARAMS = {
+    'utm_source': 'Notification',
+    'utm_medium': 'email',
+    'utm_campaign': 'Wiki Doc Edits'
+}
+
+
 def context_dict(revision):
     """Return a dict that fills in the blanks in notification templates."""
     document = revision.document
@@ -30,10 +39,7 @@ def context_dict(revision):
             args=[document.full_path], locale=document.locale)
             + '?from=%s&to=%s' % (from_revision.id, to_revision.id))
 
-    return {
-        'document_title': document.title,
-        'creator': revision.creator,
-        'host': Site.objects.get_current().domain,
+    link_urls = {
         'compare_url': compare_url,
         'view_url': reverse('wiki.document',
                             locale=document.locale,
@@ -44,9 +50,22 @@ def context_dict(revision):
         'history_url': reverse('wiki.document_revisions',
                                locale=document.locale,
                                args=[document.slug]),
+    }
 
+    for name, url in link_urls.iteritems():
+        url_obj = URLObject(url).add_query_params(EMAIL_URL_TRACKING_PARAMS)
+        link_urls[name] = str(url_obj)
+
+    context = {
+        'document_title': document.title,
+        'creator': revision.creator,
+        'host': Site.objects.get_current().domain,
         'diff': diff
     }
+    context.update(link_urls)
+
+    return context
+
 
 def notification_mails(revision, subject, template, url, users_and_watches):
     """Return EmailMessages in standard notification mail format."""

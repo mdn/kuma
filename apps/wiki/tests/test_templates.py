@@ -560,16 +560,16 @@ class NewRevisionTests(TestCaseBase):
         eq_(self.d.current_revision, new_rev.based_on)
 
         # Assert notifications fired and have the expected content:
-        expected_to = ['sam@example.com']
+        expected_to = [u'sam@example.com']
         expected_subject = u'[MDN] Page "%s" changed by %s' % (self.d.title,
                                                      new_rev.creator)
         edited_email = mail.outbox[0]
         eq_(expected_subject, edited_email.subject)
         eq_(expected_to, edited_email.to)
-        ok_('%s changed %s.' % (self.username,
-                                                               self.d.title)
+        ok_('%s changed %s.' % (unicode(self.username), unicode(self.d.title))
             in edited_email.body)
-        ok_('https://testserver/en-US/docs/%s$history' % self.d.slug
+        ok_(u'https://testserver/en-US/docs/%s$history?utm_campaign=' %
+                                                                    self.d.slug
             in edited_email.body)
 
         settings.CELERY_ALWAYS_EAGER = old
