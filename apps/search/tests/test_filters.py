@@ -86,7 +86,7 @@ class FilterTests(ElasticTestCase):
             },
         ])
 
-        request = factory.get('/en-US/search?topic=non-existent')
+        request = factory.get('/fr/search?topic=non-existent')
         response = view(request)
         self.assertEqual(response.data['count'], 6)
         self.assertEqual(len(response.data['documents']), 6)
