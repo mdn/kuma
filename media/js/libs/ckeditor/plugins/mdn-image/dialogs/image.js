@@ -519,12 +519,13 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 								label: gettext('Attachments'),
 								items: [],
 								onChange: function() {
-									var value = this.getValue(),
-										dialog = this.getDialog(),
-										alt = mdn.ckeditor.getObjectByUrl(value);
+									var value = this.getValue();
+									var dialog = this.getDialog();
+									var attachmentAlt = mdn.ckeditor.getObjectByUrl(value);
+
 									dialog.setValueOf('info', 'txtUrl', value);
-									if(alt) {
-										dialog.setValueOf('info', 'txtAlt', alt.description);
+									if(!dialog.getValueOf('info', 'txtAlt') && attachmentAlt) {
+										dialog.setValueOf('info', 'txtAlt', attachmentAlt.description);
 									}
 								},
 								setup: function(data) {
