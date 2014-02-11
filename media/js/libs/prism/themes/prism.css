@@ -1,27 +1,41 @@
 /**
- * prism.js Dark theme for JavaScript, CSS and HTML
- * Based on the slides of the talk “/Reg(exp){2}lained/”
+ * prism.js default theme for JavaScript, CSS and HTML
+ * Based on dabblet (http://dabblet.com)
  * @author Lea Verou
  */
 
 code[class*="language-"],
 pre[class*="language-"] {
-	color: white;
-	text-shadow: 0 -.1em .2em black;
+	color: black;
+	text-shadow: 0 1px white;
 	font-family: Consolas, Monaco, 'Andale Mono', monospace;
 	direction: ltr;
 	text-align: left;
 	white-space: pre;
 	word-spacing: normal;
-	
+	word-break: normal;
+
+
 	-moz-tab-size: 4;
 	-o-tab-size: 4;
 	tab-size: 4;
-	
+
 	-webkit-hyphens: none;
 	-moz-hyphens: none;
 	-ms-hyphens: none;
 	hyphens: none;
+}
+
+pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
+code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
+	text-shadow: none;
+	background: #b3d4fc;
+}
+
+pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
+code[class*="language-"]::selection, code[class*="language-"] ::selection {
+	text-shadow: none;
+	background: #b3d4fc;
 }
 
 @media print {
@@ -31,38 +45,33 @@ pre[class*="language-"] {
 	}
 }
 
-pre[class*="language-"],
-:not(pre) > code[class*="language-"] {
-	background: hsl(30,20%,25%);
-}
-
 /* Code blocks */
 pre[class*="language-"] {
 	padding: 1em;
 	margin: .5em 0;
-	overflow: auto;	
-	border: .3em solid hsl(30,20%,40%);
-	border-radius: .5em;
-	box-shadow: 1px 1px .5em black inset;
+	overflow: auto;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #f5f2f0;
 }
 
 /* Inline code */
 :not(pre) > code[class*="language-"] {
-	padding: .15em .2em .05em;
+	padding: .1em;
 	border-radius: .3em;
-	border: .13em solid hsl(30,20%,40%);
-	box-shadow: 1px 1px .3em -.1em black inset;
 }
 
 .token.comment,
 .token.prolog,
 .token.doctype,
 .token.cdata {
-	color: hsl(30,20%,50%);
+	color: slategray;
 }
 
 .token.punctuation {
-	opacity: .7;
+	color: #999;
 }
 
 .namespace {
@@ -72,28 +81,33 @@ pre[class*="language-"] {
 .token.property,
 .token.tag,
 .token.boolean,
-.token.number {
-	color: hsl(350, 40%, 70%);
+.token.number,
+.token.constant,
+.token.symbol {
+	color: #905;
 }
 
 .token.selector,
 .token.attr-name,
-.token.string {
-	color: hsl(75, 70%, 60%);
+.token.string,
+.token.builtin {
+	color: #690;
 }
 
 .token.operator,
 .token.entity,
 .token.url,
 .language-css .token.string,
-.style .token.string {
-	color: hsl(40, 90%, 60%);
+.style .token.string,
+.token.variable {
+	color: #a67f59;
+	background: hsla(0,0%,100%,.5);
 }
 
 .token.atrule,
 .token.attr-value,
 .token.keyword {
-	color: hsl(350, 40%, 70%);
+	color: #07a;
 }
 
 

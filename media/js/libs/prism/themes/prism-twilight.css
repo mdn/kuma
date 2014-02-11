@@ -12,11 +12,12 @@ pre[class*="language-"] {
 	text-shadow: 0 -.1em .2em black;
 	white-space: pre;
 	word-spacing: normal;
-	
+	word-break: normal;
+
 	-moz-tab-size: 4;
 	-o-tab-size: 4;
 	tab-size: 4;
-	
+
 	-webkit-hyphens: none;
 	-moz-hyphens: none;
 	-ms-hyphens: none;
@@ -34,7 +35,7 @@ pre[class*="language-"] {
 	border: .3em solid hsl(0,0%,33%); /* #282A2B */
 	box-shadow: 1px 1px .5em black inset;
 	margin: .5em 0;
-	overflow: auto;	
+	overflow: auto;
 	padding: 1em;
 }
 pre[class*="language-"]::selection { /* Safari */
@@ -42,6 +43,19 @@ pre[class*="language-"]::selection { /* Safari */
 }
 pre[class*="language-"]::selection { /* Firefox */
 	background:hsl(200, 4%, 16%); /* #282A2B */
+}
+
+/* Text Selection colour */
+pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
+code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
+	text-shadow: none;
+	background: hsla(0,0%,93%,0.15); /* #EDEDED */
+}
+
+pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
+code[class*="language-"]::selection, code[class*="language-"] ::selection {
+	text-shadow: none;
+	background: hsla(0,0%,93%,0.15); /* #EDEDED */
 }
 
 /* Inline code */
@@ -75,7 +89,10 @@ pre[class*="language-"]::selection { /* Firefox */
 
 .token.keyword,
 .token.property,
-.token.selector {
+.token.selector,
+.token.constant,
+.token.symbol,
+.token.builtin {
 	color:hsl(53, 89%, 79%); /* #F9EE98 */
 }
 .token.attr-name,
@@ -85,7 +102,8 @@ pre[class*="language-"]::selection { /* Firefox */
 .token.entity,
 .token.url,
 .language-css .token.string,
-.style .token.string {
+.style .token.string,
+.token.variable {
 	color:hsl(76, 21%, 52%); /* #8F9D6A */
 }
 
@@ -114,15 +132,7 @@ pre[data-line] {
 .language-markup .token.tag,
 .language-markup .token.attr-name,
 .language-markup .token.punctuation  {
-	color: hsl(33, 33%, 52%); /* #AC885B */
-}
-
-/* Text Selection colour */
-::selection {
-	background: hsla(0,0%,93%,0.15); /* #EDEDED */
-}
-::-moz-selection {
-	background: hsla(0,0%,93%,0.15); /* #EDEDED */
+	color: hsl(33, 33%, 52%); /* #AC885B */
 }
 
 /* Make the tokens sit above the line highlight so the colours don't look faded. */
@@ -131,11 +141,11 @@ pre[data-line] {
 	z-index:1;
 }
 .line-highlight {
-	background: -moz-linear-gradient(left, hsl(0, 0%, 33%,.1) 70%, hsl(0, 0%, 33%,0)); /* #545454 */
-	background: -o-linear-gradient(left, hsl(0, 0%, 33%,.1) 70%, hsl(0, 0%, 33%,0)); /* #545454 */
-	background: -webkit-linear-gradient(left, hsl(0, 0%, 33%,.1) 70%, hsl(0, 0%, 33%,0)); /* #545454 */
+	background: -moz-linear-gradient(left, hsla(0, 0%, 33%,.1) 70%, hsla(0, 0%, 33%,0)); /* #545454 */
+	background: -o-linear-gradient(left, hsla(0, 0%, 33%,.1) 70%, hsla(0, 0%, 33%,0)); /* #545454 */
+	background: -webkit-linear-gradient(left, hsla(0, 0%, 33%,.1) 70%, hsla(0, 0%, 33%,0)); /* #545454 */
 	background: hsla(0, 0%, 33%, 0.25); /* #545454 */
-	background: linear-gradient(left, hsl(0, 0%, 33%,.1) 70%, hsl(0, 0%, 33%,0)); /* #545454 */
+	background: linear-gradient(left, hsla(0, 0%, 33%,.1) 70%, hsla(0, 0%, 33%,0)); /* #545454 */
 	border-bottom:1px dashed hsl(0, 0%, 33%); /* #545454 */
 	border-top:1px dashed hsl(0, 0%, 33%); /* #545454 */
 	left: 0;

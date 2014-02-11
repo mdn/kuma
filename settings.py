@@ -593,7 +593,7 @@ MINIFY_BUNDLES = {
             'css/libs/jquery.tagit.css',
         ),
         'syntax-prism': (
-            'js/libs/prism/prism.css',
+            'js/libs/prism/themes/prism.css',
             'js/libs/prism/plugins/line-highlight/prism-line-highlight.css',
             'js/libs/prism/plugins/ie8/prism-ie8.css',
             'js/prism-mdn/plugins/line-numbering/prism-line-numbering.css',
