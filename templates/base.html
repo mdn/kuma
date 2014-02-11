@@ -24,9 +24,6 @@
     {% endfor %}
   {% endblock %}
 
-  <noscript>
-    <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}redesign/css/noscript.css">
-  </noscript>
   <!--[if IE]><link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/ie.css"><![endif]-->
   <!--[if lte IE 7]><link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/ie7.css"><![endif]-->
   <!--[if lte IE 6]><link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/ie6.css"><![endif]-->
@@ -161,6 +158,11 @@
       </div>
     </div>
   </div></footer>
+
+  <!-- placing at the bottom to avoid collision with Facebook OpenGraph -->
+  <noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}redesign/css/noscript.css">
+  </noscript>
 
   <!-- site js -->
   <script src="{{ url('jsi18n') }}build:{{ BUILD_ID_JS }}"></script>
