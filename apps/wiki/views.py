@@ -409,10 +409,12 @@ def document(request, document_slug, document_locale):
     if redirect_url and redirect_url != doc.get_absolute_url():
         url = urlparams(redirect_url, query_dict=request.GET)
         messages.add_message(request, messages.WARNING,
+            # TODO: Re-enable the link in this message after Django >1.5 upgrade
+            # Redirected from <a href="%(url)s?redirect=no">%(url)s</a>
             mark_safe(_(u'''
-                Redirected from <a href="%(url)s?redirect=no">%(url)s</a>
+                Redirected from %(url)s?redirect=no
             ''') % {
-                "url": doc.get_absolute_url()
+                "url": request.build_absolute_uri(doc.get_absolute_url())
             }),
             extra_tags='wiki_redirect')
         return HttpResponsePermanentRedirect(url)

@@ -136,7 +136,7 @@
         {% for message in messages %}
           {% if 'wiki_redirect' in message.tags %}
             <div class="redirected-from" id="redirected-from">
-              <p>{{ message | safe }}</p>
+              <p>{{ message }}</p>
             </div>
           {% endif %}
         {% endfor %}
