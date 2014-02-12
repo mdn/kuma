@@ -18,6 +18,9 @@
             ['_setAllowAnchor', true],
   {% if not request.user.is_anonymous() %}
             ['_setCustomVar', 7, 'Signed-In', 'Yes', 1],
+      {% if request.user.get_profile().beta_tester %}
+            ['_setCustomVar', 9, 'Beta Tester', 'Yes', 1],
+      {% endif %}
   {% endif %}
             ['_trackPageview']);
   _gaq.push( removeUtms );
