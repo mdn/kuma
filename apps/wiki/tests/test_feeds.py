@@ -6,10 +6,8 @@ import time
 import datetime
 import json
 import hashlib
-import logging
 
 from nose.tools import eq_, ok_
-from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 
 from sumo.urlresolvers import reverse
@@ -56,20 +54,23 @@ class FeedTests(TestCaseBase):
         for i, item in enumerate(feed.find('item')):
             desc_text = pq(item).find('description').text()
             ok_("%s$compare?to=%s&from=%s" % (d1.slug,
-                                                 d1.current_revision.id,
-                                                 first_rev_id)
+                                              d1.current_revision.id,
+                                              first_rev_id)
                 in desc_text)
 
     def test_revisions_feed(self):
         d = document(title='HTML9')
         d.save()
+        now = datetime.datetime.now()
         for i in xrange(1, 6):
-            revision(save=True, document=d,
-                         title='HTML9', comment='Revision %s' % i,
-                         content="Some Content %s" % i,
-                         is_approved=True,
-                         created=datetime.datetime.now()\
-                         + datetime.timedelta(seconds=5 * i))
+            created = now + datetime.timedelta(seconds=5 * i)
+            revision(save=True,
+                     document=d,
+                     title='HTML9',
+                     comment='Revision %s' % i,
+                     content="Some Content %s" % i,
+                     is_approved=True,
+                     created=created)
 
         resp = self.client.get(reverse('wiki.feeds.recent_revisions',
                                        args=(), kwargs={'format': 'rss'}))
@@ -87,20 +88,20 @@ class FeedTests(TestCaseBase):
             ok_('$history' in desc_text)
 
         resp = self.client.get(reverse('wiki.feeds.recent_revisions',
-                                       args=(), kwargs={'format': 'rss'}) + 
-                                       '?limit=2')
+                                       args=(), kwargs={'format': 'rss'}) +
+                               '?limit=2')
         feed = pq(resp.content)
         eq_(2, len(feed.find('item')))
 
         resp = self.client.get(reverse('wiki.feeds.recent_revisions',
-                                       args=(), kwargs={'format': 'rss'}) + 
-                                       '?limit=2&page=1')
+                                       args=(), kwargs={'format': 'rss'}) +
+                               '?limit=2&page=1')
         ok_('Revision 5' in resp.content)
         ok_('Revision 4' in resp.content)
 
         resp = self.client.get(reverse('wiki.feeds.recent_revisions',
-                                       args=(), kwargs={'format': 'rss'}) + 
-                                       '?limit=2&page=2')
+                                       args=(), kwargs={'format': 'rss'}) +
+                               '?limit=2&page=2')
         ok_('Revision 3' in resp.content)
         ok_('Revision 2' in resp.content)
 
@@ -109,17 +110,22 @@ class FeedTests(TestCaseBase):
         reflect proper document locale, regardless of requestor's locale"""
         d = document(title='HTML9', locale="fr")
         d.save()
+        now = datetime.datetime.now()
         for i in xrange(1, 6):
-            revision(save=True, document=d,
-                         title='HTML9', comment='Revision %s' % i,
-                         content="Some Content %s" % i,
-                         is_approved=True,
-                         created=datetime.datetime.now()\
-                         + datetime.timedelta(seconds=5 * i))
+            created = now + datetime.timedelta(seconds=5 * i)
+            revision(save=True,
+                     document=d,
+                     title='HTML9',
+                     comment='Revision %s' % i,
+                     content="Some Content %s" % i,
+                     is_approved=True,
+                     created=created)
 
-        resp = self.client.get('%s?all_locales' % 
-                reverse('wiki.feeds.recent_revisions',
-                        args=(), kwargs={'format': 'rss'}, locale='en-US'))
+        resp = self.client.get('%s?all_locales' %
+                               reverse('wiki.feeds.recent_revisions',
+                                       args=(),
+                                       kwargs={'format': 'rss'},
+                                       locale='en-US'))
         eq_(200, resp.status_code)
         feed = pq(resp.content)
         eq_(5, len(feed.find('item')))
@@ -130,18 +136,22 @@ class FeedTests(TestCaseBase):
     def test_revisions_feed_diffs(self):
         d = document(title='HTML9')
         d.save()
-        revision(save=True, document=d,
-                    title='HTML9', comment='Revision 1',
-                    content="First Content",
-                    is_approved=True,
-                    created=datetime.datetime.now())
-        r = revision(save=True, document=d,
-                    title='HTML9', comment='Revision 2',
-                    content="First Content",
-                    is_approved=True,
-                    created=datetime.datetime.now() \
-                        + datetime.timedelta(seconds=1),
-                    tags='"some", "more", "tags"')
+        revision(save=True,
+                 document=d,
+                 title='HTML9',
+                 comment='Revision 1',
+                 content="First Content",
+                 is_approved=True,
+                 created=datetime.datetime.now())
+        r = revision(save=True,
+                     document=d,
+                     title='HTML9',
+                     comment='Revision 2',
+                     content="First Content",
+                     is_approved=True,
+                     created=(datetime.datetime.now() +
+                              datetime.timedelta(seconds=1)),
+                     tags='"some", "more", "tags"')
         r.review_tags.set(*[u'editorial'])
 
         resp = self.client.get(reverse('wiki.feeds.recent_revisions',
@@ -163,17 +173,17 @@ class FeedTests(TestCaseBase):
         """Rendering a document shouldn't affect feed contents, unless the
         document content has actually been changed."""
         d1 = document(title="FeedDoc1", locale='en-US', save=True)
-        r1 = revision(document=d1, save=True)
+        revision(document=d1, save=True)
 
-        time.sleep(1) # Let timestamps tick over.
+        time.sleep(1)  # Let timestamps tick over.
         d2 = document(title="FeedDoc2", locale='en-US', save=True)
-        r2 = revision(document=d2, save=True)
+        revision(document=d2, save=True)
 
-        time.sleep(1) # Let timestamps tick over.
+        time.sleep(1)  # Let timestamps tick over.
         d3 = document(title="FeedDoc3", locale='en-US', save=True)
-        r3 = revision(document=d3, save=True)
+        revision(document=d3, save=True)
 
-        time.sleep(1) # Let timestamps tick over.
+        time.sleep(1)  # Let timestamps tick over.
         d4 = document(title="FeedDoc4", locale='en-US', save=True)
         # No r4, so we can trigger the no-current-rev edge case
 
@@ -187,7 +197,7 @@ class FeedTests(TestCaseBase):
         feed_hash_1 = hashlib.md5(resp.content).hexdigest()
 
         # Force another render, hash the feed
-        time.sleep(1) # Let timestamps tick over.
+        time.sleep(1)  # Let timestamps tick over.
         for d in (d1, d2, d3, d4):
             d.render(cache_control="no-cache")
         resp = self.client.get(feed_url)
@@ -197,8 +207,8 @@ class FeedTests(TestCaseBase):
         eq_(feed_hash_1, feed_hash_2)
 
         # Make a real edit.
-        time.sleep(1) # Let timestamps tick over.
-        r2a = revision(document=d2, content="Hah! An edit!", save=True)
+        time.sleep(1)  # Let timestamps tick over.
+        revision(document=d2, content="Hah! An edit!", save=True)
         for d in (d1, d2, d3, d4):
             d.render(cache_control="no-cache")
 

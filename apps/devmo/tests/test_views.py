@@ -1,13 +1,8 @@
 import datetime
 import logging
 import time
-from os.path import dirname
-
-import requests
 
 import mock
-from mock import patch
-from nose import SkipTest
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
@@ -16,7 +11,6 @@ from devmo.tests import create_profile
 
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.contrib.sites.models import Site
 from django.core import mail
 from django.core.paginator import PageNotAnInteger
 
@@ -26,8 +20,9 @@ from devmo.tests import mock_lookup_user
 from devmo.models import UserProfile
 
 from devmo.cron import devmo_calendar_reload
+from devmo.tests import LocalizingClient
 
-from sumo.tests import TestCase, LocalizingClient
+from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
 
 from waffle.models import Flag

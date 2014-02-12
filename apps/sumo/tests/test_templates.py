@@ -3,8 +3,9 @@ from pyquery import PyQuery as pq
 import jingo
 from test_utils import RequestFactory
 
-from sumo.tests import LocalizingClient, TestCase
+from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
+from devmo.tests import LocalizingClient
 
 
 def setup():

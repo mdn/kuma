@@ -1,6 +1,4 @@
-import logging
-
-from nose.tools import eq_, ok_
+from nose.tools import eq_
 
 from django.contrib.auth.models import User
 
@@ -9,7 +7,7 @@ from wiki.helpers import (revisions_unified_diff,
                           section_extract, section_hide,
                           zone_section_extract,
                           document_zone_management_links)
-from wiki.models import DocumentZone, Document, Revision
+from wiki.models import DocumentZone
 
 
 class ContentHelperTests(TestCaseBase):
@@ -48,6 +46,7 @@ class ContentHelperTests(TestCaseBase):
         result = section_hide(src, 'Quick_Links')
         eq_(normalize_html(expected), normalize_html(result))
 
+
 class RevisionsUnifiedDiffTests(TestCaseBase):
     fixtures = ['test_users.json']
 
@@ -58,6 +57,7 @@ class RevisionsUnifiedDiffTests(TestCaseBase):
         except AttributeError:
             self.fail("Should not throw AttributeError")
         eq_("Diff is unavailable.", diff)
+
 
 class DocumentZoneTests(TestCaseBase):
     """Tests for DocumentZone helpers"""
@@ -116,23 +116,26 @@ class DocumentZoneTests(TestCaseBase):
 
     def test_zone_section_extract(self):
         root_result = zone_section_extract(self.root_doc, 'links')
-        eq_(normalize_html(root_result), normalize_html(self.root_links_content))
+        eq_(normalize_html(root_result),
+            normalize_html(self.root_links_content))
 
         sub_result = zone_section_extract(self.sub_doc, 'links')
-        eq_(normalize_html(sub_result), normalize_html(self.root_links_content))
-        
+        eq_(normalize_html(sub_result),
+            normalize_html(self.root_links_content))
+
         sub_sub_result = zone_section_extract(self.sub_sub_doc, 'links')
-        eq_(normalize_html(sub_sub_result), normalize_html(self.sub_sub_links_content))
+        eq_(normalize_html(sub_sub_result),
+            normalize_html(self.sub_sub_links_content))
 
     def test_document_zone_links(self):
         admin = User.objects.filter(is_superuser=True)[0]
         random = User.objects.filter(is_superuser=False)[0]
         cases = [
-            (admin,  self.root_doc,  False, True),
-            (random, self.root_doc,  False, False),
-            (admin,  self.sub_doc,   True,  True),
-            (random, self.sub_doc,   False, False),
-            (admin,  self.other_doc, True,  False),
+            (admin, self.root_doc, False, True),
+            (random, self.root_doc, False, False),
+            (admin, self.sub_doc, True, True),
+            (random, self.sub_doc, False, False),
+            (admin, self.other_doc, True, False),
             (random, self.other_doc, False, False),
         ]
         for (user, doc, add, change) in cases:

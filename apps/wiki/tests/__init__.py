@@ -1,9 +1,6 @@
-import sys
 from datetime import datetime
 import time
-import logging
 
-from django.conf import settings
 from django.contrib.auth.models import User, Group, Permission
 from django.core.files import temp as tempfile
 from django.template.defaultfilters import slugify
@@ -12,7 +9,8 @@ from html5lib.filters._base import Filter as html5lib_Filter
 from nose.tools import nottest
 from waffle.models import Flag
 
-from sumo.tests import LocalizingClient, TestCase, get_user
+from devmo.tests import LocalizingClient
+from sumo.tests import TestCase, get_user
 import wiki.content
 from wiki.models import Document, Revision, CATEGORIES, SIGNIFICANCES
 

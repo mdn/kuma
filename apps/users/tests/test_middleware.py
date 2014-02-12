@@ -1,9 +1,8 @@
 from django.contrib.auth.models import User
 
-from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 
-from sumo.tests import LocalizingClient
+from devmo.tests import LocalizingClient
 from sumo.tests import TestCase
 from users.models import UserBan
 

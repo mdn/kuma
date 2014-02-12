@@ -9,8 +9,7 @@ import basket
 import constance.config
 from waffle.models import Switch
 
-from devmo.tests import SkippedTestCase
-from sumo.tests import LocalizingClient
+from devmo.tests import SkippedTestCase, LocalizingClient
 from sumo.urlresolvers import reverse
 
 

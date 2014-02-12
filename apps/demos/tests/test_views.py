@@ -10,7 +10,7 @@ import logging
 from django.contrib.auth.models import User
 
 from sumo.urlresolvers import reverse
-from sumo.tests import LocalizingClient
+from devmo.tests import LocalizingClient
 
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr

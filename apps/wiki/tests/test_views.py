@@ -1,9 +1,4 @@
 # coding=utf-8
-
-# This Python file uses the following encoding: utf-8
-# see also: http://www.python.org/dev/peps/pep-0263/
-import sys
-import logging
 import datetime
 import json
 import base64
@@ -31,11 +26,9 @@ from pyquery import PyQuery as pq
 
 import constance.config
 
-from taggit.utils import parse_tags, edit_string_for_tags
-
 from waffle.models import Flag
 
-from sumo.tests import LocalizingClient, post, get
+from sumo.tests import post, get
 from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
 
@@ -80,16 +73,15 @@ class RedirectTests(TestCaseBase):
         """The document view shouldn't redirect when passed redirect=no."""
         redirect, _ = doc_rev('REDIRECT <a class="redirect" '
                               'href="http://smoo/">smoo</a>')
-        response = self.client.get(
-                       redirect.get_absolute_url() + '?redirect=no',
-                       follow=True)
+        url = redirect.get_absolute_url() + '?redirect=no'
+        response = self.client.get(url, follow=True)
         self.assertContains(response, 'REDIRECT ')
 
     def test_self_redirect_suppression(self):
         """The document view shouldn't redirect to itself."""
-
         slug = 'redirdoc'
-        html = 'REDIRECT <a class="redirect" href="/en-US/docs/' + slug + '">smoo</a>'
+        html = ('REDIRECT <a class="redirect" href="/en-US/docs/%s">smoo</a>' %
+                slug)
 
         doc = document(title='blah', slug=slug, html=html, save=True,
         locale=settings.WIKI_DEFAULT_LANGUAGE)
@@ -170,7 +162,7 @@ class ViewTests(TestCaseBase):
 
         result_tags = sorted([str(x) for x in data['tags']])
         eq_(expected_tags, result_tags)
-        
+
         result_review_tags = sorted([str(x) for x in data['review_tags']])
         eq_(expected_review_tags, result_review_tags)
 
@@ -186,7 +178,7 @@ class ViewTests(TestCaseBase):
 
         result_tags = sorted([str(x) for x in data['tags']])
         eq_(expected_tags, result_tags)
-        
+
         result_review_tags = sorted([str(x) for x in data['review_tags']])
         eq_(expected_review_tags, result_review_tags)
 
@@ -213,7 +205,7 @@ class ViewTests(TestCaseBase):
         all_url = urlparams(reverse('wiki.document_revisions', args=(slug,),
                                     locale=settings.WIKI_DEFAULT_LANGUAGE),
                             limit='all')
-        resp = self.client.get(url)
+        resp = self.client.get(all_url)
         eq_(200, resp.status_code)
 
     def test_toc_view(self):
@@ -263,14 +255,15 @@ class ViewTests(TestCaseBase):
 
         root_doc = _make_doc('Root', 'Root')
         child_doc_1 = _make_doc('Child 1', 'Root/Child_1', root_doc)
-        grandchild_doc_1 = _make_doc('Grandchild 1',
-            'Root/Child_1/Grandchild_1', child_doc_1)
+        _make_doc('Grandchild 1', 'Root/Child_1/Grandchild_1', child_doc_1)
         grandchild_doc_2 = _make_doc('Grandchild 2',
-            'Root/Child_1/Grandchild_2', child_doc_1)
-        great_grandchild_doc_1 = _make_doc('Great Grandchild 1',
-            'Root/Child_1/Grandchild_2/Great_Grand_Child_1', grandchild_doc_2)
-        child_doc_2 = _make_doc('Child 2', 'Root/Child_2', root_doc)
-        child_doc_3 = _make_doc('Child 3', 'Root/Child_3', root_doc, True)
+                                     'Root/Child_1/Grandchild_2',
+                                     child_doc_1)
+        _make_doc('Great Grandchild 1',
+                  'Root/Child_1/Grandchild_2/Great_Grand_Child_1',
+                  grandchild_doc_2)
+        _make_doc('Child 2', 'Root/Child_2', root_doc)
+        _make_doc('Child 3', 'Root/Child_3', root_doc, True)
 
         for expand in (True, False):
             url = reverse('wiki.get_children', args=['Root'],
@@ -293,7 +286,8 @@ class ViewTests(TestCaseBase):
                 ok_('review_tags' in json_obj)
             eq_(len(json_obj['subpages']), 2)
             eq_(len(json_obj['subpages'][0]['subpages']), 2)
-            eq_(json_obj['subpages'][0]['subpages'][1]['title'], 'Grandchild 2')
+            eq_(json_obj['subpages'][0]['subpages'][1]['title'],
+                'Grandchild 2')
 
         # Depth parameter testing
         def _depth_test(depth, aught):
@@ -309,12 +303,10 @@ class ViewTests(TestCaseBase):
 
         # Sorting test
         sort_root_doc = _make_doc('Sort Root', 'Sort_Root')
-        sort_child_doc_1 = _make_doc('B Child', 'Sort_Root/B_Child',
-                                     sort_root_doc)
-        sort_child_doc_2 = _make_doc('A Child', 'Sort_Root/A_Child',
-                                     sort_root_doc)
+        _make_doc('B Child', 'Sort_Root/B_Child', sort_root_doc)
+        _make_doc('A Child', 'Sort_Root/A_Child', sort_root_doc)
         resp = self.client.get(reverse('wiki.get_children', args=['Sort_Root'],
-            locale=settings.WIKI_DEFAULT_LANGUAGE))
+                                       locale=settings.WIKI_DEFAULT_LANGUAGE))
         json_obj = json.loads(resp.content)
         eq_(json_obj['subpages'][0]['title'], 'A Child')
 
@@ -364,10 +356,10 @@ class PermissionTests(TestCaseBase):
                     (True, self.users['change']),
                 )),
                 ('Template:test_for_%s', (
-                    (True,       self.superuser),
-                    (False,      self.users['none']),
-                    (True,       self.users['all']),
-                    (is_add,     self.users['add']),
+                    (True, self.superuser),
+                    (False, self.users['none']),
+                    (True, self.users['all']),
+                    (is_add, self.users['add']),
                     (not is_add, self.users['change']),
                 ))
             )
@@ -539,12 +531,12 @@ class ReadOnlyTests(TestCaseBase):
 
 
 class KumascriptIntegrationTests(TestCaseBase):
-    """Tests for usage of the kumascript service.
+    """
+    Tests for usage of the kumascript service.
 
     Note that these tests really just check whether or not the service was
     used, and are not integration tests meant to exercise the real service.
     """
-
     fixtures = ['test_users.json']
 
     def setUp(self):
@@ -730,32 +722,32 @@ class KumascriptIntegrationTests(TestCaseBase):
         expected_errors = {
             "logs": [
                 {"level": "debug",
-                  "message": "Message #1",
-                  "args": ['TestError'],
-                  "time": "12:32:03 GMT-0400 (EDT)",
-                  "timestamp": "1331829123101000"},
+                 "message": "Message #1",
+                 "args": ['TestError'],
+                 "time": "12:32:03 GMT-0400 (EDT)",
+                 "timestamp": "1331829123101000"},
                 {"level": "warning",
-                  "message": "Message #2",
-                  "args": ['TestError'],
-                  "time": "12:33:58 GMT-0400 (EDT)",
-                  "timestamp": "1331829238052000"},
+                 "message": "Message #2",
+                 "args": ['TestError'],
+                 "time": "12:33:58 GMT-0400 (EDT)",
+                 "timestamp": "1331829238052000"},
                 {"level": "info",
-                  "message": "Message #3",
-                  "args": ['TestError'],
-                  "time": "12:34:22 GMT-0400 (EDT)",
-                  "timestamp": "1331829262403000"},
+                 "message": "Message #3",
+                 "args": ['TestError'],
+                 "time": "12:34:22 GMT-0400 (EDT)",
+                 "timestamp": "1331829262403000"},
                 {"level": "debug",
-                  "message": "Message #4",
-                  "time": "12:32:03 GMT-0400 (EDT)",
-                  "timestamp": "1331829123101000"},
+                 "message": "Message #4",
+                 "time": "12:32:03 GMT-0400 (EDT)",
+                 "timestamp": "1331829123101000"},
                 {"level": "warning",
-                  "message": "Message #5",
-                  "time": "12:33:58 GMT-0400 (EDT)",
-                  "timestamp": "1331829238052000"},
+                 "message": "Message #5",
+                 "time": "12:33:58 GMT-0400 (EDT)",
+                 "timestamp": "1331829238052000"},
                 {"level": "info",
-                  "message": "Message #6",
-                  "time": "12:34:22 GMT-0400 (EDT)",
-                  "timestamp": "1331829262403000"},
+                 "message": "Message #6",
+                 "time": "12:34:22 GMT-0400 (EDT)",
+                 "timestamp": "1331829262403000"},
             ]
         }
 
@@ -816,20 +808,18 @@ class KumascriptIntegrationTests(TestCaseBase):
 
 class DocumentSEOTests(TestCaseBase):
     """Tests for the document seo logic"""
-
     fixtures = ['test_users.json']
 
     def test_seo_title(self):
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
 
         # Utility to make a quick doc
         def _make_doc(title, aught_titles, slug):
             doc = document(save=True, slug=slug, title=title,
-                                       locale=settings.WIKI_DEFAULT_LANGUAGE)
+                           locale=settings.WIKI_DEFAULT_LANGUAGE)
             revision(save=True, document=doc)
-            response = client.get(reverse('wiki.document', args=[slug],
-                                    locale=settings.WIKI_DEFAULT_LANGUAGE))
+            response = self.client.get(reverse('wiki.document', args=[slug],
+                                       locale=settings.WIKI_DEFAULT_LANGUAGE))
             page = pq(response.content)
 
             ok_(page.find('title').text() in aught_titles)
@@ -844,25 +834,24 @@ class DocumentSEOTests(TestCaseBase):
 
         # Additional tests for /Web/*  changes
         _make_doc('Firefox OS', ['Firefox OS | MDN'], 'firefox_os')
-        _make_doc('Email App', ['Email App - Firefox OS | MDN'], 'firefox_os/email_app')
+        _make_doc('Email App', ['Email App - Firefox OS | MDN'],
+                  'firefox_os/email_app')
         _make_doc('Web', ['Web | MDN'], 'Web')
         _make_doc('HTML', ['HTML | MDN'], 'Web/html')
         _make_doc('Fieldset', ['Fieldset - HTML | MDN'], 'Web/html/fieldset')
-        _make_doc('Legend', ['Legend - HTML | MDN'], 'Web/html/fieldset/legend')
-
+        _make_doc('Legend', ['Legend - HTML | MDN'],
+                  'Web/html/fieldset/legend')
 
     def test_seo_script(self):
-
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
 
         def make_page_and_compare_seo(slug, content, aught_preview):
             # Create the doc
             data = new_document_data()
             data.update({'title': 'blah', 'slug': slug, 'content': content})
-            response = client.post(reverse('wiki.new_document',
-                                       locale=settings.WIKI_DEFAULT_LANGUAGE),
-                                   data)
+            response = self.client.post(reverse('wiki.new_document',
+                                                locale=settings.WIKI_DEFAULT_LANGUAGE),
+                                        data)
             eq_(302, response.status_code)
 
             # Connect to newly created page
@@ -920,19 +909,17 @@ class DocumentEditingTests(TestCaseBase):
     fixtures = ['test_users.json']
 
     def test_noindex_post(self):
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
 
         # Go to new document page to ensure no-index header works
-        response = client.get(reverse('wiki.new_document', args=[],
-                                       locale=settings.WIKI_DEFAULT_LANGUAGE))
+        response = self.client.get(reverse('wiki.new_document', args=[],
+                                           locale=settings.WIKI_DEFAULT_LANGUAGE))
         eq_(response['X-Robots-Tag'], 'noindex')
 
     @attr('bug821986')
     def test_editor_safety_filter(self):
         """Safety filter should be applied before rendering editor"""
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
 
         r = revision(save=True, content="""
             <svg><circle onload=confirm(3)>
@@ -944,13 +931,12 @@ class DocumentEditingTests(TestCaseBase):
             '%s?tolocale=%s' % (reverse('wiki.translate', args=args), 'fr')
         )
         for url in urls:
-            page = pq(client.get(url).content)
+            page = pq(self.client.get(url).content)
             editor_src = page.find('#id_content').text()
             ok_('onload' not in editor_src)
 
     def test_create_on_404(self):
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
 
         # Create the parent page.
         d, r = doc_rev()
@@ -963,33 +949,32 @@ class DocumentEditingTests(TestCaseBase):
 
         # Ensure redirect to create new page on attempt to visit non-existent
         # child page.
-        resp = client.get(url)
+        resp = self.client.get(url)
         eq_(302, resp.status_code)
         ok_('docs/new' in resp['Location'])
-        ok_('?slug=%s' % local_slug  in resp['Location'])
+        ok_('?slug=%s' % local_slug in resp['Location'])
 
         # Ensure real 404 for visit to non-existent page with params common to
         # kumascript and raw content API.
         for p_name in ('raw', 'include', 'nocreate'):
             sub_url = '%s?%s=1' % (url, p_name)
-            resp = client.get(sub_url)
+            resp = self.client.get(sub_url)
             eq_(404, resp.status_code)
 
         # Ensure root level documents work, not just children
-        response = client.get(reverse('wiki.document',
+        response = self.client.get(reverse('wiki.document',
                                       args=['noExist'], locale=locale))
         eq_(302, response.status_code)
 
-        response = client.get(reverse('wiki.document',
+        response = self.client.get(reverse('wiki.document',
                                       args=['Template:NoExist'],
                                       locale=locale))
         eq_(302, response.status_code)
-    
+
     def test_new_document_comment(self):
-        """ Creating a new document with a revision comment saves the comment """
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
-        
+        """Creating a new document with a revision comment saves the comment"""
+        self.client.login(username='admin', password='testpass')
+
         comment = 'I am the revision comment'
         slug = 'Test-doc-comment'
         loc = settings.WIKI_DEFAULT_LANGUAGE
@@ -997,16 +982,15 @@ class DocumentEditingTests(TestCaseBase):
         # Create a new doc.
         data = new_document_data()
         data.update({'slug': slug, 'comment': comment})
-        resp = client.post(reverse('wiki.new_document'), data)
-        eq_(comment,
-            Document.objects.get(slug=slug, locale=loc).current_revision.comment)
+        self.client.post(reverse('wiki.new_document'), data)
+        doc = Document.objects.get(slug=slug, locale=loc)
+        eq_(comment, doc.current_revision.comment)
 
     @attr('toc')
     def test_toc_initial(self):
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
 
-        resp = client.get(reverse('wiki.new_document'))
+        resp = self.client.get(reverse('wiki.new_document'))
         eq_(200, resp.status_code)
 
         page = pq(resp.content)
@@ -1031,8 +1015,7 @@ class DocumentEditingTests(TestCaseBase):
         # Not testing slug changes separately; the model tests cover those plus
         # slug+title changes. If title changes work in the view, the rest
         # should also.
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
 
         new_title = 'Some New Title'
         d, r = doc_rev()
@@ -1042,7 +1025,7 @@ class DocumentEditingTests(TestCaseBase):
                      'form': 'rev'})
         data['slug'] = ''
         url = reverse('wiki.edit_document', args=[d.full_path])
-        client.post(url, data)
+        self.client.post(url, data)
         eq_(new_title,
             Document.objects.get(slug=d.slug, locale=d.locale).title)
         try:
@@ -1061,8 +1044,7 @@ class DocumentEditingTests(TestCaseBase):
         # Not testing slug changes separately; the model tests cover those plus
         # slug+title changes. If title changes work in the view, the rest
         # should also.
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
 
         # create parent doc & rev along with child doc & rev
         d = document(title='parent', save=True)
@@ -1077,7 +1059,7 @@ class DocumentEditingTests(TestCaseBase):
                      'form': 'rev'})
         data['slug'] = ''
         url = reverse('wiki.edit_document', args=[d.full_path])
-        client.post(url, data)
+        self.client.post(url, data)
         eq_(new_title,
             Document.objects.get(slug=d.slug, locale=d.locale).title)
         try:
@@ -1089,8 +1071,7 @@ class DocumentEditingTests(TestCaseBase):
     def test_slug_change_ignored_for_iframe(self):
         """When the title of an article is edited in an iframe, the change is
         ignored."""
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
         new_slug = 'some_new_slug'
         d, r = doc_rev()
         old_slug = d.slug
@@ -1098,31 +1079,30 @@ class DocumentEditingTests(TestCaseBase):
         data.update({'title': d.title,
                      'slug': new_slug,
                      'form': 'rev'})
-        client.post('%s?iframe=1' % reverse('wiki.edit_document',
+        self.client.post('%s?iframe=1' % reverse('wiki.edit_document',
                                             args=[d.full_path]), data)
         eq_(old_slug, Document.objects.get(slug=d.slug,
-                                             locale=d.locale).slug)
+                                           locale=d.locale).slug)
         assert "REDIRECT" not in Document.objects.get(slug=old_slug).html
 
     @attr('clobber')
     def test_slug_collision_errors(self):
         """When an attempt is made to retitle an article and another with that
         title already exists, there should be form errors"""
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
 
         exist_slug = "existing-doc"
 
         # Create a new doc.
         data = new_document_data()
         data.update({"slug": exist_slug})
-        resp = client.post(reverse('wiki.new_document'), data)
+        resp = self.client.post(reverse('wiki.new_document'), data)
         eq_(302, resp.status_code)
 
         # Create another new doc.
         data = new_document_data()
         data.update({"slug": 'some-new-title'})
-        resp = client.post(reverse('wiki.new_document'), data)
+        resp = self.client.post(reverse('wiki.new_document'), data)
         eq_(302, resp.status_code)
 
         # Now, post an update with duplicate slug
@@ -1130,9 +1110,8 @@ class DocumentEditingTests(TestCaseBase):
             'form': 'rev',
             'slug': exist_slug
         })
-        resp = client.post(reverse('wiki.edit_document',
-                                   args=['some-new-title']),
-                           data)
+        resp = self.client.post(reverse('wiki.edit_document',
+                                args=['some-new-title']), data)
         eq_(200, resp.status_code)
         p = pq(resp.content)
 
@@ -1144,8 +1123,7 @@ class DocumentEditingTests(TestCaseBase):
         """When an attempt is made to retitle an article, and another article
         with that title exists but is a redirect, there should be no errors and
         the redirect should be replaced."""
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
 
         exist_title = "Existing doc"
         exist_slug = "existing-doc"
@@ -1156,14 +1134,14 @@ class DocumentEditingTests(TestCaseBase):
         # Create a new doc.
         data = new_document_data()
         data.update({"title": exist_title, "slug": exist_slug})
-        resp = client.post(reverse('wiki.new_document'), data)
+        resp = self.client.post(reverse('wiki.new_document'), data)
         eq_(302, resp.status_code)
 
         # Change title and slug
         data.update({'form': 'rev',
                      'title': changed_title,
                      'slug': changed_slug})
-        resp = client.post(reverse('wiki.edit_document',
+        resp = self.client.post(reverse('wiki.edit_document',
                                     args=[exist_slug]),
                            data)
         eq_(302, resp.status_code)
@@ -1172,65 +1150,63 @@ class DocumentEditingTests(TestCaseBase):
         data.update({'form': 'rev',
                      'title': exist_title,
                      'slug': exist_slug})
-        resp = client.post(reverse('wiki.edit_document',
+        resp = self.client.post(reverse('wiki.edit_document',
                                     args=[changed_slug]),
                            data)
         eq_(302, resp.status_code)
 
     def test_changing_metadata(self):
         """Changing metadata works as expected."""
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
         d, r = doc_rev()
         data = new_document_data()
         data.update({'firefox_versions': [1, 2, 3],
                      'operating_systems': [1, 3],
                      'form': 'doc'})
-        client.post(reverse('wiki.edit_document', args=[d.slug]), data)
+        self.client.post(reverse('wiki.edit_document', args=[d.slug]), data)
         eq_(3, d.firefox_versions.count())
         eq_(2, d.operating_systems.count())
         data.update({'firefox_versions': [1, 2],
                      'operating_systems': [2],
                      'form': 'doc'})
-        client.post(reverse('wiki.edit_document', args=[data['slug']]), data)
+        self.client.post(reverse('wiki.edit_document', args=[data['slug']]),
+                         data)
         eq_(2, d.firefox_versions.count())
         eq_(1, d.operating_systems.count())
 
     def test_invalid_slug(self):
         """Slugs cannot contain "$", but can contain "/"."""
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
         data = new_document_data()
 
         data['title'] = 'valid slug'
         data['slug'] = 'valid'
-        response = client.post(reverse('wiki.new_document'), data)
+        response = self.client.post(reverse('wiki.new_document'), data)
         self.assertRedirects(response,
                 reverse('wiki.document', args=[data['slug']],
-                                     locale=settings.WIKI_DEFAULT_LANGUAGE))
+                        locale=settings.WIKI_DEFAULT_LANGUAGE))
 
         # Slashes should not be acceptable via form input
         data['title'] = 'valid with slash'
         data['slug'] = 'va/lid'
-        response = client.post(reverse('wiki.new_document'), data)
+        response = self.client.post(reverse('wiki.new_document'), data)
         self.assertContains(response, 'The slug provided is not valid.')
 
         # Dollar sign is reserved for verbs
         data['title'] = 'invalid with dollars'
         data['slug'] = 'inva$lid'
-        response = client.post(reverse('wiki.new_document'), data)
+        response = self.client.post(reverse('wiki.new_document'), data)
         self.assertContains(response, 'The slug provided is not valid.')
 
         # Question mark is reserved for query params
         data['title'] = 'invalid with questions'
         data['slug'] = 'inva?lid'
-        response = client.post(reverse('wiki.new_document'), data)
+        response = self.client.post(reverse('wiki.new_document'), data)
         self.assertContains(response, 'The slug provided is not valid.')
 
     def test_invalid_reserved_term_slug(self):
         """Slugs should not collide with reserved URL patterns"""
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
         data = new_document_data()
 
         # TODO: This is info derived from urls.py, but unsure how to DRY it
@@ -1256,13 +1232,11 @@ class DocumentEditingTests(TestCaseBase):
         for term in reserved_slugs:
             data['title'] = 'invalid with %s' % term
             data['slug'] = term
-            response = client.post(reverse('wiki.new_document'), data)
+            response = self.client.post(reverse('wiki.new_document'), data)
             self.assertContains(response, 'The slug provided is not valid.')
 
     def test_slug_revamp(self):
-
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
 
         def _createAndRunTests(slug):
 
@@ -1286,19 +1260,16 @@ class DocumentEditingTests(TestCaseBase):
             """ NEW DOCUMENT CREATION, CHILD CREATION """
 
             # Create the document, validate it exists
-            response = client.post(new_doc_url, doc_data)
+            response = self.client.post(new_doc_url, doc_data)
             eq_(302, response.status_code)  # 302 = good, forward to new page
             ok_(slug in response['Location'])
             self.assertRedirects(response, reverse('wiki.document',
                                                    locale=locale, args=[slug]))
-            eq_(client.get(reverse('wiki.document',
-                                   locale=locale,
-                                   args=[slug])
-                          ).status_code, 200)
+            doc_url = reverse('wiki.document', locale=locale, args=[slug])
+            eq_(self.client.get(doc_url).status_code, 200)
             doc = Document.objects.get(locale=locale, slug=slug)
             eq_(doc.slug, slug)
-            eq_(0, len(Document.objects.filter(title=doc_data['title']
-                                               + 'Redirect')))
+            eq_(0, len(Document.objects.filter(title=doc_data['title'] + 'Redirect')))
 
             # Create child document data
             child_data = new_document_data()
@@ -1310,7 +1281,7 @@ class DocumentEditingTests(TestCaseBase):
             # Attempt to create the child with invalid slug, validate it fails
             def test_invalid_slug(inv_slug, url, data, doc):
                 data['slug'] = inv_slug
-                response = client.post(url, data)
+                response = self.client.post(url, data)
                 page = pq(response.content)
                 eq_(200, response.status_code)  # 200 = bad, invalid data
                 # Slug doesn't add parent
@@ -1334,7 +1305,7 @@ class DocumentEditingTests(TestCaseBase):
             # should succeed and redirect
             child_data['slug'] = child_slug
             full_child_slug = slug + '/' + child_data['slug']
-            response = client.post(new_doc_url + '?parent=' + str(doc.id),
+            response = self.client.post(new_doc_url + '?parent=' + str(doc.id),
                                    child_data)
             eq_(302, response.status_code)
             self.assertRedirects(response, reverse('wiki.document',
@@ -1355,7 +1326,7 @@ class DocumentEditingTests(TestCaseBase):
             grandchild_data['is_localizable'] = True
 
             # Attempt to create the child with invalid slug, validate it fails
-            response = client.post(
+            response = self.client.post(
                 new_doc_url + '?parent=' + str(child_doc.id), grandchild_data)
             page = pq(response.content)
             eq_(200, response.status_code)  # 200 = bad, invalid data
@@ -1370,7 +1341,7 @@ class DocumentEditingTests(TestCaseBase):
             grandchild_data['slug'] = grandchild_slug
             full_grandchild_slug = (full_child_slug
                                     + '/' + grandchild_data['slug'])
-            response = client.post(new_doc_url
+            response = self.client.post(new_doc_url
                                     + '?parent=' + str(child_doc.id),
                                    grandchild_data)
             eq_(302, response.status_code)
@@ -1380,16 +1351,16 @@ class DocumentEditingTests(TestCaseBase):
             grandchild_doc = Document.objects.get(locale=locale,
                                                   slug=full_grandchild_slug)
             eq_(grandchild_doc.slug, full_grandchild_slug)
-            eq_(0, len(Document.objects.filter(
-                                title=grandchild_data['title'] + ' Redirect 1',
-                                locale=locale)))
+            missing_title = grandchild_data['title'] + ' Redirect 1'
+            eq_(0, len(Document.objects.filter(title=missing_title,
+                                               locale=locale)))
 
-            """ EDIT DOCUMENT TESTING """
             def _run_edit_tests(edit_slug, edit_data, edit_doc,
                                 edit_parent_path):
+                """EDIT DOCUMENT TESTING"""
                 # Load "Edit" page for the root doc, ensure no "/" in the slug
                 # Also ensure the 'parent' link is not present
-                response = client.get(reverse('wiki.edit_document',
+                response = self.client.get(reverse('wiki.edit_document',
                                           args=[edit_doc.slug], locale=locale))
                 eq_(200, response.status_code)
                 page = pq(response.content)
@@ -1402,7 +1373,7 @@ class DocumentEditingTests(TestCaseBase):
                 def test_invalid_slug_edit(inv_slug, url, data):
                     data['slug'] = inv_slug
                     data['form'] = 'rev'
-                    response = client.post(url, data)
+                    response = self.client.post(url, data)
                     eq_(200, response.status_code)  # 200 = bad, invalid data
                     page = pq(response.content)
                     # Slug doesn't add parent
@@ -1412,33 +1383,30 @@ class DocumentEditingTests(TestCaseBase):
                     self.assertContains(response,
                                         'The slug provided is not valid.')
                     # Ensure no redirect
-                    eq_(0, len(Document.objects.filter(
-                                        title=data['title'] + ' Redirect 1',
-                                        locale=locale)))
-
-                edit_bad_url = reverse('wiki.edit_document',
-                                       args=[edit_doc.slug], locale=locale)
+                    redirect_title = data['title'] + ' Redirect 1'
+                    eq_(0, len(Document.objects.filter(title=redirect_title,
+                                                       locale=locale)))
 
                 # Push a valid edit, without changing the slug
                 edit_data['slug'] = edit_slug
                 edit_data['form'] = 'rev'
-                response = client.post(reverse('wiki.edit_document',
+                response = self.client.post(reverse('wiki.edit_document',
                                                args=[edit_doc.slug],
                                                locale=locale),
                                        edit_data)
                 eq_(302, response.status_code)
                 # Ensure no redirect
-                eq_(0, len(Document.objects.filter(
-                                    title=edit_data['title'] + ' Redirect 1',
-                                    locale=locale)))
+                redirect_title = edit_data['title'] + ' Redirect 1'
+                eq_(0, len(Document.objects.filter(title=redirect_title,
+                                                   locale=locale)))
                 self.assertRedirects(response,
                                      reverse('wiki.document',
                                              locale=locale,
                                              args=[edit_doc.slug]))
 
-            """ TRANSLATION DOCUMENT TESTING """
             def _run_translate_tests(translate_slug, translate_data,
                                      translate_doc):
+                """TRANSLATION DOCUMENT TESTING"""
 
                 foreign_url = (reverse('wiki.translate',
                                       args=[translate_doc.slug],
@@ -1450,7 +1418,7 @@ class DocumentEditingTests(TestCaseBase):
                                           locale=foreign_locale)
 
                 # Verify translate page form is populated correctly
-                response = client.get(foreign_url)
+                response = self.client.get(foreign_url)
                 eq_(200, response.status_code)
                 page = pq(response.content)
                 eq_(translate_data['slug'],
@@ -1461,7 +1429,7 @@ class DocumentEditingTests(TestCaseBase):
                 def test_invalid_slug_translate(inv_slug, url, data):
                     data['slug'] = inv_slug
                     data['form'] = 'both'
-                    response = client.post(url, data)
+                    response = self.client.post(url, data)
                     eq_(200, response.status_code)  # 200 = bad, invalid data
                     page = pq(response.content)
                     # Slug doesn't add parent
@@ -1476,29 +1444,27 @@ class DocumentEditingTests(TestCaseBase):
                 # Push a valid translation
                 translate_data['slug'] = translate_slug
                 translate_data['form'] = 'both'
-                response = client.post(foreign_url, translate_data)
+                response = self.client.post(foreign_url, translate_data)
                 eq_(302, response.status_code)
                 # Ensure no redirect
-                eq_(0, len(Document.objects.filter(
-                                title=translate_data['title'] + ' Redirect 1',
-                                locale=foreign_locale)))
+                redirect_title = translate_data['title'] + ' Redirect 1'
+                eq_(0, len(Document.objects.filter(title=redirect_title,
+                                                   locale=foreign_locale)))
                 self.assertRedirects(response, foreign_doc_url)
 
                 return Document.objects.get(locale=foreign_locale,
                                             slug=translate_doc.slug)
 
-            foreign_doc = _run_translate_tests(slug, doc_data, doc)
-            foreign_child_doc = _run_translate_tests(child_slug, child_data,
-                                                     child_doc)
-            foreign_grandchild_doc = _run_translate_tests(grandchild_slug,
-                                                          grandchild_data,
-                                                          grandchild_doc)
+            _run_translate_tests(slug, doc_data, doc)
+            _run_translate_tests(child_slug, child_data, child_doc)
+            _run_translate_tests(grandchild_slug, grandchild_data,
+                                 grandchild_doc)
 
-            """ TEST BASIC EDIT OF TRANSLATION """
             def _run_translate_edit_tests(edit_slug, edit_data, edit_doc):
+                """TEST BASIC EDIT OF TRANSLATION"""
 
                 # Hit the initial URL
-                response = client.get(reverse('wiki.edit_document',
+                response = self.client.get(reverse('wiki.edit_document',
                                               args=[edit_doc.slug],
                                               locale=foreign_locale))
                 eq_(200, response.status_code)
@@ -1509,7 +1475,7 @@ class DocumentEditingTests(TestCaseBase):
                 # the same (i.e. no parent prepending)
                 edit_data['slug'] = invalid_slug
                 edit_data['form'] = 'both'
-                response = client.post(reverse('wiki.edit_document',
+                response = self.client.post(reverse('wiki.edit_document',
                                                args=[edit_doc.slug],
                                                locale=foreign_locale),
                                        edit_data)
@@ -1527,7 +1493,7 @@ class DocumentEditingTests(TestCaseBase):
 
                 # Push a valid edit, without changing the slug
                 edit_data['slug'] = edit_slug
-                response = client.post(reverse('wiki.edit_document',
+                response = self.client.post(reverse('wiki.edit_document',
                                                args=[edit_doc.slug],
                                                locale=foreign_locale),
                                        edit_data)
@@ -1545,7 +1511,7 @@ class DocumentEditingTests(TestCaseBase):
 
                 edit_data['slug'] = edit_data['slug'] + '_Updated'
                 edit_data['form'] = 'rev'
-                response = client.post(reverse('wiki.edit_document',
+                response = self.client.post(reverse('wiki.edit_document',
                                                args=[edit_doc.slug],
                                                locale=loc),
                                        edit_data)
@@ -1561,9 +1527,7 @@ class DocumentEditingTests(TestCaseBase):
                                              locale=loc,
                                              args=[edit_doc.slug.replace(
                                                  edit_slug,
-                                                 edit_data['slug'])]
-                                            )
-                                    )
+                                                 edit_data['slug'])]))
 
         # Run all of the tests
         _createAndRunTests("parent")
@@ -1589,45 +1553,57 @@ class DocumentEditingTests(TestCaseBase):
         child_url = (reverse('wiki.new_document') +
                      '?parent=' +
                      str(parent_doc.id))
-        response = client.post(child_url, child_data)
+        response = self.client.post(child_url, child_data)
         eq_(302, response.status_code)
         self.assertRedirects(response,
                              reverse('wiki.document',
                                      args=['length/length'],
-                                    locale=settings.WIKI_DEFAULT_LANGUAGE)
-                            )
+                                    locale=settings.WIKI_DEFAULT_LANGUAGE))
 
         # Editing "length/length" document doesn't cause errors
         child_data['form'] = 'rev'
         child_data['slug'] = ''
-        edit_url = reverse('wiki.edit_document', args=['length/length'], locale=settings.WIKI_DEFAULT_LANGUAGE)
-        response = client.post(edit_url, child_data)
+        edit_url = reverse('wiki.edit_document', args=['length/length'],
+                           locale=settings.WIKI_DEFAULT_LANGUAGE)
+        response = self.client.post(edit_url, child_data)
         eq_(302, response.status_code)
-        self.assertRedirects(response, reverse('wiki.document', args=['length/length'], locale=settings.WIKI_DEFAULT_LANGUAGE))
+        self.assertRedirects(response, reverse('wiki.document',
+                                               args=['length/length'],
+                                               locale=settings.WIKI_DEFAULT_LANGUAGE))
 
-        # Creating a new translation of "length" and "length/length" doesn't cause errors
+        # Creating a new translation of "length" and "length/length"
+        # doesn't cause errors
         child_data['form'] = 'both'
         child_data['slug'] = 'length'
-        translate_url = reverse('wiki.document', args=[child_data['slug']], locale=settings.WIKI_DEFAULT_LANGUAGE) + '$translate?tolocale=es'
-        response = client.post(translate_url, child_data)
+        translate_url = reverse('wiki.document', args=[child_data['slug']],
+                                locale=settings.WIKI_DEFAULT_LANGUAGE)
+        response = self.client.post(translate_url + '$translate?tolocale=es',
+                                    child_data)
         eq_(302, response.status_code)
-        self.assertRedirects(response, reverse('wiki.document', args=[child_data['slug']], locale='es'))
+        self.assertRedirects(response, reverse('wiki.document',
+                                               args=[child_data['slug']],
+                                               locale='es'))
 
-        translate_url = reverse('wiki.document', args=['length/length'], locale=settings.WIKI_DEFAULT_LANGUAGE) + '$translate?tolocale=es'
-        response = client.post(translate_url, child_data)
+        translate_url = reverse('wiki.document', args=['length/length'],
+                                locale=settings.WIKI_DEFAULT_LANGUAGE)
+        response = self.client.post(translate_url + '$translate?tolocale=es',
+                                    child_data)
         eq_(302, response.status_code)
-        self.assertRedirects(response, reverse('wiki.document', args=['length/' + child_data['slug']], locale='es'))
+        slug = 'length/' + child_data['slug']
+        self.assertRedirects(response, reverse('wiki.document',
+                                               args=[slug],
+                                               locale='es'))
 
     def test_translate_keeps_topical_parent(self):
-        client = self.client
-        client.login(username='admin', password='testpass')
-
+        self.client.login(username='admin', password='testpass')
         en_doc, de_doc = make_translation()
 
-        en_child_doc = document(parent_topic=en_doc, slug='en-child', save=True)
+        en_child_doc = document(parent_topic=en_doc, slug='en-child',
+                                save=True)
         en_child_rev = revision(document=en_child_doc, save=True)
-        de_child_doc = document(parent_topic=de_doc, locale='de', slug='de-child',
-                                parent=en_child_doc, save=True)
+        de_child_doc = document(parent_topic=de_doc, locale='de',
+                                slug='de-child', parent=en_child_doc,
+                                save=True)
         revision(document=de_child_doc, save=True)
 
         post_data = {}
@@ -1640,26 +1616,26 @@ class DocumentEditingTests(TestCaseBase):
         post_data['based_on'] = en_child_rev.id
         post_data['parent_id'] = en_child_doc.id
 
-        translate_url = reverse('wiki.edit_document', args=[de_child_doc.slug],
-                               locale='de')
-        client.post(translate_url, post_data)
+        translate_url = reverse('wiki.edit_document',
+                                args=[de_child_doc.slug],
+                                locale='de')
+        self.client.post(translate_url, post_data)
 
         de_child_doc = Document.objects.get(locale='de', slug='de-child')
         eq_(en_child_doc, de_child_doc.parent)
         eq_(de_doc, de_child_doc.parent_topic)
         eq_('New translation', de_child_doc.current_revision.content)
 
-
     def test_translate_keeps_toc_depth(self):
-        client = self.client
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
 
         locale = settings.WIKI_DEFAULT_LANGUAGE
         original_slug = 'eng-doc'
         foreign_locale = 'es'
         foreign_slug = 'es-doc'
 
-        en_doc = document(title='Eng Doc', slug=original_slug, is_localizable=True, locale=locale)
+        en_doc = document(title='Eng Doc', slug=original_slug,
+                          is_localizable=True, locale=locale)
         en_doc.save()
         r = revision(document=en_doc, toc_depth=1)
         r.save()
@@ -1671,25 +1647,29 @@ class DocumentEditingTests(TestCaseBase):
         post_data['is_localizable'] = True
         post_data['form'] = 'both'
         post_data['toc_depth'] = r.toc_depth
-        translate_url = reverse('wiki.document', args=[original_slug], locale=settings.WIKI_DEFAULT_LANGUAGE) + '$translate?tolocale=' + foreign_locale
-        response = client.post(translate_url, post_data)
-        self.assertRedirects(response, reverse('wiki.document', args=[foreign_slug], locale=foreign_locale))
+        translate_url = reverse('wiki.document', args=[original_slug],
+                                locale=settings.WIKI_DEFAULT_LANGUAGE)
+        translate_url += '$translate?tolocale=' + foreign_locale
+        response = self.client.post(translate_url, post_data)
+        self.assertRedirects(response, reverse('wiki.document',
+                                               args=[foreign_slug],
+                                               locale=foreign_locale))
 
         es_d = Document.objects.get(locale=foreign_locale, slug=foreign_slug)
         eq_(r.toc_depth, es_d.current_revision.toc_depth)
 
         # Go to edit the translation, ensure the the slug is correct
-        response = client.get(reverse('wiki.edit_document', args=[foreign_slug], locale=foreign_locale))
+        response = self.client.get(reverse('wiki.edit_document',
+                                           args=[foreign_slug],
+                                           locale=foreign_locale))
         page = pq(response.content)
         eq_(page.find('input[name=slug]')[0].value, foreign_slug)
 
     def test_slug_translate(self):
         """Editing a translated doc keeps the correct slug"""
-        client = self.client
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
 
         # Settings
-        locale = settings.WIKI_DEFAULT_LANGUAGE
         original_slug = 'eng-doc'
         child_slug = 'child-eng-doc'
         foreign_locale = 'es'
@@ -1697,7 +1677,10 @@ class DocumentEditingTests(TestCaseBase):
         foreign_child_slug = 'child-es-doc'
 
         # Create the one-level English Doc
-        en_doc = document(title='Eng Doc', slug=original_slug, is_localizable=True, locale=settings.WIKI_DEFAULT_LANGUAGE)
+        en_doc = document(title='Eng Doc',
+                          slug=original_slug,
+                          is_localizable=True,
+                          locale=settings.WIKI_DEFAULT_LANGUAGE)
         en_doc.save()
         r = revision(document=en_doc)
         r.save()
@@ -1709,17 +1692,27 @@ class DocumentEditingTests(TestCaseBase):
         parent_data['content'] = 'This is the content'
         parent_data['is_localizable'] = True
         parent_data['form'] = 'both'
-        translate_url = reverse('wiki.document', args=[original_slug], locale=settings.WIKI_DEFAULT_LANGUAGE) + '$translate?tolocale=' + foreign_locale
-        response = client.post(translate_url, parent_data)
-        self.assertRedirects(response, reverse('wiki.document', args=[foreign_slug], locale=foreign_locale))
+        translate_url = reverse('wiki.document', args=[original_slug],
+                                locale=settings.WIKI_DEFAULT_LANGUAGE)
+        translate_url += '$translate?tolocale=' + foreign_locale
+        response = self.client.post(translate_url, parent_data)
+        self.assertRedirects(response, reverse('wiki.document',
+                                               args=[foreign_slug],
+                                               locale=foreign_locale))
 
         # Go to edit the translation, ensure the the slug is correct
-        response = client.get(reverse('wiki.edit_document', args=[foreign_slug], locale=foreign_locale))
+        response = self.client.get(reverse('wiki.edit_document',
+                                           args=[foreign_slug],
+                                           locale=foreign_locale))
         page = pq(response.content)
         eq_(page.find('input[name=slug]')[0].value, foreign_slug)
 
         # Create an English child now
-        en_doc = document(title='Child Eng Doc', slug=original_slug + '/' + child_slug, is_localizable=True, locale=settings.WIKI_DEFAULT_LANGUAGE, parent_topic=en_doc)
+        en_doc = document(title='Child Eng Doc',
+                          slug=original_slug + '/' + child_slug,
+                          is_localizable=True,
+                          locale=settings.WIKI_DEFAULT_LANGUAGE,
+                          parent_topic=en_doc)
         en_doc.save()
         r = revision(document=en_doc)
         r.save()
@@ -1732,20 +1725,29 @@ class DocumentEditingTests(TestCaseBase):
         child_data['is_localizable'] = True
         child_data['form'] = 'both'
 
-        translate_url = reverse('wiki.document', args=[original_slug + '/' + child_slug], locale=settings.WIKI_DEFAULT_LANGUAGE) + '$translate?tolocale=' + foreign_locale
-        response = client.post(translate_url, child_data)
-        self.assertRedirects(response, reverse('wiki.document', args=[foreign_slug + '/' + child_data['slug']], locale=foreign_locale))
+        translate_url = reverse('wiki.document',
+                                args=[original_slug + '/' + child_slug],
+                                locale=settings.WIKI_DEFAULT_LANGUAGE)
+        translate_url += '$translate?tolocale=' + foreign_locale
+        response = self.client.post(translate_url, child_data)
+        slug = foreign_slug + '/' + child_data['slug']
+        self.assertRedirects(response, reverse('wiki.document',
+                                               args=[slug],
+                                               locale=foreign_locale))
 
     def test_clone(self):
         self.client.login(username='admin', password='testpass')
-
         slug = 'my_doc'
         title = 'My Doc'
         content = '<p>Hello!</p>'
 
-        document = revision(save=True, title=title, slug=slug, content=content).document
+        test_revision = revision(save=True, title=title, slug=slug,
+                                 content=content)
+        document = test_revision.document
 
-        response = self.client.get(reverse('wiki.new_document', args=[], locale=settings.WIKI_DEFAULT_LANGUAGE) + '?clone=' + str(document.id))
+        response = self.client.get(reverse('wiki.new_document',
+                                           args=[],
+                                           locale=settings.WIKI_DEFAULT_LANGUAGE) + '?clone=' + str(document.id))
         page = pq(response.content)
 
         eq_(page.find('input[name=title]')[0].value, title)
@@ -1831,8 +1833,7 @@ class DocumentEditingTests(TestCaseBase):
         ts2 = ('XML', 'JSON')
 
         get_current.return_value.domain = 'su.mo.com'
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
 
         def assert_tag_state(yes_tags, no_tags):
 
@@ -1845,8 +1846,8 @@ class DocumentEditingTests(TestCaseBase):
                 ok_(t not in doc_tags)
 
             # Ensure the tags are found in the Document view
-            response = client.get(reverse('wiki.document',
-                                          args=[doc.full_path]), data)
+            response = self.client.get(reverse('wiki.document',
+                                               args=[doc.full_path]), data)
             page = pq(response.content)
             for t in yes_tags:
                 eq_(1, page.find('.tag-list li a:contains("%s")' % t).length,
@@ -1857,28 +1858,28 @@ class DocumentEditingTests(TestCaseBase):
 
             # Check for the document slug (title in feeds) in the tag listing
             for t in yes_tags:
-                response = client.get(reverse('wiki.tag', args=[t]))
+                response = self.client.get(reverse('wiki.tag', args=[t]))
                 ok_(doc.slug in response.content.decode('utf-8'))
-                response = client.get(reverse('wiki.feeds.recent_documents',
-                                      args=['atom', t]))
+                response = self.client.get(reverse('wiki.feeds.recent_documents',
+                                                   args=['atom', t]))
                 ok_(doc.title in response.content.decode('utf-8'))
 
             for t in no_tags:
-                response = client.get(reverse('wiki.tag', args=[t]))
+                response = self.client.get(reverse('wiki.tag', args=[t]))
                 ok_(doc.slug not in response.content.decode('utf-8'))
-                response = client.get(reverse('wiki.feeds.recent_documents',
-                                      args=['atom', t]))
+                response = self.client.get(reverse('wiki.feeds.recent_documents',
+                                                   args=['atom', t]))
                 ok_(doc.title not in response.content.decode('utf-8'))
 
         # Create a new doc with tags
         data.update({'slug': slug, 'tags': ','.join(ts1)})
-        client.post(reverse('wiki.new_document'), data)
+        self.client.post(reverse('wiki.new_document'), data)
         assert_tag_state(ts1, ts2)
 
         # Now, update the tags.
         data.update({'form': 'rev', 'tags': ', '.join(ts2)})
-        client.post(reverse('wiki.edit_document',
-                                       args=[path]), data)
+        self.client.post(reverse('wiki.edit_document',
+                                 args=[path]), data)
         assert_tag_state(ts2, ts1)
 
     @attr('review_tags')
@@ -1886,13 +1887,12 @@ class DocumentEditingTests(TestCaseBase):
     def test_review_tags(self, get_current):
         """Review tags can be managed on document revisions"""
         get_current.return_value.domain = 'su.mo.com'
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
 
         # Create a new doc with one review tag
         data = new_document_data()
         data.update({'review_tags': ['technical']})
-        response = client.post(reverse('wiki.new_document'), data)
+        response = self.client.post(reverse('wiki.new_document'), data)
 
         # Ensure there's now a doc with that expected tag in its newest
         # revision
@@ -1906,42 +1906,45 @@ class DocumentEditingTests(TestCaseBase):
             'form': 'rev',
             'review_tags': ['editorial', 'technical'],
         })
-        response = client.post(reverse('wiki.edit_document', args=[doc.full_path]), data)
+        response = self.client.post(reverse('wiki.edit_document',
+                                            args=[doc.full_path]), data)
 
         # Ensure the doc's newest revision has both tags.
-        doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE, slug="a-test-article")
+        doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE,
+                                   slug="a-test-article")
         rev = doc.revisions.order_by('-id').all()[0]
         review_tags = [x.name for x in rev.review_tags.all()]
         review_tags.sort()
         eq_(['editorial', 'technical'], review_tags)
 
         # Now, ensure that warning boxes appear for the review tags.
-        response = client.get(reverse('wiki.document', args=[doc.full_path]), data)
+        response = self.client.get(reverse('wiki.document',
+                                           args=[doc.full_path]), data)
         page = pq(response.content)
         eq_(2, page.find('.warning.warning-review').length)
 
         # Ensure the page appears on the listing pages
-        response = client.get(reverse('wiki.list_review'))
+        response = self.client.get(reverse('wiki.list_review'))
         eq_(1, pq(response.content).find("ul.documents li a:contains('%s')" %
                                          doc.title).length)
-        response = client.get(reverse('wiki.list_review_tag',
+        response = self.client.get(reverse('wiki.list_review_tag',
                                       args=('technical',)))
         eq_(1, pq(response.content).find("ul.documents li a:contains('%s')" %
                                          doc.title).length)
-        response = client.get(reverse('wiki.list_review_tag',
+        response = self.client.get(reverse('wiki.list_review_tag',
                                       args=('editorial',)))
         eq_(1, pq(response.content).find("ul.documents li a:contains('%s')" %
                                          doc.title).length)
 
         # Also, ensure that the page appears in the proper feeds
         # HACK: Too lazy to parse the XML. Lazy lazy.
-        response = client.get(reverse('wiki.feeds.list_review',
+        response = self.client.get(reverse('wiki.feeds.list_review',
                                       args=('atom',)))
         ok_('<entry><title>%s</title>' % doc.title in response.content)
-        response = client.get(reverse('wiki.feeds.list_review_tag',
+        response = self.client.get(reverse('wiki.feeds.list_review_tag',
                                       args=('atom', 'technical', )))
         ok_('<entry><title>%s</title>' % doc.title in response.content)
-        response = client.get(reverse('wiki.feeds.list_review_tag',
+        response = self.client.get(reverse('wiki.feeds.list_review_tag',
                                       args=('atom', 'editorial', )))
         ok_('<entry><title>%s</title>' % doc.title in response.content)
 
@@ -1950,70 +1953,78 @@ class DocumentEditingTests(TestCaseBase):
             'form': 'rev',
             'review_tags': ['editorial', ]
         })
-        response = client.post(reverse('wiki.edit_document', args=[doc.full_path]), data)
+        response = self.client.post(reverse('wiki.edit_document',
+                                            args=[doc.full_path]), data)
 
         # Ensure only one of the tags' warning boxes appears, now.
-        response = client.get(reverse('wiki.document', args=[doc.full_path]), data)
+        response = self.client.get(reverse('wiki.document',
+                                           args=[doc.full_path]), data)
         page = pq(response.content)
         eq_(1, page.find('.warning.warning-review').length)
 
         # Ensure the page appears on the listing pages
-        response = client.get(reverse('wiki.list_review'))
+        response = self.client.get(reverse('wiki.list_review'))
         eq_(1, pq(response.content).find("ul.documents li a:contains('%s')" %
                                          doc.title).length)
-        response = client.get(reverse('wiki.list_review_tag',
+        response = self.client.get(reverse('wiki.list_review_tag',
                                       args=('technical',)))
         eq_(0, pq(response.content).find("ul.documents li a:contains('%s')" %
                                          doc.title).length)
-        response = client.get(reverse('wiki.list_review_tag',
+        response = self.client.get(reverse('wiki.list_review_tag',
                                       args=('editorial',)))
         eq_(1, pq(response.content).find("ul.documents li a:contains('%s')" %
                                          doc.title).length)
 
         # Also, ensure that the page appears in the proper feeds
         # HACK: Too lazy to parse the XML. Lazy lazy.
-        response = client.get(reverse('wiki.feeds.list_review',
+        response = self.client.get(reverse('wiki.feeds.list_review',
                                       args=('atom',)))
         ok_('<entry><title>%s</title>' % doc.title in response.content)
-        response = client.get(reverse('wiki.feeds.list_review_tag',
+        response = self.client.get(reverse('wiki.feeds.list_review_tag',
                                       args=('atom', 'technical', )))
         ok_('<entry><title>%s</title>' % doc.title not in response.content)
-        response = client.get(reverse('wiki.feeds.list_review_tag',
+        response = self.client.get(reverse('wiki.feeds.list_review_tag',
                                       args=('atom', 'editorial', )))
         ok_('<entry><title>%s</title>' % doc.title in response.content)
 
     @attr('review-tags')
     def test_quick_review(self):
         """Test the quick-review button."""
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
 
         test_data = [
-           {'params': {'approve_technical': 1},
-            'expected_tags': ['editorial'],
-            'name': 'technical',
-            'message_contains': ['Technical review completed.']
+            {
+                'params': {'approve_technical': 1},
+                'expected_tags': ['editorial'],
+                'name': 'technical',
+                'message_contains': ['Technical review completed.']
             },
-           {'params': {'approve_editorial': 1},
-            'expected_tags': ['technical'],
-            'name': 'editorial',
-            'message_contains': ['Editorial review completed.']
+            {
+                'params': {'approve_editorial': 1},
+                'expected_tags': ['technical'],
+                'name': 'editorial',
+                'message_contains': ['Editorial review completed.']
             },
-            {'params': {'approve_technical': 1,
-                        'approve_editorial': 1},
-             'expected_tags': [],
-             'name': 'editorial-technical',
-             'message_contains': ['Technical review completed.',
-                                  'Editorial review completed.']
-             }
-            ]
+            {
+                'params': {
+                    'approve_technical': 1,
+                    'approve_editorial': 1
+                },
+                'expected_tags': [],
+                'name': 'editorial-technical',
+                'message_contains': [
+                    'Technical review completed.',
+                    'Editorial review completed.',
+                ]
+            }
+        ]
 
         for data_dict in test_data:
             slug = 'test-quick-review-%s' % data_dict['name']
             data = new_document_data()
             data.update({'review_tags': ['editorial', 'technical'],
                          'slug': slug})
-            resp = client.post(reverse('wiki.new_document'), data)
+            resp = self.client.post(reverse('wiki.new_document'), data)
 
             doc = Document.objects.get(slug=slug)
             rev = doc.revisions.order_by('-id').all()[0]
@@ -2021,10 +2032,11 @@ class DocumentEditingTests(TestCaseBase):
                                  args=[doc.full_path])
 
             params = dict(data_dict['params'], revision_id=rev.id)
-            resp = client.post(review_url, params)
+            resp = self.client.post(review_url, params)
             eq_(302, resp.status_code)
 
-            doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE, slug=slug)
+            doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE,
+                                       slug=slug)
             rev = doc.revisions.order_by('-id').all()[0]
             review_tags = [x.name for x in rev.review_tags.all()]
             review_tags.sort()
@@ -2034,21 +2046,22 @@ class DocumentEditingTests(TestCaseBase):
 
     @attr('midair')
     def test_edit_midair_collision(self):
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
 
         # Post a new document.
         data = new_document_data()
-        resp = client.post(reverse('wiki.new_document'), data)
+        resp = self.client.post(reverse('wiki.new_document'), data)
         doc = Document.objects.get(slug=data['slug'])
 
         # Edit #1 starts...
-        resp = client.get(reverse('wiki.edit_document', args=[doc.full_path]))
+        resp = self.client.get(reverse('wiki.edit_document',
+                                       args=[doc.full_path]))
         page = pq(resp.content)
         rev_id1 = page.find('input[name="current_rev"]').attr('value')
 
         # Edit #2 starts...
-        resp = client.get(reverse('wiki.edit_document', args=[doc.full_path]))
+        resp = self.client.get(reverse('wiki.edit_document',
+                                       args=[doc.full_path]))
         page = pq(resp.content)
         rev_id2 = page.find('input[name="current_rev"]').attr('value')
 
@@ -2058,7 +2071,8 @@ class DocumentEditingTests(TestCaseBase):
             'content': 'This edit got there first',
             'current_rev': rev_id2
         })
-        resp = client.post(reverse('wiki.edit_document', args=[doc.full_path]), data)
+        resp = self.client.post(reverse('wiki.edit_document',
+                                        args=[doc.full_path]), data)
         eq_(302, resp.status_code)
 
         # Edit #1 submits, but receives a mid-aired notification
@@ -2067,7 +2081,8 @@ class DocumentEditingTests(TestCaseBase):
             'content': 'This edit gets mid-aired',
             'current_rev': rev_id1
         })
-        resp = client.post(reverse('wiki.edit_document', args=[doc.full_path]), data)
+        resp = self.client.post(reverse('wiki.edit_document',
+                                        args=[doc.full_path]), data)
         eq_(200, resp.status_code)
 
         ok_(unicode(MIDAIR_COLLISION).encode('utf-8') in resp.content,
@@ -2076,8 +2091,7 @@ class DocumentEditingTests(TestCaseBase):
     @attr('toc')
     def test_toc_toggle_off(self):
         """Toggling of table of contents in revisions"""
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
         d, _ = doc_rev()
         data = new_document_data()
         ok_(Document.objects.get(slug=d.slug, locale=d.locale).show_toc)
@@ -2085,14 +2099,16 @@ class DocumentEditingTests(TestCaseBase):
         data['toc_depth'] = 0
         data['slug'] = d.slug
         data['title'] = d.title
-        client.post(reverse('wiki.edit_document', args=[d.full_path]), data)
-        eq_(0, Document.objects.get(slug=d.slug, locale=d.locale).current_revision.toc_depth)
+        self.client.post(reverse('wiki.edit_document',
+                                 args=[d.full_path]),
+                         data)
+        doc = Document.objects.get(slug=d.slug, locale=d.locale)
+        eq_(0, doc.current_revision.toc_depth)
 
     @attr('toc')
     def test_toc_toggle_on(self):
         """Toggling of table of contents in revisions"""
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
         d, r = doc_rev()
         new_r = revision(document=d, content=r.content, toc_depth=0,
                          is_approved=True)
@@ -2102,13 +2118,14 @@ class DocumentEditingTests(TestCaseBase):
         data['form'] = 'rev'
         data['slug'] = d.slug
         data['title'] = d.title
-        client.post(reverse('wiki.edit_document', args=[d.full_path]), data)
+        self.client.post(reverse('wiki.edit_document',
+                                 args=[d.full_path]),
+                         data)
         ok_(Document.objects.get(slug=d.slug, locale=d.locale).show_toc)
 
     def test_parent_topic(self):
         """Selection of a parent topic when creating a document."""
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
         d = document(title='HTML8')
         d.save()
         r = revision(document=d)
@@ -2117,13 +2134,12 @@ class DocumentEditingTests(TestCaseBase):
         data = new_document_data()
         data['title'] = 'Replicated local storage'
         data['parent_topic'] = d.id
-        resp = client.post(reverse('wiki.new_document'), data)
+        resp = self.client.post(reverse('wiki.new_document'), data)
         eq_(302, resp.status_code)
         ok_(d.children.count() == 1)
         ok_(d.children.all()[0].title == 'Replicated local storage')
 
     def test_repair_breadcrumbs(self):
-        client = LocalizingClient()
         english_top = document(locale=settings.WIKI_DEFAULT_LANGUAGE,
                                title='English top',
                                save=True)
@@ -2151,9 +2167,9 @@ class DocumentEditingTests(TestCaseBase):
                                  parent_topic=english_bottom,
                                  save=True)
 
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
 
-        resp = client.get(reverse('wiki.repair_breadcrumbs',
+        resp = self.client.get(reverse('wiki.repair_breadcrumbs',
                                   args=[french_bottom.full_path],
                                   locale='fr'))
         eq_(302, resp.status_code)
@@ -2164,27 +2180,25 @@ class DocumentEditingTests(TestCaseBase):
         eq_(french_mid.id, french_bottom_fixed.parent_topic.id)
         eq_(french_top.id, french_bottom_fixed.parent_topic.parent_topic.id)
 
-
     def test_translate_on_edit(self):
-        d1 = document(title="Doc1", locale=settings.WIKI_DEFAULT_LANGUAGE, save=True)
+        d1 = document(title="Doc1", locale=settings.WIKI_DEFAULT_LANGUAGE,
+                      save=True)
         revision(document=d1, save=True)
 
         d2 = document(title="TransDoc1", locale='de', parent=d1, save=True)
         revision(document=d2, save=True)
 
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
         url = reverse('wiki.edit_document', args=(d2.slug,), locale=d2.locale)
 
-        resp = client.get(url)
+        resp = self.client.get(url)
         eq_(200, resp.status_code)
 
     def test_discard_location(self):
         """Testing that the 'discard' HREF goes to the correct place when it's
            explicitely and implicitely set"""
 
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
 
         def _create_doc(slug, locale):
             doc = document(slug=slug, is_localizable=True, locale=locale)
@@ -2195,34 +2209,42 @@ class DocumentEditingTests(TestCaseBase):
 
         # Test that the 'discard' button on an edit goes to the original page
         doc = _create_doc('testdiscarddoc', settings.WIKI_DEFAULT_LANGUAGE)
-        response = client.get(reverse('wiki.edit_document', args=[doc.slug], locale=doc.locale))
+        response = self.client.get(reverse('wiki.edit_document',
+                                           args=[doc.slug], locale=doc.locale))
         eq_(pq(response.content).find('#btn-discard').attr('href'),
             reverse('wiki.document', args=[doc.slug], locale=doc.locale))
 
-        # Test that the 'discard button on a new translation goes to the en-US page'
-        response = client.get(reverse('wiki.translate', args=[doc.slug], locale=doc.locale) + '?tolocale=es')
+        # Test that the 'discard button on a new translation goes
+        # to the en-US page'
+        response = self.client.get(reverse('wiki.translate',
+                                           args=[doc.slug], locale=doc.locale) + '?tolocale=es')
         eq_(pq(response.content).find('#btn-discard').attr('href'),
             reverse('wiki.document', args=[doc.slug], locale=doc.locale))
 
-        # Test that the 'discard' button on an existing translation goes to the 'es' page
+        # Test that the 'discard' button on an existing translation goes
+        # to the 'es' page
         foreign_doc = _create_doc('testdiscarddoc', 'es')
-        response = client.get(reverse('wiki.edit_document', args=[foreign_doc.slug], locale=foreign_doc.locale))
+        response = self.client.get(reverse('wiki.edit_document',
+                                           args=[foreign_doc.slug],
+                                           locale=foreign_doc.locale))
         eq_(pq(response.content).find('#btn-discard').attr('href'),
-            reverse('wiki.document', args=[foreign_doc.slug], locale=foreign_doc.locale))
+            reverse('wiki.document', args=[foreign_doc.slug],
+                    locale=foreign_doc.locale))
 
         # Test new
-        response = client.get(reverse('wiki.new_document', locale=settings.WIKI_DEFAULT_LANGUAGE))
+        response = self.client.get(reverse('wiki.new_document',
+                                           locale=settings.WIKI_DEFAULT_LANGUAGE))
         eq_(pq(response.content).find('#btn-discard').attr('href'),
-            reverse('wiki.new_document', locale=settings.WIKI_DEFAULT_LANGUAGE))
+            reverse('wiki.new_document',
+                    locale=settings.WIKI_DEFAULT_LANGUAGE))
 
     def test_revert(self):
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
 
         data = new_document_data()
         data['title'] = 'A Test Article For Reverting'
         data['slug'] = 'test-article-for-reverting'
-        response = client.post(reverse('wiki.new_document'), data)
+        response = self.client.post(reverse('wiki.new_document'), data)
 
         doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE,
                                    slug='test-article-for-reverting')
@@ -2231,10 +2253,10 @@ class DocumentEditingTests(TestCaseBase):
         data['content'] = 'Not lorem ipsum anymore'
         data['comment'] = 'Nobody likes Latin anyway'
 
-        response = client.post(reverse('wiki.edit_document',
+        response = self.client.post(reverse('wiki.edit_document',
                                        args=[doc.full_path]), data)
 
-        response = client.post(reverse('wiki.revert_document',
+        response = self.client.post(reverse('wiki.revert_document',
                                        args=[doc.full_path, rev.id]),
                                {'revert': True, 'comment': 'Blah blah'})
 
@@ -2244,7 +2266,7 @@ class DocumentEditingTests(TestCaseBase):
         ok_('Blah blah' in rev.comment)
 
         rev = doc.revisions.order_by('-id').all()[1]
-        response = client.post(reverse('wiki.revert_document',
+        response = self.client.post(reverse('wiki.revert_document',
                                        args=[doc.full_path, rev.id]),
                                {'revert': True})
         ok_(302 == response.status_code)
@@ -2280,14 +2302,14 @@ class DocumentWatchTests(TestCaseBase):
         response = post(self.client, 'wiki.document_watch',
                        args=[self.document.slug])
         eq_(200, response.status_code)
-        assert EditDocumentEvent.is_notifying(user, self.document), \
-               'Watch was not created'
+        assert (EditDocumentEvent.is_notifying(user, self.document),
+                'Watch was not created')
         # Unsubscribe
         response = post(self.client, 'wiki.document_unwatch',
                        args=[self.document.slug])
         eq_(200, response.status_code)
-        assert not EditDocumentEvent.is_notifying(user, self.document), \
-               'Watch was not destroyed'
+        assert (not EditDocumentEvent.is_notifying(user, self.document),
+                'Watch was not destroyed')
 
 
 class SectionEditingResourceTests(TestCaseBase):
@@ -2295,8 +2317,7 @@ class SectionEditingResourceTests(TestCaseBase):
 
     def test_raw_source(self):
         """The raw source for a document can be requested"""
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
         d, r = doc_rev("""
             <h1 id="s1">s1</h1>
             <p>test</p>
@@ -2323,7 +2344,7 @@ class SectionEditingResourceTests(TestCaseBase):
             <p>test</p>
             <p>test</p>
         """
-        response = client.get('%s?raw=true' %
+        response = self.client.get('%s?raw=true' %
                               reverse('wiki.document', args=[d.full_path]),
                               HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         ok_('Access-Control-Allow-Origin' in response)
@@ -2334,13 +2355,12 @@ class SectionEditingResourceTests(TestCaseBase):
     @attr('bug821986')
     def test_raw_editor_safety_filter(self):
         """Safety filter should be applied before rendering editor"""
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
         d, r = doc_rev("""
             <p onload=alert(3)>FOO</p>
             <svg><circle onload=confirm(3)>HI THERE</circle></svg>
         """)
-        response = client.get('%s?raw=true' %
+        response = self.client.get('%s?raw=true' %
                               reverse('wiki.document', args=[d.full_path]),
                               HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         ok_('<p onload=' not in response.content)
@@ -2349,8 +2369,7 @@ class SectionEditingResourceTests(TestCaseBase):
     def test_raw_with_editing_links_source(self):
         """The raw source for a document can be requested, with section editing
         links"""
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
         d, r = doc_rev("""
             <h1 id="s1">s1</h1>
             <p>test</p>
@@ -2375,7 +2394,7 @@ class SectionEditingResourceTests(TestCaseBase):
             <p>test</p>
             <p>test</p>
         """ % {'full_path': d.full_path}
-        response = client.get('%s?raw=true&edit_links=true' %
+        response = self.client.get('%s?raw=true&edit_links=true' %
                               reverse('wiki.document', args=[d.full_path]),
                               HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(normalize_html(expected),
@@ -2383,8 +2402,7 @@ class SectionEditingResourceTests(TestCaseBase):
 
     def test_raw_section_source(self):
         """The raw source for a document section can be requested"""
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
         d, r = doc_rev("""
             <h1 id="s1">s1</h1>
             <p>test</p>
@@ -2403,17 +2421,17 @@ class SectionEditingResourceTests(TestCaseBase):
             <p>test</p>
             <p>test</p>
         """
-        response = client.get('%s?section=s2&raw=true' %
-                              reverse('wiki.document', args=[d.full_path]),
-                              HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        response = self.client.get('%s?section=s2&raw=true' %
+                                   reverse('wiki.document',
+                                           args=[d.full_path]),
+                                   HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(normalize_html(expected),
             normalize_html(response.content))
 
     @attr('midair')
     @attr('rawsection')
     def test_raw_section_edit(self):
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
         d, r = doc_rev("""
             <h1 id="s1">s1</h1>
             <p>test</p>
@@ -2435,13 +2453,14 @@ class SectionEditingResourceTests(TestCaseBase):
             <h1 id="s2">s2</h1>
             <p>replace</p>
         """
-        response = client.post('%s?section=s2&raw=true' %
-                               reverse('wiki.edit_document', args=[d.full_path]),
-                               {"form": "rev",
-                               'slug': d.slug,
-                                "content": replace},
-                               follow=True,
-                               HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        response = self.client.post('%s?section=s2&raw=true' %
+                                    reverse('wiki.edit_document',
+                                    args=[d.full_path]),
+                                    {"form": "rev",
+                                     "slug": d.slug,
+                                     "content": replace},
+                                    follow=True,
+                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(normalize_html(expected),
             normalize_html(response.content))
 
@@ -2457,9 +2476,10 @@ class SectionEditingResourceTests(TestCaseBase):
             <p>test</p>
             <p>test</p>
         """
-        response = client.get('%s?raw=true' %
-                               reverse('wiki.document', args=[d.full_path]),
-                              HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        response = self.client.get('%s?raw=true' %
+                                   reverse('wiki.document',
+                                           args=[d.full_path]),
+                                   HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(normalize_html(expected),
             normalize_html(response.content))
 
@@ -2468,8 +2488,7 @@ class SectionEditingResourceTests(TestCaseBase):
         """If a page was changed while someone was editing, but the changes
         didn't affect the specific section being edited, then ignore the midair
         warning"""
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
 
         doc, rev = doc_rev("""
             <h1 id="s1">s1</h1>
@@ -2510,16 +2529,18 @@ class SectionEditingResourceTests(TestCaseBase):
         }
 
         # Edit #1 starts...
-        resp = client.get('%s?section=s1' %
-                          reverse('wiki.edit_document', args=[doc.full_path]),
-                          HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        resp = self.client.get('%s?section=s1' %
+                               reverse('wiki.edit_document',
+                                       args=[doc.full_path]),
+                               HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         page = pq(resp.content)
         rev_id1 = page.find('input[name="current_rev"]').attr('value')
 
         # Edit #2 starts...
-        resp = client.get('%s?section=s2' %
-                          reverse('wiki.edit_document', args=[doc.full_path]),
-                          HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        resp = self.client.get('%s?section=s2' %
+                               reverse('wiki.edit_document',
+                                       args=[doc.full_path]),
+                               HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         page = pq(resp.content)
         rev_id2 = page.find('input[name="current_rev"]').attr('value')
 
@@ -2530,8 +2551,9 @@ class SectionEditingResourceTests(TestCaseBase):
             'current_rev': rev_id2,
             'slug': doc.slug
         })
-        resp = client.post('%s?section=s2&raw=true' %
-                            reverse('wiki.edit_document', args=[doc.full_path]),
+        resp = self.client.post('%s?section=s2&raw=true' %
+                            reverse('wiki.edit_document',
+                                    args=[doc.full_path]),
                             data,
                            HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(302, resp.status_code)
@@ -2543,7 +2565,7 @@ class SectionEditingResourceTests(TestCaseBase):
             'content': replace_1,
             'current_rev': rev_id1
         })
-        resp = client.post('%s?section=s1&raw=true' %
+        resp = self.client.post('%s?section=s1&raw=true' %
                            reverse('wiki.edit_document', args=[doc.full_path]),
                            data,
                            HTTP_X_REQUESTED_WITH='XMLHttpRequest')
@@ -2552,23 +2574,23 @@ class SectionEditingResourceTests(TestCaseBase):
         eq_(205, resp.status_code)
 
         # Finally, make sure that all the edits landed
-        response = client.get('%s?raw=true' %
-                               reverse('wiki.document', args=[doc.full_path]),
-                              HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        response = self.client.get('%s?raw=true' %
+                                   reverse('wiki.document',
+                                           args=[doc.full_path]),
+                                   HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(normalize_html(expected),
             normalize_html(response.content))
 
         # Also, ensure that the revision is slipped into the headers
         eq_(unicode(Document.objects.get(slug=doc.slug, locale=doc.locale)
-                                     .current_revision.id),
+                                    .current_revision.id),
             unicode(response['x-kuma-revision']))
 
     @attr('midair')
     def test_midair_section_collision(self):
         """If both a revision and the edited section has changed, then a
         section edit is a collision."""
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
 
         doc, rev = doc_rev("""
             <h1 id="s1">s1</h1>
@@ -2597,16 +2619,18 @@ class SectionEditingResourceTests(TestCaseBase):
         }
 
         # Edit #1 starts...
-        resp = client.get('%s?section=s2' %
-                          reverse('wiki.edit_document', args=[doc.full_path]),
-                          HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        resp = self.client.get('%s?section=s2' %
+                               reverse('wiki.edit_document',
+                                       args=[doc.full_path]),
+                               HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         page = pq(resp.content)
         rev_id1 = page.find('input[name="current_rev"]').attr('value')
 
         # Edit #2 starts...
-        resp = client.get('%s?section=s2' %
-                          reverse('wiki.edit_document', args=[doc.full_path]),
-                          HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        resp = self.client.get('%s?section=s2' %
+                               reverse('wiki.edit_document',
+                                       args=[doc.full_path]),
+                               HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         page = pq(resp.content)
         rev_id2 = page.find('input[name="current_rev"]').attr('value')
 
@@ -2617,10 +2641,10 @@ class SectionEditingResourceTests(TestCaseBase):
             'slug': doc.slug,
             'current_rev': rev_id2
         })
-        resp = client.post('%s?section=s2&raw=true' %
-                            reverse('wiki.edit_document', args=[doc.full_path]),
-                            data,
-                           HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        resp = self.client.post('%s?section=s2&raw=true' %
+                                reverse('wiki.edit_document',
+                                        args=[doc.full_path]),
+                                data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(302, resp.status_code)
 
         # Edit #1 submits, but since it's the same section, there's a collision
@@ -2629,10 +2653,10 @@ class SectionEditingResourceTests(TestCaseBase):
             'content': replace_1,
             'current_rev': rev_id1
         })
-        resp = client.post('%s?section=s2&raw=true' %
-                           reverse('wiki.edit_document', args=[doc.full_path]),
-                           data,
-                           HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        resp = self.client.post('%s?section=s2&raw=true' %
+                                reverse('wiki.edit_document',
+                                        args=[doc.full_path]),
+                                data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         # With the raw API, we should get a 409 Conflict on collision.
         eq_(409, resp.status_code)
 
@@ -2656,15 +2680,15 @@ class SectionEditingResourceTests(TestCaseBase):
               <dd>Przykłady 例 예제 示例</dd>
             </dl>
         """
-        client = LocalizingClient()
-        resp = client.get('%s?raw&include' % reverse('wiki.document', args=[doc.full_path]),
-                          HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        eq_(normalize_html(expected), normalize_html(resp.content.decode('utf-8')))
+        resp = self.client.get('%s?raw&include' %
+                               reverse('wiki.document', args=[doc.full_path]),
+                               HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        eq_(normalize_html(expected),
+            normalize_html(resp.content.decode('utf-8')))
 
     def test_section_edit_toc(self):
         """show_toc is preserved in section editing."""
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
 
         doc, rev = doc_rev("""
             <h1 id="s1">s1</h1>
@@ -2686,21 +2710,17 @@ class SectionEditingResourceTests(TestCaseBase):
         <h1 id="s2">s2</h1>
         <p>replace</p>
         """
-        response = client.post('%s?section=s2&raw=true' %
-                               reverse('wiki.edit_document', args=[doc.full_path]),
-                               {"form": "rev",
-                               'slug': doc.slug,
-                                "content": replace},
-                               follow=True,
-                               HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.client.post('%s?section=s2&raw=true' %
+                         reverse('wiki.edit_document', args=[doc.full_path]),
+                         {"form": "rev", "slug": doc.slug, "content": replace},
+                         follow=True, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         changed = Document.objects.get(pk=doc.id).current_revision
         ok_(rev.id != changed.id)
         eq_(1, changed.toc_depth)
 
     def test_section_edit_review_tags(self):
         """review tags are preserved in section editing."""
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
 
         doc, rev = doc_rev("""
             <h1 id="s1">s1</h1>
@@ -2723,13 +2743,10 @@ class SectionEditingResourceTests(TestCaseBase):
         <h1 id="s2">s2</h1>
         <p>replace</p>
         """
-        response = client.post('%s?section=s2&raw=true' %
-                               reverse('wiki.edit_document', args=[doc.full_path]),
-                               {"form": "rev",
-                               'slug': doc.slug,
-                                "content": replace},
-                               follow=True,
-                               HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.client.post('%s?section=s2&raw=true' %
+                         reverse('wiki.edit_document', args=[doc.full_path]),
+                         {"form": "rev", "slug": doc.slug, "content": replace},
+                         follow=True, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         changed = Document.objects.get(pk=doc.id).current_revision
         ok_(rev.id != changed.id)
         eq_(set(tags_to_save),
@@ -2750,7 +2767,6 @@ class MindTouchRedirectTests(TestCaseBase):
     # out from the ones the legacy MindTouch handling will emit, so
     # instead we just test that A) we did issue a redirect and B) the
     # URL we constructed is enough for the document views to go on.
-
     fixtures = ['test_users.json']
 
     server_prefix = 'http://testserver/%s/docs' % settings.WIKI_DEFAULT_LANGUAGE
@@ -2833,27 +2849,33 @@ class MindTouchRedirectTests(TestCaseBase):
 
 
 class AutosuggestDocumentsTests(TestCaseBase):
-    """ Test the we're properly filtering out the Redirects from the document list """
+    """
+    Test the we're properly filtering out the Redirects from the document list
+    """
 
     def test_autosuggest_no_term(self):
-        url = reverse('wiki.autosuggest_documents', locale=settings.WIKI_DEFAULT_LANGUAGE)
+        url = reverse('wiki.autosuggest_documents',
+                      locale=settings.WIKI_DEFAULT_LANGUAGE)
         resp = self.client.get(url)
         eq_(400, resp.status_code)
 
     def test_document_redirects(self):
 
         # All contain "e", so that will be the search term
-        invalidDocuments = (
-            {'title': 'Something Redirect 8', 'html': 'REDIRECT <a class="redirect" href="/blah">Something Redirect</a>', 'is_redirect': 1},
+        invalid_documents = (
+            {
+                'title': 'Something Redirect 8',
+                'html': 'REDIRECT <a class="redirect" href="/blah">Something Redirect</a>',
+                'is_redirect': 1
+            },
         )
-        validDocuments = (
+        valid_documents = (
             {'title': 'e 6', 'html': '<p>Blah text Redirect'},
             {'title': 'e 7', 'html': 'AppleTalk'},
             {'title': 'Response.Redirect'},
         )
-        allDocuments = invalidDocuments + validDocuments
 
-        for doc in allDocuments:
+        for doc in invalid_documents + valid_documents:
             d = document()
             d.title = doc['title']
             if 'html' in doc:
@@ -2864,7 +2886,8 @@ class AutosuggestDocumentsTests(TestCaseBase):
                 d.is_redirect = 1
             d.save()
 
-        url = reverse('wiki.autosuggest_documents', locale=settings.WIKI_DEFAULT_LANGUAGE) + '?term=e'
+        url = reverse('wiki.autosuggest_documents',
+                      locale=settings.WIKI_DEFAULT_LANGUAGE) + '?term=e'
         resp = self.client.get(url)
 
         ok_('Access-Control-Allow-Origin' in resp)
@@ -2872,12 +2895,12 @@ class AutosuggestDocumentsTests(TestCaseBase):
 
         eq_(200, resp.status_code)
         data = json.loads(resp.content)
-        eq_(len(data), len(validDocuments))
+        eq_(len(data), len(valid_documents))
 
         # Ensure that the valid docs found are all in the valid list
         for d in data:
             found = False
-            for v in validDocuments:
+            for v in valid_documents:
                 if v['title'] in d['title']:
                     found = True
                     break
@@ -2886,28 +2909,37 @@ class AutosuggestDocumentsTests(TestCaseBase):
     def test_list_no_redirects(self):
         Document.objects.all().delete()
 
-        invalidDocuments = (
-            {'title': 'Something Redirect 8', 'slug': 'xx',
-                'html': 'REDIRECT <a class="redirect" href="http://davidwalsh.name">yo</a>'},
-            {'title': 'My Template', 'slug': 'Template:Something', 'html': 'blah'},
-        )
-        validDocuments = ({'title': 'A Doc', 'slug': 'blah', 'html': 'Blah blah blah'},)
-        allDocuments = invalidDocuments + validDocuments
+        invalid_documents = [
+            {
+                'title': 'Something Redirect 8',
+                'slug': 'xx',
+                'html': 'REDIRECT <a class="redirect" href="http://davidwalsh.name">yo</a>'
+            },
+            {
+                'title': 'My Template',
+                'slug': 'Template:Something',
+                'html': 'blah',
+            },
+        ]
+        valid_documents = [
+            {'title': 'A Doc', 'slug': 'blah', 'html': 'Blah blah blah'}
+        ]
+        for doc in invalid_documents + valid_documents:
+            document(save=True, slug=doc['slug'],
+                     title=doc['title'], html=doc['html'])
 
-        for doc in allDocuments:
-            d = document(save=True, slug=doc['slug'], title=doc['title'], html=doc['html'])
-
-        resp = self.client.get(reverse('wiki.all_documents', locale=settings.WIKI_DEFAULT_LANGUAGE))
-        eq_(len(validDocuments), len(pq(resp.content).find('.documents li')))
+        resp = self.client.get(reverse('wiki.all_documents',
+                                       locale=settings.WIKI_DEFAULT_LANGUAGE))
+        eq_(len(valid_documents), len(pq(resp.content).find('.documents li')))
 
 
 class CodeSampleViewTests(TestCaseBase):
     fixtures = ['test_users.json']
 
-    @override_constance_settings(KUMA_WIKI_IFRAME_ALLOWED_HOSTS='^https?\:\/\/testserver')
+    @override_constance_settings(
+        KUMA_WIKI_IFRAME_ALLOWED_HOSTS='^https?\:\/\/testserver')
     def test_code_sample_1(self):
         """The raw source for a document can be requested"""
-        client = LocalizingClient()
         d, r = doc_rev("""
             <p>This is a page. Deal with it.</p>
             <div id="sample1" class="code-sample">
@@ -2923,9 +2955,9 @@ class CodeSampleViewTests(TestCaseBase):
             '<script type="text/javascript">window.alert("HI THERE")</script>',
         )
 
-        response = client.get(reverse('wiki.code_sample',
-                              args=[d.full_path, 'sample1']),
-                              HTTP_HOST='testserver')
+        response = self.client.get(reverse('wiki.code_sample',
+                                           args=[d.full_path, 'sample1']),
+                                   HTTP_HOST='testserver')
         ok_('Access-Control-Allow-Origin' in response)
         eq_('*', response['Access-Control-Allow-Origin'])
         eq_(200, response.status_code)
@@ -2936,9 +2968,9 @@ class CodeSampleViewTests(TestCaseBase):
         for item in expecteds:
             ok_(item in normalized)
 
-    @override_constance_settings(KUMA_WIKI_IFRAME_ALLOWED_HOSTS='^https?\:\/\/sampleserver')
+    @override_constance_settings(
+        KUMA_WIKI_IFRAME_ALLOWED_HOSTS='^https?\:\/\/sampleserver')
     def test_code_sample_host_restriction(self):
-        client = LocalizingClient()
         d, r = doc_rev("""
             <p>This is a page. Deal with it.</p>
             <div id="sample1" class="code-sample">
@@ -2949,17 +2981,18 @@ class CodeSampleViewTests(TestCaseBase):
             <p>test</p>
         """)
 
-        response = client.get(reverse('wiki.code_sample',
-                              args=[d.full_path, 'sample1']),
-                              HTTP_HOST='testserver')
+        response = self.client.get(reverse('wiki.code_sample',
+                                           args=[d.full_path, 'sample1']),
+                                   HTTP_HOST='testserver')
         eq_(403, response.status_code)
 
-        response = client.get(reverse('wiki.code_sample',
-                              args=[d.full_path, 'sample1']),
-                              HTTP_HOST='sampleserver')
+        response = self.client.get(reverse('wiki.code_sample',
+                                           args=[d.full_path, 'sample1']),
+                                   HTTP_HOST='sampleserver')
         eq_(200, response.status_code)
 
-    @override_constance_settings(KUMA_WIKI_IFRAME_ALLOWED_HOSTS='^https?\:\/\/sampleserver')
+    @override_constance_settings(
+        KUMA_WIKI_IFRAME_ALLOWED_HOSTS='^https?\:\/\/sampleserver')
     def test_code_sample_iframe_embed(self):
         slug = 'test-code-embed'
         embed_url = ('https://sampleserver/%s/docs/%s$samples/sample1' %
@@ -2979,7 +3012,6 @@ class CodeSampleViewTests(TestCaseBase):
         """ % dict(embed_url=embed_url)
 
         slug = 'test-code-doc'
-        client = LocalizingClient()
         d, r = doc_rev()
         revision(save=True, document=d, title="Test code doc", slug=slug,
             content=doc_src)
@@ -3102,7 +3134,8 @@ class DeferredRenderingViewTests(TestCaseBase):
     @attr('schedule_rendering')
     @mock.patch_object(Document, 'schedule_rendering')
     @mock.patch('wiki.kumascript.get')
-    def test_schedule_rendering(self, mock_kumascript_get, mock_document_schedule_rendering):
+    def test_schedule_rendering(self, mock_kumascript_get,
+                                mock_document_schedule_rendering):
         mock_kumascript_get.return_value = (self.rendered_content, None)
 
         self.client.login(username='testuser', password='testpass')
@@ -3132,7 +3165,8 @@ class DeferredRenderingViewTests(TestCaseBase):
 
     @mock.patch('wiki.kumascript.get')
     @mock.patch('requests.post')
-    def test_alternate_bleach_whitelist(self, mock_requests_post, mock_kumascript_get):
+    def test_alternate_bleach_whitelist(self, mock_requests_post,
+                                        mock_kumascript_get):
         # Some test content with contentious tags.
         test_content = """
             <p id="foo">
@@ -3206,7 +3240,7 @@ class DeferredRenderingViewTests(TestCaseBase):
             eq_(normalize_html(expected),
                 normalize_html(resp.content),
                 "Should match? %s %s %s %s" %
-                    (do_login, param, expected, resp.content))
+                (do_login, param, expected, resp.content))
 
 
 class APITests(TestCaseBase):
@@ -3231,8 +3265,6 @@ class APITests(TestCaseBase):
 
         auth = '%s:%s' % (self.key_id, self.secret)
         self.basic_auth = 'Basic %s' % base64.encodestring(auth)
-
-        self.client = LocalizingClient()
 
         self.d, self.r = doc_rev("""
             <h3 id="S1">Section 1</h3>
@@ -3382,7 +3414,8 @@ class APITests(TestCaseBase):
         eq_(201, resp.status_code)
 
         new_slug = '%s/nonexistent/newchild' % self.d.slug
-        new_doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE, slug=new_slug)
+        new_doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE,
+                                       slug=new_slug)
         eq_(p_doc.pk, new_doc.parent_topic.pk)
 
     def test_put_unsupported_content_type(self):
@@ -3415,7 +3448,8 @@ class APITests(TestCaseBase):
                          HTTP_AUTHORIZATION=self.basic_auth)
         eq_(201, resp.status_code)
 
-        new_doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE, slug=slug)
+        new_doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE,
+                                       slug=slug)
         eq_(data['title'], new_doc.title)
         eq_(normalize_html(data['content']), normalize_html(new_doc.html))
 
@@ -3431,7 +3465,8 @@ class APITests(TestCaseBase):
                          HTTP_AUTHORIZATION=self.basic_auth)
         eq_(201, resp.status_code)
 
-        new_doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE, slug=slug)
+        new_doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE,
+                                       slug=slug)
         eq_(normalize_html(html), normalize_html(new_doc.html))
 
     def test_put_complex_html(self):
@@ -3458,7 +3493,8 @@ class APITests(TestCaseBase):
                          HTTP_AUTHORIZATION=self.basic_auth)
         eq_(201, resp.status_code)
 
-        new_doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE, slug=slug)
+        new_doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE,
+                                       slug=slug)
         eq_(data['title'], new_doc.title)
         eq_(normalize_html(data['content']), normalize_html(new_doc.html))
 
@@ -3544,17 +3580,17 @@ class APITests(TestCaseBase):
             post_data = smart_str(data, encoding=charset)
 
         parsed = urlparse(path)
-        r = {
+        params = {
             'CONTENT_LENGTH': len(post_data),
-            'CONTENT_TYPE':   content_type,
-            'PATH_INFO':      self.client._get_path(parsed),
-            'QUERY_STRING':   parsed[4],
+            'CONTENT_TYPE': content_type,
+            'PATH_INFO': self.client._get_path(parsed),
+            'QUERY_STRING': parsed[4],
             'REQUEST_METHOD': 'PUT',
-            'wsgi.input':     FakePayload(post_data),
+            'wsgi.input': FakePayload(post_data),
         }
-        r.update(extra)
+        params.update(extra)
 
-        response = self.client.request(**r)
+        response = self.client.request(**params)
         if follow:
             response = self.client._handle_redirects(response, **extra)
         return response
@@ -3566,14 +3602,14 @@ class AttachmentTests(TestCaseBase):
     def setUp(self):
         self.old_allowed_types = constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES
         constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES = 'text/plain'
+        super(AttachmentTests, self).setUp()
+        self.client = Client()  # file views don't need LocalizingClient
+        self.client.login(username='admin', password='testpass')
 
     def tearDown(self):
         constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES = self.old_allowed_types
 
     def _post_new_attachment(self):
-        self.client = Client()  # file views don't need LocalizingClient
-        self.client.login(username='admin', password='testpass')
-
         file_for_upload = make_test_file(
             content='A test file uploaded into kuma.')
         post_data = {
@@ -3587,7 +3623,6 @@ class AttachmentTests(TestCaseBase):
         return resp
 
     def test_legacy_redirect(self):
-        self.client = Client()  # file views don't need LocalizingClient
         test_user = User.objects.get(username='testuser2')
         test_file_content = 'Meh meh I am a test file.'
         test_files = (
@@ -3629,7 +3664,8 @@ class AttachmentTests(TestCaseBase):
         eq_(302, resp.status_code)
 
         attachment = Attachment.objects.get(title='Test uploaded file')
-        eq_(resp['Location'], 'http://testserver%s' % attachment.get_absolute_url())
+        eq_(resp['Location'],
+            'http://testserver%s' % attachment.get_absolute_url())
 
         rev = attachment.current_revision
         eq_('admin', rev.creator.username)
@@ -3638,9 +3674,6 @@ class AttachmentTests(TestCaseBase):
         ok_(rev.is_approved)
 
     def test_edit_attachment(self):
-        self.client = Client()  # file views don't need LocalizingClient
-        self.client.login(username='admin', password='testpass')
-
         file_for_upload = make_test_file(
             content='I am a test file for editing.')
 
@@ -3654,8 +3687,10 @@ class AttachmentTests(TestCaseBase):
         resp = self.client.post(reverse('wiki.new_attachment'), data=post_data)
 
         tdir = tempfile.gettempdir()
-        edited_file_for_upload = tempfile.NamedTemporaryFile(suffix=".txt", dir=tdir)
-        edited_file_for_upload.write('I am a new version of the test file for editing.')
+        edited_file_for_upload = tempfile.NamedTemporaryFile(suffix=".txt",
+                                                             dir=tdir)
+        edited_file_for_upload.write(
+            'I am a new version of the test file for editing.')
         edited_file_for_upload.seek(0)
 
         post_data = {
@@ -3668,14 +3703,17 @@ class AttachmentTests(TestCaseBase):
         attachment = Attachment.objects.get(title='Test editing file')
 
         resp = self.client.post(reverse('wiki.edit_attachment',
-                                        kwargs={'attachment_id': attachment.id}),
+                                        kwargs={
+                                            'attachment_id': attachment.id,
+                                        }),
                                 data=post_data)
 
         eq_(302, resp.status_code)
 
         # Re-fetch because it's been updated.
         attachment = Attachment.objects.get(title='Test editing file')
-        eq_(resp['Location'], 'http://testserver%s' % attachment.get_absolute_url())
+        eq_(resp['Location'],
+            'http://testserver%s' % attachment.get_absolute_url())
 
         eq_(2, attachment.revisions.count())
 
@@ -3704,9 +3742,6 @@ class AttachmentTests(TestCaseBase):
         eq_(200, resp.status_code)
 
     def test_attachment_detail(self):
-        self.client = Client()  # file views don't need LocalizingClient
-        self.client.login(username='admin', password='testpass')
-
         file_for_upload = make_test_file(
             content='I am a test file for attachment detail view.')
 
@@ -3722,12 +3757,15 @@ class AttachmentTests(TestCaseBase):
         attachment = Attachment.objects.get(title='Test file for viewing')
 
         resp = self.client.get(reverse('wiki.attachment_detail',
-                                       kwargs={'attachment_id': attachment.id}))
+                                       kwargs={
+                                           'attachment_id': attachment.id,
+                                       }))
         eq_(200, resp.status_code)
 
     def test_get_previous(self):
-        """AttachmentRevision.get_previous() should return this revisions's files's
-        most recent approved revision."""
+        """
+        AttachmentRevision.get_previous() should return this revisions's
+        files's most recent approved revision."""
         test_user = User.objects.get(username='testuser2')
         a = Attachment(title='Test attachment for get_previous',
                        slug='test-attachment-for-get-previous')
@@ -3787,9 +3825,6 @@ class AttachmentTests(TestCaseBase):
         r.file.save('mime_type_filter_test_file.txt',
                     ContentFile('I am a test file for mime-type filtering'))
 
-        self.client = Client()  # file views don't need LocalizingClient
-        self.client.login(username='admin', password='testpass')
-
         # Shamelessly stolen from Django's own file-upload tests.
         tdir = tempfile.gettempdir()
         file_for_upload = tempfile.NamedTemporaryFile(suffix=".html",
@@ -3832,9 +3867,6 @@ class AttachmentTests(TestCaseBase):
             'file': file_for_upload,
         }
 
-        self.client = Client()
-        self.client.login(username='admin', password='testpass')
-
         add_url = urlparams(reverse('wiki.new_attachment'),
                             document_id=doc.id)
         resp = self.client.post(add_url, data=post_data)
@@ -3867,10 +3899,7 @@ class AttachmentTests(TestCaseBase):
 
         add_url = urlparams(reverse('wiki.new_attachment'),
                             document_id=doc.id)
-        self.client = Client()
-        self.client.login(username='admin', password='testpass')
-
-        resp = self.client.post(add_url, data=post_data)
+        self.client.post(add_url, data=post_data)
 
         test_file_2 = make_test_file(
             content='Another file for testing the files dict')
@@ -3882,7 +3911,7 @@ class AttachmentTests(TestCaseBase):
             'file': test_file_2,
         }
 
-        resp = self.client.post(add_url, data=post_data)
+        self.client.post(add_url, data=post_data)
 
         doc = Document.objects.get(pk=doc.id)
 
@@ -3925,10 +3954,10 @@ class PageMoveTests(TestCaseBase):
         child_doc.parent_topic = parent.document
         child_doc.save()
 
-        conflict = revision(title='Conflict for page-move view',
-                            slug='moved/test-page-move-views/test-views',
-                            is_approved=True,
-                            save=True)
+        revision(title='Conflict for page-move view',
+                 slug='moved/test-page-move-views/test-views',
+                 is_approved=True,
+                 save=True)
 
         data = {'slug': 'moved/test-page-move-views'}
         self.client.login(username='admin', password='testpass')

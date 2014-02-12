@@ -8,10 +8,14 @@ from pyelasticsearch.exceptions import (Timeout, ConnectionError,
 from rest_framework.test import APIRequestFactory
 from test_utils import TestCase
 
+from devmo.tests import LocalizingMixin
 from search.index import get_index, get_indexing_es
 
 
-factory = APIRequestFactory()
+class LocalizingAPIRequestFactory(LocalizingMixin, APIRequestFactory):
+    pass
+
+factory = LocalizingAPIRequestFactory()
 
 
 class ElasticTestCase(TestCase):
@@ -48,7 +52,7 @@ class ElasticTestCase(TestCase):
         try:
             super(ElasticTestCase, cls).tearDownClass()
         except AttributeError:
-            # python 2.6 has no setUpClass, but that's okay
+            # python 2.6 has no tearDownClass, but that's okay
             pass
 
         if not cls.skipme:

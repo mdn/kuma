@@ -1,23 +1,19 @@
-from time import time
-import requests
-
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core import mail
 
 import mock
-from nose import SkipTest
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 from test_utils import RequestFactory
 
-from devmo.tests import mock_lookup_user
+from devmo.tests import mock_lookup_user, LocalizingClient
 from sumo.helpers import urlparams
-from sumo.tests import TestCase, LocalizingClient
+from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
-from users.models import RegistrationProfile, EmailChange, UserBan
+from users.models import EmailChange, UserBan
 from users.views import SESSION_VERIFIED_EMAIL, _clean_next_url
 
 

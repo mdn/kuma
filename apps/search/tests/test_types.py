@@ -52,7 +52,8 @@ class DocumentTypeTests(ElasticTestCase):
 
     def test_hidden_slugs_get_indexable(self):
         self.refresh()
-        title_list = DocumentType.get_indexable().values_list('title', flat=True)
+        title_list = DocumentType.get_indexable().values_list('title',
+                                                              flat=True)
         ok_('User:jezdez' not in title_list)
 
     def test_hidden_slugs_should_update(self):
