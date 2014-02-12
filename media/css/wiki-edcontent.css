@@ -3,6 +3,31 @@ html, body { background: #fff; }
 html.maximized { overflow-y: auto !important; }
 body { font: 14px/1.5 'Open Sans', sans-serif; padding: 0 20px; }
 
+/* key and button style from support.cdn.mozilla.net/static/css/wiki-min.css */
+.key, .button{
+	background:#f0f0f0;
+	background:-moz-linear-gradient(top,#f0f0f0,#fcfcfc);
+	background:-webkit-gradient(linear,center top,center bottom,from(#f0f0f0),to(#fcfcfc));
+	-webkit-border-radius:3px;
+	-moz-border-radius:3px;
+	border-radius:3px;
+	-webkit-background-clip:padding-box;
+	-moz-background-clip:padding;
+	background-clip:padding-box;
+	color:#303030;
+	border:1px solid #e0e0e0;
+	border-bottom-width:2px;
+	white-space:nowrap
+}
+
+.key{
+	font-family:monospace;
+	padding:1px 6px
+}
+
+.button{
+	padding:1px 10px
+}
 
 /* seo and callout plugin styles */
 .seoSummary {
