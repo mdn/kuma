@@ -84,7 +84,7 @@
     <nav id="main-nav" role="navigation"><ul><li><a href="{{ devmo_url('Zones') }}">{{ _('Zones') }}<i aria-hidden="true" class="icon-caret-down"></i></a>
 
         <div class="submenu submenu-single" id="nav-zones-submenu">
-          <div class="submenu-column">
+          <div class="submenu-column last">
             <ul>
               <li><a href="{{ devmo_url('Mozilla/Add-ons') }}">{{ _('Add-ons') }}</a></li>
               <li><a href="{{ devmo_url('Apps') }}">{{ _('App Center') }}</a></li>
@@ -94,6 +94,10 @@
               <li><a href="{{ devmo_url('Persona') }}">{{ _('Persona') }}</a></li>
             </ul>
           </div>
+          <button class="submenu-close transparent">
+            <span class="offscreen">Close submenu</span>
+            <i aria-hidden="true" class="icon-remove-sign"></i>
+          </button>
         </div>
       </li><li><a href="{{ devmo_url('Web') }}">{{ _('Web Platform') }}<i aria-hidden="true" class="icon-caret-down"></i></a>
 
@@ -109,7 +113,7 @@
               <li><a href="{{ devmo_url('Web/Apps') }}">{{ _('Apps') }}</a></li>
               <li><a href="{{ devmo_url('Web/MathML') }}">{{ _('MathML') }}</a></li>
             </ul>
-          </div><div class="submenu-column">
+          </div><div class="submenu-column last">
             <div class="title">{{ _('References & Guides') }}</div>
             <ul>
               <li><a href="{{ devmo_url('Web/Tutorials') }}">{{ _('Tutorials') }}</a></li>
@@ -120,6 +124,10 @@
               <li><a href="{{ devmo_url('Web') }}">{{ _('...more docs') }}</a></li>
             </ul>
           </div>
+          <button class="submenu-close transparent">
+            <span class="offscreen">Close submenu</span>
+            <i aria-hidden="true" class="icon-remove-sign"></i>
+          </button>
         </div>
       </li><li><a href="{{ devmo_url('Mozilla/Developer_Program') }}">{{ _('Developer Program') }}</a></li><li><a href="{{ devmo_url('Tools') }}">{{ _('Tools') }}</a></li><li><a href="{{ url('demos') }}">{{ _('Demos') }}</a></li>{#<li><a href="">{{ _('Developer Program') }}</a></li>#}{% if not is_sphinx %}<li class="main-nav-search"><form action="{{ url('search') }}" method="get" role="search">
         <div class="search-wrap">

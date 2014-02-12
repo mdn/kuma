@@ -156,6 +156,10 @@
       display: inline-block;
     }
 
+    .submenu-close{
+      display:none;
+    }
+
     &:before, &:after {
       top: menu-arrow-top;
       left: 269px;
@@ -542,6 +546,16 @@ footer {
       .submenu-column {
         width: 40%;
         border-right: 0;
+      }
+
+      .submenu-close{
+        display: block;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        i{
+          margin-left: 0;
+        }
       }
     }
   }
