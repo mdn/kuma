@@ -170,11 +170,17 @@ article {
 
 /* search navigator near article heading */
 .from-search {
-  padding-left: (grid-spacing * 2);
-
   h1 {
     display: inline-block;
   }
+}
+
+.from-search-spacer {
+    padding-left: (grid-spacing * 2);
+}
+
+.from-search-previous-box, .from-search-next-box {
+  display: none;
 }
 
 .from-search-previous, .from-search-next {
@@ -384,6 +390,7 @@ div.bug, div.warning, div.overheadIndicator {
   pre {
     color: text-color;
   }
+
 }
 
 /* page attachments block at the bottom of the article */

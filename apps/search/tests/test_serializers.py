@@ -1,11 +1,10 @@
 from nose.tools import ok_, eq_
 
 from search.models import Filter, FilterGroup
-from search.tests import ElasticTestCase, factory
+from search.tests import ElasticTestCase
 
-from test_utils import TestCase
-
-from search.fields import DocumentExcerptField, SearchQueryField
+from search.fields import (DocumentExcerptField, SearchQueryField,
+                           TopicQueryField)
 from search.models import DocumentType
 from search.serializers import FilterSerializer, DocumentSerializer
 from search.queries import DocumentS
@@ -41,7 +40,7 @@ class SerializerTests(ElasticTestCase):
         eq_(dict_data['title'], 'le title')
 
 
-class FieldTests(TestCase):
+class FieldTests(ElasticTestCase):
 
     def test_DocumentExcerptField(self):
 
@@ -59,12 +58,20 @@ class FieldTests(TestCase):
         eq_(field.to_native(FakeValue()), FakeValue.summary)
 
     def test_SearchQueryField(self):
-        fake_request = factory.get('/?q=test')
+        request = self.get_request('/?q=test')
         # APIRequestFactory doesn't actually return APIRequest objects
         # but standard HttpRequest objects due to the way it initializes
         # the request when APIViews are called
-        fake_request.QUERY_PARAMS = fake_request.GET
+        request.QUERY_PARAMS = request.GET
 
         field = SearchQueryField()
-        field.context = {'request': fake_request}
+        field.context = {'request': request}
         eq_(field.to_native(None), 'test')
+
+    def test_TopicQueryField(self):
+        request = self.get_request('/?topic=spam&topic=eggs')
+        request.QUERY_PARAMS = request.GET
+
+        field = TopicQueryField()
+        field.context = {'request': request}
+        eq_(field.to_native(None), ['spam', 'eggs'])

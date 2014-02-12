@@ -86,3 +86,17 @@
 {% block content %}
   {% include 'wiki/includes/document_content.html' %}
 {% endblock %}
+
+{% block body_attributes %}data-slug="{{ document.slug }}" data-docid="{{ document.id }}"{% endblock body_attributes %}
+
+{% block js %}
+  {% if waffle.flag('search_doc_navigator') %}
+  <script type="text/javascript">
+    (function($, ga) {
+      {% if search_ref %}
+      $('.from-search-toc').mozSearchResults('{{ search_ref }}', ga);
+      {% endif %}
+    })(jQuery, window._gaq || []);
+  </script>
+  {% endif %}
+{% endblock %}

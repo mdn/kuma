@@ -4,7 +4,6 @@ import urllib
 
 from django.core import urlresolvers
 from django.http import HttpResponsePermanentRedirect, HttpResponseForbidden
-from django.middleware import common
 from django.utils.encoding import iri_to_uri, smart_str, smart_unicode
 
 import jingo

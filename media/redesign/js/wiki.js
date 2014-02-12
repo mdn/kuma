@@ -15,21 +15,6 @@
   })();
 
   /*
-    Set up the "from search" buttons if user came from search
-  */
-  (function() {
-    var $fromSearchNav = $('.from-search-navigate');
-    if($fromSearchNav.length) {
-      var $fromSearchList = $('.from-search-toc');
-      $fromSearchNav.mozMenu({
-        submenu: $fromSearchList,
-        brickOnClick: true
-      });
-      $fromSearchList.find('ol').mozKeyboardNav();
-    }
-  })();
-
-  /*
     Toggle for quick links show/hide
   */
   (function() {

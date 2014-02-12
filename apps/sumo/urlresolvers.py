@@ -22,6 +22,12 @@ def set_url_prefixer(prefixer):
     _locals.prefixer = prefixer
 
 
+def reset_url_prefixer():
+    """Set the Prefixer for the current thread."""
+    global _locals
+    _locals = threading.local()
+
+
 def get_url_prefixer():
     """Get the Prefixer for the current thread, or None."""
     return getattr(_locals, 'prefixer', None)

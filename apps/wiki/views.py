@@ -32,7 +32,8 @@ from django.http import (HttpResponse, HttpResponseRedirect,
                          HttpResponsePermanentRedirect,
                          Http404, HttpResponseBadRequest)
 from django.http.multipartparser import MultiPartParser
-from django.shortcuts import get_object_or_404, render_to_response, redirect, render
+from django.shortcuts import (get_object_or_404, render_to_response, redirect,
+                              render)
 from django.views.decorators.http import (require_GET, require_POST,
                                           require_http_methods, condition)
 from django.views.decorators.clickjacking import xframe_options_exempt
@@ -43,7 +44,6 @@ import constance.config
 
 from waffle.decorators import waffle_flag
 
-import jingo
 from tower import ugettext_lazy as _lazy
 from tower import ugettext as _
 
@@ -55,10 +55,11 @@ from smuggler.forms import ImportFileForm
 from authkeys.decorators import accepts_auth_key
 
 from access.decorators import permission_required, login_required
+from search.store import ref_from_referer
 from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
 from sumo.utils import paginate, smart_int
-from wiki import (DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX, SLUG_CLEANSING_REGEX)
+from wiki import DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX, SLUG_CLEANSING_REGEX
 from wiki.decorators import check_readonly
 from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,
                          ApproveRevisionInLocaleEvent)
@@ -551,9 +552,9 @@ def document(request, document_slug, document_locale):
     # NOTE: .only() avoids a memcache object-too-large error for large wiki
     # pages when an attempt is made to cache all revisions
     contributors = set([r.creator for r in doc.revisions
-                                            .filter(is_approved=True)
-                                            .only('creator')
-                                            .select_related('creator')])
+                                              .filter(is_approved=True)
+                                              .only('creator')
+                                              .select_related('creator')])
     # TODO: Port this kitsune feature over, eventually:
     #     https://github.com/jsocol/kitsune/commit/
     #       f1ebb241e4b1d746f97686e65f49e478e28d89f2
@@ -570,30 +571,33 @@ def document(request, document_slug, document_locale):
     if slug_dict['seo_root']:
         try:
             seo_root_doc = Document.objects.get(locale=document_locale,
-                                            slug=slug_dict['seo_root'])
+                                                slug=slug_dict['seo_root'])
             seo_parent_title = ' - ' + seo_root_doc.title
         except Document.DoesNotExist:
             pass
 
     # Retrieve file attachments
     attachments = _format_attachment_obj(doc.attachments)
+    search_ref = request.GET.get('search') or ref_from_referer(request)
 
-    # Provide additional information if user came from a search
-    from_search = request.GET.get('search', '')
+    context = {
+        'document': doc,
+        'document_html': doc_html,
+        'toc_html': toc_html,
+        'related': related,
+        'contributors': contributors,
+        'fallback_reason': fallback_reason,
+        'kumascript_errors': ks_errors,
+        'render_raw_fallback': render_raw_fallback,
+        'seo_summary': seo_summary,
+        'seo_parent_title': seo_parent_title,
+        'attachment_data': attachments,
+        'search_ref': search_ref,
+        'attachment_data_json': json.dumps(attachments),
+    }
+    context.update(SHOWFOR_DATA)
 
-    data = {'document': doc, 'document_html': doc_html, 'toc_html': toc_html,
-            'related': related, 'contributors': contributors,
-            'fallback_reason': fallback_reason,
-            'kumascript_errors': ks_errors,
-            'render_raw_fallback': render_raw_fallback,
-            'seo_summary': seo_summary,
-            'seo_parent_title': seo_parent_title,
-            'attachment_data': attachments,
-            'from_search': from_search,
-            'attachment_data_json': json.dumps(attachments)}
-    data.update(SHOWFOR_DATA)
-
-    response = render(request, 'wiki/document.html', data)
+    response = render(request, 'wiki/document.html', context)
     return set_common_headers(response)
 
 

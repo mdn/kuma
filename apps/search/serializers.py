@@ -1,6 +1,7 @@
 from rest_framework import serializers, pagination
 
-from .fields import SearchQueryField, DocumentExcerptField
+from .fields import (SearchQueryField, DocumentExcerptField,
+                     TopicQueryField, LocaleField)
 from .models import Filter
 
 
@@ -30,12 +31,14 @@ class SearchSerializer(pagination.PaginationSerializer):
     pages = serializers.Field(source='paginator.num_pages')
     start = serializers.Field(source='start_index')
     end = serializers.Field(source='end_index')
+    locale = LocaleField(source='*')
     filters = FacetedFilterSerializer(source='paginator.object_list.'
                                              'faceted_filters',
                                       many=True)
 
 
 class DocumentSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
     title = serializers.CharField(read_only=True, max_length=255)
     slug = serializers.CharField(read_only=True, max_length=255)
     locale = serializers.CharField(read_only=True, max_length=7)

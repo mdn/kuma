@@ -2,28 +2,31 @@
 <script type="text/javascript">
   // http://cfsimplicity.com/61/removing-analytics-clutter-from-campaign-urls
   var removeUtms  =   function(){
-      var l = window.location;
-      if( l.hash.indexOf( 'utm' ) != -1 ){
-          var anchor = l.hash.match(/#(?!utm)[^&]+/);
+      var location = window.location;
+      if (location.hash.indexOf('utm') != -1) {
+          var anchor = location.hash.match(/#(?!utm)[^&]+/);
           anchor  =   anchor ? anchor[0] : '';
           if(!anchor && window.history.replaceState){
-              history.replaceState({}, '', l.pathname + l.search);
+              history.replaceState({}, '', location.pathname + location.search);
           } else {
-              l.hash = anchor;
+              location.hash = anchor;
           }
-      };
+      }
   };
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', '{{ config.GOOGLE_ANALYTICS_ACCOUNT }}'],
             ['_setAllowAnchor', true],
-  {% if not request.user.is_anonymous() %}
+{% if request.user.is_authenticated() %}
             ['_setCustomVar', 7, 'Signed-In', 'Yes', 1],
-      {% if request.user.get_profile().beta_tester %}
+{% if request.user.get_profile().beta_tester %}
             ['_setCustomVar', 9, 'Beta Tester', 'Yes', 1],
-      {% endif %}
-  {% endif %}
+{% endif %}
+{% endif %}
+{% if waffle.flag('search_doc_navigator') %}
+            ['_setCustomVar', 8, 'docs navigator', 'Yes', 1],
+{% endif %}
             ['_trackPageview']);
-  _gaq.push( removeUtms );
+  _gaq.push(removeUtms);
 
   (function(a, d) {
     var ga = d.createElement(a); ga.type = 'text/javascript'; ga.async = true;

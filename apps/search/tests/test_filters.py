@@ -1,13 +1,11 @@
 from nose.tools import ok_
 
-from sumo.middleware import LocaleURLMiddleware
 from waffle.models import Flag
-
-from search.tests import ElasticTestCase, factory
-from search.views import SearchView
 
 from search.filters import (SearchQueryBackend, HighlightFilterBackend,
                             LanguageFilterBackend, DatabaseFilterBackend)
+from search.tests import ElasticTestCase
+from search.views import SearchView
 
 
 class FilterTests(ElasticTestCase):
@@ -22,7 +20,7 @@ class FilterTests(ElasticTestCase):
             filter_backends = (SearchQueryBackend,)
 
         view = SearchQueryView.as_view()
-        request = factory.get('/en-US/search?q=article')
+        request = self.get_request('/en-US/search?q=article')
         response = view(request)
         self.assertEqual(response.data['count'], 4)
         self.assertEqual(len(response.data['documents']), 4)
@@ -36,7 +34,7 @@ class FilterTests(ElasticTestCase):
             filter_backends = (SearchQueryBackend, HighlightFilterBackend)
 
         view = HighlightView.as_view()
-        request = factory.get('/en-US/search?q=article')
+        request = self.get_request('/en-US/search?q=article')
         response = view(request)
         ok_('<em>article</em>' in response.data['documents'][0]['excerpt'])
 
@@ -45,17 +43,13 @@ class FilterTests(ElasticTestCase):
             filter_backends = (LanguageFilterBackend,)
 
         view = LanguageView.as_view()
-        request = factory.get('/fr/search?q=article')
-        # setting request.locale correctly
-        LocaleURLMiddleware().process_request(request)
+        request = self.get_request('/fr/search?q=article')
         response = view(request)
         self.assertEqual(response.data['count'], 1)
         self.assertEqual(len(response.data['documents']), 1)
         self.assertEqual(response.data['documents'][0]['locale'], 'fr')
 
-        request = factory.get('/en-US/search?q=article')
-        # setting request.locale correctly
-        LocaleURLMiddleware().process_request(request)
+        request = self.get_request('/en-US/search?q=article')
         response = view(request)
         self.assertEqual(response.data['count'], 5)
         self.assertEqual(len(response.data['documents']), 5)
@@ -66,7 +60,7 @@ class FilterTests(ElasticTestCase):
             filter_backends = (DatabaseFilterBackend,)
 
         view = DatabaseFilterView.as_view()
-        request = factory.get('/en-US/search?topic=tagged')
+        request = self.get_request('/en-US/search?topic=tagged')
         response = view(request)
         self.assertEqual(response.data['count'], 2)
         self.assertEqual(len(response.data['documents']), 2)
@@ -88,7 +82,7 @@ class FilterTests(ElasticTestCase):
             },
         ])
 
-        request = factory.get('/fr/search?topic=non-existent')
+        request = self.get_request('/fr/search?topic=non-existent')
         response = view(request)
         self.assertEqual(response.data['count'], 6)
         self.assertEqual(len(response.data['documents']), 6)
