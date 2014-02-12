@@ -3,7 +3,7 @@ language: python
 python:
     - "2.7"
 
-env: FORCE_DB=1 PYTHONPATH=.
+env: FORCE_DB=1 PYTHONPATH=. DJANGO_SETTINGS_MODULE=settings_travis
 
 
 services:
