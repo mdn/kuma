@@ -50,10 +50,10 @@
   /*
     Set up the zone subnav accordion
   */
-  $('.zone-landing-header-preview-base').each(function() {
-    var $base = $(this);
-    var $subnav = $base.find('.subnav');
+  $('.subnav').each(function() {
+    var $subnav = $(this);
     var $subnavList = $subnav.find(' > ol');
+    var minHeightFn = $('.zone-landing-header-preview-base').length ? setMinHeight : noop;
 
     if(!$subnavList.length) return; // Exit if the subnav isn't set up properly
 
@@ -62,7 +62,7 @@
 
     // Make them toggleable!
     $subnavList.find('.toggleable').mozTogglers({
-      slideCallback: setMinHeight
+      slideCallback: minHeightFn
     });
 
     // Try to find the current page in the list, if found, open it
@@ -84,14 +84,14 @@
     // Mark this is an accordion so the togglers open/close properly
     $subnavList.addClass('accordion');
 
-    
+    function noop(){}
     function setMinHeight() {
-      if($base.css('position') == 'absolute') {
+      if($('.zone-landing-header-preview-base').css('position') == 'absolute') {
         $('.wiki-main-content').css('min-height', $subnav.height());
       }
     }
 
-    setMinHeight();
+    minHeightFn();
   });
 
   /*
