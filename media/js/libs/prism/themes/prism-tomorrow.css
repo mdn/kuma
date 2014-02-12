@@ -12,6 +12,7 @@ pre[class*="language-"] {
   text-align: left;
   white-space: pre;
   word-spacing: normal;
+  word-break: normal;
 
   -moz-tab-size: 4;
   -o-tab-size: 4;
@@ -73,20 +74,24 @@ pre[class*="language-"] {
 }
 
 .token.property,
-.token.class-name  {
+.token.class-name,
+.token.constant,
+.token.symbol {
   color: #f8c555;
 }
 
 .token.selector,
 .token.important,
 .token.atrule,
-.token.keyword {
+.token.keyword,
+.token.builtin {
   color: #cc99cd;
 }
 
 .token.string,
 .token.attr-value,
-.token.regex {
+.token.regex,
+.token.variable {
   color: #7ec699;
 }
 
