@@ -1,6 +1,5 @@
 from django.contrib.auth.models import User
 
-from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 
 from devmo.tests import LocalizingClient

@@ -1,4 +1,3 @@
-import logging
 from datetime import datetime, timedelta
 import json
 import time
@@ -18,7 +17,7 @@ from django.contrib.contenttypes.models import ContentType
 
 import constance.config
 
-from waffle.models import Flag, Switch
+from waffle.models import Switch
 
 from sumo import ProgrammingError
 from sumo.tests import TestCase
@@ -28,7 +27,6 @@ from devmo.tests import override_constance_settings
 from wiki.cron import calculate_related_documents
 from wiki.models import (FirefoxVersion, OperatingSystem, Document, Revision,
                          Attachment, DocumentZone,
-                         REDIRECT_CONTENT, REDIRECT_SLUG, REDIRECT_TITLE,
                          MAJOR_SIGNIFICANCE, CATEGORIES,
                          get_current_or_latest_revision,
                          DocumentRenderedContentNotAvailable,
@@ -175,7 +173,6 @@ class DocumentTests(TestCase):
         switch = Switch.objects.create(name='wiki_error_on_delete')
 
         for active in (True, False):
-            
             switch.active = active
             switch.save()
 
@@ -186,7 +183,7 @@ class DocumentTests(TestCase):
                 d.delete()
                 if active:
                     ok_(False, 'Exception on delete when active')
-            except Exception, e:
+            except Exception:
                 if not active:
                     ok_(False, 'No exception on delete when not active')
 
@@ -342,7 +339,8 @@ class DocumentTests(TestCase):
         A child doc should list all its parent's docs, excluding itself, and
         including its parent
         """
-        parent = document(locale=settings.WIKI_DEFAULT_LANGUAGE, title='test', save=True)
+        parent = document(locale=settings.WIKI_DEFAULT_LANGUAGE, title='test',
+                          save=True)
         enfant = document(locale='fr', title='le test', parent=parent,
                          save=True)
         bambino = document(locale='es', title='el test', parent=parent,
@@ -389,10 +387,10 @@ class PermissionTests(TestCase):
                     (True, self.users['change']),
                 )),
                 ('Template:test_for_%s', (
-                    (True,       self.superuser),
-                    (False,      self.users['none']),
-                    (True,       self.users['all']),
-                    (is_add,     self.users['add']),
+                    (True, self.superuser),
+                    (False, self.users['none']),
+                    (True, self.users['all']),
+                    (is_add, self.users['add']),
                     (not is_add, self.users['change']),
                 ))
             )
@@ -501,7 +499,8 @@ class DocumentTestsWithFixture(TestCase):
     def test_default_topic_parents_for_translation(self):
         """A translated document with no topic parent should by default use
         the translation of its translation parent's topic parent."""
-        orig_pt = document(locale=settings.WIKI_DEFAULT_LANGUAGE, title='test section',
+        orig_pt = document(locale=settings.WIKI_DEFAULT_LANGUAGE,
+                           title='test section',
                            save=True)
         orig = document(locale=settings.WIKI_DEFAULT_LANGUAGE, title='test',
                         parent_topic=orig_pt, save=True)
@@ -515,7 +514,8 @@ class DocumentTestsWithFixture(TestCase):
         eq_(trans.parent_topic.pk, trans_pt.pk)
 
     def test_default_topic_with_stub_creation(self):
-        orig_pt = document(locale=settings.WIKI_DEFAULT_LANGUAGE, title='test section',
+        orig_pt = document(locale=settings.WIKI_DEFAULT_LANGUAGE,
+                           title='test section',
                            save=True)
         orig = document(locale=settings.WIKI_DEFAULT_LANGUAGE, title='test',
                         parent_topic=orig_pt, save=True)
@@ -545,25 +545,19 @@ class DocumentTestsWithFixture(TestCase):
         for title in orig_path:
             doc = document(locale=settings.WIKI_DEFAULT_LANGUAGE, title=title,
                            parent_topic=doc, save=True)
-            rev = revision(document=doc, title=title, save=True)
+            revision(document=doc, title=title, save=True)
             docs.append(doc)
 
         # Translate, but leave gaps for stubs
         trans_0 = document(locale='fr', title='le MDN',
                            parent=docs[0], save=True)
-        trans_0_rev = revision(document=trans_0, title='le MDN',
-                               tags="LeTest!",
-                               save=True)
+        revision(document=trans_0, title='le MDN', tags="LeTest!", save=True)
         trans_2 = document(locale='fr', title='le CSS',
                            parent=docs[2], save=True)
-        trans_2_rev = revision(document=trans_2, title='le CSS',
-                               tags="LeTest!",
-                               save=True)
+        revision(document=trans_2, title='le CSS', tags="LeTest!", save=True)
         trans_5 = document(locale='fr', title='le leaf',
                            parent=docs[5], save=True)
-        trans_5_rev = revision(document=trans_5, title='le ;eaf',
-                               tags="LeTest!",
-                               save=True)
+        revision(document=trans_5, title='le ;eaf', tags="LeTest!", save=True)
 
         # Make sure trans_2 got the right parent
         eq_(trans_2.parents[0].pk, trans_0.pk)
@@ -624,8 +618,8 @@ class DocumentTestsWithFixture(TestCase):
         """Make sure sample extraction works from the model.
         This is a smaller version of the test from test_content.py"""
         sample_html = u'<p class="foo">Hello world!</p>'
-        sample_css  = u'.foo p { color: red; }'
-        sample_js   = u'window.alert("Hi there!");'
+        sample_css = u'.foo p { color: red; }'
+        sample_js = u'window.alert("Hi there!");'
         doc_src = u"""
             <p>This is a page. Deal with it.</p>
             <ul id="s2" class="code-sample">
@@ -781,10 +775,11 @@ class RevisionTests(TestCase):
 
         time.sleep(1)
 
-        r2 = revision(document=d, title='Test reverting',
-                      content='An edit to revert',
-                      comment='This edit gets reverted',
-                      is_approved=True)
+        revision(document=d,
+                 title='Test reverting',
+                 content='An edit to revert',
+                 comment='This edit gets reverted',
+                 is_approved=True)
         r.save()
 
         time.sleep(1)
@@ -797,7 +792,6 @@ class RevisionTests(TestCase):
     def test_revert_review_tags(self):
         d, r = doc_rev('Test reverting with review tags')
         r.review_tags.set('technical')
-        old_id = r.id
 
         time.sleep(1)
 
@@ -812,7 +806,8 @@ class RevisionTests(TestCase):
         reverted_tags = [t.name for t in reverted.review_tags.all()]
         ok_('technical' in reverted_tags)
         ok_('editorial' not in reverted_tags)
-        
+
+
 class RelatedDocumentTests(TestCase):
     fixtures = ['test_users.json', 'wiki/documents.json']
 
@@ -1056,7 +1051,9 @@ class DeferredRenderingTests(TestCase):
     @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0)
     @mock.patch('wiki.kumascript.get')
     def test_build_json_on_render(self, mock_kumascript_get):
-        """A document's json field is refreshed on render(), but not on save()"""
+        """
+        A document's json field is refreshed on render(), but not on save()
+        """
         # FIXME
         # this was broken when render_done signal was introduced
         raise SkipTest("Skip for now")
@@ -1067,7 +1064,7 @@ class DeferredRenderingTests(TestCase):
         self.d1.render()
         ok_(self.d1.json is not None)
 
-        time.sleep(0.1) # Small clock-tick to age the results.
+        time.sleep(0.1)  # Small clock-tick to age the results.
 
         # Change the doc title, saving does not actually change the json field.
         self.d1.title = "New title"
@@ -1108,18 +1105,20 @@ class DeferredRenderingTests(TestCase):
 
     @mock.patch('wiki.kumascript.get')
     def test_render_timeout(self, mock_kumascript_get):
-        """A rendering that has taken too long is no longer considered in progress"""
+        """
+        A rendering that has taken too long is no longer considered in progress
+        """
         mock_kumascript_get.return_value = (self.rendered_content, None)
         timeout = 5.0
         constance.config.KUMA_DOCUMENT_RENDER_TIMEOUT = timeout
         self.d1.render_started_at = (datetime.now() -
-                                     timedelta(seconds=timeout+1))
+                                     timedelta(seconds=timeout + 1))
         self.d1.save()
         try:
             self.d1.render('', 'http://testserver/')
         except DocumentRenderingInProgress:
-            ok_(False, "A timed-out rendering should not be considered as still "
-                       "in progress")
+            ok_(False, "A timed-out rendering should not be considered as "
+                       "still in progress")
 
     @mock.patch('wiki.kumascript.get')
     def test_long_render_sets_deferred(self, mock_kumascript_get):
@@ -1127,9 +1126,11 @@ class DeferredRenderingTests(TestCase):
         document as in need of deferred rendering in the future."""
         constance.config.KUMASCRIPT_TIMEOUT = 1.0
         rendered_content = self.rendered_content
+
         def my_kumascript_get(self, cache_control, base_url, timeout):
             time.sleep(1.0)
             return (rendered_content, None)
+
         mock_kumascript_get.side_effect = my_kumascript_get
 
         constance.config.KUMA_DOCUMENT_FORCE_DEFERRED_TIMEOUT = 2.0
@@ -1146,7 +1147,6 @@ class DeferredRenderingTests(TestCase):
     def test_schedule_rendering(self, mock_render_document_delay,
                                 mock_kumascript_get):
         mock_kumascript_get.return_value = (self.rendered_content, None)
-        
         # Scheduling for a non-deferred render should happen on the spot.
         self.d1.defer_rendering = False
         self.d1.save()
@@ -1234,7 +1234,7 @@ class DeferredRenderingTests(TestCase):
 class RenderExpiresTests(TestCase):
     """Tests for max-age and automatic document rebuild"""
     fixtures = ['test_users.json']
-     
+
     def test_find_stale_documents(self):
         now = datetime.now()
 
@@ -1264,7 +1264,7 @@ class RenderExpiresTests(TestCase):
 
         max_age = 1000
         now = datetime.now()
-        
+
         d1 = document(title='Aged 1')
         d1.render_max_age = max_age
         d1.save()
@@ -1280,9 +1280,7 @@ class RenderExpiresTests(TestCase):
     def test_update_expires_without_max_age(self, mock_kumascript_get):
         mock_kumascript_get.return_value = ('MOCK CONTENT', None)
 
-        max_age = 1000
         now = datetime.now()
-        
         d1 = document(title='Aged 1')
         d1.render_expires = now - timedelta(seconds=100)
         d1.save()
@@ -1367,10 +1365,10 @@ class PageMoveTests(TestCase):
         child1 = _make_doc('Child 1', parent)
         child2 = _make_doc('Child 2', parent)
         grandchild = _make_doc('GrandChild 1', child1)
-        greatgrandchild = _make_doc('Great GrandChild 1', grandchild)
+        _make_doc('Great GrandChild 1', grandchild)
 
         # Test descendant counts
-        eq_(len(parent.get_descendants()), 4)  #All
+        eq_(len(parent.get_descendants()), 4)  # All
         eq_(len(parent.get_descendants(1)), 2)
         eq_(len(parent.get_descendants(2)), 3)
         eq_(len(parent.get_descendants(0)), 0)
@@ -1424,7 +1422,8 @@ class PageMoveTests(TestCase):
         ok_(child.is_child_of(parent))
 
         # And at two levels removed.
-        grandparent = document(title='Grandparent of circular-dependency document')
+        grandparent = document(title='Grandparent of '
+                                     'circular-dependency document')
         parent.parent_topic = grandparent
         child.save()
 
@@ -1437,7 +1436,7 @@ class PageMoveTests(TestCase):
         child.save()
 
         ok_(parent.has_children())
-    
+
     @attr('move')
     def test_move_tree(self):
         """Moving a tree of documents does the correct thing"""
@@ -1482,14 +1481,14 @@ class PageMoveTests(TestCase):
         grandchild_doc.parent_topic = child2_doc
         grandchild_doc.save()
 
-        new_top = revision(title='New Top-level bucket for tree moves',
-                       slug='new-prefix',
-                       is_approved=True,
-                       save=True)
-        new_level = revision(title='New first-level parent for tree moves',
-                       slug='new-prefix/first-level',
-                       is_approved=True,
-                       save=True)
+        revision(title='New Top-level bucket for tree moves',
+                 slug='new-prefix',
+                 is_approved=True,
+                 save=True)
+        revision(title='New first-level parent for tree moves',
+                 slug='new-prefix/first-level',
+                 is_approved=True,
+                 save=True)
         # Now we do a simple move: inserting a prefix that needs to be
         # inherited by the whole tree.
         top_doc._move_tree('new-prefix/first-level/parent')
@@ -1503,30 +1502,35 @@ class PageMoveTests(TestCase):
         eq_('new-prefix/first-level/parent',
             moved_top.current_revision.slug)
         ok_(old_top_id != moved_top.current_revision.id)
-        ok_(moved_top.current_revision.slug in \
+        ok_(moved_top.current_revision.slug in
             Document.objects.get(slug='first-level/parent').redirect_url())
 
         moved_child1 = Document.objects.get(pk=child1_doc.id)
         eq_('new-prefix/first-level/parent/child1',
             moved_child1.current_revision.slug)
         ok_(old_child1_id != moved_child1.current_revision.id)
-        ok_(moved_child1.current_revision.slug in \
-            Document.objects.get(slug='first-level/second-level/child1').redirect_url())
+        ok_(moved_child1.current_revision.slug in
+            Document.objects.get(
+                slug='first-level/second-level/child1'
+            ).redirect_url())
 
         moved_child2 = Document.objects.get(pk=child2_doc.id)
         eq_('new-prefix/first-level/parent/child2',
             moved_child2.current_revision.slug)
         ok_(old_child2_id != moved_child2.current_revision.id)
-        ok_(moved_child2.current_revision.slug in \
-            Document.objects.get(slug='first-level/second-level/child2').redirect_url())
+        ok_(moved_child2.current_revision.slug in
+            Document.objects.get(
+                slug='first-level/second-level/child2'
+            ).redirect_url())
 
         moved_grandchild = Document.objects.get(pk=grandchild_doc.id)
         eq_('new-prefix/first-level/parent/child2/grandchild',
             moved_grandchild.current_revision.slug)
         ok_(old_grandchild_id != moved_grandchild.current_revision.id)
-        ok_(moved_grandchild.current_revision.slug in \
-            Document.objects.get(slug='first-level/second-level/third-level/grandchild').redirect_url())
-
+        ok_(moved_grandchild.current_revision.slug in
+            Document.objects.get(
+                slug='first-level/second-level/third-level/grandchild'
+            ).redirect_url())
 
     @attr('move')
     def test_conflicts(self):
@@ -1563,12 +1567,12 @@ class PageMoveTests(TestCase):
             top_doc._tree_conflicts('moved/test-move-conflict-detection'))
 
         # But a redirect should not trigger a conflict.
-        conflict_redirect = revision(title='Conflicting document for move conflict detection',
-                                     slug='moved/test-move-conflict-detection',
-                                     content='REDIRECT <a class="redirect" href="/foo">Foo</a>',
-                                     document=top_conflict.document,
-                                     is_approved=True,
-                                     save=True)
+        revision(title='Conflicting document for move conflict detection',
+                 slug='moved/test-move-conflict-detection',
+                 content='REDIRECT <a class="redirect" href="/foo">Foo</a>',
+                 document=top_conflict.document,
+                 is_approved=True,
+                 save=True)
 
         eq_([child_conflict.document],
             top_doc._tree_conflicts('moved/test-move-conflict-detection'))
@@ -1610,10 +1614,10 @@ class PageMoveTests(TestCase):
             rev.review_tags.set('technical')
             rev = Revision.objects.get(pk=rev.id)
 
-            new_top = revision(title='New Top-level parent for tree moves',
-                           slug='new-top',
-                           is_approved=True,
-                           save=True)
+            revision(title='New Top-level parent for tree moves',
+                     slug='new-top',
+                     is_approved=True,
+                     save=True)
 
             doc = rev.document
             doc._move_tree('new-top/page-move-tags')
@@ -1655,7 +1659,9 @@ class PageMoveTests(TestCase):
         mom_doc.save()
 
         daughter = revision(title='Bottom-level child for breadcrumb move',
-                       slug='grandma/mom/daughter', is_approved=True, save=True)
+                            slug='grandma/mom/daughter',
+                            is_approved=True,
+                            save=True)
         daughter_doc = daughter.document
         daughter_doc.parent_topic = mom_doc
         daughter_doc.save()
@@ -1685,7 +1691,6 @@ class PageMoveTests(TestCase):
             ok_(False, "Moving page under non-existing doc should error.")
         except:
             pass
-
 
     @attr('move')
     @attr('top')
@@ -1718,7 +1723,7 @@ class PageMoveTests(TestCase):
 
         page_to_move_doc._move_tree(page_moved_slug, user=None,
                                     title=new_title)
-        
+
         page_to_move_doc = Document.objects.get(slug=page_to_move_slug)
         page_moved_doc = Document.objects.get(slug=page_moved_slug)
         page_child_doc = Document.objects.get(slug=page_child_slug)
@@ -1786,7 +1791,7 @@ class PageMoveTests(TestCase):
         child_slug = '%s/child' % root_slug
 
         new_root_slug = 'User:foobar'
-        
+
         special_root = document(title='User:foo',
                                 slug=root_slug,
                                 save=True)
@@ -1794,7 +1799,7 @@ class PageMoveTests(TestCase):
                             title=special_root.title,
                             slug=root_slug,
                             save=True)
-                            
+
         special_child = document(title='User:foo child',
                                  slug=child_slug,
                                  save=True)
@@ -1808,7 +1813,7 @@ class PageMoveTests(TestCase):
 
         original_root_id = special_root.id
         original_child_id = special_child.id
-        
+
         # First move, to new slug.
         special_root._move_tree(new_root_slug)
 
@@ -1861,7 +1866,7 @@ class PageMoveTests(TestCase):
 class DocumentZoneTests(TestCase):
     """Tests for content zones in topic hierarchies"""
     fixtures = ['test_users.json']
-    
+
     def test_find_roots(self):
         """Ensure sub pages can find the content zone root"""
         root_rev = revision(title='ZoneRoot', slug='ZoneRoot',

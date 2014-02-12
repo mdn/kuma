@@ -26,7 +26,8 @@ class FilterTests(ElasticTestCase):
         response = view(request)
         self.assertEqual(response.data['count'], 4)
         self.assertEqual(len(response.data['documents']), 4)
-        self.assertEqual(response.data['documents'][0]['slug'], 'article-title')
+        self.assertEqual(response.data['documents'][0]['slug'],
+                         'article-title')
         self.assertEqual(response.data['documents'][0]['locale'], 'en-US')
 
     def test_highlight_filter(self):
@@ -69,7 +70,8 @@ class FilterTests(ElasticTestCase):
         response = view(request)
         self.assertEqual(response.data['count'], 2)
         self.assertEqual(len(response.data['documents']), 2)
-        self.assertEqual(response.data['documents'][0]['slug'], 'article-title')
+        self.assertEqual(response.data['documents'][0]['slug'],
+                         'article-title')
         self.assertEqual(response.data['filters'], [
             {
                 'name': 'Group',

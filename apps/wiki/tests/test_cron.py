@@ -6,7 +6,6 @@ from sumo.tests import TestCase
 from wiki.cron import build_sitemaps
 from wiki.models import Document
 
-from datetime import datetime;
 
 class SitemapsTestCase(TestCase):
     fixtures = ['test_users.json', 'wiki/documents.json']
@@ -25,8 +24,7 @@ class SitemapsTestCase(TestCase):
                 locale
             )
             sitemap_xml = open('%s/sitemaps/%s/sitemap.xml' %
-                                (settings.MEDIA_ROOT, locale),
-                               'r').read()
+                               (settings.MEDIA_ROOT, locale), 'r').read()
 
             docs = (Document.objects.filter(locale=locale)
                                     .exclude(title__startswith='User:')

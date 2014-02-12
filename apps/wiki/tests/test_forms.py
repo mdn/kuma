@@ -1,8 +1,6 @@
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 
-from django import forms
-
 from sumo.tests import TestCase
 from wiki.forms import RevisionForm, RevisionValidationForm, TreeMoveForm
 from wiki.tests import doc_rev, normalize_html
@@ -20,7 +18,8 @@ class FormEditorSafetyFilterTests(TestCase):
         """)
         rev_form = RevisionForm(instance=r)
         ok_('onload' not in rev_form.initial['content'])
-        
+
+
 class FormSectionEditingTests(TestCase):
     fixtures = ['test_users.json']
 
@@ -104,27 +103,29 @@ class TreeMoveFormTests(TestCase):
     fixtures = ['test_users.json', 'wiki/documents.json']
 
     def test_form_properly_strips_leading_cruft(self):
-        """ Tests that leading slash and {locale}/docs/ is removed if included """
+        """
+        Tests that leading slash and {locale}/docs/ is removed if included
+        """
 
         #[submitted_value, properly_cleaned_value]
         comparisons = [
-            ['/somedoc', 'somedoc'], # leading slash
-            ['/en-US/docs/mynewplace', 'mynewplace'], # locale and docs
-            ['/docs/one', 'one'], # leading docs
-            ['docs/one', 'one'], # leading docs without slash
-            ['fr/docs/one', 'one'], # foreign locale with docs
+            ['/somedoc', 'somedoc'],  # leading slash
+            ['/en-US/docs/mynewplace', 'mynewplace'],  # locale and docs
+            ['/docs/one', 'one'],  # leading docs
+            ['docs/one', 'one'],  # leading docs without slash
+            ['fr/docs/one', 'one'],  # foreign locale with docs
             ['docs/article-title/docs', 'article-title/docs'] # docs with later docs
         ]
 
         for comparison in comparisons:
-            form = TreeMoveForm({ 'locale': 'en-US', 'title': 'Article',
-                                 'slug': comparison[0] })
+            form = TreeMoveForm({'locale': 'en-US', 'title': 'Article',
+                                 'slug': comparison[0]})
             form.is_valid()
             eq_(comparison[1], form.cleaned_data['slug'])
 
     def test_form_enforces_parent_doc_to_exist(self):
-        form = TreeMoveForm({ 'locale': 'en-US', 'title': 'Article',
-                             'slug': 'nothing/article' })
+        form = TreeMoveForm({'locale': 'en-US', 'title': 'Article',
+                             'slug': 'nothing/article'})
         form.is_valid()
         ok_(form.errors)
         ok_(u'Parent' in form.errors.as_text())

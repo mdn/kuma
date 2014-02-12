@@ -1,31 +1,13 @@
 # coding=utf-8
-
-import sys
-import logging
-import datetime
-
-from django.conf import settings
-from django.test.client import Client
-from django.http import Http404
-from django.utils.encoding import smart_str
 from django.core.cache import get_cache
 
-import mock
-from nose import SkipTest
-from nose.tools import eq_, ok_
-from nose.plugins.attrib import attr
-from pyquery import PyQuery as pq
-
-from sumo.tests import LocalizingClient, post, get
-from sumo.helpers import urlparams
+from nose.tools import eq_
 from sumo.urlresolvers import reverse
 
-from . import TestCaseBase, FakeResponse
+from . import TestCaseBase
 
-from wiki.models import (Document, Attachment, DocumentZone, SECONDARY_CACHE_ALIAS)
-from wiki.tests import (doc_rev, document, new_document_data, revision,
-                        normalize_html, create_template_test_users)
-from wiki.views import _version_groups, DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL
+from wiki.models import DocumentZone, SECONDARY_CACHE_ALIAS
+from wiki.tests import revision
 
 
 class DocumentZoneMiddlewareTestCase(TestCaseBase):
@@ -115,7 +97,8 @@ class DocumentZoneMiddlewareTestCase(TestCaseBase):
         url = '/en-US/docs/%s?raw=1' % self.middle_doc.slug
         response = self.client.get(url, follow=False)
         eq_(302, response.status_code)
-        eq_('http://testserver/en-US/ExtraWiki/Middle?raw=1', response['Location'])
+        eq_('http://testserver/en-US/ExtraWiki/Middle?raw=1',
+            response['Location'])
 
         self.root_zone.url_root = 'NewRoot'
         self.root_zone.save()
@@ -123,7 +106,8 @@ class DocumentZoneMiddlewareTestCase(TestCaseBase):
         url = '/en-US/docs/%s?raw=1' % self.middle_doc.slug
         response = self.client.get(url, follow=False)
         eq_(302, response.status_code)
-        eq_('http://testserver/en-US/NewRoot/Middle?raw=1', response['Location'])
+        eq_('http://testserver/en-US/NewRoot/Middle?raw=1',
+            response['Location'])
 
     def test_blank_url_root(self):
         """Ensure a blank url_root does not trigger URL remap"""

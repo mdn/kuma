@@ -1,6 +1,5 @@
 # This Python file uses the following encoding: utf-8
 # see also: http://www.python.org/dev/peps/pep-0263/
-import logging
 from urlparse import urljoin
 from jinja2 import escape, Markup
 
@@ -13,14 +12,14 @@ import bleach
 from sumo.tests import TestCase
 import wiki.content
 from wiki.content import (CodeSyntaxFilter, DekiscriptMacroFilter,
-                          SectionTOCFilter, SectionIDFilter, IframeHostFilter,
+                          SectionTOCFilter, SectionIDFilter,
                           H2TOCFilter, H3TOCFilter,
                           SECTION_TAGS, get_seo_description,
                           get_content_sections, extract_css_classnames,
                           extract_html_attributes,
                           extract_kumascript_macro_names)
 from wiki.models import ALLOWED_TAGS, ALLOWED_ATTRIBUTES, Document
-from wiki.tests import normalize_html, doc_rev, document, revision
+from wiki.tests import normalize_html, doc_rev, document
 from wiki.helpers import bugize_text
 
 
@@ -29,7 +28,7 @@ class ContentSectionToolTests(TestCase):
 
     def test_section_pars_for_empty_docs(self):
         doc = document(title='Doc', locale=u'fr', slug=u'doc', save=True,
-                        html='<!-- -->')
+                       html='<!-- -->')
         res = get_content_sections(doc.html)
         eq_(type(res).__name__, 'list')
 
@@ -67,7 +66,7 @@ class ContentSectionToolTests(TestCase):
             ('header1', 'Header_One'),
             ('header2', 'Header_Two'),
             ('hasname', 'Constants'),
-            ('hasid',   'This_text_clobbers_the_ID'),
+            ('hasid', 'This_text_clobbers_the_ID'),
             ('Quick_Links', 'Quick_Links'),
         )
         for cls, id in expected:
@@ -363,8 +362,8 @@ class ContentSectionToolTests(TestCase):
 
     def test_non_ascii_section_headers(self):
         headers = [
-           (u'Documentation à propos de HTML',
-            'Documentation_.C3.A0_propos_de_HTML'),
+            (u'Documentation à propos de HTML',
+             'Documentation_.C3.A0_propos_de_HTML'),
             (u'Outils facilitant le développement HTML',
              'Outils_facilitant_le_d.C3.A9veloppement_HTML'),
             (u'例:\u00a0スキューと平行移動',
@@ -577,7 +576,7 @@ class ContentSectionToolTests(TestCase):
         try:
             result = wiki.content.filter_out_noinclude(doc_src)
             eq_('', result)
-        except e:
+        except:
             ok_(False, "There should not have been an exception")
 
     def test_sample_code_extraction(self):
@@ -757,8 +756,8 @@ class ContentSectionToolTests(TestCase):
             <p>test</p>
         """ % tubes
         result_src = (wiki.content.parse(doc_src)
-                      .filterIframeHosts('^https?\:\/\/(www.)?youtube.com\/embed\/(\.*)')
-                      .serialize())
+                                  .filterIframeHosts('^https?\:\/\/(www.)?youtube.com\/embed\/(\.*)')
+                                  .serialize())
         page = pq(result_src)
 
         eq_(page.find('#if1').attr('src'), tubes[0])
@@ -786,8 +785,8 @@ class ContentSectionToolTests(TestCase):
         d.save()
         r.save()
 
-        d2 = document(title=u'Héritée', locale=u'fr', slug=u'CSS/Héritage',
-                      save=True)
+        document(title=u'Héritée', locale=u'fr', slug=u'CSS/Héritage',
+                 save=True)
 
         base_url = u'http://testserver/'
         vars = dict(
@@ -796,7 +795,8 @@ class ContentSectionToolTests(TestCase):
             exist_url_with_base=urljoin(base_url, d.get_absolute_url()),
             uilocale_url=u'/en-US/docs/%s/%s' % (d.locale, d.slug),
             noexist_url=u'/en-US/docs/no-such-doc',
-            noexist_url_with_base=urljoin(base_url, u'/en-US/docs/no-such-doc'),
+            noexist_url_with_base=urljoin(base_url,
+                                          u'/en-US/docs/no-such-doc'),
             noexist_uilocale_url=u'/en-US/docs/en-US/blah-blah-blah',
             nonen_slug='/fr/docs/CSS/H%c3%a9ritage',
             tag_url='/en-US/docs/tag/foo',
@@ -953,7 +953,7 @@ class AllowedHTMLTests(TestCase):
         'mark', 'time', 'meter', 'output', 'progress',
         'audio', 'details', 'datagrid', 'datalist', 'table',
         'address'
-        )
+    )
 
     unclose_tags = ('img', 'input', 'br', 'command')
 
@@ -1060,18 +1060,20 @@ class SearchParserTests(TestCase):
 class GetSEODescriptionTests(TestCase):
 
     def test_summary_section(self):
-        content = (u'<h2 id="Summary">Summary</h2><p>The <strong>Document Object '
-             'Model'
-             '</strong> (<strong>DOM</strong>) is an API for '
-             '<a href="/en-US/docs/HTML" title="en-US/docs/HTML">HTML</a> and '
-             '<a href="/en-US/docs/XML" title="en-US/docs/XML">XML</a> '
-             'documents. It provides a structural representation of the '
-             'document, enabling you to modify its content and visual '
-             'presentation by using a scripting language such as '
-             '<a href="/en-US/docs/JavaScript" '
-             'title="https://developer.mozilla.org/en-US/docs/JavaScript">'
-             'JavaScript</a>.</span></p>')
-        expected = ('The Document Object Model (DOM) is an API for HTML and '
+        content = (
+            '<h2 id="Summary">Summary</h2><p>The <strong>Document Object '
+            'Model'
+            '</strong> (<strong>DOM</strong>) is an API for '
+            '<a href="/en-US/docs/HTML" title="en-US/docs/HTML">HTML</a> and '
+            '<a href="/en-US/docs/XML" title="en-US/docs/XML">XML</a> '
+            'documents. It provides a structural representation of the '
+            'document, enabling you to modify its content and visual '
+            'presentation by using a scripting language such as '
+            '<a href="/en-US/docs/JavaScript" '
+            'title="https://developer.mozilla.org/en-US/docs/JavaScript">'
+            'JavaScript</a>.</span></p>')
+        expected = (
+            'The Document Object Model (DOM) is an API for HTML and '
             'XML documents. It provides a structural representation of the'
             ' document, enabling you to modify its content and visual'
             ' presentation by using a scripting language such as'

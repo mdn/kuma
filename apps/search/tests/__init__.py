@@ -20,6 +20,7 @@ factory = LocalizingAPIRequestFactory()
 
 class ElasticTestCase(TestCase):
     """Base class for Elastic Search tests, providing some conveniences"""
+    skipme = False
 
     @classmethod
     def setUpClass(cls):
@@ -51,7 +52,7 @@ class ElasticTestCase(TestCase):
         try:
             super(ElasticTestCase, cls).tearDownClass()
         except AttributeError:
-            # python 2.6 has no setUpClass, but that's okay
+            # python 2.6 has no tearDownClass, but that's okay
             pass
 
         if not cls.skipme:

@@ -1,9 +1,6 @@
-import sys
 from datetime import datetime
 import time
-import logging
 
-from django.conf import settings
 from django.contrib.auth.models import User, Group, Permission
 from django.core.files import temp as tempfile
 from django.template.defaultfilters import slugify
