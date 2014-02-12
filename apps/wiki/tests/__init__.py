@@ -12,7 +12,8 @@ from html5lib.filters._base import Filter as html5lib_Filter
 from nose.tools import nottest
 from waffle.models import Flag
 
-from sumo.tests import LocalizingClient, TestCase, get_user
+from devmo.tests import LocalizingClient
+from sumo.tests import TestCase, get_user
 import wiki.content
 from wiki.models import Document, Revision, CATEGORIES, SIGNIFICANCES
 

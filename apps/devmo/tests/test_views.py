@@ -26,8 +26,9 @@ from devmo.tests import mock_lookup_user
 from devmo.models import UserProfile
 
 from devmo.cron import devmo_calendar_reload
+from devmo.tests import LocalizingClient
 
-from sumo.tests import TestCase, LocalizingClient
+from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
 
 from waffle.models import Flag

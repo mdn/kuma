@@ -9,7 +9,8 @@ from django.conf import settings
 from django.contrib.auth.models import User
 
 from devmo.models import UserProfile
-from sumo.tests import LocalizingClient, TestCase
+from devmo.tests import LocalizingClient
+from sumo.tests import TestCase
 
 
 class TestCaseBase(TestCase):

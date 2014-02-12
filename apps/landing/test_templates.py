@@ -1,10 +1,9 @@
 from nose.tools import eq_, ok_
 import test_utils
 
-from sumo.tests import LocalizingClient
 from sumo.urlresolvers import reverse
+from devmo.tests import LocalizingClient, override_constance_settings
 
-from devmo.tests import override_constance_settings
 
 class HomeTests(test_utils.TestCase):
     def setUp(self):

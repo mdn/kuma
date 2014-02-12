@@ -5,6 +5,7 @@ import mock
 from django.conf import settings, UserSettingsHolder
 from django.contrib.auth.models import User
 from django.utils.functional import wraps
+from django.test.client import Client
 
 import constance.config
 from constance.backends import database as constance_database
@@ -13,6 +14,7 @@ import test_utils
 from nose.plugins.skip import SkipTest
 
 from devmo.models import UserProfile
+from sumo.urlresolvers import split_path
 
 
 def create_profile():
@@ -115,3 +117,29 @@ def mock_lookup_user():
             u'pending': False,
             u'status': u'ok',
             u'token': u'cdaa9e5d-2023-5f59-974d-83f6a29514ec'}
+
+
+class LocalizingMixin(object):
+    def request(self, **request):
+        """Make a request, but prepend a locale if there isn't one already."""
+        # Fall back to defaults as in the superclass's implementation:
+        path = request.get('PATH_INFO', self.defaults.get('PATH_INFO', '/'))
+        locale, shortened = split_path(path)
+        if not locale:
+            request['PATH_INFO'] = '/%s/%s' % (settings.LANGUAGE_CODE,
+                                               shortened)
+        return super(LocalizingMixin, self).request(**request)
+
+
+class LocalizingClient(LocalizingMixin, Client):
+    """Client which prepends a locale so test requests can get through
+    LocaleURLMiddleware without resulting in a locale-prefix-adding 301.
+
+    Otherwise, we'd have to hard-code locales into our tests everywhere or
+    {mock out reverse() and make LocaleURLMiddleware not fire}.
+
+    """
+
+    # If you use this, you might also find the force_locale=True argument to
+    # sumo.urlresolvers.reverse() handy, in case you need to force locale
+    # prepending in a one-off case or do it outside a mock request.

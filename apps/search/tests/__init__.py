@@ -8,15 +8,18 @@ from pyelasticsearch.exceptions import (Timeout, ConnectionError,
 from rest_framework.test import APIRequestFactory
 from test_utils import TestCase
 
+from devmo.tests import LocalizingMixin
 from search.index import get_index, get_indexing_es
 
 
-factory = APIRequestFactory()
+class LocalizingAPIRequestFactory(LocalizingMixin, APIRequestFactory):
+    pass
+
+factory = LocalizingAPIRequestFactory()
 
 
 class ElasticTestCase(TestCase):
     """Base class for Elastic Search tests, providing some conveniences"""
-    skipme = False
 
     @classmethod
     def setUpClass(cls):
