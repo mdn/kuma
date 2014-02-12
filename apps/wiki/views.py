@@ -24,6 +24,7 @@ except ImportError:
 from django.conf import settings
 from django.db import transaction
 from django.core.exceptions import PermissionDenied, ValidationError
+from django.utils.safestring import mark_safe
 from django.template import RequestContext, loader
 from django.core.cache import cache
 from django.contrib import messages
@@ -406,20 +407,17 @@ def document(request, document_slug, document_locale):
                     else doc.redirect_url())
 
     if redirect_url and redirect_url != doc.get_absolute_url():
-        url = urlparams(redirect_url, query_dict=request.GET,
-                        redirectslug=doc.slug, redirectlocale=doc.locale)
+        url = urlparams(redirect_url, query_dict=request.GET)
+        messages.add_message(request, messages.WARNING,
+            # TODO: Re-enable the link in this message after Django >1.5 upgrade
+            # Redirected from <a href="%(url)s?redirect=no">%(url)s</a>
+            mark_safe(_(u'''
+                Redirected from %(url)s?redirect=no
+            ''') % {
+                "url": request.build_absolute_uri(doc.get_absolute_url())
+            }),
+            extra_tags='wiki_redirect')
         return HttpResponsePermanentRedirect(url)
-
-    # Get "redirected from" doc if we were redirected:
-    redirect_slug = request.GET.get('redirectslug')
-    redirect_locale = request.GET.get('redirectlocale')
-    redirected_from = None
-    if redirect_slug and redirect_locale:
-        try:
-            redirected_from = Document.objects.get(locale=redirect_locale,
-                                                   slug=redirect_slug)
-        except Document.DoesNotExist:
-            pass
 
     # We've got a doc, so now let's enforce the view_document permission
     if not request.user.has_perm('wiki.view_document', doc):
@@ -584,7 +582,6 @@ def document(request, document_slug, document_locale):
     from_search = request.GET.get('search', '')
 
     data = {'document': doc, 'document_html': doc_html, 'toc_html': toc_html,
-            'redirected_from': redirected_from,
             'related': related, 'contributors': contributors,
             'fallback_reason': fallback_reason,
             'kumascript_errors': ks_errors,
