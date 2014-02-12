@@ -19,13 +19,11 @@
       <div class="warning">
         <p>{{ _('Your requested move cannot be completed due to slug conflicts:') }}</p>
 
-        <div class="moveDescendants">
-          <ul>
-          {% for doc in descendants %}
-            <li>{{ doc }}</li>
-          {% endfor %}
-          </ul>
-        </div>
+        <ul class="move-descendants-list">
+        {% for doc in descendants %}
+          <li>{{ doc }}</li>
+        {% endfor %}
+        </ul>
 
         <p>{{ _('Please choose a different slug value.') }}</p>
       </div>
@@ -71,9 +69,14 @@
           </li>
         </ul>
 
+        <ul id="page-buttons">
+          <li><button class="btn-save" type="submit">{{ _('Move {d} Pages')|f(d=descendants_count) if descendants_count else _('Move Page') }}</button></li>
+          <li><a class="btn-discard" href="{{ url('wiki.document', document.full_path, locale=document.locale) }}">Cancel</a></li>
+        </ul>
+
         {% if descendants_count: %}
           <p><strong>{{ _('The following {d} subpages will be affected by this move:')|f(d=descendants_count) }}</strong></p>
-          <div class="moveDescendants"><ul>
+          <div class="move-descendants"><ul class="move-descendants-list">
             {% for doc in descendants %}
               <li>{{ doc }}</li>
             {% endfor %}
@@ -81,11 +84,6 @@
         {% else %}
           <p><strong>{{ _('No other documents will be affected by this change.') }}</strong></p>
         {% endif %}
-
-        <ul id="page-buttons">
-          <li><button class="btn-save" type="submit">{{ _('Move {d} Pages')|f(d=descendants_count) if descendants_count else _('Move Page') }}</button></li>
-          <li><a class="btn-discard" href="{{ url('wiki.document', document.full_path, locale=document.locale) }}">Cancel</a></li>
-        </ul>
 
       </form>
 

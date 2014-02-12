@@ -622,24 +622,30 @@ article.main div.tags input.adder {
 #parentSuggestion  {
   width: 300px;
 }
-.moveDescendants {
-  max-height: 160px;
+
+.move-descendants {
   border: 1px solid #dfe6eb;
   padding: 10px 10px 0 10px;
-  overflow-y: auto;
   background: #eaeff2;
   resize: vertical;
-  width: 50%;
   margin-bottom: 20px;
 }
-.moveDescendants ul {
-  margin-left: 40px;
-  list-style-type: circle;
-}
-.moveDescendants a {
+.move-descendants a {
   display: inline-block;
   margin: 0 0 10px 0;
   font-size: 80%;
+}
+
+.move-page .warning {
+    color: #fff;
+}
+.warning .move-descendants-list {
+    padding: 0 0 20px 20px;
+}
+
+.move-descendants-list {
+    margin-left: 20px;
+    list-style-type: circle;
 }
 
 .move-page #page-buttons {
