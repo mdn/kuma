@@ -288,6 +288,7 @@ article {
 .page-buttons, #page-buttons {
   bidi-value(float, right, left);
   float: right;
+  margin-top: -5px;
 
   text-align: right;
   compat-only(width, auto);
@@ -386,7 +387,7 @@ article {
 /* document warnings, bugs, etc. */
 div.bug, div.warning, div.overheadIndicator {
   prevent-last-child-bottom-spacing();
-  
+
   pre {
     color: text-color;
   }
@@ -553,7 +554,7 @@ div.bug, div.warning, div.overheadIndicator {
     float: none;
     width: auto;
   }
-  
+
   .column-container-reverse {
     margin-left: 0;
   }
@@ -722,14 +723,14 @@ span.cke_skin_kuma {
   color: rgb(153, 153, 153);
 
   i {
-    margin-left: 0; 
+    margin-left: 0;
     margin-right: 4px;
   }
 }
 
 
 /*
-  Small desktop.  We go to a two-column layout 
+  Small desktop.  We go to a two-column layout
 */
 @media media-query-small-desktop {
 
@@ -821,18 +822,18 @@ span.cke_skin_kuma {
     }
 
     td {
-      display: block;  
+      display: block;
       border-bottom: 0;
       border-right: 0;
     }
-    
+
   }
 }
 
 
 /* print styling */
 @media print {
-  
+
   /* hide sections not important to the article */
   #wiki-left, #wiki-right, #wiki-controls, .crumbs, .page-buttons, #page-attachments, .offline-notice, .contributors, .redirected-from, #offline-dialog-content, a.edit-section {
     display: none;
