@@ -1063,6 +1063,15 @@ class CompareRevisionTests(TestCaseBase):
         response = self.client.get(url)
         eq_(404, response.status_code)
 
+    def test_compare_unmatched_document_url(self):
+        """Comparing two revisions of unlinked document should cause error."""
+        unmatched_document = _create_document(title='Invalid document')
+        url = reverse('wiki.compare_revisions', args=[unmatched_document.slug])
+        query = {'from': self.revision1.id, 'to': self.revision2.id}
+        url = urlparams(url, **query)
+        response = self.client.get(url)
+        eq_(404, response.status_code)
+
 
 class TranslateTests(TestCaseBase):
     """Tests for the Translate page"""
