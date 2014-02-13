@@ -56,7 +56,7 @@
               $navItems.css('display', 'none');
               $searchWrap.addClass('expanded');
               $nav.addClass('expand');
-              setTimeout(function() { 
+              setTimeout(function() {
                 $input.attr('placeholder', $input.attr('data-placeholder'));
                 $input.val($input.attr('data-value'));
               }, 100);
@@ -177,14 +177,22 @@
       xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));
     }
   });
-  
 
-  /* 
-    Skip to search is better done with JS because it's sometimes hidden and shown 
+
+  /*
+    Skip to search and is better done with JS because it's sometimes hidden and shown
   */
   $('#skip-search').on('click', function(e) {
     e.preventDefault();
     $('input[name=q]').last().get(0).focus();
+  });
+
+  /*
+  Skip to select language doesn't work in fx without js
+  */
+  $('#skip-language').on('click', function(e) {
+    e.preventDefault();
+    $('#language').get(0).focus();
   });
 
 })(jQuery);
