@@ -6,6 +6,13 @@
 {% block title %}{{ page_title(title) }}{% endblock %}
 {% block bodyclass%}translate{% endblock %}
 
+{% block extrahead %}
+  <meta name="twitter:title" content="Mozilla Developer Network">
+  <meta property="og:title" content="Mozilla Developer Network">
+
+  {{ css('home') }}
+{% endblock %}
+
 {% block site_css %}
     {{ super() }}
     {{ css('jquery-ui') }}

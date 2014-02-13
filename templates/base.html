@@ -24,6 +24,15 @@
     {% endfor %}
   {% endblock %}
 
+  <!-- common social tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="{{ request.build_absolute_uri('/media/redesign/img/opengraph-logo.png') }}">
+  <meta property="og:site_name" content="Mozilla Developer Network">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:image" content="{{ request.build_absolute_uri('/media/redesign/img/opengraph-logo.png') }}">
+  <meta name="twitter:site" content="@mozhacks">
+  <meta name="twitter:creator" content="@mozhacks">
+
   <!--[if IE]><link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/ie.css"><![endif]-->
   <!--[if lte IE 7]><link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/ie7.css"><![endif]-->
   <!--[if lte IE 6]><link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/ie6.css"><![endif]-->
