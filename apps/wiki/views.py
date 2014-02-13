@@ -1230,6 +1230,7 @@ def move(request, document_slug, document_locale):
         Document, locale=document_locale, slug=document_slug)
 
     descendants = doc.get_descendants()
+    slug_split = _split_slug(doc.slug)
 
     if request.method == 'POST':
         form = TreeMoveForm(initial=request.GET, data=request.POST)
@@ -1260,6 +1261,7 @@ def move(request, document_slug, document_locale):
         'descendants':  descendants,
         'descendants_count': len(descendants),
         'SLUG_CLEANSING_REGEX': SLUG_CLEANSING_REGEX,
+        'specific_slug': slug_split['specific']
     })
 
 

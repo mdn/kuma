@@ -1,11 +1,11 @@
 (function($) {
      // Retrieve request and move information
-     var $moveSlug = $('#moveSlug'),
-         $suggestionInput = $('#parentSuggestion'),
-         $suggestionContainer= $('.parentSuggestContainer'),
-         $lookupLink = $('.moveLookupLink'),
-         specific_slug = $('#currentSlug').val(),
-         moveLocale = $('#moveLocale').val(),
+     var $moveSlug = $('#move-slug'),
+         $suggestionInput = $('#parent-suggestion'),
+         $suggestionContainer= $('.parent-suggest-container'),
+         $lookupLink = $('.move-lookup-link'),
+         specific_slug = $('#current-slug').val(),
+         moveLocale = $('#locale').val(),
          onHide = function() {
              $suggestionContainer.removeClass('show');
              $moveSlug[0].focus();

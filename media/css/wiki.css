@@ -559,15 +559,15 @@ article.main div.tags input.adder {
   width: 400px;
 }
 
-.parentSuggestContainer {
+.parent-suggest-container {
   position: relative;
 }
 
-  .parentSuggestContainer.show .moveLookupLink {
+  .parent-suggest-container.show .move-lookup-link {
     display: none;
   }
 
-  .parentSuggestContainer.show #parentSuggestionInputContainer {
+  .parent-suggest-container.show #parent-suggest-input-container {
     display: block;
     opacity: 1;
     top: -22px;
@@ -580,12 +580,12 @@ article.main div.tags input.adder {
     -moz-transition-duration: .4s;
   }
 
-.moveLookupLink {
+.move-lookup-link {
   display: inline-block; 
   margin-left: 40px; 
   font-size: 0.8em;
 }
-#parentSuggestionInputContainer {
+#parent-suggest-input-container {
   padding: 10px;
   background: #eaeff2;
   background: linear-gradient(top, #eaeff2, #d4dde4);
@@ -599,7 +599,7 @@ article.main div.tags input.adder {
   top: -10px;
   left: -90000px;
 }
-#parentSuggestionInputContainer:before {
+#parent-suggest-input-container:before {
   position: absolute;
   display: inline-block;
   border-top: 7px solid transparent;
@@ -609,7 +609,7 @@ article.main div.tags input.adder {
   top: 20px;
   content: '';
 }
-#parentSuggestionInputContainer:after {
+#parent-suggest-input-container:after {
   position: absolute;
   display: inline-block;
   border-top: 6px solid transparent;
@@ -619,7 +619,7 @@ article.main div.tags input.adder {
   top: 21px;
   content: '';
 }
-#parentSuggestion  {
+#parent-suggestion  {
   width: 300px;
 }
 .moveDescendants {
