@@ -110,10 +110,12 @@ component-submenu-method(menu-width, num-columns, background-color, arrow-border
     border-right: 1px dotted #d4dde4;
     width: col-width;
 
-    &.last {
+    &.last, &:only-child {
       margin-right: 0;
       border-right: 0;
       padding-right: 0;
+      width: auto;
+      float: none;
     }
   }
   
