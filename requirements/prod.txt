@@ -1,8 +1,8 @@
 Django==1.4.9
 
 ## Formerly vendor/python/lib
-django-picklefield==0.1.9
-django-taggit==0.9.3
+django_picklefield==0.1.9
+django_taggit==0.9.3
 pytz==2011h
 httplib2==0.7.3
 South==0.8.2
@@ -12,29 +12,30 @@ Babel==0.9.6
 GitPython==0.1.7
 amqplib==0.6.1
 anyjson==0.3.1
-beautifulsoup==3.2.1
+BeautifulSoup==3.2.1
 billiard==0.3.1
 carrot==0.10.7
 celery==2.5.5
-django-celery==2.5.5
-django-threadedcomments==0.5.2
+django_celery==2.5.5
+django_threadedcomments==0.5.2
 feedparser==4.1
 html5lib==0.90
 jsonpickle==0.3.1
 kombu==2.2.0
 lockfile==0.8
-logilab-astng==0.20.1
-logilab-common==0.50.3
+logilab_astng==0.20.1
+logilab_common==0.50.3
 ordereddict==1.1
 pyes==0.16.0
 pyflakes==0.4.0
 pyparsing==1.5.5
-python-dateutil==1.5
-recaptcha-client==1.0.6
+python_dateutil==1.5
+django_registration==1.0
+recaptcha_client==1.0.6
 six==1.3.0
-sqlalchemy==0.6.4
-django-pylibmc
-django-constance==0.6
+SQLAlchemy==0.6.4
+django_pylibmc
+django_constance==0.6
 
 ## Forked, temporary or otherwise
 # 2012-08-02
@@ -52,31 +53,31 @@ django-constance==0.6
 -e git://github.com/mozilla/django-badger.git@1a41701179df11df8ca8ca44898b70b6352623d3#egg=django-badger
 
 ## Formerly vendor/src - converted to versions from git refs
-python-magic==0.4.6
+python_magic==0.4.6
 # -e git://github.com/jsocol/commonware.git@b5544185b2d24adc1eb512735990752400ce9cbd#egg=commonware
 commonware==0.4.2 
 # -e git://github.com/jsocol/django-authority@543c39a889444488de2b16be72da61b1845b9141#egg=django-authority
-django-authority==0.4
+django_authority==0.4
 # -e git://github.com/jsocol/django-cronjobs.git@fa411be81d26619c973ec281c5cce2ce5219bd9c#egg=django-cronjobs
-django-cronjobs==0.1
+django_cronjobs==0.1
 # -e git://github.com/brosner/django-timezones.git@adf2fb3dcb353733bc8f8742388e2e34f17e3d70#egg=django-timezones
-django-timezones==0.2
+django_timezones==0.2
 # -e git://github.com/kennethreitz/requests.git@1a7c91f6581c80122ed8cd1fdf4a8ca38c842453#egg=requests
 requests==1.1.0
 # -e git://github.com/andymckay/django-statsd.git@d77e1c60ae07d9a253e084f11969c2803f1800d3#egg=django-statsd
-django-statsd-mozilla==0.3.8.5
+django_statsd_mozilla==0.3.8.5
 # -e git://github.com/rhec/pyelasticsearch.git@0fdecc5317a9e1a443cb1f6eaaa2db32900181fd#egg=pyelasticsearch
 pyelasticsearch==0.6.1
 # -e git://github.com/erikrose/django-tidings.git@6ee3ac5069dfa76cd85b8fb43def72919731b05e#egg=django-tidings
-django-tidings==0.4
+django_tidings==0.4
 # -e git://github.com/getsentry/raven-python.git@edd9b1f4fb0ca85b09c1859a228c54f18d6e7d95#egg=raven-python
 raven==3.3.12
 # -e git+https://github.com/sehmaschine/django-grappelli.git@95558ba99f656ba9bd0736e93317b280c05f4237#egg=django-grappelli
-django-grappelli==2.4.5
+django_grappelli==2.4.5
 # -e git+https://github.com/tomchristie/django-rest-framework.git@195790e60b117eff421eb8f04a9f9f3527e797b8#egg=django-rest-framework
 djangorestframework==2.3.8
 # -e git+https://github.com/jezdez/django-memcached-hashring.git@e66d2cd9255cb802428872360b7fc7071496c063#egg=django-memcached-hashring
-django-memcached-hashring==0.1.2
+django_memcached_hashring==0.1.2
 # -e git+https://github.com/Doist/hash_ring.git@40e7a260eea6387bfa5855457ee85b7939ce6ab8#egg=hash_ring
 hash_ring==1.3.1
 
