@@ -83,6 +83,9 @@
                 {% if user.is_superuser %}
                   <li><a href="{{ url('admin:wiki_document_change', document.id) }}">{{ _('View in admin') }}</a></li>
                 {% endif %}
+                {% if user.has_perm('wiki.delete_document') %}
+                  <li><a href="{{ url('wiki.delete_document', document.slug) }}">{{ _('Delete this page') }}</a></li>
+                {% endif %}
 
                 {% set policy_links = build_policy_admin_links(request.user, document) %}
                 {% if policy_links['change_one'] %}
