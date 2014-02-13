@@ -9,4 +9,4 @@ A new revision has been approved for the document
 To view the updated document, click the following
 link, or paste it into your browser's location bar:
 {% endtrans %}
-https://{{ host }}{{ url }}{% endautoescape %}
+https://{{ host }}{{ item_url }}{% endautoescape %}

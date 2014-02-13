@@ -4,7 +4,8 @@ from functools import wraps
 
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
-from django.utils import translation
+from django.template.defaultfilters import linebreaks, slugify
+from django.utils import translation, html
 
 import jingo
 import tower
@@ -96,7 +97,6 @@ def render_email(template, context):
 
 def emails_with_users_and_watches(subject,
                                   text_template,
-                                  html_template,
                                   context_vars,
                                   users_and_watches,
                                   from_email=settings.TIDINGS_FROM_ADDRESS,
@@ -116,13 +116,11 @@ def emails_with_users_and_watches(subject,
 
     :arg subject: lazy gettext subject string
     :arg text_template: path to text template file
-    :arg html_template: path to html template file
     :arg context_vars: a map which becomes the Context passed in to the
         template and the subject string
     :arg from_email: the from email address
     :arg default_local: the local to default to if not user.profile.locale
     :arg extra_kwargs: additional kwargs to pass into EmailMessage constructor
-
     :returns: generator of EmailMessage objects
 
     """
@@ -131,18 +129,21 @@ def emails_with_users_and_watches(subject,
         context_vars['user'] = user
         context_vars['watch'] = watch[0]
         context_vars['watches'] = watch
+        context_vars['subject'] = subject.format(**context_vars)
 
+        text_content = render_email(text_template, context_vars)
         msg = EmailMultiAlternatives(
             subject.format(**context_vars),
-            render_email(text_template, context_vars),
+            text_content,
             from_email,
             [user.email],
             **extra_kwargs)
 
-        if html_template:
-            msg.attach_alternative(
-                render_email(html_template, context_vars), 'text/html')
-
+        context_vars.update({
+            'text_content': linebreaks(html.escape(text_content)),
+            })
+        html_content = render_email('wiki/email/base.html', context_vars)
+        msg.attach_alternative(html_content, 'text/html')
         return msg
 
     for u, w in users_and_watches:

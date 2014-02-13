@@ -33,4 +33,4 @@ Message from the reviewer:
 To view the history of this document, click the following
 link, or paste it into your browser's location bar:
 {% endtrans %}
-https://{{ host }}{{ url }}{% endautoescape %}
+https://{{ host }}{{ item_url }}{% endautoescape %}
