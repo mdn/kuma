@@ -2049,12 +2049,18 @@ def delete_revision(request, document_path, revision_id):
 def delete_document(request, document_slug, document_locale):
     """
     Delete a Document.
-    
+
     """
     document = get_object_or_404(
         Document,
         locale=document_locale,
         slug=document_slug)
+
+    # HACK: https://bugzil.la/972545 - Don't delete pages that have children
+    # TODO: https://bugzil.la/972541 -  Deleting a page that has subpages
+    prevent = False
+    if document.has_children():
+        prevent = True
 
     first_revision = document.revisions.all()[0]
 
@@ -2073,10 +2079,10 @@ def delete_document(request, document_slug, document_locale):
         form = DocumentDeletionForm()
     return render(request,
                   'wiki/confirm_document_delete.html',
-                  {'document': document, 'form': form, 'request': request, 
-                  'revision': first_revision})
+                  {'document': document, 'form': form, 'request': request,
+                   'revision': first_revision, 'prevent' : prevent})
 
-        
+
 @login_required
 @permission_required('wiki.restore_document')
 @check_readonly

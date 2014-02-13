@@ -5,13 +5,18 @@
 
   <article class="delete-document">
 
+    {% if prevent %}
+        <p class="warning">{{ _('Cannot delete pages with children until we fix this bug:') }} <a target="_blank" href="https://bugzilla.mozilla.org/show_bug.cgi?id=972541">https://bugzilla.mozilla.org/show_bug.cgi?id=972541</a>
+        </p>
+    {% else %}
+
     {{ build_document_crumbs(document) }}
 
     <h1>{{ _('Delete') }} <a href="{{ url('wiki.document', document.full_path, locale=document.locale) }}">{{ _('{title}')|fe(title=document.title) }}</a></h1>
 
     <strong>{{ _('Creator') }}</strong>
     <p><a href="{{ url('devmo.views.profile_view', username=revision.creator) }}">{{ revision.creator }}</a></p>
-    
+
     <strong>{{ _('Creation Date') }}</strong>
     <p>{{ datetimeformat(revision.created, format='longdatetime') }}</p>
 
@@ -28,6 +33,8 @@
       <a href="{{ url('wiki.document', document.slug) }}">{{ _('Cancel') }}</a>
 
     </form>
+
+    {% endif %}
   </article>
 
 {% endblock %}
