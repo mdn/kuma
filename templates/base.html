@@ -1,13 +1,13 @@
 {% from "includes/common_macros.html" import optimizely_script with context %}
 <!DOCTYPE html>
-<html lang="{{ LANG }}" dir="{{ DIR }}" id="developer-mozilla-org" class="redesign">
+<html lang="{{ LANG }}" dir="{{ DIR }}" id="developer-mozilla-org" class="redesign no-js">
 <head prefix="og: http://ogp.me/ns#">
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <script>(function(d) { d.className = d.className.replace(/\bno-js/, ''); })(document.documentElement);</script>
   {% if not is_sphinx %}
     {{ optimizely_script() }}
   {% endif %}
-
   <title>{% block title %}{{ _('Mozilla Developer Network') }}{% endblock %}</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -166,11 +166,6 @@
       </div>
     </div>
   </div></footer>
-
-  <!-- placing at the bottom to avoid collision with Facebook OpenGraph -->
-  <noscript>
-    <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}redesign/css/noscript.css">
-  </noscript>
 
   <!-- site js -->
   <script src="{{ url('jsi18n') }}build:{{ BUILD_ID_JS }}"></script>

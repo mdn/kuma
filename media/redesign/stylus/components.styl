@@ -32,7 +32,11 @@
   }
 
   ol ol {
-    requires-javascript(display, none); /* prevents flash of unstyled content */
+    display: none; /* prevents flash of unstyled content */
+
+    .no-js & {
+      display: block;
+    }
   }
 
   .toggleable.current, > ol > li.current {

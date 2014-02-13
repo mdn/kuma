@@ -225,11 +225,6 @@ bidi-value(prop, ltr, rtl, make-important = false) {
   bidi-style(prop, ltr, prop, rtl, make-important);
 }
 
-/* Symbolic, simply notes that the style requires that JS is present :( */
-requires-javascript(prop, value) {
-  {prop}: value;
-}
-
 
 /*
   MIXINS LIKE CLASSES

@@ -7,7 +7,11 @@
     }
 
     .newsletter-setting {
-        display: none; /* Avoid FOUC. Overridden in noscript.styl. */
+        display: none; /* Prevents flash of content */
         padding-left: grid-spacing;
+
+        .no-js & {
+        	display: block;
+        }
     }
 }
