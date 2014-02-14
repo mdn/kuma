@@ -911,6 +911,7 @@ class Document(NotificationsMixin, models.Model):
         if self.pk:
             for translation in self.other_translations:
                 translations.append({
+                    'last_edit': translation.current_revision.created.isoformat(),
                     'locale': translation.locale,
                     'title': translation.title,
                     'url': reverse('wiki.document',
