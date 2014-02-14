@@ -195,4 +195,13 @@
     $('#language').get(0).focus();
   });
 
+  /*
+    Create advanced and language menus
+  */
+  (function() {
+    var $menus = $('#advanced-menu, #languages-menu');
+    $menus.mozMenu();
+    $menus.parent().find('.submenu').mozKeyboardNav();
+  })();
+
 })(jQuery);

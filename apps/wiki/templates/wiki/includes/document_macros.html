@@ -51,12 +51,12 @@
               {% endif %}
             </ul>
           </div>
-        </div></li>{% endif %}<li><a href="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}" class="button {{ disabled_class }}" {{ disabled_attr }}>{{ _('Edit') }}<i aria-hidden="true" class="icon-pencil"></i></a></li><li><a href="javascript:;" id="settings-menu" class="button only-icon" {{ disabled_attr }} aria-haspopup="true" aria-owns="settings-menu-submenu" aria-expanded="false"><span>{{ _('Settings') }}</span><i aria-hidden="true" class="icon-cog"></i></a>
+        </div></li>{% endif %}<li><a href="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}" class="button {{ disabled_class }}" {{ disabled_attr }}>{{ _('Edit') }}<i aria-hidden="true" class="icon-pencil"></i></a></li><li><a href="javascript:;" id="advanced-menu" class="button only-icon" {{ disabled_attr }} aria-haspopup="true" aria-owns="advanced-menu-submenu" aria-expanded="false"><span>{{ _('Advanced') }}</span><i aria-hidden="true" class="icon-cog"></i></a>
 
-        <div class="submenu" id="settings-menu-submenu">
+        <div class="submenu" id="advanced-menu-submenu">
           <!-- this page -->
           <div class="submenu-column">
-            <div class="title">{{ _('This Page') }}</div>
+            <div class="title">{{ _('Advanced') }}</div>
             <ul>
                 <li><a href="{{ url('wiki.document_revisions', document.full_path) }}">{{_('History')}}</a></li>
                 {% if user.is_authenticated() and document %}
