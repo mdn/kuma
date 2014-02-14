@@ -27,7 +27,11 @@ enable-toc-toggle() {
     }
 
     .toggle-container {
-      requires-javascript(display, none);
+      display: none;
+
+      .no-js & {
+        display: block;
+      }
     }
   }
 }
@@ -89,7 +93,11 @@ enable-toc-toggle() {
   }
 
   ul ul { /* hides submenus by default */
-    requires-javascript(display, none);
+    display: none;
+
+    .no-js & {
+      display: block;
+    }
   }
 }
 
