@@ -131,7 +131,7 @@ CKEDITOR.editorConfig = function(config) {
   config.dialog_backgroundCoverColor = 'black';
   config.dialog_backgroundCoverOpacity = 0.3;
   config.docType = '<!DOCTYPE html>';
-  config.bodyClass = 'page-content text-content redesign';
+  config.bodyClass = 'text-content redesign';
 
   if(!CKEDITOR.stylesSet.registered['default']) {
           CKEDITOR.stylesSet.add('default', [
