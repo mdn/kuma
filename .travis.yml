@@ -1,7 +1,7 @@
 language: python
 
 python:
-    - "2.7"
+    - "2.6"
 
 env: FORCE_DB=1 PYTHONPATH=. DJANGO_SETTINGS_MODULE=settings_travis
 
@@ -12,21 +12,18 @@ services:
 
 before_install:
     - sudo apt-get update -qq
-    - sudo apt-get install build-essential axel python-dev python-virtualenv libxml2-dev libxslt-dev libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev zlib1g-dev sqlite3 libtidy-dev python-mysqldb python-jinja2 python-imaging python-lxml python-coverage python-pylibmc python-pyquery
+    - sudo apt-get install build-essential axel python-dev libxml2-dev libxslt-dev libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev zlib1g-dev sqlite3 libtidy-dev
     - sudo ln -s /usr/lib/`uname -i`-linux-gnu/libfreetype.so /usr/lib
     - sudo ln -s /usr/lib/`uname -i`-linux-gnu/libz.so /usr/lib
-    - axel -a http://people.mozilla.org/~lorchard/kuma/wheels-prod.tar.gz
-    - axel -a http://people.mozilla.org/~lorchard/kuma/wheels-dev.tar.gz
-    - axel -a http://people.mozilla.org/~lorchard/kuma/product_details_json.tar.gz
-    - tar -zxf wheels-prod.tar.gz
-    - tar -zxf wheels-dev.tar.gz
+    - axel -a https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/wheels.tar.gz
+    - tar -zxf wheels.tar.gz
+    - axel -a https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/product_details_json.tar.gz
     - tar -C .. -zxf product_details_json.tar.gz
 
 install:
     - pip install -U pip wheel
     - pip install -r requirements/compiled.txt
-    - pip install --no-index --find-links=wheels-prod -r requirements/prod.txt
-    - pip install --no-index --find-links=wheels-dev -r requirements/dev.txt
+    - pip install --no-index --find-links=wheels -r requirements/prod.txt -r requirements/dev.txt
 
 before_script:
     - mysql -e 'create database kuma;'
@@ -35,8 +32,6 @@ script:
     - python manage.py test --noinput -v2 actioncounters contentflagging dashboards demos devmo kpi landing search users wiki
 
 notifications:
-    email:
-        - mdndev@mozilla.com
     irc:
         channels:
             - "irc.mozilla.org#mdndev"
