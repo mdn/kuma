@@ -117,9 +117,10 @@
 
           <article class="localized">
             <header>
+              {% include 'wiki/includes/guide_links.html' %}
               <h3>{{ _('{locale} translation:')|f(locale=language) }}</h3>
             </header>
-            <div class="ckeditor-container">
+            <div class="ckeditor-container editor-container">
               {{ content_editor(revision_form.content) }}
             </div>
           </article>
