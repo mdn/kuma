@@ -127,11 +127,13 @@
         </header>
 
         {% if revision_form %}
+            {% include 'wiki/includes/guide_links.html' %}
+            
             {% if document.is_template %}
               {{ revision_form.content | safe }}
-              <div id="ace_content"></div>
+              <div id="ace_content" class="editor-container"></div>
             {% else %}
-              <div class="ckeditor-container">{{ revision_form.content | safe }}</div>
+              <div class="ckeditor-container editor-container">{{ revision_form.content | safe }}</div>
             {% endif %}
 
             <input type="hidden" name="form" value="rev" />

@@ -47,11 +47,13 @@
 
       </header>
 
+      {% include 'wiki/includes/guide_links.html' %}
+
       {% if is_template %}
         {{ revision_form.content|safe }}
-        <div id="ace_content"></div>
+        <div id="ace_content" class="editor-container"></div>
       {% else %}
-        <div class="ckeditor-container">
+        <div class="ckeditor-container editor-container">
           {{ revision_form.content|safe }}
         </div>
       {% endif %}
