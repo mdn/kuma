@@ -52,17 +52,17 @@
           </li>
           <li>
             <dl>
-              <dt><label for="moveSlug">{{ _('New Slug:') }}</label> </dt>
+              <dt><label for="move-slug">{{ _('New Slug:') }}</label> </dt>
               <dd>
-                <input type="text" name="slug" id="moveSlug" value="" required="required" data-validator="{{ SLUG_CLEANSING_REGEX }}" />
-                <input type="hidden" value="{{ document.slug }}" id="currentSlug" />
+                <input type="text" name="slug" id="move-slug" value="" required="required" data-validator="{{ SLUG_CLEANSING_REGEX }}" />
+                <input type="hidden" value="{{ specific_slug }}" id="current-slug" />
                 <input type="hidden" value="{{ document.locale }}" id="locale" name="locale"/>
               </dd>
-              <dd class="parentSuggestContainer">
-                <a href="javascript:;" class="moveLookupLink">{{ _('Lookup by Document Title') }}</a>
+              <dd class="parent-suggest-container">
+                <a href="javascript:;" class="move-lookup-link">{{ _('Lookup by Document Title') }}</a>
 
-                <div id="parentSuggestionInputContainer">
-                    <input type="text" placeholder="{{ _('Parent Title') }}" id="parentSuggestion" disabled />
+                <div id="parent-suggest-input-container">
+                    <input type="text" placeholder="{{ _('Parent Title') }}" id="parent-suggestion" disabled />
                 </div>
               </dd>
             </dl>
