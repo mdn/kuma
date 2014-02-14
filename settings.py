@@ -550,6 +550,9 @@ MINIFY_BUNDLES = {
             'css/fonts.css',
             'css/mdn-screen.css',
             'css/redesign-transition.css',
+            'css/libs/font-awesome/css/font-awesome.css',
+            'redesign/css/main.css',
+            'redesign/css/badges.css',
         ),
         'jquery-ui': (
             'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
@@ -573,6 +576,9 @@ MINIFY_BUNDLES = {
         'wiki': (
             'css/wiki.css',
             'css/wiki-screen.css',
+            'redesign/css/wiki.css',
+            'redesign/css/zones.css',
+            'redesign/css/diff.css',
         ),
         'sphinx': (
             'redesign/css/wiki.css',
@@ -602,16 +608,6 @@ MINIFY_BUNDLES = {
         ),
         'promote': (
             'redesign/css/promote.css',
-        ),
-        'redesign-main': (
-            'css/libs/font-awesome/css/font-awesome.css',
-            'redesign/css/main.css',
-            'redesign/css/badges.css',
-        ),
-        'redesign-wiki': (
-            'redesign/css/wiki.css',
-            'redesign/css/zones.css',
-            'redesign/css/diff.css',
         ),
         'error': (
             'redesign/css/error.css',

@@ -3,8 +3,7 @@
 
 {% block site_css %}
     {{ super() }}
-    {{ css('redesign-wiki', 'all') }}
-    
+
     {% if config.KUMA_CUSTOM_CSS_PATH %}
       <link rel="stylesheet" type="text/css"
             href="{{ config.KUMA_CUSTOM_CSS_PATH }}?raw=1" />
