@@ -138,56 +138,62 @@
     {% endif %}
 
       {% if wiki_activity and wiki_activity | length > 0 %}
+        <section id="docs-activity" class="profile-section">
+          <header>
+            <h2>{{_("Recent Docs Activity")}}</h2>
+          </header>
+          {% if not profile.user == request.user %}
+            {% trans
+            docs_url=devmo_url('Project:MDN/Contributing/Creating_and_editing_pages') %}
+            <p id="help-edit">You can help, too! Improve MDN documentation by <a href="{{docs_url}}">creating and editing pages</a>.</p>
+            {% endtrans %}
+          {% endif %}
+          <table class="activity">
+            <thead>
+              <th scope="col" class="page">{{_("Page")}}</th>
+              <th scope="col" class="date">{{_("Date")}}</th>
+              <th scope="col" class="summary">{{_("Comment")}}</th>
+            </thead>
+            <tbody>
+              {% for rev in wiki_activity %}
+              <tr>
+                <th scope="row">
+                    <h3><a href="{{ rev.document.get_absolute_url() }}">{{ rev.document.title }}</a></h3>
+                    <ul class="actions">
+                        <li><a href="{{ rev.document.get_absolute_url() }}$edit" class="edit">{{_("Edit page")}}</a></li>
+                        <li>{% if rev.get_previous() %}<a href="{{ rev.document.get_absolute_url() }}$compare?from={{ rev.get_previous().id }}&to={{ rev.id }}" class="diff">{{_("View complete diff")}}</a>{% endif %}</li>
+                        <li><a href="{{ rev.document.get_absolute_url() }}$history" class="history">{{_("View page history")}}</a></li>
+                    </ul>
+                </th>
+                <td>{{ rev.created.strftime('%B %d, %Y') }}<br />
+                    {{ rev.created.strftime('%I:%M %p') }}</td>
+                {# TODO: auto-generate smart comment like "N words changed." #}
+                <td>{{ format_comment(rev) }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+            <tfoot>
+                    {# TODO: create user revision activity feed
+              <tr>
+                <td colspan="3">
+                    <a href="/index.php?title=Special:Contributions&feed=rss&target={{profile.user.username | urlencode}}" rel="alternate" class="feed">{{_("Feed")}}</a>
+                </td>
+              </tr>
+                    #}
+            </tfoot>
+          </table>
+        </section>
+      {% else %}
+        {% if profile.user == request.user %}
           <section id="docs-activity" class="profile-section">
             <header>
               <h2>{{_("Recent Docs Activity")}}</h2>
             </header>
-            <table class="activity">
-              <thead>
-                <th scope="col" class="page">{{_("Page")}}</th>
-                <th scope="col" class="date">{{_("Date")}}</th>
-                <th scope="col" class="summary">{{_("Comment")}}</th>
-              </thead>
-              <tbody>
-                {% for rev in wiki_activity %}
-                <tr>
-                  <th scope="row">
-                      <h3><a href="{{ rev.document.get_absolute_url() }}">{{ rev.document.title }}</a></h3>
-                      <ul class="actions">
-                          <li><a href="{{ rev.document.get_absolute_url() }}$edit" class="edit">{{_("Edit page")}}</a></li>
-                          <li>{% if rev.get_previous() %}<a href="{{ rev.document.get_absolute_url() }}$compare?from={{ rev.get_previous().id }}&to={{ rev.id }}" class="diff">{{_("View complete diff")}}</a>{% endif %}</li>
-                          <li><a href="{{ rev.document.get_absolute_url() }}$history" class="history">{{_("View page history")}}</a></li>
-                      </ul>
-                  </th>
-                  <td>{{ rev.created.strftime('%B %d, %Y') }}<br />
-                      {{ rev.created.strftime('%I:%M %p') }}</td>
-                  {# TODO: auto-generate smart comment like "N words changed." #}
-                  <td>{{ format_comment(rev) }}</td>
-                </tr>
-                {% endfor %}
-              </tbody>
-              <tfoot>
-                      {# TODO: create user revision activity feed
-                <tr>
-                  <td colspan="3">
-                      <a href="/index.php?title=Special:Contributions&feed=rss&target={{profile.user.username | urlencode}}" rel="alternate" class="feed">{{_("Feed")}}</a>
-                  </td>
-                </tr>
-                      #}
-              </tfoot>
-            </table>
-          </section>
-      {% else %}
-        <section id="docs-activity" class="profile-section">
-          <header>
-            <h2>{{_('Recent Docs Activity')}}</h2>
-          </header>
-          {% if profile.user == request.user %}
             {% trans docs_url=devmo_url('Project:MDN/Contributing/Creating_and_editing_pages') %}
             <p class="none">You haven't contributed to any MDN docs. <a href="{{docs_url}}">Pitch in!</a></p>
             {% endtrans %}
-          {% endif %}
-        </section>
+          </section>
+        {% endif %}
       {% endif %}
 
   </section><!-- /#content-main -->
