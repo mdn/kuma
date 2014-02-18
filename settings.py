@@ -634,7 +634,7 @@ MINIFY_BUNDLES = {
     },
     'js': {
         'redesign-main': (
-            'js/libs/jquery-1.9.1.js',
+            'js/libs/jquery-2.1.0.js',
             'js/jquery-upgrade-compat.js',
             'redesign/js/components.js',
             'redesign/js/main.js',
@@ -645,7 +645,7 @@ MINIFY_BUNDLES = {
             'redesign/js/home.js'
         ),
         'popup': (
-            'js/libs/jquery-1.9.1.js',
+            'js/libs/jquery-2.1.0.js',
             'js/jquery-upgrade-compat.js',
             'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
             'js/modal-control.js',
