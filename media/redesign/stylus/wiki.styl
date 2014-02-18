@@ -78,6 +78,10 @@ enable-toc-toggle() {
   position: relative;
   margin-bottom: grid-spacing;
 
+  a {
+    color: text-color;
+  }
+
   .title {
     margin-bottom: 0;
     display: inline-block;
@@ -101,7 +105,7 @@ enable-toc-toggle() {
   }
 }
 
-.quick-links a, .quick-links .title, #quick-links-toggle {
+.quick-links li.toggleable a, .quick-links .title, #quick-links-toggle {
   bidi-style(padding-left, 20px, padding-right, 0);
   color: text-color;
   display: inline-block;
@@ -748,13 +752,13 @@ span.cke_skin_kuma {
 
 /* Page deletion styles */
 .delete-document {
-  textarea { 
-    width: 500px; 
-    max-width: 100%; 
+  textarea {
+    width: 500px;
+    max-width: 100%;
     margin-bottom: grid-spacing;
   }
-  label { 
-    display: block; 
+  label {
+    display: block;
   }
 }
 
