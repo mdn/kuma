@@ -107,28 +107,12 @@ beta-spacing = (grid-spacing * 2.5);
   }
 }
 
+/* profile editing */
 #profile-edit {
-    #field_beta {
-        @extend $checkbox-label-container;
-    }
-
+    padding-left: 0;
     .section li > input[type="text"], select, textarea, #tagit-interests, #tags-expertise {
         vendorize(box-sizing, border-box);
         width: 100%;
-    }
-
-    #field_beta {
-        height: beta-spacing;
-        margin-bottom: 0;
-    }
-    #apps-newsletter-subscribe {
-        margin-top: beta-spacing;
-        @media media-query-mobile {
-            & + .fm-submit {
-                display: none;
-            }
-            margin-top: 0;
-        }
     }
 }
 
@@ -139,7 +123,26 @@ beta-spacing = (grid-spacing * 2.5);
     }
 }
 
+/* Profile edit newsletter */
+.profile-newsletter-container {
+  background: #f4f7f8;
+  padding: grid-spacing;
+  overflow: hidden;
 
+  .fm-submit {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  select {
+    width: 80%;
+  }
+}
+#field_beta {
+    @extend $checkbox-label-container;
+}
+
+/* For tablet and lower, move the profile buttons below the user name */
 @media media-query-tablet {
   #profile-head {
     .edit {
@@ -157,4 +160,12 @@ beta-spacing = (grid-spacing * 2.5);
     }
   }
 
+  .profile-newsletter-container {
+    padding-bottom: 0;
+    margin-bottom: (grid-spacing * 1.5);
+
+    .fm-submit {
+      display: none;
+    }
+  }
 }
