@@ -109,7 +109,7 @@ class Command(BaseCommand):
         if self.options['defer']:
             logging.info(u"Queuing deferred render for %s (%s)" %
                           (doc, doc.get_absolute_url()))
-            render_document.delay(doc, cc, self.base_url)
+            render_document.delay(doc.pk, cc, self.base_url)
             logging.debug(u"Queued.")
 
         else:

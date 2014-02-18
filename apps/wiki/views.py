@@ -1980,6 +1980,7 @@ def helpful_vote(request, document_slug, document_locale):
 
 @login_required
 @check_readonly
+@transaction.autocommit
 def revert_document(request, document_path, revision_id):
     """Revert document to a specific revision."""
     document_locale, document_slug, needs_redirect = (Document

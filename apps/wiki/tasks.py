@@ -109,9 +109,10 @@ def _rebuild_kb_chunk(data, **kwargs):
 
 
 @task(rate_limit='10/m')
-def render_document(doc, cache_control, base_url):
+def render_document(pk, cache_control, base_url):
     """Simple task wrapper for the render() method of the Document model"""
-    doc.render(cache_control, base_url)
+    document = Document.objects.get(pk=pk)
+    document.render(cache_control, base_url)
 
 
 @task
