@@ -539,4 +539,4 @@ class TreeMoveForm(forms.Form):
 
 
 class DocumentDeletionForm(forms.Form):
-    reason = forms.CharField(widget=forms.Textarea)
+    reason = forms.CharField(widget=forms.Textarea(attrs={'autofocus': 'true'}))
