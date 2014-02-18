@@ -10,7 +10,6 @@
 
 {% block extrahead %}
     <meta property="og:title" content="{{ submission.title }}"/>
-    <meta property="og:type" content="website"/>
     <meta property="og:image" content="{{ screenshot }}"/>    
     <meta property="og:site_name" content="{{ page_title(_('Demo Studio')) }}"/>
     <meta property="og:description" content="{{ submission.summary }}"/>
@@ -18,10 +17,7 @@
 
     <meta name="twitter:title" content="{{ submission.title }}" />
     <meta name="twitter:image" content="{{ screenshot }}" />
-    <meta name="twitter:card" content="summary" />
     <meta name="twitter:url" content="{{ full_url }}" />
-    <meta name="twitter:site" content="@mozhacks" />
-    <meta name="twitter:creator" content="@mozhacks" />
     <meta name="twitter:description" content="{{ submission.summary }}" />
 {% endblock %}
 
