@@ -1,5 +1,5 @@
 {% import 'badger/includes/macros.html' as macros %}
-<ul class="awards cf">
+<ul class="awards clear">
     {% for award in award_list %}
         <li class="award">
             <a href="{{ award.get_absolute_url() }}" class="award_image">{{ macros.badge_image(badge, MEDIA_URL) }}</a>
