@@ -79,6 +79,8 @@ djangorestframework==2.3.8
 django-memcached-hashring==0.1.2
 # -e git+https://github.com/Doist/hash_ring.git@40e7a260eea6387bfa5855457ee85b7939ce6ab8#egg=hash_ring
 hash_ring==1.3.1
+# -e git://github.com/praekelt/django-recaptcha.git@bbb40d4e5f9ec463ac9015450b87d2f073a0315b#egg=django-recaptcha
+django-recaptcha==0.0.9
 
 ## Formerly vendor/src - arbitrary commits not matched to versions
 # 2011-12-29
@@ -113,8 +115,6 @@ hash_ring==1.3.1
 -e git://github.com/semente/django-smuggler.git@f2ca1ca3e1e092b0fb426558b124a1f2b6eed23b#egg=smuggler
 # 2011-08-24
 -e git://github.com/mozilla/funfactory.git@19b0cc4fd64f8e8f468876951bfe5350caca10d9#egg=funfactory
-# 2011-08-10
--e git://github.com/praekelt/django-recaptcha.git@bbb40d4e5f9ec463ac9015450b87d2f073a0315b#egg=django-recaptcha
 # 2012-01-26
 -e git://github.com/mozilla/nuggets.git@96e80a64aa4bfcfef4f43fc3ab6966450ccd7325#egg=nuggets
 # 2011-12-08

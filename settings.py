@@ -311,13 +311,11 @@ TEMPLATE_LOADERS = (
     'jingo.Loader',
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
 )
 
 JINGO_EXCLUDE_APPS = (
     'admin',
     'admindocs',
-    'registration',
     'grappelli',
     'waffle'
 )
