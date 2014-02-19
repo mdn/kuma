@@ -589,9 +589,6 @@ MINIFY_BUNDLES = {
             'js/libs/DataTables-1.9.4/media/css/jquery.dataTables.css',
             'js/libs/DataTables-1.9.4/extras/Scroller/media/css/dataTables.scroller.css',
         ),
-        'ie': (
-            'css/ie.css',
-        ),
         'users': (
             'redesign/css/users.css',
         ),
