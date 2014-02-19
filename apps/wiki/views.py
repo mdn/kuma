@@ -413,7 +413,7 @@ def document(request, document_slug, document_locale):
             # TODO: Re-enable the link in this message after Django >1.5 upgrade
             # Redirected from <a href="%(url)s?redirect=no">%(url)s</a>
             mark_safe(_(u'''
-                Redirected from %(url)s?redirect=no
+                Redirected from %(url)s
             ''') % {
                 "url": request.build_absolute_uri(doc.get_absolute_url())
             }),
