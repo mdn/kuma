@@ -182,7 +182,7 @@ class DocumentTests(TestCaseBase):
         response = self.client.get(redirect_url)
         response = self.client.get(redirect_url, follow=True)
         self.assertRedirects(response, urlparams(target_url), status_code=301)
-        self.assertContains(response, redirect_url + '?redirect=no')
+        self.assertContains(response, redirect_url)
 
     def test_redirect_from_nonexistent(self):
         """The template shouldn't crash or print a backlink if the "from" page
