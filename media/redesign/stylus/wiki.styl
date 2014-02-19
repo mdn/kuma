@@ -161,6 +161,21 @@ enable-toc-toggle() {
 article {
   position: relative;
 
+  .external:before {
+    content: '\f08e';
+    font-family: FontAwesome;
+    padding: 0 6px 0 0;
+    color: #bbb;
+    font-size: 11px;
+    display: inline-block;
+  }
+
+  .external:hover, .external:focus {
+    &:before {
+      text-decoration: none;
+    }
+  }
+
   a {
     text-decoration: underline;
 
