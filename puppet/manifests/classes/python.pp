@@ -25,9 +25,10 @@ class python_prereqs {
             creates => '/usr/local/bin/pip2.6';
     }
     exec {
-        "install-wheel":
+        "install-extras":
             require => Exec["install-pip"],
-            command => '/usr/local/bin/pip2.6 install wheel';
+            # we install 1.4.9 here separately because 1.4.x can't be packaged as a wheel file
+            command => '/usr/local/bin/pip2.6 install wheel Django==1.4.9';
     }
 }
 

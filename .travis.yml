@@ -21,7 +21,8 @@ before_install:
     - tar -C .. -zxf product_details_json.tar.gz
 
 install:
-    - pip install -U pip wheel
+    # we install 1.4.9 here separately because 1.4.x can't be packaged as a wheel file
+    - pip install -U pip wheel Django==1.4.9
     - pip install -r requirements/compiled.txt
     - pip install --no-index --find-links=wheels -r requirements/prod.txt -r requirements/dev.txt
 
