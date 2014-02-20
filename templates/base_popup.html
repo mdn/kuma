@@ -14,15 +14,12 @@
   <link rel="shortcut icon" href="{{ MEDIA_URL }}img/favicon.ico"/>
 
   {% block site_css %}
-  <!--[if !IE 6]><!-->
   {{ css('mdn') }}
-  <!--<![endif]-->
   {% endblock %}
 
-  <!--[if IE]>
+    <!--[if IE]>
   <meta http-equiv="imagetoolbar" content="no">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-  <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <script src="{{ MEDIA_URL }}js/libs/html5.js"></script>
   <![endif]-->
 
   {% block extrahead %}{% endblock %}
