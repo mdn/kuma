@@ -316,6 +316,7 @@ TEMPLATE_LOADERS = (
 JINGO_EXCLUDE_APPS = (
     'admin',
     'admindocs',
+    'registration',
     'grappelli',
     'waffle'
 )
