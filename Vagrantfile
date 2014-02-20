@@ -14,43 +14,7 @@ end
 
 CONF = _config
 
-Vagrant::Config.run do |config|
-
-    config.vm.box = CONF['box']
-    config.vm.box_url = CONF['virtual_box_url']
-    config.package.name = CONF['package_name']
-
-    # nfs needs to be explicitly enabled to run.
-    if CONF['nfs'] == false or RUBY_PLATFORM =~ /mswin(32|64)/
-        config.vm.share_folder("v-root", CONF['mount_point'], ".")
-    else
-        config.vm.share_folder("v-root", CONF['mount_point'], ".", :nfs => true)
-    end
-
-    # This thing can be a little hungry for memory
-    config.vm.customize ["modifyvm", :id, "--memory", CONF['memory_size']]
-    config.vm.customize ['modifyvm', :id, '--cpus', CONF['number_cpus']]
-
-    # uncomment to enable VM GUI console, mainly for troubleshooting
-    if CONF['gui'] == true
-        config.vm.boot_mode = :gui
-    end
-
-    config.vm.network :hostonly, CONF['ip_address']
-
-    # Increase vagrant's patience during hang-y CentOS bootup
-    # see: https://github.com/jedi4ever/veewee/issues/14
-    config.ssh.max_tries = 50
-    config.ssh.timeout   = 300
-
-    config.vm.provision :puppet, :options => ['--verbose', '--logdest=console'] do |puppet|
-        puppet.manifests_path = "puppet/manifests"
-        puppet.manifest_file = "dev-vagrant.pp"
-    end
-
-end
-
-Vagrant::VERSION >= "1.1.0" and Vagrant.configure("2") do |config|
+Vagrant.configure("2") do |config|
 
     config.vm.box = CONF['box']
     config.vm.network :private_network, :ip => CONF['ip_address']
@@ -108,7 +72,7 @@ Vagrant::VERSION >= "1.1.0" and Vagrant.configure("2") do |config|
       aws.instance_type = CONF['aws_instance_type']
 
     end
-  
+
     # section for https://github.com/mitchellh/vagrant-rackspace
     config.vm.provider :rackspace do |rs, override|
       override.vm.box = 'dummy-rackspace'
@@ -121,10 +85,9 @@ Vagrant::VERSION >= "1.1.0" and Vagrant.configure("2") do |config|
       rs.flavor = /512MB/
       rs.image = /Ubuntu/
     end
-  
+
     config.vm.provision :puppet do |puppet|
         puppet.manifests_path = "puppet/manifests"
         puppet.manifest_file = "dev-vagrant.pp"
     end
-  
 end
