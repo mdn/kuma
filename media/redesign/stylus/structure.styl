@@ -378,15 +378,24 @@ footer {
 
   p {
     bidi-style(padding-left, 92px, padding-right, 0, true);
-    bidi-style(background-position, -5px 0, background-position, right 0);
-    background-image: url(logo-sprite-url);
-    background-position: 0px -83px;
-    background-size: 205px auto;
-    background-repeat: no-repeat;
     compat-important(padding-top, 10px);
     padding-bottom: 0;
-
+    position: relative;
     min-height: 62px;
+
+    &:after {
+      bidi-style(left, 0, right, 0);
+      content: "";
+      display: block;
+      width: 65px;
+      height: 60px
+      background-image: url(logo-sprite-url);
+      background-position: 0px -83px;
+      background-size: 205px auto;
+      background-repeat: no-repeat;
+      position: absolute;
+      top: 0;
+    }
   }
 
   .column-strip {
