@@ -10,6 +10,10 @@ Kuma
    :target: https://requires.io/github/mozilla/kuma/requirements/?branch=master
    :alt: Requirements Status
 
+.. image:: https://d2weczhvl823v0.cloudfront.net/mozilla/kuma/trend.png
+   :target: https://bitdeli.com/free
+   :alt: Bitdeli Badge
+
 Kuma is the platform that powers `MDN (developer.mozilla.org)
 <https://developer.mozilla.org>`_
 
