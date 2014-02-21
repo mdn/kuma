@@ -28,7 +28,14 @@ class python_prereqs {
         "install-extras":
             require => Exec["install-pip"],
             # we install 1.4.9 here separately because 1.4.x can't be packaged as a wheel file
-            command => '/usr/local/bin/pip2.6 install wheel Django==1.4.9';
+            command => '/usr/local/bin/pip2.6 install wheel virtualenv Django==1.4.9';
+    }
+    exec {
+        "create-virtualenv":
+            cwd => '/home/vagrant',
+            require => Exec["install-extras"],
+            command => '/bin/rm -rf env && /usr/local/bin/virtualenv -p /usr/bin/python2.6 env',
+            user => 'vagrant';
     }
 }
 
@@ -38,16 +45,19 @@ class python_wheels {
         "download-wheels":
             cwd => "/home/vagrant/src/puppet/cache/wheels",
             command => "/usr/bin/axel -a https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/wheels.tar.xz && /bin/tar xvfJ *.tar.xz && /bin/rm wheels.tar.xz",
-            creates => '/home/vagrant/src/puppet/cache/wheels/wheels';
+            creates => '/home/vagrant/src/puppet/cache/wheels/wheels',
+            user => 'vagrant';
         "install-wheels":
             cwd => '/home/vagrant/src',
             timeout => 1200, # Too long, but this can take awhile
-            command => "/usr/local/bin/pip2.6 install --no-index --find-links=/home/vagrant/src/puppet/cache/wheels/wheels -r requirements/prod.txt -r requirements/dev.txt -r requirements/compiled.txt",
-            require => Exec["download-wheels"];
+            command => "/home/vagrant/env/bin/pip install --no-index --find-links=/home/vagrant/src/puppet/cache/wheels/wheels -r requirements/prod.txt -r requirements/dev.txt -r requirements/compiled.txt",
+            require => Exec["download-wheels"],
+            user => 'vagrant';
         "clean-wheels":
             cwd => "/home/vagrant/src/puppet/cache/wheels",
             command => "/bin/rm -rf wheels",
-            require => Exec["install-wheels"];
+            require => Exec["install-wheels"],
+            user => 'vagrant';
      }
 }
 
