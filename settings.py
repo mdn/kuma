@@ -639,6 +639,7 @@ MINIFY_BUNDLES = {
             'redesign/js/components.js',
             'redesign/js/main.js',
             'redesign/js/badges.js',
+            'redesign/js/google-analytics.js',
         ),
         'home': (
             'js/libs/owl.carousel/owl-carousel/owl.carousel.js',
