@@ -48,11 +48,6 @@ p {
   }
 }
 
-/* search results container and child elements */
-#search-results-close-container {
-  slider();
-}
-
 .search-results-container {
   padding: grid-spacing;
   
@@ -123,25 +118,6 @@ p {
 .search-results-more {
   clearfix();
   padding: 0 grid-spacing;
-
-  .with-view-all .view-all {
-    display: block;
-  }
-}
-
-.view-all {
-  reverse-link-decoration();
-  float: right;
-  display: none;
-}
-
-.search-results-more.with-view-all {
-  .view-all {
-    display: block;
-  }
-  .pager {
-    display: none;
-  }
 }
 
 /* sidebar topic listings */
