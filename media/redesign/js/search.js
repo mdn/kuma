@@ -9,12 +9,6 @@
     }
   };
 
-  var parentSelector = '.search-pane';
-  $(parentSelector + ' .close').on('click', function(e) {
-    e.preventDefault();
-    $('#search-results-close-container').addClass('closed');
-  });
-
   /*
     Set up the "from search" buttons if user came from search
   */
@@ -38,16 +32,6 @@
     });
     fromSearchList.find('ol').mozKeyboardNav();
   }
-
-  var more = $('.search-results-more');
-  more.find('.view-all').on('click', function(e) {
-    e.preventDefault();
-    var hiddenClass = 'closed';
-    var parent = $(this).closest(parentSelector);
-    parent.find('.' + hiddenClass).removeClass(hiddenClass);
-    parent.find('.pager').removeClass('hidden');
-    more.removeClass('with-view-all');
-  });
 
   // a small wrapper around store.js to be able to set an expiration
   var searchStore = {
