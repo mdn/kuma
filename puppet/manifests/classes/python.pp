@@ -8,8 +8,13 @@ class python_prereqs {
           "python-pyquery", "python-pygments", "pylint", "pyflakes"]:
           ensure => purged;
     }
-    file { "/home/vagrant/src/puppet/cache/pip":
-        ensure => directory
+    file {
+        "/home/vagrant/src/puppet/cache/pip":
+        ensure => directory;
+    }
+    file {
+        "/home/vagrant/src/puppet/cache/wheels":
+        ensure => directory;
     }
     exec {
         "get-pip":
