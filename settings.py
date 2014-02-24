@@ -549,7 +549,6 @@ MINIFY_BUNDLES = {
         'mdn': (
             'css/fonts.css',
             'css/mdn-screen.css',
-            'css/redesign-transition.css',
             'css/libs/font-awesome/css/font-awesome.css',
             'redesign/css/main.css',
             'redesign/css/badges.css',
