@@ -64,7 +64,7 @@ def checkin_changes(ctx):
 @hostgroups(settings.WEB_HOSTGROUP, remote_kwargs={'ssh_key': settings.SSH_KEY})
 def deploy_app(ctx):
     ctx.remote(settings.REMOTE_UPDATE_SCRIPT)
-    ctx.remote("service httpd graceful")
+    ctx.remote("service httpd restart")
 
 @hostgroups(settings.WEB_HOSTGROUP, remote_kwargs={'ssh_key': settings.SSH_KEY})
 def deploy_kumascript(ctx):
