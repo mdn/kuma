@@ -64,7 +64,8 @@
   Track all outgoing links
   */
   $('body').on('click', 'a', function (e) {
-    if (this.hostname === window.location.hostname) {
+    if (this.hostname === window.location.hostname ||
+        this.protocol == 'javascript:') {
       return;
     }
     var newTab = (this.target === '_blank' || e.metaKey || e.ctrlKey);
