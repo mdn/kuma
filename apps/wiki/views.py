@@ -756,9 +756,10 @@ def list_documents(request, category=None, tag=None):
     docs = Document.objects.filter_for_list(locale=request.locale,
                                              category=category_id,
                                              tag=tag_obj)
-    docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
+    paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     return render(request, 'wiki/list_documents.html',
-                        {'documents': docs,
+                        {'documents': paginated_docs,
+                         'count': docs.count(),
                          'category': category,
                          'tag': tag})
 
@@ -767,9 +768,10 @@ def list_documents(request, category=None, tag=None):
 def list_templates(request):
     """Returns listing of all templates"""
     docs = Document.objects.filter(is_template=True).order_by('title')
-    docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
+    paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     return render(request, 'wiki/list_documents.html',
-                        {'documents': docs,
+                        {'documents': paginated_docs,
+                         'count': docs.count(),
                          'is_templates': True})
 
 
@@ -802,6 +804,16 @@ def list_documents_for_review(request, tag=None):
                         {'documents': docs,
                          'tag': tag_obj,
                          'tag_name': tag})
+
+@require_GET
+def list_documents_with_errors(request):
+    """Lists wiki documents with (KumaScript) errors"""
+    docs = Document.objects.filter_for_list(errors=True)
+    paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
+    return render(request, 'wiki/list_documents.html',
+                         {'documents': paginated_docs,
+                          'count': docs.count(),
+                          'errors': True})
 
 
 @login_required

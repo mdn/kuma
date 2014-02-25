@@ -455,11 +455,13 @@ class BaseDocumentManager(models.Manager):
         return True
 
     def filter_for_list(self, locale=None, category=None, tag=None,
-                        tag_name=None):
+                        tag_name=None, errors=None):
         docs = (self.filter(is_template=False, is_redirect=False)
                     .exclude(slug__startswith='User:')
                     .exclude(slug__startswith='Talk:')
                     .exclude(slug__startswith='User_talk:')
+                    .exclude(slug__startswith='Template_talk:')
+                    .exclude(slug__startswith='Project_talk:')
                     .order_by('slug'))
         if locale:
             docs = docs.filter(locale=locale)
@@ -472,6 +474,9 @@ class BaseDocumentManager(models.Manager):
             docs = docs.filter(tags__in=[tag])
         if tag_name:
             docs = docs.filter(tags__name=tag_name)
+        if errors:
+            docs = (docs.exclude(rendered_errors__isnull=True)
+                        .exclude(rendered_errors__exact='[]'))
         # Leave out the html, since that leads to huge cache objects and we
         # never use the content in lists.
         docs = docs.defer('html')
