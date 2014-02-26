@@ -474,6 +474,7 @@ def _generate_toc_html(doc, tool, rendering_params):
     if doc.show_toc and not rendering_params['raw']:
         toc_filter = TOC_FILTERS[doc.current_revision.toc_depth]
         toc_html = (wiki.content.parse(tool.serialize())
+                    .injectSectionIDs()
                     .filter(toc_filter)
                     .serialize())
     return toc_html
@@ -487,11 +488,6 @@ def _filter_doc_html(request, doc, tool, rendering_params):
     # If a section ID is specified, extract that section.
     if rendering_params['section']:
         tool.extractSection(rendering_params['section'])
-
-    # Annotate links within the page, but only if not sending raw source.
-    if not rendering_params['raw']:
-        base_url = request.build_absolute_uri('/')
-        tool.annotateLinks(base_url=base_url)
 
     # If this user can edit the document, inject some section editing
     # links.
@@ -689,9 +685,6 @@ def document(request, document_slug, document_locale):
 
     # Step 5: Start parsing and applying filters.
     if not doc.is_template:
-        doc_html = (wiki.content.parse(doc_html)
-                                .injectSectionIDs()
-                                .serialize())
         tool = wiki.content.parse(doc_html)
 
         toc_html = _generate_toc_html(doc, tool, rendering_params)
@@ -734,10 +727,22 @@ def document(request, document_slug, document_locale):
     # Provide additional information if user came from a search
     search_ref = request.GET.get('search') or ref_from_referer(request)
 
+    # Retrieve pre-parsed content hunks
+    if doc.is_template:
+        quick_links_html, zone_subnav_html = None, None
+        body_html = doc_html
+    else:
+        quick_links_html = doc.get_quick_links_html()
+        zone_subnav_html = doc.get_zone_subnav_html()
+        body_html = doc.get_body_html()
+
     # Step 8: Bundle it all up and, finally, return.
     context = {'document': doc,
                'document_html': doc_html,
                'toc_html': toc_html,
+               'quick_links_html': quick_links_html,
+               'zone_subnav_html': zone_subnav_html,
+               'body_html': body_html,
                'related': related,
                'contributors': contributors,
                'fallback_reason': fallback_reason,

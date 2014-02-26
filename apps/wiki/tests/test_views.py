@@ -900,7 +900,7 @@ class DocumentSEOTests(TestCaseBase):
         make_page_and_compare_seo('nine',
           u'<p>I <em>am</em> awesome.'
               ' <a href="blah">A link</a> is also &lt;cool&gt;</p>',
-          'I am awesome. A link is also cool')
+          u'I am awesome. A link is also cool')
 
 
 class DocumentEditingTests(TestCaseBase):
@@ -2515,11 +2515,11 @@ class SectionEditingResourceTests(TestCaseBase):
             <p>test</p>
         """)
         replace_1 = """
-            <h1 id="s1">replace1</h1>
+            <h1 id="replace1">replace1</h1>
             <p>replace</p>
         """
         replace_2 = """
-            <h1 id="s2">replace2</h1>
+            <h1 id="replace2">replace2</h1>
             <p>replace</p>
         """
         expected = """
