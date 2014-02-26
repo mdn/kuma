@@ -74,11 +74,12 @@
       window.location = href;
     };
 
+    var data = ['_trackEvent', 'Outbound Links', href]; 
     if (newTab) {
-      gaTrack(['_trackEvent', 'Outbound Links', href]);
+      gaTrack(data);
     } else {
       e.preventDefault();
-      gaTrack(['_trackEvent', 'Outbound Links', href], callback);
+      gaTrack(data, callback);
     }
   });
 
