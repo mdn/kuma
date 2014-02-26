@@ -144,7 +144,9 @@ CKEDITOR.editorConfig = function(config) {
           { name: 'SEO Summary', element: 'span', attributes: { 'class': 'seoSummary' }, wrap: false },
           { name: 'Article Summary', element: 'div', attributes: { 'class': 'summary' }, wrap: true },
           { name: 'Syntax Box', element: 'div', attributes: { 'class': 'syntaxbox' }, wrap: false },
-          { name: 'Right Sidebar', element: 'div', attributes: { 'class': 'standardSidebar' }, wrap: false }
+          { name: 'Right Sidebar', element: 'div', attributes: { 'class': 'standardSidebar' }, wrap: false },
+          { name: 'Button', element: 'span', attributes: { 'class': 'button' }, wrap: false },
+          { name: 'Key', element: 'span', attributes: { 'class': 'key' }, wrap: false }
       ]);
   }
 
