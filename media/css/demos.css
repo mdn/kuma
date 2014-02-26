@@ -368,7 +368,7 @@
 /* @Gallery @Head *********/
 .gallery-head { clear: both; position: relative; z-index: 11; }
 .gallery-head:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
-.gallery-head .count { font-size: 1.428em; float: left; }
+.gallery-head .count { float: left; }
 .gallery-head .count .button { font-size: .636em; margin-left: 15px; position: relative; top: -2px; }
 .gallery-head .sort { float: right; font-size: .786em; margin: .5em 0 0; }
 .gallery-head .sort li { display: inline; padding: 0; margin: 0 0 0 20px; background: none; }

@@ -1,4 +1,5 @@
 {% extends "badger/base.html" %}
+{% import "badger/includes/macros.html" as macros %}
 
 {% set user = award.user %}
 {% set award_url = request.build_absolute_uri(url('badger.views.award_detail', award.badge.slug, award.id)) %}
@@ -13,30 +14,26 @@
 
 {% block pageid %}award_delete{% endblock %}
 
-{% block intro %}
-    {{ _('Badges:') }}
-    <b>{{ _("Delete Award") }}</b>
-{% endblock %}
-
 {% block subcontent %}
-<section class="row-fluid">
 
-    <section class="badge span4">
-        {% include "badger/includes/badge_full.html" %}
-    </section>
-
-    <section class="award span8">
+<h1>{{ _('Badges: Delete Award') }}</h1>
+<div class="column-container">
+    <div class="column-strip">
+        <a href="{{ badge.get_absolute_url() }}" class="image">{{ macros.badge_image(badge, MEDIA_URL, 256) }}</a>
 
         <form id="delete_award" method="POST" action="" enctype="multipart/form-data">
             {{ csrf() }}
-            <p><strong>{{ _("Delete this award, are you sure?") }}</strong></p>
-            <ul>
-                <li><input type="submit" class="btn btn-large btn-danger submit" value="{{ _("Yes, delete award") }}"></li>
-            </ul>
+            <input type="submit" class="button negative delete-badge" value="{{ _("Delete this award") }}">
         </form>
+    </div>
+    <div class="column-main">
+        {% if badge.description %}
+            <p>{{ badge.description }}</p>
+        {% endif %}
 
-        {% include "badger/includes/award_full.html" %}
-    </section>
-
-</section>
+        <section class="award span8">
+            {% include "badger/includes/award_full.html" %}
+        </section>
+    </div>
+</div>
 {% endblock %}

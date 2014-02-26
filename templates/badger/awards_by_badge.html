@@ -8,12 +8,8 @@
         href="{{ url('badger.feeds.awards_by_badge', 'atom', badge.slug) }}" />
 {% endblock %}
 
-{% block intro %}
-    {{ _('Badges:') }}
-    <b>{{ _("Awards for {title}") | f(title=badge.title) }}</b>
-{% endblock %}
-
 {% block subcontent %}
+<h1>{{ _('Badges:') }} {{ _("Awards for {title}") | f(title=badge.title) }}</h1>
 <section class="row-fluid">
     <section>
         {% include "badger/includes/badge_full.html" %}

@@ -20,10 +20,3 @@
 	background-position: 97% 5px !important;
 	background-repeat: no-repeat !important;
 }
-
-/* dialog updates */
-.ui-dialog-titlebar {
-	background: none !important;
-	background-color: #000 !important;
-	border-color: #999;
-}

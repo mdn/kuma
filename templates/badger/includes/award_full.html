@@ -1,22 +1,26 @@
 {% import 'badger/includes/macros.html' as macros %}
-<dl class="award">
-    <dt>{{_("Awarded to:")}}</dt>
-    <dd class="awarded_to">
-        <a href="{{ award.user.get_absolute_url() }}" class="username"><img src="{{ user_avatar(award.user) }}" class="avatar" alt="{{ award.user }}" width="128" height="128" />{{ award.user }}</a>
-        {% if request.user == award.user %}
-            <strong>{{ _("(That's you!)") }}</strong>
-        {% endif %}
-    </dd>
-    {% if award.creator %}
-        <dt>{{_("Awarded by:")}}</dt>
-            <dd class="awarded_by"><a href="{{ award.creator.get_absolute_url() }}" 
+
+<div class="column-container">
+    <div class="column-half">
+        <h2>{{ _('Awarded to')}}</h2>
+        <p>
+            <a href="{{ award.user.get_absolute_url() }}" class="username"><img src="{{ user_avatar(award.user) }}" class="avatar" alt="{{ award.user }}" width="128" height="128" /><br />{{ award.user }}</a>
+            {% if request.user == award.user %}
+                <strong>{{ _("(That's you!)") }}</strong>
+            {% endif %}
+        </p>
+    </div>
+    <div class="column-half">
+        {% if award.creator %}
+        <h2>{{ _('Awarded by')}}</h2>
+        <p><a href="{{ award.creator.get_absolute_url() }}" 
                 class="username"><img src="{{ user_avatar(award.creator) }}" class="avatar"
-                    alt="{{ award.creator }}" width="128" height="128" />{{ award.creator }}</a></dd>
-    {% endif %}
-    <dt>{{_("Awarded at:")}}</dt>
-        <dd class="issued">{{ award.created }}</dd>
-    {% if award.description %}
-        <dt>{{_("Explanation:")}}</dt>
-        <dd class="description">{{ award.description }}</dd>
-    {% endif %}
-</dl>
+                    alt="{{ award.creator }}" width="128" height="128" /><br />{{ award.creator }}</a></p>
+        {% endif %}
+    </div>
+</div>
+
+{% if award.description %}
+    <h3>Awarded for</h3>
+    <p>{{ award.description }}</p>
+{% endif %}

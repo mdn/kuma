@@ -1,10 +1,16 @@
 (function ($) {
 
-    $('#recent_badge_awards .close').click(function () {
-        $('#recent_badge_awards').hide();
-    });
+    // Show the dialog immediately if the new badge is present!
+    var $badgesModalContent = $('#recent_badge_awards');
+    if($badgesModalContent.length) {
+        $('body').mozModal($badgesModalContent, {
+            title: $badgesModalContent.attr('data-title'),
+            classes: 'transparent',
+            allowScroll: true
+        });
+    }
 
-    $("form.obi_issuer button.issue").click(function () {
+    $('form.obi_issuer button.issue').click(function () {
         // Grab the hosted assertion URL from the header link.
         var assertion_url =
             $('head link[rel="alternate"][type="application/json"]')

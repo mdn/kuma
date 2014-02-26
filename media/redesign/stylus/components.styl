@@ -154,3 +154,102 @@ component-submenu-method(menu-width, num-columns, background-color, arrow-border
 .submission .section > legend {
     margin: 0;
 }
+
+
+
+/* 
+  Mozilla modal component provided by bedrock:
+  https://raw.github.com/mozilla/bedrock/master/media/css/base/mozilla-modal.less
+*/
+body.noscroll {
+  overflow: hidden;
+}
+
+#modal {
+  background: #354b5d;
+  background: rgba(53, 75, 93, 0.8);
+  width: 100%;
+  height: 101%;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 9999999;
+  overflow: auto;
+
+  /* if we don't want to show the "modal" background */
+  &.transparent {
+    background: transparent;
+    height: auto;
+    bottom: auto;
+  }
+
+  .overlay-contents, header {
+    padding: (grid-spacing / 2) grid-spacing;
+  }
+
+  .window {
+    padding: grid-spacing;
+    color: #333;
+
+    .inner {
+      position: relative;
+      vendorize('box-shadow', 0 1px 22px rgba(0, 0, 0, 0.8));
+
+      header {
+        display: block;
+        background: #0095dd;
+        height: 38px;
+        font-size: 26px;
+        color: #fff;
+      }
+
+      #modal-close {
+        position: fixed;
+        z-index: 99;
+        position: absolute;
+        top: 9px;
+        right: 9px;
+        cursor: pointer;
+
+        a {
+          color: #fff;
+          vertical-align: middle;
+          padding: 0 3px;
+          offscreen();
+        }
+
+        .button {
+          padding: 0;
+          min-width: 34px;
+          font-size: 30px;
+          vertical-align: middle;
+        }
+
+        &:hover {
+          a {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      .overlay-contents {
+        background: #fff;
+        margin: 0 auto;
+        img {
+          max-width: 100%;
+        }
+      }
+    }
+  }
+}
+
+/* Tweaks for RTL locales */
+.html-rtl {
+  #mozilla-dialog .window .inner .mozilla-modal-close {
+    right: auto;
+    left: 9px;
+    text-align: left;
+  }
+}

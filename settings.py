@@ -557,6 +557,7 @@ MINIFY_BUNDLES = {
         'jquery-ui': (
             'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
             'css/jqueryui/moz-jquery-plugins.css',
+            'redesign/css/jquery-ui-customizations.css',
         ),
         'demostudio': (
             'css/demos.css',
