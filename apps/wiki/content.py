@@ -5,6 +5,7 @@ import re
 import urllib
 from urllib import urlencode
 from urlparse import urlparse
+from collections import defaultdict
 
 from xml.sax.saxutils import quoteattr
 
@@ -393,6 +394,8 @@ class LinkAnnotationFilter(html5lib_Filter):
                     classes=[]
                 )
 
+        needs_existence_check = defaultdict(lambda: defaultdict(set))
+
         # Run through all the links and check for annotatable conditions.
         for href in links.keys():
 
@@ -440,14 +443,26 @@ class LinkAnnotationFilter(html5lib_Filter):
                         .locale_and_slug_from_path(href_path,
                                                    path_locale=href_locale))
 
-                # Does this locale and slug correspond to an existing document?
-                # If not, mark it as a "new" link.
-                #
-                # TODO: Should these DB queries be batched up into one big
-                # query? A page with hundreds of links will fire off hundreds
-                # of queries
-                ct = Document.objects.filter(locale=locale, slug=slug).count()
-                if ct == 0:
+                # Gather up this link for existence check
+                needs_existence_check[locale][slug].add(href)
+
+        # Perform existence checks for all the links, using one DB query per
+        # locale for all the candidate slugs.
+        for locale, slug_hrefs in needs_existence_check.items():
+            
+            existing_slugs = (Document.objects
+                                      .filter(locale=locale,
+                                              slug__in=slug_hrefs.keys())
+                                      .values_list('slug', flat=True))
+            
+            # Remove the slugs that pass existence check.
+            for slug in existing_slugs:
+                del slug_hrefs[slug]
+
+            # Mark all the links whose slugs did not come back from the DB
+            # query as "new"
+            for slug, hrefs in slug_hrefs.items():
+                for href in hrefs:
                     links[href]['classes'].append('new')
 
         # Pass #2: Filter the content, annotating links
