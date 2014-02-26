@@ -5,38 +5,34 @@
 {% set classes = 'change_email' %}
 
 {% block content %}
-<section id="content">
-  <div class="wrap">
-    <div id="content-main" class="full">
-      <article id="change-email" class="main">
-          <h1>{{ _('Change email with Persona') }}</h1>
-            <form class="browserid boxed" action="{{url('users.browserid_change_email')}}" method="POST">
-              <input type="hidden" name="next" value="{{ next_url }}" />
 
-              {% trans browserid_href='https://persona.org/', why_browserid='http://identity.mozilla.com/post/12950196039/deploying-browserid-at-mozilla' %}
-              <h3>What's this?</h3>
-              <p>MDN has switched to <a href="{{ browserid_href }}" target="_blank" rel="external">Persona</a>, a safe and simple way to sign in with just your e-mail address.
-              <a href="{{ why_browserid }}" rel="external">Learn more about why Mozilla is using Persona</a>.</p>
-              {% endtrans %}
-              <p>{% trans %}
-              To change your MDN email, simply sign in below with the new email 
-              address.
-              {% endtrans %}</p>
+  <article id="change-email">
+      <h1>{{ _('Change email with Persona') }}</h1>
+        <form class="browserid boxed" action="{{url('users.browserid_change_email')}}" method="POST">
+          <input type="hidden" name="next" value="{{ next_url }}" />
 
-              {% include "users/browserid_signin.html" %}
-              
-              {% if messages %}
-                <ul class="messages errorlist">
-                  {% for message in messages %}
-                    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>
-                      {{ message }}
-                    </li>
-                  {% endfor %}
-                </ul>
-              {% endif %}
-            </form>
-      </article>
-    </div>
-   </div>
-</section>
+          {% trans browserid_href='https://persona.org/', why_browserid='http://identity.mozilla.com/post/12950196039/deploying-browserid-at-mozilla' %}
+          <h3>What's this?</h3>
+          <p>MDN has switched to <a href="{{ browserid_href }}" target="_blank" rel="external">Persona</a>, a safe and simple way to sign in with just your e-mail address.
+          <a href="{{ why_browserid }}" rel="external">Learn more about why Mozilla is using Persona</a>.</p>
+          {% endtrans %}
+          <p>{% trans %}
+          To change your MDN email, simply sign in below with the new email 
+          address.
+          {% endtrans %}</p>
+
+          {% include "users/browserid_signin.html" %}
+          
+          {% if messages %}
+            <ul class="messages errorlist">
+              {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                  {{ message }}
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </form>
+  </article>
+      
 {% endblock content %}

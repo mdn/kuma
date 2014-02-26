@@ -5,19 +5,15 @@
 {% set classes = 'login' %}
 
 {% block content %}
-<section id="content">
-  <div class="wrap">
-    <div id="content-main" class="full">
+
       {% if request.user.is_authenticated() %}
-        <article class="main">
+        <article>
           <h3>{{ _('You are already logged in.') }}</h3>
         </article>
       {% else %}
-        <article id="login" class="main">
+        <article id="login">
             {% include "users/browserid_signin.html" %}
         </article>
       {% endif %}
-    </div>
-  </div>
-</section>
+    
 {% endblock %}

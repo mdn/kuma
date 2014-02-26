@@ -5,10 +5,7 @@
 {% set classes = 'password' %}
 
 {% block content %}
-<section id="content">
-  <div class="wrap">
-    <div id="content-main" class="full">
-      <article id="pw-reset" class="main">
+      <article id="pw-reset">
         <h1>{{ title }}</h1>
         <p>
           {% trans %} Forgotten your password? Enter your email address below,
@@ -29,7 +26,4 @@
           </fieldset>
         </form>
       </article>
-    </div>
-   </div>
-</section>
 {% endblock content %}

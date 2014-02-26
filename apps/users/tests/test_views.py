@@ -83,7 +83,7 @@ class LoginTestCase(TestCase):
         response = self.client.get(login_uri, follow=True)
         eq_(200, response.status_code)
         doc = pq(response.content)
-        eq_("You are already logged in.", doc.find('div#content-main').text())
+        eq_("You are already logged in.", doc.find('article').text())
 
     @mock.patch_object(Site.objects, 'get_current')
     def test_django_login_redirects_to_next(self, get_current):
@@ -287,7 +287,7 @@ class ChangeEmailTestCase(TestCase):
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_('Unable to change email for user testuser',
-            doc('.main h1').text())
+            doc('article h1').text())
         u = User.objects.get(username='testuser')
         eq_(old_email, u.email)
 

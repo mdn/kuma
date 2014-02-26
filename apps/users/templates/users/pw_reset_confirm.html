@@ -5,10 +5,7 @@
 {% set classes = 'password' %}
 
 {% block content %}
-<section id="content">
-  <div class="wrap">
-    <div id="content-main" class="full">
-  <article id="pw-reset" class="main">
+  <article id="pw-reset">
     {% if validlink %}
       <h1>{{ title }}</h1>
       <form class="boxed" method="post" action="">
@@ -35,7 +32,4 @@
       <p>{{ _('The password reset link was invalid, possibly because it has already been used. Please request a new password reset.') }}</p>
     {% endif %}
   </article>
-    </div>
-   </div>
-</section>
 {% endblock content %}

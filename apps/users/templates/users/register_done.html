@@ -5,18 +5,12 @@
 {% set classes = 'register' %}
 
 {% block content %}
-<section id="content">
-  <div class="wrap">
-    <div id="content-main" class="full">
-      <article id="register" class="main">
-        <h1>{{ _('Thank you for registering!') }}</h1>
-        {# L10n: This string appears on the 'thank you for registering' page. #}
-        <p>{% trans %}Thank you for being awesome!{% endtrans %}</p>
-        <p>{% trans %}Before you can log in, you need to confirm your email
-          address. We've sent you an email with a confirmation link in it. Just
-          click the link and you'll be ready to go!{% endtrans %}</p>
-      </article>
-    </div>
-   </div>
-</section>
+<article id="register">
+  <h1>{{ _('Thank you for registering!') }}</h1>
+  {# L10n: This string appears on the 'thank you for registering' page. #}
+  <p>{% trans %}Thank you for being awesome!{% endtrans %}</p>
+  <p>{% trans %}Before you can log in, you need to confirm your email
+    address. We've sent you an email with a confirmation link in it. Just
+    click the link and you'll be ready to go!{% endtrans %}</p>
+</article>
 {% endblock %}
