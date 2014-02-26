@@ -219,12 +219,12 @@
         e.preventDefault();
         e.stopPropagation();
         if(e.keyCode == 27) {
-          $(this).siblings('a').trigger('click').focus();
+          $(this).siblings('a').trigger('mdn:click').focus();
         };
       }); 
 
       // Click event to show/hide
-      $self.on('click', '.toggler', function(e) {
+      $self.on('click mdn:click', '.toggler', function(e) {
         e.preventDefault();
         e.stopPropagation();
         settings.onOpen.call(this);

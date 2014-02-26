@@ -75,7 +75,7 @@
 
       $togglers.each(function() {
         if($.contains($(this).parent('li').get(0), self) && used.indexOf(this) === -1) {
-          $(this).trigger('click');
+          $(this).trigger('mdn:click');
           used.push(this);
         }
       });
@@ -171,11 +171,11 @@
         if(!e || e.type == 'resize') {
           if($toggler.css('pointer-events') == 'auto'  || $toggler.find('i').css('display') != 'none') { /* icon check is for old IEs that don't support pointer-events */
             if(!$toc.attr('data-closed')) {
-              $toggler.trigger('click');
+              $toggler.trigger('mdn:click');
             }
           }
           else if($toc.attr('data-closed')) { // Changes width, should be opened (i.e. mobile to desktop width)
-            $toggler.trigger('click');
+            $toggler.trigger('mdn:click');
           }
         }
       }, 10);
@@ -196,12 +196,16 @@
       $htab.append($('div[id=compat-desktop]')[index]);
       $htab.append($('div[id=compat-mobile]')[index]);
 
-      $items.find('a').on('click', function() {
-          var $this = $(this)
+      $items.find('a').on('click mdn:click', function(e) {
+          var $this = $(this);
+          if(e) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
           $items.removeClass('selected');
           $this.parent().addClass('selected');
           $htab.find('>div').hide().eq($items.index($this.parent())).show();
-      }).eq(0).trigger('click');
+      }).eq(0).trigger('mdn:click');
   });
 
   /*
