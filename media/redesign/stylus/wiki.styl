@@ -317,7 +317,6 @@ article {
   float: right;
   margin-top: -5px;
 
-  text-align: right;
   compat-only(width, auto);
   compat-only(top, auto);
 
@@ -338,6 +337,29 @@ article {
 
     {selector-icon} {
       font-size: 16px;
+    }
+  }
+
+  .submenu {
+    component-submenu-method(160px, 1, button-background, button-shadow-color);
+    bidi-style(right, 0, left, auto);
+    top: 40px;
+    z-index: 3;
+    border-top: 1px solid button-shadow-color;
+    width: 160px !important; /* needs this due to overriding media query rule of component */
+
+    bdi {
+      bidi-value(text-align, left, right);
+    }
+
+    &:before {
+      bidi-style(right, 10px, left, auto);
+      top: -18px;
+    }
+
+    &:after {
+      bidi-style(right, 10px, left, auto);
+      top: -20px;
     }
   }
 }
@@ -521,7 +543,6 @@ div.bug, div.warning, div.overheadIndicator {
       bidi-value(text-align, left, right);
       bidi-style(left, -(grid-spacing * 1.5), right, auto);
 
-      text-align: right;
       position: absolute;
       left: -(grid-spacing + (grid-spacing/2));
       color: #484848;
