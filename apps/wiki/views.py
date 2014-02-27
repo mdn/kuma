@@ -97,6 +97,10 @@ OS_ABBR_JSON = json.dumps(dict([(o.slug, True)
                                 for o in OPERATING_SYSTEMS]))
 BROWSER_ABBR_JSON = json.dumps(dict([(v.slug, v.show_in_ui)
                                      for v in FIREFOX_VERSIONS]))
+TOC_FILTERS = {1: wiki.content.SectionTOCFilter,
+               2: wiki.content.H2TOCFilter,
+               3: wiki.content.H3TOCFilter,
+               4: wiki.content.SectionTOCFilter}
 
 
 def _version_groups(versions):
@@ -415,7 +419,7 @@ def _set_common_headers(doc, section_id, response):
     """
     response['ETag'] = doc.calculate_etag(section_id)
     if doc.current_revision:
-        response['x-kuma-revision'] = doc.current_revision.id
+        response['X-kuma-revision'] = doc.current_revision.id
     return response
 
 
@@ -468,10 +472,7 @@ def _generate_toc_html(doc, tool, rendering_params):
     """
     toc_html = None
     if doc.show_toc and not rendering_params['raw']:
-        toc_filter = {1: wiki.content.SectionTOCFilter,
-                      2: wiki.content.H2TOCFilter,
-                      3: wiki.content.H3TOCFilter,
-                      4: wiki.content.SectionTOCFilter}[doc.current_revision.toc_depth]
+        toc_filter = TOC_FILTERS[doc.current_revision.toc_depth]
         toc_html = (wiki.content.parse(tool.serialize())
                     .filter(toc_filter)
                     .serialize())
@@ -527,6 +528,7 @@ def _get_seo_parent_title(slug_dict, document_locale):
         try:
             seo_root_doc = Document.objects.get(locale=document_locale,
                                             slug=slug_dict['seo_root'])
+            #TODO: will this break a unicode title?
             seo_parent_title = ' - ' + seo_root_doc.title
         except Document.DoesNotExist:
             pass
@@ -613,6 +615,7 @@ def document(request, document_slug, document_locale):
             return _document_deleted(request, deletion_logs)
 
         # We can throw a 404 immediately if the request type is HEAD.
+        # TODO: take a shortcut if the document was found?
         if request.method == 'HEAD':
             raise Http404
 
@@ -689,7 +692,7 @@ def document(request, document_slug, document_locale):
         doc_html = (wiki.content.parse(doc_html)
                                 .injectSectionIDs()
                                 .serialize())
-        tool = (wiki.content.parse(doc_html))
+        tool = wiki.content.parse(doc_html)
 
         toc_html = _generate_toc_html(doc, tool, rendering_params)
 
