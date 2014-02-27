@@ -74,6 +74,7 @@ urlpatterns = patterns('wiki.views',
     url(r'^/new$', 'new_document', name='wiki.new_document'),
     url(r'^/all$', 'list_documents', name='wiki.all_documents'),
     url(r'^/preview-wiki-content$', 'preview_revision', name='wiki.preview'),
+    url(r'^/with-errors$', 'list_documents_with_errors', name='wiki.errors'),
 
     url(r'^/move-requested$',
         TemplateView.as_view(template_name='wiki/move_requested.html'),

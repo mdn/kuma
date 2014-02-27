@@ -1,13 +1,16 @@
-{# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
+{% set counter = _('Found {0} documents.')|f(count) %}
 {% if category %}
   {% set title = category %}
 {% elif tag %}
   {% set title = _('Articles tagged: {tag}')|f(tag=tag) %}
 {% elif is_templates %}
-  {% set title = _('All Templates') %}
+  {% set title = _('All templates') %}
+  {% set counter = _('Found {0} templates.')|f(count) %}
+{% elif errors %}
+  {% set title = _('Documents with errors') %}
 {% else %}
-  {% set title = _('All Articles') %}
+  {% set title = _('All documents') %}
 {% endif %}
 {% block title %}{{ page_title(title) }}{% endblock %}
 {% set crumbs = [(None, title)] %}
@@ -36,11 +39,12 @@
     <div id="document-list" class="boxed">
       <h1>{{ title }}</h1>
       {% if documents.object_list %}
+        <p>{{ counter }}</p>
         <ul class="documents">
           {% for doc in documents.object_list %}
             <li>
               <a href="{{ doc.get_absolute_url() }}">{{ doc.slug }}</a>
-                {% if not is_templates %}
+                {% if not is_templates and not errors %}
                   <small>{{ doc.get_summary() | truncate(100) }}</small>
                 {% endif %}
             </li>
