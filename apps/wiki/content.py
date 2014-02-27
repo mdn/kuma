@@ -444,7 +444,7 @@ class LinkAnnotationFilter(html5lib_Filter):
                                                    path_locale=href_locale))
 
                 # Gather up this link for existence check
-                needs_existence_check[locale][slug].add(href)
+                needs_existence_check[locale.lower()][slug.lower()].add(href)
 
         # Perform existence checks for all the links, using one DB query per
         # locale for all the candidate slugs.
@@ -457,7 +457,9 @@ class LinkAnnotationFilter(html5lib_Filter):
             
             # Remove the slugs that pass existence check.
             for slug in existing_slugs:
-                del slug_hrefs[slug]
+                lslug = slug.lower()
+                if lslug in slug_hrefs:
+                    del slug_hrefs[lslug]
 
             # Mark all the links whose slugs did not come back from the DB
             # query as "new"

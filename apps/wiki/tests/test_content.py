@@ -787,6 +787,8 @@ class ContentSectionToolTests(TestCase):
 
         document(title=u'Héritée', locale=u'fr', slug=u'CSS/Héritage',
                  save=True)
+        document(title=u'DOM/StyleSheet', locale=u'en-US',
+                 slug=u'DOM/StyleSheet', save=True)
 
         base_url = u'http://testserver/'
         vars = dict(
@@ -823,6 +825,11 @@ class ContentSectionToolTests(TestCase):
                 <a href="%(tag_url)s">Tag link</a>
                 <a href="%(feed_url)s">Feed link</a>
                 <a href="%(templates_url)s">Templates link</a>
+                <a href="/en-US/docs/DOM/stylesheet">Case sensitive 1</a>
+                <a href="/en-US/docs/DOM/Stylesheet">Case sensitive 1</a>
+                <a href="/en-US/docs/DOM/StyleSheet">Case sensitive 1</a>
+                <a href="/en-us/docs/dom/StyleSheet">Case sensitive 1</a>
+                <a href="/en-US/docs/dom/Styles">For good measure</a>
         """ % vars
         expected = u"""
                 <li><a href="%(nonen_slug)s">Héritée</a></li>
@@ -844,6 +851,11 @@ class ContentSectionToolTests(TestCase):
                 <a href="%(tag_url)s">Tag link</a>
                 <a href="%(feed_url)s">Feed link</a>
                 <a href="%(templates_url)s">Templates link</a>
+                <a href="/en-US/docs/DOM/stylesheet">Case sensitive 1</a>
+                <a href="/en-US/docs/DOM/Stylesheet">Case sensitive 1</a>
+                <a href="/en-US/docs/DOM/StyleSheet">Case sensitive 1</a>
+                <a href="/en-us/docs/dom/StyleSheet">Case sensitive 1</a>
+                <a class="new" href="/en-US/docs/dom/Styles">For good measure</a>
         """ % vars
 
         # Split the markup into lines, to better see failures
