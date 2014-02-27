@@ -79,15 +79,13 @@
 
 {% endblock %}
 
-{% block body_attributes %}data-slug="{{ document.slug }}" data-docid="{{ document.id }}" contextmenu="edit-history-menu"{% endblock body_attributes %}
+{% block body_attributes %}data-slug="{{ document.slug }}" contextmenu="edit-history-menu"{% endblock body_attributes %}
 
 {% block js %}
   {% if waffle.flag('search_doc_navigator') %}
   <script type="text/javascript">
     (function($, ga) {
-      {% if search_ref %}
-      $('.from-search-toc').mozSearchResults('{{ search_ref }}', ga);
-      {% endif %}
+      $('.from-search-toc').mozSearchResults('{{ search_url|safe }}', ga);
     })(jQuery, window._gaq || []);
   </script>
   {% endif %}
