@@ -21,7 +21,6 @@ class apache_config {
         require => Apache::Loadmodule['proxy']
     }
     apache::loadmodule { "vhost_alias": }
-    apache::loadmodule { "wsgi": }
     file { "/etc/apache2/ssl":
         ensure => directory, mode => 0644;
     }
@@ -53,7 +52,6 @@ class apache_config {
             Apache::Loadmodule['proxy'],
             Apache::Loadmodule['proxy_http'],
             Apache::Loadmodule['vhost_alias'],
-            Apache::Loadmodule['wsgi'],
         ];
     }
     service { "apache2":
@@ -132,7 +130,7 @@ class kuma_config {
         "kuma_update_product_details":
             user => "vagrant",
             cwd => "/home/vagrant/src",
-            command => "/usr/bin/python ./manage.py update_product_details",
+            command => "/home/vagrant/env/bin/python ./manage.py update_product_details",
             timeout => 1200, # Too long, but this can take awhile
             creates => "/home/vagrant/product_details_json/firefox_versions.json",
             require => [
@@ -141,24 +139,24 @@ class kuma_config {
         "kuma_sql_migrate":
             user => "vagrant",
             cwd => "/home/vagrant/src",
-            command => "/usr/bin/python ./vendor/src/schematic/schematic migrations/",
+            command => "/home/vagrant/env/bin/python ./vendor/src/schematic/schematic migrations/",
             require => [ Exec["kuma_update_product_details"],
                 Service["mysql"], File["/home/vagrant/logs"] ];
         "kuma_south_migrate":
             user => "vagrant",
             cwd => "/home/vagrant/src",
-            command => "/usr/bin/python manage.py migrate",
+            command => "/home/vagrant/env/bin/python manage.py migrate",
             require => [ Exec["kuma_sql_migrate"] ];
         "kuma_update_feeds":
             user => "vagrant",
             cwd => "/home/vagrant/src",
-            command => "/usr/bin/python ./manage.py update_feeds",
+            command => "/home/vagrant/env/bin/python ./manage.py update_feeds",
             onlyif => "/usr/bin/mysql -B -uroot kuma -e'select count(*) from feeder_entry' | grep '0'",
             require => [ Exec["kuma_south_migrate"] ];
         "kuma_index_database":
             user => "vagrant",
             cwd => "/home/vagrant/src",
-            command => "/usr/bin/python manage.py reindex -p 5",
+            command => "/home/vagrant/env/bin/python manage.py reindex -p 5",
             timeout => 600,
             require => [ Service["elasticsearch"] ];
     }

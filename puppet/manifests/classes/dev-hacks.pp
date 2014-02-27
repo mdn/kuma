@@ -1,16 +1,5 @@
-# Ensure some handy dev tools are available.
-class dev_tools {
-    package {
-        [ "build-essential", "git", "subversion", "mercurial", "vim",
-            "nfs-common", "openjdk-7-jdk", "tmux", "translate-toolkit",
-            "gettext", "htop", "ack-grep", "locate"]:
-            ensure => installed;
-    }
-}
-
 # Do some dirty, dirty things to make development nicer.
 class dev_hacks {
-
     exec { 'locale-gen':
         command => "/usr/sbin/locale-gen en_US.utf8",
         unless => '/bin/grep -q "en_US.utf8" /etc/default/locale'

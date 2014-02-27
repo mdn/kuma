@@ -1,4 +1,5 @@
 language: python
+cache: apt
 
 python:
     - "2.6"
@@ -12,17 +13,20 @@ services:
 
 before_install:
     - sudo apt-get update -qq
-    - sudo apt-get install build-essential axel python-dev libxml2-dev libxslt-dev libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev zlib1g-dev sqlite3 libtidy-dev
+    - sudo apt-get install build-essential aria2 python2.6-dev libxml2-dev libxslt-dev libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev zlib1g-dev sqlite3 libtidy-dev
     - sudo ln -s /usr/lib/`uname -i`-linux-gnu/libfreetype.so /usr/lib
     - sudo ln -s /usr/lib/`uname -i`-linux-gnu/libz.so /usr/lib
-    - axel -a https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/wheels.tar.gz
-    - tar -zxf wheels.tar.gz
-    - axel -a https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/product_details_json.tar.gz
+    - aria2c -j 10 https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/wheels.tar.xz
+    - aria2c -j 10 https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/travis_wheels.tar.xz
+    - aria2c -j 10 https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/product_details_json.tar.gz
+    - tar xvfJ wheels.tar.xz
+    - tar xvfJ travis_wheels.tar.xz
     - tar -C .. -zxf product_details_json.tar.gz
 
 install:
-    - pip install -U pip wheel
-    - pip install -r requirements/compiled.txt
+    # we install 1.4.9 here separately because 1.4.x can't be packaged as a wheel file
+    - pip install -U pip wheel Django==1.4.9
+    - pip install --no-index --find-links=travis_wheels -r requirements/compiled.txt
     - pip install --no-index --find-links=wheels -r requirements/prod.txt -r requirements/dev.txt
 
 before_script:

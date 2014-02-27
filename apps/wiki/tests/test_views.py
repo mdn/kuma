@@ -2313,14 +2313,14 @@ class DocumentWatchTests(TestCaseBase):
         response = post(self.client, 'wiki.document_watch',
                        args=[self.document.slug])
         eq_(200, response.status_code)
-        assert (EditDocumentEvent.is_notifying(user, self.document),
-                'Watch was not created')
+        assert EditDocumentEvent.is_notifying(user, self.document), \
+            'Watch was not created'
         # Unsubscribe
         response = post(self.client, 'wiki.document_unwatch',
                        args=[self.document.slug])
         eq_(200, response.status_code)
-        assert (not EditDocumentEvent.is_notifying(user, self.document),
-                'Watch was not destroyed')
+        assert not EditDocumentEvent.is_notifying(user, self.document), \
+            'Watch was not destroyed'
 
 
 class SectionEditingResourceTests(TestCaseBase):

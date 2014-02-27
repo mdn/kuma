@@ -9,7 +9,7 @@ ip_address: 192.168.10.55
 memory_size: 768
 number_cpus: 2
 box: "kuma-ubuntu"
-virtual_box_url: "http://people.mozilla.org/~lorchard/vm/kuma-ubuntu-20140129.box"
+virtual_box_url: "https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/vagrant/mdn/kuma-ubuntu-20140129.box"
 vmware_box_url: "http://people.mozilla.com/~jleidel/vagrant/kuma-precise-vmware.box"
 package_name: "kuma-ubuntu.box"
 mount_point: "/home/vagrant/src"
