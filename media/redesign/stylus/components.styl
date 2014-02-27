@@ -154,3 +154,25 @@ component-submenu-method(menu-width, num-columns, background-color, arrow-border
 .submission .section > legend {
     margin: 0;
 }
+
+.submenu {
+  component-submenu-method(160px, 1, button-background, button-shadow-color);
+  bidi-style(right, 0, left, auto);
+  top: 40px;
+  z-index: 3;
+  border-top: 1px solid button-shadow-color;
+
+  .submenu-column {
+    float: left;
+  }
+
+  &:before {
+    bidi-style(right, 10px, left, auto);
+    top: -18px;
+  }
+
+  &:after {
+    bidi-style(right, 10px, left, auto);
+    top: -20px;
+  }
+}

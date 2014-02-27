@@ -6,15 +6,6 @@
   $('.toggleable').mozTogglers();
 
   /*
-    Create the settings and languages menu
-  */
-  (function() {
-    var $menus = $('#settings-menu, #languages-menu');
-    $menus.mozMenu();
-    $menus.parent().find('.submenu').mozKeyboardNav();
-  })();
-
-  /*
     Toggle for quick links show/hide
   */
   (function() {
