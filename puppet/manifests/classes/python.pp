@@ -9,10 +9,6 @@ class python_prereqs {
           ensure => purged;
     }
     file {
-        "/home/vagrant/src/puppet/cache/pip":
-        ensure => directory;
-    }
-    file {
         "/home/vagrant/src/puppet/cache/wheels":
         ensure => directory;
     }
@@ -51,6 +47,7 @@ class python_wheels {
             cwd => "/home/vagrant/src/puppet/cache/wheels",
             command => "/usr/bin/axel -a https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/wheels.tar.xz && /bin/tar xvfJ *.tar.xz && /bin/rm wheels.tar.xz",
             creates => '/home/vagrant/src/puppet/cache/wheels/wheels',
+            require => File["/home/vagrant/src/puppet/cache/wheels"],
             user => 'vagrant';
         "install-wheels":
             cwd => '/home/vagrant/src',
