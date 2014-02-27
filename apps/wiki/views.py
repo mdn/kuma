@@ -97,6 +97,10 @@ OS_ABBR_JSON = json.dumps(dict([(o.slug, True)
                                 for o in OPERATING_SYSTEMS]))
 BROWSER_ABBR_JSON = json.dumps(dict([(v.slug, v.show_in_ui)
                                      for v in FIREFOX_VERSIONS]))
+TOC_FILTERS = {1: wiki.content.SectionTOCFilter,
+               2: wiki.content.H2TOCFilter,
+               3: wiki.content.H3TOCFilter,
+               4: wiki.content.SectionTOCFilter}
 
 
 def _version_groups(versions):
@@ -295,28 +299,23 @@ def _join_slug(parent_split, slug):
     return '/'.join(parent_split)
 
 
-@csrf_exempt
-@require_http_methods(['GET', 'PUT', 'HEAD'])
-@allow_CORS_GET
-@accepts_auth_key
-@process_document_path
-@condition(last_modified_func=_document_last_modified)
-@transaction.autocommit  # For rendering bookkeeping, needs immediate updates
-@newrelic.agent.function_trace()
-def document(request, document_slug, document_locale):
-    """View a wiki document."""
+#####################################################################
+#
+# Utility functions which support the document() view and its various
+# sub-views.
+#
+#####################################################################
 
-    # Check for auth'd PUT API request, branch off to handler if needed.
-    if 'PUT' == request.method:
-        if not request.authkey and not request.user.is_authenticated():
-            raise PermissionDenied
-        return _document_PUT(request, document_slug, document_locale)
 
+def _get_doc_and_fallback_reason(document_locale, document_slug):
+    """
+    Attempt to fetch a Document at the given locale and slug, and
+    return it, or return a fallback reason if we weren't able to.
+    
+    """
+    doc = None
     fallback_reason = None
-    base_url = request.build_absolute_uri('/')
-    slug_dict = _split_slug(document_slug)
-
-    # If a slug isn't available in the requested locale, fall back to en-US:
+    
     try:
         doc = Document.objects.get(locale=document_locale, slug=document_slug)
         if (not doc.current_revision and doc.parent and
@@ -325,131 +324,116 @@ def document(request, document_slug, document_locale):
             # and OK to fall back to parent (parent is approved).
             fallback_reason = 'translation_not_approved'
         elif not doc.current_revision:
-            # No current_revision, no parent with current revision, so
-            # nothing to show.
             fallback_reason = 'no_content'
-
     except Document.DoesNotExist:
-
-        # Possible the document once existed, but is now deleted.
-        # If so, show that it was deleted.
-        try:
-            deletion_logs = DocumentDeletionLog.objects.filter(
-                locale=document_locale,
-                slug=document_slug
-            )
+        pass
+    
+    return doc, fallback_reason
             
-            return render(request,
-                          'wiki/deletion_log.html',
-                          {'deletion_log': deletion_logs[0]})
-        except IndexError:
-            pass
+    
+def _check_for_deleted_document(document_locale, document_slug):
+    """
+    If a Document is not found, see if there's a deletion log for it.
+    
+    """
+    return DocumentDeletionLog.objects.filter(
+        locale=document_locale,
+        slug=document_slug
+    )
 
-        # We can throw a 404 immediately if the request type is HEAD
-        if request.method == 'HEAD':
-            raise Http404()
 
+def _default_locale_fallback(request, document_slug, document_locale):
+    """
+    If we're falling back to a Document in the default locale, figure
+    out why and whether we can redirect to a translation in the
+    requested locale.
+    
+    """
+    fallback_doc = None
+    redirect_url = None
+    fallback_reason = None
+
+    try:
+        fallback_doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE,
+                                            slug=document_slug)
+
+        # If there's a translation to the requested locale, take it:
+        translation = fallback_doc.translated_to(document_locale)
+
+        if translation and translation.current_revision:
+            url = translation.get_absolute_url()
+            redirect_url = urlparams(url, query_dict=request.GET)
+        elif translation and fallback_doc.current_revision:
+            # Found a translation but its current_revision is None
+            # and OK to fall back to parent (parent is approved).
+            fallback_reason = 'translation_not_approved'
+        elif fallback_doc.current_revision:
+            # There is no translation
+            # and OK to fall back to parent (parent is approved).
+            fallback_reason = 'no_translation'
+    except Document.DoesNotExist:
+        pass
+
+    return fallback_doc, fallback_reason, redirect_url
+
+
+def _document_redirect_to_create(document_slug, document_locale, slug_dict):
+    """
+    When a Document doesn't exist but the user can create it, return
+    the creation URL to redirect to.
+    
+    """
+    url = reverse('wiki.new_document', locale=document_locale)
+    if slug_dict['length'] > 1:
         try:
-            # Look in default language:
-            doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE,
-                                       slug=document_slug)
-
-            # If there's a translation to the requested locale, take it:
-            translation = doc.translated_to(document_locale)
-            if translation and translation.current_revision:
-                url = translation.get_absolute_url()
-                url = urlparams(url, query_dict=request.GET)
-                return HttpResponseRedirect(url)
-            elif translation and doc.current_revision:
-                # Found a translation but its current_revision is None
-                # and OK to fall back to parent (parent is approved).
-                fallback_reason = 'translation_not_approved'
-            elif doc.current_revision:
-                # There is no translation
-                # and OK to fall back to parent (parent is approved).
-                fallback_reason = 'no_translation'
-
+            parent_doc = Document.objects.get(locale=document_locale,
+                                              slug=slug_dict['parent'],
+                                              is_template=0)
+            url = urlparams(url, parent=parent_doc.id,
+                            slug=slug_dict['specific'])
         except Document.DoesNotExist:
+            raise Http404
+    else:
+        # This is a "base level" redirect, i.e. no parent
+        url = urlparams(url, slug=document_slug)
+    return url
 
-            # If any of these parameters are present, throw a real 404.
-            if (request.GET.get('raw', False) is not False or
-                request.GET.get('include', False) is not False or
-                request.GET.get('nocreate', False) is not False or
-                not request.user.is_authenticated()):
-                raise Http404()
 
-            # The user may be trying to create a child page; if a parent exists
-            # for this document, redirect them to the "Create" page
-            # Otherwise, they could be trying to create a main level doc
-            url = reverse('wiki.new_document', locale=document_locale)
+def _check_404_params(request):
+    """
+    If a Document is not found, we may 404 immediately based on
+    request parameters.
+    
+    """
+    params = []
+    for request_param in ('raw', 'include', 'nocreate'):
+        params.append(request.GET.get(request_param, None))
+    return any(params) or (not request.user.is_authenticated())
 
-            if slug_dict['length'] > 1:
-                try:
-                    parent_doc = Document.objects.get(locale=document_locale,
-                                                      slug=slug_dict['parent'],
-                                                      is_template=0)
 
-                    # Redirect to create page with parent ID
-                    url = urlparams(url, parent=parent_doc.id,
-                                    slug=slug_dict['specific'])
-                    return HttpResponseRedirect(url)
-                except Document.DoesNotExist:
-                    raise Http404
+def _set_common_headers(doc, section_id, response):
+    """
+    Perform some response-header manipulation that gets used in
+    several places.
+    
+    """
+    response['ETag'] = doc.calculate_etag(section_id)
+    if doc.current_revision:
+        response['X-kuma-revision'] = doc.current_revision.id
+    return response
 
-            # This is a "base level" redirect, i.e. no parent
-            url = urlparams(url, slug=document_slug)
-            return HttpResponseRedirect(url)
 
-    # Obey explicit redirect pages:
-    # Don't redirect on redirect=no (like Wikipedia), so we can link from a
-    # redirected-to-page back to a "Redirected from..." link, so you can edit
-    # the redirect.
-    redirect_url = (None if request.GET.get('redirect') == 'no'
-                    else doc.redirect_url())
-
-    if redirect_url and redirect_url != doc.get_absolute_url():
-        url = urlparams(redirect_url, query_dict=request.GET)
-        messages.add_message(request, messages.WARNING,
-            # TODO: Re-enable the link in this message after Django >1.5 upgrade
-            # Redirected from <a href="%(url)s?redirect=no">%(url)s</a>
-            mark_safe(_(u'''
-                Redirected from %(url)s
-            ''') % {
-                "url": request.build_absolute_uri(doc.get_absolute_url())
-            }),
-            extra_tags='wiki_redirect')
-        return HttpResponsePermanentRedirect(url)
-
-    # We've got a doc, so now let's enforce the view_document permission
-    if not request.user.has_perm('wiki.view_document', doc):
-        raise PermissionDenied
-
-    # Utility to set common headers used by all response exit points
-    response_headers = dict()
-
-    # Grab some parameters that affect output
-    section_id = request.GET.get('section', None)
-    show_raw = request.GET.get('raw', False) is not False
-    show_summary = request.GET.get('summary', False) is not False
-    is_include = request.GET.get('include', False) is not False
-    need_edit_links = request.GET.get('edit_links', False) is not False
-
-    def set_common_headers(r):
-        r['ETag'] = doc.calculate_etag(section_id)
-        if doc.current_revision:
-            r['x-kuma-revision'] = doc.current_revision.id
-        # Finally, set any extra headers. update() doesn't work here.
-        for k, v in response_headers.items():
-            r[k] = v
-        return r
-
-    render_raw_fallback = False
-
-    # Grab the document HTML as a fallback, then attempt to use kumascript:
+def _get_html_and_errors(request, doc, rendering_params):
+    """
+    Get the initial HTML for a Document, including determining whether
+    to use kumascript to render it.
+    
+    """
     doc_html, ks_errors = doc.html, None
-    use_rendered = kumascript.should_use_rendered(doc, request.GET)
-    if use_rendered:
+    render_raw_fallback = False
+    base_url = request.build_absolute_uri('/')
 
+    if rendering_params['use_rendered']:
         if (request.GET.get('bleach_new', False) is not False and
                 request.user.is_authenticated()):
             # Temporary bleach_new query option to switch to Constance-based
@@ -478,73 +462,248 @@ def document(request, document_slug, document_locale):
                 # content
                 render_raw_fallback = True
 
-    toc_html = None
-    if not doc.is_template:
+    return doc_html, ks_errors, render_raw_fallback
 
+
+def _generate_toc_html(doc, tool, rendering_params):
+    """
+    Generate the HTML, if needed, for a Document's table of contents.
+    
+    """
+    toc_html = None
+    if doc.show_toc and not rendering_params['raw']:
+        toc_filter = TOC_FILTERS[doc.current_revision.toc_depth]
+        toc_html = (wiki.content.parse(tool.serialize())
+                    .filter(toc_filter)
+                    .serialize())
+    return toc_html
+
+
+def _filter_doc_html(request, doc, tool, rendering_params):
+    """
+    Apply needed filtering/annotating operations to a Document's HTML.
+    
+    """
+    # If a section ID is specified, extract that section.
+    if rendering_params['section']:
+        tool.extractSection(rendering_params['section'])
+
+    # Annotate links within the page, but only if not sending raw source.
+    if not rendering_params['raw']:
+        base_url = request.build_absolute_uri('/')
+        tool.annotateLinks(base_url=base_url)
+
+    # If this user can edit the document, inject some section editing
+    # links.
+    if ((rendering_params['edit_links'] or not rendering_params['raw']) and
+        request.user.is_authenticated() and
+        doc.allows_revision_by(request.user)):
+        tool.injectSectionEditingLinks(doc.full_path, doc.locale)
+    
+    # ?raw view is often used for editors - apply safety filtering.
+    if rendering_params['raw']:
+        tool.filterEditorSafety()
+
+    doc_html = tool.serialize()
+
+    # If this is an include, filter out the class="noinclude" blocks.
+    if rendering_params['include']:
+        doc_html = (wiki.content.filter_out_noinclude(doc_html))
+    
+    # If ?summary is on, just serve up the summary as doc HTML
+    if rendering_params['summary']:
+        doc_html = doc.get_summary(strip_markup=False,
+                                   use_rendered=rendering_params['use_rendered'])
+
+    return doc_html
+
+
+def _get_seo_parent_title(slug_dict, document_locale):
+    """
+    Get parent-title information for SEO purposes.
+    
+    """
+    seo_parent_title = ''
+    if slug_dict['seo_root']:
+        try:
+            seo_root_doc = Document.objects.get(locale=document_locale,
+                                            slug=slug_dict['seo_root'])
+            #TODO: will this break a unicode title?
+            seo_parent_title = ' - ' + seo_root_doc.title
+        except Document.DoesNotExist:
+            pass
+    return seo_parent_title
+
+
+#####################################################################
+#
+# Specialized sub-views which may be called by document().
+#
+#####################################################################
+
+
+@newrelic.agent.function_trace()
+@allow_CORS_GET
+def _document_deleted(request, deletion_logs):
+    """
+    When a Document has been deleted, display a notice.
+    
+    """
+    return render(request,
+                  'wiki/deletion_log.html',
+                  {'deletion_logs': deletion_logs})
+
+
+@newrelic.agent.function_trace()
+@allow_CORS_GET
+def _document_raw(request, doc, doc_html, rendering_params):
+    """
+    Display a raw Document.
+    
+    """
+    response = HttpResponse(doc_html)
+    response['X-Frame-Options'] = 'Allow'
+    response['X-Robots-Tag'] = 'noindex'
+    absolute_url = doc.get_absolute_url()
+
+    if absolute_url in (constance.config.KUMA_CUSTOM_CSS_PATH,
+                        constance.config.KUMA_CUSTOM_SAMPLE_CSS_PATH):
+        response['Content-Type'] = 'text/css; charset=utf-8'
+    elif doc.is_template:
+        # Treat raw, un-bleached template source as plain text, not HTML.
+        response['Content-Type'] = 'text/plain; charset=utf-8'
+    
+    return _set_common_headers(doc,
+                               rendering_params['section'],
+                               response)
+
+
+@csrf_exempt
+@require_http_methods(['GET', 'PUT', 'HEAD'])
+@allow_CORS_GET
+@accepts_auth_key
+@process_document_path
+@condition(last_modified_func=_document_last_modified)
+@transaction.autocommit  # For rendering bookkeeping, needs immediate updates
+@newrelic.agent.function_trace()
+def document(request, document_slug, document_locale):
+    """
+    View a wiki document.
+    
+    """
+    # PUT requests go to the write API.
+    if request.method == 'PUT':
+        if not request.authkey and \
+           not request.user.is_authenticated():
+            raise PermissionDenied
+        return _document_PUT(request,
+                             document_slug,
+                             document_locale)
+
+    fallback_reason = None
+    slug_dict = _split_slug(document_slug)
+
+    # Is there a document at this slug, in this locale?
+    doc, fallback_reason = _get_doc_and_fallback_reason(document_locale,
+                                                        document_slug)
+
+    if doc is None:
+        # Possible the document once existed, but is now deleted.
+        # If so, show that it was deleted.
+        deletion_logs = _check_for_deleted_document(document_locale, document_slug)
+        if deletion_logs.exists():
+            return _document_deleted(request, deletion_logs)
+
+        # We can throw a 404 immediately if the request type is HEAD.
+        # TODO: take a shortcut if the document was found?
+        if request.method == 'HEAD':
+            raise Http404
+
+        # Check if we should fall back to default locale.
+        fallback_doc, fallback_reason, redirect_url = _default_locale_fallback(request,
+                                                                               document_slug,
+                                                                               document_locale)
+        if fallback_doc is not None:
+            doc = fallback_doc
+            if redirect_url is not None:
+                return HttpResponseRedirect(redirect_url)
+        else:
+            if _check_404_params(request):
+                raise Http404
+
+            # The user may be trying to create a child page; if a parent exists
+            # for this document, redirect them to the "Create" page
+            # Otherwise, they could be trying to create a main level doc.
+            create_url = _document_redirect_to_create(document_slug,
+                                                      document_locale,
+                                                      slug_dict)
+            return HttpResponseRedirect(create_url)
+
+    # We found a Document. Now we need to figure out how we're going
+    # to display it.
+    
+    # Step 1: If we're a redirect, and redirecting hasn't been
+    # disabled, redirect.
+
+    # Obey explicit redirect pages:
+    # Don't redirect on redirect=no (like Wikipedia), so we can link from a
+    # redirected-to-page back to a "Redirected from..." link, so you can edit
+    # the redirect.
+    redirect_url = (None if request.GET.get('redirect') == 'no'
+                    else doc.redirect_url())
+
+    if redirect_url and redirect_url != doc.get_absolute_url():
+        url = urlparams(redirect_url, query_dict=request.GET)
+        messages.add_message(request, messages.WARNING,
+            # TODO: Re-enable the link in this message after Django >1.5 upgrade
+            # Redirected from <a href="%(url)s?redirect=no">%(url)s</a>
+            mark_safe(_(u'''
+                Redirected from %(url)s
+            ''') % {
+                "url": request.build_absolute_uri(doc.get_absolute_url())
+            }),
+            extra_tags='wiki_redirect')
+        return HttpResponsePermanentRedirect(url)
+
+    # Step 2: Kick 'em out if they're not allowed to view this Document.
+    if not request.user.has_perm('wiki.view_document', doc):
+        raise PermissionDenied
+
+    # Step 3: Read some request params to see what we're supposed to
+    # do.
+    rendering_params = {}
+    for param in ('raw', 'summary',
+                  'include', 'edit_links'):
+        rendering_params[param] = (request.GET.get(param, False) \
+                                   is not False)
+    rendering_params['section'] = request.GET.get('section', None)
+    rendering_params['render_raw_fallback'] = False
+    rendering_params['use_rendered'] = kumascript.should_use_rendered(doc, request.GET)
+
+    # Step 4: Get us some HTML to play with.
+    doc_html, ks_errors, render_raw_fallback = _get_html_and_errors(request,
+                                                                    doc,
+                                                                    rendering_params)
+    rendering_params['render_raw_fallback'] = render_raw_fallback
+    toc_html = None
+
+    # Step 5: Start parsing and applying filters.
+    if not doc.is_template:
         doc_html = (wiki.content.parse(doc_html)
                                 .injectSectionIDs()
                                 .serialize())
+        tool = wiki.content.parse(doc_html)
 
-        # Start applying some filters to the document HTML
-        tool = (wiki.content.parse(doc_html))
+        toc_html = _generate_toc_html(doc, tool, rendering_params)
 
-        # Generate a TOC for the document using the sections provided by
-        # SectionEditingLinks
-        if doc.show_toc and not show_raw:
-            toc_filter = {1: wiki.content.SectionTOCFilter,
-                          2: wiki.content.H2TOCFilter,
-                          3: wiki.content.H3TOCFilter,
-                          4: wiki.content.SectionTOCFilter}[doc.current_revision.toc_depth]
-            toc_html = (wiki.content.parse(tool.serialize())
-                                    .filter(toc_filter)
-                                    .serialize())
+        doc_html = _filter_doc_html(request, doc,
+                                    tool, rendering_params)
 
-        # If a section ID is specified, extract that section.
-        if section_id:
-            tool.extractSection(section_id)
+    # Step 6: If we're doing raw view, bail out to that now.
+    if rendering_params['raw']:
+        return _document_raw(request, doc, doc_html, rendering_params)
 
-        # Annotate links within the page, but only if not sending raw source.
-        if not show_raw:
-            tool.annotateLinks(base_url=base_url)
-
-        # If this user can edit the document, inject some section editing
-        # links.
-        if ((need_edit_links or not show_raw) and
-                request.user.is_authenticated() and
-                doc.allows_revision_by(request.user)):
-            tool.injectSectionEditingLinks(doc.full_path, doc.locale)
-
-        # ?raw view is often used for editors - apply safety filtering.
-        if show_raw:
-            tool.filterEditorSafety()
-
-        doc_html = tool.serialize()
-
-        # If this is an include, filter out the class="noinclude" blocks.
-        if is_include:
-            doc_html = (wiki.content.filter_out_noinclude(doc_html))
-    
-    # If ?summary is on, just serve up the summary as doc HTML
-    if show_summary:
-        doc_html = doc.get_summary(strip_markup=False,
-                                   use_rendered=use_rendered)
-
-    # if ?raw parameter is supplied, then we respond with raw page source
-    # without template wrapping or edit links. This is also permissive for
-    # iframe inclusion
-    if show_raw:
-        response = HttpResponse(doc_html)
-        response['X-Frame-Options'] = 'Allow'
-        response['X-Robots-Tag'] = 'noindex'
-        absolute_url = doc.get_absolute_url()
-        if (constance.config.KUMA_CUSTOM_CSS_PATH == absolute_url or
-            constance.config.KUMA_CUSTOM_SAMPLE_CSS_PATH == absolute_url):
-            response['Content-Type'] = 'text/css; charset=utf-8'
-        elif doc.is_template:
-            # Treat raw, un-bleached template source as plain text, not HTML.
-            response['Content-Type'] = 'text/plain; charset=utf-8'
-        return set_common_headers(response)
-
+    # Step 7: Get related info for this Document.
     related = doc.related_documents.order_by('-related_to__in_common')[0:5]
 
     # Get the contributors. (To avoid this query, we could render the
@@ -555,6 +714,7 @@ def document(request, document_slug, document_locale):
                                               .filter(is_approved=True)
                                               .only('creator')
                                               .select_related('creator')])
+
     # TODO: Port this kitsune feature over, eventually:
     #     https://github.com/jsocol/kitsune/commit/
     #       f1ebb241e4b1d746f97686e65f49e478e28d89f2
@@ -563,43 +723,35 @@ def document(request, document_slug, document_locale):
     seo_summary = ''
     if not doc.is_template:
         seo_summary = doc.get_summary(strip_markup=True,
-                                      use_rendered=use_rendered)
+                                      use_rendered=rendering_params['use_rendered'])
 
-    # Get the additional title information, if necessary
-    seo_parent_title = ''
-
-    if slug_dict['seo_root']:
-        try:
-            seo_root_doc = Document.objects.get(locale=document_locale,
-                                                slug=slug_dict['seo_root'])
-            seo_parent_title = ' - ' + seo_root_doc.title
-        except Document.DoesNotExist:
-            pass
+    # Get the additional title information, if necessary.
+    seo_parent_title = _get_seo_parent_title(slug_dict, document_locale)
 
     # Retrieve file attachments
     attachments = _format_attachment_obj(doc.attachments)
+
+    # Provide additional information if user came from a search
     search_ref = request.GET.get('search') or ref_from_referer(request)
 
-    context = {
-        'document': doc,
-        'document_html': doc_html,
-        'toc_html': toc_html,
-        'related': related,
-        'contributors': contributors,
-        'fallback_reason': fallback_reason,
-        'kumascript_errors': ks_errors,
-        'render_raw_fallback': render_raw_fallback,
-        'seo_summary': seo_summary,
-        'seo_parent_title': seo_parent_title,
-        'attachment_data': attachments,
-        'search_ref': search_ref,
-        'attachment_data_json': json.dumps(attachments),
-    }
+    # Step 8: Bundle it all up and, finally, return.
+    context = {'document': doc,
+               'document_html': doc_html,
+               'toc_html': toc_html,
+               'related': related,
+               'contributors': contributors,
+               'fallback_reason': fallback_reason,
+               'kumascript_errors': ks_errors,
+               'render_raw_fallback': rendering_params['render_raw_fallback'],
+               'seo_summary': seo_summary,
+               'seo_parent_title': seo_parent_title,
+               'attachment_data': attachments,
+               'attachment_data_json': json.dumps(attachments)}
     context.update(SHOWFOR_DATA)
 
     response = render(request, 'wiki/document.html', context)
-    return set_common_headers(response)
-
+    return _set_common_headers(doc, rendering_params['section'], response)
+        
 
 def _document_PUT(request, document_slug, document_locale):
     """Handle PUT requests as document write API"""
