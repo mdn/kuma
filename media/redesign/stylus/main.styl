@@ -3,15 +3,17 @@
 */
 
 /* configuration and functionality - no output */
-@import 'vars'
-@import 'mixins'
+@import 'includes/vars'
+@import 'includes/mixins'
 
-/* output */
-@import 'fonts'
-@import 'reset'
-@import 'globals'
-@import 'tags'
-@import 'grid'
-@import 'components'
-@import 'structure'
-@import 'classes'
+/* stylesheets also used elsewhere - output */
+@import 'includes/grid'
+
+/* stylesheets used only in main - output  */
+@import 'main/fonts'
+@import 'main/reset'
+@import 'main/globals'
+@import 'main/tags'
+@import 'main/components'
+@import 'main/structure'
+@import 'main/classes'
