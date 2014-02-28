@@ -15,17 +15,16 @@ if [ ! -d "$CSSDIR" ]; then
   mkdir $CSSDIR
 fi
 
-FILENAMES=(main wiki demo-studio profile search zones home wiki-syntax users error error-404 promote sphinx dashboards diff calendar newsletter badges wiki-editor)
-STYLESHEETS=$(printf "$STYLUSDIR/%s.styl " "${FILENAMES[@]}")
+STYLESHEETS=($STYLUSDIR/*.styl)
 if [ $WATCH ]; then
   echo Watching and automatically compiling stylesheets
 
   # Using $STYLESHEETS directly so that stylus only watches each stylesheet
   # once, even if it is @included multiple times.
   if [ $QUIET ]; then
-    (stylus $STYLESHEETS --out $CSSDIR --compress --watch &) &> /dev/null
+    (stylus ${STYLESHEETS[@]} --out $CSSDIR --compress --watch &) &> /dev/null
   else
-    stylus $STYLESHEETS --out $CSSDIR --compress --watch
+    stylus ${STYLESHEETS[@]} --out $CSSDIR --compress --watch
   fi
 else
   # Iterating through stylesheets so that shell output is immediate.
