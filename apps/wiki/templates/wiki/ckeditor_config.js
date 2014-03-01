@@ -91,6 +91,14 @@
   CKEDITOR.timestamp = '{{ BUILD_ID_JS }}';
 
   CKEDITOR.editorConfig = function(config) {
+    // Should be kept in sync with the list in ckeditor/source/build-config.js.
+    // Defining plugins list explicitly lets us to switch easily between dev and build versions.
+    config.plugins =
+      'a11yhelp,about,basicstyles,bidi,blockquote,clipboard,contextmenu,dialogadvtab,elementspath,enterkey,' +
+      'entities,find,htmlwriter,image,indentlist,language,link,list,liststyle,magicline,maximize,pastefromword,' +
+      'pastetext,preview,removeformat,resize,scayt,showblocks,showborders,sourcearea,stylescombo,table,tabletools,' +
+      'toolbar,undo,wsc,wysiwygarea';
+
     // Need to be ported to v4.
     // config.extraPlugins = 'definitionlist,mdn-buttons,mdn-link,mdn-syntaxhighlighter,mdn-keystrokes,mdn-attachments,mdn-image,mdn-enterkey,mdn-wrapstyle,mdn-table,tablesort,mdn-sampler,mdn-sample-finder,mdn-maximize,mdn-redirect,youtube,autogrow,texzilla';
 
