@@ -14,6 +14,8 @@ var CKBUILDER_CONFIG = {
 		'.mailmap',
 		'.DS_Store'
 	],
+
+	/* Should be kept in sync with the list in ckeditor_config.js. */
 	plugins: {
 		a11yhelp: 1,
 		about: 1,
