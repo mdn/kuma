@@ -4,3 +4,12 @@
 [submodule "kumascript"]
 	path = kumascript
 	url = git://github.com/mozilla/kumascript.git
+[submodule "media/js/libs/ckeditor/source/ckeditor"]
+	path = media/js/libs/ckeditor/source/ckeditor
+	url = git@github.com:ckeditor/ckeditor-dev.git
+[submodule "media/js/libs/ckeditor/source/plugins/scayt"]
+	path = media/js/libs/ckeditor/source/plugins/scayt
+	url = https://github.com/WebSpellChecker/ckeditor-plugin-scayt.git
+[submodule "media/js/libs/ckeditor/source/plugins/wsc"]
+	path = media/js/libs/ckeditor/source/plugins/wsc
+	url = https://github.com/WebSpellChecker/ckeditor-plugin-wsc.git

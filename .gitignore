@@ -37,3 +37,4 @@ docs/_build/
 maintenance/media
 wheelhouse
 .awsconfig
+media/js/libs/ckeditor/source/ckbuilder
