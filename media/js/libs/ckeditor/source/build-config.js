@@ -55,6 +55,7 @@ var CKBUILDER_CONFIG = {
 		wsc: 1,
 		wysiwygarea: 1,
 		'mdn-format': 1,
+		'mdn-syntaxhighlighter': 1,
 		'mdn-system-integration': 1
 	}
 };
