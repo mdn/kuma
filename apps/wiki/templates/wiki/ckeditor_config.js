@@ -97,7 +97,9 @@
       'a11yhelp,about,basicstyles,bidi,blockquote,clipboard,contextmenu,dialogadvtab,elementspath,enterkey,' +
       'entities,find,htmlwriter,image,indentlist,language,link,list,liststyle,magicline,maximize,pastefromword,' +
       'pastetext,preview,removeformat,resize,scayt,showblocks,showborders,sourcearea,stylescombo,table,tabletools,' +
-      'toolbar,undo,wsc,wysiwygarea';
+      'toolbar,undo,wsc,wysiwygarea,' +
+      // MDN's plugins.
+      'mdn-format';
 
     // Need to be ported to v4.
     // config.extraPlugins = 'definitionlist,mdn-buttons,mdn-link,mdn-syntaxhighlighter,mdn-keystrokes,mdn-attachments,mdn-image,mdn-enterkey,mdn-wrapstyle,mdn-table,tablesort,mdn-sampler,mdn-sample-finder,mdn-maximize,mdn-redirect,youtube,autogrow,texzilla';
