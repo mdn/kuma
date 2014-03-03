@@ -1,10 +1,10 @@
 (function ($) {
 
-    $('#recent_badge_awards .close').click(function () {
+    $('#recent_badge_awards .close').on('click', function() {
         $('#recent_badge_awards').hide();
     });
 
-    $("form.obi_issuer button.issue").click(function () {
+    $('form.obi_issuer button.issue').on('click', function() {
         // Grab the hosted assertion URL from the header link.
         var assertion_url =
             $('head link[rel="alternate"][type="application/json"]')
