@@ -748,40 +748,6 @@ class DocumentListTests(TestCaseBase):
         eq_(1, len(doc('#document-list ul.documents li')))
 
 
-class DocumentRevisionsTests(SkippedTestCase):
-    """Tests for the Document Revisions template"""
-    fixtures = ['test_users.json']
-
-    def test_document_revisions_list(self):
-        """Verify the document revisions list view."""
-        d = _create_document()
-        user = User.objects.get(pk=118533)
-        r1 = revision(summary="a tweak", content='lorem ipsum dolor',
-                      keywords='kw1 kw2', document=d, creator=user)
-        r1.save()
-        r2 = revision(summary="another tweak", content='lorem dimsum dolor',
-                      keywords='kw1 kw2', document=d, creator=user)
-        r2.save()
-        response = self.client.get(reverse('wiki.document_revisions',
-                                   args=[d.slug]))
-        eq_(200, response.status_code)
-        doc = pq(response.content)
-        eq_(3, len(doc('#revision-list li')))
-        # Verify there is no Review link
-        eq_(0, len(doc('#revision-list div.status a')))
-        eq_('Unreviewed', doc('#revision-list div.status:first').text())
-
-        # Log in as user with permission to review
-        self.client.login(username='admin', password='testpass')
-        response = self.client.get(reverse('wiki.document_revisions',
-                                   args=[d.slug]))
-        eq_(200, response.status_code)
-        doc = pq(response.content)
-        # Verify there are Review links now
-        eq_(2, len(doc('#revision-list div.status a')))
-        eq_('Review', doc('#revision-list div.status:first').text())
-
-
 class ReviewRevisionTests(SkippedTestCase):
     """Tests for Review Revisions and Translations"""
     fixtures = ['test_users.json']
