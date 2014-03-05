@@ -8,17 +8,14 @@
         href="{{ url('badger.feeds.awards_recent', 'atom') }}" />
 {% endblock %}
 
-{% block intro %}
-    {{ _('Badges:') }}
-    {% if badge %}
-        <b>{{ _("Awards for {badge}") | f(badge=badge) }}</b>
-    {% else: %}
-        <b>{{ _("All awards") }}</b>
-    {% endif %}
-{% endblock %}
-
 {% block subcontent %}
 <section class="awards_list" class="item_flow">
+    <h1>{{ _('Badges:') }}
+    {% if badge %}
+        {{ _("Awards for {badge}") | f(badge=badge) }}
+    {% else %}
+        {{ _("All awards") }}
+    {% endif %}</h1>
     {% include "badger/includes/awards_list.html" %}
 </section>
 {% endblock %}

@@ -115,14 +115,7 @@
 
     {% if waffle.flag('badger') and award_list %}
       <section id="profile-badges" class="profile-section">
-        <header>
-        <h2 class="count">{{_("Recent Badge Awards")}}
-          <small>(
-              <a href="{{ url('badger.views.awards_by_user', profile.user.username) }}">{{ _("More...") }}</a>
-              <a href="{{ url('badger.feeds.awards_by_user', 'atom', profile.user.username) }}"><img src="{{MEDIA_URL}}/img/feed-icon-14x14.png" /></a>
-          )</small>
-        </h2>
-        </header>
+        <h2>{{_("Recent Badge Awards")}}</h2>
         {% include "badger/includes/awards_as_badges_list.html" %}
       </section>
     {% endif %}
