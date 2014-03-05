@@ -1,21 +1,19 @@
 import os
-from invoke import run, task, Collection
+from invoke import run, task
 
-target = 'wheelhouse'
-ns = Collection()
+here = os.path.dirname(__file__)
+target = os.path.join(here, 'wheelhouse')
+os.environ.setdefault('AWS_CONFIG_FILE', '/home/vagrant/src/.awsconfig')
 
 
 def go(cmd, **kwargs):
+    # print cmd, kwargs
     return run(cmd.format(**kwargs))
-
-
-@task
-def clean(name):
-    go('rm -rf {name}', name=target)
 
 
 def build_wheelball(name, requirements,
                     cache='/tmp'):
+    print('Started running wheel builder {0}'.format(name))
     requirements = ['-r requirements/{0}.txt'.format(req)
                     for req in requirements]
 
@@ -27,29 +25,59 @@ def build_wheelball(name, requirements,
     go('cd {target} && tar cfJ {name}.tar.xz {name}',
        target=target, name=name)
     go('cd .. && rm -rf {label}', label=label)
-    print('Built ' + label)
+    print('Done running wheel builder {0}. Built {1}.tar.xz'.format(name,
+                                                                    label))
 
 
-@task('clean')
-def base_wheels(name='wheels'):
-    build_wheelball(name, ['prod', 'dev', 'compiled'])
-
-
-@task('clean')
-def travis_wheels(name='travis_wheels'):
-    build_wheelball(name, ['compiled'])
+wheel_builders = {
+    'base': lambda: build_wheelball('base_wheels', ['prod', 'dev', 'compiled']),
+    'travis': lambda: build_wheelball('travis_wheels', ['compiled']),
+}
 
 
 @task
-def upload(name):
-    go('aws --profile mozilla s3 cp --acl public-read '
-       '{name}.tar.xz s3://pkgs.mozilla.net/python/mdn/{name}.tar.xz',
-       name=name)
+def build(only=None):
+    if only is None:
+        for name, builder in wheel_builders.items():
+            builder()
+    else:
+        builder = wheel_builders.get(only, None)
+        if builder:
+            builder()
 
 
-wheel = Collection('wheel')
-wheel.add_task(base_wheels, 'base')
-wheel.add_task(travis_wheels, 'travis')
-ns.add_collection(wheel)
-ns.add_task(upload)
-ns.add_task(clean)
+@task
+def upload(only=None):
+    aws_config = os.environ['AWS_CONFIG_FILE']
+    if not os.path.exists(aws_config):
+        print('No AWS config file found at {0}'.format(aws_config))
+        return
+    if only is None:
+        names = wheel_builders.keys()
+    else:
+        names = [only]
+    for name in names:
+        print('Starting uploading {name} wheel file'.format(name=name))
+        path = os.path.join(target, name)
+        go('aws --profile mozilla s3 cp --acl public-read '
+           '{path}_wheels.tar.xz '
+           's3://pkgs.mozilla.net/python/mdn/{name}_wheels.tar.xz',
+           path=path, name=name)
+        print('Done uploading {name} wheel file'.format(name=name))
+    print('You may want to run: rm -rf {target}'.format(target=target))
+
+
+@task
+def install(name):
+    tmpdir = os.path.join(here, 'wheelhouse_tmp')
+    go('mkdir {tmpdir}', tmpdir=tmpdir)
+    go('cd {tmpdir} && curl -LO '
+        'https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/{name}_wheels.tar.xz '
+        '-o {name}_wheels.tar.xz',
+       name=name, tmpdir=tmpdir)
+    go('cd {tmpdir} && tar xvfJ {name}_wheels.tar.xz && '
+       'rm {name}_wheels.tar.xz', name=name, tmpdir=tmpdir)
+    go('sudo pip install --no-index --find-links={tmpdir}/{name}_wheels '
+        '-r requirements/prod.txt -r requirements/dev.txt',
+        tmpdir=tmpdir, name=name)
+    go('rm -rf {tmpdir}', tmpdir=tmpdir)

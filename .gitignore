@@ -36,3 +36,5 @@ media/redesign/css/*.css
 docs/_build/
 .editorconfig
 maintenance/media
+wheelhouse
+.awsconfig

@@ -45,19 +45,19 @@ class python_wheels {
     exec {
         "download-wheels":
             cwd => "/home/vagrant/src/puppet/cache/wheels",
-            command => "/usr/bin/axel -a https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/wheels.tar.xz && /bin/tar xvfJ *.tar.xz && /bin/rm wheels.tar.xz",
-            creates => '/home/vagrant/src/puppet/cache/wheels/wheels',
+            command => "/usr/bin/axel -a https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/base_wheels.tar.xz && /bin/tar xvfJ *.tar.xz && /bin/rm wheels.tar.xz",
+            creates => '/home/vagrant/src/puppet/cache/wheels/base_wheels',
             require => File["/home/vagrant/src/puppet/cache/wheels"],
             user => 'vagrant';
         "install-wheels":
             cwd => '/home/vagrant/src',
             timeout => 1200, # Too long, but this can take awhile
-            command => "/home/vagrant/env/bin/pip install --no-index --find-links=/home/vagrant/src/puppet/cache/wheels/wheels -r requirements/prod.txt -r requirements/dev.txt -r requirements/compiled.txt",
+            command => "/home/vagrant/env/bin/pip install --no-index --find-links=/home/vagrant/src/puppet/cache/wheels/base_wheels -r requirements/prod.txt -r requirements/dev.txt -r requirements/compiled.txt",
             require => Exec["download-wheels"],
             user => 'vagrant';
         "clean-wheels":
             cwd => "/home/vagrant/src/puppet/cache/wheels",
-            command => "/bin/rm -rf wheels",
+            command => "/bin/rm -rf base_wheels",
             require => Exec["install-wheels"],
             user => 'vagrant';
      }

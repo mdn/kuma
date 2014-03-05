@@ -14,26 +14,54 @@ yourself a set of AWS credentials. Once that's done, you can set up AWS CLI
 tools like so:
 
     sudo pip install awscli
-    mkdir ~/.aws
-    cat >> ~/.aws/config
+    cat >> ~/src/.awsconfig
     [profile mozilla]
     aws_access_key_id=YOUR_KEY_ID_HERE
     aws_secret_access_key=YOUR_ACCESS_KEY_HERE
     region=us-west-2
 
-Then, you can update the wheels like so:
+.. note::
 
-    pip install -U pip wheel
-    mkdir -p wheel
-    pip wheel --no-use-wheel --wheel-dir=wheels -r requirements/prod.txt -r requirements/dev.txt
-    tar -zcf wheels.tar.gz wheels
-    aws --profile mozilla s3 cp wheels.tar.gz s3://pkgs.mozilla.net/python/mdn/wheels.tar.gz
+    We're storing the AWS config in the ``~/src`` directory as it's the only
+    way to persist the credentials between recreation of Vagrant instances.
+    We're ignoring the file ``~/src/.awsconfig`` by default in our
+    ``.gitignore`` file though, so it should never land in a public space.
+    To make use of that config file we're setting the ``AWS_CONFIG_FILE``
+    environment variable to ``/home/vagrant/src/.awsconfig`` when you run the
+    upload invoke task (unless you're specifying it otherwise).
+
+Then, you can update the wheels like so::
+
+    sudo pip install -U pip wheel awscli
+    invoke build
+
+If you'd like to only build one of the possible wheel files use the ``--only``
+option::
+
+    invoke build --only=travis
+
+After that you should have a directory called ``wheelhouse`` with some tar.xz
+files. After that you want to upload them to the Amazon S3 bucket by running::
+
+    invoke upload
+
+If you only want to upload one of the built wheels use the ``--name`` option::
+
+    invoke upload --only=travis
 
 Installing the Wheels
 ---------------------
 
+.. note::
+
+    This is done by Puppet by default and shouldn't be needed.
+
+If you're ready to update your requirements manually run this::
+
+    inv install base
+
 You can download the wheels all at once as a tarball::
 
-    wget https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/wheels.tar.gz
-    tar -zxf wheels.tar.gz
-    pip install --no-index --find-links=wheels -r requirements/prod.txt -r requirements/dev.txt
+    wget https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/base_wheels.tar.xz
+    tar -zxf base_wheels.tar.gz
+    pip install --no-index --find-links=base_wheels -r requirements/prod.txt -r requirements/dev.txt
