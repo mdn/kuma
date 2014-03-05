@@ -549,9 +549,11 @@ def _document_deleted(request, deletion_logs):
     When a Document has been deleted, display a notice.
     
     """
+    deletion_log = deletion_logs.order_by('-pk')[0]
+
     return render(request,
                   'wiki/deletion_log.html',
-                  {'deletion_logs': deletion_logs})
+                  {'deletion_log': deletion_log})
 
 
 @newrelic.agent.function_trace()
