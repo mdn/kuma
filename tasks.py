@@ -3,7 +3,7 @@ from invoke import run, task
 
 here = os.path.dirname(__file__)
 target = os.path.join(here, 'wheelhouse')
-os.environ.setdefault('AWS_CONFIG_FILE', '/home/vagrant/src/.awsconfig')
+os.environ.setdefault('AWS_CONFIG_FILE', os.path.join(here, '.awsconfig'))
 
 
 def go(cmd, **kwargs):
