@@ -22,10 +22,10 @@ def build_wheelball(name, requirements,
     go('sudo pip2.6 wheel --no-use-wheel --wheel-dir={label} {reqs} '
         '--download-cache={cache}',
         label=label, reqs=' '.join(requirements), cache=cache)
-    go('cd {target} && tar cfJ {name}.tar.xz {name}',
+    go('cd {target} && tar cfz {name}.tar.gz {name}',
        target=target, name=name)
     go('cd .. && rm -rf {label}', label=label)
-    print('Done running wheel builder {0}. Built {1}.tar.xz'.format(name,
+    print('Done running wheel builder {0}. Built {1}.tar.gz'.format(name,
                                                                     label))
 
 
@@ -60,8 +60,8 @@ def upload(only=None):
         print('Starting uploading {name} wheel file'.format(name=name))
         path = os.path.join(target, name)
         go('aws --profile mozilla s3 cp --acl public-read '
-           '{path}_wheels.tar.xz '
-           's3://pkgs.mozilla.net/python/mdn/{name}_wheels.tar.xz',
+           '{path}_wheels.tar.gz '
+           's3://pkgs.mozilla.net/python/mdn/{name}_wheels.tar.gz',
            path=path, name=name)
         print('Done uploading {name} wheel file'.format(name=name))
     print('You may want to run: rm -rf {target}'.format(target=target))
@@ -72,11 +72,11 @@ def install(name):
     tmpdir = os.path.join(here, 'wheelhouse_tmp')
     go('mkdir {tmpdir}', tmpdir=tmpdir)
     go('cd {tmpdir} && curl -LO '
-        'https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/{name}_wheels.tar.xz '
-        '-o {name}_wheels.tar.xz',
+        'https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/{name}_wheels.tar.gz '
+        '-o {name}_wheels.tar.gz',
        name=name, tmpdir=tmpdir)
-    go('cd {tmpdir} && tar xvfJ {name}_wheels.tar.xz && '
-       'rm {name}_wheels.tar.xz', name=name, tmpdir=tmpdir)
+    go('cd {tmpdir} && tar xvfz {name}_wheels.tar.gz && '
+       'rm {name}_wheels.tar.gz', name=name, tmpdir=tmpdir)
     go('sudo pip install --no-index --find-links={tmpdir}/{name}_wheels '
         '-r requirements/prod.txt -r requirements/dev.txt',
         tmpdir=tmpdir, name=name)

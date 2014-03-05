@@ -40,7 +40,7 @@ option::
 
     invoke build --only=travis
 
-After that you should have a directory called ``wheelhouse`` with some tar.xz
+After that you should have a directory called ``wheelhouse`` with some tar.gz
 files. After that you want to upload them to the Amazon S3 bucket by running::
 
     invoke upload
