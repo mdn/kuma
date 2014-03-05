@@ -59,9 +59,3 @@ Installing the Wheels
 If you're ready to update your requirements manually run this::
 
     inv install base
-
-You can download the wheels all at once as a tarball::
-
-    wget https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/base_wheels.tar.xz
-    tar -zxf base_wheels.tar.gz
-    pip install --no-index --find-links=base_wheels -r requirements/prod.txt -r requirements/dev.txt
