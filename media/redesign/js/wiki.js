@@ -200,6 +200,26 @@
   });
 
   /*
+  Adds a context menu to edit page or view history
+  if right-click on a link it will edit/view history on the links href.
+  */
+  $('body[contextmenu=edit-history-menu]').mozContextMenu(function(target, $contextMenu) {
+      var $menuitems = $contextMenu.find('menuitem');
+      var href = target.href ? target.href : location.href;
+
+      $menuitems.removeAttr('disabled');
+
+      // if target is an anchor other than MDN
+      if (target.hostname && target.hostname !== location.hostname) {
+        $menuitems.attr('disabled', true);
+      }
+
+      $contextMenu.on('click', function(event) {
+        location.href = href + $(event.target).data('action');
+      });
+  });
+
+  /*
     Stack overflow search form, used for dev program
 
     ex: http://stackoverflow.com/search?q=[firefox]+or+[firefox-os]+or+[html5-apps]+foobar
@@ -214,7 +234,7 @@
     }
   });
 
-  /* 
+  /*
     jQuery extensions used within the wiki.
   */
   $.extend({

@@ -77,9 +77,15 @@
 
 {% block content %}
   {% include 'wiki/includes/document_content.html' %}
+
+  <menu type="context" id="edit-history-menu">
+    <menuitem data-action="$edit" label="{{_("Edit page")}}"></menuitem>
+    <menuitem data-action="$history" label="{{_("View page history")}}"></menuitem>
+  </menu>
+
 {% endblock %}
 
-{% block body_attributes %}data-slug="{{ document.slug }}" data-docid="{{ document.id }}"{% endblock body_attributes %}
+{% block body_attributes %}data-slug="{{ document.slug }}" data-docid="{{ document.id }}" contextmenu="edit-history-menu"{% endblock body_attributes %}
 
 {% block js %}
   {% if waffle.flag('search_doc_navigator') %}

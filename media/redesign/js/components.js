@@ -87,7 +87,7 @@
               $self[0].focus();
             }
           });
-          
+
           $closeButton.on('click', function(){
             closeSubmenu($(this).parent());
           });
@@ -233,7 +233,7 @@
         if(e.keyCode == 27) {
           $(this).siblings('a').trigger('mdn:click').focus();
         };
-      }); 
+      });
 
       // Click event to show/hide
       $self.on('click mdn:click', '.toggler', function(e) {
@@ -291,6 +291,18 @@
       function getState($li) {
         return $li.attr(closedAttribute);
       }
+    });
+  };
+  /*
+  adds a native html5 contextmenu
+  callback passes two arguments, event.target and the menu-element
+  */
+  $.fn.mozContextMenu = function (callback) {
+    $(this).each(function() {
+      var $menu = $('#' + $(this).attr('contextmenu'));
+      $(this).on('contextmenu', function(event) {
+        callback(event.target, $menu);
+      });
     });
   };
 
