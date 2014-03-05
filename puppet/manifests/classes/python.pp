@@ -45,7 +45,7 @@ class python_wheels {
     exec {
         "download-wheels":
             cwd => "/home/vagrant/src/puppet/cache/wheels",
-            command => "/usr/bin/axel -a https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/base_wheels.tar.xz && /bin/tar xvfJ *.tar.xz && /bin/rm wheels.tar.xz",
+            command => "/usr/bin/axel -a https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/base_wheels.tar.xz && /bin/tar xvfJ *.tar.xz && /bin/rm base_wheels.tar.xz",
             creates => '/home/vagrant/src/puppet/cache/wheels/base_wheels',
             require => File["/home/vagrant/src/puppet/cache/wheels"],
             user => 'vagrant';
