@@ -3,6 +3,7 @@
 
 {% block site_css %}
     {{ super() }}
+    {{ css('wiki', 'all') }}
 
     {% if config.KUMA_CUSTOM_CSS_PATH %}
       <link rel="stylesheet" type="text/css"
@@ -10,9 +11,6 @@
     {% endif %}
 {% endblock %}
 
-{% if not styles %}
-  {% set styles = ('wiki',) %}
-{% endif %}
 {% if not scripts %}
   {% set scripts = ('wiki',) %}
 {% endif %}
