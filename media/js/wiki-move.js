@@ -6,6 +6,7 @@
          $lookupLink = $('.move-lookup-link'),
          specific_slug = $('#current-slug').val(),
          moveLocale = $('#locale').val(),
+         $previewUrl = $('#preview-url'),
          onHide = function() {
              $suggestionContainer.removeClass('show');
              $moveSlug[0].focus();
@@ -35,7 +36,7 @@
      });
 
      // Show the lookup when the link is clicked
-     $lookupLink.click(function(e) {
+     $lookupLink.on('click', function(e) {
          e.preventDefault();
          // Show the lookup
          $suggestionContainer.addClass('show');
@@ -49,6 +50,12 @@
      // Go to link when blured
      $moveSlug.on('blur', function() {
          $lookupLink.focus();
+     });
+
+     // Update the preview upon change
+     $moveSlug.on('keyup', function() {
+        var value = $(this).val() || $previewUrl.data('specific');
+        $previewUrl.text($previewUrl.data('url') + value);
      });
 
      // Help on the client side for validating slugs to be moved
