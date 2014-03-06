@@ -1,4 +1,5 @@
 {% extends "badger/base.html" %}
+{% import "badger/includes/macros.html" as macros %}
 
 {% set user = award.user %}
 {% set award_url = request.build_absolute_uri(url('badger.views.award_detail', award.badge.slug, award.id)) %}
@@ -35,83 +36,36 @@
 {% endblock %}
 
 {% block intro %}
-    {{ _('Badge award:') }} <b>{{ badge.title }}</b>
+    
 {% endblock %}
 
 {% block subcontent %}
-<section class="row-fluid">
 
-    <section class="badge span4">
-        {% include "badger/includes/badge_full.html" %}
-    </section>
+<h1>{{ _('Badge award:') }} {{ badge.title }}</h1>
+<div class="column-container">
+    <div class="column-strip">
+        <a href="{{ badge.get_absolute_url() }}" class="image">{{ macros.badge_image(badge, MEDIA_URL, 256) }}</a>
+        {% if award.user == request.user %}
+            <form class="obi_issuer">
+                <button class="btn issue"><img class="obi_icons" width="32" style="margin: 0 0em 0em 0; float: left" src="http://openbadges.org/wp-content/themes/openbadges2/media/images/content-background.png" />
+                    <strong>{{_("Add this to your Mozilla&nbsp;Badge&nbsp;Backpack") | safe}}</strong></button>
+            </form>
+        {% endif %}
+    </div>
+    <div class="column-main">
+        {% if badge.description %}
+            <p>{{ badge.description }}</p>
+        {% endif %}
 
-    <section class="award span8">
-        {% include "badger/includes/award_full.html" %}
-        <dl class="share">
-            <dt>{{ _('Share:') }}</dt>
-            <dd><ul>
-
-                {% if award.user == request.user %}
-                    <li><form class="obi_issuer">
-                        <button class="btn issue" style="width: 18em"><img class="obi_icons" width="32" style="margin: 0 0em 0em 0; float: left" src="http://openbadges.org/wp-content/themes/openbadges2/media/images/content-background.png" />
-                            <strong>{{_("Add this to your Mozilla&nbsp;Badge&nbsp;Backpack") | safe}}</strong></button>
-                    </form></li>
-                {% endif %}
-
-                {% if award.user == request.user %}
-                    <li><a href="https://twitter.com/share" class="twitter-share-button"
-                           data-text="I earned the badge &quot;{{ badge.title }}&quot; on {{ settings.SITE_TITLE }}!" 
-                           data-size="large"
-                           data-url="{{ award_url }}" data-hashtags="badgus">...</a></li>
-                {% else %}
-                    <li><a href="https://twitter.com/share" class="twitter-share-button" 
-                           data-text="{{ award.user }} earned the badge &quot;{{ badge.title }}&quot; on {{ settings.SITE_TITLE }}!" 
-                           data-size="large"
-                           data-url="{{ award_url }}" data-hashtags="badgus">...</a></li>
-                {% endif %}
-
-                <li><div class="g-plus" data-href="{{ award_url }}" data-action="share"
-                         data-annotation="bubble" data-height="24"></div></li>
-
-                <li><div class="fb-like" data-href="{{ award_url }}" data-send="true"
-                         data-width="450" data-show-faces="false"></div></li>
-
-            </ul></dd>
-        </dl>
-    </section>
-
-</section>
-
-<div id="fb-root"></div>
-<script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '235454449896211', // App ID
-      channelUrl : '{{ request.build_absolute_uri('/media/fb-channel.html') }}', // Channel File
-      status     : true, // check login status
-      cookie     : true, // enable cookies to allow the server to access the session
-      xfbml      : true  // parse XFBML
-    });
-    // Additional initialization code here
-  };
-
-  // Load the SDK Asynchronously
-  (function(d){
-     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement('script'); js.id = id; js.async = true;
-     js.src = "//connect.facebook.net/en_US/all.js";
-     ref.parentNode.insertBefore(js, ref);
-   }(document));
-</script>
+        <section class="award span8">
+            {% include "badger/includes/award_full.html" %}
+        </section>
+    </div>
+</div>
 
 {% endblock %}
 
 {% block js %}
     <script type="text/javascript"
         src="{{ settings.OBI_BASE_URL }}issuer.js"></script>
-    <script type="text/javascript"
-        src="//platform.twitter.com/widgets.js"></script>
-    <script type="text/javascript"
-        src="https://apis.google.com/js/plusone.js"></script>
 {% endblock %}

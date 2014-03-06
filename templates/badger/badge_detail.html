@@ -28,34 +28,38 @@
      {% endfor %}
 {% endblock %}
 
-{% block intro %}
-    {{ _('Badge:') }}
-    <b class="badge-title">{{ badge.title }}</b>
-{% endblock %}
-
 {% block subcontent %}
-<section class="row-fluid">
 
-    <section class="span4" id="detail">
-        <header class="page-header">
-        </header>
-        {% include "badger/includes/badge_full.html" %}
-    </section>
+<h1>{{ _('Badge: ') }} {{ badge.title }}</h1>
+<div class="column-container">
+    <div class="column-strip">
+        <a href="{{ badge.get_absolute_url() }}" class="image">{{ macros.badge_image(badge, MEDIA_URL, 256) }}</a>
+    </div>
+    <div class="column-main">
+        {% if badge.description %}
+            <p>{{ badge.description }}</p>
+        {% endif %}
 
-    {% if award_list %}
-    <section class="span4">
-        
+        {% if badge.tags and badge.tags.count() %}
+        <ul class="tags">
+            {% for tag in badge.tags.all() %}
+                <li><a class="tag" href="{{ url('badger.badges_list', tag_name=tag.name) }}"><i class="icon-tag icon-white"></i> {{ tag.name }}</a></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% if award_list | length %}
         <section id="recent_awardees" class="item_flow">
             <header class="page-header">
-                <h2>
-                    <span>{{ _("Recent awardees") }}</span>
+                <h3>
+                    <span>{{ _('Recent awardees') }}</span>
                     <small>(
-                        <a href="{{ url('badger.views.awards_list', badge.slug) }}">{{ _("More...") }}</a>
+                        <a href="{{ url('badger.views.awards_list', badge.slug) }}">{{ _('More...') }}</a>
                         <a href="{{ url('badger.feeds.awards_by_badge', 'atom', badge.slug) }}"><img src="{{MEDIA_URL}}/img/feed-icon-14x14.png" /></a>
                     )</small>
-                </h2>
+                </h3>
             </header>
-            <ul class="awardees cf">
+            <ul class="awardees clear">
                 {% for award in award_list %}
                     <li class="awardee">
                         <a href="{{ award.user.get_absolute_url() }}" class="avatar_image"><img src="{{ user_avatar(award.user) }}"
@@ -66,61 +70,8 @@
                 {% endfor %}
             </ul>
         </section>
-
-    </section>
-    {% endif %}
-
-    <section>
-        {% if not award %}
-        <dl class="share">
-            <dt>{{ _('Share:') }}</dt>
-            <dd><ul>
-                <li><a href="https://twitter.com/share" class="twitter-share-button" 
-                       data-text="&quot;{{ badge.title }}&quot; on {{ settings.SITE_TITLE }}!" 
-                       data-size="large"
-                       data-url="{{ badge_url }}" data-hashtags="badgus">...</a></li>
-
-                <li><div class="g-plus" data-href="{{ badge_url }}" data-action="share"
-                         data-annotation="bubble" data-height="24"></div></li>
-
-                <li><div class="fb-like" data-href="{{ badge_url }}" data-send="true"
-                         data-width="450" data-show-faces="false"></div></li>
-
-            </ul></dd>
-        </dl>
         {% endif %}
-    </section>
+    </div>
+</div>
 
-</section>
-
-<div id="fb-root"></div>
-<script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '235454449896211', // App ID
-      channelUrl : '{{ request.build_absolute_uri('/media/fb-channel.html') }}', // Channel File
-      status     : true, // check login status
-      cookie     : true, // enable cookies to allow the server to access the session
-      xfbml      : true  // parse XFBML
-    });
-    // Additional initialization code here
-  };
-
-  // Load the SDK Asynchronously
-  (function(d){
-     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement('script'); js.id = id; js.async = true;
-     js.src = "//connect.facebook.net/en_US/all.js";
-     ref.parentNode.insertBefore(js, ref);
-   }(document));
-</script>
-
-{% endblock %}
-
-{% block js %}
-    <script type="text/javascript"
-        src="//platform.twitter.com/widgets.js"></script>
-    <script type="text/javascript"
-        src="https://apis.google.com/js/plusone.js"></script>
 {% endblock %}
