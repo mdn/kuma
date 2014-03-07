@@ -555,7 +555,8 @@ class SectionIDFilter(html5lib_Filter):
             buffer.append(token)
             if 'StartTag' == token['type']:
                 attrs = dict(token['data'])
-                if 'id' in attrs:
+                # The header tags IDs will be (re)evaluated in pass 2
+                if 'id' in attrs and token['name'] not in HEAD_TAGS:
                     self.known_ids.add(attrs['id'])
                 if 'name' in attrs:
                     self.known_ids.add(attrs['name'])
@@ -609,8 +610,17 @@ class SectionIDFilter(html5lib_Filter):
                 slug = self.slugify(u''.join(text))
                 if not slug:
                     slug = self.gen_id()
+                else:
+                    # Create unique slug for heading tags with the same content
+                    start_inc = 2
+                    slug_base = slug
+                    while slug in self.known_ids:
+                        slug = '{0}_{1}'.format(slug_base, start_inc)
+                        start_inc += 1
+
                 attrs['id'] = slug
                 start['data'] = attrs.items()
+                self.known_ids.add(slug)
 
                 # Finally, emit the tokens we scooped up for the header.
                 yield start
