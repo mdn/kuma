@@ -1,7 +1,7 @@
 Kuma via Vagrant
 ================
 
-The core developers run Kuma in a `Vagrant`_-managed virtual machine to
+Core developers often run Kuma in a `Vagrant`_-managed virtual machine to
 simplify :doc:`installation <installation>`. If you're on Mac OS X or Linux
 and looking for a quick way to get started, you should try these instructions.
 
@@ -15,11 +15,9 @@ Getting up and running
 
 #. Install vagrant using the installer from `vagrantup.com <http://vagrantup.com/>`_
 
-#. To follow the instructions from `Webdev Bootcamp <http://mozweb.readthedocs.org/en/latest/git.html#working-on-projects>`_,
-   fork the project into your own account.
+#. Fork the project into your own account. (If you need help, follow the instructions from `Webdev Bootcamp <http://mozweb.readthedocs.org/en/latest/git.html#working-on-projects>`_)
 
-#. Clone your fork of Kuma and update submodules (**don't** try to use the same working
-   directory as for the local installation)::
+#. Clone your fork of Kuma and update submodules (If you have a local, non-vagrant kuma setup, **don't** try to use the same kuma working directory as the local kuma installation)::
 
        git clone git@github.com:<your_username>/kuma.git
        cd kuma
@@ -29,26 +27,20 @@ Getting up and running
 
        cp vagrantconfig_local.yaml-dist vagrantconfig_local.yaml
 
-   This may have some interesting settings for you to tweak, but the
-   defaults should work fine.
-
-#. The next step is to fire up the VM and install everything.
-   By default, VirtualBox creates VMs in your system drive and kuma's VM
-   weighs 3GB; so you might need to change that directory to another drive
-   following `that tutorial <http://emptysquare.net/blog/moving-virtualbox-and-vagrant-to-an-external-drive/>`_.
-   When you are ready, use the following command and go take a bike ride
-   (approx. 30 min on a fast net connection).::
+#. Fire up the VM and install everything. (approx. 30 min on a fast net connection).::
 
       vagrant up
+
+   VirtualBox creates VMs in your system drive. Kuma's VM is 3GB.
+   If it won't fit on your system drive, you will need to `change that directory to another drive <http://emptysquare.net/blog/moving-virtualbox-and-vagrant-to-an-external-drive/>`_.
+
 
 #. If the above process fails with an error, try running the Puppet setup
    again with the following command::
 
        vagrant provision
 
-   This often recovers from transient network issues or installation
-   ordering problems. However, In some rare occasions you might need
-   to run this multiple times
+   In some rare occasions you might need to run this multiple times.
 
 #. On Ubuntu, ``vagrant up`` might fail after being unable to mount NFS shared
    folders. First, make sure you have the nfs-common and nfs-server packages
@@ -73,7 +65,7 @@ Getting up and running
 
 #. Everything should be working now, from the host side::
 
-       curl 'https://developer-local.allizom.org'
+       curl -k 'https://developer-local.allizom.org'
 
 #. You should be able to log into a shell in the VM as the user
    ``vagrant``::
@@ -188,3 +180,4 @@ for Vagrant. Right now there are three supported:
    ``vagrantconfig_local.yaml``. Then run::
 
      vagrant up --provider=rackspace
+
