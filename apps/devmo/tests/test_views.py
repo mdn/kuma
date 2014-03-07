@@ -25,6 +25,8 @@ from devmo.tests import LocalizingClient
 from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
 
+from users.models import UserBan
+
 from waffle.models import Flag
 
 TESTUSER_PASSWORD = 'testpass'
@@ -398,6 +400,34 @@ class ProfileViewsTest(TestCase):
         logging.debug("HEAD %s" % r.items())
         logging.debug("CONT %s" % r.content)
         ok_(False)
+
+    def test_bug_811751_banned_profile(self):
+        """A banned user's profile should not be viewable"""
+        profile = UserProfile.objects.get(user__username='testuser')
+        user = profile.user
+        url = reverse('devmo.views.profile_view',
+                      args=(user.username,))
+
+        # Profile viewable if not banned
+        response = self.client.get(url, follow=True)
+        self.assertNotEqual(response.status_code, 403)
+
+        # Ban User
+        admin = User.objects.get(username='admin')
+        testuser = User.objects.get(username='testuser')
+        ban = UserBan(user=testuser, by=admin,
+                      reason='Banned by unit test.',
+                      is_active=True)
+        ban.save()
+
+        # Profile not viewable if banned
+        response = self.client.get(url, follow=True)
+        self.assertEqual(response.status_code, 403)
+
+        # Admin can view banned user's profile
+        self.client.login(username='admin', password='testpass')
+        response = self.client.get(url, follow=True)
+        self.assertNotEqual(response.status_code, 403)
 
 
 def get_datetime_from_string(string, string_format):
