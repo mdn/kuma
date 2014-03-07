@@ -424,6 +424,11 @@ class ProfileViewsTest(TestCase):
         response = self.client.get(url, follow=True)
         self.assertEqual(response.status_code, 403)
 
+        # Admin can view banned user's profile
+        self.client.login(username='admin', password='testpass')
+        response = self.client.get(url, follow=True)
+        self.assertNotEqual(response.status_code, 403)
+
 
 def get_datetime_from_string(string, string_format):
     new_datetime = datetime.datetime.fromtimestamp(time.mktime(

@@ -17,6 +17,8 @@
       <p class="notice">{{ _('The wiki is in read-only mode.') }}</p>
     {% elif reason == 'kumabanned' %}
       <p class="notice">{{ _('Your account has been banned from making edits.') }}</p>
+    {% elif reason == 'bannedprofile' %}
+      <p class="notice">{{ _("This user's account has been banned.") }}</p>
     {% endif %}
   
     <img src="{{ MEDIA_URL }}img/beast-403.png" alt="" class="beast 403">

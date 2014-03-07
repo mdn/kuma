@@ -49,8 +49,10 @@ def profile_view(request, username):
     profile = get_object_or_404(UserProfile, user__username=username)
     user = profile.user
 
-    if UserBan.objects.filter(user=user, is_active=True):
-        return HttpResponseForbidden()
+    if (UserBan.objects.filter(user=user, is_active=True) and
+            not request.user.is_superuser):
+        return render(request, '403.html',
+                      {'reason': "bannedprofile"}, status=403)
 
     DEMOS_PAGE_SIZE = getattr(settings, 'DEMOS_PAGE_SIZE', 12)
     sort_order = request.GET.get('sort', 'created')
