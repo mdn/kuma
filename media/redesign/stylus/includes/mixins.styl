@@ -283,6 +283,92 @@ title-header() {
   display: block;
 }
 
+/* submenu generator: used in the main navigation and wiki */
+component-submenu-method(menu-width, num-columns, background-color, arrow-border-color) {
+  position: absolute;
+  padding: grid-spacing;
+  background: background-color;
+  display: none;
+  width: menu-width;
+  box-shadow: 3px 3px 5px #aaa;
+
+  .submenu-close {
+    display: none;
+    position: absolute;
+    top: 20px;
+    bidi-style(right, 0, left, auto);
+
+    i {
+      margin-left: 0;
+    }
+  }
+
+  .submenu-column {
+    if num-columns is 1 {
+      col-width = 100%;
+    } else {
+      col-width = ((menu-width - (num-columns * grid-spacing) - 1) / num-columns) + (grid-spacing / 2);
+    }
+    vertical-align: text-top;
+    width: col-width;
+    display: inline-block;
+
+    &:nth-child(even) {
+      bidi-style(border-left, 1px dotted #d4dde4, border-right, 0);
+      bidi-style(padding-left, grid-spacing, padding-right, 0);
+    }
+  }
+  
+  .title {
+    compat-only(font-size, base-font-size);
+    compat-only(padding-left, 0);
+    compat-only(background, none);
+  }
+
+  a {
+    @extend .smaller;
+    padding: 5px 0;
+    display: block;
+  }
+  reverse-link-decoration();
+
+  generate-arrow();
+  &:before {
+    border-bottom-color: background-color;
+    position: absolute;
+    z-index: 2;
+  }
+
+  &:after {
+    border-bottom-color: arrow-border-color;
+    position: absolute;
+    z-index: 1;
+  }
+
+  @media media-query-tablet {
+    .submenu-close {
+      display: block;
+    }
+  }
+
+  @media media-query-mobile {
+    .submenu-column, .submenu-column:nth-child(even) {
+      bidi-style(border-left, 0, border-right, 0);
+      bidi-style(padding-left, 0, padding-right, 0);
+    }
+  }
+
+  @media media-query-small-mobile {
+    & {
+      width: auto;
+
+      .submenu-column {
+        width: auto;
+        display: block;
+      }
+    }
+  }
+}
 
 /*
   CLASSES TO BE EXTENDED BY OTHER CLASSES
@@ -314,4 +400,29 @@ $checkbox-label-container {
         position: absolute;
         bidi-style(margin-left, 25px, margin-right, 0);
     }
+}
+
+/* Dropdown menus that hide advanced feature, such as the "This Page" menu on
+   article pages, the "Advanced" menu on profiles, etc. */
+$advanced-menu {
+  component-submenu-method(160px, 1, button-background, button-shadow-color);
+  bidi-style(right, 0, left, auto);
+  top: 40px;
+  z-index: 3;
+  border-top: 1px solid button-shadow-color;
+  width: 160px !important; /* needs this due to overriding media query rule of component */
+
+  bdi {
+    bidi-value(text-align, left, right);
+  }
+
+  &:before {
+    bidi-style(right, 10px, left, auto);
+    top: -18px;
+  }
+
+  &:after {
+    bidi-style(right, 10px, left, auto);
+    top: -20px;
+  }
 }
