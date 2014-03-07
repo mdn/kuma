@@ -52,6 +52,14 @@
           </li>
           <li>
             <dl>
+              <dt>{{ _('Preview URL:') }}</dt>
+              <dd id="preview-url" data-url="{{ settings.SITE_URL  }}/{{ document.locale }}/docs/" data-specific="{{ specific_slug }}">
+                {{ request.build_absolute_uri(url('wiki.document', document.full_path)) }}
+              </dd>
+            </dl>
+          </li>
+          <li>
+            <dl>
               <dt><label for="move-slug">{{ _('New Slug:') }}</label> </dt>
               <dd>
                 <input type="text" name="slug" id="move-slug" value="" required="required" data-validator="{{ SLUG_CLEANSING_REGEX }}" />
@@ -64,14 +72,6 @@
                 <div id="parent-suggest-input-container">
                     <input type="text" placeholder="{{ _('Parent Title') }}" id="parent-suggestion" disabled />
                 </div>
-              </dd>
-            </dl>
-          </li>
-          <li>
-            <dl>
-              <dt>{{ _('Preview URL:') }}</dt>
-              <dd id="preview-url" data-url="{{ settings.SITE_URL  }}/{{ document.locale }}/docs/" data-specific="{{ specific_slug }}">
-                {{ request.build_absolute_uri(url('wiki.document', document.full_path)) }}
               </dd>
             </dl>
           </li>
