@@ -67,6 +67,12 @@ urlpatterns = patterns('',
     # Badges
     (r'^badges/', include('badger.urls_simple')),
 
+    # Pixel tracking services
+    url(r'^track/pixel/mail/view/(?P<el>.+)$$',
+        'gabeacon.views.collect_pixel',
+        kwargs={'t': 'event', 'ec': 'mail', 'ea':'view', 'ev': 1},
+        name='track.mail.view'),
+
     # Services and sundry.
     (r'^', include('tidings.urls')),
     (r'^humans.txt$', 'django.views.static.serve',

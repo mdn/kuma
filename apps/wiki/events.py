@@ -72,17 +72,20 @@ def notification_mails(revision, subject, template, url, users_and_watches):
     document = revision.document
     subject = subject.format(title=document.title, creator=revision.creator,
                              locale=document.locale)
-    t = loader.get_template(template)
     c = {'document_title': document.title,
          'creator': revision.creator,
-         'url': url,
+         # Unfortunately, 'url' name overrides default django templatetag
+         # so we should different but generic name.
+         'item_url': url,
          'host': Site.objects.get_current().domain}
-    content = t.render(Context(c))
-    mail = EmailMessage(subject, content, settings.TIDINGS_FROM_ADDRESS)
 
-    for u, dummy in users_and_watches:
-        mail.to = [u.email]
-        yield mail
+    emails = email_utils.emails_with_users_and_watches(
+            subject=subject,
+            text_template=template,
+            context_vars=c,
+            users_and_watches=users_and_watches,
+            default_locale=document.locale)
+    return iter(emails)
 
 
 class EditDocumentEvent(InstanceEvent):
@@ -105,7 +108,6 @@ class EditDocumentEvent(InstanceEvent):
         return email_utils.emails_with_users_and_watches(
             subject=subject,
             text_template='wiki/email/edited.ltxt',
-            html_template=None,
             context_vars=context,
             users_and_watches=users_and_watches,
             default_locale=document.locale)
@@ -125,7 +127,7 @@ class _RevisionInLocaleEvent(Event):
 
     def _users_watching(self, **kwargs):
         return self._users_watching_by_filter(
-            locale=self.revision.document.locale, **kwargs)
+                                locale=self.revision.document.locale, **kwargs)
 
 
 class ReviewableRevisionInLocaleEvent(_RevisionInLocaleEvent):
