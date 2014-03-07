@@ -962,7 +962,7 @@ def list_documents_for_review(request, tag=None):
 @require_GET
 def list_documents_with_errors(request):
     """Lists wiki documents with (KumaScript) errors"""
-    docs = Document.objects.filter_for_list(errors=True)
+    docs = Document.objects.filter_for_list(locale=request.locale, errors=True)
     paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     return render(request, 'wiki/list_documents.html',
                          {'documents': paginated_docs,
