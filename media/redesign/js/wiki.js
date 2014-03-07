@@ -205,17 +205,15 @@
   */
   $('body[contextmenu=edit-history-menu]').mozContextMenu(function(target, $contextMenu) {
       var $menuitems = $contextMenu.find('menuitem');
-      var href = target.href ? target.href : location.href;
-
       $menuitems.removeAttr('disabled');
 
       // if target is an anchor other than MDN
-      if (target.hostname && target.hostname !== location.hostname) {
+      if(target.hostname && target.hostname !== location.hostname) {
         $menuitems.attr('disabled', true);
       }
 
-      $contextMenu.on('click', function(event) {
-        location.href = href + $(event.target).data('action');
+      $contextMenu.on('click', function(e) {
+        location.href = (target.href || location.href) + $(e.target).data('action');
       });
   });
 
