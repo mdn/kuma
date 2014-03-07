@@ -97,6 +97,20 @@
         }
     },
     {
+        "pk": 8,
+        "model": "wiki.document",
+        "fields": {
+            "category": 10,
+            "title": "getElementByID",
+            "locale": "en-US",
+            "current_revision": 21,
+            "modified": "2013-06-06 05:54:18",
+            "is_template": false,
+            "html": "<p>words that are not in the title</p>",
+            "slug": "camel-case-test"
+        }
+    },
+    {
         "pk": 19,
         "model": "wiki.revision",
         "fields": {

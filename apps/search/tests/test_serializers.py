@@ -30,7 +30,7 @@ class SerializerTests(ElasticTestCase):
         doc = DocumentS(DocumentType)
         doc_serializer = DocumentSerializer(doc, many=True)
         list_data = doc_serializer.data
-        eq_(len(list_data), 6)
+        eq_(len(list_data), 7)
         ok_(isinstance(list_data, list))
         eq_(list_data[0]['title'], 'le title')
 

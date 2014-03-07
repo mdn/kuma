@@ -131,8 +131,14 @@ class ViewTests(ElasticTestCase):
         request = self.get_request('/en-US/search')
         view = SearchView.as_view(paginate_by=1)
         response = view(request)
-        eq_(response.data['pages'], 5)
+        eq_(response.data['pages'], 6)
 
         request = self.get_request('/en-US/search?per_page=4')
         response = view(request)
         eq_(response.data['pages'], 2)
+
+    def test_tokenize_camelcase_titles(self):
+        for q in ('get', 'element', 'by', 'id'):
+            response = self.client.get('/en-US/search?q=' + q)
+            eq_(response.status_code, 200)
+            self.assertContains(response, 'camel-case-test')

@@ -98,21 +98,6 @@ class DocumentType(SearchMappingType, Indexable):
                     'catenate_numbers': True,  # 90-210 -> 90210
                 }
             },
-            'tokenizer': {
-                'camelCase': {
-                    'type': 'pattern',
-                    "pattern": """
-                         ([^\\p{L}\\d]+)
-                        |(?<=\\D)(?=\\d)
-                        |(?<=\\d)(?=\\D)
-                        |(?<=[\\p{L}&&[^\\p{Lu}]])
-                         (?=\\p{Lu})
-                        |(?<=\\p{Lu})
-                         (?=\\p{Lu}
-                            [\\p{L}&&[^\\p{Lu}]]
-                        )"""
-                },
-            },
             'analyzer': {
                 'default': {
                     'tokenizer': 'standard',
@@ -128,8 +113,8 @@ class DocumentType(SearchMappingType, Indexable):
                     'char_filter': ['html_strip'],
                     'filter': [
                         'elision',
-                        'lowercase',
                         'kuma_word_delimiter',
+                        'lowercase',
                         'standard',
                         'stop',
                         'snowball',
@@ -137,11 +122,11 @@ class DocumentType(SearchMappingType, Indexable):
                 },
                 'kuma_title': {
                     'type': 'custom',
-                    'tokenizer': 'camelCase',
+                    'tokenizer': 'standard',
                     'filter': [
                         'elision',
-                        'lowercase',
                         'kuma_word_delimiter',
+                        'lowercase',
                         'standard',
                         'snowball',
                     ],
