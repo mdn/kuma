@@ -90,7 +90,7 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
 ALLOWED_ATTRIBUTES = bleach.ALLOWED_ATTRIBUTES
 # Note: <iframe> is allowed, but src="" is pre-filtered before bleach
 ALLOWED_ATTRIBUTES['iframe'] = ['id', 'src', 'sandbox', 'seamless',
-                                'frameborder', 'width', 'height']
+                                'frameborder', 'width', 'height', 'class']
 ALLOWED_ATTRIBUTES['p'] = ['style', 'class', 'id', 'align', 'lang', 'dir']
 ALLOWED_ATTRIBUTES['span'] = ['style', 'class', 'id', 'title', 'lang', 'dir']
 ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is',
