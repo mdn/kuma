@@ -338,29 +338,6 @@ article {
       font-size: 16px;
     }
   }
-
-  .submenu {
-    component-submenu-method(160px, 1, button-background, button-shadow-color);
-    bidi-style(right, 0, left, auto);
-    top: 40px;
-    z-index: 3;
-    border-top: 1px solid button-shadow-color;
-    width: 160px !important; /* needs this due to overriding media query rule of component */
-
-    bdi {
-      bidi-value(text-align, left, right);
-    }
-
-    &:before {
-      bidi-style(right, 10px, left, auto);
-      top: -18px;
-    }
-
-    &:after {
-      bidi-style(right, 10px, left, auto);
-      top: -20px;
-    }
-  }
 }
 
 /* kumascript errors block at the top of an article */
