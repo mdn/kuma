@@ -811,10 +811,12 @@ class Document(NotificationsMixin, models.Model):
             if src:
                 return src
 
-    def get_section_content(self, section_id):
+    def get_section_content(self, section_id, ignore_heading=True):
         """Convenience method to extract the rendered content for a single section"""
         html = self.rendered_html and self.rendered_html or self.html
-        return parse_content(html).extractSection(section_id).serialize()
+        return (parse_content(html)
+                .extractSection(section_id, ignore_heading=ignore_heading)
+                .serialize())
 
     def calculate_etag(self, section_id=None):
         """Calculate an etag-suitable hash for document content or a section"""

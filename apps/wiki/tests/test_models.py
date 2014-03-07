@@ -33,6 +33,7 @@ from wiki.models import (FirefoxVersion, OperatingSystem, Document, Revision,
                          DocumentRenderingInProgress,
                          TaggedDocument,)
 from wiki.tests import (document, revision, doc_rev, translated_revision,
+                        normalize_html,
                         create_template_test_users,
                         create_topical_parents_docs)
 from wiki import tasks
@@ -1914,3 +1915,73 @@ class DocumentZoneTests(TestCase):
         zone_stack = sub_sub_doc.find_zone_stack()
         eq_(zone_stack[0], middle_zone)
         eq_(zone_stack[1], root_zone)
+
+
+class DocumentParsingTests(TestCase):
+    """Tests exercising content parsing methods"""
+    fixtures = ['test_users.json']
+
+    def test_get_section_content(self):
+        src = """
+            <h2>Foo</h2>
+            <p>Bar</p>
+            <h3 id="Quick_Links">Quick Links</h3>
+            <p>Foo, yay</p>
+            <h2>Baz</h2>
+            <p>Baz</p>
+        """
+        expected = """
+            <p>Foo, yay</p>
+        """
+
+        r = revision(title='Document with sections',
+                     slug='document-with-sections',
+                     content=src,
+                     is_approved=True, save=True)
+        d = r.document
+        
+        result = d.get_section_content('Quick_Links')
+        eq_(normalize_html(expected), normalize_html(result))
+
+    def test_cached_content_fields(self):
+        src="""
+            <h2>First</h2>
+            <p>This is a document</p>
+            <h3 id="Quick_Links">Quick Links</h3>
+            <p>Foo, yay</p>
+            <h3 id="Subnav">Subnav</h3>
+            <p>Bar, yay</p>
+            <h2>Second</h2>
+            <p>Another section</p>
+            <a href="/en-US/docs/document-with-sections">Existing link</a>
+            <a href="/en-US/docs/does-not-exist">New link</a>
+        """
+        body = """
+            <h2 id="First">First</h2>
+            <p>This is a document</p>
+            <!-- -->
+            <!-- -->
+            <h2 id="Second">Second</h2>
+            <p>Another section</p>
+            <a href="/en-US/docs/document-with-sections">Existing link</a>
+            <a class="new" href="/en-US/docs/does-not-exist">New link</a>
+        """
+        quick_links = """
+            <p>Foo, yay</p>
+        """
+        subnav = """
+            <p>Bar, yay</p>
+        """
+
+        r = revision(title='Document with sections',
+                     slug='document-with-sections',
+                     content=src,
+                     is_approved=True, save=True)
+        d = r.document
+        
+        eq_(normalize_html(body),
+            normalize_html(d.get_body_html()))
+        eq_(normalize_html(quick_links),
+            normalize_html(d.get_quick_links_html()))
+        eq_(normalize_html(subnav),
+            normalize_html(d.get_zone_subnav_local_html()))
