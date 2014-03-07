@@ -5,10 +5,7 @@
 {% set classes = 'register' %}
 
 {% block content %}
-<section id="content">
-  <div class="wrap">
-    <div id="content-main" class="full">
-  <article id="register" class="main">
+  <article id="register">
     <h1>{{ title }}</h1>
     <p>
       {% trans new_email=email %}
@@ -17,7 +14,4 @@
       {% endtrans %}
     </p>
   </article>
-    </div>
-   </div>
-</section>
 {% endblock %}

@@ -4,23 +4,17 @@
 {% set classes = 'register' %}
 
 {% block content %}
-<section id="content">
-  <div class="wrap">
-    <div id="content-main" class="full">
-      <article id="register" class="main">
-        {% if error == 'no_email' %}
-          <h1>{{ _('No email found for this account') }}</h1>
-          <p>
-          {% trans bug_url='http://mzl.la/mdn-bug' %}Could not find email for <strong>{{ username }}</strong>. Please <a href="{{ bug_url }}">file a bug</a> to restore your account.{% endtrans %}
-          </p>
-        {% else %}
-          <h1>{{ _('Reminder email sent.') }}</h1>
-          <p>
-          {% trans %}We've sent a reminder email to the address registered for <strong>{{ username }}</strong>.{% endtrans %}
-          </p>
-        {% endif %}
-      </article>
-    </div>
-   </div>
-</section>
+<article id="register">
+  {% if error == 'no_email' %}
+    <h1>{{ _('No email found for this account') }}</h1>
+    <p>
+    {% trans bug_url='http://mzl.la/mdn-bug' %}Could not find email for <strong>{{ username }}</strong>. Please <a href="{{ bug_url }}">file a bug</a> to restore your account.{% endtrans %}
+    </p>
+  {% else %}
+    <h1>{{ _('Reminder email sent.') }}</h1>
+    <p>
+    {% trans %}We've sent a reminder email to the address registered for <strong>{{ username }}</strong>.{% endtrans %}
+    </p>
+  {% endif %}
+</article>
 {% endblock %}

@@ -5,28 +5,22 @@
 {% set classes = 'password' %}
 
 {% block content %}
-<section id="content">
-  <div class="wrap">
-    <div id="content-main" class="full">
-      <article id="pw-reset" class="main">
-        <h1>{{ title }}</h1>
-        <p>{% trans %}
-          To activate your account you must first confirm your email
-          address. Enter your email and submit the form below, and we will
-          resend the confirmation email.
-          {% endtrans %}</p>
+<article id="pw-reset">
+  <h1>{{ title }}</h1>
+  <p>{% trans %}
+    To activate your account you must first confirm your email
+    address. Enter your email and submit the form below, and we will
+    resend the confirmation email.
+    {% endtrans %}</p>
 
-        <form class="boxed" method="post" action="">
-          <fieldset>
-            {{ csrf() }}
-            <ul>
-              {{ form.as_ul()|safe }}
-              <li class="submit"><button type="submit">{{ _('Resend confirmation email') }}</button></li>
-            </ul>
-          </fieldset>
-        </form>
-      </article>
-    </div>
-   </div>
-</section>
+  <form class="boxed" method="post" action="">
+    <fieldset>
+      {{ csrf() }}
+      <ul>
+        {{ form.as_ul()|safe }}
+        <li class="submit"><button type="submit">{{ _('Resend confirmation email') }}</button></li>
+      </ul>
+    </fieldset>
+  </form>
+</article>
 {% endblock content %}

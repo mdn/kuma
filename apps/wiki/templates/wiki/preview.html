@@ -7,34 +7,28 @@
 {% block bodyclass %}document{% endblock %}
 
 {% block content %}
-<section id="content">
-  <div class="wrap">
-  	
-    <div id="content-main" class="full">
-    	
-      {% if kumascript_errors %}
-	    {% include 'wiki/includes/kumascript_errors.html' %}
-	  {% endif %}
-    	
-      <div class="warning warning-review">
-  		<p>{{ _('This is a preview of an unsaved document.') }}</p>
-  	  </div>
-    	
-      <article class="article" role="main">
-      <header id="article-head">
-        <div class="title">
-            <h1 class="page-title">{{ title }}</h1>
-        </div>
-      </header>
-      
-       <div id="wikiArticle" class="page-content boxed">
-       		{{ content|safe }}
-       </div>
-      
-  	  </article>
-    </div>
+
+  {% if kumascript_errors %}
+    {% include 'wiki/includes/kumascript_errors.html' %}
+  {% endif %}
+	
+  <div class="warning warning-review">
+	<p>{{ _('This is a preview of an unsaved document.') }}</p>
   </div>
-</section>
+	
+  <article class="article" role="main">
+    <header id="article-head">
+      <div class="title">
+          <h1 class="page-title">{{ title }}</h1>
+      </div>
+    </header>
+    
+     <div id="wikiArticle" class="page-content boxed">
+     		{{ content|safe }}
+     </div>
+    
+  </article>
+
 {% endblock %}
 
 {% block breadcrumbs %}
