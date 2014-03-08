@@ -24,7 +24,6 @@ lockfile==0.8
 logilab-astng==0.20.1
 logilab-common==0.50.3
 ordereddict==1.1
-pyes==0.16.0
 pyflakes==0.4.0
 pyparsing==1.5.5
 python-dateutil==1.5
