@@ -126,6 +126,19 @@
 
         </header>
 
+        {% if request.user.get_profile().wiki_activity()|count == 0 %}
+          <section class="first-contrib-welcome">
+            <h2>{{_('Thank you for taking the time to improve MDN!')}}</h2>
+            <p>
+              {% trans url=devmo_url('Project:MDN/Contributing/Editor_guide/') %}
+                It looks like this is your first contribution to MDN. You can find answers to common editing questions within our <a target="_blank" href="{{ url }}">Editor Guide</a>.
+              {% endtrans %}
+            </p>
+            <p>{{_("Don't be afraid to break something, you can always revert your changes.")}}</p>
+            <p>{{_('Have fun and be proud of your contribution!')}}</p>
+          </section>
+        {% endif %}
+
         {% if revision_form %}
             {% include 'wiki/includes/guide_links.html' %}
             
@@ -139,15 +152,20 @@
             <input type="hidden" name="form" value="rev" />
             {{ revision_form.hidden_fields()|join|safe }}
 
-            {% include 'wiki/includes/revision_comment.html' %}
-
             <section class="page-meta">
               {% set tags = document.tags.all() %}
               <section id="page-tags" class="page-tags">
-                <h2><i aria-hidden="true" class="icon-tags"></i>{{ _('Tags') }}</h2>
+                <h2><i aria-hidden="true" class="icon-tags"></i>{{ _('Tags') }} <a href="{{ devmo_url('Project:MDN/Contributing/Editor_guide/Editing#The_tags_box') }}"><i aria-hidden="true" title="{{ _('Learn how to tag an article') }}" class="icon-question-sign editor-help-icon"></i></a></h2>
+                <p>
+                  {% trans url=devmo_url('Project:MDN/Contributing/Tagging_standards') %}
+                    Categorize the article. It will make the article findable under the right filters in the search engine. <a target="_blank" href="{{ url }}">Read the Tagging Guide</a>.
+                  {% endtrans %}
+                </p>
                 <input id="tagit_tags" type="text" name="tags" value="{% for tag in tags %}{{ tag.name }},{% endfor %}" maxlength="255" />
               </section>
             </section>
+
+            {% include 'wiki/includes/revision_comment.html' %}
 
             <section class="page-meta wiki-block">
               <section>
