@@ -72,8 +72,6 @@ from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
                          DocumentDeletionLog,
                          DocumentRenderedContentNotAvailable,
                          CATEGORIES,
-                         OPERATING_SYSTEMS, GROUPED_OPERATING_SYSTEMS,
-                         FIREFOX_VERSIONS, GROUPED_FIREFOX_VERSIONS,
                          REVIEW_FLAG_TAGS_DEFAULT,
                          DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL,
                          get_current_or_latest_revision, TOC_DEPTH_H4,
@@ -93,47 +91,10 @@ from django.core.mail import send_mail
 log = logging.getLogger('k.wiki')
 
 
-OS_ABBR_JSON = json.dumps(dict([(o.slug, True)
-                                for o in OPERATING_SYSTEMS]))
-BROWSER_ABBR_JSON = json.dumps(dict([(v.slug, v.show_in_ui)
-                                     for v in FIREFOX_VERSIONS]))
 TOC_FILTERS = {1: wiki.content.SectionTOCFilter,
                2: wiki.content.H2TOCFilter,
                3: wiki.content.H3TOCFilter,
                4: wiki.content.SectionTOCFilter}
-
-
-def _version_groups(versions):
-    """Group versions so browser+version pairs can be mapped to {for} slugs.
-
-    See test_version_groups for an example.
-
-    """
-    def split_slug(slug):
-        """Given something like fx35, split it into an alphabetic prefix and a
-        suffix, returning a 2-tuple like ('fx', '35')."""
-        right = slug.lstrip(ascii_letters)
-        left_len = len(slug) - len(right)
-        return slug[:left_len], slug[left_len:]
-
-    slug_groups = {}
-    for v in versions:
-        left, right = split_slug(v.slug)
-        slug_groups.setdefault(left, []).append((v.max_version, right))
-    for g in slug_groups.itervalues():
-        g.sort()
-    return slug_groups
-
-
-VERSION_GROUP_JSON = json.dumps(_version_groups(FIREFOX_VERSIONS))
-
-SHOWFOR_DATA = {
-    'oses': GROUPED_OPERATING_SYSTEMS,
-    'oses_json': OS_ABBR_JSON,
-    'browsers': GROUPED_FIREFOX_VERSIONS,
-    'browsers_json': BROWSER_ABBR_JSON,
-    'version_group_json': VERSION_GROUP_JSON,
-}
 
 
 @newrelic.agent.function_trace()
@@ -311,11 +272,11 @@ def _get_doc_and_fallback_reason(document_locale, document_slug):
     """
     Attempt to fetch a Document at the given locale and slug, and
     return it, or return a fallback reason if we weren't able to.
-    
+
     """
     doc = None
     fallback_reason = None
-    
+
     try:
         doc = Document.objects.get(locale=document_locale, slug=document_slug)
         if (not doc.current_revision and doc.parent and
@@ -327,14 +288,14 @@ def _get_doc_and_fallback_reason(document_locale, document_slug):
             fallback_reason = 'no_content'
     except Document.DoesNotExist:
         pass
-    
+
     return doc, fallback_reason
-            
-    
+
+
 def _check_for_deleted_document(document_locale, document_slug):
     """
     If a Document is not found, see if there's a deletion log for it.
-    
+
     """
     return DocumentDeletionLog.objects.filter(
         locale=document_locale,
@@ -347,7 +308,7 @@ def _default_locale_fallback(request, document_slug, document_locale):
     If we're falling back to a Document in the default locale, figure
     out why and whether we can redirect to a translation in the
     requested locale.
-    
+
     """
     fallback_doc = None
     redirect_url = None
@@ -381,7 +342,7 @@ def _document_redirect_to_create(document_slug, document_locale, slug_dict):
     """
     When a Document doesn't exist but the user can create it, return
     the creation URL to redirect to.
-    
+
     """
     url = reverse('wiki.new_document', locale=document_locale)
     if slug_dict['length'] > 1:
@@ -403,7 +364,7 @@ def _check_404_params(request):
     """
     If a Document is not found, we may 404 immediately based on
     request parameters.
-    
+
     """
     params = []
     for request_param in ('raw', 'include', 'nocreate'):
@@ -415,7 +376,7 @@ def _set_common_headers(doc, section_id, response):
     """
     Perform some response-header manipulation that gets used in
     several places.
-    
+
     """
     response['ETag'] = doc.calculate_etag(section_id)
     if doc.current_revision:
@@ -427,7 +388,7 @@ def _get_html_and_errors(request, doc, rendering_params):
     """
     Get the initial HTML for a Document, including determining whether
     to use kumascript to render it.
-    
+
     """
     doc_html, ks_errors = doc.html, None
     render_raw_fallback = False
@@ -468,7 +429,7 @@ def _get_html_and_errors(request, doc, rendering_params):
 def _generate_toc_html(doc, tool, rendering_params):
     """
     Generate the HTML, if needed, for a Document's table of contents.
-    
+
     """
     toc_html = None
     if doc.show_toc and not rendering_params['raw']:
@@ -483,7 +444,7 @@ def _generate_toc_html(doc, tool, rendering_params):
 def _filter_doc_html(request, doc, tool, rendering_params):
     """
     Apply needed filtering/annotating operations to a Document's HTML.
-    
+
     """
     # If a section ID is specified, extract that section.
     if rendering_params['section']:
@@ -495,7 +456,7 @@ def _filter_doc_html(request, doc, tool, rendering_params):
         request.user.is_authenticated() and
         doc.allows_revision_by(request.user)):
         tool.injectSectionEditingLinks(doc.full_path, doc.locale)
-    
+
     # ?raw view is often used for editors - apply safety filtering.
     if rendering_params['raw']:
         tool.filterEditorSafety()
@@ -505,7 +466,7 @@ def _filter_doc_html(request, doc, tool, rendering_params):
     # If this is an include, filter out the class="noinclude" blocks.
     if rendering_params['include']:
         doc_html = (wiki.content.filter_out_noinclude(doc_html))
-    
+
     # If ?summary is on, just serve up the summary as doc HTML
     if rendering_params['summary']:
         doc_html = doc.get_summary(strip_markup=False,
@@ -517,7 +478,7 @@ def _filter_doc_html(request, doc, tool, rendering_params):
 def _get_seo_parent_title(slug_dict, document_locale):
     """
     Get parent-title information for SEO purposes.
-    
+
     """
     seo_parent_title = ''
     if slug_dict['seo_root']:
@@ -543,7 +504,7 @@ def _get_seo_parent_title(slug_dict, document_locale):
 def _document_deleted(request, deletion_logs):
     """
     When a Document has been deleted, display a notice.
-    
+
     """
     deletion_log = deletion_logs.order_by('-pk')[0]
 
@@ -557,7 +518,7 @@ def _document_deleted(request, deletion_logs):
 def _document_raw(request, doc, doc_html, rendering_params):
     """
     Display a raw Document.
-    
+
     """
     response = HttpResponse(doc_html)
     response['X-Frame-Options'] = 'Allow'
@@ -570,7 +531,7 @@ def _document_raw(request, doc, doc_html, rendering_params):
     elif doc.is_template:
         # Treat raw, un-bleached template source as plain text, not HTML.
         response['Content-Type'] = 'text/plain; charset=utf-8'
-    
+
     return _set_common_headers(doc,
                                rendering_params['section'],
                                response)
@@ -587,7 +548,7 @@ def _document_raw(request, doc, doc_html, rendering_params):
 def document(request, document_slug, document_locale):
     """
     View a wiki document.
-    
+
     """
     # PUT requests go to the write API.
     if request.method == 'PUT':
@@ -639,7 +600,7 @@ def document(request, document_slug, document_locale):
 
     # We found a Document. Now we need to figure out how we're going
     # to display it.
-    
+
     # Step 1: If we're a redirect, and redirecting hasn't been
     # disabled, redirect.
 
@@ -754,11 +715,10 @@ def document(request, document_slug, document_locale):
                'seo_parent_title': seo_parent_title,
                'attachment_data': attachments,
                'attachment_data_json': json.dumps(attachments)}
-    context.update(SHOWFOR_DATA)
 
     response = render(request, 'wiki/document.html', context)
     return _set_common_headers(doc, rendering_params['section'], response)
-        
+
 
 def _document_PUT(request, document_slug, document_locale):
     """Handle PUT requests as document write API"""
@@ -884,7 +844,6 @@ def revision(request, document_slug, document_locale, revision_id):
 
     data = {'document': rev.document, 'revision': rev,
             'comment': format_comment(rev)}
-    data.update(SHOWFOR_DATA)
     return render(request, 'wiki/revision.html', data)
 
 
@@ -1478,7 +1437,6 @@ def preview_revision(request):
     # TODO: Get doc ID from JSON.
     data = {'content': wiki_content, 'title': request.POST.get('title', ''),
             'kumascript_errors': kumascript_errors}
-    #data.update(SHOWFOR_DATA)
     return render(request, 'wiki/preview.html', data)
 
 
@@ -1539,12 +1497,12 @@ def autosuggest_documents(request):
     locale = request.GET.get('locale', False)
     current_locale = request.GET.get('current_locale', False)
     exclude_current_locale = request.GET.get('exclude_current_locale', False)
-    
+
     if not partial_title:
         # Only handle actual autosuggest requests, not requests for a
         # memory-busting list of all documents.
         return HttpResponseBadRequest(_lazy('Autosuggest requires a partial title. For a full document index, see the main page.'))
-        
+
     # Retrieve all documents that aren't redirects or templates
     docs = (Document.objects.
         extra(select={'length': 'Length(slug)'}).
@@ -1593,7 +1551,7 @@ def document_revisions(request, document_slug, document_locale):
             per_page = DOCUMENTS_PER_PAGE
         page = paginate(request, revs, per_page)
         revs = [r for r in page.object_list]
-        
+
     # Ensure the current revision appears at the top, no matter where it
     # appears in the order.
     curr_id = doc.current_revision.id
@@ -1649,7 +1607,6 @@ def review_revision(request, document_slug, document_locale, revision_id):
 
     data = {'revision': rev, 'document': doc, 'form': form,
             'parent_revision': parent_revision}
-    data.update(SHOWFOR_DATA)
     return render(request, template, data)
 
 
@@ -2264,7 +2221,7 @@ def delete_document(request, document_slug, document_locale):
 def restore_document(request, document_slug, document_locale):
     """
     Restore a deleted Document.
-    
+
     """
     document = get_object_or_404(Document.deleted_objects.all(),
                                  slug=document_slug,
@@ -2280,7 +2237,7 @@ def restore_document(request, document_slug, document_locale):
 def purge_document(request, document_slug, document_locale):
     """
     Permanently purge a deleted Document.
-    
+
     """
     document = get_object_or_404(Document.deleted_objects.all(),
                                  slug=document_slug,
@@ -2365,11 +2322,7 @@ def _document_form_initial(document):
             'slug': document.slug,
             'category': document.category,
             'is_localizable': document.is_localizable,
-            'tags': [t.name for t in document.tags.all()],
-            'firefox_versions': [x.item_id for x in
-                                 document.firefox_versions.all()],
-            'operating_systems': [x.item_id for x in
-                                  document.operating_systems.all()]}
+            'tags': [t.name for t in document.tags.all()],}
 
 
 def _save_rev_and_notify(rev_form, creator, document):

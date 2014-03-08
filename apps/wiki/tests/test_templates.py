@@ -365,10 +365,6 @@ class NewDocumentTests(TestCaseBase):
         eq_(settings.WIKI_DEFAULT_LANGUAGE, d.locale)
         eq_(data['category'], d.category)
         eq_(tags, sorted(t.name for t in d.tags.all()))
-        eq_(data['firefox_versions'],
-            list(d.firefox_versions.values_list('item_id', flat=True)))
-        eq_(data['operating_systems'],
-            list(d.operating_systems.values_list('item_id', flat=True)))
         r = d.revisions.all()[0]
         eq_(data['keywords'], r.keywords)
         eq_(data['summary'], r.summary)

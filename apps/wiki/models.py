@@ -271,51 +271,6 @@ TOC_DEPTH_CHOICES = (
     (TOC_DEPTH_H4, _lazy('H4 and higher')),
 )
 
-# FF versions used to filter article searches, power {for} tags, etc.:
-#
-# Iterables of (ID, name, abbreviation for {for} tags, max version this version
-# group encompasses) grouped into optgroups. To add the ability to sniff a new
-# version of an existing browser (assuming it doesn't change the user agent
-# string too radically), you should need only to add a line here; no JS
-# required. Just be wary of inexact floating point comparisons when setting
-# max_version, which should be read as "From the next smaller max_version up to
-# but not including version x.y".
-VersionMetadata = namedtuple('VersionMetadata',
-                             'id, name, long, slug, max_version, show_in_ui')
-GROUPED_FIREFOX_VERSIONS = (
-    ((_lazy(u'Desktop:'), 'desktop'), (
-        # The first option is the default for {for} display. This should be the
-        # newest version.
-        VersionMetadata(2, _lazy(u'Firefox 3.5-3.6'),
-                        _lazy(u'Firefox 3.5-3.6'), 'fx35', 3.9999, True),
-        VersionMetadata(1, _lazy(u'Firefox 4'),
-                        _lazy(u'Firefox 4'), 'fx4', 4.9999, True),
-        VersionMetadata(3, _lazy(u'Firefox 3.0'),
-                        _lazy(u'Firefox 3.0'), 'fx3', 3.4999, False))),
-    ((_lazy(u'Mobile:'), 'mobile'), (
-        VersionMetadata(4, _lazy(u'Firefox 4'),
-                        _lazy(u'Firefox 4 for Mobile'), 'm4', 4.9999, True),)))
-
-# Flattened:  # TODO: perhaps use optgroups everywhere instead
-FIREFOX_VERSIONS = tuple(chain(*[options for label, options in
-                                 GROUPED_FIREFOX_VERSIONS]))
-
-# OSes used to filter articles and declare {for} sections:
-OsMetaData = namedtuple('OsMetaData', 'id, name, slug')
-GROUPED_OPERATING_SYSTEMS = (
-    ((_lazy(u'Desktop OS:'), 'desktop'), (
-        OsMetaData(1, _lazy(u'Windows'), 'win'),
-        OsMetaData(2, _lazy(u'Mac OS X'), 'mac'),
-        OsMetaData(3, _lazy(u'Linux'), 'linux'))),
-    ((_lazy(u'Mobile OS:'), 'mobile'), (
-        OsMetaData(5, _lazy(u'Android'), 'android'),
-        OsMetaData(4, _lazy(u'Maemo'), 'maemo'))))
-
-# Flattened
-OPERATING_SYSTEMS = tuple(chain(*[options for label, options in
-                                  GROUPED_OPERATING_SYSTEMS]))
-
-
 # how a redirect looks as rendered HTML
 REDIRECT_HTML = 'REDIRECT <a class="redirect"'
 REDIRECT_CONTENT = 'REDIRECT <a class="redirect" href="%(href)s">%(title)s</a>'
@@ -1347,7 +1302,7 @@ class Document(NotificationsMixin, models.Model):
         """
         Create and return a Document and a Revision to serve as
         redirects once this page has been moved.
-        
+
         """
         redirect_doc = Document(locale=self.locale,
                                 title=self.title,
@@ -1371,7 +1326,7 @@ class Document(NotificationsMixin, models.Model):
         Create and return a Revision which is a copy of this
         Document's current Revision, as it will exist at a moved
         location.
-        
+
         """
         moved_rev = self.current_revision
 
@@ -1403,7 +1358,7 @@ class Document(NotificationsMixin, models.Model):
         This is necessary since page moving is a background task, and
         a Document may come into existence at the target slug after
         the move is requested.
-        
+
         """
         existing = None
         try:
@@ -1472,7 +1427,7 @@ class Document(NotificationsMixin, models.Model):
         # Step 4: Create (but don't yet save) a Document and Revision
         # to leave behind as a redirect from old location to new.
         redirect_doc, redirect_rev = self._post_move_redirects(new_slug, user, title)
-        
+
         # Step 5: Update our breadcrumbs.
         new_parent = self._get_new_parent(new_slug)
 
@@ -1627,11 +1582,6 @@ class Document(NotificationsMixin, models.Model):
     @property
     def language(self):
         return settings.LANGUAGES[self.locale.lower()]
-
-    # FF version and OS are hung off the original, untranslated document and
-    # dynamically inherited by translations:
-    firefox_versions = _inherited('firefox_versions', 'firefox_version_set')
-    operating_systems = _inherited('operating_systems', 'operating_system_set')
 
     @property
     def full_path(self):
@@ -2217,29 +2167,6 @@ class Revision(models.Model):
 
     def needs_technical_review(self):
         return 'technical' in [t.name for t in self.review_tags.all()]
-
-
-# FirefoxVersion and OperatingSystem map many ints to one Document. The
-# enumeration table of int-to-string is not represented in the DB because of
-# difficulty working DB-dwelling gettext keys into our l10n workflow.
-class FirefoxVersion(models.Model):
-    """A Firefox version, version range, etc. used to categorize documents"""
-    item_id = models.IntegerField(choices=[(v.id, v.name) for v in
-                                           FIREFOX_VERSIONS])
-    document = models.ForeignKey(Document, related_name='firefox_version_set')
-
-    class Meta(object):
-        unique_together = ('item_id', 'document')
-
-
-class OperatingSystem(models.Model):
-    """An operating system used to categorize documents"""
-    item_id = models.IntegerField(choices=[(o.id, o.name) for o in
-                                           OPERATING_SYSTEMS])
-    document = models.ForeignKey(Document, related_name='operating_system_set')
-
-    class Meta(object):
-        unique_together = ('item_id', 'document')
 
 
 class HelpfulVote(models.Model):

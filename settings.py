@@ -330,7 +330,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.messages.context_processors.messages',
 
     'sumo.context_processors.global_settings',
-    'sumo.context_processors.for_data',
 
     'devmo.context_processors.i18n',
     'devmo.context_processors.next_url',

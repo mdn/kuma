@@ -25,7 +25,7 @@ from sumo.tests import TestCase
 from devmo.tests import override_constance_settings
 
 from wiki.cron import calculate_related_documents
-from wiki.models import (FirefoxVersion, OperatingSystem, Document, Revision,
+from wiki.models import (Document, Revision,
                          Attachment, DocumentZone,
                          MAJOR_SIGNIFICANCE, CATEGORIES,
                          get_current_or_latest_revision,
@@ -222,16 +222,6 @@ class DocumentTests(TestCase):
         _objects_eq(getattr(parent, direct_attr), [e1, e2])
         _objects_eq(getattr(child, direct_attr), [])
 
-    def test_firefox_version_inheritance(self):
-        """Assert the parent delegation of firefox_version works."""
-        self._test_m2m_inheritance(FirefoxVersion, 'firefox_versions',
-                                   'firefox_version_set')
-
-    def test_operating_system_inheritance(self):
-        """Assert the parent delegation of operating_system works."""
-        self._test_m2m_inheritance(OperatingSystem, 'operating_systems',
-                                   'operating_system_set')
-
     def test_category_inheritance(self):
         """A document's categories must always be those of its parent."""
         some_category = CATEGORIES[1][0]
@@ -274,15 +264,6 @@ class DocumentTests(TestCase):
         i2 = enum_class(item_id=2)
         getattr(d, attr).add(i2)
         _objects_eq(getattr(d, attr), [i1, i2])
-
-    def test_firefox_versions(self):
-        """Test firefox_versions attr"""
-        self._test_int_sets_and_descriptors(FirefoxVersion, 'firefox_versions')
-
-    def test_operating_systems(self):
-        """Test operating_systems attr"""
-        self._test_int_sets_and_descriptors(OperatingSystem,
-                                            'operating_systems')
 
     def test_only_localizable_allowed_children(self):
         """You can't have children for a non-localizable document."""
