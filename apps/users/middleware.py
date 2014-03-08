@@ -13,7 +13,7 @@ class BanMiddleware(object):
     Middleware implementing bans. HTTP requests from banned users will
     be logged out, and shown a message explaining that they are
     banned.
-    
+
     """
     def process_request(self, request):
         if hasattr(request, 'user') and \

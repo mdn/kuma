@@ -11,7 +11,7 @@ from tower import ugettext as _, ugettext_lazy as _lazy
 class Sha256Hasher(BasePasswordHasher):
     """
     SHA-256 password hasher.
-    
+
     """
     algorithm = 'sha256'
     digest = hashlib.sha256
