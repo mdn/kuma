@@ -236,21 +236,6 @@ ALLOWED_STYLES = [
     'direction', 'white-space', 'unicode-bidi', 'word-wrap'
 ]
 
-# Disruptiveness of edits to translated versions. Numerical magnitude indicate
-# the relative severity.
-TYPO_SIGNIFICANCE = 10
-MEDIUM_SIGNIFICANCE = 20
-MAJOR_SIGNIFICANCE = 30
-SIGNIFICANCES = (
-    (TYPO_SIGNIFICANCE,
-     _lazy(u'Minor details like punctuation and spelling errors')),
-    (MEDIUM_SIGNIFICANCE,
-     _lazy(u"Content changes that don't require immediate translation")),
-    (MAJOR_SIGNIFICANCE,
-     _lazy(u'Major content changes that will make older translations '
-           'inaccurate')),
-)
-
 CATEGORIES = (
     (00, _lazy(u'Uncategorized')),
     (10, _lazy(u'Reference')),
@@ -516,7 +501,7 @@ class BaseDocumentManager(models.Manager):
             'title', 'locale', 'slug', 'tags', 'is_template', 'is_localizable',
             'parent', 'parent_topic', 'category', 'document', 'is_redirect',
             'summary', 'content', 'comment',
-            'keywords', 'tags', 'toc_depth', 'significance', 'is_approved',
+            'keywords', 'tags', 'toc_depth', 'is_approved',
             'creator',  # HACK: Replaced on import, but deserialize needs it
             'is_mindtouch_migration',
         )
@@ -1847,22 +1832,6 @@ class Document(NotificationsMixin, models.Model):
 
         return qs.exists()
 
-    def is_majorly_outdated(self):
-        """Return whether a MAJOR_SIGNIFICANCE-level update has occurred to the
-        parent document since this translation had an approved update.
-
-        If this is not a translation or has never been approved, return False.
-
-        """
-        if not (self.parent and self.current_revision):
-            return False
-
-        based_on_id = self.current_revision.based_on_id
-        more_filters = {'id__gt': based_on_id} if based_on_id else {}
-        return self.parent.revisions.filter(
-            is_approved=True,
-            significance__gte=MAJOR_SIGNIFICANCE, **more_filters).exists()
-
     def is_watched_by(self, user):
         """Return whether `user` is notified of edits to me."""
         from wiki.events import EditDocumentEvent
@@ -2021,7 +1990,6 @@ class Revision(models.Model):
 
     created = models.DateTimeField(default=datetime.now, db_index=True)
     reviewed = models.DateTimeField(null=True)
-    significance = models.IntegerField(choices=SIGNIFICANCES, null=True)
     comment = models.CharField(max_length=255)
     reviewer = models.ForeignKey(User, related_name='reviewed_revisions',
                                  null=True)

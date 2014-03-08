@@ -12,7 +12,7 @@ from waffle.models import Flag
 from devmo.tests import LocalizingClient
 from sumo.tests import TestCase, get_user
 import wiki.content
-from wiki.models import Document, Revision, CATEGORIES, SIGNIFICANCES
+from wiki.models import Document, Revision, CATEGORIES
 
 
 class TestCaseBase(TestCase):
@@ -67,7 +67,7 @@ def revision(save=False, **kwargs):
         d = kwargs['document']
 
     defaults = {'summary': 'Some summary', 'content': 'Some content',
-                'significance': SIGNIFICANCES[0][0], 'comment': 'Some comment',
+                'comment': 'Some comment',
                 'creator': kwargs.get('creator', get_user()), 'document': d,
                 'tags': '"some", "tags"', 'toc_depth': 1}
 

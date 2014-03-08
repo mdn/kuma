@@ -16,8 +16,6 @@ document_patterns = patterns('wiki.views',
     url(r'^\$edit$', 'edit_document', name='wiki.edit_document'),
     url(r'^\$edit/(?P<revision_id>\d+)$', 'edit_document',
         name='wiki.new_revision_based_on'),
-    url(r'^\$review/(?P<revision_id>\d+)$', 'review_revision',
-        name='wiki.review_revision'),
     url(r'^\$compare$', 'compare_revisions', name='wiki.compare_revisions'),
     url(r'^\$children$', 'get_children', name='wiki.get_children'),
     url(r'^\$translate$', 'translate', name='wiki.translate'),
@@ -55,16 +53,6 @@ urlpatterns = patterns('wiki.views',
     # Un/Subscribe to locale 'ready for review' notifications.
     url(r'^/ckeditor_config.js$', 'ckeditor_config',
         name='wiki.ckeditor_config'),
-    url(r'^/watch-ready-for-review$', 'watch_locale',
-        name='wiki.locale_watch'),
-    url(r'^/unwatch-ready-for-review$', 'unwatch_locale',
-        name='wiki.locale_unwatch'),
-
-    # Un/Subscribe to 'approved' notifications.
-    url(r'^/watch-approved$', 'watch_approved',
-        name='wiki.approved_watch'),
-    url(r'^/unwatch-approved$', 'unwatch_approved',
-        name='wiki.approved_unwatch'),
 
     url(r'^.json$', 'json_view', name='wiki.json'),
 
@@ -79,10 +67,10 @@ urlpatterns = patterns('wiki.views',
     url(r'^/move-requested$',
         TemplateView.as_view(template_name='wiki/move_requested.html'),
         name='wiki.move_requested'),
-    
+
     url(r'^/get-documents$', 'autosuggest_documents', name='wiki.autosuggest_documents'),
     url(r'^/external-signup$', 'external_signup', name='wiki.external_signup'),
-    
+
     url(r'^/category/(?P<category>\d+)$', 'list_documents',
         name='wiki.category'),
     url(r'^/needs-review/(?P<tag>[^/]+)$', 'list_documents_for_review',

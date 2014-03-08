@@ -24,33 +24,6 @@ from wiki.signals import render_done
 log = logging.getLogger('k.task')
 
 
-@task
-def send_reviewed_notification(revision, document, message):
-    """Send notification of review to the revision creator."""
-    if revision.reviewer == revision.creator:
-        # log.debug('Revision (id=%s) reviewed by creator, skipping email' % \
-        #           revision.id)
-        return
-
-    # log.debug('Sending reviewed email for revision (id=%s)' % revision.id)
-    if revision.is_approved:
-        subject = _('Your revision has been approved: {title}')
-    else:
-        subject = _('Your revision has been rejected: {title}')
-    subject = subject.format(title=document.title)
-    t = loader.get_template('wiki/email/reviewed.ltxt')
-    url = reverse('wiki.document_revisions', locale=document.locale,
-                  args=[document.slug])
-    content = t.render(Context({'document_title': document.title,
-                                'approved': revision.is_approved,
-                                'reviewer': revision.reviewer,
-                                'message': message,
-                                'url': url,
-                                'host': Site.objects.get_current().domain}))
-    send_mail(subject, content, settings.TIDINGS_FROM_ADDRESS,
-              [revision.creator.email])
-
-
 def schedule_rebuild_kb():
     """Try to schedule a KB rebuild, if we're allowed to."""
     if not settings.WIKI_REBUILD_ON_DEMAND or celery.conf.ALWAYS_EAGER:

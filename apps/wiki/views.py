@@ -61,9 +61,8 @@ from sumo.urlresolvers import reverse
 from sumo.utils import paginate, smart_int
 from wiki import DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX, SLUG_CLEANSING_REGEX
 from wiki.decorators import check_readonly
-from wiki.events import (EditDocumentEvent, ReviewableRevisionInLocaleEvent,
-                         ApproveRevisionInLocaleEvent)
-from wiki.forms import (DocumentForm, RevisionForm, ReviewForm,
+from wiki.events import EditDocumentEvent
+from wiki.forms import (DocumentForm, RevisionForm,
                         RevisionValidationForm, AttachmentRevisionForm,
                         TreeMoveForm, DocumentDeletionForm)
 from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
@@ -76,7 +75,7 @@ from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
                          DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL,
                          get_current_or_latest_revision, TOC_DEPTH_H4,
                          REDIRECT_CONTENT)
-from wiki.tasks import move_page, send_reviewed_notification
+from wiki.tasks import move_page
 from wiki.helpers import format_comment
 import wiki.content
 from wiki import kumascript
@@ -1563,53 +1562,6 @@ def document_revisions(request, document_slug, document_locale):
                          'page': page, 'revs': revs, 'curr_id': curr_id})
 
 
-@login_required
-@permission_required('wiki.review_revision')
-@process_document_path
-def review_revision(request, document_slug, document_locale, revision_id):
-    """Review a revision of a wiki document."""
-    rev = get_object_or_404(Revision, pk=revision_id,
-                            document__slug=document_slug)
-    doc = rev.document
-    form = ReviewForm()
-
-    if request.method == 'POST':
-        form = ReviewForm(request.POST)
-        if form.is_valid() and not rev.reviewed:
-            # Don't allow revisions to be reviewed twice
-            rev.is_approved = 'approve' in request.POST
-            rev.reviewer = request.user
-            rev.reviewed = datetime.now()
-            if form.cleaned_data['significance']:
-                rev.significance = form.cleaned_data['significance']
-            rev.save()
-
-            # Send an email (not really a "notification" in the sense that
-            # there's a Watch table entry) to revision creator.
-            msg = form.cleaned_data['comment']
-            send_reviewed_notification.delay(rev, doc, msg)
-
-            # If approved, send approved notification
-            ApproveRevisionInLocaleEvent(rev).fire(exclude=rev.creator)
-
-            # Schedule KB rebuild?
-            # schedule_rebuild_kb()
-
-            return HttpResponseRedirect(reverse('wiki.document_revisions',
-                                                args=[document.full_path]))
-
-    if doc.parent:  # A translation
-        parent_revision = get_current_or_latest_revision(doc.parent)
-        template = 'wiki/review_translation.html'
-    else:
-        parent_revision = None
-        template = 'wiki/review_revision.html'
-
-    data = {'revision': rev, 'document': doc, 'form': form,
-            'parent_revision': parent_revision}
-    return render(request, template, data)
-
-
 @require_GET
 @xframe_options_sameorigin
 @process_document_path
@@ -1923,51 +1875,6 @@ def unwatch_document(request, document_slug, document_locale):
         Document, locale=document_locale, slug=document_slug)
     EditDocumentEvent.stop_notifying(request.user, document)
     return HttpResponseRedirect(document.get_absolute_url())
-
-
-@require_POST
-@login_required
-@waffle_flag('locale_watch')
-def watch_locale(request):
-    """Start watching a locale for revisions ready for review."""
-    ReviewableRevisionInLocaleEvent.notify(request.user, locale=request.locale)
-    # This redirect is pretty bad, because you might also have been on the
-    # Contributor Dashboard:
-    return HttpResponseRedirect(reverse('dashboards.localization'))
-
-
-@require_POST
-@login_required
-@waffle_flag('local_watch')
-def unwatch_locale(request):
-    """Stop watching a locale for revisions ready for review."""
-    ReviewableRevisionInLocaleEvent.stop_notifying(request.user,
-                                                   locale=request.locale)
-    return HttpResponseRedirect(reverse('dashboards.localization'))
-
-
-@require_POST
-@login_required
-def watch_approved(request):
-    """Start watching approved revisions in a locale."""
-    locale = request.POST.get('locale')
-    if locale not in settings.SUMO_LANGUAGES:
-        raise Http404
-
-    ApproveRevisionInLocaleEvent.notify(request.user, locale=locale)
-    return HttpResponseRedirect(reverse('dashboards.localization'))
-
-
-@require_POST
-@login_required
-def unwatch_approved(request):
-    """Stop watching approved revisions."""
-    locale = request.POST.get('locale')
-    if locale not in settings.SUMO_LANGUAGES:
-        raise Http404
-
-    ApproveRevisionInLocaleEvent.stop_notifying(request.user, locale=locale)
-    return HttpResponseRedirect(reverse('dashboards.localization'))
 
 
 @require_GET

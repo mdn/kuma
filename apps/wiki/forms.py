@@ -17,7 +17,6 @@ from sumo.form_fields import StrippedCharField
 import wiki.content
 from wiki.models import (Document, Revision,
                          AttachmentRevision, valid_slug_parent,
-                         SIGNIFICANCES,
                          CATEGORIES, REVIEW_FLAG_TAGS, RESERVED_SLUGS,
                          TOC_DEPTH_CHOICES, LOCALIZATION_FLAG_TAGS)
 from wiki import SLUG_CLEANSING_REGEX
@@ -367,17 +366,6 @@ class RevisionForm(forms.ModelForm):
         new_rev.review_tags.set(*self.cleaned_data['review_tags'])
         new_rev.localization_tags.set(*self.cleaned_data['localization_tags'])
         return new_rev
-
-
-class ReviewForm(forms.Form):
-    comment = StrippedCharField(max_length=255, widget=forms.Textarea(),
-                                required=False, label=_lazy(u'Comment:'),
-                                error_messages={'max_length': COMMENT_LONG})
-
-    significance = forms.ChoiceField(
-                    label=_lazy(u'Significance:'),
-                    choices=SIGNIFICANCES, initial=SIGNIFICANCES[0][0],
-                    required=False, widget=forms.RadioSelect())
 
 
 class RevisionValidationForm(RevisionForm):
