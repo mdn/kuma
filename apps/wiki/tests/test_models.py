@@ -26,14 +26,12 @@ from devmo.tests import override_constance_settings
 
 from wiki.cron import calculate_related_documents
 from wiki.models import (Document, Revision,
-                         Attachment, DocumentZone,
-                         MAJOR_SIGNIFICANCE, CATEGORIES,
+                         Attachment, DocumentZone, CATEGORIES,
                          get_current_or_latest_revision,
                          DocumentRenderedContentNotAvailable,
                          DocumentRenderingInProgress,
                          TaggedDocument,)
-from wiki.tests import (document, revision, doc_rev, translated_revision,
-                        normalize_html,
+from wiki.tests import (document, revision, doc_rev, normalize_html,
                         create_template_test_users,
                         create_topical_parents_docs)
 from wiki import tasks
@@ -401,66 +399,6 @@ class DocumentTestsWithFixture(TestCase):
     """Document tests which need the users fixture"""
 
     fixtures = ['test_users.json']
-
-    def test_majorly_outdated(self):
-        """Test the is_majorly_outdated method."""
-        trans = translated_revision(is_approved=True)
-        trans.save()
-        trans_doc = trans.document
-
-        # Make sure a doc returns False if it has no parent:
-        assert not trans_doc.parent.is_majorly_outdated()
-
-        assert not trans_doc.is_majorly_outdated()
-
-        # Add a parent revision of MAJOR significance:
-        r = revision(document=trans_doc.parent,
-                     significance=MAJOR_SIGNIFICANCE,
-                     is_approved=False)
-        r.save()
-        assert not trans_doc.is_majorly_outdated()
-
-        # Approve it:
-        r.is_approved = True
-        r.save()
-
-        assert trans_doc.is_majorly_outdated()
-
-    def test_majorly_outdated_with_unapproved_parents(self):
-        """Migrations might introduce translated revisions without based_on
-        set. Tolerate these.
-
-        If based_on of a translation's current_revision is None, the
-        translation should be considered out of date iff any
-        major-significance, approved revision to the English article exists.
-
-        """
-        # Create a parent doc with only an unapproved revision...
-        parent_rev = revision()
-        parent_rev.save()
-        # ...and a translation with a revision based on nothing.
-        trans = document(parent=parent_rev.document, locale='de')
-        trans.save()
-        trans_rev = revision(document=trans, is_approved=True)
-        trans_rev.save()
-
-        assert trans_rev.based_on is None, \
-            ('based_on defaulted to something non-None, which this test '
-             "wasn't expecting.")
-
-        assert not trans.is_majorly_outdated(), \
-            ('A translation was considered majorly out of date even though '
-             'the English document has never had an approved revision of '
-             'major significance.')
-
-        major_parent_rev = revision(document=parent_rev.document,
-                                    significance=MAJOR_SIGNIFICANCE,
-                                    is_approved=True)
-        major_parent_rev.save()
-
-        assert trans.is_majorly_outdated(), \
-            ('A translation was not considered majorly outdated when its '
-             "current revision's based_on value was None.")
 
     def test_redirect_document_non_redirect(self):
         """Assert redirect_document on non-redirects returns None."""
@@ -1920,7 +1858,7 @@ class DocumentParsingTests(TestCase):
                      content=src,
                      is_approved=True, save=True)
         d = r.document
-        
+
         result = d.get_section_content('Quick_Links')
         eq_(normalize_html(expected), normalize_html(result))
 
@@ -1959,7 +1897,7 @@ class DocumentParsingTests(TestCase):
                      content=src,
                      is_approved=True, save=True)
         d = r.document
-        
+
         eq_(normalize_html(body),
             normalize_html(d.get_body_html()))
         eq_(normalize_html(quick_links),

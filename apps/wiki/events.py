@@ -10,7 +10,7 @@ from django.template import Context, loader
 from tower import ugettext as _
 
 from devmo import email_utils
-from tidings.events import InstanceEvent, Event
+from tidings.events import InstanceEvent
 from sumo.urlresolvers import reverse
 from wiki.helpers import revisions_unified_diff
 from wiki.models import Document
@@ -109,58 +109,3 @@ class EditDocumentEvent(InstanceEvent):
             context_vars=context,
             users_and_watches=users_and_watches,
             default_locale=document.locale)
-
-
-class _RevisionInLocaleEvent(Event):
-    """An event that receives a revision when constructed and filters according
-    to that revision's document's locale"""
-    filters = set(['locale'])
-
-    def __init__(self, revision):
-        super(_RevisionInLocaleEvent, self).__init__()
-        self.revision = revision
-
-    # notify(), stop_notifying(), and is_notifying() take...
-    # (user_or_email, locale=some_locale)
-
-    def _users_watching(self, **kwargs):
-        return self._users_watching_by_filter(
-            locale=self.revision.document.locale, **kwargs)
-
-
-class ReviewableRevisionInLocaleEvent(_RevisionInLocaleEvent):
-    """Event fired when any revision in a certain locale is ready for review"""
-    # No other content types have a concept of reviewability, so we don't
-    # bother setting content_type.
-    event_type = 'reviewable wiki in locale'
-
-    def _mails(self, users_and_watches):
-        revision = self.revision
-        document = revision.document
-        # log.debug('Sending ready for review email for revision (id=%s)' %
-        #           revision.id)
-        subject = _('{title} is ready for review ({creator})')
-        url = reverse('wiki.review_revision', locale=document.locale,
-                      args=[document.slug, revision.id])
-        return notification_mails(revision, subject,
-                                  'wiki/email/ready_for_review.ltxt', url,
-                                  users_and_watches)
-
-
-class ApproveRevisionInLocaleEvent(_RevisionInLocaleEvent):
-    """Event fired when any revision in a certain locale is approved"""
-    # No other content types have a concept of approval, so we don't bother
-    # setting content_type.
-    event_type = 'approved wiki in locale'
-
-    def _mails(self, users_and_watches):
-        revision = self.revision
-        document = revision.document
-        log.debug('Sending approved email for revision (id=%s)' %
-                  revision.id)
-        subject = _('{title} ({locale}) has a new approved revision')
-        url = reverse('wiki.document', locale=document.locale,
-                      args=[document.slug])
-        return notification_mails(revision, subject,
-                                  'wiki/email/approved.ltxt', url,
-                                  users_and_watches)

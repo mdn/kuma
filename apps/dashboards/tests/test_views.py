@@ -41,7 +41,6 @@ class RevisionsDashTest(TestCase):
         eq_(28, revisions[1]['id'])
         # Oldest revision last.
         eq_(19, revisions[-1]['id'])
-        
 
     @attr('dashboards')
     def test_locale_filter(self):

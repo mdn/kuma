@@ -1,14 +1,10 @@
-import logging
-
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from django.utils.encoding import iri_to_uri, smart_str, smart_unicode
 
 from sumo.helpers import urlparams
-from sumo.urlresolvers import reverse
 
 from wiki import ReadOnlyException
-from wiki.models import Document, DocumentZone
+from wiki.models import DocumentZone
 
 
 class ReadOnlyMiddleware(object):
@@ -38,7 +34,7 @@ class DocumentZoneMiddleware(object):
                 new_path = request.path_info.replace(remap['original_path'],
                                                      remap['new_path'], 1)
                 new_path = '/%s%s' % (request.locale, new_path)
-                
+
                 query = request.GET.copy()
                 if 'lang' in query:
                     query.pop('lang')
