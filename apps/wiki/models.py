@@ -1,6 +1,4 @@
-from collections import namedtuple
 from datetime import datetime, timedelta
-from itertools import chain
 from urlparse import urlparse
 import hashlib
 import re

@@ -31,8 +31,7 @@ from wiki.models import (Document, Revision,
                          DocumentRenderedContentNotAvailable,
                          DocumentRenderingInProgress,
                          TaggedDocument,)
-from wiki.tests import (document, revision, doc_rev, translated_revision,
-                        normalize_html,
+from wiki.tests import (document, revision, doc_rev, normalize_html,
                         create_template_test_users,
                         create_topical_parents_docs)
 from wiki import tasks
@@ -1859,7 +1858,7 @@ class DocumentParsingTests(TestCase):
                      content=src,
                      is_approved=True, save=True)
         d = r.document
-        
+
         result = d.get_section_content('Quick_Links')
         eq_(normalize_html(expected), normalize_html(result))
 
@@ -1898,7 +1897,7 @@ class DocumentParsingTests(TestCase):
                      content=src,
                      is_approved=True, save=True)
         d = r.document
-        
+
         eq_(normalize_html(body),
             normalize_html(d.get_body_html()))
         eq_(normalize_html(quick_links),

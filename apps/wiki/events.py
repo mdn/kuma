@@ -10,7 +10,7 @@ from django.template import Context, loader
 from tower import ugettext as _
 
 from devmo import email_utils
-from tidings.events import InstanceEvent, Event
+from tidings.events import InstanceEvent
 from sumo.urlresolvers import reverse
 from wiki.helpers import revisions_unified_diff
 from wiki.models import Document

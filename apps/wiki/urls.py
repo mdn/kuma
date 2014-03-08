@@ -1,7 +1,6 @@
 from django.conf.urls import include, patterns, url
 from django.views.generic import TemplateView
 
-from sumo.views import redirect_to
 from wiki.feeds import (DocumentsRecentFeed, DocumentsReviewFeed, RevisionsFeed,
                         AttachmentsFeed,
                         DocumentsUpdatedTranslationParentFeed,)

@@ -1,17 +1,10 @@
-from django.conf import settings
-from django.db.models import Sum
 from django.db.models.signals import post_save
 
 import waffle
 
-from .models import (Document, Revision)
+from badger.utils import get_badge
 
-import badger
-import badger.utils
-from badger.utils import get_badge, award_badge, get_progress
-from badger.models import Badge, Award, Progress
-
-from wiki.models import (Document, Revision)
+from wiki.models import Revision
 
 
 # Machine-awarded badges defined here

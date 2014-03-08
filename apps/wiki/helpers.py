@@ -10,9 +10,6 @@ import jinja2
 from pyquery import PyQuery as pq
 from tidylib import tidy_document
 from tower import ugettext as _
-import logging
-
-from django.contrib.contenttypes.models import ContentType
 
 from sumo.urlresolvers import reverse
 import wiki
@@ -122,7 +119,7 @@ def format_comment(rev):
 
 @register.function
 def revisions_unified_diff(from_revision, to_revision):
-    if from_revision == None or to_revision == None:
+    if from_revision is None or to_revision is None:
         return "Diff is unavailable."
     fromfile = u'[%s] %s #%s' % (from_revision.document.locale,
                                  from_revision.document.title,
@@ -212,10 +209,10 @@ def selector_content_find(document, selector):
     """
     summary = ''
     try:
-      page = pq(document.rendered_html)
-      summary = page.find(selector).text()
+        page = pq(document.rendered_html)
+        summary = page.find(selector).text()
     except:
-      pass
+        pass
     return summary
 
 
@@ -231,7 +228,7 @@ def document_zone_management_links(user, document):
             user.has_perm('wiki.add_documentzone')):
         links['add'] = '%s?document=%s' % (
             reverse('admin:wiki_documentzone_add'), document.id)
-    
+
     # Enable "change" link if there's a zone, and the user has permission.
     if zone and user.has_perm('wiki.change_documentzone'):
         links['change'] = reverse('admin:wiki_documentzone_change',

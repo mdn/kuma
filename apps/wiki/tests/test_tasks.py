@@ -1,20 +1,15 @@
-from datetime import datetime
 
 from django.conf import settings
-from django.contrib.auth.models import User
-from django.contrib.sites.models import Site
-from django.core import mail
 from django.core.cache import cache
 
 import celery.conf
 import mock
-from nose.tools import eq_, ok_
+from nose.tools import eq_
 from test_utils import RequestFactory
 
 from sumo.tests import TestCase
 from devmo.tests import override_settings
 from wiki.tasks import rebuild_kb, schedule_rebuild_kb, _rebuild_kb_chunk
-from wiki.tests import TestCaseBase, revision
 
 
 class RebuildTestCase(TestCase):

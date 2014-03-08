@@ -1,10 +1,7 @@
 # coding=utf-8
-
-import logging
 import re
 import urllib
 from urllib import urlencode
-from urlparse import urlparse
 from collections import defaultdict
 
 from xml.sax.saxutils import quoteattr
@@ -449,12 +446,12 @@ class LinkAnnotationFilter(html5lib_Filter):
         # Perform existence checks for all the links, using one DB query per
         # locale for all the candidate slugs.
         for locale, slug_hrefs in needs_existence_check.items():
-            
+
             existing_slugs = (Document.objects
                                       .filter(locale=locale,
                                               slug__in=slug_hrefs.keys())
                                       .values_list('slug', flat=True))
-            
+
             # Remove the slugs that pass existence check.
             for slug in existing_slugs:
                 lslug = slug.lower()
@@ -861,10 +858,10 @@ class SectionFilter(html5lib_Filter):
 
                 # If this is the first heading of the section and we want to
                 # omit it, note that we've found it
-                if (self.in_section and 
+                if (self.in_section and
                         self.ignore_heading and
                         not self.already_ignored_header and
-                        not self.heading_to_ignore and 
+                        not self.heading_to_ignore and
                         self._isHeading(token)):
 
                     self.heading_to_ignore = token
@@ -958,12 +955,12 @@ class EditorSafetyFilter(html5lib_Filter):
     def __iter__(self):
 
         for token in html5lib_Filter.__iter__(self):
-        
+
             if ('StartTag' == token['type']):
 
                 # Strip out any attributes that start with "on"
-                token['data'] = [(k,v)
-                    for (k,v) in dict(token['data']).items()
+                token['data'] = [(k, v)
+                    for (k, v) in dict(token['data']).items()
                     if not k.startswith('on')]
 
             yield token

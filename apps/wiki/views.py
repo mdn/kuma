@@ -6,7 +6,6 @@ import hashlib
 import logging
 import re
 from urllib import urlencode
-from string import ascii_letters
 import jinja2
 import mime_types
 import newrelic.agent
@@ -81,7 +80,6 @@ import wiki.content
 from wiki import kumascript
 
 from pyquery import PyQuery as pq
-from django.utils.safestring import mark_safe
 
 from django.core.validators import URLValidator
 from django.core.mail import send_mail
@@ -1977,6 +1975,8 @@ def code_sample(request, document_slug, document_locale, sample_id):
     return render(request, 'wiki/code_sample.html', data)
 
 
+# TODO: Fix this view if we are going to use it. document_path
+# is undefined.
 @require_POST
 @process_document_path
 def helpful_vote(request, document_slug, document_locale):

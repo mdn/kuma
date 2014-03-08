@@ -21,7 +21,7 @@ import constance.config
 
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
-from sumo.tests import post, get, attrs_eq
+from sumo.tests import post, get
 from wiki.cron import calculate_related_documents
 from wiki.events import EditDocumentEvent
 from wiki.models import (Document, Revision, HelpfulVote,
@@ -1243,43 +1243,6 @@ class RevisionDeleteTestCase(SkippedTestCase):
              args=[self.d.slug, self.r.id])
         d = Document.objects.get(pk=d.pk)
         eq_(prev_revision, d.current_revision)
-
-
-class ApprovedWatchTests(SkippedTestCase):
-    """Tests for un/subscribing to revision approvals."""
-    fixtures = ['test_users.json']
-
-    def setUp(self):
-        super(ApprovedWatchTests, self).setUp()
-        self.client.login(username='testuser', password='testpass')
-
-    def test_watch_GET_405(self):
-        """Watch with HTTP GET results in 405."""
-        response = get(self.client, 'wiki.approved_watch')
-        eq_(405, response.status_code)
-
-    def test_unwatch_GET_405(self):
-        """Unwatch with HTTP GET results in 405."""
-        response = get(self.client, 'wiki.approved_unwatch')
-        eq_(405, response.status_code)
-
-    def test_watch_unwatch(self):
-        """Watch and unwatch a document."""
-        user = User.objects.get(username='testuser')
-        locale = 'es'
-
-        # Subscribe
-        response = post(self.client, 'wiki.approved_watch',
-                        {'locale': locale})
-        eq_(200, response.status_code)
-        assert ApproveRevisionInLocaleEvent.is_notifying(user, locale=locale)
-
-        # Unsubscribe
-        response = post(self.client, 'wiki.approved_unwatch',
-                        {'locale': locale})
-        eq_(200, response.status_code)
-        assert not ApproveRevisionInLocaleEvent.is_notifying(user,
-                                                             locale=locale)
 
 
 # TODO: Merge with wiki.tests.doc_rev()?

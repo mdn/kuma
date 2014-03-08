@@ -1,4 +1,3 @@
-import logging
 import time
 from urlparse import urljoin
 import json
@@ -7,7 +6,6 @@ import hashlib
 from collections import defaultdict
 
 import requests
-import bleach
 
 from django.conf import settings
 from django.core.cache import cache
@@ -178,7 +176,7 @@ def get(document, cache_control, base_url, timeout=None):
             if resp_errors:
                 cache.set(ck_errors, resp_errors, timeout=max_age)
 
-        elif resp.status_code == None:
+        elif resp.status_code is None:
             resp_errors = KUMASCRIPT_TIMEOUT_ERROR
 
         else:

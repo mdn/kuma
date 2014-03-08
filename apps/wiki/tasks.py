@@ -2,20 +2,16 @@ import logging
 
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.contrib.sites.models import Site
 from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail, mail_admins
 from django.db import transaction
 from django.dispatch import receiver
-from django.template import Context, loader
 
 import celery.conf
 from celery.task import task
 from celery.messaging import establish_connection
-from tower import ugettext as _
 
-from sumo.urlresolvers import reverse
 from sumo.utils import chunked
 from wiki.models import Document, SlugCollision
 from wiki.signals import render_done
