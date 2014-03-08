@@ -86,6 +86,12 @@ Vagrant.configure("2") do |config|
       rs.image = /Ubuntu/
     end
 
+    config.vm.provision :shell do |shell|
+      shell.inline = "mkdir -p /etc/puppet/modules;
+                      (puppet module list | grep elasticsearch-elasticsearch) ||
+                      puppet module install elasticsearch-elasticsearch"
+    end
+
     config.vm.provision :puppet do |puppet|
         puppet.manifests_path = "puppet/manifests"
         puppet.manifest_file = "dev-vagrant.pp"

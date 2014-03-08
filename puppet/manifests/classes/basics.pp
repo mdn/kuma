@@ -75,3 +75,14 @@ class foreman {
         provider => 'gem',
     }
 }
+
+# Get elasticsearch (you know, for search) up and running
+class { "elasticsearch":
+  package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.12.deb',
+  config => {
+    'index' => {
+      'number_of_replicas' => '0',
+      'number_of_shards'   => '5'
+    }
+  }
+}
