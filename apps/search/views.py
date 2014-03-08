@@ -15,7 +15,7 @@ from .filters import (LanguageFilterBackend, DatabaseFilterBackend,
                       AdvancedSearchQueryBackend)
 from .models import Filter, DocumentType
 from .renderers import ExtendedTemplateHTMLRenderer
-from .serializers import SearchSerializer, DocumentSerializer, FilterSerializer
+from .serializers import SearchSerializer, DocumentSerializer, FilterWithGroupSerializer
 from .queries import DocumentS
 
 
@@ -57,8 +57,8 @@ class SearchView(ListAPIView):
         self.available_filters = (Filter.objects.prefetch_related('tags',
                                                                   'group')
                                                 .filter(enabled=True))
-        self.serialized_filters = FilterSerializer(self.available_filters,
-                                                   many=True).data
+        self.serialized_filters = FilterWithGroupSerializer(self.available_filters,
+                                                            many=True).data
         self.current_page = self.request.QUERY_PARAMS.get(self.page_kwarg, 1)
         topics = self.request.QUERY_PARAMS.getlist(self.topic_param, [])
         seen_topics = set()

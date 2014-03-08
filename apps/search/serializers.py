@@ -50,20 +50,37 @@ class DocumentSerializer(serializers.Serializer):
     explanation = serializers.CharField(read_only=True, source='_explanation')
 
 
-class FilterGroupSerializer(serializers.Serializer):
-    name = serializers.CharField(read_only=True)
-    order = serializers.CharField(read_only=True)
-
-
 class FilterSerializer(serializers.ModelSerializer):
-    tags = serializers.SerializerMethodField('tag_names')
-    group = FilterGroupSerializer(source='group', read_only=True)
-
-    def tag_names(self, obj):
-        return obj.tags.values_list('name', flat=True)
 
     class Meta:
         model = Filter
         depth = 1
-        fields = ('name', 'slug', 'tags', 'operator', 'group')
-        read_only_fields = ('name', 'slug', 'operator')
+        fields = ('name', 'slug')
+        read_only_fields = ('name', 'slug')
+
+
+class GroupWithFiltersSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(read_only=True)
+    order = serializers.CharField(read_only=True)
+    filters = FilterSerializer(source='filters', read_only=True)
+
+    class Meta:
+        model = Filter
+        depth = 1
+        fields = ('name', 'order', 'filters')
+
+
+class GroupSerializer(serializers.Serializer):
+    name = serializers.CharField(read_only=True)
+    order = serializers.CharField(read_only=True)
+
+
+class FilterWithGroupSerializer(FilterSerializer):
+    tags = serializers.SerializerMethodField('tag_names')
+    group = GroupSerializer(source='group', read_only=True)
+
+    def tag_names(self, obj):
+        return obj.tags.values_list('name', flat=True)
+
+    class Meta(FilterSerializer.Meta):
+        fields = FilterSerializer.Meta.fields + ('tags', 'operator', 'group')

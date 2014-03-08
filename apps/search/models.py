@@ -53,6 +53,11 @@ class Filter(models.Model):
     slug = models.CharField(max_length=255, db_index=True,
                             help_text='the slug to be used as a query '
                                       'parameter in the search URL')
+    shortcut = models.CharField(max_length=255, db_index=True,
+                                null=True, blank=True,
+                                help_text='the name of the shortcut to '
+                                          'show in the command and query UI. '
+                                          'e.g. fxos')
     group = models.ForeignKey(FilterGroup, related_name='filters',
                               help_text='E.g. "Topic", "Skill level" etc')
     tags = PrefetchTaggableManager(help_text='A comma-separated list of tags. '
@@ -65,6 +70,10 @@ class Filter(models.Model):
     enabled = models.BooleanField(default=True,
                                   help_text='Whether this filter is shown '
                                             'to users or not.')
+    visible = models.BooleanField(default=True,
+                                  help_text='Whether this filter is shown '
+                                            'at public places, e.g. the '
+                                            'command and query UI')
 
     class Meta(object):
         unique_together = (('name', 'slug'),)
