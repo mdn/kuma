@@ -3,6 +3,7 @@
 	"locking in" a value
 */
 (function($) {
+	'use strict';
 
 	// Move the suggestion list when the page scrolls and the list is open
 	function openCloseScroll(event) {

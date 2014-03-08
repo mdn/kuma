@@ -4,6 +4,7 @@
  * 
  */
 (function ($, win, doc) {
+    'use strict';
 
     /*  
         Initialization of the CKEditor widget

@@ -1,4 +1,5 @@
 (function($) {
+  'use strict';
 
   /*
     Some quick feature testing up front
