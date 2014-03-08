@@ -198,4 +198,10 @@
     // return **this**
     return this;
   };
+
+  $('.search-results-topics').on('change', 'input', function(event) {
+    $('#search-form').submit();
+    $(this).parents('fieldset').attr('disabled', 'disabled');
+  });
+
 })(jQuery);
