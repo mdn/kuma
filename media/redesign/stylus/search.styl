@@ -25,6 +25,11 @@ h3 {selector-icon} {
   bidi-style(margin-right, (grid-spacing * .75), margin-left, 0);
 }
 
+/* block mentioning the number of results returned */
+fieldset {selector-icon} {
+  bidi-style(margin-right, (grid-spacing * .75), margin-left, 0);
+}
+
 p {
   compat-only(padding-left, 0);
 }
@@ -50,7 +55,7 @@ p {
 
 .search-results-container {
   padding: grid-spacing;
-  
+
   h3 {
     margin-bottom: grid-spacing;
   }
@@ -123,57 +128,53 @@ p {
 /* sidebar topic listings */
 .search-results-topics {
   reverse-link-decoration();
+  fieldset {
+    fieldset {
+      margin-bottom: 30px;
+    }
+    legend {
+      font-size: 24px;
+      letter-spacing: -0.5px;
+      margin: -7px 0 (grid-spacing / 2);
 
-  h3 {
-    margin-bottom: (grid-spacing / 2);
-
-    i {
-      margin-left: 0;
+      i {
+        margin-left: 0;
+      }
     }
   }
 
-  li {
-    padding-bottom: (grid-spacing / 2);
-  }
-
-  span, a {
-    bidi-value(padding-right, (grid-spacing * 2), grid-spacing);
-    bidi-value(padding-left, grid-spacing, (grid-spacing * 2));
-
+  label {
     display: block;
-    position: relative;
+    padding-bottom: (grid-spacing / 2);
 
-    {selector-icon} {
-      position: absolute;
-      top: 4px;
-      bidi-style(left, -10px, right, auto);
+    .icon-check {
+      margin-right: 5px;
     }
-  }
 
-  span.inactive {
-    color: lightgrey;
-  }
-
-  a {
-    color: #999;
-
-    &.checked {
+    .icon-check-empty {
+      margin-right: 7px;
+    }
+    &:hover .filter-name,
+    input[type="checkbox"]:focus+ .filter-name{
       color: link-color;
     }
 
-    &:before {
-      bidi-style(right, 0, left, auto);
-      position: absolute;
-      right: 0;
-      top: 0;
-      content: attr(data-count);
-      color: text-color;
-      opacity: 0.6;
+    &.inactive {
+      color: #999;
     }
+
+    .filter-count{
+      bidi-value(float, right, left)
+    }
+
   }
 
-  ul {
-    margin-bottom: 30px;
+}
+
+input.filter-button {
+  display: none;
+  .no-js & {
+    display: inline-block;
   }
 }
 

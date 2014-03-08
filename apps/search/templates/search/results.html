@@ -42,132 +42,155 @@
 
  <h1 class="offscreen">{{ _('MDN Site Search') }}</h1>
 
-  <div class="results-search-form">
-    <h2 class="offscreen">{{ _('Search') }}</h2>
-    <form action="{{ url('search') }}" method="get">
-      <label for="search-q" class="offscreen">{{ _('Search') }}</label>
-      <input type="search" name="q" id="search-q" placeholder="{{ _('Search the docs') }}" value="{{ query }}" {% if not query %}autofocus{% endif %} />
-      <button type="submit" class="offscreen">{{ _('Search') }}</button>
-    </form>
-  </div>
-
-  <div class="column-container">
-    <!-- left results -->
-    <div class="column-main">
-
-      <div id="search-results-close-container">
-        <div class="search-pane search-results-explanation">
-          <h2>{{ _('Results') }}</h2>
-          <p>
-          {% if locale_native %}
-            {% if query %}
-              {% trans count=count, locale_native=locale_native %}
-                {{ count }} document found for "{{ query }}" in {{ locale_native }}.
-              {% pluralize %}
-                {{ count }} documents found for "{{ query }}" in {{ locale_native }}.
-              {% endtrans %}
-            {% else %}
-              {% trans count=count, locale_native=locale_native %}
-                {{ count }} document found in {{ locale_native }}.
-              {% pluralize %}
-                {{ count }} documents found in {{ locale_native }}.
-              {% endtrans %}
-            {% endif %}
-          {% else %}
-            {% if query %}
-              {% trans count=count %}
-                {{ count }} document found for "{{ query }}".
-              {% pluralize %}
-                {{ count }} documents found for "{{ query }}".
-              {% endtrans %}
-            {% else %}
-              {% trans count=count %}
-                {{ count }} document found.
-              {% pluralize %}
-                {{ count }} documents found.
-              {% endtrans %}
-            {% endif %}
-          {% endif %}
-          {% if count %}
-            &middot;
-            {% if not previous and not next %}
-              {{ _('Displaying all results.') }}
-            {% else %}
-              {% trans count=count %}
-                Displaying {{ count }} search result.
-              {% pluralize %}
-                Displaying {{ start }}-{{ end }} of {{ count }} search results.
-              {% endtrans %}
-            {% endif %}
-          {% endif %}
-
-          {% if locale != settings.LANGUAGE_CODE %}
-            &middot;
-            <a href="{{ url('search', locale=settings.LANGUAGE_CODE, ) }}?q={{ query }}">
-              {% trans default_locale_native = settings.LOCALES[settings.LANGUAGE_CODE].native %}
-              Search again in {{ default_locale_native }}
-              {% endtrans %}
-            </a>
-          {% endif %}
-          </bdi></p>
-        </div>
-      </div>
-
-      {% if count %}
-      <div class="search-pane search-results-container">
-        <h3><i aria-hidden="true" class="icon-copy"></i>{{ _('Docs') }}</h3>
-
-        <ul class="result-list">
-          {% for doc in documents %}
-            {{ doc_block(doc, loop.index) }}
-          {% endfor %}
-        </ul>
-
-        <div class="search-results-more">
-
-          <div class="pager">
-            {% if previous %}
-              <a class="button" href="{{ previous }}" id="search-result-previous">
-              {{ _('Previous') }}
-              </a>
-            {% endif %}
-            {% if next %}
-              <a class="button" href="{{ next }}" id="search-result-next">
-              {{ _('Next') }}
-              </a>
-            {% endif %}
-            </div>
-
-        </div>
-      </div>
-
-      {% endif %}
+  <form id="search-form" action="{{ url('search') }}" method="get">
+    <div class="results-search-form">
+      <h2 class="offscreen">{{ _('Search') }}</h2>
+        <label for="search-q" class="offscreen">{{ _('Search') }}</label>
+        <input type="search" name="q" id="search-q" placeholder="{{ _('Search the docs') }}" value="{{ query }}" {% if not query %}autofocus{% endif %} />
+        <button type="submit" class="offscreen">{{ _('Search') }}</button>
     </div>
 
-    {% if filters %}
-    <!-- right topics -->
-    <div class="column-strip search-results-topics">
-      {% for filter_group in filters %}
-      <h3><i aria-hidden="true" class="icon-th-list"></i>{{ filter_group.name }}</h3>
-      <ul>
-        {% for filter in filter_group.options %}
-        <li>
-        {% if filter.count == 0 %}
-        <span class="inactive"><i aria-hidden="true" class="icon-check-empty"></i> {{ filter.name }}</span>
-        {% else %}
-          {% if filter.active %}
-            <a href="{{ filter.urls.inactive }}" data-count="{{ filter.count }}" class="checked"><i aria-hidden="true" class="icon-check"></i>{{ filter.name }}</a>
-          {% else %}
-            <a href="{{ filter.urls.active }}" data-count="{{ filter.count }}"><i aria-hidden="true" class="icon-check-empty"></i>{{ filter.name }}</a>
-          {% endif %}
+    <div class="column-container">
+      <!-- left results -->
+      <div class="column-main">
+
+        <div id="search-results-close-container">
+          <div class="search-pane search-results-explanation">
+            <h2>{{ _('Results') }}</h2>
+            <p>
+            {% if locale_native %}
+              {% if query %}
+                {% trans count=count, locale_native=locale_native %}
+                  {{ count }} document found for "{{ query }}" in {{ locale_native }}.
+                {% pluralize %}
+                  {{ count }} documents found for "{{ query }}" in {{ locale_native }}.
+                {% endtrans %}
+              {% else %}
+                {% trans count=count, locale_native=locale_native %}
+                  {{ count }} document found in {{ locale_native }}.
+                {% pluralize %}
+                  {{ count }} documents found in {{ locale_native }}.
+                {% endtrans %}
+              {% endif %}
+            {% else %}
+              {% if query %}
+                {% trans count=count %}
+                  {{ count }} document found for "{{ query }}".
+                {% pluralize %}
+                  {{ count }} documents found for "{{ query }}".
+                {% endtrans %}
+              {% else %}
+                {% trans count=count %}
+                  {{ count }} document found.
+                {% pluralize %}
+                  {{ count }} documents found.
+                {% endtrans %}
+              {% endif %}
+            {% endif %}
+            {% if count %}
+              &middot;
+              {% if not previous and not next %}
+                {{ _('Displaying all results.') }}
+              {% else %}
+                {% trans count=count %}
+                  Displaying {{ count }} search result.
+                {% pluralize %}
+                  Displaying {{ start }}-{{ end }} of {{ count }} search results.
+                {% endtrans %}
+              {% endif %}
+            {% endif %}
+
+            {% if locale != settings.LANGUAGE_CODE %}
+              &middot;
+              <a href="{{ url('search', locale=settings.LANGUAGE_CODE, ) }}?q={{ query }}">
+                {% trans default_locale_native = settings.LOCALES[settings.LANGUAGE_CODE].native %}
+                Search again in {{ default_locale_native }}
+                {% endtrans %}
+              </a>
+            {% endif %}
+            </bdi></p>
+          </div>
+        </div>
+
+        {% if count %}
+        <div class="search-pane search-results-container">
+          <h3><i aria-hidden="true" class="icon-copy"></i>{{ _('Docs') }}</h3>
+
+          <ul class="result-list">
+            {% for doc in documents %}
+              {{ doc_block(doc, loop.index) }}
+            {% endfor %}
+          </ul>
+
+          <div class="search-results-more">
+
+            <div class="pager">
+              {% if previous %}
+                <a class="button" href="{{ previous }}" id="search-result-previous">
+                {{ _('Previous') }}
+                </a>
+              {% endif %}
+              {% if next %}
+                <a class="button" href="{{ next }}" id="search-result-next">
+                {{ _('Next') }}
+                </a>
+              {% endif %}
+              </div>
+
+          </div>
+        </div>
+
         {% endif %}
-        </li>
+      </div>
+
+      {% if filters %}
+      <!-- right topics -->
+      <div class="column-strip search-results-topics">
+        <fieldset>
+        {% for filter_group in filters %}
+          <fieldset>
+            <legend><i aria-hidden="true" class="icon-th-list"></i><span class="offscreen">{{ _('Filter by') }} </span>{{ filter_group.name }}</legend>
+            {% for filter in filter_group.options %}
+              {% if filter.count == 0 %}
+              <label class="inactive">
+                <i aria-hidden="true" class="icon-check-empty"></i>
+                <input type="checkbox" class="offscreen" name="topic" value="{{ filter.slug }}" disabled="disabled">{{ filter.name }}
+                <span class="offscreen"> includes</span>
+                <span class="filter-count">{{ filter.count }}
+                  <span class="offscreen">documents</span>
+                </span>
+              </label>
+              {% else %}
+                {% if filter.slug in request.GET.getlist('topic') %}
+                <label class="checked">
+                  <i aria-hidden="true" class="icon-check"></i>
+                  <input type="checkbox" checked="checked" class="offscreen" name="topic" value="{{ filter.slug }}">
+                  <span class="filter-name">{{ filter.name }}</span>
+                  <span class="offscreen">includes </span>
+                  <span class="filter-count">{{ filter.count }}
+                    <span class="offscreen">documents</span>
+                  </span>
+                </label>
+                {% else %}
+                <label>
+                  <i aria-hidden="true" class="icon-check-empty"></i>
+                  <input type="checkbox" class="offscreen" name="topic" value="{{ filter.slug }}">
+                  <span class="filter-name">{{ filter.name }}</span>
+                  <span class="offscreen">includes </span>
+                    <span class="filter-count">{{ filter.count }} <span class="offscreen">documents</span>
+                  </span>
+                </label>
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+          </fieldset>
         {% endfor %}
-      </ul>
-      {% endfor %}
+          <input class="filter-button" type="submit" value="{{ _('Filter') }}" />
+      {% endif %}
+      </fieldset>
     </div>
-    {% endif %}
-</div>
+  </div>
+</form>
 {% endblock %}
 
 
