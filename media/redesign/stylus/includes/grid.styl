@@ -23,6 +23,11 @@
   max-width: max-width-default;
   add-center-spacing();
 }
+@media media-query-mobile {
+  .center {
+    add-center-spacing(15px);
+  }
+}
 
 /* column helpers for the grids to be generated */
 .column-closed {
@@ -65,7 +70,7 @@
   {grid-column-selector} {
     &:first-child {
       margin-right: 0;
-    } 
+    }
   }
 }
 
@@ -118,8 +123,8 @@
   }
 }
 
-/* 
-  mobile (phone) - just make everything its own column 
+/*
+  mobile (phone) - just make everything its own column
   preemtpively using !important so we don't run into css precedence issues -- we absolutely always want one-column view
 */
 @media media-query-mobile {
