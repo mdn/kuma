@@ -766,15 +766,45 @@ span.cke_skin_kuma {
   }
 }
 
+.media {
+  &, .body {
+    overflow: hidden;
+  }
+
+  .img {
+    float: left;
+    margin-right: 10px;
+      img {
+        display: block;
+      }
+  }
+}
+
+.top-contributor {
+  margin-top: grid-spacing;
+  h2 {
+    font-size: 16px;
+  }
+  .contributor {
+    margin-bottom: grid-spacing;
+    .img {
+      width: 40px;
+    }
+    .body p{
+      margin-top: -5px;
+    }
+  }
+}
+
 /* Page deletion styles */
 .delete-document {
-  textarea { 
-    width: 500px; 
-    max-width: 100%; 
+  textarea {
+    width: 500px;
+    max-width: 100%;
     margin-bottom: grid-spacing;
   }
-  label { 
-    display: block; 
+  label {
+    display: block;
   }
 }
 
