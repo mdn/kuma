@@ -2,8 +2,8 @@ import hashlib
 
 from urlobject import URLObject as URL
 
-from django.conf import settings
 from django.utils import translation
+from django.utils.encoding import smart_str
 
 from sumo.urlresolvers import reverse
 
@@ -33,6 +33,6 @@ def ref_from_url(url):
 
     md5 = hashlib.md5()
     for value in [query, page, locale] + topics:
-        md5.update(unicode(value))
+        md5.update(smart_str(value))
 
     return md5.hexdigest()[:16]
