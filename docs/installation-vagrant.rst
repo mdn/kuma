@@ -46,7 +46,7 @@ Getting up and running
    folders. First, make sure you have the nfs-common and nfs-server packages
    installed and also note that you can't export anything via NFS inside an
    encrypted volume or home dir.
-   
+
    If that doesn't help you can disable nfs by setting the nfs flag in the
    vagrantconfig_local.yaml file you just created.
 
@@ -63,7 +63,7 @@ Getting up and running
 
        echo '192.168.10.55 developer-local.allizom.org mdn-local.mozillademos.org' | sudo tee -a /etc/hosts
 
-#. Everything should be working now, from the host side::
+#. Everything should be working now, from the host side (you should get a 503 error, no worries, it's normal)::
 
        curl -k 'https://developer-local.allizom.org'
 
@@ -71,6 +71,14 @@ Getting up and running
    ``vagrant``::
 
        vagrant ssh
+
+#. Once logged into the VM, you have to update its environnement at least one time::
+
+       sudo puppet apply /home/vagrant/src/puppet/manifests/dev-vagrant.pp
+
+#. Then you need to run ``foreman`` inside de VM in order to be able to work and access the site::
+
+       foreman start
 
 What’s next?
 ------------
@@ -137,7 +145,7 @@ The kuma's Vagrant configuration also optionally supports using other backends
 for Vagrant. Right now there are three supported:
 
 #. Vmware Fusion (for Mac OS) and Workstation (Windows and Linux)
-   
+
    Vagrant has commercial support for this alternative virtual machine
    system from VMware that is known to provide improved speed and better
    Linux and Windows support for the host systems.
@@ -160,7 +168,7 @@ for Vagrant. Right now there are three supported:
      http://docs.vagrantup.com/v2/vmware/
 
 #. Amazon Web Services (EC2 and VPC)
-   
+
    First, install the AWS Vagrant plugin from Github:
 
     https://github.com/mitchellh/vagrant-aws
