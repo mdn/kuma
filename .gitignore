@@ -34,7 +34,6 @@ lib/product_details_json
 node_modules/
 media/redesign/css/*.css
 docs/_build/
-.editorconfig
 maintenance/media
 wheelhouse
 .awsconfig
