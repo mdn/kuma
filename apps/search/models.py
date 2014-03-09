@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
+import math
 import operator
+
 from django.conf import settings
 from django.db import models
 from django.utils.html import strip_tags
 
 from elasticutils.contrib.django import Indexable
-from taggit.managers import (TaggableManager, _TaggableManager,
-                             GenericTaggedItemBase)
 
 from sumo.urlresolvers import reverse
 
-from search.index import SearchMappingType, register_mapping_type
-from wiki.models import Document
+from search.index import register_mapping_type, SearchMappingType
 from taggit_extras.managers import PrefetchTaggableManager
+from wiki.models import ALL_TIME, Document, WikiDocumentVisits
 
 
 class FilterGroup(models.Model):
@@ -155,7 +155,7 @@ class DocumentType(SearchMappingType, Indexable):
                 # faster highlighting
                 'term_vector': 'with_positions_offsets',
             },
-            'id': {'type': 'long', 'index': 'not_analyzed'},
+            'id': {'type': 'long'},
             'locale': {'type': 'string', 'index': 'not_analyzed'},
             'modified': {'type': 'date'},
             'slug': {'type': 'string', 'index': 'not_analyzed'},
@@ -183,6 +183,7 @@ class DocumentType(SearchMappingType, Indexable):
                 'type': 'string',
                 'analyzer': 'caseInsensitiveKeyword'
             },
+            'visits_all_time': {'type': 'long'},
         }
 
     @classmethod
@@ -211,6 +212,14 @@ class DocumentType(SearchMappingType, Indexable):
             doc['_boost'] = 4.0
         else:
             doc['_boost'] = 1.0
+
+        try:
+            visits = WikiDocumentVisits.objects.get(
+                document=obj, period=ALL_TIME).visits
+            visits_factor = math.log10(visits) if visits else 1.0
+            doc['_boost'] = doc['_boost'] + visits_factor
+        except WikiDocumentVisits.DoesNotExist:
+            pass
 
         return doc
 

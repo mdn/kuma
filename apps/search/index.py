@@ -319,13 +319,13 @@ def es_reindex_cmd(percent=100, mapping_types=None, chunk_size=1000):
     recreate_index(es=es)
 
     if mapping_types:
-        indexable = get_indexable(percent, mapping_types)
+        indexables = get_indexable(percent, mapping_types)
     else:
-        indexable = get_indexable(percent)
+        indexables = get_indexable(percent)
 
     start_time = time.time()
 
-    for cls, indexable in indexable:
+    for cls, indexable in indexables:
         cls_start_time = time.time()
         total = len(indexable)
 
