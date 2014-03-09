@@ -155,10 +155,12 @@
         {% if show_right %}
           <!-- TOC, approvals, etc -->
           <div class="column-strip wiki-column" id="wiki-right">
-          <div class="top-contributor">
-            <h2>Top contributors</h2>
-            {% include 'wiki/includes/contributor.html' %}
-          </div>
+          {% if waffle.flag("top-contributors") %}
+            <div class="top-contributor">
+              <h2>Top contributors</h2>
+              {% include 'wiki/includes/contributor.html' %}
+            </div>
+          {% endif %}
           {% if toc_html %}
           <!-- table of contents -->
           <div id="toc" class="toc toggleable">

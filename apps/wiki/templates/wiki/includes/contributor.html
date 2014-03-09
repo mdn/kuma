@@ -1,8 +1,12 @@
+{% for username, contributor in document.get_top_contributors().items() %}
+{% set profile = contributor.user.get_profile() %}
+{% set gravatar_url = profile.gravatar_url(size=40, default='') %}
 <div class="contributor media">
-    <a class="img" href="#">
-        <img src="https://secure.gravatar.com/avatar/82ea6c9cd83c7da7d44e82224809bb32?s=40&r=pg&d=https%3A%2F%2Fdeveloper.cdn.mozilla.net%2Fmedia%2F%2Fimg%2Favatar.png" alt="" />
-    </a>
-    <div class="body">
-        <p><a href="#">icaaq</a> added tons of stuff, multiple times</p>
-    </div>
+  <a class="img" href="{{ profile_url(contributor.user) }}">
+      <img src="{{ gravatar_url }}" alt="" />
+  </a>
+  <div class="body">
+    <p><a href="{{ profile_url(contributor.user) }}">{{ username }}</a> has made {{ contributor.revisions }} revisions.</p>
+  </div>
 </div>
+{% endfor %}
