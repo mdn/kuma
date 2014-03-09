@@ -88,7 +88,6 @@
             "comment": "", 
             "based_on": null, 
             "is_approved": true, 
-            "reviewed": null, 
             "title": "Template:test", 
             "tags": "", 
             "summary": "", 
@@ -98,7 +97,6 @@
             "created": "2012-03-20 10:09:16", 
             "significance": null, 
             "keywords": "", 
-            "reviewer": null, 
             "document": 8, 
             "creator": 7, 
             "slug": "Template:test"
@@ -121,7 +119,6 @@
             "created": "2012-03-20 10:09:38", 
             "significance": null, 
             "keywords": "", 
-            "reviewer": null, 
             "document": 9, 
             "creator": 7, 
             "slug": "test-template"

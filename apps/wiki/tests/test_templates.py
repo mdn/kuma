@@ -291,12 +291,6 @@ class RevisionTests(TestCaseBase):
         eq_('Created: Jan 1, 2011 12:00:00 AM',
             doc('#wiki-doc div.revision-info li.revision-created')
                 .text().strip())
-        eq_('Reviewed: Jan 2, 2011 12:00:00 AM',
-            doc('#wiki-doc div.revision-info li.revision-reviewed')
-                .text().strip())
-        # is reviewed?
-        eq_('Yes', doc('.revision-info li.revision-is-reviewed').find('span')
-                    .text())
         # is current revision?
         eq_('Yes', doc('.revision-info li.revision-is-current').find('span')
                     .text())

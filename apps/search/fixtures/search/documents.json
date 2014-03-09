@@ -90,11 +90,9 @@
             "is_approved": true,
             "created": "2010-09-14 15:09:35",
             "summary": "\u30d8\u30eb\u30d7\u3068\u30c1\u30e5\u30fc\u30c8\u30ea\u30a2\u30eb\u4eba\u6c17\u306e\u30b5\u30dd\u30fc\u30c8\u8a18\u4e8b",
-            "reviewed": "2010-09-14 15:09:40",
             "content": "\u30d8\u30eb\u30d7\u3068\u30c1\u30e5\u30fc\u30c8\u30ea\u30a2\u30eb\u4eba\u6c17\u306e\u30b5\u30dd\u30fc\u30c8\u8a18\u4e8b\r\n\r\n",
             "significance": 10,
             "keywords": "\u30d8\u30eb\u30d7\u3068\u30c1\u30e5\u30fc\u30c8\u30ea\u30a2\u30eb",
-            "reviewer": 7,
             "document": 2,
             "creator": 7
         }
@@ -108,11 +106,9 @@
             "is_approved": true,
             "created": "2010-09-17 07:32:11",
             "summary": "yeah OK whatever",
-            "reviewed": "2010-09-17 07:32:27",
             "content": "anothero summario goello har",
             "significance": 40,
             "keywords": "this is the only place that says foobar",
-            "reviewer": 7,
             "document": 3,
             "creator": 7
         }
@@ -126,11 +122,9 @@
             "is_approved": true,
             "created": "2010-09-23 08:18:56",
             "summary": "ceci n'est pas une pipe!",
-            "reviewed": "2010-09-23 08:23:08",
             "content": "ceci n'est pas une pipe\r\n\r\nmon dieu!",
             "significance": 30,
             "keywords": "boulot",
-            "reviewer": 7,
             "document": 4,
             "creator": 7
         }
@@ -144,11 +138,9 @@
             "is_approved": true,
             "created": "2010-09-29 09:09:52",
             "summary": "the keyword audio only appears in the summary of this article",
-            "reviewed": "2010-09-29 09:10:08",
             "content": "the keyword video only appears in the body of this article",
             "significance": 10,
             "keywords": "barfoo",
-            "reviewer": 7,
             "document": 1,
             "creator": 7
         }
@@ -162,11 +154,9 @@
             "is_approved": true,
             "created": "2010-09-30 09:12:10",
             "summary": "this article contains the word for things you can hear",
-            "reviewed": "2010-09-30 09:12:25",
             "content": "audio is in this <strong>but the word for tough things</strong> will be ignored",
             "significance": 30,
             "keywords": "ghosts",
-            "reviewer": 7,
             "document": 5,
             "creator": 7
         }
@@ -180,11 +170,9 @@
             "is_approved": true,
             "created": "2010-09-30 09:12:10",
             "summary": "",
-            "reviewed": "2010-09-30 09:12:25",
             "content": "REDIRECT [[foo|bar]]",
             "significance": 30,
             "keywords": "ghosts",
-            "reviewer": 7,
             "document": 6,
             "creator": 7
         }

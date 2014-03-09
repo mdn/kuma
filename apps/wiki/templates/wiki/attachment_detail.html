@@ -45,24 +45,14 @@
             <span>{{ _('%s bytes') % attachment.size }}</span>
           </li>
           
-          {% if revision.reviewed %}
-            <li class="revision-reviewed">
-              <mark>{{ _('Reviewed:') }}</mark>
-              <span>{{ datetimeformat(revision.reviewed, format='datetime') }}</span>
-            </li>
-            <li>
-              <mark>{{ _('Reviewed by:') }}</mark>
-              <span>{{ revision.reviewer }}</span>
-            </li>
-            <li class="revision-is-current">
-              <mark>{{ _('Is approved?') }}</mark>
-              <span>{{ revision.is_approved|yesno }}</span>
-            </li>
-            <li>
-              <mark>{{ _('Is current revision?') }}</mark>
-              <span>{{ (revision == attachment.current_revision)|yesno }}</span>
-            </li>
-          {% endif %}
+          <li class="revision-is-current">
+            <mark>{{ _('Is approved?') }}</mark>
+            <span>{{ revision.is_approved|yesno }}</span>
+          </li>
+          <li>
+            <mark>{{ _('Is current revision?') }}</mark>
+            <span>{{ (revision == attachment.current_revision)|yesno }}</span>
+          </li>
         </ul>
       </div>
     </details>

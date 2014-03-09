@@ -209,11 +209,6 @@ rendering_info.short_description = 'Rendering'
 rendering_info.admin_order_field = 'last_rendered_at'
 
 
-def current_revision_reviewed(self):
-    return self.current_revision.reviewed
-current_revision_reviewed.admin_order_field = 'current_revision__reviewed'
-
-
 class DocumentAdmin(admin.ModelAdmin):
 
     class Media:
@@ -246,7 +241,7 @@ class DocumentAdmin(admin.ModelAdmin):
 
 class RevisionAdmin(admin.ModelAdmin):
     fields = ('title', 'summary', 'content', 'keywords', 'tags',
-              'reviewed', 'comment', 'is_approved')
+              'comment', 'is_approved')
     list_display = ('id', 'slug', 'title', 'is_approved', 'created',
                     'creator',)
     list_display_links = ('id', 'slug')
