@@ -151,9 +151,9 @@ remove-main-spacing() {
   }
 }
 
-add-center-spacing() {
-  padding-left: gutter-width;
-  padding-right: gutter-width;
+add-center-spacing(spacing = gutter-width) {
+  padding-left: spacing;
+  padding-right: spacing;
 }
 
 remove-center-spacing() {
@@ -318,7 +318,7 @@ component-submenu-method(menu-width, num-columns, background-color, arrow-border
       bidi-style(padding-left, grid-spacing, padding-right, 0);
     }
   }
-  
+
   .title {
     compat-only(font-size, base-font-size);
     compat-only(padding-left, 0);
