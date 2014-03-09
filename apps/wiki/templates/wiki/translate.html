@@ -139,8 +139,13 @@
         <div class="localized">
           <section class="page-meta">
               <section id="page-tags" class="page-tags">
-                <h2><i aria-hidden="true" class="icon-tag"></i>{{ _('Tags') }}</h2>
-                <input id="tagit_tags" type="text" name="tags" value="{% if document.tags %}{% for tag in document.tags.all() %}{{ tag.name }},{% endfor %}{% endif %}" maxlength="255" />
+                <h2><i aria-hidden="true" class="icon-tag"></i>{{ _('Tags') }} <a href="{{ devmo_url('Project:MDN/Contributing/Editor_guide/Editing#The_tags_box') }}"><i aria-hidden="true" title="{{ _('Learn how to tag an article') }}" class="icon-question-sign editor-help-icon"></i></a></h2>
+                <p>
+                  {% trans url=devmo_url('Project:MDN/Contributing/Tagging_standards') %}
+                    Categorize the article. It will make the article findable under the right filters in the search engine. <a target="_blank" href="{{ url }}">Read the Tagging Guide</a>.
+                  {% endtrans %}
+                </p>
+                <input id="tagit_tags" type="text" name="tags" value="{% if document.tags %}{% for tag in document.tags.all() %}{{ tag.name }},{% endfor %}{% endif %}" maxlength="255">
               </section>
               <section class="page-tags">
                 <h2>{{_('Localization flags')}}</h2>

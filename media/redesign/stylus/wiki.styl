@@ -571,6 +571,13 @@ div.bug, div.warning, div.overheadIndicator {
   compat-only(background, none);
 }
 
+.page-meta section h2,
+.page-meta section h3 {
+  .editor-help-icon {
+    font-size: 20px;
+  }
+}
+
 #page-tags, #page-comment {
   @extend .wiki-block;
 }
@@ -614,8 +621,23 @@ div.bug, div.warning, div.overheadIndicator {
   h2 {selector-icon}, h3 {selector-icon} {
     @extend .right-icons;
   }
-}
 
+  .first-contrib-welcome {
+    background: light-background-color;
+    border: 5px solid header-background-color;
+    padding: 15px 15px 10px;
+    margin-bottom: 20px;
+
+    h2 {
+      margin: 0 0 .5em;
+      font: bold 18px/1.5 'Open Sans', sans-serif;
+    }
+
+    p {
+      margin-bottom: .6em;
+    }
+  }
+}
 
 /* ckeditor / content area styles */
 .ckeditor-container {
