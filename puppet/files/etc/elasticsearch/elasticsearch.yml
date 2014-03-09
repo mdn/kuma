@@ -102,7 +102,7 @@
 
 # Set the number of replicas (additional copies) of an index (1 by default):
 #
-# index.number_of_replicas: 1
+index.number_of_replicas: 0
 
 # Note, that for development on a local machine, with small indices, it usually
 # makes sense to "disable" the distributed features:
