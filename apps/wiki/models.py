@@ -1,6 +1,4 @@
-from collections import namedtuple
 from datetime import datetime, timedelta
-from itertools import chain
 from urlparse import urlparse
 import hashlib
 import re
@@ -22,6 +20,13 @@ from django.db import models
 from django.db.models import signals
 from django.http import Http404
 from django.utils.functional import cached_property
+
+from django.utils.decorators import available_attrs
+
+try:
+    from functools import wraps
+except ImportError:
+    from django.utils.functional import wraps
 
 from south.modelsinspector import add_introspection_rules
 import constance.config
@@ -83,7 +88,7 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
 ALLOWED_ATTRIBUTES = bleach.ALLOWED_ATTRIBUTES
 # Note: <iframe> is allowed, but src="" is pre-filtered before bleach
 ALLOWED_ATTRIBUTES['iframe'] = ['id', 'src', 'sandbox', 'seamless',
-                                'frameborder', 'width', 'height']
+                                'frameborder', 'width', 'height', 'class']
 ALLOWED_ATTRIBUTES['p'] = ['style', 'class', 'id', 'align', 'lang', 'dir']
 ALLOWED_ATTRIBUTES['span'] = ['style', 'class', 'id', 'title', 'lang', 'dir']
 ALLOWED_ATTRIBUTES['img'] = ['src', 'id', 'align', 'alt', 'class', 'is',
@@ -229,21 +234,6 @@ ALLOWED_STYLES = [
     'direction', 'white-space', 'unicode-bidi', 'word-wrap'
 ]
 
-# Disruptiveness of edits to translated versions. Numerical magnitude indicate
-# the relative severity.
-TYPO_SIGNIFICANCE = 10
-MEDIUM_SIGNIFICANCE = 20
-MAJOR_SIGNIFICANCE = 30
-SIGNIFICANCES = (
-    (TYPO_SIGNIFICANCE,
-     _lazy(u'Minor details like punctuation and spelling errors')),
-    (MEDIUM_SIGNIFICANCE,
-     _lazy(u"Content changes that don't require immediate translation")),
-    (MAJOR_SIGNIFICANCE,
-     _lazy(u'Major content changes that will make older translations '
-           'inaccurate')),
-)
-
 CATEGORIES = (
     (00, _lazy(u'Uncategorized')),
     (10, _lazy(u'Reference')),
@@ -263,51 +253,6 @@ TOC_DEPTH_CHOICES = (
     (TOC_DEPTH_H3, _lazy(u'H3 and higher')),
     (TOC_DEPTH_H4, _lazy('H4 and higher')),
 )
-
-# FF versions used to filter article searches, power {for} tags, etc.:
-#
-# Iterables of (ID, name, abbreviation for {for} tags, max version this version
-# group encompasses) grouped into optgroups. To add the ability to sniff a new
-# version of an existing browser (assuming it doesn't change the user agent
-# string too radically), you should need only to add a line here; no JS
-# required. Just be wary of inexact floating point comparisons when setting
-# max_version, which should be read as "From the next smaller max_version up to
-# but not including version x.y".
-VersionMetadata = namedtuple('VersionMetadata',
-                             'id, name, long, slug, max_version, show_in_ui')
-GROUPED_FIREFOX_VERSIONS = (
-    ((_lazy(u'Desktop:'), 'desktop'), (
-        # The first option is the default for {for} display. This should be the
-        # newest version.
-        VersionMetadata(2, _lazy(u'Firefox 3.5-3.6'),
-                        _lazy(u'Firefox 3.5-3.6'), 'fx35', 3.9999, True),
-        VersionMetadata(1, _lazy(u'Firefox 4'),
-                        _lazy(u'Firefox 4'), 'fx4', 4.9999, True),
-        VersionMetadata(3, _lazy(u'Firefox 3.0'),
-                        _lazy(u'Firefox 3.0'), 'fx3', 3.4999, False))),
-    ((_lazy(u'Mobile:'), 'mobile'), (
-        VersionMetadata(4, _lazy(u'Firefox 4'),
-                        _lazy(u'Firefox 4 for Mobile'), 'm4', 4.9999, True),)))
-
-# Flattened:  # TODO: perhaps use optgroups everywhere instead
-FIREFOX_VERSIONS = tuple(chain(*[options for label, options in
-                                 GROUPED_FIREFOX_VERSIONS]))
-
-# OSes used to filter articles and declare {for} sections:
-OsMetaData = namedtuple('OsMetaData', 'id, name, slug')
-GROUPED_OPERATING_SYSTEMS = (
-    ((_lazy(u'Desktop OS:'), 'desktop'), (
-        OsMetaData(1, _lazy(u'Windows'), 'win'),
-        OsMetaData(2, _lazy(u'Mac OS X'), 'mac'),
-        OsMetaData(3, _lazy(u'Linux'), 'linux'))),
-    ((_lazy(u'Mobile OS:'), 'mobile'), (
-        OsMetaData(5, _lazy(u'Android'), 'android'),
-        OsMetaData(4, _lazy(u'Maemo'), 'maemo'))))
-
-# Flattened
-OPERATING_SYSTEMS = tuple(chain(*[options for label, options in
-                                  GROUPED_OPERATING_SYSTEMS]))
-
 
 # how a redirect looks as rendered HTML
 REDIRECT_HTML = 'REDIRECT <a class="redirect"'
@@ -358,6 +303,33 @@ SECONDARY_CACHE_ALIAS = getattr(settings,
                                 'SECONDARY_CACHE_ALIAS',
                                 'secondary')
 URL_REMAPS_CACHE_KEY_TMPL = 'DocumentZoneUrlRemaps:%s'
+
+
+def cache_with_field(field_name):
+    """Decorator for generated content methods.
+    
+    If the backing model field is null, or kwarg force_fresh is True, call the
+    decorated method to generate and return the content.
+
+    Otherwise, just return the value in the backing model field.
+    """
+    def decorator(fn):
+        @wraps(fn, assigned=available_attrs(fn))
+        def wrapper(self, *args, **kwargs):
+            force_fresh = kwargs.pop('force_fresh', False)
+
+            # Try getting the value using the DB field.
+            field_val = getattr(self, field_name)
+            if not field_val is None and not force_fresh:
+                return field_val
+
+            # DB field is blank, or we're forced to generate it fresh.
+            field_val = fn(self, force_fresh=force_fresh)
+            setattr(self, field_name, field_val)
+            return field_val
+
+        return wrapper
+    return decorator
 
 
 def _inherited(parent_attr, direct_attr):
@@ -527,7 +499,7 @@ class BaseDocumentManager(models.Manager):
             'title', 'locale', 'slug', 'tags', 'is_template', 'is_localizable',
             'parent', 'parent_topic', 'category', 'document', 'is_redirect',
             'summary', 'content', 'comment',
-            'keywords', 'tags', 'toc_depth', 'significance', 'is_approved',
+            'keywords', 'tags', 'toc_depth', 'is_approved',
             'creator',  # HACK: Replaced on import, but deserialize needs it
             'is_mindtouch_migration',
         )
@@ -732,6 +704,58 @@ class Document(NotificationsMixin, models.Model):
     # the current revision's created field
     modified = models.DateTimeField(auto_now=True, null=True, db_index=True)
 
+    body_html = models.TextField(editable=False, blank=True, null=True)
+    
+    quick_links_html = models.TextField(editable=False, blank=True, null=True)
+
+    zone_subnav_local_html = models.TextField(editable=False,
+                                              blank=True, null=True)
+
+    @cache_with_field('body_html')
+    def get_body_html(self, *args, **kwargs):
+        html = self.rendered_html and self.rendered_html or self.html
+        sections_to_hide = ('Quick_Links', 'Subnav')
+        doc = parse_content(html)
+        for sid in sections_to_hide:
+            doc = doc.replaceSection(sid, '<!-- -->')
+        doc.injectSectionIDs()
+        doc.annotateLinks(base_url=settings.SITE_URL)
+        return doc.serialize()
+
+    @cache_with_field('quick_links_html')
+    def get_quick_links_html(self, *args, **kwargs):
+        return self.get_section_content('Quick_Links')
+
+    @cache_with_field('zone_subnav_local_html')
+    def get_zone_subnav_local_html(self, *args, **kwargs):
+        return self.get_section_content('Subnav')
+
+    def regenerate_cache_with_fields(self):
+        """Regenerate fresh content for all the cached fields"""
+        # TODO: Maybe @cache_with_field can build a registry over which this
+        # method can iterate?
+        self.get_body_html(force_fresh=True)
+        self.get_quick_links_html(force_fresh=True)
+        self.get_zone_subnav_local_html(force_fresh=True)
+
+    def get_zone_subnav_html(self):
+        """Search from self up through DocumentZone stack, returning the first
+        zone nav HTML found."""
+        src = self.get_zone_subnav_local_html()
+        if src:
+            return src
+        for zone in self.find_zone_stack():
+            src = zone.document.get_zone_subnav_local_html()
+            if src:
+                return src
+
+    def get_section_content(self, section_id, ignore_heading=True):
+        """Convenience method to extract the rendered content for a single section"""
+        html = self.rendered_html and self.rendered_html or self.html
+        return (parse_content(html)
+                .extractSection(section_id, ignore_heading=ignore_heading)
+                .serialize())
+
     def calculate_etag(self, section_id=None):
         """Calculate an etag-suitable hash for document content or a section"""
         if not section_id:
@@ -844,6 +868,9 @@ class Document(NotificationsMixin, models.Model):
 
     def render(self, cache_control=None, base_url=None, timeout=None):
         """Render content using kumascript and any other services necessary."""
+        if not base_url:
+            base_url = settings.SITE_URL
+
         # Disallow rendering while another is in progress.
         if self.is_rendering_in_progress:
             raise DocumentRenderingInProgress()
@@ -863,6 +890,9 @@ class Document(NotificationsMixin, models.Model):
                                                         base_url,
                                                         timeout=timeout)
             self.rendered_errors = errors and json.dumps(errors) or None
+
+        # Regenerate the cached content fields
+        self.regenerate_cache_with_fields()
 
         # Finally, note the end time of rendering and update the document.
         self.last_rendered_at = datetime.now()
@@ -1255,7 +1285,7 @@ class Document(NotificationsMixin, models.Model):
         """
         Create and return a Document and a Revision to serve as
         redirects once this page has been moved.
-        
+
         """
         redirect_doc = Document(locale=self.locale,
                                 title=self.title,
@@ -1279,7 +1309,7 @@ class Document(NotificationsMixin, models.Model):
         Create and return a Revision which is a copy of this
         Document's current Revision, as it will exist at a moved
         location.
-        
+
         """
         moved_rev = self.current_revision
 
@@ -1311,7 +1341,7 @@ class Document(NotificationsMixin, models.Model):
         This is necessary since page moving is a background task, and
         a Document may come into existence at the target slug after
         the move is requested.
-        
+
         """
         existing = None
         try:
@@ -1380,7 +1410,7 @@ class Document(NotificationsMixin, models.Model):
         # Step 4: Create (but don't yet save) a Document and Revision
         # to leave behind as a redirect from old location to new.
         redirect_doc, redirect_rev = self._post_move_redirects(new_slug, user, title)
-        
+
         # Step 5: Update our breadcrumbs.
         new_parent = self._get_new_parent(new_slug)
 
@@ -1535,11 +1565,6 @@ class Document(NotificationsMixin, models.Model):
     @property
     def language(self):
         return settings.LANGUAGES[self.locale.lower()]
-
-    # FF version and OS are hung off the original, untranslated document and
-    # dynamically inherited by translations:
-    firefox_versions = _inherited('firefox_versions', 'firefox_version_set')
-    operating_systems = _inherited('operating_systems', 'operating_system_set')
 
     @property
     def full_path(self):
@@ -1805,22 +1830,6 @@ class Document(NotificationsMixin, models.Model):
 
         return qs.exists()
 
-    def is_majorly_outdated(self):
-        """Return whether a MAJOR_SIGNIFICANCE-level update has occurred to the
-        parent document since this translation had an approved update.
-
-        If this is not a translation or has never been approved, return False.
-
-        """
-        if not (self.parent and self.current_revision):
-            return False
-
-        based_on_id = self.current_revision.based_on_id
-        more_filters = {'id__gt': based_on_id} if based_on_id else {}
-        return self.parent.revisions.filter(
-            is_approved=True,
-            significance__gte=MAJOR_SIGNIFICANCE, **more_filters).exists()
-
     def is_watched_by(self, user):
         """Return whether `user` is notified of edits to me."""
         from wiki.events import EditDocumentEvent
@@ -1979,7 +1988,6 @@ class Revision(models.Model):
 
     created = models.DateTimeField(default=datetime.now, db_index=True)
     reviewed = models.DateTimeField(null=True)
-    significance = models.IntegerField(choices=SIGNIFICANCES, null=True)
     comment = models.CharField(max_length=255)
     reviewer = models.ForeignKey(User, related_name='reviewed_revisions',
                                  null=True)
@@ -2125,29 +2133,6 @@ class Revision(models.Model):
 
     def needs_technical_review(self):
         return 'technical' in [t.name for t in self.review_tags.all()]
-
-
-# FirefoxVersion and OperatingSystem map many ints to one Document. The
-# enumeration table of int-to-string is not represented in the DB because of
-# difficulty working DB-dwelling gettext keys into our l10n workflow.
-class FirefoxVersion(models.Model):
-    """A Firefox version, version range, etc. used to categorize documents"""
-    item_id = models.IntegerField(choices=[(v.id, v.name) for v in
-                                           FIREFOX_VERSIONS])
-    document = models.ForeignKey(Document, related_name='firefox_version_set')
-
-    class Meta(object):
-        unique_together = ('item_id', 'document')
-
-
-class OperatingSystem(models.Model):
-    """An operating system used to categorize documents"""
-    item_id = models.IntegerField(choices=[(o.id, o.name) for o in
-                                           OPERATING_SYSTEMS])
-    document = models.ForeignKey(Document, related_name='operating_system_set')
-
-    class Meta(object):
-        unique_together = ('item_id', 'document')
 
 
 class HelpfulVote(models.Model):

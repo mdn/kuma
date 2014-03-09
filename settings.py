@@ -300,7 +300,7 @@ SERVE_MEDIA = False
 
 # Paths that don't require a locale prefix.
 SUPPORTED_NONLOCALES = ('media', 'admin', 'robots.txt', 'services', 'static',
-                        '1', 'files', '@api', 'grappelli',
+                        '1', 'files', '@api', 'grappelli', '__debug__',
                         '.well-known')
 
 # Make this unique, and don't share it with anybody.
@@ -330,7 +330,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.messages.context_processors.messages',
 
     'sumo.context_processors.global_settings',
-    'sumo.context_processors.for_data',
 
     'devmo.context_processors.i18n',
     'devmo.context_processors.next_url',
@@ -635,6 +634,7 @@ MINIFY_BUNDLES = {
             'redesign/js/components.js',
             'redesign/js/main.js',
             'redesign/js/badges.js',
+            'redesign/js/analytics.js',
         ),
         'jquery2': (
             'js/libs/jquery-2.1.0.js',

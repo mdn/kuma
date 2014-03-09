@@ -24,9 +24,9 @@ class FilterTests(ElasticTestCase):
         response = view(request)
         self.assertEqual(response.data['count'], 4)
         self.assertEqual(len(response.data['documents']), 4)
-        self.assertEqual(response.data['documents'][0]['slug'],
+        self.assertEqual(response.data['documents'][1]['slug'],
                          'article-title')
-        self.assertEqual(response.data['documents'][0]['locale'], 'en-US')
+        self.assertEqual(response.data['documents'][1]['locale'], 'en-US')
 
     def test_highlight_filter(self):
 
@@ -36,7 +36,7 @@ class FilterTests(ElasticTestCase):
         view = HighlightView.as_view()
         request = self.get_request('/en-US/search?q=article')
         response = view(request)
-        ok_('<em>article</em>' in response.data['documents'][0]['excerpt'])
+        ok_('<em>article</em>' in response.data['documents'][1]['excerpt'])
 
     def test_language_filter(self):
         class LanguageView(SearchView):
@@ -51,8 +51,8 @@ class FilterTests(ElasticTestCase):
 
         request = self.get_request('/en-US/search?q=article')
         response = view(request)
-        self.assertEqual(response.data['count'], 5)
-        self.assertEqual(len(response.data['documents']), 5)
+        self.assertEqual(response.data['count'], 6)
+        self.assertEqual(len(response.data['documents']), 6)
         self.assertEqual(response.data['documents'][0]['locale'], 'en-US')
 
     def test_database_filter(self):
@@ -84,6 +84,6 @@ class FilterTests(ElasticTestCase):
 
         request = self.get_request('/fr/search?topic=non-existent')
         response = view(request)
-        self.assertEqual(response.data['count'], 6)
-        self.assertEqual(len(response.data['documents']), 6)
+        self.assertEqual(response.data['count'], 7)
+        self.assertEqual(len(response.data['documents']), 7)
         self.assertEqual(response.data['documents'][0]['slug'], 'le-title')

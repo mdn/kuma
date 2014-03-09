@@ -1,9 +1,6 @@
-from datetime import datetime
-import json
 import re
 
 from django import forms
-from django.utils.encoding import smart_str
 from django.forms.widgets import CheckboxSelectMultiple
 
 from tower import ugettext_lazy as _lazy
@@ -15,12 +12,10 @@ import magic
 from sumo.form_fields import StrippedCharField
 
 import wiki.content
-from wiki.models import (Document, Revision, FirefoxVersion, OperatingSystem,
+from wiki.models import (Document, Revision,
                          AttachmentRevision, valid_slug_parent,
-                         FIREFOX_VERSIONS, OPERATING_SYSTEMS, SIGNIFICANCES,
-                         GROUPED_FIREFOX_VERSIONS, GROUPED_OPERATING_SYSTEMS,
                          CATEGORIES, REVIEW_FLAG_TAGS, RESERVED_SLUGS,
-                         TOC_DEPTH_CHOICES, LOCALIZATION_FLAG_TAGS)
+                         LOCALIZATION_FLAG_TAGS)
 from wiki import SLUG_CLEANSING_REGEX
 
 
@@ -73,6 +68,7 @@ class DocumentForm(forms.ModelForm):
                               error_messages={'required': TITLE_REQUIRED,
                                               'min_length': TITLE_SHORT,
                                               'max_length': TITLE_LONG})
+
     slug = StrippedCharField(min_length=1, max_length=255,
                              widget=forms.TextInput(),
                              label=_lazy(u'Slug:'),
@@ -80,24 +76,6 @@ class DocumentForm(forms.ModelForm):
                              error_messages={'required': SLUG_REQUIRED,
                                              'min_length': SLUG_SHORT,
                                              'max_length': SLUG_LONG})
-
-    firefox_versions = forms.MultipleChoiceField(
-                                label=_lazy(u'Firefox version:'),
-                                choices=[(v.id, v.long) for v in
-                                         FIREFOX_VERSIONS],
-                                initial=[v.id for v in
-                                         GROUPED_FIREFOX_VERSIONS[0][1]],
-                                required=False,
-                                widget=forms.CheckboxSelectMultiple())
-
-    operating_systems = forms.MultipleChoiceField(
-                                label=_lazy(u'Operating systems:'),
-                                choices=[(o.id, o.name) for o in
-                                         OPERATING_SYSTEMS],
-                                initial=[o.id for o in
-                                         GROUPED_OPERATING_SYSTEMS[0][1]],
-                                required=False,
-                                widget=forms.CheckboxSelectMultiple())
 
     category = forms.ChoiceField(choices=CATEGORIES,
                                  initial=10,
@@ -131,14 +109,6 @@ class DocumentForm(forms.ModelForm):
                 raise forms.ValidationError(SLUG_INVALID)
         return slug
 
-    def clean_firefox_versions(self):
-        data = self.cleaned_data['firefox_versions']
-        return [FirefoxVersion(item_id=int(x)) for x in data]
-
-    def clean_operating_systems(self):
-        data = self.cleaned_data['operating_systems']
-        return [OperatingSystem(item_id=int(x)) for x in data]
-
     class Meta:
         model = Document
         fields = ('title', 'slug', 'category', 'locale')
@@ -152,14 +122,6 @@ class DocumentForm(forms.ModelForm):
         doc.save()
         self.save_m2m()  # not strictly necessary since we didn't change
                          # any m2m data since we instantiated the doc
-
-        if not parent_doc:
-            ffv = self.cleaned_data['firefox_versions']
-            doc.firefox_versions.all().delete()
-            doc.firefox_versions = ffv
-            os = self.cleaned_data['operating_systems']
-            doc.operating_systems.all().delete()
-            doc.operating_systems = os
 
         return doc
 
@@ -200,19 +162,10 @@ class RevisionForm(forms.ModelForm):
                                 'min_length': SUMMARY_SHORT,
                                 'max_length': SUMMARY_LONG})
 
-    showfor_data = {
-        'oses': [(unicode(c[0][0]), [(o.slug, unicode(o.name)) for
-                                    o in c[1]]) for
-                 c in GROUPED_OPERATING_SYSTEMS],
-        'versions': [(unicode(c[0][0]), [(v.slug, unicode(v.name)) for
-                                        v in c[1] if v.show_in_ui]) for
-                     c in GROUPED_FIREFOX_VERSIONS]}
-
     content = StrippedCharField(
                 min_length=5, max_length=300000,
                 label=_lazy(u'Content:'),
-                widget=forms.Textarea(attrs={'data-showfor':
-                                             json.dumps(showfor_data)}),
+                widget=forms.Textarea(),
                 error_messages={'required': CONTENT_REQUIRED,
                                 'min_length': CONTENT_SHORT,
                                 'max_length': CONTENT_LONG})
@@ -412,17 +365,6 @@ class RevisionForm(forms.ModelForm):
         return new_rev
 
 
-class ReviewForm(forms.Form):
-    comment = StrippedCharField(max_length=255, widget=forms.Textarea(),
-                                required=False, label=_lazy(u'Comment:'),
-                                error_messages={'max_length': COMMENT_LONG})
-
-    significance = forms.ChoiceField(
-                    label=_lazy(u'Significance:'),
-                    choices=SIGNIFICANCES, initial=SIGNIFICANCES[0][0],
-                    required=False, widget=forms.RadioSelect())
-
-
 class RevisionValidationForm(RevisionForm):
     """Created primarily to disallow slashes in slugs during validation"""
 
@@ -491,6 +433,7 @@ class AttachmentRevisionForm(forms.ModelForm):
         rev.mime_type = mime_type
 
         return rev
+
 
 class TreeMoveForm(forms.Form):
     title = StrippedCharField(min_length=1, max_length=255,

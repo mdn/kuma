@@ -25,14 +25,13 @@ from sumo.tests import TestCase
 from devmo.tests import override_constance_settings
 
 from wiki.cron import calculate_related_documents
-from wiki.models import (FirefoxVersion, OperatingSystem, Document, Revision,
-                         Attachment, DocumentZone,
-                         MAJOR_SIGNIFICANCE, CATEGORIES,
+from wiki.models import (Document, Revision,
+                         Attachment, DocumentZone, CATEGORIES,
                          get_current_or_latest_revision,
                          DocumentRenderedContentNotAvailable,
                          DocumentRenderingInProgress,
                          TaggedDocument,)
-from wiki.tests import (document, revision, doc_rev, translated_revision,
+from wiki.tests import (document, revision, doc_rev, normalize_html,
                         create_template_test_users,
                         create_topical_parents_docs)
 from wiki import tasks
@@ -221,16 +220,6 @@ class DocumentTests(TestCase):
         _objects_eq(getattr(parent, direct_attr), [e1, e2])
         _objects_eq(getattr(child, direct_attr), [])
 
-    def test_firefox_version_inheritance(self):
-        """Assert the parent delegation of firefox_version works."""
-        self._test_m2m_inheritance(FirefoxVersion, 'firefox_versions',
-                                   'firefox_version_set')
-
-    def test_operating_system_inheritance(self):
-        """Assert the parent delegation of operating_system works."""
-        self._test_m2m_inheritance(OperatingSystem, 'operating_systems',
-                                   'operating_system_set')
-
     def test_category_inheritance(self):
         """A document's categories must always be those of its parent."""
         some_category = CATEGORIES[1][0]
@@ -273,15 +262,6 @@ class DocumentTests(TestCase):
         i2 = enum_class(item_id=2)
         getattr(d, attr).add(i2)
         _objects_eq(getattr(d, attr), [i1, i2])
-
-    def test_firefox_versions(self):
-        """Test firefox_versions attr"""
-        self._test_int_sets_and_descriptors(FirefoxVersion, 'firefox_versions')
-
-    def test_operating_systems(self):
-        """Test operating_systems attr"""
-        self._test_int_sets_and_descriptors(OperatingSystem,
-                                            'operating_systems')
 
     def test_only_localizable_allowed_children(self):
         """You can't have children for a non-localizable document."""
@@ -419,66 +399,6 @@ class DocumentTestsWithFixture(TestCase):
     """Document tests which need the users fixture"""
 
     fixtures = ['test_users.json']
-
-    def test_majorly_outdated(self):
-        """Test the is_majorly_outdated method."""
-        trans = translated_revision(is_approved=True)
-        trans.save()
-        trans_doc = trans.document
-
-        # Make sure a doc returns False if it has no parent:
-        assert not trans_doc.parent.is_majorly_outdated()
-
-        assert not trans_doc.is_majorly_outdated()
-
-        # Add a parent revision of MAJOR significance:
-        r = revision(document=trans_doc.parent,
-                     significance=MAJOR_SIGNIFICANCE,
-                     is_approved=False)
-        r.save()
-        assert not trans_doc.is_majorly_outdated()
-
-        # Approve it:
-        r.is_approved = True
-        r.save()
-
-        assert trans_doc.is_majorly_outdated()
-
-    def test_majorly_outdated_with_unapproved_parents(self):
-        """Migrations might introduce translated revisions without based_on
-        set. Tolerate these.
-
-        If based_on of a translation's current_revision is None, the
-        translation should be considered out of date iff any
-        major-significance, approved revision to the English article exists.
-
-        """
-        # Create a parent doc with only an unapproved revision...
-        parent_rev = revision()
-        parent_rev.save()
-        # ...and a translation with a revision based on nothing.
-        trans = document(parent=parent_rev.document, locale='de')
-        trans.save()
-        trans_rev = revision(document=trans, is_approved=True)
-        trans_rev.save()
-
-        assert trans_rev.based_on is None, \
-            ('based_on defaulted to something non-None, which this test '
-             "wasn't expecting.")
-
-        assert not trans.is_majorly_outdated(), \
-            ('A translation was considered majorly out of date even though '
-             'the English document has never had an approved revision of '
-             'major significance.')
-
-        major_parent_rev = revision(document=parent_rev.document,
-                                    significance=MAJOR_SIGNIFICANCE,
-                                    is_approved=True)
-        major_parent_rev.save()
-
-        assert trans.is_majorly_outdated(), \
-            ('A translation was not considered majorly outdated when its '
-             "current revision's based_on value was None.")
 
     def test_redirect_document_non_redirect(self):
         """Assert redirect_document on non-redirects returns None."""
@@ -1914,3 +1834,73 @@ class DocumentZoneTests(TestCase):
         zone_stack = sub_sub_doc.find_zone_stack()
         eq_(zone_stack[0], middle_zone)
         eq_(zone_stack[1], root_zone)
+
+
+class DocumentParsingTests(TestCase):
+    """Tests exercising content parsing methods"""
+    fixtures = ['test_users.json']
+
+    def test_get_section_content(self):
+        src = """
+            <h2>Foo</h2>
+            <p>Bar</p>
+            <h3 id="Quick_Links">Quick Links</h3>
+            <p>Foo, yay</p>
+            <h2>Baz</h2>
+            <p>Baz</p>
+        """
+        expected = """
+            <p>Foo, yay</p>
+        """
+
+        r = revision(title='Document with sections',
+                     slug='document-with-sections',
+                     content=src,
+                     is_approved=True, save=True)
+        d = r.document
+
+        result = d.get_section_content('Quick_Links')
+        eq_(normalize_html(expected), normalize_html(result))
+
+    def test_cached_content_fields(self):
+        src="""
+            <h2>First</h2>
+            <p>This is a document</p>
+            <h3 id="Quick_Links">Quick Links</h3>
+            <p>Foo, yay</p>
+            <h3 id="Subnav">Subnav</h3>
+            <p>Bar, yay</p>
+            <h2>Second</h2>
+            <p>Another section</p>
+            <a href="/en-US/docs/document-with-sections">Existing link</a>
+            <a href="/en-US/docs/does-not-exist">New link</a>
+        """
+        body = """
+            <h2 id="First">First</h2>
+            <p>This is a document</p>
+            <!-- -->
+            <!-- -->
+            <h2 id="Second">Second</h2>
+            <p>Another section</p>
+            <a href="/en-US/docs/document-with-sections">Existing link</a>
+            <a class="new" href="/en-US/docs/does-not-exist">New link</a>
+        """
+        quick_links = """
+            <p>Foo, yay</p>
+        """
+        subnav = """
+            <p>Bar, yay</p>
+        """
+
+        r = revision(title='Document with sections',
+                     slug='document-with-sections',
+                     content=src,
+                     is_approved=True, save=True)
+        d = r.document
+
+        eq_(normalize_html(body),
+            normalize_html(d.get_body_html()))
+        eq_(normalize_html(quick_links),
+            normalize_html(d.get_quick_links_html()))
+        eq_(normalize_html(subnav),
+            normalize_html(d.get_zone_subnav_local_html()))

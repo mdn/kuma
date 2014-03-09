@@ -10,9 +10,6 @@ import jinja2
 from pyquery import PyQuery as pq
 from tidylib import tidy_document
 from tower import ugettext as _
-import logging
-
-from django.contrib.contenttypes.models import ContentType
 
 from sumo.urlresolvers import reverse
 import wiki
@@ -122,7 +119,7 @@ def format_comment(rev):
 
 @register.function
 def revisions_unified_diff(from_revision, to_revision):
-    if from_revision == None or to_revision == None:
+    if from_revision is None or to_revision is None:
         return "Diff is unavailable."
     fromfile = u'[%s] %s #%s' % (from_revision.document.locale,
                                  from_revision.document.title,
@@ -206,54 +203,17 @@ def wiki_bleach(val):
 
 
 @register.filter
-def section_extract(val, section_id):
-    """
-    Extract a section from the given markup, ignoring the heading (if any)
-    """
-    return (wiki.content.parse(val)
-                        .extractSection(section_id, ignore_heading=True)
-                        .serialize())
-
-@register.filter
 def selector_content_find(document, selector):
     """
     Provided a selector, returns the relevant content from the document
     """
     summary = ''
     try:
-      page = pq(document.rendered_html)
-      summary = page.find(selector).text()
+        page = pq(document.rendered_html)
+        summary = page.find(selector).text()
     except:
-      pass
+        pass
     return summary
-
-@register.filter
-def zone_section_extract(document, section_id):
-    """
-    Attempt to extract the given section from the current document, or from one
-    of its parent DocumentZones (if any)
-    """
-    html = section_extract(document.rendered_html, section_id)
-    if html:
-        return html
-
-    for zone in document.find_zone_stack():
-        html = section_extract(zone.document.rendered_html, section_id)
-        if html:
-            return html
-
-    return None
-
-
-@register.filter
-def section_hide(val, *section_ids):
-    """
-    Hide the given section(s) by replacing with an HTML comment
-    """
-    doc = wiki.content.parse(val)
-    for sid in section_ids:
-        doc = doc.replaceSection(sid, '<!-- -->')
-    return doc.serialize()
 
 
 @register.function
@@ -268,7 +228,7 @@ def document_zone_management_links(user, document):
             user.has_perm('wiki.add_documentzone')):
         links['add'] = '%s?document=%s' % (
             reverse('admin:wiki_documentzone_add'), document.id)
-    
+
     # Enable "change" link if there's a zone, and the user has permission.
     if zone and user.has_perm('wiki.change_documentzone'):
         links['change'] = reverse('admin:wiki_documentzone_change',

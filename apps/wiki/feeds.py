@@ -271,7 +271,7 @@ class RevisionsFeed(DocumentsFeed):
         limit = int(self.request.GET.get('limit', DEFAULT_FEED_ITEMS))
         page = int(self.request.GET.get('page', 1))
 
-        start = ((page-1) * limit)
+        start = ((page - 1) * limit)
         finish = start + limit
 
         if not limit or limit > MAX_FEED_ITEMS:

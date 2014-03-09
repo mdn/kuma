@@ -82,6 +82,38 @@ class ContentSectionToolTests(TestCase):
             ok_(id not in seen_ids)
             seen_ids.add(id)
 
+    def test_incremented_section_ids(self):
+
+        doc_src = """
+        <h1 class="header1">Header One</h1>
+        <h1>Header One</h1>
+        <h1>Header One</h1>
+        <h1>Header Two</h1>
+        <h1 name="someId">Header Two</h1>
+        """
+
+        result_src = (wiki.content
+                      .parse(doc_src)
+                      .injectSectionIDs()
+                      .serialize())
+
+        expected = """
+        <h1 class="header1" id="Header_One">Header One</h1>
+        <h1 id="Header_One_2">Header One</h1>
+        <h1 id="Header_One_3">Header One</h1>
+        <h1 id="Header_Two">Header Two</h1>
+        <h1 id="someId" name="someId">Header Two</h1>
+        """
+
+        eq_(result_src, expected)
+
+        # Ensure 1, 2 doesn't turn into 3, 4
+        result_src = (wiki.content
+                      .parse(expected)
+                      .injectSectionIDs()
+                      .serialize())
+        eq_(result_src, expected)
+
     def test_simple_implicit_section_extract(self):
         doc_src = """
             <h1 id="s1">Head 1</h1>

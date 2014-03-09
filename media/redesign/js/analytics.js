@@ -1,10 +1,10 @@
-(function($) {
-  'use strict';
+// create namespace
+if (typeof mdn === 'undefined') {
+  var mdn = {};
+}
 
-  /*
-  https://github.com/mozilla/bedrock/blob/master/media/js/base/global.js#L176
-  */
-  function gaTrack(eventArray, callback) {
+mdn.analytics = {
+  trackEvent: function(eventArray, callback) {
     // submit eventArray to GA and call callback only after tracking has
     // been sent, or if sending fails.
     //
@@ -14,12 +14,12 @@
     //
     // $(function() {
     //      var handler = function(e) {
-    //           var _this = this;
+    //           var self = this;
     //           e.preventDefault();
-    //           $(_this).off('submit', handler);
+    //           $(self).off('submit', handler);
     //           gaTrack(
     //              ['_trackEvent', 'Newsletter Registration', 'submit', newsletter],
-    //              function() {$(_this).submit();}
+    //              function() {$(self).submit();}
     //           );
     //      };
     //      $(thing).on('submit', handler);
@@ -58,29 +58,27 @@
           callback();
       }
     }
-  }
-
+  },
   /*
   Track all outgoing links
   */
-  $('body').on('click', 'a', function (e) {
-    if (this.hostname === window.location.hostname ||
-        this.protocol == 'javascript:') {
-      return;
-    }
-    var newTab = (this.target === '_blank' || e.metaKey || e.ctrlKey);
-    var href = this.href;
-    var callback = function() {
-      window.location = href;
-    };
+  initOutboundLinks: function($target) {
+    $target.on('click', 'a', function (e) {
+      if (this.hostname && this.hostname !== window.location.hostname) {
+        var newTab = (this.target === '_blank' || e.metaKey || e.ctrlKey);
+        var href = this.href;
+        var callback = function() {
+          window.location = href;
+        };
 
-    var data = ['_trackEvent', 'Outbound Links', href]; 
-    if (newTab) {
-      gaTrack(data);
-    } else {
-      e.preventDefault();
-      gaTrack(data, callback);
-    }
-  });
-
-})(jQuery);
+        var data = ['_trackEvent', 'Outbound Links', href];
+        if (newTab) {
+          mdn.analytics.trackEvent(data);
+        } else {
+          e.preventDefault();
+          mdn.analytics.trackEvent(data, callback);
+        }
+      }
+    });
+  }
+};

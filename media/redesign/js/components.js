@@ -293,16 +293,14 @@
       }
     });
   };
+
   /*
-  adds a native html5 contextmenu
-  callback passes two arguments, event.target and the menu-element
+    Plugin to adds a native html5 contextmenu
+    Callback passes two arguments, event.target and the menu-element
   */
   $.fn.mozContextMenu = function (callback) {
-    $(this).each(function() {
-      var $menu = $('#' + $(this).attr('contextmenu'));
-      $(this).on('contextmenu', function(event) {
-        callback(event.target, $menu);
-      });
+    return $(this).on('contextmenu', function(e) {
+      callback(e.target, $('#' + $(this).attr('contextmenu')));
     });
   };
 

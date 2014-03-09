@@ -40,28 +40,13 @@ from authkeys.models import Key
 
 from wiki.content import get_seo_description
 from wiki.events import EditDocumentEvent
-from wiki.models import (VersionMetadata, Document, Revision, Attachment,
-                         DocumentZone,
+from wiki.models import (Document, Revision, Attachment, DocumentZone,
                          AttachmentRevision, DocumentAttachment, TOC_DEPTH_H4)
 from wiki.tests import (doc_rev, document, new_document_data, revision,
                         normalize_html, create_template_test_users,
                         make_translation)
-from wiki.views import _version_groups, DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL
+from wiki.views import DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL
 from wiki.forms import MIDAIR_COLLISION
-
-
-class VersionGroupTests(TestCaseBase):
-    def test_version_groups(self):
-        """Make sure we correctly set up browser/version mappings for the JS"""
-        versions = [VersionMetadata(1, 'Firefox 4.0', 'Firefox 4.0', 'fx4',
-                                    5.0, False),
-                    VersionMetadata(2, 'Firefox 3.5-3.6', 'Firefox 3.5-3.6',
-                                    'fx35', 4.0, False),
-                    VersionMetadata(4, 'Firefox Mobile 1.1',
-                                    'Firefox Mobile 1.1', 'm11', 2.0, False)]
-        want = {'fx': [(4.0, '35'), (5.0, '4')],
-                'm': [(2.0, '11')]}
-        eq_(want, _version_groups(versions))
 
 
 class RedirectTests(TestCaseBase):
@@ -900,7 +885,7 @@ class DocumentSEOTests(TestCaseBase):
         make_page_and_compare_seo('nine',
           u'<p>I <em>am</em> awesome.'
               ' <a href="blah">A link</a> is also &lt;cool&gt;</p>',
-          'I am awesome. A link is also cool')
+          u'I am awesome. A link is also cool')
 
 
 class DocumentEditingTests(TestCaseBase):
@@ -1154,25 +1139,6 @@ class DocumentEditingTests(TestCaseBase):
                                     args=[changed_slug]),
                            data)
         eq_(302, resp.status_code)
-
-    def test_changing_metadata(self):
-        """Changing metadata works as expected."""
-        self.client.login(username='admin', password='testpass')
-        d, r = doc_rev()
-        data = new_document_data()
-        data.update({'firefox_versions': [1, 2, 3],
-                     'operating_systems': [1, 3],
-                     'form': 'doc'})
-        self.client.post(reverse('wiki.edit_document', args=[d.slug]), data)
-        eq_(3, d.firefox_versions.count())
-        eq_(2, d.operating_systems.count())
-        data.update({'firefox_versions': [1, 2],
-                     'operating_systems': [2],
-                     'form': 'doc'})
-        self.client.post(reverse('wiki.edit_document', args=[data['slug']]),
-                         data)
-        eq_(2, d.firefox_versions.count())
-        eq_(1, d.operating_systems.count())
 
     def test_invalid_slug(self):
         """Slugs cannot contain "$", but can contain "/"."""
@@ -2515,11 +2481,11 @@ class SectionEditingResourceTests(TestCaseBase):
             <p>test</p>
         """)
         replace_1 = """
-            <h1 id="s1">replace1</h1>
+            <h1 id="replace1">replace1</h1>
             <p>replace</p>
         """
         replace_2 = """
-            <h1 id="s2">replace2</h1>
+            <h1 id="replace2">replace2</h1>
             <p>replace</p>
         """
         expected = """

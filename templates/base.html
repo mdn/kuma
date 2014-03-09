@@ -176,6 +176,13 @@
     {% endif %}
 
     {{ js('redesign-main') }}
+
+    {% if waffle.flag('ga_outbound_links') %}
+      <script>
+        mdn.analytics.initOutboundLinks($('body'));
+      </script>
+    {% endif %}
+
     <script src="//mozorg.cdn.mozilla.net/{{ request.locale }}/tabzilla/tabzilla.js" async></script>
 
     {% for script in scripts %}

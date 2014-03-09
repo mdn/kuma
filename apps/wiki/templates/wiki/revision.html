@@ -83,6 +83,7 @@
         <div class="page-content boxed">{{ revision.content|wiki_bleach }}</div>
       </div>
     </details>
+    <a href="{{ url('wiki.revert_document', document.full_path, revision.id) }}" class="button">{{ _('Revert to this revision') }}</a>
   </article>
     
 {% endblock %}

@@ -21,12 +21,6 @@
 {% set disabled_attr = ('title="%s"' % _('Please log in to use this feature.') if not is_logged_in else '') %}
 {% set search_doc_navigator_enabled = waffle.flag('search_doc_navigator') %}
 
-
-{% if not document.is_template %}
-  {% set quick_links_section_id = 'Quick_Links' %}
-  {% set quick_links_html = document.rendered_html|section_extract(quick_links_section_id) %}
-{% endif %}
-
 {% if document.is_template %}
   {% set macro_name = document.slug|replace('Template:','', 1) %}
   {% set template_search_link = url('search', locale=document.locale)|urlparams(locale='*', kumascript_macros=macro_name) %}
@@ -35,8 +29,6 @@
 {% set zone_stack = document.find_zone_stack() %}
 {% set is_zone = zone_stack|length %}
 {% set is_zone_root = is_zone and zone_stack[0].document == document %}
-{% set zone_subnav_section_id = 'Subnav' %}
-{% set zone_subnav_html = document|zone_section_extract(zone_subnav_section_id) %}
 
 {% set current_revision = document.current_revision %}
 {% if (user.is_authenticated() and current_revision and document.allows_revision_by(user)) and (current_revision.needs_technical_review() or current_revision.needs_editorial_review()) %}
@@ -177,7 +169,7 @@
 
         <!-- just the article content -->
         {% if not document.is_template %}
-          {% set document_html_safe = document_html|section_hide(zone_subnav_section_id, quick_links_section_id)|safe %}
+          {% set document_html_safe = body_html|safe %}
         {% else %}
           {% set document_html_safe = document_html|safe %}
         {% endif %}
