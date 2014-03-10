@@ -50,7 +50,8 @@ from . import kumascript, TEMPLATE_TITLE_PREFIX
 from .content import (get_seo_description, get_content_sections,
                       extract_code_sample, parse as parse_content,
                       extract_css_classnames, extract_html_attributes,
-                      extract_kumascript_macro_names)
+                      extract_kumascript_macro_names,
+                      SectionTOCFilter, H2TOCFilter, H3TOCFilter,)
 from .exceptions import (UniqueCollision, SlugCollision,
                          DocumentRenderingInProgress,
                          DocumentRenderedContentNotAvailable)
@@ -253,6 +254,13 @@ TOC_DEPTH_CHOICES = (
     (TOC_DEPTH_H3, _lazy(u'H3 and higher')),
     (TOC_DEPTH_H4, _lazy('H4 and higher')),
 )
+
+TOC_FILTERS = {
+    1: SectionTOCFilter,
+    2: H2TOCFilter,
+    3: H3TOCFilter,
+    4: SectionTOCFilter
+}
 
 # how a redirect looks as rendered HTML
 REDIRECT_HTML = 'REDIRECT <a class="redirect"'
@@ -711,6 +719,8 @@ class Document(NotificationsMixin, models.Model):
     zone_subnav_local_html = models.TextField(editable=False,
                                               blank=True, null=True)
 
+    toc_html = models.TextField(editable=False, blank=True, null=True)
+
     @cache_with_field('body_html')
     def get_body_html(self, *args, **kwargs):
         html = self.rendered_html and self.rendered_html or self.html
@@ -730,6 +740,19 @@ class Document(NotificationsMixin, models.Model):
     def get_zone_subnav_local_html(self, *args, **kwargs):
         return self.get_section_content('Subnav')
 
+    @cache_with_field('toc_html')
+    def get_toc_html(self, *args, **kwargs):
+        if not self.current_revision:
+            return ''
+        toc_depth = self.current_revision.toc_depth
+        if not toc_depth:
+            return ''
+        html = self.rendered_html and self.rendered_html or self.html
+        return (parse_content(html)
+                .injectSectionIDs()
+                .filter(TOC_FILTERS[toc_depth])
+                .serialize())
+
     def regenerate_cache_with_fields(self):
         """Regenerate fresh content for all the cached fields"""
         # TODO: Maybe @cache_with_field can build a registry over which this
@@ -737,6 +760,7 @@ class Document(NotificationsMixin, models.Model):
         self.get_body_html(force_fresh=True)
         self.get_quick_links_html(force_fresh=True)
         self.get_zone_subnav_local_html(force_fresh=True)
+        self.get_toc_html(force_fresh=True)
 
     def get_zone_subnav_html(self):
         """Search from self up through DocumentZone stack, returning the first

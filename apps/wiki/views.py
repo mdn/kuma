@@ -88,12 +88,6 @@ from django.core.mail import send_mail
 log = logging.getLogger('k.wiki')
 
 
-TOC_FILTERS = {1: wiki.content.SectionTOCFilter,
-               2: wiki.content.H2TOCFilter,
-               3: wiki.content.H3TOCFilter,
-               4: wiki.content.SectionTOCFilter}
-
-
 @newrelic.agent.function_trace()
 def process_document_path(func, reverse_name='wiki.document'):
     """Decorator to process document_path into locale and slug, with
@@ -430,11 +424,7 @@ def _generate_toc_html(doc, tool, rendering_params):
     """
     toc_html = None
     if doc.show_toc and not rendering_params['raw']:
-        toc_filter = TOC_FILTERS[doc.current_revision.toc_depth]
-        toc_html = (wiki.content.parse(tool.serialize())
-                    .injectSectionIDs()
-                    .filter(toc_filter)
-                    .serialize())
+        toc_html = doc.get_toc_html()
     return toc_html
 
 
