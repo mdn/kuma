@@ -930,7 +930,8 @@ class Document(NotificationsMixin, models.Model):
         return get_seo_description(src, self.locale, strip_markup)
 
     def build_json_data(self):
-        content = (parse_content(self.html)
+        html = self.rendered_html and self.rendered_html or self.html
+        content = (parse_content(html)
                    .injectSectionIDs()
                    .serialize())
         sections = get_content_sections(content)
