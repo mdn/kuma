@@ -12,12 +12,6 @@
 
 {% block bodyclass %}document {% if is_zone %}zone{% endif %} {% if is_zone_root %}zone-landing{% endif %}{% endblock %}
 
-{% if document.parent %}
-  {# If there is a parent doc, use it for translating. #}
-  {% set translate_url = url('wiki.select_locale', document_path=document.parent.full_path) %}
-{% else %}
-  {% set translate_url = url('wiki.select_locale', document_path=document.full_path, locale=document.locale) %}
-{% endif %}
 {% if fallback_reason == 'no_translation' %}
   {% set help_link = url('wiki.translate', document_path=document.full_path, locale=document.locale)|urlparams(tolocale=request.locale) %}
 {% elif fallback_reason == 'translation_not_approved' %}
