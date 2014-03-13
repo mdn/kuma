@@ -903,10 +903,11 @@ def list_files(request):
 def list_documents_for_review(request, tag=None):
     """Lists wiki documents with revisions flagged for review"""
     tag_obj = tag and get_object_or_404(ReviewTag, name=tag) or None
-    docs = paginate(request, Document.objects.filter_for_review(tag=tag_obj),
-                    per_page=DOCUMENTS_PER_PAGE)
+    docs = Document.objects.filter_for_review(locale=request.locale, tag=tag_obj)
+    paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     return render(request, 'wiki/list_documents_for_review.html',
-                        {'documents': docs,
+                        {'documents': paginated_docs,
+                         'count': docs.count(),
                          'tag': tag_obj,
                          'tag_name': tag})
 
