@@ -18,27 +18,35 @@
           {% set template_name = token.name %}
           {% set template_args = token.args %}
           {% set template_slug = 'Template:{name}' | f(name=template_name) %}
-          {% set template_path = ('{locale}/{slug}' | f(locale='en-US', slug=template_slug)) %}
-          {% set edit_url = url('wiki.edit_document', template_path) %}
+          {% if '$' not in template_name %}
+              {% set template_path = ('{locale}/{slug}' | f(locale='en-US', slug=template_slug)) %}
+              {% set edit_url = url('wiki.edit_document', template_path) %}
+          {% endif %}
           <span>
             at document offset {{ token['offset'] }}
             in macro <code>{{ template_name }} ({{ template_args }})</code>
-            ( <a href="{{ edit_url }}">edit</a> ):
+            {% if edit_url %}
+                ( <a href="{{ edit_url }}">edit</a> ):
+            {% endif %}
           </span>
         {% endif %}
         {% if err_type == 'TemplateLoadingError' %}
           {% set options = error.args[2] %}
           {% set template_name = options.name %}
           {% set template_slug = 'Template:{name}' | f(name=template_name) %}
-          {% set template_path = ('{locale}/{slug}' | f(locale='en-US', slug=template_slug)) %}
-          {% set edit_url = url('wiki.edit_document', template_path) %}
-          {% set new_url = url('wiki.new_document') %}
+          {% if '$' not in template_name %}
+              {% set template_path = ('{locale}/{slug}' | f(locale='en-US', slug=template_slug)) %}
+              {% set edit_url = url('wiki.edit_document', template_path) %}
+              {% set new_url = url('wiki.new_document') %}
+          {% endif %}
           <span>
             for <code>{{ template_slug }}</code> (
-                {% if 'status 404' in error.message %}
+                {% if 'status 404' in error.message and new_url %}
                     <a href="{{ new_url }}?slug={{ template_slug }}">new</a>
-                {% else %}
+                {% elif edit_url %}
                     <a href="{{ edit_url }}">edit</a>
+                {% elif '$' in template_name %}
+                    {{ _("Note: '$' in macro names is not supported") }}
                 {% endif %}
             ):
           </span>
