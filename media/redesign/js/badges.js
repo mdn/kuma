@@ -1,4 +1,5 @@
 (function ($) {
+    'use strict';
 
     // Show the dialog immediately if the new badge is present!
     (function() {

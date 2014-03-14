@@ -1,5 +1,6 @@
-
 (function($) {
+  'use strict';
+  
   // remove query paramters from the given URL. it probably sucks
   var remove_qs = function(url) {
     if (url.indexOf('?') !== -1) {

@@ -1,18 +1,20 @@
 (function($) {
+    'use strict';
+
      // Retrieve request and move information
-     var $moveSlug = $('#move-slug'),
-         $suggestionInput = $('#parent-suggestion'),
-         $suggestionContainer= $('.parent-suggest-container'),
-         $lookupLink = $('.move-lookup-link'),
-         specific_slug = $('#current-slug').val(),
-         moveLocale = $('#locale').val(),
-         $previewUrl = $('#preview-url'),
-         onHide = function() {
-             $suggestionContainer.removeClass('show');
-             $moveSlug[0].focus();
-             $suggestionInput.mozillaAutocomplete('clear');
-             $suggestionInput.attr('disabled', 'disabled');
-         };
+     var $moveSlug = $('#move-slug');
+     var $suggestionInput = $('#parent-suggestion');
+     var $suggestionContainer= $('.parent-suggest-container');
+     var $lookupLink = $('.move-lookup-link');
+     $previewUrl = $('#preview-url'),
+     var specific_slug = $('#current-slug').val();
+     var moveLocale = $('#locale').val();
+     var onHide = function() {
+         $suggestionContainer.removeClass('show');
+         $moveSlug[0].focus();
+         $suggestionInput.mozillaAutocomplete('clear');
+         $suggestionInput.attr('disabled', 'disabled');
+     };
 
      // Hook up the autocompleter before creating the link connection
      $suggestionInput.mozillaAutocomplete({
@@ -38,7 +40,6 @@
      // Show the lookup when the link is clicked
      $lookupLink.on('click', function(e) {
          e.preventDefault();
-         // Show the lookup
          $suggestionContainer.addClass('show');
          $suggestionInput[0].disabled = false;
          $suggestionInput[0].focus();

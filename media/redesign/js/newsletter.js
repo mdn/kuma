@@ -1,4 +1,6 @@
 (function($) {
+	'use strict';
+	
 	var $parent = $('#apps-newsletter-subscribe');
 	var $checkbox = $parent.find('#id_newsletter');
 	var $settings = $parent.find('.newsletter-setting');

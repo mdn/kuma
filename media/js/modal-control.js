@@ -1,4 +1,5 @@
 (function($, doc) {
+  'use strict';
 
   $(doc).ready(function() {
     var id = 'modal-content';

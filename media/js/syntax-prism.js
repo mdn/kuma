@@ -1,4 +1,6 @@
 (function($) {
+    'use strict';
+    
     // Fudge a few languages
     var languages = Prism.languages;
     languages.xml = languages.xul = languages.html = languages.markup;
