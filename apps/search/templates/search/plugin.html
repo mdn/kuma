@@ -4,7 +4,7 @@
 {# L10n: Search Mozilla Developer Network documentation #}
 <Description>{{ _('Search Mozilla Developer Network documentation') }}</Description>
 <InputEncoding>UTF-8</InputEncoding>
-<Image width="16" height="16" type="image/png">https://developer.mozilla.org/media/img/favicon.ico</Image>
+<Image width="16" height="16" type="image/png">{{ MEDIA_URL }}redesign/img/favicon32.png</Image>
 <Url type="text/html" method="get" template="https://{{ site }}/{{ locale }}/search">
   <Param name="q" value="{searchTerms}"/>
   <Param name="w" value="3"/>
