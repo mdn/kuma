@@ -417,7 +417,7 @@ def _get_html_and_errors(request, doc, rendering_params):
     return doc_html, ks_errors, render_raw_fallback
 
 
-def _generate_toc_html(doc, tool, rendering_params):
+def _generate_toc_html(doc, rendering_params):
     """
     Generate the HTML, if needed, for a Document's table of contents.
 
@@ -428,35 +428,50 @@ def _generate_toc_html(doc, tool, rendering_params):
     return toc_html
 
 
-def _filter_doc_html(request, doc, tool, rendering_params):
+def _filter_doc_html(request, doc, doc_html, rendering_params):
     """
     Apply needed filtering/annotating operations to a Document's HTML.
-
     """
+    # If ?summary is on, just serve up the summary as doc HTML
+    if rendering_params['summary']:
+        return doc.get_summary_html()
+
+    # Shortcut the parsing & filtering, if none of these relevant rendering
+    # params are set.
+    if not (rendering_params['section'] or rendering_params['raw'] or
+            rendering_params['edit_links'] or rendering_params['include']):
+        return doc_html
+
+    # TODO: One more view-time content parsing instance to refactor
+    tool = wiki.content.parse(doc_html)
+
+    # ?raw view is often used for editors - apply safety filtering.
+    # TODO: Should this stuff happen in render() itself?
+    if rendering_params['raw']:
+        # HACK: Raw rendered content has not had section IDs injected
+        tool.injectSectionIDs()
+        tool.filterEditorSafety()
+
     # If a section ID is specified, extract that section.
+    # TODO: Pre-extract every section on render? Might be over-optimization
     if rendering_params['section']:
         tool.extractSection(rendering_params['section'])
 
-    # If this user can edit the document, inject some section editing
-    # links.
+    # If this user can edit the document, inject section editing links.
+    # TODO: Rework so that this happens on the client side?
     if ((rendering_params['edit_links'] or not rendering_params['raw']) and
-        request.user.is_authenticated() and
-        doc.allows_revision_by(request.user)):
+            request.user.is_authenticated() and
+            doc.allows_revision_by(request.user)):
         tool.injectSectionEditingLinks(doc.full_path, doc.locale)
-
-    # ?raw view is often used for editors - apply safety filtering.
-    if rendering_params['raw']:
-        tool.filterEditorSafety()
 
     doc_html = tool.serialize()
 
     # If this is an include, filter out the class="noinclude" blocks.
+    # TODO: Any way to make this work in rendering? Possibly over-optimization,
+    # because this is often paired with ?section - so we'd need to store every
+    # section twice for with & without include sections
     if rendering_params['include']:
-        doc_html = (wiki.content.filter_out_noinclude(doc_html))
-
-    # If ?summary is on, just serve up the summary as doc HTML
-    if rendering_params['summary']:
-        doc_html = doc.get_summary_html()
+        doc_html = wiki.content.filter_out_noinclude(doc_html)
 
     return doc_html
 
@@ -634,12 +649,8 @@ def document(request, document_slug, document_locale):
 
     # Step 5: Start parsing and applying filters.
     if not doc.is_template:
-        tool = wiki.content.parse(doc_html)
-
-        toc_html = _generate_toc_html(doc, tool, rendering_params)
-
-        doc_html = _filter_doc_html(request, doc,
-                                    tool, rendering_params)
+        toc_html = _generate_toc_html(doc, rendering_params)
+        doc_html = _filter_doc_html(request, doc, doc_html, rendering_params)
 
     # Step 6: If we're doing raw view, bail out to that now.
     if rendering_params['raw']:
@@ -1929,12 +1940,7 @@ def toc_view(request, document_slug=None, document_locale=None):
         return HttpResponseBadRequest()
 
     document = get_object_or_404(Document, **kwargs)
-    tool = wiki.content.parse(wiki.content.parse(document.html)
-                                .injectSectionIDs()
-                                .serialize())
-    toc_html = (wiki.content.parse(tool.serialize())
-                            .filter(wiki.content.SectionTOCFilter)
-                            .serialize())
+    toc_html = document.get_toc_html()
     if toc_html:
         toc_html = '<ol>' + toc_html + '</ol>'
 
