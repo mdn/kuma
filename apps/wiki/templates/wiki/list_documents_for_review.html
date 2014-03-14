@@ -20,6 +20,7 @@
 
       <div id="document-list" class="boxed">
         <h1>{{ title }}</h1>
+        <p>{{ _('Found {0} documents.')|f(count) }}</p>
         {% if documents.object_list %}
           <ul class="documents cols-3">
             {% for doc in documents.object_list %}
@@ -33,4 +34,3 @@
       </div>
       
 {% endblock %}
-{# vim: set ts=2 et sts=2 sw=2: #}
