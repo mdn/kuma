@@ -721,6 +721,10 @@ class Document(NotificationsMixin, models.Model):
 
     toc_html = models.TextField(editable=False, blank=True, null=True)
 
+    summary_html = models.TextField(editable=False, blank=True, null=True)
+
+    summary_text = models.TextField(editable=False, blank=True, null=True)
+
     @cache_with_field('body_html')
     def get_body_html(self, *args, **kwargs):
         html = self.rendered_html and self.rendered_html or self.html
@@ -753,6 +757,14 @@ class Document(NotificationsMixin, models.Model):
                 .filter(TOC_FILTERS[toc_depth])
                 .serialize())
 
+    @cache_with_field('summary_html')
+    def get_summary_html(self, *args, **kwargs):
+        return self.get_summary(strip_markup=False)
+
+    @cache_with_field('summary_text')
+    def get_summary_text(self, *args, **kwargs):
+        return self.get_summary(strip_markup=True)
+
     def regenerate_cache_with_fields(self):
         """Regenerate fresh content for all the cached fields"""
         # TODO: Maybe @cache_with_field can build a registry over which this
@@ -761,6 +773,8 @@ class Document(NotificationsMixin, models.Model):
         self.get_quick_links_html(force_fresh=True)
         self.get_zone_subnav_local_html(force_fresh=True)
         self.get_toc_html(force_fresh=True)
+        self.get_summary_html(force_fresh=True)
+        self.get_summary_text(force_fresh=True)
 
     def get_zone_subnav_html(self):
         """Search from self up through DocumentZone stack, returning the first

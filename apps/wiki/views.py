@@ -456,8 +456,7 @@ def _filter_doc_html(request, doc, tool, rendering_params):
 
     # If ?summary is on, just serve up the summary as doc HTML
     if rendering_params['summary']:
-        doc_html = doc.get_summary(strip_markup=False,
-                                   use_rendered=rendering_params['use_rendered'])
+        doc_html = doc.get_summary_html()
 
     return doc_html
 
@@ -665,8 +664,7 @@ def document(request, document_slug, document_locale):
     # Get the SEO summary
     seo_summary = ''
     if not doc.is_template:
-        seo_summary = doc.get_summary(strip_markup=True,
-                                      use_rendered=rendering_params['use_rendered'])
+        seo_summary = doc.get_summary_text()
 
     # Get the additional title information, if necessary.
     seo_parent_title = _get_seo_parent_title(slug_dict, document_locale)
