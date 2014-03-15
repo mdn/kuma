@@ -48,6 +48,7 @@ var CKBUILDER_CONFIG = {
 		showborders: 1,
 		sourcearea: 1,
 		stylescombo: 1,
+		tab:1,
 		table: 1,
 		tabletools: 1,
 		toolbar: 1,
@@ -56,6 +57,7 @@ var CKBUILDER_CONFIG = {
 		wysiwygarea: 1,
 		'mdn-format': 1,
 		'mdn-syntaxhighlighter': 1,
-		'mdn-system-integration': 1
+		'mdn-system-integration': 1,
+		'mdn-toggle-block': 1
 	}
 };
