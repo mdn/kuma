@@ -58,10 +58,10 @@
       'pastetext,preview,removeformat,resize,scayt,showblocks,showborders,sourcearea,stylescombo,tab,table,tabletools,' +
       'toolbar,undo,wsc,wysiwygarea,' +
       // MDN's plugins.
-      'mdn-format,mdn-syntaxhighlighter,mdn-system-integration,mdn-toggle-block';
+      'mdn-format,mdn-sampler,mdn-syntaxhighlighter,mdn-system-integration,mdn-toggle-block';
 
     // Need to be ported to v4.
-    // config.extraPlugins = 'definitionlist,mdn-link,mdn-attachments,mdn-image,mdn-enterkey,mdn-wrapstyle,mdn-table,tablesort,mdn-sampler,mdn-sample-finder,mdn-maximize,mdn-redirect,youtube,autogrow,texzilla';
+    // config.extraPlugins = 'definitionlist,mdn-link,mdn-attachments,mdn-image,mdn-enterkey,mdn-wrapstyle,mdn-table,tablesort,mdn-sample-finder,mdn-maximize,mdn-redirect,youtube,autogrow,texzilla';
 
     // Disable the Advanced Content Filter because too many pages
     // use unlimited HTML.

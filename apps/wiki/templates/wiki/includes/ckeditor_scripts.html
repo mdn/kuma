@@ -9,7 +9,7 @@
 <script src="{{ MEDIA_URL }}js/libs/ckeditor/source/ckeditor/adapters/jquery.js?build={{ BUILD_ID_JS }}"></script>
 <script>
   // Define the path to non-core plugins.
-  'scayt,wsc,mdn-format,mdn-syntaxhighlighter,mdn-system-integration,mdn-toggle-block'.split(',').forEach(function(pluginName) {
+  'scayt,wsc,mdn-format,mdn-sampler,mdn-syntaxhighlighter,mdn-system-integration,mdn-toggle-block'.split(',').forEach(function(pluginName) {
     CKEDITOR.plugins.addExternal(pluginName, '{{ MEDIA_URL }}js/libs/ckeditor/source/plugins/' + pluginName + '/');
   });
 </script>
