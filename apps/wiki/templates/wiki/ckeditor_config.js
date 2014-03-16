@@ -63,7 +63,7 @@
       'tablesort';
 
     // Need to be ported to v4.
-    // config.extraPlugins = 'definitionlist,mdn-link,mdn-attachments,mdn-image,mdn-enterkey,mdn-wrapstyle,mdn-table,mdn-sample-finder,mdn-maximize,mdn-redirect,youtube,autogrow,texzilla';
+    // config.extraPlugins = 'definitionlist,mdn-link,mdn-attachments,mdn-image,mdn-enterkey,mdn-wrapstyle,mdn-table,mdn-sample-finder,mdn-redirect,youtube,texzilla';
 
     // Disable the Advanced Content Filter because too many pages
     // use unlimited HTML.
