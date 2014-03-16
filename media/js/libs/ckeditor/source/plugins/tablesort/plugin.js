@@ -24,7 +24,7 @@
 
 CKEDITOR.plugins.add( 'tablesort',
 {
-	lang : [ 'en' ], // @Packager.RemoveLine
+	lang : 'en', // %REMOVE_LINE_CORE%
 
 	init : function( editor )
 	{
