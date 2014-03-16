@@ -126,12 +126,46 @@
   .home-search-form {
     padding: (grid-spacing * 2) 0;
 
-    input {
+    .search-wrapper{
       big-search();
       color: #fff;
 
-      set-placeholder-style(color, #fff);
+      //set-placeholder-style(color, #fff);
     }
+
+    .suggestions {
+      big-search();
+      height: 300px;
+      overflow-y:scroll;
+      color: #fff;
+
+      a{
+        color: #fff;
+      }
+    }
+
+    input {
+      background: transparent;
+      border: none;
+      color: #fff;
+      display: inline;
+    }
+
+    .filters {
+      display: inline;
+  }
+/*
+  .filters span.topic{
+      display: inline;
+      border: 2px violet dashed;
+      margin: 0 0.1em;
+  }
+*/
+  .filters span.topic button.close{
+      width: 30px;
+      height: 30px;
+  }
+
   }
 }
 
