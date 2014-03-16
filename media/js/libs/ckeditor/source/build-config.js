@@ -59,6 +59,7 @@ var CKBUILDER_CONFIG = {
 		'mdn-sampler': 1,
 		'mdn-syntaxhighlighter': 1,
 		'mdn-system-integration': 1,
-		'mdn-toggle-block': 1
+		'mdn-toggle-block': 1,
+		tablesort: 1
 	}
 };
