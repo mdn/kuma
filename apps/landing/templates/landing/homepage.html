@@ -19,30 +19,12 @@
   <script>
       document.addEventListener('DOMContentLoaded', function listener(){
           "use strict";
-
-          // https://developer.mozilla.org/en-US/search.json?q=html5&per_page=100&topic=javascript&topic=html
-
           var filtersData = window.mdn.searchFilters;
-
-
-          /*var xhr = new XMLHttpRequest();
-          xhr.open('GET', SEARCH_URL);
-
-          xhr.addEventListener('load', function(e){
-              console.log(xhr.responseText);
-          });
-
-          xhr.addEventListener('error', function(e){
-              console.error(xhr.responseText);
-          });
-
-          xhr.send();*/
 
           function parse(s){
               var matches = s.match(/^(#\S+)\s+|\s(#\S+)\s+/);
               return matches ? matches[1] || matches[2] : matches;
           }
-
 
           var search = $('.search-wrapper');
           var searchFilters = search.find('.filters');
@@ -107,7 +89,7 @@
               // clean suggestion div
               suggestions.empty();
               $.each(filtersData, function(index, group){
-                  var title = $('<h3>').text(group.name);
+                  var title = $('<strong>').text(group.name);
                   var ul = document.createElement("UL");
                   var show = false;
                   $.each(group.filters, function(index, filter){
@@ -115,10 +97,11 @@
                       var nameNorm = removeAccents(filter.name.toLowerCase());
                       if (!f || slugNorm.indexOf(removeAccents(f.toLowerCase())) != -1 || nameNorm.indexOf(removeAccents(f.toLowerCase())) != -1) {
                           var $li = $('<li></li>')
-                                      .attr('id', filter.slug);
+                                      .attr('data-slug', filter.slug);
                           var $a = $('<a></a>')
+                                      .attr('class', 'search-ss')
                                       .attr('href', '#')
-                                      .text(filter.name + ' : #' + filter.slug)
+                                      .html(filter.name + ' <span>#' + filter.slug + '</span>')
                                       .appendTo($li)
                                       .on('click', function(e){
                                           e.preventDefault();
@@ -157,7 +140,6 @@
               if(searchInput.val().length - previousValue.length === 1 &&
                  searchInput.val()[searchInput.val().length -1] === '#')
               {
-                  console.log('show');
                   suggestions.attr('data-hidden', 'false');
                   suggestions.show();
               }
@@ -196,7 +178,7 @@
 
               console.log('search URL', searchURL);
               location.href = searchURL;
-          })
+          });
 
           document.removeEventListener('DOMContentLoaded', listener);
       });
