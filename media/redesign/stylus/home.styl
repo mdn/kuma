@@ -126,6 +126,13 @@
   .home-search-form {
     padding: (grid-spacing * 2) 0;
 
+    input#home-q {
+      big-search();
+      color: #fff;
+
+      set-placeholder-style(color, #fff);
+    }
+
     .search-wrapper{
       big-search();
       color: #fff;
@@ -136,6 +143,12 @@
         color: white!important;
         float: right;
         font-size: 1.2em !important;
+      }
+      input#home-q-s {
+        background: transparent;
+        border: none;
+        color: #fff;
+        display: inline;
       }
     }
 
@@ -165,13 +178,6 @@
           }
         }
       }
-    }
-
-    input {
-      background: transparent;
-      border: none;
-      color: #fff;
-      display: inline;
     }
 
     .filters {

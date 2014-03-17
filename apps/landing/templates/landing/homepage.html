@@ -27,14 +27,20 @@
 
   <div class="home-search-form">
     <form action="{{ url('search') }}" method="get" class="search">
+    {% if waffle.flag('search_suggestions') %}
       <div class="search-wrapper">
         <div class="filters"></div>
-        <label for="home-q" class="offscreen">{{ _('Search') }}</label>
-        <input type="search" id="home-q" name="q" autocomplete="off" placeholder="{{ _('Search the docs') }}" size="15" />
+        <label for="home-q-s" class="offscreen">{{ _('Search') }}</label>
+        <input type="search" id="home-q-s" name="q" autocomplete="off" placeholder="{{ _('Search the docs') }}" size="15" />
         <button type="submit" class="offscreen">{{ _('Search') }}</button>
         <button type="button "class="show-topics"><i class="icon-caret-down" aria-hidden="true"></i></button>
       </div>
       <ul class="suggestions" data-hidden="true" style="display:none"></ul>
+    {% else %}
+      <label for="home-q" class="offscreen">{{ _('Search') }}</label>
+      <input type="search" id="home-q" name="q" placeholder="{{ _('Search the docs') }}" />
+      <button type="submit" class="offscreen">{{ _('Search') }}</button>
+    {% endif %}
     </form>
   </div>
 
@@ -201,5 +207,7 @@
 {% block js %}
   {{ super() }}
   {{ js('home') }}
+  {% if waffle.flag('search_suggestions') %}
   <script src="/media/js/search-suggestions.js"></script>
+  {% endif %}
 {% endblock %}
