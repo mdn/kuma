@@ -129,8 +129,14 @@
     .search-wrapper{
       big-search();
       color: #fff;
-
-      //set-placeholder-style(color, #fff);
+      cursor: text;
+      .show-topics{
+        background-color: rgba(255, 255, 255, 0) !important;
+        box-shadow: none;
+        color: white!important;
+        float: right;
+        font-size: 1.2em !important;
+      }
     }
 
     .suggestions {
@@ -140,6 +146,7 @@
       color: #fff;
       strong {
         text-transform: uppercase;
+        padding: 0 10px;
       }
       li {
         a.search-ss{
@@ -147,6 +154,7 @@
           color: #FFF;
           padding: 0 10px;
           &:hover,
+          &:focus,
           &.selected {
             background: #FFF;
             color: #fb9500;
@@ -169,13 +177,14 @@
     .filters {
       display: inline-block;
       span.topic {
-        text-transform: none!important;
+        background: rgba(255, 255, 255, 0.8);
         cursor: default!important;
         margin-right: 5px;
+        text-transform: none!important;
         button.close {
+          box-shadow: none;
           margin-left: 5px;
-          width: 30px;
-          height: 30px;
+          padding: 5px 0!important;
         }
       }
     }
