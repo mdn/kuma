@@ -249,24 +249,21 @@ article {
 }
 
 .from-search-toc {
+  component-submenu-method(200px, 1, button-background, button-shadow-color)
   @extend .smaller;
   border: 1px solid button-shadow-color;
-  width: 200px;
-  position: absolute;
   left: 66px;
   top: 0;
   z-index: 2;
-  background: button-background;
-  padding: (grid-spacing / 2);
   color: #888;
+
+  &:before, &:after { /* remove submenu arrows */
+    display: none;
+  }
 
   ol {
     list-style-type: decimal;
     padding-left: grid-spacing;
-  }
-
-  li {
-    padding: 4px 0;
   }
 
   a.current {

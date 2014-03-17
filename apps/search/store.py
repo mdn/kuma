@@ -12,12 +12,16 @@ PAGE_PARAM = 'page'
 TOPICS_PARAM = 'topic'
 
 
-def ref_from_referer(request):
+def referrer_url(request):
     referrer = request.META.get('HTTP_REFERER', None)
     if (referrer is None or
             reverse('search', locale=request.locale) != URL(referrer).path):
         return None
-    return ref_from_url(referrer)
+    return referrer
+
+
+def ref_from_referrer(request):
+    return ref_from_url(referrer_url(request))
 
 
 def ref_from_request(request):

@@ -54,11 +54,12 @@ from smuggler.forms import ImportFileForm
 from authkeys.decorators import accepts_auth_key
 
 from access.decorators import permission_required, login_required
-from search.store import ref_from_referer
+from search.store import referrer_url
 from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
 from sumo.utils import paginate, smart_int
-from wiki import DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX, SLUG_CLEANSING_REGEX
+from wiki import (DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX,
+                  SLUG_CLEANSING_REGEX)
 from wiki.decorators import check_readonly
 from wiki.events import EditDocumentEvent
 from wiki.forms import (DocumentForm, RevisionForm,
@@ -672,9 +673,6 @@ def document(request, document_slug, document_locale):
     # Retrieve file attachments
     attachments = _format_attachment_obj(doc.attachments)
 
-    # Provide additional information if user came from a search
-    search_ref = request.GET.get('search') or ref_from_referer(request)
-
     # Retrieve pre-parsed content hunks
     if doc.is_template:
         quick_links_html, zone_subnav_html = None, None
@@ -699,7 +697,8 @@ def document(request, document_slug, document_locale):
                'seo_summary': seo_summary,
                'seo_parent_title': seo_parent_title,
                'attachment_data': attachments,
-               'attachment_data_json': json.dumps(attachments)}
+               'attachment_data_json': json.dumps(attachments),
+               'search_url': referrer_url(request) or ''}
 
     response = render(request, 'wiki/document.html', context)
     return _set_common_headers(doc, rendering_params['section'], response)
