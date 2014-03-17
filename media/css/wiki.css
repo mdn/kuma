@@ -736,11 +736,6 @@ article.main div.tags input.adder {
     font-weight: bold;
 }
 
-#revision-list div.significance {
-    display: inline-block;
-    width: 35px;
-}
-
 #revision-list div.creator {
     color: #333;
     display: inline-block;
