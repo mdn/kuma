@@ -2,6 +2,7 @@
 import re
 import urllib
 from urllib import urlencode
+from urlparse import urlparse
 from collections import defaultdict
 
 from xml.sax.saxutils import quoteattr
@@ -365,6 +366,7 @@ class LinkAnnotationFilter(html5lib_Filter):
     def __init__(self, source, base_url):
         html5lib_Filter.__init__(self, source)
         self.base_url = base_url
+        self.base_url_parsed = urlparse(base_url)
 
     def __iter__(self):
         from wiki.models import Document
@@ -382,9 +384,10 @@ class LinkAnnotationFilter(html5lib_Filter):
                     continue
 
                 href = attrs['href']
-                if href.startswith(self.base_url):
+                href_parsed = urlparse(href)
+                if href_parsed.netloc == self.base_url_parsed.netloc:
                     # Squash site-absolute URLs to site-relative paths.
-                    href = '/%s' % href[len(self.base_url):]
+                    href = href_parsed.path
 
                 # Prepare annotations record for this path.
                 links[href] = dict(
@@ -472,9 +475,10 @@ class LinkAnnotationFilter(html5lib_Filter):
                 if 'href' in attrs:
 
                     href = attrs['href']
-                    if href.startswith(self.base_url):
+                    href_parsed = urlparse(href)
+                    if href_parsed.netloc == self.base_url_parsed.netloc:
                         # Squash site-absolute URLs to site-relative paths.
-                        href = '/%s' % href[len(self.base_url):]
+                        href = href_parsed.path
 
                     if href in links:
                         # Update class names on this link element.
