@@ -16,7 +16,6 @@
         var setup = function() {
           var $appBoxes = $('.approved .boxed');
           var $tools = $('div.cke_toolbox');
-          var $wikiArt = $('#cke_wikiArticle');
           var $container = $('.ckeditor-container');
           var $content = $('#cke_id_content');
           var contentTop = $container.offset().top;
@@ -64,7 +63,7 @@
           $(win).resize(function() { // Recalculate box width on resize
             if (fixed) {
               $tools.css({
-                width: $wikiArt.width() - 10
+                width: $container.width() - 10
               }); // Readjust toolbox to fit
             }
           });
