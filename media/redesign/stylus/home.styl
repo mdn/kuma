@@ -137,6 +137,8 @@
       big-search();
       color: #fff;
       cursor: text;
+      height: 36px;
+      padding: 6px;
       .show-topics{
         background-color: rgba(255, 255, 255, 0) !important;
         box-shadow: none;
@@ -149,6 +151,8 @@
         border: none;
         color: #fff;
         display: inline;
+        padding: 0 8px;
+        vertical-align: middle;
       }
     }
 
@@ -157,6 +161,7 @@
       max-height: 300px;
       overflow-y:scroll;
       color: #fff;
+      padding: 6px;
       strong {
         text-transform: uppercase;
         padding: 0 10px;
@@ -188,9 +193,12 @@
         margin-right: 5px;
         text-transform: none!important;
         button.close {
-          box-shadow: none;
+          background-color: rgba(255, 255, 255, 0.4) !important;
           margin-left: 5px;
-          padding: 5px 0!important;
+          padding: 5px!important;
+          i[class^="icon-"] {
+            margin-left: 0;
+          }
         }
       }
     }
