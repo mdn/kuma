@@ -47,15 +47,6 @@
               <div class="date">
                 <a href="{{ url('wiki.revision', document.full_path, rev.id) }}" rel="nofollow, noindex">{{ datetimeformat(rev.created, format='datetime') }}</a>
               </div>
-              <div class="significance">
-                {% if rev.significance == 20 %}
-                  M
-                {% elif rev.significance == 30 %}
-                  MT
-                {% else %}
-                  &nbsp;
-                {% endif %}
-              </div>
               <div class="creator">
                 <a href="{{ url('devmo.views.profile_view', username=rev.creator) }}">{{ rev.creator }}</a>
               </div>
