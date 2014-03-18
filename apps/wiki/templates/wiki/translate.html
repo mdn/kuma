@@ -44,10 +44,6 @@
       </div>
 
     {% include 'wiki/includes/page_buttons.html' %}
-
-    {% if not based_on.reviewed or not based_on.is_approved %}
-      <p class="trans-note">{{ _('You are translating an unreviewed or rejected English document.') }}</p>
-    {% endif %}
     </header>
 
     {% include 'wiki/includes/translate_description.html' %}

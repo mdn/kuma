@@ -37,7 +37,7 @@
             {% endif %}
             {% set is_current = document.current_revision.id == rev %}
             {% if loop.first %}<ul>{% endif %}
-            <li class="{% if document.current_revision.id == rev %}current{% endif %}{% if rev.reviewed and not rev.is_approved %}rejected{% endif %}">
+            <li class="{% if document.current_revision.id == rev %}current{% endif %}">
               <div class="radio">
                 {% if not current %}<input type="radio" name="from" value="{{ rev.id }}" {% if loop.index == 2 %}checked="checked"{% endif %} />{% endif %}
               </div>
