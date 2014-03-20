@@ -14,7 +14,6 @@ make-wiki-blocks-flat() {
 
 enable-toc-toggle() {
   #toc {
-    padding: (grid-spacing / 2) grid-spacing;
 
     .toggler {
       pointer-events: auto;
@@ -426,6 +425,10 @@ div.bug, div.warning, div.overheadIndicator {
 
 .contributor-sub {
   padding: 4px 0;
+  margin-bottom: 20px;
+  strong {
+    display: block;
+  }
 }
 
 /* table of contents column */
@@ -437,18 +440,14 @@ div.bug, div.warning, div.overheadIndicator {
 .tag-attach-list {
   position: relative;
 
-  ul, > a {
+  a {
     @extend .smaller;
     display: inline-block;
   }
 
   ul {
-    bidi-style(padding-left, 6px, padding-right, 0);
     margin-bottom: 0;
-
-    li {
-      margin-bottom: 0;
-    }
+    margin-top: 4px;
   }
 
   > a {
@@ -498,17 +497,18 @@ div.bug, div.warning, div.overheadIndicator {
   compat-only(font-size, base-font-size);
   compat-only(margin-left, 0, 'ol ol, ul ul');
   background: light-background-color;
-  compat-important(padding, grid-spacing (grid-spacing * .75));
 
   &.fixed {
-    position: fixed;
+    position: fixed !important;
     top: 0;
+    right: auto !important;
     z-index: 10;
     overflow-y: auto;
   }
 
   > ol {
     compat-important(font-size, smaller-font-size);
+    margin: -20px grid-spacing 0;
   }
 
   ol ol {
@@ -545,6 +545,8 @@ div.bug, div.warning, div.overheadIndicator {
   a.title {
     position: relative;
     text-decoration: none;
+    display: inline-block;
+    margin: (grid-spacing /2) grid-spacing;
   }
 }
 
@@ -746,13 +748,13 @@ span.cke_skin_kuma {
 
 /* Page deletion styles */
 .delete-document {
-  textarea { 
-    width: 500px; 
-    max-width: 100%; 
+  textarea {
+    width: 500px;
+    max-width: 100%;
     margin-bottom: grid-spacing;
   }
-  label { 
-    display: block; 
+  label {
+    display: block;
   }
 }
 
@@ -761,6 +763,34 @@ span.cke_skin_kuma {
 .live-sample-frame {
   border: 1px solid #ccc;
   box-shadow: 0px 0px 1px 1px #ddd;
+}
+.wiki-wrapper {
+  max-width: 79.1428571%;
+  margin-right: 3%;
+  position: relative;
+  float: left;
+  #toc {
+    position: absolute;
+    right: 0;
+    width: 250px;
+  }
+}
+.wiki-article {
+  margin-right: 292px;
+}
+.themeUpdated {
+  display: none;
+}
+.contributors {
+  width: 17.8571429%;
+  float: left;
+  border: 0;
+  padding:0;
+  margin:99px 0 0;
+  background: transparent;
+}
+#wiki-left {
+  width: auto;
 }
 
 /*
@@ -781,6 +811,38 @@ span.cke_skin_kuma {
     #wiki-left {
       float: none;
     }
+  }
+  .wiki-wrapper {
+    max-width: 74.5%;
+    .wiki-article {
+      margin-right: 0;
+    }
+    #toc {
+      position: relative;
+      right: auto;
+      width: auto;
+      margin-bottom:20px;
+      padding: 0;
+      overflow: hidden;
+      .toggler {
+        pointer-events: auto;
+        color: #0095DD;
+        display: block;
+        padding: 20px;
+        margin: 0;
+        i {
+          display: inline-block;
+          top: 23px;
+          right:20px;
+        }
+      }
+      > ol {
+        margin-bottom: 20px;;
+      }
+    }
+  }
+  .contributors {
+    width: 22.5%;
   }
 
   /* hide redirected from info on small screens */
@@ -824,7 +886,15 @@ span.cke_skin_kuma {
     display: none;
   }
 }
-
+@media all and (max-width: 1023px) {
+  .wiki-wrapper {
+    max-width: 100%;
+  }
+  .contributors {
+    width: auto;
+    float: none;
+  }
+}
 /* Mobile updates */
 @media media-query-mobile {
   #languages-menu-submenu {

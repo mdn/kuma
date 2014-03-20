@@ -142,6 +142,7 @@
 
         if(scroll > tocOffset && $toggler.css('pointer-events') == 'none') {
           $toc.css({
+            left: $toc.offset().left,
             width: $toc.css('width'),
             maxHeight: maxHeight
           });
@@ -152,9 +153,9 @@
         }
         else {
           $toc.css({
-            width: 'auto',
-            maxHeight: 'none'
-          });
+            left: "",
+            width: ""
+            });
           $toc.removeClass(fixedClass);
         }
 

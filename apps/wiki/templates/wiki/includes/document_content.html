@@ -117,7 +117,9 @@
         <a class="button from-search-next only-icon"><i aria-hidden="true" class="icon-chevron-right"></i></a>
       </span>
       {% endif %}
-    <h1>{{ document.title }}</h1>
+  </div>
+  <main role="main" class="wiki-wrapper">
+      <h1>{{ document.title }}</h1>
 
       {% if messages %}
         {% for message in messages %}
@@ -128,33 +130,9 @@
           {% endif %}
         {% endfor %}
       {% endif %}
-
-  </div>
   {% endif %}
 
-  <!-- start the main content container -->
-    <div id="wiki-column-container" class="{% if show_right %}wiki-right-present{% else %}wiki-right-closed wiki-right-none{% endif %} {% if show_left %}wiki-left-present{% else %}wiki-left-closed wiki-left-none{% endif %}">
-
-      {% if show_left and not is_zone_root %}
-      <!-- additional controls row; hidden unless needed -->
-      <div id="wiki-controls" class="column-container column-container-reverse">
-        <div class="column-strip">
-          <!-- Show TOC "show" link -->
-        </div>
-        <div class="column-half">
-        </div>
-        <div class="column-strip quick-links hidden">
-          <a href="#show-quick-links" class="title smaller" id="show-quick-links"><i aria-hidden="true" class="icon-caret-down"></i>{{ _('Show Sidebar') }}</a>
-        </div>
-      </div>
-      {% endif %}
-
-      <!-- content row with three strips -->
-      <div class="column-container column-container-reverse">
-
         {% if show_right %}
-          <!-- TOC, approvals, etc -->
-          <div class="column-strip wiki-column" id="wiki-right">
           {% if toc_html %}
           <!-- table of contents -->
           <div id="toc" class="toc toggleable">
@@ -164,7 +142,6 @@
             </ol>
           </div>
           {% endif %}
-          </div>
         {% endif %}
 
         <!-- just the article content -->
@@ -173,9 +150,6 @@
         {% else %}
           {% set document_html_safe = document_html|safe %}
         {% endif %}
-
-        <!-- center: main article content -->
-        <div id="wiki-content" class="{{ content_class }} wiki-column text-content">
 
           {% if request.user.is_authenticated() and document_html %}
             {% if render_raw_fallback %}
@@ -233,7 +207,7 @@
           {% endif %}
 
           <!-- just the article content -->
-          <article id="wikiArticle">
+          <div class="wiki-article">
             {% if not fallback_reason %}
               {% if not document_html %}
                 {{ _("This article doesn't have any content yet.") }}
@@ -254,7 +228,8 @@
             {% else %}
               {{ _("This article doesn't have approved content yet.") }}
             {% endif %}
-          </article>
+            </div>
+          <!--/article-->
 
           {% if not is_zone_root %}
             <!-- attachments list -->
@@ -262,39 +237,35 @@
               {% include 'wiki/includes/attachment_list.html' %}
             {% endif %}
 
-            <!-- contributors -->
-            <div class="wiki-block contributors">
-              <h2 class="offscreen">{{ _('Document Tags and Contributors') }}</h2>
-              {% if tags|length %}
+          {% endif %}
+          </main>
+           <!-- contributors -->
+            <aside class="contributors">
+                          {% if tags|length %}
               <!-- tags if present -->
               <div class="tag-attach-list tags contributor-sub">
-                <i aria-hidden="true" class="icon-tags"></i><strong>{{ _('Tags:') }}</strong>
+                <strong><i aria-hidden="true" class="icon-tags"></i>{{ _('Tags:') }}</strong>
                 <ul class="tag-list">{% for tag in tags %}<li><a href="{{url('wiki.tag', tag.name)}}">{{ tag.name }}</a></li>{% endfor %}</ul>
               </div>
               {% endif %}
               {% trans contributors=user_list(contributors) %}
               <div class="contributor-sub">
-                <i aria-hidden="true" class="icon-group"></i><strong>Contributors to this page:</strong> {{ contributors }}
+                <strong><i aria-hidden="true" class="icon-group"></i>Contributors to this page:</strong> {{ contributors }}
               </div>
               {% endtrans %}
               {% if current_revision.creator %}
                 <div class="contributor-sub">
-                  <i aria-hidden="true" class="icon-time"></i><strong>{{ _('Last updated by:') }}</strong>
+                  <strong><i aria-hidden="true" class="icon-time"></i>{{ _('Last updated by:') }}</strong>
                   <a href="{{ url('devmo.views.profile_view', username=current_revision.creator) }}">{{ current_revision.creator }}</a>,
                   {{ datetimeformat(current_revision.created, format='datetime') }}
                 </div>
               {% endif %}
-            </div>
-          {% endif %}
-        </div>
 
-        {% if show_left %}
+                      {% if show_left %}
           <!-- quick links and zone subnav strip -->
           <div id="wiki-left" class="column-strip wiki-column">
 
           {% if not is_zone_root %}
-
-            <a href="#quick-links" class="title smaller" id="quick-links-toggle"><i aria-hidden="true" class="icon-caret-up"></i>{{ _('Hide Sidebar') }}</a>
 
             {% if zone_subnav_html %}
               <!-- zone subnav -->
@@ -312,10 +283,8 @@
             {% endif %}
 
           {% endif %}
-
-          </div>
+            </div>
+            </aside>
         {% endif %}
-      </div>
     </div>
-  </div>
 </div> <!-- ends "main-content" -->
