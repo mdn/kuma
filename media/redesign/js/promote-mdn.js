@@ -94,12 +94,7 @@ function PromoteMDNLinks(userSettings) {
     };
 
     options = extend({}, options, userSettings || {});
-
-    for (var i in options.extraLinks) {
-        if (dataset[i] === undefined) {
-            dataset[i] = options.extraLinks[i];
-        }
-    }
+    dataset = extend({}, dataset, options.extraLinks || {})
 
     var replaceCount = 0;
     var re = new RegExp(/<a[^>]*>(.*?)<\/a>/);
