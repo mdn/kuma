@@ -536,6 +536,22 @@ class ContentSectionToolTests(TestCase):
                   .filter(H3TOCFilter).serialize())
         eq_(normalize_html(expected), normalize_html(result))
 
+    def test_bug_925043(self):
+        '''Bug 925043 - Redesign TOC has a bunch of empty <code> tags in markup'''
+        doc_src = """
+            <h2 id="Print">Mastering <code>print</code></h2>
+            <code>print 'Hello World!'</code>
+        """
+        expected = """
+            <li>
+                <a href="#Print" rel="internal">Mastering<code>print</code></a>
+            </li>
+        """
+        result = (wiki.content
+                  .parse(doc_src)
+                  .filter(SectionTOCFilter).serialize())
+        eq_(normalize_html(expected), normalize_html(result))
+
     def test_dekiscript_macro_conversion(self):
         doc_src = u"""
             <span>Just a span</span>
