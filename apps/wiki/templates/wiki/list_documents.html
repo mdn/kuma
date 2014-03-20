@@ -39,11 +39,13 @@
       <div id="document-list" class="boxed">
         <h1>{{ title }}</h1>
         {% if documents.object_list %}
-          <ul class="documents cols-3">
+          <ul class="documents">
             {% for doc in documents.object_list %}
               <li>
-                <a href="{{ doc.get_absolute_url() }}">{{ doc.title }}</a> ({{ doc.locale }})<br/>
-                <small>{{ doc.get_absolute_url() }}</small>
+                <a href="{{ doc.get_absolute_url() }}">{{ doc.slug }}</a>
+                  {% if not is_templates %}
+                    <small>{{ doc.get_summary() | truncate(100) }}</small>
+                  {% endif %}
               </li>
             {% endfor %}
           </ul>

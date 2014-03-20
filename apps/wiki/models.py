@@ -458,7 +458,8 @@ class BaseDocumentManager(models.Manager):
         docs = (self.filter(is_template=False, is_redirect=False)
                     .exclude(slug__startswith='User:')
                     .exclude(slug__startswith='Talk:')
-                    .order_by('title'))
+                    .exclude(slug__startswith='User_talk:')
+                    .order_by('slug'))
         if locale:
             docs = docs.filter(locale=locale)
         if category:

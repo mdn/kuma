@@ -193,6 +193,12 @@ a.persona-button {
   vendorize(border-radius, 3px);
   z-index: 2;
 
+  &:focus{
+    span{
+      text-decoration: underline;
+    }
+  }
+
   span {
     text-decoration: none;
     outline: none;
@@ -221,17 +227,21 @@ a.persona-button {
       padding-left: 3px;
       vendorize(border-radius, 3px 0 0 3px);
       create-gradient(#43a6e2, #287cc2);
+      height: 24px;
 
       &:after {
         create-gradient(#43a6e2, #287cc2, left top);
       }
 
-      img {
+      i {
+        background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAQAAAD9CzEMAAABjElEQVR4Ae3WQYQbURjA8ccwhBCGYU+5LiGUEkoJPZUQQk5LWJawLMuSUyhLCTnlVIZSQk6llKGUEIZSQsg1hBCWZZnTEMK/KqqyMcn7Zubd9vddh7+5fN9TenC54wchOws86iid0fmoQJ+IQ3NqWQRKLIg3wEoXKBNy3Hes5AGXFaf1kgdG6KkkC7xii54gWeAL+l7LAxZP6OvJA1UkZvLADRJbbGmgh0xRFrBZIfNBFqgjtZQFOsjZksAlUqHsD1wiZD7LAooWEksK8lUxRF8l2bLTNUm6rsfoqUsC8oUdpDmZA06JKKcJ2PziuFbaV8UZc+J1s3gXObGJDkoSkB//tyheApwziD3/U67IJw04NBmy5rSAe95IAmW6jJF6ZEQT53ggT5816Ux4Hxdo8kA2fNzDwDs2ZOc3uf1AiZBsfdsP+GSv9j9QxYQZ1r/AT8xo7AJFTPF3gQ6mbHH+BgLMuVDkiDDHU1Qwaa64xqSN4hNGKXzTgQZtPuLhETB9Nmv0TA/mKx4et7T/AHu690RA5bMsAAAAAElFTkSuQmCC') 0 0 no-repeat;
+        background-size: cover;
         position: relative;
         top: 2px;
         left: 5px;
         width: 14px;
         height: 15px;
+        display: inline-block;
       }
     }
 

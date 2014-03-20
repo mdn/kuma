@@ -20,8 +20,7 @@
           <ul class="documents cols-3">
             {% for file in files.object_list %}
               <li>
-                <a href="{{ file.get_absolute_url() }}">{{ file.title }}</a><br/>
-                <small>{{ file.get_absolute_url() }}</small>
+                <a href="{{ file.get_absolute_url() }}">{{ file.title }}</a>
               </li>
             {% endfor %}
           </ul>
