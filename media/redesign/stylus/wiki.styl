@@ -161,7 +161,7 @@ article {
   position: relative;
 
   .external {
-    white-space: nowrap;
+    white-space: pre-line;
 
     &:before {
       content: '\f08e';
@@ -249,24 +249,21 @@ article {
 }
 
 .from-search-toc {
+  component-submenu-method(200px, 1, button-background, button-shadow-color)
   @extend .smaller;
   border: 1px solid button-shadow-color;
-  width: 200px;
-  position: absolute;
   left: 66px;
   top: 0;
   z-index: 2;
-  background: button-background;
-  padding: (grid-spacing / 2);
   color: #888;
+
+  &:before, &:after { /* remove submenu arrows */
+    display: none;
+  }
 
   ol {
     list-style-type: decimal;
     padding-left: grid-spacing;
-  }
-
-  li {
-    padding: 4px 0;
   }
 
   a.current {
@@ -571,6 +568,13 @@ div.bug, div.warning, div.overheadIndicator {
   compat-only(background, none);
 }
 
+.page-meta section h2,
+.page-meta section h3 {
+  .editor-help-icon {
+    font-size: 20px;
+  }
+}
+
 #page-tags, #page-comment {
   @extend .wiki-block;
 }
@@ -614,8 +618,23 @@ div.bug, div.warning, div.overheadIndicator {
   h2 {selector-icon}, h3 {selector-icon} {
     @extend .right-icons;
   }
-}
 
+  .first-contrib-welcome {
+    background: light-background-color;
+    border: 5px solid header-background-color;
+    padding: 15px 15px 10px;
+    margin-bottom: 20px;
+
+    h2 {
+      margin: 0 0 .5em;
+      font: bold 18px/1.5 'Open Sans', sans-serif;
+    }
+
+    p {
+      margin-bottom: .6em;
+    }
+  }
+}
 
 /* ckeditor / content area styles */
 .ckeditor-container {
@@ -756,12 +775,7 @@ span.cke_skin_kuma {
   }
 }
 
-/* Styles for live sample iframe */
 
-.live-sample-frame {
-  border: 1px solid #ccc;
-  box-shadow: 0px 0px 1px 1px #ddd;
-}
 
 /*
   Small desktop.  We go to a two-column layout

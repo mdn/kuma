@@ -54,11 +54,12 @@ from smuggler.forms import ImportFileForm
 from authkeys.decorators import accepts_auth_key
 
 from access.decorators import permission_required, login_required
-from search.store import ref_from_referer
+from search.store import referrer_url
 from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
 from sumo.utils import paginate, smart_int
-from wiki import DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX, SLUG_CLEANSING_REGEX
+from wiki import (DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX,
+                  SLUG_CLEANSING_REGEX)
 from wiki.decorators import check_readonly
 from wiki.events import EditDocumentEvent
 from wiki.forms import (DocumentForm, RevisionForm,
@@ -86,12 +87,6 @@ from django.core.mail import send_mail
 
 
 log = logging.getLogger('k.wiki')
-
-
-TOC_FILTERS = {1: wiki.content.SectionTOCFilter,
-               2: wiki.content.H2TOCFilter,
-               3: wiki.content.H3TOCFilter,
-               4: wiki.content.SectionTOCFilter}
 
 
 @newrelic.agent.function_trace()
@@ -430,11 +425,7 @@ def _generate_toc_html(doc, tool, rendering_params):
     """
     toc_html = None
     if doc.show_toc and not rendering_params['raw']:
-        toc_filter = TOC_FILTERS[doc.current_revision.toc_depth]
-        toc_html = (wiki.content.parse(tool.serialize())
-                    .injectSectionIDs()
-                    .filter(toc_filter)
-                    .serialize())
+        toc_html = doc.get_toc_html()
     return toc_html
 
 
@@ -466,8 +457,7 @@ def _filter_doc_html(request, doc, tool, rendering_params):
 
     # If ?summary is on, just serve up the summary as doc HTML
     if rendering_params['summary']:
-        doc_html = doc.get_summary(strip_markup=False,
-                                   use_rendered=rendering_params['use_rendered'])
+        doc_html = doc.get_summary_html()
 
     return doc_html
 
@@ -675,17 +665,13 @@ def document(request, document_slug, document_locale):
     # Get the SEO summary
     seo_summary = ''
     if not doc.is_template:
-        seo_summary = doc.get_summary(strip_markup=True,
-                                      use_rendered=rendering_params['use_rendered'])
+        seo_summary = doc.get_summary_text()
 
     # Get the additional title information, if necessary.
     seo_parent_title = _get_seo_parent_title(slug_dict, document_locale)
 
     # Retrieve file attachments
     attachments = _format_attachment_obj(doc.attachments)
-
-    # Provide additional information if user came from a search
-    search_ref = request.GET.get('search') or ref_from_referer(request)
 
     # Retrieve pre-parsed content hunks
     if doc.is_template:
@@ -711,7 +697,8 @@ def document(request, document_slug, document_locale):
                'seo_summary': seo_summary,
                'seo_parent_title': seo_parent_title,
                'attachment_data': attachments,
-               'attachment_data_json': json.dumps(attachments)}
+               'attachment_data_json': json.dumps(attachments),
+               'search_url': referrer_url(request) or ''}
 
     response = render(request, 'wiki/document.html', context)
     return _set_common_headers(doc, rendering_params['section'], response)
@@ -913,10 +900,11 @@ def list_files(request):
 def list_documents_for_review(request, tag=None):
     """Lists wiki documents with revisions flagged for review"""
     tag_obj = tag and get_object_or_404(ReviewTag, name=tag) or None
-    docs = paginate(request, Document.objects.filter_for_review(tag=tag_obj),
-                    per_page=DOCUMENTS_PER_PAGE)
+    docs = Document.objects.filter_for_review(locale=request.locale, tag=tag_obj)
+    paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     return render(request, 'wiki/list_documents_for_review.html',
-                        {'documents': docs,
+                        {'documents': paginated_docs,
+                         'count': docs.count(),
                          'tag': tag_obj,
                          'tag_name': tag})
 

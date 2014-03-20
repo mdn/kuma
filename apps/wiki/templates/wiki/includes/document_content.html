@@ -1,11 +1,5 @@
 {% from "wiki/includes/document_macros.html" import build_document_crumbs, get_document_quick_links, get_document_buttons, get_document_subnav, get_approvals_html, document_watch with context %}
 
-{% if document.parent %}
-  {# If there is a parent doc, use it for translating. #}
-  {% set translate_url = url('wiki.select_locale', document_path=document.parent.full_path) %}
-{% else %}
-  {% set translate_url = url('wiki.select_locale', document_path=document.full_path, locale=document.locale) %}
-{% endif %}
 {% if fallback_reason == 'no_translation' %}
   {% set help_link = url('wiki.translate', document_path=document.full_path, locale=document.locale)|urlparams(tolocale=request.locale) %}
 {% elif fallback_reason == 'translation_not_approved' %}
@@ -106,8 +100,8 @@
   </div>
 
   <!-- heading -->
-  <div class="document-head{% if search_doc_navigator_enabled and search_ref %} from-search{% endif %}">
-    {% if search_doc_navigator_enabled and search_ref %}
+  <div class="document-head{% if search_doc_navigator_enabled %} from-search{% endif %}">
+    {% if search_doc_navigator_enabled %}
       <span class="from-search-previous-box">
         <a href="" class="button from-search-previous only-icon"><i aria-hidden="true" class="icon-chevron-left"></i></a>
       </span>

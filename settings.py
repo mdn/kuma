@@ -582,11 +582,6 @@ MINIFY_BUNDLES = {
             'redesign/css/wiki.css',
             'redesign/css/sphinx.css',
         ),
-        'dashboards': (
-            'css/dashboards.css',
-            'js/libs/DataTables-1.9.4/media/css/jquery.dataTables.css',
-            'js/libs/DataTables-1.9.4/extras/Scroller/media/css/dataTables.scroller.css',
-        ),
         'users': (
             'redesign/css/users.css',
         ),
@@ -617,7 +612,7 @@ MINIFY_BUNDLES = {
         'profile': (
             'redesign/css/profile.css',
         ),
-        'redesign-dashboards': (
+        'dashboards': (
             'redesign/css/dashboards.css',
             'redesign/css/diff.css',
             'js/libs/DataTables-1.9.4/media/css/jquery.dataTables.css',
@@ -628,7 +623,7 @@ MINIFY_BUNDLES = {
         ),
     },
     'js': {
-        'redesign-main': (
+        'main': (
             'js/jquery-upgrade-compat.js',
             'redesign/js/components.js',
             'redesign/js/main.js',
@@ -676,7 +671,6 @@ MINIFY_BUNDLES = {
             'js/libs/tag-it.js',
         ),
         'search': (
-            'js/store.js',
             'redesign/js/search.js',
         ),
         'wiki-edit': (
@@ -702,7 +696,6 @@ MINIFY_BUNDLES = {
             'js/syntax-prism.js',
         ),
         'wiki': (
-            'js/store.js',
             'redesign/js/search.js',
             'redesign/js/wiki.js',
         ),

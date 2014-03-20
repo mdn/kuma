@@ -1,4 +1,5 @@
 (function(win, doc, $) {
+  'use strict';
 
   /*
     Togglers within articles (i.e.)
@@ -275,6 +276,6 @@
       timeout = setTimeout(later, wait);
       if (callNow) func.apply(context, args);
     };
-  };
+  }
 
 })(window, document, jQuery);

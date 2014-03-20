@@ -266,11 +266,15 @@ class EmailChange(models.Model):
 
 
 class UserBan(models.Model):
-    user = models.ForeignKey(User, related_name="bans")
-    by = models.ForeignKey(User, related_name="bans_issued")
+    user = models.ForeignKey(User,
+                             related_name="bans",
+                             verbose_name="Banned user")
+    by = models.ForeignKey(User,
+                           related_name="bans_issued",
+                           verbose_name="Banned by")
     reason = models.TextField()
     date = models.DateField(default=datetime.date.today)
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=True, help_text="(Is ban active)")
 
     def __unicode__(self):
         message = _lazy(u'%s banned by %s') % (self.user, self.by)

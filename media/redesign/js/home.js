@@ -1,4 +1,5 @@
 (function($) {
+  'use strict';
 
   // Create the demos slider
   var $list = $('.home-demos-list');

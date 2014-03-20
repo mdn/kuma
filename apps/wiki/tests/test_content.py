@@ -822,7 +822,7 @@ class ContentSectionToolTests(TestCase):
         document(title=u'DOM/StyleSheet', locale=u'en-US',
                  slug=u'DOM/StyleSheet', save=True)
 
-        base_url = u'http://testserver/'
+        base_url = u'https://testserver'
         vars = dict(
             base_url=base_url,
             exist_url=d.get_absolute_url(),

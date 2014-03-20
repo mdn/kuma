@@ -125,10 +125,19 @@ What’s next?
 
       ./manage.py createsuperuser
 
-Important Waffle Flags
-----------------------
+Enabling Important Site Features
+--------------------------------
 
-Some site funcationaly require waffle flags.  Waffle flags include:
+Some site functionality needs to be enabled before being used.
+
+To enable KumaScript (Kuma's template system), log in, visit
+"/admin/constance/config/", and change ``KUMASCRIPT_TIMEOUT`` to a non-zero
+value.
+
+Other site features are managed using Waffle flags. To enable these features,
+log in, visit "/admin/waffle/flag/", and create one flag for each desired
+feature. Be sure to choose "Yes" for the "Everyone" option. Some Waffle flags
+include:
 
 -  ``kumaediting``:  Allows creation, editing, and translating of documents
 -  ``page_move``:  Allows moving of documents
@@ -136,7 +145,6 @@ Some site funcationaly require waffle flags.  Waffle flags include:
 -  ``events_map``:  Allows display of map on the events page
 -  ``elasticsearch``:  Enables elastic search for site search
 
-To create or modify waffle flags, visit "/admin/" and click the "Waffle" link.
 
 AWS and Rackspace
 -----------------

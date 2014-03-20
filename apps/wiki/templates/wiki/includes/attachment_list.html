@@ -2,16 +2,19 @@
 <section class="page-meta">
 <section id="page-attachments">
 
-  <h3><i aria-hidden="true" class="icon-paper-clip"></i>{{ _('Attachments') }}</h3>
+  <h3><i aria-hidden="true" class="icon-paper-clip"></i>{{ _('Attachments') }} <a href="{{ devmo_url('Project:MDN/Contributing/Editor_guide/Editing#The_attachments_box') }}"><i aria-hidden="true" title="{{ _('Learn how to use Attachments') }}" class="icon-question-sign editor-help-icon"></i></a></h3>
 
-  {% if show_attach_button and attachment_form %}
+  {% if show_attach_button and attachment_form and attachment_data|length %}
   <p class="add">
-      <a href="javascript:;" id="page-attachments-button" class="button neutral">Attach Files<i aria-hidden="true" class="icon-paper-clip"></i></a>
+      <button type="button" id="page-attachments-button" class="button neutral">Attach Files<i aria-hidden="true" class="icon-paper-clip"></i></button>
   </p>
   {% endif %}
 
   <p id="page-attachments-no-message" class="{% if attachment_data|length %}hidden{% endif %}">
-    {{ _('This document has no attachments.') }}
+    {{ _('This document has no attachments. Images can be attached, and then embedded in the article.') }}
+    {% if show_attach_button and attachment_form and not attachment_data|length %}
+      <a href="javascript:;" id="page-attachments-button" class="button neutral">Attach Files<i aria-hidden="true" class="icon-paper-clip"></i></a>
+    {% endif %}
   </p>
 
   <script>
