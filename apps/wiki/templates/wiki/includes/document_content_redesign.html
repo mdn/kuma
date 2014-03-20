@@ -25,6 +25,11 @@
   {% set quick_links_html = document.rendered_html|section_extract(quick_links_section_id) %}
 {% endif %}
 
+{% if document.is_template %}
+  {% set macro_name = document.title|replace('Template:','', 1) %}
+  {% set template_search_link = url('search', locale=document.locale)|urlparams(locale=request.locale, kumascript_macros=macro_name) %}
+{% endif %}
+
 {% set zone_stack = document.find_zone_stack() %}
 {% set is_zone = zone_stack|length %}
 {% set is_zone_root = is_zone and zone_stack[0].document == document %}
@@ -245,6 +250,11 @@
                 {{ _("This article doesn't have any content yet.") }}
               {% elif document.is_template %}
                 <pre class="brush: js">{{ document_html }}</pre>
+                {% trans search_link=template_search_link, title=document.title %}
+                  Search for
+                  <a href="{{ search_link }}">pages that use {{ title }}</a>
+                  to see example use cases and how many pages use this macro.
+                {% endtrans %}
               {% else %}
                 {{ document_html_safe }}
               {% endif %}
