@@ -63,22 +63,19 @@ Getting up and running
 
        echo '192.168.10.55 developer-local.allizom.org mdn-local.mozillademos.org' | sudo tee -a /etc/hosts
 
-#. Everything should be working now, from the host side (you should get a 503 error, no worries, it's normal)::
-
-       curl -k 'https://developer-local.allizom.org'
-
-#. You should be able to log into a shell in the VM as the user
+#. Everything should be working now, you should be able to log into a shell in the VM as the user
    ``vagrant``::
 
        vagrant ssh
 
-#. Once logged into the VM, you have to update its environnement at least one time::
-
-       sudo puppet apply /home/vagrant/src/puppet/manifests/dev-vagrant.pp
-
 #. Then you need to run ``foreman`` inside de VM in order to be able to work and access the site::
 
        foreman start
+
+#. You're done, from the host side (your computer) try the following command and you should get the MDN homepage::
+
+       curl -k 'https://developer-local.allizom.org'
+
 
 What’s next?
 ------------
