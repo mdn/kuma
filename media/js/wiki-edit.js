@@ -106,7 +106,7 @@
                   }
               });
 
-              s = values.join(' ');
+              var s = values.join(' ');
               
               s = $.slugifyString(s);
 
