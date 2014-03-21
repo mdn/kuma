@@ -767,50 +767,18 @@ class GetCurrentOrLatestRevisionTests(TestCase):
         rev = revision(is_approved=True, save=True)
         eq_(rev, get_current_or_latest_revision(rev.document))
 
-    def test_single_rejected(self):
-        """No approved revisions available should return None."""
-        rev = revision(is_approved=False)
-        eq_(None, get_current_or_latest_revision(rev.document))
-
     def test_multiple_approved(self):
         """When multiple approved revisions exist, return the most recent."""
         r1 = revision(is_approved=True, save=True)
         r2 = revision(is_approved=True, save=True, document=r1.document)
         eq_(r2, get_current_or_latest_revision(r2.document))
 
-    def test_approved_over_most_recent(self):
-        """Should return most recently approved when there is a more recent
-        unreviewed revision."""
-        r1 = revision(is_approved=True, save=True,
-                      created=datetime.now() - timedelta(days=1))
-        r2 = revision(is_approved=False, reviewed=None, save=True,
-                      document=r1.document)
-        eq_(r1, get_current_or_latest_revision(r2.document))
-
     def test_latest(self):
-        """Return latest not-rejected revision when no current exists."""
-        r1 = revision(is_approved=False, reviewed=None, save=True,
-                      created=datetime.now() - timedelta(days=1))
-        r2 = revision(is_approved=False, reviewed=None, save=True,
-                      document=r1.document)
-        eq_(r2, get_current_or_latest_revision(r1.document))
-
-    def test_latest_rejected(self):
-        """Return latest rejected revision when no current exists."""
-        r1 = revision(is_approved=False, reviewed=None, save=True,
+        """Return latest revision when no current exists."""
+        r1 = revision(is_approved=False, save=True,
                       created=datetime.now() - timedelta(days=1))
         r2 = revision(is_approved=False, save=True, document=r1.document)
-        eq_(r2, get_current_or_latest_revision(r1.document,
-                                               reviewed_only=False))
-
-    def test_latest_unreviewed(self):
-        """Return latest unreviewed revision when no current exists."""
-        r1 = revision(is_approved=False, reviewed=None, save=True,
-                      created=datetime.now() - timedelta(days=1))
-        r2 = revision(is_approved=False, reviewed=None, save=True,
-                      document=r1.document)
-        eq_(r2, get_current_or_latest_revision(r1.document,
-                                               reviewed_only=False))
+        eq_(r2, get_current_or_latest_revision(r1.document))
 
 
 class DumpAndLoadJsonTests(TestCase):

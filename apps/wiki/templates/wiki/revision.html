@@ -35,32 +35,14 @@
             <span>{{ revision.creator }}</span>
             {{ ban_link(revision.creator, request.user) }}
           </li>
-          <li class="revision-is-reviewed">
-            <mark>{{ _('Is reviewed?') }}</mark>
-            <span>{{ revision.reviewed|yesno }}</span>
+          <li>
+            <mark>{{ _('Is current revision?') }}</mark>
+            <span>{{ (revision == document.current_revision)|yesno }}</span>
           </li>
-          {% if revision.reviewed %}
-            <li class="revision-reviewed">
-              <mark>{{ _('Reviewed:') }}</mark>
-              <span>{{ datetimeformat(revision.reviewed, format='datetime') }}</span>
-            </li>
-            <li>
-              <mark>{{ _('Reviewed by:') }}</mark>
-              <span>{{ revision.reviewer }}</span>
-            </li>
-            <li class="revision-is-current">
-              <mark>{{ _('Is approved?') }}</mark>
-              <span>{{ revision.is_approved|yesno }}</span>
-            </li>
-            <li>
-              <mark>{{ _('Is current revision?') }}</mark>
-              <span>{{ (revision == document.current_revision)|yesno }}</span>
-            </li>
-            <li>
-              <mark>{{ _('Comment') }}</mark>
-              <span>{{ comment }}</span>
-            </li>
-          {% endif %}
+          <li>
+            <mark>{{ _('Comment') }}</mark>
+            <span>{{ comment }}</span>
+          </li>
           {#
           {% if user.is_authenticated() %}
             <li><a href="{{ url('wiki.new_revision_based_on', document.slug, revision.id) }}">{{ _('Edit article based on this revision') }}</a></li>

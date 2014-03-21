@@ -277,7 +277,6 @@ class RevisionTests(TestCaseBase):
         d = _create_document()
         r = d.current_revision
         r.created = datetime(2011, 1, 1)
-        r.reviewed = datetime(2011, 1, 2)
         r.save()
         url = reverse('wiki.revision', args=[d.slug, r.id])
         response = self.client.get(url)
@@ -291,15 +290,6 @@ class RevisionTests(TestCaseBase):
         eq_('Created: Jan 1, 2011 12:00:00 AM',
             doc('#wiki-doc div.revision-info li.revision-created')
                 .text().strip())
-        eq_('Reviewed: Jan 2, 2011 12:00:00 AM',
-            doc('#wiki-doc div.revision-info li.revision-reviewed')
-                .text().strip())
-        # is reviewed?
-        eq_('Yes', doc('.revision-info li.revision-is-reviewed').find('span')
-                    .text())
-        # is current revision?
-        eq_('Yes', doc('.revision-info li.revision-is-current').find('span')
-                    .text())
 
 
 class NewDocumentTests(TestCaseBase):
@@ -1001,17 +991,6 @@ class TranslateTests(TestCaseBase):
         doc = pq(response.content)
         eq_(doc('#id_content')[0].value, base_rev.content)
 
-    def test_translate_rejected_parent(self):
-        """Translate view of rejected English document shows warning."""
-        raise SkipTest("TODO: FIXME for Kuma")
-        user = User.objects.get(pk=8)
-        revision(is_approved=False, save=True, reviewer=user,
-                               reviewed=datetime.now())
-        response = self.client.get(self._translate_uri())
-        doc = pq(response.content)
-        ok_('You are translating an unreviewed or rejected English document' in
-            doc.text())
-
 
 def _test_form_maintains_based_on_rev(client, doc, view, post_data,
                                       trans_lang=None, locale=None):
@@ -1231,10 +1210,8 @@ class RevisionDeleteTestCase(SkippedTestCase):
         the current_revision to previous version."""
         self.client.login(username='admin', password='testpass')
         prev_revision = self.d.current_revision
-        prev_revision.reviewed = datetime.now() - timedelta(days=1)
         prev_revision.save()
         self.r.is_approved = True
-        self.r.reviewed = datetime.now()
         self.r.save()
         d = Document.objects.get(pk=self.d.pk)
         eq_(self.r, d.current_revision)
