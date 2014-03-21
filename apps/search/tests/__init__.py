@@ -78,21 +78,17 @@ class ElasticTestCase(TestCase):
 
     def refresh(self, timesleep=0):
         index = get_index()
-
         # Any time we're doing a refresh, we're making sure that the
         # index is ready to be queried.  Given that, it's almost
         # always the case that we want to run all the generated tasks,
         # then refresh.
-        # TODO: uncomment this when we have live indexing.
-        # generate_tasks()
-
         get_indexing_es().refresh(index)
         if timesleep > 0:
             time.sleep(timesleep)
 
     def setup_indexes(self, empty=False, wait=True):
         """(Re-)create ES indexes."""
-        from search.index import es_reindex_cmd
+        from search.commands import es_reindex_cmd
 
         if empty:
             # Removes the index and creates a new one with nothing in

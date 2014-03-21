@@ -1,5 +1,6 @@
 from rest_framework.renderers import TemplateHTMLRenderer
 
+from .models import Index
 from .store import ref_from_request
 
 
@@ -11,5 +12,6 @@ class ExtendedTemplateHTMLRenderer(TemplateHTMLRenderer):
         Adds some more data to the template context.
         """
         data['search_ref'] = ref_from_request(request)
+        data['index'] = Index.objects.get_current()
         return super(ExtendedTemplateHTMLRenderer,
                      self).resolve_context(data, request, response)

@@ -32,7 +32,7 @@ from south.modelsinspector import add_introspection_rules
 import constance.config
 
 from tidings.models import NotificationsMixin
-from search.tasks import register_live_index
+from search.decorators import register_live_index
 from sumo import ProgrammingError
 from sumo_locales import LOCALES
 from sumo.models import LocaleField
