@@ -53,30 +53,36 @@ urlpatterns = patterns('wiki.views',
     url(r'^/ckeditor_config.js$', 'ckeditor_config',
         name='wiki.ckeditor_config'),
 
+    # internals
     url(r'^.json$', 'json_view', name='wiki.json'),
-
-    url(r'^/templates$', 'list_templates', name='wiki.list_templates'),
-    url(r'^/files$', 'list_files', name='wiki.list_files'),
-    url(r'^/tags$', 'list_tags', name='wiki.list_tags'),
-    url(r'^/new$', 'new_document', name='wiki.new_document'),
-    url(r'^/all$', 'list_documents', name='wiki.all_documents'),
     url(r'^/preview-wiki-content$', 'preview_revision', name='wiki.preview'),
-    url(r'^/with-errors$', 'list_documents_with_errors', name='wiki.errors'),
-
     url(r'^/move-requested$',
         TemplateView.as_view(template_name='wiki/move_requested.html'),
         name='wiki.move_requested'),
-
     url(r'^/get-documents$', 'autosuggest_documents', name='wiki.autosuggest_documents'),
-    url(r'^/external-signup$', 'external_signup', name='wiki.external_signup'),
+    url(r'^/load/$', 'load_documents', name='wiki.load_documents'),
 
-    url(r'^/category/(?P<category>\d+)$', 'list_documents',
-        name='wiki.category'),
+    # Special pages
+    url(r'^/templates$', 'list_templates', name='wiki.list_templates'),
+    url(r'^/files$', 'list_files', name='wiki.list_files'),
+    url(r'^/tags$', 'list_tags', name='wiki.list_tags'),
+    url(r'^/tag/(?P<tag>.+)$', 'list_documents', name='wiki.tag'),
+    url(r'^/new$', 'new_document', name='wiki.new_document'),
+    url(r'^/all$', 'list_documents', name='wiki.all_documents'),
+    url(r'^/with-errors$', 'list_documents_with_errors', name='wiki.errors'),
+    url(r'^/without-parent$', 'list_documents_without_parent', 
+        name='wiki.without_parent'),
+    url(r'^/top-level$', 'list_top_level_documents',
+        name='wiki.top_level'),
     url(r'^/needs-review/(?P<tag>[^/]+)$', 'list_documents_for_review',
         name='wiki.list_review_tag'),
     url(r'^/needs-review/?', 'list_documents_for_review',
         name='wiki.list_review'),
+    url(r'^/external-signup$', 'external_signup', name='wiki.external_signup'),
+    url(r'^/category/(?P<category>\d+)$', 'list_documents',
+    name='wiki.category'),
 
+    # Feeds
     url(r'^/feeds/(?P<format>[^/]+)/all/?',
         DocumentsRecentFeed(), name="wiki.feeds.recent_documents"),
     url(r'^/feeds/(?P<format>[^/]+)/l10n-updates/?',
@@ -93,10 +99,6 @@ urlpatterns = patterns('wiki.views',
         RevisionsFeed(), name="wiki.feeds.recent_revisions"),
     url(r'^/feeds/(?P<format>[^/]+)/files/?',
         AttachmentsFeed(), name="wiki.feeds.recent_files"),
-
-    url(r'^/tag/(?P<tag>.+)$', 'list_documents', name='wiki.tag'),
-
-    url(r'^/load/$', 'load_documents', name='wiki.load_documents'),
 
     (r'^/(?P<document_path>[^\$]+)', include(document_patterns)),
 )
