@@ -11,12 +11,7 @@
 {% set is_zone_root = is_zone and zone_stack[0].document == document %}
 
 {% block bodyclass %}document {% if is_zone %}zone{% endif %} {% if is_zone_root %}zone-landing{% endif %}{% endblock %}
-
-{% if fallback_reason == 'no_translation' %}
-  {% set help_link = url('wiki.translate', document_path=document.full_path, locale=document.locale)|urlparams(tolocale=request.locale) %}
-{% elif fallback_reason == 'translation_not_approved' %}
-  {% set help_link = url('wiki.translate', document_path=document.parent.full_path, locale=document.parent.locale)|urlparams(tolocale=request.locale) %}
-{% endif %}
+{% block body_attributes %}data-slug="{{ document.slug }}" contextmenu="edit-history-menu"{% endblock body_attributes %}
 
 {% block site_css %}
     {{ super() }}
@@ -76,10 +71,7 @@
     <menuitem data-action="$edit" label="{{_("Edit page")}}"></menuitem>
     <menuitem data-action="$history" label="{{_("View page history")}}"></menuitem>
   </menu>
-
 {% endblock %}
-
-{% block body_attributes %}data-slug="{{ document.slug }}" contextmenu="edit-history-menu"{% endblock body_attributes %}
 
 {% block js %}
   {% if waffle.flag('search_doc_navigator') %}
