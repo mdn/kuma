@@ -488,6 +488,7 @@ def _get_seo_parent_title(slug_dict, document_locale):
 
 @newrelic.agent.function_trace()
 @allow_CORS_GET
+@prevent_indexing
 def _document_deleted(request, deletion_logs):
     """
     When a Document has been deleted, display a notice.
