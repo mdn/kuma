@@ -557,3 +557,12 @@ class LoggingTests(test_utils.TestCase):
             eq_(1, len(mail.outbox))
         except:
             pass
+
+class ErrorViewTests(test_utils.TestCase):
+    urls = 'devmo.tests.error_urls'
+
+    def test_error_handlers(self):
+        for status_code in (403, 404, 500):
+            resp = self.client.get('/en-US/error_%s/' % status_code)
+            eq_(status_code, resp.status_code)
+            eq_(0, len(resp.context.keys()))

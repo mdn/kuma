@@ -9,7 +9,6 @@ from django.views.decorators.cache import cache_page
 import jingo
 import badger
 
-
 admin.autodiscover()
 badger.autodiscover()
 
@@ -76,13 +75,11 @@ urlpatterns = patterns('',
 if settings.DEBUG:
     urlpatterns += staticfiles_urlpatterns()
 
-# Handle 404 and 500 errors
-def _error_page(request, status):
-    """Render error pages with jinja2."""
-    return render(request, '%d.html' % status, status=status)
-handler403 = lambda r: _error_page(r, 403)
-handler404 = lambda r: _error_page(r, 404)
-handler500 = lambda r: _error_page(r, 500)
+# Handle errors through jinja
+from devmo.views import error_page
+handler403 = lambda r: error_page(r, 403)
+handler404 = lambda r: error_page(r, 404)
+handler500 = lambda r: error_page(r, 500)
 
 if settings.SERVE_MEDIA:
     media_url = settings.MEDIA_URL.lstrip('/').rstrip('/')
