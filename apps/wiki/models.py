@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from urlparse import urlparse
 import hashlib
 import re
@@ -2406,3 +2406,39 @@ class AttachmentRevision(models.Model):
         ).order_by('-created')
         if len(previous_revisions):
             return previous_revisions[0]
+
+
+LAST_7_DAYS = 1
+LAST_30_DAYS = 2
+LAST_90_DAYS = 3
+ALL_TIME = 4
+PERIODS = [(LAST_7_DAYS, _lazy(u'Last 7 days')),
+           (LAST_30_DAYS, _lazy(u'Last 30 days')),
+           (LAST_90_DAYS, _lazy(u'Last 90 days')),
+           (ALL_TIME, _lazy(u'All Time'))]
+
+
+def period_dates(period):
+    """Return when each period begins and ends."""
+    end = date.today() - timedelta(days=1)
+
+    if period == LAST_7_DAYS:
+        start = end - timedelta(days=7)
+    elif period == LAST_30_DAYS:
+        start = end - timedelta(days=30)
+    elif period == LAST_90_DAYS:
+        start = end - timedelta(days=90)
+    elif ALL_TIME:
+        start = settings.GA_START_DATE
+
+    return start, end
+
+
+class WikiDocumentVisits(models.Model):
+    """Visit counts for wiki documents."""
+    document = models.ForeignKey(Document, related_name='visits')
+    period = models.IntegerField(choices=PERIODS)
+    visits = models.IntegerField(db_index=True)
+
+    class Meta(object):
+        unique_together = ('document', 'period')
