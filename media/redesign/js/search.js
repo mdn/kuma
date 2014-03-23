@@ -9,6 +9,14 @@
     }
   };
 
+  var ga = function () {
+    if (window._gaq && typeof window._gaq.push === 'function') {
+      return window._gaq;
+    } else {
+      return [];
+    }
+  };
+
   var parentSelector = '.search-pane';
   $(parentSelector + ' .close').on('click', function(e) {
     e.preventDefault();
@@ -21,17 +29,16 @@
   var fromSearchNav = $('.from-search-navigate');
   if(fromSearchNav.length) {
     var fromSearchList = $('.from-search-toc');
-    var ga = window._gaq || [];
     fromSearchNav.mozMenu({
       submenu: fromSearchList,
       brickOnClick: true,
       onOpen: function(){
-        ga.push(['_trackEvent',
+        ga().push(['_trackEvent',
                  'Search doc navigator',
                  'Open on hover']);
       },
       onClose: function(){
-        ga.push(['_trackEvent',
+        ga().push(['_trackEvent',
                  'Search doc navigator',
                  'Close on blur']);
       }
@@ -123,7 +130,7 @@
     }
   };
 
-  $.fn.mozSearchResults = function(key, ga) {
+  $.fn.mozSearchResults = function(key) {
     var next_doc,
         prev_doc,
         payload = searchStore.get(prefix + key);
@@ -140,7 +147,7 @@
       if (window.location.search.indexOf("search=") !== -1) {
         history.replaceState(state, window.document.title, clean_window_location);
         // record the removal of a stale ?search= parameter URL
-        ga.push(['_trackEvent',
+        ga().push(['_trackEvent',
                  'Search doc navigator',
                  'Remove stale parameters on load',
                  '',
@@ -155,7 +162,7 @@
           href: doc.url + ref,
           on: {
             click: function() {
-              ga.push(['_trackEvent',
+              ga().push(['_trackEvent',
                        'Search doc navigator',
                        'Click',
                        remove_qs($(this).attr('href')),
@@ -179,7 +186,7 @@
             $('.from-search-next').each(function() {
               $(this).attr('href', next_doc.url + ref)
                      .click(function() {
-                        ga.push(['_trackEvent',
+                        ga().push(['_trackEvent',
                                  'Search doc navigator',
                                  'Click next',
                                  next_doc.url,
@@ -195,7 +202,7 @@
             $('.from-search-previous').each(function() {
               $(this).attr('href', prev_doc.url + ref)
                      .click(function() {
-                        ga.push(['_trackEvent',
+                        ga().push(['_trackEvent',
                                  'Search doc navigator',
                                  'Click previous',
                                  prev_doc.url,
