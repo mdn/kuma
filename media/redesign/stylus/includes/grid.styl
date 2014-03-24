@@ -16,123 +16,150 @@
 @import 'vars'
 @import 'mixins'
 
-/* centers pieces of the page, mostly the header, footer, and main elements */
-.center {
-  margin: 0 auto;
-  position: relative;
-  max-width: max-width-default;
-  add-center-spacing();
-}
-@media media-query-mobile {
-  .center {
-    add-center-spacing(15px);
-  }
-}
-
-/* column helpers for the grids to be generated */
-.column-closed {
-  display: none;
-}
-
-/* this is a "helper" which automatically formats its column children, clears the floats afterward, removes margin from last item */
-.column-container {
-  clearfix();
-
-  {grid-column-selector} {
-    margin-right: grid-margin;
-    bidi-value(float, left, right);
-    min-height: 1px;
-
-    &:last-child {
-      bidi-value(margin-right, 0, grid-margin);
-    }
-  }
-
-  &.column-container-reverse {
-    bidi-style(margin-left, -1%, margin-right, 0);
-
-    {grid-column-selector} {
-      bidi-value(float, right, left);
-
-      &:first-child {
-        bidi-value(margin-right, 0, grid-margin);
-      }
-
-      &:last-child {
-        bidi-value(margin-right, grid-margin, 0);
-      }
-    }
-  }
-}
-
-/* adjustments to reverse the column containers in RTL */
-.html-rtl .column-container {
-  {grid-column-selector} {
-    &:first-child {
-      margin-right: 0;
-    }
-  }
-}
 
 /*  column width definitions */
-.column-1 {
+$column-1 {
   width: 5.5%;
 }
-.column-2 {
+$column-2 {
   width: 14%;
 }
-.column-3, .column-strip, .column-quarter {
+$column-3, $column-strip, $column-quarter {
   width: 22.5%;
 }
-.column-4, .column-third {
+$column-4, $column-third {
   width: 31%;
 }
-.column-5 {
+$column-5 {
   width: 39.5%;
 }
-.column-6, .column-half {
+$column-6, $column-half {
   width: 48%;
 }
-.column-7 {
+$column-7 {
   width: 56.5%;
 }
-.column-8 {
+$column-8 {
   width: 65%;
 }
-.column-9, .column-main {
+$column-9, $column-main {
   width: grid-width-column-main;
 }
-.column-10 {
+$column-10 {
   width: 82%;
 }
-.column-11 {
+$column-11 {
   width: 90.5%;
 }
-.column-12, .column-all {
+$column-12, $column-all {
   width: auto;
   margin: 0;
   float: none;
 }
 
-/*  tablet grid width */
-@media media-query-tablet {
-  .column-container {
-    &.column-container-reverse {
-      margin-left: 0;
-    }
-  }
-}
+/* Outputs relevant grid styles once */
+draw-grid() {
+    /* this is a "helper" which automatically formats its column children, clears the floats afterward, removes margin from last item */
+    .column-container {
+      clearfix();
 
-/*
-  mobile (phone) - just make everything its own column
-  preemtpively using !important so we don't run into css precedence issues -- we absolutely always want one-column view
-*/
-@media media-query-mobile {
-  .column-1, .column-2, .column-3, .column-4, .column-5, .column-6, .column-7, .column-8, .column-9, .column-10, .column-11, .column-12,
-  .column-strip, .column-quarter, .column-third, .column-half, .column-9, .column-all, .column-container {grid-column-selector} {
-    width: auto !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    float: none !important;
-  }
+      {grid-column-selector} {
+        margin-right: grid-margin;
+        bidi-value(float, left, right);
+        min-height: 1px;
+
+        &:last-child {
+          bidi-value(margin-right, 0, grid-margin);
+        }
+      }
+
+      &.column-container-reverse {
+        bidi-style(margin-left, -1%, margin-right, 0);
+
+        {grid-column-selector} {
+          bidi-value(float, right, left);
+
+          &:first-child {
+            bidi-value(margin-right, 0, grid-margin);
+          }
+
+          &:last-child {
+            bidi-value(margin-right, grid-margin, 0);
+          }
+        }
+      }
+    }
+
+    /* adjustments to reverse the column containers in RTL */
+    .html-rtl .column-container {
+      {grid-column-selector} {
+        &:first-child {
+          margin-right: 0;
+        }
+      }
+    }
+
+    .column-closed {
+      display: none;
+    }
+
+    .column-1 {
+        @extend $column-1;
+    }
+    .column-2 {
+        @extend $column-2;
+    }
+    .column-3, .column-strip, .column-quarter {
+        @extend $column-3;
+    }
+    .column-4, .column-third {
+        @extend $column-4;
+    }
+    .column-5 {
+        @extend $column-5;
+    }
+    .column-6, .column-half {
+        @extend $column-6;
+    }
+    .column-7 {
+        @extend $column-7;
+    }
+    .column-8 {
+        @extend $column-8;
+    }
+    .column-9, .column-main {
+        @extend $column-9;
+    }
+    .column-10 {
+        @extend $column-10;
+    }
+    .column-11 {
+        @extend $column-11;
+    }
+    .column-12, .column-all {
+        @extend $column-12;
+    }
+
+    /*  tablet grid width */
+    @media media-query-tablet {
+      .column-container {
+        &.column-container-reverse {
+          margin-left: 0;
+        }
+      }
+    }
+
+    /*
+      mobile (phone) - just make everything its own column
+      preemtpively using !important so we don't run into css precedence issues -- we absolutely always want one-column view
+    */
+    @media media-query-mobile {
+      .column-1, .column-2, .column-3, .column-4, .column-5, .column-6, .column-7, .column-8, .column-9, .column-10, .column-11, .column-12,
+      .column-strip, .column-quarter, .column-third, .column-half, .column-9, .column-all, .column-container {grid-column-selector} {
+        width: auto !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        float: none !important;
+      }
+    }
 }
