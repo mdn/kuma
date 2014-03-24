@@ -872,11 +872,10 @@ def list_documents(request, category=None, tag=None):
                                              tag=tag_obj)
     paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     return render(request, 'wiki/list_documents.html',
-                        {'documents': paginated_docs,
-                         'count': docs.count(),
-                         'category': category,
-                         'tag': tag})
-
+                  {'documents': paginated_docs,
+                   'count': docs.count(),
+                   'category': category,
+                   'tag': tag})
 
 @require_GET
 def list_templates(request):
@@ -884,19 +883,16 @@ def list_templates(request):
     docs = Document.objects.filter(is_template=True).order_by('title')
     paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     return render(request, 'wiki/list_documents.html',
-                        {'documents': paginated_docs,
-                         'count': docs.count(),
-                         'is_templates': True})
-
+                  {'documents': paginated_docs,
+                   'count': docs.count(),
+                   'is_templates': True})
 
 @require_GET
 def list_tags(request):
     """Returns listing of all tags"""
     tags = DocumentTag.objects.order_by('name')
     tags = paginate(request, tags, per_page=DOCUMENTS_PER_PAGE)
-    return render(request, 'wiki/list_tags.html',
-                        {'tags': tags})
-
+    return render(request, 'wiki/list_tags.html', {'tags': tags})
 
 @require_GET
 def list_files(request):
@@ -904,9 +900,7 @@ def list_files(request):
     files = paginate(request,
                      Attachment.objects.order_by('title'),
                      per_page=DOCUMENTS_PER_PAGE)
-    return render(request, 'wiki/list_files.html',
-                        {'files': files})
-
+    return render(request, 'wiki/list_files.html', {'files': files})
 
 @require_GET
 def list_documents_for_review(request, tag=None):
@@ -915,10 +909,10 @@ def list_documents_for_review(request, tag=None):
     docs = Document.objects.filter_for_review(locale=request.locale, tag=tag_obj)
     paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     return render(request, 'wiki/list_documents_for_review.html',
-                        {'documents': paginated_docs,
-                         'count': docs.count(),
-                         'tag': tag_obj,
-                         'tag_name': tag})
+                  {'documents': paginated_docs,
+                   'count': docs.count(),
+                   'tag': tag_obj,
+                   'tag_name': tag})
 
 @require_GET
 def list_documents_with_errors(request):
@@ -926,9 +920,31 @@ def list_documents_with_errors(request):
     docs = Document.objects.filter_for_list(locale=request.locale, errors=True)
     paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     return render(request, 'wiki/list_documents.html',
-                         {'documents': paginated_docs,
-                          'count': docs.count(),
-                          'errors': True})
+                  {'documents': paginated_docs,
+                   'count': docs.count(),
+                   'errors': True})
+
+@require_GET
+def list_documents_without_parent(request):
+    """Lists wiki documents without parent (no English source document)"""
+    docs = Document.objects.filter_for_list(locale=request.locale,
+                                            noparent=True)
+    paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
+    return render(request, 'wiki/list_documents.html',
+                  {'documents': paginated_docs,
+                   'count': docs.count(),
+                   'noparent': True})
+
+@require_GET
+def list_top_level_documents(request):
+    """Lists documents directly under /docs/"""
+    docs = Document.objects.filter_for_list(locale=request.locale,
+                                            toplevel=True)
+    paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
+    return render(request, 'wiki/list_documents.html',
+                  {'documents': paginated_docs,
+                   'count': docs.count(),
+                   'toplevel': True})
 
 
 @login_required

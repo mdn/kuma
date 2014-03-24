@@ -435,7 +435,8 @@ class BaseDocumentManager(models.Manager):
         return True
 
     def filter_for_list(self, locale=None, category=None, tag=None,
-                        tag_name=None, errors=None):
+                        tag_name=None, errors=None, noparent=None,
+                        toplevel=None):
         docs = (self.filter(is_template=False, is_redirect=False)
                     .exclude(slug__startswith='User:')
                     .exclude(slug__startswith='Talk:')
@@ -457,6 +458,12 @@ class BaseDocumentManager(models.Manager):
         if errors:
             docs = (docs.exclude(rendered_errors__isnull=True)
                         .exclude(rendered_errors__exact='[]'))
+        if noparent:
+            # List translated pages without English source associated
+            docs = docs.filter(parent__isnull=True)
+        if toplevel:
+            docs = docs.filter(parent_topic__isnull=True)
+
         # Leave out the html, since that leads to huge cache objects and we
         # never use the content in lists.
         docs = docs.defer('html')

@@ -9,6 +9,10 @@
   {% set counter = _('Found {0} templates.')|f(count) %}
 {% elif errors %}
   {% set title = _('Documents with errors') %}
+{% elif toplevel %}
+  {% set title = _('Top level documents') %}
+{% elif noparent %}
+  {% set title = _('Documents with no parent') %}
 {% else %}
   {% set title = _('All documents') %}
 {% endif %}
