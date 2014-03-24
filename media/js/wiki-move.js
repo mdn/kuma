@@ -6,7 +6,7 @@
      var $suggestionInput = $('#parent-suggestion');
      var $suggestionContainer= $('.parent-suggest-container');
      var $lookupLink = $('.move-lookup-link');
-     $previewUrl = $('#preview-url'),
+     var $previewUrl = $('#preview-url');
      var specific_slug = $('#current-slug').val();
      var moveLocale = $('#locale').val();
      var onHide = function() {
@@ -15,6 +15,7 @@
          $suggestionInput.mozillaAutocomplete('clear');
          $suggestionInput.attr('disabled', 'disabled');
      };
+     var moveRegex = new RegExp($moveSlug.attr('data-validator'), 'i');
 
      // Hook up the autocompleter before creating the link connection
      $suggestionInput.mozillaAutocomplete({
@@ -60,7 +61,6 @@
      });
 
      // Help on the client side for validating slugs to be moved
-     var moveRegex = new RegExp($moveSlug.attr('data-validator'), 'i');
      $moveSlug.on('change keyup focus blur', function() {
         this.value = $.slugifyString(this.value.replace(moveRegex, ''), true);
      });

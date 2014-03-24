@@ -7,5 +7,5 @@
     lazyLoad: true
   });
   $list.css('height', 'auto');
-  
+
 })(jQuery);
