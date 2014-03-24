@@ -125,6 +125,8 @@ django-recaptcha==0.0.9
 -e git://github.com/jsocol/pystatsd.git@3e78169def352792ace04317096208fb782fc348#egg=pystatsd
 # 2013-02-21
 -e git://github.com/simplejson/simplejson.git@062aa98fe19c9536b6ede4c0b84f5f3e6711b768#egg=simplejson
+# 2014-03-24
+-e git://github.com/jarekps/django-gabeacon.git@aee844814b4d07381216a9eea4070a9ccf162dd4#egg=django-gabeacon
 
 ## Obsoleted / no longer needed
 
