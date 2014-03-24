@@ -68,7 +68,7 @@ Getting up and running
 
        vagrant ssh
 
-#. Then you need to run ``foreman`` inside de VM in order to be able to work and access the site::
+#. Then you need to run ``foreman`` inside the VM in order to be able to work and access the site::
 
        foreman start
 
