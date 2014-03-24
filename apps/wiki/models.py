@@ -4,6 +4,7 @@ import hashlib
 import re
 import json
 import newrelic.agent
+import operator
 
 from pyquery import PyQuery
 from tower import ugettext_lazy as _lazy, ugettext as _
@@ -1876,6 +1877,23 @@ class Document(NotificationsMixin, models.Model):
     def get_mapping_type(self):
         from search.models import DocumentType
         return DocumentType
+
+    def get_top_contributors(self):
+        contributor_counts = {}
+        for cid in self.revisions.values_list('creator', flat=True):
+            contributor_counts.setdefault(cid, 0)
+            contributor_counts[cid] += 1
+        top_creator_ids = sorted(contributor_counts.iteritems(),
+                      key=operator.itemgetter(1),
+                      reverse=True)[:3]
+        top_users = User.objects.filter(pk__in=[tc[0] for tc in top_creator_ids])
+        top_contributors = {}
+        for user in top_users:
+            top_contributors[user.username] = {
+                'user': user,
+                'revisions': contributor_counts[user.id]
+            }
+        return top_contributors
 
 
 class DocumentDeletionLog(models.Model):
