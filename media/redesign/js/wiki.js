@@ -240,7 +240,7 @@
     // Currently used within CKEDitor YouTube plugin
     parseQuerystring: function(str){
       var nvpair = {};
-      var qs = (str || window.location.search).replace('?', '');
+      var qs = (str || location.search).replace('?', '');
       var pairs = qs.split('&');
 
       $.each(pairs, function(i, v){

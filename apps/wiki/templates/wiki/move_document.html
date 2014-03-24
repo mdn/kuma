@@ -99,5 +99,5 @@
 
 {% block js %}
   {{ js('jquery-ui') }}
-  <script src="{{ MEDIA_URL }}js/wiki-move.js?build={{ BUILD_ID_JS }}"></script>
+  {{ js('wiki-move', async=True) }}
 {% endblock %}
