@@ -469,6 +469,7 @@
 .section-demos .submission .section { padding: 3.75em 0 0; border-top: 5px double rgba(100,120,130,.25); }
 .section-demos .submission .section > legend b { margin-top: 18px; margin-left: 20px; font: 200 1.714em/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
 .section-demos .submission .section.notitle { padding-top: 18px; }
+#demo-submit textarea { width: 610px; }
 
 /* @Sidebar @modules *********/
 .section-demos .module { padding: 18px; background: #c0c4c8; background: rgba(255,255,255,.6); border: 0; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; -moz-box-shadow: 1px 1px 4px rgba(0,0,0,.4); -webkit-box-shadow: 1px 1px 4px rgba(0,0,0,.4); box-shadow: 1px 1px 4px rgba(0,0,0,.4); }
@@ -533,5 +534,38 @@ body.popup #content-main { width: 100%; padding: 0; }
 body.popup .page-title { font: 200 1.714em/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; }
 
 #flag-confirm textarea { display: block; width: 96%; height: 8em; }
+#flag-confirm .submit { margin: 1em 0 0; }
+#flag-confirm .submit button { font-size: 1.142em; }
+
+.module { background: #fff; border-bottom: 3px solid #cecabc; padding: 18px; margin: 0 0 22px; }
+.module .mod-title { margin: -18px -18px 18px; padding: 15px 18px 12px; background: #2f2f2f url("../img/bg-headings.png") 0 0 no-repeat; color: #fff; font: 200 1.285em/1.2 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
+.module .mod-title a { color: #a8d4ff; }
+.module ul, .module ol { margin: 0; overflow: hidden; }
+.module .prose { font-size: .857em; }
+
+.module .gallery { list-style: none; margin: 0 -18px 0 0; }
+.module .gallery li { display: inline-block; margin: 0 5px 5px 0; }
+.module .gallery a img { background: #fff; -moz-box-shadow: 1px 1px 0 #d5d5d5; -webkit-box-shadow: 1px 1px 0 #d5d5d5; box-shadow: 1px 1px 0 #d5d5d5; }
+.module .gallery a:hover img, .module .gallery a:focus img, .module .gallery a:active img { -moz-box-shadow: 1px 1px 0 #25a; -webkit-box-shadow: 1px 1px 0 #25a; box-shadow: 1px 1px 0 #25a; }
+
+.module .hentry { font-size: .786em; border-bottom: 1px dotted #d8d4ca; padding-bottom: 1em; margin-bottom: 1em; }
+.module .hentry:last-child { border: 0; padding: 0; margin: 0; }
+.module .hentry h5, .module .hentry h4, .module .hentry p { margin: 0 0 .2em; }
+.module .hentry a { font-weight: bold; }
+.module .hentry .entry-meta { font-size: .857em; font-weight: bold; }
+
+/* for module-style boxes in the main content */
+.modules { clear: both; overflow: hidden; }
+.modules .module { width: 275px; float: left; margin-right: 20px; }
+
+#before-begin .mod-title { background-position: 100% -300px; }
+#prepare-demo .mod-title { background-position: 100% -200px; }
+
+#content .module.notes ul { font-size: .785em; }
+#content .module.notes li { margin: 0 0 10px; padding: 0 0 10px; background: none; border-bottom: 1px dotted #b9b6a7; }
+#content .module.notes li:last-child { padding: 0; border: 0; margin: 0; }
+
+#flag-confirm label { display: block; }
+#flag-confirm textarea { display: block; width: 500px; height: 8em; }
 #flag-confirm .submit { margin: 1em 0 0; }
 #flag-confirm .submit button { font-size: 1.142em; }

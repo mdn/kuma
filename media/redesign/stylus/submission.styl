@@ -1,0 +1,95 @@
+@import 'includes/vars'
+@import 'includes/mixins'
+
+.submission {
+    .section {
+        font-size: small-bump-font-size;
+        margin: 0 0 grid-spacing;
+        padding: 35px 0 0;
+        position: relative;
+
+        & > legend {
+            b {
+                display: block;
+                font-size: base-bump-font-size;
+                position: absolute;
+            }
+        }
+
+        &.notitle {
+            padding-top: 0;
+        }
+    }
+
+    li {
+        margin: 0 0 (grid-spacing / 2);
+    }
+
+    input[readonly] {
+        background: transparent;
+        border: 0;
+    }
+
+    label {
+        input {
+            padding: 0;
+            width: auto;
+        }
+    }
+
+    .note {
+        color: #666;
+        font-family: inherit;
+        font-size: smaller-font-size;
+        font-style: normal;
+        font-weight: normal;
+    }
+
+    p.note {
+        margin: (grid-spacing / 4) 0;
+    }
+
+    .inline {
+        legend {
+            b {
+                display: block;
+                margin: 0 0 7px;
+            }
+        }
+        li {
+            margin: 0 0 (grid-spacing / 4);
+        }
+        label {
+            display: inline;
+            font-weight: normal;
+        }
+    }
+
+    .disabled {
+        color: #999;
+        color: rgba(0,0,0,.4);
+    }
+
+    .other-value {
+        margin-top: (grid-spacing / 4);
+        label {
+            display: block;
+        }
+    }
+
+    input[type="url"], input[type="email"], input[type="text"] {
+        width: 450px;
+    }
+
+    label, .label {
+        display: block;
+        font-weight: bold;
+        margin: 0 0 (grid-spacing / 4);
+    }
+
+    .check {
+        label, .label {
+            display: inline;
+        }
+    }
+}

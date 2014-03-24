@@ -3,6 +3,10 @@
 {% block title %}{{ page_title(_('Forum Archive')) }}{% endblock %}
 
 {% block bodyclass %}section-community landing{% endblock %}
+{% block site_css %}
+    {{ super() }}
+    {{ css('forum-archive') }}
+{% endblock %}
 
 {% block content %}
 <section id="content">

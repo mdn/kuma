@@ -1,6 +1,11 @@
 {% extends "demos/base.html" %}
 {% set obj = submission %}
 
+{% block site_css %}
+    {{ super() }}
+    {{ css('submission',) }}
+{% endblock %}
+
 {% block body_attributes %}id="submit"{% endblock %}
 {% block bodyclass %}{% endblock %}
 {% block title %}

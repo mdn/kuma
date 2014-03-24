@@ -4,11 +4,16 @@
 {% set classes = 'profile' %}
 {% block title %}{{ page_title(title) }}{% endblock %}
 
+{% block site_css %}
+    {{ super() }}
+    {{ css('user-banned') }}
+{% endblock %}
+
 {% block content %}
 <article id="profile-banned">
   <h1>{{ title }}</h1>
   <p>
-  	{{ _('You have been banned for the following reason:') }}
+  	{{ _('You have been banned for the following reasons:') }}
   </p>
   <ul>
   {% if bans | length %}

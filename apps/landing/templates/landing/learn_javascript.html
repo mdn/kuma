@@ -23,112 +23,116 @@
 <div class="wrap">
 
   <section id="content-main" class="full" role="main">
-    <div id="intro-level" class="learn-module boxed">
-      <h2>{{ _('Introductory Level') }}</h2>
-      <ul class="link-list">
-        <li>
-          <h3 class="title"><a href="http://www.codecademy.com/">{{ _('Codecademy') }}</a></h3>
-          <h4 class="source">Codecademy</h4>
-          <p>{{ _('Codecademy is the easiest way to learn how to code JavaScript. It\'s interactive, fun, and you can do it with your friends.') }}</p>
-        </li>
-        <li>
-          <h3 class="title"><a href="{{ devmo_url('JavaScript/Getting_Started') }}">{{ _('Getting Started with JavaScript') }}</a></h3>
-          <h4 class="source">MDN</h4>
-          <p>{{ _('What is JavaScript and how can it help you?') }}</p>
-        </li>
-        <li>
-          <h3 class="title"><a href="http://dev.opera.com/articles/view/programming-the-real-basics/" rel="external">{{ _('Programming &ndash; The Real Basics')|safe }}</a></h3>
-          <h4 class="source">Dev.Opera Web</h4>
-          <p>{{ _('Basic fundamentals of programming. Following articles introduce what you can do with JavaScript, best practices for using it, and more.') }}</p>
-        </li>
-        <li>
-          <h3 class="title"><a href="http://code.google.com/edu/submissions/html-css-javascript/#javascript" rel="external">{{ _('JavaScript From the Ground Up') }}</a></h3>
-          <h4 class="source">Google Code University</h4>
-          <p>{{ _('Video tutorial on making pages interactive with JavaScript') }}</p>
-        </li>
-        <li>
-          <h3 class="title"><a href="http://dev.opera.com/articles/view/javascript-best-practices/" rel="external">{{ _('JavaScript Best Practices') }}</a></h3>
-          <h4 class="source">Dev.Opera</h4>
-          <p>{{ _('Learn about some of the obvious and (not so) obvious best practices when writing JavaScript.') }}</p>
-        </li>
-      </ul>
-    </div>
-    
-    <div id="inter-level" class="learn-module boxed">
-      <h2>{{ _('Intermediate Level') }}</h2>
-      <ul class="link-list">
-        <li>
-          <h3 class="title"><a href="{{ devmo_url('A_re-introduction_to_JavaScript') }}">{{ _('A Re-introduction to JavaScript') }}</a></h3>
-          <h4 class="source">MDN</h4>
-          <p>{{ _('A recap of the JavaScript programming language aimed at intermediate-level developers.') }}</p>
-        </li>
-        <li>
-          <h3 class="title"><a href="http://eloquentjavascript.net/contents.html" rel="external">{{ _('Eloquent JavaScript') }}</a></h3>
-          <p>{{ _('A comprehensive guide to intermediate and advanced JavaScript methodologies.') }}</p>
-        </li>
-        <li>
-          <h3 class="title"><a href="http://www.addyosmani.com/resources/essentialjsdesignpatterns/book/" rel="external">{{ _('Essential JavaScript Design Patterns') }}</a></h3>
-          <h4 class="source">Addy Osmani</h4>
-          <p>{{ _('An introduction to essential JavaScript design patterns.') }}</p>
-        </li>
-        <li>
-          <h3 class="title"><a href="http://www.yuiblog.com/blog/2007/01/24/video-crockford-tjpl/" rel="external">{{ _('The JavaScript Programming Language') }}</a></h3>
-          <h4 class="source">YUI Blog</h4>
-          <p>{{ _('Douglas Crockford explores the language as it is today, and how it came to be.') }}</p>
-        </li>
-        <li>
-          <h3 class="title"><a href="{{ devmo_url('Introduction_to_Object-Oriented_JavaScript') }}">{{ _('Introduction to Object-oriented JavaScript') }}</a></h3>
-          <h4 class="source">MDN</h4>
-          <p>{{ _('Learn about the JavaScript object model.') }}</p>
-        </li>
-      </ul>
+    <div class="column-container">
+      <div id="intro-level" class="column-half learn-module">
+        <h2>{{ _('Introductory Level') }}</h2>
+        <ul class="link-list">
+          <li>
+            <h3 class="title"><a href="http://www.codecademy.com/">{{ _('Codecademy') }}</a></h3>
+            <h4 class="source">Codecademy</h4>
+            <p>{{ _('Codecademy is the easiest way to learn how to code JavaScript. It\'s interactive, fun, and you can do it with your friends.') }}</p>
+          </li>
+          <li>
+            <h3 class="title"><a href="{{ devmo_url('JavaScript/Getting_Started') }}">{{ _('Getting Started with JavaScript') }}</a></h3>
+            <h4 class="source">MDN</h4>
+            <p>{{ _('What is JavaScript and how can it help you?') }}</p>
+          </li>
+          <li>
+            <h3 class="title"><a href="http://dev.opera.com/articles/view/programming-the-real-basics/" rel="external">{{ _('Programming &ndash; The Real Basics')|safe }}</a></h3>
+            <h4 class="source">Dev.Opera Web</h4>
+            <p>{{ _('Basic fundamentals of programming. Following articles introduce what you can do with JavaScript, best practices for using it, and more.') }}</p>
+          </li>
+          <li>
+            <h3 class="title"><a href="http://code.google.com/edu/submissions/html-css-javascript/#javascript" rel="external">{{ _('JavaScript From the Ground Up') }}</a></h3>
+            <h4 class="source">Google Code University</h4>
+            <p>{{ _('Video tutorial on making pages interactive with JavaScript') }}</p>
+          </li>
+          <li>
+            <h3 class="title"><a href="http://dev.opera.com/articles/view/javascript-best-practices/" rel="external">{{ _('JavaScript Best Practices') }}</a></h3>
+            <h4 class="source">Dev.Opera</h4>
+            <p>{{ _('Learn about some of the obvious and (not so) obvious best practices when writing JavaScript.') }}</p>
+          </li>
+        </ul>
+      </div>
+      
+      <div id="inter-level" class="column-half learn-module">
+        <h2>{{ _('Intermediate Level') }}</h2>
+        <ul class="link-list">
+          <li>
+            <h3 class="title"><a href="{{ devmo_url('A_re-introduction_to_JavaScript') }}">{{ _('A Re-introduction to JavaScript') }}</a></h3>
+            <h4 class="source">MDN</h4>
+            <p>{{ _('A recap of the JavaScript programming language aimed at intermediate-level developers.') }}</p>
+          </li>
+          <li>
+            <h3 class="title"><a href="http://eloquentjavascript.net/contents.html" rel="external">{{ _('Eloquent JavaScript') }}</a></h3>
+            <p>{{ _('A comprehensive guide to intermediate and advanced JavaScript methodologies.') }}</p>
+          </li>
+          <li>
+            <h3 class="title"><a href="http://www.addyosmani.com/resources/essentialjsdesignpatterns/book/" rel="external">{{ _('Essential JavaScript Design Patterns') }}</a></h3>
+            <h4 class="source">Addy Osmani</h4>
+            <p>{{ _('An introduction to essential JavaScript design patterns.') }}</p>
+          </li>
+          <li>
+            <h3 class="title"><a href="http://www.yuiblog.com/blog/2007/01/24/video-crockford-tjpl/" rel="external">{{ _('The JavaScript Programming Language') }}</a></h3>
+            <h4 class="source">YUI Blog</h4>
+            <p>{{ _('Douglas Crockford explores the language as it is today, and how it came to be.') }}</p>
+          </li>
+          <li>
+            <h3 class="title"><a href="{{ devmo_url('Introduction_to_Object-Oriented_JavaScript') }}">{{ _('Introduction to Object-oriented JavaScript') }}</a></h3>
+            <h4 class="source">MDN</h4>
+            <p>{{ _('Learn about the JavaScript object model.') }}</p>
+          </li>
+        </ul>
+      </div>
     </div>
 
-    <div id="adv-level" class="learn-module boxed">
+    <div id="adv-level" class="learn-module">
       <h2>{{ _('Advanced Level') }}</h2>
-      <ul class="link-list col1">
-        <li>
-          <h3 class="title"><a href="http://ejohn.org/apps/learn/" rel="external">{{ _('Learning Advanced JavaScript') }}</a></h3>
-          <h4 class="source">John Resig</h4>
-          <p>{{ _('John Resig\'s guide to advanced JavaScript.') }}</p>
-        </li>
-        <li>
-          <h3 class="title"><a href="http://www.elated.com/articles/javascript-dom-intro/" rel="external">{{ _('Introducing the JavaScript DOM') }}</a></h3>
-          <h4 class="source">Elated</h4>
-          <p>{{ _('What is the Document Object Model, and why is it useful? This article gives you a gentle introduction to this powerful JavaScript feature.') }}</p>
-        </li>
-        <li>  
-          <h3 class="title"><a href="http://yuiblog.com/blog/2006/10/20/video-crockford-domtheory/" rel="external">{{ _('An Inconvenient API: The Theory of the DOM') }}</a></h3>
-          <h4 class="source">YUI Blog</h4>
-          <p>{{ _('Douglas Crockford explains the Document Object Model.') }}</p>
-        </li>
-        <li>  
-          <h3 class="title"><a href="http://yuiblog.com/blog/2006/11/27/video-crockford-advjs/" rel="external">{{ _('Advanced JavaScript') }}</a></h3>
-          <h4 class="source">YUI Blog</h4>
-          <p>{{ _('Douglas Crockford looks closely at code patterns from which JavaScript programmers can choose in authoring their applications.') }}</p>
-        </li>
-      </ul>
-      <ul class="link-list col2">
-        <li>  
-          <h3 class="title"><a href="http://bonsaiden.github.com/JavaScript-Garden/" rel="external">{{ _('JavaScript Garden') }}</a></h3>
-          <p>{{ _('Documentation of the most quirky parts of JavaScript.') }}</p>
-        </li>
-        <li>  
-          <h3 class="title"><a href="http://stackoverflow.com/questions/394601/which-javascript-framework-jquery-vs-dojo-vs" rel="external">{{ _('Which JavaScript Framework?') }}</a></h3>
-          <h4 class="source">Stack Overflow</h4>
-          <p>{{ _('Advice on choosing a JavaScript framework.') }}</p>
-        </li>
-        <li>
-          <h3 class="title"><a href="http://yuiblog.com/blog/2008/07/22/non-blocking-scripts/" rel="external">{{ _('Non-blocking JavaScript Downloads') }}</a></h3>
-          <h4 class="source">YUI Blog</h4>
-          <p>{{ _('Tips on improving the download performance of pages containing JavaScript.') }}</p>
-        </li>
-        <li>
-          <h3 class="title"><a href="{{ devmo_url('JavaScript/Guide') }}">{{ _('JavaScript Guide') }}</a></h3>
-          <h4 class="source">MDN</h4>
-          <p>{{ _('A comprehensive, regularly updated guide to JavaScript for all levels of learning from beginner to advanced.') }}</p>
-        </li>
-      </ul>
+      <div class="column-container">
+        <ul class="column-half link-list">
+          <li>
+            <h3 class="title"><a href="http://ejohn.org/apps/learn/" rel="external">{{ _('Learning Advanced JavaScript') }}</a></h3>
+            <h4 class="source">John Resig</h4>
+            <p>{{ _('John Resig\'s guide to advanced JavaScript.') }}</p>
+          </li>
+          <li>
+            <h3 class="title"><a href="http://www.elated.com/articles/javascript-dom-intro/" rel="external">{{ _('Introducing the JavaScript DOM') }}</a></h3>
+            <h4 class="source">Elated</h4>
+            <p>{{ _('What is the Document Object Model, and why is it useful? This article gives you a gentle introduction to this powerful JavaScript feature.') }}</p>
+          </li>
+          <li>  
+            <h3 class="title"><a href="http://yuiblog.com/blog/2006/10/20/video-crockford-domtheory/" rel="external">{{ _('An Inconvenient API: The Theory of the DOM') }}</a></h3>
+            <h4 class="source">YUI Blog</h4>
+            <p>{{ _('Douglas Crockford explains the Document Object Model.') }}</p>
+          </li>
+          <li>  
+            <h3 class="title"><a href="http://yuiblog.com/blog/2006/11/27/video-crockford-advjs/" rel="external">{{ _('Advanced JavaScript') }}</a></h3>
+            <h4 class="source">YUI Blog</h4>
+            <p>{{ _('Douglas Crockford looks closely at code patterns from which JavaScript programmers can choose in authoring their applications.') }}</p>
+          </li>
+        </ul>
+        <ul class="column-half link-list">
+          <li>  
+            <h3 class="title"><a href="http://bonsaiden.github.com/JavaScript-Garden/" rel="external">{{ _('JavaScript Garden') }}</a></h3>
+            <p>{{ _('Documentation of the most quirky parts of JavaScript.') }}</p>
+          </li>
+          <li>  
+            <h3 class="title"><a href="http://stackoverflow.com/questions/394601/which-javascript-framework-jquery-vs-dojo-vs" rel="external">{{ _('Which JavaScript Framework?') }}</a></h3>
+            <h4 class="source">Stack Overflow</h4>
+            <p>{{ _('Advice on choosing a JavaScript framework.') }}</p>
+          </li>
+          <li>
+            <h3 class="title"><a href="http://yuiblog.com/blog/2008/07/22/non-blocking-scripts/" rel="external">{{ _('Non-blocking JavaScript Downloads') }}</a></h3>
+            <h4 class="source">YUI Blog</h4>
+            <p>{{ _('Tips on improving the download performance of pages containing JavaScript.') }}</p>
+          </li>
+          <li>
+            <h3 class="title"><a href="{{ devmo_url('JavaScript/Guide') }}">{{ _('JavaScript Guide') }}</a></h3>
+            <h4 class="source">MDN</h4>
+            <p>{{ _('A comprehensive, regularly updated guide to JavaScript for all levels of learning from beginner to advanced.') }}</p>
+          </li>
+        </ul>
+      </div>
     </div>
 
   </section><!-- /#content-main -->

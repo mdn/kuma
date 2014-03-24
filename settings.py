@@ -546,7 +546,6 @@ MINIFY_BUNDLES = {
     'css': {
         'mdn': (
             'css/fonts.css',
-            'css/mdn-screen.css',
             'css/libs/font-awesome/css/font-awesome.css',
             'redesign/css/main.css',
             'redesign/css/badges.css',
@@ -620,6 +619,21 @@ MINIFY_BUNDLES = {
         ),
         'newsletter': (
             'redesign/css/newsletter.css',
+        ),
+        'learn': (
+            'redesign/css/learn.css',
+        ),
+        'submission': (
+            'redesign/css/submission.css',
+        ),
+        'forum-archive': (
+            'redesign/css/forum-archive.css',
+        ),
+        'user-banned': (
+            'redesign/css/user-banned.css',
+        ),
+        'error-403-alternate': (
+            'redesign/css/error-403-alternate.css',
         ),
     },
     'js': {

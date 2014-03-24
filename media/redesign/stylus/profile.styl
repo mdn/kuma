@@ -1,207 +1,334 @@
-/*
-  Used within the devmo django app
-*/
-
 @import 'includes/vars'
 @import 'includes/mixins'
 
-beta-spacing = (grid-spacing * 2.5);
+/*** Display ***/
 
-.profile {
-
-  /* off-settings some old styles for now */
-  #profile-head {
+#profile-head {
     background: light-background-color;
-    border-color: header-background-color;
-  }
-
-  table.activity thead, table.activity tfoot {
-    background: header-background-color;
-  }
-
-  table.activity tr:nth-child(2n), .gallery-foot {
-    background: light-background-color;
-  }
-
-  table.activity th h3 {
-    font-size: base-bump-font-size;
-  }
-
-  .submission .fm-submit button {
-    box-shadow: inherit;
-  }
-
-  h1 {
-      letter-spacing: 0;
-  }
-}
-
-/* just for the display page (not the edit page) */
-.profile-display {
-
-  #profile-head {
+    margin-bottom: grid-spacing;
     min-height: 200px;
+    overflow: hidden;
+    padding: grid-spacing;
+    position: relative;
 
-    .main {
-      float: none;
-      width: auto;
-      margin-left: 150px;
+    b {
+        color: #a19f93;
+        font-weight: normal;
+        font-size: larger-font-size;
+    }
+
+    .photo {
+        margin: 0 0 (grid-spacing / 2);
+    }
+
+    .extra {
+        float: left;
     }
 
     .links {
-      display: table;
-      border-spacing: (grid-spacing / 2);
-      margin: -(@border-spacing); // Offset outer border
+        border-spacing: (grid-spacing / 2);
+        display: table;
+        font-size: smaller-font-size;
+        margin: -(@border-spacing); // Offset outer border
 
-      li {
-        display: table-row;
-      }
+        li {
+            display: table-row;
+        }
 
-      i, a {
-        display: table-cell;
-        vertical-align: middle;
-      }
+        i, a {
+            display: table-cell;
+            vertical-align: middle;
+        }
 
-      i {
-        font-size: 14px;
-        text-align: center;
-      }
+        i {
+            font-size: base-font-size;
+            text-align: center;
+        }
 
-      a {
-        compat-only(background, none);
-        padding: 0;
-      }
+        a {
+            padding: 0;
+        }
     }
 
-    .edit {
-      & > a {
+    .edit > a {
         compat-only(margin, 0 5px 0 0);
-      }
     }
 
     .submenu {
-      @extend $advanced-menu;
+        @extend $advanced-menu;
 
-      a {
-       compat-only(float, none);
-       compat-only(margin, 0);
-     }
-   }
-  }
-}
-
-/* API key pages */
-.profile-api-page {
-  label {
-    display: block; 
-  }
-
-  #section-head { /* this can all be removed after launch */
-    compat-only(background, none);
-    compat-only(border-bottom, none);
-    compat-only(border-top, none);
-    compat-only(color, inherit);
-    compat-only(text-shadow, none);
-    compat-only(box-shadow, none);
-    compat-only(padding, 0);
-    compat-only(margin-top, 0);
-
-    h1 {
-      heading-1();
-      compat-only(width, auto);
-      compat-only(float, none);
-      compat-only(margin, 0);
-
-      b {
-        heading-1();
-        compat-only(display, inline);
-        compat-only(margin-top, 0);
-        compat-only(color, inherit);
-      }
+        a {
+            compat-only(float, none);
+            compat-only(margin, 0);
+        }
     }
-  }
+
+    .main {
+        float: none;
+        margin-left: 150px;
+        width: auto;
+    }
+
+    .bio {
+        font-size: smaller-font-size;
+    }
+
+    .info {
+        li {
+            display: inline;
+            margin-right: (grid-spacing / 2);
+
+            &:before {
+                color: #a19f93;
+                content: "/";
+                margin-right: @margin-right;
+            }
+
+            &:first-child:before {
+                content: "";
+                margin: 0;
+            }
+        }
+    }
+
+    .tags {
+        margin-bottom: 5px;
+
+        h2 {
+            font-size: base-font-size;
+            margin-bottom: 0;
+        }
+
+        li {
+            display: inline;
+            font-size: smaller-font-size;
+            margin: 0 10px 0 0;
+        }
+    }
+
+    .memberSince {
+        color: #6a9412;
+        font-size: smaller-font-size;
+        font-style: italic;
+    }
+
+    .edit {
+        position: absolute;
+        top: @padding;
+        right: @padding;
+
+        a {
+            float: left;
+            margin-left: (grid-spacing / 2);
+        }
+    }
 }
 
-/* profile editing */
-#profile-edit {
-    padding-left: 0;
+.profile-section {
+    clear: both;
+    margin-bottom: grid-spacing;
+}
+
+.gallery-foot {
+    background: light-background-color;
+}
+
+#docs-activity {
+    header {
+        margin-bottom: (grid-spacing / 2);
+        h2 {
+            display: inline;
+        }
+    }
+}
+
+table.activity {
+    border-collapse: collapse;
+    font-size: smaller-font-size;
+    width: 100%;
+
+    td, th {
+        padding: 6px 3px;
+    }
+
+    th {
+        h3 {
+            font-size: base-bump-font-size;
+            margin: 0 0 (grid-spacing / 4);
+        }
+        &.date {
+            width: 120px;
+        }
+        &.page {
+            width: 40%;
+        }
+    }
+
+    thead {
+        background: header-background-color;
+        th {
+            font-weight: bold;
+        }
+    }
+
+    tbody {
+        h3 {
+            margin-bottom: 4px;
+        }
+
+        tr {
+            &:nth-child(even) {
+                background: light-background-color;
+            }
+        }
+
+        th {
+            font-weight: 200;
+        }
+    }
+
+    .actions {
+        font-size: 10px;
+
+        li {
+            display: inline;
+            margin: 0 10px 5px 0;
+        }
+    }
+}
+
+
+/*** Edit ***/
+
+.profile-edit {
+    /* Set forms to full width so that they resize with the column. */
     .section li > input[type="text"], select, textarea, #tagit-interests, #tags-expertise {
-        vendorize(box-sizing, border-box);
         width: 100%;
+        vendorize(box-sizing, border-box);
     }
-}
 
-#elsewhere {
-    label {
-        compat-only(background, none);
-        compat-only(padding-left, 0);
+    .extra {
+        font-size: smaller-font-size;
+        figcaption {
+            margin: (grid-spacing / 2) 0;
+        }
+    }
+
+    .wordcount {
+        .note {
+            float: right;
+        }
+    }
+
+    ul.tagit {
+        background: #fff;
+        border: 1px solid #cbc8b9;
+        padding: 6px 8px;
+        width: 610px;
+    }
+
+    li.tag-expert {
+        display: inline-block;
+        margin: 0 10px 10px 0;
+
+        label {
+            background: #f9f9f9;
+            border: 1px solid #dbd9d1;
+            border-radius: 2px;
+            font-weight: normal;
+            margin: 0;
+            padding: 3px 8px 3px 4px;
+            &:hover {
+                border-color: #bbb;
+            }
+        }
+    }
+
+    .submission {
+        button {
+            vendorize(box-shadow, inherit);
+        }
     }
 }
 
 /* Profile edit newsletter */
 .profile-newsletter-container {
-  background: #f4f7f8;
-  padding: grid-spacing;
-  overflow: hidden;
+    background: #f4f7f8;
+    padding: grid-spacing;
+    overflow: hidden;
 
-  .fm-submit {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
+    .fm-submit {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
 
-  select {
-    width: 80%;
-  }
+    select {
+        width: 80%;
+    }
 }
 
 #field_beta {
     @extend $checkbox-label-container;
 }
 
+.profile-display, .profile-edit {
+    .page-title {
+        font-size: 26px;
+        letter-spacing: 0;
+        margin-bottom: (grid-spacing / 2);
+    }
+}
+
+/* API key pages */
+.profile-api-page {
+    label {
+        display: block;
+    }
+}
+
 /* For tablet and lower, move the profile buttons below the user name */
 @media media-query-tablet {
-  #profile-head {
-    .edit {
-      display: inline-block;
-      position: relative;
-      top: auto;
-      right: auto;
-      margin: 0 0 grid-spacing 0;
+    .profile-display {
+        .edit {
+            position: relative;
+            top: auto;
+            right: auto;
+            margin: 0 0 grid-spacing 0;
 
-      a {
-        float: none;
-        display: inline-block;
-        margin: 0 10px 0 0;
-      }
+            a {
+                float: none;
+                display: inline-block;
+                margin: 0 10px 0 0;
+            }
+        }
     }
-  }
 
-  .profile-newsletter-container {
-    padding-bottom: 0;
-    margin-bottom: (grid-spacing * 1.5);
+    .profile-newsletter-container {
+        padding-bottom: 0;
+        margin-bottom: (grid-spacing * 1.5);
 
-    .fm-submit {
-      display: none;
+        .fm-submit {
+            display: none;
+        }
     }
-  }
 }
 
 @media media-query-small-mobile {
-  .profile-display #profile-head .edit {
-    margin: 0;
+    .profile-display #profile-head .edit {
+        margin: 0;
 
-    & > a {
-      display: block;
-      text-align: center;
-      override-compat-important(margin, (grid-spacing / 2) 0);
-    }
+        & > a {
+            display: block;
+            text-align: center;
+            override-compat-important(margin, (grid-spacing / 2) 0);
+        }
 
-    #edit-profile i {
-      display: none;
-    }
+        #edit-profile i {
+            display: none;
+        }
 
-    .submenu {
-      top: 90px;
+        .submenu {
+            top: 90px;
+        }
     }
-  }
 }
