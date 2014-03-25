@@ -1,4 +1,3 @@
-{# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
 {% set title = _('Delete Revision | {document}')|f(document=document.title) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
@@ -8,7 +7,7 @@
       <article id="delete-revision">
 
         <h1>{{ _('Are you sure you want to delete this revision?') }}</h1>
-        
+
         <label><strong>{{ _('Creator') }}</strong></label>
         <div>{{ revision.creator }}</div>
         <label><strong>{{ _('Date') }}</strong></label>
@@ -26,5 +25,5 @@
           </div>
         </form>
       </article>
-    
+
 {% endblock %}

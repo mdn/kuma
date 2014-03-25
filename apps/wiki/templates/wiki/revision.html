@@ -1,4 +1,3 @@
-{# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
 {# L10n: {n} is the revision number, {t} is the title of the document. {c} is the category. #}
 {% set title = _('Revision {n} | {t} | {c}')|f(n=revision.id, t=document.title, c=document.get_category_display()) %}
@@ -51,7 +50,7 @@
         </ul>
       </div>
     </details>
-    
+
     <details>
       <h2><summary>{{ _('Revision Source') }}</summary></h2>
       <div id="doc-source">
@@ -67,5 +66,5 @@
     </details>
     <a href="{{ url('wiki.revert_document', document.full_path, revision.id) }}" class="button">{{ _('Revert to this revision') }}</a>
   </article>
-    
+
 {% endblock %}

@@ -1,4 +1,3 @@
-{# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "users/base.html" %}
 {% from "layout/errorlist.html" import errorlist %}
 {% set title = _('Register') %}
@@ -11,11 +10,11 @@
       <article id="register" class="main">
         <h1>{{ _('Register') }}</h1>
         <p>{% trans %}
-          You can access everything on the MDN website even without an account, but 
-          when you join you'll be able to edit docs, submit demos, and have your 
-          own profile page. 
+          You can access everything on the MDN website even without an account, but
+          when you join you'll be able to edit docs, submit demos, and have your
+          own profile page.
         {% endtrans %}</p>
-        
+
         <form class="boxed" method="post" action="">
           {{ csrf() }}
           {{ errorlist(form) }}

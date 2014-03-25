@@ -1,4 +1,3 @@
-{# vim: set ts=2 et sts=2 sw=2: #}
 {% macro li_field(form, field_name, label='', id='', classes='', note='', icon_class='', image=False, show_label=True) %}
     {% set field = form[field_name] %}
     <li id="field_{{field_name}}" class="field {{ 'type_%s' % field.field.widget.input_type if field.field.widget.input_type }}{{ ' required' if field.field.required }}{{ ' error' if field.errors }} {{classes}}">

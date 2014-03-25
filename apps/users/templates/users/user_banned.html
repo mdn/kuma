@@ -1,4 +1,3 @@
-{# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "users/base.html" %}
 {% set title = _('You\'ve Been Banned') %}
 {% set classes = 'profile' %}
@@ -13,7 +12,7 @@
 <article id="profile-banned">
   <h1>{{ title }}</h1>
   <p>
-  	{{ _('You have been banned for the following reasons:') }}
+    {{ _('You have been banned for the following reasons:') }}
   </p>
   <ul>
   {% if bans | length %}

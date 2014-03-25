@@ -1,10 +1,9 @@
-{# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
 {% set title = _('All Files') %}
 {% block title %}{{ page_title(title) }}{% endblock %}
 
 {% block extrahead %}
-<link rel="alternate" type="application/atom+xml" title="{{title}}" 
+<link rel="alternate" type="application/atom+xml" title="{{title}}"
       href="{{ url('wiki.feeds.recent_files', format='atom') }}" />
 {% endblock %}
 

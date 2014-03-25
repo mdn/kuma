@@ -1,4 +1,3 @@
-{# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
 {% set title = _('Revert Revision | {document}')|f(document=document.title) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
@@ -7,7 +6,7 @@
 {% block content %}
 
       <article id="delete-revision">
-      
+
         <h1>{{ _('Are you sure you want to revert to this revision?') }}</h1>
 
         <label><strong>{{ _('Document') }}</strong></label>
@@ -36,5 +35,5 @@
           </div>
         </form>
       </article>
-    
+
 {% endblock %}

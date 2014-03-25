@@ -1,4 +1,3 @@
-{# vim: set ts=2 et sts=2 sw=2: #}
 {# TODO: Turn this into a macro. Import it "with context" so datetimeformat can access request.locale. #}
 {% if revision_from and revision_to %}
   <section class="revision-diff">
@@ -33,17 +32,17 @@
       <dt>{{ _('Title:') }}</dt>
       <dd class="rev-from">{{ revision_from.title }}</dd>
       <dd class="rev-to">{{ revision_to.title }}</dd>
-      
+
       <dt>{{ _('Slug:') }}</dt>
       <dd class="rev-from">{{ revision_from.slug }}</dd>
       <dd class="rev-to">{{ revision_to.slug }}</dd>
-      
+
       {% if revision_from.tags or revision_to.tags %}
       <dt>{{ _('Tags:') }}</dt>
       <dd class="rev-from">{{ revision_from.tags }}</dd>
       <dd class="rev-to">{{ revision_to.tags }}</dd>
       {% endif %}
-      
+
       <dt>{{ _('Content:') }}</dt>
       <dd>{{ diff_table(revision_from.content, revision_to.content, revision_from.id, revision_to.id) }}</dd>
     </dl>

@@ -1,4 +1,3 @@
-{# vim: set ts=2 et sts=2 sw=2: #}
 {% if user.is_authenticated() %}
   {% if is_watching_approved %}
     <form action="{{ url('wiki.approved_unwatch') }}" method="post">

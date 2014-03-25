@@ -1,5 +1,3 @@
-{# vim: set ts=2 et sts=2 sw=2: #}
-
 {% extends "wiki/base.html" %}
 {% block title %}{{ title }}{% endblock %}
 {% set classes = 'document' %}
@@ -10,11 +8,11 @@
   {% if kumascript_errors %}
     {% include 'wiki/includes/kumascript_errors.html' %}
   {% endif %}
-	
+
   <div class="warning warning-review">
-	<p>{{ _('This is a preview of an unsaved document.') }}</p>
+    <p>{{ _('This is a preview of an unsaved document.') }}</p>
   </div>
-	
+
   <div>
     <div class="page-title">
         <h1 class="page-title">{{ title }}</h1>
