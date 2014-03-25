@@ -1,4 +1,3 @@
-{# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
 {# L10n: {n} is the revision number, {t} is the title of the document. {c} is the category. #}
 {% set title = _('Attachment {n} | {t}')|f(n=revision.id, t=attachment.title) %}
@@ -9,7 +8,7 @@
 {% block content %}
 
   <article id="wiki-doc">
-    
+
     <h1>{{ attachment.title }}</h1>
 
     <details class="h2" open="open">
@@ -44,7 +43,7 @@
             <mark>{{ _('MIME Type:') }}</mark>
             <span>{{ _('%s bytes') % attachment.size }}</span>
           </li>
-          
+
           <li class="revision-is-current">
             <mark>{{ _('Is approved?') }}</mark>
             <span>{{ revision.is_approved|yesno }}</span>
@@ -69,5 +68,5 @@
     </details>
 
   </article>
-    
+
 {% endblock %}

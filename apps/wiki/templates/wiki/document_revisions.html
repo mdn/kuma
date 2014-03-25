@@ -1,4 +1,3 @@
-{# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
 {% set title = _('Revision History | {document}')|fe(document=document.title) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
@@ -6,9 +5,9 @@
 {% block content %}
 
   <article id="revision-history">
-  
+
     <h1>{{ _('History of') }} <a href="{{ url('wiki.document', document.full_path, locale=document.locale) }}">{{ _('{title}')|fe(title=document.title) }}</a></h1>
-    
+
     <div class="choice-list">
       <label>{{ _('Revision history for:') }}</label>
       <ul>

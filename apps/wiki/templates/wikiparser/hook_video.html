@@ -1,5 +1,3 @@
-{# vim: set ts=2 et sts=2 sw=2: #}
-
 <div class="video{% if params['modal'] %} modal-trigger{% endif %}">
   {% if params['modal'] %}
     <a href="{% if sources %}{{ sources[0].src }}{% else %}{{ fallback }}{% endif %}" class="video-modal-trigger-{{ video.id }}">

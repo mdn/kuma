@@ -1,4 +1,3 @@
-{# vim: set ts=2 et sts=2 sw=2: #}
 {% if user.is_authenticated() %}
   {% if is_watching_locale %}
     <form action="{{ url('wiki.locale_unwatch') }}" method="post">

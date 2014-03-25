@@ -1,4 +1,3 @@
-{# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
 {% from "layout/errorlist.html" import errorlist %}
 {% set title = _(document.title + ' | Edit {title}')|fe(title=('Template' if document.is_template else 'Article')) %}
@@ -141,7 +140,7 @@
 
         {% if revision_form %}
             {% include 'wiki/includes/guide_links.html' %}
-            
+
             {% if document.is_template %}
               {{ revision_form.content | safe }}
               <div id="ace_content" class="editor-container"></div>

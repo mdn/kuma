@@ -1,4 +1,3 @@
-{# vim: set ts=2 et sts=2 sw=2: #}
 {% extends "wiki/base.html" %}
 {% set title = _('Compare Revisions | {document}')|f(document=document.title) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
@@ -7,13 +6,13 @@
 {% block content %}
 
   <article id="compare-revisions">
-  
+
     <h1>{{ _('Compare Revisions') }}</h1>
     <h2><a href="{{ url('wiki.document', document.full_path, locale=document.locale) }}">{{ document.title }}</a></h2>
-    
+
     {% include 'wiki/includes/revision_diff.html' %}
     <p><a href="{{ url('wiki.document_revisions', document.slug) }}">{{ _('Back to History') }}</a></p>
-  
+
   </article>
 
 {% endblock %}
