@@ -41,15 +41,6 @@ class SearchView(ListAPIView):
     pagination_serializer_class = SearchSerializer
     topic_param = 'topic'
 
-    @csrf_exempt
-    def dispatch(self, request, *args, **kwargs):
-        # Google Custom Search results page
-        if not flag_is_active(request, 'elasticsearch'):
-            query = request.GET.get('q', '')
-            return render(request, 'landing/searchresults.html',
-                          {'query': query})
-        return super(SearchView, self).dispatch(request, *args, **kwargs)
-
     def initial(self, request, *args, **kwargs):
         super(SearchView, self).initial(request, *args, **kwargs)
         self.drilldown_faceting = flag_is_active(request,
