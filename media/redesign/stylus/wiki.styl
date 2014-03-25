@@ -548,12 +548,12 @@ div.bug, div.warning, div.overheadIndicator {
 
 /* adjustments to columns based on show/hide and media query */
 #wiki-column-container.wiki-right-closed #wiki-content, #wiki-column-container.wiki-left-closed #wiki-content {
-  @extend .column-9;
+  @extend $column-9;
 }
 
 #wiki-column-container.wiki-right-closed.wiki-left-closed {
   #wiki-content {
-    @extend .column-all;
+    @extend $column-all;
     float: none;
     width: auto;
   }
@@ -765,13 +765,13 @@ span.cke_skin_kuma {
 
 /* Page deletion styles */
 .delete-document {
-  textarea { 
-    width: 500px; 
-    max-width: 100%; 
+  textarea {
+    width: 500px;
+    max-width: 100%;
     margin-bottom: grid-spacing;
   }
-  label { 
-    display: block; 
+  label {
+    display: block;
   }
 }
 

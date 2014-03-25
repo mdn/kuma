@@ -1,8 +1,11 @@
 /*
+  Main CSS file for MDN.  Holds the site structure and key styles.
+*/
+
+/*
   Classes which should be mirror extensions and mixins - mixins.styl
   These classes are used within wiki content so we must have them available as classes as well
 */
-
 @import '../includes/mixins'
 
 .offscreen {
@@ -29,8 +32,16 @@
   margin-left: (grid-spacing * 2);
 }
 
+/* grid setup for direct class use */
+draw-grid();
 
-
+/* centers pieces of the page, mostly the header, footer, and main elements */
+.center {
+  margin: 0 auto;
+  position: relative;
+  max-width: max-width-default;
+  add-center-spacing();
+}
 
 /* global notices (via soapbox) */
 .global-notice {
@@ -503,6 +514,10 @@ footer {
 
 /* for mobile, move the search box under the nav */
 @media media-query-mobile {
+
+  .center {
+    add-center-spacing(15px);
+  }
 
   #main-header {
     .main-nav-search {
