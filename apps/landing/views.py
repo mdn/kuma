@@ -29,15 +29,9 @@ def home(request):
 
     return render(request, 'landing/homepage.html',
                   {'demos': demos, 'updates': updates,
-                    'current_challenge_tag_name': 
+                    'current_challenge_tag_name':
                     str(constance.config.DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG).strip()})
 
-
-def search(request):
-    """Google Custom Search results page."""
-    query = request.GET.get('q', '')
-    return render(request, 'landing/searchresults.html',
-                  {'query': query})
 
 def hacks(request):
     """Hacks landing page."""
