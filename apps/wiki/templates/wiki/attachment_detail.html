@@ -7,7 +7,7 @@
 
 {% block content %}
 
-  <article id="wiki-doc">
+  <article>
 
     <h1>{{ attachment.title }}</h1>
 
@@ -58,7 +58,7 @@
 
     <details class="h2">
       <summary>{{ _('Attachment Preview') }}</summary>
-      <div id="doc-content">
+      <div>
         {% if preview_content %}
           {{ preview_content|safe }}
         {% else %}
