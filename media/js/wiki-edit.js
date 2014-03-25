@@ -543,7 +543,8 @@
 
     function updateDraftState(action) {
         var now = new Date();
-        nowString = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
+        var nowString = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
+
         $('#draft-action').text(action);
         $('#draft-time').attr('title', now.toISOString()).text(nowString);
     }
