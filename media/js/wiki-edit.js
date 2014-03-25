@@ -1,12 +1,12 @@
 /*
  * wiki.js
  * Scripts for the wiki app.
- * 
+ *
  */
 (function ($, win, doc) {
     'use strict';
 
-    /*  
+    /*
         Initialization of the CKEditor widget
     */
     (function() {
@@ -78,10 +78,10 @@
         }
       });
     })();
-    
-    
 
-  /* 
+
+
+  /*
     Plugin for prepopulating the slug fields
   */
   $.fn.prepopulate = function(dependencies, maxLength) {
@@ -107,7 +107,7 @@
               });
 
               var s = values.join(' ');
-              
+
               s = $.slugifyString(s);
 
               // Trim to first num_chars chars
@@ -118,12 +118,12 @@
               split[split.length - 1] = s;
               $field.val(split.join('/'));
           };
-          
+
           dependencies.on('keyup change focus', populate);
       });
   };
 
-  /* 
+  /*
     Functionality to set up the new, edit, and translate pages
   */
     var DRAFT_NAME;
@@ -158,10 +158,6 @@
         }
         initDetailsTags();
 
-        if ($body.is('.review')) { // Review pages
-            initApproveReject();
-        }
-
         if ($body.is('.edit, .new, .translate')) {
             initMetadataEditButton();
             initSaveAndEditButtons();
@@ -179,7 +175,7 @@
             var editor = win.ace_editor = ace.edit('ace_content');
             editor.setTheme('ace/theme/dreamweaver');
             editor.setBehavioursEnabled(false);
-            
+
             var JavaScriptMode = require('ace/mode/javascript').Mode;
 
             var session = editor.getSession();
@@ -191,7 +187,7 @@
             $('.ace_text-input').focus();
             initDrafting();
         }
-    }    
+    }
 
     // Make <summary> and <details> tags work even if the browser doesn't support them.
     // From http://mathiasbynens.be/notes/html5-details-jquery
@@ -291,12 +287,12 @@
     function initArticlePreview() {
         $('#btn-preview').on('click', function(e) {
             e.preventDefault();
-            
+
             // Ensure that content is available and exists
             var title = ' ';
             var $titleNode = $('#id_title');
             var data;
-                
+
             if(CKEDITOR.instances['id_content']) {
                 data = $.trim(CKEDITOR.instances['id_content'].getSnapshot());
             }
@@ -309,22 +305,22 @@
             if($titleNode.length) {
                 title = $titleNode.val();
             }
-            
+
             // Since we have content, we can launch!
             if(data) {
                 // Create and inject form for preview submission
                 var $form = $("<form action='" + $(this).attr("data-preview-url") + "' target='previewWin' method='POST' />").appendTo(document.body);
                 $("<input type='hidden' name='content' />").val(data).appendTo($form);
                 $("<input type='hidden' name='title' />").val(title).appendTo($form);
-                
+
                 // Add the CSRF ?
                 $('input[name=csrfmiddlewaretoken]').clone().appendTo($form);
-                
+
                 // Submit the form, and then get rid of it
                 $form.get(0).submit();
                 $form.remove();
             }
-            
+
             return false;
         });
     }
@@ -356,9 +352,9 @@
         }
     }
 
-    // 
+    //
     // Initialize logic for metadata parent translation
-    // 
+    //
     function initMetadataParentTranslation() {
         var $parentLis = $('.metadata-choose-parent');
         var $parentInput = $('#parent_id');
@@ -389,7 +385,7 @@
     // Ensures same key used by all functionalities in this file
     // Uses slashes as delimiters because they can't be used in slugs to edge name clashes based on
     // slug can be prevented
-    // 
+    //
     function getStorageKey() {
         var noEdit = location.pathname.replace('$edit', '');
         var finalKey;
@@ -439,12 +435,12 @@
                 editor.setData(content);
             }
             editor.focus();
-            
+
             updateDraftState('loaded');
             hideDraftBox();
         });
 
-        // Hook up the "dispose" link 
+        // Hook up the "dispose" link
         $draftDiv.find('.discardLink').on('click', function(e) {
             e.preventDefault();
             hideDraftBox();
@@ -458,7 +454,7 @@
 
     //
     // Initialize logic for save and save-and-edit buttons.
-    // 
+    //
     function initSaveAndEditButtons () {
         // Save button submits to top-level
         $('#btn-save').on('click', function () {
@@ -511,7 +507,7 @@
                         // the background.
                         $(formSelector + ' input[name=current_rev]').val(
                             ir.attr('data-current-revision'));
-                        
+
                     } else if ($(formSelector, if_doc).hasClass('conflict')) {
                         // HACK: If we detect a conflict in the iframe while
                         // doing save-and-edit, force a full-on save in order
@@ -521,9 +517,9 @@
                             .attr('action', '')
                             .attr('target', '');
                         $('#btn-save').click();
-                    
+
                     }
-                    
+
                     // Anything else that happens (eg. 403 errors) should have
                     // framebusting code to escape the hidden iframe.
                 }
@@ -605,23 +601,6 @@
             clearTimeout(DRAFT_TIMEOUT_ID);
            clearDraft();
        });
-    }
-
-    function initApproveReject() {
-
-        var approveModal = $('#approve-modal');
-        var rejectModal = $('#reject-modal');
-
-        $('#btn-approve').on('click', function() {
-            approveModal.show();
-            rejectModal.hide();
-        });
-        approveModal.hide();
-        $('#btn-reject').on('click', function() {
-            rejectModal.show();
-            approveModal.hide();
-        });
-        rejectModal.hide();
     }
 
     function initAttachmentsActions() {
@@ -752,7 +731,7 @@
                 }
             }
             catch(e) {
-                // Show error message? 
+                // Show error message?
                 console.warn('Exception! ', e);
             }
             $pageAttachmentsSpinner.css('opacity', 0);
@@ -785,7 +764,7 @@
             }
 
             // Show the spinner
-            $pageAttachmentsSpinner.css("opacity", 1);
+            $pageAttachmentsSpinner.css('opacity', 1);
         });
     }
 

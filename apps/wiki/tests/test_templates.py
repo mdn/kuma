@@ -283,12 +283,12 @@ class RevisionTests(TestCaseBase):
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_('Revision id: %s' % r.id,
-            doc('#wiki-doc div.revision-info li.revision-id').text())
-        eq_(d.title, doc('#wiki-doc h1').text())
+            doc('div.revision-info li.revision-id').text())
+        eq_(d.title, doc('h1').text())
         eq_(r.content,
             doc('#doc-source textarea').text())
         eq_('Created: Jan 1, 2011 12:00:00 AM',
-            doc('#wiki-doc div.revision-info li.revision-created')
+            doc('div.revision-info li.revision-created')
                 .text().strip())
 
 
@@ -1136,22 +1136,6 @@ class SelectLocaleTests(TestCaseBase):
         doc = pq(response.content)
         eq_(len(settings.LANGUAGE_CHOICES) - 1,  # All except for 1 (en-US)
             len(doc('#select-locale ul.locales li')))
-
-
-class RelatedDocumentTestCase(SkippedTestCase):
-    fixtures = ['test_users.json', 'wiki/documents.json']
-
-    def test_related_order(self):
-        calculate_related_documents()
-        d = Document.objects.get(pk=1)
-        response = self.client.get(d.get_absolute_url())
-
-        doc = pq(response.content)
-        related = doc('section#related-articles li a')
-        eq_(2, len(related))
-
-        # If 'an article title 2' is first, the other must be second.
-        eq_('an article title 2', related[0].text)
 
 
 class RevisionDeleteTestCase(SkippedTestCase):
