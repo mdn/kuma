@@ -234,7 +234,7 @@ def _split_slug(slug):
 
         if root in bad_seo_roots:
            if length > 2:
-            seo_root = root + '/' + slug_split[1] 
+            seo_root = root + '/' + slug_split[1]
         else:
             seo_root = root
 
@@ -958,7 +958,7 @@ def new_document(request):
     initial_slug = request.GET.get('slug', '')
     initial_title = initial_slug.replace('_', ' ')
 
-    initial_parent_id = None
+    initial_parent_id = ''
     try:
         initial_parent_id = int(request.GET.get('parent', ''))
     except ValueError:
@@ -1640,7 +1640,7 @@ def external_signup(request):
                 context['submitted'] = True
 
                 message = """
-A request for external documentation to be added to MDN has 
+A request for external documentation to be added to MDN has
 been made for the following address:
 
 %s
@@ -1972,7 +1972,7 @@ def code_sample(request, document_slug, document_locale, sample_id):
     HTML document"""
 
     # Restrict rendering of live code samples to specified hosts
-    full_address = (''.join(('http', ('', 's')[request.is_secure()], '://', 
+    full_address = (''.join(('http', ('', 's')[request.is_secure()], '://',
                     request.META.get('HTTP_HOST'), request.path)))
 
     if not re.search(constance.config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS, full_address):
