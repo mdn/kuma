@@ -738,13 +738,15 @@ class SectionTOCFilter(html5lib_Filter):
                         yield t
             elif ('StartTag' == token['type'] and
                   token['name'] in TAGS_IN_TOC and
+                  self.in_header and
                   not self.skip_header):
                 yield token
             elif (token['type'] in ("Characters", "SpaceCharacters")
                   and self.in_header):
                 yield token
             elif ('EndTag' == token['type'] and
-                    token['name'] in TAGS_IN_TOC):
+                  token['name'] in TAGS_IN_TOC and
+                  self.in_header):
                 yield token
             elif ('EndTag' == token['type'] and
                     token['name'] in HEAD_TAGS_TOC):
