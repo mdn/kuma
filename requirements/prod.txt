@@ -50,7 +50,7 @@ django-constance==0.6
 ## Formerly vendor/src - converted to versions from git refs
 python-magic==0.4.6
 # -e git://github.com/jsocol/commonware.git@b5544185b2d24adc1eb512735990752400ce9cbd#egg=commonware
-commonware==0.4.2 
+commonware==0.4.2
 # -e git://github.com/jsocol/django-authority@543c39a889444488de2b16be72da61b1845b9141#egg=django-authority
 django-authority==0.4
 # -e git://github.com/jsocol/django-cronjobs.git@fa411be81d26619c973ec281c5cce2ce5219bd9c#egg=django-cronjobs
@@ -92,7 +92,7 @@ django-recaptcha==0.0.9
 # 2013-04-22
 -e git://github.com/jbalogh/jingo.git@327dd865b6c350f02ce40092f2983be19de71303#egg=jingo
 # 2010-11-05
--e git://github.com/jsocol/jingo-minify.git@95f24e9ecdbeb5d1d88029896b3d53ae8828e533#egg=jingo-minify
+-e git://github.com/jsocol/jingo-minify.git@b7405d3f93628190bf83cc43b0ff44e2fbb8b3c0#egg=jingo-minify
 # 2011-09-09
 -e git://github.com/pcraciunoiu/py-wikimarkup.git@bf2046e42a2f2aaae8df233407efbce803342d04#egg=py-wikimarkup
 # 2010-11-04
