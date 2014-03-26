@@ -179,7 +179,7 @@
 
     {% if waffle.flag('ga_outbound_links') %}
       <script>
-        mdn.analytics.initOutboundLinks($('body'));
+        mdn.analytics.trackOutboundLinks($('body'));
       </script>
     {% endif %}
 
