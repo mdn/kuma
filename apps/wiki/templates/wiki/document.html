@@ -386,9 +386,9 @@
 {% block js %}
   {% if waffle.flag('search_doc_navigator') %}
   <script type="text/javascript">
-    (function($, ga) {
-      $('.from-search-toc').mozSearchResults('{{ search_url|safe }}', ga);
-    })(jQuery, window._gaq || []);
+    (function($) {
+      $('.from-search-toc').mozSearchResults('{{ search_url|safe }}');
+    })(jQuery);
   </script>
   {% endif %}
 {% endblock %}

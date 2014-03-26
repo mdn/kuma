@@ -6,17 +6,16 @@
     var fromSearchNav = $('.from-search-navigate');
     if(fromSearchNav.length) {
         var fromSearchList = $('.from-search-toc');
-        var ga = window._gaq || [];
         fromSearchNav.mozMenu({
             submenu: fromSearchList,
             brickOnClick: true,
             onOpen: function(){
-                ga.push(['_trackEvent',
+                mdn.analytics.trackEvent(['_trackEvent',
                                  'Search doc navigator',
                                  'Open on hover']);
             },
             onClose: function(){
-                ga.push(['_trackEvent',
+                mdn.analytics.trackEvent(['_trackEvent',
                                  'Search doc navigator',
                                  'Close on blur']);
             }
@@ -69,7 +68,7 @@
         storage.flush();
     }
 
-    $.fn.mozSearchResults = function(url, ga) {
+    $.fn.mozSearchResults = function(url) {
         var next_doc;
         var prev_doc;
         var data;
@@ -89,7 +88,7 @@
                     href: doc.url,
                     on: {
                         click: function() {
-                            ga.push(['_trackEvent',
+                            mdn.analytics.trackEvent(['_trackEvent',
                                              'Search doc navigator',
                                              'Click',
                                              $(this).attr('href'),
@@ -107,7 +106,7 @@
                         $('.from-search-next').each(function() {
                             $(this).attr('href', next_doc.url)
                                          .on('click', function() {
-                                                ga.push(['_trackEvent',
+                                                mdn.analytics.trackEvent(['_trackEvent',
                                                                  'Search doc navigator',
                                                                  'Click next',
                                                                  next_doc.url,
@@ -123,7 +122,7 @@
                         $('.from-search-previous').each(function() {
                             $(this).attr('href', prev_doc.url)
                                          .on('click', function() {
-                                                ga.push(['_trackEvent',
+                                                mdn.analytics.trackEvent(['_trackEvent',
                                                                  'Search doc navigator',
                                                                  'Click previous',
                                                                  prev_doc.url,
