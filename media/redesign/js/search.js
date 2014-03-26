@@ -14,7 +14,7 @@
                                  'Search doc navigator',
                                  'Open on hover']);
             },
-            onClose: function(){
+            onClose: function() {
                 mdn.analytics.trackEvent(['_trackEvent',
                                  'Search doc navigator',
                                  'Close on blur']);
@@ -136,6 +136,7 @@
                 }
                 var list_item = $('<li></li>').append(link);
                 $('.from-search-toc ol').append(list_item);
+                $('#wiki-document-head').addClass('from-search');
             });
         }
 
@@ -155,6 +156,7 @@
                 url: url,
                 dataType: 'json',
                 success: function(data) {
+                    fromSearchNav.parent().show();
                     storage.setItem('data', data);
                     populate(data);
                 },
@@ -163,6 +165,7 @@
                 }
             });
         } else {
+            fromSearchNav.parent().show();
             populate(data);
         }
         return this;
