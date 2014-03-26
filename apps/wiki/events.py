@@ -10,7 +10,7 @@ from django.template import Context, loader
 from tower import ugettext as _
 
 from devmo import email_utils
-from tidings.events import InstanceEvent
+from tidings.events import InstanceEvent, Event
 from sumo.urlresolvers import reverse
 from wiki.helpers import revisions_unified_diff
 from wiki.models import Document
@@ -75,7 +75,9 @@ def notification_mails(revision, subject, template, url, users_and_watches):
     t = loader.get_template(template)
     c = {'document_title': document.title,
          'creator': revision.creator,
-         'url': url,
+         # Unfortunately, 'url' name overrides default django templatetag
+         # so we should different but generic name.
+         'item_url': url,
          'host': Site.objects.get_current().domain}
     content = t.render(Context(c))
     mail = EmailMessage(subject, content, settings.TIDINGS_FROM_ADDRESS)

@@ -1,0 +1,8 @@
+<html>
+    <body>
+    {{ text_content|safe }}
+    {% if config.GOOGLE_ANALYTICS_ACCOUNT != '0' %}
+        <img src="http://{{ host }}{{ url('track.mail.view', el=subject)}}" style="visibility: hidden">
+    {% endif %}
+    </body>
+</html>

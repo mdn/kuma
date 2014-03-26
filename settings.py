@@ -474,6 +474,8 @@ INSTALLED_APPS = (
     'humans',
 
     'badger',
+
+    'gabeacon',
 )
 
 TEST_RUNNER = 'test_utils.runner.RadicalTestSuiteRunner'
