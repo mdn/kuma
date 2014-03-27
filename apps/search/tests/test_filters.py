@@ -1,7 +1,5 @@
 from nose.tools import ok_
 
-from waffle.models import Flag
-
 from search.filters import (SearchQueryBackend, HighlightFilterBackend,
                             LanguageFilterBackend, DatabaseFilterBackend)
 from search.tests import ElasticTestCase
@@ -10,10 +8,6 @@ from search.views import SearchView
 
 class FilterTests(ElasticTestCase):
     fixtures = ['test_users.json', 'wiki/documents.json']
-
-    def setUp(self):
-        super(FilterTests, self).setUp()
-        Flag.objects.create(name='elasticsearch', everyone=True)
 
     def test_search_query(self):
         class SearchQueryView(SearchView):

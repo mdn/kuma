@@ -1,7 +1,5 @@
 from nose.tools import eq_
 
-from waffle.models import Flag
-
 from search.models import Filter, FilterGroup
 from search.tests import ElasticTestCase
 from search.views import SearchView
@@ -9,10 +7,6 @@ from search.views import SearchView
 
 class ViewTests(ElasticTestCase):
     fixtures = ['test_users.json', 'wiki/documents.json']
-
-    def setUp(self):
-        super(ViewTests, self).setUp()
-        Flag.objects.create(name='elasticsearch', everyone=True)
 
     def test_search_rendering(self):
         """The search view """
