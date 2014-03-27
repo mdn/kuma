@@ -11,23 +11,23 @@
 /* @Buttons *********/
 .section-demos button, .section-demos .button { display: inline-block; padding: .35em 14px .25em; color: #fff; border: 1px solid #8f4d4f; border-color: rgba(255,255,255,.2);
   font: 1em/1 "Bebas Neue", "League Gothic", "Arial Narrow", sans-serif; letter-spacing: .05em; text-decoration: none;
-  background: #861215 url("../img/button-shade.png") 0 .85em repeat-x; 
+  background: #861215 url("../img/button-shade.png") 0 .85em repeat-x;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
-  border-radius: 5px; 
+  border-radius: 5px;
   -moz-box-shadow: inset 0 0 3px rgba(180,0,0,.5), 1px 1px 3px rgba(0,0,0,.4);
   -webkit-box-shadow: inset 0 0 3px rgba(180,0,0,.5), 1px 1px 3px rgba(0,0,0,.4);
-  box-shadow: inset 0 0 3px rgba(180,0,0,.5), 1px 1px 2px rgba(0,0,0,.4); 
-  -moz-transition: background-color 0.2s; 
-  -webkit-transition: background-color 0.2s; 
+  box-shadow: inset 0 0 3px rgba(180,0,0,.5), 1px 1px 2px rgba(0,0,0,.4);
+  -moz-transition: background-color 0.2s;
+  -webkit-transition: background-color 0.2s;
   -o-transition: background-color 0.2s;
   transition: background-color 0.2s;
 }
 .section-demos button:hover, .section-demos button:focus,
-.section-demos .button:hover, .section-demos .button:focus, .section-demos .button:active { background-color: #b2181c; text-decoration: none; 
-  -moz-transition: background-color 0.1s; 
-  -webkit-transition: background-color 0.1s; 
-  -o-transition: background-color 0.1s; 
+.section-demos .button:hover, .section-demos .button:focus, .section-demos .button:active { background-color: #b2181c; text-decoration: none;
+  -moz-transition: background-color 0.1s;
+  -webkit-transition: background-color 0.1s;
+  -o-transition: background-color 0.1s;
   transition: background-color: 0.1s;
 }
 
@@ -51,10 +51,10 @@
   -moz-border-radius: 6px;
   -webkit-border-radius: 6px;
   border-radius: 6px;
-  background: #000; 
+  background: #000;
   background: rgba(0,0,0,.9);
-  background: -moz-linear-gradient(top, #333 0, rgba(0,0,0,.9) 100%); 
-  background: -webkit-linear-gradient(top, #333 0, rgba(0,0,0,.9) 100%); 
+  background: -moz-linear-gradient(top, #333 0, rgba(0,0,0,.9) 100%);
+  background: -webkit-linear-gradient(top, #333 0, rgba(0,0,0,.9) 100%);
   background: linear-gradient(top, #333 0, rgba(0,0,0,.9) 100%);
   -moz-box-shadow: 0 2px 6px rgba(0,0,0,.5);
   -webkit-box-shadow: 0 2px 6px rgba(0,0,0,.5);
@@ -72,10 +72,10 @@
   -moz-border-radius: 6px;
   -webkit-border-radius: 6px;
   border-radius: 6px;
-  background: #000; 
+  background: #000;
   background: rgba(0,0,0,.9);
-  background: -moz-linear-gradient(top, #333 0, rgba(0,0,0,.9) 100%); 
-  background: -webkit-linear-gradient(top, #333 0, rgba(0,0,0,.9) 100%); 
+  background: -moz-linear-gradient(top, #333 0, rgba(0,0,0,.9) 100%);
+  background: -webkit-linear-gradient(top, #333 0, rgba(0,0,0,.9) 100%);
   background: linear-gradient(top, #333 0, rgba(0,0,0,.9) 100%);
   -moz-box-shadow: 0 2px 6px rgba(0,0,0,.5);
   -webkit-box-shadow: 0 2px 6px rgba(0,0,0,.5);
@@ -89,21 +89,21 @@
 
 /* @Derby CTA *********/
 #derby-cta { position: absolute; z-index: 10; top: 5px; right: 50px; width: 125px; height: 125px; padding: 20px 20px 200px 160px; background: url("../img/demos/bg-searchlight.png") right top no-repeat; }
-#derby-cta a { display: block; width: 125px; height: 105px; padding: 10px 0; text-align: center; color: #fff; color: rgba(255,255,255,.85); text-shadow: 0 0 5px rgba(0,0,0,.5); font: 24px/.8 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: 1px; 
-  -moz-transform: rotate(-18deg); 
+#derby-cta a { display: block; width: 125px; height: 105px; padding: 10px 0; text-align: center; color: #fff; color: rgba(255,255,255,.85); text-shadow: 0 0 5px rgba(0,0,0,.5); font: 24px/.8 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: 1px;
+  -moz-transform: rotate(-18deg);
   -webkit-transform: rotate(-18deg);
-  -o-transform: rotate(-18deg); 
-  transform: rotate(-18deg); 
-  -moz-transition: color, text-shadow 0.5s; 
-  -webkit-transition: color, text-shadow 0.5s; 
+  -o-transform: rotate(-18deg);
+  transform: rotate(-18deg);
+  -moz-transition: color, text-shadow 0.5s;
+  -webkit-transition: color, text-shadow 0.5s;
   -o-transition: color, text-shadow 0.5s;
-  transition: color, text-shadow 0.5s; 
+  transition: color, text-shadow 0.5s;
 }
-#derby-cta a:hover, #derby-cta a:focus, #derby-cta a:active { color: #fff; text-decoration: none; text-shadow: 0 0 5px rgba(0,0,0,.5), 0 0 5px rgba(200,255,255,.95); 
-  -moz-transition: color, text-shadow 0.1s; 
-  -webkit-transition: color, text-shadow 0.1s; 
+#derby-cta a:hover, #derby-cta a:focus, #derby-cta a:active { color: #fff; text-decoration: none; text-shadow: 0 0 5px rgba(0,0,0,.5), 0 0 5px rgba(200,255,255,.95);
+  -moz-transition: color, text-shadow 0.1s;
+  -webkit-transition: color, text-shadow 0.1s;
   -o-transition: color, text-shadow 0.1s;
-  transition: color, text-shadow 0.1s; 
+  transition: color, text-shadow 0.1s;
 }
 #derby-cta span:before, #derby-cta span:after { content: "\272D"; display: inline-block; font-size: 11px; margin: 0 6px; position: relative; top: -5px; }
 #derby-cta em { font-style: normal; display: block; font-size: 32px; padding: 4px 0 1px; margin: 4px 0 6px; border: solid #fff; border-width: 1px 0; }
@@ -131,7 +131,7 @@
 #demo-main .demo-details .avatar { position: absolute; left: 15px; top: 15px; }
 #demo-main .demo-details .launch { font-size: 1.64em; margin-bottom: 0; }
 #demo-main .demo-details .launch .button { padding: .35em 15px .25em; text-decoration: none; }
-#demo-main .flag { position: absolute; top: 35px; left: -65px; display: inline-block; text-align: center; width: 110px; padding: 4px 80px; background: #d3d011; font: normal 18px/.9 "Bebas Neue", "League Gothic", "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: 2px; 
+#demo-main .flag { position: absolute; top: 35px; left: -65px; display: inline-block; text-align: center; width: 110px; padding: 4px 80px; background: #d3d011; font: normal 18px/.9 "Bebas Neue", "League Gothic", "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: 2px;
   -moz-box-shadow: 0 3px 0 rgba(0,0,0,.5);
   -webkit-box-shadow: 0 3px 0 rgba(0,0,0,.5);
   box-shadow: 0 3px 0 rgba(0,0,0,.5);
@@ -195,14 +195,14 @@
 #demobox .share { position: relative; z-index: 99; margin-top: 8px; }
 
 #share-opts { margin: .75em 0; float: right; width: 200px; }
-.hasJS #share-opts { position: absolute; top: -11px; left: -15px; z-index: 999; float: none; margin: 0; padding: 11px 15px; 
+.hasJS #share-opts { position: absolute; top: -11px; left: -15px; z-index: 999; float: none; margin: 0; padding: 11px 15px;
   -moz-border-radius: 6px;
   -webkit-border-radius: 6px;
   border-radius: 6px;
-  background: #000; 
+  background: #000;
   background: rgba(0,0,0,.9);
-  background: -moz-linear-gradient(top, #333 0, rgba(0,0,0,.9) 100%); 
-  background: -webkit-linear-gradient(top, #333 0, rgba(0,0,0,.9) 100%); 
+  background: -moz-linear-gradient(top, #333 0, rgba(0,0,0,.9) 100%);
+  background: -webkit-linear-gradient(top, #333 0, rgba(0,0,0,.9) 100%);
   background: linear-gradient(top, #333 0, rgba(0,0,0,.9) 100%);
   -moz-box-shadow: 0 2px 6px rgba(0,0,0,.5);
   -webkit-box-shadow: 0 2px 6px rgba(0,0,0,.5);
@@ -229,7 +229,7 @@
 #share-opts #shorturl ::selection { color: #000; background: #ffc145; }
 
 #demobox .flag { position: absolute; top: 8px; left: 392px; z-index: 10; width: 190px; height: 150px; overflow: hidden; }
-#demobox .flag strong { position: absolute; left: -65px; top: 40px; display: inline-block; text-align: center; width: 110px; padding: 4px 80px; background: #d3d011; font: normal 18px/.9 "Bebas Neue", "League Gothic", "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: 2px; color: #333; text-shadow: none; 
+#demobox .flag strong { position: absolute; left: -65px; top: 40px; display: inline-block; text-align: center; width: 110px; padding: 4px 80px; background: #d3d011; font: normal 18px/.9 "Bebas Neue", "League Gothic", "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: 2px; color: #333; text-shadow: none;
   -moz-box-shadow: 0 3px 0 rgba(0,0,0,.5);
   -webkit-box-shadow: 0 3px 0 rgba(0,0,0,.5);
   box-shadow: 0 3px 0 rgba(0,0,0,.5);
@@ -260,7 +260,7 @@
 #demo-manage .edit { color: #2f2f2f; background-color: #a5d9f3; }
 #demo-manage .edit:hover, #demo-manage .edit:focus, #demo-manage .edit:active { color: #000; background-color: #80cdf3; }
 #demo-manage .remove { color: #2f2f2f; background-color: #f07b7b; }
-#demo-manage .remove:hover, #demo-manage .remove:focus, #demo-manage .remove:active, 
+#demo-manage .remove:hover, #demo-manage .remove:focus, #demo-manage .remove:active,
 #demo-manage button:hover .remove, #demo-manage button:focus .remove { color: #000; background-color: #f05b5b; }
 
 .demo-more { font-size: .928em; width: 610px; float: left; color: #666; padding: 20px 0 0; }
@@ -349,10 +349,10 @@
 #page-head.gallery .learn { width: 200px; float: right; padding: 18px; }
 #page-head.gallery .learn ul { color: #861215; list-style: disc; margin: 0 0 0 10px; text-transform: uppercase; }
 #page-head.gallery .learn h2 { margin: -10px -10px 15px; border-radius: 4px; padding: .75em 10px; color: #fff; font-size: 1em; text-align: center; text-transform: uppercase;
-  background-image: none; 
-  background: #000; 
-  background: -moz-linear-gradient(top, #333 0, #000 100%); 
-  background: -webkit-linear-gradient(top, #333 0, #000 100%); 
+  background-image: none;
+  background: #000;
+  background: -moz-linear-gradient(top, #333 0, #000 100%);
+  background: -webkit-linear-gradient(top, #333 0, #000 100%);
   background: linear-gradient(top, #333 0, #000 100%);
 }
 
@@ -389,7 +389,7 @@
 
 .gallery-foot .paging { text-align: center; float: left; width: 69.8%; margin: 0 auto; }
 .gallery-foot .paging li { display: inline; padding-left: 12px; margin-left: 8px; background: none; border-left: 1px solid #666; }
-.gallery-foot .paging li:first-child { border: 0; }  
+.gallery-foot .paging li:first-child { border: 0; }
 .gallery-foot li.prev { padding-right: 0; border-right: 0; margin-right: 0; }
 
 .gallery-foot .paging a { background: url("../img/paging-arrows.png") no-repeat; }
@@ -428,12 +428,12 @@
   -moz-box-shadow: 2px -2px 0 rgba(0,0,0,.1);
   -webkit-box-shadow: 2px -2px 0 rgba(0,0,0,.1);
   box-shadow: 2px -2px 0 rgba(0,0,0,.1);
-  -moz-transform-origin: top left; 
-  -moz-transform: rotate(90deg) translateY(-25px); 
-  -webkit-transform-origin: top left; 
+  -moz-transform-origin: top left;
+  -moz-transform: rotate(90deg) translateY(-25px);
+  -webkit-transform-origin: top left;
   -webkit-transform: rotate(90deg) translateY(-25px);
-  transform-origin: top left; 
-  transform: rotate(90deg) translateY(-25px); 
+  transform-origin: top left;
+  transform: rotate(90deg) translateY(-25px);
 }
 .demohover .flag { left: 17px; top: 5px; }
 
@@ -446,7 +446,7 @@
 .demo .stats .likes { background-position: 0 -850px; }
 .demo .stats .comments { padding: 0; background: none; }
 .demo .stats .comments a { color: #999; padding-left: 22px; background: url("../img/demos/demobox-icons.png") 0 -900px no-repeat; }
-.demo .stats .comments a:hover, .demo .stats .comments a:focus, .demo .stats .comments a:active { color: #333; }  
+.demo .stats .comments a:hover, .demo .stats .comments a:focus, .demo .stats .comments a:active { color: #333; }
 
 .demo .desc { font-size: .786em; margin: 0 0 .75em; }
 .demo .descLink { color: #79120e; font-weight:bold; }
@@ -474,10 +474,10 @@
 /* @Sidebar @modules *********/
 .section-demos .module { padding: 18px; background: #c0c4c8; background: rgba(255,255,255,.6); border: 0; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; -moz-box-shadow: 1px 1px 4px rgba(0,0,0,.4); -webkit-box-shadow: 1px 1px 4px rgba(0,0,0,.4); box-shadow: 1px 1px 4px rgba(0,0,0,.4); }
 .section-demos .mod-title { margin: -10px -10px 15px; border-radius: 4px; padding: .75em 10px; color: #fff; text-align: center; font: 1.124em/1 "Carto Bold", sans-serif; text-transform: uppercase;
-  background-image: none; 
-  background: #000; 
-  background: -moz-linear-gradient(top, #333 0, #000 100%); 
-  background: -webkit-linear-gradient(top, #333 0, #000 100%); 
+  background-image: none;
+  background: #000;
+  background: -moz-linear-gradient(top, #333 0, #000 100%);
+  background: -webkit-linear-gradient(top, #333 0, #000 100%);
   background: linear-gradient(top, #333 0, #000 100%);
 }
 
@@ -496,7 +496,7 @@
 .replaced .replacement .button { font-size: 1.142em; }
 .replaced input:hover + .replacement .button { background-color: #b2181c; }
 
-.submission .fm-submit button, p.choices .positive { background-color: #689032;  
+.submission .fm-submit button, p.choices .positive { background-color: #689032;
   -moz-box-shadow: inset 0 0 3px rgba(90,125,40,.5), 1px 1px 3px rgba(0,0,0,.4);
   -webkit-box-shadow: inset 0 0 3px rgba(90,125,40,.5), 1px 1px 3px rgba(0,0,0,.4);
   box-shadow: inset 0 0 3px rgba(90,125,40,.5), 1px 1px 2px rgba(0,0,0,.4);
@@ -569,3 +569,24 @@ body.popup .page-title { font: 200 1.714em/1 "Bebas Neue", "League Gothic", Haet
 #flag-confirm textarea { display: block; width: 500px; height: 8em; }
 #flag-confirm .submit { margin: 1em 0 0; }
 #flag-confirm .submit button { font-size: 1.142em; }
+
+#nav-toolbar { font-size: .785em; text-shadow: 1px 1px 0 rgba(255,255,255,.25); padding: 0; border-top: 1px solid #cbc8b9; border-bottom: 1px solid #f8f8f6; background: #f6f6f1 url("../img/bg-content.png") fixed; }
+#nav-toolbar>div { background: #e4e4d9; background: rgba(198,198,175,.35); }
+#nav-toolbar .crumbs { margin: 0; }
+
+#nav-toolbar a:link, #nav-toolbar a:visited { color: #6d6d67; }
+#nav-toolbar a:hover, #nav-toolbar a:focus, #nav-toolbar a:active { color: #25a; }
+#nav-toolbar a.disabled:hover, #nav-toolbar a.disabled:focus, #nav-toolbar a.disabled:active { color: #6d6d67; cursor: default; }
+
+#nav-toolbar .crumbs { float: left; }
+#nav-toolbar .crumbs ol { margin: 0; padding: .6em 0 .7em; list-style: none; }
+#nav-toolbar .crumbs li { display: inline; padding-left: 13px; margin-left: 6px; background: url("../img/wiki/nav-arrows.png") -15px -698px no-repeat; }
+#nav-toolbar .crumbs li.first, #nav-toolbar .crumbs li.second { display:none; }
+#nav-toolbar .crumbs li.first.last { display: inline; }
+#nav-toolbar .crumbs li.crumb-one { padding-left: 0; margin-left: 0; background: none; }
+#nav-toolbar .crumbs li a { text-decoration: underline; }
+
+.html-rtl #nav-toolbar .crumbs { float: right; }
+.html-rtl #nav-toolbar .crumbs li { padding-left: 13px; margin-left: 6px; background-position: 0 -798px; }
+.html-rtl #nav-toolbar .crumbs li.crumb-one { background: url("../img/wiki/nav-arrows.png") 0 -798px no-repeat; }
+.html-rtl #nav-toolbar .crumbs li:last-child { background: none; }
