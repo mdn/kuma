@@ -395,7 +395,6 @@ div.bug, div.warning, div.overheadIndicator {
   pre {
     color: text-color;
   }
-
 }
 
 /* page attachments block at the bottom of the article */
@@ -776,6 +775,221 @@ span.cke_skin_kuma {
 }
 
 
+/* Page move */
+.move-page {
+    dl {
+        width: auto;
+    }
+
+    dt {
+        width: 120px;
+    }
+
+    input[type=text] {
+        width: 400px;
+    }
+
+    #page-buttons {
+        right: auto;
+        top: auto;
+        text-align: left;
+        margin: grid-spacing 0;
+        position: relative;
+    }
+
+    .warning {
+        color: #fff;
+    }
+}
+
+.parent-suggest-container {
+    position: relative;
+
+    &.show {
+        .move-lookup-link {
+            display: none;
+        }
+
+        #parent-suggest-input-container {
+            display: block;
+            opacity: 1;
+            top: -22px;
+            left: 0;
+
+            vendorize(transition, unquote('opacity, top .4s'));
+
+        }
+    }
+}
+
+.move-lookup-link {
+  display: inline-block;
+  margin-left: (grid-spacing * 2);
+}
+
+.move-descendants-list {
+    margin-left: grid-spacing;
+    list-style-type: circle;
+}
+
+#parent-suggestion  {
+    width: 300px;
+}
+
+.warning .move-descendants-list {
+    padding: 0 0 grid-spacing grid-spacing;
+}
+
+#parent-suggest-input-container {
+    background: #eaeff2;
+    create-gradient(#eaeff2, #d4dde4, top);
+    padding: 10px;
+    border: 1px solid #d4dde4;
+    box-shadow: 0 5px 10px #ccc;
+    position: absolute;
+    margin-left: grid-spacing;
+    opacity: 0;
+    top: -10px;
+    left: -90000px;
+
+    generate-arrow(7px);
+
+    &:before {
+        border-right: 7px solid #dfe6eb;
+        border-left: 0;
+        left: -7px;
+        top: 20px;
+    }
+    &:after {
+        border-right: 6px solid #dfe6eb;
+        border-left: 0;
+        left: -6px;
+        top: 21px;
+    }
+}
+
+.move-descendants {
+    border: 1px solid #dfe6eb;
+    padding: 10px 10px 0 10px;
+    background: #eaeff2;
+    resize: vertical;
+    margin-bottom: grid-spacing;
+
+    a {
+        display: inline-block;
+        margin: 0 0 10px 0;
+    }
+}
+
+/* Revision page */
+div.revision-info li {
+    list-style-position: inside;
+}
+
+#doc-source textarea {
+    height: 400px;
+    width: 100%;
+}
+
+/* Revision history */
+.choice-list {
+    margin: grid-spacing 0;
+
+    ul {
+        display: inline;
+    }
+
+    li {
+        display: inline-block;
+        list-style: none;
+        padding: 0 5px;
+        font-weight: bold;
+    }
+}
+
+#revision-list {
+    ul {
+        margin: 5px 0;
+    }
+
+    li {
+        list-style: none;
+        padding: 4px 0;
+
+        &:nth-child(odd) {
+            background: rgba(170, 160, 130, .1);
+        }
+
+        &.current {
+            background: rgba(198, 198, 175, .25);
+            border-bottom: solid 2px #b8b5a3;
+            border-top: solid 2px #b8b5a3;
+
+            div.status {
+                color: #223d61;
+                font-weight: bold;
+            }
+        }
+
+        &.rejected div.creator {
+            color: #999;
+            text-decoration: line-through;
+        }
+    }
+
+    div.radio {
+        display: inline-block;
+        text-align: center;
+        width: 15px;
+    }
+
+    div.date {
+        display: inline-block;
+        padding: 0 0 0 10px;
+        width: 190px;
+    }
+
+    div.status {
+        display: inline-block;
+        width: 80px;
+
+        a {
+            font-weight: bold;
+        }
+    }
+
+    div.creator {
+        color: #333;
+        display: inline-block;
+        width: 175px;
+    }
+
+    div.comment {
+        display: inline-block;
+        width: 460px;
+    }
+
+    div.delete {
+        display: inline-block;
+        text-align: center;
+        width: 50px;
+    }
+
+    div.compare {
+        height: 20px;
+        padding: 0 0 0 50px;
+    }
+
+    div.compare.top {
+        background: transparent url(media-url-dir + 'compare.arrows.png') no-repeat 4px 5px;
+        padding-bottom: 5px;
+    }
+
+    div.compare.bottom {
+        background: transparent url(media-url-dir + 'compare.arrows.png') no-repeat 4px -40px;
+        padding-top: 10px;
+    }
+}
 
 /*
   Small desktop.  We go to a two-column layout

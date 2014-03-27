@@ -312,7 +312,7 @@ class ViewTests(TestCaseBase):
         """)
         resp = self.client.get(r.get_absolute_url())
         page = pq(resp.content)
-        ct = page.find('#doc-content .page-content').html()
+        ct = page.find('#wikiArticle').html()
         ok_('<svg>' not in ct)
         ok_('<a href="#">Hahaha</a>' in ct)
 

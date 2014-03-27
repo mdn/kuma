@@ -158,10 +158,6 @@
         }
         initDetailsTags();
 
-        if ($body.is('.review')) { // Review pages
-            initApproveReject();
-        }
-
         if ($body.is('.edit, .new, .translate')) {
             initMetadataEditButton();
             initSaveAndEditButtons();
@@ -608,23 +604,6 @@
        });
     }
 
-    function initApproveReject() {
-
-        var approveModal = $('#approve-modal');
-        var rejectModal = $('#reject-modal');
-
-        $('#btn-approve').on('click', function() {
-            approveModal.show();
-            rejectModal.hide();
-        });
-        approveModal.hide();
-        $('#btn-reject').on('click', function() {
-            rejectModal.show();
-            approveModal.hide();
-        });
-        rejectModal.hide();
-    }
-
     function initAttachmentsActions() {
         var $attachmentsTable = $('#page-attachments-table');
         var $attachmentsCount = $('#page-attachments-count');
@@ -786,7 +765,7 @@
             }
 
             // Show the spinner
-            $pageAttachmentsSpinner.css("opacity", 1);
+            $pageAttachmentsSpinner.css('opacity', 1);
         });
     }
 

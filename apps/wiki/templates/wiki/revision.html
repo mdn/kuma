@@ -7,10 +7,11 @@
 
 {% block content %}
 
-  <article id="wiki-doc">
+  <article>
     <h1>{{ document.title }}</h1>
+
     <details class="h2" open="open">
-      <summary>{{ _('Revision Information') }}</summary>
+      <summary class="hidden">{{ _('Revision Information') }}</summary>
       <div class="revision-info">
         <ul>
           <li>
@@ -51,20 +52,20 @@
       </div>
     </details>
 
-    <details>
+    <details><div class="wiki-block">
+      <h2><summary>{{ _('Revision Content') }}</summary></h2>
+      <article id="wikiArticle">
+        {{ revision.content|wiki_bleach }}
+      </article>
+    </div></details>
+
+    <details><div class="wiki-block">
       <h2><summary>{{ _('Revision Source') }}</summary></h2>
       <div id="doc-source">
-        <textarea readonly="readonly">{{ revision.content }}</textarea>
+        <pre class="brush:html">{{ revision.content }}</pre>
       </div>
-    </details>
+    </div></details>
 
-    <details>
-      <h2><summary>{{ _('Revision Content') }}</summary></h2>
-      <div id="doc-content">
-        <div class="page-content boxed">{{ revision.content|wiki_bleach }}</div>
-      </div>
-    </details>
     <a href="{{ url('wiki.revert_document', document.full_path, revision.id) }}" class="button">{{ _('Revert to this revision') }}</a>
   </article>
-
 {% endblock %}
