@@ -28,9 +28,11 @@
             ['_trackPageview']);
   _gaq.push(removeUtms);
 
+  {% set GA_FILE = 'u/ga_debug.js' if settings.TEMPLATE_DEBUG else 'ga.js' %}
+
   (function(a, d) {
     var ga = d.createElement(a); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == d.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    ga.src = ('https:' == d.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/{{ GA_FILE }}';
     var s = d.getElementsByTagName(a)[0]; s.parentNode.insertBefore(ga, s);
   })('script', document);
 
