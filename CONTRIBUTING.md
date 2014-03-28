@@ -6,7 +6,7 @@ Contributing Code
      or on a [bugzilla bug][mdn-backlog] before coding.
   *  Python code style should follow [PEP8 standards][pep8] whenever possible.
   *  Write tests!  The Django site has [good testing docs][django-testing]
-     
+
 [MPL2]: http://www.mozilla.org/MPL/2.0/
 [dev-mdn]: https://lists.mozilla.org/listinfo/dev-mdn
 [mdn-backlog]: http://mzl.la/mdn_backlog
@@ -16,11 +16,10 @@ Contributing Code
 What to work on
 ===============
 
-Please also see our prioritized backlog at:
+Good starting projects are listed on [GitHub][github] and [Bugzilla][bugzilla]. If you have any questions, just ask in the #mdndev IRC channel on irc.mozilla.org!
 
-  <http://mzl.la/mdn_backlog>
-
-Come talk to us in the #mdndev IRC channel on irc.mozilla.org! 
+[github]: https://github.com/mozilla/kuma/issues?labels=good+first+issue&milestone=&page=1&state=open
+[bugzilla]: https://bugzilla.mozilla.org/buglist.cgi?cmdtype=dorem&remaction=run&namedcmd=mdn-mentored&sharer_id=416309
 
 How to submit code
 ==================
