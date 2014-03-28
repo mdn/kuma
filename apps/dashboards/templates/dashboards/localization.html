@@ -18,7 +18,7 @@
           <label for="dash-locale">{{ _('Locale') }}:</label>
           <select name="locale" id="dash-locale">
             <option value="">{{ _('All Locales') }}</option>
-            {% for code, name in settings.LANGUAGE_CHOICES -%}
+            {% for code, name in settings.LANGUAGES -%}
               <option value="{{ code }}" {{ code|ifeq(request.GET.locale, "selected") }}>
                 {{ name }}
               </option>

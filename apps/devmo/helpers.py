@@ -1,20 +1,21 @@
 import datetime
 import re
-import httplib
 import urllib
-import urlparse
-import socket
+import os
 
 from django.conf import settings
 from django.core.cache import cache
 from django.template import defaultfilters
 from django.utils.html import strip_tags
+from django.utils.safestring import mark_safe
 
 import bleach
 from jingo import register
 import jinja2
 import pytz
 from soapbox.models import Message
+from statici18n.utils import get_filename
+from django.contrib.staticfiles.storage import staticfiles_storage
 
 import utils
 from sumo.urlresolvers import split_path, reverse
@@ -27,6 +28,18 @@ register.filter(defaultfilters.timesince)
 register.filter(defaultfilters.truncatewords)
 
 register.filter(utils.entity_decode)
+
+
+@register.function
+def inlinei18n(locale):
+    key = 'statici18n:%s' % locale
+    path = cache.get(key)
+    if path is None:
+        path = os.path.join(settings.STATICI18N_OUTPUT_DIR,
+                            get_filename(locale, settings.STATICI18N_DOMAIN))
+        cache.set(key, path, 60 * 60 * 24 * 30)
+    with staticfiles_storage.open(path) as i18n_file:
+        return mark_safe(i18n_file.read())
 
 
 @register.function

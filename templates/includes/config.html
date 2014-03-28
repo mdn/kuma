@@ -1,5 +1,8 @@
 <script type="text/javascript">
   {{ waffle.wafflejs() }}
+  {% if waffle.flag('static-i18njs') %}
+  {{ inlinei18n(request.locale) }}
+  {% endif %}
   // This represents the site configuration
   window.mdn = {
     build: '{{ BUILD_ID_JS }}',

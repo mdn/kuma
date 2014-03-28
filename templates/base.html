@@ -165,7 +165,9 @@
   </div></footer>
 
   <!-- site js -->
+  {% if not waffle.flag('static-i18njs') %}
   <script src="{{ url('jsi18n') }}build:{{ BUILD_ID_JS }}"></script>
+  {% endif %}
   {% block site_js %}
     <!--[if lte IE 8]><script src="/media/redesign/js/libs/selectivizr-1.0.2/selectivizr-build.js?build={{ BUILD_ID_JS }}"></script><div id="feature-test-old-ie"></div><![endif]-->
 

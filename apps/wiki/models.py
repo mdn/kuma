@@ -1609,7 +1609,7 @@ class Document(NotificationsMixin, models.Model):
 
     @property
     def language(self):
-        return settings.LANGUAGES[self.locale.lower()]
+        return settings.LANGUAGES_DICT[self.locale.lower()]
 
     @property
     def full_path(self):

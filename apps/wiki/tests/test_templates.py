@@ -1134,7 +1134,7 @@ class SelectLocaleTests(TestCaseBase):
                        args=[self.d.full_path])
         eq_(200, response.status_code)
         doc = pq(response.content)
-        eq_(len(settings.LANGUAGE_CHOICES) - 1,  # All except for 1 (en-US)
+        eq_(len(settings.LANGUAGES) - 1,  # All except for 1 (en-US)
             len(doc('#select-locale ul.locales li')))
 
 
