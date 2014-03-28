@@ -86,6 +86,28 @@
                     }
                 }
             });
+        },
+
+        /*
+            Track Clientside errors
+        */
+        trackClientErrors: function() {
+            $(window).on('error', function(e) {
+                analytics.trackEvent([
+                    '_trackEvent',
+                    'JavaScript error',
+                    e.originalEvent.message,
+                    e.originalEvent.filename + ':' + e.originalEvent.lineno
+                ]);
+            });
+            $(document).ajaxError(function(e, request, settings) {
+                analytics.trackEvent([
+                    '_trackEvent',
+                    'Ajax error',
+                    settings.url,
+                    e.result
+                ]);
+            });
         }
     };
 })();

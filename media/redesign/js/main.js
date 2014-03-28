@@ -2,6 +2,11 @@
     'use strict';
 
     /*
+        Track clientside errors
+    */
+    mdn.analytics.trackClientErrors();
+
+    /*
         Some quick feature testing up front
     */
     var isOldIE = $('#feature-test-old-ie').length;
