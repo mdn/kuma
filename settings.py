@@ -625,9 +625,6 @@ MINIFY_BUNDLES = {
         'submission': (
             'redesign/css/submission.css',
         ),
-        'forum-archive': (
-            'redesign/css/forum-archive.css',
-        ),
         'user-banned': (
             'redesign/css/user-banned.css',
         ),
