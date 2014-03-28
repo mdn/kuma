@@ -13,6 +13,9 @@ Getting up and running
 
 #. Install VirtualBox 4.x from http://www.virtualbox.org/
 
+#. (Windows) After installing VirtualBox you need to set the path
+                PATH=C:\Program Files\Oracle\VirtualBox\VBoxManage.exe;
+
 #. Install vagrant using the installer from `vagrantup.com <http://vagrantup.com/>`_
 
 #. Fork the project into your own account. (If you need help, follow the instructions from `Webdev Bootcamp <http://mozweb.readthedocs.org/en/latest/git.html#working-on-projects>`_)
