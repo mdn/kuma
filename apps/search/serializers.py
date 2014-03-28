@@ -1,7 +1,6 @@
 from rest_framework import serializers, pagination
 
-from .fields import (SearchQueryField, DocumentExcerptField,
-                     TopicQueryField, LocaleField)
+from .fields import SearchQueryField, DocumentExcerptField, LocaleField
 from .models import Filter
 
 
@@ -10,7 +9,7 @@ class FilterURLSerializer(serializers.Serializer):
     inactive = serializers.CharField(read_only=True)
 
 
-class FacetedFilterSerializer(serializers.Serializer):
+class FacetedFilterOptionsSerializer(serializers.Serializer):
     name = serializers.CharField(read_only=True)
     slug = serializers.CharField(read_only=True)
     count = serializers.IntegerField(read_only=True)
@@ -20,7 +19,8 @@ class FacetedFilterSerializer(serializers.Serializer):
 
 class FacetedFilterSerializer(serializers.Serializer):
     name = serializers.CharField(read_only=True)
-    options = FacetedFilterSerializer(source='options')
+    slug = serializers.CharField(read_only=True)
+    options = FacetedFilterOptionsSerializer(source='options')
 
 
 class SearchSerializer(pagination.PaginationSerializer):
@@ -52,6 +52,7 @@ class DocumentSerializer(serializers.Serializer):
 
 class FilterGroupSerializer(serializers.Serializer):
     name = serializers.CharField(read_only=True)
+    slug = serializers.CharField(read_only=True)
     order = serializers.CharField(read_only=True)
 
 

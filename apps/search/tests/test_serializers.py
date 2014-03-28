@@ -3,18 +3,18 @@ from nose.tools import ok_, eq_
 from search.models import Filter, FilterGroup
 from search.tests import ElasticTestCase
 
-from search.fields import (DocumentExcerptField, SearchQueryField,
-                           TopicQueryField)
+from search.fields import DocumentExcerptField, SearchQueryField
 from search.models import DocumentType
 from search.serializers import FilterSerializer, DocumentSerializer
 from search.queries import DocumentS
 
 
 class SerializerTests(ElasticTestCase):
-    fixtures = ['test_users.json', 'wiki/documents.json']
+    fixtures = ['test_users.json', 'wiki/documents.json',
+                'search/filters.json']
 
     def test_filter_serializer(self):
-        group = FilterGroup.objects.create(name='Group')
+        group = FilterGroup.objects.get(name='Group')
         filter_ = Filter.objects.create(name='Serializer', slug='serializer',
                                         group=group)
         filter_.tags.add('tag')
@@ -24,7 +24,7 @@ class SerializerTests(ElasticTestCase):
             'slug': 'serializer',
             'tags': ['tag'],
             'operator': 'OR',
-            'group': {'name': 'Group', 'order': 1}})
+            'group': {'name': 'Group', 'slug': 'group', 'order': 1}})
 
     def test_document_serializer(self):
         doc = DocumentS(DocumentType)
@@ -67,11 +67,3 @@ class FieldTests(ElasticTestCase):
         field = SearchQueryField()
         field.context = {'request': request}
         eq_(field.to_native(None), 'test')
-
-    def test_TopicQueryField(self):
-        request = self.get_request('/?topic=spam&topic=eggs')
-        request.QUERY_PARAMS = request.GET
-
-        field = TopicQueryField()
-        field.context = {'request': request}
-        eq_(field.to_native(None), ['spam', 'eggs'])

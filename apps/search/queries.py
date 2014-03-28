@@ -10,7 +10,7 @@ from .utils import QueryURLObject
 
 class Filter(namedtuple('Filter',
                         ['name', 'slug', 'count', 'url',
-                         'page', 'active', 'group'])):
+                         'page', 'active', 'group_name', 'group_slug'])):
     __slots__ = ()
 
     def pop_page(self, url):
@@ -19,13 +19,13 @@ class Filter(namedtuple('Filter',
     def urls(self):
         return {
             'active': self.pop_page(
-                self.url.merge_query_param('topic', self.slug)),
+                self.url.merge_query_param(self.group_slug, self.slug)),
             'inactive': self.pop_page(
-                self.url.pop_query_param('topic', self.slug)),
+                self.url.pop_query_param(self.group_slug, self.slug)),
         }
 
 
-FilterGroup = namedtuple('FilterGroup', ['name', 'order', 'options'])
+FilterGroup = namedtuple('FilterGroup', ['name', 'slug', 'order', 'options'])
 
 
 class DocumentS(S):
@@ -38,7 +38,7 @@ class DocumentS(S):
         self.url = kwargs.pop('url', None)
         self.current_page = kwargs.pop('current_page', None)
         self.serialized_filters = kwargs.pop('serialized_filters', None)
-        self.topics = kwargs.pop('topics', None)
+        self.selected_filters = kwargs.pop('selected_filters', None)
         super(DocumentS, self).__init__(*args, **kwargs)
 
     def _clone(self, next_step=None):
@@ -46,7 +46,7 @@ class DocumentS(S):
         new.url = self.url
         new.current_page = self.current_page
         new.serialized_filters = self.serialized_filters
-        new.topics = self.topics
+        new.selected_filters = self.selected_filters
         return new
 
     def all(self):
@@ -73,28 +73,36 @@ class DocumentS(S):
 
             filter_ = filter_mapping.get(slug, None)
             if filter_ is None:
-                name = slug
-                group = None
+                filter_name = slug
+                group_name = None
+                group_slug = None
             else:
                 # Let's check if we can get the name from the gettext catalog
-                name = _(filter_['name'])
-                group = _(filter_['group']['name'])
+                filter_name = _(filter_['name'])
+                group_name = _(filter_['group']['name'])
+                group_slug = filter_['group']['slug']
 
-            f = Filter(url=url,
+            filter_groups.setdefault((
+                group_name,
+                group_slug,
+                filter_['group']['order']
+            ), []).append(
+                Filter(url=url,
                        page=self.current_page,
-                       name=name,
+                       name=filter_name,
                        slug=slug,
                        count=facet.get('count', 0),
-                       active=slug in self.topics,
-                       group=group)
-
-            filter_groups.setdefault((group, filter_['group']['order']), []).append(f)
+                       active=slug in self.selected_filters,
+                       group_name=group_name,
+                       group_slug=group_slug))
 
         # return a sorted list of filters here
         grouped_filters = []
-        for (group, order), filters in filter_groups.items():
+        for group_options, filters in filter_groups.items():
+            group_name, group_slug, group_order = group_options
             sorted_filters = sorted(filters, key=attrgetter('name'))
-            grouped_filters.append(FilterGroup(group,
-                                               order,
-                                               sorted_filters))
+            grouped_filters.append(FilterGroup(name=group_name,
+                                               slug=group_slug,
+                                               order=group_order,
+                                               options=sorted_filters))
         return sorted(grouped_filters, key=attrgetter('order'), reverse=True)

@@ -8,6 +8,7 @@ from django.db.models.signals import post_delete
 from django.utils.html import strip_tags
 from django.utils import timezone
 from django.utils.functional import cached_property
+from django.template.defaultfilters import slugify
 
 from elasticutils.contrib.django import MappingType, Indexable
 from elasticutils.contrib.django.tasks import index_objects
@@ -122,13 +123,24 @@ class FilterGroup(models.Model):
     A way to group different kinds of filters from each other.
     """
     name = models.CharField(max_length=255)
+    slug = models.CharField(max_length=255, blank=True, null=True,
+                            help_text='the slug to be used as the name of the '
+                                      'query parameter in the search URL')
     order = models.IntegerField(default=1,
-                                help_text='An integer defining which order the '
-                                          'filter group should show up in the '
-                                          'sidebar')
+                                help_text='An integer defining which order '
+                                          'the filter group should show up '
+                                          'in the sidebar')
 
     class Meta:
         ordering = ('-order', 'name')
+        unique_together = (
+            ('name', 'slug'),
+        )
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super(FilterGroup, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return self.name
@@ -169,14 +181,17 @@ class Filter(models.Model):
                                             'to users or not.')
 
     class Meta(object):
-        unique_together = (('name', 'slug'),)
+        unique_together = (
+            ('name', 'slug'),
+        )
 
     def __unicode__(self):
         return self.name
 
     def get_absolute_url(self):
         path = reverse('search', locale=settings.LANGUAGE_CODE)
-        return '%s%s?topic=%s' % (settings.SITE_URL, path, self.slug)
+        return '%s%s?%s=%s' % (settings.SITE_URL, path,
+                               self.group.slug, self.slug)
 
 
 @register_mapping_type

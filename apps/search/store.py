@@ -7,9 +7,10 @@ from django.utils.encoding import smart_str
 
 from sumo.urlresolvers import reverse
 
+from .filters import get_filters
+
 QUERY_PARAM = 'q'
 PAGE_PARAM = 'page'
-TOPICS_PARAM = 'topic'
 
 
 def referrer_url(request):
@@ -32,11 +33,11 @@ def ref_from_url(url):
     url = URL(url)
     query = url.query.dict.get(QUERY_PARAM, '')
     page = url.query.dict.get(PAGE_PARAM, 1)
-    topics = url.query.multi_dict.get(TOPICS_PARAM, [])
+    filters = get_filters(url.query.multi_dict.get)
     locale = translation.get_language()
 
     md5 = hashlib.md5()
-    for value in [query, page, locale] + topics:
+    for value in [query, page, locale] + filters:
         md5.update(smart_str(value))
 
     return md5.hexdigest()[:16]

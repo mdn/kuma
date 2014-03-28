@@ -1,11 +1,21 @@
 import operator
 from django.conf import settings
+from django.utils.datastructures import SortedDict
+
 from elasticutils import Q
 from elasticutils.contrib.django import F
 from rest_framework.filters import BaseFilterBackend
 from waffle import flag_is_active
 
-from search.models import DocumentType, Filter
+from search.models import DocumentType, Filter, FilterGroup
+
+
+def get_filters(getter_func):
+    filters = SortedDict()
+    for slug in FilterGroup.objects.values_list('slug', flat=True):
+        for filters_slug in getter_func(slug, []):
+            filters[filters_slug] = None
+    return filters.keys()
 
 
 class LanguageFilterBackend(BaseFilterBackend):
@@ -121,7 +131,7 @@ class DatabaseFilterBackend(BaseFilterBackend):
         for serialized_filter in view.serialized_filters:
             filter_tags = serialized_filter['tags']
             filter_operator = Filter.OPERATORS[serialized_filter['operator']]
-            if serialized_filter['slug'] in view.current_topics:
+            if serialized_filter['slug'] in view.selected_filters:
 
                 if len(filter_tags) > 1:
                     tag_filters = []
