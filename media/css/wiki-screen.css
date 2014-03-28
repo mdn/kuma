@@ -1,55 +1,4 @@
-/*----------------------------------------------------------------------------
-Screen CSS file for MDN wiki (kuma)
-Created by Craig Cook - focalcurve.com
-        on 17 May, 2011
-
-Colors -
-Orange        #fb9500
-Green         #8dc434
-Blue          #00b6f0
-Red           #ed2024
-Gold          #f8d575
-Off-black     #333
-Dark red      #630a0c
-
-Link          #369
-Hover         #25a
-Visited       #69c
-
-Font sizes -
-16px *  .875 = 14px (base size)
-
-14px * 1.857 = 26px
-14px * 1.714 = 24px
-14px * 1.571 = 22px
-14px * 1.428 = 20px
-14px * 1.285 = 18px
-14px * 1.142 = 16px
-14px *  .928 = 13px
-14px *  .857 = 12px
-14px *  .785 = 11px
-14px *  .714 = 10px
-14px *  .642 = 9px
------------------------------------------------------------------------------*/
-
 a.new:link, a.new:visited, a.new:hover, a.new:active, a.new:focus { color: #900; }
-
-/*** =External Link Styles *********/
-.article a.external, .article a[rel~="external"] { padding-right: 16px; background: transparent url("../img/wiki/icons/link_external.png") 99% 40% no-repeat; }
-.article a[href^="mailto:"], .article .link-mailto { padding-right: 16px; background: url("../img/wiki/icons/link_mail.png") 99% 40% no-repeat; }
-.article a[href^="news://"] { padding-right: 18px; background: url("../img/wiki/icons/link_news.png") 99% 40% no-repeat; }
-.article a[href^="ftp://"], .article .link-ftp { padding-right: 18px; background: url("../img/wiki/icons/link_download.png") 99% 40% no-repeat; }
-.article a[href^="irc://"], .article .link-irc { padding-right: 18px; background: url("../img/wiki/icons/link_chat.png") 99% 40% no-repeat; }
-
-.article a.imagelink { background: none; padding-right: 0; }
-
-/*** @Basics *********/
-.page-content h1, .page-content h2, .page-content h3, .page-content h4, .page-content h5, .page-content h6 { font-family: Georgia, Times, "Times New Roman", serif; position: relative; }
-.page-content h1, .page-content h2 { border-bottom: 1px solid #e0e0dc; }
-.page-content h2 { font-size: 1.628em; }
-.page-content h3 { font-size: 1.428em; }
-.page-content h4 { font-size: 1.142em; }
-
 
 .page-content blockquote { padding: 0 25px; border-left: 5px solid #ccc; }
 .page-content ul { list-style: disc; padding-left: 22px; }
@@ -70,13 +19,15 @@ a.new:link, a.new:visited, a.new:hover, a.new:active, a.new:focus { color: #900;
 .page-content thead th { background: #f3f3ef; }
 
 /* Increase line-height in wide windows */
-.page-content { line-height: inherit; -moz-transition: line-height 0.2s ease-in-out; -webkit-transition: line-height 0.2s ease-in-out; transition: line-height 0.2s ease-in-out; } 
-@media screen and (min-width: 890px) { 
-  .page-content { line-height: 1.572; -moz-transition: line-height 0.2s ease-in-out; -webkit-transition: line-height 0.2s ease-in-out; transition: line-height 0.2s ease-in-out; } 
+.page-content { line-height: inherit; -moz-transition: line-height 0.2s ease-in-out; -webkit-transition: line-height 0.2s ease-in-out; transition: line-height 0.2s ease-in-out; }
+@media screen and (min-width: 890px) {
+  .page-content { line-height: 1.572; -moz-transition: line-height 0.2s ease-in-out; -webkit-transition: line-height 0.2s ease-in-out; transition: line-height 0.2s ease-in-out; }
 }
 
+/*** Used in content ***/
 img.lwrap { background: #fff; padding: 0 20px .75em 0; }
 img.rwrap { background: #fff; padding: 0 0 .75em 20px; }
+/*** End: Used in content ***/
 
 /* @Layout (wiki is liquid) *********/
 .wrap { position: relative; width: 95%; min-width: 760px; max-width: 1200px; padding: 0 10px; margin: 0 auto; }
@@ -103,17 +54,17 @@ textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
 
 
 /* page attachments */
-@-moz-keyframes newAttachment { 
-  0% { background-color: #90ee90; } 
-  100% { background-color: transparent; } 
+@-moz-keyframes newAttachment {
+  0% { background-color: #90ee90; }
+  100% { background-color: transparent; }
 }
-@-webkit-keyframes newAttachment { 
-  0% { background-color: #90ee90; } 
-  100% { background-color: transparent; } 
+@-webkit-keyframes newAttachment {
+  0% { background-color: #90ee90; }
+  100% { background-color: transparent; }
 }
-@keyframes newAttachment { 
-  0% { background-color: #90ee90; } 
-  100% { background-color: transparent; } 
+@keyframes newAttachment {
+  0% { background-color: #90ee90; }
+  100% { background-color: transparent; }
 }
 #page-attachments { clear: both; }
 #page-attachments table  { margin: 20px 0 0 0; width: 100%; border: 1px solid #E0E0DC; border-bottom:0; border-right:0; border-collapse: collapse; }
@@ -124,7 +75,7 @@ textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
 #page-attachments .attachment-description { font-size: .9em; font-style: italic; }
 #page-attachments .attachment-name-cell { width: 40%; }
 #page-attachments .attachment-error { color: #900; font-size: .9em; }
-#page-attachments .new-row { 
+#page-attachments .new-row {
   -moz-animation-name: newAttachment;
   -moz-animation-duration: 2s;
   -webkit-animation-name: newAttachment;
@@ -139,63 +90,6 @@ textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
 #page-attachments-new-table textarea { height: 40px; }
 #page-attachments-upload-target { visibility: hidden; height: 1px; width: 1px; }
 #page-attachments-spinner { opacity: 0; display: inline-block; width: 16px; height:16px; margin-left: 10px; -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";  }
-
-/*** @Tools @Nav *********/
-#nav-toolbar { font-size: .785em; text-shadow: 1px 1px 0 rgba(255,255,255,.25); padding: 0; border-top: 1px solid #cbc8b9; border-bottom: 1px solid #f8f8f6; background: #f6f6f1 url("../img/bg-content.png") fixed; }
-#nav-toolbar>div { background: #e4e4d9; background: rgba(198,198,175,.35); }
-#nav-toolbar .crumbs { margin: 0; }
-
-#tool-menus { width: 300px; float: right; }
-#tool-menus ul li.menu { float: right; padding: 0; margin: 0; position: relative; }
-#tool-menus li a { display: block; padding: .6em 20px .7em 8px; background: transparent url("../img/wiki/menu-arrow.png") 92% 0 no-repeat; }
-#tool-menus li a:hover, #tool-menus li a:focus, #tool-menus li a:active, #tool-menus li.sfhover > a { background-color: #369; background-position: 92% -100px; color: #fff; text-decoration: none; text-shadow: 1px 1px 0 rgba(0,0,0,.25); }
-#tool-menus li li a, #tool-menus li li strong { display: block; padding: .5em 15px; background: transparent none; }
-#tool-menus li li strong { background-color: #f5f5f1; }
-
-#tools .menu ul { position: absolute; left: -999em; z-index: 9999; width: 180px; background: #fff; border: 1px solid #c6c6c2; -moz-box-shadow: 2px 2px 0 rgba(170,160,130,.2); -webkit-box-shadow: 2px 2px 0 rgba(170,160,130,.2); box-shadow: 2px 2px 0 rgba(170,160,130,.2); }
-#tools.superfish .menu ul { left: auto; right: 0; z-index: 9999; }
-#tools .menu ul li { width: 180px; margin: 0; font-size: 1.12em; }
-#tools .menu:hover ul, #tool-menus ul .sfhover ul { left: auto; right: 0; }
-
-#nav-toolbar a:link, #nav-toolbar a:visited { color: #6d6d67; }
-#nav-toolbar a:hover, #nav-toolbar a:focus, #nav-toolbar a:active { color: #25a; }
-#nav-toolbar a.disabled:hover, #nav-toolbar a.disabled:focus, #nav-toolbar a.disabled:active { color: #6d6d67; cursor: default; }
-
-.sf-js-enabled .toggle:focus { outline: 0; }
-
-/*** @Breadcrumbs *********/
-#nav-toolbar .crumbs { float: left; }
-#nav-toolbar .crumbs ol { margin: 0; padding: .6em 0 .7em; list-style: none; }
-#nav-toolbar .crumbs li { display: inline; padding-left: 13px; margin-left: 6px; background: url("../img/wiki/nav-arrows.png") -15px -698px no-repeat; }
-#nav-toolbar .crumbs li.first, #nav-toolbar .crumbs li.second { display:none; }
-#nav-toolbar .crumbs li.first.last { display: inline; }
-#nav-toolbar .crumbs li.crumb-one { padding-left: 0; margin-left: 0; background: none; }
-#nav-toolbar .crumbs li a { text-decoration: underline; }
-
-/* @Footer *********/
-.last-mod { clear: both; text-align: right; font-size: .785em; }
-
-/* @Search *********/
-#doc-search { border: 1px solid #cbc8b9; background: rgba(198,198,175,.25); padding: 4px; margin-bottom: 1em; font-size: .928em; }
-#doc-search p { margin: 0; }
-#doc-search #q-docs { width: 590px; margin-right: 8px; }
-#doc-search #doc-filter { width: 140px; margin-right: 8px; }
-
-@media screen and (max-width: 890px) { 
-  #site-search { width: 190px; -moz-transition: width 0.2s ease-in-out; -webkit-transition: width 0.2s ease-in-out; transition: width 0.2s ease-in-out; }
-  #site-search #q { width: 90px; -moz-transition: width 0.2s ease-in-out; -webkit-transition: width 0.2s ease-in-out; transition: width 0.2s ease-in-out; }
-}
-
-/* @Search @Results *********/
-#google-branding { font-size: .785em; float: right; margin-top: -3.75em; opacity: .3; }
-#google-branding .gsc-branding-text { vertical-align: top; padding-right: 2px; }
-
-#search-results .gs-result { margin: 0 0 1.2em; padding: 0 2px 1.2em; border-bottom: 1px dotted #d8d4ca; }
-#search-results .gs-title { font-size: 1em; font-weight: bold; margin: 0 0 .25em; }
-#search-results .gs-snippet { font-size: .857em; margin: 0 0 .25em; }
-#search-results .gs-visibleUrl { font-size: .785em; display: inline; margin-right: 10px; color: #aaa; }
-#search-results .gs-visibleUrl-short { font-weight: bold; }
-#search-results div.gs-watermark { display: none; }
 
 /* @Custom styles *********/
 p.footnote { font-size: 90%; font-style: italic; color: #716d65; }
@@ -213,17 +107,9 @@ div.note p:last-child, div.tip p:last-child, div.warning.review-technical p:last
 .title { position: relative; margin-bottom: 0.8em; }
 .title:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; } /* clear floats */
 .title h1 { /* float: left; */ width: 60%; padding-left: 18px; margin-bottom: 0; padding-bottom: 0; }
-.title h1.talk span { font-size: .538em; font-weight: normal; color: #6d6d67; }
-.title .pageback { font-size: .857em; margin-top: -1.6em; float: left; width: 75%; }
-.title .page-moved { float: left; width: 60%; clear: both; margin: -1.5em 0 1em; font-size: .785em; }
 .title .redirected-from, .title .offline-notice { padding: 5px 0 0 18px; font-size: 0.785em; }
-.title .offline-notice a { color: #888; }
 
 .template { display: none; }
-
-a.edit-section { display: none; margin-top: 0.5em; float: right; padding: .25em 5px .15em; border: 0; border-radius: 3px; box-shadow: 1px 1px 0 rgba(0,0,0,.25); color: #333; background: #a5d9f3 url("../img/light-shade.png") 0 .75em repeat-x; font: 200 15px/1 "Bebas Neue", "League Gothic", Haettenschweiler, sans-serif; text-transform: uppercase; letter-spacing: .5px; text-decoration: none; }
-a.edit-section:before { content: "\25c0\00a0"; font-size: .857em; }
-a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333; background-color: #ade4ff; text-decoration: none; }
 
 .edited-section { display: none; }
 .edited-section a.edit-section { display: none; }
@@ -263,13 +149,6 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 .editing #btn-properties { font-weight: bold; }
 
 .editing .save-state { font-size: .85em; margin: -1.75em 0 1.5em; color: #888; padding-left: 20px; clear:both; }
-.editing #btn-savedraft { font-family: inherit; font-size: 1em; line-height: 1; text-transform: none; color: #333; padding: 0; background: transparent none; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
-.editing #btn-savedraft:hover, .editing #btn-savedraft:focus { text-decoration: underline; color: #25a; }
-
-.previewing .title { float: left; width: 45%; }
-.previewing .title h1 { width: auto; float: none; color: #768e99; }
-.previewing .title h1 em { color: #333; font-style: normal; }
-.previewing .article-content { margin-top: 1em; border-color: #c7dae9; }
 
 #page-buttons { width: 50%; text-align: right; margin: 0; position: absolute; right: 4px; top: 20px; }
 #page-buttons li { margin: 0 0 2px 10px; }
@@ -287,59 +166,55 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 
 #action-bar .ban-link { background-image: none; }
 
-.btn-save { 
-  background: #d7eca1; 
-  background: -moz-linear-gradient(top, #d7eca1 0, #cce390 100%); 
+.btn-save {
+  background: #d7eca1;
+  background: -moz-linear-gradient(top, #d7eca1 0, #cce390 100%);
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #d7eca1), color-stop(100%, #cce390));
   background: linear-gradient(top, #d7eca1 0, #cce390 100%);
 }
 .btn-save:hover, .btn-save:focus {
-  background: #c3e56d; 
-  background: -moz-linear-gradient(top, #c3e56d 0, #b3d55b 100%); 
+  background: #c3e56d;
+  background: -moz-linear-gradient(top, #c3e56d 0, #b3d55b 100%);
   background: -webkit-linear-gradient(top, #c3e56d 0, #b3d55b 100%);
   background: linear-gradient(top, #c3e56d 0, #b3d55b 100%);
 }
 #btn-save-and-edit { display: none; }
 #btn-save-and-edit.loading span {
-    padding-left: 20px; 
+    padding-left: 20px;
     margin-left: -5px;
     background: url(../img/wiki/save-and-keep-editing-arrows.gif) no-repeat 0px 1px;
 }
-#page-buttons iframe#save-and-edit-target { 
-    visibility: hidden; height: 1px; width: 1px; 
+#page-buttons iframe#save-and-edit-target {
+    visibility: hidden; height: 1px; width: 1px;
 }
-.btn-preview { 
+.btn-preview {
   background: #cce3f4;
-  background: -moz-linear-gradient(top, #cce3f4 0, #c0d7ea 100%); 
+  background: -moz-linear-gradient(top, #cce3f4 0, #c0d7ea 100%);
   background: -webkit-linear-gradient(top, #cce3f4 0, #c0d7ea 100%);
   background: linear-gradient(top, #cce3f4 0, #c0d7ea 100%);
 }
 .btn-preview:hover, .btn-preview:focus {
   background: #abd5f4;
-  background: -moz-linear-gradient(top, #abd5f4 0, #a7cee9 100%); 
+  background: -moz-linear-gradient(top, #abd5f4 0, #a7cee9 100%);
   background: -webkit-linear-gradient(top, #abd5f4 0, #a7cee9 100%);
   background: linear-gradient(top, #abd5f4 0, #a7cee9 100%);
 }
-.btn-discard, .btn-cancel { 
-  background: #f2d2c6; 
-  background: -moz-linear-gradient(top, #f2d2c6 0, #efc6b7 100%); 
+.btn-discard, .btn-cancel {
+  background: #f2d2c6;
+  background: -moz-linear-gradient(top, #f2d2c6 0, #efc6b7 100%);
   background: -webkit-linear-gradient(top, #f2d2c6 0, #efc6b7 100%);
   background: linear-gradient(top, #f2d2c6 0, #efc6b7 100%);
 }
-.btn-discard:hover, .btn-discard:focus, 
+.btn-discard:hover, .btn-discard:focus,
 .btn-cancel:hover, .btn-cancel:focus {
   background: #f8b8a0;
-  background: -moz-linear-gradient(top, #f8b8a0 0, #f8a688 100%); 
+  background: -moz-linear-gradient(top, #f8b8a0 0, #f8a688 100%);
   background: -webkit-linear-gradient(top, #f8b8a0 0, #f8a688 100%);
   background: linear-gradient(top, #f8b8a0 0, #f8a688 100%);
 }
 
-.page-content .talkpage { font-size: .857em; padding: .25em 15px; }
-
 .article header .notice { clear: both; position: relative; top: -10px; margin: 10px 0 5px; padding: 10px 15px 0; background: #fcf6d4; border: 1px solid #e5d5c1; }
 .article header .notice p { margin: 0 0 10px; }
-
-/* input#id_title { font-size: 1.857em; width: 80%; padding: .1em 6px; margin: 0 0 10px; } */
 
 #content #ace_content { position: relative; width: 100%; height: 500px; }
 #content #ace_content .ace_warning,
@@ -347,29 +222,9 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
   background-image: none;
 }
 
-@media screen and (max-width: 890px) { 
+@media screen and (max-width: 890px) {
   #page-buttons a, #page-buttons button { font-size: 14px; }
 }
-
-/* @TOC @Table of contents *********/
-#article-nav { float: right; padding: 0 0 1em 20px; background: #fff; width: 230px; position: relative; z-index: 1; }
-#article-nav .page-toc { background: #e4edf7; padding: 16px 18px; margin: 0 0 5px; border: 1px solid #dfe8f2; font-size: .857em; }
-#article-nav .page-toc h2 { margin: 0 0 .75em; border: 0; padding: 0; font: 200 20px/1.2 "Bebas Neue", "League Gothic", Haettenschweiler, sans-serif; text-transform: uppercase; letter-spacing: .5px; }
-#article-nav .page-toc ol { margin: 0; padding: 0; list-style: none; }
-#article-nav .page-toc > ol { padding-left: -.2em; }
-#article-nav .page-toc ol li { margin-bottom: .25em; margin-left: .7em; text-indent: -.5em }
-#article-nav .page-toc ol li span { display: none; } /* hide numbers */
-#article-nav .page-toc ol li ol { margin-top: .5em; padding-left: 15px; }
-
-#article-nav .page-anchors { background: #f1f6fb; margin: 0 0 5px; padding: 6px 18px; border: 1px solid #edf2f7; font-size: .785em; font-style: italic; text-transform: uppercase; }
-#article-nav .page-anchors li { display: inline; padding: 0; margin-right: 12px; background: none; }
-#article-nav .page-anchors a, #article-nav .page-anchors span { padding-left: 16px; }
-#article-nav .page-anchors span { cursor: default; }
-
-/* @IRC @channels *********/
-.suggestchannels { font-size: .857em; padding: 6px 6px 6px 8px; background-color: #f6f6f6; border: 1px solid #f3f3f3; margin-bottom: 5px; }
-.suggestchannels ul { list-style: none; }
-.suggestchannels li { float: left; width: 50% }
 
 /* @Meta *********/
 .article .page-meta { clear: both; margin-top: 30px; }
@@ -415,10 +270,10 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 #content-fields .localized { width: 49%; float: right; }
 
 #content-fields .approved .boxed { padding: 25px; }
-#content-fields .approved header:after { position: absolute; bottom: -30px; left: 3px; content: ""; display: block; width: 95%; height: 30px; 
-  background:  -moz-linear-gradient(bottom,  rgba(255, 255, 255, .1) 0,  rgba(255, 255, 255, 1) 20px);  
+#content-fields .approved header:after { position: absolute; bottom: -30px; left: 3px; content: ""; display: block; width: 95%; height: 30px;
+  background:  -moz-linear-gradient(bottom,  rgba(255, 255, 255, .1) 0,  rgba(255, 255, 255, 1) 20px);
   background:  -webkit-linear-gradient(bottom,  rgba(255, 255, 255, .1) 0,  rgba(255, 255, 255, 1) 20px);
-  background:  linear-gradient(bottom,  rgba(255, 255, 255, .1) 0,  rgba(255, 255, 255, 1) 20px);  
+  background:  linear-gradient(bottom,  rgba(255, 255, 255, .1) 0,  rgba(255, 255, 255, 1) 20px);
 }
 
 #trans-description { margin: 0 0 1em; }
@@ -436,12 +291,6 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
   white-space: normal;
 }
 
-/* Wiki offline notice - jQuery UI dialog overrides included */
-#offline-dialog-content { display: none; padding-bottom: 20px; }
-.offline-dialog-mac, .offline-dialog-others { display:inline-block; width:200px; height:200px; border: 1px solid #ccc; padding: 20px; position: relative; vertical-align: text-top; }
-.offline-dialog-mac:before, .offline-dialog-others:after { content: attr(data-title); font-weight: bold; position: absolute; top: -10px; left: 10px; background: #eee; padding: 0 10px; }
-.offline-dialog-mac:hover, .offline-dialog-others:hover { text-decoration: none; background: #ddd; color: #333; border-color: #aaa; }
-.offline-dialog-others  { margin-left: 20px; text-align: center; }
 
 
 /* The .no-details styles will get applied only if JavaScript is enabled and <details> is not natively supported. */
@@ -453,19 +302,6 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 /* The following styles are not really needed, since the jQuery script takes care of hiding/displaying the elements. */
 /* However, we're still gonna use CSS as well to prevent FOUC in browsers that understand these selectors. */
 /* Remember: by default (and probably most of the time), the contents of the <details> element are hidden. */
-
-/* Hide all direct descendants of every <details> element */
-/* Note that IE6 doesn't support the child selector; we'll work around that using jQuery later */
-.no-details details > * {
-    display: none;
-}
-
-/* Make sure summary remains visible, and apply a pointer cursor upon hover to indicate it's a clickable element */
-.no-details details summary {
-    cursor: pointer;
-    display: block;
-    margin: 10px 0 30px;
-}
 
 /* Revision diffs */
 .revision-diff dt {
@@ -493,24 +329,6 @@ a.edit-section:hover, a.edit-section:active, a.edit-section:focus { color: #333;
 .revision-diff h3 {
     font-weight: bold;
     margin: 5px 0 0;
-}
-
-table.diff {
-    background: #fff;
-    border: 1px solid #ccc;
-    clear: both;
-    margin: 5px 0 15px;
-    width: 100%;
-    font-family: "Courier New", "Andale Mono", monospace;
-}
-
-
-td.diff_header {
-    text-align:right;
-}
-
-.diff_next {
-    background-color:#c0c0c0;
 }
 
 .diff_add {
@@ -543,7 +361,7 @@ td.diff_header {
 }
 
 /* WYSIWYG-specific styles */
-.ui-autocomplete { 
+.ui-autocomplete {
   z-index: 100001 !important; /* Ugly, but have to do this for the autocomplete component to display on top of the CKEditor dialog */
   max-height: 200px;
   overflow: auto;
@@ -585,9 +403,8 @@ table.compat-table { border: 1px solid #bbb; border-collapse: collapse;}
 table.compat-table td { padding: 5px; border: 1px solid #ccc; text-align: left; background: #fff; vertical-align: top; word-wrap: break-word; }
 table.compat-table td.header, table.compat-table th { border: 1px solid #bbb; padding: 0 5px; background: #eee; text-align: left; font-weight: bold; }
 
-/*** @Legacy classes - Leftovers from the old wiki. These can be phased out. *********/
+/*** Used in content ***/
 span.alllinks { display: block; text-align: right; font-size: 90%; }
-
 table.topicpage-table { width: auto; clear: both; }
 table.topicpage-table td { padding: 10px; width: 50%; vertical-align: top; }
 table.topicpage-table small { font-size: 90%; }
@@ -597,24 +414,15 @@ table.standard-table td.header, table.standard-table th { border: 1px solid #bbb
 table.fullwidth-table { margin-bottom: 1.5em; border: 1px solid #bbb; border-collapse: collapse; width: 100%; background: #fff; }
 table.fullwidth-table td { border: 1px solid #ccc; padding: 5px 15px; text-align: left; vertical-align: top; }
 table.fullwidth-table td.header, table.fullwidth-table th { border: 1px solid #bbb; padding: 0 5px; background: #eee; font-weight: bold; font-size: 1.05em; text-align: left; }
-table.features-table { margin-bottom: 20px; border-collapse: collapse; width: auto; }
-table.features-table td { padding-top: 20px; vertical-align: top; }
-table.features-table td img { float: left; margin: -20px 15px 5px 0px; }
-table.features-table td p { margin: 0 3px; font-size: 95%; }
-table.mainpage-table { margin: 0 0 10px 0; border-collapse: collapse; width: auto; }
-table.mainpage-table td { padding: 0 10px 10px 10px; vertical-align: top; }
-
-.article .prewrong pre { border: 1px dashed #ac6262; background: #fbeded; color: #8a4e4e; }
-.wrong { margin: 0 0 1.5em; padding: 5px; background: #fbeded; border: solid 1px #ac6262; color: #6d675f; }
-.wrong-inline { border: 1px solid #ac6262; padding: 0 3px 0 3px; background: #fbeded; color: #6d675f; }
-.article .wrong-source-code { color: #8a4e4e; }
-.article .right-source-code { color: #537d46; }
-div.bug, div.warning { margin: 0 0 1.5em; border: 2px solid #ac6262; padding: 10px; background: #fbeded; color: #6d675f; }
-  div.bug *:last-child, div.warning *:last-child { padding: 0; margin: 0; }
-
 .originaldocinfo { margin: 15px 0; border: 1px solid #e9e9e9; padding: 10px 10px 0; background: #f3f3f3; font-size: 80%; font-family: Verdana, Tahoma, sans-serif; }
 .originaldocinfo h2 { font-size: 120%; }
+
+/* Used only rarely -- we
 .licenseblock { border: 1px dashed #ccc; padding: 0 10px; background: #f1f1f1; font-size: 80%; font-family: Verdana, Tahoma, sans-serif; }
+/*** End: Used in content ***/
+
+div.warning { margin: 0 0 1.5em; border: 2px solid #ac6262; padding: 10px; background: #fbeded; color: #6d675f; }
+div.warning *:last-child { padding: 0; margin: 0; }
 
 /*** @SyntaxHighlighter style blocks *********/
 article .syntaxhighlighter { width: auto !important; }
@@ -652,68 +460,39 @@ tr.release td.stepLabel { padding: 0 5px 15px 25px; width: 12%; text-align: righ
 
 /* @RTL - flip the layout for right-to-left languages *********/
 /* just a jump to the left... */
-.html-rtl #utility, 
 .html-rtl .user-state,
-.html-rtl #tool-menus, 
-.html-rtl #tool-menus ul li.menu,  
-.html-rtl #page-buttons li, 
-.html-rtl #article-nav { 
-  float: left; 
+.html-rtl #page-buttons li {
+  float: left;
 }
 
 /* then a step to the right... */
-.html-rtl #branding, 
-.html-rtl #nav,
-.html-rtl #title, 
-.html-rtl #nav-toolbar .crumbs, 
-.html-rtl .page-tags h2, 
+.html-rtl #branding,
+.html-rtl #title,
+.html-rtl .page-tags h2,
 .html-rtl .page-tags #deki-page-tags,
-.html-rtl .page-tags .tags-edit, 
-.html-rtl #site-info #legal, 
-.html-rtl .deki-pagination div, 
-.html-rtl .pagination span, 
-.html-rtl .deki-pagination div.info,
-.html-rtl #content-fields .approved, 
-.html-rtl .description .approved, 
-.html-rtl .editing .title, 
-.html-rtl .change-locale, 
-.html-rtl .editing .title h1 { 
-  float: right; 
+.html-rtl .page-tags .tags-edit,
+.html-rtl .pagination span,
+.html-rtl #content-fields .approved,
+.html-rtl .description .approved,
+.html-rtl .editing .title,
+.html-rtl .change-locale,
+.html-rtl .editing .title h1 {
+  float: right;
 }
 
-.html-rtl #utility .user-state li { border-left: 0; margin-left: 0; padding-left: 0; border-right: 1px solid; margin-right: 5px; padding-right: 8px; }
-.html-rtl #utility .user-state li:first-child { padding: 0; margin: 0; border: 0; }
-.html-rtl #site-search button { float: left; }
-.html-rtl #site-search-gg { float: left; margin: 2px 0 0 35px; }
-.html-rtl #nav-toolbar .crumbs li { padding-left: 13px; margin-left: 6px; background-position: 0 -798px; }
-.html-rtl #nav-toolbar .crumbs li.crumb-one { background: url("../img/wiki/nav-arrows.png") 0 -798px no-repeat; }
-.html-rtl #nav-toolbar .crumbs li:last-child { background: none; }
-
-.html-rtl #tools .menu ul { position: absolute; left: 0; right: -999em; }
-.html-rtl #tools .menu:hover ul, .html-rtl #tool-menus ul .sfhover ul { left: 0; right: auto; }
-.html-rtl #tools.superfish .menu ul { left: 0; right: auto; }
-
-.html-rtl #utility .sub-menu, .html-rtl .compact #nav .sub-menu, .html-rtl #tools .menu ul { left: auto; right: -999em; }
-.html-rtl .compact #nav .nav-menu:hover .sub-menu, .html-rtl .compact #nav .hover .sub-menu, .html-rtl .compact #nav a:focus + ul { right: auto; }
-.html-rtl #article-nav { padding: 0 20px 1em 0; }
 .html-rtl .page-meta h2 { margin: 0 0 0 20px; }
 .html-rtl .page-tags #deki-page-tags-toggleview, .html-rtl .page-meta p.add { right: auto; left: 20px; text-align: left; }
 .html-rtl .page-tags #deki-page-tags .tagData { padding-right: 0; padding-left: 30px; }
 .html-rtl .page-tags #deki-page-tags .tagButtons { padding-left: 0; padding-right: 10px; float: left; }
 .html-rtl #page-buttons { right: auto; left: 20px; }
-.html-rtl #site-info #legal { padding: 0 55px 0 0; }
-.html-rtl #site-info #legal img { left: auto; right: 0; }
 .html-rtl .user-state { text-align: left; }
-.html-rtl #utility .sub-menu li { text-align: right; border: 0; padding: 0; margin: 0; }
-.html-rtl #menuFiller .deki-file-menu { margin-left: 86px; }
 .html-rtl span.icon img { margin: 0 0 0 3px; }
 .html-rtl .last-mod, html[dir="rtl"] #footbar p { text-align: left; }
-.html-rtl .deki-pagination .next, .html-rtl .pagination .next { text-align: left; float: left !important; }
-.html-rtl .deki-pagination .prev, .html-rtl .pagination .prev { text-align: right; float: right !important; }
-.html-rtl .deki-pagination .prev a:before, .html-rtl .pagination .prev a:before,
-.html-rtl .deki-pagination .next a:after, .html-rtl .pagination .next a:after { content: ""; }
-.html-rtl .deki-pagination .prev a:after, .html-rtl .pagination .prev a:after { content: "\00A0\00BB"; font-size: 1.1em; } /* space laquo */
-.html-rtl .deki-pagination .next a:before, .html-rtl .pagination .next a:before { content: "\00AB\00A0"; font-size: 1.1em; } /* raquo space */
+.html-rtl .pagination .next { text-align: left; float: left !important; }
+.html-rtl .pagination .prev { text-align: right; float: right !important; }
+.html-rtl .pagination .prev a:before, .html-rtl .pagination .next a:after { content: ""; }
+.html-rtl .pagination .prev a:after { content: "\00A0\00BB"; font-size: 1.1em; } /* space laquo */
+.html-rtl .pagination .next a:before { content: "\00AB\00A0"; font-size: 1.1em; } /* raquo space */
 
 .html-rtl .change-locale { clear: right; }
 
@@ -722,7 +501,7 @@ tr.release td.stepLabel { padding: 0 5px 15px 25px; width: 12%; text-align: righ
 
 
 /* REDESIGN SPECIFIC; these should be kept with redesign and moved */
-.redesign div.note, .redesign div.warning.review-technical, .redesign div.warning.review-editorial { 
+.redesign div.note, .redesign div.warning.review-technical, .redesign div.warning.review-editorial {
   background: rgba(231, 228, 157, 0.25);
   color: rgba(0, 0, 0, 0.65);
   font-style: italic;
@@ -740,7 +519,7 @@ tr.release td.stepLabel { padding: 0 5px 15px 25px; width: 12%; text-align: righ
   font-weight: 700;
 }
 
-.redesign table.standard-table { 
+.redesign table.standard-table {
   border: 2px solid rgba(255, 255, 255, 1);
   border-collapse: collapse;
 }
@@ -768,7 +547,7 @@ tr.release td.stepLabel { padding: 0 5px 15px 25px; width: 12%; text-align: righ
 }
 
 .redesign table.fullwidth-table td.header,.redesign table.fullwidth-table th {
-  border: 1px solid rgba(212, 221, 228, 1); 
+  border: 1px solid rgba(212, 221, 228, 1);
   background: rgba(212, 221, 228, 0.5);
 }
 
