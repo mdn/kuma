@@ -9,5 +9,4 @@ urlpatterns = patterns('landing.views',
     url(r'^learn/javascript/?$', 'learn_javascript', name='learn_javascript'),
     url(r'^promote/?$', 'promote_buttons', name='promote'),
     url(r'^promote/buttons/?$', 'promote_buttons', name='promote_buttons'),
-    url(r'^forum-archive/?$', 'forum_archive', name='forum_archive'),
 )

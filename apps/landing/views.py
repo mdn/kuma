@@ -100,11 +100,6 @@ def promote_buttons(request):
     return render(request, 'landing/promote_buttons.html')
 
 
-def forum_archive(request):
-    """Forum Archive from phpbb-static landing page."""
-    return render(request, 'landing/forum_archive.html')
-
-
 def common_landing(request, section=None, extra=None):
     """Common code for landing pages."""
     if not section:
