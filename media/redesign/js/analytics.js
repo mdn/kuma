@@ -1,4 +1,4 @@
-(function() {
+(function(win, doc, $) {
     'use strict';
 
     // Adding to globally available mdn object
@@ -27,7 +27,7 @@
             //            $(thing).on('submit', handler);
             // });
 
-            var _gaq = window._gaq;
+            var _gaq = win._gaq;
             var timeout;
             var timedCallback;
 
@@ -92,7 +92,7 @@
             Track Clientside errors
         */
         trackClientErrors: function() {
-            $(window).on('error', function(e) {
+            $(win).on('error', function(e) {
                 analytics.trackEvent([
                     '_trackEvent',
                     'JavaScript error',
@@ -100,7 +100,7 @@
                     e.originalEvent.filename + ':' + e.originalEvent.lineno
                 ]);
             });
-            $(document).ajaxError(function(e, request, settings) {
+            $(doc).ajaxError(function(e, request, settings) {
                 analytics.trackEvent([
                     '_trackEvent',
                     'Ajax error',
@@ -110,4 +110,4 @@
             });
         }
     };
-})();
+})(window, document, jQuery);
