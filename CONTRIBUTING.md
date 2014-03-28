@@ -19,7 +19,7 @@ What to work on
 Good starting projects are listed on [GitHub][github] and [Bugzilla][bugzilla]. If you have any questions, just ask in the #mdndev IRC channel on irc.mozilla.org!
 
 [github]: https://github.com/mozilla/kuma/issues?labels=good+first+issue&milestone=&page=1&state=open
-[bugzilla]: https://bugzilla.mozilla.org/buglist.cgi?status_whiteboard_type=allwordssubstr&status_whiteboard=[mentor%3D&query_format=advanced&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&product=Mozilla%20Developer%20Network
+[bugzilla]: https://bugzilla.mozilla.org/buglist.cgi?bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&columnlist=short_desc%2Ccomponent%2Cchangeddate&list_id=9799718&product=Mozilla%20Developer%20Network&query_format=advanced&status_whiteboard=[good%20first%20bug]&status_whiteboard_type=allwordssubstr&query_based_on=
 
 How to submit code
 ==================
