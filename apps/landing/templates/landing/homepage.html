@@ -163,36 +163,9 @@
     </div>
   </div>
 </div></div>
-
-
-  {# Putting off for after launch
-  <div class="column-container home-contribute-recent">
-    <div class="column-half">
-      <h3>{{ _('Recent Edits') }}</h3>
-      <ul>
-        <li><a href="">Building the web for beginners</a> <span class="author">by <a href="">David Walsh</a> on August 2, 2013</span></li>
-        <li><a href="">Building the web for beginners</a> <span class="author">by <a href="">David Walsh</a> on August 2, 2013</span></li>
-        <li><a href="">Building the web for beginners</a> <span class="author">by <a href="">David Walsh</a> on August 2, 2013</span></li>
-      </ul>
-    </div>
-    <div class="column-half">
-      <h3>{{ _('Recent Discussions') }}</h3>
-      <ul>
-        <li><a href="">Building the web for beginners</a> <span class="author">by <a href="">David Walsh</a> on August 2, 2013</span></li>
-        <li><a href="">Building the web for beginners</a> <span class="author">by <a href="">David Walsh</a> on August 2, 2013</span></li>
-        <li><a href="">Building the web for beginners</a> <span class="author">by <a href="">David Walsh</a> on August 2, 2013</span></li>
-      </ul>
-    </div>
-  </div>
-  </div>
-</div></div>
-#}
-
 {% endblock %}
-
-
 
 {% block js %}
   {{ super() }}
-  {{ js('home') }}
+  {{ js('home', async=True) }}
 {% endblock %}
