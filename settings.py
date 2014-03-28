@@ -1,5 +1,4 @@
 # Django settings for kuma project.
-from datetime import date
 import logging
 import os
 import platform
@@ -19,7 +18,7 @@ path = lambda *a: os.path.join(ROOT, *a)
 ROOT_PACKAGE = os.path.basename(ROOT)
 
 ADMINS = (
-    # ('Your Name', 'your_email@domain.com'),
+    ('MDN devs', 'mdn-dev@mozilla.com'),
 )
 
 PROTOCOL = 'https://'
@@ -1128,6 +1127,7 @@ GRAPPELLI_INDEX_DASHBOARD = 'admin_dashboard.CustomIndexDashboard'
 
 DBGETTEXT_PATH = 'apps/'
 DBGETTEXT_ROOT = 'translations'
+
 
 def get_user_url(user):
     from sumo.urlresolvers import reverse

@@ -1,6 +1,6 @@
 from nose.tools import eq_
 
-from search.models import Filter, FilterGroup
+from search.models import Index, Filter, FilterGroup
 from search.tests import ElasticTestCase
 from search.views import SearchView
 
@@ -136,3 +136,11 @@ class ViewTests(ElasticTestCase):
             response = self.client.get('/en-US/search?q=' + q)
             eq_(response.status_code, 200)
             self.assertContains(response, 'camel-case-test')
+
+    def test_index(self):
+        self.client.login(username='admin', password='testpass')
+        response = self.client.get('/en-US/search')
+        eq_(response.status_code, 200)
+        self.assertContains(response,
+                            ('Search index: %s' %
+                             Index.objects.get_current().name))

@@ -107,7 +107,10 @@
                 {% endtrans %}
               </a>
             {% endif %}
-            </bdi></p>
+            {% if request.user.is_superuser %}
+              Search index: {{ index.name }} (created: {{ index.created_at }})
+            {% endif %}
+            </p>
           </div>
         </div>
 
