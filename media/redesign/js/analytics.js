@@ -20,7 +20,7 @@
             //                     e.preventDefault();
             //                     $(self).off('submit', handler);
             //                     gaTrack(
-            //                            ['_trackEvent', 'Newsletter Registration', 'submit'],
+            //                            ['Newsletter Registration', 'submit'],
             //                            function() { $(self).submit(); }
             //                     );
             //            };
@@ -30,6 +30,12 @@
             var _gaq = window._gaq;
             var timeout;
             var timedCallback;
+
+            // Create the final event array
+            if(eventArray[0] == '_trackEvent') { // legacy
+                eventArray.shift();
+            }
+            eventArray  = ['_trackEvent'].concat(eventArray);
 
             // Create the timed callback if a callback function has been provided
             if (typeof(callback) == 'function') {
@@ -76,7 +82,7 @@
                     var callback = function() {
                         location = href;
                     };
-                    var data = ['_trackEvent', 'Outbound Links', href];
+                    var data = ['Outbound Links', href];
 
                     if (newTab) {
                         analytics.trackEvent(data);
@@ -94,7 +100,6 @@
         trackClientErrors: function() {
             $(window).on('error', function(e) {
                 analytics.trackEvent([
-                    '_trackEvent',
                     'JavaScript error',
                     e.originalEvent.message,
                     e.originalEvent.filename + ':' + e.originalEvent.lineno
@@ -102,7 +107,6 @@
             });
             $(document).ajaxError(function(e, request, settings) {
                 analytics.trackEvent([
-                    '_trackEvent',
                     'Ajax error',
                     settings.url,
                     e.result

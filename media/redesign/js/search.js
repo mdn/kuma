@@ -10,14 +10,10 @@
             submenu: fromSearchList,
             brickOnClick: true,
             onOpen: function(){
-                mdn.analytics.trackEvent(['_trackEvent',
-                                 'Search doc navigator',
-                                 'Open on hover']);
+                mdn.analytics.trackEvent(['Search doc navigator', 'Open on hover']);
             },
             onClose: function() {
-                mdn.analytics.trackEvent(['_trackEvent',
-                                 'Search doc navigator',
-                                 'Close on blur']);
+                mdn.analytics.trackEvent(['Search doc navigator', 'Close on blur']);
             }
         });
         fromSearchList.find('ol').mozKeyboardNav();
@@ -88,7 +84,7 @@
                     href: doc.url,
                     on: {
                         click: function() {
-                            mdn.analytics.trackEvent(['_trackEvent',
+                            mdn.analytics.trackEvent([
                                              'Search doc navigator',
                                              'Click',
                                              $(this).attr('href'),
@@ -106,7 +102,7 @@
                         $('.from-search-next').each(function() {
                             $(this).attr('href', next_doc.url)
                                          .on('click', function() {
-                                                mdn.analytics.trackEvent(['_trackEvent',
+                                                mdn.analytics.trackEvent([
                                                                  'Search doc navigator',
                                                                  'Click next',
                                                                  next_doc.url,
@@ -122,8 +118,8 @@
                         $('.from-search-previous').each(function() {
                             $(this).attr('href', prev_doc.url)
                                          .on('click', function() {
-                                                mdn.analytics.trackEvent(['_trackEvent',
-                                                                 'Search doc navigator',
+                                                mdn.analytics.trackEvent([
+                                                                'Search doc navigator',
                                                                  'Click previous',
                                                                  prev_doc.url,
                                                                  prev_doc.id]);
