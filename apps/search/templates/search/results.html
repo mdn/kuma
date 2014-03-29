@@ -16,7 +16,7 @@
 
 {% block extrahead %}
   {% if waffle.flag('search_suggestions') %}
-  <link rel="stylesheet" media="screen,projection,tv" href="/media/redesign/css/search-suggestions.css">
+  {{ css('search-suggestions') }}
   {% endif %}
 {% endblock %}
 
@@ -220,6 +220,6 @@
   </script>
   {% endif %}
   {% if waffle.flag('search_suggestions') %}
-  <script src="/media/js/search-suggestions.js"></script>
+  {{ js('search-suggestions') }}
   {% endif %}
 {% endblock js %}
