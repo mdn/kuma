@@ -1,0 +1,98 @@
+@import 'includes/vars'
+@import 'includes/mixins'
+@import 'includes/grid'
+
+.search-form {
+  padding: (grid-spacing * 2) 0;
+  /* 
+  height: 50px;
+  z-index: 2;
+  position: relative;
+  */
+  
+  .search-wrapper{
+    big-search();
+    color: #fff;
+    cursor: text;
+    min-height: 36px;
+    padding: 6px;
+    position: relative;
+    .show-topics{
+      background-color: rgba(255, 255, 255, 0) !important;
+      box-shadow: none;
+      color: #FFF!important;
+      font-size: 1.2em !important;
+      position: absolute;
+      right: 0px;
+    }
+    input#search-q-s {
+      background: transparent;
+      border: none;
+      color: #fff;
+      display: inline;
+      padding: 0 8px;
+      vertical-align: middle;
+    }
+  }
+
+  .suggestions {
+    big-search();
+    color: #fff;
+    max-height: 300px;
+    overflow-y:scroll;
+    padding: 6px;
+    strong {
+      text-transform: uppercase;
+      padding: 0 10px;
+    }
+    li {
+      a.search-ss{
+        display: block;
+        color: #FFF;
+        padding: 0 10px;
+        &:hover,
+        &:focus,
+        &.selected {
+          background: #202F67;
+          color: #FFF!important;
+          text-decoration: none;
+        }
+        span {
+          float: right;
+        }
+      }
+    }
+  }
+
+  .filters {
+    display: inline-block;
+    span.topic {
+      background-color: #202F67!important;
+      box-shadow: none;
+      color: #FFF!important;
+      cursor: default!important;
+      margin-right: 5px;
+      text-transform: none!important;
+      button.close {
+        background-color: transparent !important;
+        box-shadow: none;
+        color: #FFF!important;
+        margin-left: 5px;
+        padding: 5px!important;
+        i[class^="icon-"] {
+          margin-left: 0;
+        }
+      }
+    }
+  }
+
+  &.dark {
+    .search-wrapper, .suggestions {
+      background-color: #FFF;
+    }
+    .search-wrapper, .search-wrapper input#search-q-s, .search-wrapper .show-topics, .suggestions, .suggestions li a {
+      color: #4D4E53!important; 
+    }
+  }
+
+}

@@ -14,6 +14,12 @@
   {% endif %}
 {% endblock %}
 
+{% block extrahead %}
+  {% if waffle.flag('search_suggestions') %}
+  <link rel="stylesheet" media="screen,projection,tv" href="/media/redesign/css/search-suggestions.css">
+  {% endif %}
+{% endblock %}
+
 {% block bodyclass %}search-results search-results-no-demo{% endblock %}
 
 {% macro doc_block(doc, index) -%}
@@ -42,12 +48,23 @@
 
  <h1 class="offscreen">{{ _('MDN Site Search') }}</h1>
 
-  <form id="search-form" action="{{ url('search') }}" method="get">
-    <div class="results-search-form">
+  <form id="search-form" action="{{ url('search') }}" method="get" class="search">
+    <div class="results-search-form search-form dark">
       <h2 class="offscreen">{{ _('Search') }}</h2>
-        <label for="search-q" class="offscreen">{{ _('Search') }}</label>
-        <input type="search" name="q" id="search-q" placeholder="{{ _('Search the docs') }}" value="{{ query }}" {% if not query %}autofocus{% endif %} />
+  {% if waffle.flag('search_suggestions') %}
+      <div class="search-wrapper">
+        <div class="filters"></div>
+        <label for="search-q-s" class="offscreen">{{ _('Search') }}</label>
+        <input type="search" id="search-q-s" name="q" autocomplete="off" placeholder="{{ _('Search the docs') }}" size="15" />
         <button type="submit" class="offscreen">{{ _('Search') }}</button>
+        <button type="button "class="show-topics"><i class="icon-caret-down" aria-hidden="true"></i></button>
+      </div>
+      <ul class="suggestions" data-hidden="true" style="display:none"></ul>
+    {% else %}
+      <label for="search-q" class="offscreen">{{ _('Search') }}</label>
+      <input type="search" name="q" id="search-q" placeholder="{{ _('Search the docs') }}" value="{{ query }}" {% if not query %}autofocus{% endif %} />
+      <button type="submit" class="offscreen">{{ _('Search') }}</button>
+    {% endif %}
     </div>
 
     <div class="column-container">
@@ -201,5 +218,8 @@
     $('.result-list-item h4 a').mozSearchStore('{{ search_ref }}');
   });
   </script>
+  {% endif %}
+  {% if waffle.flag('search_suggestions') %}
+  <script src="/media/js/search-suggestions.js"></script>
   {% endif %}
 {% endblock js %}
