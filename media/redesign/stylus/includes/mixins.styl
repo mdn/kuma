@@ -16,7 +16,7 @@ vendorize-value(property, value, more = '') {
   {property}: unquote('-webkit-' + value + more);
   {property}: unquote('-moz-' + value + more);
   {property}: unquote('-ms-' + value + more);
-  {property}: value + more;
+  {property}: unquote(value + more);
 }
 
 /* prevents spacing of a given element if it's the last child */
