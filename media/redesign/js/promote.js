@@ -1,4 +1,4 @@
-function PromoteMDNLinks(userSettings) {
+function PromoteMDN(userSettings) {
 
     // For the time being, we are not gonna do anything if querySelectorAll is not available in the browser
     if (!'querySelectorAll' in document) {
@@ -164,7 +164,7 @@ function PromoteMDNLinks(userSettings) {
             if (typeof callback !== 'function') {
                 throw new TypeError();
             }
-            
+
             var len = arr.length >>> 0;
             var thisArg = arguments.length >= 2 ? arguments[1] : void 0;
             for(var i = 0; i < len; i++) {
@@ -192,6 +192,6 @@ function PromoteMDNLinks(userSettings) {
     };
 
     function getPlaceholder(placeholderIndex) {
-    	return '{_m$d$n_repl$ace_' + placeholderIndex + '_}';
+        return '{_m$d$n_repl$ace_' + placeholderIndex + '_}';
     }
 };
