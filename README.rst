@@ -35,10 +35,10 @@ Development
 Getting Started
 ===============
 
-We're trying to make it easier for new contributors to help with MDN code.
-Here are some options:
+Want to help make MDN great? Here are some options:
 
-1. We can always use help with `our selenium test suite
+1. Contribute to `our selenium test suite
    <https://github.com/mozilla/mdn-tests>`_
-2. Right now the best way to start on Kuma code is outlined in the
-   `Dev Docs <https://kuma.readthedocs.org/en/latest/installation-vagrant.html>`_
+2. Contribute to the platform itself. Our `contribution guide
+   <CONTRIBUTING.md>`_ lists some good first projects and offers direction on
+   submitting code.
