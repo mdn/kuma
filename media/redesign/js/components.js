@@ -1,4 +1,4 @@
-(function($) {
+(function(doc, $) {
     'use strict';
 
     var focusClass = 'focused';
@@ -154,8 +154,12 @@
     */
     $.fn.mozKeyboardNav = function(options) {
         var settings = $.extend({
-            itemSelector: 'a'
+            itemSelector: 'a',
+            onEnterKey: noop,
+            alwaysCollectItems: false
         }, options);
+
+        var $selectedItem;
 
         return $(this).each(function() {
 
@@ -169,15 +173,31 @@
                 var charCode = e.charCode;
                 var numberKeyStart = 49;
 
+                // If we should always get fresh items, do so
+                if(settings.alwaysCollectItems) {
+                    var $items = $(this).find(settings.itemSelector);
+                }
+
+                // Up and down buttons
                 if(code == 38 || code == 40) {
                     e.preventDefault();
                     e.stopPropagation();
 
                     // Find currently selected item and clear
-                    var $selectedItem = $items.filter('.' + focusClass).removeClass(focusClass);
+                    $selectedItem = $items.filter('.' + focusClass).removeClass(focusClass);
+
+                    // Tricky...if they clicked elsewhere in the mean time, we may need to try to
+                    // figure it out by activeElement
+                    var index = $items.index($selectedItem);
+                    var activeElementIndex = doc.activeElement && $items.index(doc.activeElement);
+                    if(activeElementIndex > -1) {
+                        index = activeElementIndex;
+                    }
+                    if(index < 0) {
+                        index = 0;
+                    }
 
                     // If nothing is currently selected, start with first no matter which key
-                    var index = $items.index($selectedItem) || 0;
                     var $next = $($items.get(index + 1));
                     var $prev = $($items.get(index - 1));
 
@@ -188,9 +208,14 @@
                         selectItem($next.length ? $next : $items.first());
                     }
                 }
+                // Number keys: 1, 2, 3, etc.
                 else if(charCode >= numberKeyStart && charCode <= 57) {
                     var item = $items.get(charCode - numberKeyStart);
                     item && selectItem(item);
+                }
+                // Enter key
+                else if(code == 13) {
+                    settings.onEnterKey($selectedItem);
                 }
             });
 
@@ -198,6 +223,7 @@
 
         function selectItem(item) {
             $(item).addClass(focusClass).get(0).focus();
+            $selectedItem = item;
         }
 
     };
@@ -305,4 +331,4 @@
         });
     };
 
-})(jQuery);
+})(document, jQuery);

@@ -30,5 +30,4 @@ DEFAULT_LOCALE = 'en-US'
 WAFFLE_FLAG = 'l10ndashboard'
 
 # Revisions
-
-PAGE_SIZE = 100
+PAGE_SIZE = 50

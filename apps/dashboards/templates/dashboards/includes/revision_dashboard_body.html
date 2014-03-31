@@ -1,0 +1,46 @@
+{% if total %}
+    <table class="dashboard-table" width="100%">
+        <thead>
+            <tr>
+                <td class="dashboard-revision">Revision</td>
+                <td class="dashboard-title">Title</td>
+                <td class="dashboard-comment">Comment</td>
+                <td class="dashboard-author">Author</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for revision in revisions %}
+
+                {% set previous_id = revision.get_previous().id %}
+                {% set revision_url = url('wiki.document', revision.document.full_path, locale=revision.document.locale) %}
+                <tr
+                    tabindex="0"
+                    class="dashboard-row {% if not previous_id %}dashboard-row-new{% endif %}"
+                    data-revision-id="{{ revision.id }}"
+                    data-previous-id="{{ previous_id }}"
+                    data-view-url="{{ revision_url }}"
+                    data-edit-url="{{ url('wiki.edit_document', revision.document.full_path, locale=revision.document.locale) }}"
+                    data-compare-url="{{ url('wiki.compare_revisions', revision.document.full_path, locale=revision.document.locale) }}?from={{ previous_id if previous_id else revision.id }}&to={{ revision.id }}&raw=1"
+                    data-revert-url="{{ url('wiki.revert_document', revision.document.full_path, revision.id, locale=revision.document.locale) }}"
+                    data-history-url="{{ url('wiki.document_revisions', revision.document.full_path, locale=revision.document.locale) }}">
+                    <td class="dashboard-revision">
+                        <a href="{{ url('wiki.revision', revision.document.full_path, revision.id) }}">{{ datetimeformat(revision.created, format='datetime') }}</a>
+                        <br />
+                        <span class="locale">{{ revision.document.locale }}</span>
+                        {% if not previous_id %}<span class="new">{{ _('new') }}</span>{% endif %}
+                    </td>
+                    <td class="dashboard-title"><a href="{{ revision_url }}">{{ revision.title }}</a></td>
+                    <td class="dashboard-comment">{{ revision.comment }}</td>
+                    <td class="dashboard-author"><a href="{{ url('devmo.views.profile_view', username=revision.creator) }}">{{ revision.creator }}</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% else: %}
+
+    <p>{{ _('There are no revisions matching this filter set.') }}</p>
+
+{% endif %}
+
+{{ revisions|paginator }}
