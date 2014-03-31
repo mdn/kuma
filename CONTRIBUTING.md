@@ -27,7 +27,7 @@ How to submit code
 GitHub workflow
 ---------------
 
-   1. Most devs use the [Vagrant Installation](https://github.com/mozilla/kuma/blob/master/docs/installation-vagrant.rst#getting-up-and-running).
+   1. [Install our development environment](https://github.com/mozilla/kuma/blob/master/docs/installation-vagrant.rst#getting-up-and-running)
    2. Set up mozilla remote ($ git remote add mozilla git://github.com/mozilla/kuma.git)
    3. Create a branch for a bug ($ git checkout -b new-issue-888888)
    4. Develop on bug branch.
