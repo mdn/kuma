@@ -1,23 +1,10 @@
-(function($) {
+(function(doc, $) {
     'use strict';
 
     /*
         Track clientside errors
     */
     mdn.analytics.trackClientErrors();
-
-    /*
-        Some quick feature testing up front
-    */
-    var isOldIE = $('#feature-test-old-ie').length;
-    (function() {
-        // This DIV will have a different z-index based on device width
-        // This is changed via media queries supported via MDN
-        var $div = $('<div id="feature-test-element"></div>').appendTo(document.body);
-        window.mdn.features.getDeviceState = function() {
-            return $div.css('z-index');
-        };
-    })();
 
     /*
         Main menu
@@ -116,7 +103,7 @@
         Account for the footer language change dropdown and other dropdowns marked as autosubmit
     */
     $('select.autosubmit').on('change', function(){
-            this.form.submit();
+        this.form.submit();
     });
 
     /*
@@ -147,11 +134,11 @@
     /*
         Send Django CSRF with all AJAX requests
     */
-    $(document).ajaxSend(function(event, xhr, settings) {
+    $(doc).ajaxSend(function(event, xhr, settings) {
         function getCookie(name) {
             var cookieValue = null;
-            if (document.cookie && document.cookie != '') {
-                var cookies = document.cookie.split(';');
+            if (doc.cookie && doc.cookie != '') {
+                var cookies = doc.cookie.split(';');
                 for (var i = 0; i < cookies.length; i++) {
                     var cookie = jQuery.trim(cookies[i]);
                     // Does this cookie string begin with the name we want?
@@ -165,8 +152,8 @@
         }
         function sameOrigin(url) {
             // url could be relative or scheme relative or absolute
-            var host = document.location.host; // host + port
-            var protocol = document.location.protocol;
+            var host = doc.location.host; // host + port
+            var protocol = doc.location.protocol;
             var sr_origin = '//' + host;
             var origin = protocol + sr_origin;
             // Allow absolute or scheme relative URLs to same origin
@@ -210,4 +197,4 @@
         $menus.parent().find('.submenu').mozKeyboardNav();
     })();
 
-})(jQuery);
+})(document, jQuery);

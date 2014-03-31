@@ -684,11 +684,6 @@ MINIFY_BUNDLES = {
         'search': (
             'redesign/js/search.js',
         ),
-        'wiki-edit': (
-            'js/wiki-edit.js',
-            'js/libs/tag-it.js',
-            'js/wiki-tags-edit.js',
-        ),
         'dashboards': (
             'js/libs/DataTables-1.9.4/media/js/jquery.dataTables.js',
             'js/libs/DataTables-1.9.4/extras/Scroller/media/js/dataTables.scroller.js',
@@ -706,6 +701,14 @@ MINIFY_BUNDLES = {
         'wiki': (
             'redesign/js/search.js',
             'redesign/js/wiki.js',
+        ),
+        'wiki-edit': (
+            'js/wiki-edit.js',
+            'js/libs/tag-it.js',
+            'js/wiki-tags-edit.js',
+        ),
+        'wiki-move': (
+            'js/wiki-move.js',
         ),
         'newsletter': (
             'redesign/js/newsletter.js',
