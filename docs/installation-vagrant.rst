@@ -144,6 +144,15 @@ Developing with Vagrant
    mounted via NFS at /home/vagrant/src within the VM. Update should be
    reflected without any action on your part.
 
+-  Visit `https://developer-local.allizom.org/docs/new
+   <https://developer-local.allizom.org/docs/new>`_ to create new wiki pages as
+   needed. Alternatively, download a dump of the ``devmo`` database from
+   `https://developer.allizom.org/landfill/
+   <https://developer.allizom.org/landfill/>`_, extract it, and import it to
+   your local database by running a command like the following in the VM::
+
+     mysql -uroot kuma < /path/to/database/dump.sql
+
 
 AWS and Rackspace
 -----------------
