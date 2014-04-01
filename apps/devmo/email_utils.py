@@ -145,10 +145,10 @@ def emails_with_users_and_watches(subject,
 
         return msg
 
-    for u, w in users_and_watches:
-        if hasattr(u, 'profile'):
-            locale = u.profile.locale
+    for user, watch in users_and_watches:
+        if hasattr(user, 'profile'):
+            locale = user.profile.locale
         else:
             locale = default_locale
 
-        yield _make_mail(locale, u, w)
+        yield _make_mail(locale, user, watch)
