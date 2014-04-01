@@ -85,11 +85,6 @@ What’s next?
 
 -  See :doc:`development <development>` for tips not specific to vagrant.
 
--  Django and node.js web services must be started within the VM by
-   hand, which makes them easier to restart during development. Details
-   on this should be displayed via ``/etc/motd`` when you log in with
-   ``vagrant ssh``
-
 -  Edit files as usual on your host machine; the current directory is
    mounted via NFS at /home/vagrant/src within the VM. Update should be
    reflected without any action on your part.
