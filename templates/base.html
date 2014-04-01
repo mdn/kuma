@@ -24,25 +24,26 @@
   {% endblock %}
 
   <!-- common social tags -->
+  {% set social_logo = request.build_absolute_uri('/media/redesign/img/opengraph-logo.png') %}
   <meta property="og:type" content="website">
-  <meta property="og:image" content="{{ request.build_absolute_uri('/media/redesign/img/opengraph-logo.png') }}">
+  <meta property="og:image" content="{{ social_logo }}">
   <meta property="og:site_name" content="Mozilla Developer Network">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:image" content="{{ request.build_absolute_uri('/media/redesign/img/opengraph-logo.png') }}">
-  <meta name="twitter:site" content="@mozhacks">
-  <meta name="twitter:creator" content="@mozhacks">
+  <meta name="twitter:image" content="{{ social_logo }}">
+  <meta name="twitter:site" content="@NewOnMDN">
+  <meta name="twitter:creator" content="@NewOnMDN">
 
   <link rel="search" type="application/opensearchdescription+xml" href="{{ settings.SITE_URL }}/{{ request.locale }}/search/xml" title="{{ _('Mozilla Developer Network') }}">
 
-  <!-- For third-generation iPad with high-resolution Retina display: -->
+  <!-- third-generation iPad with high-resolution Retina display: -->
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ MEDIA_URL }}redesign/img/favicon144.png">
-  <!-- For iPhone with high-resolution Retina display: -->
+  <!-- iPhone with high-resolution Retina display: -->
   <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ MEDIA_URL }}redesign/img/favicon114.png">
-  <!-- For first- and second-generation iPad: -->
+  <!-- first- and second-generation iPad: -->
   <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ MEDIA_URL }}redesign/img/favicon72.png">
-  <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+  <!-- non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
   <link rel="apple-touch-icon-precomposed" href="{{ MEDIA_URL }}redesign/img/favicon57.png">
-  <!-- Basic favicon -->
+  <!-- basic favicon -->
   <link rel="shortcut icon" href="{{ MEDIA_URL }}redesign/img/favicon32.png">
 
   <!--[if IE]>
