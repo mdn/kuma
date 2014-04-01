@@ -158,7 +158,7 @@ class kuma_config {
             cwd => "/home/vagrant/src",
             command => "/home/vagrant/env/bin/python manage.py reindex -p 5",
             timeout => 600,
-            require => [ Service["elasticsearch"] ];
+            require => [ Service["elasticsearch"], Exec["kuma_south_migrate"] ];
     }
 }
 
