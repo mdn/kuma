@@ -75,9 +75,9 @@ Getting up and running
 
        foreman start
 
-#. You're done, from the host side (your computer) try the following command and you should get the MDN homepage::
+#. You're done! Visit the following address in your browser and you should see the homepage::
 
-       curl -k 'https://developer-local.allizom.org'
+       https://developer-local.allizom.org
 
 
 What’s next?
