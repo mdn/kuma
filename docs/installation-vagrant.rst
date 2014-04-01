@@ -85,10 +85,6 @@ What’s next?
 
 -  See :doc:`development <development>` for tips not specific to vagrant.
 
--  Edit files as usual on your host machine; the current directory is
-   mounted via NFS at /home/vagrant/src within the VM. Update should be
-   reflected without any action on your part.
-
 -  Useful vagrant sub-commands::
 
        vagrant ssh     # Connect to the VM via ssh
@@ -139,6 +135,14 @@ include:
 -  ``revision-dashboard-newusers``:  Allows searching of new users through the revision dashboard
 -  ``events_map``:  Allows display of map on the events page
 -  ``elasticsearch``:  Enables elastic search for site search
+
+
+Developing with Vagrant
+-----------------------
+
+-  Edit files as usual on your host machine; the current directory is
+   mounted via NFS at /home/vagrant/src within the VM. Update should be
+   reflected without any action on your part.
 
 
 AWS and Rackspace
