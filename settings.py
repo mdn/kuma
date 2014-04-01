@@ -338,6 +338,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
     'constance.context_processors.config',
     'django_browserid.context_processors.browserid_form',
+    'search.context_processors.search_filters',
 )
 
 MIDDLEWARE_CLASSES = (

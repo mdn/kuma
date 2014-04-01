@@ -19,6 +19,7 @@
     // Wiki-specific settings will be placed here
     wiki: {
       autosuggestTitleUrl: '{{ url('wiki.autosuggest_documents') }}'
-    }
+    },
+    searchFilters: {{ command_search_filters|jsonencode }}
   };
 </script>
