@@ -825,6 +825,12 @@ span.cke_skin_kuma {
 .move-lookup-link {
   display: inline-block;
   margin-left: (grid-spacing * 2);
+  compat-important(color, link-color);
+  compat-important(text-transform, none);
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .move-descendants-list {

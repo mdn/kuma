@@ -6,14 +6,14 @@
 
   {% if show_attach_button and attachment_form and attachment_data|length %}
   <p class="add">
-      <button type="button" id="page-attachments-button" class="button neutral">Attach Files<i aria-hidden="true" class="icon-paper-clip"></i></button>
+      <button type="button" id="page-attachments-button" class="neutral">Attach Files<i aria-hidden="true" class="icon-paper-clip"></i></button>
   </p>
   {% endif %}
 
   <p id="page-attachments-no-message" class="{% if attachment_data|length %}hidden{% endif %}">
     {{ _('This document has no attachments. Images can be attached, and then embedded in the article.') }}
     {% if show_attach_button and attachment_form and not attachment_data|length %}
-      <a href="javascript:;" id="page-attachments-button" class="button neutral">Attach Files<i aria-hidden="true" class="icon-paper-clip"></i></a>
+      <button id="page-attachments-button" class="neutral">Attach Files<i aria-hidden="true" class="icon-paper-clip"></i></button>
     {% endif %}
   </p>
 
