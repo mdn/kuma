@@ -32,7 +32,7 @@
         <figure class="avatar">
           <img src="{{ profile.gravatar }}" alt="{{ profile.user.username }}" width="120" height="120" class="photo" />
         </figure>
-        
+
         <ul class="links">
         {% for site in profile.website_choices %}
             {% set site_name = site[0] %}
@@ -69,7 +69,7 @@
               </div>
           {% endif %}
       </div>
-  
+
       {% if profile.title or profile.organization or profile.location or profile.irc_nickname %}
       <ul class="info">
         {% if profile.title %}<li class="title">{{ profile.title }}</li>{% endif %}
@@ -78,12 +78,12 @@
 	{% if profile.irc_nickname %}<li class="irc">IRC: {{ profile.irc_nickname }}</li>{% endif %}
       </ul>
       {% endif %}
-  
+
       <div class="bio">
         <p>{{ profile.bio | nl2br }}</p>
       </div>
-        
-        {% set tag_ns = 'profile:interest:' %}     
+
+        {% set tag_ns = 'profile:interest:' %}
         {% set tags = profile.tags.all_ns(tag_ns) %}
         {% if tags | length %}
         <div class="tags">
@@ -120,7 +120,7 @@
       </section>
     {% endif %}
 
-    {% if demos_page.object_list | length > 0 %} 
+    {% if demos_page.object_list|length %}
         <section id="profile-demos" class="profile-section">
             {{ submission_listing(
                 request, demos_page.object_list, demos_page.has_other_pages(),
@@ -135,11 +135,11 @@
           <header class="gallery-head">
             <h2 class="count">{{_("No Demos")}}</h2>
           </header>
-          <p class="none">{% trans submit_url=url('demos.views.submit') %}You haven't submitted any web technology demos. Build something awesome and <a class="button positive" href="{{submit_url}}">Submit a Demo</a>{% endtrans %}</p>
+          <p class="none">{% trans submit_url=url('demos.views.submit') %}You haven't submitted any web technology demos. Build something awesome and <a href="{{submit_url}}">submit a demo</a>!{% endtrans %}</p>
         </section>
     {% endif %}
 
-      {% if wiki_activity and wiki_activity | length > 0 %}
+      {% if wiki_activity and wiki_activity|length %}
           <section id="docs-activity" class="profile-section">
             <header>
               <h2>{{_("Recent Docs Activity")}}</h2>
