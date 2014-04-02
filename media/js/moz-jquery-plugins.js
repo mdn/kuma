@@ -286,8 +286,8 @@
     */
     $.fn.mozPlaceholder = function() {
         return this.each(function() {
-            var $input = $(this),
-                placeholder = $input.attr('placeholder');
+            var $input = $(this);
+            var placeholder = $input.attr('placeholder');
 
             var valCheck = function() {
                 var box = $input[0]
