@@ -1,1 +1,6 @@
-{{ diff_table(revision_from.content, revision_to.content, revision_from.id, revision_to.id) }}
+{% if revision_from.id != revision_to.id %}
+	{% set from_content = revision_from.content %}
+{% else %}
+	{% set from_content = '' %}
+{% endif %}
+{{ diff_table(from_content, revision_to.content, revision_from.id, revision_to.id) }}

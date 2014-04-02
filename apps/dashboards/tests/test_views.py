@@ -3,10 +3,10 @@ import json
 from nose.plugins.attrib import attr
 from nose.tools import eq_, ok_
 
-from waffle.models import Flag
-
 from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
+
+from pyquery import PyQuery as pq
 
 
 class RevisionsDashTest(TestCase):
@@ -30,29 +30,33 @@ class RevisionsDashTest(TestCase):
                                    HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(200, response.status_code)
 
-        revision_json = json.loads(response.content)
-        eq_(10, revision_json['iTotalRecords'])
+        page = pq(response.content)
+        revisions =  page.find('.dashboard-row')
 
-        revisions = revision_json['aaData']
-        eq_(10, len(revisions))
+        eq_(10, revisions.length)
+
         # Most recent revision first.
-        eq_(29, revisions[0]['id'])
+        eq_(29, int(pq(revisions[0]).attr('data-revision-id')))
         # Second-most-recent revision next.
-        eq_(28, revisions[1]['id'])
+        eq_(28, int(pq(revisions[1]).attr('data-revision-id')))
         # Oldest revision last.
-        eq_(19, revisions[-1]['id'])
+        eq_(19, int(pq(revisions[-1]).attr('data-revision-id')))
+
 
     @attr('dashboards')
     def test_locale_filter(self):
         url = reverse('dashboards.revisions', locale='fr') + '?locale=fr'
         response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(200, response.status_code)
-        revisions = json.loads(response.content)
+
+        page = pq(response.content)
+        revisions = page.find('.dashboard-row')
+
         ok_(len(revisions))
-        eq_(1, revisions['iTotalRecords'])
-        eq_(1, len(revisions['aaData']))
-        ok_(['fr' in rev['doc_url'] for rev in revisions['aaData']])
-        ok_(['en-US' not in rev['doc_url'] for rev in revisions['aaData']])
+        eq_(1, revisions.length)
+
+        ok_('fr' in pq(revisions[0]).find('.locale').html())
+
 
     @attr('dashboards')
     def test_user_lookup(self):
@@ -60,9 +64,15 @@ class RevisionsDashTest(TestCase):
                       locale='en-US') + '?user=test'
         response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(200, response.status_code)
-        users = json.loads(response.content)
-        ok_(['test' in user['label'] for user in users])
-        ok_(['admin' not in user['label'] for user in users])
+
+        page = pq(response.content)
+        revisions = page.find('.dashboard-row')
+
+        for revision in revisions:
+            author = pq(revision).find('.dashboard-author').text()
+            ok_('test' in author)
+            ok_('admin' not in author)
+
 
     @attr('dashboards')
     def test_creator_filter(self):
@@ -70,11 +80,17 @@ class RevisionsDashTest(TestCase):
                       locale='en-US') + '?user=testuser01'
         response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(200, response.status_code)
-        revisions = json.loads(response.content)
-        ok_(len(revisions))
-        eq_(2, revisions['iTotalRecords'])
-        ok_(['testuser01' == rev['creator'] for rev in revisions['aaData']])
-        ok_(['testuser2' != rev['creator'] for rev in revisions['aaData']])
+
+        page = pq(response.content)
+        revisions = page.find('.dashboard-row')
+
+        eq_(2, revisions.length)
+
+        for revision in revisions:
+            author = pq(revision).find('.dashboard-author').text()
+            ok_('testuser01' in author)
+            ok_('testuser2' not in author)
+
 
     @attr('dashboards')
     def test_topic_lookup(self):
@@ -82,9 +98,15 @@ class RevisionsDashTest(TestCase):
                       locale='en-US') + '?topic=lorem'
         response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(200, response.status_code)
-        slugs = json.loads(response.content)
-        ok_(['lorem' in slug['label'] for slug in slugs])
-        ok_(['article' not in slug['label'] for slug in slugs])
+
+        page = pq(response.content)
+        revisions = page.find('.dashboard-row')
+
+        for revision in revisions:
+            slug = pq(revision).find('.dashboard-title').html()
+            ok_('lorem' in slug)
+            ok_('article' not in slug)
+
 
     @attr('dashboards')
     def test_topic_filter(self):
@@ -92,24 +114,11 @@ class RevisionsDashTest(TestCase):
                       locale='en-US') + '?topic=article-with-revisions'
         response = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         eq_(200, response.status_code)
-        revisions = json.loads(response.content)
-        ok_(len(revisions))
-        eq_(6, revisions['iTotalRecords'])
-        eq_(6, len(revisions['aaData']))
-        ok_(['lorem' not in rev['slug'] for rev in revisions['aaData']])
 
-    @attr('dashboards')
-    def test_newuser_filter_waffle(self):
-        url = reverse('dashboards.revisions', locale='en-US')
-        response = self.client.get(url)
-        eq_(200, response.status_code)
-        ok_('revision-dashboard-newusers' not in response.content)
+        page = pq(response.content)
+        revisions = page.find('.dashboard-row')
 
-        rev_dash_newusers = Flag.objects.create(
-            name='revision-dashboard-newusers', everyone=True)
-        rev_dash_newusers.save()
+        eq_(6, revisions.length)
+        for revision in revisions:
+            ok_('lorem' not in pq(revision).find('.dashboard-title').html())
 
-        url = reverse('dashboards.revisions', locale='en-US')
-        response = self.client.get(url)
-        eq_(200, response.status_code)
-        ok_('revision-dashboard-newusers' in response.content)

@@ -1601,6 +1601,7 @@ def compare_revisions(request, document_slug, document_locale):
 
     context = {'document': doc, 'revision_from': revision_from,
                          'revision_to': revision_to}
+
     if request.GET.get('raw', 0):
         response = render(request,
                                 'wiki/includes/revision_diff_table.html',

@@ -1,75 +1,53 @@
 {% extends "base.html" %}
 {% set title = _('Revision Dashboard') %}
 {% set scripts = ('dashboards',) %}
-{% set styles = ('dashboards', 'wiki', 'jquery-ui') %}
+{% set styles = ('dashboards', 'jquery-ui') %}
 {% set classes = 'compare' %}
 
 {% block title %}{{ page_title(title) }}{% endblock %}
 
 {% block content %}
 
-  <div class="dashboard">
+    <div class="dashboard">
 
-    <h1>{{ title }}</h1>
+        <h1>{{ title }}</h1>
+        <form method="get" id="revision-filter">
+            <div class="revision-field">
+                <label for="id_locale">{{ _('Locale:') }}</label>
+                {{ form.locale }}
+            </div>
 
-    <h2>{{ _('Revision Filter') }}</h2>
-    <form method="get" id="revision-filter">
-      <label for="dash-locale">{{ _('Locale') }}:</label>
-      <select name="locale" id="dash-locale">
-        <option value="">{{ _('All Locales') }}</option>
-        {% for code, name in settings.LANGUAGES -%}
-          <option value="{{ code }}" {{ code|ifeq(request.GET.locale, "selected") }}>
-            {{ name }}
-          </option>
-        {%- endfor %}
-      </select>
+            <div class="revision-field">
+                <label for="id_user">{{ _('User:') }}</label>
+                {{ form.user }}
+            </div>
 
-      <label for="revision-dashboard-user">{{ _('User') }}:</label>
-      <input name="user" id="revision-dashboard-user" value="{{ request.GET.user }}" />
+            <div class="revision-field">
+                <label for="id_topic">{{ _('Topic:') }}</label>
+                {{ form.topic }}
+            </div>
+            <br />
 
-      {% if waffle.flag('revision-dashboard-newusers') %}
-        <label for="revision-dashboard-newusers">{{ _('New users only')}}</label>
-        <input type="checkbox" name="newusers" id="revision-dashboard-newusers" {% if request.GET.newusers %}checked{% endif %} />
-      {% endif %}
+            <div class="revision-field">
+                <label for="id_start_date">{{ _('Start Date:') }}</label>
+                {{ form.start_date }}
+            </div>
 
+            <div class="revision-field">
+                <label for="id_end_date">{{ _('End Date:') }}</label>
+                {{ form.end_date }}
+            </div>
 
-      <label for="revision-dashboard-topic">{{ _('Topic') }}:</label>
-      <input name="topic" id="revision-dashboard-topic" value="{{ request.GET.topic }}" />
-
-      <input type="submit" value="{{ _('Filter') }}" />
-    </form>
-
-    <table id="revisions-table">
-      <thead>
-        <tr>
-          <th class="revision-head-article">{{ _('Article') }}</th>
-          <th class="revision-head-date">{{ _('Date') }}</th>
-          <th class="revision-head-author">{{ _('Author') }}</th>
-        </tr>
-      </thead>
-      <tbody>
-      </tbody>
-    </table>
+            <button type="submit">{{ _('Filter') }}</button>
+            <input type="hidden" name="page" id="revision-page" value="{{ page }}" />
+        </form>
 
 
-    <div id="revisions-compare">
-      <div id="action-bar">
-        <ul id="page-buttons">
-          <li><a id="revert" href="#" class="button">{{ _('Revert') }}<i aria-hidden="true" class="icon-undo"></i></a></li>
-          <li><a id="view" href="#" class="button">{{ _('View Page') }}<i aria-hidden="true" class="icon-circle-arrow-right"></i></a></li>
-          <li class="page-edit"><a id="edit" href="#" class="button">{{ _('Edit Page') }}<i aria-hidden="true" class="icon-pencil"></i></a></li>
-          <li class="page-history"><a id="history" href="#" class="button">{{ _('History') }}<i aria-hidden="true" class="icon-book"></i></a></li>
-          <li id="ban-user"></li>
-        </ul>
-      </div>
-
-      <h2>{{ _('Revision Diff') }}</h2>
-      <div id="revision-address"></div>
-      <div id="diff-view">
-        <p>{{ _('Click an item in the revision list above to see details.') }}</p>
-      </div>
+        <div id="revision-replace-block">
+        {% include 'dashboards/includes/revision_dashboard_body.html' %}
+        </div>
     </div>
-  </div>
+
 {% endblock %}
 
 
@@ -77,148 +55,145 @@
 {{ js('jquery-ui') }}
 
 <script>
-$(document).ready(function(){
-  var $revTable       = $('#revisions-table'),
-      $revTableBody   = $('tbody', $revTable),
-      $revisionForm   = $('#revision-filter'),
-      $actionBar      = $('#action-bar'),
-      $localeInput    = $('#dash-locale'),
-      currentLocale   = '{{ request.locale }}',
-      localeKey       = '{LOCALE}',
-      baseURL         = '/' + localeKey + '/dashboards/revisions',
-      $revisionDashboardUser = $('#revision-dashboard-user'),
-      $revisionDashboardTopic = $('#revision-dashboard-topic'),
-      lastSelected;
-  $actionBar.hide();
-  $revTableBody.click(getRecordDetail);
+(function (jQuery) {
+    'use strict';
 
-  // Create the autocomplete for user
-  $revisionDashboardUser.mozillaAutocomplete({
-    minLength: 3,
-    labelField: 'label',
-    autocompleteUrl: '{{ url('dashboards.user_lookup') }}',
-    onSelect: function(item, isSilent) {
-      // Do something upon selection
-      if(!isSilent) loadRecords();
-    },
-    buildRequestData: function(req) {
-      // Should add locale value here
-      req.locale = getLocale();
-      req.user = req.term;
-      return req;
-    }
-  });
+    var $revisionReplaceBlock = $('#revision-replace-block');
+    var $localeInput = $('#id_locale');
+    var $filterForm = $('#revision-filter');
+    var $pageInput = $('#revision-page');
+    var currentLocale = '{{ request.locale }}';
 
-  // Create the autocomplete for topic
-  $revisionDashboardTopic.mozillaAutocomplete({
-    minLength: 3,
-    labelField: 'label',
-    autocompleteUrl: '{{ url('dashboards.topic_lookup') }}',
-    onSelect: function(item, isSilent) {
-      // Do something upon selection
-      if(!isSilent) loadRecords();
-    },
-    buildRequestData: function(req) {
-      // Should add locale value here
-      req.locale = getLocale();
-      req.topic = req.term;
-      return req;
-    }
-  });
+    var controlsTemplate = '\
+    <div class="action-bar">\
+        <ul id="page-buttons">\
+            <li><a id="revert" href="$reverturl" class="button">{{ _('Revert') }}<i aria-hidden="true" class="icon-undo"></i></a></li><li><a id="view" href="$viewurl" class="button">{{ _('View Page') }}<i aria-hidden="true" class="icon-circle-arrow-right"></i></a></li><li class="page-edit"><a id="edit" href="$editurl" class="button">{{ _('Edit Page') }}<i aria-hidden="true" class="icon-pencil"></i></a></li><li class="page-history"><a id="history" href="$historyurl" class="button">{{ _('History') }}<i aria-hidden="true" class="icon-book"></i></a></li>\
+        </ul>\
+    </div>';
 
-  function getLocale() {
-    return $localeInput.get(0).value || currentLocale;
-  }
-
-  function getSourceURL() {
-    return baseURL.replace(localeKey, getLocale()) + '?' + $revisionForm.serialize();
-  }
-
-  // Upon form submission, get records
-  $revisionForm.submit(function(e) {
-    e.preventDefault();
-    loadRecords();
-
-    if('pushState' in history) {
-      history.pushState(null, '', location.pathname + '?' + $revisionForm.serialize());
-    }
-  });
-
-  // When the username is clicked, filter
-  $revTable.delegate('a.creator', 'click', function(ev) {
-    ev.preventDefault();
-    $revisionDashboardUser.val($(ev.target).text())
-    loadRecords();
-  });
-
-  // Triggers a change in record source
-  function loadRecords() {
-    var settings = $revTable.dataTable.settings[0];
-    settings.sAjaxSource = getSourceURL();
-    $revTable.dataTable.ext.oApi._fnAjaxUpdate(settings);
-  }
-
-  // Fires off an AJAX request to get the necessary data
-  function getRecordDetail(e){
-    var parent        =   $(e.target).parents('tr').get(0),
-        data          =   $revTable.fnGetData(parent),
-        $diffView     =   $('#diff-view'),
-        $revertLink   =   $('a#revert'),
-        $viewLink     =   $('a#view'),
-        $editLink     =   $('a#edit'),
-        $historyLink  =   $('a#history'),
-        $banUserItem  =   $('#ban-user');
-
-    if(e.target.tagName == 'A') return;
-
-    // Manage selection colors
-    if(lastSelected) {
-      lastSelected.removeClass('selected')
-    }
-    lastSelected = $(parent).addClass('selected');
-
-    // Update the revision address block
-    $('#revision-address').text(data.title + " - " + data.doc_url);
-
-    // Load diff content
-    $('a', $actionBar).attr('href', '');
-    $actionBar.show();
-    $diffView.html(gettext('Loading ...'));
-    $diffView.load(data.compare_url, function(resp, status, xhr){
-      if (status == 'error') {
-        $diffView.html('Error: ' + xhr.status + ' ' + xhr.statusText);
-      } else {
-        $revertLink.attr('href', data.revert_url);
-        $viewLink.attr('href', data.doc_url);
-        $editLink.attr('href', data.edit_url);
-        $historyLink.attr('href', data.history_url);
-        $banUserItem.html(data.ban_link);
-      }
+    // Create the autocomplete for user
+    $('#id_user').mozillaAutocomplete({
+        minLength: 3,
+        labelField: 'label',
+        autocompleteUrl: '{{ url("dashboards.user_lookup") }}',
+        buildRequestData: function (req) {
+            // Should add locale value here
+            req.locale = getLocale();
+            req.user = req.term;
+            return req;
+        }
     });
-  }
 
-  // Create the feature-rich table
-  $revTable.dataTable({
-    'bPaginate': false,
-    'bLengthChange': false,
-    'bFilter': false,
-    'bSort': false,
-    'bAutoWidth': false,
-    'aoColumns': [
-      {'mData': 'richTitle'},
-      {'mData': 'date'},
-      {'mData': 'creator'}
-    ],
-    'sScrollY': '300px',
-    'sDom': 'frtiS',
-    'oScroller':{
-      'loadingIndicator': true,
-      'serverWait': 500
-    },
-    'bServerSide': true,
-    'bDeferRender': true,
-    'sAjaxSource': getSourceURL()
-  });
-});
+    // Create the autocomplete for topic
+    $('#id_topic').mozillaAutocomplete({
+        minLength: 3,
+        labelField: 'label',
+        autocompleteUrl: '{{ url("dashboards.topic_lookup") }}',
+        buildRequestData: function (req) {
+            // Should add locale value here
+            req.locale = getLocale();
+            req.topic = req.term;
+            return req;
+        }
+    });
+
+    // Enable keynav
+    $revisionReplaceBlock.mozKeyboardNav({
+        itemSelector: '.dashboard-row',
+        onEnterKey: function (item) {
+            $(item).trigger('mdn:click');
+        },
+        alwaysCollectItems: true
+    });
+
+    // Focus on the first item, if there
+    focusFirst();
+
+    // Create date pickers
+    $('#id_start_date, #id_end_date').datepicker();
+
+    // When an item is clicked, load its detail
+    $revisionReplaceBlock.on('click mdn:click', '.dashboard-row', function (e) {
+        var $this = $(this);
+        var $detail;
+
+        // Don't interrupt links and stop if a request is already running
+        if (e.target.tagName == 'A' || $this.attr('data-running')) return;
+
+        if ($this.attr('data-loaded')) {
+            $this.find('.dashboard-detail').slideToggle();
+        } else {
+            $this.attr('data-running', 1);
+            $.ajax({
+                url: $this.attr('data-compare-url')
+            }).then(function (content) {
+                // Prepend the controls
+                var controls = controlsTemplate
+                                        .replace('$reverturl', $this.attr('data-revert-url'))
+                                        .replace('$viewurl', $this.attr('data-view-url'))
+                                        .replace('$editurl', $this.attr('data-edit-url'))
+                                        .replace('$historyurl', $this.attr('data-history-url'));
+
+                $detail = $('<div class="dashboard-detail">' + controls + content + '</div>').appendTo($this).slideDown();
+                $this.attr('data-loaded', 1);
+                $this.removeAttr('data-running');
+            });
+        }
+    });
+
+    // AJAX loads for pagination
+    $revisionReplaceBlock.on('click', '.pagination a', function (e) {
+        e.preventDefault();
+        $pageInput.val(this.href.split('page=')[1]);
+        $filterForm.submit();
+    });
+
+    // Filter form submission handler; loads content via AJAX, updates URL state
+    $filterForm.on('submit', function (e) {
+        e.preventDefault();
+        var $this = $(this);
+
+        if ('pushState' in history) {
+            history.pushState(null, '', location.pathname + '?' + $this.serialize());
+        }
+
+        $.ajax({
+            url: $this.attr('action'),
+            data: $this.serialize()
+        }).then(function (content) {
+            replaceContent(content);
+            $this.trigger('ajaxComplete');
+
+            // Reset the page count to 0 in case of new filter
+            $pageInput.val(1);
+        });
+    });
+
+    // Returns the current locale
+    function getLocale() {
+        return $localeInput.get(0).value || currentLocale;
+    }
+
+    // Focuses on the first row in the table
+    function focusFirst() {
+        var first = $revisionReplaceBlock.find('.dashboard-row').first();
+        first.length && first.get(0).focus();
+    }
+
+    // Replaces table body content and scrolls to top of the page
+    function replaceContent(content) {
+        $revisionReplaceBlock.fadeOut(function () {
+            $(this).html(content).fadeIn(function () {
+                focusFirst();
+            });
+
+            // Animate to top!
+            $('html, body').animate({
+                scrollTop: $revisionReplaceBlock.offset().top
+            }, 2000);
+        });
+    }
+
+})(jQuery);
 </script>
 {% endblock %}
