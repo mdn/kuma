@@ -1,14 +1,13 @@
 $(document).ready(function() {
 
-    var markers = [], 
-        $mapCanvas = $('#map_canvas'), 
-        address;
+    var markers = [];
+    var $mapCanvas = $('#map_canvas');
+    var address;
 
     $('#upcoming tbody tr').each(function(){
-        var $self = $(this),
-            html = $self.children('td.date').html() + '<br/>' +
-                   $self.children('td.conference').html() + '<br/>';
-                   
+        var $self = $(this);
+        var html = $self.children('td.date').html() + '<br/>' + $self.children('td.conference').html() + '<br/>';
+
         // Add the new marker
         markers.push({
             address: $self.children('td.location').text(),
