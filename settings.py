@@ -51,12 +51,6 @@ MIGRATION_DATABASES = {
     },
 }
 
-# Dekiwiki has a backend API. protocol://hostname:port
-# If set to False, integration with MindTouch / Dekiwiki will be disabled
-DEKIWIKI_ENDPOINT = False # 'https://developer-stage9.mozilla.org'
-DEKIWIKI_APIKEY = 'SET IN LOCAL SETTINGS'
-DEKIWIKI_MOCK = True
-
 # Cache Settings
 CACHE_BACKEND = 'locmem://?timeout=86400'
 CACHE_PREFIX = 'kuma:'
