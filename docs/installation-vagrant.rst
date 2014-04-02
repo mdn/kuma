@@ -141,9 +141,7 @@ include:
 
 -  ``kumaediting``:  Allows creation, editing, and translating of documents
 -  ``page_move``:  Allows moving of documents
--  ``revision-dashboard-newusers``:  Allows searching of new users through the revision dashboard
 -  ``events_map``:  Allows display of map on the events page
--  ``elasticsearch``:  Enables elastic search for site search
 
 
 AWS and Rackspace
