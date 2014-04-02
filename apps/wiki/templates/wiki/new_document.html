@@ -1,5 +1,5 @@
 {% extends "wiki/base.html" %}
-{% from "layout/errorlist.html" import errorlist %}
+{% from "includes/error_list.html" import errorlist %}
 {% from "includes/common_macros.html" import content_editor %}
 {% set title = _('Create a New {title}')|fe(title=('Template' if is_template else 'Article')) %}
 {% block title %}{{ page_title(title) }}{% endblock %}

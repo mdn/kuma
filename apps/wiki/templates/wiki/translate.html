@@ -1,14 +1,11 @@
 {% extends "wiki/base.html" %}
-{% from "layout/errorlist.html" import errorlist %}
+{% from "includes/error_list.html" import errorlist %}
 {% from "includes/common_macros.html" import content_editor %}
 {% set title = _('Translate Article | {document}')|f(document=parent.title) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
 {% block bodyclass%}translate{% endblock %}
 
 {% block extrahead %}
-  <meta name="twitter:title" content="Mozilla Developer Network">
-  <meta property="og:title" content="Mozilla Developer Network">
-
   {{ css('home') }}
 {% endblock %}
 
