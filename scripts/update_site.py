@@ -40,6 +40,7 @@ GIT_PULL = "git pull -q origin %(branch)s"
 GIT_RESET_HARD = "git reset --hard HEAD"
 GIT_SUBMODULE_SYNC = "git submodule sync"
 GIT_SUBMODULE_UPDATE = "git submodule update --init -q"
+GIT_REVISION_TXT = "git rev-parse HEAD > media/revision.txt"
 SVN_REVERT = "svn revert -R ."
 SVN_UP = "svn update"
 COMPILE_PO = "./compile-mo.sh ."
@@ -93,6 +94,7 @@ def update_site(env, debug):
         (EXEC, 'python2.6 manage.py collectstatic --noinput'),
         (EXEC, './scripts/compile-stylesheets'),
         (EXEC, 'LANG=en_US.UTF-8 python2.6 manage.py compress_assets'),
+        (EXEC, GIT_REVISION_TXT),
     ]
 
     for cmd, cmd_args in commands:
