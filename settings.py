@@ -1041,11 +1041,6 @@ CONSTANCE_CONFIG = dict(
         "JSON array of tags that are enabled for search faceting"
     ),
 
-    EXTERNAL_SIGNUP_EMAIL = (
-        '',
-        'The email address to receive external docs signup emails.'
-    ),
-
     SESSION_CLEANUP_CHUNK_SIZE = (
         1000,
         'Number of expired sessions to cleanup up in one go.',
