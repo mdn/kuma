@@ -75,24 +75,15 @@ Getting up and running
 
        foreman start
 
-#. You're done, from the host side (your computer) try the following command and you should get the MDN homepage::
+#. You're done! Visit the following address in your browser and you should see the homepage::
 
-       curl -k 'https://developer-local.allizom.org'
+       https://developer-local.allizom.org
 
 
 What’s next?
 ------------
 
 -  See :doc:`development <development>` for tips not specific to vagrant.
-
--  Django and node.js web services must be started within the VM by
-   hand, which makes them easier to restart during development. Details
-   on this should be displayed via ``/etc/motd`` when you log in with
-   ``vagrant ssh``
-
--  Edit files as usual on your host machine; the current directory is
-   mounted via NFS at /home/vagrant/src within the VM. Update should be
-   reflected without any action on your part.
 
 -  Useful vagrant sub-commands::
 
@@ -142,6 +133,23 @@ include:
 -  ``kumaediting``:  Allows creation, editing, and translating of documents
 -  ``page_move``:  Allows moving of documents
 -  ``events_map``:  Allows display of map on the events page
+
+
+Developing with Vagrant
+-----------------------
+
+-  Edit files as usual on your host machine; the current directory is
+   mounted via NFS at /home/vagrant/src within the VM. Update should be
+   reflected without any action on your part.
+
+-  Visit `https://developer-local.allizom.org/docs/new
+   <https://developer-local.allizom.org/docs/new>`_ to create new wiki pages as
+   needed. Alternatively, download a dump of the ``devmo`` database from
+   `https://developer.allizom.org/landfill/
+   <https://developer.allizom.org/landfill/>`_, extract it, and import it to
+   your local database by running a command like the following in the VM::
+
+     mysql -uroot kuma < /path/to/database/dump.sql
 
 
 AWS and Rackspace
