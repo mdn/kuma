@@ -172,23 +172,6 @@
         }
     },
     {
-        "pk": 1,
-        "model": "search.filtergroup",
-        "fields": {
-            "name": "Group"
-        }
-    },
-    {
-        "pk": 1,
-        "model": "search.filter",
-        "fields": {
-            "name": "Tagged",
-            "slug": "tagged",
-            "advanced": false,
-            "group": 1
-        }
-    },
-    {
         "pk": 100,
         "model": "taggit.tag",
         "fields": {

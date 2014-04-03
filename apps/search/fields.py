@@ -19,15 +19,6 @@ class SearchQueryField(QueryParameterField):
     param_name = 'q'
 
 
-class TopicQueryField(QueryParameterField):
-    """
-    Field that returns the topic list of the current request.
-    """
-    param_name = 'topic'
-    method = 'getlist'
-    empty_value = []
-
-
 class LocaleField(serializers.Field):
 
     def to_native(self, value):

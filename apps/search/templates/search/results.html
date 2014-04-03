@@ -146,8 +146,8 @@
       </div>
 
       {% if filters %}
-      <!-- right topics -->
-      <div class="column-strip search-results-topics">
+      <!-- right filters -->
+      <div class="column-strip search-results-filters">
         <fieldset>
         {% for filter_group in filters %}
           <fieldset>
@@ -156,33 +156,31 @@
               {% if filter.count == 0 %}
               <label class="inactive">
                 <i aria-hidden="true" class="icon-check-empty"></i>
-                <input type="checkbox" class="offscreen" name="topic" value="{{ filter.slug }}" disabled="disabled">{{ filter.name }}
+                <input type="checkbox" class="offscreen" name="{{ filter_group.slug }}" value="{{ filter.slug }}" disabled="disabled">{{ filter.name }}
                 <span class="offscreen"> includes</span>
                 <span class="filter-count">{{ filter.count }}
                   <span class="offscreen">documents</span>
                 </span>
               </label>
+              {% elif filter.slug in selected_filters %}
+              <label class="checked">
+                <i aria-hidden="true" class="icon-check"></i>
+                <input type="checkbox" checked="checked" class="offscreen" name="{{ filter_group.slug }}" value="{{ filter.slug }}">
+                <span class="filter-name">{{ filter.name }}</span>
+                <span class="offscreen">includes </span>
+                <span class="filter-count">{{ filter.count }}
+                  <span class="offscreen">documents</span>
+                </span>
+              </label>
               {% else %}
-                {% if filter.slug in request.GET.getlist('topic') %}
-                <label class="checked">
-                  <i aria-hidden="true" class="icon-check"></i>
-                  <input type="checkbox" checked="checked" class="offscreen" name="topic" value="{{ filter.slug }}">
-                  <span class="filter-name">{{ filter.name }}</span>
-                  <span class="offscreen">includes </span>
-                  <span class="filter-count">{{ filter.count }}
-                    <span class="offscreen">documents</span>
-                  </span>
-                </label>
-                {% else %}
-                <label>
-                  <i aria-hidden="true" class="icon-check-empty"></i>
-                  <input type="checkbox" class="offscreen" name="topic" value="{{ filter.slug }}">
-                  <span class="filter-name">{{ filter.name }}</span>
-                  <span class="offscreen">includes </span>
-                    <span class="filter-count">{{ filter.count }} <span class="offscreen">documents</span>
-                  </span>
-                </label>
-                {% endif %}
+              <label>
+                <i aria-hidden="true" class="icon-check-empty"></i>
+                <input type="checkbox" class="offscreen" name="{{ filter_group.slug }}" value="{{ filter.slug }}">
+                <span class="filter-name">{{ filter.name }}</span>
+                <span class="offscreen">includes </span>
+                  <span class="filter-count">{{ filter.count }} <span class="offscreen">documents</span>
+                </span>
+              </label>
               {% endif %}
             {% endfor %}
           </fieldset>

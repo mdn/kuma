@@ -1,0 +1,19 @@
+[
+    {
+        "pk": 1,
+        "model": "search.filtergroup",
+        "fields": {
+            "name": "Group",
+            "slug": "group"
+        }
+    },
+    {
+        "pk": 1,
+        "model": "search.filter",
+        "fields": {
+            "name": "Tagged",
+            "slug": "tagged",
+            "group": 1
+        }
+    }
+]
