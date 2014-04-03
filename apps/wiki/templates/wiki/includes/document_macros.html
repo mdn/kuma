@@ -33,7 +33,7 @@
   {% else %}
     {% set translate_url = url('wiki.select_locale', document_path=document.full_path, locale=document.locale) %}
   {% endif %}
-  <ul class="page-buttons">{% if not document.is_template %}<li><a href="javascript:;" id="languages-menu" class="button transparent" aria-haspopup="true" aria-owns="languages-menu-submenu" aria-expanded="false"><span>{{ _('Languages') }}</span><i aria-hidden="true" class="icon-comments"></i></a>
+  <ul class="page-buttons">{% if not document.is_template %}<li><button id="languages-menu" class="transparent" aria-haspopup="true" aria-owns="languages-menu-submenu" aria-expanded="false"><span>{{ _('Languages') }}</span><i aria-hidden="true" class="icon-comments"></i></button>
 
         <div class="submenu" id="languages-menu-submenu">
           <div class="submenu-column">
@@ -51,7 +51,7 @@
               {% endif %}
             </ul>
           </div>
-        </div></li>{% endif %}<li><a href="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}" class="button">{{ _('Edit') }}<i aria-hidden="true" class="icon-pencil"></i></a></li><li><a href="javascript:;" id="advanced-menu" class="button only-icon" aria-haspopup="true" aria-owns="advanced-menu-submenu" aria-expanded="false"><span>{{ _('Advanced') }}</span><i aria-hidden="true" class="icon-cog"></i></a>
+        </div></li>{% endif %}<li><a href="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}" class="button">{{ _('Edit') }}<i aria-hidden="true" class="icon-pencil"></i></a></li><li><button id="advanced-menu" class="only-icon" aria-haspopup="true" aria-owns="advanced-menu-submenu" aria-expanded="false"><span>{{ _('Advanced') }}</span><i aria-hidden="true" class="icon-cog"></i></button>
 
         <div class="submenu" id="advanced-menu-submenu">
           <!-- this page -->
