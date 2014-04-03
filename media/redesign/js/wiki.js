@@ -108,7 +108,17 @@
         });
     }
 
-    /* Syntax highlighting scripts */
+    /*
+        Add icons to external links if they don't have images
+    */
+    $('.external').each(function() {
+        var $link = $(this);
+        if(!$link.find('img').length) $link.addClass('external-icon');
+    });
+
+    /*
+        Syntax highlighting scripts
+    */
     $('article pre').length && (function() {
         var mediaPath = win.mdn.mediaPath;
         $('<link />').attr({
