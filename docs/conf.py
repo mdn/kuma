@@ -11,7 +11,7 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import sys, os
+# import sys, os
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -41,7 +41,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Kuma'
-copyright = u'2013, Mozilla'
+copyright = u'Mozilla'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -92,18 +92,12 @@ pygments_style = 'sphinx'
 
 # -- Options for HTML output ---------------------------------------------------
 
-try:
-    import mdn_theme
-except ImportError:
-    html_theme = 'default'
-    html_theme_path = []
-else:
-    # The theme to use for HTML and HTML Help pages.  See the documentation for
-    # a list of builtin themes.
-    html_theme = 'mdn'
+# The theme to use for HTML and HTML Help pages.  See the documentation for
+# a list of builtin themes.
+#html_theme = 'default'
 
-    # Add any paths that contain custom themes here, relative to this directory.
-    html_theme_path = [mdn_theme.get_theme_dir()]
+# Add any paths that contain custom themes here, relative to this directory.
+#html_theme_path = []
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -237,7 +231,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   ('index', 'Kuma', u'Kuma Documentation',
-   u'Mozilla', 'Kuma', 'One line description of project.',
+   u'Mozilla', 'Kuma', 'The Django based project of developer.mozilla.org.',
    'Miscellaneous'),
 ]
 
