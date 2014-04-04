@@ -6,13 +6,20 @@ from django.shortcuts import redirect, render
 from django.views.i18n import javascript_catalog
 from django.views.decorators.cache import cache_page
 
-import jingo
 import badger
 
 
 admin.autodiscover()
 badger.autodiscover()
 
+
+# Handle 404 and 500 errors
+def _error_page(request, status):
+    """Render error pages with jinja2."""
+    return render(request, '%d.html' % status, status=status)
+handler403 = lambda r: _error_page(r, 403)
+handler404 = lambda r: _error_page(r, 404)
+handler500 = lambda r: _error_page(r, 500)
 
 urlpatterns = patterns('',
    # Home / landing pages:
@@ -71,18 +78,12 @@ urlpatterns = patterns('',
     (r'^', include('tidings.urls')),
     (r'^humans.txt$', 'django.views.static.serve',
         {'document_root': settings.HUMANSTXT_ROOT, 'path': 'humans.txt'}),
+
+    url(r'^miel$', handler500, name='users.honeypot'),
 )
 
 if settings.DEBUG:
     urlpatterns += staticfiles_urlpatterns()
-
-# Handle 404 and 500 errors
-def _error_page(request, status):
-    """Render error pages with jinja2."""
-    return render(request, '%d.html' % status, status=status)
-handler403 = lambda r: _error_page(r, 403)
-handler404 = lambda r: _error_page(r, 404)
-handler500 = lambda r: _error_page(r, 500)
 
 if settings.SERVE_MEDIA:
     media_url = settings.MEDIA_URL.lstrip('/').rstrip('/')
