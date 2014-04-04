@@ -5,8 +5,12 @@ Core developers often run Kuma in a `Vagrant`_-managed virtual machine to
 simplify :doc:`installation <installation>`. If you're on Mac OS X or Linux
 and looking for a quick way to get started, you should try these instructions.
 
+.. note:: **If you have problems using vagrant**, please paste any errors to `pastebin`_, and `email dev-mdn@lists.mozilla.org <mailto:dev-mdn@lists.mozilla.org?subject=vagrant%20issue>`_. After you email dev-mdn, you can also ask in `IRC`_
+
 .. _vagrant: http://vagrantup.com/
 .. _uses NFS to share the current working directory: http://docs.vagrantup.com/v2/synced-folders/nfs.html
+.. _pastebin: http://pastebin.mozilla.org/
+.. _IRC: irc://irc.mozilla.org:6697/#mdndev
 
 Getting up and running
 ----------------------
