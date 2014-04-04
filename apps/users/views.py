@@ -227,8 +227,10 @@ def login(request):
 @ssl_required
 def logout(request):
     """Log the user out."""
+    username = request.user.username
+
     auth.logout(request)
-    next_url = _clean_next_url(request) or reverse('home')
+    next_url = _clean_next_url(request, username) or reverse('home')
 
     resp = HttpResponseRedirect(next_url)
     resp.delete_cookie('authtoken')
@@ -538,7 +540,7 @@ def password_change_complete(request):
     return render(request, 'users/pw_change_complete.html')
 
 
-def _clean_next_url(request):
+def _clean_next_url(request, username=None):
     if 'next' in request.POST:
         url = request.POST.get('next')
     elif 'next' in request.GET:
@@ -553,16 +555,18 @@ def _clean_next_url(request):
         return None
     parsed_url = urlparse.urlparse(url)
 
-    # Don't redirect right back to login, logout, register, or
-    # change email pages
+    # Don't redirect right back to login, logout, register, change email, or
+    # edit profile pages
     locale, register_url = split_path(reverse(
         'users.browserid_register'))
     locale, change_email_url = split_path(reverse(
         'users.change_email'))
-    LOOPING_NEXT_URLS = [settings.LOGIN_URL, settings.LOGOUT_URL,
-                          register_url, change_email_url]
-    for looping_url in LOOPING_NEXT_URLS:
-        if looping_url in parsed_url.path:
+    locale, edit_profile_url = split_path(reverse(
+        'devmo_profile_edit', args=[username, ]))
+    REDIRECT_HOME_URLS = [settings.LOGIN_URL, settings.LOGOUT_URL,
+                          register_url, change_email_url, edit_profile_url]
+    for home_url in REDIRECT_HOME_URLS:
+        if home_url in parsed_url.path:
             return None
 
     # TODO?HACK: can't use urllib.quote_plus because mod_rewrite quotes the
