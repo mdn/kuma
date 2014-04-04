@@ -2,6 +2,8 @@
 @import 'includes/mixins'
 @import 'includes/grid'
 
+home-involved-background-y = 50px;
+
 #home {
     create-home-gradient-background(#00539f);
     remove-main-spacing();
@@ -256,7 +258,7 @@
     }
 
     .home-involved-card {
-        background: url(media-url-dir + 'home-globe.jpg') -90px 50px no-repeat #f4f7f8;
+        background: url(media-url-dir + 'home-globe.jpg') -90px home-involved-background-y no-repeat #f4f7f8;
 
         a {
             color: #fff;
@@ -336,7 +338,7 @@
         margin-top: grid-spacing;
     }
     .owl-item.loading {
-        background: url('/media/js/libs/owl.carousel/owl-carousel/AjaxLoader.gif') no-repeat center center
+        background: url('/media/js/libs/owl.carousel/owl-carousel/AjaxLoader.gif') no-repeat center center;
     }
 
     .preview {
@@ -444,8 +446,8 @@
                 margin-top: (grid-spacing * 2);
             }
 
-            .home-involved-card p {
-                text-align: left;
+            .home-involved-card {
+                background-position: center home-involved-background-y;
             }
         }
 
