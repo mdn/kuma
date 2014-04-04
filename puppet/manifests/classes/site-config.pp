@@ -121,10 +121,10 @@ class kuma_config {
             require => [ File["/home/vagrant/uploads"] ];
         "/home/vagrant/src/webroot/.htaccess":
             ensure => link,
-            target => "/home/vagrant/src/configs/htaccess-without-mindtouch";
+            target => "/home/vagrant/src/configs/htaccess";
         "/var/www/.htaccess":
             ensure => link,
-            target => "/home/vagrant/src/configs/htaccess-without-mindtouch";
+            target => "/home/vagrant/src/configs/htaccess";
     }
     exec {
         "kuma_update_product_details":
