@@ -1,6 +1,6 @@
 {% from "includes/common_macros.html" import optimizely_script with context %}
 <!DOCTYPE html>
-<html lang="{{ LANG }}" dir="{{ DIR }}" id="developer-mozilla-org" class="redesign no-js">
+<html lang="{{ LANG }}" dir="{{ DIR }}" class="redesign no-js">
 <head prefix="og: http://ogp.me/ns#">
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -27,7 +27,7 @@
   {% set social_logo = request.build_absolute_uri('/media/redesign/img/opengraph-logo.png') %}
   <meta property="og:type" content="website">
   <meta property="og:image" content="{{ social_logo }}">
-  <meta property="og:site_name" content="Mozilla Developer Network">
+  <meta property="og:site_name" content="{{ _('Mozilla Developer Network') }}">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:image" content="{{ social_logo }}">
   <meta name="twitter:site" content="@NewOnMDN">

@@ -1,26 +1,26 @@
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr" id="developer-mozilla-org" xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:og="http://ogp.me/ns#">
+<html lang="en-US" dir="ltr" xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:og="http://ogp.me/ns#">
 {% set full_url = request.build_absolute_uri(submission.get_absolute_url()) %}
 {% set short_url = full_url | bitly_shorten %}
 <head>
   <title>{{ page_title(_('{subtitle} | Demo Studio') | f(subtitle=submission.title)) }}</title>
-  
+
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
   <meta property="og:title" content="{{ submission.title }}"/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content="{{ full_url }}"/>
-  <meta property="og:image" content="{{ request.build_absolute_uri(submission.screenshot_1.url) }}"/>    
+  <meta property="og:image" content="{{ request.build_absolute_uri(submission.screenshot_1.url) }}"/>
   <meta property="og:site_name" content="{{ page_title(_('Demo Studio')) }}"/>
   <meta property="og:description" content="{{ submission.summary }}"/>
 
   <meta name="description" content="{{ submission.summary }}" />
-  
+
   <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/demowrap.css">
   {{ css('jquery-ui') }}
   <script src="{{ url('jsi18n') }}build:{{ BUILD_ID_JS }}"></script>
-  
+
   <!--[if IE]>
   <meta http-equiv="imagetoolbar" content="no">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -31,12 +31,12 @@
 <body>
   <header id="demobar">
   <h4 id="logo"><a href="{{ url('demos') }}"><img src="{{ MEDIA_URL }}img/mdn-logo-micro.png" alt="{{_('Mozilla Developer Network')}}" width="54" height="16"></a></h4>
-    
+
     <div class="title">
       <h1 class="demo-title"><a href="{{ submission.get_absolute_url() }}">{{ submission.title }}</a></h1>
       <p class="byline vcard">{% trans profile_link=profile_link(submission.creator) %}by {{ profile_link }}{% endtrans %}</p>
     </div>
-    
+
     <ul class="tools">
       <li>
         {% set likes = submission.likes.get_total_for_request(request) %}
@@ -46,7 +46,7 @@
                 {{ csrf() }}
                 <button type="submit" class="unlike" title="{{_('You like this demo. Undo?')}}"><span>{{_('You Like')}}</span></button>
         </form>
-        <form id="demo-like" target="like_receiver" method="POST" 
+        <form id="demo-like" target="like_receiver" method="POST"
             action="{{ url('demos_like', slug=submission.slug) }}?iframe=1"
             style="{{ likes > 0 and 'display: none' or ' ' }}">
                 {{ csrf() }}
@@ -85,7 +85,7 @@
         {% endif %}
       </ul>
     </nav>
-    
+
       <p id="close"><a href="{{ submission.demo_package.url.replace('.zip', '/index.html') }}" title="{{_('Remove this toolbar')}}">{{_('Remove toolbar')}}</a></p>
 
   {% if waffle.switch('jquery_upgrade') %}
@@ -125,12 +125,12 @@
         if (! $(e.target).parents().hasClass("share"))
           $shareOpts.hide();
       });
-      
+
       $("a, input, textarea, button").bind("focus", function(e) {
         if (! $(e.target).parents().hasClass("share"))
           $shareOpts.hide();
       });
-      
+
       $("#shorturl")
         .focus(function() {
           $(this).select().addClass("focus");
@@ -145,9 +145,9 @@
 
     });
     </script>
-    
+
   </header>
-  
+
   <iframe id="demoframe" border="no" frameborder="0" scrolling="auto"  seamless="seamless"
       src="{{ submission.demo_package.url.replace('.zip', '/index.html') }}"></iframe>
 
@@ -166,7 +166,7 @@
 
   <script type="text/javascript">
     $('#share-opts li a').click(function () {
-        window.open($(this).attr('href'), 'sharer', 
+        window.open($(this).attr('href'), 'sharer',
             'toolbar=0, status=0, resizable=1, width=626, height=436');
         return false;
     });
