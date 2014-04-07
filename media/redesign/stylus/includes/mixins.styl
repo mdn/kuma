@@ -1,398 +1,407 @@
 /*
-  Provides man mixins for use within the MDN theme.
+    Provides man mixins for use within the MDN theme.
 */
 
 @import 'vars'
 
+VENDOR-PREFIXES = '-webkit-' '-moz-' '-ms-';
+
 /* vendorizes a propery */
 vendorize(property, value) {
-  -webkit-{property}: value;
-  -moz-{property}: value;
-  -ms-{property}: value;
-  {property}: value;
+    for prefix in VENDOR-PREFIXES {
+        {prefix + property}: value;
+    }
+    {property}: value;
 }
 
 vendorize-value(property, value, more = '') {
-  {property}: unquote('-webkit-' + value + more);
-  {property}: unquote('-moz-' + value + more);
-  {property}: unquote('-ms-' + value + more);
-  {property}: unquote(value + more);
+    for prefix in VENDOR-PREFIXES {
+        {property}: unquote(prefix + value + more);
+    }
+    {property}: unquote(value + more);
 }
 
 /* prevents spacing of a given element if it's the last child */
 prevent-last-child-spacing(element = '*', property = 'padding') {
-  if (element is '*') {
-    element = unquote(element);
-  }
+    if (element is '*') {
+        element = unquote(element);
+    }
 
-  & > {element}:last-child {
-    {property}: 0;
-  }
+    & > {element}:last-child {
+        {property}: 0;
+    }
 }
 
 prevent-last-child-bottom-spacing(element = '*') {
-  prevent-last-child-spacing(element, margin-bottom);
-  prevent-last-child-spacing(element, padding-bottom);
+    prevent-last-child-spacing(element, margin-bottom);
+    prevent-last-child-spacing(element, padding-bottom);
 }
 
 /* text-decoration none, hover text-decoration underline */
 reverse-link-decoration() {
-  a {
-    text-decoration: none;
-    &:hover, &:active, &:focus {
-      text-decoration: underline;
+    a {
+        text-decoration: none;
+        &:hover, &:active, &:focus {
+            text-decoration: underline;
+        }
     }
-  }
 }
 
 /* generates a background property for header and zones */
 create-gradient-background(color = '', use-gradient = false) {
-  if use-gradient {
-    background-image: url(media-url-dir + 'header-background.png'), url(media-url-dir + 'mdn-header-gradient.png');
-    background-repeat: repeat, repeat-x;
-  } else {
-    background-image: url(media-url-dir + 'header-background.png');
-    background-repeat: repeat;
-  }
-  background-position: 0 0, 0 0, 0 0;
-  if color {
-    background-color: color;
-  }
+    if use-gradient {
+        background-image: url(media-url-dir + 'header-background.png'), url(media-url-dir + 'mdn-header-gradient.png');
+        background-repeat: repeat, repeat-x;
+    } else {
+        background-image: url(media-url-dir + 'header-background.png');
+        background-repeat: repeat;
+    }
+    background-position: 0 0, 0 0, 0 0;
+    if color {
+        background-color: color;
+    }
 }
 
 create-home-gradient-background(color) {
-  create-gradient-background(color);
-  background-image: url(media-url-dir + 'header-background.png'), url(media-url-dir + 'blueprint.png'), url(media-url-dir + 'mdn-header-gradient.png');
-  background-repeat: repeat, repeat, repeat-x;
+    create-gradient-background(color);
+    background-image: url(media-url-dir + 'header-background.png'), url(media-url-dir + 'blueprint.png'), url(media-url-dir + 'mdn-header-gradient.png');
+    background-repeat: repeat, repeat, repeat-x;
 }
 
 /* generates a cross-browser gradient */
 create-gradient(start-color, end-color, direction = false) {
-  if direction {
-    vendorize-value(background, linear-gradient, '(' + direction + ', ' + start-color + ', ' + end-color + ')');
-  } else {
-    vendorize-value(background, linear-gradient, '(' + start-color + ', ' + end-color + ')');
-  }
-  filter: unquote("progid:DXImageTransform.Microsoft.gradient(startColorstr='" + start-color + "', endColorstr='" + end-color + "', GradientType=1)"); /* IE6-9 */
+    if direction {
+        vendorize-value(background, linear-gradient, '(' + direction + ', ' + start-color + ', ' + end-color + ')');
+    } else {
+        vendorize-value(background, linear-gradient, '(' + start-color + ', ' + end-color + ')');
+    }
+    filter: unquote("progid:DXImageTransform.Microsoft.gradient(startColorstr='" + start-color + "', endColorstr='" + end-color + "', GradientType=1)"); /* IE6-9 */
 }
 
 /* generates the essential "before" and "after" code for pseudo-arrows */
 generate-arrow(arrow-width = 10px) {
-  &:before, &:after {
-    content: ' ';
-    height: 0;
-    position: absolute;
-    width: 0;
-    border: arrow-width solid transparent;
-  }
+    &:before, &:after {
+        content: ' ';
+        height: 0;
+        position: absolute;
+        width: 0;
+        border: arrow-width solid transparent;
+    }
 }
 
 /* use this in the case of having to override styles from old template :( */
 compat-important(prop, value) {
-  {prop}: value !important;
+    {prop}: value !important;
 }
 
 /* Override an !important set by compat-important() with another !important.
-   This should be removed after all CSS has been migrated to Stylus. */
+     This should be removed after all CSS has been migrated to Stylus. */
 override-compat-important(prop, value) {
-    compat-important(prop, value);
+        compat-important(prop, value);
 }
 
 /* used for style which are only present to override other styles -- these will be deleted once legacy design is gone */
 compat-only(prop, value, more-selector = '') {
-  compat-important(prop, value);
+    compat-important(prop, value);
 
-  if more-selector {
-    & {more-selector} {
-      compat-important(prop, value);
+    if more-selector {
+        & {more-selector} {
+            compat-important(prop, value);
+        }
     }
-  }
 }
 
 /* used to denote an old IE style */
 old-ie(prop, value, important = false) {
-  {prop}: value (important ? unquote('!important') : '');
+    {prop}: value (important ? unquote('!important') : '');
 }
 
 /* used to create sliding animations */
 slider(duration=default-animation-duration, maximum-height = 10000px) {
-  overflow-y: hidden;
-  max-height: maximum-height;
-  vendorize(transition-property, all);
-  vendorize(transition-duration, duration);
-  vendorize(transition-timing-function, slide-timing-function);
+    overflow-y: hidden;
+    max-height: maximum-height;
+    vendorize(transition-property, all);
+    vendorize(transition-duration, duration);
+    vendorize(transition-timing-function, slide-timing-function);
 
-  &.closed {
-    max-height: 0;
-  }
+    &.closed {
+        max-height: 0;
+    }
 }
 
 /* sets the base styles for messages (review, warning, error, notice, etc.) */
 set-message-base() {
-  compat-only(border-width, 5px);
-  compat-only(border-style, solid);
-  padding: (grid-spacing / 2);
-  margin-bottom: grid-spacing;
-  font-size: smaller-font-size;
+    compat-only(border-width, 5px);
+    compat-only(border-style, solid);
+    padding: (grid-spacing / 2);
+    margin-bottom: grid-spacing;
+    font-size: smaller-font-size;
 
-  & *:last-child {
-    margin-bottom: 0;
-    padding-bottom: 0;
-  }
+    & *:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
 }
 
 /* removes the implied "<main>" spacing so page is more customizable */
 remove-main-spacing() {
-  main > .center {
-    width: auto;
-    padding: 0;
-    margin: 0;
-    max-width: none;
-  }
+    main > .center {
+        width: auto;
+        padding: 0;
+        margin: 0;
+        max-width: none;
+    }
 }
 
 add-center-spacing(spacing = gutter-width) {
-  padding-left: spacing;
-  padding-right: spacing;
+    padding-left: spacing;
+    padding-right: spacing;
 }
 
 remove-center-spacing() {
-  padding-left: 0;
-  padding-right: 0;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 /* overrides the navigation menu color - zones and homepage */
 override-main-nav-color(hex) {
-  #main-nav > ul > li > a, .user-state a {
-    compat-important(color, hex);
-  }
-
-  #main-nav > ul > li {
-    .search-wrap {
-      background-color: rgba(255, 255, 255, 0.4);
-
-      input, i, .search-trigger {
-        color: hex !important;
-      }
-
-      input {
-         set-placeholder-style(color, hex);
-      }
+    #main-nav > ul > li > a, .user-state a {
+        compat-important(color, hex);
     }
-  }
+
+    #main-nav > ul > li {
+        .search-wrap {
+            background-color: rgba(255, 255, 255, 0.4);
+
+            input, i, .search-trigger {
+                color: hex !important;
+            }
+
+            input {
+                 set-placeholder-style(color, hex);
+            }
+        }
+    }
 
 }
 
 /* overrides the size of the navigation search box on certain pages */
 minimize-header-search(size = 20px) {
-  .search-wrap {
-    width: size;
-  }
+    .search-wrap {
+        width: size;
+    }
 }
 
 /* sets an input tag's placeholder styles */
 set-placeholder-style(prop, value) {
-  &::-webkit-input-placeholder {
-    {prop}: value;
-  }
-  &::-moz-placeholder {
-    {prop}: value;
-  }
+    &::-webkit-input-placeholder {
+        {prop}: value;
+    }
+    &::-moz-placeholder {
+        {prop}: value;
+    }
 }
 
 /* uses the white logo instead of color logo */
 use-white-logo() {
-  #main-header .logo {
-    background-position: 0 -41px;
-  }
+    #main-header .logo {
+        background-position: 0 -41px;
+    }
 }
 
 /* for use
 
 /*
-  Allows setting of a property for LTR and RTL without having to deal with duplicating and maintaining selectors:
+    Allows setting of a property for LTR and RTL without having to deal with duplicating and maintaining selectors:
 
-    example:   bidi-style(left, 20px, right, auto)
+        example:     bidi-style(left, 20px, right, auto)
 */
 bidi-style(ltr-prop, value, inverse-prop, inverse-value, make-important = false) {
-  make-important = make-important ? unquote('!important') : unquote('')
+    make-important = make-important ? unquote('!important') : unquote('')
 
-  {ltr-prop}: value make-important;
+    {ltr-prop}: value make-important;
 
-  .html-rtl & {
-    {inverse-prop}: value make-important;
-    {ltr-prop}: inverse-value make-important;
-  }
+    .html-rtl & {
+        {inverse-prop}: value make-important;
+        {ltr-prop}: inverse-value make-important;
+    }
 }
 
 bidi-value(prop, ltr, rtl, make-important = false) {
-  bidi-style(prop, ltr, prop, rtl, make-important);
+    bidi-style(prop, ltr, prop, rtl, make-important);
+}
+
+bidi-value-vendorize(prop, ltr, rtl, make-important = false) {
+    for prefix in VENDOR-PREFIXES {
+        bidi-style(unquote(prefix + prop), ltr, prop, rtl, make-important);
+    }
+    bidi-style(prop, ltr, prop, rtl, make-important);
 }
 
 
 /*
-  MIXINS LIKE CLASSES
+    MIXINS LIKE CLASSES
 
-  These are not dynamic but serve as mixins so that styles wont be repeated throughout files
+    These are not dynamic but serve as mixins so that styles wont be repeated throughout files
 */
 heading-1() {
-  font-size: (content-block-margin * 2);
-  letter-spacing: -2px;
+    font-size: (content-block-margin * 2);
+    letter-spacing: -2px;
 }
 
 heading-2() {
-  font-size: 30px;
-  letter-spacing: -1px;
+    font-size: 30px;
+    letter-spacing: -1px;
 }
 
 big-search() {
-  @extend .larger;
-  display: block;
-  margin: 0 auto;
-  background: rgba(255, 255, 255, 0.2);
-  border: 0;
-  border-radius: 3px;
-  font-family: heading-font-family;
-  letter-spacing: -1px;
-  width: 60%;
+    @extend .larger;
+    display: block;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.2);
+    border: 0;
+    border-radius: 3px;
+    font-family: heading-font-family;
+    letter-spacing: -1px;
+    width: 60%;
 }
 
 offscreen() {
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
 }
 
 clearfix() {
-  &:before, &:after {
-    content: ' ';
-    display: table;
-  }
+    &:before, &:after {
+        content: ' ';
+        display: table;
+    }
 
-  &:after {
-    clear: both;
-  }
+    &:after {
+        clear: both;
+    }
 }
 
 title-header() {
-  font-weight: bold;
-  text-transform: uppercase;
-  color: text-color;
-  text-decoration: none;
-  display: block;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: text-color;
+    text-decoration: none;
+    display: block;
 }
 
 /* submenu generator: used in the main navigation and wiki */
 component-submenu-method(menu-width, num-columns, background-color, arrow-border-color) {
-  position: absolute;
-  padding: grid-spacing;
-  background: background-color;
-  display: none;
-  width: menu-width;
-  box-shadow: 3px 3px 5px #aaa;
-
-  .submenu-close {
+    position: absolute;
+    padding: grid-spacing;
+    background: background-color;
     display: none;
-    position: absolute;
-    top: 20px;
-    bidi-style(right, 0, left, auto);
+    width: menu-width;
+    box-shadow: 3px 3px 5px #aaa;
 
-    i {
-      margin-left: 0;
-    }
-  }
-
-  .submenu-column {
-    if num-columns is 1 {
-      col-width = 100%;
-    } else {
-      col-width = ((menu-width - (num-columns * grid-spacing) - 1) / num-columns) + (grid-spacing / 2);
-    }
-    vertical-align: text-top;
-    width: col-width;
-    display: inline-block;
-
-    &:nth-child(even) {
-      bidi-style(border-left, 1px dotted #d4dde4, border-right, 0);
-      bidi-style(padding-left, grid-spacing, padding-right, 0);
-    }
-  }
-
-  .title {
-    compat-only(font-size, base-font-size);
-    compat-only(padding-left, 0);
-    compat-only(background, none);
-  }
-
-  a {
-    @extend .smaller;
-    padding: 5px 0;
-    display: block;
-  }
-  reverse-link-decoration();
-
-  generate-arrow();
-  &:before {
-    border-bottom-color: background-color;
-    position: absolute;
-    z-index: 2;
-  }
-
-  &:after {
-    border-bottom-color: arrow-border-color;
-    position: absolute;
-    z-index: 1;
-  }
-
-  @media media-query-tablet {
     .submenu-close {
-      display: block;
+        display: none;
+        position: absolute;
+        top: 20px;
+        bidi-style(right, 0, left, auto);
+
+        i {
+            margin-left: 0;
+        }
     }
-  }
 
-  @media media-query-mobile {
-    .submenu-column, .submenu-column:nth-child(even) {
-      bidi-style(border-left, 0, border-right, 0);
-      bidi-style(padding-left, 0, padding-right, 0);
+    .submenu-column {
+        if num-columns is 1 {
+            col-width = 100%;
+        } else {
+            col-width = ((menu-width - (num-columns * grid-spacing) - 1) / num-columns) + (grid-spacing / 2);
+        }
+        vertical-align: text-top;
+        width: col-width;
+        display: inline-block;
+
+        &:nth-child(even) {
+            bidi-style(border-left, 1px dotted #d4dde4, border-right, 0);
+            bidi-style(padding-left, grid-spacing, padding-right, 0);
+        }
     }
-  }
 
-  @media media-query-small-mobile {
-    & {
-      width: auto;
+    .title {
+        compat-only(font-size, base-font-size);
+        compat-only(padding-left, 0);
+        compat-only(background, none);
+    }
 
-      .submenu-column {
-        width: auto;
+    a {
+        @extend .smaller;
+        padding: 5px 0;
         display: block;
-      }
     }
-  }
+    reverse-link-decoration();
+
+    generate-arrow();
+    &:before {
+        border-bottom-color: background-color;
+        position: absolute;
+        z-index: 2;
+    }
+
+    &:after {
+        border-bottom-color: arrow-border-color;
+        position: absolute;
+        z-index: 1;
+    }
+
+    @media media-query-tablet {
+        .submenu-close {
+            display: block;
+        }
+    }
+
+    @media media-query-mobile {
+        .submenu-column, .submenu-column:nth-child(even) {
+            bidi-style(border-left, 0, border-right, 0);
+            bidi-style(padding-left, 0, padding-right, 0);
+        }
+    }
+
+    @media media-query-small-mobile {
+        & {
+            width: auto;
+
+            .submenu-column {
+                width: auto;
+                display: block;
+            }
+        }
+    }
 }
 
 /*
-  CLASSES TO BE EXTENDED BY OTHER CLASSES
+    CLASSES TO BE EXTENDED BY OTHER CLASSES
 
-  These are very "general" and non-specific on purpose
-  There's a good chance these classes wont be used directly in HTML
+    These are very "general" and non-specific on purpose
+    There's a good chance these classes wont be used directly in HTML
 */
 .smaller {
-  font-size: smaller-font-size;
+    font-size: smaller-font-size;
 }
 
 .larger {
-  font-size: larger-font-size;
+    font-size: larger-font-size;
 }
 
 
 
 /* When an element contains a label and a checkbox in order (as on the edit
-   profile page and elsewhere) make them appear on the same line, with the
-   checkbox to the left of the label. */
+     profile page and elsewhere) make them appear on the same line, with the
+     checkbox to the left of the label. */
 $checkbox-label-container {
     clearfix();
 
@@ -407,26 +416,26 @@ $checkbox-label-container {
 }
 
 /* Dropdown menus that hide advanced feature, such as the "This Page" menu on
-   article pages, the "Advanced" menu on profiles, etc. */
+     article pages, the "Advanced" menu on profiles, etc. */
 $advanced-menu {
-  component-submenu-method(160px, 1, button-background, button-shadow-color);
-  bidi-style(right, 0, left, auto);
-  top: 40px;
-  z-index: 3;
-  border-top: 1px solid button-shadow-color;
-  width: 160px !important; /* needs this due to overriding media query rule of component */
+    component-submenu-method(160px, 1, button-background, button-shadow-color);
+    bidi-style(right, 0, left, auto);
+    top: 40px;
+    z-index: 3;
+    border-top: 1px solid button-shadow-color;
+    width: 160px !important; /* needs this due to overriding media query rule of component */
 
-  bdi {
-    bidi-value(text-align, left, right);
-  }
+    bdi {
+        bidi-value(text-align, left, right);
+    }
 
-  &:before {
-    bidi-style(right, 10px, left, auto);
-    top: -18px;
-  }
+    &:before {
+        bidi-style(right, 10px, left, auto);
+        top: -18px;
+    }
 
-  &:after {
-    bidi-style(right, 10px, left, auto);
-    top: -20px;
-  }
+    &:after {
+        bidi-style(right, 10px, left, auto);
+        top: -20px;
+    }
 }
