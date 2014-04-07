@@ -25,7 +25,7 @@
     {% elif reason == 'bannedprofile' %}
       <p class="notice">{{ _("This user's account has been banned.") }}</p>
     {% endif %}
-  
+
     <img src="{{ MEDIA_URL }}img/beast-403.png" alt="" class="beast 403">
 
     {% if user.username %}
@@ -55,20 +55,16 @@
       </ul>
 
       {% trans %}
-      <p>No computer has ever made a mistake or distorted information. We are all, by any practical definition of the words, foolproof and incapable of error. So it can only be attributable to human error. If so, <a href="https://bugzilla.mozilla.org/form.mdn" rel="nofollow">file a bug</a> for my human operators.</p>
-      {% endtrans %}
-      
-      {% trans %}
       <p class="attrib"><small><a href="http://theoatmeal.com/comics/state_web_summer#tumblr" rel="nofollow">Tumbeasts</a> by Matthew Inman of <a href="http://theoatmeal.com" rel="nofollow">The Oatmeal</a></small></p>
       {% endtrans %}
-  
+
   </section>
 
 </div>
 </section>
-      
+
 {% endblock %}
- 
+
 {% block site_js %}
     {{ super() }}
     {{ js('framebuster') }}
