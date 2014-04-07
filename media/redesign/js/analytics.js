@@ -74,6 +74,11 @@
         */
         trackOutboundLinks: function(target) {
             $(target).on('click', 'a', function (e) {
+                // If we explicitly say not to track something, don't
+                if($(this).hasClass('no-track')) {
+                    return;
+                }
+
                 var host = this.hostname;
 
                 if(host && host != location.hostname) {
