@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    "use strict";
+    'use strict';
     var filtersData = window.mdn.searchFilters;
 
     var $search = $('.search-wrapper');
@@ -12,6 +12,9 @@ $(document).ready(function(){
     var previousValue = $searchInput.val();
 
     var fnSuggestions = {
+      'prepareInput':function(){
+          $searchInput.attr('size', '15');
+      },
       'parse':function(s){
           var matches = s.match(/^(#\S+)\s+|\s(#\S+)\s+/);
           return matches ? matches[1] || matches[2] : matches;
@@ -52,9 +55,9 @@ $(document).ready(function(){
           var toParse = $searchInput.val();
           var filter = true;
           var filters = [];
-          var _this = this;
+          var self = this;
           while(filter){
-              filter = _this.parse(toParse);
+              filter = self.parse(toParse);
               if(filter){
                   filters.push(filter);
                   toParse = toParse.replace(filter, '').trim();
@@ -63,9 +66,9 @@ $(document).ready(function(){
 
           if(filters.length >= 1){
               filters.forEach(function(entry){
-                _this.addFilter(entry)
+                self.addFilter(entry)
               });
-              _this.close();
+              self.close();
           }
 
           $searchInput.val(toParse);
@@ -83,15 +86,15 @@ $(document).ready(function(){
       'recoverTopics': function(f){
           // clean suggestion div
           $suggestions.empty();
-          var _this = this;
+          var self = this;
           $.each(filtersData, function(index, group){
               var title = $('<strong>').text(group.name);
               var ul = document.createElement("UL");
               var show = false;
               $.each(group.filters, function(index, filter){
                   var slugNorm = filter.slug.toLowerCase();
-                  var nameNorm = _this.removeAccents(filter.name.toLowerCase());
-                  if (!f || slugNorm.indexOf(_this.removeAccents(f.toLowerCase())) != -1 || nameNorm.indexOf(_this.removeAccents(f.toLowerCase())) != -1) {
+                  var nameNorm = self.removeAccents(filter.name.toLowerCase());
+                  if (!f || slugNorm.indexOf(self.removeAccents(f.toLowerCase())) != -1 || nameNorm.indexOf(self.removeAccents(f.toLowerCase())) != -1) {
                       var $li = $('<li></li>')
                                   .attr('data-slug', filter.slug)
                                   .addClass('sug');
@@ -102,7 +105,7 @@ $(document).ready(function(){
                                   .appendTo($li)
                                   .on('click', function(e){
                                       e.preventDefault();
-                                      _this.addFilter('#'+filter.slug);
+                                      self.addFilter('#'+filter.slug);
                                       $searchInput.val($searchInput.val().replace('#'+f,""));
                                       previousValue = $searchInput.val();
                                       $searchInput.attr('size', $searchInput.val().length < 15 ? 15 : $searchInput.val().length);
@@ -181,4 +184,25 @@ $(document).ready(function(){
         console.log('search URL', searchURL);
         location.href = searchURL;
     });
+
+    fnSuggestions.prepareInput();
+    // Show first time notification in the first visit
+    if (typeof localStorage['first-visit'] === 'undefined') {
+        var $closeButton = $('<button></button>')
+            .addClass('close')
+            .attr('type', 'button')
+            .html('<i aria-hidden="true" class="icon-remove"></i>')
+            .on('click', function(){
+                $firstTimePop.remove();
+            })
+        var $firstTimePop = $('<div></div>')
+            .addClass('notificaton-first-time')
+            .append('<h2>Welcome to the new way to search MDN!</h2>')
+            .append('<p>Search as usual, or filter your search by clicking in the arrow (<i class="icon-caret-down" aria-hidden="true"></i>) to show the filters menu.</p>')
+            .append('<p>Filtering also works by typing shortcuts into the search field (shortcut examples #int, #JS, #CSS).</p>')
+            .append($closeButton);
+
+        $search.after($firstTimePop);
+        localStorage['first-visit'] = 'nope';
+    }
 });
