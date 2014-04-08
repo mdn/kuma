@@ -648,8 +648,6 @@ MINIFY_BUNDLES = {
         'dashboards': (
             'redesign/css/dashboards.css',
             'redesign/css/diff.css',
-            'js/libs/DataTables-1.9.4/media/css/jquery.dataTables.css',
-            'js/libs/DataTables-1.9.4/extras/Scroller/media/css/dataTables.scroller.css',
         ),
         'newsletter': (
             'redesign/css/newsletter.css',
@@ -717,10 +715,6 @@ MINIFY_BUNDLES = {
         ),
         'search': (
             'redesign/js/search.js',
-        ),
-        'dashboards': (
-            'js/libs/DataTables-1.9.4/media/js/jquery.dataTables.js',
-            'js/libs/DataTables-1.9.4/extras/Scroller/media/js/dataTables.scroller.js',
         ),
         'framebuster': (
             'js/framebuster.js',

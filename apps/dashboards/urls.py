@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, url
+from django.views.generic.simple import redirect_to
 
 
 urlpatterns = patterns('dashboards.views',
@@ -8,7 +9,6 @@ urlpatterns = patterns('dashboards.views',
     url(r'^dashboards/topic_lookup$', 'topic_lookup',
         name='dashboards.topic_lookup'),
 
-    url(r'^dashboards/localization$', 'localization', name='dashboards.localization'),
-    url(r'^dashboards/fetch_localization_data$', 'fetch_localization_data',
-        name='dashboards.fetch_localization_data'),
+    url(r'^dashboards/localization$', redirect_to,
+        {'url': '/docs/MDN/Doc_status/Overview'}),
 )

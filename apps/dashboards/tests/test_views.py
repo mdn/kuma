@@ -31,7 +31,7 @@ class RevisionsDashTest(TestCase):
         eq_(200, response.status_code)
 
         page = pq(response.content)
-        revisions =  page.find('.dashboard-row')
+        revisions = page.find('.dashboard-row')
 
         eq_(10, revisions.length)
 
@@ -41,7 +41,6 @@ class RevisionsDashTest(TestCase):
         eq_(28, int(pq(revisions[1]).attr('data-revision-id')))
         # Oldest revision last.
         eq_(19, int(pq(revisions[-1]).attr('data-revision-id')))
-
 
     @attr('dashboards')
     def test_locale_filter(self):
@@ -57,7 +56,6 @@ class RevisionsDashTest(TestCase):
 
         ok_('fr' in pq(revisions[0]).find('.locale').html())
 
-
     @attr('dashboards')
     def test_user_lookup(self):
         url = reverse('dashboards.user_lookup',
@@ -72,7 +70,6 @@ class RevisionsDashTest(TestCase):
             author = pq(revision).find('.dashboard-author').text()
             ok_('test' in author)
             ok_('admin' not in author)
-
 
     @attr('dashboards')
     def test_creator_filter(self):
@@ -91,7 +88,6 @@ class RevisionsDashTest(TestCase):
             ok_('testuser01' in author)
             ok_('testuser2' not in author)
 
-
     @attr('dashboards')
     def test_topic_lookup(self):
         url = reverse('dashboards.topic_lookup',
@@ -107,7 +103,6 @@ class RevisionsDashTest(TestCase):
             ok_('lorem' in slug)
             ok_('article' not in slug)
 
-
     @attr('dashboards')
     def test_topic_filter(self):
         url = reverse('dashboards.revisions',
@@ -121,4 +116,3 @@ class RevisionsDashTest(TestCase):
         eq_(6, revisions.length)
         for revision in revisions:
             ok_('lorem' not in pq(revision).find('.dashboard-title').html())
-
