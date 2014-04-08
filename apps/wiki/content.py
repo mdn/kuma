@@ -199,7 +199,7 @@ def extract_css_classnames(content):
         elements.each(process_el)
     except:
         pass
-    return classnames
+    return list(classnames)
 
 
 @newrelic.agent.function_trace()
@@ -229,7 +229,7 @@ def extract_kumascript_macro_names(content):
         names.update(macro_re.findall(txt))
     except:
         pass
-    return names
+    return list(names)
 
 
 class ContentSectionTool(object):

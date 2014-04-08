@@ -46,8 +46,9 @@ class DocumentSerializer(serializers.Serializer):
     url = serializers.CharField(read_only=True, source='get_url')
     edit_url = serializers.CharField(read_only=True, source='get_edit_url')
     tags = serializers.ChoiceField(read_only=True, source='tags')
-    score = serializers.FloatField(read_only=True, source='_score')
-    explanation = serializers.CharField(read_only=True, source='_explanation')
+    score = serializers.FloatField(read_only=True, source='es_meta.score')
+    explanation = serializers.CharField(read_only=True,
+                                        source='es_meta.explanation')
 
 
 class FilterGroupSerializer(serializers.Serializer):

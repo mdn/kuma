@@ -49,16 +49,6 @@ class DocumentS(S):
         new.selected_filters = self.selected_filters
         return new
 
-    def all(self):
-        """
-        The serializer calls the ``all`` method for "all items" of the queryset,
-        while elasticutils considers the method to return "all results" of the
-        search, which ignores pagination etc.
-
-        Iterating over self is the same as in Django's querysets' all method.
-        """
-        return self
-
     def faceted_filters(self):
         url = QueryURLObject(self.url)
         filter_mapping = SortedDict((filter_['slug'], filter_)
@@ -67,9 +57,9 @@ class DocumentS(S):
         filter_groups = SortedDict()
 
         for slug, facet in self.facet_counts().items():
-            if not isinstance(facet, dict):
-                # let's just blankly ignore any non-filter or non-query filters
-                continue
+            # if not isinstance(facet, dict):
+            #     # let's just blankly ignore any non-filter or non-query filters
+            #     continue
 
             filter_ = filter_mapping.get(slug, None)
             if filter_ is None:
@@ -91,7 +81,7 @@ class DocumentS(S):
                        page=self.current_page,
                        name=filter_name,
                        slug=slug,
-                       count=facet.get('count', 0),
+                       count=facet['count'],
                        active=slug in self.selected_filters,
                        group_name=group_name,
                        group_slug=group_slug))

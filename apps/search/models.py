@@ -383,8 +383,8 @@ class DocumentType(MappingType, Indexable):
 
     def get_excerpt(self):
         for field in self.excerpt_fields:
-            if field in self._highlight:
-                return u'…'.join(self._highlight[field])
+            if field in self.es_meta.highlight:
+                return u'…'.join(self.es_meta.highlight[field])
         return self.summary
 
     def get_url(self):

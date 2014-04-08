@@ -2,9 +2,8 @@ import logging
 
 from django.conf import settings
 
+from elasticsearch.exceptions import RequestError, NotFoundError
 from elasticutils.contrib.django import get_es, S
-from pyelasticsearch.exceptions import (ElasticHttpNotFoundError,
-                                        IndexAlreadyExistsError)
 
 from .decorators import _mapping_types
 from .models import Index
@@ -56,8 +55,7 @@ def get_indexes(all_indexes=False):
     """
     es = get_indexing_es()
 
-    status = es.status()
-    indexes = status['indices']
+    indexes = es.indices.status()['indices']
 
     if not all_indexes:
         indexes = dict((k, v) for k, v in indexes.items()
@@ -75,8 +73,8 @@ def delete_index_if_exists(index):
 
     """
     try:
-        get_indexing_es().delete_index(index)
-    except ElasticHttpNotFoundError:
+        get_indexing_es().indices.delete(index)
+    except NotFoundError:
         # Can ignore this since it indicates the index doesn't exist
         # and therefore there's nothing to delete.
         pass
@@ -97,11 +95,9 @@ def get_index_stats():
 
     :returns: mapping type name -> count for documents indexes.
 
-    :throws pyelasticsearch.exceptions.Timeout: if the request
-        times out
-    :throws pyelasticsearch.exceptions.ConnectionError: if there's a
-        connection error
-    :throws pyelasticsearch.exceptions.ElasticHttpNotFound: if the
+    :throws elasticsearch.exceptions.ConnectionError: if there's a
+        connection error or if it times out
+    :throws elasticsearch.exceptions.NotFoundError: if the
         index doesn't exist
 
     """
@@ -152,8 +148,8 @@ def recreate_index(es=None, index=None):
         }
     }
     try:
-        es.create_index(index, settings=settings)
-    except IndexAlreadyExistsError:
+        es.indices.create(index, body=settings)
+    except RequestError:
         pass
 
 

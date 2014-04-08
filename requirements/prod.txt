@@ -33,6 +33,9 @@ sqlalchemy==0.6.4
 django-constance==0.6
 django-statici18n==0.4.5
 django-appconf==0.6
+urllib3==1.8
+elasticutils==0.9.1
+elasticsearch==0.4.5
 
 ## Forked, temporary or otherwise
 # 2012-08-02
@@ -63,8 +66,6 @@ django-timezones==0.2
 requests==1.1.0
 # -e git://github.com/andymckay/django-statsd.git@d77e1c60ae07d9a253e084f11969c2803f1800d3#egg=django-statsd
 django-statsd-mozilla==0.3.8.5
-# -e git://github.com/rhec/pyelasticsearch.git@0fdecc5317a9e1a443cb1f6eaaa2db32900181fd#egg=pyelasticsearch
-pyelasticsearch==0.6.1
 # -e git://github.com/erikrose/django-tidings.git@6ee3ac5069dfa76cd85b8fb43def72919731b05e#egg=django-tidings
 django-tidings==0.4
 # -e git://github.com/getsentry/raven-python.git@edd9b1f4fb0ca85b09c1859a228c54f18d6e7d95#egg=raven-python
@@ -117,8 +118,6 @@ django-recaptcha==0.0.9
 -e git://github.com/mozilla/nuggets.git@96e80a64aa4bfcfef4f43fc3ab6966450ccd7325#egg=nuggets
 # 2011-12-08
 -e git://github.com/ubernostrum/django-soapbox.git@e6c48818913b5afae0d366740e1ab306a3a28aff#egg=soapbox
-# 2013-10-12
--e git://github.com/mozilla/elasticutils.git@3b355f010771ffbab8b5b19aecb3ede3b2c05c9c#egg=elasticutils
 # 2013-05-31
 -e git://github.com/mozilla/django-session-csrf@f00ad913c62e139d36078e8a7e07dab65a021386#egg=django-session-csrf
 # 2013-06-26

@@ -1089,7 +1089,7 @@ class SearchParserTests(TestCase):
             <div class="%s">Test</div>
         """ % expected
         result = extract_css_classnames(content)
-        eq_(sorted(expected), sorted(list(result)))
+        eq_(sorted(expected), sorted(result))
 
     def test_html_attribute_extraction(self):
         expected = (
@@ -1103,7 +1103,7 @@ class SearchParserTests(TestCase):
             <div %s>Test</div>
         """ % expected
         result = extract_html_attributes(content)
-        eq_(sorted(expected), sorted(list(result)))
+        eq_(sorted(expected), sorted(result))
 
     def test_kumascript_macro_extraction(self):
         expected = ('foobar', 'barfoo', 'bazquux', 'banana')
@@ -1114,7 +1114,7 @@ class SearchParserTests(TestCase):
             <p>{{%s}}</p>
         """ % expected
         result = extract_kumascript_macro_names(content)
-        eq_(sorted(expected), sorted(list(result)))
+        eq_(sorted(expected), sorted(result))
 
 
 class GetSEODescriptionTests(TestCase):

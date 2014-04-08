@@ -44,16 +44,20 @@ class FieldTests(ElasticTestCase):
 
     def test_DocumentExcerptField(self):
 
+        class Meta(object):
+            def __init__(self, highlight):
+                self.highlight = highlight
+
         class FakeValue(DocumentType):
             summary = 'just a summary'
-            _highlight = {'content': ['this is <em>matching</em> text']}
+            es_meta = Meta({'content': ['this is <em>matching</em> text']})
 
         field = DocumentExcerptField()
         eq_(field.to_native(FakeValue()), 'this is <em>matching</em> text')
 
         class FakeValue(DocumentType):
             summary = 'just a summary'
-            _highlight = {}
+            es_meta = Meta({})
 
         eq_(field.to_native(FakeValue()), FakeValue.summary)
 
