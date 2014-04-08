@@ -1,4 +1,4 @@
-{% from "layout/errorlist.html" import errorlist %}
+{% from "includes/error_list.html" import errorlist %}
 
 <form method="post" class="boxed" action="{{ url('users.login') }}">
   {{ csrf() }}

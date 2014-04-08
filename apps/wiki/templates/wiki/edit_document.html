@@ -1,5 +1,5 @@
 {% extends "wiki/base.html" %}
-{% from "layout/errorlist.html" import errorlist %}
+{% from "includes/error_list.html" import errorlist %}
 {% set title = _(document.title + ' | Edit {title}')|fe(title=('Template' if document.is_template else 'Article')) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
 {% set classes = 'edit' %}

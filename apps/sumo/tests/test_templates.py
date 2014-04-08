@@ -88,7 +88,7 @@ class ErrorListTests(MockRequestTests):
             def non_field_errors(self):
                 return ['<"evil&ness-non-field">']
 
-        source = ("""{% from "layout/errorlist.html" import errorlist %}"""
+        source = ("""{% from "includes/error_list.html" import errorlist %}"""
                   """{{ errorlist(form) }}""")
         html = jingo.render_to_string(self.request.get('/'),
                                       jingo.env.from_string(source),

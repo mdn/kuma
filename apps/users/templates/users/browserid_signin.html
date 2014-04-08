@@ -1,4 +1,4 @@
-{% from "layout/errorlist.html" import errorlist %}
+{% from "includes/error_list.html" import errorlist %}
 <h1>{{ _('Sign In with Persona') }}</h1>
 <form class="browserid boxed" action="{{url('users.browserid_verify')}}" method="POST">
   <input type="hidden" name="next" id="next" value="{{ next_url }}" />

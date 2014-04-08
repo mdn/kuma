@@ -107,32 +107,8 @@ class Paginator(object):
     def render(self):
         c = {'pager': self.pager, 'num_pages': self.num_pages,
              'count': self.count}
-        t = env.get_template('layout/paginator.html').render(c)
+        t = env.get_template('includes/paginator.html').render(c)
         return jinja2.Markup(t)
-
-
-@register.function
-@jinja2.contextfunction
-def breadcrumbs(context, items=list(), add_default=True):
-    """
-    Show a list of breadcrumbs. If url is None, it won't be a link.
-    Accepts: [(url, label)]
-    """
-    if add_default:
-        crumbs = [(reverse('home'), _lazy(u'Firefox Help'))]
-    else:
-        crumbs = []
-
-    # add user-defined breadcrumbs
-    if items:
-        try:
-            crumbs += items
-        except TypeError:
-            crumbs.append(items)
-
-    c = {'breadcrumbs': crumbs}
-    t = env.get_template('layout/breadcrumbs.html').render(**c)
-    return jinja2.Markup(t)
 
 
 def _babel_locale(locale):
