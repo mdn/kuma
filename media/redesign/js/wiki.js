@@ -87,6 +87,25 @@
     });
 
     /*
+        Set up the "from search" buttons if user came from search
+    */
+    var fromSearchNav = $('.from-search-navigate');
+    if(fromSearchNav.length) {
+        var fromSearchList = $('.from-search-toc');
+        fromSearchNav.mozMenu({
+            submenu: fromSearchList,
+            brickOnClick: true,
+            onOpen: function(){
+                mdn.analytics.trackEvent(['Search doc navigator', 'Open on hover']);
+            },
+            onClose: function() {
+                mdn.analytics.trackEvent(['Search doc navigator', 'Close on blur']);
+            }
+        });
+        fromSearchList.find('ol').mozKeyboardNav();
+    }
+
+    /*
         Subscribe / unsubscribe to an article
     */
     $('.page-watch a').on('click', function(e) {

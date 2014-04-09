@@ -200,24 +200,25 @@ article {
 
 /* search navigator near article heading */
 .from-search {
-  h1 {
+  padding-left: (grid-spacing * 2);
+
+  h1, .from-search-navigate {
     display: inline-block;
   }
-}
-
-.from-search-spacer {
-    padding-left: (grid-spacing * 2);
-}
-
-.from-search-previous-box, .from-search-next-box {
-  display: none;
+  .from-search-previous, .from-search-next {
+    display: block;
+  }
 }
 
 .from-search-previous, .from-search-next {
   position: absolute;
   top: (grid-spacing * .75) + 2px;
-  display: block;
+  display: none;
   compat-only(font-size, 24px);
+
+  &.disabled {
+    opacity: 0.3;
+  }
 }
 
 .from-search-previous {
@@ -232,7 +233,7 @@ article {
   @extend .larger;
   position: relative;
   color: #ced1d2;
-  display: inline-block;
+  display: none;
   height: 38px;
   width: grid-spacing;
   top: 4px;
