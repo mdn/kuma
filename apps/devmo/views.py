@@ -1,12 +1,18 @@
 from django.conf import settings
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, render
-from django.http import (HttpResponseRedirect, HttpResponseForbidden)
+from django.http import (HttpResponse,
+                         HttpResponseForbidden,
+                         HttpResponseNotFound,
+                         HttpResponseRedirect,
+                         HttpResponseServerError)
+from django.template import loader
 
 from devmo.urlresolvers import reverse
 
 import constance.config
 import basket
+import jingo
 from taggit.utils import parse_tags
 from waffle import flag_is_active
 
@@ -178,3 +184,28 @@ def my_profile_edit(request):
     user = request.user
     return HttpResponseRedirect(reverse(
             'devmo.views.profile_edit', args=(user.username,)))
+
+
+def error_page(request, status):
+    """
+    Render error pages.
+
+    We have our own view for this for two reasons:
+
+    1. We want to use jinja instead of standard Django templates.
+
+    2. We don't want to supply the templates with any context, since
+       that can end up raising additional errors.
+    
+    """
+    response_classes = {
+        403: HttpResponseForbidden,
+        404: HttpResponseNotFound,
+        500: HttpResponseServerError,
+    }
+    
+    response_class = response_classes.get(status, HttpResponse)
+    t = loader.get_template('%d.html' % status)
+
+    return response_class(t.render({}))
+
