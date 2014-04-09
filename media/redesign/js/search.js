@@ -137,7 +137,7 @@
         }
 
         if (url === '') {
-            if (key === null) {
+            if (key === null || key === undefined) {
                 return this;
             } else {
                 url = key;
