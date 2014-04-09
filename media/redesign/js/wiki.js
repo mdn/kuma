@@ -119,7 +119,7 @@
     /*
         Syntax highlighting scripts
     */
-    $('article pre').length && (function() {
+    $('article pre').length && ('querySelectorAll' in document) && (function() {
         var mediaPath = win.mdn.mediaPath;
         $('<link />').attr({
             type: 'text/css',
