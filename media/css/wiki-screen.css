@@ -24,11 +24,6 @@ a.new:link, a.new:visited, a.new:hover, a.new:active, a.new:focus { color: #900;
   .page-content { line-height: 1.572; -moz-transition: line-height 0.2s ease-in-out; -webkit-transition: line-height 0.2s ease-in-out; transition: line-height 0.2s ease-in-out; }
 }
 
-/*** Used in content ***/
-img.lwrap { background: #fff; padding: 0 20px .75em 0; }
-img.rwrap { background: #fff; padding: 0 0 .75em 20px; }
-/*** End: Used in content ***/
-
 /* @Layout (wiki is liquid) *********/
 .wrap { position: relative; width: 95%; min-width: 760px; max-width: 1200px; padding: 0 10px; margin: 0 auto; }
 section#content, div#content { border-top: 0; }
@@ -403,24 +398,6 @@ table.compat-table { border: 1px solid #bbb; border-collapse: collapse;}
 table.compat-table td { padding: 5px; border: 1px solid #ccc; text-align: left; background: #fff; vertical-align: top; word-wrap: break-word; }
 table.compat-table td.header, table.compat-table th { border: 1px solid #bbb; padding: 0 5px; background: #eee; text-align: left; font-weight: bold; }
 
-/*** Used in content ***/
-span.alllinks { display: block; text-align: right; font-size: 90%; }
-table.topicpage-table { width: auto; clear: both; }
-table.topicpage-table td { padding: 10px; width: 50%; vertical-align: top; }
-table.topicpage-table small { font-size: 90%; }
-table.standard-table { border: 1px solid #bbb; border-collapse: collapse; }
-table.standard-table td { padding: 5px; border: 1px solid #ccc; text-align: left; vertical-align: top; }
-table.standard-table td.header, table.standard-table th { border: 1px solid #bbb; padding: 0 5px; background: #eee; text-align: left; font-weight: bold; }
-table.fullwidth-table { margin-bottom: 1.5em; border: 1px solid #bbb; border-collapse: collapse; width: 100%; background: #fff; }
-table.fullwidth-table td { border: 1px solid #ccc; padding: 5px 15px; text-align: left; vertical-align: top; }
-table.fullwidth-table td.header, table.fullwidth-table th { border: 1px solid #bbb; padding: 0 5px; background: #eee; font-weight: bold; font-size: 1.05em; text-align: left; }
-.originaldocinfo { margin: 15px 0; border: 1px solid #e9e9e9; padding: 10px 10px 0; background: #f3f3f3; font-size: 80%; font-family: Verdana, Tahoma, sans-serif; }
-.originaldocinfo h2 { font-size: 120%; }
-
-/* Used only rarely -- we
-.licenseblock { border: 1px dashed #ccc; padding: 0 10px; background: #f1f1f1; font-size: 80%; font-family: Verdana, Tahoma, sans-serif; }
-/*** End: Used in content ***/
-
 div.warning { margin: 0 0 1.5em; border: 2px solid #ac6262; padding: 10px; background: #fbeded; color: #6d675f; }
 div.warning *:last-child { padding: 0; margin: 0; }
 
@@ -517,38 +494,6 @@ tr.release td.stepLabel { padding: 0 5px 15px 25px; width: 12%; text-align: righ
 .redesign table.compat-table td.header, .redesign table.compat-table th {
   background: rgba(212, 221, 228, 0.5);
   font-weight: 700;
-}
-
-.redesign table.standard-table {
-  border: 2px solid rgba(255, 255, 255, 1);
-  border-collapse: collapse;
-}
-
-.redesign table.standard-table td {
-  border: 2px solid rgba(255, 255, 255, 1);
-  font-size: 12px;
-  box-shadow: inset 0 -1px 0 0 rgba(212, 221, 228, 0.5);
-  background-color: rgba(212, 221, 228, 0.15);
-  padding: 6px 8px 8px;
-}
-
-.redesign table.standard-table td.header, .redesign table.standard-table th {
-  border: 2px solid rgba(255, 255, 255, 1);
-  border-bottom: 2px solid rgba(212, 221, 228, 1);
-  background: rgba(212, 221, 228, 0.5);
-  text-align: left;
-  font-family: 'Open Sans Light', sans-serif;
-  font-size: 14px;
-  padding: 2px 8px 4px;
-}
-
-.redesign table.fullwidth-table {
-  border: 1px solid rgba(212, 221, 228, 0.5);
-}
-
-.redesign table.fullwidth-table td.header,.redesign table.fullwidth-table th {
-  border: 1px solid rgba(212, 221, 228, 1);
-  background: rgba(212, 221, 228, 0.5);
 }
 
 .redesign div.bug, .redesign div.warning {
