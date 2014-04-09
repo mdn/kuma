@@ -35,7 +35,6 @@ class dev {
         mysql: stage => basics;
         memcache: stage => basics;
         rabbitmq: stage => basics;
-        elasticsearch: stage => basics;
         foreman: stage => basics;
 
         nodejs: stage => langs;
