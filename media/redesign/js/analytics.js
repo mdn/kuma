@@ -107,14 +107,16 @@
                 analytics.trackEvent([
                     'JavaScript error',
                     e.originalEvent.message,
-                    e.originalEvent.filename + ':' + e.originalEvent.lineno
+                    e.originalEvent.filename + ':' + e.originalEvent.lineno,
+                    true
                 ]);
             });
             $(doc).ajaxError(function(e, request, settings) {
                 analytics.trackEvent([
                     'Ajax error',
                     settings.url,
-                    e.result
+                    e.result,
+                    true
                 ]);
             });
         }
