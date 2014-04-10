@@ -1,5 +1,6 @@
 (function () {
-    var instanceReadyCallback = function (ev) {
+
+    CKEDITOR.on('instanceReady', function (ev) {
         var writer = ev.editor.dataProcessor.writer;
 
         // Tighten up the indentation a bit from the default of wide tabs.
@@ -33,11 +34,7 @@
         // Callback for inline, if necessary
         var callback = CKEDITOR.inlineCallback;
         callback && callback(ev);
-
-        CKEDITOR.removeEventListener('instanceReady', instanceReadyCallback);
-    };
-
-    CKEDITOR.on('instanceReady', instanceReadyCallback);
+    });
 
     // Provide redirect pattern for corresponding plugin
     mdn.ckeditor.redirectPattern = '{{ redirect_pattern|safe }}';
