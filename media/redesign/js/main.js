@@ -197,4 +197,15 @@
         $menus.parent().find('.submenu').mozKeyboardNav();
     })();
 
+    /*
+        Lazy-load images via js
+    */
+    $('noscript.js-image').each(function() {
+        var $img = $('<img class="js-avatar">');
+        $.each($(this).data(), function(name, value) {
+            $img.attr(name, value);
+        });
+        $(this).after($img);
+    });
+
 })(document, jQuery);

@@ -196,6 +196,38 @@ article {
 .document-head {
   position: relative;
   clear: both;
+
+  h1 {
+    margin-bottom: 20px;
+  }
+
+  .contributors {
+    padding: 10px;
+    border-bottom: 1px solid rgb(241, 241, 241);
+    border-top: 1px solid rgb(241, 241, 241);
+    background: none repeat scroll 0% 0% rgba(234, 239, 243, 0.4);
+    margin-top: -20px;
+    margin-bottom: 20px;
+
+    ul {
+      display: inline;
+      
+      li {
+        display: inline-block;
+        margin: 0 5px 4px 0;
+      }
+
+      a:focus {
+        outline: 2px solid;
+      }
+    }
+
+    img.js-avatar {
+      vertical-align: text-bottom;
+    }
+
+  }
+
 }
 
 /* search navigator near article heading */
