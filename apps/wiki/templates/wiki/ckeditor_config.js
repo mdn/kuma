@@ -39,6 +39,18 @@
 
     CKEDITOR.on('instanceReady', instanceReadyCallback);
 
+    // Prevent bad on* attributes (https://github.com/ckeditor/ckeditor-dev/commit/1b9a322)
+    var oldHtmlDataProcessorProto = CKEDITOR.htmlDataProcessor.prototype.toHtml;
+    CKEDITOR.htmlDataProcessor.prototype.toHtml = function(data, fixForBody) {
+        data = protectInsecureAttributes(data);
+        data = oldHtmlDataProcessorProto.apply(this, arguments);
+        data = data.replace( new RegExp( 'data-cke-' + CKEDITOR.rnd + '-', 'ig' ), '' );
+        function protectInsecureAttributes(html) {
+            return html.replace( /([^a-z0-9<\-])(on\w{3,})(?!>)/gi, '$1data-cke-' + CKEDITOR.rnd + '-$2' );
+        }
+        return data;
+    };
+
     // Provide redirect pattern for corresponding plugin
     mdn.ckeditor.redirectPattern = '{{ redirect_pattern|safe }}';
 
