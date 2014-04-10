@@ -66,6 +66,28 @@
   }
 }
 
+ul.directory-tree {
+    padding-left: 0;
+
+    &, ul {
+        list-style-type: none;
+        padding-top: 0;
+    }
+    ul {
+        padding-left: 0;
+        background: url(media-url-dir + 'tree-vline.png') repeat-y;
+
+        li {
+            padding-left: 16px;
+            background: url(media-url-dir + 'tree-node.png') no-repeat;
+        }
+    }
+
+    li {
+        padding-bottom: 0;
+    }
+}
+
 .notice {
   position: relative;
   top: -(grid-spacing / 2);
