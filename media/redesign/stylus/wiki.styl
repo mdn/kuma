@@ -201,8 +201,10 @@ article {
     margin-bottom: 20px;
   }
 
-  .contributors {
-    padding: 10px;
+  .contributor-avatars {
+    @extend .smaller;
+    color: #777;
+    padding: 10px 10px 6px;
     border-bottom: 1px solid rgb(241, 241, 241);
     border-top: 1px solid rgb(241, 241, 241);
     background: none repeat scroll 0% 0% rgba(234, 239, 243, 0.4);
@@ -211,23 +213,38 @@ article {
 
     ul {
       display: inline;
-      
+
       li {
         display: inline-block;
         margin: 0 5px 4px 0;
+
+        &.hidden {
+          display: none;
+        }
       }
 
-      a:focus {
-        outline: 2px solid;
+      a {
+        opacity: 0.6;
+        vendorize(transition, opacity .2s ease-out);
+
+        &:hover,
+        &:focus{
+          opacity: 1;
+        }
+      }
+
+      .avatar {
+        vertical-align: text-bottom;
+        border-radius: 2px;
       }
     }
 
-    img.js-avatar {
-      vertical-align: text-bottom;
+    button {
+      position: relative;
+      top: -2px;
+      font-size: 10px !important;
     }
-
   }
-
 }
 
 /* search navigator near article heading */

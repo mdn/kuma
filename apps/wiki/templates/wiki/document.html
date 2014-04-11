@@ -178,7 +178,7 @@
           {% endif %}
         <h1>{{ document.title }}</h1>
         {% if waffle.flag('top_contributors') %}
-        <div class="contributors">
+        <div class="contributor-avatars">
             <span class="quickstat">
             {% trans contributor_count=document.get_contributors()|length %}
             by {{ contributor_count }} contributor:
@@ -190,7 +190,7 @@
         {% for username, contributor in document.get_contributors().iteritems() %}
                 <li>
                 <a href="{{ url('devmo_profile_view', username) }}" title="{% trans %}View {{ username }} profile{% endtrans %}">
-                <noscript class="js-image" data-alt="{{ username }}" data-src="{{ contributor.user.get_profile().small_gravatar }}">{{ username }}</noscript></a>
+                <noscript data-class="avatar" data-alt="{{ username }}" data-src="{{ contributor.user.get_profile().small_gravatar }}">{{ username }}</noscript></a>
                 </li>
         {% endfor %}
             </ul>

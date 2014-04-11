@@ -244,6 +244,32 @@
     });
 
     /*
+        if many contributors, dont show all at once.
+    */
+    (function (){
+        var $contributors = $('.contributor-avatars');
+
+        if ($contributors.find('li').length > 13) {
+            var showAllContributors = $('<button type="button">Show all<span class="hidden"> contributors</span></button>');
+
+            showAllContributors.on('click', function(e) {
+                e.preventDefault();
+                $contributors.find('li.hidden').removeClass('hidden');
+                $contributors.find('noscript').mozLazyloadImage();
+                $contributors.find('li:eq(13) a').focus();
+                $(this).remove();
+            });
+
+            $contributors.find('li:lt(13) noscript').mozLazyloadImage();
+            $contributors.find('li:gt(12)').addClass('hidden');
+            $contributors.find('ul').after(showAllContributors);
+        } else {
+            $contributors.find('noscript').mozLazyloadImage();
+        }
+
+    })();
+
+    /*
         jQuery extensions used within the wiki.
     */
     $.extend({

@@ -331,4 +331,17 @@
         });
     };
 
+    /*
+        Plugin to lazyload images
+    */
+    $.fn.mozLazyloadImage = function() {
+        return $(this).each(function() {
+            var $img = $('<img />');
+            $.each($(this).data(), function(name, value) {
+                $img.attr(name, value);
+            });
+            $(this).after($img).remove();
+        });
+    };
+
 })(document, jQuery);
