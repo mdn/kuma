@@ -36,6 +36,8 @@
             else {
                 parent.appendChild(child);
             }
+
+            mdn.analytics.trackEvent(['Wiki sidebar toggle', 'Click', this.id == 'quick-links-toggle' ? 'Hide' : 'Show'], true);
         });
     })();
 
