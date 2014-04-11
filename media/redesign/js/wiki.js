@@ -213,8 +213,17 @@
     });
 
     /*
-    Adds a context menu to edit page or view history
-    if right-click on a link it will edit/view history on the links href.
+        Bottom language checker autosubmit
+    */
+    $('.wiki-l10n').on('change', function() {
+        if(this.value) {
+            location = this.value;
+        }
+    });
+
+    /*
+        Adds a context menu to edit page or view history
+        if right-click on a link it will edit/view history on the links href.
     */
     $('body[contextmenu=edit-history-menu]').mozContextMenu(function(target, $contextMenu) {
             var $menuitems = $contextMenu.find('menuitem');
@@ -232,7 +241,6 @@
 
     /*
         Stack overflow search form, used for dev program
-
         ex: http://stackoverflow.com/search?q=[firefox]+or+[firefox-os]+or+[html5-apps]+foobar
     */
     $('.stack-form').html('<form action="http://stackoverflow.com/search"><i class="stack-icon" aria-hidden="true"></i><label for="stack-search" class="offscreen">' + gettext('Search Stack Overflow') + '</label><input id="stack-search" placeholder="' + gettext('Search Stack Overflow') + '" /><button type="submit" class="offscreen">Submit Search</button></form>').find('form').on('submit', function(e) {
