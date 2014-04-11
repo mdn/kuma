@@ -485,7 +485,7 @@
 .submission #prepare-demo li { margin: 0 0 10px; padding: 0 0 10px; background: none; border-bottom: 1px dotted #b9b6a7; }
 #prepare-demo li:last-child { padding: 0; border: 0; margin: 0; }
 
-#update-profile { width: 200px; padding-bottom: 0; position: absolute; right: 10px; top: 100px; border: 1px solid #cecfd2; background: #c0c4c8 url(../img/avatar-peep.png) left 120% no-repeat; background: rgba(255,255,255,.6) url(../img/avatar-peep.png) left 120% no-repeat; -moz-border-radius: 9px; -webkit-border-radius: 9px; border-radius: 9px; }
+#update-profile { width: 200px; padding-bottom: 0;right: 10px; top: 100px; border: 1px solid #cecfd2; background: #c0c4c8 url(../img/avatar-peep.png) left 120% no-repeat; background: rgba(255,255,255,.6) url(../img/avatar-peep.png) left 120% no-repeat; -moz-border-radius: 9px; -webkit-border-radius: 9px; border-radius: 9px; }
 #update-profile p { margin-bottom: 15px; text-shadow: 1px 1px 0 rgba(255,255,255,.25); }
 #update-profile .go { display: inline-block; padding: 2px 8px; background: rgba(255,255,255,.4); -moz-border-radius: 6px; -webkit-border-radius: 6px; border-radius: 6px; -moz-transition: background-color 0.3s; -webkit-transition: background-color 0.3s; -o-transition: background-color 0.3s; transition: background-color 0.3s; }
 #update-profile .go:hover, #update-profile .go:focus { background: rgba(255,255,255,.6); -moz-transition: background-color 0.2s; -webkit-transition: background-color 0.2s; -o-transition: background-color 0.2s; transition: background-color 0.2s; }
