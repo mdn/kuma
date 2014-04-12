@@ -341,6 +341,23 @@ home-involved-background-y = 50px;
         background: url('/media/js/libs/owl.carousel/owl-carousel/AjaxLoader.gif') no-repeat center center;
     }
 
+    /* In right-to-left languages, show some carousel items in reverse order
+       and hide the pager. This is not a permanent solution,
+       https://bugzilla.mozilla.org/show_bug.cgi?id=992745 */
+    .html-rtl & {
+        .owl-item {
+            float: right;
+        }
+
+        .owl-item.loading, .owl-controls {
+            display: none;
+        }
+
+        .owl-carousel {
+            margin-bottom: grid-spacing;
+        }
+    }
+
     .preview {
         text-transform: uppercase;
         float: right;
