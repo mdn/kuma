@@ -29,7 +29,10 @@
                         <span class="locale">{{ revision.document.locale }}</span>
                         {% if not previous_id %}<span class="new">{{ _('new') }}</span>{% endif %}
                     </td>
-                    <td class="dashboard-title"><a href="{{ revision_url }}">{{ revision.title }}</a></td>
+                    <td class="dashboard-title">
+                        <a href="{{ revision_url }}">{{ revision.title }}</a>
+                        <span class="dashboard-slug">{{ revision.document.slug }}</span>
+                    </td>
                     <td class="dashboard-comment">{{ revision.comment }}</td>
                     <td class="dashboard-author"><a href="{{ url('devmo.views.profile_view', username=revision.creator) }}">{{ revision.creator }}</a></td>
                 </tr>
