@@ -336,9 +336,16 @@ home-involved-background-y = 50px;
 
     .owl-theme .owl-controls {
         margin-top: grid-spacing;
+
+        .html-rtl & { // Temporarily hide paging controls for RTL!
+            display: none;
+        }
     }
     .owl-item.loading {
         background: url('/media/js/libs/owl.carousel/owl-carousel/AjaxLoader.gif') no-repeat center center;
+    }
+    .owl-carousel .owl-item {
+        bidi-value(float, left, right);
     }
 
     .preview {
