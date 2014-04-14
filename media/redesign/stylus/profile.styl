@@ -312,12 +312,7 @@ table.activity {
     }
 
     .profile-newsletter-container {
-        padding-bottom: 0;
         margin-bottom: (grid-spacing * 1.5);
-
-        .fm-submit {
-            display: none;
-        }
     }
 }
 
@@ -337,6 +332,19 @@ table.activity {
 
         .submenu {
             top: 90px;
+        }
+    }
+}
+
+@media media-query-mobile {
+    .profile-newsletter-container {
+        #apps-newsletter-subscribe {
+            margin: 0;
+            padding: 0;
+        }
+
+        .fm-submit {
+            display: none;
         }
     }
 }
