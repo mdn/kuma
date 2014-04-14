@@ -45,7 +45,7 @@
                 };
             }
 
-            // If Analytics has loaded, go ahead wiht tracking
+            // If Analytics has loaded, go ahead with tracking
             if (_gaq && _gaq.push) {
                 // Send event to GA
                 _gaq.push(eventArray);

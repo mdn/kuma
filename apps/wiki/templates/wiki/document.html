@@ -177,6 +177,25 @@
           </span>
           {% endif %}
         <h1>{{ document.title }}</h1>
+        {% if waffle.flag('top_contributors') %}
+        <div class="contributor-avatars">
+            <span class="quickstat">
+            {% trans contributor_count=document.get_contributors()|length %}
+            by {{ contributor_count }} contributor:
+            {% pluralize %}
+            by {{ contributor_count }} contributors:
+            {% endtrans %}
+            </span>
+            <ul>
+        {% for username, contributor in document.get_contributors().iteritems() %}
+                <li>
+                <a href="{{ url('devmo_profile_view', username) }}" title="{% trans %}View {{ username }} profile{% endtrans %}">
+                <noscript data-class="avatar" data-alt="{{ username }}" data-src="{{ contributor.user.get_profile().small_gravatar }}">{{ username }}</noscript></a>
+                </li>
+        {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
 
           {% if messages %}
             {% for message in messages %}

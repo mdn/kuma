@@ -25,6 +25,9 @@
 {% if waffle.flag('search_doc_navigator') %}
             ['_setCustomVar', 8, 'docs navigator', 'Yes', 1],
 {% endif %}
+{% if waffle.flag('top_contributors') %}
+            ['_setCustomVar', 10, 'top contributors', 'Yes', 1],
+{% endif %}
             ['_trackPageview']);
   _gaq.push(removeUtms);
 

@@ -190,6 +190,10 @@ class UserProfile(ModelBase):
     def gravatar(self):
         return self.gravatar_url()
 
+    @property
+    def small_gravatar(self):
+        return self.gravatar_url(size=20)
+
     def __unicode__(self):
         return '%s: %s' % (self.id, self.deki_user_id)
 
