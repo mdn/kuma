@@ -84,7 +84,6 @@ function PromoteMDN(userSettings) {
         'WebRTC': mdnRoot + 'WebRTC',
         'WebAPI': mdnRoot + 'WebAPI',
         'Web apps': mdnRoot + 'Apps',
-        'Mozilla Developer Program': mdnRoot + 'Mozilla/Developer_Program',
         'Emscripten': mdnRoot + 'Emscripten',
         'L20n': mdnRoot + 'L20n',
         'Firefox Marketplace': 'https://developer.mozilla.org/Marketplace',
