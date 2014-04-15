@@ -192,7 +192,7 @@ class UserProfile(ModelBase):
 
     @property
     def small_gravatar(self):
-        return self.gravatar_url(size=20)
+        return self.gravatar_url(size=30)
 
     def __unicode__(self):
         return '%s: %s' % (self.id, self.deki_user_id)
@@ -249,7 +249,7 @@ try:
     add_introspection_rules([], ['sumo.models.LocaleField'])
 except ImportError:
     pass
-    
+
 
 def parse_date(date_str):
     try:

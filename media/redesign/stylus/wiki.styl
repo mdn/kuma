@@ -223,6 +223,13 @@ article {
 
     ul {
       display: inline;
+      opacity: 0.7;
+      vendorize(transition, opacity .3s ease-in-out);
+
+      &:hover,
+      &.focused {
+        opacity: 1;
+      }
 
       li {
         display: inline-block;
@@ -234,12 +241,13 @@ article {
       }
 
       a {
-        opacity: 0.6;
-        vendorize(transition, opacity .2s ease-out);
+        &:focus {
+          outline: none;
 
-        &:hover,
-        &:focus{
-          opacity: 1;
+            img {
+              vendorize(transform, scale(1.5));
+            }
+          }
         }
       }
 
@@ -247,6 +255,17 @@ article {
         vertical-align: text-bottom;
         border-radius: 2px;
         max-width: 20px;
+        opacity: 0;
+        vendorize(transition, all .2s);
+
+        &.loaded {
+          opacity: 1;
+        }
+
+        &:hover,
+        &:focus{
+          vendorize(transform, scale(1.5));
+        }
       }
     }
 

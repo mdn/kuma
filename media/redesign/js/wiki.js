@@ -258,6 +258,7 @@
     */
     (function (){
         var $contributors = $('.contributor-avatars');
+        var $contributorsList = $contributors.find('ul');
         $contributors.find('a').each(function(index) {
           $(this).on('click', function(e) {
             var newTab = (e.metaKey || e.ctrlKey);
@@ -266,7 +267,7 @@
               location = href;
             };
             var data = ['Top Contributors', 'Click position', index];
-             
+
             if (newTab) {
               mdn.analytics.trackEvent(data);
             } else {
@@ -276,21 +277,34 @@
           });
         });
 
+        $contributorsList.on('focusin focusout', function(e) {
+            if (e.type === 'focusin') {
+                $(this).addClass('focused');
+            } else {
+                $(this).removeClass('focused');
+            }
+        });
+
         if ($contributors.find('li').length > 13) {
             var showAllContributors = $('<button type="button">Show all<span class="hidden"> contributors</span></button>');
 
-            showAllContributors.on('click', function(e) {
-                e.preventDefault();
-                mdn.analytics.trackEvent(['Top Contributors', 'Show all']);
-                $contributors.find('li.hidden').removeClass('hidden');
-                $contributors.find('noscript').mozLazyloadImage();
-                $contributors.find('li:eq(13) a').focus();
-                $(this).remove();
+            showAllContributors.on('click keypress', function(e) {
+                var enterOrSpace = (e.which === 13 || e.which === 32);
+                if (enterOrSpace || e.type === 'click') {
+                    e.preventDefault();
+                    mdn.analytics.trackEvent(['Top Contributors', 'Show all']);
+                    $contributors.find('li.hidden').removeClass('hidden');
+                    $contributors.find('noscript').mozLazyloadImage();
+                    if (enterOrSpace) {
+                        $contributors.find('li:eq(13) a').focus();
+                    }
+                    $(this).remove();
+                }
             });
 
             $contributors.find('li:lt(13) noscript').mozLazyloadImage();
             $contributors.find('li:gt(12)').addClass('hidden');
-            $contributors.find('ul').after(showAllContributors);
+            $contributorsList.after(showAllContributors);
         } else {
             $contributors.find('noscript').mozLazyloadImage();
         }
