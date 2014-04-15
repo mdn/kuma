@@ -51,7 +51,7 @@
               {% endif %}
             </ul>
           </div>
-        </div></li>{% endif %}<li><a href="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}" class="button">{{ _('Edit') }}<i aria-hidden="true" class="icon-pencil"></i></a></li><li><button id="advanced-menu" class="only-icon" aria-haspopup="true" aria-owns="advanced-menu-submenu" aria-expanded="false"><span>{{ _('Advanced') }}</span><i aria-hidden="true" class="icon-cog"></i></button>
+        </div></li>{% endif %}<li class="page-buttons-edit"><a href="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}" class="button">{{ _('Edit') }}<i aria-hidden="true" class="icon-pencil"></i></a></li><li><button id="advanced-menu" class="only-icon" aria-haspopup="true" aria-owns="advanced-menu-submenu" aria-expanded="false"><span>{{ _('Advanced') }}</span><i aria-hidden="true" class="icon-cog"></i></button>
 
         <div class="submenu" id="advanced-menu-submenu">
           <!-- this page -->
