@@ -226,7 +226,7 @@ draw-grid();
 }
 
 a.persona-button {
-  vendorize(border-radius, 3px);
+  border-radius: 3px;
   z-index: 2;
   display: inline-block;
   visibility: hidden;
@@ -262,12 +262,12 @@ a.persona-button {
       height: 24px;
       z-index: 1;
       vendorize(transform, scale(0.707) rotate(45deg));
-      vendorize(border-radius, 0 3px 0 50px);
+      border-radius: 0 3px 0 50px;
     }
 
     &.persona-icon {
       padding-left: 3px;
-      vendorize(border-radius, 3px 0 0 3px);
+      border-radius: 3px 0 0 3px;
       create-gradient(#43a6e2, #287cc2);
       height: 24px;
 
@@ -623,7 +623,7 @@ ol.pagination {
     &.selected a {
       background: #447bc4;
       color: #fff;
-      vendorize(border-radius, 5px);
+      border-radius: 5px;
     }
   }
 }
