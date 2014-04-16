@@ -224,6 +224,7 @@ article {
     ul {
       display: inline;
       opacity: 0.7;
+      margin-left: 2px;
       vendorize(transition, opacity .3s ease-in-out);
 
       &:hover,
@@ -245,7 +246,7 @@ article {
           outline: none;
 
             img {
-              vendorize(transform, scale(1.5));
+              vendorize(transform, scale(1.7));
             }
           }
         }
@@ -264,17 +265,23 @@ article {
 
         &:hover,
         &:focus{
-          vendorize(transform, scale(1.5));
+          vendorize(transform, scale(1.7));
+        }
+      }
+
+      button {
+        margin-left: -2px;
+        compat-important(color, #777);
+        compat-important(text-transform, none);
+        compat-important(font-size, 12px);
+        compat-important(padding, 5px 0);
+
+        &:hover,
+        &:focus {
+          compat-important(color, #4D4E53);
         }
       }
     }
-
-    button {
-      position: relative;
-      top: -2px;
-      font-size: 10px !important;
-    }
-  }
 }
 
 /* search navigator near article heading */

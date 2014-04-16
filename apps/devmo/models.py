@@ -192,7 +192,7 @@ class UserProfile(ModelBase):
 
     @property
     def small_gravatar(self):
-        return self.gravatar_url(size=30)
+        return self.gravatar_url(size=34)
 
     def __unicode__(self):
         return '%s: %s' % (self.id, self.deki_user_id)

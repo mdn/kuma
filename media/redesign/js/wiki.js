@@ -286,7 +286,7 @@
         });
 
         if ($contributors.find('li').length > 13) {
-            var showAllContributors = $('<button type="button">Show all<span class="hidden"> contributors</span></button>');
+            var showAllContributors = $('<button type="button" class="transparent">Show all&hellip;<span class="hidden"> contributors</span></button>');
 
             showAllContributors.on('click keypress', function(e) {
                 var enterOrSpace = (e.which === 13 || e.which === 32);
