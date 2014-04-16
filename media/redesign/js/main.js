@@ -174,10 +174,15 @@
 
     /*
         Skip to search and is better done with JS because it's sometimes hidden and shown
+        Skip to main is also better done with JS as it is configurable on the server side
     */
     $('#skip-search').on('click', function(e) {
         e.preventDefault();
         $('input[name=q]').last().get(0).focus();
+    });
+    $('#skip-main').each(function() { // Only one, so using each as closure
+        var id = this.href.split('#')[1];
+        id && $('#' + id).attr('role', 'main');
     });
 
     /*
