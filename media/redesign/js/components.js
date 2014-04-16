@@ -337,8 +337,16 @@
     $.fn.mozLazyloadImage = function() {
         return $(this).each(function() {
             var $img = $('<img />');
+            var alt = $(this).data('alt');
+            $img.on('load', function() {
+                $(this)
+                    .attr('alt', alt)
+                    .addClass('loaded');
+            });
             $.each($(this).data(), function(name, value) {
-                $img.attr(name, value);
+                if (name !== "alt") {
+                    $img.attr(name, value);
+                }
             });
             $(this).after($img).remove();
         });
