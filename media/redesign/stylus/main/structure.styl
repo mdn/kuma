@@ -45,12 +45,7 @@ draw-grid();
 
 /* global notices (via soapbox) */
 .global-notice {
-  background: #fff;
   background: light-background-color;
-  compat-only(font-size, base-font-size);
-  compat-only(border, 0);
-  compat-only(color, text-color);
-  compat-only(padding, 0);
 
   .wrap {
     @extend .center;
@@ -93,15 +88,14 @@ draw-grid();
 }
 
 #nav-access {
-  compat-only(width, 100%);
+  width: 100%;
   position: absolute;
   top: -20em;
   z-index: 1001;
 
   a {
-    compat-important(color, link-color);
-    compat-important(background, rgba(255, 255, 255, 0.9));
-    compat-important(padding, 12px 10px);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 12px 10px;
     position: absolute;
     left: 0;
     right: 0;
@@ -211,7 +205,6 @@ draw-grid();
   right: 200px;
   top: 12px;
   font-size: small-bump-font-size;
-  compat-only(width, auto);
 
   li + li {
     bidi-style(border-left, 1px solid #bbb, border-right, 0);
@@ -324,7 +317,7 @@ a.persona-button {
     font-weight: bold;
     width: 20px;
     overflow: hidden;
-    compat-only(padding, 0);
+    padding: 0;
     vendorize(transition-property, width);
     vendorize(transition-duration, default-animation-duration);
     position: absolute;
@@ -366,7 +359,7 @@ footer {
 
   p {
     bidi-style(padding-left, 92px, padding-right, 0, true);
-    compat-important(padding-top, 10px);
+    padding-top: 10px;
     padding-bottom: 0;
     position: relative;
     min-height: 62px;
