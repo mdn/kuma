@@ -223,19 +223,22 @@
 
     /*
         Adds a context menu to edit page or view history
-        if right-click on a link it will edit/view history on the links href.
     */
     $('body[contextmenu=edit-history-menu]').mozContextMenu(function(target, $contextMenu) {
             var $menuitems = $contextMenu.find('menuitem');
-            $menuitems.removeAttr('disabled');
+            var $body = $('body');
+            var isTextSelected = !document.getSelection().isCollapsed;
+            var isLinkTargeted = ($(target).is('a') || $(target).parents().is('a'));
+            var isImageTargeted = $(target).is('img');
 
-            // if target is an anchor other than MDN
-            if(target.hostname && target.hostname !== location.hostname) {
-                $menuitems.attr('disabled', true);
+            $body.attr('contextmenu', 'edit-history-menu');
+
+            if(isLinkTargeted || isTextSelected || isImageTargeted) {
+                $body.attr('contextmenu', '');
             }
 
             $contextMenu.on('click', function(e) {
-                location.href = (target.href || location.href) + $(e.target).data('action');
+                location.href = (target.href || location.href) + $(e.target).data('action') + '?src=context';
             });
     });
 
