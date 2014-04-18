@@ -23,7 +23,9 @@
 {% endif %}
 
 {% set current_revision = document.current_revision %}
-{% if (is_logged_in and current_revision and document.allows_revision_by(user)) and (current_revision.needs_technical_review() or current_revision.needs_editorial_review()) %}
+{% set needs_tech_review = current_revision.needs_technical_review() %}
+{% set needs_editorial_review = current_revision.needs_editorial_review() %}
+{% if (is_logged_in and current_revision and document.allows_revision_by(user)) and (needs_technical_review or needs_editorial_review) %}
   {% set approvals_html = get_approvals_html(document, request.user) %}
 {% endif %}
 
@@ -49,7 +51,6 @@
 
 {% block site_css %}
     {{ super() }}
-    {% set zone_stack = document.find_zone_stack() %}
     {% if zone_stack %}
       {% for zone in zone_stack|reverse() %}
         <link rel="stylesheet" type="text/css" href="{{ url('wiki.styles', zone.document.full_path) }}">
@@ -178,16 +179,17 @@
           {% endif %}
         <h1>{{ document.title }}</h1>
         {% if waffle.flag('top_contributors') %}
+        {% set doc_contributors = document.get_contributors() %}
         <div class="contributor-avatars">
             <span class="quickstat">
-            {% trans contributor_count=document.get_contributors()|length %}
+            {% trans contributor_count=doc_contributors|length %}
             by {{ contributor_count }} contributor:
             {% pluralize %}
             by {{ contributor_count }} contributors:
             {% endtrans %}
             </span>
             <ul>
-        {% for username, contributor in document.get_contributors().iteritems() %}
+        {% for username, contributor in doc_contributors.iteritems() %}
                 <li>
                 <a href="{{ url('devmo_profile_view', username) }}" title="{% trans %}View {{ username }} profile{% endtrans %}">
                 <noscript data-class="avatar" data-alt="{{ username }}" data-src="{{ contributor.user.get_profile().small_gravatar }}">{{ username }}</noscript></a>
@@ -290,12 +292,12 @@
               {% endif %}
 
               {% if document.current_revision %}
-                {% if document.current_revision.needs_technical_review() %}
+                {% if needs_technical_review %}
                   <div class="warning warning-review">{% trans %}
                     <p>This article is in need of a technical review.</p>
                   {% endtrans %}</div>
                 {% endif %}
-                {% if document.current_revision.needs_editorial_review() %}
+                {% if needs_editorial_review %}
                   <div class="warning warning-review">{% trans %}
                     <p>This article is in need of an editorial review.</p>
                   {% endtrans %}</div>
