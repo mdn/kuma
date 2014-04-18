@@ -197,9 +197,7 @@ $(document).ready(function(){
             })
         var $firstTimePop = $('<div></div>')
             .addClass('notificaton-first-time')
-            .append('<h2>Welcome to the new way to search MDN!</h2>')
-            .append('<p>Search as usual, or filter your search by clicking in the arrow (<i class="icon-caret-down" aria-hidden="true"></i>) to show the filters menu.</p>')
-            .append('<p>Filtering also works by typing shortcuts into the search field (shortcut examples #int, #JS, #CSS).</p>')
+            .append($search.data('ft-text'))
             .append($closeButton);
 
         $search.after($firstTimePop);
