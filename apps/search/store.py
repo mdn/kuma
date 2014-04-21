@@ -15,8 +15,11 @@ PAGE_PARAM = 'page'
 
 def referrer_url(request):
     referrer = request.META.get('HTTP_REFERER', None)
-    if (referrer is None or
-            reverse('search', locale=request.locale) != URL(referrer).path):
+    try:
+        if (referrer is None or
+                reverse('search', locale=request.locale) != URL(referrer).path):
+            return None
+    except UnicodeDecodeError:
         return None
     return referrer
 
