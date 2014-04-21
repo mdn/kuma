@@ -15,8 +15,17 @@ PAGE_PARAM = 'page'
 
 def referrer_url(request):
     referrer = request.META.get('HTTP_REFERER', None)
-    if (referrer is None or
-            reverse('search', locale=request.locale) != URL(referrer).path):
+
+    # Non-ASCII referers can be problematic.
+    # TODO: The 'ftfy' library can probably fix these, but may not be
+    # worth the effort.
+    try:
+        urlpath = URL(referrer).path
+    except UnicodeDecodeError:
+        urlpath = None
+        
+    if (referrer is None or urlpath is None or
+            reverse('search', locale=request.locale) != urlpath):
         return None
     return referrer
 
