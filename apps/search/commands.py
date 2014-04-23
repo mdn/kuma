@@ -3,7 +3,7 @@ import time
 
 from django.conf import settings
 from django.db import reset_queries
-from pyelasticsearch.exceptions import ElasticHttpNotFoundError
+from elasticsearch.exceptions import NotFoundError
 
 from .decorators import requires_good_connection
 from .index import (get_indexing_es, get_index, recreate_index, get_indexable,
@@ -38,7 +38,7 @@ def es_reindex_cmd(percent=100, mapping_types=None,
 
     # We're doing a lot of indexing, so we get the refresh_interval
     # currently in the index, then nix refreshing. Later we'll restore it.
-    index_settings = (es.get_settings(index)
+    index_settings = (es.indices.get_settings(index)
                         .get(index, {}).get('settings', {}))
     refresh_interval = index_settings.get('index.refresh_interval', '1s')
     number_of_replicas = index_settings.get('number_of_replicas', '1')
@@ -52,7 +52,7 @@ def es_reindex_cmd(percent=100, mapping_types=None,
     }
 
     try:
-        es.update_settings(index, temporary_settings)
+        es.indices.put_settings(temporary_settings, index=index)
         start_time = time.time()
 
         for cls, indexable in indexable:
@@ -98,7 +98,7 @@ def es_reindex_cmd(percent=100, mapping_types=None,
                 'number_of_replicas': number_of_replicas,
             }
         }
-        es.update_settings(index, reset_settings)
+        es.indices.put_settings(reset_settings, index)
         delta_time = time.time() - start_time
         log.info('Done! (total time: %s)', format_time(delta_time))
 
@@ -147,5 +147,5 @@ def es_status_cmd(index=None):
         for name, count in mt_stats.items():
             log.info('    %-20s: %d', name, count)
 
-    except ElasticHttpNotFoundError:
+    except NotFoundError:
         log.info('  Index does not exist. (%s)', index)

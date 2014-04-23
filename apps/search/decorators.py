@@ -1,6 +1,6 @@
 import logging
 from django.db.models.signals import pre_delete
-from pyelasticsearch.exceptions import ConnectionError, Timeout
+from elasticsearch.exceptions import ConnectionError
 
 from wiki.signals import render_done
 
@@ -36,7 +36,7 @@ def requires_good_connection(fun):
     def _requires_good_connection(*args, **kwargs):
         try:
             return fun(*args, **kwargs)
-        except (ConnectionError, Timeout):
+        except ConnectionError:
             log.error('Either your ElasticSearch process is not quite '
                       'ready to rumble, is not running at all, or ES_URLS'
                       'is set wrong in your settings_local.py file.')

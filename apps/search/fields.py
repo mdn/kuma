@@ -33,6 +33,6 @@ class DocumentExcerptField(serializers.Field):
     <em> tag intact.
     """
     def to_native(self, value):
-        if not value._highlight:
+        if not value.es_meta.highlight:
             return value.summary
         return value.get_excerpt()

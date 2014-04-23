@@ -169,9 +169,9 @@ class DatabaseFilterBackend(BaseFilterBackend):
         # only way to get to the currently applied filters
         # to use it to limit the facets filters below
         if view.drilldown_faceting:
-            facet_filter = queryset._build_query().get('filter', [])
+            facet_filter = queryset.build_search().get('filter', [])
         else:
-            facet_filter = unfiltered_queryset._build_query().get('filter', [])
+            facet_filter = unfiltered_queryset.build_search().get('filter', [])
 
         for facet_slug, facet_params in active_facets:
             facet_query = {

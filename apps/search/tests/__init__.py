@@ -3,8 +3,7 @@ import time
 from django.conf import settings
 
 from nose import SkipTest
-from pyelasticsearch.exceptions import (Timeout, ConnectionError,
-                                        ElasticHttpNotFoundError)
+from elasticsearch.exceptions import ConnectionError, NotFoundError
 from rest_framework.test import APIRequestFactory
 from test_utils import TestCase
 
@@ -39,8 +38,8 @@ class ElasticTestCase(TestCase):
 
         # try to connect to ES and if it fails, skip ElasticTestCases.
         try:
-            get_indexing_es().health()
-        except (Timeout, ConnectionError):
+            get_indexing_es().cluster.health()
+        except ConnectionError:
             cls.skipme = True
             return
 
@@ -101,13 +100,13 @@ class ElasticTestCase(TestCase):
 
         self.refresh()
         if wait:
-            get_indexing_es().health(wait_for_status='yellow')
+            get_indexing_es().cluster.health(wait_for_status='yellow')
 
     def teardown_indexes(self):
         es = get_indexing_es()
         try:
-            es.delete_index(get_index())
-        except ElasticHttpNotFoundError:
+            es.indices.delete(get_index())
+        except NotFoundError:
             # If we get this error, it means the index didn't exist
             # so there's nothing to delete.
             pass

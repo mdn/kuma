@@ -1,7 +1,7 @@
 from nose.tools import eq_, ok_
 
 from django.conf import settings
-from pyelasticsearch.exceptions import IndexAlreadyExistsError
+from elasticsearch.exceptions import RequestError
 
 from wiki.models import Document
 from search.models import Index, DocumentType
@@ -88,8 +88,8 @@ class TestIndexes(ElasticTestCase):
         es = get_indexing_es()
 
         try:
-            es.create_index(index.prefixed_name)
-        except IndexAlreadyExistsError:
+            es.indices.create(index.prefixed_name)
+        except RequestError:
             pass
         else:
             assert False
@@ -97,7 +97,7 @@ class TestIndexes(ElasticTestCase):
         # then delete it and check if recreating works without blowing up
         index.delete()
         try:
-            es.create_index(index.prefixed_name)
-        except IndexAlreadyExistsError:
+            es.indices.create(index.prefixed_name)
+        except RequestError:
             assert False
-        es.delete_index(index.prefixed_name)
+        es.indices.delete(index.prefixed_name)
