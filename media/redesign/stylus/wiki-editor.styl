@@ -1,15 +1,15 @@
 @import 'includes/vars'
 
 /* styles for the WYSIWYG editor which we cannot take directly from screen.css */
-html, body { 
-  background: #fff; 
+html, body {
+  background: #fff;
 }
-html.maximized { 
-  overflow-y: auto !important; 
+html.maximized {
+  overflow-y: auto !important;
 }
-body { 
-  font: 14px/1.5 'Open Sans', sans-serif; 
-  padding: 0 grid-spacing; 
+body {
+  font: 14px/1.5 'Open Sans', sans-serif;
+  padding: 0 grid-spacing;
 }
 
 
@@ -20,7 +20,7 @@ body {
   position: relative;
 
   &:before {
-    font-size: 10px;
+    set-font-size(10px);
     content: 'SEO Summary';
     position: absolute;
     top: -16px;
@@ -50,7 +50,7 @@ pre {
   position: relative;
 }
 pre:before {
-  font-size: 12px;
+  set-smaller-font-size();
   font-family: arial, sans-serif;
   font-style: italic;
   position: absolute;
@@ -80,7 +80,7 @@ createLanguageQuery('xml', 'XML');
 li[data-default-state='open'] > a:after {
   content: '(defaults to "open")';
   color: #666;
-  font-size: 12px;
+  set-smaller-font-size();
   font-family: arial, sans-serif;
   font-style: italic;
   display: inline-block;

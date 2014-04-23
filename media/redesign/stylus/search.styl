@@ -65,7 +65,7 @@ p {
     }
 
     h4 {
-        @extend .larger
+        set-larger-font-size();
     }
 
     h4, {selector-icon} { /* bug #938074 */
@@ -98,7 +98,7 @@ p {
 }
 
 .result-list-link {
-    @extend .smaller;
+    set-smaller-font-size();
     font-style: italic;
 
     {selector-icon} {
@@ -128,7 +128,7 @@ p {
             margin-bottom: 30px;
         }
         legend {
-            font-size: 24px;
+            set-font-size(24px);
             letter-spacing: -0.5px;
             margin: -7px 0 (grid-spacing / 2);
 

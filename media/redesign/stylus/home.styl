@@ -60,7 +60,7 @@ home-involved-background-y = 50px;
             color: #0095dd;
             background-position: 0 -222px;
             background-size: 205px auto;
-            font-size: 30px;
+            set-font-size(30px);
             margin-right: 5px;
 
             &.blue {
@@ -108,7 +108,7 @@ home-involved-background-y = 50px;
     }
 
     .entry-meta {
-        @extend .smaller;
+        set-smaller-font-size();
         font-style: italic;
     }
 }
@@ -151,7 +151,7 @@ home-involved-background-y = 50px;
     }
 
     h3 {
-        @extend .larger;
+        set-larger-font-size();
         font-weight: bold;
         font-family: 'Open Sans Extra Bold', sans-serif;
 
@@ -192,7 +192,7 @@ home-involved-background-y = 50px;
         padding: 100px grid-spacing grid-spacing grid-spacing;
         position: relative;
         overflow-x: hidden;
-        font-size: larger-font-size;
+        set-larger-font-size();
 
         &:before {
             bidi-style(content, '\f061', content, '\f060');
@@ -200,7 +200,7 @@ home-involved-background-y = 50px;
             font-family: 'FontAwesome';
             bottom: grid-spacing;
             position: absolute;
-            font-size: 24px;
+            set-font-size(24px);
             z-index: 4;
         }
     }
@@ -246,7 +246,7 @@ home-involved-background-y = 50px;
         letter-spacing: 0;
         line-height: normal;
         margin-bottom: 0;
-        font-size: base-font-size;
+        set-font-size(base-font-size);
 
         a {
             text-decoration: underline;
@@ -279,12 +279,12 @@ home-involved-background-y = 50px;
         }
 
         .number {
-            font-size: 30px;
+            set-font-size(30px);
             font-weight: bold;
         }
 
         h2 {
-            @extend .larger;
+            set-larger-font-size();
             padding-bottom: (grid-spacing / 2);
             border-bottom: 1px solid #e0e2e4;
             margin-bottom: 110px;
@@ -319,7 +319,7 @@ home-involved-background-y = 50px;
     }
 
     .home-demos-list-item {
-        @extend .smaller;
+        set-smaller-font-size();
         display: block;
         text-align: center;
         margin: 0 auto;
@@ -382,7 +382,7 @@ home-involved-background-y = 50px;
     }
 
     h3 {
-        @extend .larger;
+        set-larger-font-size();
         font-weight: bold;
         text-transform: uppercase;
     }
@@ -413,7 +413,7 @@ home-involved-background-y = 50px;
 
     .column-callout {
         a {
-            font-size: base-bump-font-size;
+            set-font-size(base-bump-font-size);
         }
     }
 }
@@ -441,7 +441,7 @@ home-involved-background-y = 50px;
 
         .column-callout {
             a {
-                font-size: larger-font-size;
+                set-larger-font-size();
             }
         }
 
@@ -476,7 +476,7 @@ home-involved-background-y = 50px;
         }
 
         .home-demos h2, .home-contribute h2, .column-hacks > h2 {
-            font-size: 20px;
+            set-font-size(20px);
 
             > i {
                 display: none;

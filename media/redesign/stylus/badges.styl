@@ -31,7 +31,7 @@
             white-space: normal;
             text-decoration: none;
             width: 128px;
-            font-size: smaller-font-size;
+            set-smaller-font-size();
 
             &:before {
                 content: '✸ ';
@@ -221,7 +221,7 @@ input[type="submit"].delete-badge {
 
     .badge-text {
         font-weight: bold;
-        font-size: 18px;
+        set-font-size(18px);
         line-height: 20px;
     }
 }
@@ -262,7 +262,7 @@ input[type="submit"].delete-badge {
 
     .badge-notify {
         font-weight: bold;
-        font-size: smaller-font-size;
+        set-smaller-font-size();
         text-transform: uppercase;
     }
 
@@ -273,7 +273,7 @@ input[type="submit"].delete-badge {
     .badge-headline {
         font-weight: bold;
         color: text-color;
-        font-size: 18px;
+        set-font-size(18px);
         font-weight: bold;
         line-height: 22px;
     }

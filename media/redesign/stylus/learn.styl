@@ -22,12 +22,12 @@
             text-align: justify;
 
             &.intro {
-                font-size: base-bump-font-size;
+                set-font-size(base-bump-font-size);
             }
         }
 
         &.landing p {
-            font-size: larger-font-size;
+            set-larger-font-size();
             text-align: center;
         }
 
@@ -58,7 +58,7 @@
         li {
             background: none;
             float: left;
-            font-size: smaller-font-size;
+            set-smaller-font-size();
             margin: 0 0 0 10%;
             text-shadow: 0 0 1px #000;
             width: 22%;
@@ -122,7 +122,7 @@ h2 {
     position: relative;
 
     h2 {
-        font-size: base-font-size;
+        set-font-size(base-font-size);
         line-height: 1.22;
     }
 
@@ -151,7 +151,7 @@ h2 {
 
 #learn-fineprint {
     clear: both;
-    font-size: 11px;
+    set-font-size(11px);
     margin: grid-spacing grid-spacing (grid-spacing * 2);
 }
 
@@ -165,14 +165,14 @@ h2 {
 }
 
 .link-list {
-    font-size: smaller-font-size;
+    set-smaller-font-size();
 
     .title {
         margin: 5px 0;
     }
 
     .source {
-        font-size: 11px;
+        set-font-size(11px);
         font-weight: normal;
         color: #666;
     }
@@ -257,7 +257,7 @@ h2 {
         background: rgba(0,0,0,.85);
         border-radius: 5px;
         color: #ccc;
-        font-size: 11px;
+        set-font-size(11px);
         padding: (grid-spacing / 2);
         text-shadow: 0 0 1px #000;
         vendorize(box-shadow, 0 2px 2px rgba(0,0,0,.15));

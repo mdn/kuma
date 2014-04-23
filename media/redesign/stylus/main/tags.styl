@@ -59,12 +59,12 @@ h2 {
 }
 
 h3 {
-  font-size: 24px;
+  set-font-size(24px);
   letter-spacing: -0.5px;
 }
 
 h4 {
-  font-size: 18px;
+  set-font-size(18px);
   letter-spacing: -0.25px;
 }
 
@@ -94,7 +94,7 @@ p, dl, table, pre {
 
 pre {
   compat-only(line-height, 19px);
-  font-size: base-font-size !important;
+  set-font-size(base-font-size !important);
   border: 0;
   background: #f6f6f2;
   padding: 15px;
@@ -126,7 +126,7 @@ input[type=text], input[type=password], input[type=search], input[type=email], i
 
 input, button, textarea, select, optgroup, option {
   font-family: inherit;
-  font-size: inherit;
+  set-font-size(inherit);
   font-style: inherit;
   font-weight: inherit;
 }
