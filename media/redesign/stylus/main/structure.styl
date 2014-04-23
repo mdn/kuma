@@ -20,13 +20,21 @@
   title-header();
 }
 
+.smaller {
+  set-smaller-font-size();
+}
+
+.larger {
+  set-larger-font-size();
+}
+
 .grid-padding {
   padding: grid-spacing;
 }
 
 .heading-link {
   font-style: italic;
-  font-size: base-font-size;
+  set-font-size(base-font-size);
   font-weight: normal;
   display: inline-block;
   margin-left: (grid-spacing * 2);
@@ -49,7 +57,7 @@ draw-grid();
 
   .wrap {
     @extend .center;
-    @extend .smaller;
+    set-smaller-font-size();
     compat-important(padding-left, 24px);
     compat-important(padding-right, 24px);
     compat-important(padding-top, 10px);
@@ -204,7 +212,7 @@ draw-grid();
   position: absolute;
   right: 200px;
   top: 12px;
-  font-size: small-bump-font-size;
+  set-font-size(small-bump-font-size);
 
   li + li {
     bidi-style(border-left, 1px solid #bbb, border-right, 0);
@@ -240,7 +248,7 @@ a.persona-button {
     outline: none;
     display: block;
     float: left;
-    font-size: 14px;
+    set-font-size(base-font-size);
     line-height: 24px;
     color: white;
     padding: 0 10px 0 20px;
@@ -349,7 +357,7 @@ main {
 
 /* footer */
 footer {
-  @extend .smaller;
+  set-smaller-font-size();
   background: #fff;
   padding:  first-content-top-padding 0 0 0;
 
@@ -436,7 +444,7 @@ footer {
 
         > a {
           i {
-            @extend .larger;
+            set-larger-font-size();
           }
         }
       }

@@ -3,7 +3,7 @@
 
 .submission {
     .section {
-        font-size: small-bump-font-size;
+        set-font-size(small-bump-font-size);
         margin: 0 0 grid-spacing;
         padding: 35px 0 0;
         position: relative;
@@ -11,7 +11,7 @@
         & > legend {
             b {
                 display: block;
-                font-size: base-bump-font-size;
+                set-font-size(base-bump-font-size);
                 position: absolute;
             }
         }
@@ -40,7 +40,7 @@
     .note {
         color: #666;
         font-family: inherit;
-        font-size: smaller-font-size;
+        set-smaller-font-size();
         font-style: normal;
         font-weight: normal;
     }

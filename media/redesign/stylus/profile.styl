@@ -15,7 +15,7 @@
     b {
         color: #a19f93;
         font-weight: normal;
-        font-size: larger-font-size;
+        set-larger-font-size();
     }
 
     .photo {
@@ -29,7 +29,7 @@
     .links {
         border-spacing: (grid-spacing / 2);
         display: table;
-        font-size: smaller-font-size;
+        set-smaller-font-size();
         margin: -(@border-spacing); // Offset outer border
 
         li {
@@ -42,7 +42,7 @@
         }
 
         i {
-            font-size: base-font-size;
+            set-font-size(base-font-size);
             text-align: center;
         }
 
@@ -71,7 +71,7 @@
     }
 
     .bio {
-        font-size: smaller-font-size;
+        set-smaller-font-size();
     }
 
     .info {
@@ -96,20 +96,20 @@
         margin-bottom: 5px;
 
         h2 {
-            font-size: base-font-size;
+            set-font-size(base-font-size);
             margin-bottom: 0;
         }
 
         li {
             display: inline;
-            font-size: smaller-font-size;
+            set-smaller-font-size();
             margin: 0 10px 0 0;
         }
     }
 
     .memberSince {
         color: #6a9412;
-        font-size: smaller-font-size;
+        set-smaller-font-size();
         font-style: italic;
     }
 
@@ -145,7 +145,7 @@
 
 table.activity {
     border-collapse: collapse;
-    font-size: smaller-font-size;
+    set-smaller-font-size();
     width: 100%;
 
     td, th {
@@ -154,7 +154,7 @@ table.activity {
 
     th {
         h3 {
-            font-size: base-bump-font-size;
+            set-font-size(base-bump-font-size);
             margin: 0 0 (grid-spacing / 4);
         }
         &.date {
@@ -189,7 +189,7 @@ table.activity {
     }
 
     .actions {
-        font-size: 10px;
+        set-font-size(10px);
 
         li {
             display: inline;
@@ -209,7 +209,7 @@ table.activity {
     }
 
     .extra {
-        font-size: smaller-font-size;
+        set-smaller-font-size();
         figcaption {
             margin: (grid-spacing / 2) 0;
         }
@@ -282,7 +282,7 @@ table.activity {
 
 .profile-display, .profile-edit {
     .page-title {
-        font-size: 26px;
+        set-font-size(26px);
         letter-spacing: 0;
         margin-bottom: (grid-spacing / 2);
     }

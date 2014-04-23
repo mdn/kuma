@@ -6,6 +6,32 @@
 
 VENDOR-PREFIXES = '-webkit-' '-moz-' '-ms-';
 
+set-font-size(value) {
+    font-size: value;
+
+    if (value is not inherit) {
+        font-size: remify(value);
+    }
+}
+
+remify(value) {
+    u = unit(value);
+
+    if (u is 'px') {
+        return unit(value/base-font-size, 'rem')
+    } else {
+        return unit(value, u)
+    }
+}
+
+set-smaller-font-size() {
+    set-font-size(smaller-font-size);
+}
+set-larger-font-size() {
+    set-font-size(base-bump-font-size);
+}
+
+
 /* vendorizes a propery */
 vendorize(property, value) {
     for prefix in VENDOR-PREFIXES {
@@ -135,7 +161,7 @@ set-message-base() {
     compat-only(border-style, solid);
     padding: (grid-spacing / 2);
     margin-bottom: grid-spacing;
-    font-size: smaller-font-size;
+    set-smaller-font-size();
 
     & *:last-child {
         margin-bottom: 0;
@@ -245,17 +271,17 @@ bidi-value-vendorize(prop, ltr, rtl, make-important = false) {
     These are not dynamic but serve as mixins so that styles wont be repeated throughout files
 */
 heading-1() {
-    font-size: (content-block-margin * 2);
+    set-font-size((content-block-margin * 2));
     letter-spacing: -2px;
 }
 
 heading-2() {
-    font-size: 30px;
+    set-font-size(30px);
     letter-spacing: -1px;
 }
 
 big-search() {
-    @extend .larger;
+    set-larger-font-size();
     display: block;
     margin: 0 auto;
     background: rgba(255, 255, 255, 0.2);
@@ -339,7 +365,7 @@ component-submenu-method(menu-width, num-columns, background-color, arrow-border
     }
 
     a {
-        @extend .smaller;
+        set-smaller-font-size();
         padding: 5px 0;
         display: block;
     }
@@ -381,20 +407,6 @@ component-submenu-method(menu-width, num-columns, background-color, arrow-border
             }
         }
     }
-}
-
-/*
-    CLASSES TO BE EXTENDED BY OTHER CLASSES
-
-    These are very "general" and non-specific on purpose
-    There's a good chance these classes wont be used directly in HTML
-*/
-.smaller {
-    font-size: smaller-font-size;
-}
-
-.larger {
-    font-size: larger-font-size;
 }
 
 

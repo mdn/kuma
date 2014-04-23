@@ -73,7 +73,7 @@ enable-toc-toggle() {
 
 /* quick links */
 .quick-links {
-  @extend .smaller;
+  set-smaller-font-size();
   position: relative;
   margin-bottom: grid-spacing;
 
@@ -135,7 +135,7 @@ enable-toc-toggle() {
 
 .quick-links {selector-icon}, #quick-links-toggle {selector-icon} {
   bidi-style(left, -6px, right, auto);
-  font-size: 14px;
+  set-font-size(base-font-size);
   position: absolute;
   top: 1px;
 
@@ -150,8 +150,8 @@ enable-toc-toggle() {
 /* document review form stuff */
 .reviews {
   set-message-base();
-  @extend .smaller;
-  @extend .review-base
+  set-smaller-font-size();
+  @extend .review-base;
 
   p {
     margin: 0;
@@ -176,7 +176,7 @@ article {
     .html-ltr &:before, .html-rtl &:after {
       content: '\f08e';
       font-family: FontAwesome;
-      font-size: 9px;
+      set-font-size(9px);
       display: inline-block;
       opacity: 0.5;
       margin-right: 3px;
@@ -212,7 +212,7 @@ article {
   }
 
   .contributor-avatars {
-    @extend .smaller;
+    set-smaller-font-size();
     color: #777;
     padding: 10px 10px 6px;
     border-bottom: 1px solid rgb(241, 241, 241);
@@ -315,7 +315,7 @@ article {
 }
 
 .from-search-navigate {
-  @extend .larger;
+  set-larger-font-size();
   position: relative;
   color: #ced1d2;
   display: inline-block;
@@ -325,7 +325,7 @@ article {
 }
 
 .from-search-navigate-up, .from-search-navigate-down {
-  @extend .smaller;
+  set-smaller-font-size();
   position: absolute;
   left: 0;
 }
@@ -340,7 +340,7 @@ article {
 
 .from-search-toc {
   component-submenu-method(200px, 1, button-background, button-shadow-color)
-  @extend .smaller;
+  set-smaller-font-size();
   border: 1px solid button-shadow-color;
   left: 66px;
   top: 0;
@@ -364,7 +364,7 @@ article {
 }
 
 .redirected-from {
-  @extend .smaller;
+  set-smaller-font-size();
   margin-top: -(grid-spacing);
   font-style: italic;
   opacity: 0.7;
@@ -372,7 +372,7 @@ article {
 
 /* wiki article cookie crumbs */
 .crumbs {
-  @extend .smaller;
+  set-smaller-font-size();
   margin-bottom: (grid-spacing / 2);
 
   li {
@@ -390,7 +390,7 @@ article {
       font-family: FontAwesome;
       text-decoration: none;
       color: #c1c2c4;
-      font-size: 70%;
+      set-font-size(70%);
     }
   }
 
@@ -422,7 +422,7 @@ article {
     }
 
     {selector-icon} {
-      font-size: 16px;
+      set-font-size(base-bump-font-size);
     }
   }
 
@@ -452,7 +452,7 @@ article {
 /* notice at the top of the article */
 .notice {
   set-message-base();
-  font-size: base-font-size;
+  set-font-size(base-font-size);
   compat-important(border-width, 2px);
 }
 
@@ -462,7 +462,7 @@ article {
   background: rgba( 193, 56, 50, 0.85);
   compat-important(border-color, rgba(0, 0, 0, 0.1));
   compat-only(color, #fff);
-  font-size: base-font-size;
+  set-font-size(base-font-size);
 
   pre {
     padding: (grid-spacing / 2) !important;
@@ -501,7 +501,7 @@ div.bug, div.warning, div.overheadIndicator {
 
 /* contributors block at the bottom of the article */
 .contributors {
-  @extend .smaller;
+  set-smaller-font-size();
   color: #777;
 
   {selector-icon} {
@@ -524,7 +524,7 @@ div.bug, div.warning, div.overheadIndicator {
   position: relative;
 
   ul, > a {
-    @extend .smaller;
+    set-smaller-font-size();
     display: inline-block;
   }
 
@@ -553,7 +553,7 @@ div.bug, div.warning, div.overheadIndicator {
 }
 
 .tags a, .tagit li {
-  @extend .smaller;
+  set-smaller-font-size();
   padding: 1px 4px;
   border: 1px solid #cee9f9 !important; /* overrides plugin selector */
   text-decoration: none;
@@ -571,7 +571,7 @@ div.bug, div.warning, div.overheadIndicator {
 }
 
 .tagit li {
-  font-size: base-font-size;
+  set-font-size(base-font-size);
 }
 
 .tagit, .tagit-new {
@@ -660,7 +660,7 @@ div.bug, div.warning, div.overheadIndicator {
 .page-meta section h2,
 .page-meta section h3 {
   .editor-help-icon {
-    font-size: 20px;
+    set-font-size(20px);
   }
 }
 
@@ -682,7 +682,7 @@ div.bug, div.warning, div.overheadIndicator {
     margin-bottom: (grid-spacing);
 
     .action {
-      @extend .larger;
+      set-larger-font-size();
       display: block;
       line-height: 20px;
     }
@@ -699,7 +699,7 @@ div.bug, div.warning, div.overheadIndicator {
 
   h2 {
     font-family: site-font-family;
-    font-size: 28px; /* Change to h3 after redesign launched */
+    set-font-size(28px); /* Change to h3 after redesign launched */
     compat-only(text-transform, none);
     margin-bottom: grid-spacing;
   }
@@ -815,7 +815,7 @@ span.cke_skin_kuma {
 /* compare page */
 .compare, #revision-list {
   ul {
-    @extend .smaller;
+    set-smaller-font-size();
     compat-only(min-width, 0);
   }
 
@@ -839,7 +839,7 @@ span.cke_skin_kuma {
 .offline-notice {
   margin-top: -20px;
   margin-bottom: 20px;
-  font-size: 11px;
+  set-font-size(11px);
   margin-left: 6px;
 }
 

@@ -79,7 +79,7 @@
     }
 
     h3.title {
-        font-size: base-font-size;
+        set-font-size(base-font-size);
         margin: 6px 0 0 0;
     }
 }
@@ -94,7 +94,7 @@
 
     .masthead-text {
         p {
-            @extend .larger;
+            set-larger-font-size();
             font-weight: light-font-weight;
         }
     }
@@ -210,7 +210,7 @@
         @extend .dev-program-pad;
 
         h2 {
-            font-size: larger-font-size;
+            set-larger-font-size();
         }
     }
 }
@@ -238,13 +238,13 @@
 
 .dev-program-hacks {
     h3 {
-        font-size: larger-font-size;
+        set-larger-font-size();
         margin-bottom: 4px;
     }
 
     p {
         color: #bbb;
-        font-size: smaller-font-size;
+        set-smaller-font-size();
         margin-bottom: 10px;
 
         a {
