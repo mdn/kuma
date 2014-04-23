@@ -17,7 +17,6 @@ RewriteRule ^patches(.*) data/www/patches$1 [L]
 RewriteRule ^presentations(.*) data/www/presentations$1 [L]
 RewriteRule ^samples(.*) data/www/samples$1 [L]
 RewriteRule ^diagrams(.*) data/www/diagrams$1 [L]
-RewriteRule ^devnews(.*) data/www/devnews$1 [L]
 RewriteRule ^web-tech(.*) data/www/web-tech$1 [L]
 RewriteRule ^css(.*) data/www/css$1 [L]
 
@@ -49,11 +48,14 @@ RewriteRule ^([\w\-]*)/HTML5$ $1/docs/HTML/HTML5 [R=301,L,NC]
 RewriteRule web-tech/2008/09/12/css-transforms /docs/CSS/Using_CSS_transforms [R=301,L]
 RewriteRule ^([\w\-]*)/docs/?$ $1/docs/Web [R=301,L,NC]
 
+# DevNews
+RewriteRule ^(\w{2,3}(?:-\w{2})?/)?devnews/index.php/feed.* https://blog.mozilla.org/feed/ [R=301,L]
+RewriteRule ^(\w{2,3}(?:-\w{2})?/)?devnews.* https://wiki.mozilla.org/Releases [R=301,L]
+
 # Off-site redirects
 RewriteRule ^contests/$ http://labs.mozilla.com/contests/extendfirefox/ [R=302]
 RewriteRule ^contests/extendfirefox(/.*)? http://labs.mozilla.com/contests/extendfirefox$1 [R=302]
 RewriteRule ^es4(/.*)?$ http://wiki.ecmascript.org/ [R]
-RewriteRule devnews/index.php/feed/atom/ https://blog.mozilla.org/feed/ [R=301,L]
 
 # HACK: Django will eventually redirect the user to the right spot, but skip a
 # couple of redirects for these known legacy locales
