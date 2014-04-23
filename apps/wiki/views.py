@@ -1546,11 +1546,17 @@ def document_revisions(request, document_slug, document_locale):
     """List all the revisions of a given document."""
     doc = get_object_or_404(
         Document, locale=document_locale, slug=document_slug)
+    if doc.current_revision is None:
+        raise Http404
+
     # Grab revisions, but defer summary and content because they can lead to
     # attempts to cache more than memcached allows.
     revs = (Revision.objects.filter(document=doc)
                 .defer('summary', 'content')
                 .order_by('-created', '-id'))
+    if not revs.exists():
+        raise Http404
+
     page = None
     per_page = request.GET.get('limit', 10)
 
