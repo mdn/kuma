@@ -81,7 +81,7 @@ class ElasticTestCase(TestCase):
         # index is ready to be queried.  Given that, it's almost
         # always the case that we want to run all the generated tasks,
         # then refresh.
-        get_indexing_es().refresh(index)
+        get_indexing_es().indices.refresh(index=index)
         if timesleep > 0:
             time.sleep(timesleep)
 
