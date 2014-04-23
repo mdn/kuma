@@ -1,5 +1,3 @@
-a.new:link, a.new:visited, a.new:hover, a.new:active, a.new:focus { color: #900; }
-
 .page-content blockquote { padding: 0 25px; border-left: 5px solid #ccc; }
 .page-content ul { list-style: disc; padding-left: 22px; }
 .page-content ul ul { list-style: circle; }
@@ -70,16 +68,6 @@ textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
 #page-attachments .attachment-description { font-size: .9em; font-style: italic; }
 #page-attachments .attachment-name-cell { width: 40%; }
 #page-attachments .attachment-error { color: #900; font-size: .9em; }
-#page-attachments .new-row {
-  -moz-animation-name: newAttachment;
-  -moz-animation-duration: 2s;
-  -webkit-animation-name: newAttachment;
-  -webkit-animation-duration: 2s;
-  animation-name: newAttachment;
-  animation-duration: 2s;
-
-  background: transparent;
-}
 #page-attachments-new-table input[type="text"] { width: 90%; }
 #page-attachments-new-table .attachment-required { border: 1px solid #900; }
 #page-attachments-new-table textarea { height: 40px; }
@@ -88,8 +76,7 @@ textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
 
 /* @Custom styles *********/
 p.footnote { font-size: 90%; font-style: italic; color: #716d65; }
-div.callout-box, p.trans-note { float: right; margin: 0 0 .5em 15px; border: 1px solid #eee; padding: 10px; width: 200px; background: #fafafa; text-align: center; position: relative; z-index: 2; }
-p.trans-note { float:none; clear: both; width: auto; margin-bottom: 1em; }
+div.callout-box { float: right; margin: 0 0 .5em 15px; border: 1px solid #eee; padding: 10px; width: 200px; background: #fafafa; text-align: center; position: relative; z-index: 2; }
 div.note, div.warning.review-technical, div.warning.review-editorial { margin-bottom: 1.286em; border: solid #dddaaa; border-width: 1px 0; padding: .75em 15px; background: #faf9e2; color: #5d5636; line-height: 1.5em; }
 div.tip { margin-bottom: 1.286em; border: 1px solid #e1f5f0; border-width: 1px 0; padding: .75em 15px; color: #6d675f; }
 div.note p, div.tip p, div.warning.review-technical p, div.warning.review-editorial p { margin-bottom: .75em; }
@@ -111,19 +98,6 @@ div.note p:last-child, div.tip p:last-child, div.warning.review-technical p:last
 .edited-section-loading { display: block; opacity: 0.25; }
 .edited-section-loading a.edit-section { display: block; }
 .edited-section-loading a.edit-section:before { content: "\26a1\00a0"; }
-
-.edited-section-ui { position: relative; }
-.edited-section-ui .edited-section-buttons { background: #e6e6e6; padding: 10px 0 10px 10px; float: right; opacity: 0; }
-.edited-section-ui .edited-section-buttons.loaded { opacity: 1; }
-.edited-section-ui .cke_skin_kuma { padding: 0; }
-.edited-section-ui .cke_skin_kuma .cke_bottom { display: none; }
-.edited-section-ui .cke_skin_kuma .cke_toolbox { border-width: 0; margin: -6px; background: #e6e6e6; padding: 5px 5px 13px; }
-.edited-section-ui .btn-save, .edited-section-ui .btn-cancel { padding: .25em 8px .15em; margin: .25em 10px 1em 0; border: 0; border-radius: 3px; box-shadow: 1px 1px 0 rgba(0,0,0,.25); color: #333; font: 200 15px/1 "Bebas Neue", "League Gothic", Haettenschweiler, sans-serif; text-transform: uppercase; letter-spacing: .5px; text-decoration: none; }
-.edited-section-ui .btn-save:before { content: "\2714\00a0"; font-size: .857em;}
-.edited-section-ui .btn-cancel:before { content: "\2718\00a0"; font-size: .857em; }
-
-.edited-section-ui-saving { opacity: 0.5; }
-.edited-section-ui-saving .btn-save, .edited-section-ui-saving .btn-cancel{ display: none; }
 
 .editing .metadata { float: left; width: 55%; display: none; }
 .new .editing .metadata { display: block; }
@@ -159,8 +133,6 @@ div.note p:last-child, div.tip p:last-child, div.warning.review-technical p:last
 #page-buttons .page-watch button:hover, #page-buttons .page-watch a:focus, #page-buttons .page-watch a:active { background-color: #f8daa9; text-decoration: none; }
 #page-buttons .page-watch button.disabled { cursor: pointer; opacity: .75; background-color: #f0e4c7; }
 
-#action-bar .ban-link { background-image: none; }
-
 .btn-save {
   background: #d7eca1;
   background: -moz-linear-gradient(top, #d7eca1 0, #cce390 100%);
@@ -194,19 +166,6 @@ div.note p:last-child, div.tip p:last-child, div.warning.review-technical p:last
   background: -webkit-linear-gradient(top, #abd5f4 0, #a7cee9 100%);
   background: linear-gradient(top, #abd5f4 0, #a7cee9 100%);
 }
-.btn-discard, .btn-cancel {
-  background: #f2d2c6;
-  background: -moz-linear-gradient(top, #f2d2c6 0, #efc6b7 100%);
-  background: -webkit-linear-gradient(top, #f2d2c6 0, #efc6b7 100%);
-  background: linear-gradient(top, #f2d2c6 0, #efc6b7 100%);
-}
-.btn-discard:hover, .btn-discard:focus,
-.btn-cancel:hover, .btn-cancel:focus {
-  background: #f8b8a0;
-  background: -moz-linear-gradient(top, #f8b8a0 0, #f8a688 100%);
-  background: -webkit-linear-gradient(top, #f8b8a0 0, #f8a688 100%);
-  background: linear-gradient(top, #f8b8a0 0, #f8a688 100%);
-}
 
 .article header .notice { clear: both; position: relative; top: -10px; margin: 10px 0 5px; padding: 10px 15px 0; background: #fcf6d4; border: 1px solid #e5d5c1; }
 .article header .notice p { margin: 0 0 10px; }
@@ -222,7 +181,6 @@ div.note p:last-child, div.tip p:last-child, div.warning.review-technical p:last
 }
 
 /* @Meta *********/
-.article .page-meta { clear: both; margin-top: 30px; }
 .page-meta section { position: relative; overflow: hidden; background: #f5f5f1; padding: 15px 20px; margin: 0 0 20px; }
 .page-meta h2 { margin: 0 20px 0 0; color: #666; font: 200 20px/1.1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-transform: uppercase; letter-spacing: .5px; }
 .page-meta p.add { width: 190px; position: absolute; right: 20px; top: 12px; text-align: right; margin: 0; }
@@ -239,7 +197,6 @@ div.note p:last-child, div.tip p:last-child, div.warning.review-technical p:last
 .change-locale { font-size: .857em; float: left; clear: left; position: relative; top: -1.75em; }
 #change-locale-link { display: inline-block; padding: .6em 20px .7em 8px; background: transparent url("../img/wiki/menu-arrow.png") 92% 0 no-repeat; }
 #change-locale { position: absolute; left: -999em; z-index: 9999; width: 180px; background: #fff; border: 1px solid #c6c6c2; -moz-box-shadow: 2px 2px 0 rgba(170,160,130,.2); -webkit-box-shadow: 2px 2px 0 rgba(170,160,130,.2); box-shadow: 2px 2px 0 rgba(170,160,130,.2); }
-.hasJS #change-locale { display: none; left: auto; right: 0; }
 #change-locale { padding: 6px 0; max-height: 300px; overflow: auto; }
 #change-locale li { list-style: none; }
 #change-locale a { display: block; padding: .25em 8px; }
@@ -257,8 +214,6 @@ div.note p:last-child, div.tip p:last-child, div.warning.review-technical p:last
 .description .approved, #trans-content .approved { width: 49%; float: left; }
 .description .localized, #trans-content .localized { width: 49%; float: right; }
 
-.description input#id_title { font-size: 1.124em; width: 90%; margin: 0; }
-
 #content-fields:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
 #content-fields header { position: relative; z-index: 10; display: block; height: 1.142em; padding: .5em 0 1em; background: #f6f6f1 url("../img/bg-content.png") fixed; }
 #content-fields .approved { width: 49%; float: left; }
@@ -273,8 +228,6 @@ div.note p:last-child, div.tip p:last-child, div.warning.review-technical p:last
 
 #trans-description { margin: 0 0 1em; }
 #trans-content { margin: 0 0 1em; }
-
-#content-fields.fixed header { width: 48%; }
 
 #trans-content #cke_contents_wikiArticle { min-height: 800px; }
 
@@ -408,33 +361,6 @@ article .syntaxhighlighter { width: auto !important; }
 .twocolumns { -moz-column-count: 2; -webkit-column-count: 2; column-count: 2; }
 .threecolumns { -moz-column-count: 3; -webkit-column-count: 3; column-count: 3; }
 
-div.floatright, table.floatright { float: right; clear: right; margin: 0 0 .5em .5em; }
-div.floatleft, table.floatleft { float: left; margin: 0 .5em .5em 0; }
-div.thumb { margin-bottom: 0.5em; border: 1px solid #fff; }
-div.thumb div { border: 1px solid #ccc; padding: 3px; overflow: hidden; background-color: #f9f9f9; font-size: 94%; text-align: center; }
-div.thumb div a img { border: 1px solid #ccc; }
-div.thumb div div.thumbcaption { border: none; padding: .3em 0 .1em 0; text-align: left; line-height: 1.4; }
-div.magnify { float: right; }
-div.magnify a, div.magnify img { display: block; }
-div.tright { float: right; clear: right; border-width: .5em 0 .8em 1.4em; }
-div.tleft { float: left; margin-right: .5em; border-width: .5em 1.4em .8em 0; }
-
-table.release { border: 1px solid #ccc; width: 100%; font-size: 95%; }
-table.release td { border: 1px solid #ccc; padding: 0 0 15px 25px; }
-tr.releaseHeader td { font-size: 125%;}
-tr.releaseHeader td.OK { background-color: green;}
-tr.releaseHeader td.ERR { background-color: red;}
-tr.releaseHeader td.IP { background-color: yellow;}
-tr.releaseHeader td.TBD {background-color: grey;}
-tr.release td.OK { width: 22%; background: #cfc; }
-tr.release td.ERR { width: 22%; background: #fcc; }
-tr.release td.IP { width: 22%; background: #ffc; }
-tr.release td.TBD { width: 22%; background: #eee; }
-tr.release td.stepLabel { padding: 0 5px 15px 25px; width: 12%; text-align: right; }
-.OK { background-color: rgb(153,255,153); }
-.irrelevant { color: rgb(153,153,153); }
-.maybe { background-color: rgb(255,255,204); }
-
 /* @RTL - flip the layout for right-to-left languages *********/
 /* just a jump to the left... */
 .html-rtl .user-state,
@@ -464,7 +390,6 @@ tr.release td.stepLabel { padding: 0 5px 15px 25px; width: 12%; text-align: righ
 .html-rtl #page-buttons { right: auto; left: 20px; }
 .html-rtl .user-state { text-align: left; }
 .html-rtl span.icon img { margin: 0 0 0 3px; }
-.html-rtl .last-mod, html[dir="rtl"] #footbar p { text-align: left; }
 .html-rtl .pagination .next { text-align: left; float: left !important; }
 .html-rtl .pagination .prev { text-align: right; float: right !important; }
 .html-rtl .pagination .prev a:before, .html-rtl .pagination .next a:after { content: ""; }
