@@ -77,7 +77,7 @@
                   <li><a href="{{ url('wiki.new_document') }}?parent={{ document.id }}">{{ _('New sub-page') }}</a></li>
                   <li><a href="{{ url('wiki.new_document') }}?clone={{ document.id }}">{{ _('Clone this page') }}</a></li>
                 {% endif %}
-                {% if user.is_authenticated() and waffle.flag('page_move') %}
+                {% if user.is_authenticated() and user.has_perm('wiki.move_tree') %}
                   <li><a href="{{ url('wiki.move', document.slug, locale=document.locale) }}">{{ _('Move this page') }}</a></li>
                 {% endif %}
                 {% if user.is_superuser %}
