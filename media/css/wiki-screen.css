@@ -1,31 +1,6 @@
-.page-content blockquote { padding: 0 25px; border-left: 5px solid #ccc; }
-.page-content ul { list-style: disc; padding-left: 22px; }
-.page-content ul ul { list-style: circle; }
-.page-content ol { padding-left: 22px; }
-.page-content ul li, .page-content ol li { line-height: 1.5em; }
-.page-content dt { font-style: normal; font-weight: bold; }
-.page-content dd { margin-bottom: .5em; padding-left: 15px; }
-.page-content pre { border: 1px dotted #cbc8b9; background: #f6f6f2; padding: 15px; overflow: auto; font: 100% "Courier New", "Andale Mono", monospace; }
-.page-content code { font: 100% "Courier New", "Andale Mono", monospace; font-weight: inherit; }
-.page-content pre code { font-size: 100%; }
-.page-content strong code { font-weight: inherit; }
-.page-content a code { color: inherit; }
-.page-content img { max-width: 100%; height: auto; }
-.page-content caption { font-weight: bold; }
-.page-content table { border-collapse: collapse; border: solid #e0e0dc; border-width: 1px 0 0 1px; }
-.page-content td, .page-content th { border: solid #e0e0dc; border-width: 0 1px 1px 0; padding: 6px; text-align: start; }
-.page-content thead th { background: #f3f3ef; }
-
-/* Increase line-height in wide windows */
-.page-content { line-height: inherit; -moz-transition: line-height 0.2s ease-in-out; -webkit-transition: line-height 0.2s ease-in-out; transition: line-height 0.2s ease-in-out; }
-@media screen and (min-width: 890px) {
-  .page-content { line-height: 1.572; -moz-transition: line-height 0.2s ease-in-out; -webkit-transition: line-height 0.2s ease-in-out; transition: line-height 0.2s ease-in-out; }
-}
-
 /* @Layout (wiki is liquid) *********/
 .wrap { position: relative; width: 95%; min-width: 760px; max-width: 1200px; padding: 0 10px; margin: 0 auto; }
 section#content, div#content { border-top: 0; }
-.page-content { background: #fff; min-height: 300px; }
 
 textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
 
