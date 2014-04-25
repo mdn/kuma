@@ -1,12 +1,12 @@
 /*
 	Customized plugin added by David Walsh (:davidwalsh, dwalsh@mozilla.com)
-	
+
 	This plugin inserts boilerplate live sample content
 */
 CKEDITOR.plugins.add('mdn-sampler', {
 
 	requires: ['selection'],
-	
+
 	init: function(editor) {
 
 		editor.addCommand('mdnSampler', {
@@ -22,16 +22,16 @@ CKEDITOR.plugins.add('mdn-sampler', {
 				makeElement('h2', text, { name: sampleSlug });
 
 				// Inject Pre[html]
-				makeElement('h3', gettext('HTML Content'));
-				makeElement('pre', gettext('Sample HTML Content'), { 'class': 'brush: html' });
+				makeElement('h3', gettext('HTML'));
+				makeElement('pre', gettext('Sample HTML'), { 'class': 'brush: html' });
 
 				// Inject Pre[css]
-				makeElement('h3', gettext('CSS Content'));
-				makeElement('pre', gettext('Sample CSS Content'), { 'class': 'brush: css' });
+				makeElement('h3', gettext('CSS'));
+				makeElement('pre', gettext('Sample CSS'), { 'class': 'brush: css' });
 
 				// Inject Pre[js]
-				makeElement('h3', gettext('JavaScript Content'));
-				makeElement('pre', gettext('Sample JavaScript Content'), { 'class': 'brush: js' });
+				makeElement('h3', gettext('JavaScript'));
+				makeElement('pre', gettext('Sample JavaScript'), { 'class': 'brush: js' });
 
 				// Inject the IFrame?
 				makeElement('p', '{{ EmbedLiveSample(\'' + sampleSlug + '\') }}');
