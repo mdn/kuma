@@ -316,7 +316,7 @@ URL_REMAPS_CACHE_KEY_TMPL = 'DocumentZoneUrlRemaps:%s'
 
 def cache_with_field(field_name):
     """Decorator for generated content methods.
-    
+
     If the backing model field is null, or kwarg force_fresh is True, call the
     decorated method to generate and return the content.
 
@@ -721,7 +721,7 @@ class Document(NotificationsMixin, models.Model):
     modified = models.DateTimeField(auto_now=True, null=True, db_index=True)
 
     body_html = models.TextField(editable=False, blank=True, null=True)
-    
+
     quick_links_html = models.TextField(editable=False, blank=True, null=True)
 
     zone_subnav_local_html = models.TextField(editable=False,
@@ -1720,7 +1720,11 @@ class Document(NotificationsMixin, models.Model):
         if REDIRECT_HTML in self.html:
             anchors = PyQuery(self.html)('a[href].redirect')
             if anchors:
-                return anchors[0].get('href')
+                url = anchors[0].get('href')
+                # allow explicit domain and *not* '//'
+                # i.e allow "https://developer...." and "/en-US/docs/blah"
+                if url.startswith(settings.SITE_URL) or (url[0] == '/' and url[1] != '/'):
+                    return url
 
     def redirect_document(self):
         """If I am a redirect to a Document, return that Document.
