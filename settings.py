@@ -372,6 +372,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
     'constance.context_processors.config',
     'django_browserid.context_processors.browserid_form',
+    'search.context_processors.search_filters',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -605,6 +606,9 @@ MINIFY_BUNDLES = {
         'search': (
             'redesign/css/search.css',
         ),
+        'search-suggestions': (
+            'redesign/css/search-suggestions.css',
+        ),
         'wiki': (
             'css/wiki-screen.css',
             'redesign/css/wiki.css',
@@ -682,6 +686,9 @@ MINIFY_BUNDLES = {
         'home': (
             'js/libs/owl.carousel/owl-carousel/owl.carousel.js',
             'redesign/js/home.js'
+        ),
+        'search-suggestions': (
+            'js/search-suggestions.js',
         ),
         'popup': (
             'js/jquery-upgrade-compat.js',

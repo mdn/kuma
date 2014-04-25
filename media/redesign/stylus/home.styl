@@ -127,14 +127,93 @@ home-involved-background-y = 50px;
         }
     }
 
-    .home-search-form {
-        padding: (grid-spacing * 2) 0;
+  .search-form {
+    padding: (grid-spacing * 2) 0;
 
-        input {
-            big-search();
-            color: #fff;
+    input#home-q {
+      big-search();
+      color: #fff;
 
-            set-placeholder-style(color, #fff);
+      set-placeholder-style(color, #fff);
+    }
+
+    .search-wrapper{
+      big-search();
+      color: #fff;
+      cursor: text;
+      min-height: 36px;
+      padding: 6px;
+      position: relative;
+      .show-topics{
+        background-color: rgba(255, 255, 255, 0) !important;
+        box-shadow: none;
+        color: white!important;
+        font-size: 1.2em !important;
+        position: absolute;
+        right: 0px;
+      }
+      input#home-q-s {
+        background: transparent;
+        border: none;
+        color: #fff;
+        display: inline;
+        padding: 0 8px;
+        vertical-align: middle;
+      }
+    }
+
+    .suggestions {
+      big-search();
+      max-height: 300px;
+      overflow-y:scroll;
+      color: #fff;
+      padding: 6px;
+      strong {
+        text-transform: uppercase;
+        padding: 0 10px;
+      }
+      li {
+        a.search-ss{
+          display: block;
+          color: #FFF;
+          padding: 0 10px;
+          &:hover,
+          &:focus,
+          &.selected {
+            background: #FFF;
+            color: #fb9500;
+            text-decoration: none;
+          }
+          span {
+            float: right;
+          }
+        }
+      }
+    }
+
+    .filters {
+      display: inline-block;
+
+      span.topic {
+        display: inline;
+        border: 2px violet dashed;
+        margin: 0 0.1em;
+        text-transform: none !important;
+        cursor: default !important;
+        margin-right: 5px;
+        background: rgba(255, 255, 255, 0.8);
+        cursor: default!important;
+        margin-right: 5px;
+        text-transform: none!important;
+
+        button.close {
+            box-shadow: none;
+          background-color: rgba(255, 255, 255, 0.4) !important;
+          margin-left: 5px;
+          padding: 5px!important;
+          i[class^="icon-"] {
+            margin-left: 0;
+          }
         }
     }
 }
