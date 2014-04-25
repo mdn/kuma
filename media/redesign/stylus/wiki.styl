@@ -1087,6 +1087,37 @@ div.revision-info li {
     }
 }
 
+div.note {
+  background: rgba(231, 228, 157, 0.25);
+  border-color: rgba(231,228,157,0.15);
+  border-style: solid;
+  border-width: 5px;
+  color: rgba(0, 0, 0, 0.65);
+  font-style: italic;
+  margin-bottom: grid-spacing;
+  padding: 10px 15px;
+}
+
+#page-comment {
+    input {
+        padding-top: 10px;
+        padding-bottom: @padding-top;
+        width: 98%;
+    }
+}
+
+#translate-tags {
+    bidi-value(float, left, right);
+
+    ul.tagit {
+        padding: 0;
+
+        li.tagit-choice {
+            padding-right: 10px;
+        }
+    }
+}
+
 /*
   Small desktop.  We go to a two-column layout
 */
