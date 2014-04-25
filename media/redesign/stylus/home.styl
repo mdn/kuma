@@ -121,16 +121,16 @@ home-involved-background-y = 50px;
 /* homepage masthead (search, feature callouts) */
 .home-masthead {
 
-    h1 {
-        color: #fff;
-        margin: 0 auto;
-        width: 60%;
+  h1 {
+    color: #fff;
+    margin: 0 auto;
+    width: 60%;
 
-        span {
-            bidi-style(padding-left, 20%, padding-right, 0);
-            display: block;
-        }
+    span {
+      bidi-style(padding-left, 20%, padding-right, 0);
+      display: block;
     }
+  }
 
   .search-form {
     padding: (grid-spacing * 2) 0;
@@ -138,54 +138,57 @@ home-involved-background-y = 50px;
     input#home-q {
       big-search();
       color: #fff;
-
       set-placeholder-style(color, #fff);
     }
+  }
 
-    .search-wrapper{
-      big-search();
-      color: #fff;
-      cursor: text;
-      min-height: 36px;
-      padding: 6px;
-      position: relative;
-      .show-topics{
-        background-color: rgba(255, 255, 255, 0) !important;
+  .search-wrapper {
+    big-search();
+    color: #fff;
+    cursor: text;
+    min-height: 36px;
+    padding: 6px;
+    position: relative;
+
+    .show-topics {
+        background-color: rgba(255, 255, 255, 0);
         box-shadow: none;
-        color: white!important;
+        color: #fff !important;
         font-size: 1.2em !important;
         position: absolute;
         right: 0px;
-      }
-      input#home-q-s {
-        background: transparent;
+    }
+
+    input#home-q-s {
+        background: rgba(255, 255, 255, 0);
         border: none;
         color: #fff;
         display: inline;
         padding: 0 8px;
         vertical-align: middle;
-      }
     }
+  }
 
-    .suggestions {
+  .suggestions {
       big-search();
       max-height: 300px;
-      overflow-y:scroll;
+      overflow-y: scroll;
       color: #fff;
       padding: 6px;
+
       strong {
         text-transform: uppercase;
         padding: 0 10px;
       }
+
       li {
-        a.search-ss{
+        a.search-ss {
           display: block;
-          color: #FFF;
+          color: #fff;
           padding: 0 10px;
-          &:hover,
-          &:focus,
-          &.selected {
-            background: #FFF;
+
+          &:hover, &:focus, &.selected {
+            background: #fff;
             color: #fb9500;
             text-decoration: none;
           }
@@ -201,26 +204,24 @@ home-involved-background-y = 50px;
 
       span.topic {
         display: inline;
-        border: 2px violet dashed;
-        margin: 0 0.1em;
         text-transform: none !important;
         cursor: default !important;
         margin-right: 5px;
         background: rgba(255, 255, 255, 0.8);
-        cursor: default!important;
-        margin-right: 5px;
         text-transform: none!important;
 
         button.close {
-            box-shadow: none;
+          box-shadow: none;
           background-color: rgba(255, 255, 255, 0.4) !important;
           margin-left: 5px;
           padding: 5px!important;
-          i[class^="icon-"] {
+
+          {selector-icon} {
             margin-left: 0;
-          }
-        }
-    }
+          } /* ends selector */
+        } /* ends button */
+      } /* ends span */
+    } /* ends filters */
 }
 
 /* List of four feature columns within the masthead */
@@ -259,6 +260,7 @@ home-involved-background-y = 50px;
     position: relative;
     background-image: url(media-url-dir + 'promo-sprite.png');
     background-repeat: no-repeat;
+
     i {
         bidi-style(right, 5%, left, auto);
         position: absolute;

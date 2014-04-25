@@ -184,7 +184,6 @@
   {{ super() }}
   {{ js('home', async=True) }}
   {% if waffle.flag('search_suggestions') %}
-    <script src="/media/js/search-suggestions.js"></script>
     {{ js('search-suggestions') }}
   {% endif %}
 {% endblock %}
