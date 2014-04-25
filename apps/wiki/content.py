@@ -32,7 +32,7 @@ SECTION_TAGS = ('h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hgroup', 'section')
 HEAD_TAGS = ('h1', 'h2', 'h3', 'h4', 'h5', 'h6')
 
 # Head tags to be included in the table of contents
-HEAD_TAGS_TOC = ('h2', 'h3', 'h4')
+HEAD_TAGS_TOC = ('h2', 'h3', 'h4', 'h5', 'h6')
 
 # Allowed tags in the table of contents list
 TAGS_IN_TOC = ('code')
