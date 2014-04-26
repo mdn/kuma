@@ -209,23 +209,6 @@ textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
     background-color:#ffaaaa;
 }
 
-/* Delete Revision */
-#delete-revision label {
-    display: block;
-    font-size: 16px;
-    margin: 15px 0 0;
-}
-
-#delete-revision form {
-    margin: 20px 0 0;
-}
-
-#delete-revision textarea {
-  width: 90%;
-  height: 80px;
-  margin-bottom: 20px;
-}
-
 /* WYSIWYG-specific styles */
 .ui-autocomplete {
   z-index: 100001 !important; /* Ugly, but have to do this for the autocomplete component to display on top of the CKEditor dialog */
