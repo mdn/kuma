@@ -74,6 +74,7 @@ class GroupWithFiltersSerializer(serializers.ModelSerializer):
 
 class GroupSerializer(serializers.Serializer):
     name = serializers.CharField(read_only=True)
+    slug = serializers.CharField(read_only=True)
     order = serializers.CharField(read_only=True)
 
 

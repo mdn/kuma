@@ -14,7 +14,8 @@ from .filters import (LanguageFilterBackend, DatabaseFilterBackend,
                       AdvancedSearchQueryBackend, get_filters)
 from .models import Filter, DocumentType
 from .renderers import ExtendedTemplateHTMLRenderer
-from .serializers import SearchSerializer, DocumentSerializer, FilterWithGroupSerializer
+from .serializers import (SearchSerializer, DocumentSerializer,
+                          FilterWithGroupSerializer)
 from .queries import DocumentS
 
 
