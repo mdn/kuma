@@ -255,10 +255,6 @@ table.compat-table td.header, table.compat-table th { border: 1px solid #bbb; pa
 /*** @SyntaxHighlighter style blocks *********/
 article .syntaxhighlighter { width: auto !important; }
 
-/*** @WYSIWYG style blocks *********/
-.twocolumns { -moz-column-count: 2; -webkit-column-count: 2; column-count: 2; }
-.threecolumns { -moz-column-count: 3; -webkit-column-count: 3; column-count: 3; }
-
 /* @RTL - flip the layout for right-to-left languages *********/
 /* just a jump to the left... */
 .html-rtl .user-state,
