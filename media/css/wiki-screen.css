@@ -57,10 +57,6 @@ div.tip { margin-bottom: 1.286em; border: 1px solid #e1f5f0; border-width: 1px 0
 div.note p, div.tip p, div.warning.review-technical p, div.warning.review-editorial p { margin-bottom: .75em; }
 div.note p:last-child, div.tip p:last-child, div.warning.review-technical p:last-child, div.warning.review-editorial p:last-child { margin-bottom: 0; }
 
-/* @Page @Title and @Buttons *********/
-#article-head { position: relative; clear: both; max-width: 1200px; padding-top: 20px; margin-top: -19px; background: #f6f6f1 url("../img/bg-content.png") fixed; }
-#article-head:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
-
 .title { position: relative; margin-bottom: 0.8em; }
 .title:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; } /* clear floats */
 .title h1 { /* float: left; */ width: 60%; padding-left: 18px; margin-bottom: 0; padding-bottom: 0; }

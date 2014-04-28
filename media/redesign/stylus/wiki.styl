@@ -783,19 +783,17 @@ span.cke_skin_kuma {
 }
 
 #article-head {
-  compat-only(margin-top, 0);
-  compat-only(max-width, none);
-  compat-only(padding-top, 0);
+    clearfix();
 
-  .metadata {
-    padding-top: (grid-spacing * 2);
-    width: auto;
-    float: none;
+    .metadata {
+        padding-top: (grid-spacing * 2);
+        width: auto;
+        float: none;
 
-    li label {
-      width: auto;
+        li label {
+            width: auto;
+        }
     }
-  }
 }
 
 .guide-links{
