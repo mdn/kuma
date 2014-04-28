@@ -116,27 +116,107 @@ home-involved-background-y = 50px;
 /* homepage masthead (search, feature callouts) */
 .home-masthead {
 
-    h1 {
+  h1 {
+    color: #fff;
+    margin: 0 auto;
+    width: 60%;
+
+    span {
+      bidi-style(padding-left, 20%, padding-right, 0);
+      display: block;
+    }
+  }
+
+  .search-form {
+    padding: (grid-spacing * 2) 0;
+
+    input#home-q {
+      big-search();
+      color: #fff;
+      set-placeholder-style(color, #fff);
+    }
+  }
+
+  .search-wrapper {
+    big-search();
+    color: #fff;
+    cursor: text;
+    min-height: 36px;
+    padding: 6px;
+    position: relative;
+
+    .show-topics {
+        background-color: rgba(255, 255, 255, 0);
+        box-shadow: none;
+        color: #fff !important;
+        font-size: 1.2em !important;
+        position: absolute;
+        right: 0px;
+    }
+
+    input#home-q-s {
+        background: rgba(255, 255, 255, 0);
+        border: none;
         color: #fff;
-        margin: 0 auto;
-        width: 60%;
+        display: inline;
+        padding: 0 8px;
+        vertical-align: middle;
+    }
+  }
 
-        span {
-            bidi-style(padding-left, 20%, padding-right, 0);
-            display: block;
+  .suggestions {
+      big-search();
+      max-height: 300px;
+      overflow-y: scroll;
+      color: #fff;
+      padding: 6px;
+
+      strong {
+        text-transform: uppercase;
+        padding: 0 10px;
+      }
+
+      li {
+        a.search-ss {
+          display: block;
+          color: #fff;
+          padding: 0 10px;
+
+          &:hover, &:focus, &.selected {
+            background: #fff;
+            color: #fb9500;
+            text-decoration: none;
+          }
+          span {
+            float: right;
+          }
         }
+      }
     }
 
-    .home-search-form {
-        padding: (grid-spacing * 2) 0;
+    .filters {
+      display: inline-block;
 
-        input {
-            big-search();
-            color: #fff;
+      span.topic {
+        display: inline;
+        text-transform: none !important;
+        cursor: default !important;
+        margin-right: 5px;
+        background: rgba(255, 255, 255, 0.8);
+        text-transform: none!important;
 
-            set-placeholder-style(color, #fff);
-        }
-    }
+        button.close {
+          box-shadow: none;
+          background-color: rgba(255, 255, 255, 0.4) !important;
+          margin-left: 5px;
+          padding: 5px!important;
+
+          {selector-icon} {
+            margin-left: 0;
+          } /* ends selector */
+        } /* ends button */
+      } /* ends span */
+    } /* ends filters */
 }
 
 /* List of four feature columns within the masthead */
@@ -175,6 +255,7 @@ home-involved-background-y = 50px;
     position: relative;
     background-image: url(media-url-dir + 'promo-sprite.png');
     background-repeat: no-repeat;
+
     i {
         bidi-style(right, 5%, left, auto);
         position: absolute;

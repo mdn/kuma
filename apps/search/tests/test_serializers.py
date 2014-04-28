@@ -5,7 +5,7 @@ from search.tests import ElasticTestCase
 
 from search.fields import DocumentExcerptField, SearchQueryField
 from search.models import DocumentType
-from search.serializers import FilterSerializer, DocumentSerializer
+from search.serializers import FilterWithGroupSerializer, DocumentSerializer
 from search.queries import DocumentS
 
 
@@ -18,7 +18,7 @@ class SerializerTests(ElasticTestCase):
         filter_ = Filter.objects.create(name='Serializer', slug='serializer',
                                         group=group)
         filter_.tags.add('tag')
-        filter_serializer = FilterSerializer(filter_)
+        filter_serializer = FilterWithGroupSerializer(filter_)
         eq_(filter_serializer.data, {
             'name': 'Serializer',
             'slug': 'serializer',
