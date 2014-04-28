@@ -107,40 +107,6 @@ div.tip p:last-child { margin-bottom: 0; }
 #page-buttons .page-watch button:hover, #page-buttons .page-watch a:focus, #page-buttons .page-watch a:active { background-color: #f8daa9; text-decoration: none; }
 #page-buttons .page-watch button.disabled { cursor: pointer; opacity: .75; background-color: #f0e4c7; }
 
-.btn-save {
-  background: #d7eca1;
-  background: -moz-linear-gradient(top, #d7eca1 0, #cce390 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #d7eca1), color-stop(100%, #cce390));
-  background: linear-gradient(top, #d7eca1 0, #cce390 100%);
-}
-.btn-save:hover, .btn-save:focus {
-  background: #c3e56d;
-  background: -moz-linear-gradient(top, #c3e56d 0, #b3d55b 100%);
-  background: -webkit-linear-gradient(top, #c3e56d 0, #b3d55b 100%);
-  background: linear-gradient(top, #c3e56d 0, #b3d55b 100%);
-}
-#btn-save-and-edit { display: none; }
-#btn-save-and-edit.loading span {
-    padding-left: 20px;
-    margin-left: -5px;
-    background: url(../img/wiki/save-and-keep-editing-arrows.gif) no-repeat 0px 1px;
-}
-#page-buttons iframe#save-and-edit-target {
-    visibility: hidden; height: 1px; width: 1px;
-}
-.btn-preview {
-  background: #cce3f4;
-  background: -moz-linear-gradient(top, #cce3f4 0, #c0d7ea 100%);
-  background: -webkit-linear-gradient(top, #cce3f4 0, #c0d7ea 100%);
-  background: linear-gradient(top, #cce3f4 0, #c0d7ea 100%);
-}
-.btn-preview:hover, .btn-preview:focus {
-  background: #abd5f4;
-  background: -moz-linear-gradient(top, #abd5f4 0, #a7cee9 100%);
-  background: -webkit-linear-gradient(top, #abd5f4 0, #a7cee9 100%);
-  background: linear-gradient(top, #abd5f4 0, #a7cee9 100%);
-}
-
 .article header .notice { clear: both; position: relative; top: -10px; margin: 10px 0 5px; padding: 10px 15px 0; background: #fcf6d4; border: 1px solid #e5d5c1; }
 .article header .notice p { margin: 0 0 10px; }
 
