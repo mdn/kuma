@@ -332,10 +332,6 @@ div.warning *:last-child { padding: 0; margin: 0; }
 /*** @SyntaxHighlighter style blocks *********/
 article .syntaxhighlighter { width: auto !important; }
 
-/*** @WYSIWYG style blocks *********/
-.twocolumns { -moz-column-count: 2; -webkit-column-count: 2; column-count: 2; }
-.threecolumns { -moz-column-count: 3; -webkit-column-count: 3; column-count: 3; }
-
 /* @RTL - flip the layout for right-to-left languages *********/
 /* just a jump to the left... */
 .html-rtl .user-state,
