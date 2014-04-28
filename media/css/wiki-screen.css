@@ -4,12 +4,6 @@ section#content, div#content { border-top: 0; }
 
 textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
 
-/* tag editing; uses tagit */
-.page-tags #id_tags { width: 90%; }
-.page-tags ul.tagit { background: none repeat scroll 0 0 #FFFFFF; border: 1px solid #CBC8B9; padding: 6px 8px; min-height: 30px; }
-.page-tags ul.tagit .tagit-label { color: #333333; font-weight: normal; }
-.page-tags ul.tagit li.tagit-choice { margin-bottom:0; }
-
 /* page attachments */
 @-moz-keyframes newAttachment {
   0% { background-color: #90ee90; }
@@ -265,8 +259,6 @@ article .syntaxhighlighter { width: auto !important; }
 /* then a step to the right... */
 .html-rtl #branding,
 .html-rtl #title,
-.html-rtl .page-tags h2,
-.html-rtl .page-tags .tags-edit,
 .html-rtl .pagination span,
 .html-rtl #content-fields .approved,
 .html-rtl .description .approved,
