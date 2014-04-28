@@ -37,12 +37,6 @@ textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
 .title h1 { /* float: left; */ width: 60%; padding-left: 18px; margin-bottom: 0; padding-bottom: 0; }
 .title .redirected-from, .title .offline-notice { padding: 5px 0 0 18px; font-size: 0.785em; }
 
-.edited-section { display: none; }
-.edited-section a.edit-section { display: none; }
-.edited-section-loading { display: block; opacity: 0.25; }
-.edited-section-loading a.edit-section { display: block; }
-.edited-section-loading a.edit-section:before { content: "\26a1\00a0"; }
-
 .editing .metadata { float: left; width: 55%; display: none; }
 .new .editing .metadata { display: block; }
 .editing ul.metadata li { margin: 0; padding: 0; clear: both; }
