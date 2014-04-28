@@ -459,9 +459,12 @@ article {
 /* warning elements */
 .warning {
   set-message-base();
-  background: rgba( 193, 56, 50, 0.85);
+  background: rgba(193, 56, 50, 0.85);
+  color: #c13832;
   compat-important(border-color, rgba(0, 0, 0, 0.1));
   compat-only(color, #fff);
+  font-style: italic;
+  margin: 0 0 grid-spacing 0;
   set-font-size(base-font-size);
 
   pre {
@@ -1085,6 +1088,17 @@ div.revision-info li {
         background: transparent url(media-url-dir + 'compare.arrows.png') no-repeat 4px -40px;
         padding-top: 10px;
     }
+}
+
+div.note {
+  background: rgba(231, 228, 157, 0.25);
+  border-color: rgba(231,228,157,0.15);
+  border-style: solid;
+  border-width: 5px;
+  color: rgba(0, 0, 0, 0.65);
+  font-style: italic;
+  margin-bottom: grid-spacing;
+  padding: 10px 15px;
 }
 
 /*
