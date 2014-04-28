@@ -10,17 +10,6 @@ textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
 .page-tags ul.tagit .tagit-label { color: #333333; font-weight: normal; }
 .page-tags ul.tagit li.tagit-choice { margin-bottom:0; }
 
-#deki-page-tags ul.tagit { background: transparent; border: 0; padding: 0; min-height: none; margin-top: 6px; }
-#deki-page-tags li.tagit-choice { padding-right: 10px; }
-
-/*  */
-#page-comment input {
-  width: 98%;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
-
 /* page attachments */
 @-moz-keyframes newAttachment {
   0% { background-color: #90ee90; }
@@ -50,10 +39,7 @@ textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
 #page-attachments-spinner { opacity: 0; display: inline-block; width: 16px; height:16px; margin-left: 10px; -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";  }
 
 /* @Custom styles *********/
-p.footnote { font-size: 90%; font-style: italic; color: #716d65; }
-div.callout-box { float: right; margin: 0 0 .5em 15px; border: 1px solid #eee; padding: 10px; width: 200px; background: #fafafa; text-align: center; position: relative; z-index: 2; }
 div.note, div.warning.review-technical, div.warning.review-editorial { margin-bottom: 1.286em; border: solid #dddaaa; border-width: 1px 0; padding: .75em 15px; background: #faf9e2; color: #5d5636; line-height: 1.5em; }
-div.tip { margin-bottom: 1.286em; border: 1px solid #e1f5f0; border-width: 1px 0; padding: .75em 15px; color: #6d675f; }
 div.note p, div.tip p, div.warning.review-technical p, div.warning.review-editorial p { margin-bottom: .75em; }
 div.note p:last-child, div.tip p:last-child, div.warning.review-technical p:last-child, div.warning.review-editorial p:last-child { margin-bottom: 0; }
 
@@ -347,7 +333,6 @@ article .syntaxhighlighter { width: auto !important; }
 .html-rtl #branding,
 .html-rtl #title,
 .html-rtl .page-tags h2,
-.html-rtl .page-tags #deki-page-tags,
 .html-rtl .page-tags .tags-edit,
 .html-rtl .pagination span,
 .html-rtl #content-fields .approved,
@@ -359,9 +344,6 @@ article .syntaxhighlighter { width: auto !important; }
 }
 
 .html-rtl .page-meta h2 { margin: 0 0 0 20px; }
-.html-rtl .page-tags #deki-page-tags-toggleview, .html-rtl .page-meta p.add { right: auto; left: 20px; text-align: left; }
-.html-rtl .page-tags #deki-page-tags .tagData { padding-right: 0; padding-left: 30px; }
-.html-rtl .page-tags #deki-page-tags .tagButtons { padding-left: 0; padding-right: 10px; float: left; }
 .html-rtl #page-buttons { right: auto; left: 20px; }
 .html-rtl .user-state { text-align: left; }
 .html-rtl span.icon img { margin: 0 0 0 3px; }

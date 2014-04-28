@@ -95,7 +95,7 @@
             <section class="page-tags">
               <h3><i aria-hidden="true" class="icon-tag"></i>{{ _('Tags') }}</h3>
                 {% set parent_tags = parent.tags.all() %}
-              <div id="deki-page-tags">
+              <div id="translate-tags">
                 {% if parent_tags | length %}
                   <ul class="tag-list tagit ui-widget ui-widget-content">
                     {% for parent_tag in parent_tags %}
