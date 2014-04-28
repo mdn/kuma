@@ -666,7 +666,7 @@
                 var $textarea = $iframe.contents().find('textarea').first();
                 var validIndexes = [];
                 var invalidIndexes = [];
-                var dynamicRows;
+                var $dynamicRows;
                 var result;
 
                 if($textarea.length) {
