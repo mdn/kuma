@@ -124,18 +124,6 @@ textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
 .description .approved, #trans-content .approved { width: 49%; float: left; }
 .description .localized, #trans-content .localized { width: 49%; float: right; }
 
-#content-fields:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
-#content-fields header { position: relative; z-index: 10; display: block; height: 1.142em; padding: .5em 0 1em; background: #f6f6f1 url("../img/bg-content.png") fixed; }
-#content-fields .approved { width: 49%; float: left; }
-#content-fields .localized { width: 49%; float: right; }
-
-#content-fields .approved .boxed { padding: 25px; }
-#content-fields .approved header:after { position: absolute; bottom: -30px; left: 3px; content: ""; display: block; width: 95%; height: 30px;
-  background:  -moz-linear-gradient(bottom,  rgba(255, 255, 255, .1) 0,  rgba(255, 255, 255, 1) 20px);
-  background:  -webkit-linear-gradient(bottom,  rgba(255, 255, 255, .1) 0,  rgba(255, 255, 255, 1) 20px);
-  background:  linear-gradient(bottom,  rgba(255, 255, 255, .1) 0,  rgba(255, 255, 255, 1) 20px);
-}
-
 #trans-description { margin: 0 0 1em; }
 #trans-content { margin: 0 0 1em; }
 

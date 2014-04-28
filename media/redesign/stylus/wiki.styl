@@ -772,17 +772,35 @@ span.cke_skin_kuma {
   margin: 0 !important;
 }
 
-#content-fields .approved header:after {
-  compat-only(background, none);
-  compat-only(width, auto);
-  compat-only(height, 0);
-}
+#content-fields {
+    clearfix();
 
-#content-fields header {
-  compat-only(background, none);
-  margin-bottom: (grid-spacing / 2);
-}
+    .approved, .localized {
+        width: 49%;
+    }
 
+    .approved {
+        bidi-value(float, left, right);
+
+        .boxed {
+            padding: 25px;
+        }
+    }
+
+    .localized {
+        bidi-value(float, right, left);
+    }
+
+    header {
+        clearfix();
+        display: block;
+        height: 16px;
+        margin-bottom: (grid-spacing / 2);
+        padding: 7px 0 14px;
+        position: relative;
+        z-index: 10;
+    }
+}
 
 #page-attachments {
   h2 {selector-icon}, h3 {selector-icon} {
