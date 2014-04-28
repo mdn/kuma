@@ -37,8 +37,6 @@ textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
 .title h1 { /* float: left; */ width: 60%; padding-left: 18px; margin-bottom: 0; padding-bottom: 0; }
 .title .redirected-from, .title .offline-notice { padding: 5px 0 0 18px; font-size: 0.785em; }
 
-.template { display: none; }
-
 .edited-section { display: none; }
 .edited-section a.edit-section { display: none; }
 .edited-section-loading { display: block; opacity: 0.25; }
