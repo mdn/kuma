@@ -1,31 +1,3 @@
-/* page attachments */
-@-moz-keyframes newAttachment {
-  0% { background-color: #90ee90; }
-  100% { background-color: transparent; }
-}
-@-webkit-keyframes newAttachment {
-  0% { background-color: #90ee90; }
-  100% { background-color: transparent; }
-}
-@keyframes newAttachment {
-  0% { background-color: #90ee90; }
-  100% { background-color: transparent; }
-}
-#page-attachments { clear: both; }
-#page-attachments table  { margin: 20px 0 0 0; width: 100%; border: 1px solid #E0E0DC; border-bottom:0; border-right:0; border-collapse: collapse; }
-#page-attachments .hidden { display:none; }
-#page-attachments th, #page-attachments td { padding: 5px; border-bottom: 1px solid #E0E0DC; border-right: 1px solid #E0E0DC; vertical-align:top; }
-#page-attachments th { font-weight:bold; color: #666; }
-#page-attachments td { font-size: .9em; }
-#page-attachments .attachment-description { font-size: .9em; font-style: italic; }
-#page-attachments .attachment-name-cell { width: 40%; }
-#page-attachments .attachment-error { color: #900; font-size: .9em; }
-#page-attachments-new-table input[type="text"] { width: 90%; }
-#page-attachments-new-table .attachment-required { border: 1px solid #900; }
-#page-attachments-new-table textarea { height: 40px; }
-#page-attachments-upload-target { visibility: hidden; height: 1px; width: 1px; }
-#page-attachments-spinner { opacity: 0; display: inline-block; width: 16px; height:16px; margin-left: 10px; -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";  }
-
 .title { position: relative; margin-bottom: 0.8em; }
 .title:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; } /* clear floats */
 .title h1 { /* float: left; */ width: 60%; padding-left: 18px; margin-bottom: 0; padding-bottom: 0; }
