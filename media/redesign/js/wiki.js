@@ -2,6 +2,29 @@
     'use strict';
 
     /*
+       Bug 981409 - Add some CSS fallback for browsers without MathML support.
+
+       This is based on
+       https://developer.mozilla.org/en-US/docs/Web/MathML/Authoring#Fallback_for_Browsers_without)MathML_support
+       and https://github.com/fred-wang/mathml.css.
+    */
+    $('math').length && (function() {
+        // Test for MathML support
+        var $div = $('<div class="offscreen"><math xmlns="http://www.w3.org/1998/Math/MathML"><mspace height="23px" width="77px"/></math></div>').appendTo(document.body);
+        var box = $div.get(0).firstChild.firstChild.getBoundingClientRect();
+        $div.remove();
+
+        var supportsMathML = Math.abs(box.height - 23) <= 1 && Math.abs(box.width - 77) <= 1;
+        if (!supportsMathML) {
+            // Add CSS fallback
+            $('<link href="/media/css/libs/mathml.css" rel="stylesheet" type="text/css" />').appendTo(document.head);
+
+            // Add notification
+            $('#wikiArticle').prepend('<div class="notice"><p>Your browser does not seem to support MathML. Some CSS fallback will be used instead, but the mathematics on this page might not render correctly.</p></div>');
+        }
+    })();
+
+    /*
         Togglers within articles (i.e.)
     */
     $('.toggleable').mozTogglers();
