@@ -715,6 +715,7 @@ MINIFY_BUNDLES = {
         ),
         'search': (
             'redesign/js/search.js',
+            'redesign/js/search-navigator.js',
         ),
         'framebuster': (
             'js/framebuster.js',
@@ -727,7 +728,7 @@ MINIFY_BUNDLES = {
             'js/syntax-prism.js',
         ),
         'wiki': (
-            'redesign/js/search.js',
+            'redesign/js/search-navigator.js',
             'redesign/js/wiki.js',
         ),
         'wiki-edit': (

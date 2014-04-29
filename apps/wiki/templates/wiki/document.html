@@ -169,14 +169,14 @@
       <div id="wiki-document-head" class="document-head">
         {% if search_doc_navigator_enabled %}
           <span class="from-search-previous-box">
-            <a href="" class="button from-search-previous only-icon"><i aria-hidden="true" class="icon-chevron-left"></i></a>
+            <a href="" class="button from-search-previous only-icon disabled"><i aria-hidden="true" class="icon-chevron-left"></i></a>
           </span>
-          <span class="hidden">
+          <span class="from-search-navigate-wrap">
             <a href="" class="from-search-navigate"><span class="from-search-navigate-up"><i aria-hidden="true" class="icon-double-angle-up"></i></span><span class="from-search-navigate-down"><i aria-hidden="true" class="icon-double-angle-down"></i></span></a>
           </span>
-          <div class="from-search-toc hidden"><ol></ol></div>
+          <div class="from-search-toc"><ol></ol></div>
           <span class="from-search-next-box">
-            <a class="button from-search-next only-icon"><i aria-hidden="true" class="icon-chevron-right"></i></a>
+            <a class="button from-search-next only-icon disabled"><i aria-hidden="true" class="icon-chevron-right"></i></a>
           </span>
           {% endif %}
         <h1>{{ document.title }}</h1>
