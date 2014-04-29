@@ -1,5 +1,3 @@
-textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
-
 /* page attachments */
 @-moz-keyframes newAttachment {
   0% { background-color: #90ee90; }
