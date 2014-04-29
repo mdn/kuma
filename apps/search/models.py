@@ -278,7 +278,7 @@ class DocumentType(MappingType, Indexable):
         return {
             # try to not waste so much space
             '_all': {'enabled': False},
-            '_boost': {'name': '_boost', 'null_value': 1.0, 'type': 'float'},
+            # '_boost': {'name': '_boost', 'null_value': 1.0, 'type': 'float'},
             'content': {
                 'type': 'string',
                 'analyzer': 'kuma_content',

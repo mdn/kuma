@@ -1094,7 +1094,7 @@ KUMASCRIPT_URL_TEMPLATE = 'http://developer.mozilla.org:9080/docs/{path}'
 ES_DISABLED = True
 ES_LIVE_INDEX = False
 
-LOG_LEVEL = logging.WARN
+LOG_LEVEL = logging.DEBUG
 SYSLOG_TAG = 'http_app_kuma'
 
 LOGGING = {
@@ -1140,10 +1140,10 @@ LOGGING = {
             # Use the most permissive setting. It is filtered in the handlers.
             'level': logging.DEBUG,
         },
-        'elasticsearch': {
-            'level': logging.ERROR,
-            'handlers': ['console'],
-        },
+        # 'elasticsearch': {
+        #     'level': logging.DEBUG,
+        #     'handlers': ['console'],
+        # },
     },
 }
 

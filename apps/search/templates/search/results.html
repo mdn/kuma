@@ -23,7 +23,11 @@
         <h4><a href="{{ doc.url }}"{% if index == 1 %} tabindex="1"{% endif %}>{{ doc.title }}</a></h4>
         <p>{{ doc.excerpt|safe }}</p>
         <p class="search-meta"><a href="{{ doc.url }}">{{ doc.url|replace('https://', '') }}</a>
-        {% if waffle.flag('search_explanation') %}Score: <span title="explanation: {{ doc.explanation }}">{{ doc.score }}</span>{% endif%}
+        Score: <span title="explanation: {{ doc.explanation }}">{{ doc.score }}</span>
+        {% if doc.locale != request.locale %}
+          ({{ settings.LOCALES[doc.locale].native }})
+        {% endif %}
+
         </p>
       </div>
       {# Hiding until search has this capability #}{#
@@ -57,56 +61,18 @@
           <div class="search-pane search-results-explanation">
             <h2>{{ _('Results') }}</h2>
             <p>
-            {% if locale_native %}
-              {% if query %}
-                {% trans count=count, locale_native=locale_native %}
-                  {{ count }} document found for "{{ query }}" in {{ locale_native }}.
-                {% pluralize %}
-                  {{ count }} documents found for "{{ query }}" in {{ locale_native }}.
-                {% endtrans %}
-              {% else %}
-                {% trans count=count, locale_native=locale_native %}
-                  {{ count }} document found in {{ locale_native }}.
-                {% pluralize %}
-                  {{ count }} documents found in {{ locale_native }}.
-                {% endtrans %}
-              {% endif %}
-            {% else %}
-              {% if query %}
-                {% trans count=count %}
-                  {{ count }} document found for "{{ query }}".
-                {% pluralize %}
-                  {{ count }} documents found for "{{ query }}".
-                {% endtrans %}
-              {% else %}
-                {% trans count=count %}
-                  {{ count }} document found.
-                {% pluralize %}
-                  {{ count }} documents found.
-                {% endtrans %}
-              {% endif %}
-            {% endif %}
             {% if count %}
-              &middot;
               {% if not previous and not next %}
                 {{ _('Displaying all results.') }}
               {% else %}
                 {% trans count=count %}
-                  Displaying {{ count }} search result.
+                  Displaying {{ count }} search result for "{{ query }}".
                 {% pluralize %}
-                  Displaying {{ start }}-{{ end }} of {{ count }} search results.
+                  Displaying {{ start }}-{{ end }} of {{ count }} search results for "{{ query }}".
                 {% endtrans %}
               {% endif %}
             {% endif %}
 
-            {% if locale != settings.LANGUAGE_CODE %}
-              &middot;
-              <a href="{{ url('search', locale=settings.LANGUAGE_CODE, ) }}?q={{ query }}">
-                {% trans default_locale_native = settings.LOCALES[settings.LANGUAGE_CODE].native %}
-                Search again in {{ default_locale_native }}
-                {% endtrans %}
-              </a>
-            {% endif %}
             {% if request.user.is_superuser %}
               Search index: {{ index.name }} (created: {{ index.created_at }})
             {% endif %}

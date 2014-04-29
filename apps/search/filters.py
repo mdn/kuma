@@ -25,12 +25,34 @@ class LanguageFilterBackend(BaseFilterBackend):
     all) specified by query parameter
     """
     def filter_queryset(self, request, queryset, view):
-        locale = request.GET.get('locale', None)
-        if '*' == locale:
-            return queryset
-        if not locale or locale not in settings.MDN_LANGUAGES:
-            locale = request.locale
-        return queryset.filter(locale=locale)
+        # return queryset.filter(locale=request.locale)
+        query = queryset.build_search().get('query', {'match_all': {}})
+        if request.locale != 'en-US':
+            query = {
+                'filtered': {
+                    'query': query,
+                    'filter': {
+                        'terms': {
+                            'locale': [request.locale, 'en-US']
+                        }
+                    }
+                }
+            }
+        return queryset.query_raw({
+            'boosting': {
+                'positive': query,
+                'negative': {
+                    'bool': {
+                        'must_not': {
+                            'term': {
+                                'locale': request.locale
+                            }
+                        }
+                    }
+                },
+                "negative_boost": 0.5
+            }
+        })
 
 
 class SearchQueryBackend(BaseFilterBackend):
