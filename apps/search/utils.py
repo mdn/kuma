@@ -16,7 +16,8 @@ class QueryURLObject(URLObject):
                         params.setdefault(param, []).append(default)
             else:
                 params[param] = defaults
-        return self.del_query_param(name).set_query_params(params)
+        return (self.del_query_param(name)
+                    .set_query_params(params))
 
     def merge_query_param(self, name, value):
         """
@@ -27,7 +28,7 @@ class QueryURLObject(URLObject):
         if name in params:
             for param, defaults in params.items():
                 if param == name:
-                    if value not in defaults:
+                    if value not in defaults and value not in (None, [None]):
                         defaults.append(value)
                 params[param] = defaults
         else:
