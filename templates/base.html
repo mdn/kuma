@@ -186,7 +186,9 @@
       </script>
     {% endif %}
 
-    <script src="//mozorg.cdn.mozilla.net/{{ request.locale }}/tabzilla/tabzilla.js" async></script>
+    {% if not settings.DEBUG %}
+        <script src="//mozorg.cdn.mozilla.net/{{ request.locale }}/tabzilla/tabzilla.js" async></script>
+    {% endif %}
 
     {% for script in scripts %}
       {{ js(script) }}
