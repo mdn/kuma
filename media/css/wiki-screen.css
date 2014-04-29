@@ -1,8 +1,3 @@
-.title { position: relative; margin-bottom: 0.8em; }
-.title:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; } /* clear floats */
-.title h1 { /* float: left; */ width: 60%; padding-left: 18px; margin-bottom: 0; padding-bottom: 0; }
-.title .redirected-from, .title .offline-notice { padding: 5px 0 0 18px; font-size: 0.785em; }
-
 .editing .metadata { float: left; width: 55%; display: none; }
 .new .editing .metadata { display: block; }
 .editing ul.metadata li { margin: 0; padding: 0; clear: both; }
