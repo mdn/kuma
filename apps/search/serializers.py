@@ -69,7 +69,7 @@ class GroupWithFiltersSerializer(serializers.ModelSerializer):
     class Meta:
         model = Filter
         depth = 1
-        fields = ('name', 'order', 'filters')
+        fields = ('name', 'slug', 'order', 'filters')
 
 
 class GroupSerializer(serializers.Serializer):
