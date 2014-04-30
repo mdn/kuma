@@ -1,41 +1,31 @@
-# Get node.js and npm installed under CentOS
+# Get node.js and npm installed Ubuntu 12.04 LTS
 class nodejs {
-    package {
-        [ "nodejs", "nodejs-dev", "npm" ]:
-            ensure => installed;
+    # See also: https://launchpad.net/~chris-lea/+archive/node.js/
+    exec { 'install-chris-lea-node-repo':
+        command => '/usr/bin/apt-add-repository -y ppa:chris-lea/node.js && /usr/bin/apt-get update',
+        creates => '/etc/apt/sources.list.d/chris-lea-node_js-precise.list',
+        require => Package['python-software-properties']
+    }
+    package { 'nodejs':
+        ensure => '0.10.26-1chl1~precise1',
+        require => Exec['install-chris-lea-node-repo']
     }
     file { "/usr/include/node":
         target => "/usr/include/nodejs",
         ensure => link,
-        require => Package['nodejs-dev']
-    }
-
-    # HACK: npm seems to have a bug in this environment where it believes the
-    # active user is still root, even when it's  vagrant. So, it tries to
-    # access /root/.npm, which throws a file permission error. This dirty dirty
-    # hack applies a bandaid in exchange for exposing /root slightly
-    file { "/root":
-        ensure => directory,
-        owner => "root", group => "root", mode => 0666;
-    }
-    file { "/root/.npm":
-        ensure => directory,
-        owner => "root", group => "root", mode => 0777,
-        require => File["/root"];
-    }
-    file { "/usr/share/npm/npmrc":
-        ensure => file,
-        owner => "root", group => "root", mode => 0755,
-        source => "/home/vagrant/src/puppet/files/usr/share/npm/npmrc",
-        require => Package["npm"]
+        require => Package['nodejs']
     }
     exec { 'npm-fibers-install':
-        command => "/usr/bin/npm install -g fibers@0.6.4",
-        creates => "/usr/local/lib/node_modules/fibers",
+        command => "/usr/bin/npm install -g fibers@1.0.1",
+        creates => "/usr/lib/node_modules/fibers",
         require => [
-            Package["nodejs"], Package["nodejs-dev"], Package["npm"],
-            File["/usr/include/node"], File["/root/.npm"],
-            File["/usr/share/npm/npmrc"]
+            Package["nodejs"],
+            File["/usr/include/node"]
         ]
+    }
+    # An old version of fibers lived here, ensure it's gone.
+    file { "/usr/local/lib/node_modules/fibers":
+        ensure => absent,
+        force => true
     }
 }

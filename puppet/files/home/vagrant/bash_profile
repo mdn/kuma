@@ -8,7 +8,7 @@ fi
 # User specific environment and startup programs
 PATH=$HOME/bin:/home/vagrant/src/kumascript/node_modules/.bin:$PATH
 export PATH
-export NODE_PATH=/usr/local/lib/node_modules
+export NODE_PATH=/usr/local/lib/node_modules:/usr/lib/node_modules
 
 # More useful to start in the project directory than in user home
 cd /home/vagrant/src
