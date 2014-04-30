@@ -65,6 +65,9 @@
     */
     $.fn.mozSearchResults = function(url) {
         var key = storage.getItem('key');
+        var $nextLink = $('.from-search-next');
+        var $prevLink = $('.from-search-previous');
+
         var nextDoc;
         var prevDoc;
         var data;
@@ -124,23 +127,29 @@
                     nextDoc = data.documents[index+1];
                     if(nextDoc) {
                         // and set the href of the next page anchor, make it visible, too
-                        $('.from-search-next')
+                        $nextLink
                             .attr('href', nextDoc.url)
                             .on('click', function() {
                                 mdn.analytics.trackEvent(['Search doc navigator', 'Click next', nextDoc.url, nextDoc.id]);
                             })
                             .removeClass('disabled');
                     }
+                    else {
+                        $nextLink.attr('title', $nextLink.attr('data-empty-title'));
+                    }
 
                     // do the same for the previous page link
                     prevDoc = data.documents[index-1];
                     if(prevDoc) {
-                        $('.from-search-previous')
+                        $prevLink
                             .attr('href', prevDoc.url)
                             .on('click', function() {
                                 mdn.analytics.trackEvent(['Search doc navigator', 'Click previous', prevDoc.url, prevDoc.id])
                             })
                             .removeClass('disabled'); // also add a spacer
+                    }
+                    else {
+                        $prevLink.attr('title', $nextLink.attr('data-empty-title'));
                     }
                 }
 
