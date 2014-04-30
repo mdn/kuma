@@ -4,12 +4,7 @@
 
 .search-form {
   padding: (grid-spacing * 2) 0;
-  /* 
-  height: 50px;
-  z-index: 2;
-  position: relative;
-  */
-  
+
   .search-wrapper{
     big-search();
     color: #fff;
@@ -39,14 +34,13 @@
     big-search();
     background-color: #223066;
     border-radius: 0px;
-    box-shadow: inset 0px 0px 2px #333; 
+    box-shadow: inset 0px 0px 2px #333;
     color: #fff;
     margin: 0 auto;
-    padding: 6px;
+    padding: 14px 6px;
     position: relative;
+    vendorize(animation, openNotification 1s);
 
-    -webkit-animation: openNotification 1s;
-            animation: openNotification 1s;
     h2 {
       font-size: 20px;
       text-transform: uppercase;
@@ -126,7 +120,7 @@
       background-color: #FFF;
     }
     .search-wrapper, .search-wrapper input#search-q-s, .search-wrapper .show-topics, .suggestions, .suggestions li a {
-      color: #4D4E53!important; 
+      color: #4D4E53!important;
     }
   }
 
@@ -148,4 +142,4 @@
     margin-top: 0px;
     opacity: 1;
   }
-} 
+}
