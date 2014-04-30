@@ -30,6 +30,9 @@ urlpatterns = patterns('',
 
     # Django admin:
     (r'^grappelli/', include('grappelli.urls')),
+    url(r'^admin/wiki/document/purge/',
+        'wiki.admin.purge_view',
+        name='wiki.admin_bulk_purge'),
     (r'^admin/', include('smuggler.urls')),
     (r'^admin/', include(admin.site.urls)),
 

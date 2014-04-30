@@ -584,6 +584,15 @@ class DeletedDocumentManager(BaseDocumentManager):
         return super(DeletedDocumentManager, self).get_query_set().filter(deleted=True)
 
 
+class DocumentAdminManager(BaseDocumentManager):
+    """
+    A manager used only in the admin site, which does not perform any
+    filtering based on deleted status.
+    
+    """
+    pass
+
+
 class DocumentTag(TagBase):
     """A tag indexing a document"""
     class Meta:
@@ -634,6 +643,7 @@ class Document(NotificationsMixin, models.Model):
 
     objects = DocumentManager()
     deleted_objects = DeletedDocumentManager()
+    admin_objects = DocumentAdminManager()
 
     title = models.CharField(max_length=255, db_index=True)
     slug = models.CharField(max_length=255, db_index=True)
