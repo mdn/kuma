@@ -20,7 +20,7 @@
             $('<link href="/media/css/libs/mathml.css" rel="stylesheet" type="text/css" />').appendTo(document.head);
 
             // Add notification
-            $('#wikiArticle').prepend('<div class="notice"><p>Your browser does not seem to support MathML. Some CSS fallback will be used instead, but the mathematics on this page might not render correctly.</p></div>');
+            $('#wikiArticle').prepend('<div class="notice"><p>' + gettext('Your browser does not support MathML. A CSS fallback has been used instead.') + '</p></div>');
         }
     })();
 
