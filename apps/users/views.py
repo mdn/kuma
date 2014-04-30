@@ -72,6 +72,7 @@ def set_browserid_explained(response):
     return response
 
 
+@csrf_exempt
 @ssl_required
 @login_required
 @require_POST
