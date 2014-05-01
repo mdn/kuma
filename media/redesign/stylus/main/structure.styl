@@ -162,7 +162,7 @@ draw-grid();
   .submenu {
     menu-border-width = 5px;
     menu-arrow-top = -19px;
-    component-submenu-method(380px, 2, #fff, #333);
+    component-submenu(380px, 2, #fff, #333);
 
     top: 40px;
     left: -136px;
@@ -210,7 +210,6 @@ draw-grid();
 .user-state {
   bidi-style(right, 200px, left, auto);
   position: absolute;
-  right: 200px;
   top: 12px;
   set-font-size(small-bump-font-size);
 
@@ -303,6 +302,84 @@ a.persona-button {
     }
   }
 }
+
+/* open auth login button */
+.oauth-login-container {
+    /* same as user-state, copying down as user-state will go */
+    bidi-style(right, 200px, left, auto);
+    position: absolute;
+    top: 12px;
+    set-font-size(small-bump-font-size);
+
+    z-index: 3;
+    cursor: pointer;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    display: inline-block;
+
+    &.active {
+        border-color: rgba(255, 255, 255, 0.3);
+
+        .oauth-login-picker {
+            display: block;
+        }
+    }
+
+    {selector-icon} {
+        margin-left: 0;
+
+        &:before {
+            cursor: pointer;
+        }
+    }
+}
+
+.oauth-login-options {
+    padding: 4px 8px;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.oauth-icon {
+    border-radius: 4px;
+    background: pink;
+    text-align: center;
+    padding: 0px 5px 1px;
+    font-size: base-bump-font-size;
+    margin: 0 0 0 4px;
+    color: #fff;
+    create-gradient(#43a6e2, #287cc2);
+}
+
+.oauth-login-picker {
+    component-submenu-close();
+    display: none;
+    background: #fff;
+    position: relative;
+
+    a {
+        display: block;
+        padding: 6px 8px;
+        position: relative;
+
+        &:hover, &:active, &:focus {
+            background: rgba(link-color, 0.1);
+        }
+
+        &:after {
+            position: absolute;
+            top: 6px;
+            bidi-style(right, 10px, left, auto);
+            font-family: FontAwesome;
+            bidi-value(content, "\f0da", "\f0d9");
+            opacity: 0.5;
+        }
+    }
+
+    {selector-icon} {
+        margin-right: icon-margin;
+    }
+}
+
 
 .search-wrap {
   background: transparent;
@@ -495,6 +572,11 @@ footer {
   #tabzilla {
     display: none;
   }
+
+  /* open auth login button */
+.oauth-login-container {
+    bidi-style(right, 0, left, auto);
+}
 
   #main-header {
     .user-state {

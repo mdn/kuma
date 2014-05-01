@@ -5,22 +5,42 @@
       <li><a href="{{ url('users.logout') }}?next={{ next_url }}">{{ _('Sign out') }}</a></li>
   </ul>
 {% else %}
-<ul class="user-state signed-out">
-    <li class="user-signin menu">
-    <form class="browserid" action="{{url('users.browserid_verify') }}" method="POST">
-        <input id="next" name="next" type="hidden" value="{{ next_url }}"/>
-        {{ browserid_form }}
-        {% set toggle = 'toggle' %}
-        {% if request.COOKIES.get('browserid_explained', 0) == '1' %}
-          {% set toggle = '' %}
+
+        {% if waffle.flag('oauth_login') %}
+
+            <form>
+                <div class="oauth-login-container" tabIndex="0">
+                    <div class="oauth-login-options">
+                        <span>{{ _('Sign in with') }}</span>
+                        <span class="oauth-persona oauth-icon" title="{{ _('Sign in with Persona') }}"><i class="icon-user" aria-hidden="true"></i></span>
+                        <span class="oauth-github oauth-icon" title="{{ _('Sign in with GitHub') }}"><i class="icon-github" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="submenu oauth-login-picker" aria-hidden="true">
+                        <ul>
+                            <li><a href=""><i class="icon-user" aria-hidden="true"></i>Persona</a></li>
+                            <li><a href=""><i class="icon-github" aria-hidden="true"></i>GitHub</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </form>
+
+        {% else %}
+            <ul class="user-state signed-out">
+            <li class="user-signin menu">
+                <form class="browserid" action="{{url('users.browserid_verify') }}" method="POST">
+                    <input id="next" name="next" type="hidden" value="{{ next_url }}"/>
+                    {{ browserid_form }}
+                    {% set toggle = 'toggle' %}
+                    {% if request.COOKIES.get('browserid_explained', 0) == '1' %}
+                      {% set toggle = '' %}
+                    {% endif %}
+
+                      <a href="#" class="persona-button persona-login" data-next="{{ next_url }}">
+                        <span class="persona-icon"><i aria-hidden="true"></i></span>
+                        <span class="signin">{{ _('Sign in with Persona') }}</span>
+                      </a>
+                  </form>
+                </li>
+            </ul>
         {% endif %}
-
-          <a href="#" class="persona-button persona-login" data-next="{{ next_url }}">
-            <span class="persona-icon"><i aria-hidden="true"></i></span>
-            <span class="signin">{{ _('Sign in with Persona') }}</span>
-          </a>
-
-      </form>
-    </li>
-  </ul>
 {% endif %}

@@ -323,7 +323,7 @@ title-header() {
 }
 
 /* submenu generator: used in the main navigation and wiki */
-component-submenu-method(menu-width, num-columns, background-color, arrow-border-color) {
+component-submenu(menu-width, num-columns, background-color, arrow-border-color) {
     position: absolute;
     padding: grid-spacing;
     background: background-color;
@@ -331,16 +331,7 @@ component-submenu-method(menu-width, num-columns, background-color, arrow-border
     width: menu-width;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
 
-    .submenu-close {
-        display: none;
-        position: absolute;
-        top: 20px;
-        bidi-style(right, 0, left, auto);
-
-        i {
-            margin-left: 0;
-        }
-    }
+    component-submenu-close();
 
     .submenu-column {
         if num-columns is 1 {
@@ -384,12 +375,6 @@ component-submenu-method(menu-width, num-columns, background-color, arrow-border
         z-index: 1;
     }
 
-    @media media-query-tablet {
-        .submenu-close {
-            display: block;
-        }
-    }
-
     @media media-query-mobile {
         .submenu-column, .submenu-column:nth-child(even) {
             bidi-style(border-left, 0, border-right, 0);
@@ -409,6 +394,25 @@ component-submenu-method(menu-width, num-columns, background-color, arrow-border
     }
 }
 
+component-submenu-close() {
+    .submenu-close {
+        display: none;
+        position: absolute;
+        top: 20px;
+        bidi-style(right, 0, left, auto);
+
+        i {
+            margin-left: 0;
+        }
+    }
+
+    @media media-query-tablet {
+        .submenu-close {
+            display: block;
+        }
+    }
+
+}
 
 
 /* When an element contains a label and a checkbox in order (as on the edit
@@ -430,7 +434,7 @@ $checkbox-label-container {
 /* Dropdown menus that hide advanced feature, such as the "This Page" menu on
      article pages, the "Advanced" menu on profiles, etc. */
 $advanced-menu {
-    component-submenu-method(160px, 1, button-background, button-shadow-color);
+    component-submenu(160px, 1, button-background, button-shadow-color);
     bidi-style(right, 0, left, auto);
     top: 40px;
     z-index: 3;

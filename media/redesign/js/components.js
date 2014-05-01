@@ -13,6 +13,8 @@
         var settings = $.extend({
             showDelay: 100,
             hideDelay: 100,
+            fadeInSpeed: null,
+            fadeOutSpeed: null,
             submenu: null,
             focusOnOpen: false,
             brickOnClick: false,
@@ -57,7 +59,7 @@
                     initialized = 1;
 
                     // Add the close
-                    var $closeButton = $('<button class="submenu-close transparent">\
+                    var $closeButton = $('<button type="button" class="submenu-close transparent">\
                         <span class="offscreen">' + gettext('Close submenu') + '</span>\
                         <i aria-hidden="true" class="icon-remove-sign"></i>\
                     </button>').appendTo($submenu);
@@ -110,7 +112,7 @@
                 // Show my submenu after the showDelay
                 showTimeout = setTimeout(function() {
                     // Setting z-index here so that current menu is always on top
-                    $submenu.css('z-index', 99999).addClass('open').attr('aria-hidden', 'false').fadeIn();
+                    $submenu.css('z-index', 99999).addClass('open').attr('aria-hidden', 'false').fadeIn(settings.fadeInSpeed);
 
                     // Find the first link for improved usability
                     if(settings.focusOnOpen) {
@@ -143,7 +145,7 @@
         function closeSubmenu($sub) {
             closeTimeout = setTimeout(function() {
                 // Set the z-index to one less so another menu would get top spot if overlapping and opening
-                $sub && $sub.css('z-index', 99998).removeClass('open').attr('aria-hidden', 'true').fadeOut();
+                $sub && $sub.css('z-index', 99998).removeClass('open').attr('aria-hidden', 'true').fadeOut(settings.fadeOutSpeed);
                 settings.onClose();
             }, settings.hideDelay);
         }
