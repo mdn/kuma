@@ -3,6 +3,7 @@ import datetime
 import json
 import base64
 import time
+import logging
 
 from urlparse import urlparse
 
@@ -57,10 +58,26 @@ class RedirectTests(TestCaseBase):
     def test_redirect_suppression(self):
         """The document view shouldn't redirect when passed redirect=no."""
         redirect, _ = doc_rev('REDIRECT <a class="redirect" '
-                              'href="http://smoo/">smoo</a>')
+                              'href="/en-US/docs/blah">smoo</a>')
         url = redirect.get_absolute_url() + '?redirect=no'
         response = self.client.get(url, follow=True)
         self.assertContains(response, 'REDIRECT ')
+
+    def test_redirects_only_internal(self):
+        """Ensures redirects cannot be used to link to other sites"""
+        redirect, _ = doc_rev('REDIRECT <a class="redirect" '
+                              'href="//davidwalsh.name">DWB</a>')
+        url = redirect.get_absolute_url()
+        response = self.client.get(url, follow=True)
+        self.assertContains(response, 'DWB')
+
+    def test_redirects_only_internal_2(self):
+        """Ensures redirects cannot be used to link to other sites"""
+        redirect, _ = doc_rev('REDIRECT <a class="redirect" '
+                              'href="http://davidwalsh.name">DWB</a>')
+        url = redirect.get_absolute_url()
+        response = self.client.get(url, follow=True)
+        self.assertContains(response, 'DWB')
 
     def test_self_redirect_suppression(self):
         """The document view shouldn't redirect to itself."""
@@ -223,7 +240,7 @@ class ViewTests(TestCaseBase):
                            save=True,
                            is_redirect=is_redir)
             if is_redir:
-                content = 'REDIRECT <a class="redirect" href="x">Blah</a>'
+                content = 'REDIRECT <a class="redirect" href="/en-US/blah">Blah</a>'
             else:
                 content = test_content
                 revision(document=doc,
@@ -2890,7 +2907,7 @@ class AutosuggestDocumentsTests(TestCaseBase):
             {
                 'title': 'Something Redirect 8',
                 'slug': 'xx',
-                'html': 'REDIRECT <a class="redirect" href="http://davidwalsh.name">yo</a>'
+                'html': 'REDIRECT <a class="redirect" href="%s">yo</a>' % settings.SITE_URL
             },
             {
                 'title': 'My Template',
