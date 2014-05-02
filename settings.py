@@ -678,7 +678,6 @@ MINIFY_BUNDLES = {
             'redesign/js/home.js'
         ),
         'popup': (
-            'js/jquery-upgrade-compat.js',
             'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
             'js/modal-control.js',
         ),
