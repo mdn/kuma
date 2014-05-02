@@ -315,3 +315,36 @@ table.compat-table {
 div.bug {
     font-style: italic;
 }
+
+div.callout-box {
+    background: #fafafa;
+    border: 1px solid #eee;
+    float: right;
+    margin: 0 0 8px 15px;
+    padding: 10px;
+    position: relative;
+    text-align: center;
+    width: 200px;
+    z-index: 2;
+}
+
+p.footnote {
+    font-size: smaller-font-size;
+    font-style: italic;
+    color: #716d65;
+}
+
+div.tip {
+    border: 1px solid #e1f5f0;
+    padding: 10px 15px;
+    color: #6d675f;
+}
+
+/* Classes created by the WYSIWYG */
+.twocolumns {
+    vendorize(column-count, 2)
+}
+.threecolumns {
+    vendorize(column-count, 3);
+}
+
