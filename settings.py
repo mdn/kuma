@@ -667,17 +667,11 @@ MINIFY_BUNDLES = {
     },
     'js': {
         'main': (
-            'js/jquery-upgrade-compat.js',
+            'js/libs/jquery-2.1.0.js',
             'redesign/js/components.js',
             'redesign/js/analytics.js',
             'redesign/js/main.js',
             'redesign/js/badges.js',
-        ),
-        'jquery2': (
-            'js/libs/jquery-2.1.0.js',
-        ),
-        'jquery1': (
-            'js/libs/jquery-1.9.1.js',
         ),
         'home': (
             'js/libs/owl.carousel/owl-carousel/owl.carousel.js',
