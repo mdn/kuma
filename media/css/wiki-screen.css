@@ -1,23 +1,4 @@
-.editing .metadata { float: left; width: 55%; display: none; }
-.new .editing .metadata { display: block; }
-.editing ul.metadata li { margin: 0; padding: 0; clear: both; }
-.editing ul.metadata li label { display: block; float: left; line-height: 2.5em; text-align: right; width: 10ex; font-weight: bold; padding-right: 0.25em; color: #888; }
-.editing ul.metadata li label.inline { color:#000; width:auto; font-weight:normal; float:none; text-align:left; display:inline-block; padding-left:34px; }
-.editing ul.metadata li .show_toc_block { padding: 7px 0 0 0; }
-.editing ul.metadata li #show_toc_depth_block { margin-left: -12px; }
-.editing ul.metadata li input, .editing ul.metadata li input#id_title { font-size: 1em; padding: 6px 8px; margin: 2px 0px; width: 70%; }
-.editing ul.metadata li input[type="checkbox"] { width: auto; margin-left: 6px; }
-.editing ul.metadata li .metadataDisplay { display:inline-block; padding: 8px 0 0 3px; }
-.editing ul.metadata li.metadata-choose-parent { padding: 10px; border: 1px solid #d4dde4; font-size: 90%; background: #eaeff2; background: linear-gradient(top, #eaeff2, #d4dde4); background: -moz-linear-gradient(top, #eaeff2, #d4dde4); background: -webkit-linear-gradient(top, #eaeff2, #d4dde4); border-radius: 10px; margin: 0 10px; display: none; }
-.editing ul.metadata li.metadata-choose-parent #parent_text { display: inline-block; margin-top:10px; }
-
-.editing .title { float: left; width: 55%; }
-.editing .title h1 { display: inline-block; width: auto; float: none; color: #888; float:left; }
-.editing .title h1 em { color: #333; font-style: normal; }
-.editing #btn-properties { font-weight: bold; }
-
-.editing .save-state { font-size: .85em; margin: -1.75em 0 1.5em; color: #888; padding-left: 20px; clear:both; }
-
+/* Used on the edit page. */
 #page-buttons { width: 50%; text-align: right; margin: 0; position: absolute; right: 4px; top: 20px; }
 #page-buttons li { margin: 0 0 2px 10px; }
 #page-buttons li, #page-buttons form { display: inline; padding: 0; background: none; }
@@ -69,8 +50,6 @@
 #change-locale a:after { content: ")"; }
 #change-locale a:hover, #change-locale a:focus, #change-locale a:active { background-color: #369; background-position: 92% -100px; color: #fff; text-decoration: none; text-shadow: 1px 1px 0 rgba(0,0,0,.25); }
 
-.editing summary { font-size: 1.428em; margin: 0 0 .5em; padding-left: 40px; cursor: pointer; }
-
 .description li { clear: both; margin: 0 0 .5em; }
 .description li:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
 .description dl { margin: 0; }
@@ -78,9 +57,6 @@
 .description dd { display: inline-block; margin-left: 0; }
 .description .approved, #trans-content .approved { width: 49%; float: left; }
 .description .localized, #trans-content .localized { width: 49%; float: right; }
-
-#trans-description { margin: 0 0 1em; }
-#trans-content { margin: 0 0 1em; }
 
 #trans-content #cke_contents_wikiArticle { min-height: 800px; }
 
@@ -91,14 +67,6 @@
 .translate-display pre {
   white-space: normal;
 }
-
-
-
-/* The .no-details styles will get applied only if JavaScript is enabled and <details> is not natively supported. */
-/* Add focus styles (for keyboard accessibility) */
-.no-details summary:hover, .no-details summary:focus { background: rgba(170,160,130,.1); outline: 0; }
-.no-details summary:before { content: "+"; float: left; margin: -.225em 0 0 -35px; font-size: 1.25em; }
-.no-details .open summary:before { content: "–"; float: left; margin: -.25em 0 0 -32px; font-size: 1.25em; }
 
 /* The following styles are not really needed, since the jQuery script takes care of hiding/displaying the elements. */
 /* However, we're still gonna use CSS as well to prevent FOUC in browsers that understand these selectors. */
@@ -203,9 +171,7 @@ article .syntaxhighlighter { width: auto !important; }
 .html-rtl .pagination span,
 .html-rtl #content-fields .approved,
 .html-rtl .description .approved,
-.html-rtl .editing .title,
-.html-rtl .change-locale,
-.html-rtl .editing .title h1 {
+.html-rtl .change-locale {
   float: right;
 }
 

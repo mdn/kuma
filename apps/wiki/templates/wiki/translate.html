@@ -11,13 +11,14 @@
 
 {% block site_css %}
     {{ super() }}
+    {{ css('wiki-edit') }}
     {{ css('jquery-ui') }}
 {% endblock %}
 
 {% block content %}
   {% set language = settings.LANGUAGES_DICT[locale.lower()] %}
 
-      <form action="" method="post" data-json-url="{{ url('wiki.json') }}" id="wiki-page-translate">
+      <form action="" method="post" data-json-url="{{ url('wiki.json') }}" id="translate-document">
         {{ csrf() }}
         <input type="hidden" name="form" value="both" />
 
