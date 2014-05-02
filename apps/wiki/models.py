@@ -5,6 +5,7 @@ import re
 import json
 import newrelic.agent
 import operator
+import sys
 
 from pyquery import PyQuery
 from tower import ugettext_lazy as _lazy, ugettext as _
@@ -312,6 +313,13 @@ SECONDARY_CACHE_ALIAS = getattr(settings,
                                 'SECONDARY_CACHE_ALIAS',
                                 'secondary')
 URL_REMAPS_CACHE_KEY_TMPL = 'DocumentZoneUrlRemaps:%s'
+
+class PageMoveError(Exception):
+    """
+    Exception raised by most failures during page move.
+    
+    """
+    pass
 
 
 def cache_with_field(field_name):
@@ -1484,7 +1492,34 @@ class Document(NotificationsMixin, models.Model):
         # Finally, step 10: recurse through all of our children.
         for child in self.children.all().filter(locale=self.locale):
             child_title = child.slug.split('/')[-1]
-            child._move_tree('/'.join([new_slug, child_title]), user)
+            try:
+                child._move_tree('/'.join([new_slug, child_title]), user)
+            except PageMoveError:
+                # A child move already caught this and created the
+                # correct exception + error message, so just propagate
+                # it up.
+                raise
+            except Exception as e:
+                # One of the immediate children of this page failed to
+                # move.
+                exc_class, exc_message, exc_tb = sys.exc_info()
+                message = """
+                Failure occurred while attempting to move document
+                with id %(doc_id)s.
+
+                That document can be viewed at:
+
+                https://developer.mozilla.org/%(locale)s/docs/%(slug)s
+
+                The exception raised was:
+
+                Exception type: %(exc_class)s
+
+                Exception message: %(exc_message)s
+                """ % {'doc_id': child.id, 'locale': child.locale,
+                       'slug': child.slug, 'exc_class': exc_class,
+                       'exc_message': exc_message}
+                raise PageMoveError(message)
 
     def repair_breadcrumbs(self):
         """

@@ -30,6 +30,7 @@ from wiki.models import (Document, Revision,
                          get_current_or_latest_revision,
                          DocumentRenderedContentNotAvailable,
                          DocumentRenderingInProgress,
+                         PageMoveError,
                          TaggedDocument,)
 from wiki.tests import (document, revision, doc_rev, normalize_html,
                         create_template_test_users,
@@ -1749,6 +1750,56 @@ class PageMoveTests(TestCase):
         self.assertRaises(Document.DoesNotExist,
                           Document.objects.get,
                           id=child_redirect_id)
+
+    def test_fail_message(self):
+        """
+        When page move fails in moving one of the children, it
+        generates an informative exception message explaining which
+        child document failed.
+        
+        """
+        top = revision(title='Test page-move error messaging',
+                       slug='test-move-error-messaging',
+                       is_approved=True,
+                       save=True)
+        top_doc = top.document
+
+        child = revision(title='Child to test page-move error messaging',
+                         slug='test-move-error-messaging/child',
+                         is_approved=True,
+                         save=True)
+        child_doc = child.document
+        child_doc.parent_topic = top_doc
+        child_doc.save()
+
+        grandchild = revision(title='Grandchild to test page-move error handling',
+                              slug='test-move-error-messaging/child/grandchild',
+                              is_approved=True,
+                              save=True)
+        grandchild_doc = grandchild.document
+        grandchild_doc.parent_topic = child_doc
+        grandchild_doc.save()
+
+        conflict = revision(title='Conflict page for page-move error handling',
+                            slug='test-move-error-messaging/moved/grandchild',
+                            is_approved=True,
+                            save=True)
+        conflict_doc = conflict.document
+
+        # TODO: Someday when we're on Python 2.7, we can use
+        # assertRaisesRegexp. Until then, we have to manually catch
+        # and inspect the exception.
+        try:
+            child_doc._move_tree('test-move-error-messaging/moved')
+        except PageMoveError as e:
+            err_strings = [
+                'with id %s' % grandchild_doc.id,
+                'https://developer.mozilla.org/%s/docs/%s' % (grandchild_doc.locale,
+                                                              grandchild_doc.slug),
+                "Exception type: <type 'exceptions.Exception'>",
+                'Exception message: Requested move would overwrite a non-redirect page.']
+            for s in err_strings:
+                ok_(s in e.message)
 
 
 class DocumentZoneTests(TestCase):
