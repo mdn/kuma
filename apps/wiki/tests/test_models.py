@@ -1797,7 +1797,11 @@ class PageMoveTests(TestCase):
                 'https://developer.mozilla.org/%s/docs/%s' % (grandchild_doc.locale,
                                                               grandchild_doc.slug),
                 "Exception type: <type 'exceptions.Exception'>",
-                'Exception message: Requested move would overwrite a non-redirect page.']
+                'Exception message: Requested move would overwrite a non-redirect page.',
+                'in _move_tree',
+                'in _move_conflicts',
+                'raise Exception("Requested move would overwrite a non-redirect page.")',
+            ]
             for s in err_strings:
                 ok_(s in e.message)
 
