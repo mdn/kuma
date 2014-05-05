@@ -611,6 +611,9 @@ MINIFY_BUNDLES = {
             'redesign/css/zones.css',
             'redesign/css/diff.css',
         ),
+        'wiki-edit': (
+            'redesign/css/wiki-edit.css',
+        ),
         'sphinx': (
             'redesign/css/wiki.css',
             'redesign/css/sphinx.css',

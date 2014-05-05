@@ -1,0 +1,152 @@
+/* Styles for the new article page, the article edit page, and the article
+   translation edit page. */
+
+@import 'includes/vars.styl'
+@import 'includes/mixins.styl'
+
+#new-document, #edit-document, #translate-document {
+    .editing {
+        position: relative;
+    }
+
+    h1 {
+        letter-spacing: normal;
+        line-height: 40px;
+        margin-bottom: (grid-spacing);
+        margin-top: (grid-spacing * 1.5);
+
+        .action {
+            set-larger-font-size();
+            display: block;
+            line-height: 20px;
+        }
+
+        em {
+            color: #333;
+            font-style: normal;
+            margin-left: -3px;
+            text-transform: none;
+        }
+    }
+
+    h2 {
+        set-font-size(28px);
+        font-family: site-font-family;
+        margin-bottom: grid-spacing;
+        text-transform: none;
+    }
+
+    h2 {selector-icon}, h3 {selector-icon} {
+        @extend $right-icons;
+    }
+
+    .title {
+        h1 {
+            color: #888;
+            bidi-value(float, left, right);
+        }
+    }
+
+    #page-attachments-new-table {
+        textarea {
+            height: 40px;
+        }
+    }
+
+    summary {
+        clearfix();
+        set-font-size(20px);
+        cursor: pointer;
+        margin: 0 (grid-spacing / 2) (grid-spacing / 2) !important;
+        padding: 5px;
+    }
+}
+
+#new-document, #edit-document {
+    ul.metadata {
+        display: none;
+        float: none;
+        margin-bottom (grid-spacing / 2);
+        width: auto;
+
+        .new & {
+            display: block;
+        }
+
+        li {
+            .metadataDisplay {
+                display: inline-block;
+                padding: 8px 0 0 3px;
+            }
+
+            &.metadata-choose-parent {
+                display: none;
+                set-font-size(small-bump-font-size);
+
+                #parent_text {
+                    margin-top: 10px;
+                }
+            }
+
+            input, input#id_title {
+                margin: 2px 0px;
+                padding: 6px 8px;
+                width: 70%;
+            }
+
+            label {
+                color: #888;
+                display: block;
+                float: left;
+                font-weight: bold;
+                line-height: 2.5;
+                padding-right: 5px;
+                text-align: right;
+                width: auto;
+            }
+        }
+    }
+}
+
+#edit-document {
+    .first-contrib-welcome {
+        background: light-background-color;
+        border: 5px solid header-background-color;
+        padding: 15px 15px 10px;
+        margin-bottom: 20px;
+
+        h2 {
+            margin: 0 0 10px;
+            font: bold 18px/1.5 'Open Sans', sans-serif;
+        }
+
+        p {
+            margin-bottom: 8px;
+        }
+    }
+
+    .save-state {
+        set-smaller-font-size();
+        clear: both;
+        color: #888;
+        margin: -grid-spacing 0 grid-spacing;
+    }
+}
+
+#translate-document {
+    #page-buttons {
+        bidi-style(right, 0, left, auto);
+    }
+
+    .description {
+        .approved {
+            dt {
+                padding-top: 0;
+            }
+        }
+    }
+
+    .change-locale {
+        margin-top: (grid-spacing / 2);
+    }
+}

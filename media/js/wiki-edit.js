@@ -142,7 +142,7 @@
         $('select.enable-if-js').removeAttr('disabled');
 
         // If the form is a translate form, update the formId
-        var translateFormId = 'wiki-page-translate';
+        var translateFormId = 'translate-document';
         if($('#' + translateFormId).length) {
             formId = translateFormId;
             isTranslation = true;
@@ -197,7 +197,7 @@
         // Execute the fallback only if there's no native `details` support
         if (!supportsDetails) {
             // Note <details> tag support. Modernizr doesn't do this properly as of 1.5; it thinks Firefox 4 can do it, even though the tag has no "open" attr.
-            doc.documentElement.className += ' no-details';
+            $('details').addClass('no-details');
 
             // Loop through all `details` elements
             $('details').each(function() {
