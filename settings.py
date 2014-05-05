@@ -1181,3 +1181,12 @@ ABSOLUTE_URL_OVERRIDES = {
 }
 
 OBI_BASE_URL = 'https://backpack.openbadges.org/'
+
+# Honor the X-Forwarded-Proto header for environments like local dev VM that
+# uses Apache mod_proxy instead of mod_wsgi
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# django-allauth configuration
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+ACCOUNT_EMAIL_REQUIRED = True
