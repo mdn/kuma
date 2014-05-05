@@ -36,6 +36,7 @@ django-appconf==0.6
 urllib3==1.8
 elasticutils==0.9.1
 elasticsearch==0.4.5
+django-allauth==0.16.1
 
 ## Forked, temporary or otherwise
 # 2012-08-02

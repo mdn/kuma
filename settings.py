@@ -342,7 +342,7 @@ SERVE_MEDIA = False
 # Paths that don't require a locale prefix.
 SUPPORTED_NONLOCALES = ('media', 'admin', 'robots.txt', 'services', 'static',
                         '1', 'files', '@api', 'grappelli', '__debug__',
-                        '.well-known')
+                        '.well-known', 'accounts')
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '#%tc(zja8j01!r#h_y)=hy!^k)9az74k+-ib&ij&+**s3-e^_z'
@@ -359,7 +359,14 @@ JINGO_EXCLUDE_APPS = (
     'admindocs',
     'registration',
     'grappelli',
-    'waffle'
+    'waffle',
+    # HACK: Jingo only looks at the tail end of the app name
+    'allauth',
+    'account', # allauth.account
+    'socialaccount', # allauth.socialaccount
+    'github', # 'allauth.socialaccount.providers.github',
+    'persona', # 'allauth.socialaccount.providers.persona',
+    'base_allauth.html',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -369,6 +376,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     'django.core.context_processors.csrf',
     'django.contrib.messages.context_processors.messages',
+
+    'allauth.account.context_processors.account',
+    'allauth.socialaccount.context_processors.socialaccount',
 
     'sumo.context_processors.global_settings',
 
@@ -416,6 +426,7 @@ MIDDLEWARE_CLASSES = (
 AUTHENTICATION_BACKENDS = (
     'django_browserid.auth.BrowserIDBackend',
     'django.contrib.auth.backends.ModelBackend',
+    "allauth.account.auth_backends.AuthenticationBackend",
     'teamwork.backends.TeamworkBackend',
 )
 AUTH_PROFILE_MODULE = 'users.UserProfile'
@@ -464,8 +475,14 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     'django.contrib.staticfiles',
 
-    # BrowserID
+    # BrowserID & allauth
     'django_browserid',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.persona',
 
     # MDN
     'devmo',
