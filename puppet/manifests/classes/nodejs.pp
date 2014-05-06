@@ -7,7 +7,7 @@ class nodejs {
         require => Package['python-software-properties']
     }
     package { 'nodejs':
-        ensure => '0.10.26-1chl1~precise1',
+        ensure => '0.10.28-1chl1~precise1',
         require => Exec['install-chris-lea-node-repo']
     }
     file { "/usr/include/node":
