@@ -248,7 +248,9 @@ bidi-style(ltr-prop, value, inverse-prop, inverse-value, make-important = false)
     {ltr-prop}: value make-important;
 
     .html-rtl & {
-        {inverse-prop}: value make-important;
+        if (ltr-prop != inverse-prop) {
+            {inverse-prop}: value make-important;
+        }
         {ltr-prop}: inverse-value make-important;
     }
 }
