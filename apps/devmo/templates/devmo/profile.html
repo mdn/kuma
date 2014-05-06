@@ -139,11 +139,12 @@
         </section>
     {% endif %}
 
-      {% if wiki_activity and wiki_activity|length %}
           <section id="docs-activity" class="profile-section">
             <header>
               <h2>{{_("Recent Docs Activity")}}</h2>
             </header>
+
+            {% if wiki_activity and wiki_activity|length %}
             <table class="activity">
               <thead>
                 <th scope="col" class="page">{{_("Page")}}</th>
@@ -178,19 +179,20 @@
                       #}
               </tfoot>
             </table>
-          </section>
-      {% else %}
-        <section id="docs-activity" class="profile-section">
-          <header>
-            <h2>{{_('Recent Docs Activity')}}</h2>
-          </header>
-          {% if profile.user == request.user %}
-            {% trans docs_url=devmo_url('Project:MDN/Contributing/Creating_and_editing_pages') %}
-            <p class="none">You haven't contributed to any MDN docs. <a href="{{docs_url}}">Pitch in!</a></p>
-            {% endtrans %}
+
+            <p><a href="{{ url('dashboards.revisions') }}?user={{ profile.user.username }}" class="button">{{ _('View all activity') }}</a></p>
+            {% else %}
+
+            {% if profile.user == request.user %}
+                {% trans docs_url=devmo_url('Project:MDN/Contributing/Creating_and_editing_pages') %}
+                <p class="none">You haven't contributed to any MDN docs. <a href="{{docs_url}}">Pitch in!</a></p>
+                {% endtrans %}
+            {% else %}
+                <p class="none">{{ _('This user has no activity.') }}</p>
+            {% endif %}
+
           {% endif %}
-        </section>
-      {% endif %}
+          </section>
 
   </section><!-- /#content-main -->
 </div>

@@ -1,41 +1,50 @@
-# Get node.js and npm installed under CentOS
+# Get node.js and npm installed Ubuntu 12.04 LTS
 class nodejs {
-    package {
-        [ "nodejs", "nodejs-dev", "npm" ]:
-            ensure => installed;
+    exec { "nodejs_delete_old_ppa":
+        command => "/bin/rm /etc/apt/sources.list.d/chris-lea-node_js-precise.list*",
+        onlyif => "/bin/ls -1 /etc/apt/sources.list.d | /bin/grep -c 'chris-lea-node_js-precise.list'"
+    }
+    exec { "nodejs_uninstall_old_node":
+        command => "/usr/bin/apt-get remove -y nodejs",
+        onlyif => "/usr/bin/node --version | /bin/grep -c 'v0.6.12'"
+    }
+    exec { "nodejs_download":
+        cwd => "/home/vagrant/src/puppet/cache",
+        timeout => 300,
+        command => "/usr/bin/wget https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/vagrant/mdn/nodejs_0.10.26-1chl1~precise1_i386.deb",
+        creates => "/home/vagrant/src/puppet/cache/nodejs_0.10.26-1chl1~precise1_i386.deb",
+    }
+    package { "nodejs":
+        provider => "dpkg",
+        source => "/home/vagrant/src/puppet/cache/nodejs_0.10.26-1chl1~precise1_i386.deb",
+        require => [
+            Package["rlwrap"],
+            Exec['nodejs_download'],
+            Exec['nodejs_delete_old_ppa'],
+            Exec['nodejs_uninstall_old_node']
+        ]
     }
     file { "/usr/include/node":
         target => "/usr/include/nodejs",
         ensure => link,
-        require => Package['nodejs-dev']
+        require => Package['nodejs']
     }
-
-    # HACK: npm seems to have a bug in this environment where it believes the
-    # active user is still root, even when it's  vagrant. So, it tries to
-    # access /root/.npm, which throws a file permission error. This dirty dirty
-    # hack applies a bandaid in exchange for exposing /root slightly
-    file { "/root":
-        ensure => directory,
-        owner => "root", group => "root", mode => 0666;
+    file { "/usr/local/lib/node_modules/fibers":
+        ensure => absent,
+        force => true
     }
-    file { "/root/.npm":
-        ensure => directory,
-        owner => "root", group => "root", mode => 0777,
-        require => File["/root"];
-    }
-    file { "/usr/share/npm/npmrc":
-        ensure => file,
-        owner => "root", group => "root", mode => 0755,
-        source => "/home/vagrant/src/puppet/files/usr/share/npm/npmrc",
-        require => Package["npm"]
+    file { "/home/vagrant/src/kumascript/node_modules/fibers":
+        ensure => absent,
+        force => true
     }
     exec { 'npm-fibers-install':
-        command => "/usr/bin/npm install -g fibers@0.6.4",
-        creates => "/usr/local/lib/node_modules/fibers",
+        command => "/usr/bin/npm install -g fibers@1.0.1",
+        creates => "/usr/lib/node_modules/fibers",
         require => [
-            Package["nodejs"], Package["nodejs-dev"], Package["npm"],
-            File["/usr/include/node"], File["/root/.npm"],
-            File["/usr/share/npm/npmrc"]
+            Package["nodejs"],
+            File["/usr/include/node"],
+            File["/usr/local/lib/node_modules/fibers"],
+            File["/home/vagrant/src/kumascript/node_modules/fibers"]
         ]
     }
 }

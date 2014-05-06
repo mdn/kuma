@@ -11,13 +11,14 @@ class basics {
           "libjpeg62", "libjpeg62-dev",
           "libfreetype6", "libfreetype6-dev",
           "libpng12-0", "libpng12-dev",
-          "libtidy-0.99-0", "libtidy-dev"]:
+          "libtidy-0.99-0", "libtidy-dev", "rlwrap"]:
             ensure => installed,
             require => Exec['apt-get-update'];
     }
     exec {
         "deadsnakes-ppa":
             command => "/usr/bin/add-apt-repository --yes ppa:fkrull/deadsnakes && apt-get update -qq",
+            creates => '/etc/apt/sources.list.d/fkrull-deadsnakes-precise.list',
             require => Package["python-software-properties"];
     }
     package {

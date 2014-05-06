@@ -615,6 +615,9 @@ MINIFY_BUNDLES = {
             'redesign/css/zones.css',
             'redesign/css/diff.css',
         ),
+        'wiki-edit': (
+            'redesign/css/wiki-edit.css',
+        ),
         'sphinx': (
             'redesign/css/wiki.css',
             'redesign/css/sphinx.css',
@@ -671,17 +674,11 @@ MINIFY_BUNDLES = {
     },
     'js': {
         'main': (
-            'js/jquery-upgrade-compat.js',
+            'js/libs/jquery-2.1.0.js',
             'redesign/js/components.js',
             'redesign/js/analytics.js',
             'redesign/js/main.js',
             'redesign/js/badges.js',
-        ),
-        'jquery2': (
-            'js/libs/jquery-2.1.0.js',
-        ),
-        'jquery1': (
-            'js/libs/jquery-1.9.1.js',
         ),
         'home': (
             'js/libs/owl.carousel/owl-carousel/owl.carousel.js',
@@ -691,7 +688,6 @@ MINIFY_BUNDLES = {
             'js/search-suggestions.js',
         ),
         'popup': (
-            'js/jquery-upgrade-compat.js',
             'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
             'js/modal-control.js',
         ),
@@ -722,6 +718,7 @@ MINIFY_BUNDLES = {
         ),
         'search': (
             'redesign/js/search.js',
+            'redesign/js/search-navigator.js',
         ),
         'framebuster': (
             'js/framebuster.js',
@@ -734,7 +731,7 @@ MINIFY_BUNDLES = {
             'js/syntax-prism.js',
         ),
         'wiki': (
-            'redesign/js/search.js',
+            'redesign/js/search-navigator.js',
             'redesign/js/wiki.js',
         ),
         'wiki-edit': (
