@@ -8,11 +8,12 @@
 
 {% block site_css %}
     {{ super() }}
+    {{ css('wiki-edit') }}
     {{ css('jquery-ui') }}
 {% endblock %}
 
 {% block content %}
-    <article>
+    <article id="new-document">
     {{ errorlist(document_form) }}
     {{ errorlist(revision_form) }}
     <form id="wiki-page-edit" class="editing" method="post" action="">

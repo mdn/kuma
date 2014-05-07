@@ -9,12 +9,7 @@
   {% set help_link = url('wiki.translate', document_path=document.parent.full_path, locale=document.parent.locale)|urlparams(tolocale=request.locale) %}
 {% endif %}
 
-{# get attachments and tags ready for use #}
-{% set tags = document.tags.all() %}
-{% set attachments = document.attachments.all() %}
-{% set num_attachments = attachments|length %}
 {% set is_logged_in = request.user.is_authenticated() %}
-{% set search_doc_navigator_enabled = waffle.flag('search_doc_navigator') %}
 {% set canonical = request.build_absolute_uri(url('wiki.document', document.full_path)) %}
 
 {% if document.is_template %}
@@ -49,10 +44,8 @@
 
 {% block main_content_id %}document-main{% endblock %}
 
-
 {% block site_css %}
     {{ super() }}
-    {% set zone_stack = document.find_zone_stack() %}
     {% if zone_stack %}
       {% for zone in zone_stack|reverse() %}
         <link rel="stylesheet" type="text/css" href="{{ url('wiki.styles', zone.document.full_path) }}">
@@ -64,7 +57,7 @@
   <link rel="alternate" type="application/json" href="{{ url('wiki.json_slug', document.full_path) }}">
   <link rel="canonical" href="{{ canonical }}" >
 
-  {% if document.other_translations|length %}
+  {% if document.other_translations.exists() %}
     {% for translation in document.other_translations %}
       <link rel="alternate" hreflang="{{ translation.locale }}" href="{{ url('wiki.document', translation.full_path, locale=translation.locale) }}" title="{{ translation.title }}">
     {% endfor %}
@@ -106,8 +99,6 @@
   {% if is_zone %}
       {% if is_zone_root %}
 
-        {% set show_zone_landing_subnav = (zone_subnav_html or quick_links_html)  %}
-
         <div class="zone-landing-header" id="document-main"><div class="center">
           <!-- edit, settings buttons -->
           {{ buttons }}
@@ -117,7 +108,8 @@
 
           <h1>{{ document.title }}</h1>
 
-          {% if show_zone_landing_subnav %}
+          {% set summary = document|selector_content_find('.summary') %}
+          {% if (zone_subnav_html or quick_links_html) %}
           <div class="column-container zone-landing-header-preview">
             <div class="column-strip">
               <div class="zone-landing-header-preview-base">
@@ -133,15 +125,15 @@
               </div>
               <div class="zone-landing-header-spacing"></div>
             </div>
-            <div class="column-5 masthead-text"><p>{{ document|selector_content_find('.summary') }}</p></div>
+            <div class="column-5 masthead-text"><p>{{ summary }}</p></div>
           </div>
           {% else %}
-            <div class="column-5 masthead-text"><p>{{ document|selector_content_find('.summary') }}</p></div>
+            <div class="column-5 masthead-text"><p>{{ summary }}</p></div>
           {% endif %}
 
           <div class="zone-image"></div>
         </div></div>
-      {% elif zone_stack|length %}
+      {% else %}
         <div class="zone-article-header" id="document-main"><div class="center">
           <!-- zone title -->
           <div class="zone-title"><a href="{{ zone_stack[0].document.get_absolute_url() }}">{{ zone_stack[0].document.title }}</a></div>
@@ -153,9 +145,7 @@
     {% endif %} <!-- end is_zone -->
 
 
-
     <div class="wiki-main-content" {% if not is_zone %}id="document-main"{% endif %}><div class="center">
-
       {% if not is_zone_root %}
       <div class="article-meta">
         <!-- action buttons -->
@@ -167,16 +157,19 @@
 
       <!-- heading -->
       <div id="wiki-document-head" class="document-head">
-        {% if search_doc_navigator_enabled %}
+        {% if waffle.flag('search_doc_navigator') %}
           <span class="from-search-previous-box">
-            <a href="" class="button from-search-previous only-icon"><i aria-hidden="true" class="icon-chevron-left"></i></a>
+            <a class="button from-search-previous only-icon disabled" title="{{ _('Previous Search Result') }}" data-empty-title="{{ _('No Previous Search Result') }}"><i aria-hidden="true" class="icon-chevron-left"></i></a>
           </span>
-          <span class="hidden">
-            <a href="" class="from-search-navigate"><span class="from-search-navigate-up"><i aria-hidden="true" class="icon-double-angle-up"></i></span><span class="from-search-navigate-down"><i aria-hidden="true" class="icon-double-angle-down"></i></span></a>
+          <span class="from-search-navigate-wrap">
+            <a href="#" class="from-search-navigate"><span class="from-search-navigate-up"><i aria-hidden="true" class="icon-double-angle-up"></i></span><span class="from-search-navigate-down"><i aria-hidden="true" class="icon-double-angle-down"></i></span></a>
           </span>
-          <div class="from-search-toc hidden"><ol></ol></div>
+          <div class="from-search-toc">
+            <span class="title">{{ _('Your Search Results') }}</span>
+            <ol></ol>
+          </div>
           <span class="from-search-next-box">
-            <a class="button from-search-next only-icon"><i aria-hidden="true" class="icon-chevron-right"></i></a>
+            <a class="button from-search-next only-icon disabled" title="{{ _('Next Search Result') }}" data-empty-title="{{ _('No Previous Search Result') }}"><i aria-hidden="true" class="icon-chevron-right"></i></a>
           </span>
           {% endif %}
         <h1>{{ document.title }}</h1>
@@ -248,7 +241,7 @@
               </div>
             {% endif %}
 
-            <!-- just the article content -->
+            {# determine the article content based on template status #}
             {% if not document.is_template %}
               {% set document_html_safe = body_html|safe %}
             {% else %}
@@ -338,15 +331,17 @@
               </article>
 
               {% if not is_zone_root %}
+
                 <!-- attachments list -->
-                {% if num_attachments %}
+                {% if document.attachments.all().exists() %}
                   {% include 'wiki/includes/attachment_list.html' %}
                 {% endif %}
 
                 <!-- contributors -->
                 <div class="wiki-block contributors">
                   <h2 class="offscreen">{{ _('Document Tags and Contributors') }}</h2>
-                  {% if tags|length %}
+                  {% set tags = document.tags.all() %}
+                  {% if tags.exists() %}
                   <!-- tags if present -->
                   <div class="tag-attach-list tags contributor-sub">
                     <i aria-hidden="true" class="icon-tags"></i><strong>{{ _('Tags:') }}</strong>

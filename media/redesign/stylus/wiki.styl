@@ -1,4 +1,3 @@
-@import 'includes/vars'
 @import 'includes/mixins'
 @import 'includes/grid'
 
@@ -286,24 +285,25 @@ article {
 
 /* search navigator near article heading */
 .from-search {
-  h1 {
+  padding-left: (grid-spacing * 2);
+
+  h1, .from-search-navigate {
     display: inline-block;
   }
-}
-
-.from-search-spacer {
-    padding-left: (grid-spacing * 2);
-}
-
-.from-search-previous-box, .from-search-next-box {
-  display: none;
+  .from-search-previous, .from-search-next {
+    display: block;
+  }
 }
 
 .from-search-previous, .from-search-next {
   position: absolute;
   top: (grid-spacing * .75) + 2px;
-  display: block;
+  display: none;
   compat-only(font-size, 24px);
+
+  &.disabled {
+    opacity: 0.3;
+  }
 }
 
 .from-search-previous {
@@ -318,7 +318,7 @@ article {
   set-larger-font-size();
   position: relative;
   color: #ced1d2;
-  display: inline-block;
+  display: none;
   height: 38px;
   width: grid-spacing;
   top: 4px;
@@ -403,8 +403,8 @@ article {
   float: right;
   margin-top: -5px;
 
-  compat-only(width, auto);
-  compat-only(top, auto);
+  width: auto;
+  top: 0;
 
   > li {
     margin-left: (grid-spacing / 2);
@@ -429,6 +429,14 @@ article {
   .submenu {
     @extend $advanced-menu;
   }
+}
+
+#page-buttons {
+    iframe#save-and-edit-target {
+        height: 1px;
+        visibility: hidden;
+        width: 1px;
+    }
 }
 
 /* kumascript errors block at the top of an article */
@@ -459,9 +467,12 @@ article {
 /* warning elements */
 .warning {
   set-message-base();
-  background: rgba( 193, 56, 50, 0.85);
+  background: rgba(193, 56, 50, 0.85);
+  color: #c13832;
   compat-important(border-color, rgba(0, 0, 0, 0.1));
   compat-only(color, #fff);
+  font-style: italic;
+  margin: 0 0 grid-spacing 0;
   set-font-size(base-font-size);
 
   pre {
@@ -652,8 +663,7 @@ div.bug, div.warning, div.overheadIndicator {
   }
 }
 
-/* wiki new and edit pages */
-.page-meta section, #article-head {
+.page-meta section {
   compat-only(background, none);
 }
 
@@ -668,61 +678,20 @@ div.bug, div.warning, div.overheadIndicator {
   @extend .wiki-block;
 }
 
-.right-icons {
-  margin-left: 0 !important;
-  margin-right: 10px !important;
-}
+.page-tags {
+    ul.tagit {
+        background: none;
+        min-height: 30px;
 
-#edit-document, #wiki-page-translate, #wiki-page-edit {
-  h1 {
-    compat-only(letter-spacing, normal);
-    compat-only(padding-left, 0);
-    line-height: 40px;
-    margin-top: (grid-spacing * 1.5);
-    margin-bottom: (grid-spacing);
+        .tagit-label {
+            color: #333333;
+            font-weight: normal;
+        }
 
-    .action {
-      set-larger-font-size();
-      display: block;
-      line-height: 20px;
+        li.tagit-choice {
+            margin-bottom: 0;
+        }
     }
-
-    em {
-      compat-only(margin-left, -3px);
-      text-transform: none;
-    }
-  }
-
-  .save-state {
-    compat-only(padding-left, 0);
-  }
-
-  h2 {
-    font-family: site-font-family;
-    set-font-size(28px); /* Change to h3 after redesign launched */
-    compat-only(text-transform, none);
-    margin-bottom: grid-spacing;
-  }
-
-  h2 {selector-icon}, h3 {selector-icon} {
-    @extend .right-icons;
-  }
-
-  .first-contrib-welcome {
-    background: light-background-color;
-    border: 5px solid header-background-color;
-    padding: 15px 15px 10px;
-    margin-bottom: 20px;
-
-    h2 {
-      margin: 0 0 .5em;
-      font: bold 18px/1.5 'Open Sans', sans-serif;
-    }
-
-    p {
-      margin-bottom: .6em;
-    }
-  }
 }
 
 /* ckeditor / content area styles */
@@ -744,21 +713,39 @@ span.cke_skin_kuma {
   margin: 0 !important;
 }
 
-#content-fields .approved header:after {
-  compat-only(background, none);
-  compat-only(width, auto);
-  compat-only(height, 0);
-}
+#content-fields {
+    clearfix();
 
-#content-fields header {
-  compat-only(background, none);
-  margin-bottom: (grid-spacing / 2);
-}
+    .approved, .localized {
+        width: 49%;
+    }
 
+    .approved {
+        bidi-value(float, left, right);
+
+        .boxed {
+            padding: 25px;
+        }
+    }
+
+    .localized {
+        bidi-value(float, right, left);
+    }
+
+    header {
+        clearfix();
+        display: block;
+        height: 16px;
+        margin-bottom: (grid-spacing / 2);
+        padding: 7px 0 14px;
+        position: relative;
+        z-index: 10;
+    }
+}
 
 #page-attachments {
   h2 {selector-icon}, h3 {selector-icon} {
-    @extend .right-icons;
+    @extend $right-icons;
   }
 }
 
@@ -768,48 +755,10 @@ span.cke_skin_kuma {
   max-width: none;
 }
 
-#wiki-page-translate {
-  #page-buttons {
-    right: 0;
-  }
-
-  .description .approved dt {
-    compat-only(padding-top, 0);
-  }
-
-  .change-locale {
-    margin-top: (grid-spacing / 2);
-  }
-}
-
-#article-head {
-  compat-only(margin-top, 0);
-  compat-only(max-width, none);
-  compat-only(padding-top, 0);
-
-  .metadata {
-    padding-top: (grid-spacing * 2);
-    width: auto;
-    float: none;
-
-    li label {
-      width: auto;
-    }
-  }
-}
-
 .guide-links{
   float: right;
   padding: 0 4px 2px 0;
   color: #999;
-}
-
-.metadata-choose-parent {
-  compat-important(background, light-background-color);
-  compat-important(border, 0);
-  compat-important(padding, grid-spacing);
-  compat-important(margin-top, 20px);
-  compat-only(border-radius, 0);
 }
 
 /* compare page */
@@ -1086,6 +1035,183 @@ div.revision-info li {
         padding-top: 10px;
     }
 }
+
+div.note {
+  background: rgba(231, 228, 157, 0.25);
+  border-color: rgba(231,228,157,0.15);
+  border-style: solid;
+  border-width: 5px;
+  color: rgba(0, 0, 0, 0.65);
+  font-style: italic;
+  margin-bottom: grid-spacing;
+  padding: 10px 15px;
+}
+
+#page-comment {
+    input {
+        padding-top: 10px;
+        padding-bottom: @padding-top;
+        width: 98%;
+    }
+}
+
+#translate-tags {
+    bidi-value(float, left, right);
+
+    ul.tagit {
+        padding: 0;
+
+        li.tagit-choice {
+            padding-right: 10px;
+        }
+    }
+}
+
+#delete-revision {
+    label {
+        display: block;
+        font-size: 16px;
+        margin: 15px 0 0;
+    }
+
+    textarea {
+        height: 80px;
+        margin-bottom: 20px;
+        width: 90%;
+    }
+}
+
+/* Classes created by the WYSIWYG */
+.twocolumns {
+    vendorize(column-count, 2)
+}
+.threecolumns {
+    vendorize(column-count, 3);
+}
+
+/* page attachments */
+@-moz-keyframes newAttachment {
+  0% { background-color: #90ee90; }
+  100% { background-color: transparent; }
+}
+@-webkit-keyframes newAttachment {
+  0% { background-color: #90ee90; }
+  100% { background-color: transparent; }
+}
+@keyframes newAttachment {
+  0% { background-color: #90ee90; }
+  100% { background-color: transparent; }
+}
+
+#page-attachments {
+    border-value = 1px solid #E0E0DC;
+
+    table  {
+        border: border-value;
+        border-bottom: 0;
+        border-collapse: collapse;
+        border-right: 0;
+        margin: 20px 0 0 0;
+        width: 100%;
+    }
+
+    th, td {
+        border-bottom: border-value;
+        border-right: border-value;
+        padding: 5px;
+        vertical-align: top;
+    }
+
+    th {
+        font-weight: bold;
+        color: #666;
+    }
+
+    td {
+        set-font-size(small-bump-font-size);
+    }
+
+    .attachment-description {
+        set-font-size(11px);
+        font-style: italic;
+    }
+
+    .attachment-name-cell {
+        width: 40%;
+    }
+
+    .attachment-error {
+        color: #900;
+        set-font-size(11px);
+    }
+}
+
+#page-attachments-new-table {
+    input[type="text"] {
+        width: 90%;
+
+        .attachment-required {
+            border: 1px solid #900;
+        }
+
+        textarea {
+            height: 40px;
+        }
+    }
+}
+
+#page-attachments-upload-target {
+    height: 1px;
+    visibility: hidden;
+    width: 1px;
+}
+
+#page-attachments-spinner {
+    display: inline-block;
+    height: 16px;
+    margin-left: 10px;
+    opacity: 0;
+    width: 16px;
+}
+
+.title {
+    clearfix();
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.revision-diff {
+    clear: both;
+}
+
+details {
+    clear: both;
+    display: block;
+}
+
+/* The .no-details styles will get applied only if JavaScript is enabled and
+   <details> is not natively supported. Add focus styles (for keyboard
+   accessibility) */
+.no-details {
+    summary:hover, summary:focus {
+        outline: 0;
+    }
+
+    summary:before {
+        set-font-size(1.25em);
+        bidi-value(float, left, right);
+        content: "+";
+        margin-top: -.15em;
+        bidi-style(margin-left, -15px, margin-right, 0);
+    }
+
+    &.open summary:before {
+        content: "–";
+        margin-top: -.2em;
+        bidi-style(margin-left, -13px, margin-right, 0);
+    }
+}
+
 
 /*
   Small desktop.  We go to a two-column layout
