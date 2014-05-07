@@ -1,6 +1,3 @@
-.article header .notice { clear: both; position: relative; top: -10px; margin: 10px 0 5px; padding: 10px 15px 0; background: #fcf6d4; border: 1px solid #e5d5c1; }
-.article header .notice p { margin: 0 0 10px; }
-
 #content #ace_content { position: relative; width: 100%; height: 500px; }
 #content #ace_content .ace_warning,
 #content #ace_content .ace_error {
