@@ -140,10 +140,6 @@ table.compat-table td.header, table.compat-table th { border: 1px solid #bbb; pa
 article .syntaxhighlighter { width: auto !important; }
 
 /* @RTL - flip the layout for right-to-left languages *********/
-/* just a jump to the left... */
-.html-rtl .user-state {
-  float: left;
-}
 
 /* then a step to the right... */
 .html-rtl #branding,
@@ -156,7 +152,6 @@ article .syntaxhighlighter { width: auto !important; }
 }
 
 .html-rtl .page-meta h2 { margin: 0 0 0 20px; }
-.html-rtl .user-state { text-align: left; }
 .html-rtl span.icon img { margin: 0 0 0 3px; }
 .html-rtl .pagination .next { text-align: left; float: left !important; }
 .html-rtl .pagination .prev { text-align: right; float: right !important; }
