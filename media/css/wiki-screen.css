@@ -1,94 +1,4 @@
-/* @Layout (wiki is liquid) *********/
-.wrap { position: relative; width: 95%; min-width: 760px; max-width: 1200px; padding: 0 10px; margin: 0 auto; }
-section#content, div#content { border-top: 0; }
-
-textarea#id_content { width: 96%; padding: 15px; min-height: 300px; }
-
-/* tag editing; uses tagit */
-.page-tags #id_tags { width: 90%; }
-.page-tags ul.tagit { background: none repeat scroll 0 0 #FFFFFF; border: 1px solid #CBC8B9; padding: 6px 8px; min-height: 30px; }
-.page-tags ul.tagit .tagit-label { color: #333333; font-weight: normal; }
-.page-tags ul.tagit li.tagit-choice { margin-bottom:0; }
-
-#deki-page-tags ul.tagit { background: transparent; border: 0; padding: 0; min-height: none; margin-top: 6px; }
-#deki-page-tags li.tagit-choice { padding-right: 10px; }
-
-/*  */
-#page-comment input {
-  width: 98%;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
-
-/* page attachments */
-@-moz-keyframes newAttachment {
-  0% { background-color: #90ee90; }
-  100% { background-color: transparent; }
-}
-@-webkit-keyframes newAttachment {
-  0% { background-color: #90ee90; }
-  100% { background-color: transparent; }
-}
-@keyframes newAttachment {
-  0% { background-color: #90ee90; }
-  100% { background-color: transparent; }
-}
-#page-attachments { clear: both; }
-#page-attachments table  { margin: 20px 0 0 0; width: 100%; border: 1px solid #E0E0DC; border-bottom:0; border-right:0; border-collapse: collapse; }
-#page-attachments .hidden { display:none; }
-#page-attachments th, #page-attachments td { padding: 5px; border-bottom: 1px solid #E0E0DC; border-right: 1px solid #E0E0DC; vertical-align:top; }
-#page-attachments th { font-weight:bold; color: #666; }
-#page-attachments td { font-size: .9em; }
-#page-attachments .attachment-description { font-size: .9em; font-style: italic; }
-#page-attachments .attachment-name-cell { width: 40%; }
-#page-attachments .attachment-error { color: #900; font-size: .9em; }
-#page-attachments-new-table input[type="text"] { width: 90%; }
-#page-attachments-new-table .attachment-required { border: 1px solid #900; }
-#page-attachments-new-table textarea { height: 40px; }
-#page-attachments-upload-target { visibility: hidden; height: 1px; width: 1px; }
-#page-attachments-spinner { opacity: 0; display: inline-block; width: 16px; height:16px; margin-left: 10px; -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";  }
-
-/* @Custom styles *********/
-p.footnote { font-size: 90%; font-style: italic; color: #716d65; }
-div.callout-box { float: right; margin: 0 0 .5em 15px; border: 1px solid #eee; padding: 10px; width: 200px; background: #fafafa; text-align: center; position: relative; z-index: 2; }
-div.tip { margin-bottom: 1.286em; border: 1px solid #e1f5f0; border-width: 1px 0; padding: .75em 15px; color: #6d675f; }
-div.tip p { margin-bottom: .75em; }
-div.tip p:last-child { margin-bottom: 0; }
-
-.title { position: relative; margin-bottom: 0.8em; }
-.title:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; } /* clear floats */
-.title h1 { /* float: left; */ width: 60%; padding-left: 18px; margin-bottom: 0; padding-bottom: 0; }
-.title .redirected-from, .title .offline-notice { padding: 5px 0 0 18px; font-size: 0.785em; }
-
-.template { display: none; }
-
-.edited-section { display: none; }
-.edited-section a.edit-section { display: none; }
-.edited-section-loading { display: block; opacity: 0.25; }
-.edited-section-loading a.edit-section { display: block; }
-.edited-section-loading a.edit-section:before { content: "\26a1\00a0"; }
-
-.editing .metadata { float: left; width: 55%; display: none; }
-.new .editing .metadata { display: block; }
-.editing ul.metadata li { margin: 0; padding: 0; clear: both; }
-.editing ul.metadata li label { display: block; float: left; line-height: 2.5em; text-align: right; width: 10ex; font-weight: bold; padding-right: 0.25em; color: #888; }
-.editing ul.metadata li label.inline { color:#000; width:auto; font-weight:normal; float:none; text-align:left; display:inline-block; padding-left:34px; }
-.editing ul.metadata li .show_toc_block { padding: 7px 0 0 0; }
-.editing ul.metadata li #show_toc_depth_block { margin-left: -12px; }
-.editing ul.metadata li input, .editing ul.metadata li input#id_title { font-size: 1em; padding: 6px 8px; margin: 2px 0px; width: 70%; }
-.editing ul.metadata li input[type="checkbox"] { width: auto; margin-left: 6px; }
-.editing ul.metadata li .metadataDisplay { display:inline-block; padding: 8px 0 0 3px; }
-.editing ul.metadata li.metadata-choose-parent { padding: 10px; border: 1px solid #d4dde4; font-size: 90%; background: #eaeff2; background: linear-gradient(top, #eaeff2, #d4dde4); background: -moz-linear-gradient(top, #eaeff2, #d4dde4); background: -webkit-linear-gradient(top, #eaeff2, #d4dde4); border-radius: 10px; margin: 0 10px; display: none; }
-.editing ul.metadata li.metadata-choose-parent #parent_text { display: inline-block; margin-top:10px; }
-
-.editing .title { float: left; width: 55%; }
-.editing .title h1 { display: inline-block; width: auto; float: none; color: #888; float:left; }
-.editing .title h1 em { color: #333; font-style: normal; }
-.editing #btn-properties { font-weight: bold; }
-
-.editing .save-state { font-size: .85em; margin: -1.75em 0 1.5em; color: #888; padding-left: 20px; clear:both; }
-
+/* Used on the edit page. */
 #page-buttons { width: 50%; text-align: right; margin: 0; position: absolute; right: 4px; top: 20px; }
 #page-buttons li { margin: 0 0 2px 10px; }
 #page-buttons li, #page-buttons form { display: inline; padding: 0; background: none; }
@@ -140,8 +50,6 @@ div.tip p:last-child { margin-bottom: 0; }
 #change-locale a:after { content: ")"; }
 #change-locale a:hover, #change-locale a:focus, #change-locale a:active { background-color: #369; background-position: 92% -100px; color: #fff; text-decoration: none; text-shadow: 1px 1px 0 rgba(0,0,0,.25); }
 
-.editing summary { font-size: 1.428em; margin: 0 0 .5em; padding-left: 40px; cursor: pointer; }
-
 .description li { clear: both; margin: 0 0 .5em; }
 .description li:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
 .description dl { margin: 0; }
@@ -149,21 +57,6 @@ div.tip p:last-child { margin-bottom: 0; }
 .description dd { display: inline-block; margin-left: 0; }
 .description .approved, #trans-content .approved { width: 49%; float: left; }
 .description .localized, #trans-content .localized { width: 49%; float: right; }
-
-#content-fields:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
-#content-fields header { position: relative; z-index: 10; display: block; height: 1.142em; padding: .5em 0 1em; background: #f6f6f1 url("../img/bg-content.png") fixed; }
-#content-fields .approved { width: 49%; float: left; }
-#content-fields .localized { width: 49%; float: right; }
-
-#content-fields .approved .boxed { padding: 25px; }
-#content-fields .approved header:after { position: absolute; bottom: -30px; left: 3px; content: ""; display: block; width: 95%; height: 30px;
-  background:  -moz-linear-gradient(bottom,  rgba(255, 255, 255, .1) 0,  rgba(255, 255, 255, 1) 20px);
-  background:  -webkit-linear-gradient(bottom,  rgba(255, 255, 255, .1) 0,  rgba(255, 255, 255, 1) 20px);
-  background:  linear-gradient(bottom,  rgba(255, 255, 255, .1) 0,  rgba(255, 255, 255, 1) 20px);
-}
-
-#trans-description { margin: 0 0 1em; }
-#trans-content { margin: 0 0 1em; }
 
 #trans-content #cke_contents_wikiArticle { min-height: 800px; }
 
@@ -174,14 +67,6 @@ div.tip p:last-child { margin-bottom: 0; }
 .translate-display pre {
   white-space: normal;
 }
-
-
-
-/* The .no-details styles will get applied only if JavaScript is enabled and <details> is not natively supported. */
-/* Add focus styles (for keyboard accessibility) */
-.no-details summary:hover, .no-details summary:focus { background: rgba(170,160,130,.1); outline: 0; }
-.no-details summary:before { content: "+"; float: left; margin: -.225em 0 0 -35px; font-size: 1.25em; }
-.no-details .open summary:before { content: "–"; float: left; margin: -.25em 0 0 -32px; font-size: 1.25em; }
 
 /* The following styles are not really needed, since the jQuery script takes care of hiding/displaying the elements. */
 /* However, we're still gonna use CSS as well to prevent FOUC in browsers that understand these selectors. */
@@ -225,23 +110,6 @@ div.tip p:last-child { margin-bottom: 0; }
 
 .diff_sub {
     background-color:#ffaaaa;
-}
-
-/* Delete Revision */
-#delete-revision label {
-    display: block;
-    font-size: 16px;
-    margin: 15px 0 0;
-}
-
-#delete-revision form {
-    margin: 20px 0 0;
-}
-
-#delete-revision textarea {
-  width: 90%;
-  height: 80px;
-  margin-bottom: 20px;
 }
 
 /* WYSIWYG-specific styles */
@@ -290,10 +158,6 @@ table.compat-table td.header, table.compat-table th { border: 1px solid #bbb; pa
 /*** @SyntaxHighlighter style blocks *********/
 article .syntaxhighlighter { width: auto !important; }
 
-/*** @WYSIWYG style blocks *********/
-.twocolumns { -moz-column-count: 2; -webkit-column-count: 2; column-count: 2; }
-.threecolumns { -moz-column-count: 3; -webkit-column-count: 3; column-count: 3; }
-
 /* @RTL - flip the layout for right-to-left languages *********/
 /* just a jump to the left... */
 .html-rtl .user-state,
@@ -304,22 +168,14 @@ article .syntaxhighlighter { width: auto !important; }
 /* then a step to the right... */
 .html-rtl #branding,
 .html-rtl #title,
-.html-rtl .page-tags h2,
-.html-rtl .page-tags #deki-page-tags,
-.html-rtl .page-tags .tags-edit,
 .html-rtl .pagination span,
 .html-rtl #content-fields .approved,
 .html-rtl .description .approved,
-.html-rtl .editing .title,
-.html-rtl .change-locale,
-.html-rtl .editing .title h1 {
+.html-rtl .change-locale {
   float: right;
 }
 
 .html-rtl .page-meta h2 { margin: 0 0 0 20px; }
-.html-rtl .page-tags #deki-page-tags-toggleview, .html-rtl .page-meta p.add { right: auto; left: 20px; text-align: left; }
-.html-rtl .page-tags #deki-page-tags .tagData { padding-right: 0; padding-left: 30px; }
-.html-rtl .page-tags #deki-page-tags .tagButtons { padding-left: 0; padding-right: 10px; float: left; }
 .html-rtl #page-buttons { right: auto; left: 20px; }
 .html-rtl .user-state { text-align: left; }
 .html-rtl span.icon img { margin: 0 0 0 3px; }

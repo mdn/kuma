@@ -4,8 +4,7 @@ class stylus {
         command => "/usr/bin/npm install -g stylus",
         creates => "/usr/local/bin/stylus",
         require => [
-            Package["nodejs"], Package["nodejs-dev"], Package["npm"],
-            File["/usr/share/npm/npmrc"]
+            Package["nodejs"],
         ]
     }
     file { "/usr/local/bin/stylus":

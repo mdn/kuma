@@ -134,7 +134,7 @@
         config.contentsCss = [
             mdn.mediaPath + 'css/wiki-screen.css?{{ BUILD_ID_JS }}',
             mdn.mediaPath + 'redesign/css/main.css?{{ BUILD_ID_JS }}',
-            mdn.mediaPath + 'redesign/css/wiki-editor.css?{{ BUILD_ID_JS }}',
+            mdn.mediaPath + 'redesign/css/wiki-wysiwyg.css?{{ BUILD_ID_JS }}',
             mdn.mediaPath + 'css/libs/font-awesome/css/font-awesome.min.css?{{ BUILD_ID_JS }}',
             '/en-US/docs/Template:CustomCSS?raw=1'
         ];

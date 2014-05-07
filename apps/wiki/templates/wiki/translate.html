@@ -11,13 +11,14 @@
 
 {% block site_css %}
     {{ super() }}
+    {{ css('wiki-edit') }}
     {{ css('jquery-ui') }}
 {% endblock %}
 
 {% block content %}
   {% set language = settings.LANGUAGES_DICT[locale.lower()] %}
 
-      <form action="" method="post" data-json-url="{{ url('wiki.json') }}" id="wiki-page-translate">
+      <form action="" method="post" data-json-url="{{ url('wiki.json') }}" id="translate-document">
         {{ csrf() }}
         <input type="hidden" name="form" value="both" />
 
@@ -95,7 +96,7 @@
             <section class="page-tags">
               <h3><i aria-hidden="true" class="icon-tag"></i>{{ _('Tags') }}</h3>
                 {% set parent_tags = parent.tags.all() %}
-              <div id="deki-page-tags">
+              <div id="translate-tags">
                 {% if parent_tags | length %}
                   <ul class="tag-list tagit ui-widget ui-widget-content">
                     {% for parent_tag in parent_tags %}

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block body_attributes %}id="home"{% endblock %}
+{% set styles = ('home',) %}
 
 {% block extrahead %}
   <meta name="google-site-verification" content="Phj8dHc2oKwic3FGPsKIhdOBk_1wnCTnKwjcjiLgJPc">
@@ -13,8 +14,6 @@
   <meta name="twitter:description" content="{{ seo_description }}">
   <meta name="twitter:title" content="{{ social_title }}">
   <meta property="og:title" content="{{ social_title }}">
-
-  {{ css('home') }}
 {% endblock %}
 
 {% block content %}

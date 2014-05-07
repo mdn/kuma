@@ -13,7 +13,7 @@ from celery.task import task
 from celery.messaging import establish_connection
 
 from sumo.utils import chunked
-from wiki.models import Document, SlugCollision
+from wiki.models import Document, PageMoveError, SlugCollision
 from wiki.signals import render_done
 
 
@@ -122,8 +122,8 @@ def move_page(locale, slug, new_slug, email):
         message = """
         Page move failed.
 
-        Move was requested for document with slug %(slug)s in locale %(locale)s,
-        but no such document exists.
+        Move was requested for document with slug %(slug)s in locale
+        %(locale)s, but no such document exists.
         """ % {'slug': slug, 'locale': locale}
         logging.error(message)
         send_mail('Page move failed', message, settings.DEFAULT_FROM_EMAIL,
@@ -131,13 +131,29 @@ def move_page(locale, slug, new_slug, email):
         return
     try:
         doc._move_tree(new_slug, user=user)
+    except PageMoveError as e:
+        transaction.rollback()
+        message = """
+        Page move failed.
+
+        Move was requested for document with slug %(slug)s in locale
+        %(locale)s, but could not be completed.
+
+        Diagnostic info:
+
+        %(message)s
+        """ % {'slug': slug, 'locale': locale, 'message': e.message}
+        logging.error(message)
+        send_mail('Page move failed', message, settings.DEFAULT_FROM_EMAIL,
+                  [user.email])
+        return
     except Exception as e:
         transaction.rollback()
         message = """
         Page move failed.
 
         Move was requested for document with slug %(slug)s in locale %(locale)s,
-        but could not be completed. The following error was raised:
+        but could not be completed.
 
         %(info)s
         """ % {'slug': slug, 'locale': locale, 'info': e}

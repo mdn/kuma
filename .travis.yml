@@ -6,14 +6,12 @@ python:
 
 env: FORCE_DB=1 PYTHONPATH=. DJANGO_SETTINGS_MODULE=settings_travis
 
-
 services:
     - memcached
-    - elasticsearch
 
 before_install:
     - sudo apt-get update -qq
-    - sudo apt-get install build-essential aria2 python2.6-dev libxml2-dev libxslt-dev libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev zlib1g-dev sqlite3 libtidy-dev
+    - sudo apt-get install build-essential aria2 libxml2-dev libxslt-dev libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev zlib1g-dev sqlite3 libtidy-dev
     - sudo ln -s /usr/lib/`uname -i`-linux-gnu/libfreetype.so /usr/lib
     - sudo ln -s /usr/lib/`uname -i`-linux-gnu/libz.so /usr/lib
     - aria2c -j 10 https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/base_wheels.tar.gz
@@ -22,6 +20,9 @@ before_install:
     - tar xvfz base_wheels.tar.gz
     - tar xvfz travis_wheels.tar.gz
     - tar -C .. -zxf product_details_json.tar.gz
+    - wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.20.5.deb
+    - sudo dpkg -i elasticsearch-0.20.5.deb
+    - sudo service elasticsearch start
 
 install:
     # we install 1.4.9 here separately because 1.4.x can't be packaged as a wheel file
