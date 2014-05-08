@@ -120,10 +120,10 @@ def move_page(locale, slug, new_slug, email):
     except Document.DoesNotExist:
         transaction.rollback()
         message = """
-        Page move failed.
+Page move failed.
 
-        Move was requested for document with slug %(slug)s in locale
-        %(locale)s, but no such document exists.
+Move was requested for document with slug %(slug)s in locale
+%(locale)s, but no such document exists.
         """ % {'slug': slug, 'locale': locale}
         logging.error(message)
         send_mail('Page move failed', message, settings.DEFAULT_FROM_EMAIL,
@@ -134,14 +134,14 @@ def move_page(locale, slug, new_slug, email):
     except PageMoveError as e:
         transaction.rollback()
         message = """
-        Page move failed.
+Page move failed.
 
-        Move was requested for document with slug %(slug)s in locale
-        %(locale)s, but could not be completed.
+Move was requested for document with slug %(slug)s in locale
+%(locale)s, but could not be completed.
 
-        Diagnostic info:
+Diagnostic info:
 
-        %(message)s
+%(message)s
         """ % {'slug': slug, 'locale': locale, 'message': e.message}
         logging.error(message)
         send_mail('Page move failed', message, settings.DEFAULT_FROM_EMAIL,
@@ -150,12 +150,12 @@ def move_page(locale, slug, new_slug, email):
     except Exception as e:
         transaction.rollback()
         message = """
-        Page move failed.
+Page move failed.
 
-        Move was requested for document with slug %(slug)s in locale %(locale)s,
-        but could not be completed.
+Move was requested for document with slug %(slug)s in locale %(locale)s,
+but could not be completed.
 
-        %(info)s
+%(info)s
         """ % {'slug': slug, 'locale': locale, 'info': e}
         logging.error(message)
         send_mail('Page move failed', message, settings.DEFAULT_FROM_EMAIL,
@@ -166,12 +166,12 @@ def move_page(locale, slug, new_slug, email):
     subject = 'Page move completed: ' + slug + ' (' + locale + ')'
     full_url = settings.SITE_URL + '/' + locale + '/docs/' + new_slug
     message = """
-    Page move completed.
+Page move completed.
 
-    The move requested for the document with slug %(slug)s in locale
-    %(locale)s, and all its children, has been completed.
+The move requested for the document with slug %(slug)s in locale
+%(locale)s, and all its children, has been completed.
 
-    You can now view this document at its new location: %(full_url)s.
+You can now view this document at its new location: %(full_url)s.
     """ % {'slug': slug, 'locale': locale, 'full_url': full_url}
     send_mail(subject, message, settings.DEFAULT_FROM_EMAIL,
               [user.email])
