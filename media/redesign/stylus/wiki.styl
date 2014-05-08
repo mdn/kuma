@@ -655,17 +655,6 @@ div.bug, div.warning, div.overheadIndicator {
   }
 }
 
-.page-meta section {
-  compat-only(background, none);
-}
-
-.page-meta section h2,
-.page-meta section h3 {
-  .editor-help-icon {
-    set-font-size(20px);
-  }
-}
-
 #page-tags, #page-comment {
   @extend .wiki-block;
 }
@@ -1171,6 +1160,35 @@ details {
     }
 }
 
+.page-meta {
+    section {
+        margin: 0 0 grid-spacing;
+        overflow: hidden;
+        padding: 15px 20px;
+        position: relative;
+
+        h2, h3 {
+            .editor-help-icon {
+                set-font-size(20px);
+            }
+        }
+    }
+
+    h2 {
+        color: #666;
+        font-weight: 200;
+        letter-spacing: .5px;
+        text-transform: uppercase;
+        bidi-value(margin, 0 grid-spacing 0 0, 0 0 0 grid-spacing);
+    }
+
+    p.add {
+        position: absolute;
+        right: grid-spacing;
+        text-align: right;
+        top: 12px;
+    }
+}
 
 /*
   Small desktop.  We go to a two-column layout

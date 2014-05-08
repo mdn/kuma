@@ -207,24 +207,6 @@ draw-grid();
   }
 }
 
-.user-state {
-  bidi-style(right, 200px, left, auto);
-  position: absolute;
-  top: 12px;
-  set-font-size(small-bump-font-size);
-
-  li + li {
-    bidi-style(border-left, 1px solid #bbb, border-right, 0);
-    bidi-style(padding-right, 10px, padding-left, 10px, true); /* compat-important */
-    bidi-style(margin-right, 8px, margin-left, 6px, true); /* compat-important */
-    border-left: 1px solid #bbb;
-  }
-
-  a, a:hover, a:focus, a:visited {
-    color: link-color;
-  }
-}
-
 a.persona-button, a.github-button {
   border-radius: 3px;
   z-index: 2;
