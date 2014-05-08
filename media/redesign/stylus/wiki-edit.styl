@@ -1,8 +1,29 @@
-/* Styles for the new article page, the article edit page, and the article
-   translation edit page. */
+/* Styles for the new article, article edit, article translation, and page move
+   templates. */
 
 @import 'includes/vars.styl'
 @import 'includes/mixins.styl'
+
+#new-document, #edit-document, #translate-document, .move-page {
+    #page-buttons {
+        position: absolute;
+        bidi-style(right, 4px, left, auto);
+
+        li {
+            bidi-value(float, none, left);
+        }
+
+        a, button {
+            border: 0;
+            display: inline-block;
+            vendorize(box-shadow, 1px 1px 0 rgba(0,0,0,.25));
+        }
+
+        iframe#save-and-edit-target {
+            offscreen();
+        }
+    }
+}
 
 #new-document, #edit-document, #translate-document {
     .editing {
@@ -152,5 +173,32 @@
 
     .change-locale {
         margin-top: (grid-spacing / 2);
+    }
+}
+
+.move-page {
+    dl {
+        width: auto;
+    }
+
+    dt {
+        width: 120px;
+    }
+
+    input[type=text] {
+        width: 400px;
+    }
+
+    #page-buttons {
+        right: auto;
+        top: auto;
+        text-align: left;
+        float: none;
+        margin: grid-spacing 0;
+        position: relative;
+    }
+
+    .warning {
+        color: #fff;
     }
 }
