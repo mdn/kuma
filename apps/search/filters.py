@@ -27,13 +27,17 @@ class LanguageFilterBackend(BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
         # return queryset.filter(locale=request.locale)
         query = queryset.build_search().get('query', {'match_all': {}})
-        if request.locale != 'en-US':
+
+        # if we're in a non-standard settings, by default any non-English state
+        # we're limiting the documents to either English or the requested
+        # locale, effectively filtering out all other languages
+        if request.locale != settings.LANGUAGE_CODE:
             query = {
                 'filtered': {
                     'query': query,
                     'filter': {
                         'terms': {
-                            'locale': [request.locale, 'en-US']
+                            'locale': [request.locale, settings.LANGUAGE_CODE]
                         }
                     }
                 }
