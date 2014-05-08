@@ -5,6 +5,7 @@ import re
 import json
 import newrelic.agent
 import operator
+import traceback
 import sys
 
 from pyquery import PyQuery
@@ -1504,21 +1505,26 @@ class Document(NotificationsMixin, models.Model):
                 # move.
                 exc_class, exc_message, exc_tb = sys.exc_info()
                 message = """
-                Failure occurred while attempting to move document
-                with id %(doc_id)s.
+Failure occurred while attempting to move document
+with id %(doc_id)s.
 
-                That document can be viewed at:
+That document can be viewed at:
 
-                https://developer.mozilla.org/%(locale)s/docs/%(slug)s
+https://developer.mozilla.org/%(locale)s/docs/%(slug)s
 
-                The exception raised was:
+The exception raised was:
 
-                Exception type: %(exc_class)s
+Exception type: %(exc_class)s
 
-                Exception message: %(exc_message)s
+Exception message: %(exc_message)s
+
+Full traceback:
+
+%(traceback)s
                 """ % {'doc_id': child.id, 'locale': child.locale,
                        'slug': child.slug, 'exc_class': exc_class,
-                       'exc_message': exc_message}
+                       'exc_message': exc_message,
+                       'traceback': traceback.format_exc(e)}
                 raise PageMoveError(message)
 
     def repair_breadcrumbs(self):

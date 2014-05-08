@@ -23,6 +23,11 @@ class URLTests(TestCase):
         eq_(url.pop_query_param('spam', 'spam'),
             'http://example.com/?spam=eggs')
 
+        original = 'http://example.com/?spam=eggs&foo='
+        url = QueryURLObject(original)
+        eq_(url.pop_query_param('spam', 'eggs'),
+            'http://example.com/?foo=')
+
     def test_merge_query_param(self):
         original = 'http://example.com/?spam=eggs'
         url = QueryURLObject(original)
@@ -30,6 +35,14 @@ class URLTests(TestCase):
         eq_(url.merge_query_param('spam', 'eggs'), original)
         eq_(url.merge_query_param('spam', 'spam'), original + '&spam=spam')
 
+        original = 'http://example.com/?foo=&spam=eggs&foo=bar'
+        url = QueryURLObject(original)
+
+        eq_(url.merge_query_param('foo', None),
+            'http://example.com/?foo=&foo=bar&spam=eggs')
+
+        eq_(url.merge_query_param('foo', [None]),
+            'http://example.com/?foo=&foo=bar&spam=eggs')
 
     def test_referer_bad_encoding(self):
         class _TestRequest(object):
@@ -42,4 +55,3 @@ class URLTests(TestCase):
 
         request = _TestRequest('es', 'http://developer.mozilla.org/es/docs/Tutorial_de_XUL/A\xc3\x83\xc2\xb1adiendo_botones')
         ok_(referrer_url(request) is None)
-        

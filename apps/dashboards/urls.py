@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, url
-from django.views.generic.simple import redirect_to
+from django.views.generic.base import RedirectView
 
 
 urlpatterns = patterns('dashboards.views',
@@ -9,6 +9,6 @@ urlpatterns = patterns('dashboards.views',
     url(r'^dashboards/topic_lookup$', 'topic_lookup',
         name='dashboards.topic_lookup'),
 
-    url(r'^dashboards/localization$', redirect_to,
-        {'url': '/docs/MDN/Doc_status/Overview'}),
+    url(r'^dashboards/localization$',
+        RedirectView.as_view(url='/docs/MDN/Doc_status/Overview')),
 )
