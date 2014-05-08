@@ -150,10 +150,11 @@ Developing with Vagrant
    <https://developer-local.allizom.org/docs/new>`_ to create new wiki pages as
    needed. Alternatively, download a dump of the ``devmo`` database from
    `https://developer.allizom.org/landfill/
-   <https://developer.allizom.org/landfill/>`_, extract it, and import it to
+   <https://developer.allizom.org/landfill/>`_ or `Amazon S3
+   <https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/vagrant/mdn/devmo_sanitized-latest.sql.gz>`_ (587 mb), extract it, and import it to
    your local database by running a command like the following in the VM::
 
-     mysql -uroot kuma < /path/to/database/dump.sql
+     cat devmo_sanitized-latest.sql.gz | gzip -dc | mysql -uroot kuma
 
 
 AWS and Rackspace
