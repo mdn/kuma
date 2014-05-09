@@ -10,10 +10,5 @@
 }
 
 .html-rtl span.icon img { margin: 0 0 0 3px; }
-.html-rtl .pagination .next { text-align: left; float: left !important; }
-.html-rtl .pagination .prev { text-align: right; float: right !important; }
-.html-rtl .pagination .prev a:before, .html-rtl .pagination .next a:after { content: ""; }
-.html-rtl .pagination .prev a:after { content: "\00A0\00BB"; font-size: 1.1em; } /* space laquo */
-.html-rtl .pagination .next a:before { content: "\00AB\00A0"; font-size: 1.1em; } /* raquo space */
 
 .html-rtl .change-locale { clear: right; }
