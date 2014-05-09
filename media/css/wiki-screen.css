@@ -1,14 +1,3 @@
-/* @Translation *********/
-.change-locale { font-size: .857em; float: left; clear: left; position: relative; top: -1.75em; }
-#change-locale-link { display: inline-block; padding: .6em 20px .7em 8px; background: transparent url("../img/wiki/menu-arrow.png") 92% 0 no-repeat; }
-#change-locale { position: absolute; left: -999em; z-index: 9999; width: 180px; background: #fff; border: 1px solid #c6c6c2; -moz-box-shadow: 2px 2px 0 rgba(170,160,130,.2); -webkit-box-shadow: 2px 2px 0 rgba(170,160,130,.2); box-shadow: 2px 2px 0 rgba(170,160,130,.2); }
-#change-locale { padding: 6px 0; max-height: 300px; overflow: auto; }
-#change-locale li { list-style: none; }
-#change-locale a { display: block; padding: .25em 8px; }
-#change-locale a:before { content: attr(title) " ("; }
-#change-locale a:after { content: ")"; }
-#change-locale a:hover, #change-locale a:focus, #change-locale a:active { background-color: #369; background-position: 92% -100px; color: #fff; text-decoration: none; text-shadow: 1px 1px 0 rgba(0,0,0,.25); }
-
 .description li { clear: both; margin: 0 0 .5em; }
 .description li:after { content: "."; display: block; clear: both; height: 0; visibility: hidden; }
 .description dl { margin: 0; }

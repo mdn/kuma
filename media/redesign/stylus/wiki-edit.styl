@@ -189,7 +189,12 @@ space-for-buttons = 40px;
     }
 
     .change-locale {
+        position: relative;
+        top: -20px;
         margin-top: (grid-spacing / 2);
+        bidi-value(clear, left, right);
+        bidi-value(float, left, right);
+        set-font-size(smaller-font-size);
     }
 }
 
