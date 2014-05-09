@@ -75,51 +75,8 @@
     background-color:#ffaaaa;
 }
 
-/* WYSIWYG-specific styles */
-.ui-autocomplete {
-  z-index: 100001 !important; /* Ugly, but have to do this for the autocomplete component to display on top of the CKEditor dialog */
-  max-height: 200px;
-  overflow: auto;
-}
-.cke_skin_kuma .cke_rcombo .cke_text {
-  width: 130px !important;
-}
-.cke_skin_kuma .cke_rcombopanel {
-  height: 280px !important;
-}
 
-/* Fixes autogrow + maximize issues */
-.cke_maximized_editor #content-fields header {
-  position: fixed !important;
-  top: -200px !important;
-}
-.cke_maximized_editor div.cke_toolbox {
-  position: relative !important;
-  top: auto !important;
-  width: auto !important;
-}
 
-/* Prism syntax highlighting */
-pre[class*="language-"] { line-height: 1.5em; margin-bottom: 20px !important; }
-pre[class*="language-"] span.comment { display: inherit; }
-.error pre[class*="language-"] { margin: 10px 0 0 0 !important; background: none; }
-pre[class*="language-"].twopartsyntaxbox { margin-bottom: 0 !important; }
-pre[class*="language-"].twopartsyntaxbox, pre[class*="language-"].syntaxbox {
-  background: #ffffee;
-}
-
-/* HTabs - Compatibility Tables */
-.htab { margin: 0 auto 1em; display: inline-block; }
-.htab > ul > li { background-image: none; width:150px; height:30px; list-style-type:none; display:inline; padding-bottom:3px; border: 1px solid #ddd; padding-top:5px; text-align:left; font-size:13px; font-weight:bold; margin:auto; position:relative; padding-left:6px; padding-right:6px; border-bottom:none; opacity:.5; -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50); }
-.htab > ul > li.selected { opacity:1; -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)"; filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100); border: 1px solid #ddd; border-bottom: none; z-index: 10; background-color: #f1f6f8 !important; position: relative; }
-.htab > ul { width:150px; text-align:left; display:inline; padding:0; margin:0 auto; position:relative; top:1px; }
-.htab > div { background-color: #f1f6f8; margin-top: 0px; border: 1px solid #ddd; padding: 12px; position: relative; z-index: 9; word-wrap: break-word; }
-table.compat-table { border: 1px solid #bbb; border-collapse: collapse;}
-table.compat-table td { padding: 5px; border: 1px solid #ccc; text-align: left; background: #fff; vertical-align: top; word-wrap: break-word; }
-table.compat-table td.header, table.compat-table th { border: 1px solid #bbb; padding: 0 5px; background: #eee; text-align: left; font-weight: bold; }
-
-/*** @SyntaxHighlighter style blocks *********/
-article .syntaxhighlighter { width: auto !important; }
 
 /* @RTL - flip the layout for right-to-left languages *********/
 
