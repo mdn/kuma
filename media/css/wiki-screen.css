@@ -27,52 +27,6 @@
   white-space: normal;
 }
 
-/* The following styles are not really needed, since the jQuery script takes care of hiding/displaying the elements. */
-/* However, we're still gonna use CSS as well to prevent FOUC in browsers that understand these selectors. */
-/* Remember: by default (and probably most of the time), the contents of the <details> element are hidden. */
-
-/* Revision diffs */
-.revision-diff dt {
-  clear: both;
-  font-style: normal;
-  font-weight: bold;
-  padding-top: .5em;
-  border-top: 1px dotted #ccc;
-}
-
-.revision-diff dd {
-  margin: 0 0 .5em;
-}
-
-.revision-diff .rev-from {
-  width: 49%;
-  float: left;
-}
-
-.revision-diff .rev-to {
-  width: 49%;
-  float: right;
-}
-
-.revision-diff h3 {
-    font-weight: bold;
-    margin: 5px 0 0;
-}
-
-.diff_add {
-    background-color:#aaffaa;
-}
-
-.diff_chg {
-    background-color:#ffff77;
-}
-
-.diff_sub {
-    background-color:#ffaaaa;
-}
-
-
-
 
 /* @RTL - flip the layout for right-to-left languages *********/
 
