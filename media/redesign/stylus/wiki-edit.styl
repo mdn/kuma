@@ -7,6 +7,10 @@
 /* Space needed to account for the absolutely-positioned #page-buttons element. */
 space-for-buttons = 40px;
 
+/* Space around the <summary> element. Store these to align other elements with <summary>. */
+summary-margin = 0 (grid-spacing / 2) (grid-spacing / 2);
+summary-padding = 5px;
+
 #new-document, #edit-document, #translate-document, .move-page {
     #page-buttons {
         position: absolute;
@@ -81,8 +85,8 @@ space-for-buttons = 40px;
         clearfix();
         set-font-size(20px);
         cursor: pointer;
-        margin: 0 (grid-spacing / 2) (grid-spacing / 2) !important;
-        padding: 5px;
+        margin: summary-margin;
+        padding: summary-padding;
     }
 
     #page-buttons {
@@ -175,21 +179,63 @@ space-for-buttons = 40px;
     }
 }
 
+#translate-document, .move-page {
+    .description {
+        li {
+            clearfix();
+            clear: both;
+            margin: 0 0 7px;
+        }
+
+        dl {
+            margin: 0;
+        }
+
+        dt {
+            display: inline-block;
+            font-style: normal;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        dd {
+            display: inline-block;
+        }
+    }
+}
+
 #translate-document {
     #page-buttons {
         bidi-style(right, 0, left, auto);
     }
 
     .description {
-        .approved {
-            dt {
-                padding-top: 0;
-            }
+        margin: summary-margin;
+        padding: summary-padding;
+    }
+
+    .description, #trans-content {
+        .approved, .localized {
+            width: 50%;
+            bidi-value(float, left, right);
+        }
+    }
+
+    .translate-display {
+        overflow-x: hidden;
+
+        pre {
+            white-space: normal;
         }
     }
 
     .change-locale {
+        position: relative;
+        top: -20px;
         margin-top: (grid-spacing / 2);
+        bidi-value(clear, left, right);
+        bidi-value(float, left, right);
+        set-font-size(smaller-font-size);
     }
 }
 
