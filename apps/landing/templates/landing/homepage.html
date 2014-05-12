@@ -14,6 +14,10 @@
   <meta name="twitter:description" content="{{ seo_description }}">
   <meta name="twitter:title" content="{{ social_title }}">
   <meta property="og:title" content="{{ social_title }}">
+
+  {% if waffle.flag('search_suggestions') %}
+  {{ css('search-suggestions') }}
+  {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -23,11 +27,22 @@
 
   <h1>{{ _('Shared knowledge <span>for the Open Web</span>') }}</h1>
 
-  <div class="home-search-form">
-    <form action="{{ url('search') }}" method="get">
+  <div class="home-search-form search-form">
+    <form action="{{ url('search') }}" method="get" class="search">
+    {% if waffle.flag('search_suggestions') %}
+      <div class="search-wrapper" data-ft-text="{{ _("<h2>Welcome to the new way to search MDN!</h2><p>Search as usual, or filter your search by clicking in the arrow (<i class='icon-caret-down' aria-hidden='true'></i>) to show the filters menu.</p><p>Filtering also works by typing shortcuts into the search field (shortcut examples #int, #JS, #CSS).") }}</p>">
+        <div class="filters"></div>
+        <label for="search-q-s" class="offscreen">{{ _('Search') }}</label>
+        <input type="search" id="search-q-s" name="q" autocomplete="off" placeholder="{{ _('Search the docs') }}" size="45" />
+        <button type="submit" class="offscreen">{{ _('Search') }}</button>
+        <button type="button" class="show-topics"><i class="icon-caret-down" aria-hidden="true"></i></button>
+      </div>
+      <ul class="suggestions" data-hidden="true" style="display:none"></ul>
+    {% else %}
       <label for="home-q" class="offscreen">{{ _('Search') }}</label>
       <input type="search" id="home-q" name="q" placeholder="{{ _('Search the docs') }}" />
       <button type="submit" class="offscreen">{{ _('Search') }}</button>
+    {% endif %}
     </form>
   </div>
 
@@ -166,4 +181,7 @@
 {% block js %}
   {{ super() }}
   {{ js('home', async=True) }}
+  {% if waffle.flag('search_suggestions') %}
+    {{ js('search-suggestions') }}
+  {% endif %}
 {% endblock %}
