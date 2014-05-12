@@ -1,6 +1,6 @@
-@import 'includes/mixins'
-@import 'includes/vars'
-@import 'includes/fonts-milk'
+@import 'includes/mixins';
+@import 'includes/vars';
+@import 'includes/fonts-milk';
 
 /* Values used by all boxes. */
 box-padding = 20px;
@@ -87,7 +87,7 @@ preview-box-total-width = (preview-box-width + (box-padding * 2) + (box-border-w
 
     h3, h4 {
         /* Use the same margin that is used by images, so that the left
-        edge of the image and the left edge of the heading line up. */
+           edge of the image and the left edge of the heading line up. */
         margin-left: selection-border-width;
     }
 
@@ -114,16 +114,16 @@ preview-box-total-width = (preview-box-width + (box-padding * 2) + (box-border-w
 
 
 /*
-   Every list item in #step-design contains an image. Every list item in every
-   other section contains text only. We need to keep this in mind when applying
-   shadows.
+    Every list item in #step-design contains an image. Every list item in every
+    other section contains text only. We need to keep this in mind when applying
+    shadows.
 
-   We could just apply the shadow to list items across the board, but that
-   would make the "selected" border show up in the wrong place for
-   #step-design selections.
+    We could just apply the shadow to list items across the board, but that
+    would make the "selected" border show up in the wrong place for
+    #step-design selections.
 */
 #step-color li, #step-topic li, #step-design img {
-  box-shadow: 2px 2px 2px rgba(0,0,0,.1);
+    box-shadow: 2px 2px 2px rgba(0,0,0,.1);
 }
 
 #step-design {
