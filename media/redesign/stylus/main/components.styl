@@ -1,6 +1,6 @@
 /*
-  "Components" used throughout the site in varying ways.
-  For example, .toggler is used in a few different widgets (TOC, subnav, etc.)
+    "Components" used throughout the site in varying ways.
+    For example, .toggler is used in a few different widgets (TOC, subnav, etc.)
 */
 
 @import '../includes/vars'
@@ -8,94 +8,94 @@
 
 /* toggler component: a basic slide up and slide now system*/
 .toggler {
-  position: relative;
+    position: relative;
 
-  {selector-icon} {
-    bidi-style(right, icon-margin, left, auto);
-    position: absolute;
-    top: 3px;
-    color: text-color;
-  }
+    {selector-icon} {
+        bidi-style(right, icon-margin, left, auto);
+        position: absolute;
+        top: 3px;
+        color: text-color;
+    }
 
-  .icon-caret-right {
-    bidi-value-vendorize(transform, rotate(0deg), rotate(180deg));
-  }
+    .icon-caret-right {
+        bidi-value-vendorize(transform, rotate(0deg), rotate(180deg));
+    }
 }
 
 .toggle-container.closed {
-  display: none;
+    display: none;
 }
 
 /* subnav component:  used within the wiki */
 .subnav {
-  .toggler, > ol > li > a {
-    padding: grid-spacing (2 * grid-spacing) grid-spacing grid-spacing;
-    border-bottom: 1px dotted #d4dde4;
-    text-transform: uppercase;
-    display: block;
-  }
-
-  ol ol {
-    display: none; /* prevents flash of unstyled content */
-
-    .no-js & {
-      display: block;
-    }
-  }
-
-  .toggleable.current, > ol > li.current {
-    background: light-background-color;
-  }
-
-  {selector-icon} {
-    top: (grid-spacing + 3px);
-    right: grid-spacing;
-  }
-
-  .toggle-container {
-    a {
-      set-smaller-font-size();
-      display: block;
-      padding: list-item-spacing grid-spacing;
+    .toggler, > ol > li > a {
+        padding: grid-spacing (2 * grid-spacing) grid-spacing grid-spacing;
+        border-bottom: 1px dotted #d4dde4;
+        text-transform: uppercase;
+        display: block;
     }
 
-    .toggleable {
-      background: #e9eef1;
+    ol ol {
+        display: none; /* prevents flash of unstyled content */
 
-      .toggler {
-        title-header();
-        font-weight: normal;
-        padding-top: (grid-spacing / 2);
-        padding-bottom: (grid-spacing / 2);
-        border: 0;
-
-        i {
-          top: (grid-spacing / 2);
+        .no-js & {
+            display: block;
         }
-      }
-
-      .toggle-container a {
-        padding-left: (grid-spacing * 1.5);
-      }
     }
 
-    li.current {
-      > a:not(.toggler) {
-        position: relative;
-        color: #fff;
-        background-color: text-color;
+    .toggleable.current, > ol > li.current {
+        background: light-background-color;
+    }
 
-        generate-arrow();
+    {selector-icon} {
+        top: (grid-spacing + 3px);
+        right: grid-spacing;
+    }
 
-        &:before {
-          border-right-color: #fff;
-          position: absolute;
-          top: 20%;
-          right: 0;
+    .toggle-container {
+        a {
+            set-smaller-font-size();
+            display: block;
+            padding: list-item-spacing grid-spacing;
         }
-      }
-    }
-  }
 
-  reverse-link-decoration();
+        .toggleable {
+            background: #e9eef1;
+
+            .toggler {
+                title-header();
+                font-weight: normal;
+                padding-top: (grid-spacing / 2);
+                padding-bottom: (grid-spacing / 2);
+                border: 0;
+
+                i {
+                    top: (grid-spacing / 2);
+                }
+            }
+
+            .toggle-container a {
+                padding-left: (grid-spacing * 1.5);
+            }
+        }
+
+        li.current {
+            > a:not(.toggler) {
+                position: relative;
+                color: #fff;
+                background-color: text-color;
+
+                generate-arrow();
+
+                &:before {
+                    border-right-color: #fff;
+                    position: absolute;
+                    top: 20%;
+                    right: 0;
+                }
+            }
+        }
+    }
+
+    reverse-link-decoration();
 }
