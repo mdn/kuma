@@ -31,17 +31,20 @@ class LanguageFilterBackend(BaseFilterBackend):
         # if we're in a non-standard settings, by default any non-English state
         # we're limiting the documents to either English or the requested
         # locale, effectively filtering out all other languages
-        if request.locale != settings.LANGUAGE_CODE:
-            query = {
-                'filtered': {
-                    'query': query,
-                    'filter': {
-                        'terms': {
-                            'locale': [request.locale, settings.LANGUAGE_CODE]
-                        }
+        if request.locale == settings.LANGUAGE_CODE:
+            locales = [request.locale]
+        else:
+            locales = [request.locale, settings.LANGUAGE_CODE]
+        query = {
+            'filtered': {
+                'query': query,
+                'filter': {
+                    'terms': {
+                        'locale': locales,
                     }
                 }
             }
+        }
         return queryset.query_raw({
             'boosting': {
                 'positive': query,
