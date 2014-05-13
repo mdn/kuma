@@ -23,11 +23,11 @@
         <h4><a href="{{ doc.url }}"{% if index == 1 %} tabindex="1"{% endif %}>{{ doc.title }}</a></h4>
         <p>{{ doc.excerpt|safe }}</p>
         <p class="search-meta"><a href="{{ doc.url }}">{{ doc.url|replace('https://', '') }}</a>
-        Score: <span title="explanation: {{ doc.explanation }}">{{ doc.score }}</span>
-        {% if doc.locale != request.locale %}
-          ({{ settings.LOCALES[doc.locale].native }})
+        {% if doc.parent %}
+            {% trans parent_url=doc.parent.url, parent_title=doc.parent.title, parent_language=settings.LOCALES[doc.parent.locale].native %}
+            translated from <a href="{{ parent_url }}" title="{{ parent_title }}">{{ parent_title }} ({{ parent_language }})</a>
+            {% endtrans %}
         {% endif %}
-
         </p>
       </div>
       {# Hiding until search has this capability #}{#
