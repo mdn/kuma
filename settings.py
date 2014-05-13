@@ -1135,10 +1135,10 @@ LOGGING = {
             # Use the most permissive setting. It is filtered in the handlers.
             'level': logging.DEBUG,
         },
-        # 'elasticsearch': {
-        #     'level': logging.DEBUG,
-        #     'handlers': ['console'],
-        # },
+        'elasticsearch': {
+            'level': logging.DEBUG,
+            'handlers': ['console'],
+        },
     },
 }
 
