@@ -1136,7 +1136,7 @@ LOGGING = {
             'level': logging.DEBUG,
         },
         'elasticsearch': {
-            'level': logging.DEBUG,
+            'level': logging.ERROR,
             'handlers': ['console'],
         },
     },
