@@ -580,7 +580,6 @@ JINGO_MINIFY_USE_STATIC = False
 MINIFY_BUNDLES = {
     'css': {
         'mdn': (
-            'css/fonts.css',
             'css/libs/font-awesome/css/font-awesome.css',
             'redesign/css/main.css',
             'redesign/css/badges.css',
