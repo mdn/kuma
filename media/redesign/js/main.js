@@ -18,6 +18,26 @@
     })();
 
     /*
+        GitHub Login
+    */
+    (function() {
+        var $container = $('.oauth-login-container');
+        var activeClass = 'active';
+        var fadeSpeed = 300;
+
+        $container.find('.oauth-login-options').mozMenu({
+            fadeInSpeed: fadeSpeed,
+            fadeOutSpeed: fadeSpeed,
+            onOpen: function() {
+                $container.addClass(activeClass);
+            },
+            onClose: function() {
+                $container.removeClass(activeClass);
+            }
+        });
+    })();
+
+    /*
         Search animation
     */
     (function() {

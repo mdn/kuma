@@ -2,7 +2,7 @@
     Provides man mixins for use within the MDN theme.
 */
 
-@import 'vars'
+@import 'vars';
 
 VENDOR-PREFIXES = '-webkit-' '-moz-' '-ms-';
 
@@ -121,9 +121,9 @@ compat-important(prop, value) {
 }
 
 /* Override an !important set by compat-important() with another !important.
-     This should be removed after all CSS has been migrated to Stylus. */
+   This should be removed after all CSS has been migrated to Stylus. */
 override-compat-important(prop, value) {
-        compat-important(prop, value);
+    compat-important(prop, value);
 }
 
 /* used for style which are only present to override other styles -- these will be deleted once legacy design is gone */
@@ -204,7 +204,7 @@ override-main-nav-color(hex) {
             }
 
             input {
-                 set-placeholder-style(color, hex);
+                set-placeholder-style(color, hex);
             }
         }
     }
@@ -238,12 +238,12 @@ use-white-logo() {
 /* for use */
 
 /*
-   Workaround for bug in older versions of Stylus. This bug has been fixed by
-   at most version 0.42.1. When production has been updated to that version,
-   the code from the following pull request should work correctly in place of
-   this workaround.
+    Workaround for bug in older versions of Stylus. This bug has been fixed by
+    at most version 0.42.1. When production has been updated to that version,
+    the code from the following pull request should work correctly in place of
+    this workaround.
 
-   https://github.com/mozilla/kuma/pull/2362
+    https://github.com/mozilla/kuma/pull/2362
 */
 place-important(make-important) {
     return make-important ? unquote('!important') : unquote('');
@@ -334,7 +334,7 @@ title-header() {
 }
 
 /* submenu generator: used in the main navigation and wiki */
-component-submenu-method(menu-width, num-columns, background-color, arrow-border-color) {
+component-submenu(menu-width, num-columns, background-color, arrow-border-color) {
     position: absolute;
     padding: grid-spacing;
     background: background-color;
@@ -342,16 +342,7 @@ component-submenu-method(menu-width, num-columns, background-color, arrow-border
     width: menu-width;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
 
-    .submenu-close {
-        display: none;
-        position: absolute;
-        top: 20px;
-        bidi-style(right, 0, left, auto);
-
-        i {
-            margin-left: 0;
-        }
-    }
+    component-submenu-close();
 
     .submenu-column {
         if num-columns is 1 {
@@ -395,12 +386,6 @@ component-submenu-method(menu-width, num-columns, background-color, arrow-border
         z-index: 1;
     }
 
-    @media media-query-tablet {
-        .submenu-close {
-            display: block;
-        }
-    }
-
     @media media-query-mobile {
         .submenu-column, .submenu-column:nth-child(even) {
             bidi-style(border-left, 0, border-right, 0);
@@ -420,11 +405,30 @@ component-submenu-method(menu-width, num-columns, background-color, arrow-border
     }
 }
 
+component-submenu-close() {
+    .submenu-close {
+        display: none;
+        position: absolute;
+        top: 20px;
+        bidi-style(right, 0, left, auto);
+
+        i {
+            margin-left: 0;
+        }
+    }
+
+    @media media-query-tablet {
+        .submenu-close {
+            display: block;
+        }
+    }
+
+}
 
 
 /* When an element contains a label and a checkbox in order (as on the edit
-     profile page and elsewhere) make them appear on the same line, with the
-     checkbox to the left of the label. */
+   profile page and elsewhere) make them appear on the same line, with the
+   checkbox to the left of the label. */
 $checkbox-label-container {
     clearfix();
 
@@ -439,9 +443,9 @@ $checkbox-label-container {
 }
 
 /* Dropdown menus that hide advanced feature, such as the "This Page" menu on
-     article pages, the "Advanced" menu on profiles, etc. */
+   article pages, the "Advanced" menu on profiles, etc. */
 $advanced-menu {
-    component-submenu-method(160px, 1, button-background, button-shadow-color);
+    component-submenu(160px, 1, button-background, button-shadow-color);
     bidi-style(right, 0, left, auto);
     top: 40px;
     z-index: 3;
@@ -464,6 +468,6 @@ $advanced-menu {
 }
 
 $right-icons {
-  margin-left: 0 !important;
-  margin-right: 10px !important;
+    margin-left: 0 !important;
+    margin-right: 10px !important;
 }

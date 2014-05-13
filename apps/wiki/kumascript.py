@@ -192,7 +192,7 @@ def get(document, cache_control, base_url, timeout=None):
         # mid-request, or something. Try to report at least some hint.
         resp_errors = [
             {"level": "error",
-             "message": "Kumascript service failed unexpectedly: %s" % type(e),
+             "message": "Kumascript service failed unexpectedly: %s" % str(e),
              "args": ["UnknownError"]}
         ]
 

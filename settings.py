@@ -606,7 +606,6 @@ MINIFY_BUNDLES = {
             'redesign/css/search.css',
         ),
         'wiki': (
-            'css/wiki-screen.css',
             'redesign/css/wiki.css',
             'redesign/css/zones.css',
             'redesign/css/diff.css',

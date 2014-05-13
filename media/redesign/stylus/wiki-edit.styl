@@ -1,8 +1,36 @@
-/* Styles for the new article page, the article edit page, and the article
-   translation edit page. */
+/* Styles for the new article, article edit, article translation, and page move
+   templates. */
 
-@import 'includes/vars.styl'
-@import 'includes/mixins.styl'
+@import 'includes/vars.styl';
+@import 'includes/mixins.styl';
+
+/* Space needed to account for the absolutely-positioned #page-buttons element. */
+space-for-buttons = 40px;
+
+/* Space around the <summary> element. Store these to align other elements with <summary>. */
+summary-margin = 0 (grid-spacing / 2) (grid-spacing / 2);
+summary-padding = 5px;
+
+#new-document, #edit-document, #translate-document, .move-page {
+    #page-buttons {
+        position: absolute;
+        bidi-style(right, 4px, left, auto);
+
+        li {
+            bidi-value(float, none, left);
+        }
+
+        a, button {
+            border: 0;
+            display: inline-block;
+            vendorize(box-shadow, 1px 1px 0 rgba(0,0,0,.25));
+        }
+
+        iframe#save-and-edit-target {
+            offscreen();
+        }
+    }
+}
 
 #new-document, #edit-document, #translate-document {
     .editing {
@@ -13,7 +41,7 @@
         letter-spacing: normal;
         line-height: 40px;
         margin-bottom: (grid-spacing);
-        margin-top: (grid-spacing * 1.5);
+        margin-top: space-for-buttons;
 
         .action {
             set-larger-font-size();
@@ -57,8 +85,12 @@
         clearfix();
         set-font-size(20px);
         cursor: pointer;
-        margin: 0 (grid-spacing / 2) (grid-spacing / 2) !important;
-        padding: 5px;
+        margin: summary-margin;
+        padding: summary-padding;
+    }
+
+    #page-buttons {
+        z-index: 1; /* Move above the .title and .metadata classes to be clickable. */
     }
 }
 
@@ -106,9 +138,23 @@
             }
         }
     }
+
+    #ace_content {
+        height: 500px;
+        position: relative;
+        width: 100%;
+
+        .ace_warning, .ace_error {
+            background-image: none;
+        }
+    }
 }
 
 #edit-document {
+    .metadata {
+        margin-top: space-for-buttons;
+    }
+
     .first-contrib-welcome {
         background: light-background-color;
         border: 5px solid header-background-color;
@@ -133,20 +179,114 @@
     }
 }
 
+#translate-document, .move-page {
+    .description {
+        li {
+            clearfix();
+            clear: both;
+            margin: 0 0 7px;
+        }
+
+        dl {
+            margin: 0;
+        }
+
+        dt {
+            display: inline-block;
+            font-style: normal;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        dd {
+            display: inline-block;
+        }
+    }
+}
+
 #translate-document {
     #page-buttons {
         bidi-style(right, 0, left, auto);
     }
 
     .description {
-        .approved {
-            dt {
-                padding-top: 0;
-            }
+        margin: summary-margin;
+        padding: summary-padding;
+    }
+
+    .description, #trans-content {
+        .approved, .localized {
+            width: 50%;
+            bidi-value(float, left, right);
+        }
+    }
+
+    .translate-display {
+        overflow-x: hidden;
+
+        pre {
+            white-space: normal;
         }
     }
 
     .change-locale {
+        position: relative;
+        top: -20px;
         margin-top: (grid-spacing / 2);
+        bidi-value(clear, left, right);
+        bidi-value(float, left, right);
+        set-font-size(smaller-font-size);
     }
+}
+
+.move-page {
+    dl {
+        width: auto;
+    }
+
+    dt {
+        width: 120px;
+    }
+
+    input[type=text] {
+        width: 400px;
+    }
+
+    #page-buttons {
+        right: auto;
+        top: auto;
+        text-align: left;
+        float: none;
+        margin: grid-spacing 0;
+        position: relative;
+    }
+
+    .warning {
+        color: #fff;
+    }
+}
+
+
+/* CKEditor adjustments, many marked as !important to override CKEditor's issues */
+.ui-autocomplete {
+    z-index: 100001 !important; /* Ugly, but have to do this for the autocomplete component to display on top of the CKEditor dialog */
+    max-height: 200px;
+    overflow: auto;
+}
+.cke_skin_kuma .cke_rcombo .cke_text {
+    width: 130px !important;
+}
+.cke_skin_kuma .cke_rcombopanel {
+    height: 280px !important;
+}
+
+/* Fixes CKEditor autogrow + maximize issues */
+.cke_maximized_editor #content-fields header {
+    position: fixed !important;
+    top: -200px !important;
+}
+.cke_maximized_editor div.cke_toolbox {
+    position: relative !important;
+    top: auto !important;
+    width: auto !important;
 }
