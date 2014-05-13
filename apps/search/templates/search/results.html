@@ -1,10 +1,13 @@
 {% extends "search/base.html" %}
-{% set locale = request.GET.get('locale', request.locale) %}
+
+{% set locale = request.locale %}
 {% if locale in settings.LOCALES %}
   {% set locale_native = settings.LOCALES[locale].native %}
 {% endif %}
+{% set default_locale_native = settings.LOCALES[settings.LANGUAGE_CODE].native %}
 {% set meta = (('WT.oss', q),
                ('WT.oss_r', num_results)) %}
+
 {% block title %}
   {% if query %}
     {{ page_title(_('Search Results for "{query}"')|f(query=query)) }}
@@ -30,19 +33,12 @@
         {% endif %}
         </p>
       </div>
-      {# Hiding until search has this capability #}{#
-      <div class="column-strip result-list-link">
-        <a href=""><i aria-hidden="true" class="icon-code"></i>{{ _('Code Sample') }}</a>
-        <a href=""><i aria-hidden="true" class="icon-play-circle"></i>{{ _('Demo Sample') }}</a>
-      </div>
-      #}
     </div>
   </li>
- {% endmacro %}
+{% endmacro %}
 
 
- {% block content %}
-
+{% block content %}
  <h1 class="offscreen">{{ _('MDN Site Search') }}</h1>
 
   <form id="search-form" action="{{ url('search') }}" method="get">
@@ -61,18 +57,67 @@
           <div class="search-pane search-results-explanation">
             <h2>{{ _('Results') }}</h2>
             <p>
-            {% if count %}
-              {% if not previous and not next %}
-                {{ _('Displaying all results.') }}
+            {% if locale_native %}
+              {% if query %}
+                {% if locale_native == default_locale_native %}
+                    {% trans count=count %}
+                      {{ count }} document found for "{{ query }}" in {{ locale_native }}.
+                    {% pluralize %}
+                      {{ count }} documents found for "{{ query }}" in {{ locale_native }}.
+                    {% endtrans %}
+                {% else %}
+                    {% trans count=count %}
+                      {{ count }} document found for "{{ query }}" in {{ locale_native }} and {{ default_locale_native }}.
+                    {% pluralize %}
+                      {{ count }} documents found for "{{ query }}" in {{ locale_native }} and {{ default_locale_native }}.
+                    {% endtrans %}
+                {% endif %}
+              {% else %}
+                {% if locale_native == default_locale_native %}
+                    {% trans count=count %}
+                      {{ count }} document found in {{ locale_native }}.
+                    {% pluralize %}
+                      {{ count }} documents found in {{ locale_native }}.
+                    {% endtrans %}
+                {% else %}
+                    {% trans count=count %}
+                      {{ count }} document found in {{ locale_native }} and {{ default_locale_native }}.
+                    {% pluralize %}
+                      {{ count }} documents found in {{ locale_native }} and {{ default_locale_native }}.
+                    {% endtrans %}
+                {% endif %}
+
+              {% endif %}
+            {% else %}
+              {% if query %}
+                {% trans count=count %}
+                  {{ count }} document found for "{{ query }}".
+                {% pluralize %}
+                  {{ count }} documents found for "{{ query }}".
+                {% endtrans %}
               {% else %}
                 {% trans count=count %}
-                  Displaying {{ count }} search result for "{{ query }}".
+                  {{ count }} document found.
                 {% pluralize %}
-                  Displaying {{ start }}-{{ end }} of {{ count }} search results for "{{ query }}".
+                  {{ count }} documents found.
                 {% endtrans %}
               {% endif %}
             {% endif %}
+            {% if count %}
+              {% if not previous and not next %}
+                {{ _('Showing all results.') }}
+              {% else %}
+                {% trans %}Showing results {{ start }} to {{ end }}.{% endtrans %}
+              {% endif %}
+            {% endif %}
 
+            {% if locale != settings.LANGUAGE_CODE %}
+              <a href="{{ url('search', locale=settings.LANGUAGE_CODE, ) }}?q={{ query }}">
+                {% trans %}
+                Search again in {{ default_locale_native }} only
+                {% endtrans %}
+              </a>
+            {% endif %}
             {% if request.user.is_superuser %}
               Search index: {{ index.name }} (created: {{ index.created_at }})
             {% endif %}
