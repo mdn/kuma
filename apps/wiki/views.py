@@ -67,7 +67,7 @@ from wiki.forms import (DocumentForm, RevisionForm,
                         TreeMoveForm, DocumentDeletionForm)
 from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
                          DocumentZone,
-                         DocumentTag, ReviewTag, Attachment,
+                         DocumentTag, ReviewTag, LocalizationTag, Attachment,
                          DocumentDeletionLog,
                          DocumentRenderedContentNotAvailable,
                          CATEGORIES,
@@ -912,6 +912,18 @@ def list_documents_for_review(request, tag=None):
                    'tag_name': tag})
 
 @require_GET
+def list_documents_with_localization_tag(request, tag=None):
+    """Lists wiki documents with localization tag"""
+    tag_obj = tag and get_object_or_404(LocalizationTag, name=tag) or None
+    docs = Document.objects.filter_with_localization_tag(locale=request.locale, tag=tag_obj)
+    paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
+    return render(request, 'wiki/list_documents_with_localization_tags.html',
+                  {'documents': paginated_docs,
+                   'count': docs.count(),
+                   'tag': tag_obj,
+                   'tag_name': tag})
+
+@require_GET
 def list_documents_with_errors(request):
     """Lists wiki documents with (KumaScript) errors"""
     docs = Document.objects.filter_for_list(locale=request.locale, errors=True)
@@ -1714,7 +1726,8 @@ def translate(request, document_slug, document_locale, revision_id=None):
 
     if user_has_rev_perm:
         initial = {'based_on': based_on_rev.id, 'comment': '',
-                   'toc_depth': based_on_rev.toc_depth}
+                   'toc_depth': based_on_rev.toc_depth,
+                   'localization_tags': ['inprogress']}
         content = None
         if revision_id:
             content = Revision.objects.get(pk=revision_id).content

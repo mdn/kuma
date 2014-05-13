@@ -281,7 +281,7 @@ REVIEW_FLAG_TAGS = (
 REVIEW_FLAG_TAGS_DEFAULT = ['technical', 'editorial']
 
 LOCALIZATION_FLAG_TAGS = (
-    ('inprogress', _('Localization in Progress')),
+    ('inprogress', _('Localization in progress - not completely translated yet.')),
 )
 
 # TODO: This is info derived from urls.py, but unsure how to DRY it
@@ -483,14 +483,27 @@ class BaseDocumentManager(models.Manager):
         """Filter for documents with current revision flagged for review"""
         bq = 'current_revision__review_tags__%s'
         if tag_name:
-            q = {bq % 'name': tag_name}
+            query = {bq % 'name': tag_name}
         elif tag:
-            q = {bq % 'in': [tag]}
+            query = {bq % 'in': [tag]}
         else:
-            q = {bq % 'name__isnull': False}
+            query = {bq % 'name__isnull': False}
         if locale:
-            q['locale'] = locale
-        return self.filter(**q).distinct()
+            query['locale'] = locale
+        return self.filter(**query).distinct()
+
+    def filter_with_localization_tag(self, locale=None, tag=None, tag_name=None):
+        """Filter for documents with a localization tag on current revision"""
+        bq = 'current_revision__localization_tags__%s'
+        if tag_name:
+            query = {bq % 'name': tag_name}
+        elif tag:
+            query = {bq % 'in': [tag]}
+        else:
+            query = {bq % 'name__isnull': False}
+        if locale:
+            query['locale'] = locale
+        return self.filter(**query).distinct()
 
     def dump_json(self, queryset, stream):
         """Export a stream of JSON-serialized Documents and Revisions
@@ -1004,6 +1017,8 @@ class Document(NotificationsMixin, models.Model):
                 translations.append({
                     'last_edit': translation.current_revision.created.isoformat(),
                     'locale': translation.locale,
+                    'localization_tags': [tag.name for tag in
+                          translation.current_revision.localization_tags.all()],
                     'title': translation.title,
                     'url': reverse('wiki.document',
                                    args=[translation.full_path],
@@ -1012,13 +1027,16 @@ class Document(NotificationsMixin, models.Model):
 
         if not self.current_revision:
             review_tags = []
+            localization_tags = []
         else:
             review_tags = [x.name for x in
                            self.current_revision.review_tags.all()]
+            localization_tags = [tag.name for tag in
+                           self.current_revision.localization_tags.all()]
         if not self.pk:
             tags = []
         else:
-            tags = [x.name for x in self.tags.all()]
+            tags = [tag.name for tag in self.tags.all()]
 
         if self.modified:
             modified = self.modified.isoformat()
@@ -1037,6 +1055,7 @@ class Document(NotificationsMixin, models.Model):
             'slug': self.slug,
             'tags': tags,
             'review_tags': review_tags,
+            'localization_tags': localization_tags,
             'sections': sections,
             'locale': self.locale,
             'summary': summary,
@@ -2231,6 +2250,9 @@ class Revision(models.Model):
 
     def needs_technical_review(self):
         return 'technical' in [t.name for t in self.review_tags.all()]
+
+    def localization_in_progress(self):
+        return 'inprogress' in [t.name for t in self.localization_tags.all()]
 
 
 class HelpfulVote(models.Model):
