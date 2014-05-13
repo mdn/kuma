@@ -23,14 +23,25 @@ class LanguageFilterBackend(BaseFilterBackend):
     A django-rest-framework filter backend that filters the given queryset
     based on the current request's locale, or a different locale (or none at
     all) specified by query parameter
+
+    First, we bail if the locale query parameter is set to *. It's a short cut
+    for the macros search.
+
+    Then, if the current language is the standard language (English) we only
+    show those documents.
+
+    But if the current language is any non-standard language (non-English)
+    we're limiting the documents to either English or the requested
+    language, effectively filtering out all other languages. We also boost
+    the non-English documents to show up before the English ones.
     """
     def filter_queryset(self, request, queryset, view):
-        # return queryset.filter(locale=request.locale)
+        locale = request.GET.get('locale', None)
+        if '*' == locale:
+            return queryset
+
         query = queryset.build_search().get('query', {'match_all': {}})
 
-        # if we're in a non-standard settings, by default any non-English state
-        # we're limiting the documents to either English or the requested
-        # locale, effectively filtering out all other languages
         if request.locale == settings.LANGUAGE_CODE:
             locales = [request.locale]
         else:

@@ -1089,7 +1089,7 @@ KUMASCRIPT_URL_TEMPLATE = 'http://developer.mozilla.org:9080/docs/{path}'
 ES_DISABLED = True
 ES_LIVE_INDEX = False
 
-LOG_LEVEL = logging.DEBUG
+LOG_LEVEL = logging.WARN
 SYSLOG_TAG = 'http_app_kuma'
 
 LOGGING = {
