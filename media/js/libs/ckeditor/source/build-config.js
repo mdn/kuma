@@ -55,6 +55,7 @@ var CKBUILDER_CONFIG = {
 		undo: 1,
 		wsc: 1,
 		wysiwygarea: 1,
+		'mdn-attachment': 1,
 		'mdn-format': 1,
 		'mdn-redirect': 1,
 		'mdn-sampler': 1,
