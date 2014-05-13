@@ -58,6 +58,7 @@ var CKBUILDER_CONFIG = {
 		'mdn-attachment': 1,
 		'mdn-format': 1,
 		'mdn-redirect': 1,
+		'mdn-sample-finder': 1,
 		'mdn-sampler': 1,
 		'mdn-syntaxhighlighter': 1,
 		'mdn-system-integration': 1,
