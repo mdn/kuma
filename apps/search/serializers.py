@@ -47,7 +47,7 @@ class BaseDocumentSerializer(serializers.Serializer):
     edit_url = SiteURLField('wiki.edit_document', args=['slug'])
 
     def field_to_native(self, obj, field_name):
-        if field_name == 'parent' and not obj.parent:
+        if field_name == 'parent' and not getattr(obj, 'parent', None):
             return {}
         return super(BaseDocumentSerializer, self).field_to_native(obj, field_name)
 
