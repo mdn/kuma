@@ -256,7 +256,7 @@ place-important(make-important) {
 bidi-style(ltr-prop, value, inverse-prop, inverse-value, make-important = false) {
     {ltr-prop}: value place-important(make-important);
 
-    .html-rtl & {
+    html[dir="rtl"] & {
         if (ltr-prop != inverse-prop) {
             {inverse-prop}: value place-important(make-important);
         }

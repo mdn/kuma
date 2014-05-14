@@ -352,7 +352,7 @@ home-involved-background-y = 50px;
     /* In right-to-left languages, show some carousel items in reverse order
        and hide the pager. This is not a permanent solution,
        https://bugzilla.mozilla.org/show_bug.cgi?id=992745 */
-    .html-rtl & {
+    html[dir="rtl"] & {
         .owl-item {
             float: right;
         }
@@ -512,7 +512,7 @@ home-involved-background-y = 50px;
 }
 
 /* right to left */
-#home.html-rtl {
+html[dir="rtl"] #home {
 
     h2 {
         > selector-icon:before {

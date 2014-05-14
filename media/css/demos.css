@@ -586,7 +586,7 @@ body.popup .page-title { font: 200 1.714em/1 "Bebas Neue", "League Gothic", Haet
 #nav-toolbar .crumbs li.crumb-one { padding-left: 0; margin-left: 0; background: none; }
 #nav-toolbar .crumbs li a { text-decoration: underline; }
 
-.html-rtl #nav-toolbar .crumbs { float: right; }
-.html-rtl #nav-toolbar .crumbs li { padding-left: 13px; margin-left: 6px; background-position: 0 -798px; }
-.html-rtl #nav-toolbar .crumbs li.crumb-one { background: url("../img/wiki/nav-arrows.png") 0 -798px no-repeat; }
-.html-rtl #nav-toolbar .crumbs li:last-child { background: none; }
+html[dir="rtl"] #nav-toolbar .crumbs { float: right; }
+html[dir="rtl"] #nav-toolbar .crumbs li { padding-left: 13px; margin-left: 6px; background-position: 0 -798px; }
+html[dir="rtl"] #nav-toolbar .crumbs li.crumb-one { background: url("../img/wiki/nav-arrows.png") 0 -798px no-repeat; }
+html[dir="rtl"] #nav-toolbar .crumbs li:last-child { background: none; }
