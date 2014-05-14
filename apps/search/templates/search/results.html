@@ -46,24 +46,12 @@
  {% block content %}
 
  <h1 class="offscreen">{{ _('MDN Site Search') }}</h1>
-
+ <h2 class="offscreen">{{ _('Search') }}</h2>
   <form id="search-form" action="{{ url('search') }}" method="get" class="search">
     <div class="results-search-form search-form dark">
-      <h2 class="offscreen">{{ _('Search') }}</h2>
-  {% if waffle.flag('search_suggestions') %}
-      <div class="search-wrapper" data-ft-text="{{ _("<h2>Welcome to the new way to search MDN!</h2><p>Search as usual, or filter your search by clicking in the arrow (<i class='icon-caret-down' aria-hidden='true'></i>) to show the filters menu.</p><p>Filtering also works by typing shortcuts into the search field (shortcut examples #int, #JS, #CSS).") }}</p>">
-        <div class="filters"></div>
-        <label for="search-q-s" class="offscreen">{{ _('Search') }}</label>
-        <input type="search" id="search-q-s" name="q" autocomplete="off" placeholder="{{ _('Search the docs') }}" size="15" />
-        <button type="submit" class="offscreen">{{ _('Search') }}</button>
-        <button type="button "class="show-topics"><i class="icon-caret-down" aria-hidden="true"></i></button>
-      </div>
-      <ul class="suggestions" data-hidden="true" style="display:none"></ul>
-    {% else %}
       <label for="search-q" class="offscreen">{{ _('Search') }}</label>
-      <input type="search" name="q" id="search-q" placeholder="{{ _('Search the docs') }}" value="{{ query }}" {% if not query %}autofocus{% endif %} />
+      <input class="search-input" type="search" name="q" id="search-q" placeholder="{{ _('Search the docs') }}" value="{{ query }}" {% if not query %}autofocus{% endif %} />
       <button type="submit" class="offscreen">{{ _('Search') }}</button>
-    {% endif %}
     </div>
 
     <div class="column-container">
@@ -220,5 +208,17 @@
   {% endif %}
   {% if waffle.flag('search_suggestions') %}
   {{ js('search-suggestions') }}
+  <script>
+  $(function () {
+      var filters_sel = [];
+      $('.search-results-filters input:checked').each(function() {
+        filters_sel.push( $(this).val() );
+      });
+      $('#search-form').searchSuggestions({
+          ftText: "{{ _("<h2>Welcome to the new way to search MDN!</h2><p>Search as usual, or filter your search by clicking in the arrow (<i class='icon-caret-down' aria-hidden='true'></i>) to show the filters menu.</p><p>Filtering also works by typing shortcuts into the search field (shortcut examples #int, #JS, #CSS).") }}</p>",
+          filters: filters_sel
+      });
+  });
+  </script>
   {% endif %}
 {% endblock js %}
