@@ -28,11 +28,11 @@ class SearchView(ListAPIView):
     #: list of filters to applies in order of listing, each implementing
     #: the specific search feature
     filter_backends = (
-        LanguageFilterBackend,
         SearchQueryBackend,
         AdvancedSearchQueryBackend,
         HighlightFilterBackend,
         DatabaseFilterBackend,
+        LanguageFilterBackend,
     )
     paginate_by = 10
     max_paginate_by = 100

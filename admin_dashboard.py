@@ -58,6 +58,7 @@ class CustomIndexDashboard(Dashboard):
                 'constance.*',
                 'soapbox.*',
                 'django.contrib.sites.*',
+                'search.*',
             ),
         ))
 

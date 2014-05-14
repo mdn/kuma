@@ -73,7 +73,8 @@ class TestIndexes(ElasticTestCase):
 
         self.refresh()  # refresh to make sure the index has the results ready
         indexes_dict = dict(get_indexes())
-        eq_(indexes_dict[successor_index.prefixed_name], 7)
+        # many due to translations
+        eq_(indexes_dict[successor_index.prefixed_name], 14)
         S = DocumentType.search
         eq_(S().all().count(), 7)
         eq_(S().query(content__match='an article title')[0].slug,
