@@ -188,13 +188,13 @@
         $('<link />').attr({
             type: 'text/css',
             rel: 'stylesheet',
-            href: mediaPath + 'css/syntax-prism-min.css'
+            href: mediaPath + 'css/syntax-prism-min.css?build=' + mdn.build
         }).appendTo(doc.head);
 
         var syntaxScript = doc.createElement('script');
         syntaxScript.setAttribute('data-manual', '');
         syntaxScript.async = 'true';
-        syntaxScript.src = mediaPath + 'js/syntax-prism-min.js';
+        syntaxScript.src = mediaPath + 'js/syntax-prism-min.js?build=' + mdn.build;
         doc.body.appendChild(syntaxScript);
     })();
 
