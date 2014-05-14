@@ -41,8 +41,7 @@ document_patterns = patterns('wiki.views',
         name='wiki.purge_document'),
 
     # Un/Subscribe to document edit notifications.
-    url(r'^\$watch$', 'watch_document', name='wiki.document_watch'),
-    url(r'^\$unwatch$', 'unwatch_document', name='wiki.document_unwatch'),
+    url(r'^\$subscribe$', 'subscribe_document', name='wiki.subscribe_document'),
 
     # Vote helpful/not helpful
     url(r'^\$vote', 'helpful_vote', name="wiki.document_vote"),
