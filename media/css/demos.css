@@ -1,3 +1,43 @@
+@font-face {
+  font-family: "Carto Bold";
+  src: url('../fonts/CartoGothicStd-Bold-webfont.eot'); /* IE9 */
+  src: url('../fonts/CartoGothicStd-Bold-webfont.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
+       url('../fonts/CartoGothicStd-Bold-webfont.woff') format('woff'), /* Modern browsers */
+       url('../fonts/CartoGothicStd-Bold-webfont.ttf') format('truetype'); /* Older Webkits */
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "League Gothic";
+  src: url('../fonts/League_Gothic-webfont.eot'); /* IE9 */
+  src: url('../fonts/League_Gothic-webfont.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
+       url('../fonts/League_Gothic-webfont.woff') format('woff'), /* Modern browsers */
+       url('../fonts/League_Gothic-webfont.ttf') format('truetype'); /* Older Webkits */
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Bebas Neue";
+  src: url('../fonts/BebasNeue-webfont.eot'); /* IE9 */
+  src: url('../fonts/BebasNeue-webfont.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
+       url('../fonts/BebasNeue-webfont.woff') format('woff'), /* Modern browsers */
+       url('../fonts/BebasNeue-webfont.ttf') format('truetype'); /* Older Webkits */
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Milk";
+  src: url('../fonts/ABTSmilk.eot'); /* IE9 */
+  src: url('../fonts/ABTSmilk.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
+       url('../fonts/ABTSmilk.woff') format('woff'), /* Modern browsers */
+       url('../fonts/ABTSmilk.ttf') format('truetype'); /* Older Webkits */
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* @Background *********/
 .section-demos { background: url("../img/demos/bg-demostudio.jpg") center 50px no-repeat; min-width: 960px; }
 .section-demos #content-main { margin: 20px -20px 40px; padding: 20px 20px 10px; background: #c0c4c8; background: rgba(255,255,255,.6); -moz-border-radius: 8px; -webkit-border-radius: 8px; border-radius: 8px; -moz-box-shadow: 1px 1px 4px rgba(0,0,0,.25); -webkit-box-shadow: 1px 1px 4px rgba(0,0,0,.25); box-shadow: 1px 1px 4px rgba(0,0,0,.25); }
