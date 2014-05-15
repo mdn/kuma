@@ -57,7 +57,7 @@
     {% include "includes/google_analytics.html" %}
   {% endif %}
 </head>
-<body {% block body_attributes %}{% endblock %} class="html-{{ DIR }} {% block bodyclass %}{% endblock %}">
+<body {% block body_attributes %}{% endblock %} class="{% block bodyclass %}{% endblock %}">
 
   {% include "includes/config.html" %}
 

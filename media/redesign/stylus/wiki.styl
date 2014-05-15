@@ -172,7 +172,7 @@ article {
     .external-icon:not([href^='https://mdn.mozillademos.org']) {
         white-space: pre-line;
 
-        .html-ltr &:before, .html-rtl &:after {
+        html[dir="ltr"] &:before, html[dir="rtl"] &:after {
             content: '\f08e';
             font-family: FontAwesome;
             set-font-size(9px);
@@ -181,7 +181,7 @@ article {
             margin-right: 3px;
         }
 
-        .html-rtl &:after {
+        html[dir="rtl"] &:after {
             transform: rotateY(180deg);
         }
 
