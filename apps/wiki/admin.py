@@ -1,10 +1,15 @@
 from datetime import datetime
 
 from django.contrib import admin
-from django.http import HttpResponse
+from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
+from django.http import HttpResponse, HttpResponseRedirect
+from django.template.response import TemplateResponse
 
 from sumo.urlresolvers import reverse
 
+from access.decorators import login_required, permission_required
+from wiki.decorators import check_readonly
 from wiki.models import (Document, DocumentZone, DocumentTag, Revision,
                          EditorToolbar, Attachment, AttachmentRevision)
 
@@ -23,6 +28,41 @@ def repair_breadcrumbs(self, request, queryset):
     for doc in queryset:
         doc.repair_breadcrumbs()
 repair_breadcrumbs.short_description = "Repair translation breadcrumbs"
+
+
+def purge_documents(self, request, queryset):
+    redirect_url = '/admin/wiki/document/purge/?ids=%s'
+    selected = request.POST.getlist(admin.ACTION_CHECKBOX_NAME)
+    return HttpResponseRedirect(redirect_url % ','.join(selected))
+purge_documents.short_description = "Permanently purge deleted documents"
+
+@login_required
+@staff_member_required
+@permission_required('wiki.purge_document')
+@check_readonly
+def purge_view(request):
+    """
+    Interstitial admin view for purging multiple Documents.
+    
+    """
+    selected = request.GET.get('ids', '').split(',')
+    to_purge = Document.deleted_objects.filter(id__in=selected)
+    if request.method == 'POST':
+        if request.POST.get('confirm_purge', False):
+            purged = 0
+            for doc in to_purge:
+                doc.purge()
+                purged += 1
+            messages.info(request, "%s document(s) were purged." % purged)
+        return HttpResponseRedirect('/admin/wiki/document/')
+    return TemplateResponse(request,
+                            'admin/wiki/purge_documents.html',
+                            {'to_purge': to_purge})
+
+def undelete_documents(self, request, queryset):
+    for doc in queryset:
+        doc.undelete()
+undelete_documents.short_description = "Undelete deleted documents"
 
 
 def enable_deferred_rendering_for_documents(self, request, queryset):
@@ -220,7 +260,9 @@ class DocumentAdmin(admin.ModelAdmin):
                force_render_documents,
                enable_deferred_rendering_for_documents,
                disable_deferred_rendering_for_documents,
-               repair_breadcrumbs)
+               repair_breadcrumbs,
+               purge_documents,
+               undelete_documents)
     change_list_template = 'admin/wiki/document/change_list.html'
     fields = ('locale', 'title', 'defer_rendering', 'render_expires',
               'render_max_age', 'parent', 'parent_topic', 'category',)
@@ -233,10 +275,38 @@ class DocumentAdmin(admin.ModelAdmin):
                     revision_links,)
     list_display_links = ('id', 'slug',)
     list_filter = ('defer_rendering', 'is_template', 'is_localizable',
-                   'category', 'locale')
+                   'category', 'locale', 'deleted')
     raw_id_fields = ('parent', 'parent_topic',)
     readonly_fields = ('id', 'current_revision')
     search_fields = ('title', 'slug', 'html', 'current_revision__tags')
+
+    def get_actions(self, request):
+        """
+        Remove the built-in delete action, since it bypasses the model
+        delete() method (bad) and we want people using the non-admin
+        deletion UI anyway.
+        
+        """
+        actions = super(DocumentAdmin, self).get_actions(request)
+        if 'delete_selected' in actions:
+            del actions['delete_selected']
+        return actions
+
+    def queryset(self, request):
+        """
+        The Document class has multiple managers which perform
+        different filtering based on deleted status; we want the
+        special admin-only one that doesn't filter.
+        
+        """
+        qs = Document.admin_objects.all()
+        # TODO: When we're on a Django version that handles admin
+        # queryset ordering in a better way, we can stop doing this
+        # part.
+        ordering = self.get_ordering(request)
+        if ordering:
+            qs = qs.order_by(*ordering)
+        return qs
 
 
 class RevisionAdmin(admin.ModelAdmin):
