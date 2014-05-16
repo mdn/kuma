@@ -1,21 +1,3 @@
-{% macro document_watch(document, user) -%}
-  {% if user.is_authenticated() and document %}
-    <li class="page-watch">
-      {% if document.is_watched_by(user) %}
-        <form action="{{ url('wiki.document_unwatch', document.slug) }}" method="post">
-          {{ csrf() }}
-          <button type="submit" class="link-btn" /><i class='icon-eye-closed'></i>{{ _('Unsubscribe') }}</button>
-        </form>
-      {% else %}
-        <form action="{{ url('wiki.document_watch', document.full_path) }}" method="post">
-          {{ csrf() }}
-          <button type="submit" class="link-btn" /><i class='icon-eye-open'></i>{{ _('Subscribe') }}</button>
-        </form>
-      {% endif %}
-    </li>
-  {% endif %}
-{%- endmacro %}
-
 {% macro build_document_crumbs(document) %}
   <nav class="crumbs" role="navigation"><ol xmlns:v="http://rdf.data-vocabulary.org/#" aria-label="{{ _('breadcrumbs') }}">
     <li typeof="v:Breadcrumb"><a href="/{{ request.locale }}" rel="v:url" property="v:title">MDN</a></li>
@@ -61,17 +43,14 @@
                 <li><a href="{{ url('wiki.document_revisions', document.full_path) }}">{{_('History')}}</a></li>
                 {% if user.is_authenticated() and document %}
                   <li class="page-watch">
-                  {% if document.is_watched_by(user) %}
-                    <form action="{{ url('wiki.document_unwatch', document.slug) }}" method="post">
-                      {{ csrf() }}
-                      <a href="">{{ _('Unsubscribe') }}</a>
-                    </form>
-                  {% else %}
-                    <form action="{{ url('wiki.document_watch', document.full_path) }}" method="post">
-                      {{ csrf() }}
-                      <a href="">{{ _('Subscribe') }}</a>
-                    </form>
-                  {% endif %}
+                  
+                  	<form action="{{ url('wiki.subscribe_document', document.slug) }}" method="post">
+                  		{{ csrf() }}
+	                  	<a href="#" data-subscribe-text="{{ _('Subscribe') }}" data-unsubscribe-text="{{ _('Unsubscribe') }}">
+	                  	{% if document.is_watched_by(user) %}{{ _('Unsubscribe') }}{% else %}{{ _('Subscribe') }}{% endif %}
+	                  	</a>
+                  	</form>
+                  
                 </li>{% endif %}
                 {% if user.is_authenticated() and not document.is_template %}
                   <li><a href="{{ url('wiki.new_document') }}?parent={{ document.id }}">{{ _('New sub-page') }}</a></li>

@@ -1854,22 +1854,21 @@ def translate(request, document_slug, document_locale, revision_id=None):
 @require_POST
 @login_required
 @process_document_path
-def watch_document(request, document_slug, document_locale):
-    """Start watching a document for edits."""
-    document = get_object_or_404(
-        Document, locale=document_locale, slug=document_slug)
-    EditDocumentEvent.notify(request.user, document)
-    return HttpResponseRedirect(document.get_absolute_url())
-
-
-@require_POST
-@login_required
-@process_document_path
-def unwatch_document(request, document_slug, document_locale):
+def subscribe_document(request, document_slug, document_locale):
     """Stop watching a document for edits."""
     document = get_object_or_404(
         Document, locale=document_locale, slug=document_slug)
-    EditDocumentEvent.stop_notifying(request.user, document)
+    status = 0
+
+    if EditDocumentEvent.is_notifying(request.user, document):
+      EditDocumentEvent.stop_notifying(request.user, document)
+    else:
+      EditDocumentEvent.notify(request.user, document)
+      status = 1
+      
+    if request.is_ajax():
+        return HttpResponse(json.dumps({'status': status}))
+
     return HttpResponseRedirect(document.get_absolute_url())
 
 

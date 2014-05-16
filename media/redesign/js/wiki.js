@@ -135,7 +135,27 @@
     */
     $('.page-watch a').on('click', function(e) {
         e.preventDefault();
-        $(this).closest('form').submit();
+
+        var $link = $(this);
+        if($link.hasClass('disabled')) return;
+
+        var $form = $link.closest('form');
+
+        $link.addClass('disabled');
+        $.ajax($form.attr('action'), {
+        	cache: false,
+        	method: 'post',
+        	data: $form.serialize()
+        }).done(function(data) {
+        	data = JSON.parse(data);
+            if(data.status == 1) {
+                $link.text($link.data('unsubscribe-text'));
+            }
+            else {
+                $link.text($link.data('subscribe-text'));
+            }
+            $link.removeClass('disabled');
+        });
     });
 
     // Utility method for the togglers
