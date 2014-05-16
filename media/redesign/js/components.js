@@ -71,7 +71,7 @@
                     });
 
                     // Hide the submenu when the submenu is blurred for hideDelay
-                    $submenu.on('mouseleave', function() {
+                    $submenu.on('mouseleave focusout', function() {
                         clear(showTimeout);
                         closeSubmenu($submenu);
                     });
