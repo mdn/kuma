@@ -91,7 +91,6 @@ home-involved-background-y = 50px;
             background-position: 0 -147px;
             background-size: 134px auto;
             color: #0095dd;
-            margin-left: 0 !important;
             float: left;
 
             &:before {
@@ -255,8 +254,6 @@ home-involved-background-y = 50px;
 
         a {
             text-decoration: underline;
-            compat-only(margin-left, 0);
-            compat-only(font-style, normal);
         }
     }
 
@@ -532,8 +529,8 @@ html[dir="rtl"] #home {
         }
 
         {selector-icon} {
-            compat-only(margin-right, 0);
-            compat-only(margin-left, icon-margin);
+            margin-right: 0;
+            margin-left: icon-margin;
         }
     }
 

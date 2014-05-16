@@ -60,7 +60,10 @@ html {
 
     /* remove ugly button styles */
     .button, button {
-        compat-important(box-shadow, none);
+        &, &:link, &:visited {
+            color: #fff;
+        }
+        box-shadow: none;
     }
 
     .gallery-head {
@@ -80,5 +83,5 @@ html {
 }
 
 #demostudio.landing, #demostudio.detail {
-    compat-important(background-position, center 0px);
+    background-position: center 0px;
 }

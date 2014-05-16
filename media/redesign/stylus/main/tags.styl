@@ -70,8 +70,8 @@ h4 {
 
 /* basic text */
 {selector-icon} {
-    bidi-style(margin-left, icon-margin, margin-right, 0); /* compat-only */
-    bidi-style(margin-right, 0, margin-left, icon-margin); /* compat-only */
+    bidi-style(margin-left, icon-margin, margin-right, 0);
+    bidi-style(margin-right, 0, margin-left, icon-margin);
     display: inline-block;
 
     &:before {
@@ -92,17 +92,17 @@ p, dl, table, pre {
     margin-bottom: content-block-margin;
 }
 
+pre, code {
+    font-family: 'Courier New', 'Andale Mono', monospace;
+}
+
 pre {
-    compat-only(line-height, 19px);
-    set-font-size(base-font-size !important);
+    set-font-size(base-font-size);
+    line-height: 19px;
     border: 0;
     background: #f6f6f2;
     padding: 15px;
     overflow: auto;
-}
-
-pre, code {
-    font: 100% 'Courier New', 'Andale Mono', monospace;
 }
 
 code {
@@ -165,7 +165,12 @@ a {
 }
 
 a.button, a.button:link, a.button:visited {
+    color: button-color;
     text-decoration: none;
+
+    &.negative {
+        color: #fff;
+    }
 }
 
 .button, button, input[type='submit'], input[type='button'] {
@@ -173,16 +178,12 @@ a.button, a.button:link, a.button:visited {
     cursor: pointer;
     display: inline-block;
     line-height: 1;
-    compat-important(background-color, button-background);
-    compat-important(color, button-color);
-    compat-important(text-transform, uppercase);
-    compat-important(padding, 5px 11px);
-    compat-important(border-radius, 4px);
+    background-color: button-background;
+    color: button-color;
+    text-transform: uppercase;
+    padding: 5px 11px;
+    border-radius: 4px;
     vendorize(box-shadow, inset 0 -1px button-shadow-color);
-    compat-only(background-image, none);
-    compat-only(font-family, site-font-family);
-    compat-only(font-size, base-font-size);
-    compat-only(letter-spacing, normal);
 
     &.only-icon {
         {selector-icon} {
@@ -197,27 +198,27 @@ a.button, a.button:link, a.button:visited {
     }
 
     &.neutral, &.negative, &.positive {
-        compat-important(color, #fff);
+        color: #fff;
     }
 
     &.neutral {
-        compat-important(background-color, #0095dd);
+        background-color: #0095dd;
         vendorize(box-shadow, inset 0 -1px #00539f);
     }
 
     &.negative {
-        compat-important(background-color, #ea3b28);
+        background-color: #ea3b28;
         vendorize(box-shadow, inset 0 -1px #c13832);
     }
 
     &.positive {
-        compat-important(background-color, #70a300);
+        background-color: #70a300;
         vendorize(box-shadow, inset 0 -1px #486900);
     }
 
     &.transparent {
         vendorize(box-shadow, none);
-        compat-important(background-color, transparent);
+        background-color: transparent;
     }
 
     &::-moz-focus-inner {

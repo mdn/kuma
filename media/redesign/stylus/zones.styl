@@ -116,10 +116,10 @@
     }
 
     a.button, button {
-        compat-important(color, #fff);
+        color: #fff;
         &:not(.transparent) {
-            old-ie(background-color, #0095dd, true); /* old ie */
-            compat-important(background-color, rgba(0, 0, 0, 0.1));
+            old-ie(background-color, #0095dd); /* old ie */
+            background-color: rgba(0, 0, 0, 0.1);
             vendorize(box-shadow, inset 0 -1px rgba(0, 0, 0, .1));
         }
     }
