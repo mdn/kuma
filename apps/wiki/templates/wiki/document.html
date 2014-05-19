@@ -10,7 +10,7 @@
 {% endif %}
 
 {% set is_logged_in = request.user.is_authenticated() %}
-{% set canonical = request.build_absolute_uri(url('wiki.document', document.full_path)) %}
+{% set canonical = request.build_absolute_uri(document.get_absolute_url()) %}
 
 {% if document.is_template %}
   {% set macro_name = document.slug|replace('Template:','', 1) %}
@@ -25,6 +25,7 @@
 {% set zone_stack = document.find_zone_stack() %}
 {% set is_zone = zone_stack|length %}
 {% set is_zone_root = is_zone and zone_stack[0].document == document %}
+{% set is_translated = document.other_translations.exists() %}
 
 {% set show_left = zone_subnav_html or quick_links_html or approvals_html %}
 {% set show_right = (not is_zone_root and toc_html) %}
@@ -57,15 +58,15 @@
   <link rel="alternate" type="application/json" href="{{ url('wiki.json_slug', document.full_path) }}">
   <link rel="canonical" href="{{ canonical }}" >
 
-  {% if document.other_translations.exists() %}
+  {% if is_translated %}
     {% for translation in document.other_translations %}
-      <link rel="alternate" hreflang="{{ translation.locale }}" href="{{ url('wiki.document', translation.full_path, locale=translation.locale) }}" title="{{ translation.title }}">
+      <link rel="alternate" hreflang="{{ translation.locale }}" href="{{ translation.get_absolute_url() }}" title="{{ translation.title }}">
     {% endfor %}
   {% endif %}
 
   <!-- document-specific social tags -->
   <meta property="og:title" content="{{ document.title }}">
-  <meta property="og:url" content="{{ request.build_absolute_uri(url('wiki.document', document.full_path)) }}">
+  <meta property="og:url" content="{{ canonical }}">
   <meta name="twitter:url" content="{{ canonical }}">
   <meta name="twitter:title" content="{{ document.title }}">
   {% if seo_summary %}
@@ -76,15 +77,15 @@
 {% endblock %}
 
 {% block lang_switcher %}
-  {% if (document.is_localizable or document.parent) and document.other_translations.exists() %}
+  {% if (document.is_localizable or document.parent) and is_translated %}
     <form class="languages go" method="get" action="{{ devmo_url('Web') }}">
       <label for="language">{{ _('Other languages:') }}</label>
       <select id="language" class="wiki-l10n" name="next" dir="ltr">
-        <option value="{{ url('wiki.document', document.full_path, locale=document.locale) }}" selected>
+        <option value="{{ document.get_absolute_url() }}" selected>
           {{ document.language }}
         </option>
         {% for translation in document.other_translations %}
-          <option value="{{ url('wiki.document', translation.full_path, locale=translation.locale) }}">
+          <option value="{{ translation.get_absolute_url() }}">
             {{ translation.language }}
           </option>
         {%- endfor %}
@@ -350,7 +351,7 @@
                   <!-- tags if present -->
                   <div class="tag-attach-list tags contributor-sub">
                     <i aria-hidden="true" class="icon-tags"></i><strong>{{ _('Tags:') }}</strong>
-                    <ul class="tag-list">{% for tag in tags %}<li><a href="{{url('wiki.tag', tag.name)}}">{{ tag.name }}</a></li>{% endfor %}</ul>
+                    <ul class="tag-list">{% for tag in tags %}<li><a href="{{ url('wiki.tag', tag.name) }}">{{ tag.name }}</a></li>{% endfor %}</ul>
                   </div>
                   {% endif %}
                   {% trans contributors=user_list(contributors) %}
