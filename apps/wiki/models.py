@@ -1521,6 +1521,10 @@ class Document(NotificationsMixin, models.Model):
 
         # Finally, step 10: recurse through all of our children.
         for child in self.children.all().filter(locale=self.locale):
+            # Save the original slug and locale so we can use them in
+            # the error message if something goes wrong.
+            old_child_slug, old_child_locale = child.slug, child.locale
+            
             child_title = child.slug.split('/')[-1]
             try:
                 child._move_tree('/'.join([new_slug, child_title]), user)
@@ -1550,8 +1554,8 @@ Exception message: %(exc_message)s
 Full traceback:
 
 %(traceback)s
-                """ % {'doc_id': child.id, 'locale': child.locale,
-                       'slug': child.slug, 'exc_class': exc_class,
+                """ % {'doc_id': child.id, 'locale': old_child_locale,
+                       'slug': old_child_slug, 'exc_class': exc_class,
                        'exc_message': exc_message,
                        'traceback': traceback.format_exc(e)}
                 raise PageMoveError(message)
