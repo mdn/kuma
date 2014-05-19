@@ -201,7 +201,7 @@
     margin-top: -(grid-spacing * 4);
 }
 
-.dev-program-pad {
+$dev-program-pad {
     background: light-background-color;
     padding: (grid-spacing);
     prevent-last-child-spacing(p, margin-bottom);
@@ -212,7 +212,7 @@
     margin-right: grid-margin;
 
     .dev-program-callout {
-        @extend .dev-program-pad;
+        @extend $dev-program-pad;
 
         h2 {
             set-larger-font-size();
@@ -238,7 +238,7 @@
 }
 
 .dev-program-explanation {
-    @extend .dev-program-pad;
+    @extend $dev-program-pad;
 }
 
 .dev-program-hacks {
