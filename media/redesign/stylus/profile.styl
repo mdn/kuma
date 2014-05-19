@@ -52,16 +52,11 @@
     }
 
     .edit > a {
-        compat-only(margin, 0 5px 0 0);
+        margin: 0 5px 0 0;
     }
 
     .submenu {
         @extend $advanced-menu;
-
-        a {
-            compat-only(float, none);
-            compat-only(margin, 0);
-        }
     }
 
     .main {
@@ -118,7 +113,7 @@
         top: @padding;
         right: @padding;
 
-        a {
+        & > a {
             float: left;
             margin-left: (grid-spacing / 2);
         }
@@ -324,7 +319,7 @@ table.activity {
         & > a {
             display: block;
             text-align: center;
-            override-compat-important(margin, (grid-spacing / 2) 0);
+            margin: (grid-spacing / 2) 0;
         }
 
         #edit-profile i {

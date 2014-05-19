@@ -115,28 +115,6 @@ generate-arrow(arrow-width = 10px) {
     }
 }
 
-/* use this in the case of having to override styles from old template :( */
-compat-important(prop, value) {
-    {prop}: value !important;
-}
-
-/* Override an !important set by compat-important() with another !important.
-   This should be removed after all CSS has been migrated to Stylus. */
-override-compat-important(prop, value) {
-    compat-important(prop, value);
-}
-
-/* used for style which are only present to override other styles -- these will be deleted once legacy design is gone */
-compat-only(prop, value, more-selector = '') {
-    compat-important(prop, value);
-
-    if more-selector {
-        & {more-selector} {
-            compat-important(prop, value);
-        }
-    }
-}
-
 /* used to denote an old IE style */
 old-ie(prop, value, important = false) {
     {prop}: value (important ? unquote('!important') : '');
@@ -156,16 +134,18 @@ slider(duration=default-animation-duration, maximum-height = 10000px) {
 }
 
 /* sets the base styles for messages (review, warning, error, notice, etc.) */
-set-message-base() {
-    compat-only(border-width, 5px);
-    compat-only(border-style, solid);
+set-message-base(remove-last-spacing = true) {
+    border-width: 5px;
+    border-style: solid;
     padding: (grid-spacing / 2);
     margin-bottom: grid-spacing;
     set-smaller-font-size();
 
-    & *:last-child {
-        margin-bottom: 0;
-        padding-bottom: 0;
+    if(remove-last-spacing) {
+        & *:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
     }
 }
 
@@ -192,7 +172,7 @@ remove-center-spacing() {
 /* overrides the navigation menu color - zones and homepage */
 override-main-nav-color(hex) {
     #main-nav > ul > li > a, .user-state a {
-        compat-important(color, hex);
+        color: hex;
     }
 
     #main-nav > ul > li {
@@ -358,12 +338,6 @@ component-submenu(menu-width, num-columns, background-color, arrow-border-color)
             bidi-style(border-left, 1px dotted #d4dde4, border-right, 0);
             bidi-style(padding-left, grid-spacing, padding-right, 0);
         }
-    }
-
-    .title {
-        compat-only(font-size, base-font-size);
-        compat-only(padding-left, 0);
-        compat-only(background, none);
     }
 
     a {

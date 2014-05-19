@@ -49,7 +49,7 @@
 #demostudio.landing #content-main { background: transparent; border-radius: 0; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
 
 /* @Buttons *********/
-.section-demos button, .section-demos .button { display: inline-block; padding: .35em 14px .25em; color: #fff; border: 1px solid #8f4d4f; border-color: rgba(255,255,255,.2);
+.section-demos button, .section-demos .button { display: inline-block; padding: .35em 14px .25em; border: 1px solid #8f4d4f; border-color: rgba(255,255,255,.2);
   font: 1em/1 "Bebas Neue", "League Gothic", "Arial Narrow", sans-serif; letter-spacing: .05em; text-decoration: none;
   background: #861215 url("../img/button-shade.png") 0 .85em repeat-x;
   -moz-border-radius: 5px;

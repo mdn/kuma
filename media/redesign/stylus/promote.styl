@@ -220,8 +220,8 @@ preview-box-total-width = (preview-box-width + (box-padding * 2) + (box-border-w
 
 #button-preview {
     width: preview-box-width;
-    override-compat-important(padding, box-padding);
-    override-compat-important(border, box-border);
+    padding: box-padding;
+    border: box-border;
 
     /* Thanks to the #button-builder width we set above, there should be
        preview-box-margin-left amount of space on the left of this box after
@@ -229,7 +229,7 @@ preview-box-total-width = (preview-box-width + (box-padding * 2) + (box-border-w
     float: right;
 
     &.fixed {
-        override-compat-important(margin-left, (step-box-total-width + preview-box-left-margin));
+        margin-left: (step-box-total-width + preview-box-left-margin);
         position: fixed;
         z-index: 99;
         top: 20px;

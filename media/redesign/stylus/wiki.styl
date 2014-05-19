@@ -44,16 +44,9 @@ enable-toc-toggle() {
 }
 
 .review-base {
-    compat-important(background, #fbf8e9);
-    compat-important(border-color, #f9f3d9);
-    compat-only(color, text-color);
-}
-
-
-/* general wiki section */
-#content-main {
-    compat-only(padding, 0);
-    compat-only(width, auto);
+    background: #fbf8e9;
+    border-color: #f9f3d9;
+    color: text-color;
 }
 
 .wiki-main-content {
@@ -148,7 +141,7 @@ enable-toc-toggle() {
 
 /* document review form stuff */
 .reviews {
-    set-message-base();
+    set-message-base(false);
     set-smaller-font-size();
     @extend .review-base;
 
@@ -158,10 +151,6 @@ enable-toc-toggle() {
 
     li {
         padding-top: list-item-spacing;
-    }
-
-    button {
-        compat-important(font-size, smaller-font-size);
     }
 }
 
@@ -269,15 +258,15 @@ article {
         }
 
         button {
+            set-smaller-font-size();
             margin-left: -2px;
-            compat-important(color, #777);
-            compat-important(text-transform, none);
-            compat-important(font-size, 12px);
-            compat-important(padding, 5px 0);
+            color: #777;
+            text-transform: none;
+            padding: 5px 0;
 
             &:hover,
             &:focus {
-                compat-important(color, #4D4E53);
+                color: #4D4E53;
             }
         }
     }
@@ -299,7 +288,7 @@ article {
     position: absolute;
     top: (grid-spacing * .75) + 2px;
     display: none;
-    compat-only(font-size, 24px);
+    font-size: 24px;
 
     &.disabled {
         opacity: 0.3;
@@ -412,9 +401,7 @@ article {
         position: relative;
 
         a, button, input[type='submit'], input[type='button'] {
-            compat-important(font-size, smaller-font-size);
-            compat-only(font-family, site-font-family);
-            compat-only(letter-spacing, normal);
+            set-smaller-font-size();
 
             &.disabled {
                 opacity: 0.8;
@@ -453,7 +440,7 @@ article {
 .notice {
     set-message-base();
     set-font-size(base-font-size);
-    compat-important(border-width, 2px);
+    border-width: 2px;
 }
 
 /* warning elements */
@@ -461,8 +448,8 @@ article {
     set-message-base();
     background: rgba(193, 56, 50, 0.85);
     color: #c13832;
-    compat-important(border-color, rgba(0, 0, 0, 0.1));
-    compat-only(color, #fff);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: #fff;
     font-style: italic;
     margin: 0 0 grid-spacing 0;
     set-font-size(base-font-size);
@@ -474,10 +461,6 @@ article {
 
     &.warning-review {
         @extend .review-base;
-
-        p {
-            compat-important(color, text-color);
-        }
     }
 }
 
@@ -493,13 +476,10 @@ div.bug, div.warning, div.overheadIndicator {
 /* page attachments block at the bottom of the article */
 #page-attachments {
     @extend .wiki-block;
-    compat-only(background, #fff);
 }
 
 #page-attachments-button {
-    compat-only(font-size, smaller-font-size);
-    compat-only(font-family, site-font-family);
-    compat-only(letter-spacing, normal);
+    set-smaller-font-size();
 }
 
 /* contributors block at the bottom of the article */
@@ -570,7 +550,6 @@ div.bug, div.warning, div.overheadIndicator {
 
 .tag-list li {
     margin-right: 6px;
-    compat-only(margin-right, 6px);
 }
 
 .tagit li {
@@ -583,11 +562,8 @@ div.bug, div.warning, div.overheadIndicator {
 
 #toc {
     reverse-link-decoration();
-    compat-only(margin-left, 0);
-    compat-only(font-size, base-font-size);
-    compat-only(margin-left, 0, 'ol ol, ul ul');
     background: light-background-color;
-    compat-important(padding, grid-spacing (grid-spacing * .75));
+    padding: 20px 15px;
 
     &.fixed {
         position: fixed;
@@ -597,7 +573,7 @@ div.bug, div.warning, div.overheadIndicator {
     }
 
     > ol {
-        compat-important(font-size, smaller-font-size);
+        set-smaller-font-size();
     }
 
     ol ol {
@@ -605,7 +581,7 @@ div.bug, div.warning, div.overheadIndicator {
     }
 
     li {
-        compat-important(padding-top, (grid-spacing / 2));
+        padding-top: (grid-spacing / 2);
         position: relative;
 
         &:before {
@@ -628,7 +604,7 @@ div.bug, div.warning, div.overheadIndicator {
     }
 
     .title {
-        compat-only(margin-bottom, 0);
+        margin-bottom: 0;
     }
 
     a.title {
@@ -744,13 +720,8 @@ span.cke_skin_kuma {
 
 /* compare page */
 .compare, #revision-list {
-    ul {
+    ul, input[type='submit'] {
         set-smaller-font-size();
-        compat-only(min-width, 0);
-    }
-
-    input[type='submit'], a.button {
-        compat-only(font-size, smaller-font-size);
     }
 }
 
@@ -812,8 +783,8 @@ span.cke_skin_kuma {
 .move-lookup-link {
     display: inline-block;
     margin-left: (grid-spacing * 2);
-    compat-important(color, link-color);
-    compat-important(text-transform, none);
+    color: link-color;
+    text-transform: none;
 
     &:hover {
         text-decoration: underline;
