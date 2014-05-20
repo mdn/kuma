@@ -43,7 +43,7 @@ enable-toc-toggle() {
     padding-right: 0;
 }
 
-.review-base {
+$review-base {
     background: #fbf8e9;
     border-color: #f9f3d9;
     color: text-color;
@@ -143,7 +143,7 @@ enable-toc-toggle() {
 .reviews {
     set-message-base(false);
     set-smaller-font-size();
-    @extend .review-base;
+    @extend $review-base;
 
     p {
         margin: 0;
@@ -460,7 +460,7 @@ article {
     }
 
     &.warning-review {
-        @extend .review-base;
+        @extend $review-base;
     }
 }
 
