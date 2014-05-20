@@ -13,7 +13,7 @@ class Migration(DataMigration):
 
     def backwards(self, orm):
         "Write your backwards methods here."
-        raise RuntimeError("Cannot reverse migration. Run devmo_calendar_reload isntead.")
+        raise RuntimeError("Cannot reverse migration. Run calendar_reload instead.")
 
 
     models = {

@@ -14,7 +14,7 @@ def profile_url(user):
     """Return a URL to the user's profile."""
     try:
         return reverse('devmo_profile_view', args=[user.username])
-    except Exception, e:
+    except Exception:
         return user.username
 
 

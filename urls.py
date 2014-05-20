@@ -26,6 +26,7 @@ urlpatterns = patterns('',
     ('', include('landing.urls')),
     ('', include('devmo.urls')),
     (r'^demos/', include('demos.urls')),
+    (r'^events/?', include('kuma.events.urls')),
     (r'^demos', lambda x: redirect('demos')),
 
     # Django admin:

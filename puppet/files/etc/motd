@@ -10,6 +10,5 @@ Use Foreman to start & monitor services necessary for development:
 Consult ~/src/Procfile to see what services are managed by Foreman.
 
 To run tests:
-    ~/src/manage.py test actioncounters contentflagging demos devmo landing users search wiki
+    ~/src/manage.py test actioncounters contentflagging demos devmo landing users search wiki kuma.events
     (cd ~/src/kumascript && ./node_modules/.bin/nodeunit tests)
-

@@ -5,7 +5,7 @@ from devmo.urlresolvers import reverse
 from taggit_extras.managers import NamespacedTaggableManager
 from taggit.forms import TagWidget
 
-from .models import UserProfile, Calendar, Event
+from .models import UserProfile
 
 
 class ProfileAdmin(admin.ModelAdmin):
@@ -17,7 +17,7 @@ class ProfileAdmin(admin.ModelAdmin):
     list_editable = ('content_flagging_email', 'tags', )
 
     search_fields = ('user__username', 'homepage', 'title', 'fullname',
-                     'organization', 'location', 'bio', 'misc', 
+                     'organization', 'location', 'bio', 'misc',
                      'user__email', 'tags__name', )
 
     list_filter = ()
@@ -45,5 +45,3 @@ class ProfileAdmin(admin.ModelAdmin):
 
 
 admin.site.register(UserProfile, ProfileAdmin)
-admin.site.register(Calendar, admin.ModelAdmin)
-admin.site.register(Event, admin.ModelAdmin)
