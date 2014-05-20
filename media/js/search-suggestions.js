@@ -24,8 +24,24 @@
               .addClass('search-wrapper')
               .appendTo($searchForm);
 
+            var $filtersRight = $('<div></div>')
+              .addClass('filters-right')
+              .html('<i class="icon-chevron-left " aria-hidden="true"></i>')
+              .on('click', function(){
+                $searchFilters.scrollLeft($searchFilters.scrollLeft() - 40);
+              })
+              .appendTo($search);
+
             var $searchFilters = $('<div></div>')
               .addClass('filters')
+              .appendTo($search);
+
+            var $filtersLeft = $('<div></div>')
+              .addClass('filters-left')
+              .html('<i class="icon-chevron-right " aria-hidden="true"></i>')
+              .on('click', function(){
+                $searchFilters.scrollLeft($searchFilters.scrollLeft() + 40);
+              })
               .appendTo($search);
 
             $searchForm.find('label')
@@ -60,7 +76,6 @@
             var fnSuggestions = {
               prepareInput: function(){
                   this.storeSize(settings.sizeLimit);
-
               },
               storeSize: function(size) {
                 $searchInput.attr('size', size || $searchInput.val().length < settings.sizeLimit ? settings.sizeLimit : $searchInput.val().length);
@@ -140,7 +155,6 @@
                   return valueResult;
               },
               removeFilterFromList: function(topic){
-                  console.log(filtersData);
                   $.each(filtersData, function(idx_group, group){
                       $.each(group.filters, function(idx_filter, filter){
                           if(typeof(filter) !== 'undefined' && filter.slug === topic){
@@ -199,7 +213,7 @@
             // load previouly selected filters
             if(settings.filters){
                 $.each(settings.filters, function(sidx, sfilter){
-                    fnSuggestions.addFilter(sfilter);
+                    fnSuggestions.addFilter('#'+sfilter);
                     fnSuggestions.removeFilterFromList(sfilter);
                 });
             }

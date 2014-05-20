@@ -209,14 +209,26 @@
   {% if waffle.flag('search_suggestions') %}
   {{ js('search-suggestions') }}
   <script>
+  var get_filters = function() {
+    var url = window.location.href;
+    var filters_sel = [];
+    var searchIndex = url.indexOf("?");
+    if (searchIndex != -1 ) {
+      var sPageURL = url.substring(searchIndex +1);
+      var sURLVariables = sPageURL.split('&');
+      for (var i = 0; i < sURLVariables.length; i++) {     
+        var sParameterName = sURLVariables[i].split('=');
+        if(sParameterName[0]==='topic'){
+          filters_sel.push( sParameterName[1] );
+        }
+      }
+      return filters_sel;
+    }
+  }
   $(function () {
-      var filters_sel = [];
-      $('.search-results-filters input:checked').each(function() {
-        filters_sel.push( $(this).val() );
-      });
       $('#search-form').searchSuggestions({
           ftText: "{{ _("<h2>Welcome to the new way to search MDN!</h2><p>Search as usual, or filter your search by clicking in the arrow (<i class='icon-caret-down' aria-hidden='true'></i>) to show the filters menu.</p><p>Filtering also works by typing shortcuts into the search field (shortcut examples #int, #JS, #CSS).") }}</p>",
-          filters: filters_sel
+          filters: get_filters()
       });
   });
   </script>

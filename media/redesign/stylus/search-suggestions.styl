@@ -27,6 +27,7 @@
       display: inline;
       padding: 0 8px;
       vertical-align: middle;
+      width: auto; 
     }
   }
 
@@ -93,21 +94,41 @@
     }
   }
 
+  .filters-left,
+  .filters-right {
+    display: inline-block;
+    margin: 0 3px; 
+    i[class^="icon-"] {
+      margin: 0px !important;
+      vertical-align: bottom; 
+      &:before {
+        cursor: pointer !important;
+      }
+    }
+  }
+
   .filters {
     display: inline-block;
+    height: 35px;
+    max-width: 70%;
+    overflow: hidden;
+    position: relative;
+    vertical-align: top;
+    white-space: nowrap;
     span.topic {
       background-color: #202F67!important;
       box-shadow: none;
       color: #FFF!important;
       cursor: default!important;
       margin-right: 5px;
+      padding: 3px 11px 3px 17px !important;
       text-transform: none!important;
       button.close {
         background-color: transparent !important;
         box-shadow: none;
         color: #FFF!important;
         margin-left: 5px;
-        padding: 5px!important;
+        padding: 5px 0px 5px 5px !important
         i[class^="icon-"] {
           margin-left: 0;
         }
