@@ -475,6 +475,7 @@ INSTALLED_APPS = (
     'search',
     'users',
     'wiki',
+    'kuma.events',
 
     # DEMOS
     'demos',
@@ -503,10 +504,10 @@ INSTALLED_APPS = (
     'dashboards',
     'kpi',
     'statici18n',
+    'rest_framework',
 
     # migrations
     'south',
-    'rest_framework',
 
     # testing.
     'django_nose',
@@ -519,10 +520,15 @@ INSTALLED_APPS = (
 )
 
 TEST_RUNNER = 'test_utils.runner.RadicalTestSuiteRunner'
+
+NOSE_ARGS = [
+    '--traverse-namespace',  # make sure `./manage.py test kuma` works
+]
+
 TEST_UTILS_NO_TRUNCATE = ('django_content_type',)
 
 # Feed fetcher config
-FEEDER_TIMEOUT = 6 # in seconds
+FEEDER_TIMEOUT = 6  # in seconds
 
 def JINJA_CONFIG():
     import jinja2

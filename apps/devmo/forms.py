@@ -125,7 +125,6 @@ class UserProfileEditForm(forms.ModelForm):
             required=False
         )
 
-
     def clean_expertise(self):
         """Enforce expertise as a subset of interests"""
         cleaned_data = self.cleaned_data

@@ -3,7 +3,6 @@ import teamwork.views
 
 
 urlpatterns = patterns('devmo.views',
-    url(r'^events/?$', 'events', name='events'),
     url(r'^profiles/(?P<username>[^/]+)/?$', 'profile_view',
         name="devmo_profile_view"),
     url(r'^profiles/(?P<username>[^/]+)/roles$', teamwork.views.user_roles),

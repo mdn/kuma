@@ -12,14 +12,13 @@ from django.contrib.auth.tokens import default_token_generator
 from django.contrib import messages
 from django.contrib.sites.models import Site
 from django.http import HttpResponse, HttpResponseRedirect, Http404
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import (require_http_methods, require_GET,
                                           require_POST)
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.debug import sensitive_post_parameters
 
-from django.shortcuts import get_object_or_404, render
 from django.utils.http import base36_to_int, is_safe_url
 
 from django_browserid.forms import BrowserIDForm

@@ -1,17 +1,11 @@
 from django.conf import settings
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, render
-from django.http import (HttpResponseRedirect, HttpResponseForbidden)
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 
 from devmo.urlresolvers import reverse
 
-import constance.config
-import basket
 from taggit.utils import parse_tags
-from waffle import flag_is_active
-
-from waffle import flag_is_active
-
 from access.decorators import login_required
 from demos.models import Submission
 from teamwork.models import Team
@@ -19,7 +13,7 @@ from badger.models import Award
 from users.models import UserBan
 
 from . import INTEREST_SUGGESTIONS
-from .models import Calendar, Event, UserProfile
+from .models import UserProfile
 from .forms import (UserProfileEditForm, newsletter_subscribe,
                     get_subscription_details, subscribed_to_newsletter)
 
@@ -28,21 +22,6 @@ DOCS_ACTIVITY_MAX_ITEMS = getattr(settings,
         'DOCS_ACTIVITY_MAX_ITEMS', 15)
 
 
-def events(request):
-    """Developer Engagement Calendar"""
-    cal = Calendar.objects.get(shortname='devengage_events')
-    events = Event.objects.filter(calendar=cal)
-    upcoming_events = events.filter(done=False)
-    past_events = events.filter(done=True)
-    google_maps_api_key = getattr(settings, 'GOOGLE_MAPS_API_KEY',
-        "ABQIAAAAijZqBZcz-rowoXZC1tt9iRT5rHVQFKUGOHoyfP"
-        "_4KyrflbHKcRTt9kQJVST5oKMRj8vKTQS2b7oNjQ")
-
-    return render(request, 'devmo/calendar.html', {
-        'upcoming_events': upcoming_events,
-        'past_events': past_events,
-        'google_maps_api_key': google_maps_api_key
-    })
 
 
 def profile_view(request, username):
@@ -112,7 +91,6 @@ def profile_edit(request, username):
         ('interests', 'profile:interest:'),
         ('expertise', 'profile:expertise:')
     )
-
 
     if request.method != 'POST':
         initial = dict(email=profile.user.email, beta=profile.beta_tester)

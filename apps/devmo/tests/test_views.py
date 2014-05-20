@@ -1,25 +1,20 @@
-import datetime
 import logging
-import time
-
 import mock
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 import test_utils
 from devmo.tests import create_profile
+from soapbox.models import Message
 
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core import mail
 from django.core.paginator import PageNotAnInteger
 
-from soapbox.models import Message
-
 from devmo.tests import mock_lookup_user
 from devmo.models import UserProfile
 
-from devmo.cron import devmo_calendar_reload
 from devmo.tests import LocalizingClient
 
 from sumo.tests import TestCase
@@ -27,7 +22,6 @@ from sumo.urlresolvers import reverse
 
 from users.models import UserBan
 
-from waffle.models import Flag
 
 TESTUSER_PASSWORD = 'testpass'
 
@@ -178,10 +172,7 @@ class ProfileViewsTest(TestCase):
     @mock.patch('basket.lookup_user')
     @mock.patch('basket.subscribe')
     @mock.patch('basket.unsubscribe')
-    def test_profile_edit_beta(self,
-                                unsubscribe,
-                                subscribe,
-                                lookup_user):
+    def test_profile_edit_beta(self, unsubscribe, subscribe, lookup_user):
         lookup_user.return_value = mock_lookup_user()
         subscribe.return_value = True
         unsubscribe.return_value = True
@@ -209,10 +200,7 @@ class ProfileViewsTest(TestCase):
     @mock.patch('basket.lookup_user')
     @mock.patch('basket.subscribe')
     @mock.patch('basket.unsubscribe')
-    def test_profile_edit_websites(self,
-                                    unsubscribe,
-                                    subscribe,
-                                    lookup_user):
+    def test_profile_edit_websites(self, unsubscribe, subscribe, lookup_user):
         lookup_user.return_value = mock_lookup_user()
         subscribe.return_value = True
         unsubscribe.return_value = True
@@ -372,7 +360,6 @@ class ProfileViewsTest(TestCase):
         assert ('Ensure this value has at most 255 characters'
                 in doc.find('ul.errorlist li').text())
 
-
     @mock.patch('basket.lookup_user')
     @mock.patch('basket.subscribe')
     @mock.patch('basket.unsubscribe')
@@ -430,55 +417,32 @@ class ProfileViewsTest(TestCase):
         self.assertNotEqual(response.status_code, 403)
 
 
-def get_datetime_from_string(string, string_format):
-    new_datetime = datetime.datetime.fromtimestamp(time.mktime(
-        time.strptime(string, string_format)))
-    return new_datetime
-
-
-def check_event_date(row):
-    prev_end_datetime = datetime.datetime.today()
-    datetime_format = "%Y-%m-%d"
-    if (row.prev()):
-        prev_datetime_str = row.prev().find('td').eq(1).text()
-        prev_end_datetime = get_datetime_from_string(prev_datetime_str,
-                                                     datetime_format)
-    row_datetime_str = row.find('td').eq(1).text()
-    row_datetime = get_datetime_from_string(row_datetime_str, datetime_format)
-    logging.debug(row_datetime)
-    logging.debug(prev_end_datetime)
-    ok_(row_datetime < prev_end_datetime)
-
-
-class EventsViewsTest(test_utils.TestCase):
-    fixtures = ['devmo_calendar.json']
+class LoggingTests(test_utils.TestCase):
+    urls = 'devmo.tests.logging_urls'
 
     def setUp(self):
-        self.client = LocalizingClient()
-        devmo_calendar_reload()
+        self.old_logging = settings.LOGGING
 
-    def test_events(self):
-        url = reverse('devmo.views.events')
-        r = self.client.get(url, follow=True)
-        eq_(200, r.status_code)
+    def tearDown(self):
+        settings.LOGGING = self.old_logging
 
-    def test_events_map_flag(self):
-        url = reverse('devmo.views.events')
+    def test_no_mail_handler(self):
+        try:
+            response = self.client.get('/en-US/test_exception/')
+            eq_(500, response.status_code)
+            eq_(0, len(mail.outbox))
+        except:
+            pass
 
-        r = self.client.get(url, follow=True)
-        eq_(200, r.status_code)
-        doc = pq(r.content)
-        eq_([], doc.find('#map_canvas'))
-        ok_("maps.google.com" not in r.content)
+    def test_mail_handler(self):
+        settings.LOGGING['loggers']['django.request'] = ['console', 'mail_admins']
+        try:
+            response = self.client.get('/en-US/test_exception/')
+            eq_(500, response.status_code)
+            eq_(1, len(mail.outbox))
+        except:
+            pass
 
-        events_map_flag = Flag.objects.create(name='events_map', everyone=True)
-        events_map_flag.save()
-
-        r = self.client.get(url, follow=True)
-        eq_(200, r.status_code)
-        doc = pq(r.content)
-        eq_(1, len(doc.find('#map_canvas')))
-        ok_("maps.google.com" in r.content)
 
 class SoapboxViewsTest(test_utils.TestCase):
     fixtures = ['devmo_calendar.json']
@@ -531,29 +495,3 @@ class SoapboxViewsTest(test_utils.TestCase):
 
         doc = pq(r.content)
         eq_([], doc.find('div.global-notice'))
-
-class LoggingTests(test_utils.TestCase):
-    urls = 'devmo.tests.logging_urls'
-
-    def setUp(self):
-        self.old_logging = settings.LOGGING
-
-    def tearDown(self):
-        settings.LOGGING = self.old_logging
-
-    def test_no_mail_handler(self):
-        try:
-            response = self.client.get('/en-US/test_exception/')
-            eq_(500, response.status_code)
-            eq_(0, len(mail.outbox))
-        except:
-            pass
-
-    def test_mail_handler(self):
-        settings.LOGGING['loggers']['django.request'] = ['console', 'mail_admins']
-        try:
-            response = self.client.get('/en-US/test_exception/')
-            eq_(500, response.status_code)
-            eq_(1, len(mail.outbox))
-        except:
-            pass

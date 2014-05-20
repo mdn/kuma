@@ -1,85 +1,16 @@
-import csv
 from os.path import dirname
-from datetime import datetime
 
-from mock import patch
-from nose import SkipTest
-from nose.tools import assert_equal, eq_, ok_
-from nose.plugins.attrib import attr
+from nose.tools import eq_, ok_
 import test_utils
 
-from django.conf import settings
 from django.contrib.auth.models import User
 
-from devmo.models import Calendar, Event, UserProfile
+from devmo.models import UserProfile
 from wiki.tests import revision
 
-
 APP_DIR = dirname(dirname(__file__))
-MOZILLA_PEOPLE_EVENTS_CSV = '%s/fixtures/Mozillapeopleevents.csv' % APP_DIR
 USER_DOCS_ACTIVITY_FEED_XML = ('%s/fixtures/user_docs_activity_feed.xml' %
                                APP_DIR)
-XSS_CSV = '%s/fixtures/xss.csv' % APP_DIR
-BAD_DATE_CSV = '%s/fixtures/bad_date.csv' % APP_DIR
-
-
-class TestCalendar(test_utils.TestCase):
-    fixtures = ['devmo_calendar.json']
-
-    def setUp(self):
-        self.cal = Calendar.objects.get(shortname='devengage_events')
-        self.event = Event(date="2011-06-17", conference="Web2Day",
-                           location="Nantes, France",
-                           people="Christian Heilmann",
-                           description="TBD", done="no", calendar=self.cal)
-        self.event.save()
-
-    def test_reload_bad_url_does_not_delete_data(self):
-        self.cal.url = 'bad'
-        success = self.cal.reload()
-        ok_(success == False)
-        ok_(Event.objects.all()[0].conference == 'Web2Day')
-        self.cal.url = 'http://test/testcalspreadsheet'
-        success = self.cal.reload()
-        ok_(success == False)
-        ok_(Event.objects.all()[0].conference == 'Web2Day')
-
-    def test_reload_from_csv_data(self):
-        self.cal.reload(data=csv.reader(open(MOZILLA_PEOPLE_EVENTS_CSV, 'rb')))
-        # check total
-        assert_equal(33, len(Event.objects.all()))
-        # spot-check
-        ok_(Event.objects.get(conference='StarTechConf'))
-
-    def test_reload_from_csv_data_blank_end_date(self):
-        self.cal.reload(data=csv.reader(open(MOZILLA_PEOPLE_EVENTS_CSV, 'rb')))
-        event = Event.objects.get(conference='Monash University')
-        ok_(event)
-        eq_(event.date, event.end_date)
-
-    def test_reload_end_date_determines_done(self):
-        self.cal.reload(data=csv.reader(open(MOZILLA_PEOPLE_EVENTS_CSV, 'rb')))
-        # no matter what done column says, events should be done
-        # by virtue of the end date
-        event = Event.objects.get(conference='Confoo')
-        ok_(event)
-        eq_(True, event.done)
-        event = Event.objects.get(conference='TECH4AFRICA')
-        ok_(event)
-        eq_(False, event.done)
-
-    def test_bad_date_column_skips_row(self):
-        self.cal.reload(data=csv.reader(open(BAD_DATE_CSV, 'rb')))
-        # check total - should still have the good row
-        assert_equal(1, len(Event.objects.all()))
-        # spot-check
-        ok_(Event.objects.get(conference='StarTechConf'))
-
-    def test_html_santiziation(self):
-        self.cal.reload(data=csv.reader(open(XSS_CSV, 'rb')))
-        # spot-check
-        eq_('&lt;script&gt;alert("ruh-roh");&lt;/script&gt;Brendan Eich',
-            Event.objects.get(conference="Texas JavaScript").people)
 
 
 class TestUserProfile(test_utils.TestCase):

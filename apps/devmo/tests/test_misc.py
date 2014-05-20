@@ -1,12 +1,9 @@
-import logging
 import shlex
 import urllib2
 
 from nose.tools import eq_
 from nose import SkipTest
 import test_utils
-
-from django.conf import settings
 
 from devmo.helpers import devmo_url
 from devmo import urlresolvers
@@ -43,12 +40,12 @@ def parse_robots(base_url):
 
 
 def _make_request(path):
-        req = WSGIRequest({
-            'REQUEST_METHOD': 'GET',
-            'PATH_INFO': path,
-            'wsgi.input': StringIO()})
-        req.user = AnonymousUser()
-        return req
+    req = WSGIRequest({
+        'REQUEST_METHOD': 'GET',
+        'PATH_INFO': path,
+        'wsgi.input': StringIO()})
+    req.user = AnonymousUser()
+    return req
 
 
 class TestDevMoRobots(test_utils.TestCase):
@@ -135,7 +132,7 @@ class TestDevMoUrlResolvers(test_utils.TestCase):
 
 
 class TestDevMoNextUrl(test_utils.TestCase):
-    """ Tests that the next_url value is properly set, 
+    """ Tests that the next_url value is properly set,
     including query string """
     def test_basic(self):
         path = '/one/two'
