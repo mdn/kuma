@@ -6,6 +6,7 @@ from django.db import models
 
 class Migration(DataMigration):
 
+
     def forwards(self, orm):
         "Write your forwards methods here."
         # Note: Don't use "from appname.models import ModelName".
@@ -147,3 +148,6 @@ class Migration(DataMigration):
     )
     complete_apps = ['waffle', 'devmo']
     symmetrical = True
+    depends_on = (
+        ("waffle", "0008_auto__add_field_flag_languages"),
+    )
