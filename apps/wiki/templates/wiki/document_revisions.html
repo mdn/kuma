@@ -43,6 +43,11 @@
               <div class="radio">
                 {% if not loop.last %}<input type="radio" name="to" value="{{ rev.id }}" {% if loop.first %}checked="checked"{% endif %} />{% endif %}
               </div>
+               <div class="prev">
+              {% if rev.get_previous().id %}
+                <a href="{{ url('wiki.compare_revisions', document.full_path) }}?to={{ rev.id }}&from={{ rev.get_previous().id }}">{{ _('Previous') }}</a>
+              {% endif %}
+              </div>
               <div class="date">
                 <a href="{{ url('wiki.revision', document.full_path, rev.id) }}" rel="nofollow, noindex">{{ datetimeformat(rev.created, format='datetime') }}</a>
               </div>
