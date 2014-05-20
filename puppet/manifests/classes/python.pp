@@ -29,7 +29,7 @@ class python_prereqs {
         "install-extras":
             require => Exec["install-pip"],
             # we install 1.4.9 here separately because 1.4.x can't be packaged as a wheel file
-            command => '/usr/local/bin/pip2.6 install wheel virtualenv Django==1.4.9';
+            command => '/usr/local/bin/pip2.6 install wheel virtualenv "Django<1.5"';
     }
     exec {
         "create-virtualenv":
