@@ -1120,6 +1120,11 @@ LOGGING = {
             'filters': ['require_debug_false'],
             'level': logging.ERROR,
         },
+        'kuma_task_logger': {
+            'class': 'logging.FileHandler',
+            'filename': '/tmp/kuma_task.log',
+            'level': logging.DEBUG
+        }
     },
     'loggers': {
         'mdn': {
@@ -1137,6 +1142,11 @@ LOGGING = {
         'elasticsearch': {
             'level': logging.ERROR,
             'handlers': ['console'],
+        },
+        'k.task': {
+            'handlers': ['kuma_task_logger'],
+            'level': logging.DEBUG,
+            'propagate': True,
         },
     },
 }
