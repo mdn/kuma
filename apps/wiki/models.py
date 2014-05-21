@@ -1335,12 +1335,12 @@ class Document(NotificationsMixin, models.Model):
             raise Exception("Attempt to delete document %s: %s" %
                             (self.id, self.title))
         else:
-            signals.pre_delete.send(sender=self.__class__,
-                                    instance=self)
             if self.is_redirect or 'purge' in kwargs:
                 if 'purge' in kwargs:
                     kwargs.pop('purge')
                 return super(Document, self).delete(*args, **kwargs)
+            signals.pre_delete.send(sender=self.__class__,
+                                    instance=self)
             if not self.deleted:
                 Document.objects.filter(pk=self.pk).update(deleted=True)
             signals.post_delete.send(sender=self.__class__,
