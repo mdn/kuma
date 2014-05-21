@@ -104,7 +104,16 @@
                 {% else %}
                   {% include 'wiki/includes/document_toc_field.html' %}
                 {% endif %}
-                <li><label>{{_('Rendering max age (in seconds):')}}</label> {{ revision_form.render_max_age | safe }}</li>
+                <li>
+                  <label>{{_('Rendering max age (in hours):')}}</label>
+                  <div class="slider-container">
+                    <div id="render_age_slider"></div>
+                    <span id="age_value">1 hour</span>
+                  </div>
+                  <div class="offscreen">
+                    {{ revision_form.render_max_age |  safe }}
+                  </div>
+                </li>
                 <li class="metadata-choose-parent">
                     {{_('Find the translation source with the lookup below and then click "Save Changes.')}}
                     <br />
@@ -194,5 +203,4 @@
       {% include 'wiki/includes/ckeditor_scripts.html' %}
     {% endif %}
     {{ js('wiki-edit') }}
-
 {% endblock %}
