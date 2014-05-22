@@ -797,7 +797,6 @@ CELERY_IGNORE_RESULT = True
 CELERY_ALWAYS_EAGER = True  # For tests. Set to False for use.
 CELERY_SEND_TASK_ERROR_EMAILS = True
 CELERYD_LOG_LEVEL = logging.INFO
-CELERYD_HIJACK_ROOT_LOGGER = False
 CELERYD_CONCURRENCY = 4
 
 CELERY_IMPORTS = (
@@ -1121,11 +1120,6 @@ LOGGING = {
             'filters': ['require_debug_false'],
             'level': logging.ERROR,
         },
-        'kuma_task_logger': {
-            'class': 'logging.FileHandler',
-            'filename': '/tmp/kuma_task.log',
-            'level': logging.DEBUG
-        }
     },
     'loggers': {
         'mdn': {
@@ -1143,11 +1137,6 @@ LOGGING = {
         'elasticsearch': {
             'level': logging.ERROR,
             'handlers': ['console'],
-        },
-        'k.task': {
-            'handlers': ['kuma_task_logger'],
-            'level': logging.DEBUG,
-            'propagate': True,
         },
     },
 }
