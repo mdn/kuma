@@ -25,12 +25,12 @@ from sumo.tests import TestCase
 from devmo.tests import override_constance_settings
 
 from wiki.cron import calculate_related_documents
+from wiki.exceptions import (PageMoveError,
+                             DocumentRenderedContentNotAvailable,
+                             DocumentRenderingInProgress)
 from wiki.models import (Document, Revision,
                          Attachment, DocumentZone, CATEGORIES,
                          get_current_or_latest_revision,
-                         DocumentRenderedContentNotAvailable,
-                         DocumentRenderingInProgress,
-                         PageMoveError,
                          TaggedDocument,)
 from wiki.tests import (document, revision, doc_rev, normalize_html,
                         create_template_test_users,

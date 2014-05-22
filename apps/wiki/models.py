@@ -55,7 +55,7 @@ from .content import (get_seo_description, get_content_sections,
                       extract_css_classnames, extract_html_attributes,
                       extract_kumascript_macro_names,
                       SectionTOCFilter, H2TOCFilter, H3TOCFilter,)
-from .exceptions import (UniqueCollision, SlugCollision,
+from .exceptions import (UniqueCollision, SlugCollision, PageMoveError,
                          DocumentRenderingInProgress,
                          DocumentRenderedContentNotAvailable)
 from .signals import render_done
@@ -314,13 +314,6 @@ SECONDARY_CACHE_ALIAS = getattr(settings,
                                 'SECONDARY_CACHE_ALIAS',
                                 'secondary')
 URL_REMAPS_CACHE_KEY_TMPL = 'DocumentZoneUrlRemaps:%s'
-
-class PageMoveError(Exception):
-    """
-    Exception raised by most failures during page move.
-
-    """
-    pass
 
 
 def cache_with_field(field_name):
@@ -951,7 +944,7 @@ class Document(NotificationsMixin, models.Model):
 
         # Disallow rendering while another is in progress.
         if self.is_rendering_in_progress:
-            raise DocumentRenderingInProgress()
+            raise DocumentRenderingInProgress
 
         # Note when the rendering was started. Kind of a hack, doing a quick
         # update and setting the local property rather than doing a save()
