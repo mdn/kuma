@@ -13,6 +13,11 @@ class DocumentRenderingInProgress(Exception):
     disallowed."""
 
 
+class StaleDocumentsRenderingInProgress(Exception):
+    """An attempt to render a stale page while a rendering is already in
+    progress is disallowed."""
+
+
 class DocumentRenderedContentNotAvailable(Exception):
     """No rendered content available, and an attempt to render on the spot was
     denied. So, the view should fall back to presenting raw content for now."""

@@ -1,18 +1,11 @@
 """
 Manually re-render stale documents
 """
-import sys
 import logging
 from optparse import make_option
 
-reload(sys)
-sys.setdefaultencoding('utf8')
-
-from django.conf import settings
-from django.core.management.base import (BaseCommand, NoArgsCommand,
-                                         CommandError)
-
-from wiki.models import Document
+from django.core.management.base import BaseCommand
+from wiki.tasks import render_stale_documents
 
 
 class Command(BaseCommand):
@@ -25,5 +18,4 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         self.options = options
-        Document.objects.render_stale(log=logging,
-                                      immediate=options['immediate'])
+        render_stale_documents(log=logging, immediate=options['immediate'])

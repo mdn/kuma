@@ -9,12 +9,17 @@ from django.db import transaction
 from django.dispatch import receiver
 
 import celery.conf
-from celery.task import task
+from celery.task import task, group
 from celery.messaging import establish_connection
 
+from devmo.utils import MemcacheLock
+
 from sumo.utils import chunked
-from wiki.models import Document, PageMoveError, SlugCollision
-from wiki.signals import render_done
+
+from .exceptions import (StaleDocumentsRenderingInProgress,
+                         SlugCollision, PageMoveError)
+from .models import Document
+from .signals import render_done
 
 
 log = logging.getLogger('k.task')
@@ -77,17 +82,54 @@ def _rebuild_kb_chunk(data, **kwargs):
         mail_admins(subject=subject, message='\n'.join(messages))
 
 
-@task(rate_limit='10/m')
+@task(rate_limit='60/m')
 def render_document(pk, cache_control, base_url):
     """Simple task wrapper for the render() method of the Document model"""
     document = Document.objects.get(pk=pk)
     document.render(cache_control, base_url)
+    return document.rendered_errors
 
 
 @task
-def render_stale_documents(immediate=False):
+def render_stale_documents(immediate=False, log=None):
     """Simple task wrapper for rendering stale documents"""
-    Document.objects.render_stale(immediate=immediate, log=log)
+    lock = MemcacheLock('render-stale-documents-lock')
+    if lock.acquired and not immediate:
+        # fail loudly if this is running already
+        # may indicate a problem with the schedule of this task
+        raise StaleDocumentsRenderingInProgress
+
+    stale_docs = Document.objects.get_by_stale_rendering()
+    if stale_docs.count() == 0:
+        # not stale documents to render
+        return
+
+    if log is None:
+        # fetch a logger in case none is given
+        log = render_stale_documents.get_logger()
+
+    log.info("Found %s stale documents" % stale_docs.count())
+    response = None
+    if lock.acquire():
+        try:
+            subtasks = []
+            for doc in stale_docs:
+                if immediate:
+                    doc.render('no-cache', settings.SITE_URL)
+                    log.info("Rendered stale %s" % doc)
+                else:
+                    subtask = render_document.subtask((doc.pk, 'no-cache',
+                                                       settings.SITE_URL))
+                    subtasks.append(subtask)
+                    log.info("Deferred rendering for stale %s" % doc)
+            if subtasks:
+                # the callback is called at the end of the groyp
+                task_group = group(tasks=subtasks)
+                result = task_group.apply()  # kick off the group
+                response = result.join()
+        finally:
+            lock.release()
+    return response
 
 
 @task

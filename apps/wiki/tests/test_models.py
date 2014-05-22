@@ -15,6 +15,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User, Group, Permission
 from django.contrib.contenttypes.models import ContentType
 
+from celery.signals import task_postrun
 import constance.config
 
 from waffle.models import Switch
@@ -22,6 +23,7 @@ from waffle.models import Switch
 from sumo import ProgrammingError
 from sumo.tests import TestCase
 
+from devmo.utils import MemcacheLock
 from devmo.tests import override_constance_settings
 
 from wiki.cron import calculate_related_documents
@@ -1179,9 +1181,7 @@ class RenderExpiresTests(TestCase):
 
     @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0)
     @mock.patch('wiki.kumascript.get')
-    @mock.patch_object(tasks.render_document, 'delay')
-    def test_render_stale(self, mock_render_document_delay,
-                          mock_kumascript_get):
+    def test_render_stale(self, mock_kumascript_get):
         mock_kumascript_get.return_value = ('MOCK CONTENT', None)
 
         now = datetime.now()
@@ -1191,14 +1191,16 @@ class RenderExpiresTests(TestCase):
         d1.last_rendered_at = earlier
         d1.render_expires = now - timedelta(seconds=100)
         d1.save()
+        eq_(Document.objects.get_by_stale_rendering().count(), 1)
 
-        Document.objects.render_stale()
+        lock = MemcacheLock('render-stale-documents-lock')
+        ok_(not lock.acquired)
+        tasks.render_stale_documents()
+        ok_(not lock.acquired)
+        eq_(Document.objects.get_by_stale_rendering().count(), 0)
 
         d1_fresh = Document.objects.get(pk=d1.pk)
-        ok_(mock_render_document_delay.called)
-        # HACK: Exact time comparisons suck, because database
-        ok_(d1_fresh.last_rendered_at > earlier - timedelta(seconds=1))
-        ok_(d1_fresh.last_rendered_at < earlier + timedelta(seconds=1))
+        ok_(d1_fresh.last_rendered_at > earlier)
 
     @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0)
     @mock.patch('wiki.kumascript.get')
@@ -1215,7 +1217,7 @@ class RenderExpiresTests(TestCase):
         d1.render_expires = now - timedelta(seconds=100)
         d1.save()
 
-        Document.objects.render_stale(immediate=True)
+        tasks.render_stale_documents(immediate=True)
 
         d1_fresh = Document.objects.get(pk=d1.pk)
         ok_(not mock_render_document_delay.called)
@@ -1756,7 +1758,7 @@ class PageMoveTests(TestCase):
         When page move fails in moving one of the children, it
         generates an informative exception message explaining which
         child document failed.
-        
+
         """
         top = revision(title='Test page-move error messaging',
                        slug='test-move-error-messaging',
@@ -1803,7 +1805,7 @@ class PageMoveTests(TestCase):
                 'raise Exception("Requested move would overwrite a non-redirect page.")',
             ]
             for s in err_strings:
-                ok_(s in e.message)
+                ok_(s in e.args[0])
 
 
 class DocumentZoneTests(TestCase):
