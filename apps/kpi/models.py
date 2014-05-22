@@ -1,8 +1,5 @@
-from django.db.models import (CharField, DateField, ForeignKey,
-                              PositiveIntegerField)
-
-from sumo.models import ModelBase
-
+from django.db import models
+from devmo.models import ModelBase
 
 L10N_METRIC_CODE = 'general wiki:l10n:coverage'
 KB_L10N_CONTRIBUTORS_METRIC_CODE = 'general wiki:l10n:contributors'
@@ -10,7 +7,7 @@ KB_L10N_CONTRIBUTORS_METRIC_CODE = 'general wiki:l10n:contributors'
 
 class MetricKind(ModelBase):
     """A programmer-readable identifier of a metric, like 'clicks: search'"""
-    code = CharField(max_length=255, unique=True)
+    code = models.CharField(max_length=255, unique=True)
 
     def __unicode__(self):
         return self.code
@@ -34,16 +31,16 @@ class Metric(ModelBase):
     # clickthrough rate ratio will always exist, but the app can make sure it's
     # true upon inserting them.
 
-    kind = ForeignKey(MetricKind)
-    start = DateField()
+    kind = models.ForeignKey(MetricKind)
+    start = models.DateField()
 
     # Not useful yet. Present metrics have spans of known length.
-    end = DateField()
+    end = models.DateField()
 
     # Ints should be good enough for all the currently wish-listed metrics.
     # Percents can be (even better) represented by 2 separate metrics: one for
     # numerator, one for denominator.
-    value = PositiveIntegerField(blank=True, null=True)
+    value = models.PositiveIntegerField(blank=True, null=True)
 
     class Meta(object):
         unique_together = [('kind', 'start', 'end')]

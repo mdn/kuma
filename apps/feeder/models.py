@@ -1,14 +1,12 @@
 from django.db import models
 
-import caching.base
 import jsonpickle
 
 from devmo import SECTIONS_TWITTER, SECTIONS_UPDATES
-from devmo.models import ModelBase
 import utils
 
 
-class BundleManager(caching.base.CachingManager):
+class BundleManager(models.Manager):
     """Custom manager for bundles."""
 
     def recent_entries(self, bundles):
@@ -22,7 +20,7 @@ class BundleManager(caching.base.CachingManager):
                 feed__bundles__shortname__in=bundles)
 
 
-class Bundle(ModelBase):
+class Bundle(models.Model):
     """A bundle of several feeds. A feed can be in several (or no) bundles."""
 
     shortname = models.SlugField(
@@ -36,7 +34,7 @@ class Bundle(ModelBase):
         return self.shortname
 
 
-class Feed(ModelBase):
+class Feed(models.Model):
     """A feed holds the metadata of an RSS feed."""
 
     shortname = models.SlugField(
@@ -78,7 +76,7 @@ class Feed(ModelBase):
             item.delete()
 
 
-class Entry(ModelBase):
+class Entry(models.Model):
     """An entry is an item representing feed content."""
 
     feed = models.ForeignKey(Feed, related_name='entries')
