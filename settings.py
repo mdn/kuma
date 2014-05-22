@@ -52,15 +52,14 @@ MIGRATION_DATABASES = {
 }
 
 # Cache Settings
-CACHE_BACKEND = 'locmem://?timeout=86400'
-CACHE_PREFIX = 'kuma:'
-CACHE_COUNT_TIMEOUT = 60  # seconds
+CACHE_PREFIX = 'kuma'
+CACHE_COUNT_TIMEOUT = 60  # in seconds
 
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'TIMEOUT': 60,
-        'KEY_PREFIX': 'kuma',
+        'TIMEOUT': CACHE_COUNT_TIMEOUT,
+        'KEY_PREFIX': CACHE_PREFIX,
     },
     # NOTE: The 'secondary' cache should be the same as 'default' in
     # settings_local. The only reason it exists is because we had some issues
@@ -68,9 +67,15 @@ CACHES = {
     # caching on a case-by-case basis to resolve the issue.
     'secondary': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'TIMEOUT': 60,
-        'KEY_PREFIX': 'kuma',
-    }
+        'TIMEOUT': CACHE_COUNT_TIMEOUT,
+        'KEY_PREFIX': CACHE_PREFIX,
+    },
+    'memcache': {
+        'BACKEND': 'memcached_hashring.backend.MemcachedHashRingCache',
+        'TIMEOUT': CACHE_COUNT_TIMEOUT * 60,
+        'KEY_PREFIX': CACHE_PREFIX,
+        'LOCATION': ['127.0.0.1:11211'],
+    },
 }
 
 SECONDARY_CACHE_ALIAS = 'secondary'
@@ -521,8 +526,9 @@ def JINJA_CONFIG():
     import jinja2
     from django.conf import settings
     from django.core.cache.backends.memcached import CacheClass as MemcachedCacheClass
-    from caching.base import cache
-    config = {'extensions': ['tower.template.i18n', 'caching.ext.cache',
+    from django.core.cache import get_cache
+    cache = get_cache('memcache')
+    config = {'extensions': ['tower.template.i18n',
                              'jinja2.ext.with_', 'jinja2.ext.loopcontrols',
                              'jinja2.ext.autoescape'],
               'finalize': lambda x: x if x is not None else ''}
@@ -532,7 +538,7 @@ def JINJA_CONFIG():
         # Details: http://jinja.pocoo.org/2/documentation/api#bytecode-cache
         # and in the errors you get when you try it the other way.
         bc = jinja2.MemcachedBytecodeCache(cache._cache,
-                                           "%sj2:" % settings.CACHE_PREFIX)
+                                           "%s:j2:" % settings.CACHE_PREFIX)
         config['cache_size'] = -1  # Never clear the cache
         config['bytecode_cache'] = bc
     return config
@@ -877,7 +883,8 @@ SOUTH_MIGRATION_MODULES = {
 }
 
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
-CONSTANCE_DATABASE_CACHE_BACKEND = None
+# must be an entry in the CACHES setting!
+CONSTANCE_DATABASE_CACHE_BACKEND = 'memcache'
 
 # Settings and defaults controllable by Constance in admin
 CONSTANCE_CONFIG = dict(
