@@ -4,7 +4,6 @@ import hashlib
 import re
 import json
 import newrelic.agent
-import logging
 import operator
 import traceback
 import sys
@@ -63,7 +62,6 @@ from .signals import render_done
 
 add_introspection_rules([], ["^utils\.OverwritingFileField"])
 
-task_log = logging.getLogger('k.task')
 
 ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'div', 'span', 'p', 'br', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
@@ -432,8 +430,6 @@ class BaseDocumentManager(models.Manager):
                 if log:
                     log.info("Rendered stale %s" % doc)
             else:
-                task_log.debug('render_document(%s, %s, %s)' % (doc.pk, 'no-cache', settings.SITE_URL))
-                task_log.debug(''.join(traceback.format_stack()))
                 tasks.render_document.delay(doc.pk, 'no-cache', settings.SITE_URL)
                 if log:
                     log.info("Deferred rendering for stale %s" % doc)
@@ -946,8 +942,6 @@ class Document(NotificationsMixin, models.Model):
             # Attempt to queue a rendering. If celery.conf.ALWAYS_EAGER is
             # True, this is also an immediate rendering.
             from . import tasks
-            task_log.debug('render_document(%s, %s, %s)' % (self.pk, cache_control, base_url))
-            task_log.debug(''.join(traceback.format_stack()))
             tasks.render_document.delay(self.pk, cache_control, base_url)
 
     def render(self, cache_control=None, base_url=None, timeout=None):

@@ -9,7 +9,6 @@ import urlparse
 import hashlib
 import logging
 from optparse import make_option
-import traceback
 
 # HACK: This is the fattest hack I've written in awhile. I blame ianbicking
 # http://blog.ianbicking.org/illusive-setdefaultencoding.html
@@ -28,9 +27,6 @@ from django.core.management.base import (BaseCommand, NoArgsCommand,
 from wiki.models import (Document, Revision,
                          DocumentRenderingInProgress)
 from wiki.tasks import render_document
-
-
-log = logging.getLogger('k.task')
 
 
 class Command(BaseCommand):
@@ -113,8 +109,6 @@ class Command(BaseCommand):
         if self.options['defer']:
             logging.info(u"Queuing deferred render for %s (%s)" %
                           (doc, doc.get_absolute_url()))
-            log.debug('render_document(%s, %s, %s)' % (doc.pk, cc, self.base_url))
-            log.debug(''.join(traceback.format_stack()))
             render_document.delay(doc.pk, cc, self.base_url)
             logging.debug(u"Queued.")
 
