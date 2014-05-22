@@ -114,19 +114,21 @@ summary-padding = 5px;
             &.metadata-choose-parent {
                 display: none;
                 set-font-size(small-bump-font-size);
-
-                #parent_text {
-                    margin-top: 10px;
-                }
             }
 
             input, input#id_title {
+                float: left;
                 margin: 2px 0px;
                 padding: 6px 8px;
                 width: 70%;
             }
 
-            label {
+            select {
+                float: left;
+                margin: 5px 0;
+            }
+
+            label, legend {
                 color: #888;
                 display: block;
                 float: left;
@@ -136,6 +138,27 @@ summary-padding = 5px;
                 text-align: right;
                 width: auto;
             }
+        }
+    }
+
+    .metadata .duration-container {
+        display: inline-block;
+        float: left;
+        margin-left: 5px;
+
+        input {
+            display: inline-block;
+            width: 50px;
+        }
+
+        div {
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        label {
+            float: right;
+            margin-left: 5px;
         }
     }
 
