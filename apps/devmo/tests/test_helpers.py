@@ -2,7 +2,8 @@ from nose.tools import eq_, ok_
 import test_utils
 from soapbox.models import Message
 
-from devmo.helpers import urlencode, get_soapbox_messages, datetimeformat
+from devmo.helpers import (urlencode, soapbox_messages, get_soapbox_messages,
+                           datetimeformat)
 
 
 class TestUrlEncode(test_utils.TestCase):
@@ -43,3 +44,10 @@ class TestSoapbox(test_utils.TestCase):
         eq_(m.message, get_soapbox_messages(
             "/en-US/demos/devderby")[0].message)
         eq_(m.message, get_soapbox_messages("/de/demos/devderby")[0].message)
+
+    def test_message_with_url_is_link(self):
+        m = Message(message="Go to http://bit.ly/sample-demo", is_global=True, is_active=True, url="/")
+        m.save()
+        ok_('Go to <a href="http://bit.ly/sample-demo">'
+            'http://bit.ly/sample-demo</a>' in
+            soapbox_messages(get_soapbox_messages("/")))
