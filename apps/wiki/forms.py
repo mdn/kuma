@@ -477,7 +477,7 @@ class TreeMoveForm(forms.Form):
             try:
                 valid_slug_parent(slug, locale)
             except Exception, e:
-                raise forms.ValidationError(e.message)
+                raise forms.ValidationError(e.args[0])
         return cleaned_data
 
 
