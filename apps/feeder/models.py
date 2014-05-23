@@ -1,9 +1,9 @@
 from django.db import models
+from django.utils.functional import cached_property
 
 import jsonpickle
 
 from devmo import SECTIONS_TWITTER, SECTIONS_UPDATES
-import utils
 
 
 class BundleManager(models.Manager):
@@ -102,12 +102,12 @@ class Entry(models.Model):
     def __unicode__(self):
         return '%s: %s' % (self.feed.shortname, self.guid)
 
-    @utils.cached_property
+    @cached_property
     def parsed(self):
         """Unpickled feed data."""
         return jsonpickle.decode(self.raw)
 
-    @utils.cached_property
+    @cached_property
     def section(self):
         """The section this entry is associated with."""
         try:

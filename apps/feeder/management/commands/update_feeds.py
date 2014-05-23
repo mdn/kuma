@@ -4,7 +4,7 @@ import socket
 import time
 
 from django.conf import settings
-from django.core.management.base import NoArgsCommand, CommandError
+from django.core.management.base import NoArgsCommand
 from django.db import IntegrityError
 from django.utils import encoding, hashcompat
 
@@ -13,7 +13,7 @@ import feedparser
 import jsonpickle
 
 from feeder.models import Feed, Entry
-from utils import locked
+from devmo.utils import file_lock
 
 
 log = commonware.log.getLogger('mdn.feeder')
@@ -27,7 +27,7 @@ class Command(NoArgsCommand):
                     default=False, help='Fetch even disabled feeds.'),
     )
 
-    @locked('kuma_feeder_lock')
+    @file_lock('kuma_feeder')
     def handle_noargs(self, **options):
         """
         Locked command handler to avoid running this command more than once
