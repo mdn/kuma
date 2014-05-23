@@ -2,7 +2,7 @@ import logging
 
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.core.cache import cache
+from django.core.cache import get_cache
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail, mail_admins
 from django.db import transaction
@@ -29,6 +29,7 @@ def schedule_rebuild_kb():
     """Try to schedule a KB rebuild, if we're allowed to."""
     if not settings.WIKI_REBUILD_ON_DEMAND or celery.conf.ALWAYS_EAGER:
         return
+    cache = get_cache('memcache')
 
     if cache.get(settings.WIKI_REBUILD_TOKEN):
         log.debug('Rebuild task already scheduled.')
@@ -42,6 +43,7 @@ def schedule_rebuild_kb():
 @task(rate_limit='3/h')
 def rebuild_kb():
     """Re-render all documents in the KB in chunks."""
+    cache = get_cache('memcache')
     cache.delete(settings.WIKI_REBUILD_TOKEN)
 
     d = (Document.objects.using('default')
