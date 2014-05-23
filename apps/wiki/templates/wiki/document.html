@@ -43,8 +43,6 @@
 {% block bodyclass %}document {% if is_zone %}zone{% endif %} {% if is_zone_root %}zone-landing{% endif %}{% endblock %}
 {% block body_attributes %}data-slug="{{ document.slug }}" contextmenu="edit-history-menu"{% endblock body_attributes %}
 
-{% block main_content_id %}document-main{% endblock %}
-
 {% block site_css %}
     {{ super() }}
     {% if zone_stack %}
@@ -100,7 +98,7 @@
   {% if is_zone %}
       {% if is_zone_root %}
 
-        <div class="zone-landing-header" id="document-main"><div class="center">
+        <div class="zone-landing-header"><div class="center">
           <!-- edit, settings buttons -->
           {{ buttons }}
 
@@ -135,7 +133,7 @@
           <div class="zone-image"></div>
         </div></div>
       {% else %}
-        <div class="zone-article-header" id="document-main"><div class="center">
+        <div class="zone-article-header"><div class="center">
           <!-- zone title -->
           <div class="zone-title"><a href="{{ zone_stack[0].document.get_absolute_url() }}">{{ zone_stack[0].document.title }}</a></div>
           <!-- zone image -->
@@ -146,7 +144,7 @@
     {% endif %} <!-- end is_zone -->
 
 
-    <div class="wiki-main-content" {% if not is_zone %}id="document-main"{% endif %}><div class="center">
+    <div class="wiki-main-content"><div class="center">
       {% if not is_zone_root %}
       <div class="article-meta">
         <!-- action buttons -->
