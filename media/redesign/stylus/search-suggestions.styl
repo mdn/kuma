@@ -9,7 +9,7 @@
     big-search();
     color: #fff;
     cursor: text;
-    min-height: 36px;
+    min-height: 28px;
     padding: 6px;
     position: relative;
     .show-topics{
@@ -25,11 +25,26 @@
       border: none;
       color: #fff;
       display: inline;
-      padding: 0 8px;
+      outline: none;
+      padding: 0 8px 2px;
       vertical-align: middle;
       width: auto; 
+      &::-webkit-input-placeholder { /* WebKit browsers */
+          color: #DDD;
+      }
+      &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+          color: #DDD;
+          opacity: 1;
+      }
+      &::-moz-placeholder { /* Mozilla Firefox 19+ */
+          color: #DDD;
+          opacity: 1;
+      }
+      &:-ms-input-placeholder { /* Internet Explorer 10+ */
+          color: #DDD;
+      }
     }
-  }
+  } /* end .search-wrapper */
 
   .notificaton-first-time {
     big-search();
@@ -62,7 +77,7 @@
       right: 0px;
       top: 4px;
     }
-  }
+  } /* end .notificaton-first-time */
 
   .suggestions {
     big-search();
@@ -90,13 +105,12 @@
         span {
           float: right;
         }
-      }
-    }
-  }
+      } /* end a.search-ss */
+    } /* end li */
+  } /* end .suggestions */
 
-  .filters-left,
-  .filters-right {
-    display: inline-block;
+  .filter-arrow {
+    display: none;
     margin: 0 3px; 
     i[class^="icon-"] {
       margin: 0px !important;
@@ -105,24 +119,25 @@
         cursor: pointer !important;
       }
     }
-  }
+  } /* end .filter-arrow */
 
   .filters {
     display: inline-block;
-    height: 35px;
+    height: 28px;
     max-width: 70%;
     overflow: hidden;
     position: relative;
     vertical-align: top;
     white-space: nowrap;
     span.topic {
+      display: inline;
       background-color: #202F67!important;
       box-shadow: none;
       color: #FFF!important;
       cursor: default!important;
       margin-right: 5px;
       padding: 3px 11px 3px 17px !important;
-      text-transform: none!important;
+      text-transform: none !important;
       button.close {
         background-color: transparent !important;
         box-shadow: none;
@@ -132,9 +147,9 @@
         i[class^="icon-"] {
           margin-left: 0;
         }
-      }
-    }
-  }
+      } /* end button.close */
+    } /* end span.topic */
+  } /* end .filters */
 
   &.dark {
     .search-wrapper, .suggestions {
@@ -145,7 +160,8 @@
     }
   }
 
-}
+} /* end .search-form */
+
 @-webkit-keyframes openNotification {
   from {
     opacity: 0;
