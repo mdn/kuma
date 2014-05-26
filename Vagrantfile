@@ -15,7 +15,6 @@ end
 CONF = _config
 
 Vagrant.configure("2") do |config|
-
     config.vm.box = CONF['box']
     config.vm.network :private_network, :ip => CONF['ip_address']
     config.package.name = CONF['package_name']
@@ -84,6 +83,12 @@ Vagrant.configure("2") do |config|
       rs.public_key_path = CONF["rs_public_key"]
       rs.flavor = /512MB/
       rs.image = /Ubuntu/
+    end
+
+    config.vm.provision :shell do |shell|
+      shell.inline = "mkdir -p /etc/puppet/modules;
+                      puppet module install -f puppetlabs-apt;
+                      puppet module install -f elasticsearch-elasticsearch"
     end
 
     config.vm.provision :puppet do |puppet|
