@@ -1,14 +1,14 @@
 import datetime
 from optparse import make_option
+import logging
 import socket
 import time
 
 from django.conf import settings
-from django.core.management.base import NoArgsCommand, CommandError
+from django.core.management.base import NoArgsCommand
 from django.db import IntegrityError
 from django.utils import encoding, hashcompat
 
-import commonware
 import feedparser
 import jsonpickle
 
@@ -16,7 +16,7 @@ from feeder.models import Feed, Entry
 from utils import locked
 
 
-log = commonware.log.getLogger('mdn.feeder')
+log = logging.getLogger('kuma.feeder')
 
 
 class Command(NoArgsCommand):
@@ -69,11 +69,12 @@ class Command(NoArgsCommand):
                     log.debug('Processing title: %s', stream.feed.title)
 
                 dirty_feed = False
-                if 'feed' in stream and 'title' in stream.feed and feed.title != stream.feed.title:
+                if ('feed' in stream and 'title' in stream.feed and
+                        feed.title != stream.feed.title):
                     feed.title = stream.feed.title
                     dirty_feed = True
                 else:
-                    if (not 'feed' in stream) or (not 'title' in stream.feed):
+                    if ('feed' not in stream) or ('title' not in stream.feed):
                         log.warn("Feed doesn't have a title property")
                         log.info(stream)
 
@@ -110,56 +111,72 @@ class Command(NoArgsCommand):
         dirty_feed = False
         has_updates = False
 
-        if feed.etag == None:
+        if feed.etag is None:
             feed.etag = ''
-        if feed.last_modified == None:
+        if feed.last_modified is None:
             feed.last_modified = datetime.datetime(1975, 1, 10)
         log.debug("feed id=%s feed url=%s etag=%s last_modified=%s" % (
             feed.shortname, feed.url, feed.etag, str(feed.last_modified)))
-        stream = feedparser.parse(feed.url, etag=feed.etag,
-                                  modified=feed.last_modified.timetuple())
+        try:
+            stream = feedparser.parse(feed.url, etag=feed.etag,
+                                      modified=feed.last_modified.timetuple())
+        except UnicodeDecodeError:
+            print(feed.url)
 
         # Next 70 lines of code from planet/planet/.__init__.py channel update
-        url_status = str(500)
-        if stream.has_key("status"):
-            url_status = str(stream.status)
-        elif stream.has_key("entries") and len(stream.entries)>0:
-            url_status = str(200)
-        elif stream.bozo and stream.bozo_exception.__class__.__name__=='Timeout':
-            url_status = str(408)
+        url_status = '500'
 
-        if url_status == '301' and \
-            (stream.has_key("entries") and len(stream.entries)>0):
+        if 'status' in stream:
+            url_status = str(stream.status)
+
+        elif 'entries' in stream and len(stream.entries) > 0:
+            url_status = '200'
+
+        elif (stream.bozo and
+                stream.bozo_exception.__class__.__name__ == 'Timeout'):
+            url_status = '408'
+
+        if url_status == '301' and ('entries' in stream and
+                                    len(stream.entries) > 0):
             log.info("Feed has moved from <%s> to <%s>", feed.url, stream.url)
             feed.url = stream.url
             dirty_feed = True
+
         elif url_status == '304':
             log.debug("Feed unchanged")
             if not feed.enabled:
                 feed.enabled = True
                 dirty_feed = True
+
         elif url_status == '404':
             log.info("Not a Feed or Feed %s is gone", feed.url)
             feed.enabled = False
-            feed.disabled_reason = "This is not a feed or it's been removed removed!";
+            feed.disabled_reason = ("This is not a feed or it's "
+                                    "been removed removed!")
             dirty_feed = True
+
         elif url_status == '410':
             log.info("Feed %s gone", feed.url)
             feed.enabled = False
-            feed.disabled_reason = "This feed has been removed!";
+            feed.disabled_reason = "This feed has been removed!"
             dirty_feed = True
+
         elif url_status == '408':
             feed.enabled = False
-            feed.disabled_reason = "This feed didn't respond after %d seconds" % settings.FEEDER_TIMEOUT
+            feed.disabled_reason = ("This feed didn't respond "
+                                    "after %d seconds" %
+                                    settings.FEEDER_TIMEOUT)
             dirty_feed = True
+
         elif int(url_status) >= 400:
             feed.enabled = False
             bozo_msg = ""
             if 1 == stream.bozo and 'bozo_exception' in stream.keys():
                 log.error('Unable to fetch %s Exception: %s',
-                      feed.url, stream.bozo_exception)
+                          feed.url, stream.bozo_exception)
                 bozo_msg = stream.bozo_exception
-            feed.disabled_reason = "Error while reading the feed: %s __ %s" % (url_status, bozo_msg)
+            feed.disabled_reason = ("Error while reading the feed: %s __ %s" %
+                                    (url_status, bozo_msg))
             dirty_feed = True
         else:
             # We've got a live one...
@@ -170,13 +187,16 @@ class Command(NoArgsCommand):
                 dirty_feed = True
             has_updates = True
 
-        if stream.has_key("etag") and stream.etag != feed.etag and stream.etag != None:
+        if ('etag' in stream and stream.etag != feed.etag and
+                stream.etag is not None):
             log.info("New etag %s" % stream.etag)
             feed.etag = stream.etag
             dirty_feed = True
 
-        if stream.has_key("modified") and stream.modified != feed.last_modified:
-            feed.last_modified = time.strftime("%Y-%m-%d %H:%M:%S", stream.modified)
+        if ('modified' in stream and
+                stream.modified_parsed != feed.last_modified):
+            feed.last_modified = time.strftime("%Y-%m-%d %H:%M:%S",
+                                               stream.modified_parsed)
             log.info("New last_modified %s" % feed.last_modified)
             dirty_feed = True
 
@@ -200,7 +220,8 @@ class Command(NoArgsCommand):
             entry_guid = ''
 
             if ('guid' in entry and
-                len(entry.guid) <= Entry._meta.get_field_by_name('guid')[0].max_length):
+                (len(entry.guid) <=
+                 Entry._meta.get_field_by_name('guid')[0].max_length)):
                 entry_guid = entry.guid
             else:
                 entry_guid = hashcompat.md5_constructor(encoding.smart_str(
@@ -220,7 +241,6 @@ class Command(NoArgsCommand):
                 new_entry.save()
                 return True
             except IntegrityError, e:
-                #log.debug('Skipping duplicate entry %s, caught error: %s', entry_guid, e)
                 pass
 
         except KeyboardInterrupt:

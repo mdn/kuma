@@ -16,7 +16,7 @@ carrot==0.10.7
 celery==2.5.5
 django-celery==2.5.5
 django-threadedcomments==0.5.2
-feedparser==4.1
+feedparser==5.1.3
 html5lib==0.90
 jsonpickle==0.3.1
 kombu==2.2.0
