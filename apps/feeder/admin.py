@@ -6,6 +6,7 @@ from .models import Feed, Entry, Bundle
 class BundleInline(admin.TabularInline):
     model = Bundle.feeds.through
 
+
 class FeedAdmin(admin.ModelAdmin):
     inlines = [BundleInline]
 admin.site.register(Feed, FeedAdmin)
