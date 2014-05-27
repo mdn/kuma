@@ -34,7 +34,8 @@ class apache {
         ensure => purged;
     }
     package { [ "apache2" ]:
-        ensure => present;
+        ensure => present,
+        require => Exec["apt-get-update"];
     }
 }
 
@@ -42,6 +43,7 @@ class apache {
 class mysql {
     package { [ "mysql-server", "libmysqlclient-dev" ]:
         ensure => present,
+        require => Exec["apt-get-update"];
     }
 }
 
@@ -49,6 +51,7 @@ class mysql {
 class memcache {
     package { [ "memcached", "libmemcached-dev" ]:
         ensure => present,
+        require => Exec["apt-get-update"];
     }
     service { "memcached":
         ensure => running,
@@ -61,6 +64,7 @@ class memcache {
 class rabbitmq {
     package { ["rabbitmq-server"]:
         ensure => present,
+        require => Exec["apt-get-update"];
     }
     service { "rabbitmq-server":
         ensure => running,
