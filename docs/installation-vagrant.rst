@@ -20,7 +20,10 @@ Getting up and running
 #. (Windows) After installing VirtualBox you need to set the path
                 PATH=C:\Program Files\Oracle\VirtualBox\VBoxManage.exe;
 
-#. Install vagrant using the installer from `vagrantup.com <http://vagrantup.com/>`_
+#. Install vagrant >= 1.6 using the installer from `vagrantup.com <http://vagrantup.com/>`_
+
+#. Install the `vagrant-vbguest <https://github.com/dotless-de/vagrant-vbguest>`_
+   plugin to keep the guest additions automatically up-to-date.
 
 #. Fork the project into your own account. (If you need help, follow the instructions from `Webdev Bootcamp <http://mozweb.readthedocs.org/en/latest/git.html#working-on-projects>`_)
 
@@ -81,7 +84,7 @@ Getting up and running
 
 #. You're done! Visit the following address in your browser and you should see the homepage::
 
-       https://developer-local.allizom.org
+       https://developer-local.allizom.org/
 
 
 What’s next?
