@@ -28,9 +28,8 @@ Vagrant.configure("2") do |config|
     end
 
     config.vm.provider :virtualbox do |vb, override|
-        override.vm.box_url = CONF['virtual_box_url']
         vb.customize ["modifyvm", :id, "--memory", CONF['memory_size']]
-        vb.customize ['modifyvm', :id, '--ostype', 'Ubuntu_64']
+        vb.customize ['modifyvm', :id, '--ostype', 'Ubuntu']
         vb.customize ['modifyvm', :id, '--cpus', CONF['number_cpus']]
 
         # This thing can be a little hungry for memory
@@ -42,6 +41,7 @@ Vagrant.configure("2") do |config|
 
     config.vm.provision :shell do |shell|
       shell.inline = "mkdir -p /etc/puppet/modules;
+                      puppet module install -f puppetlabs-stdlib;
                       puppet module install -f puppetlabs-apt;
                       puppet module install -f elasticsearch-elasticsearch"
     end

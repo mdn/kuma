@@ -76,7 +76,11 @@ class rabbitmq {
 # Get foreman up and running
 class foreman {
     package { "foreman":
-        ensure   => 'installed',
-        provider => 'gem',
+        ensure   => '0.63.0',
+        provider => gem,
+    }
+    package { "posix-spawn":
+        ensure   => present,
+        provider => gem,
     }
 }
