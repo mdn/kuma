@@ -20,3 +20,14 @@
 	background-position: 97% 5px !important;
 	background-repeat: no-repeat !important;
 }
+
+.ui-slider-handle{
+	background-image:none !important;
+}
+
+.ui-slider-handle.ui-state-focus, .ui-slider-handle.ui-state-hover{
+	background-image:none;
+	border:0;
+	background-color: #0095DD;
+	box-shadow: 0px -1px #00539F inset;
+}

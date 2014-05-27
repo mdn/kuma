@@ -80,7 +80,23 @@
     })();
 
 
-
+    /*
+        Slider for page expiration time
+    */
+    var $renderSlider = $('#render_age_slider');
+    $renderSlider.slider({
+        value: 1,
+        min: 0,
+        max: 12,   
+        step: 0.5,
+        slide: function( event, ui ) {
+            $('#age_value').html(ui.value + ' hour(s)');
+            $('#id_render_max_age').val(ui.value * 3600);
+        }
+    });
+    $('#age_value').val($renderSlider.slider('value') + ' hour(s)');
+    $('#id_render_max_age').val($renderSlider.slider('value') * 3600);
+  
   /*
     Plugin for prepopulating the slug fields
   */
