@@ -16,7 +16,7 @@ from feeder.models import Feed, Entry
 from utils import locked
 
 
-log = logging.getLogger('kuma.feeder')
+log = logging.getLogger('mdn.feeder')
 
 
 class Command(NoArgsCommand):
