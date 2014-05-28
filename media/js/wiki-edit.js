@@ -85,27 +85,33 @@
     (function() {
         var seconds = $('#id_render_max_age').val();
         var getValue = function(selector) {
-             return parseInt($(selector).val()) || 0; 
+             return parseInt($(selector).val()) || 0;
         };
 
-        $('.duration-container input').on('change', function() {
+        var setAge = function() {
             $('#id_render_max_age').val(
                 (((getValue('.duration-container #days') * 24) +
-                getValue('.duration-container #hours')) * 60 + 
+                getValue('.duration-container #hours')) * 60 +
                 getValue('.duration-container #minutes')) * 60
             );
-        });
+        };
 
-        //convert seconds to days, hours, minutes
-        var days = Math.round(seconds / (60 * 60 * 24));
-        seconds -= days * (60 * 60 * 24);
-        var hours = Math.round(seconds / (60 * 60));
-        seconds -= hours * (60 * 60);
-        var minutes = Math.round(seconds / 60);
+        $('.duration-container input').on('change', setAge);
 
-        $('.duration-container #days').val(days);
-        $('.duration-container #hours').val(hours);
-        $('.duration-container #minutes').val(minutes);
+        if(seconds !== ''){
+            //convert seconds to days, hours, minutes
+            var days = Math.floor(seconds / (60 * 60 * 24));
+            seconds -= days * (60 * 60 * 24);
+            var hours = Math.floor(seconds / (60 * 60));
+            seconds -= hours * (60 * 60);
+            var minutes = Math.floor(seconds / 60);
+
+            $('.duration-container #days').val(days);
+            $('.duration-container #hours').val(hours);
+            $('.duration-container #minutes').val(minutes);
+        }else{
+            setAge();
+        }
     })();
 
   /*
