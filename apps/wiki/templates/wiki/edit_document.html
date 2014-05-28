@@ -183,12 +183,8 @@
 
             {% include 'wiki/includes/revision_comment.html' %}
 
-            <section class="page-meta wiki-block">
-              <section>
-                <h4>{{_('Review needed?')}}</h4>
-                {{ revision_form.review_tags|safe }}
-              </section>
-            </section>
+            {% include 'wiki/includes/review_tags.html' %}
+
         {% endif %}
       </fieldset>
     </form>
