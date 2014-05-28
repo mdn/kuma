@@ -133,6 +133,7 @@
         config.tabSpaces = 2;
         config.contentsCss = [
             mdn.mediaPath + 'redesign/css/main.css?{{ BUILD_ID_JS }}',
+            mdn.mediaPath + 'redesign/css/wiki.css?{{ BUILD_ID_JS }}',
             mdn.mediaPath + 'redesign/css/wiki-wysiwyg.css?{{ BUILD_ID_JS }}',
             mdn.mediaPath + 'css/libs/font-awesome/css/font-awesome.min.css?{{ BUILD_ID_JS }}',
             '/en-US/docs/Template:CustomCSS?raw=1'
