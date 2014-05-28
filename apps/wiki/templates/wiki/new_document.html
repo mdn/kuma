@@ -30,10 +30,16 @@
         </div>
 
         <ul class="metadata">
-          <li><label>{{_('Title:')}}</label> {{ document_form.title | safe }}</li>
-          <li><label><dfn title="{{_('URL segment that identifies the page')}}">{{_('Slug:')}}</dfn></label> {{ document_form.slug | safe }}</li>
+            <li class="clear">
+                <label for="id_title">{{_('Title:')}}</label>
+                {{ document_form.title | safe }}
+            </li>
+            <li class="clear">
+                <label for="id_slug"><dfn title="{{_('URL segment that identifies the page')}}">{{_('Slug:')}}</dfn></label>
+                {{ document_form.slug | safe }}
+            </li>
           {% if parent_slug and not is_template %}
-            <li><label>{{_('Parent:')}}</label>
+            <li class="clear"><label>{{_('Parent:')}}</label>
                 <a href="{{ parent_path }}" class="metadataDisplay" target="_blank">{{ parent_slug }}</a></li>
           {% endif %}
           {% if is_template %}
