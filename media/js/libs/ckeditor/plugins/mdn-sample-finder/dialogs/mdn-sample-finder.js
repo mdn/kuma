@@ -1,7 +1,7 @@
 CKEDITOR.dialog.add( 'mdn-sample-finder', function( editor ) {
 
 	var topLabel = gettext('Sample Finder'),
-		docInfo = window.documentInfo,
+		docInfo = mdn.wiki.document,
 		autoCompleteUrl = mdn.wiki.autosuggestTitleUrl,
 		autoCompleteTextbox,
 		$autoCompleteTextbox,
@@ -42,7 +42,7 @@ CKEDITOR.dialog.add( 'mdn-sample-finder', function( editor ) {
 						label : gettext('Document'),
 						'default' : '',
 						setup : function( data )
-						{ 
+						{
 							// Do the moz autocomplete stuff
 							if(!autoCompleteTextbox) {
 

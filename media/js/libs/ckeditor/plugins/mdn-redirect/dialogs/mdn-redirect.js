@@ -1,7 +1,7 @@
 CKEDITOR.dialog.add( 'mdn-redirect', function( editor ) {
 
 	var topLabel = gettext('MDN Redirect'),
-		docInfo = window.documentInfo,
+		docInfo = mdn.wiki.document,
 		autoCompleteUrl = mdn.wiki.autosuggestTitleUrl,
 		autoCompleteTextbox,
 		$autoCompleteTextbox;
@@ -23,7 +23,7 @@ CKEDITOR.dialog.add( 'mdn-redirect', function( editor ) {
 						label : gettext('Document'),
 						'default' : '',
 						setup : function( data )
-						{ 
+						{
 							// Do the moz autocomplete stuff
 							if(!autoCompleteTextbox) {
 								var self = this;
