@@ -16,9 +16,30 @@ aside {
 
 blockquote {
     prevent-last-child-bottom-spacing();
-    padding: 0 25px;
+    padding: 20px 25px;
     border-left: 5px solid #ccc;
     margin-bottom: content-block-margin;
+    background: #eee;
+    position: relative;
+
+    &:before, &:after {
+        color: #ccc;
+        content: open-quote;
+        font-size: 40px;
+        position: absolute;
+    }
+
+    &:before {
+        top: 0;
+        left: 10px;
+        content: "\201C";
+    }
+
+    &:after {
+        bottom: 0;
+        right: 10px;
+        content: "\201D";
+    }
 }
 
 caption {
