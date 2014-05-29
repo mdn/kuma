@@ -18,7 +18,33 @@
     })();
 
     /*
-        GitHub Login
+        Persona Login file load
+    */
+    (function() {
+        var $loginButton = $('.persona-login');
+
+        $loginButton.length && $.ajax({
+            url: 'https://login.persona.org/include.js',
+            dataType: 'script',
+            cache: true,
+            success: function() {
+                $loginButton.addClass('persona-loaded').on('click', function(e) {
+                    e.preventDefault();
+
+                    if(!$(this).hasClass('toggle')) {
+                        navigator.id.get(function(assertion) {
+                            if(!assertion) return;
+                            $('input[name="assertion"]').val(assertion.toString());
+                            $('form.browserid').first().submit();
+                        });
+                    }
+                });
+            }
+        });
+    })();
+
+    /*
+        Open Auth Login Heading widget
     */
     (function() {
         var $container = $('.oauth-login-container');
@@ -34,6 +60,22 @@
             onClose: function() {
                 $container.removeClass(activeClass);
             }
+        });
+
+        $('.login-link').on('click', function(e) {
+            e.preventDefault();
+
+            // Track event of which was clicked
+            var serviceUsed = $(this).data('service'); // "Persona" or "GitHub"
+
+            /*
+                TODO:
+                    Waiting on.... https://github.com/mozilla/kuma/pull/2421
+
+                    mdn.analytics.trackEvent(______)
+            */
+
+            console.log('login link clicked!  ', serviceUsed);
         });
     })();
 
@@ -94,30 +136,6 @@
             on('blur', createExpander(600));
     })();
 
-    /*
-        Persona Login
-    */
-    (function() {
-        var $loginButton = $('.persona-login');
-
-        $loginButton.length && $.ajax({
-            url: 'https://login.persona.org/include.js',
-            dataType: 'script',
-            cache: true,
-            success: function() {
-                $loginButton.addClass('persona-loaded').on('click', function(e) {
-                    if(!$(this).hasClass('toggle')) {
-                        navigator.id.get(function(assertion) {
-                            if(!assertion) return;
-                            $('input[name="assertion"]').val(assertion.toString());
-                            $('form.browserid').first().submit();
-                        });
-                        return false;
-                    }
-                });
-            }
-        });
-    })();
 
     /*
         Account for the footer language change dropdown and other dropdowns marked as autosubmit
