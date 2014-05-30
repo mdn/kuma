@@ -129,14 +129,16 @@
         var scroll = window.scrollY;
         var maxHeight = window.innerHeight - parseInt($toc.css('padding-top'), 10) - parseInt($toc.css('padding-bottom'), 10);
 
-        if(scroll > tocOffset && $toggler.css('pointer-events') == 'none') {
-          $toc.css({
-            width: $toc.css('width'),
-            maxHeight: maxHeight
-          });
+        if($toggler.css('pointer-events') == 'none') {
+          if(scroll > tocOffset && window.CSS.supports('position','sticky') != true) {
+            $toc.css({
+              width: $toc.css('width'),
+              maxHeight: maxHeight
+            });
 
-          if(!$toc.hasClass(fixedClass)){
-            $toc.addClass(fixedClass);
+            if(!$toc.hasClass(fixedClass)){
+              $toc.addClass(fixedClass);
+            }
           }
         }
         else {
