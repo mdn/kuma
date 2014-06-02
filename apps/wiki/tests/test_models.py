@@ -15,7 +15,6 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User, Group, Permission
 from django.contrib.contenttypes.models import ContentType
 
-from celery.signals import task_postrun
 import constance.config
 
 from waffle.models import Switch

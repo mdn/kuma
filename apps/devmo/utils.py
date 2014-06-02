@@ -70,13 +70,10 @@ def generate_filename_and_delete_previous(ffile, name, before_delete=None):
 
 
 class MemcacheLockException(Exception):
-    def __init__(self, *args, **kwargs):
-        Exception.__init__(self, *args, **kwargs)
+    pass
 
 
 class MemcacheLock(object):
-    key = 'render-stale-documents-lock'
-
     def __init__(self, key, attempts=1, expires=60 * 60 * 3):
         self.key = 'lock_%s' % key
         self.attempts = attempts
