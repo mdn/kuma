@@ -1,7 +1,6 @@
 CKEDITOR.dialog.add( 'mdn-redirect', function( editor ) {
 
 	var topLabel = gettext('MDN Redirect'),
-		docInfo = mdn.wiki.document,
 		autoCompleteUrl = mdn.wiki.autosuggestTitleUrl,
 		autoCompleteTextbox,
 		$autoCompleteTextbox;
