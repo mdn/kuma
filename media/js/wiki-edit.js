@@ -79,7 +79,40 @@
       });
     })();
 
+    /*
+        Calculate rendering max age in seconds from days, minutes and seconds
+    */
+    (function() {
+        var seconds = $('#id_render_max_age').val();
+        var getValue = function(selector) {
+             return parseInt($(selector).val()) || 0;
+        };
 
+        var setAge = function() {
+            $('#id_render_max_age').val(
+                (((getValue('.duration-container #days') * 24) +
+                getValue('.duration-container #hours')) * 60 +
+                getValue('.duration-container #minutes')) * 60
+            );
+        };
+
+        $('.duration-container input').on('change', setAge);
+
+        if(seconds !== ''){
+            //convert seconds to days, hours, minutes
+            var days = Math.floor(seconds / (60 * 60 * 24));
+            seconds -= days * (60 * 60 * 24);
+            var hours = Math.floor(seconds / (60 * 60));
+            seconds -= hours * (60 * 60);
+            var minutes = Math.floor(seconds / 60);
+
+            $('.duration-container #days').val(days);
+            $('.duration-container #hours').val(hours);
+            $('.duration-container #minutes').val(minutes);
+        }else{
+            setAge();
+        }
+    })();
 
   /*
     Plugin for prepopulating the slug fields
