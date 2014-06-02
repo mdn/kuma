@@ -1303,7 +1303,6 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
     attachments = _format_attachment_obj(doc.attachments)
     allow_add_attachment = (
         Attachment.objects.allow_add_attachment_by(request.user))
-    docInfo = json.dumps(doc.get_json_data())
 
     context = {
         'revision_form': rev_form,
@@ -1314,7 +1313,6 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
         'parent_path': parent_path,
         'revision': rev,
         'document': doc,
-        'docInfo': docInfo,
         'allow_add_attachment': allow_add_attachment,
         'attachment_form': AttachmentRevisionForm(),
         'attachment_data': attachments,
@@ -1865,7 +1863,7 @@ def subscribe_document(request, document_slug, document_locale):
     else:
       EditDocumentEvent.notify(request.user, document)
       status = 1
-      
+
     if request.is_ajax():
         return HttpResponse(json.dumps({'status': status}))
 

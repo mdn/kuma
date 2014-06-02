@@ -1,8 +1,12 @@
 # coding=utf-8
 
+import json
 import difflib
 import re
 import urllib
+
+from django.core.serializers.json import DjangoJSONEncoder
+from django.utils.html import conditional_escape
 
 import constance.config
 from jingo import register
@@ -15,6 +19,7 @@ from sumo.urlresolvers import reverse
 import wiki
 import wiki.content
 from wiki import DIFF_WRAP_COLUMN
+
 
 from teamwork.shortcuts import build_policy_admin_links
 
@@ -214,6 +219,43 @@ def selector_content_find(document, selector):
     except:
         pass
     return summary
+
+
+def _recursive_escape(value, esc=conditional_escape):
+    """
+    Recursively escapes strings in an object.
+
+    Traverses dict, list and tuples. These are the data structures supported
+    by the JSON encoder.
+    """
+    if isinstance(value, dict):
+        return type(value)((esc(k), _recursive_escape(v))
+                           for (k, v) in value.iteritems())
+    elif isinstance(value, (list, tuple)):
+        return type(value)(_recursive_escape(v) for v in value)
+    elif isinstance(value, basestring):
+        return esc(value)
+    elif isinstance(value, (int, long, float)) or value in (True, False, None):
+        return value
+    # We've exhausted all the types acceptable by the default JSON encoder.
+    # Django's improved JSON encoder handles a few other types, all of which
+    # are represented by strings. For these types, we apply JSON encoding
+    # immediately and then escape the result.
+    return esc(DjangoJSONEncoder().default(value))
+
+
+@register.filter
+def tojson(value):
+    """
+    Returns the JSON representation of the value.
+    """
+    try:
+        # If value contains custom subclasses of int, str, datetime, etc.
+        # arbitrary exceptions may be raised during escaping or serialization.
+        result = json.dumps(_recursive_escape(value), cls=DjangoJSONEncoder)
+    except Exception:
+        return ''
+    return jinja2.Markup(result)
 
 
 @register.function

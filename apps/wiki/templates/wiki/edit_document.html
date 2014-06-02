@@ -197,7 +197,7 @@
 
     <!-- Add information about this document in JSON format for use in CKEditor -->
     <script type="text/javascript">
-      documentInfo = {{ docInfo|safe }};
+      documentInfo = {{ document.get_json_data()|tojson }};
     </script>
 
   </article>
