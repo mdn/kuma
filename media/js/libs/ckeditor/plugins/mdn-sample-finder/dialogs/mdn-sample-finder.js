@@ -1,7 +1,7 @@
 CKEDITOR.dialog.add( 'mdn-sample-finder', function( editor ) {
 
 	var topLabel = gettext('Sample Finder'),
-		docInfo = null,
+		docInfo = mdn.wiki.document,
 		autoCompleteUrl = mdn.wiki.autosuggestTitleUrl,
 		autoCompleteTextbox,
 		$autoCompleteTextbox,

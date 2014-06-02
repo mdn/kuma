@@ -2,10 +2,17 @@ from nose.tools import eq_
 
 from django.contrib.auth.models import User
 
-from wiki.tests import TestCaseBase, revision, normalize_html
+from wiki.tests import TestCaseBase, revision
 from wiki.helpers import (revisions_unified_diff,
-                          document_zone_management_links)
+                          document_zone_management_links, tojson)
 from wiki.models import DocumentZone
+
+
+class HelpTests(TestCaseBase):
+
+    def test_tojson(self):
+        eq_(tojson({'title': '<script>alert("Hi!")</script>'}),
+            '{"title": "&lt;script&gt;alert(&quot;Hi!&quot;)&lt;/script&gt;"}')
 
 
 class RevisionsUnifiedDiffTests(TestCaseBase):
