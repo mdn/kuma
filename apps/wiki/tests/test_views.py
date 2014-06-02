@@ -1641,12 +1641,53 @@ class DocumentEditingTests(TestCaseBase):
         es_d = Document.objects.get(locale=foreign_locale, slug=foreign_slug)
         eq_(r.toc_depth, es_d.current_revision.toc_depth)
 
-        # Go to edit the translation, ensure the the slug is correct
-        response = self.client.get(reverse('wiki.edit_document',
-                                           args=[foreign_slug],
-                                           locale=foreign_locale))
-        page = pq(response.content)
-        eq_(page.find('input[name=slug]')[0].value, foreign_slug)
+    @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0)
+    def test_translate_rebuilds_source_json(self):
+        self.client.login(username='admin', password='testpass')
+        # Create an English original and a Spanish translation.
+        en_slug = 'en-doc'
+        es_locale = 'es'
+        es_slug = 'es-doc'
+        en_doc = document(title='EN Doc',
+                          slug=en_slug,
+                          is_localizable=True,
+                          locale=settings.WIKI_DEFAULT_LANGUAGE)
+        en_doc.save()
+        en_doc.render()
+
+        en_doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE,
+                                      slug=en_slug)
+        old_en_json = json.loads(en_doc.json)
+        
+        r = revision(document=en_doc)
+        r.save()
+        translation_data = new_document_data()
+        translation_data['title'] = 'ES Doc'
+        translation_data['slug'] = es_slug
+        translation_data['content'] = 'This is the content'
+        translation_data['is_localizable'] = False
+        translation_data['form'] = 'both'
+        translate_url = reverse('wiki.document', args=[en_slug],
+                                locale=settings.WIKI_DEFAULT_LANGUAGE)
+        translate_url += '$translate?tolocale=' + es_locale
+        response = self.client.post(translate_url, translation_data)
+        # Sanity to make sure the translate succeeded.
+        self.assertRedirects(response, reverse('wiki.document',
+                                               args=[es_slug],
+                                               locale=es_locale))
+        es_doc = Document.objects.get(locale=es_locale,
+                                      slug=es_slug)
+        es_doc.render()
+        
+        new_en_json = json.loads(Document.objects.get(pk=en_doc.pk).json)
+
+        ok_('translations' in new_en_json)
+        ok_(translation_data['title'] in [t['title'] for t in \
+                                          new_en_json['translations']])
+        es_translation_json = [t for t in new_en_json['translations'] if \
+                               t['title'] == translation_data['title']][0]
+        eq_(es_translation_json['last_edit'],
+            es_doc.current_revision.created.isoformat())
 
     def test_slug_translate(self):
         """Editing a translated doc keeps the correct slug"""

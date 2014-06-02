@@ -996,6 +996,13 @@ class Document(NotificationsMixin, models.Model):
             self.render_expires = None
 
         self.save()
+
+        # If we're a translation, rebuild our source doc's JSON so its
+        # translation list includes our last edit date.
+        if self.parent is not None:
+            parent_json = json.dumps(self.parent.build_json_data())
+            Document.objects.filter(pk=self.parent.pk).update(json=parent_json)
+
         render_done.send(sender=self.__class__, instance=self)
 
     def get_summary(self, strip_markup=True, use_rendered=True):
