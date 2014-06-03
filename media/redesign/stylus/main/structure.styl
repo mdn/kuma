@@ -349,9 +349,13 @@ a.github-button {
     text-align: center;
     padding: 0px 5px 1px;
     font-size: base-bump-font-size;
-    margin: 0 0 0 4px;
+    bidi-style(margin-left, 4px, margin-right, 0);
     color: #fff;
     create-gradient(#43a6e2, #287cc2);
+
+    {selector-icon} {
+    	bidi-style(margin-left, 0, margin-right, 0);
+    }
 }
 
 .oauth-github {
@@ -384,7 +388,7 @@ a.github-button {
     }
 
     {selector-icon} {
-        margin-right: icon-margin;
+        bidi-style(margin-right, icon-margin, margin-left, 0);
     }
 }
 
