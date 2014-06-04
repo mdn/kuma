@@ -1,5 +1,5 @@
 """
-Deployment for MDN 
+Deployment for MDN
 
 Requires commander (https://github.com/oremj/commander) which is installed on
 the systems that need it.
@@ -45,7 +45,8 @@ def update_assets(ctx):
 def database(ctx):
     with ctx.lcd(settings.SRC_DIR):
         ctx.local("python2.6 ./vendor/src/schematic/schematic migrations")  # schematic (old)
-        ctx.local("python2.6 manage.py migrate")                            # South (new)
+        ctx.local("python2.6 manage.py syncdb --noinput")                   # Django
+        ctx.local("python2.6 manage.py migrate --noinput")                  # South (new)
         ctx.local("python2.6 manage.py update_badges")
 
 

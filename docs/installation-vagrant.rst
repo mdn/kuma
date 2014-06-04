@@ -20,7 +20,10 @@ Getting up and running
 #. (Windows) After installing VirtualBox you need to set the path
                 PATH=C:\Program Files\Oracle\VirtualBox\VBoxManage.exe;
 
-#. Install vagrant using the installer from `vagrantup.com <http://vagrantup.com/>`_
+#. Install vagrant >= 1.6 using the installer from `vagrantup.com <http://vagrantup.com/>`_
+
+#. Install the `vagrant-vbguest <https://github.com/dotless-de/vagrant-vbguest>`_
+   plugin to keep the guest additions automatically up-to-date.
 
 #. Fork the project into your own account. (If you need help, follow the instructions from `Webdev Bootcamp <http://mozweb.readthedocs.org/en/latest/git.html#working-on-projects>`_)
 
@@ -81,7 +84,7 @@ Getting up and running
 
 #. You're done! Visit the following address in your browser and you should see the homepage::
 
-       https://developer-local.allizom.org
+       https://developer-local.allizom.org/
 
 
 What’s next?
@@ -154,56 +157,3 @@ Developing with Vagrant
    your local database by running a command like the following in the VM::
 
      mysql -uroot kuma < /path/to/database/dump.sql
-
-
-AWS and Rackspace
------------------
-
-The kuma's Vagrant configuration also optionally supports using other backends
-for Vagrant. Right now there are three supported:
-
-#. Vmware Fusion (for Mac OS) and Workstation (Windows and Linux)
-
-   Vagrant has commercial support for this alternative virtual machine
-   system from VMware that is known to provide improved speed and better
-   Linux and Windows support for the host systems.
-
-   The necessary Vagrant plugin for that is commercially available at
-   http://www.vagrantup.com/vmware. Please follow the instructions there
-   if you want to make use of this.
-
-   Then make sure you run the above mentioned ``vagrant up`` command with
-   the appropriate ``--provider`` option. For VMware Fusion (Mac OS)::
-
-     vagrant up --provider=vmware_fusion
-
-   for VMware Workstation (Windows and Linux)::
-
-     vagrant up --provider=vmware_workstation
-
-   For further information see Vagrant documentation about using VMware:
-
-     http://docs.vagrantup.com/v2/vmware/
-
-#. Amazon Web Services (EC2 and VPC)
-
-   First, install the AWS Vagrant plugin from Github:
-
-    https://github.com/mitchellh/vagrant-aws
-
-   Then make sure you've modified all the ``aws_*`` configuration options
-   in your ``vagrantconfig_local.yaml``. Then run::
-
-     vagrant up --provider=aws
-
-#. Rackspace Cloud
-
-   First install the Rackspace Cloud Vagrant plugin from Github:
-
-    https://github.com/mitchellh/vagrant-rackspace
-
-   Then modified all ``rs_*`` configuration options in your
-   ``vagrantconfig_local.yaml``. Then run::
-
-     vagrant up --provider=rackspace
-

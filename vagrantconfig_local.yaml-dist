@@ -7,21 +7,3 @@ gui: false
 
 # Add to /etc/hosts: 192.168.10.55 developer-local.allizom.org
 ip_address: 192.168.10.55
-
-# Define custom AWS config options here
-# see https://github.com/mitchellh/vagrant-aws#configuration for more options
-# aws_ssh_privkey: "~/.ssh/id_rsa"
-# aws_region: "us-east-1"
-# Ubuntu 12.04, 64-bit, ebs, http://cloud-images.ubuntu.com/releases/precise/release-20130624/
-# aws_ami: "ami-23d9a94a"
-# aws_instance_type: "t1.micro"
-# aws_access_key_id: "something something"
-# aws_secret_access_key: "something compleltely different"
-# aws_keypair_name: "some name"
-
-# Define custom Racksapce config options
-# see https://github.com/mitchellh/vagrant-rackspace#configuration for more options
-# rs_private_key: "~/.ssh/rackspace"
-# rs_username: "johndoe"
-# rs_api_key: "some long API key"
-# rs_public_key: "/home/path/to/public/key"

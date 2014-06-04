@@ -6,7 +6,10 @@ class nodejs {
     }
     exec { "nodejs_uninstall_old_node":
         command => "/usr/bin/apt-get remove -y nodejs",
-        onlyif => "/usr/bin/node --version | /bin/grep -c 'v0.6.12'"
+        onlyif => [
+                    "/usr/bin/test -f /usr/bin/node",
+                    "/usr/bin/node --version | /bin/grep -c 'v0.6.12'",
+                  ]
     }
     exec { "nodejs_download":
         cwd => "/home/vagrant/src/puppet/cache",

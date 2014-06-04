@@ -142,5 +142,8 @@ class Migration(DataMigration):
         }
     }
 
+    depends_on = (
+        ("waffle", "0008_auto__add_field_flag_languages"),
+    )
     complete_apps = ['waffle', 'devmo']
     symmetrical = True

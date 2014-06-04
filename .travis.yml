@@ -20,8 +20,8 @@ before_install:
     - tar xvfz base_wheels.tar.gz
     - tar xvfz travis_wheels.tar.gz
     - tar -C .. -zxf product_details_json.tar.gz
-    - wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.20.5.deb
-    - sudo dpkg -i elasticsearch-0.20.5.deb
+    - wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.13.deb
+    - sudo dpkg -i elasticsearch-0.90.13.deb
     - sudo service elasticsearch start
 
 install:
