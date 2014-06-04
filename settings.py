@@ -849,9 +849,6 @@ RECAPTCHA_USE_SSL = False
 RECAPTCHA_PRIVATE_KEY = 'SET ME IN SETTINGS_LOCAL'
 RECAPTCHA_PUBLIC_KEY = 'SET ME IN SETTINGS_LOCAL'
 
-# date format, needed for custom revision dashboard
-DATE_INPUT_FORMATS = ('%d/%m/%Y', '%Y/%m/%d', '%m/%d/%Y', '%d-%m-%Y', '%Y-%m-%d', '%m-%d-%Y')
-
 # content flagging
 FLAG_REASONS = (
     ('notworking', _('This demo is not working for me')),

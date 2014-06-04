@@ -27,9 +27,9 @@ class RevisionDashboardForm(forms.Form):
                     label=_lazy(u'Topic:'))
 
     start_date = forms.DateField(required=False, label=_lazy(u'Start Date:'),
-                    input_formats=settings.DATE_INPUT_FORMATS,
+                    input_formats=['%m/%d/%Y'],
                     widget=forms.TextInput(attrs={'pattern': '\d{1,2}/\d{1,2}/\d{4}'}))
 
     end_date = forms.DateField(required=False, label=_lazy(u'End Date:'),
-                    input_formats=settings.DATE_INPUT_FORMATS,
+                    input_formats=['%m/%d/%Y'],
                     widget=forms.TextInput(attrs={'pattern': '\d{1,2}/\d{1,2}/\d{4}'}))
