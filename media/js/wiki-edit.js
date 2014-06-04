@@ -85,13 +85,13 @@
     (function() {
         var seconds = $('#id_render_max_age').val();
         var getValue = function(selector) {
-             return parseInt($(selector).val()) || 0; 
+             return parseInt($(selector).val()) || 0;
         };
 
         $('.duration-container input').on('change', function() {
             $('#id_render_max_age').val(
                 (((getValue('.duration-container #days') * 24) +
-                getValue('.duration-container #hours')) * 60 + 
+                getValue('.duration-container #hours')) * 60 +
                 getValue('.duration-container #minutes')) * 60
             );
         });
@@ -496,9 +496,18 @@
             return true;
         });
 
-        // Save-and-edit submits to a hidden iframe, style the button with a
-        // loading anim.
+        // Save-and-edit submits to a hidden iframe, show loading message in notifier
+        var notifier = $('.notifier').mozNotifier();
         $('#btn-save-and-edit').on('click', function () {
+
+            notifier.setMessage('Saving changes…').show();
+
+            mdn.analytics.trackEvent({
+                category: 'Wiki',
+                action: 'Save and Continue',
+                label: window.location.href
+            });
+
             var savedTa = $(formSelector + ' textarea[name=content]').val();
             if (supportsLocalStorage) {
                 // Preserve editor content, because saving to the iframe can
@@ -511,13 +520,13 @@
             $(formSelector)
                 .attr('action', '?iframe=1')
                 .attr('target', 'save-and-edit-target');
-            // Change the button to a loading state style
-            $(this).addClass('loading');
             return true;
         });
         $('#btn-save-and-edit').show();
 
         $('#save-and-edit-target').on('load', function () {
+            notifier.success().hide();
+
             if (supportsLocalStorage) {
                 var if_doc = $(this).get(0).contentDocument;
                 if (typeof(if_doc) != 'undefined') {

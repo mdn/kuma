@@ -99,3 +99,36 @@
 
     reverse-link-decoration();
 }
+
+.notifier {
+        background: rgba(252, 246, 212, 1);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        height: 25px;
+        left: 35%;
+        line-height: 1.6;
+        opacity: 0.6;
+        padding: 2px 4px;
+        position: fixed;
+        text-align: center;
+        top: -34px;
+        width: 30%;
+        z-index: 100;
+        transition: background 0.3s ease-out, top 0.3s ease-out 1.5s, opacity 0.3s ease-out 1.5s;
+
+        &.show-notifier {
+            opacity: 1;
+            top: 0;
+            transition: top 0.3s ease-in, opacity 0.3s ease-in;
+        }
+
+        &.success {
+            color: #fff;
+            background: rgba(141, 180, 86, 1);
+        }
+
+        &.fail {
+            color:#fff;
+            background: rgba(193, 56, 50, 0.85);
+        }
+
+}
