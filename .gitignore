@@ -33,6 +33,7 @@ lib/product_details_json
 .DS_Store
 node_modules/
 media/redesign/css/*.css
+!media/redesign/css/README.md
 docs/_build/
 maintenance/media
 wheelhouse
