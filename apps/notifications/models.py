@@ -5,7 +5,8 @@ from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 
-from sumo.models import ModelBase, LocaleField
+from devmo.models import ModelBase
+from sumo.models import LocaleField
 from sumo.urlresolvers import reverse
 
 

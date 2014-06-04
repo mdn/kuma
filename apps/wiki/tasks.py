@@ -2,92 +2,70 @@ import logging
 
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.core.cache import cache
-from django.core.exceptions import ValidationError
-from django.core.mail import send_mail, mail_admins
+from django.core.mail import send_mail
 from django.db import transaction
 from django.dispatch import receiver
 
-import celery.conf
-from celery.task import task
-from celery.messaging import establish_connection
+from celery.task import task, group
 
-from sumo.utils import chunked
-from wiki.models import Document, PageMoveError, SlugCollision
-from wiki.signals import render_done
+from devmo.utils import MemcacheLock
+
+from .exceptions import StaleDocumentsRenderingInProgress, PageMoveError
+from .models import Document
+from .signals import render_done
 
 
 log = logging.getLogger('k.task')
 
 
-def schedule_rebuild_kb():
-    """Try to schedule a KB rebuild, if we're allowed to."""
-    if not settings.WIKI_REBUILD_ON_DEMAND or celery.conf.ALWAYS_EAGER:
-        return
-
-    if cache.get(settings.WIKI_REBUILD_TOKEN):
-        log.debug('Rebuild task already scheduled.')
-        return
-
-    cache.set(settings.WIKI_REBUILD_TOKEN, True)
-
-    rebuild_kb.delay()
-
-
-@task(rate_limit='3/h')
-def rebuild_kb():
-    """Re-render all documents in the KB in chunks."""
-    cache.delete(settings.WIKI_REBUILD_TOKEN)
-
-    d = (Document.objects.using('default')
-         .filter(current_revision__isnull=False).values_list('id', flat=True))
-
-    with establish_connection() as conn:
-        for chunk in chunked(d, 100):
-            _rebuild_kb_chunk.apply_async(args=[chunk],
-                                          connection=conn)
-
-
-@task(rate_limit='10/m')
-def _rebuild_kb_chunk(data, **kwargs):
-    """Re-render a chunk of documents."""
-    log.info('Rebuilding %s documents.' % len(data))
-
-    messages = []
-    for pk in data:
-        message = None
-        try:
-            document = Document.objects.get(pk=pk)
-            document.html = document.current_revision.content_cleaned
-            document.save()
-        except Document.DoesNotExist:
-            message = 'Missing document: %d' % pk
-        except ValidationError as e:
-            message = 'ValidationError for %d: %s' % (pk, e.messages[0])
-        except SlugCollision:
-            message = 'SlugCollision: %d' % pk
-
-        if message:
-            log.debug(message)
-            messages.append(message)
-
-    if messages:
-        subject = ('[%s] Exceptions raised in _rebuild_kb_chunk()' %
-                   settings.PLATFORM_NAME)
-        mail_admins(subject=subject, message='\n'.join(messages))
-
-
-@task(rate_limit='10/m')
+@task(rate_limit='60/m')
 def render_document(pk, cache_control, base_url):
     """Simple task wrapper for the render() method of the Document model"""
     document = Document.objects.get(pk=pk)
     document.render(cache_control, base_url)
+    return document.rendered_errors
 
 
 @task
-def render_stale_documents(immediate=False):
+def render_stale_documents(immediate=False, log=None):
     """Simple task wrapper for rendering stale documents"""
-    Document.objects.render_stale(immediate=immediate, log=log)
+    lock = MemcacheLock('render-stale-documents-lock')
+    if lock.acquired and not immediate:
+        # fail loudly if this is running already
+        # may indicate a problem with the schedule of this task
+        raise StaleDocumentsRenderingInProgress
+
+    stale_docs = Document.objects.get_by_stale_rendering()
+    if stale_docs.count() == 0:
+        # not stale documents to render
+        return
+
+    if log is None:
+        # fetch a logger in case none is given
+        log = render_stale_documents.get_logger()
+
+    log.info("Found %s stale documents" % stale_docs.count())
+    response = None
+    if lock.acquire():
+        try:
+            subtasks = []
+            for doc in stale_docs:
+                if immediate:
+                    doc.render('no-cache', settings.SITE_URL)
+                    log.info("Rendered stale %s" % doc)
+                else:
+                    subtask = render_document.subtask((doc.pk, 'no-cache',
+                                                       settings.SITE_URL))
+                    subtasks.append(subtask)
+                    log.info("Deferred rendering for stale %s" % doc)
+            if subtasks:
+                # the callback is called at the end of the groyp
+                task_group = group(tasks=subtasks)
+                result = task_group.apply()  # kick off the group
+                response = result.join()
+        finally:
+            lock.release()
+    return response
 
 
 @task
@@ -113,7 +91,8 @@ def move_page(locale, slug, new_slug, email):
         user = User.objects.get(email=email)
     except User.DoesNotExist:
         transaction.rollback()
-        logging.error('Page move failed: no user with email address %s' % email)
+        logging.error('Page move failed: no user with email address %s' %
+                      email)
         return
     try:
         doc = Document.objects.get(locale=locale, slug=slug)

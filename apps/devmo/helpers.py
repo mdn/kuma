@@ -17,17 +17,17 @@ from soapbox.models import Message
 from statici18n.utils import get_filename
 from django.contrib.staticfiles.storage import staticfiles_storage
 
-import utils
 from sumo.urlresolvers import split_path, reverse
 from wiki.models import Document
+
+from .utils import entity_decode
 
 
 # Yanking filters from Django.
 register.filter(strip_tags)
 register.filter(defaultfilters.timesince)
 register.filter(defaultfilters.truncatewords)
-
-register.filter(utils.entity_decode)
+register.filter(entity_decode)
 
 
 @register.function
@@ -121,7 +121,7 @@ def devmo_url(context, path):
                     locale=settings.WIKI_DEFAULT_LANGUAGE, slug=path)
                 """ # TODO: redirect_document is coupled to doc view
                 follow redirects vs. update devmo_url calls
-                
+
                 target = parent.redirect_document()
                 if target:
                 parent = target

@@ -55,7 +55,7 @@ from .content import (get_seo_description, get_content_sections,
                       extract_css_classnames, extract_html_attributes,
                       extract_kumascript_macro_names,
                       SectionTOCFilter, H2TOCFilter, H3TOCFilter,)
-from .exceptions import (UniqueCollision, SlugCollision,
+from .exceptions import (UniqueCollision, SlugCollision, PageMoveError,
                          DocumentRenderingInProgress,
                          DocumentRenderedContentNotAvailable)
 from .signals import render_done
@@ -315,13 +315,6 @@ SECONDARY_CACHE_ALIAS = getattr(settings,
                                 'secondary')
 URL_REMAPS_CACHE_KEY_TMPL = 'DocumentZoneUrlRemaps:%s'
 
-class PageMoveError(Exception):
-    """
-    Exception raised by most failures during page move.
-
-    """
-    pass
-
 
 def cache_with_field(field_name):
     """Decorator for generated content methods.
@@ -417,22 +410,6 @@ class BaseDocumentManager(models.Manager):
         """Find documents whose renderings have gone stale"""
         return (self.exclude(render_expires__isnull=True)
                     .filter(render_expires__lte=datetime.now()))
-
-    def render_stale(self, immediate=False, log=None):
-        """Perform rendering for stale documents"""
-        from . import tasks
-        stale_docs = self.get_by_stale_rendering()
-        if log:
-            log.info("Found %s stale documents" % stale_docs.count())
-        for doc in stale_docs:
-            if immediate:
-                doc.render('no-cache', settings.SITE_URL)
-                if log:
-                    log.info("Rendered stale %s" % doc)
-            else:
-                tasks.render_document.delay(doc.pk, 'no-cache', settings.SITE_URL)
-                if log:
-                    log.info("Deferred rendering for stale %s" % doc)
 
     def allows_add_by(self, user, slug):
         """Determine whether the user can create a document with the given
@@ -951,7 +928,7 @@ class Document(NotificationsMixin, models.Model):
 
         # Disallow rendering while another is in progress.
         if self.is_rendering_in_progress:
-            raise DocumentRenderingInProgress()
+            raise DocumentRenderingInProgress
 
         # Note when the rendering was started. Kind of a hack, doing a quick
         # update and setting the local property rather than doing a save()
@@ -980,7 +957,7 @@ class Document(NotificationsMixin, models.Model):
         timeout = constance.config.KUMA_DOCUMENT_FORCE_DEFERRED_TIMEOUT
         max_duration = timedelta(seconds=timeout)
         duration = self.last_rendered_at - self.render_started_at
-        if (duration >= max_duration):
+        if duration >= max_duration:
             self.defer_rendering = True
 
         # TODO: Automatically clear the defer_rendering flag if the rendering

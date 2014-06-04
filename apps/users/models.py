@@ -11,13 +11,11 @@ from django.db import models
 from django.template.loader import render_to_string
 
 from timezones.fields import TimeZoneField
-from tower import ugettext as _
-from tower import ugettext_lazy as _lazy
+from tower import ugettext as _, ugettext_lazy as _lazy
 
 from countries import COUNTRIES
-from sumo.models import ModelBase
+from devmo.models import UserProfile, ModelBase
 from sumo.urlresolvers import reverse
-from devmo.models import UserProfile
 
 
 SHA1_RE = re.compile('^[a-f0-9]{40}$')

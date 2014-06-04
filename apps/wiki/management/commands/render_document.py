@@ -1,31 +1,14 @@
-
+# encoding: utf-8
 """
 Manually schedule the rendering of a document
 """
-import sys
-import time
 import datetime
-import urlparse
-import hashlib
 import logging
 from optparse import make_option
 
-# HACK: This is the fattest hack I've written in awhile. I blame ianbicking
-# http://blog.ianbicking.org/illusive-setdefaultencoding.html
-reload(sys)
-sys.setdefaultencoding('utf8')
+from django.core.management.base import BaseCommand, CommandError
 
-import requests
-
-from django.conf import settings
-from django.core.cache import cache
-from django.contrib.auth.models import User
-from django.contrib.sites.models import Site
-from django.core.management.base import (BaseCommand, NoArgsCommand,
-                                         CommandError)
-
-from wiki.models import (Document, Revision,
-                         DocumentRenderingInProgress)
+from wiki.models import Document, DocumentRenderingInProgress
 from wiki.tasks import render_document
 
 

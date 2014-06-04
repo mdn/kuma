@@ -1,17 +1,11 @@
-import datetime
+import re
+from decimal import Decimal
 
 from django.conf import settings
-
-from jingo import register
-import jinja2
-import pytz
-import re
-
-from decimal import Decimal
+from django.utils.encoding import force_text
 from django.utils.formats import number_format
 
-
-from devmo import SECTIONS, SECTION_USAGE
+from jingo import register
 
 
 @register.inclusion_tag('landing/newsfeed.html')

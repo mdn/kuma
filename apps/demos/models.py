@@ -34,13 +34,13 @@ south.modelsinspector.add_ignored_fields(["^taggit\.managers"])
 
 from threadedcomments.models import ThreadedComment
 
-from utils import generate_filename_and_delete_previous
-
 from actioncounters.fields import ActionCounterField
 
 from embedutils import VideoEmbedURLField
 
+from devmo.utils import generate_filename_and_delete_previous
 from . import scale_image, DEMO_LICENSES
+
 
 try:
     from PIL import Image

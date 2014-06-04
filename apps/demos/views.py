@@ -38,9 +38,6 @@ import threadedcomments.views
 from threadedcomments.models import ThreadedComment
 from threadedcomments.forms import ThreadedCommentForm
 
-from utils import JingoTemplateLoader
-template_loader = JingoTemplateLoader()
-
 DEMOS_PAGE_SIZE = getattr(settings, 'DEMOS_PAGE_SIZE', 12)
 DEMOS_LAST_NEW_COMMENT_ID = 'demos_last_new_comment_id'
 
@@ -123,7 +120,7 @@ class AllView(ListView):
         if not Submission.allows_listing_hidden_by(self.request.user):
             queryset = queryset.exclude(hidden=True)
         return queryset
-        
+
 
 class TagView(ListView):
     allow_empty = True
@@ -134,7 +131,7 @@ class TagView(ListView):
     def get(self, request, *args, **kwargs):
         tag = kwargs['tag']
         tag_obj = get_object_or_404(Tag, name=tag)
-        
+
         if tag in KNOWN_TECH_TAGS:
             return HttpResponseRedirect(reverse(
                 'demos_tag', args=('tech:%s' % tag,)))

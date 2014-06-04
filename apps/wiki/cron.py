@@ -51,11 +51,6 @@ def calculate_related_documents():
 
 
 @cronjobs.register
-def rebuild_kb():
-    tasks.rebuild_kb()
-
-
-@cronjobs.register
 def build_sitemaps():
     sitemap_element = "<sitemap><loc>%s</loc><lastmod>%s</lastmod></sitemap>"
     sitemap_index = ("<sitemapindex xmlns=\"http://www.sitemaps.org/"
