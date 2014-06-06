@@ -411,9 +411,7 @@
 {% block js %}
   {% if waffle.flag('search_doc_navigator') %}
   <script type="text/javascript">
-    (function($) {
-      $('.from-search-toc').mozSearchResults('{{ search_url|safe }}');
-    })(jQuery);
+      jQuery('.from-search-toc').mozSearchResults('{{ search_url|safe }}');
   </script>
   {% endif %}
 
