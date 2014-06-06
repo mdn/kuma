@@ -11,7 +11,7 @@ import lockfile
 
 from django.core.cache import get_cache
 
-log = commonware.log.getLogger(__name__)
+log = commonware.log.getLogger('mdn.devmo.utils')
 htmlparser = HTMLParser.HTMLParser()
 
 
