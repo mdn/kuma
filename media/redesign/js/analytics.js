@@ -107,7 +107,8 @@
                 analytics.trackEvent([
                     'JavaScript error',
                     e.originalEvent.message,
-                    e.originalEvent.filename + ':' + e.originalEvent.lineno,
+                    e.originalEvent.filename,
+                    e.originalEvent.lineno || 0,
                     true
                 ]);
             });
@@ -116,6 +117,7 @@
                     'Ajax error',
                     settings.url,
                     e.result,
+                    0,
                     true
                 ]);
             });
