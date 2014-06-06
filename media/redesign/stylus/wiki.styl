@@ -154,6 +154,13 @@ $review-base {
     }
 }
 
+/* display 404 links appropriately */
+article, .quick-links {
+    a.new {
+        color: #900;
+    }
+}
+
 /* wiki article display */
 article {
     position: relative;
@@ -502,7 +509,7 @@ div.bug, div.warning, div.overheadIndicator {
     padding: 4px 0;
 }
 
-/* table of contents column */
+/* set minimum heights on main columns */
 #wiki-right, #wiki-left, #wiki-content {
     min-height: 1px; /* ensures that when TOC becomes fixed, the column has width */
 }
@@ -617,7 +624,6 @@ div.bug, div.warning, div.overheadIndicator {
         text-decoration: none;
     }
 }
-
 
 /* adjustments to columns based on show/hide and media query */
 #wiki-column-container.wiki-right-closed #wiki-content, #wiki-column-container.wiki-left-closed #wiki-content {
