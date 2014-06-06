@@ -25,6 +25,7 @@ PROTOCOL = 'https://'
 DOMAIN = 'developer.mozilla.org'
 SITE_URL = PROTOCOL + DOMAIN
 PRODUCTION_URL = SITE_URL
+STAGING_URL = PROTOCOL + 'developer.allizom.org'
 USE_X_FORWARDED_HOST = True
 
 MANAGERS = ADMINS
