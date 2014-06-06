@@ -248,7 +248,7 @@
 
             // Set it forth!
             scrollFn();
-            $(win).on('scroll', scrollFn);
+            $(win).on('scroll resize', scrollFn);
         }
     })();
 
