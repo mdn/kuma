@@ -6,7 +6,7 @@
 nfs: true
 gui: false
 ip_address: 192.168.10.55
-memory_size: 768
+memory_size: 1024
 number_cpus: 2
 box: "hashicorp/precise32"
 package_name: "kuma-ubuntu.box"
