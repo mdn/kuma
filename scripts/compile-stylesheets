@@ -1,8 +1,8 @@
 #!/bin/bash
 
-BASEDIR=$(dirname $0)
-CSSDIR=$BASEDIR/../media/redesign/css
-STYLUSDIR=$BASEDIR/../media/redesign/stylus
+KUMABASE=$(dirname $(dirname $0))
+CSSDIR=$KUMABASE/media/redesign/css
+STYLUSDIR=$KUMABASE/media/redesign/stylus
 
 for opt in "$@"; do
   case $opt in
