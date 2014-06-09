@@ -1,0 +1,14 @@
+#!/bin/bash
+KUMA_ROOT=$(dirname $(dirname $0))
+
+pushd .
+
+# https://www.youtube.com/watch?v=ckIMuvumYrg
+vagrant halt
+cd $KUMA_ROOT/vendor &&\
+git submodule sync &&\
+cd $KUMA_ROOT &&\
+git submodule update --init --recursive &&\
+vagrant up && (vagrant provision; vagrant provision)
+
+popd
