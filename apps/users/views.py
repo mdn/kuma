@@ -29,6 +29,7 @@ from django_browserid import auth as browserid_auth
 from access.decorators import logout_required, login_required
 import constance.config
 from tidings.tasks import claim_watches
+from waffle import switch_is_active
 
 from sumo.decorators import ssl_required
 from sumo.urlresolvers import reverse, split_path
@@ -37,6 +38,7 @@ from users.forms import (ProfileForm, AvatarForm, EmailConfirmationForm,
                          BrowserIDRegisterForm,
                          EmailReminderForm, UserBanForm)
 from users.models import Profile, RegistrationProfile, EmailChange, UserBan
+from users.tasks import send_welcome_email
 from users.utils import handle_login, handle_register, send_reminder_email
 from devmo.models import UserProfile
 from devmo.forms import newsletter_subscribe
@@ -188,6 +190,9 @@ def browserid_register(request):
 
                 user.backend = 'django_browserid.auth.BrowserIDBackend'
                 auth.login(request, user)
+
+                if switch_is_active('welcome_email'):
+                    send_welcome_email.delay(user.pk)
 
                 newsletter_subscribe(request, email,
                                      register_form.cleaned_data)

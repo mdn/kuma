@@ -1,0 +1,28 @@
+{# This is an email. Whitespace matters! #}
+<!doctype html>
+<html lang="en-US" dir="ltr">
+    <head>
+        <meta charset="utf-8" />
+        <title>Take the next step to get involved on MDN!</title>
+    </head>
+    <body>
+        <p>Hi {{username}}!</p>
+        <p>Thanks for creating an account on <a href="https://developer.mozilla.org">Mozilla Developer Network (MDN)</a>&mdash;a community making great resources for developers like you.</p>
+        <p>You've completed the first step of <a href="https://developer.mozilla.org/en-US/docs/MDN/Getting_started">Getting Started on MDN</a> by creating an account.</p>
+        <p>
+            Now, keep going by picking a task on MDN, and doing it! We have a bunch of intro tasks you can choose from, whether you
+            <a href="https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_1.3A_I_like_words">like words</a>,
+            <a href="https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_2.3A_I_like_code">like code</a>,
+            <a href="https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_3.3A_I_like_both_words_and_code">like both words and code</a>,
+            or you want to <a href="https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_4.3A_I_want_MDN_in_my_language">translate MDN to your language</a>.
+        </p>
+        <strong>Talk to us!</strong>
+        <p>Want to talk to someone about MDN? There are a few ways you can do that:</p>
+        <ul>
+            <li>Mailing list: <a href="https://lists.mozilla.org/listinfo/dev-mdc">subscribe</a> to tell us about what you're interested in on MDN and ask questions about the site.</li>
+            <li>Real-time chat: <a href="irc://irc.mozilla.org/mdn">#mdn channel on irc.mozilla.org</a>. (Get more info about <a href="https://wiki.mozilla.org/IRC">IRC</a>.) You can find the MDN writing staff admins there: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and community manager Janet Swisher (jms).</li>
+            <li>Blog: On the <a href="https://blog.mozilla.org/community">about:community</a> blog, look for the posts tagged with <a href="https://blog.mozilla.org/community/category/developer-engagement/">Developer Engagement</a>.</li>
+        </ul>
+        <p>Don't be shy, if you have any doubt, problems, questions: contact us! We are here to help.</p>
+    </body>
+</html>
