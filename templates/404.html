@@ -54,6 +54,6 @@
 
 {% block js %}
 <script type="text/javascript">
-mdn.analytics.trackEvent(['Error', '404']);
+mdn.analytics.trackError('404: ' + window.location);
 </script>
 {% endblock %}

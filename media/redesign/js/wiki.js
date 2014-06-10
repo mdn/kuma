@@ -60,7 +60,12 @@
                 parent.appendChild(child);
             }
 
-            mdn.analytics.trackEvent(['Wiki sidebar toggle', 'Click', this.id == 'quick-links-toggle' ? 'Hide' : 'Show'], true);
+            mdn.analytics.trackEvent({
+                category: 'Wiki sidebar toggle',
+                action: 'Click',
+                label: this.id == 'quick-links-toggle' ? 'Hide' : 'Show'
+            });
+
         });
     })();
 
@@ -121,10 +126,16 @@
             submenu: fromSearchList,
             brickOnClick: true,
             onOpen: function(){
-                mdn.analytics.trackEvent(['Search doc navigator', 'Open on hover']);
+                mdn.analytics.trackEvent({
+                    category: 'Search doc navigator',
+                    action: 'Open on hover',
+                });
             },
             onClose: function() {
-                mdn.analytics.trackEvent(['Search doc navigator', 'Close on blur']);
+                mdn.analytics.trackEvent({
+                    category: 'Search doc navigator',
+                    action: 'Close on blur',
+                });
             }
         });
         fromSearchList.find('ol').mozKeyboardNav();
@@ -335,7 +346,11 @@
             var callback = function() {
               location = href;
             };
-            var data = ['Top Contributors', 'Click position', index];
+            var data = {
+                category: 'Top Contributors',
+                action: 'Click position',
+                label: index
+            };
 
             if (newTab) {
               mdn.analytics.trackEvent(data);
@@ -357,7 +372,11 @@
                 var enterOrSpace = (e.which === 13 || e.which === 32);
                 if (enterOrSpace || e.type === 'click') {
                     e.preventDefault();
-                    mdn.analytics.trackEvent(['Top Contributors', 'Show all']);
+                    mdn.analytics.trackEvent({
+                        category: 'Top Contributors',
+                        action: 'Show all'
+                    });
+
                     $contributors.find('li.hidden').removeClass('hidden');
                     $noscripts.mozLazyloadImage();
                     if (enterOrSpace) {

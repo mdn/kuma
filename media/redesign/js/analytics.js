@@ -6,61 +6,41 @@
         /*
             Tracks generic events passed to the method
         */
-        trackEvent: function(eventArray, callback) {
+        trackEvent: function(eventObject, callback) {
             // Submit eventArray to GA and call callback only after tracking has
             // been sent, or if sending fails.
             //
             // callback is optional.
-            //
-            // Example usage:
-            //
-            // $(function() {
-            //            var handler = function(e) {
-            //                     var self = this;
-            //                     e.preventDefault();
-            //                     $(self).off('submit', handler);
-            //                     gaTrack(
-            //                            ['Newsletter Registration', 'submit'],
-            //                            function() { $(self).submit(); }
-            //                     );
-            //            };
-            //            $(thing).on('submit', handler);
-            // });
 
-            var _gaq = win._gaq;
-            var timeout;
-            var timedCallback;
+            /*
+                Format:
 
-            // Create the final event array
-            if(eventArray[0] == '_trackEvent') { // legacy
-                eventArray.shift();
-            }
-            eventArray  = ['_trackEvent'].concat(eventArray);
+                    ga('send', {
+                        'eventCategory' : 'Star Trek',
+                        'eventAction'   : 'Fire',
+                        'eventLabel'    : 'Phasers',
+                        'eventValue'    : 100,
+                        'hitCallback'   : function () {
+                            document.location = href;
+                        },
+                        'hitType': 'event'
+                    });
+            */
 
-            // Create the timed callback if a callback function has been provided
-            if (typeof(callback) == 'function') {
-                timedCallback = function() {
-                    clearTimeout(timeout);
-                    callback();
-                };
-            }
+            var ga = win.ga;
+            var data = {
+                hitType: 'event',
+                eventCategory: eventObject.category || '',    // Required.
+                eventAction: eventObject.action || '',             // Required.
+                eventLabel: eventObject.label || '',
+                eventValue: eventObject.value || 0,
+                hitCallback: callback || null
+            };
 
             // If Analytics has loaded, go ahead with tracking
-            if (_gaq && _gaq.push) {
+            if (ga) {
                 // Send event to GA
-                _gaq.push(eventArray);
-                // Only set up timeout and hitCallback if a callback exists.
-                if (timedCallback) {
-                    // Failsafe - be sure we do the callback in a half-second
-                    // even if GA isn't able to send in our trackEvent.
-                    timeout = setTimeout(timedCallback, 500);
-
-                    // But ordinarily, we get GA to call us back immediately after
-                    // it finishes sending our things.
-                    // https://developers.google.com/analytics/devguides/collection/gajs/#PushingFunctions
-                    // This is called after GA has sent the current pending data:
-                    _gaq.push(timedCallback);
-                }
+                ga('send', data);
             }
             else if(callback) {
                 // GA disabled or blocked or something, make sure we still
@@ -74,25 +54,30 @@
         */
         trackOutboundLinks: function(target) {
             $(target).on('click', 'a', function (e) {
+                var $this = $(this);
+
                 // If we explicitly say not to track something, don't
-                if($(this).hasClass('no-track')) {
+                if($this.hasClass('no-track')) {
                     return;
                 }
 
                 var host = this.hostname;
-
                 if(host && host != location.hostname) {
                     var newTab = (this.target == '_blank' || e.metaKey || e.ctrlKey);
                     var href = this.href;
                     var callback = function() {
                         location = href;
                     };
-                    var data = ['Outbound Links', href];
+                    var data = {
+                        category: 'Outbound Links',
+                        action: href
+                    };
 
                     if (newTab) {
                         analytics.trackEvent(data);
                     } else {
                         e.preventDefault();
+                        data.hitCallback = callback;
                         analytics.trackEvent(data, callback);
                     }
                 }
@@ -100,24 +85,24 @@
         },
 
         /*
-            Track Clientside errors
+            Track specific clientside errors create by our code
         */
         trackClientErrors: function() {
             $(win).on('error', function(e) {
-                analytics.trackEvent([
-                    'JavaScript error',
-                    e.originalEvent.message,
-                    e.originalEvent.filename + ':' + e.originalEvent.lineno,
-                    true
-                ]);
+                var originalEvent = e.originalEvent;
+                analytics.trackError(' JavaScript Error: ' + originalEvent.message + ' ; ' + originalEvent.filename + ':' + originalEvent.lineno);
             });
             $(doc).ajaxError(function(e, request, settings) {
-                analytics.trackEvent([
-                    'Ajax error',
-                    settings.url,
-                    e.result,
-                    true
-                ]);
+                analytics.trackError('AJAX Error: ' +  settings.url + ' : ' + e.result);
+            });
+        },
+
+        /*
+            Sends universal analytics client side error
+        */
+        trackError: function(description) {
+            win.ga && ga('send', 'exception', {
+                'exDescription': description
             });
         }
     };

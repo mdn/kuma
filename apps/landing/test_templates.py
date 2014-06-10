@@ -15,9 +15,9 @@ class HomeTests(test_utils.TestCase):
         with override_constance_settings(GOOGLE_ANALYTICS_ACCOUNT='0'):
             r = self.client.get(url, follow=True)
             eq_(200, r.status_code)
-            ok_('var _gaq' not in r.content)
+            ok_('ga(\'create' not in r.content)
 
         with override_constance_settings(GOOGLE_ANALYTICS_ACCOUNT='UA-99999999-9'):
             r = self.client.get(url, follow=True)
             eq_(200, r.status_code)
-            ok_('var _gaq' in r.content)
+            ok_('ga(\'create' in r.content)
