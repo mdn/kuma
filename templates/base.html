@@ -169,7 +169,6 @@
   {% if not waffle.flag('static-i18njs') %}
   <script src="{{ url('jsi18n') }}build:{{ BUILD_ID_JS }}"></script>
   {% endif %}
-  <script src="//mozorg.cdn.mozilla.net/{{ request.locale }}/tabzilla/tabzilla.js" async></script>
 
   {% block site_js %}
     <!--[if lte IE 8]><script src="/media/redesign/js/libs/selectivizr-1.0.2/selectivizr-build.js?build={{ BUILD_ID_JS }}"></script><![endif]-->
@@ -186,6 +185,8 @@
       {{ js(script) }}
     {% endfor %}
   {% endblock %}
+
+  <script src="//mozorg.cdn.mozilla.net/{{ request.locale }}/tabzilla/tabzilla.js" async></script>
 
   {% block js %}{% endblock %}
 </body>
