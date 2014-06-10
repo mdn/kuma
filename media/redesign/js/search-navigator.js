@@ -90,7 +90,7 @@
 
             // Setting the main search input with the store query
             if(data.query) {
-                $('#main-q').val(data.query);
+                $('#main-q').attr('data-value', data.query);
             }
 
             // Before we go into processing, let's ensure that *this* page's slug is in the list
