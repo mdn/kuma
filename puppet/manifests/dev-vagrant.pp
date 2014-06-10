@@ -20,7 +20,6 @@ class dev {
       key => 'D88E42B4',
       key_source => 'http://packages.elasticsearch.org/GPG-KEY-elasticsearch',
     }
-
     class { 'elasticsearch':
       package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.13.deb',
       java_install => true,
@@ -30,10 +29,11 @@ class dev {
           'name' => 'kuma'
         },
         'index' => {
-          'number_of_replicas' => '0'
+          'number_of_replicas' => '0',
+          'number_of_shards'   => '1'
         },
         'network' => {
-          'host' => '0.0.0.0',
+          'host' => '0.0.0.0'
         }
       },
     }
