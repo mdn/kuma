@@ -31,6 +31,7 @@ Vagrant.configure("2") do |config|
         vb.customize ["modifyvm", :id, "--memory", CONF['memory_size']]
         vb.customize ['modifyvm', :id, '--ostype', 'Ubuntu']
         vb.customize ['modifyvm', :id, '--cpus', CONF['number_cpus']]
+        vb.customize ["modifyvm", :id, "--ioapic", "on"]
 
         # This thing can be a little hungry for memory
         # uncomment to enable VM GUI console, mainly for troubleshooting
