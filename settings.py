@@ -133,6 +133,7 @@ MDN_LANGUAGES = (
                  'ja',
                  'ka',
                  'ko',
+                 'ml',
                  'ms',
                  'nl',
                  'pl',
