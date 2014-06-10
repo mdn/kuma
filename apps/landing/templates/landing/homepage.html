@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 
 {% block body_attributes %}id="home"{% endblock %}
-{% set styles = ('home',) %}
+
+{% block site_css %}
+	{{ super() }}
+	{{ css('home', 'all') }}
+{% endblock %}
 
 {% block extrahead %}
   <meta name="google-site-verification" content="Phj8dHc2oKwic3FGPsKIhdOBk_1wnCTnKwjcjiLgJPc">
