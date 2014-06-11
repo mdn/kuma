@@ -440,4 +440,123 @@
         };
     }
 
+    /*
+        Track YouTube videos
+    */
+    (function(){
+        var $youtubeIframes = $('iframe[src*="youtube.com/embed"]');
+        var players = [];
+        var timeoutFlag = 1;
+        var timer;
+
+        function timeout() {
+            var fraction;
+            timeoutFlag = 1;
+            $.each(players, function(index, player) {
+                if(player.getPlayerState() ==  1) {
+
+                    timeoutFlag = 0;
+
+                    fraction = player.getCurrentTime() / player.getDuration();
+
+                    if(!player.checkpoint) {
+                        player.checkpoint = 0.1 + Math.round(fraction*10)/10;
+                    }
+
+                    if(fraction > player.checkpoint) {
+                        mdn.analytics.trackEvent({
+                            category: 'YouTube',
+                            action: 'Percent Completed',
+                            label: player.getVideoUrl(),
+                            value: player.checkpoint * 100
+                        });
+
+                        // 10% checkpoints for analytics
+                        player.checkpoint += 0.1;
+                    }
+                }
+            });
+
+            if(timeoutFlag) {
+                timer && clearTimeout(t);
+            }else{
+                timer = setTimeout(timeout, 6000);
+            }
+        };
+
+        // If the page has embedded YouTube videos
+        if($youtubeIframes.length) {
+
+            var origin = window.location.protocol + "//" + window.location.hostname +
+                        (window.location.port ? ':' + window.location.port: '');
+
+            //Enable JS API on all YouTube iframes, might cause flicker!
+            $youtubeIframes.each(function() {
+                $(this).attr('src', function(i, src){
+                    return src + (src.split('?')[1] ? '&':'?') + '&enablejsapi=1&origin=' + origin;
+                });
+            });
+
+            // Load YouTube Iframe API
+            var youtubeScript = doc.createElement('script');
+            youtubeScript.async = 'true';
+            youtubeScript.src = "//www.youtube.com/iframe_api";
+            doc.body.appendChild(youtubeScript);
+
+
+            // Method executed by YouTube API, needs to be global
+            window.onYouTubeIframeAPIReady = function(event) {
+                $youtubeIframes.each(function(i){
+                    players[i] = new YT.Player($(this).get(0));
+
+                    players[i].addEventListener('onReady', function(){
+                       mdn.analytics.trackEvent({
+                            category: 'YouTube',
+                            action: 'Load',
+                            label: players[i].getVideoUrl()
+                        });
+                    });
+                    players[i].addEventListener('onStateChange', function(event) {
+                        var action;
+                        switch(event.data) {
+                            case 0: // YT.PlayerState.ENDED
+                              action = 'Finished';
+                              break;
+                            case 1: // YT.PlayerState.PLAYING
+                              action = 'Play';
+                              if(timeoutFlag){
+                                timeout();
+                              }
+                              break;
+                            case 2: // YT.PlayerState.PAUSED
+                              action = 'Pause';
+                              break;
+                            case 3: // YT.PlayerState.BUFFERING
+                              action = 'Buffering';
+                              break;
+                            default:
+                              return;
+                        }
+                       mdn.analytics.trackEvent({
+                            category: 'YouTube',
+                            action: 'State Change',
+                            label: players[i].getVideoUrl(),
+                            value: action
+                        });
+                    });
+                    players[i].addEventListener('onPlaybackQualityChange', function(event) {
+                       mdn.analytics.trackEvent({
+                            category: 'YouTube',
+                            action: 'Playback Quality',
+                            label: players[i].getVideoUrl(),
+                            value: event.data
+                        });
+                    });
+                    players[i].addEventListener('onError', function(event) {
+                        mdn.trackError('YouTube Error: ' + event.data + 'on ' + window.location.href);
+                    });
+                });
+            };
+        }
+    })();
 })(window, document, jQuery);
