@@ -18,7 +18,6 @@ from django.contrib.auth.models import User
 from django.conf import settings
 
 from devmo.urlresolvers import reverse
-from devmo.models import UserProfile
 
 from . import TAG_DESCRIPTIONS
 from .models import Submission

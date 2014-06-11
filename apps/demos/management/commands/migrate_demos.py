@@ -14,7 +14,7 @@ from threadedcomments.models import ThreadedComment
 
 from actioncounters.models import ActionCounterUnique
 from demos.models import Submission, update_submission_comment_count
-from devmo.models import UserProfile
+from users.models import UserProfile
 
 
 logger = logging.getLogger(__name__)

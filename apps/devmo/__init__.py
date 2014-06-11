@@ -50,23 +50,6 @@ SECTIONS_UPDATES = dict((section.updates, section)
                         for section in _sections)
 
 
-# TODO: Make this dynamic, editable from admin interface
-INTEREST_SUGGESTIONS = [
-    "audio", "canvas", "css3", "device", "files", "fonts",
-    "forms", "geolocation", "javascript", "html5", "indexeddb", "dragndrop",
-    "mobile", "offlinesupport", "svg", "video", "webgl", "websockets",
-    "webworkers", "xhr", "multitouch",
-
-    "front-end development",
-    "web development",
-    "tech writing",
-    "user experience",
-    "design",
-    "technical review",
-    "editorial review",
-]
-
-
 # Django compatibility shim; remove once we're on Django 1.4,
 # and replace calls to this with:
 # from django.db.utils import DatabaseError
@@ -78,4 +61,3 @@ def get_mysql_error():
     else:
         from django.db.utils import DatabaseError
         return DatabaseError
-

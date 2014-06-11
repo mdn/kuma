@@ -418,7 +418,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'teamwork.backends.TeamworkBackend',
 )
-AUTH_PROFILE_MODULE = 'devmo.UserProfile'
+AUTH_PROFILE_MODULE = 'users.UserProfile'
 
 PASSWORD_HASHERS = (
     'users.backends.Sha256Hasher',

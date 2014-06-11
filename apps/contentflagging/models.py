@@ -19,8 +19,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from django.template import Context, loader
 
-from devmo.models import UserProfile
-
 from .utils import get_ip, get_unique
 
 

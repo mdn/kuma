@@ -38,9 +38,8 @@
                 {{ _('Change your avatar at') }} <a href="http://gravatar.com" rel="external">gravatar.com</a>
             </figcaption>
           </figure>
-
           <ul>
-              <li><a href="{{ url('devmo.views.profile_view', username=profile.user.username) }}">{{ _('View profile') }}</a></li>
+              <li><a href="{{ profile.user.get_absolute_url() }}">{{ _('View profile') }}</a></li>
             {# TODO: Implement account deletion #}
             {# <li class="delete"><a href="#">{{ _('Delete my account') }}</a></li> #}
           </ul>

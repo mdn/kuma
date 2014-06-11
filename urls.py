@@ -24,7 +24,6 @@ handler500 = lambda r: _error_page(r, 500)
 urlpatterns = patterns('',
    # Home / landing pages:
     ('', include('landing.urls')),
-    ('', include('devmo.urls')),
     (r'^demos/', include('demos.urls')),
     (r'^events/?', include('kuma.events.urls')),
     (r'^demos', lambda x: redirect('demos')),

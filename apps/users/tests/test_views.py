@@ -1,8 +1,11 @@
+import logging
+
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core import mail
 from django.test.utils import override_settings
+from django.core.paginator import PageNotAnInteger
 
 import mock
 from nose.tools import eq_, ok_
@@ -12,11 +15,14 @@ from test_utils import RequestFactory
 from waffle.models import Switch
 
 from devmo.tests import mock_lookup_user, LocalizingClient
-from sumo.helpers import urlparams
 from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
-from users.models import EmailChange, UserBan
+
+from users.models import UserProfile, UserBan
 from users.views import SESSION_VERIFIED_EMAIL, _clean_next_url
+from users.tests import create_profile
+
+TESTUSER_PASSWORD = 'testpass'
 
 
 class LoginTestCase(TestCase):
@@ -30,77 +36,6 @@ class LoginTestCase(TestCase):
 
     def tearDown(self):
         settings.DEBUG = self.old_debug
-
-    @mock.patch_object(Site.objects, 'get_current')
-    def test_bad_login_fails_both_backends(self, get_current):
-        get_current.return_value.domain = 'dev.mo.org'
-        self.assertRaises(User.DoesNotExist, User.objects.get,
-                          username='nouser')
-
-        response = self.client.post(reverse('users.login'),
-                                    {'username': 'nouser',
-                                     'password': 'nopass'}, follow=True)
-        eq_(200, response.status_code)
-        self.assertContains(response, 'Please enter a correct username and '
-                                      'password.')
-
-    @mock.patch_object(Site.objects, 'get_current')
-    def test_django_login(self, get_current):
-        get_current.return_value.domain = 'dev.mo.org'
-
-        response = self.client.post(reverse('users.login'),
-                                    {'username': 'testuser',
-                                     'password': 'testpass'}, follow=True)
-        eq_(200, response.status_code)
-        doc = pq(response.content)
-        eq_('testuser', doc.find('ul.user-state a:first').text())
-
-    @mock.patch_object(Site.objects, 'get_current')
-    def test_django_login_wont_redirect_to_login(self, get_current):
-        get_current.return_value.domain = 'dev.mo.org'
-        login_uri = reverse('users.login')
-
-        response = self.client.post(login_uri,
-                                    {'username': 'testuser',
-                                     'password': 'testpass',
-                                     'next': login_uri},
-                                    follow=True)
-        eq_(200, response.status_code)
-        for redirect_url, code in response.redirect_chain:
-            ok_(login_uri not in redirect_url, "Found %s in redirect_chain"
-                % login_uri)
-        doc = pq(response.content)
-        eq_('testuser', doc.find('ul.user-state a:first').text())
-
-    @mock.patch_object(Site.objects, 'get_current')
-    def test_logged_in_message(self, get_current):
-        get_current.return_value.domain = 'dev.mo.org'
-        login_uri = reverse('users.login')
-
-        response = self.client.post(login_uri,
-                                    {'username': 'testuser',
-                                     'password': 'testpass'},
-                                    follow=True)
-        eq_(200, response.status_code)
-        response = self.client.get(login_uri, follow=True)
-        eq_(200, response.status_code)
-        doc = pq(response.content)
-        eq_("You are already logged in.", doc.find('article').text())
-
-    @mock.patch_object(Site.objects, 'get_current')
-    def test_django_login_redirects_to_next(self, get_current):
-        get_current.return_value.domain = 'dev.mo.org'
-        login_uri = reverse('users.login')
-
-        response = self.client.post(login_uri,
-                                    {'username': 'testuser',
-                                     'password': 'testpass'},
-                                    follow=True)
-        eq_(200, response.status_code)
-        response = self.client.get(login_uri, {'next': '/en-US/demos/submit'},
-                                   follow=True)
-        eq_('http://testserver/en-US/demos/submit',
-                                                response.redirect_chain[0][0])
 
     @mock.patch_object(Site.objects, 'get_current')
     def test_clean_next_url_request_properties(self, get_current):
@@ -133,165 +68,8 @@ class LoginTestCase(TestCase):
             r = RequestFactory().get('/users/login', {'next': next})
             eq_(None, _clean_next_url(r))
 
-    @mock.patch_object(Site.objects, 'get_current')
-    def test_login_invalid_next_parameter(self, get_current):
-        '''Test with an invalid ?next=http://example.com parameter.'''
-        get_current.return_value.domain = 'testserver.com'
-        valid_next = reverse('home', locale=settings.LANGUAGE_CODE)
-
-        for invalid_next in self._invalid_nexts():
-            # Verify that _valid_ next parameter is set in form hidden field.
-            response = self.client.get(urlparams(reverse('users.login'),
-                                                 next=invalid_next))
-            eq_(200, response.status_code)
-            doc = pq(response.content)
-            eq_(valid_next, doc('input[name="next"]')[0].attrib['value'])
-
-            # Verify that it gets used on form POST.
-            response = self.client.post(reverse('users.login'),
-                                        {'username': 'testuser',
-                                         'password': 'testpass',
-                                         'next': invalid_next})
-            eq_(302, response.status_code)
-            eq_('http://testserver' + valid_next, response['location'])
-            self.client.logout()
-
     def _invalid_nexts(self):
         return ['http://foobar.com/evil/', '//goo.gl/y-bad']
-
-
-class ReminderEmailTestCase(TestCase):
-    fixtures = ['test_users.json']
-
-    def setUp(self):
-        self.client = LocalizingClient()
-
-    @mock.patch_object(Site.objects, 'get_current')
-    def test_reminder_email(self, get_current):
-        """Should send simple email reminder to user."""
-        get_current.return_value.domain = 'dev.mo.org'
-
-        response = self.client.post(reverse('users.send_email_reminder'),
-                                    {'username': 'testuser'},
-                                    follow=True)
-        eq_(200, response.status_code)
-        eq_(1, len(mail.outbox))
-        email = mail.outbox[0]
-        assert email.subject.find('Email Address Reminder') == 0
-        assert 'testuser' in email.body
-
-    @mock.patch_object(Site.objects, 'get_current')
-    def test_unknown_user_no_email_sent(self, get_current):
-        """Should send simple email reminder to user."""
-        get_current.return_value.domain = 'dev.mo.org'
-
-        response = self.client.post(reverse('users.send_email_reminder'),
-                                    {'username': 'testuser404'},
-                                    follow=True)
-        eq_(200, response.status_code)
-        eq_(0, len(mail.outbox))
-
-    @mock.patch_object(Site.objects, 'get_current')
-    def test_user_without_email_message(self, get_current):
-        """Should send simple email reminder to user."""
-        get_current.return_value.domain = 'dev.mo.org'
-
-        u = User.objects.get(username='testuser')
-        u.email = ''
-        u.save()
-
-        response = self.client.post(reverse('users.send_email_reminder'),
-                                    {'username': 'testuser'},
-                                    follow=True)
-        eq_(200, response.status_code)
-        eq_(0, len(mail.outbox))
-        ok_('Could not find email' in response.content)
-        ok_('file a bug' in response.content)
-
-
-class ChangeEmailTestCase(TestCase):
-    fixtures = ['test_users.json']
-
-    def setUp(self):
-        self.client = LocalizingClient()
-
-    @mock.patch_object(Site.objects, 'get_current')
-    def test_user_change_email(self, get_current):
-        """Send email to change user's email and then change it."""
-        get_current.return_value.domain = 'su.mo.com'
-
-        self.client.login(username='testuser', password='testpass')
-        # Attempt to change email.
-        response = self.client.post(reverse('users.change_email'),
-                                    {'email': 'paulc@trololololololo.com'},
-                                    follow=True)
-        eq_(200, response.status_code)
-
-        # Be notified to click a confirmation link.
-        eq_(1, len(mail.outbox))
-        assert mail.outbox[0].subject.find('Please confirm your') == 0
-        ec = EmailChange.objects.all()[0]
-        assert ec.activation_key in mail.outbox[0].body
-        eq_('paulc@trololololololo.com', ec.email)
-
-        # Visit confirmation link to change email.
-        response = self.client.get(reverse('users.confirm_email',
-                                           args=[ec.activation_key]))
-        eq_(200, response.status_code)
-        u = User.objects.get(username='testuser')
-        eq_('paulc@trololololololo.com', u.email)
-
-    def test_user_change_email_same(self):
-        """Changing to same email shows validation error."""
-        self.client.login(username='testuser', password='testpass')
-        user = User.objects.get(username='testuser')
-        user.email = 'valid@email.com'
-        user.save()
-        response = self.client.post(reverse('users.change_email'),
-                                    {'email': user.email})
-        eq_(200, response.status_code)
-        doc = pq(response.content)
-        eq_('This is your current email.', doc('ul.errorlist').text())
-
-    def test_user_change_email_duplicate(self):
-        """Changing to same email shows validation error."""
-        self.client.login(username='testuser', password='testpass')
-        email = 'testuser2@test.com'
-        response = self.client.post(reverse('users.change_email'),
-                                    {'email': email})
-        eq_(200, response.status_code)
-        doc = pq(response.content)
-        eq_('A user with that email address already exists.',
-            doc('ul.errorlist').text())
-
-    @mock.patch_object(Site.objects, 'get_current')
-    def test_user_confirm_email_duplicate(self, get_current):
-        """If we detect a duplicate email when confirming an email change,
-        don't change it and notify the user."""
-        get_current.return_value.domain = 'su.mo.com'
-        self.client.login(username='testuser', password='testpass')
-        old_email = User.objects.get(username='testuser').email
-        new_email = 'newvalid@email.com'
-        response = self.client.post(reverse('users.change_email'),
-                                    {'email': new_email})
-        eq_(200, response.status_code)
-        assert mail.outbox[0].subject.find('Please confirm your') == 0
-        ec = EmailChange.objects.all()[0]
-
-        # Before new email is confirmed, give the same email to a user
-        other_user = User.objects.filter(username='testuser2')[0]
-        other_user.email = new_email
-        other_user.save()
-
-        # Visit confirmation link and verify email wasn't changed.
-        response = self.client.get(reverse('users.confirm_email',
-                                           args=[ec.activation_key]))
-        eq_(200, response.status_code)
-        doc = pq(response.content)
-        eq_('Unable to change email for user testuser',
-            doc('article h1').text())
-        u = User.objects.get(username='testuser')
-        eq_(old_email, u.email)
 
 
 class BrowserIDTestCase(TestCase):
@@ -522,7 +300,7 @@ class BrowserIDTestCase(TestCase):
         eq_(302, resp.status_code)
         ok_('profiles/testuser/edit' in resp['Location'])
 
-        resp = self.client.get(reverse('devmo_profile_edit', locale='en-US',
+        resp = self.client.get(reverse('users.profile_edit', locale='en-US',
                                        args=['testuser', ]))
         eq_(200, resp.status_code)
         doc = pq(resp.content)
@@ -551,7 +329,7 @@ class BrowserIDTestCase(TestCase):
         eq_(302, resp.status_code)
         ok_('change_email' in resp['Location'])
 
-        resp = self.client.get(reverse('devmo_profile_edit', locale='en-US',
+        resp = self.client.get(reverse('users.profile_edit', locale='en-US',
                                        args=['testuser', ]))
         eq_(200, resp.status_code)
         doc = pq(resp.content)
@@ -617,3 +395,390 @@ class BanTestCase(TestCase):
                                       by=admin,
                                       reason='Banned by unit test.')
         ok_(bans.count())
+
+
+class ProfileViewsTest(TestCase):
+    fixtures = ['test_users.json']
+
+    def setUp(self):
+        self.old_debug = settings.DEBUG
+        settings.DEBUG = True
+        self.client = LocalizingClient()
+        self.client.logout()
+
+    def tearDown(self):
+        settings.DEBUG = self.old_debug
+
+    def _get_current_form_field_values(self, doc):
+        # Scrape out the existing significant form field values.
+        form = dict()
+        for fn in ('email', 'fullname', 'title', 'organization', 'location',
+                   'irc_nickname', 'bio', 'interests', 'country', 'format'):
+            form[fn] = doc.find('#profile-edit *[name="%s"]' % fn).val()
+        form['country'] = 'us'
+        form['format'] = 'html'
+        return form
+
+    @attr('docs_activity')
+    def test_profile_view(self):
+        """A user profile can be viewed"""
+        profile = UserProfile.objects.get(user__username='testuser')
+        user = profile.user
+        url = reverse('users.profile', args=(user.username,))
+        r = self.client.get(url, follow=True)
+        doc = pq(r.content)
+
+        eq_(profile.user.username,
+            doc.find('#profile-head.vcard .nickname').text())
+        eq_(profile.fullname,
+            doc.find('#profile-head.vcard .fn').text())
+        eq_(profile.title,
+            doc.find('#profile-head.vcard .title').text())
+        eq_(profile.organization,
+            doc.find('#profile-head.vcard .org').text())
+        eq_(profile.location,
+            doc.find('#profile-head.vcard .loc').text())
+        eq_('IRC: ' + profile.irc_nickname,
+            doc.find('#profile-head.vcard .irc').text())
+        eq_(profile.bio,
+            doc.find('#profile-head.vcard .bio').text())
+
+    def test_my_profile_view(self):
+        u = User.objects.get(username='testuser')
+        self.client.login(username=u.username, password=TESTUSER_PASSWORD)
+        resp = self.client.get('/profile/')
+        eq_(302, resp.status_code)
+        ok_(reverse('users.profile', args=(u.username,)) in
+            resp['Location'])
+
+    def test_bug_698971(self):
+        """A non-numeric page number should not cause an error"""
+        (user, profile) = create_profile()
+
+        url = '%s?page=asdf' % reverse('users.profile', args=(user.username,))
+
+        try:
+            self.client.get(url, follow=True)
+        except PageNotAnInteger:
+            ok_(False, "Non-numeric page number should not cause an error")
+
+    @mock.patch('basket.lookup_user')
+    @mock.patch('basket.subscribe')
+    @mock.patch('basket.unsubscribe')
+    def test_profile_edit(self,
+                            unsubscribe,
+                            subscribe,
+                            lookup_user):
+        lookup_user.return_value = mock_lookup_user()
+        subscribe.return_value = True
+        unsubscribe.return_value = True
+        profile = UserProfile.objects.get(user__username='testuser')
+        user = profile.user
+        url = reverse('users.profile', args=(user.username,))
+        r = self.client.get(url, follow=True)
+        doc = pq(r.content)
+        eq_(0, doc.find('#profile-head .edit .button').length)
+
+        self.client.login(username=user.username,
+                password=TESTUSER_PASSWORD)
+
+        url = reverse('users.profile', args=(user.username,))
+        r = self.client.get(url, follow=True)
+        doc = pq(r.content)
+
+        edit_button = doc.find('#profile-head .edit #edit-profile')
+        eq_(1, edit_button.length)
+
+        url = edit_button.attr('href')
+        r = self.client.get(url, follow=True)
+        doc = pq(r.content)
+
+        eq_(profile.fullname,
+            doc.find('#profile-edit input[name="fullname"]').val())
+        eq_(profile.title,
+            doc.find('#profile-edit input[name="title"]').val())
+        eq_(profile.organization,
+            doc.find('#profile-edit input[name="organization"]').val())
+        eq_(profile.location,
+            doc.find('#profile-edit input[name="location"]').val())
+        eq_(profile.irc_nickname,
+            doc.find('#profile-edit input[name="irc_nickname"]').val())
+
+        new_attrs = dict(
+            email='testuser@test.com',
+            fullname="Another Name",
+            title="Another title",
+            organization="Another org",
+            country="us",
+            format="html"
+        )
+
+        r = self.client.post(url, new_attrs, follow=True)
+        doc = pq(r.content)
+
+        eq_(1, doc.find('#profile-head').length)
+        eq_(new_attrs['fullname'],
+            doc.find('#profile-head .main .fn').text())
+        eq_(new_attrs['title'],
+            doc.find('#profile-head .info .title').text())
+        eq_(new_attrs['organization'],
+            doc.find('#profile-head .info .org').text())
+
+        profile = UserProfile.objects.get(user__username=user.username)
+        eq_(new_attrs['fullname'], profile.fullname)
+        eq_(new_attrs['title'], profile.title)
+        eq_(new_attrs['organization'], profile.organization)
+
+    def test_my_profile_edit(self):
+        u = User.objects.get(username='testuser')
+        self.client.login(username=u.username, password=TESTUSER_PASSWORD)
+        resp = self.client.get('/profile/edit')
+        eq_(302, resp.status_code)
+        ok_(reverse('users.profile_edit', args=(u.username,)) in
+            resp['Location'])
+
+    @mock.patch('basket.lookup_user')
+    @mock.patch('basket.subscribe')
+    @mock.patch('basket.unsubscribe')
+    def test_profile_edit_beta(self, unsubscribe, subscribe, lookup_user):
+        lookup_user.return_value = mock_lookup_user()
+        subscribe.return_value = True
+        unsubscribe.return_value = True
+        user = User.objects.get(username='testuser')
+        self.client.login(username=user.username,
+                          password=TESTUSER_PASSWORD)
+
+        url = reverse('users.profile_edit',
+                      args=(user.username,))
+        r = self.client.get(url, follow=True)
+        doc = pq(r.content)
+        eq_(None, doc.find('input#id_beta').attr('checked'))
+
+        form = self._get_current_form_field_values(doc)
+        form['beta'] = True
+
+        r = self.client.post(url, form, follow=True)
+
+        url = reverse('users.profile_edit',
+                      args=(user.username,))
+        r = self.client.get(url, follow=True)
+        doc = pq(r.content)
+        eq_('checked', doc.find('input#id_beta').attr('checked'))
+
+    @mock.patch('basket.lookup_user')
+    @mock.patch('basket.subscribe')
+    @mock.patch('basket.unsubscribe')
+    def test_profile_edit_websites(self, unsubscribe, subscribe, lookup_user):
+        lookup_user.return_value = mock_lookup_user()
+        subscribe.return_value = True
+        unsubscribe.return_value = True
+
+        user = User.objects.get(username='testuser')
+        self.client.login(username=user.username,
+                password=TESTUSER_PASSWORD)
+
+        url = reverse('users.profile_edit',
+                      args=(user.username,))
+        r = self.client.get(url, follow=True)
+        doc = pq(r.content)
+
+        test_sites = {
+            u'website': u'http://example.com/',
+            u'twitter': u'http://twitter.com/lmorchard',
+            u'github': u'http://github.com/lmorchard',
+            u'stackoverflow': u'http://stackoverflow.com/users/lmorchard',
+            u'linkedin': u'https://www.linkedin.com/in/testuser',
+            u'mozillians': u'https://mozillians.org/u/testuser',
+            u'facebook': u'https://www.facebook.com/test.user'
+        }
+
+        form = self._get_current_form_field_values(doc)
+
+        # Fill out the form with websites.
+        form.update(dict(('websites_%s' % k, v)
+                    for k, v in test_sites.items()))
+
+        # Submit the form, verify redirect to profile detail
+        r = self.client.post(url, form, follow=True)
+        doc = pq(r.content)
+        eq_(1, doc.find('#profile-head').length)
+
+        p = UserProfile.objects.get(user=user)
+
+        # Verify the websites are saved in the profile.
+        eq_(test_sites, p.websites)
+
+        # Verify the saved websites appear in the editing form
+        url = reverse('users.profile_edit',
+                      args=(user.username,))
+        r = self.client.get(url, follow=True)
+        doc = pq(r.content)
+        for k, v in test_sites.items():
+            eq_(v, doc.find('#profile-edit *[name="websites_%s"]' % k).val())
+
+        # Come up with some bad sites, either invalid URL or bad URL prefix
+        bad_sites = {
+            u'website': u'HAHAHA WHAT IS A WEBSITE',
+            u'twitter': u'http://facebook.com/lmorchard',
+            u'stackoverflow': u'http://overqueueblah.com/users/lmorchard',
+        }
+        form.update(dict(('websites_%s' % k, v)
+                    for k, v in bad_sites.items()))
+
+        # Submit the form, verify errors for all of the bad sites
+        r = self.client.post(url, form, follow=True)
+        doc = pq(r.content)
+        eq_(1, doc.find('#profile-edit').length)
+        tmpl = '#profile-edit #elsewhere .%s .errorlist'
+        for n in ('website', 'twitter', 'stackoverflow'):
+            eq_(1, doc.find(tmpl % n).length)
+
+    @mock.patch('basket.lookup_user')
+    @mock.patch('basket.subscribe')
+    @mock.patch('basket.unsubscribe')
+    def test_profile_edit_interests(self,
+                                    unsubscribe,
+                                    subscribe,
+                                    lookup_user):
+        lookup_user.return_value = mock_lookup_user()
+        subscribe.return_value = True
+        unsubscribe.return_value = True
+
+        user = User.objects.get(username='testuser')
+        self.client.login(username=user.username,
+                password=TESTUSER_PASSWORD)
+
+        url = reverse('users.profile_edit',
+                      args=(user.username,))
+        r = self.client.get(url, follow=True)
+        doc = pq(r.content)
+
+        test_tags = ['javascript', 'css', 'canvas', 'html', 'homebrewing']
+
+        form = self._get_current_form_field_values(doc)
+
+        form['interests'] = ', '.join(test_tags)
+
+        r = self.client.post(url, form, follow=True)
+        doc = pq(r.content)
+        eq_(1, doc.find('#profile-head').length)
+
+        p = UserProfile.objects.get(user=user)
+
+        result_tags = [t.name.replace('profile:interest:', '')
+                for t in p.tags.all_ns('profile:interest:')]
+        result_tags.sort()
+        test_tags.sort()
+        eq_(test_tags, result_tags)
+
+        test_expertise = ['css', 'canvas']
+        form['expertise'] = ', '.join(test_expertise)
+        r = self.client.post(url, form, follow=True)
+        doc = pq(r.content)
+
+        eq_(1, doc.find('#profile-head').length)
+
+        p = UserProfile.objects.get(user=user)
+
+        result_tags = [t.name.replace('profile:expertise:', '')
+                for t in p.tags.all_ns('profile:expertise')]
+        result_tags.sort()
+        test_expertise.sort()
+        eq_(test_expertise, result_tags)
+
+        # Now, try some expertise tags not covered in interests
+        test_expertise = ['css', 'canvas', 'mobile', 'movies']
+        form['expertise'] = ', '.join(test_expertise)
+        r = self.client.post(url, form, follow=True)
+        doc = pq(r.content)
+
+        eq_(1, doc.find('.error #id_expertise').length)
+
+    @mock.patch('basket.lookup_user')
+    @mock.patch('basket.subscribe')
+    @mock.patch('basket.unsubscribe')
+    def test_bug_709938_interests(self, unsubscribe, subscribe, lookup_user):
+        lookup_user.return_value = mock_lookup_user()
+        subscribe.return_value = True
+        unsubscribe.return_value = True
+        user = User.objects.get(username='testuser')
+        self.client.login(username=user.username,
+                password=TESTUSER_PASSWORD)
+
+        url = reverse('users.profile_edit',
+                      args=(user.username,))
+        r = self.client.get(url, follow=True)
+        doc = pq(r.content)
+
+        test_tags = [u'science,Technology,paradox,knowledge,modeling,big data,'
+                     u'vector,meme,heuristics,harmony,mathesis universalis,'
+                     u'symmetry,mathematics,computer graphics,field,chemistry,'
+                     u'religion,astronomy,physics,biology,literature,'
+                     u'spirituality,Art,Philosophy,Psychology,Business,Music,'
+                     u'Computer Science']
+
+        form = self._get_current_form_field_values(doc)
+
+        form['interests'] = test_tags
+
+        r = self.client.post(url, form, follow=True)
+        eq_(200, r.status_code)
+        doc = pq(r.content)
+        eq_(1, doc.find('ul.errorlist li').length)
+        assert ('Ensure this value has at most 255 characters'
+                in doc.find('ul.errorlist li').text())
+
+    @mock.patch('basket.lookup_user')
+    @mock.patch('basket.subscribe')
+    @mock.patch('basket.unsubscribe')
+    def test_bug_698126_l10n(self, unsubscribe, subscribe, lookup_user):
+        """Test that the form field names are localized"""
+        lookup_user.return_value = mock_lookup_user()
+        subscribe.return_value = True
+        unsubscribe.return_value = True
+        user = User.objects.get(username='testuser')
+        self.client.login(username=user.username,
+            password=TESTUSER_PASSWORD)
+
+        url = reverse('users.profile_edit',
+            args=(user.username,))
+        r = self.client.get(url, follow=True)
+        for field in r.context['form'].fields:
+            # if label is localized it's a lazy proxy object
+            ok_(not isinstance(
+                r.context['form'].fields[field].label, basestring),
+                'Field %s is a string!' % field)
+
+    def _break(self, url, r):
+        logging.debug("URL  %s" % url)
+        logging.debug("STAT %s" % r.status_code)
+        logging.debug("HEAD %s" % r.items())
+        logging.debug("CONT %s" % r.content)
+        ok_(False)
+
+    def test_bug_811751_banned_profile(self):
+        """A banned user's profile should not be viewable"""
+        profile = UserProfile.objects.get(user__username='testuser')
+        user = profile.user
+        url = reverse('users.profile', args=(user.username,))
+
+        # Profile viewable if not banned
+        response = self.client.get(url, follow=True)
+        self.assertNotEqual(response.status_code, 403)
+
+        # Ban User
+        admin = User.objects.get(username='admin')
+        testuser = User.objects.get(username='testuser')
+        ban = UserBan(user=testuser, by=admin,
+                      reason='Banned by unit test.',
+                      is_active=True)
+        ban.save()
+
+        # Profile not viewable if banned
+        response = self.client.get(url, follow=True)
+        self.assertEqual(response.status_code, 403)
+
+        # Admin can view banned user's profile
+        self.client.login(username='admin', password='testpass')
+        response = self.client.get(url, follow=True)
+        self.assertNotEqual(response.status_code, 403)
