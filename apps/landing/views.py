@@ -12,7 +12,8 @@ import constance.config
 from devmo import SECTION_USAGE, SECTION_APPS, SECTION_HACKS
 from feeder.models import Bundle
 from demos.models import Submission
-from devmo.forms import SubscriptionForm
+
+from .forms import SubscriptionForm
 
 
 def home(request):
