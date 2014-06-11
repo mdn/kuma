@@ -308,3 +308,31 @@ localizers will have merge head-aches.
         POOTLE_SETTINGS=localsettings.py python2.6 manage.py
         update_against_templates --project=mdn -v 2
 
+Adding a new Locale
+===================
+Adding a new locale is also easy.
+
+1.  Check out the localizations (See `get-localizations`_)
+
+2.  Follow `the "Add locale" instructions on wiki.mozilla.org
+    <https://wiki.mozilla.org/L10n:Verbatim#Adding_a_locale_to_a_Verbatim_project>`_.
+
+3.  Update your locale repo to get the new locale::
+
+        $ cd locale
+        $ svn up
+
+4.  Add the locale to `MDN_LANGUAGES` in `settings.py`
+
+5.  Verify django loads new locale without errors by visiting the locale's home
+    page. E.g., https://developer-local.allizom.org/ml/
+
+6.  BONUS: Use `podebug` to test a fake translation of the locale::
+
+        $ cd locale
+        $ podebug --rewrite=bracket templates/LC_MESSAGES/messages.pot
+        ml/LC_MESSAGES/messages.po
+        $ ./compile-mo.sh .
+
+    Restart the django server and re-visit the new locale to verify it shows
+    "translated" strings in the locale.
