@@ -13,7 +13,7 @@ from tower import ugettext_lazy as _
 from product_details import product_details
 from taggit.utils import parse_tags
 
-from devmo.forms import PRIVACY_REQUIRED
+from landing.forms import PRIVACY_REQUIRED
 
 from .models import UserProfile
 
