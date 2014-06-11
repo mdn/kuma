@@ -18,8 +18,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.generic import ListView
 
-from devmo.models import UserProfile
-
 import constance.config
 
 from taggit.models import Tag
@@ -28,6 +26,7 @@ from taggit_extras.utils import parse_tags
 
 from demos.models import Submission
 from demos.forms import SubmissionNewForm, SubmissionEditForm
+from users.models import UserProfile
 
 from . import DEMOS_CACHE_NS_KEY
 

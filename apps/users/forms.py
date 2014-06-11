@@ -1,107 +1,54 @@
-import re
+import time
 
 from django import forms
 from django.conf import settings
-from django.contrib.auth import authenticate, forms as auth_forms
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
+from django.http import HttpResponseServerError
 
-from tower import ugettext as _, ugettext_lazy as _lazy
+import basket
+from basket.base import BasketException
+from basket.errors import BASKET_UNKNOWN_EMAIL
+import constance.config
+from tower import ugettext_lazy as _
 from product_details import product_details
+from taggit.utils import parse_tags
 
 from devmo.forms import PRIVACY_REQUIRED
-from sumo.widgets import ImageWidget
-from users.models import Profile
-from users.widgets import FacebookURLWidget, TwitterURLWidget
+
+from .models import UserProfile
 
 
-USERNAME_INVALID = _lazy(u'Username may contain only letters, '
-                         'numbers and ./-/_ characters.')
-USERNAME_REQUIRED = _lazy(u'Username is required.')
-USERNAME_SHORT = _lazy(u'Username is too short (%(show_value)s characters). '
-                       'It must be at least %(limit_value)s characters.')
-USERNAME_LONG = _lazy(u'Username is too long (%(show_value)s characters). '
-                      'It must be %(limit_value)s characters or less.')
-EMAIL_REQUIRED = _lazy(u'Email address is required.')
-EMAIL_SHORT = _lazy(u'Email address is too short (%(show_value)s characters). '
-                    'It must be at least %(limit_value)s characters.')
-EMAIL_LONG = _lazy(u'Email address is too long (%(show_value)s characters). '
-                   'It must be %(limit_value)s characters or less.')
-PASSWD_REQUIRED = _lazy(u'Password is required.')
-PASSWD2_REQUIRED = _lazy(u'Please enter your password twice.')
-PASSWD_UTF8 = _lazy(u'To use this password, you need to initiate a password '
-                    u'reset. Please use the "forgot my password" link below.')
+USERNAME_INVALID = _('Username may contain only letters, '
+                     'numbers and ./-/_ characters.')
+USERNAME_REQUIRED = _('Username is required.')
+USERNAME_SHORT = _('Username is too short (%(show_value)s characters). '
+                   'It must be at least %(limit_value)s characters.')
+USERNAME_LONG = _('Username is too long (%(show_value)s characters). '
+                  'It must be %(limit_value)s characters or less.')
+EMAIL_REQUIRED = _('Email address is required.')
+EMAIL_SHORT = _('Email address is too short (%(show_value)s characters). '
+                'It must be at least %(limit_value)s characters.')
+EMAIL_LONG = _('Email address is too long (%(show_value)s characters). '
+               'It must be %(limit_value)s characters or less.')
+PASSWD_REQUIRED = _('Password is required.')
+PASSWD2_REQUIRED = _('Please enter your password twice.')
+PASSWD_UTF8 = _('To use this password, you need to initiate a password '
+                'reset. Please use the "forgot my password" link below.')
 
 
 class UsernameField(forms.RegexField):
     def __init__(self, *args, **kwargs):
         super(UsernameField, self).__init__(
-            label=_lazy(u'Username'), max_length=30, min_length=3,
+            label=_(u'Username'), max_length=30, min_length=3,
             regex=r'^[\w.-]+$',
-            help_text=_lazy(u'Required. 30 characters or fewer. '
-                            'Letters, digits and ./-/_ only.'),
+            help_text=_('Required. 30 characters or fewer. '
+                        'Letters, digits and ./-/_ only.'),
             widget=forms.TextInput(),
             error_messages={'invalid': USERNAME_INVALID,
                             'required': USERNAME_REQUIRED,
                             'min_length': USERNAME_SHORT,
                             'max_length': USERNAME_LONG},
             *args, **kwargs)
-
-
-class RegisterForm(forms.ModelForm):
-    """A user registration form that requires unique email addresses.
-
-    The default Django user creation form does not require an email address,
-    let alone that it be unique. This form does, and sets a minimum length
-    for usernames.
-
-    """
-    username = UsernameField()
-    email = forms.EmailField(label=_lazy(u'Email address'),
-                             error_messages={'required': EMAIL_REQUIRED,
-                                             'min_length': EMAIL_SHORT,
-                                             'max_length': EMAIL_LONG})
-    password = forms.CharField(label=_lazy(u'Password'),
-                               widget=forms.PasswordInput(
-                                   render_value=False),
-                               error_messages={'required': PASSWD_REQUIRED})
-    password2 = forms.CharField(label=_lazy(u'Repeat password'),
-                                widget=forms.PasswordInput(
-                                    render_value=False),
-                                error_messages={'required': PASSWD2_REQUIRED},
-                                help_text=_lazy(u'Enter the same password as '
-                                                 'above, for verification.'))
-
-    class Meta(object):
-        model = User
-        fields = ('username', 'password', 'password2', 'email')
-
-    def clean(self):
-        super(RegisterForm, self).clean()
-        password = self.cleaned_data.get('password')
-        password2 = self.cleaned_data.get('password2')
-
-        if not password == password2:
-            raise forms.ValidationError(_('Passwords must match.'))
-
-        return self.cleaned_data
-
-    def clean_email(self):
-        email = self.cleaned_data['email']
-        if User.objects.filter(email=email).exists():
-            raise forms.ValidationError(_('A user with that email address '
-                                          'already exists.'))
-        return email
-
-    def clean_username(self):
-        username = self.cleaned_data.get('username')
-        if User.objects.filter(username=username).exists():
-            raise forms.ValidationError(
-                _('The username you entered already exists.'))
-        return username
-
-    def __init__(self,  request=None, *args, **kwargs):
-        super(RegisterForm, self).__init__(request, auto_id='id_for_%s',
-                                           *args, **kwargs)
 
 
 class BrowserIDRegisterForm(forms.ModelForm):
@@ -157,113 +104,150 @@ class BrowserIDRegisterForm(forms.ModelForm):
         )
 
 
-class AuthenticationForm(auth_forms.AuthenticationForm):
-    """Overrides the default django form.
-
-    * Doesn't prefill password on validation error.
-    * Allows logging in inactive users (initialize with `only_active=False`).
-    """
-    password = forms.CharField(label=_lazy(u"Password"),
-                               widget=forms.PasswordInput(render_value=False))
-
-    def __init__(self, request=None, only_active=True, *args, **kwargs):
-        self.only_active = only_active
-        super(AuthenticationForm, self).__init__(request, *args, **kwargs)
-
-    def clean(self):
-        username = self.cleaned_data.get('username')
-        password = self.cleaned_data.get('password')
-
-        if username and password:
-            try:
-                self.user_cache = authenticate(username=username,
-                                               password=password)
-            except UnicodeEncodeError:
-                raise forms.ValidationError(PASSWD_UTF8)
-
-            if self.user_cache is None:
-                raise forms.ValidationError(
-                    _('Please enter a correct username and password. Note '
-                      'that both fields are case-sensitive.'))
-            elif self.only_active and not self.user_cache.is_active:
-                raise forms.ValidationError(_('This account is inactive.'))
-
-        if self.request:
-            if not self.request.session.test_cookie_worked():
-                raise forms.ValidationError(
-                    _("Your Web browser doesn't appear to have cookies "
-                      "enabled. Cookies are required for logging in."))
-
-        return self.cleaned_data
-
-
-class ProfileForm(forms.ModelForm):
-    """The form for editing the user's profile."""
-
-    class Meta(object):
-        model = Profile
-        exclude = ('user', 'livechat_id', 'avatar')
-        widgets = {
-            'twitter': TwitterURLWidget,
-            'facebook': FacebookURLWidget,
-        }
-
-    def clean_twitter(self):
-        twitter = self.cleaned_data['twitter']
-        if twitter and not re.match(TwitterURLWidget.pattern, twitter):
-            raise forms.ValidationError(_(u'Please enter a twitter.com URL.'))
-        return twitter
-
-    def clean_facebook(self):
-        facebook = self.cleaned_data['facebook']
-        if facebook and not re.match(FacebookURLWidget.pattern, facebook):
-            raise forms.ValidationError(_(u'Please enter a facebook.com URL.'))
-        return facebook
-
-
-class AvatarForm(forms.ModelForm):
-    """The form for editing the user's avatar."""
-    avatar = forms.ImageField(required=True, widget=ImageWidget)
-
-    def __init__(self, *args, **kwargs):
-        super(AvatarForm, self).__init__(*args, **kwargs)
-        self.fields['avatar'].help_text = (
-            u'Your avatar will be resized to {size}x{size}'.format(
-                size=settings.AVATAR_SIZE))
-
-    class Meta(object):
-        model = Profile
-        fields = ('avatar',)
-
-
-class EmailConfirmationForm(forms.Form):
-    """A simple form that requires an email address."""
-    email = forms.EmailField(label=_lazy(u'Email address'))
-
-
-class EmailReminderForm(forms.Form):
-    """A simple form that requires a username."""
-    username = UsernameField()
-
-
-class EmailChangeForm(forms.Form):
-    """A simple form that requires an email address and validates that it is
-    not the current user's email."""
-    email = forms.EmailField(label=_lazy(u'Email address'))
-
-    def __init__(self, user, *args, **kwargs):
-        super(EmailChangeForm, self).__init__(*args, **kwargs)
-        self.user = user
-
-    def clean_email(self):
-        email = self.cleaned_data['email']
-        if self.user.email == email:
-            raise forms.ValidationError(_('This is your current email.'))
-        if User.objects.filter(email=email).exists():
-            raise forms.ValidationError(_('A user with that email address '
-                                          'already exists.'))
-        return self.cleaned_data['email']
-
-
 class UserBanForm(forms.Form):
     reason = forms.CharField(widget=forms.Textarea)
+
+
+class UserProfileEditForm(forms.ModelForm):
+
+    class Meta:
+        model = UserProfile
+        fields = ('fullname', 'title', 'organization', 'location',
+                  'locale', 'timezone', 'bio', 'irc_nickname', 'interests')
+
+    beta = forms.BooleanField(label=_('Beta tester'), required=False)
+
+    # Email is on the form, but is handled in the view separately
+    email = forms.EmailField(label=_('Email'), required=True)
+
+    interests = forms.CharField(label=_('Interests'),
+                                max_length=255, required=False)
+    expertise = forms.CharField(label=_('Expertise'),
+                                max_length=255, required=False)
+
+    newsletter = forms.BooleanField(label=_('Send me the newsletter'),
+                                    required=False)
+
+    # Newsletter fields copied from SubscriptionForm
+    formatChoices = [('html', 'HTML'), ('text', 'Plain text')]
+    format = forms.ChoiceField(
+        label=_(u'Preferred format'),
+        choices=formatChoices,
+        initial=formatChoices[0],
+        widget=forms.RadioSelect()
+    )
+    agree = forms.BooleanField(
+        label=_(u'I agree'),
+        error_messages={'required': PRIVACY_REQUIRED},
+        required=False
+    )
+
+    def __init__(self, locale, *args, **kwargs):
+        regions = product_details.get_regions(locale)
+        regions = sorted(regions.iteritems(), key=lambda x: x[1])
+        self.locale = locale
+
+        lang = country = locale.lower()
+        if '-' in lang:
+            lang, country = lang.split('-', 1)
+
+        super(UserProfileEditForm, self).__init__(*args, **kwargs)
+
+        # Dynamically add URLFields for all sites defined in the model.
+        sites = kwargs.get('sites', UserProfile.website_choices)
+        for name, meta in sites:
+            self.fields['websites_%s' % name] = forms.RegexField(
+                    regex=meta['regex'], required=False)
+            self.fields['websites_%s' % name].widget.attrs['placeholder'] = meta['prefix']
+
+        # Newsletter field copied from SubscriptionForm
+        # FIXME: this is extra dupe nasty here because we already have a locale
+        # field on the profile
+        self.fields['country'] = forms.ChoiceField(
+            label=_(u'Your country'),
+            choices=regions,
+            initial=country,
+            required=False
+        )
+
+    def clean_expertise(self):
+        """Enforce expertise as a subset of interests"""
+        cleaned_data = self.cleaned_data
+
+        # bug 709938 - don't assume interests passed validation
+        interests = set(parse_tags(cleaned_data.get('interests','')))
+        expertise = set(parse_tags(cleaned_data['expertise']))
+
+        if len(expertise) > 0 and not expertise.issubset(interests):
+            raise forms.ValidationError(_("Areas of expertise must be a "
+                "subset of interests"))
+
+        return cleaned_data['expertise']
+
+    def save(self, commit=True):
+        email = self.cleaned_data.get('email')
+        try:
+            # Beta
+            user = User.objects.get(email=email)
+            beta_group = Group.objects.get(
+                name=constance.config.BETA_GROUP_NAME)
+            if self.cleaned_data['beta']:
+                beta_group.user_set.add(user)
+            else:
+                beta_group.user_set.remove(user)
+
+        except Group.DoesNotExist:
+            # If there's no Beta Testers group, ignore that logic
+            pass
+        return super(UserProfileEditForm, self).save(commit=True)
+
+
+def newsletter_subscribe(request, email, cleaned_data):
+    subscription_details = get_subscription_details(email)
+    subscribed = subscribed_to_newsletter(subscription_details)
+
+    if cleaned_data['newsletter'] and not subscribed:
+        if not cleaned_data['agree']:
+            raise forms.ValidationError(PRIVACY_REQUIRED)
+        optin = 'N'
+        if request.locale == 'en-US':
+            optin = 'Y'
+        for i in range(constance.config.BASKET_RETRIES):
+            try:
+                result = basket.subscribe(
+                        email=email,
+                        newsletters=settings.BASKET_APPS_NEWSLETTER,
+                        country=cleaned_data['country'],
+                        format=cleaned_data['format'],
+                        lang=request.locale,
+                        optin=optin,
+                        source_url=request.build_absolute_uri())
+                if result.get('status') != 'error':
+                    break
+            except BasketException:
+                if i == constance.config.BASKET_RETRIES:
+                    return HttpResponseServerError()
+                else:
+                    time.sleep(constance.config.BASKET_RETRY_WAIT * i)
+    elif subscription_details:
+        basket.unsubscribe(subscription_details['token'], email,
+                           newsletters=settings.BASKET_APPS_NEWSLETTER)
+
+
+def get_subscription_details(email):
+    subscription_details = None
+    try:
+        subscription_details = basket.lookup_user(email=email,
+                                        api_key=constance.config.BASKET_API_KEY)
+    except BasketException, e:
+        if e.code == BASKET_UNKNOWN_EMAIL:
+            # pass - unknown email is just a new subscriber
+            pass
+    return subscription_details
+
+
+def subscribed_to_newsletter(subscription_details):
+    subscribed = (settings.BASKET_APPS_NEWSLETTER in
+                  subscription_details['newsletters'] if
+                  subscription_details else False)
+    return subscribed

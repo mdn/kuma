@@ -9,9 +9,9 @@ from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
 
 from sumo.tests import TestCase
-from users.helpers import (profile_url, profile_avatar, public_email,
+from users.helpers import (profile_avatar, public_email,
                            display_name, user_list)
-from devmo.models import UserProfile
+from users.models import UserProfile
 from devmo.urlresolvers import _prefixes
 
 
@@ -25,9 +25,6 @@ class HelperTestCase(TestCase):
     def tearDown(self):
         super(HelperTestCase, self).tearDown()
         _prefixes.clear()
-
-    def test_profile_url(self):
-        eq_('/profiles/testuser', profile_url(self.u))
 
     def test_profile_default_gravatar(self):
         d_param = urllib.urlencode({'d': settings.DEFAULT_AVATAR})

@@ -1,124 +1,35 @@
-import re
-
-from django.contrib.auth.models import User
-from django.forms import ValidationError
+from django.conf import settings
 
 from nose.tools import eq_
-from pyquery import PyQuery as pq
+import test_utils
 
-from users.forms import AuthenticationForm, ProfileForm, EmailReminderForm
-from users.tests import TestCaseBase
-
-
-class AuthenticationFormTests(TestCaseBase):
-    """AuthenticationForm tests."""
-    fixtures = ['test_users.json']
-
-    def test_only_active(self):
-        # Verify with active user
-        user = User.objects.get(username='testuser')
-        assert user.is_active
-        form = AuthenticationForm(data={'username': 'testuser',
-                                        'password': 'testpass'})
-        assert form.is_valid()
-
-        # Verify with inactive user
-        user.is_active = False
-        user.save()
-        user = User.objects.get(username='testuser')
-        assert not user.is_active
-        form = AuthenticationForm(data={'username': 'testuser',
-                                        'password': 'testpass'})
-        assert not form.is_valid()
-
-    def test_allow_inactive(self):
-        # Verify with active user
-        user = User.objects.get(username='testuser')
-        assert user.is_active
-        form = AuthenticationForm(only_active=False,
-                                  data={'username': 'testuser',
-                                        'password': 'testpass'})
-        assert form.is_valid()
-
-        # Verify with inactive user
-        user.is_active = False
-        user.save()
-        user = User.objects.get(username='testuser')
-        assert not user.is_active
-        form = AuthenticationForm(only_active=False,
-                                  data={'username': 'testuser',
-                                        'password': 'testpass'})
-        assert form.is_valid()
+from users.forms import UserProfileEditForm
 
 
-FACEBOOK_URLS = (
-    ('https://facebook.com/valid', True),
-    ('http://www.facebook.com/valid', True),
-    ('htt://facebook.com/invalid', False),
-    ('http://notfacebook.com/invalid', False),
-    ('http://facebook.com/', False),
-)
+class TestUserProfileEditForm(test_utils.TestCase):
 
-TWITTER_URLS = (
-    ('https://twitter.com/valid', True),
-    ('http://www.twitter.com/valid', True),
-    ('htt://twitter.com/invalid', False),
-    ('http://nottwitter.com/invalid', False),
-    ('http://twitter.com/', False),
-)
-
-
-class ProfileFormTestCase(TestCaseBase):
-    fixtures = ['users.json']
-    form = ProfileForm()
-
-    def setUp(self):
-        self.form.cleaned_data = {}
-
-    def test_facebook_pattern_attr(self):
-        """Facebook field has the correct pattern attribute."""
-        fragment = pq(self.form.as_ul())
-        facebook = fragment('#id_facebook')[0]
-        assert 'pattern' in facebook.attrib
-
-        pattern = re.compile(facebook.attrib['pattern'])
-        for url, match in FACEBOOK_URLS:
-            eq_(bool(pattern.match(url)), match)
-
-    def test_twitter_pattern_attr(self):
-        """Twitter field has the correct pattern attribute."""
-        fragment = pq(self.form.as_ul())
-        twitter = fragment('#id_twitter')[0]
-        assert 'pattern' in twitter.attrib
-
-        pattern = re.compile(twitter.attrib['pattern'])
-        for url, match in TWITTER_URLS:
-            eq_(bool(pattern.match(url)), match)
-
-    def test_clean_facebook(self):
-        clean = lambda: self.form.clean_facebook()
-        for url, match in FACEBOOK_URLS:
-            self.form.cleaned_data['facebook'] = url
-            if match:
-                clean()  # Should not raise.
-            else:
-                self.assertRaises(ValidationError, clean)
-
-    def test_clean_twitter(self):
-        clean = lambda: self.form.clean_twitter()
-        for url, match in TWITTER_URLS:
-            self.form.cleaned_data['twitter'] = url
-            if match:
-                clean()  # Should not raise.
-            else:
-                self.assertRaises(ValidationError, clean)
-
-
-class EmailReminderFormTest(TestCaseBase):
-    def test_can_haz_3_char_username(self):
-        form = EmailReminderForm({'username': 'abcd'})
-        # it works with 4
-        self.assertTrue(form.is_valid())
-        form = EmailReminderForm({'username': 'abc'})
-        # it works with 3
-        self.assertTrue(form.is_valid())
+    def test_https_profile_urls(self):
+        """bug 733610: Profile URLs should allow https"""
+        protos = (
+            ('http://', True),
+            ('ftp://', False),
+            ('gopher://', False),
+            ('https://', True),
+        )
+        sites = (
+            ('website', 'mozilla.org'),
+            ('twitter', 'twitter.com/lmorchard'),
+            ('github', 'github.com/lmorchard'),
+            ('stackoverflow', 'stackoverflow.com/users/lmorchard'),
+            ('linkedin', 'www.linkedin.com/in/lmorchard'),
+        )
+        for proto, expected_valid in protos:
+            for name, site in sites:
+                url = '%s%s' % (proto, site)
+                form = UserProfileEditForm(settings.WIKI_DEFAULT_LANGUAGE, {
+                    "email": "lorchard@mozilla.com",
+                    "format": "html",
+                    "websites_%s" % name: url
+                })
+                result_valid = form.is_valid()
+                eq_(expected_valid, result_valid)

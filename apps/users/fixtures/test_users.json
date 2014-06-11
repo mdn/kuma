@@ -53,7 +53,7 @@
             "title": "Dr.",
             "user": 7
         },
-        "model": "devmo.userprofile",
+        "model": "users.userprofile",
         "pk": 7
     },
     {
@@ -87,7 +87,7 @@
             "title": "Dr.2",
             "user": 8
         },
-        "model": "devmo.userprofile",
+        "model": "users.userprofile",
         "pk": 8
     },
     {
@@ -121,7 +121,7 @@
             "title": "Dr.01",
             "user": 9
         },
-        "model": "devmo.userprofile",
+        "model": "users.userprofile",
         "pk": 9
     },
     {
@@ -150,7 +150,7 @@
             "location": "Adminville",
             "user": 10
         },
-        "model": "devmo.userprofile",
+        "model": "users.userprofile",
         "pk": 10
     }
 ]
