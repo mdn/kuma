@@ -150,20 +150,30 @@ class kuma_config {
         "kuma_south_migrate":
             user => "vagrant",
             cwd => "/home/vagrant/src",
-            command => "/home/vagrant/env/bin/python manage.py migrate --noinput",
+            command => "/home/vagrant/env/bin/python manage.py migrate events --delete-ghost-migrations --fake --noinput",
             require => [ Exec["kuma_django_syncdb"] ];
+        "kuma_south_migrate2":
+            user => "vagrant",
+            cwd => "/home/vagrant/src",
+            command => "/home/vagrant/env/bin/python manage.py migrate users 0002 --fake --noinput",
+            require => [ Exec["kuma_south_migrate"] ];
+        "kuma_south_migrate3":
+            user => "vagrant",
+            cwd => "/home/vagrant/src",
+            command => "/home/vagrant/env/bin/python manage.py migrate --noinput",
+            require => [ Exec["kuma_south_migrate2"] ];
         "kuma_update_feeds":
             user => "vagrant",
             cwd => "/home/vagrant/src",
             command => "/home/vagrant/env/bin/python ./manage.py update_feeds",
             onlyif => "/usr/bin/mysql -B -uroot kuma -e'select count(*) from feeder_entry' | grep '0'",
-            require => [ Exec["kuma_south_migrate"] ];
+            require => [ Exec["kuma_south_migrate3"] ];
         "kuma_index_database":
             user => "vagrant",
             cwd => "/home/vagrant/src",
             command => "/home/vagrant/env/bin/python manage.py reindex -p 5",
             timeout => 600,
-            require => [ Service["elasticsearch"], Exec["kuma_south_migrate"] ];
+            require => [ Service["elasticsearch"], Exec["kuma_south_migrate3"] ];
     }
 }
 

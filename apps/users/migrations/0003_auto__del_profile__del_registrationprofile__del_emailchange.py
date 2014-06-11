@@ -1,21 +1,58 @@
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 import datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
-        # Changing field 'UserProfile.locale'
-        db.alter_column('user_profiles', 'locale', self.gf('sumo.models.LocaleField')(max_length=7, null=True))
+        # Deleting model 'Profile'
+        db.delete_table('users_profile')
+
+        # Deleting model 'RegistrationProfile'
+        db.delete_table('users_registrationprofile')
+
+        # Deleting model 'EmailChange'
+        db.delete_table('users_emailchange')
 
 
     def backwards(self, orm):
-        
-        # Changing field 'UserProfile.locale'
-        db.alter_column('user_profiles', 'locale', self.gf('sumo.models.LocaleField')(max_length=7))
+        # Adding model 'Profile'
+        db.create_table('users_profile', (
+            ('website', self.gf('django.db.models.fields.URLField')(max_length=255, null=True, blank=True)),
+            ('bio', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('twitter', self.gf('django.db.models.fields.URLField')(max_length=255, null=True, blank=True)),
+            ('facebook', self.gf('django.db.models.fields.URLField')(max_length=255, null=True, blank=True)),
+            ('user', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.User'], unique=True, primary_key=True)),
+            ('timezone', self.gf('timezones.fields.TimeZoneField')(default='US/Pacific', null=True, blank=True)),
+            ('public_email', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('city', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
+            ('country', self.gf('django.db.models.fields.CharField')(max_length=2, null=True, blank=True)),
+            ('livechat_id', self.gf('django.db.models.fields.CharField')(default=None, max_length=255, null=True, blank=True)),
+            ('avatar', self.gf('django.db.models.fields.files.ImageField')(max_length=250, null=True, blank=True)),
+            ('irc_handle', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
+        ))
+        db.send_create_signal('users', ['Profile'])
+
+        # Adding model 'RegistrationProfile'
+        db.create_table('users_registrationprofile', (
+            ('activation_key', self.gf('django.db.models.fields.CharField')(max_length=40)),
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], unique=True)),
+        ))
+        db.send_create_signal('users', ['RegistrationProfile'])
+
+        # Adding model 'EmailChange'
+        db.create_table('users_emailchange', (
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], unique=True)),
+            ('activation_key', self.gf('django.db.models.fields.CharField')(max_length=40)),
+            ('email', self.gf('django.db.models.fields.EmailField')(max_length=75, null=True, db_index=True)),
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+        ))
+        db.send_create_signal('users', ['EmailChange'])
 
 
     models = {
@@ -55,31 +92,32 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        'devmo.calendar': {
-            'Meta': {'object_name': 'Calendar'},
+        'taggit.tag': {
+            'Meta': {'object_name': 'Tag'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'shortname': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'url': ('django.db.models.fields.URLField', [], {'unique': 'True', 'max_length': '200'})
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '100'})
         },
-        'devmo.event': {
-            'Meta': {'ordering': "['date']", 'object_name': 'Event'},
-            'calendar': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['devmo.Calendar']"}),
-            'conference': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'conference_link': ('django.db.models.fields.URLField', [], {'max_length': '200', 'blank': 'True'}),
-            'date': ('django.db.models.fields.DateField', [], {}),
-            'description': ('django.db.models.fields.TextField', [], {}),
-            'done': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'end_date': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
+        'taggit.taggeditem': {
+            'Meta': {'object_name': 'TaggedItem'},
+            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'taggit_taggeditem_tagged_items'", 'to': "orm['contenttypes.ContentType']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'location': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'materials': ('django.db.models.fields.URLField', [], {'max_length': '200', 'blank': 'True'}),
-            'people': ('django.db.models.fields.TextField', [], {})
+            'object_id': ('django.db.models.fields.IntegerField', [], {'db_index': 'True'}),
+            'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'taggit_taggeditem_items'", 'to': "orm['taggit.Tag']"})
         },
-        'devmo.userprofile': {
+        'users.userban': {
+            'Meta': {'object_name': 'UserBan'},
+            'by': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'bans_issued'", 'to': "orm['auth.User']"}),
+            'date': ('django.db.models.fields.DateField', [], {'default': 'datetime.date.today'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'reason': ('django.db.models.fields.TextField', [], {}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'bans'", 'to': "orm['auth.User']"})
+        },
+        'users.userprofile': {
             'Meta': {'object_name': 'UserProfile', 'db_table': "'user_profiles'"},
             'bio': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'content_flagging_email': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'deki_authtoken': ('django.db.models.fields.CharField', [], {'max_length': '255', 'blank': 'True'}),
             'deki_user_id': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
             'fullname': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'blank': 'True'}),
             'homepage': ('django.db.models.fields.URLField', [], {'default': "''", 'max_length': '255', 'blank': 'True'}),
@@ -92,20 +130,7 @@ class Migration(SchemaMigration):
             'timezone': ('timezones.fields.TimeZoneField', [], {'default': "'US/Pacific'", 'null': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True', 'blank': 'True'})
-        },
-        'taggit.tag': {
-            'Meta': {'object_name': 'Tag'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '100', 'db_index': 'True'})
-        },
-        'taggit.taggeditem': {
-            'Meta': {'object_name': 'TaggedItem'},
-            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'taggit_taggeditem_tagged_items'", 'to': "orm['contenttypes.ContentType']"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'object_id': ('django.db.models.fields.IntegerField', [], {'db_index': 'True'}),
-            'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'taggit_taggeditem_items'", 'to': "orm['taggit.Tag']"})
         }
     }
 
-    complete_apps = ['devmo']
+    complete_apps = ['users']
