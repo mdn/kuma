@@ -1,7 +1,7 @@
 {% if user.is_authenticated() %}
   <ul class="user-state">
     {% set username = request.user.username %}
-      <li><a href="{{ url('devmo.views.profile_view', username=username) }}">{{ _('{username}') | f(username=username) }}</a></li>
+      <li><a href="{{ request.user.get_absolute_url() }}">{{ _('{username}') | f(username=username) }}</a></li>
       <li><a href="{{ url('users.logout') }}?next={{ next_url }}">{{ _('Sign out') }}</a></li>
   </ul>
 {% else %}

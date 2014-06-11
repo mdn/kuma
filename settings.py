@@ -1174,7 +1174,7 @@ DBGETTEXT_ROOT = 'translations'
 
 def get_user_url(user):
     from sumo.urlresolvers import reverse
-    return reverse('devmo.views.profile_view', args=[user.username])
+    return reverse('users.profile', args=[user.username])
 
 ABSOLUTE_URL_OVERRIDES = {
     'auth.user': get_user_url

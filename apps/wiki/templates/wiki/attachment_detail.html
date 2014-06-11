@@ -33,7 +33,7 @@
           </li>
           <li>
             <mark>{{ _('Creator:') }}</mark>
-            <span><a href="{{ url('devmo.views.profile_view', username=revision.creator) }}">{{ revision.creator }}</a></span>
+            <span><a href="{{ revision.creator.get_absolute_url() }}">{{ revision.creator }}</a></span>
           </li>
           <li>
             <mark>{{ _('MIME Type:') }}</mark>

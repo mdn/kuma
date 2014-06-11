@@ -15,7 +15,7 @@
     <h1>{{ _('Delete') }} <a href="{{ url('wiki.document', document.full_path, locale=document.locale) }}">{{ _('{title}')|fe(title=document.title) }}</a></h1>
 
     <strong>{{ _('Creator') }}</strong>
-    <p><a href="{{ url('devmo.views.profile_view', username=revision.creator) }}">{{ revision.creator }}</a></p>
+    <p><a href="{{ revision.creator.get_absolute_url() }}">{{ revision.creator }}</a></p>
 
     <strong>{{ _('Creation Date') }}</strong>
     <p>{{ datetimeformat(revision.created, format='longdatetime') }}</p>

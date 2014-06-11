@@ -52,7 +52,7 @@
                 <a href="{{ url('wiki.revision', document.full_path, rev.id) }}" rel="nofollow, noindex">{{ datetimeformat(rev.created, format='datetime') }}</a>
               </div>
               <div class="creator">
-                <a href="{{ url('devmo.views.profile_view', username=rev.creator) }}">{{ rev.creator }}</a>
+                <a href="{{ rev.creator.get_absolute_url() }}">{{ rev.creator }}</a>
               </div>
               <div class="comment">
                 {{ format_comment(rev) }}

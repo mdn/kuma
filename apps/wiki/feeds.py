@@ -60,8 +60,7 @@ class DocumentsFeed(Feed):
 
     def item_author_link(self, document):
         return self.request.build_absolute_uri(
-            reverse('devmo.views.profile_view',
-                    args=(document.current_revision.creator.username,)))
+            document.current_revision.creator.get_absolute_url())
 
     def item_link(self, document):
         return self.request.build_absolute_uri(
@@ -368,9 +367,7 @@ class RevisionsFeed(DocumentsFeed):
         return '%s' % item.creator
 
     def item_author_link(self, item):
-        return self.request.build_absolute_uri(
-            reverse('devmo.views.profile_view',
-                    args=(item.creator.username,)))
+        return self.request.build_absolute_uri(item.creator.get_absolute_url())
 
     def item_categories(self, item):
         return []
@@ -403,9 +400,7 @@ class AttachmentsFeed(DocumentsFeed):
         return '%s' % item.creator
 
     def item_author_link(self, item):
-        return self.request.build_absolute_uri(
-            reverse('devmo.views.profile_view',
-                    args=(item.creator.username,)))
+        return self.request.build_absolute_uri(item.creator.get_absolute_url())
 
     def item_categories(self, item):
         return []

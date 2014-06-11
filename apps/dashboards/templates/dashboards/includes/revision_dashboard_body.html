@@ -34,7 +34,7 @@
                         <span class="dashboard-slug">{{ revision.document.slug }}</span>
                     </td>
                     <td class="dashboard-comment">{{ revision.comment }}</td>
-                    <td class="dashboard-author"><a href="{{ url('devmo.views.profile_view', username=revision.creator) }}">{{ revision.creator }}</a></td>
+                    <td class="dashboard-author"><a href="{{ revision.creator.get_absolute_url() }}">{{ revision.creator }}</a></td>
                 </tr>
             {% endfor %}
         </tbody>
