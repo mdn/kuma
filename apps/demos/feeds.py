@@ -1,15 +1,13 @@
 """Feeds for submissions"""
 import datetime
-import hashlib
 import json
-import urllib
-import logging
 import validate_jsonp
 
 import jingo
 
-from django.contrib.syndication.views import Feed, FeedDoesNotExist
-from django.utils.feedgenerator import SyndicationFeed, Rss201rev2Feed, Atom1Feed, get_tag_uri
+from django.contrib.syndication.views import Feed
+from django.utils.feedgenerator import (SyndicationFeed, Rss201rev2Feed,
+                                        Atom1Feed)
 from django.shortcuts import get_object_or_404
 
 from django.utils.translation import ugettext as _
@@ -117,7 +115,7 @@ class SubmissionsFeed(Feed):
         return submission.title
 
     def item_description(self, submission):
-        return jingo.render_to_string(self.request, 
+        return jingo.render_to_string(self.request,
             'demos/feed_item_description.html', dict(
                 request=self.request, submission=submission
             )
@@ -128,12 +126,12 @@ class SubmissionsFeed(Feed):
 
     def item_author_link(self, submission):
         return self.request.build_absolute_uri(
-            reverse('demos.views.profile_detail', 
+            reverse('demos.views.profile_detail',
             args=(submission.creator.username,)))
 
     def item_link(self, submission):
         return self.request.build_absolute_uri(
-            reverse('demos.views.detail', 
+            reverse('demos.views.detail',
             args=(submission.slug,)))
 
     def item_categories(self, submission):
@@ -148,7 +146,7 @@ class SubmissionsFeed(Feed):
 
     def item_enclosure_length(self, submission):
         return submission.demo_package.size
-            
+
     def item_enclosure_mime_type(self, submission):
         return 'application/zip'
 

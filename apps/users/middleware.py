@@ -1,9 +1,5 @@
 from django.contrib.auth import logout
-from django.shortcuts import redirect
 from django.shortcuts import render
-
-from sumo.helpers import urlparams
-from sumo.urlresolvers import reverse
 
 from users.models import UserBan
 
@@ -16,8 +12,7 @@ class BanMiddleware(object):
 
     """
     def process_request(self, request):
-        if hasattr(request, 'user') and \
-               request.user.is_authenticated():
+        if hasattr(request, 'user') and request.user.is_authenticated():
             bans = UserBan.objects.filter(user=request.user,
                                           is_active=True)
             if not bans:
