@@ -4,7 +4,6 @@
 {% set classes = 'login' %}
 
 {% block content %}
-
       {% if request.user.is_authenticated() %}
         <article>
           <h3>{{ _('You are already logged in.') }}</h3>
@@ -14,5 +13,4 @@
             {% include "users/browserid_signin.html" %}
         </article>
       {% endif %}
-
 {% endblock %}

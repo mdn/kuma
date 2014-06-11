@@ -58,10 +58,10 @@
 
         {% if not edit %}
         {% trans %}
-            <p>Whether you are creating an amazing new way to experience the Web or just 
-            experimenting with the latest technologies, we invite you to submit your own 
+            <p>Whether you are creating an amazing new way to experience the Web or just
+            experimenting with the latest technologies, we invite you to submit your own
             demos to share with (or show off to) other web developers.</p>
-            <p>Please complete the form below to ensure your demo is submitted to the 
+            <p>Please complete the form below to ensure your demo is submitted to the
             Demo Studio successfully.</p>
         {% endtrans %}
         {% endif %}
@@ -71,8 +71,8 @@
         <fieldset class="section">
           <legend><b>{{_('Describe Your Demo')}}</b></legend>
 
-          {% trans %}    
-              <p>Tell us more about your demo, including the name, description and the 
+          {% trans %}
+              <p>Tell us more about your demo, including the name, description and the
               technologies used. Please list the browsers you have tested it with.</p>
           {% endtrans %}
 
@@ -179,13 +179,13 @@
             <li id="field_accept_terms" class="check field{{ ' error' if form.accept_terms.errors }}">
             <strong class="label">
               <label>
-                  {{ form.accept_terms|safe }} 
+                  {{ form.accept_terms|safe }}
                   {% trans terms_url=url('demos_terms') %}
-                      I accept the 
-                      <a href="{{ terms_url }}#tfc">Terms for Contributors</a> and 
+                      I accept the
+                      <a href="{{ terms_url }}#tfc">Terms for Contributors</a> and
                       <a href="{{ terms_url }}#rrd">Rights Representation Details</a>
                   {% endtrans %}
-              </label> 
+              </label>
              </strong>
              {{ form.accept_terms.errors|safe }}
             </li>
@@ -193,7 +193,7 @@
         </fieldset>
         {% endif %}
 
-       <p class="fm-submit"> 
+       <p class="fm-submit">
           {% if not edit %}
               <button type="submit" name="action_create">{{ _("Submit demo") }}</button>
               {{_('or')}} <a href="{{ url('demos') }}">{{_('Discard Demo')}}</a>
@@ -202,15 +202,15 @@
               or <a href="{{ url('demos_detail', slug=submission.slug) }}">{{_('Discard Changes')}}</a>
           {% endif %}
        </p>
-        
+
       </form>
     </div>
     <div class="column-strip">
       <aside id="update-profile" class="module aside">
         <h1 class="mod-title">{{_('Update Your Profile')}}</h1>
         {% trans %}
-        <p>Share your developer interests and areas of expertise with the MDN 
-        community. We'll be able to bring you a better, more customized experience 
+        <p>Share your developer interests and areas of expertise with the MDN
+        community. We'll be able to bring you a better, more customized experience
         and you will have a place to show off the amazing work you do.</p>
         {% endtrans %}
         <p><a href="{{ request.user.get_absolute_url() }}" class="go">{{_("Go to your profile")}}</a></p>
@@ -240,7 +240,7 @@
 		  });
 
 		});
-	});	
+	});
 // ]]>
 </script>
 
@@ -252,13 +252,13 @@
    */
   (function($) {
     $.fn.extend({
-      isChildOf: function( filter_string ) {    
-        var parents = $(this).parents().get(); 
+      isChildOf: function( filter_string ) {
+        var parents = $(this).parents().get();
         for ( j = 0; j < parents.length; j++ ) {
           if ( $(parents[j]).is(filter_string) ) {
             return true;
           }
-        }  
+        }
         return false;
       }
     });
@@ -279,7 +279,7 @@
       });
     }
 	});
-	
+
 // ]]>
 </script>
 

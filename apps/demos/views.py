@@ -1,5 +1,3 @@
-import jingo
-import logging
 import random
 
 from django.conf import settings

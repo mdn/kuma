@@ -1,5 +1,4 @@
 import time
-import json
 
 import basket
 from basket.base import BasketException
@@ -9,15 +8,12 @@ from django.http import HttpResponseServerError
 from django.shortcuts import render
 
 import constance.config
-from waffle import flag_is_active
-from waffle.decorators import waffle_switch
-from users.models import User
 
-from devmo import (SECTION_USAGE, SECTION_ADDONS, SECTION_APPS, SECTION_MOBILE,
-                   SECTION_WEB, SECTION_MOZILLA, SECTION_HACKS)
-from feeder.models import Bundle, Feed
+from devmo import SECTION_USAGE, SECTION_APPS, SECTION_HACKS
+from feeder.models import Bundle
 from demos.models import Submission
 from devmo.forms import SubscriptionForm
+
 
 def home(request):
     """Home page."""

@@ -1,11 +1,6 @@
 """Models for content moderation flagging"""
-import logging
-
 from django.db import models
 from django.conf import settings
-from django.db.models import F
-
-from django.core.exceptions import MultipleObjectsReturned
 
 from django.core import urlresolvers
 from django.core.mail import send_mail
@@ -19,7 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from django.template import Context, loader
 
-from .utils import get_ip, get_unique
+from .utils import get_unique
 
 
 FLAG_REASONS = getattr(settings, "FLAG_REASONS", (
@@ -62,7 +57,7 @@ class ContentFlagManager(models.Manager):
                 defaults=dict(content_type=content_type,
                               object_pk=object.pk, ip=ip,
                               user_agent=user_agent, user=user,
-                              flag_type=flag_type, 
+                              flag_type=flag_type,
                               explanation=explanation))
 
         if recipients:
