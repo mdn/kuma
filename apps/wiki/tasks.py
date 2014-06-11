@@ -142,6 +142,11 @@ but could not be completed.
         return
 
     transaction.commit()
+
+    # Now that we know the move succeeded, re-render the whole tree.
+    for stale_doc in [doc] + doc.get_descendants():
+        stale_doc.schedule_rendering('max-age=0')
+    
     subject = 'Page move completed: ' + slug + ' (' + locale + ')'
     full_url = settings.SITE_URL + '/' + locale + '/docs/' + new_slug
     message = """
