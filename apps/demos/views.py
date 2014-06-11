@@ -7,7 +7,7 @@ from django.core.cache import cache
 
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.core.urlresolvers import reverse
 
 from django.contrib.auth.decorators import login_required
@@ -224,8 +224,7 @@ class SearchView(ListView):
 
 
 def profile_detail(request, username):
-    return HttpResponseRedirect(reverse(
-        'devmo.views.profile_view', args=(username,)))
+    return redirect('users.profile', username)
 
 
 def like(request, slug):

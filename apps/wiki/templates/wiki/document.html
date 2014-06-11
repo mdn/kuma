@@ -362,7 +362,7 @@
                   {% if current_revision.creator %}
                     <div class="contributor-sub">
                       <i aria-hidden="true" class="icon-time"></i><strong>{{ _('Last updated by:') }}</strong>
-                      <a href="{{ url('devmo.views.profile_view', username=current_revision.creator) }}">{{ current_revision.creator }}</a>,
+                      <a href="{{ current_revision.creator.get_absolute_url() }}">{{ current_revision.creator }}</a>,
                       {{ datetimeformat(current_revision.created, format='datetime') }}
                     </div>
                   {% endif %}

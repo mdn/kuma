@@ -13,7 +13,7 @@
         <div>{{ document.title }}</div>
 
         <label><strong>{{ _('Creator') }}</strong></label>
-        <div><a href="{{ url('devmo.views.profile_view', username=revision.creator) }}">{{ revision.creator }}</a></div>
+        <div><a href="{{ revision.creator.get_absolute_url() }}">{{ revision.creator }}</a></div>
         <label><strong>{{ _('Date') }}</strong></label>
         <div>{{ datetimeformat(revision.created, format='longdatetime') }}</div>
         <label><strong>{{ _('Content') }}</strong></label>

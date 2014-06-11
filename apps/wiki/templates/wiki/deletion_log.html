@@ -6,7 +6,7 @@
 
     <h1>{{ _('Document Deleted') }}</h1>
     <p>
-    {% trans url=url('devmo.views.profile_view', username=deletion_log.user), username=deletion_log.user, when=datetimeformat(deletion_log.timestamp, format='longdatetime')  %}
+    {% trans url=deletion_log.user.get_absolute_url(), username=deletion_log.user, when=datetimeformat(deletion_log.timestamp, format='longdatetime')  %}
       This document was deleted by <a href="{{ url }}">{{ username }}</a> on {{ when }}.
     {% endtrans %}
     </p>

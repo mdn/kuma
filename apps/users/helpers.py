@@ -10,15 +10,6 @@ from sumo.urlresolvers import reverse
 
 
 @register.function
-def profile_url(user):
-    """Return a URL to the user's profile."""
-    try:
-        return reverse('devmo_profile_view', args=[user.username])
-    except Exception:
-        return user.username
-
-
-@register.function
 def profile_avatar(user):
     """Return a URL to the user's avatar."""
     try:  # This is mostly for tests.
@@ -37,15 +28,16 @@ def display_name(user):
         return user.username
     return profile.fullname if profile.fullname else user.username
 
+
 @register.function
 def ban_link(ban_user, banner_user):
     """Returns a link to ban a user"""
-
     link = ''
     if ban_user.id != banner_user.id and banner_user.has_perm('users.add_userban'):
         url = '%s?user=%s&by=%s' % (reverse('admin:users_userban_add'), ban_user.id, banner_user.id)
         link = '<a href="%s" class="button ban-link">%s</a>' % (url, _('Ban User'))
     return Markup(link)
+
 
 @register.filter
 def public_email(email):
@@ -62,6 +54,6 @@ def unicode_to_html(text):
 def user_list(users):
     """Turn a list of users into a list of links to their profiles."""
     link = u'<a href="%s">%s</a>'
-    list = u', '.join([link % (escape(profile_url(u)), escape(u.username)) for
+    list = u', '.join([link % (escape(u.get_absolute_url()), escape(u.username)) for
                        u in users])
     return Markup(list)

@@ -198,13 +198,11 @@ def _format_attachment_obj(attachments):
             'url': attachment.get_file_url(),
             'size': 0,
             'creator': attachment.current_revision.creator.username,
-            'creatorUrl': reverse('devmo.views.profile_view',
-                            args=[attachment.current_revision.creator]),
+            'creatorUrl': attachment.current_revision.creator.get_absolute_url(),
             'revision': attachment.current_revision.id,
             'id': attachment.id,
             'mime': attachment.current_revision.mime_type
         }
-
         # Adding this to prevent "UnicodeEncodeError" for certain media
         try:
             obj['size'] = attachment.current_revision.file.size
