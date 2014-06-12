@@ -64,7 +64,7 @@ class GroupWithFiltersSerializer(serializers.ModelSerializer):
     name = serializers.CharField(read_only=True)
     slug = serializers.CharField(read_only=True)
     order = serializers.CharField(read_only=True)
-    filters = FilterSerializer(source='filters', read_only=True)
+    filters = FilterSerializer(source='filters.visible_only', read_only=True)
 
     class Meta:
         model = FilterGroup

@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.db import models
+from django.db.models import query
 from django.db.models.signals import post_delete
 from django.utils.html import strip_tags
 from django.utils import timezone
@@ -146,6 +147,13 @@ class FilterGroup(models.Model):
         return self.name
 
 
+class FilterManager(models.Manager):
+    use_for_related_fields = True
+
+    def visible_only(self):
+        return self.filter(visible=True)
+
+
 class Filter(models.Model):
     """
     The model to store custom search filters in the database. This is
@@ -188,6 +196,8 @@ class Filter(models.Model):
                                   help_text='Whether this filter is shown '
                                             'at public places, e.g. the '
                                             'command and query UI')
+
+    objects = FilterManager()
 
     class Meta(object):
         unique_together = (
