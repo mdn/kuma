@@ -2,12 +2,14 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core import mail
+from django.test.utils import override_settings
 
 import mock
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 from test_utils import RequestFactory
+from waffle.models import Switch
 
 from devmo.tests import mock_lookup_user, LocalizingClient
 from sumo.helpers import urlparams
@@ -380,11 +382,14 @@ class BrowserIDTestCase(TestCase):
     @mock.patch('basket.subscribe')
     @mock.patch('basket.unsubscribe')
     @mock.patch('users.views._verify_browserid')
+    @override_settings(CELERY_ALWAYS_EAGER=True)
     def test_valid_assertion_with_new_account_creation(self,
                                                        _verify_browserid,
                                                        unsubscribe,
                                                        subscribe,
                                                        lookup_user):
+        Switch.objects.create(name='welcome_email', active=True)
+
         new_username = 'neverbefore'
         new_email = 'never.before.seen@example.com'
         lookup_user.return_value = mock_lookup_user()
@@ -449,6 +454,14 @@ class BrowserIDTestCase(TestCase):
             eq_(new_email, user.email)
         except User.DoesNotExist:
             ok_(False, "New user should have been created")
+
+        # Ensure the user was sent a welcome email
+        welcome_email = mail.outbox[0]
+        expected_subject = u'Take the next step to get involved on MDN!'
+        expected_to = [new_email]
+        eq_(expected_subject, welcome_email.subject)
+        eq_(expected_to, welcome_email.to)
+        ok_(u'Hi %s' % new_username in welcome_email.body)
 
     @mock.patch('users.views._verify_browserid')
     def test_valid_assertion_with_existing_account_login(self,
