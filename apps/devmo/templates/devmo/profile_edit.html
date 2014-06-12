@@ -38,7 +38,7 @@
                 {{ _('Change your avatar at') }} <a href="http://gravatar.com" rel="external">gravatar.com</a>
             </figcaption>
           </figure>
-          
+
           <ul>
               <li><a href="{{ url('devmo.views.profile_view', username=profile.user.username) }}">{{ _('View profile') }}</a></li>
             {# TODO: Implement account deletion #}
@@ -68,7 +68,7 @@
 
                   {% set field = form['bio'] %}
                   <li class="wordcount{{ ' error' if field.errors }}">
-                    <label for="id_bio">{{ _('About me') }} <span class="note"><b id="bio_wordcount" class="counter">150</b> {{ _('words remaining') }}</span></label> 
+                    <label for="id_bio">{{ _('About me') }} <span class="note"><b id="bio_wordcount" class="counter">150</b> {{ _('words remaining') }}</span></label>
                     {{ field | safe }}
                   </li>
 
@@ -97,9 +97,9 @@
                     {% for site in profile.website_choices %}
                         {% set name = site[0] %}
                         {% set meta = site[1] %}
-                        {{ li_field(form, 
+                        {{ li_field(form,
                             'websites_{name}' | f(name=name),
-                            classes="site {name}" | f(name=name), 
+                            classes="site {name}" | f(name=name),
                             label=meta['label'],
                             icon_class=meta['fa_icon']) }}
                     {% endfor %}
@@ -111,7 +111,7 @@
 
       <div class="column-4"><div class="profile-newsletter-container">
         {{ newsletter_widget(form) }}
-        <p class="fm-submit"><button type="submit" class="neutral">{{ _('Save Changes') }}</button></p>
+        <p class="fm-submit"><button type="submit" class="positive">{{ _('Save Changes') }}<i aria-hidden="true" class="icon-save"></i></button></p>
       </div></div>
 
     </div>
@@ -119,7 +119,7 @@
     <div class="column-container">
       <div class="column-2"></div>
       <div class="column-half">
-        <p class="fm-submit"><button type="submit">{{ _('Save Changes') }}</button></p>
+        <p class="fm-submit"><button type="submit" class="positive">{{ _('Save Changes') }}<i aria-hidden="true" class="icon-save"></i></button></p>
       </div>
     </div>
 
