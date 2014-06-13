@@ -8,7 +8,7 @@
 space-for-buttons = 40px;
 
 /* Space around the <summary> element. Store these to align other elements with <summary>. */
-summary-margin = 0 (grid-spacing / 2) (grid-spacing / 2);
+summary-margin = 0 ($grid-spacing / 2) ($grid-spacing / 2);
 summary-padding = 5px;
 
 #new-document, #edit-document, #translate-document, .move-page {
@@ -40,7 +40,7 @@ summary-padding = 5px;
     h1 {
         letter-spacing: normal;
         line-height: 40px;
-        margin-bottom: (grid-spacing);
+        margin-bottom: ($grid-spacing);
         margin-top: space-for-buttons;
 
         .action {
@@ -58,11 +58,11 @@ summary-padding = 5px;
     }
 
     h2 {
-        margin-bottom: grid-spacing;
+        margin-bottom: $grid-spacing;
         text-transform: none;
     }
 
-    h2 {selector-icon}, h3 {selector-icon} {
+    h2 {$selector-icon}, h3 {$selector-icon} {
         @extend $right-icons;
     }
 
@@ -96,7 +96,7 @@ summary-padding = 5px;
     ul.metadata {
         display: none;
         float: none;
-        margin-bottom (grid-spacing / 2);
+        margin-bottom ($grid-spacing / 2);
         width: auto;
 
         .new & {
@@ -111,7 +111,7 @@ summary-padding = 5px;
 
             &.metadata-choose-parent {
                 display: none;
-                set-font-size(small-bump-font-size);
+                set-font-size($small-bump-font-size);
             }
 
             input, input#id_title {
@@ -177,8 +177,8 @@ summary-padding = 5px;
     }
 
     .first-contrib-welcome {
-        background: light-background-color;
-        border: 5px solid header-background-color;
+        background: $light-background-color;
+        border: 5px solid $header-background-color;
         padding: 15px 15px 10px;
         margin-bottom: 20px;
 
@@ -196,7 +196,7 @@ summary-padding = 5px;
         set-smaller-font-size();
         clear: both;
         color: #888;
-        margin: -grid-spacing 0 grid-spacing;
+        margin: -$grid-spacing 0 $grid-spacing;
     }
 }
 
@@ -253,10 +253,10 @@ summary-padding = 5px;
     .change-locale {
         position: relative;
         top: -20px;
-        margin-top: (grid-spacing / 2);
+        margin-top: ($grid-spacing / 2);
         bidi-value(clear, left, right);
         bidi-value(float, left, right);
-        set-font-size(smaller-font-size);
+        set-font-size($smaller-font-size);
     }
 }
 
@@ -278,7 +278,7 @@ summary-padding = 5px;
         top: auto;
         text-align: left;
         float: none;
-        margin: grid-spacing 0;
+        margin: $grid-spacing 0;
         position: relative;
     }
 

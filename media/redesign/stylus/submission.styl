@@ -3,15 +3,15 @@
 
 .submission {
     .section {
-        set-font-size(small-bump-font-size);
-        margin: 0 0 grid-spacing;
+        set-font-size($small-bump-font-size);
+        margin: 0 0 $grid-spacing;
         padding: 35px 0 0;
         position: relative;
 
         & > legend {
             b {
                 display: block;
-                set-font-size(base-bump-font-size);
+                set-font-size($base-bump-font-size);
                 position: absolute;
             }
         }
@@ -22,7 +22,7 @@
     }
 
     li {
-        margin: 0 0 (grid-spacing / 2);
+        margin: 0 0 ($grid-spacing / 2);
     }
 
     input[readonly] {
@@ -46,7 +46,7 @@
     }
 
     p.note {
-        margin: (grid-spacing / 4) 0;
+        margin: ($grid-spacing / 4) 0;
     }
 
     .inline {
@@ -57,7 +57,7 @@
             }
         }
         li {
-            margin: 0 0 (grid-spacing / 4);
+            margin: 0 0 ($grid-spacing / 4);
         }
         label {
             display: inline;
@@ -71,7 +71,7 @@
     }
 
     .other-value {
-        margin-top: (grid-spacing / 4);
+        margin-top: ($grid-spacing / 4);
         label {
             display: block;
         }
@@ -84,7 +84,7 @@
     label, .label {
         display: block;
         font-weight: bold;
-        margin: 0 0 (grid-spacing / 4);
+        margin: 0 0 ($grid-spacing / 4);
     }
 
     .check {

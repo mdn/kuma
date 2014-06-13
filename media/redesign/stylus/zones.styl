@@ -34,7 +34,7 @@
     }
 
     .wiki-main-content {
-        padding-top: first-content-top-padding !important;
+        padding-top: $first-content-top-padding !important;
 
         .center {
             add-center-spacing();
@@ -53,7 +53,7 @@
 
     .zone-landing-header-preview {
         color: #fff;
-        margin-top: grid-spacing;
+        margin-top: $grid-spacing;
 
         .column-strip {
             position: relative;
@@ -84,7 +84,7 @@
     }
 
     h3.title {
-        set-font-size(base-font-size);
+        set-font-size($base-font-size);
         margin: 6px 0 0 0;
     }
 }
@@ -94,13 +94,13 @@
     position: relative;
 
     > .center {
-        padding-top: first-content-top-padding;
+        padding-top: $first-content-top-padding;
     }
 
     .masthead-text {
         p {
             set-larger-font-size();
-            font-weight: light-font-weight;
+            font-weight: $light-font-weight;
         }
     }
 
@@ -126,7 +126,7 @@
 }
 
 .zone-landing-lists li {
-    padding: list-item-spacing 0;
+    padding: $list-item-spacing 0;
     prevent-last-child-spacing(padding-bottom);
 }
 
@@ -134,14 +134,14 @@
 
 /*    Basic zone article pages */
 .zone-article-header {
-    padding: grid-spacing 0;
+    padding: $grid-spacing 0;
     overflow: hidden;
 
     .zone-title {
         heading-2();
 
         a {
-            font-family: heading-font-family;
+            font-family: $heading-font-family;
             color: #fff;
         }
     }
@@ -165,23 +165,23 @@
 
 .zone-subnav-container {
     background: #fff;
-    margin-bottom: grid-spacing;
+    margin-bottom: $grid-spacing;
     position: relative;
     z-index: 10;
 }
 
 .zone-callout {
     position: relative;
-    padding: grid-spacing;
+    padding: $grid-spacing;
     background: #f4f7f8;
-    margin: (grid-spacing + (grid-spacing / 2)) 0;
+    margin: ($grid-spacing + ($grid-spacing / 2)) 0;
 
     table {
         width: 100%;
     }
     td {
         vertical-align: bottom;
-        padding-right: grid-spacing;
+        padding-right: $grid-spacing;
     }
 }
 
@@ -189,7 +189,7 @@
 /* Styles specific to the Connect page (formerly the Developer Program page),
    because it's a specific zone */
 .dev-program-block {
-    margin-bottom: (grid-spacing * 2);
+    margin-bottom: ($grid-spacing * 2);
     prevent-last-child-spacing('*', margin-bottom);
 
     ul {
@@ -198,18 +198,18 @@
 }
 
 .dev-program-first {
-    margin-top: -(grid-spacing * 4);
+    margin-top: -($grid-spacing * 4);
 }
 
 $dev-program-pad {
-    background: light-background-color;
-    padding: (grid-spacing);
+    background: $light-background-color;
+    padding: ($grid-spacing);
     prevent-last-child-spacing(p, margin-bottom);
 }
 
 .dev-program-callouts {
-    margin-left: grid-margin;
-    margin-right: grid-margin;
+    margin-left: $grid-margin;
+    margin-right: $grid-margin;
 
     .dev-program-callout {
         @extend $dev-program-pad;
@@ -221,7 +221,7 @@ $dev-program-pad {
 }
 
 .stack-form {
-    margin-bottom: content-block-margin;
+    margin-bottom: $content-block-margin;
 
     input {
         display: inline-block;
@@ -232,8 +232,8 @@ $dev-program-pad {
         width: 16px;
         height: 16px;
         display: inline-block;
-        background-image: url(media-url-dir + 'stackoverflow.png');
-        margin-right: icon-margin;
+        background-image: url($media-url-dir + 'stackoverflow.png');
+        margin-right: $icon-margin;
     }
 }
 
@@ -270,14 +270,14 @@ $dev-program-pad {
     }
 }
 
-@media media-query-tablet {
+@media $media-query-tablet {
     .zone-landing {
         .zone-subnav-container {
             margin-top: 0;
         }
 
         .zone-landing-header-preview .column-strip, .zone-landing-header-preview .masthead-text {
-            width: get-grid-dimension(media-query-tablet, 6);
+            width: get-grid-dimension($media-query-tablet, 6);
 
             .zone-landing-header-preview-base {
                 position: static;
@@ -290,7 +290,7 @@ $dev-program-pad {
     }
 }
 
-@media media-query-mobile {
+@media $media-query-mobile {
     .zone-landing-header .zone-image {
         display: none;
     }
