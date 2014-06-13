@@ -9,6 +9,7 @@ from django.contrib.sites.models import Site
 from django.core import mail
 from django.utils.http import urlquote
 from django.test.client import Client
+from django.test.utils import override_settings
 
 import mock
 from nose import SkipTest
@@ -481,6 +482,7 @@ class NewRevisionTests(TestCaseBase):
         doc = pq(response.content)
         eq_(doc('#id_content')[0].value, r.content)
 
+    @override_settings(CELERY_ALWAYS_EAGER=True)
     @mock.patch_object(Site.objects, 'get_current')
     @mock.patch_object(settings._wrapped, 'TIDINGS_CONFIRM_ANONYMOUS_WATCHES', False)
     def test_new_revision_POST_document_with_current(self, get_current):
@@ -492,8 +494,6 @@ class NewRevisionTests(TestCaseBase):
         Also assert that the edited and reviewable notifications go out.
 
         """
-        old, settings.CELERY_ALWAYS_EAGER = settings.CELERY_ALWAYS_EAGER, True
-
         get_current.return_value.domain = 'testserver'
 
         # Sign up for notifications:
@@ -523,8 +523,6 @@ class NewRevisionTests(TestCaseBase):
         ok_(u'https://testserver/en-US/docs/%s$history?utm_campaign=' %
                                                                     self.d.slug
             in edited_email.body)
-
-        settings.CELERY_ALWAYS_EAGER = old
 
     @mock.patch_object(EditDocumentEvent, 'fire')
     @mock.patch_object(Site.objects, 'get_current')
