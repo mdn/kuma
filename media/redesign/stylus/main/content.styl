@@ -24,7 +24,7 @@ table-blue = #d4dde4;
             }
 
             small {
-                font-size: smaller-font-size;
+                font-size: $smaller-font-size;
             }
         }
 
@@ -51,7 +51,7 @@ table-blue = #d4dde4;
         &.fullwidth-table {
             background: #fff;
             border: 1px solid rgba(table-blue, 0.5);
-            margin-bottom: grid-spacing;
+            margin-bottom: $grid-spacing;
             width: 100%;
 
             td {
@@ -96,8 +96,8 @@ table-blue = #d4dde4;
     }
 
     ul, ol {
-        bidi-style(padding-left, (grid-spacing * 2), padding-right, 0);
-        margin-bottom: content-block-margin;
+        bidi-style(padding-left, ($grid-spacing * 2), padding-right, 0);
+        margin-bottom: $content-block-margin;
 
         &.no-bullets {
             list-style-type: none;
@@ -120,8 +120,8 @@ table-blue = #d4dde4;
     }
 
     dd {
-        margin-bottom: content-block-margin;
-        padding-left: grid-spacing;
+        margin-bottom: $content-block-margin;
+        padding-left: $grid-spacing;
     }
 
     span.alllinks {
@@ -142,13 +142,13 @@ table-blue = #d4dde4;
         background: #f1f1f1;
         border: 1px solid #ccc;
         font-family: Verdana, Tahoma, sans-serif;
-        font-size: smaller-font-size;
+        font-size: $smaller-font-size;
         padding: 10px;
     }
 
     .originaldocinfo {
         h2 {
-            font-size: base-font-size;
+            font-size: $base-font-size;
         }
 
         ul {
@@ -180,11 +180,11 @@ ul.directory-tree {
     }
     ul {
         padding-left: 0;
-        background: url(media-url-dir + 'tree-vline.png') repeat-y;
+        background: url($media-url-dir + 'tree-vline.png') repeat-y;
 
         li {
             padding-left: 16px;
-            background: url(media-url-dir + 'tree-node.png') no-repeat;
+            background: url($media-url-dir + 'tree-node.png') no-repeat;
         }
     }
 
@@ -195,16 +195,16 @@ ul.directory-tree {
 
 .notice {
     position: relative;
-    top: -(grid-spacing / 2);
+    top: -($grid-spacing / 2);
     background: #fcf6d4;
     border: 1px solid #e5d5c1;
     box-shadow: 1px 1px 0 rgba(0,0,0,.1);
     clear: both;
-    margin: (grid-spacing / 2) 0 (grid-spacing / 4);
-    padding: (grid-spacing / 2) (grid-spacing * .75) 0;
+    margin: ($grid-spacing / 2) 0 ($grid-spacing / 4);
+    padding: ($grid-spacing / 2) ($grid-spacing * .75) 0;
 
     p, ul {
-        margin-bottom: (grid-spacing / 2);
+        margin-bottom: ($grid-spacing / 2);
     }
 
     &.success {
@@ -322,7 +322,7 @@ div.callout-box {
 }
 
 p.footnote {
-    font-size: smaller-font-size;
+    font-size: $smaller-font-size;
     font-style: italic;
     color: #716d65;
 }

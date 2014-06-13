@@ -10,11 +10,11 @@
 .toggler {
     position: relative;
 
-    {selector-icon} {
-        bidi-style(right, icon-margin, left, auto);
+    {$selector-icon} {
+        bidi-style(right, $icon-margin, left, auto);
         position: absolute;
         top: 3px;
-        color: text-color;
+        color: $text-color;
     }
 
     .icon-caret-right {
@@ -29,7 +29,7 @@
 /* subnav component:  used within the wiki */
 .subnav {
     .toggler, > ol > li > a {
-        padding: grid-spacing (2 * grid-spacing) grid-spacing grid-spacing;
+        padding: $grid-spacing (2 * $grid-spacing) $grid-spacing $grid-spacing;
         border-bottom: 1px dotted #d4dde4;
         text-transform: uppercase;
         display: block;
@@ -44,19 +44,19 @@
     }
 
     .toggleable.current, > ol > li.current {
-        background: light-background-color;
+        background: $light-background-color;
     }
 
-    {selector-icon} {
-        top: (grid-spacing + 3px);
-        right: grid-spacing;
+    {$selector-icon} {
+        top: ($grid-spacing + 3px);
+        right: $grid-spacing;
     }
 
     .toggle-container {
         a {
             set-smaller-font-size();
             display: block;
-            padding: list-item-spacing grid-spacing;
+            padding: $list-item-spacing $grid-spacing;
         }
 
         .toggleable {
@@ -65,17 +65,17 @@
             .toggler {
                 title-header();
                 font-weight: normal;
-                padding-top: (grid-spacing / 2);
-                padding-bottom: (grid-spacing / 2);
+                padding-top: ($grid-spacing / 2);
+                padding-bottom: ($grid-spacing / 2);
                 border: 0;
 
                 i {
-                    top: (grid-spacing / 2);
+                    top: ($grid-spacing / 2);
                 }
             }
 
             .toggle-container a {
-                padding-left: (grid-spacing * 1.5);
+                padding-left: ($grid-spacing * 1.5);
             }
         }
 
@@ -83,7 +83,7 @@
             > a:not(.toggler) {
                 position: relative;
                 color: #fff;
-                background-color: text-color;
+                background-color: $text-color;
 
                 generate-arrow();
 

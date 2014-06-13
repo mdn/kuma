@@ -1,58 +1,58 @@
 /* colors */
-text-color = #4d4e53;
-link-color = #0095dd;
-menu-link-color = text-color;
-header-background-color = #eaeff2;
-light-background-color = #f4f7f8;
+$text-color = #4d4e53;
+$link-color = #0095dd;
+$menu-link-color = $text-color;
+$header-background-color = #eaeff2;
+$light-background-color = #f4f7f8;
 
 /* typography */
-light-font-weight = 200;
-site-font-family = 'Open Sans', sans-serif;
-heading-font-family = 'Open Sans Light', sans-serif;
+$light-font-weight = 200;
+$site-font-family = 'Open Sans', sans-serif;
+$heading-font-family = 'Open Sans Light', sans-serif;
 
 /* sizes */
-larger-font-size = 20px;
-base-font-size = 14px;
-smaller-font-size = 12px;
+$larger-font-size = 20px;
+$base-font-size = 14px;
+$smaller-font-size = 12px;
 
-small-bump-font-size = 13px;
-base-bump-font-size = 16px;
+$small-bump-font-size = 13px;
+$base-bump-font-size = 16px;
 
 /* buttons */
-button-background = #eaeff2;
-button-color = menu-link-color;
-button-shadow-color = #bbbfc2;
+$button-background = #eaeff2;
+$button-color = $menu-link-color;
+$button-shadow-color = #bbbfc2;
 
 /* grid and site dimensions */
-grid-spacing = 20px;
-grid-margin = 3%;
-grid-column-selector = '> [class^="column-"]';
-grid-width-column-main = 73.5%;
+$grid-spacing = 20px;
+$grid-margin = 3%;
+$grid-column-selector = '> [class^="column-"]';
+$grid-width-column-main = 73.5%;
 
-max-width-default = 1400px;
+$max-width-default = 1400px;
 
-media-query-small-desktop = 'all and (max-width: 1200px)';
-media-query-tablet = 'all and (max-width: 1024px)';
-media-query-mobile = 'all and (max-width: 768px)';
-media-query-small-mobile = 'all and (max-width : 480px)';
+$media-query-small-desktop = 'all and (max-width: 1200px)';
+$media-query-tablet = 'all and (max-width: 1024px)';
+$media-query-mobile = 'all and (max-width: 768px)';
+$media-query-small-mobile = 'all and (max-width : 480px)';
 
-media-query-navigation-break = 'all and (max-width: 970px)'; /* Moves nav items all the way to the left, moves logo above */
-media-query-navigation-block = 'all and (max-width: 660px)'; /* Moves nav menu items to block, its own line */
+$media-query-navigation-break = 'all and (max-width: 970px)'; /* Moves nav items all the way to the left, moves logo above */
+$media-query-navigation-block = 'all and (max-width: 660px)'; /* Moves nav menu items to block, its own line */
 
 /* animation */
-default-animation-duration = .5s;
-slide-timing-function = cubic-bezier(0, 1, 0.5, 1);
+$default-animation-duration = .5s;
+$slide-timing-function = cubic-bezier(0, 1, 0.5, 1);
 
 /* dimensions */
-gutter-width = 24px;
-first-content-top-padding = (grid-spacing * 1.5);
-list-item-spacing = 8px;
-content-block-margin = gutter-width;
-icon-margin = 10px;
+$gutter-width = 24px;
+$first-content-top-padding = ($grid-spacing * 1.5);
+$list-item-spacing = 8px;
+$content-block-margin = $gutter-width;
+$icon-margin = 10px;
 
 /* selectors */
-selector-icon = 'i[class^="icon-"]';
+$selector-icon = 'i[class^="icon-"]';
 
 /* paths */
-media-url-dir = '/media/redesign/img/';
-logo-sprite-url = media-url-dir + 'logo_sprite.svg?2014-01';
+$media-url-dir = '/media/redesign/img/';
+$logo-sprite-url = $media-url-dir + 'logo_sprite.svg?2014-01';

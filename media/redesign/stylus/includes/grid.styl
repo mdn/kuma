@@ -43,7 +43,7 @@ $column-8 {
     width: 65%;
 }
 $column-9, $column-main {
-    width: grid-width-column-main;
+    width: $grid-width-column-main;
 }
 $column-10 {
     width: 82%;
@@ -63,28 +63,28 @@ draw-grid() {
     .column-container {
         clearfix();
 
-        {grid-column-selector} {
-            margin-right: grid-margin;
+        {$grid-column-selector} {
+            margin-right: $grid-margin;
             bidi-value(float, left, right);
             min-height: 1px;
 
             &:last-child {
-                bidi-value(margin-right, 0, grid-margin);
+                bidi-value(margin-right, 0, $grid-margin);
             }
         }
 
         &.column-container-reverse {
             bidi-style(margin-left, -1%, margin-right, 0);
 
-            {grid-column-selector} {
+            {$grid-column-selector} {
                 bidi-value(float, right, left);
 
                 &:first-child {
-                    bidi-value(margin-right, 0, grid-margin);
+                    bidi-value(margin-right, 0, $grid-margin);
                 }
 
                 &:last-child {
-                    bidi-value(margin-right, grid-margin, 0);
+                    bidi-value(margin-right, $grid-margin, 0);
                 }
             }
         }
@@ -92,7 +92,7 @@ draw-grid() {
 
     /* adjustments to reverse the column containers in RTL */
     html[dir="rtl"] .column-container {
-        {grid-column-selector} {
+        {$grid-column-selector} {
             &:first-child {
                 margin-right: 0;
             }
@@ -141,7 +141,7 @@ draw-grid() {
     }
 
     /*  tablet grid width */
-    @media media-query-tablet {
+    @media $media-query-tablet {
         .column-container {
             &.column-container-reverse {
                 margin-left: 0;
@@ -153,9 +153,9 @@ draw-grid() {
          mobile (phone) - just make everything its own column
          preemtpively using !important so we don't run into css precedence issues -- we absolutely always want one-column view
      */
-     @media media-query-mobile {
+     @media $media-query-mobile {
         .column-1, .column-2, .column-3, .column-4, .column-5, .column-6, .column-7, .column-8, .column-9, .column-10, .column-11, .column-12,
-        .column-strip, .column-quarter, .column-third, .column-half, .column-9, .column-all, .column-container {grid-column-selector} {
+        .column-strip, .column-quarter, .column-third, .column-half, .column-9, .column-all, .column-container {$grid-column-selector} {
             width: auto !important;
             margin-left: 0 !important;
             margin-right: 0 !important;
