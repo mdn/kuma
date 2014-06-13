@@ -1603,12 +1603,14 @@ Full traceback:
                     new_rev.pk = None
                     new_rev.document = new_pt
                     # HACK: Let's auto-add tags that flag this as a topic stub
-                    addl_tags = '"TopicStub","NeedsTranslation"'
+                    stub_tags = '"TopicStub","NeedsTranslation"'
+                    stub_l10n_tags = ['inprogress']
                     if new_rev.tags:
-                        new_rev.tags = '%s,%s' % (new_rev.tags, addl_tags)
+                        new_rev.tags = '%s,%s' % (new_rev.tags, stub_tags)
                     else:
-                        new_rev.tags = addl_tags
+                        new_rev.tags = stub_tags
                     new_rev.save()
+                    new_rev.localization_tags.add(*stub_l10n_tags)
 
         # Finally, assign the new default parent topic
         self.parent_topic = new_pt

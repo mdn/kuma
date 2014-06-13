@@ -503,6 +503,7 @@ class DocumentTestsWithFixture(TestCase):
             if not p.pk in (trans_0.pk, trans_2.pk, trans_5.pk):
                 ok_('NeedsTranslation' in p.current_revision.tags)
                 ok_('TopicStub' in p.current_revision.tags)
+                ok_(p.current_revision.localization_in_progress())
 
     def test_repair_breadcrumbs(self):
         english_top = document(locale=settings.WIKI_DEFAULT_LANGUAGE,
