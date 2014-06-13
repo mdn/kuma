@@ -7,17 +7,17 @@ make-wiki-blocks-flat() {
         margin-right: 0;
         width: auto !important;
         float: none;
-        padding-bottom: (grid-spacing * 2);
+        padding-bottom: ($grid-spacing * 2);
     }
 }
 
 enable-toc-toggle() {
     #toc {
-        padding: (grid-spacing / 2) grid-spacing;
+        padding: ($grid-spacing / 2) $grid-spacing;
 
         .toggler {
             pointer-events: auto;
-            color: link-color;
+            color: $link-color;
 
             i {
                 display: inline-block;
@@ -36,9 +36,9 @@ enable-toc-toggle() {
 
 /* wiki classes to be extended */
 .wiki-block {
-    padding-top: (grid-spacing * 2);
-    margin-top: (grid-spacing * 2);
-    border-top: 1px solid button-background;
+    padding-top: ($grid-spacing * 2);
+    margin-top: ($grid-spacing * 2);
+    border-top: 1px solid $button-background;
     padding-left: 0;
     padding-right: 0;
 }
@@ -46,7 +46,7 @@ enable-toc-toggle() {
 $review-base {
     background: #fbf8e9;
     border-color: #f9f3d9;
-    color: text-color;
+    color: $text-color;
 }
 
 .wiki-main-content {
@@ -67,10 +67,10 @@ $review-base {
 .quick-links {
     set-smaller-font-size();
     position: relative;
-    margin-bottom: grid-spacing;
+    margin-bottom: $grid-spacing;
 
     a {
-        color: text-color;
+        color: $text-color;
     }
 
     .title {
@@ -80,7 +80,7 @@ $review-base {
 
     li {
         position: relative;
-        padding-top: list-item-spacing;
+        padding-top: $list-item-spacing;
     }
 
     li li {
@@ -98,7 +98,7 @@ $review-base {
 
 .quick-links li.toggleable a, .quick-links .title, #quick-links-toggle {
     bidi-style(padding-left, 20px, padding-right, 0);
-    color: text-color;
+    color: $text-color;
     display: inline-block;
 }
 
@@ -115,7 +115,7 @@ $review-base {
 }
 
 .quick-links .see-also{
-    background: light-background-color !important;
+    background: $light-background-color !important;
     padding-left: 0;
     margin-left: -22px;
     display: inline-block !important;
@@ -125,9 +125,9 @@ $review-base {
 }
 
 
-.quick-links {selector-icon}, #quick-links-toggle {selector-icon} {
+.quick-links {$selector-icon}, #quick-links-toggle {$selector-icon} {
     bidi-style(left, -6px, right, auto);
-    set-font-size(base-font-size);
+    set-font-size($base-font-size);
     position: absolute;
     top: 1px;
 
@@ -150,7 +150,7 @@ $review-base {
     }
 
     li {
-        padding-top: list-item-spacing;
+        padding-top: $list-item-spacing;
     }
 }
 
@@ -281,7 +281,7 @@ article {
 
 /* search navigator near article heading */
 .from-search {
-    padding-left: (grid-spacing * 2);
+    padding-left: ($grid-spacing * 2);
 
     h1, .from-search-navigate {
         display: inline-block;
@@ -293,7 +293,7 @@ article {
 
 .from-search-previous, .from-search-next {
     position: absolute;
-    top: (grid-spacing * .75) + 2px;
+    top: ($grid-spacing * .75) + 2px;
     display: none;
     font-size: 24px;
 
@@ -316,7 +316,7 @@ article {
     color: #ced1d2;
     display: none;
     height: 38px;
-    width: grid-spacing;
+    width: $grid-spacing;
     top: 4px;
 }
 
@@ -335,9 +335,9 @@ article {
 }
 
 .from-search-toc {
-    component-submenu(200px, 1, button-background, button-shadow-color)
+    component-submenu(200px, 1, $button-background, $button-shadow-color)
     set-smaller-font-size();
-    border: 1px solid button-shadow-color;
+    border: 1px solid $button-shadow-color;
     left: 66px;
     top: 0;
     z-index: 2;
@@ -349,7 +349,7 @@ article {
 
     ol {
         list-style-type: decimal;
-        padding-left: grid-spacing;
+        padding-left: $grid-spacing;
     }
 
     a.current {
@@ -361,7 +361,7 @@ article {
 
 .redirected-from {
     set-smaller-font-size();
-    margin-top: -(grid-spacing);
+    margin-top: -($grid-spacing);
     font-style: italic;
     opacity: 0.7;
 }
@@ -369,10 +369,10 @@ article {
 /* wiki article cookie crumbs */
 .crumbs {
     set-smaller-font-size();
-    margin-bottom: (grid-spacing / 2);
+    margin-bottom: ($grid-spacing / 2);
 
     li {
-        bidi-style(margin-right, (grid-spacing / 2), margin-left, 0);
+        bidi-style(margin-right, ($grid-spacing / 2), margin-left, 0);
         display: inline-block;
     }
 
@@ -403,7 +403,7 @@ article {
     top: 0;
 
     > li {
-        margin-left: (grid-spacing / 2);
+        margin-left: ($grid-spacing / 2);
         display: inline-block;
         position: relative;
 
@@ -420,8 +420,8 @@ article {
         	padding-right: 0;
         }
 
-        {selector-icon} {
-            set-font-size(base-bump-font-size);
+        {$selector-icon} {
+            set-font-size($base-bump-font-size);
         }
     }
 
@@ -440,10 +440,10 @@ article {
 
 /* wiki summary, usually displays at the top of the article */
 .summary {
-    background: light-background-color;
+    background: $light-background-color;
     font-weight: bold;
-    padding: grid-spacing;
-    margin-bottom: grid-spacing;
+    padding: $grid-spacing;
+    margin-bottom: $grid-spacing;
 
     prevent-last-child-spacing(p, margin-bottom);
 }
@@ -451,7 +451,7 @@ article {
 /* notice at the top of the article */
 .notice {
     set-message-base();
-    set-font-size(base-font-size);
+    set-font-size($base-font-size);
     border-width: 2px;
 }
 
@@ -463,11 +463,11 @@ article {
     border-color: rgba(0, 0, 0, 0.1);
     color: #fff;
     font-style: italic;
-    margin: 0 0 grid-spacing 0;
-    set-font-size(base-font-size);
+    margin: 0 0 $grid-spacing 0;
+    set-font-size($base-font-size);
 
     pre {
-        padding: (grid-spacing / 2) !important;
+        padding: ($grid-spacing / 2) !important;
         background: none repeat scroll 0 0 rgba(255, 255, 255, 0.7) !important;
     }
 
@@ -481,7 +481,7 @@ div.bug, div.warning, div.overheadIndicator {
     prevent-last-child-bottom-spacing();
 
     pre {
-        color: text-color;
+        color: $text-color;
     }
 }
 
@@ -499,9 +499,9 @@ div.bug, div.warning, div.overheadIndicator {
     set-smaller-font-size();
     color: #777;
 
-    {selector-icon} {
-        bidi-style(margin-left, 0, margin-right, icon-margin);
-        bidi-style(margin-right, icon-margin, margin-left, 0);
+    {$selector-icon} {
+        bidi-style(margin-left, 0, margin-right, $icon-margin);
+        bidi-style(margin-right, $icon-margin, margin-left, 0);
     }
 }
 
@@ -553,7 +553,7 @@ div.bug, div.warning, div.overheadIndicator {
     border: 1px solid #cee9f9 !important; /* overrides plugin selector */
     text-decoration: none;
     border-radius: 4px;
-    background: light-background-color !important; /* overrides plugin selector */
+    background: $light-background-color !important; /* overrides plugin selector */
 
     .close {
         color: #cee9f9 !important; /* overrides plugin selector */
@@ -565,7 +565,7 @@ div.bug, div.warning, div.overheadIndicator {
 }
 
 .tagit li {
-    set-font-size(base-font-size);
+    set-font-size($base-font-size);
 }
 
 .tagit, .tagit-new {
@@ -574,7 +574,7 @@ div.bug, div.warning, div.overheadIndicator {
 
 #toc {
     reverse-link-decoration();
-    background: light-background-color;
+    background: $light-background-color;
     padding: 20px 15px;
 
     &.fixed {
@@ -589,19 +589,19 @@ div.bug, div.warning, div.overheadIndicator {
     }
 
     ol ol {
-        padding-left: grid-spacing;
+        padding-left: $grid-spacing;
     }
 
     li {
-        padding-top: (grid-spacing / 2);
+        padding-top: ($grid-spacing / 2);
         position: relative;
 
         &:before {
             bidi-value(text-align, left, right);
-            bidi-style(left, -(grid-spacing * 1.5), right, auto);
+            bidi-style(left, -($grid-spacing * 1.5), right, auto);
 
             position: absolute;
-            left: -(grid-spacing + (grid-spacing/2));
+            left: -($grid-spacing + ($grid-spacing/2));
             color: #484848;
         }
     }
@@ -704,7 +704,7 @@ span.cke_skin_kuma {
         clearfix();
         display: block;
         height: 16px;
-        margin-bottom: (grid-spacing / 2);
+        margin-bottom: ($grid-spacing / 2);
         padding: 7px 0 14px;
         position: relative;
         z-index: 10;
@@ -712,7 +712,7 @@ span.cke_skin_kuma {
 }
 
 #page-attachments {
-    h2 {selector-icon}, h3 {selector-icon} {
+    h2 {$selector-icon}, h3 {$selector-icon} {
         @extend $right-icons;
     }
 }
@@ -738,7 +738,7 @@ span.cke_skin_kuma {
 
 /* legacy overrides */
 .topicpage-table .Documentation, .topicpage-table .Community, .topicpage-table .Tools, .topicpage-table .Related_Topics {
-    font-family: site-font-family;
+    font-family: $site-font-family;
     text-transform: none;
 }
 
@@ -764,7 +764,7 @@ span.cke_skin_kuma {
     textarea {
         width: 500px;
         max-width: 100%;
-        margin-bottom: grid-spacing;
+        margin-bottom: $grid-spacing;
     }
     label {
         display: block;
@@ -793,8 +793,8 @@ span.cke_skin_kuma {
 
 .move-lookup-link {
     display: inline-block;
-    margin-left: (grid-spacing * 2);
-    color: link-color;
+    margin-left: ($grid-spacing * 2);
+    color: $link-color;
     text-transform: none;
 
     &:hover {
@@ -803,7 +803,7 @@ span.cke_skin_kuma {
 }
 
 .move-descendants-list {
-    margin-left: grid-spacing;
+    margin-left: $grid-spacing;
     list-style-type: circle;
 }
 
@@ -812,7 +812,7 @@ span.cke_skin_kuma {
 }
 
 .warning .move-descendants-list {
-    padding: 0 0 grid-spacing grid-spacing;
+    padding: 0 0 $grid-spacing $grid-spacing;
 }
 
 #parent-suggest-input-container {
@@ -822,7 +822,7 @@ span.cke_skin_kuma {
     border: 1px solid #d4dde4;
     box-shadow: 0 5px 10px #ccc;
     position: absolute;
-    margin-left: grid-spacing;
+    margin-left: $grid-spacing;
     opacity: 0;
     top: -10px;
     left: -90000px;
@@ -848,7 +848,7 @@ span.cke_skin_kuma {
     padding: 10px 10px 0 10px;
     background: #eaeff2;
     resize: vertical;
-    margin-bottom: grid-spacing;
+    margin-bottom: $grid-spacing;
 
     a {
         display: inline-block;
@@ -868,7 +868,7 @@ div.revision-info li {
 
 /* Revision history */
 .choice-list {
-    margin: grid-spacing 0;
+    margin: $grid-spacing 0;
 
     ul {
         display: inline;
@@ -962,12 +962,12 @@ div.revision-info li {
     }
 
     div.compare.top {
-        background: transparent url(media-url-dir + 'compare.arrows.png') no-repeat 4px 5px;
+        background: transparent url($media-url-dir + 'compare.arrows.png') no-repeat 4px 5px;
         padding-bottom: 5px;
     }
 
     div.compare.bottom {
-        background: transparent url(media-url-dir + 'compare.arrows.png') no-repeat 4px -40px;
+        background: transparent url($media-url-dir + 'compare.arrows.png') no-repeat 4px -40px;
         padding-top: 10px;
     }
 }
@@ -979,7 +979,7 @@ div.note {
     border-width: 5px;
     color: rgba(0, 0, 0, 0.65);
     font-style: italic;
-    margin-bottom: grid-spacing;
+    margin-bottom: $grid-spacing;
     padding: 10px 15px;
 
     prevent-last-child-spacing(p, margin-bottom);
@@ -1066,7 +1066,7 @@ div.note {
     }
 
     td {
-        set-font-size(small-bump-font-size);
+        set-font-size($small-bump-font-size);
     }
 
     .attachment-description {
@@ -1148,7 +1148,7 @@ details {
 
 .page-meta {
     section {
-        margin: 0 0 grid-spacing;
+        margin: 0 0 $grid-spacing;
         overflow: hidden;
         padding: 15px 20px;
         position: relative;
@@ -1165,12 +1165,12 @@ details {
         font-weight: 200;
         letter-spacing: .5px;
         text-transform: uppercase;
-        bidi-value(margin, 0 grid-spacing 0 0, 0 0 0 grid-spacing);
+        bidi-value(margin, 0 $grid-spacing 0 0, 0 0 0 $grid-spacing);
     }
 
     p.add {
         position: absolute;
-        right: grid-spacing;
+        right: $grid-spacing;
         text-align: right;
         top: 12px;
     }
@@ -1191,17 +1191,17 @@ details {
 /*
     Small desktop.  We go to a two-column layout
 */
-@media media-query-small-desktop {
+@media $media-query-small-desktop {
 
     /* when there's a left sidebar, we need to adjust the layout to look like:  |= */
     .wiki-left-present:not(.wiki-left-closed) {
         #wiki-right, #wiki-content {
-            width: grid-width-column-main;
+            width: $grid-width-column-main;
             margin-right: 0;
         }
         #wiki-right {
             enable-toc-toggle();
-            padding-bottom: (grid-spacing * 2);
+            padding-bottom: ($grid-spacing * 2);
         }
         #wiki-left {
             float: none;
@@ -1215,7 +1215,7 @@ details {
 }
 
 
-@media media-query-tablet {
+@media $media-query-tablet {
     make-wiki-blocks-flat();
 
     .zone-landing-header-preview {
@@ -1230,7 +1230,7 @@ details {
         .tag-attach-list {
             display: inline-block;
 
-            {selector-icon} {
+            {$selector-icon} {
                 left: 0;
                 margin-left: 0;
             }
@@ -1251,7 +1251,7 @@ details {
 }
 
 /* Mobile updates */
-@media media-query-mobile {
+@media $media-query-mobile {
     #languages-menu-submenu {
         right: auto;
         left: 0;

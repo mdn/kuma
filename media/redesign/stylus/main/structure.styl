@@ -29,15 +29,15 @@
 }
 
 .grid-padding {
-    padding: grid-spacing;
+    padding: $grid-spacing;
 }
 
 .heading-link {
     font-style: italic;
-    set-font-size(base-font-size);
+    set-font-size($base-font-size);
     font-weight: normal;
     display: inline-block;
-    margin-left: (grid-spacing * 2);
+    margin-left: ($grid-spacing * 2);
 }
 
 /* grid setup for direct class use */
@@ -47,19 +47,19 @@ draw-grid();
 .center {
     margin: 0 auto;
     position: relative;
-    max-width: max-width-default;
+    max-width: $max-width-default;
     add-center-spacing();
 }
 
 /* global notices (via soapbox) */
 .global-notice {
-    background: light-background-color;
+    background: $light-background-color;
 
     .wrap {
         @extend .center;
         set-smaller-font-size();
         padding: 10px 24px;
-        max-width: max-width-default;
+        max-width: $max-width-default;
 
         prevent-last-child-spacing(p, margin-bottom);
     }
@@ -78,7 +78,7 @@ draw-grid();
         width: 205px;
         height: 40px;
         margin-top: 7px;
-        background-image: url(logo-sprite-url);
+        background-image: url($logo-sprite-url);
         background-position: 0 0;
         background-repeat: no-repeat;
         background-size:100% auto;
@@ -119,7 +119,7 @@ draw-grid();
     > ul {
         bidi-value(float, right, left);
         margin-top: 20px;
-        margin-bottom: grid-spacing;
+        margin-bottom: $grid-spacing;
 
         > li {
             bidi-style(margin-left, 31px, margin-right, 0);
@@ -128,8 +128,8 @@ draw-grid();
             max-width: 1000px;
             display: inline-block;
             vendorize(transition-property, width);
-            vendorize(transition-duration, default-animation-duration);
-            vendorize(transition-delay, default-animation-duration);
+            vendorize(transition-duration, $default-animation-duration);
+            vendorize(transition-delay, $default-animation-duration);
             text-align: initial;
 
             &:first-child {
@@ -147,7 +147,7 @@ draw-grid();
 
             > a {
                 &:link, &:visited, &:hover, &:active {
-                    color: menu-link-color;
+                    color: $menu-link-color;
                     text-decoration: none;
                 }
             }
@@ -223,7 +223,7 @@ a.persona-button, a.github-button {
         outline: none;
         display: block;
         float: left;
-        set-font-size(base-font-size);
+        set-font-size($base-font-size);
         line-height: 24px;
         color: white;
         padding: 0 10px 0 20px;
@@ -300,7 +300,7 @@ a.github-button {
             create-gradient(#5d649a, #63397b, left top);
         }
 
-        {selector-icon} {
+        {$selector-icon} {
             margin-left: 0;
             top: 0;
             left: 8px;
@@ -314,7 +314,7 @@ a.github-button {
     bidi-style(right, 200px, left, auto);
     position: absolute;
     top: 12px;
-    set-font-size(small-bump-font-size);
+    set-font-size($small-bump-font-size);
 
     z-index: 3;
     cursor: pointer;
@@ -330,7 +330,7 @@ a.github-button {
         }
     }
 
-    {selector-icon} {
+    {$selector-icon} {
         margin-left: 0;
 
         &:before {
@@ -348,12 +348,12 @@ a.github-button {
     border-radius: 4px;
     text-align: center;
     padding: 0px 5px 1px;
-    font-size: base-bump-font-size;
+    font-size: $base-bump-font-size;
     bidi-style(margin-left, 4px, margin-right, 0);
     color: #fff;
     create-gradient(#43a6e2, #287cc2);
 
-    {selector-icon} {
+    {$selector-icon} {
     	bidi-style(margin-left, 0, margin-right, 0);
     }
 }
@@ -374,7 +374,7 @@ a.github-button {
         position: relative;
 
         &:hover, &:active, &:focus {
-            background: rgba(link-color, 0.1);
+            background: rgba($link-color, 0.1);
         }
 
         &:after {
@@ -387,8 +387,8 @@ a.github-button {
         }
     }
 
-    {selector-icon} {
-        bidi-style(margin-right, icon-margin, margin-left, 0);
+    {$selector-icon} {
+        bidi-style(margin-right, $icon-margin, margin-left, 0);
     }
 }
 
@@ -399,7 +399,7 @@ a.github-button {
     border-radius: 3px;
     position: relative;
     vendorize(transition-property, width);
-    vendorize(transition-duration, default-animation-duration);
+    vendorize(transition-duration, $default-animation-duration);
     width: 60px;
     background-color: rgba(255, 255, 255, 0.9);
 
@@ -410,20 +410,20 @@ a.github-button {
     input {
         background: transparent;
         border: 0;
-        color: menu-link-color;
+        color: $menu-link-color;
         font-weight: bold;
         width: 20px;
         overflow: hidden;
         padding: 0;
         vendorize(transition-property, width);
-        vendorize(transition-duration, default-animation-duration);
+        vendorize(transition-duration, $default-animation-duration);
         position: absolute;
         left: 8px;
         width: 90%;
         z-index: 2;
         cursor: pointer;
 
-        set-placeholder-style(color, text-color);
+        set-placeholder-style(color, $text-color);
         set-placeholder-style(text-transform, uppercase);
     }
 
@@ -440,7 +440,7 @@ main {
     min-height: 200px;
 
     > .center {
-        padding-top: first-content-top-padding;
+        padding-top: $first-content-top-padding;
     }
 }
 
@@ -448,7 +448,7 @@ main {
 footer {
     set-smaller-font-size();
     background: #fff;
-    padding:  first-content-top-padding 0 0 0;
+    padding:  $first-content-top-padding 0 0 0;
 
     p, label {
         font-style: italic;
@@ -467,7 +467,7 @@ footer {
             display: block;
             width: 65px;
             height: 60px
-            background-image: url(logo-sprite-url);
+            background-image: url($logo-sprite-url);
             background-position: 0px -83px;
             background-size: 205px auto;
             background-repeat: no-repeat;
@@ -495,9 +495,9 @@ footer {
     overflow: hidden;
     z-index: 1;
 
-    @media media-query-small-desktop { z-index: 2; }
-    @media media-query-tablet { z-index: 3; }
-    @media media-query-mobile { z-index: 4; }
+    @media $media-query-small-desktop { z-index: 2; }
+    @media $media-query-tablet { z-index: 3; }
+    @media $media-query-mobile { z-index: 4; }
 }
 
 /* simple hiding of elements */
@@ -512,7 +512,7 @@ footer {
 }
 
 /* tablet updates */
-@media media-query-tablet {
+@media $media-query-tablet {
 
     /* make submenus full width */
     #main-nav {
@@ -542,7 +542,7 @@ footer {
 }
 
 /* custom nav menu movement */
-@media media-query-navigation-break {
+@media $media-query-navigation-break {
 
     #main-header {
         .logo {
@@ -568,7 +568,7 @@ footer {
 }
 
 /* break nav into blocks (own line) */
-@media media-query-navigation-block {
+@media $media-query-navigation-block {
 
     #main-nav {
         > ul {
@@ -601,14 +601,14 @@ footer {
         }
 
         .logo {
-            margin: (grid-spacing / 2) 0;
+            margin: ($grid-spacing / 2) 0;
             float: none;
         }
     }
 }
 
 /* for mobile, move the search box under the nav */
-@media media-query-mobile {
+@media $media-query-mobile {
 
     .center {
         add-center-spacing(15px);
@@ -654,7 +654,7 @@ p.field-explanation {
     margin-bottom: 0;
 }
 
-label {selector-icon} {
+label {$selector-icon} {
     margin-left: 0;
     margin-right: 10px;
 }
@@ -665,7 +665,7 @@ label {selector-icon} {
     top: 12px;
     bidi-value(float, none, left);
     bidi-style(right, 200px, left, auto);
-    set-font-size(small-bump-font-size);
+    set-font-size($small-bump-font-size);
 
     li {
         display: inline;
@@ -681,14 +681,14 @@ label {selector-icon} {
     }
 
     a, a:hover, a:focus, a:visited {
-        color: link-color;
+        color: $link-color;
     }
 }
 
 for i in (2 3 4) {
     .cols-{i} {
         vendorize(column-count, i);
-        vendorize(column-gap, (grid-spacing / 2));
+        vendorize(column-gap, ($grid-spacing / 2));
     }
 }
 
@@ -709,8 +709,8 @@ for i in (2 3 4) {
 }
 
 ol.pagination {
-    margin: grid-spacing 0;
-    padding: grid-spacing 0;
+    margin: $grid-spacing 0;
+    padding: $grid-spacing 0;
 
     li {
         bidi-value(float, left, right);
