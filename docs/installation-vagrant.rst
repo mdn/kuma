@@ -82,46 +82,16 @@ Getting up and running
 
        foreman start
 
-#. You're done! Visit the following address in your browser and you should see the homepage::
+#. Visit the following address in your browser and add an exception for the security certificate if prompted::
+
+       https://mdn-local.mozillademos.org
+
+#. Visit the following address in your browser and you should see the homepage::
 
        https://developer-local.allizom.org/
 
+#. You're done!
 
-What’s next?
-------------
-
--  See :doc:`development <development>` for tips not specific to vagrant.
-
--  Useful vagrant sub-commands::
-
-       vagrant ssh     # Connect to the VM via ssh
-       vagrant suspend # Sleep the VM, saving state
-       vagrant halt    # Shutdown the VM
-       vagrant up      # Boot up the VM
-       vagrant destroy # Destroy the VM
-
--  You should occasionally re-run the Puppet setup, especially after
-   updating code with major changes. This will ensure that the VM
-   environment stays up to date with configuration changes and
-   installation of additional services.
-
-   -  On the Host::
-
-          vagrant provision
-
-   -  Inside the VM::
-
-          sudo puppet apply /home/vagrant/src/puppet/manifests/dev-vagrant.pp
-
--  After your first sign in, SSH into the vagrant box and add yourself as an admin::
-
-      vagrant ssh
-      mysql -uroot kuma
-      UPDATE auth_user set is_staff = 1, is_active=1, is_superuser = 1 WHERE username = 'YOUR_USERNAME'
-
-- Alternatively, you can simply issue the command::
-
-      ./manage.py createsuperuser
 
 Enabling Important Site Features
 --------------------------------
@@ -142,18 +112,72 @@ include:
 -  ``events_map``:  Allows display of map on the events page
 
 
+What’s next?
+------------
+
+Edit files as usual on your host machine; the current directory is
+mounted via NFS at /home/vagrant/src within the VM. Updates should be
+reflected without any action on your part.
+
+Create an admin user
+~~~~~~~~~~~~~~~~~~~~
+
+-  After your first sign in, SSH into the vagrant box and add yourself as an admin::
+
+      vagrant ssh
+      mysql -uroot kuma
+      UPDATE auth_user set is_staff = 1, is_active=1, is_superuser = 1 WHERE username = 'YOUR_USERNAME'
+
+- Alternatively, you can simply issue the command in the host directory::
+
+      ./manage.py createsuperuser
+
+Create pages
+~~~~~~~~~~~~
+
+You can visit `https://developer-local.allizom.org/docs/new
+<https://developer-local.allizom.org/docs/new>`_ to create new wiki pages as
+needed or download a sanitised version of the ``devmo`` database.
+
+- Download a dump of ``devmo_sanitized-latest.sql.bz2`` from `https://developer.allizom.org/landfill/ <https://developer.allizom.org/landfill/>`_, extract it in the host directory, and import it to your local database by running a command like the following in the VM::
+
+     mysql -uroot kuma < /path/to/database/dump.sql
+
+  You can then delete the extracted file.
+
+-  Download a dump of the ``attachments-2014-06-13.tar.gz`` from
+   `https://developer.allizom.org/landfill/
+   <https://developer.allizom.org/landfill/>`_, extract it in "/media/attachments".
+
+
+After configuration changes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+-  You should occasionally re-run the Puppet setup, especially after
+   updating code with major changes. This will ensure that the VM
+   environment stays up to date with configuration changes and
+   installation of additional services.
+
+   -  On the Host::
+
+          vagrant provision
+
+   -  Inside the VM::
+
+          sudo puppet apply /home/vagrant/src/puppet/manifests/dev-vagrant.pp
+
+
 Developing with Vagrant
 -----------------------
 
--  Edit files as usual on your host machine; the current directory is
-   mounted via NFS at /home/vagrant/src within the VM. Update should be
-   reflected without any action on your part.
+-  See :doc:`development <development>` for tips not specific to vagrant.
 
--  Visit `https://developer-local.allizom.org/docs/new
-   <https://developer-local.allizom.org/docs/new>`_ to create new wiki pages as
-   needed. Alternatively, download a dump of the ``devmo`` database from
-   `https://developer.allizom.org/landfill/
-   <https://developer.allizom.org/landfill/>`_, extract it, and import it to
-   your local database by running a command like the following in the VM::
+-  Useful vagrant sub-commands::
 
-     mysql -uroot kuma < /path/to/database/dump.sql
+       vagrant ssh     # Connect to the VM via ssh
+       vagrant suspend # Sleep the VM, saving state
+       vagrant halt    # Shutdown the VM
+       vagrant up      # Boot up the VM
+       vagrant destroy # Destroy the VM
+
+
