@@ -4,12 +4,12 @@
 .section-learning {
     #page-head {
         clear: both;
-        margin-bottom: grid-spacing;
+        margin-bottom: $grid-spacing;
         padding: 0;
         text-align: center;
 
         .crumb {
-            margin-top: -(grid-spacing);
+            margin-top: -($grid-spacing);
             text-align: left;
 
             a:before {
@@ -18,11 +18,11 @@
         }
 
         p {
-            margin: grid-spacing auto 0;
+            margin: $grid-spacing auto 0;
             text-align: justify;
 
             &.intro {
-                set-font-size(base-bump-font-size);
+                set-font-size($base-bump-font-size);
             }
         }
 
@@ -33,20 +33,20 @@
 
         .page-title {
             letter-spacing: 1px;
-            margin: 0 0 grid-spacing;
+            margin: 0 0 $grid-spacing;
             text-transform: uppercase;
         }
     }
 
     .column-container {
-        margin: grid-spacing 0;
+        margin: $grid-spacing 0;
     }
 }
 
 #blackboard {
     background: #242424 url("../img/boardframe-top.jpg") center top no-repeat;
     box-shadow: 0 2px 3px rgba(0,0,0,.25);
-    margin: grid-spacing auto;
+    margin: $grid-spacing auto;
     padding: 60px 0 0;
     width: 940px;
 
@@ -116,13 +116,13 @@ h2 {
     background: #deded4;
     background: rgba(209, 209, 193, .5);
     clear: both;
-    margin: (grid-spacing * 2) 0;
+    margin: ($grid-spacing * 2) 0;
     min-height: 80px;
-    padding: grid-spacing grid-spacing (grid-spacing / 4) 140px;
+    padding: $grid-spacing $grid-spacing ($grid-spacing / 4) 140px;
     position: relative;
 
     h2 {
-        set-font-size(base-font-size);
+        set-font-size($base-font-size);
         line-height: 1.22;
     }
 
@@ -140,8 +140,8 @@ h2 {
 
     span {
         position: absolute;
-        top: grid-spacing;
-        left: grid-spacing;
+        top: $grid-spacing;
+        left: $grid-spacing;
         background: url("../img/p2pu-webcraft.png") no-repeat 0 0;
         content: "";
         height: 80px;
@@ -152,7 +152,7 @@ h2 {
 #learn-fineprint {
     clear: both;
     set-font-size(11px);
-    margin: grid-spacing grid-spacing (grid-spacing * 2);
+    margin: $grid-spacing $grid-spacing ($grid-spacing * 2);
 }
 
 .learn-module h2 {
@@ -213,7 +213,7 @@ h2 {
     li {
         position: relative;
         border-bottom: 1px dotted #ccc;
-        padding: (grid-spacing / 2) 0;
+        padding: ($grid-spacing / 2) 0;
         background: none;
 
         &:first-child {
@@ -257,7 +257,7 @@ h2 {
         border-radius: 5px;
         color: #ccc;
         set-font-size(11px);
-        padding: (grid-spacing / 2);
+        padding: ($grid-spacing / 2);
         text-shadow: 0 0 1px #000;
         vendorize(box-shadow, 0 2px 2px rgba(0,0,0,.15));
     }

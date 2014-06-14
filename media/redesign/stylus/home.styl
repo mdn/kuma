@@ -2,7 +2,7 @@
 @import 'includes/mixins';
 @import 'includes/grid';
 
-home-involved-background-y = 50px;
+$home-involved-background-y = 50px;
 
 #home {
     create-home-gradient-background(#00539f);
@@ -42,7 +42,7 @@ home-involved-background-y = 50px;
 
     /* shared spacing in prominent block*/
     .home-masthead, .home-hacks, .home-demos, .home-contribute {
-        padding: first-content-top-padding 0;
+        padding: $first-content-top-padding 0;
     }
 
     /* shared basic tag updates throughout the homepage */
@@ -51,7 +51,7 @@ home-involved-background-y = 50px;
             display: inline-block;
             position: relative;
             margin-left: 0;
-            background-image: url(logo-sprite-url);
+            background-image: url($logo-sprite-url);
             background-size: 132px;
             background-position: 0 -143px;
             background-repeat: no-repeat;
@@ -132,7 +132,7 @@ home-involved-background-y = 50px;
     }
 
     .home-search-form {
-        padding: (grid-spacing * 2) 0;
+        padding: ($grid-spacing * 2) 0;
 
         input {
             big-search();
@@ -159,8 +159,8 @@ home-involved-background-y = 50px;
         font-weight: bold;
         font-family: 'Open Sans Extra Bold', sans-serif;
 
-        {selector-icon} {
-            bidi-style(margin-right, icon-margin, margin-left, 0);
+        {$selector-icon} {
+            bidi-style(margin-right, $icon-margin, margin-left, 0);
         }
     }
 
@@ -177,7 +177,7 @@ home-involved-background-y = 50px;
 .column-callout    {
     @extend $column-4;
     position: relative;
-    background-image: url(media-url-dir + 'promo-sprite.png');
+    background-image: url($media-url-dir + 'promo-sprite.png');
     background-repeat: no-repeat;
     i {
         bidi-style(right, 5%, left, auto);
@@ -193,16 +193,16 @@ home-involved-background-y = 50px;
     a {
         color: #fff !important;
         display: block;
-        padding: 100px grid-spacing grid-spacing grid-spacing;
+        padding: 100px $grid-spacing $grid-spacing $grid-spacing;
         position: relative;
         overflow-x: hidden;
         set-larger-font-size();
 
         &:before {
             bidi-style(content, '\f061', content, '\f060');
-            bidi-style(right, grid-spacing, left, auto);
+            bidi-style(right, $grid-spacing, left, auto);
             font-family: 'FontAwesome';
-            bottom: grid-spacing;
+            bottom: $grid-spacing;
             position: absolute;
             set-font-size(24px);
             z-index: 4;
@@ -238,7 +238,7 @@ home-involved-background-y = 50px;
     }
 
     li {
-        padding-top: grid-spacing;
+        padding-top: $grid-spacing;
         border-bottom: 1px solid #ececec;
 
         &:last-child {
@@ -250,7 +250,7 @@ home-involved-background-y = 50px;
         letter-spacing: 0;
         line-height: normal;
         margin-bottom: 0;
-        set-font-size(base-font-size);
+        set-font-size($base-font-size);
 
         a {
             text-decoration: underline;
@@ -258,16 +258,16 @@ home-involved-background-y = 50px;
     }
 
     .hacks {
-        margin-bottom: (grid-spacing / 2);
+        margin-bottom: ($grid-spacing / 2);
     }
 
     .home-involved-card {
-        background: url(media-url-dir + 'home-globe.jpg') -90px home-involved-background-y no-repeat #f4f7f8;
+        background: url($media-url-dir + 'home-globe.jpg') -90px $home-involved-background-y no-repeat #f4f7f8;
 
         a {
             color: #fff;
             text-decoration: none;
-            padding: grid-spacing;
+            padding: $grid-spacing;
             display: block;
         }
 
@@ -287,10 +287,10 @@ home-involved-background-y = 50px;
 
         h2 {
             set-larger-font-size();
-            padding-bottom: (grid-spacing / 2);
+            padding-bottom: ($grid-spacing / 2);
             border-bottom: 1px solid #e0e2e4;
             margin-bottom: 110px;
-            bidi-style(margin-right, -(grid-spacing), margin-left, 0);
+            bidi-style(margin-right, -($grid-spacing), margin-left, 0);
             font-weight: bold;
         }
 
@@ -302,7 +302,7 @@ home-involved-background-y = 50px;
 
         .button {
             background-color: #48ade4 !important;
-            font-size: smaller-font-size !important;
+            font-size: $smaller-font-size !important;
             color: #fff !important;
             font-weight: bold;
         }
@@ -311,7 +311,7 @@ home-involved-background-y = 50px;
 
 /* demos section */
 .home-demos {
-    background: light-background-color;
+    background: $light-background-color;
 
     .home-demos-list {
         clearfix();
@@ -340,7 +340,7 @@ home-involved-background-y = 50px;
     }
 
     .owl-theme .owl-controls {
-        margin-top: grid-spacing;
+        margin-top: $grid-spacing;
     }
     .owl-item.loading {
         background: url('/media/js/libs/owl.carousel/owl-carousel/AjaxLoader.gif') no-repeat center center;
@@ -359,7 +359,7 @@ home-involved-background-y = 50px;
         }
 
         .owl-carousel {
-            margin-bottom: grid-spacing;
+            margin-bottom: $grid-spacing;
         }
     }
 
@@ -391,7 +391,7 @@ home-involved-background-y = 50px;
 
     li {
         border-bottom: 1px solid #ececec;
-        padding: list-item-spacing 0;
+        padding: $list-item-spacing 0;
 
         &:last-child {
             border-bottom: 0;
@@ -399,12 +399,12 @@ home-involved-background-y = 50px;
     }
 
     .home-contribute-recent {
-        margin-top: (grid-spacing / 2);
+        margin-top: ($grid-spacing / 2);
     }
 }
 
 /* tablet */
-@media media-query-tablet {
+@media $media-query-tablet {
     #home {
         .home-masthead {
             h1, input {
@@ -415,13 +415,13 @@ home-involved-background-y = 50px;
 
     .column-callout {
         a {
-            set-font-size(base-bump-font-size);
+            set-font-size($base-bump-font-size);
         }
     }
 }
 
 /* mobile */
-@media media-query-mobile {
+@media $media-query-mobile {
     #home {
 
         .home-masthead {
@@ -437,7 +437,7 @@ home-involved-background-y = 50px;
         .column-callout, .column-home-features {
             width: auto !important;
             float: none;
-            margin-bottom: grid-spacing;
+            margin-bottom: $grid-spacing;
             margin-right: 0;
         }
 
@@ -454,7 +454,7 @@ home-involved-background-y = 50px;
         .column-home-features {
             li {
                 display: inline-block;
-                padding-right: grid-spacing;
+                padding-right: $grid-spacing;
             }
         }
 
@@ -465,11 +465,11 @@ home-involved-background-y = 50px;
             }
 
             .column-involved {
-                margin-top: (grid-spacing * 2);
+                margin-top: ($grid-spacing * 2);
             }
 
             .home-involved-card {
-                background-position: center home-involved-background-y;
+                background-position: center $home-involved-background-y;
             }
         }
 
@@ -500,7 +500,7 @@ home-involved-background-y = 50px;
     }
 }
 
-@media media-query-small-mobile {
+@media $media-query-small-mobile {
     .owl-theme .owl-controls .owl-page span {
         width: 8px;
         height: 8px;
@@ -512,12 +512,12 @@ home-involved-background-y = 50px;
 html[dir="rtl"] #home {
 
     h2 {
-        > selector-icon:before {
+        > $selector-icon:before {
             margin-right: 22px;
         }
 
         a { /* this can be bidi-'d when we can accommodate for body */
-            margin-right: (grid-spacing * 2);
+            margin-right: ($grid-spacing * 2);
             margin-left: 0;
         }
 
@@ -528,9 +528,9 @@ html[dir="rtl"] #home {
             float: right;
         }
 
-        {selector-icon} {
+        {$selector-icon} {
             margin-right: 0;
-            margin-left: icon-margin;
+            margin-left: $icon-margin;
         }
     }
 

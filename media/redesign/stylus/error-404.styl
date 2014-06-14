@@ -23,7 +23,7 @@
     100% { left: 231px; top: 68px; }
 }
 
-/* Take grid-spacing away from the margin of .beast and (later) give it to the
+/* Take $grid-spacing away from the margin of .beast and (later) give it to the
    padding #beastainer instead so that the eye positions can be relative to
    .beast without accounting for the margin. */
 .beast {
@@ -32,7 +32,7 @@
 
 #beastainer {
     float: right;
-    padding: grid-spacing 0 grid-spacing grid-spacing;
+    padding: $grid-spacing 0 $grid-spacing $grid-spacing;
     position: relative;
 }
 
