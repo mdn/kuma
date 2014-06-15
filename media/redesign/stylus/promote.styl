@@ -23,7 +23,7 @@ $img-nohover-padding = 1px;
 $img-margin-right = (($step-box-width - ($img-width * $number-of-images) - (($img-nohover-padding + $selection-border-width + $box-border-width) * 2 * $number-of-images)) / ($number-of-images - 1));
 
 /* Values used by the preview box that floats off to the right. */
-$preview-box-width = img-width;
+$preview-box-width = $img-width;
 $preview-box-left-margin = 10px;
 $preview-box-total-width = ($preview-box-width + ($box-padding * 2) + ($box-border-width * 2));
 
@@ -153,7 +153,7 @@ $preview-box-total-width = ($preview-box-width + ($box-padding * 2) + ($box-bord
     li {
         border: $box-border;
         padding: 2px;
-        width: img-width;
+        width: $img-width;
 
         /* Very similar to what we do with $img-margin-right above. We assume
            that four list items are shown so that even if fewer list items are
