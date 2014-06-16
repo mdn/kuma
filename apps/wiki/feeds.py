@@ -13,7 +13,7 @@ from django.utils.feedgenerator import (SyndicationFeed, Rss201rev2Feed,
 from django.utils.translation import ugettext as _
 
 from sumo.urlresolvers import reverse
-from users.models import UserProfile
+from kuma.users.models import UserProfile
 
 from wiki.helpers import diff_table, tag_diff_table, compare_url, colorize_diff
 from wiki.models import Document, Revision, AttachmentRevision

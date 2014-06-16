@@ -30,12 +30,11 @@ from teamwork.models import Team
 from waffle import switch_is_active
 
 from demos.models import Submission
-
 from sumo.decorators import ssl_required
 from sumo.urlresolvers import reverse, split_path
-from users.forms import BrowserIDRegisterForm, UserBanForm
 
-from .forms import (UserProfileEditForm, newsletter_subscribe,
+from .forms import (BrowserIDRegisterForm, UserBanForm,
+                    UserProfileEditForm, newsletter_subscribe,
                     get_subscription_details, subscribed_to_newsletter)
 from .models import UserProfile, UserBan
 from .tasks import send_welcome_email

@@ -24,7 +24,7 @@ from taggit_extras.utils import parse_tags
 
 from demos.models import Submission
 from demos.forms import SubmissionNewForm, SubmissionEditForm
-from users.models import UserProfile
+from kuma.users.models import UserProfile
 
 from . import DEMOS_CACHE_NS_KEY
 

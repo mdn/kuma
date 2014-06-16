@@ -1,4 +1,3 @@
-from os.path import dirname
 from django.contrib.auth.models import User
 
 import test_utils
@@ -6,9 +5,10 @@ from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 
 from sumo.tests import TestCase
-from users.models import UserBan, UserProfile
-from users.tests import profile
 from wiki.tests import revision
+
+from ..models import UserBan, UserProfile
+from . import profile
 
 
 class TestUserProfile(test_utils.TestCase):

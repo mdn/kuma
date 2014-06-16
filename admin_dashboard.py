@@ -45,7 +45,7 @@ class CustomIndexDashboard(Dashboard):
             models=(
                 'django.contrib.auth.*',
                 'teamwork.*',
-                'users.*',
+                'kuma.users.*',
             ),
         ))
 
@@ -69,7 +69,7 @@ class CustomIndexDashboard(Dashboard):
             exclude=(
                 'wiki.*',
                 'demos.*',
-                'users.*',
+                'kuma.users.*',
                 'waffle.*',
                 'constance.*',
                 'soapbox.*',

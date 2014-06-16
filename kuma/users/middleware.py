@@ -1,7 +1,7 @@
 from django.contrib.auth import logout
 from django.shortcuts import render
 
-from users.models import UserBan
+from .models import UserBan
 
 
 class BanMiddleware(object):

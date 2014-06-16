@@ -3,7 +3,7 @@ from django.conf import settings
 from nose.tools import eq_
 import test_utils
 
-from users.forms import UserProfileEditForm
+from ..forms import UserProfileEditForm
 
 
 class TestUserProfileEditForm(test_utils.TestCase):

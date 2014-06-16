@@ -4,7 +4,8 @@ from nose.plugins.attrib import attr
 
 from devmo.tests import LocalizingClient
 from sumo.tests import TestCase
-from users.models import UserBan
+
+from ..models import UserBan
 
 
 class BanTestCase(TestCase):

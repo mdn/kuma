@@ -9,10 +9,10 @@ from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
 
 from sumo.tests import TestCase
-from users.helpers import (profile_avatar, public_email,
-                           display_name, user_list)
-from users.models import UserProfile
 from devmo.urlresolvers import _prefixes
+
+from ..helpers import profile_avatar, public_email, display_name, user_list
+from ..models import UserProfile
 
 
 class HelperTestCase(TestCase):

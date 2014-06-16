@@ -65,10 +65,10 @@ urlpatterns = patterns('',
         name='wiki.raw_file'),
 
     # Users
-    ('', include('users.urls')),
+    ('', include('kuma.users.urls')),
 
     # BrowserID Realm
-    url(r'^\.well-known/browserid-realm', 'users.views.browserid_realm',
+    url(r'^\.well-known/browserid-realm', 'kuma.users.views.browserid_realm',
         name='users.browserid-realm'),
 
     # Auth keys

@@ -1,7 +1,7 @@
 from django.conf.urls import include, patterns, url
 
 from teamwork.views import user_roles
-from users import views
+from . import views
 
 users_patterns = patterns('',
     url(r'^browserid_verify$', views.browserid_verify,

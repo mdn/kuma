@@ -18,9 +18,9 @@ from devmo.tests import mock_lookup_user, LocalizingClient
 from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
 
-from users.models import UserProfile, UserBan
-from users.views import SESSION_VERIFIED_EMAIL, _clean_next_url
-from users.tests import create_profile
+from ..models import UserProfile, UserBan
+from ..views import SESSION_VERIFIED_EMAIL, _clean_next_url
+from . import create_profile
 
 TESTUSER_PASSWORD = 'testpass'
 
@@ -111,7 +111,7 @@ class BrowserIDTestCase(TestCase):
         eq_(302, resp.status_code)
         ok_('FAILURE' in resp['Location'])
 
-    @mock.patch('users.views._verify_browserid')
+    @mock.patch('kuma.users.views._verify_browserid')
     def test_invalid_assertion(self, _verify_browserid):
         _verify_browserid.return_value = None
 
@@ -121,7 +121,7 @@ class BrowserIDTestCase(TestCase):
         eq_(302, resp.status_code)
         ok_('FAILURE' in resp['Location'])
 
-    @mock.patch('users.views._verify_browserid')
+    @mock.patch('kuma.users.views._verify_browserid')
     def test_valid_assertion_with_django_user(self, _verify_browserid):
         _verify_browserid.return_value = {'email': 'testuser2@test.com'}
 
@@ -138,7 +138,7 @@ class BrowserIDTestCase(TestCase):
         eq_('django_browserid.auth.BrowserIDBackend',
             self.client.session.get('_auth_user_backend', ''))
 
-    @mock.patch('users.views._verify_browserid')
+    @mock.patch('kuma.users.views._verify_browserid')
     def test_explain_popup(self, _verify_browserid):
         _verify_browserid.return_value = {'email': 'testuser2@test.com'}
         resp = self.client.get(reverse('home', locale='en-US'))
@@ -159,7 +159,7 @@ class BrowserIDTestCase(TestCase):
     @mock.patch('basket.lookup_user')
     @mock.patch('basket.subscribe')
     @mock.patch('basket.unsubscribe')
-    @mock.patch('users.views._verify_browserid')
+    @mock.patch('kuma.users.views._verify_browserid')
     @override_settings(CELERY_ALWAYS_EAGER=True)
     def test_valid_assertion_with_new_account_creation(self,
                                                        _verify_browserid,
@@ -241,7 +241,7 @@ class BrowserIDTestCase(TestCase):
         eq_(expected_to, welcome_email.to)
         ok_(u'Hi %s' % new_username in welcome_email.body)
 
-    @mock.patch('users.views._verify_browserid')
+    @mock.patch('kuma.users.views._verify_browserid')
     def test_valid_assertion_with_existing_account_login(self,
                                                          _verify_browserid):
         """ Removed the existing user form: we don't auth the password with
@@ -281,7 +281,7 @@ class BrowserIDTestCase(TestCase):
     @mock.patch('basket.lookup_user')
     @mock.patch('basket.subscribe')
     @mock.patch('basket.unsubscribe')
-    @mock.patch('users.views._verify_browserid')
+    @mock.patch('kuma.users.views._verify_browserid')
     def test_valid_assertion_changing_email(self, _verify_browserid,
                                                         unsubscribe,
                                                         subscribe,
@@ -309,7 +309,7 @@ class BrowserIDTestCase(TestCase):
     @mock.patch('basket.lookup_user')
     @mock.patch('basket.subscribe')
     @mock.patch('basket.unsubscribe')
-    @mock.patch('users.views._verify_browserid')
+    @mock.patch('kuma.users.views._verify_browserid')
     def test_valid_assertion_doesnt_steal_email(self, _verify_browserid,
                                                         unsubscribe,
                                                         subscribe,
