@@ -1326,7 +1326,11 @@ class Document(NotificationsMixin, models.Model):
             signals.pre_delete.send(sender=self.__class__,
                                     instance=self)
             if not self.deleted:
+                cache_key = (DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL %
+                             self.natural_cache_key)
                 Document.objects.filter(pk=self.pk).update(deleted=True)
+                cache.delete(cache_key)
+
             signals.post_delete.send(sender=self.__class__,
                                      instance=self)
 
