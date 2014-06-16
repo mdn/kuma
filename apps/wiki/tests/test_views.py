@@ -412,45 +412,64 @@ class ConditionalGetTests(TestCaseBase):
     def test_last_modified(self):
         """Ensure the last-modified stamp of a document is cached"""
 
-        self.d, self.r = doc_rev()
-        self.url = reverse('wiki.document',
-                           args=[self.d.slug],
-                           locale=settings.WIKI_DEFAULT_LANGUAGE)
+        doc, rev = doc_rev()
+        get_url = reverse('wiki.document',
+                          args=[doc.slug],
+                          locale=settings.WIKI_DEFAULT_LANGUAGE)
 
         # There should be no last-modified date cached for this document yet.
         cache_key = (DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL %
-                     self.d.natural_cache_key)
+                     doc.natural_cache_key)
         ok_(not cache.get(cache_key))
 
         # Now, try a request, and ensure that the last-modified header is
         # present.
-        response = self.client.get(self.url, follow=False)
+        response = self.client.get(get_url, follow=False)
         ok_(response.has_header('last-modified'))
         last_mod = response['last-modified']
 
         # Try another request, using If-Modified-Since. THis should be a 304
-        response = self.client.get(self.url, follow=False,
+        response = self.client.get(get_url, follow=False,
                                    HTTP_IF_MODIFIED_SINCE=last_mod)
         eq_(304, response.status_code)
 
         # Finally, ensure that the last-modified was cached.
         cached_last_mod = cache.get(cache_key)
-        eq_(self.d.modified.strftime('%s'), cached_last_mod)
+        eq_(doc.modified.strftime('%s'), cached_last_mod)
 
         # Let the clock tick, so the last-modified will change on edit.
         time.sleep(1.0)
 
         # Edit the document, ensure the last-modified has been invalidated.
-        revision(document=self.d, content="New edits", save=True)
+        revision(document=doc, content="New edits", save=True)
         ok_(not cache.get(cache_key))
 
         # This should be another 304, but the last-modified in response and
         # cache should have changed.
-        response = self.client.get(self.url, follow=False,
+        response = self.client.get(get_url, follow=False,
                                    HTTP_IF_MODIFIED_SINCE=last_mod)
         eq_(200, response.status_code)
         ok_(last_mod != response['last-modified'])
         ok_(cached_last_mod != cache.get(cache_key))
+
+    def test_deletion_clears_last_modified(self):
+        """Deleting a page clears any last-modified caching"""
+        # Setup mostly the same as previous test, to get a doc and set
+        # last-modified info.
+        doc, rev = doc_rev()
+        self.url = reverse('wiki.document',
+                           args=[doc.slug],
+                           locale=settings.WIKI_DEFAULT_LANGUAGE)
+        cache_key = (DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL %
+                     doc.natural_cache_key)
+        ok_(not cache.get(cache_key))
+        response = self.client.get(self.url, follow=False)
+        ok_(cache.get(cache_key))
+
+        # Now delete the doc and make sure there's no longer
+        # last-modified data in the cache for it afterward.
+        doc.delete()
+        ok_(not cache.get(cache_key))
 
 
 class ReadOnlyTests(TestCaseBase):
@@ -459,7 +478,7 @@ class ReadOnlyTests(TestCaseBase):
 
     def setUp(self):
         super(ReadOnlyTests, self).setUp()
-        self.d, self.r = doc_rev()
+        self.d, r = doc_rev()
         self.edit_url = reverse('wiki.edit_document', args=[self.d.full_path])
 
     def test_everyone(self):
