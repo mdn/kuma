@@ -4,7 +4,7 @@ from notifications.models import Watch
 from notifications.tasks import claim_watches
 from notifications.tests import watch
 from sumo.tests import TestCase
-from users.tests import user
+from kuma.users.tests import user
 
 
 class ClaimWatchesTests(TestCase):

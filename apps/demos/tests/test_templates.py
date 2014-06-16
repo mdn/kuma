@@ -4,7 +4,7 @@ from nose.tools import eq_
 from pyquery import PyQuery as pq
 
 from sumo.urlresolvers import reverse
-from users.tests import TestCaseBase
+from kuma.users.tests import TestCaseBase
 
 
 class SubmitTests(TestCaseBase):

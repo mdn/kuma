@@ -12,7 +12,7 @@ from jinja2 import escape
 from sumo.urlresolvers import reverse
 from sumo.utils import paginate, smart_int
 
-from users.helpers import ban_link
+from kuma.users.helpers import ban_link
 
 from wiki.models import Document, Revision
 from wiki.helpers import format_comment

@@ -3,9 +3,10 @@ from string import letters
 
 from django.contrib.auth.models import User
 
-from users.models import UserProfile
 from devmo.tests import LocalizingClient
 from sumo.tests import TestCase
+
+from ..models import UserProfile
 
 
 class TestCaseBase(TestCase):

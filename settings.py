@@ -406,7 +406,7 @@ MIDDLEWARE_CLASSES = (
     'sumo.anonymous.AnonymousIdentityMiddleware',
     'sumo.middleware.PlusToSpaceMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'users.middleware.BanMiddleware',
+    'kuma.users.middleware.BanMiddleware',
 
     'badger.middleware.RecentBadgeAwardsMiddleware',
     'wiki.badges.BadgeAwardingMiddleware',
@@ -421,7 +421,7 @@ AUTHENTICATION_BACKENDS = (
 AUTH_PROFILE_MODULE = 'users.UserProfile'
 
 PASSWORD_HASHERS = (
-    'users.backends.Sha256Hasher',
+    'kuma.users.backends.Sha256Hasher',
     'django.contrib.auth.hashers.SHA1PasswordHasher',
     'django.contrib.auth.hashers.MD5PasswordHasher',
     'django.contrib.auth.hashers.UnsaltedMD5PasswordHasher',
@@ -473,7 +473,7 @@ INSTALLED_APPS = (
     'feeder',
     'landing',
     'search',
-    'users',
+    'kuma.users',
     'wiki',
     'kuma.events',
 
