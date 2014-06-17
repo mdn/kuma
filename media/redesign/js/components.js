@@ -354,4 +354,65 @@
         });
     };
 
+    /*
+        Plugin to show status updates to the user
+    */
+    $.fn.mozNotifier = function(options){
+
+        var settings = $.extend({
+            showClass: 'show-notifier',
+            successClass: 'success',
+            successMessage: 'Changes have been saved successfully.',
+            failClass: 'fail',
+            failMessage: 'Unexpected error. Please try again.'
+        }, options);
+
+        var $container = this;
+        $container.attr({
+            'role': 'status',
+            'aria-live': 'polite'
+        });
+
+        function setMessage(message, callback) {
+                $container.html(gettext(message));
+                if (typeof callback == 'function'){
+                    callback($container);
+                }
+                return this;
+        }
+
+        return {
+            success: function(message) {
+                message = message || settings.successMessage;
+                setMessage(message, function() {
+                    $container.addClass(settings.successClass);
+                });
+                return this;
+            },
+
+            fail: function(message) {
+                message = message || settings.failMessage;
+                setMessage(message, function(){
+                    $container.addClass(settings.failClass);
+                });
+                return this;
+            },
+
+            setMessage: setMessage,
+
+            show: function() {
+                $container.removeClass(settings.successClass + ' ' + settings.failClass);
+                $container.addClass(settings.showClass);
+                return this;
+            },
+
+            hide: function() {
+                $container.removeClass(settings.showClass);
+                return this;
+            }
+        };
+    }
+
 })(document, jQuery);
+
+
