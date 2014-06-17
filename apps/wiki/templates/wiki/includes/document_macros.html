@@ -33,7 +33,7 @@
               {% endif %}
             </ul>
           </div>
-        </div></li>{% endif %}<li class="page-buttons-edit"><a href="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}" class="button">{{ _('Edit') }}<i aria-hidden="true" class="icon-pencil"></i></a></li><li><button id="advanced-menu" class="only-icon" aria-haspopup="true" aria-owns="advanced-menu-submenu" aria-expanded="false"><span>{{ _('Advanced') }}</span><i aria-hidden="true" class="icon-cog"></i></button>
+        </div></li>{% endif %}<li class="page-buttons-edit"><a href="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}" class="button" data-optimizely-hook="button-edit-doc">{{ _('Edit') }}<i aria-hidden="true" class="icon-pencil"></i></a></li><li><button id="advanced-menu" class="only-icon" aria-haspopup="true" aria-owns="advanced-menu-submenu" aria-expanded="false"><span>{{ _('Advanced') }}</span><i aria-hidden="true" class="icon-cog"></i></button>
 
         <div class="submenu" id="advanced-menu-submenu">
           <!-- this page -->
@@ -43,14 +43,14 @@
                 <li><a href="{{ url('wiki.document_revisions', document.full_path) }}">{{_('History')}}</a></li>
                 {% if user.is_authenticated() and document %}
                   <li class="page-watch">
-                  
+
                   	<form action="{{ url('wiki.subscribe_document', document.slug) }}" method="post">
                   		{{ csrf() }}
 	                  	<a href="#" data-subscribe-text="{{ _('Subscribe') }}" data-unsubscribe-text="{{ _('Unsubscribe') }}">
 	                  	{% if document.is_watched_by(user) %}{{ _('Unsubscribe') }}{% else %}{{ _('Subscribe') }}{% endif %}
 	                  	</a>
                   	</form>
-                  
+
                 </li>{% endif %}
                 {% if user.is_authenticated() and not document.is_template %}
                   <li><a href="{{ url('wiki.new_document') }}?parent={{ document.id }}">{{ _('New sub-page') }}</a></li>
