@@ -61,8 +61,8 @@
             }
 
             mdn.analytics.trackEvent({
-                category: 'Wiki sidebar toggle',
-                action: 'Click',
+                category: 'Wiki',
+                action: 'Sidebar',
                 label: this.id == 'quick-links-toggle' ? 'Hide' : 'Show'
             });
 

@@ -510,8 +510,8 @@
 
             mdn.analytics.trackEvent({
                 category: 'Wiki',
-                action: 'Save and Continue',
-                label: window.location.href
+                action: 'Button',
+                label: 'Save and Keep Editing'
             });
 
             var savedTa = $(formSelector + ' textarea[name=content]').val();
