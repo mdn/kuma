@@ -15,6 +15,7 @@
   <article id="edit-document">
     <form id="wiki-page-edit" class="editing" method="post" action="">
       {{ csrf() }}
+      {% include 'wiki/includes/page_buttons_config.html' %}
       <fieldset>
 
         {{ errorlist(revision_form) }}
@@ -188,6 +189,10 @@
         {% endif %}
       </fieldset>
       {% include 'wiki/includes/wiki_notifier.html' %}
+
+      <section class="wiki-block">
+        {% include 'wiki/includes/page_buttons.html' %}
+      </section>
     </form>
 
     {% include 'wiki/includes/attachment_list.html' %}

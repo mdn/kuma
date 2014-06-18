@@ -1,0 +1,6 @@
+{% if document %}<iframe id="save-and-edit-target" name="save-and-edit-target"></iframe>{% endif %}
+
+
+<input type="hidden" id="new-page-href" value="{{ url('wiki.new_document') }}">
+<input type="hidden" id="new-page-label" value="{{ _('New Page') }}">
+<input type="hidden" id="new-page-msg" value="{{ _('Discard changes and create a new document?') }}">

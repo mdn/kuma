@@ -1677,7 +1677,7 @@ class DocumentEditingTests(TestCaseBase):
         en_doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE,
                                       slug=en_slug)
         old_en_json = json.loads(en_doc.json)
-        
+
         r = revision(document=en_doc)
         r.save()
         translation_data = new_document_data()
@@ -1697,7 +1697,7 @@ class DocumentEditingTests(TestCaseBase):
         es_doc = Document.objects.get(locale=es_locale,
                                       slug=es_slug)
         es_doc.render()
-        
+
         new_en_json = json.loads(Document.objects.get(pk=en_doc.pk).json)
 
         ok_('translations' in new_en_json)
@@ -2254,14 +2254,14 @@ class DocumentEditingTests(TestCaseBase):
         doc = _create_doc('testdiscarddoc', settings.WIKI_DEFAULT_LANGUAGE)
         response = self.client.get(reverse('wiki.edit_document',
                                            args=[doc.slug], locale=doc.locale))
-        eq_(pq(response.content).find('#btn-discard').attr('href'),
+        eq_(pq(response.content).find('.btn-discard').attr('href'),
             reverse('wiki.document', args=[doc.slug], locale=doc.locale))
 
         # Test that the 'discard button on a new translation goes
         # to the en-US page'
         response = self.client.get(reverse('wiki.translate',
                                            args=[doc.slug], locale=doc.locale) + '?tolocale=es')
-        eq_(pq(response.content).find('#btn-discard').attr('href'),
+        eq_(pq(response.content).find('.btn-discard').attr('href'),
             reverse('wiki.document', args=[doc.slug], locale=doc.locale))
 
         # Test that the 'discard' button on an existing translation goes
@@ -2270,14 +2270,14 @@ class DocumentEditingTests(TestCaseBase):
         response = self.client.get(reverse('wiki.edit_document',
                                            args=[foreign_doc.slug],
                                            locale=foreign_doc.locale))
-        eq_(pq(response.content).find('#btn-discard').attr('href'),
+        eq_(pq(response.content).find('.btn-discard').attr('href'),
             reverse('wiki.document', args=[foreign_doc.slug],
                     locale=foreign_doc.locale))
 
         # Test new
         response = self.client.get(reverse('wiki.new_document',
                                            locale=settings.WIKI_DEFAULT_LANGUAGE))
-        eq_(pq(response.content).find('#btn-discard').attr('href'),
+        eq_(pq(response.content).find('.btn-discard').attr('href'),
             reverse('wiki.new_document',
                     locale=settings.WIKI_DEFAULT_LANGUAGE))
 

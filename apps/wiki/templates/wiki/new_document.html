@@ -18,6 +18,7 @@
     {{ errorlist(revision_form) }}
     <form id="wiki-page-edit" class="editing" method="post" action="">
       {{ csrf() }}
+      {% include 'wiki/includes/page_buttons_config.html' %}
       <fieldset>
       <header id="article-head">
 
@@ -76,6 +77,10 @@
       </section>
 
     </fieldset>
+
+      <section class="wiki-block">
+        {% include 'wiki/includes/page_buttons.html' %}
+      </section>
     </form>
 
     {% include 'wiki/includes/attachment_list.html' %}

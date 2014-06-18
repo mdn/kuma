@@ -395,17 +395,14 @@ article {
 
 /* edit, language, settings, save, and cancel buttons */
 .page-buttons, #page-buttons {
-    bidi-value(float, right, left);
-    float: right;
-    margin-top: -5px;
-
+    bidi-value(text-align, right, left);
     width: auto;
-    top: 0;
 
     > li {
         margin-left: ($grid-spacing / 2);
         display: inline-block;
         position: relative;
+        bidi-value(text-align, left, right);
 
         a, button, input[type='submit'], input[type='button'] {
             set-smaller-font-size();
@@ -725,6 +722,7 @@ span.cke_skin_kuma {
 
 .guide-links{
     float: right;
+    margin-top: $grid-spacing;
     padding: 0 4px 2px 0;
     color: #999;
 }
@@ -1170,9 +1168,9 @@ details {
 
     p.add {
         position: absolute;
-        right: $grid-spacing;
+        bidi-style(right, 0, left, 0);
         text-align: right;
-        top: 12px;
+        top: 41px;
     }
 }
 
@@ -1263,6 +1261,10 @@ details {
 
     .page-buttons > li.page-buttons-edit {
         display: none;
+    }
+
+    .page-meta p.add {
+        position: static;
     }
 
     /* display the attachments table as inline */

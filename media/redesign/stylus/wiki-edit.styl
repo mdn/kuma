@@ -12,12 +12,11 @@ $summary-margin = 0 ($grid-spacing / 2) ($grid-spacing / 2);
 $summary-padding = 5px;
 
 #new-document, #edit-document, #translate-document, .move-page {
-    #page-buttons {
-        position: absolute;
-        bidi-style(right, 4px, left, auto);
+    .page-buttons {
+        margin-bottom: -10px;
 
         li {
-            bidi-value(float, none, left);
+            margin-bottom: 10px;
         }
 
         a, button {
@@ -25,10 +24,9 @@ $summary-padding = 5px;
             display: inline-block;
             vendorize(box-shadow, 1px 1px 0 rgba(0,0,0,.25));
         }
-
-        iframe#save-and-edit-target {
-            offscreen();
-        }
+    }
+    iframe#save-and-edit-target {
+        offscreen();
     }
 }
 
@@ -41,7 +39,6 @@ $summary-padding = 5px;
         letter-spacing: normal;
         line-height: 40px;
         margin-bottom: ($grid-spacing);
-        margin-top: $space-for-buttons;
 
         .action {
             set-larger-font-size();
@@ -96,7 +93,8 @@ $summary-padding = 5px;
     ul.metadata {
         display: none;
         float: none;
-        margin-bottom ($grid-spacing / 2);
+        margin-top: ($grid-spacing / 2);
+        margin-bottom: ($grid-spacing / 2);
         width: auto;
 
         .new & {
@@ -174,12 +172,8 @@ $summary-padding = 5px;
 #edit-document {
     #article-head {
         position: relative;
-        margin-top: $space-for-buttons;
     }
 
-    #page-buttons {
-        top: -($space-for-buttons);
-    }
 
     h1{
         margin-top: 0;
@@ -205,7 +199,7 @@ $summary-padding = 5px;
         set-smaller-font-size();
         clear: both;
         color: #888;
-        margin: -$grid-spacing 0 $grid-spacing;
+        margin: 0;
     }
 }
 

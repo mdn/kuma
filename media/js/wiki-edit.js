@@ -315,7 +315,7 @@
      * Initialize the article preview functionality.
      */
     function initArticlePreview() {
-        $('#btn-preview').on('click', function(e) {
+        $('.btn-preview').on('click', function(e) {
             e.preventDefault();
 
             // Ensure that content is available and exists
@@ -487,7 +487,7 @@
     //
     function initSaveAndEditButtons () {
         // Save button submits to top-level
-        $('#btn-save').on('click', function () {
+        $('.btn-save').on('click', function () {
             if (supportsLocalStorage) {
                 // Clear any preserved content.
                 clearDraft();
@@ -499,7 +499,7 @@
 
         // Save-and-edit submits to a hidden iframe, show loading message in notifier
         var notifier = $('.notifier').mozNotifier();
-        $('#btn-save-and-edit').on('click', function () {
+        $('.btn-save-and-edit').on('click', function () {
 
             notifier.setMessage('Saving changes…').show();
 
@@ -521,7 +521,7 @@
             $form.attr('action', '?iframe=1').attr('target', 'save-and-edit-target');
             return true;
         });
-        $('#btn-save-and-edit').show();
+        $('.btn-save-and-edit').show();
 
         $('#save-and-edit-target').on('load', function () {
             notifier.success().hide();
@@ -549,7 +549,7 @@
                         // to surface the issue. There's no easy way to bust
                         // the iframe otherwise, since this was a POST.
                         $form.attr('action', '').attr('target', '');
-                        $('#btn-save').click();
+                        $('.btn-save').click();
 
                     }
 
@@ -558,7 +558,7 @@
                 }
             }
             // Stop loading state on button
-            $('#btn-save-and-edit').removeClass('loading');
+            $('.btn-save-and-edit').removeClass('loading');
             // Clear the review comment
             $('#id_comment').val('');
             // Re-enable the form; it gets disabled to prevent double-POSTs
@@ -638,7 +638,7 @@
         }
 
         // Clear draft upon discard
-       $('#btn-discard').on('click', function() {
+       $('.btn-discard').on('click', function() {
             clearTimeout(DRAFT_TIMEOUT_ID);
            clearDraft();
        });

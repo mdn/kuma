@@ -20,6 +20,7 @@
 
       <form action="" method="post" data-json-url="{{ url('wiki.json') }}" id="translate-document">
         {{ csrf() }}
+        {% include 'wiki/includes/page_buttons_config.html' %}
         <input type="hidden" name="form" value="both" />
 
   <div id="localize-document" class="editing">
@@ -146,6 +147,10 @@
 
   </div>
   {% include 'wiki/includes/wiki_notifier.html' %}
+
+  <section class="wiki-block">
+    {% include 'wiki/includes/page_buttons.html' %}
+  </section>
 </form>
 
     {% include 'wiki/includes/attachment_list.html' %}
