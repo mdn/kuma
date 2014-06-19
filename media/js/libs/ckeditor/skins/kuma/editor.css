@@ -110,7 +110,6 @@ a:hover.cke_colorauto,a:hover.cke_colormore,a:focus.cke_colorauto,a:focus.cke_co
 .cke_skin_kuma .cke_browser_webkit .cke_rtl .cke_toolbar{float:right;}
 .cke_skin_kuma .cke_browser_ie .cke_button .cke_label{line-height:16px;}
 .cke_skin_kuma .cke_browser_ie .cke_rcombo,.cke_skin_kuma .cke_browser_ie .cke_rcombo *{cursor:default;}
-.cke_skin_kuma .cke_browser_ie .cke_toolbox{padding-bottom:5px;_padding-bottom:6px;}
 .cke_shared .cke_skin_kuma .cke_browser_ie .cke_toolbox{padding-bottom:0;}
 .cke_skin_kuma .cke_contextmenu{padding:2px;}
 .cke_skin_kuma .cke_menu{font:13px "Lucida Grande", "Lucida Sans Unicode", Lucida, Arial, Helvetica, sans-serif; overflow:hidden; }
@@ -235,11 +234,7 @@ a:hover.cke_colorauto,a:hover.cke_colormore,a:focus.cke_colorauto,a:focus.cke_co
 .cke_skin_kuma .cke_browser_iequirks .cke_fontSize .cke_text{width:32px;}
 html .cke_skin_kuma{visibility:inherit;}
 html.cke_skin_kuma_container{visibility:visible;}
-.cke_skin_kuma .cke_toolbox { clear:both; padding: 5px 5px 35px 5px; margin: -9px -9px 0; border: solid #fff; border-width: 9px 9px 0; 
-  background: -moz-linear-gradient(bottom, rgba(255,255,255,.1) 0, rgba(255,255,255,1) 30px, #e6e6e6 31px, #e6e6e6 100%); 
-  background: -webkit-linear-gradient(bottom, rgba(255,255,255,.1) 0, rgba(255,255,255,1) 30px, #e6e6e6 31px, #e6e6e6 100%);
-  background: linear-gradient(bottom, rgba(255,255,255,.1) 0, rgba(255,255,255,1) 30px, #e6e6e6 31px, #e6e6e6 100%);
-}
+.cke_skin_kuma .cke_toolbox { clear:both; padding: 5px; margin-bottom: 30px; border: solid #fff; background: #e6e6e6; }
 .cke_skin_kuma .cke_toolbox:after{content:".";display:block;clear:both;height:0;visibility:hidden;}
 .cke_skin_kuma .mdn-buttons-button { background: url(/media/img/markup.png) no-repeat; }
 .mdn-buttons-button.h1 {background-position:-5px -6px;}
