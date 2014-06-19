@@ -577,6 +577,15 @@
             return true;
         });
 
+        // Track submissions of the edit page form
+        $('#' + formId).on('submit', function() {
+            mdn.optimizely.push(['trackEvent', 'editpage-submit']);
+            mdn.analytics.trackEvent({
+                category: 'Wiki',
+                action: 'Form submission',
+                label: 'Edit page'
+            });
+        });
     }
 
     function updateDraftState(action) {
