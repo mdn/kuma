@@ -572,17 +572,17 @@ div.bug, div.warning, div.overheadIndicator {
     border: 0 !important; /* overrides plugin selector */
 }
 
+.fixed {
+    position: fixed;
+    top: 0;
+    z-index: 10;
+    overflow-y: auto;
+}
+
 #toc {
     reverse-link-decoration();
     background: $light-background-color;
     padding: 20px 15px;
-
-    &.fixed {
-        position: fixed;
-        top: 0;
-        z-index: 10;
-        overflow-y: auto;
-    }
 
     > ol {
         set-smaller-font-size();
