@@ -172,8 +172,17 @@ $summary-padding = 5px;
 }
 
 #edit-document {
-    .metadata {
+    #article-head {
+        position: relative;
         margin-top: $space-for-buttons;
+    }
+
+    #page-buttons {
+        top: -($space-for-buttons);
+    }
+
+    h1{
+        margin-top: 0;
     }
 
     .first-contrib-welcome {
