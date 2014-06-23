@@ -140,8 +140,7 @@
               });
 
               var s = values.join(' ');
-
-              s = $.slugifyString(s);
+              s = $.slugifyString(s, false, true);
 
               // Trim to first num_chars chars
               s = s.substring(0, maxLength);

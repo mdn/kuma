@@ -413,14 +413,19 @@
             return nvpair;
         },
         // Used within the wiki new/move pages
-        slugifyString: function(str, allowSlash) {
+        slugifyString: function(str, allowSlash, allowMultipleUnderscores) {
             var regex = new RegExp('[\?\&\"\'\#\*\$' + (allowSlash ? '' : '\/') + ' +?]', 'g');
+
             // Remove anything from the slug that could cause big problems
-            return str.replace(regex, '_')
-                // "$" is used for verb delimiter in URLs
-                .replace(/\$/g, '')
-                // Don't allow "_____" mess
-                .replace(/\_+/g, '_');
+            // "$" is used for verb delimiter in URLs
+            var result = str.replace(regex, '_').replace(/\$/g, '');
+
+            // Don't allow "_____" mess
+            if(!allowMultipleUnderscores) {
+                result = result.replace(/_+/g, '_');
+            }
+
+            return result;
         }
     });
 
