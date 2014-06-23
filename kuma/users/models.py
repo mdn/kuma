@@ -141,8 +141,6 @@ class UserProfile(ModelBase):
 
     class Meta:
         db_table = 'user_profiles'
-        verbose_name = _('user profile')
-        verbose_name_plural = _('user profiles')
 
     def __unicode__(self):
         return '%s: %s' % (self.id, self.deki_user_id)
