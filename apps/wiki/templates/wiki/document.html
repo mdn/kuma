@@ -186,7 +186,7 @@
             <ul>
         {% for username, contributor in document.get_contributors().iteritems() %}
                 <li>
-                <a href="{{ url('devmo_profile_view', username) }}" title="{% trans %}View profile: {{ username }}{% endtrans %}">
+                <a href="{{ contributor.user.get_absolute_url() }}" title="{% trans %}View profile: {{ username }}{% endtrans %}">
                 <noscript data-class="avatar" data-alt="{{ username }}" data-src="{{ contributor.user.get_profile().small_gravatar }}">{{ username }}</noscript></a>
                 </li>
         {% endfor %}
