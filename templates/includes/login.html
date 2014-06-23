@@ -2,9 +2,14 @@
   <ul class="user-state">
     {% set username = request.user.username %}
       <li><a href="{{ request.user.get_absolute_url() }}">{{ _('{username}') | f(username=username) }}</a></li>
-      <li><a href="{{ url('users.logout') }}?next={{ next_url }}">{{ _('Sign out') }}</a></li>
+      <li><a href="{{ url('account_logout') }}?next={{ next_url }}">{{ _('Sign out') }}</a></li>
   </ul>
+{% set accounts = social_accounts(user) %}
+Accounts: {{ accounts }}
 {% else %}
+
+    {{ providers_media_js() }}
+    <a href="{{ provider_login_url("persona") }}" title="Login with Person">Login with Person</a>
 
     <form class="browserid" action="{{url('users.browserid_verify') }}" method="POST">
     <input id="next" name="next" type="hidden" value="{{ next_url }}"/>

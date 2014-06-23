@@ -1,9 +1,11 @@
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 
-from jinja2 import escape, Markup
+from jinja2 import escape, Markup, contextfunction
 from jingo import register
 
+from allauth.account.utils import user_display
+from allauth.socialaccount import providers
 from tower import ugettext as _
 
 from sumo.urlresolvers import reverse
@@ -57,3 +59,53 @@ def user_list(users):
     list = u', '.join([link % (escape(u.get_absolute_url()), escape(u.username)) for
                        u in users])
     return Markup(list)
+
+
+@register.function
+@contextfunction
+def provider_login_url(context, provider_id, **params):
+    """
+    {{ provider_login_url("facebook", next="bla") }}
+    {{ provider_login_url("openid", openid="http://me.yahoo.com", next="bla") }}
+    """
+    request = context['request']
+    provider = providers.registry.by_id(provider_id)
+    if 'next' not in params:
+        next = request.REQUEST.get('next')
+        if next:
+            params['next'] = next
+    else:
+        if not params['next']:
+            del params['next']
+    return Markup(provider.get_login_url(request, **params))
+
+
+@register.function
+@contextfunction
+def providers_media_js(context):
+    """
+    {{ providers_media_js() }}
+    """
+    request = context['request']
+    return Markup(u'\n'.join([p.media_js(request)
+                             for p in providers.registry.get_list()]))
+
+
+@register.function
+def social_accounts(user):
+    """
+    {% set accounts = social_accounts(user) %}
+
+    Then:
+        {{ accounts.twitter }} -- a list of connected Twitter accounts
+        {{ accounts.twitter.0 }} -- the first Twitter account
+        {% if accounts %} -- if there is at least one social account
+    """
+    accounts = {}
+    for account in user.socialaccount_set.all().iterator():
+        providers = accounts.setdefault(account.provider, [])
+        providers.append(account)
+    return accounts
+
+
+register.function(user_display)

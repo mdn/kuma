@@ -361,11 +361,11 @@ JINGO_EXCLUDE_APPS = (
     'grappelli',
     'waffle',
     # HACK: Jingo only looks at the tail end of the app name
-    'allauth',
-    'account', # allauth.account
-    'socialaccount', # allauth.socialaccount
-    'github', # 'allauth.socialaccount.providers.github',
-    'persona', # 'allauth.socialaccount.providers.persona',
+    # 'allauth',
+    # 'account',  # allauth.account
+    # 'socialaccount',  # allauth.socialaccount
+    'github',  # 'allauth.socialaccount.providers.github',
+    'persona',  # 'allauth.socialaccount.providers.persona',
     'base_allauth.html',
 )
 
@@ -478,11 +478,6 @@ INSTALLED_APPS = (
     # BrowserID & allauth
     'django_browserid',
 
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.github',
-    'allauth.socialaccount.providers.persona',
 
     # MDN
     'devmo',
@@ -491,6 +486,11 @@ INSTALLED_APPS = (
     'landing',
     'search',
     'kuma.users',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.persona',
     'wiki',
     'kuma.events',
 
@@ -1207,3 +1207,5 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
 ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_LOGOUT_ON_GET = True
+ACCOUNT_EMAIL_VERIFICATION = 'none'
