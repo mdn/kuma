@@ -4,7 +4,6 @@ import hashlib
 import re
 import json
 import newrelic.agent
-import operator
 import traceback
 import sys
 
@@ -20,7 +19,7 @@ from django.core.cache import get_cache, cache
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import resolve
 from django.db import models
-from django.db.models import signals
+from django.db.models import signals, Count
 from django.http import Http404
 from django.utils.functional import cached_property
 
@@ -1954,21 +1953,10 @@ Full traceback:
         return DocumentType
 
     def get_contributors(self):
-        contributor_counts = {}
-        for cid in self.revisions.values_list('creator', flat=True):
-            contributor_counts.setdefault(cid, 0)
-            contributor_counts[cid] += 1
-        top_creator_ids = sorted(contributor_counts.iteritems(),
-                                 key=operator.itemgetter(1),
-                                 reverse=True)
-        top_users = User.objects.filter(pk__in=[tc[0] for tc in top_creator_ids])
-        top_contributors = {}
-        for user in top_users:
-            top_contributors[user.username] = {
-                'user': user,
-                'revisions': contributor_counts[user.id]
-            }
-        return top_contributors
+        top_creator_ids = (self.revisions.values_list('creator', flat=True)
+                                         .annotate(Count('creator'))
+                                         .order_by('-creator__count'))
+        return User.objects.filter(pk__in=list(top_creator_ids))
 
 
 class DocumentDeletionLog(models.Model):

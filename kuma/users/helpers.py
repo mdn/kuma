@@ -1,3 +1,6 @@
+import urllib
+import hashlib
+
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -8,15 +11,23 @@ from tower import ugettext as _
 
 from sumo.urlresolvers import reverse
 
+DEFAULT_AVATAR = getattr(settings, 'DEFAULT_AVATAR',
+                         settings.MEDIA_URL + 'img/avatar-default.png')
+
 
 @register.function
-def profile_avatar(user):
-    """Return a URL to the user's avatar."""
-    try:  # This is mostly for tests.
-        profile = user.get_profile()
-    except ObjectDoesNotExist:
-        return settings.DEFAULT_AVATAR
-    return profile.gravatar if profile.gravatar else settings.DEFAULT_AVATAR
+def gravatar_url(user, secure=True, size=220, rating='pg',
+                 default=DEFAULT_AVATAR):
+    """Produce a gravatar image URL from email address."""
+    base_url = (secure and 'https://secure.gravatar.com' or
+                'http://www.gravatar.com')
+    email_hash = hashlib.md5(user.email.lower().encode('utf8'))
+    params = urllib.urlencode({'s': size, 'd': default, 'r': rating})
+    return '%(base_url)s/avatar/%(hash)s?%(params)s' % {
+        'base_url': base_url,
+        'hash': email_hash.hexdigest(),
+        'params': params,
+    }
 
 
 @register.function

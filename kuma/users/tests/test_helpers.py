@@ -11,7 +11,7 @@ from pyquery import PyQuery as pq
 from sumo.tests import TestCase
 from devmo.urlresolvers import _prefixes
 
-from ..helpers import profile_avatar, public_email, display_name, user_list
+from ..helpers import gravatar_url, public_email, display_name, user_list
 from ..models import UserProfile
 
 
@@ -28,20 +28,20 @@ class HelperTestCase(TestCase):
 
     def test_profile_default_gravatar(self):
         d_param = urllib.urlencode({'d': settings.DEFAULT_AVATAR})
-        ok_(d_param in profile_avatar(self.u),
-            "Bad default avatar: %s" % profile_avatar(self.u))
+        ok_(d_param in gravatar_url(self.u),
+            "Bad default avatar: %s" % gravatar_url(self.u))
 
-    def test_profile_avatar(self):
+    def test_gravatar_url(self):
         self.u.email = 'test@test.com'
-        ok_(md5(self.u.email).hexdigest() in profile_avatar(self.u))
+        ok_(md5(self.u.email).hexdigest() in gravatar_url(self.u))
 
     def test_public_email(self):
-        eq_(u'<span class="email">'
-             '&#109;&#101;&#64;&#100;&#111;&#109;&#97;&#105;&#110;&#46;&#99;'
-             '&#111;&#109;</span>', public_email('me@domain.com'))
-        eq_(u'<span class="email">'
-             '&#110;&#111;&#116;&#46;&#97;&#110;&#46;&#101;&#109;&#97;&#105;'
-             '&#108;</span>', public_email('not.an.email'))
+        eq_('<span class="email">'
+            '&#109;&#101;&#64;&#100;&#111;&#109;&#97;&#105;&#110;&#46;&#99;'
+            '&#111;&#109;</span>', public_email('me@domain.com'))
+        eq_('<span class="email">'
+            '&#110;&#111;&#116;&#46;&#97;&#110;&#46;&#101;&#109;&#97;&#105;'
+            '&#108;</span>', public_email('not.an.email'))
 
     def test_display_name(self):
         new_user = User.objects.create(pk=40000, username='testuser3')
