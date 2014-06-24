@@ -18,22 +18,22 @@ from landing.forms import PRIVACY_REQUIRED
 from .models import UserProfile
 
 
-USERNAME_INVALID = _('Username may contain only letters, '
-                     'numbers and ./-/_ characters.')
-USERNAME_REQUIRED = _('Username is required.')
-USERNAME_SHORT = _('Username is too short (%(show_value)s characters). '
-                   'It must be at least %(limit_value)s characters.')
-USERNAME_LONG = _('Username is too long (%(show_value)s characters). '
-                  'It must be %(limit_value)s characters or less.')
-EMAIL_REQUIRED = _('Email address is required.')
-EMAIL_SHORT = _('Email address is too short (%(show_value)s characters). '
-                'It must be at least %(limit_value)s characters.')
-EMAIL_LONG = _('Email address is too long (%(show_value)s characters). '
-               'It must be %(limit_value)s characters or less.')
-PASSWD_REQUIRED = _('Password is required.')
-PASSWD2_REQUIRED = _('Please enter your password twice.')
-PASSWD_UTF8 = _('To use this password, you need to initiate a password '
-                'reset. Please use the "forgot my password" link below.')
+USERNAME_INVALID = _(u'Username may contain only letters, '
+                     u'numbers and ./-/_ characters.')
+USERNAME_REQUIRED = _(u'Username is required.')
+USERNAME_SHORT = _(u'Username is too short (%(show_value)s characters). '
+                   u'It must be at least %(limit_value)s characters.')
+USERNAME_LONG = _(u'Username is too long (%(show_value)s characters). '
+                  u'It must be %(limit_value)s characters or less.')
+EMAIL_REQUIRED = _(u'Email address is required.')
+EMAIL_SHORT = _(u'Email address is too short (%(show_value)s characters). '
+                u'It must be at least %(limit_value)s characters.')
+EMAIL_LONG = _(u'Email address is too long (%(show_value)s characters). '
+               u'It must be %(limit_value)s characters or less.')
+PASSWD_REQUIRED = _(u'Password is required.')
+PASSWD2_REQUIRED = _(u'Please enter your password twice.')
+PASSWD_UTF8 = _(u'To use this password, you need to initiate a password '
+                u'reset. Please use the "forgot my password" link below.')
 
 
 class UsernameField(forms.RegexField):
@@ -41,8 +41,8 @@ class UsernameField(forms.RegexField):
         super(UsernameField, self).__init__(
             label=_(u'Username'), max_length=30, min_length=3,
             regex=r'^[\w.-]+$',
-            help_text=_('Required. 30 characters or fewer. '
-                        'Letters, digits and ./-/_ only.'),
+            help_text=_(u'Required. 30 characters or fewer. '
+                        u'Letters, digits and ./-/_ only.'),
             widget=forms.TextInput(),
             error_messages={'invalid': USERNAME_INVALID,
                             'required': USERNAME_REQUIRED,
@@ -57,7 +57,7 @@ class BrowserIDRegisterForm(forms.ModelForm):
 
     username = UsernameField()
 
-    newsletter = forms.BooleanField(label=_('Send me the newsletter'),
+    newsletter = forms.BooleanField(label=_(u'Send me the newsletter'),
                                     required=False)
 
     # Newsletter fields copied from SubscriptionForm
@@ -81,8 +81,8 @@ class BrowserIDRegisterForm(forms.ModelForm):
     def clean_username(self):
         username = self.cleaned_data.get('username')
         if User.objects.filter(username=username).exists():
-            raise forms.ValidationError(_('The username you entered'
-                                          ' already exists.'))
+            raise forms.ValidationError(_(u'The username you entered '
+                                          u'already exists.'))
         return username
 
     def __init__(self, locale, request=None, *args, **kwargs):
@@ -115,17 +115,17 @@ class UserProfileEditForm(forms.ModelForm):
         fields = ('fullname', 'title', 'organization', 'location',
                   'locale', 'timezone', 'bio', 'irc_nickname', 'interests')
 
-    beta = forms.BooleanField(label=_('Beta tester'), required=False)
+    beta = forms.BooleanField(label=_(u'Beta tester'), required=False)
 
     # Email is on the form, but is handled in the view separately
-    email = forms.EmailField(label=_('Email'), required=True)
+    email = forms.EmailField(label=_(u'Email'), required=True)
 
-    interests = forms.CharField(label=_('Interests'),
+    interests = forms.CharField(label=_(u'Interests'),
                                 max_length=255, required=False)
-    expertise = forms.CharField(label=_('Expertise'),
+    expertise = forms.CharField(label=_(u'Expertise'),
                                 max_length=255, required=False)
 
-    newsletter = forms.BooleanField(label=_('Send me the newsletter'),
+    newsletter = forms.BooleanField(label=_(u'Send me the newsletter'),
                                     required=False)
 
     # Newsletter fields copied from SubscriptionForm
