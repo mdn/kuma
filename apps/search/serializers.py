@@ -1,7 +1,7 @@
 from rest_framework import serializers, pagination
 
 from .fields import SearchQueryField, DocumentExcerptField, LocaleField
-from .models import Filter
+from .models import Filter, FilterGroup
 
 
 class FilterURLSerializer(serializers.Serializer):
@@ -56,18 +56,18 @@ class FilterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Filter
         depth = 1
-        fields = ('name', 'slug')
-        read_only_fields = ('name', 'slug')
+        fields = ('name', 'slug', 'shortcut')
+        read_only_fields = ('name', 'slug', 'shortcut')
 
 
 class GroupWithFiltersSerializer(serializers.ModelSerializer):
     name = serializers.CharField(read_only=True)
     slug = serializers.CharField(read_only=True)
     order = serializers.CharField(read_only=True)
-    filters = FilterSerializer(source='filters', read_only=True)
+    filters = FilterSerializer(source='filters.visible_only', read_only=True)
 
     class Meta:
-        model = Filter
+        model = FilterGroup
         depth = 1
         fields = ('name', 'slug', 'order', 'filters')
 
