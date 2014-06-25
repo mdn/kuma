@@ -130,7 +130,7 @@ draw-grid();
             vendorize(transition-property, width);
             vendorize(transition-duration, $default-animation-duration);
             vendorize(transition-delay, $default-animation-duration);
-            text-align: initial;
+            bidi-value(text-align, left, right);
 
             &:first-child {
                 margin-left: 0;
