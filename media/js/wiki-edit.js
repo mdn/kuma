@@ -163,8 +163,7 @@
     var DRAFT_TIMEOUT_ID;
 
     var supportsLocalStorage = ('localStorage' in win);
-    var formId = 'wiki-page-edit';
-    var formSelector;
+    var $form = $('#wiki-page-edit');
     var isTranslation;
     var isTemplate;
 
@@ -174,13 +173,12 @@
 
         $('select.enable-if-js').removeAttr('disabled');
 
-        // If the form is a translate form, update the formId
-        var translateFormId = 'translate-document';
-        if($('#' + translateFormId).length) {
-            formId = translateFormId;
+        // If the form is a translate form, update the $form object
+        var $translateForm = $('#translate-document');
+        if($translateForm.length) {
+            $form = $translateForm;
             isTranslation = true;
         }
-        formSelector = '#' + formId;
 
         if($body.hasClass('is-template')) {
             isTemplate = 1;
@@ -496,9 +494,7 @@
                 clearDraft();
             }
             clearTimeout(DRAFT_TIMEOUT_ID);
-            $(formSelector)
-                .attr('action', '')
-                .removeAttr('target');
+            $form.attr('action', '').removeAttr('target');
             return true;
         });
 
@@ -514,7 +510,7 @@
                 label: window.location.href
             });
 
-            var savedTa = $(formSelector + ' textarea[name=content]').val();
+            var savedTa = $form.find('textarea[name=content]').val();
             if (supportsLocalStorage) {
                 // Preserve editor content, because saving to the iframe can
                 // yield things like 403 / login-required errors that bust out
@@ -523,9 +519,7 @@
             }
             clearTimeout(DRAFT_TIMEOUT_ID);
             // Redirect the editor form to the iframe.
-            $(formSelector)
-                .attr('action', '?iframe=1')
-                .attr('target', 'save-and-edit-target');
+            $form.attr('action', '?iframe=1').attr('target', 'save-and-edit-target');
             return true;
         });
         $('#btn-save-and-edit').show();
@@ -547,17 +541,15 @@
                         // We also need to update the form's current_rev to
                         // avoid triggering a conflict, since we just saved in
                         // the background.
-                        $(formSelector + ' input[name=current_rev]').val(
+                        $form.find('input[name=current_rev]').val(
                             ir.attr('data-current-revision'));
 
-                    } else if ($(formSelector, if_doc).hasClass('conflict')) {
+                    } else if ($form.add(if_doc).hasClass('conflict')) {
                         // HACK: If we detect a conflict in the iframe while
                         // doing save-and-edit, force a full-on save in order
                         // to surface the issue. There's no easy way to bust
                         // the iframe otherwise, since this was a POST.
-                        $(formSelector)
-                            .attr('action', '')
-                            .attr('target', '');
+                        $form.attr('action', '').attr('target', '');
                         $('#btn-save').click();
 
                     }
@@ -571,14 +563,12 @@
             // Clear the review comment
             $('#id_comment').val('');
             // Re-enable the form; it gets disabled to prevent double-POSTs
-            $(formSelector)
-                .data('disabled', false)
-                .removeClass('disabled');
+            $form.data('disabled', false).removeClass('disabled');
             return true;
         });
 
         // Track submissions of the edit page form
-        $('#' + formId).on('submit', function() {
+        $form.on('submit', function() {
             mdn.optimizely.push(['trackEvent', 'editpage-submit']);
             mdn.analytics.trackEvent({
                 category: 'Wiki',
@@ -598,7 +588,7 @@
 
     function saveDraft(val) {
         if (supportsLocalStorage) {
-            localStorage.setItem(DRAFT_NAME, val || $(formSelector + ' textarea[name=content]').val());
+            localStorage.setItem(DRAFT_NAME, val || $form.find('textarea[name=content]').val());
             updateDraftState(gettext('saved'));
         }
     }
@@ -619,7 +609,7 @@
                 },
 
                 treatedDraft = $.trim(treatDraft(prev_draft)),
-                treatedServer = treatDraft($(formSelector + ' textarea[name=content]').val().trim());
+                treatedServer = treatDraft($form.find('textarea[name=content]').val().trim());
             if (prev_draft){
                 // draft matches server so discard draft
                 if (treatedDraft == treatedServer) {
