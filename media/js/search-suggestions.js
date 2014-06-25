@@ -117,12 +117,14 @@
                   $filtersLeft.hide();
                 }
               },
-              addFilter:function(f){ // f is a topic with the # ('#javascript', '#advanced')
+              addFilter:function(slug,group,shortcut){ 
                 var self = this;
+                var shortcut = (shortcut || slug);
                 var filter = $('<span></span>')
                     .addClass('topic button')
-                    .attr('data-topic', f.slice('#'.length))
-                    .text(f)
+                    .attr('data-topic', slug)
+                    .attr('data-group', group)
+                    .text('#'+shortcut)
                     .appendTo($searchFilters);
 
                 $('<button></button>')
@@ -131,6 +133,16 @@
                     .html('<i aria-hidden="true" class="icon-remove"></i>')
                     .on('click', function(){
                         $(filter).remove();
+                        $.each(filtersData, function(index, groupFilters){
+                          if(groupFilters.slug === group){
+                            $.each(groupFilters.filters, function(index, filter){
+                              if(typeof(filter) !== 'undefined' && filter.slug === slug) {
+                                filter.shortcut = shortcut;
+                                self.close();
+                              }
+                            });
+                          }
+                        });
                         self.showarrows();
                     })
                     .appendTo(filter)
@@ -154,14 +166,15 @@
                   if(filters.length >= 1){
                       filters.forEach(function(entry){
                         $.each(filtersData, function(idx_group, group){
+                            var groupSlug = group.slug;
                             $.each(group.filters, function(idx_filter, filter){
-                                if(typeof(filter) !== 'undefined' && filter.slug === entry.replace('#','')){
-                                    self.addFilter(entry);
-                                    filtersData[idx_group].filters.splice(idx_filter, 1);
+                                if(typeof(filter) !== 'undefined' && (filter.shortcut || filter.slug) === entry.replace('#','')){
+                                    self.addFilter(filter.slug, groupSlug, filter.shortcut);
+                                    filtersData[idx_group].filters[idx_filter].shortcut = 'hidden';
                                 }
                             });
+                          });
                         });
-                      });
                       self.close();
                   }
 
@@ -177,11 +190,11 @@
                   }
                   return valueResult;
               },
-              removeFilterFromList: function(topic){
+              removeFilterFromList: function(slug){
                   $.each(filtersData, function(idx_group, group){
                       $.each(group.filters, function(idx_filter, filter){
-                          if(typeof(filter) !== 'undefined' && filter.slug === topic){
-                              filtersData[idx_group].filters.splice(idx_filter, 1);
+                          if(typeof(filter) !== 'undefined' && filter.slug === slug){
+                              filtersData[idx_group].filters[idx_filter].shortcut = 'hidden';
                           }
                       });
                   });
@@ -192,24 +205,24 @@
                   var self = this;
                   $.each(filtersData, function(index, group){
                       var title = $('<strong>').text(group.name);
+                      var groupSlug = group.slug;
                       var $ul = $('<ul></ul>');
                       var show = false;
-
                       $.each(group.filters, function(index, filter){
-                          var slugNorm = filter.slug.toLowerCase();
+                          var slugNorm = (filter.shortcut || filter.slug).toLowerCase();
                           var nameNorm = self.removeAccents(filter.name.toLowerCase());
-                          if (!f || slugNorm.indexOf(self.removeAccents(f.toLowerCase())) != -1 || nameNorm.indexOf(self.removeAccents(f.toLowerCase())) != -1) {
+                          if ((!f || slugNorm.indexOf(self.removeAccents(f.toLowerCase())) != -1 || nameNorm.indexOf(self.removeAccents(f.toLowerCase())) != -1) && filter.shortcut != 'hidden') {
                               var $li = $('<li></li>')
                                           .attr('data-slug', filter.slug)
                                           .addClass('sug');
                               var $a = $('<a></a>')
                                           .attr('class', 'search-ss')
                                           .attr('href', '#')
-                                          .html(filter.name + ' <span>#' + filter.slug + '</span>')
+                                          .html(filter.name + ' <span>#' + (filter.shortcut || filter.slug) + '</span>')
                                           .appendTo($li)
                                           .on('click', function(e){
                                               e.preventDefault();
-                                              self.addFilter('#'+filter.slug);
+                                              self.addFilter(filter.slug, groupSlug, filter.shortcut);
                                               $searchInput.val($searchInput.val().replace('#'+f, ''));
                                               previousValue = $searchInput.val();
                                               self.storeSize();
@@ -236,10 +249,20 @@
             // load previouly selected filters
             if(settings.filters){
                 $.each(settings.filters, function(sidx, sfilter){
-                    fnSuggestions.addFilter('#'+sfilter);
-                    fnSuggestions.removeFilterFromList(sfilter);
-                    $searchInput.focus();
+
+                  // foreach filters to get the correct shortcut
+                  $.each(filtersData, function(index, group){
+                    if(group.slug === sfilter.group){
+                      $.each(group.filters, function(index, filter){
+                        if(typeof(filter) !== 'undefined' && filter.slug === sfilter.slug) {
+                          fnSuggestions.addFilter(sfilter.slug, sfilter.group, filter.shortcut);
+                          fnSuggestions.removeFilterFromList(sfilter.slug);
+                        }
+                      });
+                    }
+                  });
                 });
+                $searchInput.focus();
             }
 
             // events
@@ -284,13 +307,14 @@
                 e.preventDefault();
 
                 var topics = $.makeArray($form.find('.topic')).map(function(e){
-                    return encodeURIComponent($(e).attr('data-topic'));
+                    var topic = {'filter': $(e).data('topic'), 'group': $(e).data('group')};
+                    return topic;
                 });
-                var topicsString = topics.map(function(t){ return 'topic='+t; }).join('&');
+                var topicsString = topics.map(function(t){ return t.group+'='+t.filter; }).join('&');
                 var searchQuery = encodeURIComponent($searchInput.val());
 
                 // Redirects to search
-                location.href = BASE_SEARCH_URL + '?' + 'q=' + searchQuery + '&' + topicsString;
+                location.href = BASE_SEARCH_URL + '?' + 'q=' + searchQuery + (topicsString ? '&' + topicsString : '');
             });
 
 
