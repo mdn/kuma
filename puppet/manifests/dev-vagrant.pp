@@ -68,6 +68,8 @@ class dev {
         python: stage => langs;
 
         stylus: stage => extras;
+        cleancss: stage => extras;
+        uglify: stage => extras;
 
         site_config: stage => main;
         dev_hacks_post: stage => hacks_post;
