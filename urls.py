@@ -66,7 +66,6 @@ urlpatterns = patterns('',
 
     # Users
     ('', include('kuma.users.urls')),
-    (r'^accounts/', include('allauth.urls')),
 
     # BrowserID Realm
     url(r'^\.well-known/browserid-realm', 'kuma.users.views.browserid_realm',

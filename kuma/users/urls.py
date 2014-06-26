@@ -4,6 +4,7 @@ from teamwork.views import user_roles
 from . import views
 
 users_patterns = patterns('',
+    url(r'^', include('allauth.urls')),
     url(r'^browserid_verify$', views.browserid_verify,
         name='users.browserid_verify'),
     url(r'^browserid_register$', views.browserid_register,
