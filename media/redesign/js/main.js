@@ -36,7 +36,7 @@
                             if(!assertion) return;
                             $('input[name="assertion"]').val(assertion.toString());
                             $('form.browserid').first().submit();
-                        });
+                        }, { siteName: 'Mozilla Developer Network', siteLogo: '/media/redesign/img/opengraph-logo.png' });
                     }
                 });
             }
