@@ -214,7 +214,9 @@
         Set up the scrolling TOC effect
     */
     (function() {
-        var $toc = $('#toc');
+        var $toc = $('#toc'),
+            $page_buttons = $('.page-buttons'),
+            $stickies = $('.sticky');
         if($toc.length) {
             var tocOffset = $toc.offset().top;
             var $toggler = $toc.find('> .toggler');
@@ -229,19 +231,32 @@
                 if(scroll > tocOffset && $toggler.css('pointer-events') == 'none') {
                     $toc.css({
                         width: $toc.css('width'),
-                        maxHeight: maxHeight
+                        maxHeight: maxHeight,
+                        top: $page_buttons.height()
                     });
 
-                    if(!$toc.hasClass(fixedClass)){
-                        $toc.addClass(fixedClass);
-                    }
+                    $page_buttons.css({
+                        left: $toc.position().left,
+                    });
+
+                    $stickies.each(function(i) {
+                        if(!$(this).hasClass(fixedClass)){
+                            $(this).addClass(fixedClass);
+                        }
+                    });
                 }
                 else {
                     $toc.css({
                         width: 'auto',
-                        maxHeight: 'none'
+                        maxHeight: 'none',
+                        top: 'auto'
                     });
-                    $toc.removeClass(fixedClass);
+                    $page_buttons.css({
+                        left: 'auto',
+                    });
+                    $stickies.each(function(i) {
+                        $(this).removeClass(fixedClass);
+                    });
                 }
 
                 // Should the TOC be one-column (auto-closed) or sidebar'd
