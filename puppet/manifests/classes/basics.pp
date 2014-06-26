@@ -15,6 +15,10 @@ class basics {
             ensure => installed,
             require => Exec['apt-get-update'];
     }
+    package { "ruby-augeas":
+        ensure   => installed,
+        provider => gem,
+    }
     exec {
         "deadsnakes-ppa":
             command => "/usr/bin/add-apt-repository --yes ppa:fkrull/deadsnakes && apt-get update -qq",
