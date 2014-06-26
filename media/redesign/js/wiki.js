@@ -215,37 +215,24 @@
     */
     (function() {
         var $toc = $('#toc');
-        if($toc.length) {
-            var tocOffset = $toc.offset().top;
-            var $toggler = $toc.find('> .toggler');
-            var fixedClass = 'fixed';
-            var $wikiRight = $('#wiki-right');
+        var tocOffset = $toc.offset();
+        var $toggler = $toc.find('> .toggler');
+        var fixedClass = 'fixed';
+        var $wikiRight = $('#wiki-right');
+        var $pageButtons = $('.page-buttons');
+        var pageButtonsOffset = $pageButtons.offset();
 
-            var scrollFn = debounce(function(e) {
-                // Set forth the pinned or static positioning of the table of contents
-                var scroll = win.scrollY;
-                var maxHeight = win.innerHeight - parseInt($toc.css('padding-top'), 10) - parseInt($toc.css('padding-bottom'), 10);
+        var scrollFn = debounce(function(e) {
+            // Set forth the pinned or static positioning of the table of contents
+            var scroll = win.scrollY;
+            var pageButtonsHeight = 0;
 
-                if(scroll > tocOffset && $toggler.css('pointer-events') == 'none') {
-                    $toc.css({
-                        width: $toc.css('width'),
-                        maxHeight: maxHeight
-                    });
-
-                    if(!$toc.hasClass(fixedClass)){
-                        $toc.addClass(fixedClass);
-                    }
-                }
-                else {
-                    $toc.css({
-                        width: 'auto',
-                        maxHeight: 'none'
-                    });
-                    $toc.removeClass(fixedClass);
-                }
+            if(!e || e.type == 'resize') {
+                // Calculate right offset for page buttons on resize and page load
+                pageButtonsOffset.right = $(win).width() - $('.wiki-main-content').offset().left - $('.wiki-main-content').innerWidth();
 
                 // Should the TOC be one-column (auto-closed) or sidebar'd
-                if(!e || e.type == 'resize') {
+                if($toc.length){
                     if($toggler.css('pointer-events') == 'auto'    || $toggler.find('i').css('display') != 'none') { /* icon check is for old IEs that don't support pointer-events */
                         if(!$toc.attr('data-closed')) {
                             $toggler.trigger('mdn:click');
@@ -255,9 +242,52 @@
                         $toggler.trigger('mdn:click');
                     }
                 }
-            }, 10);
+            }
 
-            // Set it forth!
+            if($pageButtons.attr('data-sticky') == "true"){
+                pageButtonsHeight = $pageButtons.innerHeight();
+                if(scroll > pageButtonsOffset.top) {
+                    $pageButtons.css({
+                        'min-width': $pageButtons.css('width'),
+                        'right': pageButtonsOffset.right,
+                        'overflow-y': 'inherit',
+                        'z-index': 50,
+                        'text-align': 'right'
+                    });
+                    $pageButtons.addClass(fixedClass);
+                } else {
+                    $pageButtons.css({
+                        'width': 'auto'
+                    });
+                    $pageButtons.removeClass(fixedClass);
+                }
+            }
+
+            if(!$toc.length) return;
+
+            var tocTopPadding = parseInt($toc.css('padding-top'), 10);
+            var maxHeight = win.innerHeight - tocTopPadding - parseInt($toc.css('padding-bottom'), 10) - pageButtonsHeight;
+
+            if(scroll + pageButtonsHeight > tocOffset.top - tocTopPadding && $toggler.css('pointer-events') == 'none') {
+                $toc.css({
+                    width: $toc.css('width'),
+                    top: pageButtonsHeight,
+                    maxHeight: maxHeight
+                });
+                $toc.addClass(fixedClass);
+            }
+            else {
+                $toc.css({
+                    width: 'auto',
+                    maxHeight: 'none'
+                });
+                $toc.removeClass(fixedClass);
+            }
+
+        }, 10);
+
+        // Set it forth!
+        if($toc.length || $pageButtons.attr('data-sticky') == "true"){
             scrollFn();
             $(win).on('scroll resize', scrollFn);
         }
