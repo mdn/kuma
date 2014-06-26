@@ -27,6 +27,7 @@ class dev {
     }
 
     elasticsearch::instance { 'kuma':
+      datadir => '/var/lib/elasticsearch',
       config => {
         'node' => {
           'name' => 'kuma'
