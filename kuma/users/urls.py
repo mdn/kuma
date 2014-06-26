@@ -8,11 +8,8 @@ users_patterns = patterns('',
         name='users.browserid_verify'),
     url(r'^browserid_register$', views.browserid_register,
         name='users.browserid_register'),
-    url(r'^browserid_change_email$', views.browserid_change_email,
-        name='users.browserid_change_email'),
     url(r'^login$', views.login, name='users.login'),
     url(r'^logout$', views.logout, name='users.logout'),
-    url(r'^change_email$', views.change_email, name='users.change_email'),
     url(r'^ban/(?P<user_id>\d+)$', views.ban_user, name='users.ban_user'),
 )
 

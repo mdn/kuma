@@ -86,30 +86,6 @@ def set_browserid_explained(response):
     return response
 
 
-@csrf_exempt
-@ssl_required
-@login_required
-@require_POST
-def browserid_change_email(request):
-    """Process a submitted BrowserID assertion to change email."""
-    form = BrowserIDForm(data=request.POST)
-    if not form.is_valid():
-        messages.error(request, form.errors)
-        return HttpResponseRedirect(reverse('users.change_email'))
-    result = _verify_browserid(form, request)
-    email = result['email']
-    user = _get_latest_user_with_email(email)
-    if user and user != request.user:
-        messages.error(request, 'That email already belongs to another '
-                       'user.')
-        return HttpResponseRedirect(reverse('users.change_email'))
-    else:
-        user = request.user
-        user.email = email
-        user.save()
-        return redirect('users.profile_edit', user.username)
-
-
 @ssl_required
 def browserid_realm(request):
     # serve the realm from the environment config
@@ -242,13 +218,6 @@ def logout(request):
     return resp
 
 
-@login_required
-@require_http_methods(['GET'])
-def change_email(request):
-    """Change user's email."""
-    return render(request, 'users/change_email.html')
-
-
 def _clean_next_url(request, username=None):
     if 'next' in request.POST:
         url = request.POST.get('next')
@@ -268,12 +237,10 @@ def _clean_next_url(request, username=None):
     # edit profile pages
     locale, register_url = split_path(reverse(
         'users.browserid_register'))
-    locale, change_email_url = split_path(reverse(
-        'users.change_email'))
     locale, edit_profile_url = split_path(reverse(
         'users.profile_edit', args=[username, ]))
     REDIRECT_HOME_URLS = [settings.LOGIN_URL, settings.LOGOUT_URL,
-                          register_url, change_email_url, edit_profile_url]
+                          register_url, edit_profile_url]
     for home_url in REDIRECT_HOME_URLS:
         if home_url in parsed_url.path:
             return None
