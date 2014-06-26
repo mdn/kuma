@@ -1141,6 +1141,10 @@ LOGGING = {
             # Use the most permissive setting. It is filtered in the handlers.
             'level': logging.DEBUG,
         },
+        'cron': {
+            'handlers': ['console'],
+            'level': logging.INFO,
+        },
         'django.request': {
             'handlers': ['console'],
             'propagate': True,
