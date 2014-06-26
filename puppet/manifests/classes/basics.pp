@@ -10,7 +10,7 @@ class basics {
           "libxml2-dev", "libxslt1.1", "libxslt1-dev",
           "libjpeg62", "libjpeg62-dev",
           "libfreetype6", "libfreetype6-dev",
-          "libpng12-0", "libpng12-dev",
+          "libpng12-0", "libpng12-dev", "libaugeas-dev",
           "libtidy-0.99-0", "libtidy-dev", "rlwrap", "make"]:
             ensure => installed,
             require => Exec['apt-get-update'];
