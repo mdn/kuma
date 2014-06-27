@@ -1,5 +1,6 @@
 {% extends "wiki/base.html" %}
 {% from "includes/error_list.html" import errorlist %}
+{% from 'wiki/includes/page_buttons.html' import page_buttons %}
 {% from "includes/common_macros.html" import content_editor %}
 {% set title = _('Translate Article | {document}')|f(document=parent.title) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
@@ -20,7 +21,6 @@
 
       <form action="" method="post" data-json-url="{{ url('wiki.json') }}" id="translate-document">
         {{ csrf() }}
-        {% include 'wiki/includes/page_buttons_config.html' %}
         <input type="hidden" name="form" value="both" />
 
   <div id="localize-document" class="editing">
@@ -33,7 +33,7 @@
         {{ _('Translating article to {locale}' )|f(locale=language) }}.
       </div>
 
-    {% include 'wiki/includes/page_buttons.html' %}
+    {{ page_buttons(wiki, document, discard_href, 'top') }}
     </header>
 
     {% include 'wiki/includes/translate_description.html' %}
@@ -149,7 +149,7 @@
   {% include 'wiki/includes/wiki_notifier.html' %}
 
   <section class="wiki-block">
-    {% include 'wiki/includes/page_buttons.html' %}
+    {{ page_buttons(wiki, document, discard_href, 'bottom') }}
   </section>
 </form>
 
