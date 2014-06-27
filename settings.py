@@ -859,11 +859,19 @@ RECAPTCHA_PRIVATE_KEY = 'SET ME IN SETTINGS_LOCAL'
 RECAPTCHA_PUBLIC_KEY = 'SET ME IN SETTINGS_LOCAL'
 
 # content flagging
-FLAG_REASONS = (
+DEMO_FLAG_REASONS = (
     ('notworking', _('This demo is not working for me')),
     ('inappropriate', _('This demo contains inappropriate content')),
     ('plagarised', _('This demo was not created by the author')),
 )
+
+WIKI_FLAG_REASONS = (
+    ('bad', _('This article is spam/inappropriate')),
+    ('unneeded', _('This article is obsolete/unneeded')),
+    ('duplicate', _('This is a duplicate of another article')),
+)
+
+FLAG_REASONS = DEMO_FLAG_REASONS + WIKI_FLAG_REASONS
 
 # bit.ly
 BITLY_API_KEY = "SET ME IN SETTINGS_LOCAL"
