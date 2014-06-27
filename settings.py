@@ -143,6 +143,7 @@ MDN_LANGUAGES = (
                  'ro',
                  'ru',
                  'sq',
+                 'sr-CYRL',
                  'ta',
                  'th',
                  'tr',
@@ -161,6 +162,7 @@ RTL_LANGUAGES = (
 DEV_POOTLE_PRODUCT_DETAILS_MAP = {
     'pt': 'pt-PT',
     'fy': 'fy-NL',
+    'sr': 'sr-CYRL',
     'xx-testing': 'x-testing',
 }
 
