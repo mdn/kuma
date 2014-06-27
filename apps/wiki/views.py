@@ -54,6 +54,7 @@ from smuggler.forms import ImportFileForm
 from authkeys.decorators import accepts_auth_key
 
 from access.decorators import permission_required, login_required
+from contentflagging.models import ContentFlag, FLAG_NOTIFICATIONS
 from search.store import referrer_url
 from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
@@ -64,7 +65,8 @@ from wiki.decorators import check_readonly
 from wiki.events import EditDocumentEvent
 from wiki.forms import (DocumentForm, RevisionForm,
                         RevisionValidationForm, AttachmentRevisionForm,
-                        TreeMoveForm, DocumentDeletionForm)
+                        TreeMoveForm, DocumentDeletionForm,
+                        DocumentContentFlagForm)
 from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
                          DocumentZone,
                          DocumentTag, ReviewTag, LocalizationTag, Attachment,
@@ -2505,3 +2507,34 @@ def edit_attachment(request, attachment_id):
         form = AttachmentRevisionForm()
     return render(request, 'wiki/edit_attachment.html',
                         {'form': form})
+
+
+@xframe_options_sameorigin
+@process_document_path
+def flag(request, document_slug, document_locale):
+    doc = get_object_or_404(Document,
+                            slug=document_slug,
+                            locale=document_locale)
+
+    if request.method == POST:
+        form = WikiContentFlagForm(data=request.POST)
+        if form.is_valid():
+            flag_type = form.cleaned_data['flag_type']
+            recipients = None
+            if (flag_type in FLAG_NOTIFICATIONS and
+                FLAG_NOTIFICATIONS[flag_type]):
+                recipients = [profile.user.email for profile in
+                              UserProfile.objects.filter(
+                                  content_flagging_email=True)]
+            flag, created = ContentFlag.objects.flag(
+                request=request, object=doc,
+                flag_type=flag_type,
+                explanation=form.cleaned_data['explanation'],
+                recipients=recipients)
+            return HttpResponseRedirect(reverse(
+                'wiki.document', locale=document_locale,
+                args=[document_slug]))
+    else:
+        form = WikiContentFlagForm(data=request.GET)
+    return render(request, 'wiki/flag.html', {
+        'form': form, 'doc': doc})

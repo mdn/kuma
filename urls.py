@@ -64,6 +64,11 @@ urlpatterns = patterns('',
         'wiki.views.raw_file',
         name='wiki.raw_file'),
 
+    # Flagged content.
+    url(r'^flagged/$',
+        'contentflagging.views.flagged',
+        name='contentflagging.flagged'),
+
     # Users
     ('', include('kuma.users.urls')),
 

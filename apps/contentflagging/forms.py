@@ -26,16 +26,14 @@ class MyModelForm(forms.ModelForm):
 
 class ContentFlagForm(MyModelForm):
     """Form for accepting a content moderation flag submission"""
-
     class Meta:
         model = ContentFlag
-        fields = ( 'flag_type', 'explanation' )
+        fields = ('flag_type', 'explanation')
 
     flag_type = forms.ChoiceField(
-            choices=FLAG_REASONS,
+            choices=settings.DEMO_FLAG_REASONS,
             widget=forms.RadioSelect)
 
     def clean(self):
         cleaned_data = super(ContentFlagForm, self).clean()
         return cleaned_data
-

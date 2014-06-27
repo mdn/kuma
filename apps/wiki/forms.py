@@ -1,6 +1,7 @@
 import re
 
 from django import forms
+from django.conf import settings
 from django.forms.widgets import CheckboxSelectMultiple
 
 from tower import ugettext_lazy as _lazy
@@ -9,6 +10,7 @@ from tower import ugettext as _
 import constance.config
 import magic
 
+from contentflagging.forms import ContentFlagForm
 from sumo.form_fields import StrippedCharField
 
 import wiki.content
@@ -483,3 +485,9 @@ class TreeMoveForm(forms.Form):
 
 class DocumentDeletionForm(forms.Form):
     reason = forms.CharField(widget=forms.Textarea(attrs={'autofocus': 'true'}))
+
+
+class DocumentContentFlagForm(ContentFlagForm):
+    flag_type = forms.ChoiceField(
+        choices=settings.WIKI_FLAG_REASONS,
+        widget=forms.RadioSelect)
