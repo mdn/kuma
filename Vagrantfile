@@ -41,7 +41,11 @@ Vagrant.configure("2") do |config|
     end
 
     config.vm.provision :shell do |shell|
-      shell.inline = "mkdir -p /etc/puppet/modules;
+      shell.inline = "wget -O /tmp/puppetlabs-release-precise.deb https://apt.puppetlabs.com/puppetlabs-release-precise.deb;
+                      dpkg -i /tmp/puppetlabs-release-precise.deb;
+                      apt-get update;
+                      apt-get --assume-yes install facter=1.7.6-1puppetlabs1 puppet=2.7.26-1puppetlabs1 puppet-common=2.7.26-1puppetlabs1;
+                      mkdir -p /etc/puppet/modules;
                       puppet module install -f puppetlabs-stdlib;
                       puppet module install -f puppetlabs-apt;
                       puppet module install -f elasticsearch-elasticsearch"
