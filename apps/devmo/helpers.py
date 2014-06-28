@@ -1,6 +1,8 @@
 import datetime
+from polib import pofile
 import re
 import urllib
+from urlobject import URLObject
 import os
 
 from django.conf import settings
@@ -28,6 +30,19 @@ register.filter(strip_tags)
 register.filter(defaultfilters.timesince)
 register.filter(defaultfilters.truncatewords)
 register.filter(entity_decode)
+
+
+def strings_are_translated(strings, locale):
+    # http://stackoverflow.com/a/24339946/571420
+    po = pofile(os.path.join(settings.ROOT,
+                             'locale/%s/LC_MESSAGES/messages.po' % locale))
+    all_strings_translated = True
+    for string in strings:
+        if not any(e for e in po if e.msgid == string and
+                   (e.translated() and 'fuzzy' not in e.flags)
+                   and not e.obsolete):
+            all_strings_translated = False
+    return all_strings_translated
 
 
 @register.function
@@ -159,3 +174,13 @@ def get_soapbox_messages(url):
 @register.inclusion_tag('devmo/elements/soapbox_messages.html')
 def soapbox_messages(soapbox_messages):
     return {'soapbox_messages': soapbox_messages}
+
+
+@register.function
+def add_utm(url_, campaign, source='notification', medium='email'):
+    """Add the utm_* tracking parameters to a URL."""
+    url_obj = URLObject(url_).add_query_params({
+        'utm_campaign': campaign,
+        'utm_source': source,
+        'utm_medium': medium})
+    return str(url_obj)

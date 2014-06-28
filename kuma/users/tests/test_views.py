@@ -19,7 +19,8 @@ from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
 
 from ..models import UserProfile, UserBan
-from ..views import SESSION_VERIFIED_EMAIL, _clean_next_url
+from ..views import (SESSION_VERIFIED_EMAIL, _clean_next_url,
+                     WELCOME_EMAIL_STRINGS)
 from . import create_profile
 
 TESTUSER_PASSWORD = 'testpass'
@@ -156,40 +157,17 @@ class BrowserIDTestCase(TestCase):
         resp = self.client.get(reverse('home', locale='en-US'))
         eq_('1', self.client.cookies.get('browserid_explained').value)
 
-    @mock.patch('basket.lookup_user')
-    @mock.patch('basket.subscribe')
-    @mock.patch('basket.unsubscribe')
-    @mock.patch('kuma.users.views._verify_browserid')
-    @override_settings(CELERY_ALWAYS_EAGER=True)
-    def test_valid_assertion_with_new_account_creation(self,
-                                                       _verify_browserid,
-                                                       unsubscribe,
-                                                       subscribe,
-                                                       lookup_user):
-        Switch.objects.create(name='welcome_email', active=True)
 
-        new_username = 'neverbefore'
-        new_email = 'never.before.seen@example.com'
-        lookup_user.return_value = mock_lookup_user()
-        subscribe.return_value = True
-        unsubscribe.return_value = True
-        _verify_browserid.return_value = {'email': new_email}
-
-        try:
-            user = User.objects.get(email=new_email)
-            ok_(False, "User for email should not yet exist")
-        except User.DoesNotExist:
-            pass
-
+    def _signin_new_email(self, locale, new_email):
         # Sign in with a verified email, but with no existing account
         resp = self.client.post(reverse('users.browserid_verify',
-                                        locale='en-US'),
+                                        locale=locale),
                                 {'assertion': 'PRETENDTHISISVALID'})
         eq_(302, resp.status_code)
 
         # This should be a redirect to the BrowserID registration page.
         redir_url = resp['Location']
-        reg_url = reverse('users.browserid_register', locale='en-US')
+        reg_url = reverse('users.browserid_register', locale=locale)
         ok_(reg_url in redir_url)
 
         # And, as part of the redirect, the verified email address should be in
@@ -207,8 +185,12 @@ class BrowserIDTestCase(TestCase):
         # There should be no error lists on first load
         eq_(0, page.find('.errorlist').length)
 
+        return redir_url
+
+
+    def _register_user(self, register_url, new_username, new_email):
         # Submit the create_user form, with a chosen username
-        resp = self.client.post(redir_url, {'username': 'neverbefore',
+        resp = self.client.post(register_url, {'username': new_username,
                                             'action': 'register',
                                             'country': 'us',
                                             'format': 'html'})
@@ -233,6 +215,67 @@ class BrowserIDTestCase(TestCase):
         except User.DoesNotExist:
             ok_(False, "New user should have been created")
 
+
+    @mock.patch('basket.lookup_user')
+    @mock.patch('basket.subscribe')
+    @mock.patch('basket.unsubscribe')
+    @mock.patch('kuma.users.views._verify_browserid')
+    @override_settings(CELERY_ALWAYS_EAGER=True)
+    def test_valid_assertion_with_new_account_creation(self,
+                                                       _verify_browserid,
+                                                       unsubscribe,
+                                                       subscribe,
+                                                       lookup_user):
+        new_email = 'never.before.seen@example.com'
+        lookup_user.return_value = mock_lookup_user()
+        subscribe.return_value = True
+        unsubscribe.return_value = True
+        _verify_browserid.return_value = {'email': new_email}
+
+        new_username = 'neverbefore'
+
+        try:
+            User.objects.get(email=new_email)
+            ok_(False, "User for email should not yet exist")
+        except User.DoesNotExist:
+            pass
+
+        register_url = self._signin_new_email('en-US', new_email)
+
+        self._register_user(register_url, new_username, new_email)
+
+
+    @mock.patch('basket.lookup_user')
+    @mock.patch('basket.subscribe')
+    @mock.patch('basket.unsubscribe')
+    @mock.patch('kuma.users.views._verify_browserid')
+    @override_settings(CELERY_ALWAYS_EAGER=True)
+    def test_new_account_email(self,
+                               _verify_browserid,
+                               unsubscribe,
+                               subscribe,
+                               lookup_user
+                              ):
+        new_email = 'never.before.seen@example.com'
+        lookup_user.return_value = mock_lookup_user()
+        subscribe.return_value = True
+        unsubscribe.return_value = True
+        _verify_browserid.return_value = {'email': new_email}
+
+        Switch.objects.create(name='welcome_email', active=True)
+        new_username = 'neverbefore'
+
+        try:
+            User.objects.get(email=new_email)
+            ok_(False, "User for email should not yet exist")
+        except User.DoesNotExist:
+            pass
+
+        register_url = self._signin_new_email('en-US', new_email)
+
+        self._register_user(register_url, new_username, new_email)
+
+
         # Ensure the user was sent a welcome email
         welcome_email = mail.outbox[0]
         expected_subject = u'Take the next step to get involved on MDN!'
@@ -240,6 +283,92 @@ class BrowserIDTestCase(TestCase):
         eq_(expected_subject, welcome_email.subject)
         eq_(expected_to, welcome_email.to)
         ok_(u'Hi %s' % new_username in welcome_email.body)
+
+
+    @mock.patch('devmo.helpers.strings_are_translated')
+    @mock.patch('basket.lookup_user')
+    @mock.patch('basket.subscribe')
+    @mock.patch('basket.unsubscribe')
+    @mock.patch('kuma.users.views._verify_browserid')
+    @override_settings(CELERY_ALWAYS_EAGER=True)
+    def test_new_account_translated_email(self,
+                               _verify_browserid,
+                               unsubscribe,
+                               subscribe,
+                               lookup_user,
+                               strings_are_translated
+                              ):
+        new_email = 'never.before.seen@example.com'
+        lookup_user.return_value = mock_lookup_user()
+        subscribe.return_value = True
+        unsubscribe.return_value = True
+        _verify_browserid.return_value = {'email': new_email}
+        strings_are_translated.return_value = True
+
+        Switch.objects.create(name='welcome_email', active=True)
+        new_username = 'neverbefore'
+
+        try:
+            User.objects.get(email=new_email)
+            ok_(False, "User for email should not yet exist")
+        except User.DoesNotExist:
+            pass
+
+        register_url = self._signin_new_email('fr', new_email)
+
+        self._register_user(register_url, new_username, new_email)
+
+
+        # Ensure the user was sent a welcome email
+        strings_are_translated.assert_called_once_with(WELCOME_EMAIL_STRINGS,
+                                                       'fr')
+        welcome_email = mail.outbox[0]
+        expected_subject = u'Take the next step to get involved on MDN!'
+        expected_to = [new_email]
+        eq_(expected_subject, welcome_email.subject)
+        eq_(expected_to, welcome_email.to)
+        ok_(u'Hi %s' % new_username in welcome_email.body)
+
+
+    @mock.patch('devmo.helpers.strings_are_translated')
+    @mock.patch('basket.lookup_user')
+    @mock.patch('basket.subscribe')
+    @mock.patch('basket.unsubscribe')
+    @mock.patch('kuma.users.views._verify_browserid')
+    @override_settings(CELERY_ALWAYS_EAGER=True)
+    def test_new_account_untranslated_email(self,
+                               _verify_browserid,
+                               unsubscribe,
+                               subscribe,
+                               lookup_user,
+                               strings_are_translated
+                              ):
+        new_email = 'never.before.seen@example.com'
+        lookup_user.return_value = mock_lookup_user()
+        subscribe.return_value = True
+        unsubscribe.return_value = True
+        _verify_browserid.return_value = {'email': new_email}
+        strings_are_translated.return_value = False
+
+        Switch.objects.create(name='welcome_email', active=True)
+        new_username = 'neverbefore'
+
+        try:
+            User.objects.get(email=new_email)
+            ok_(False, "User for email should not yet exist")
+        except User.DoesNotExist:
+            pass
+
+        register_url = self._signin_new_email('de', new_email)
+
+        self._register_user(register_url, new_username, new_email)
+
+
+        # Ensure the user was sent a welcome email
+        strings_are_translated.assert_called_once_with(WELCOME_EMAIL_STRINGS,
+                                                       'de')
+        eq_([], mail.outbox)
+
 
     @mock.patch('kuma.users.views._verify_browserid')
     def test_valid_assertion_with_existing_account_login(self,

@@ -570,6 +570,8 @@ DOMAIN_METHODS = {
             'tower.management.commands.extract.extract_tower_python'),
         ('**/templates/**.html',
             'tower.management.commands.extract.extract_tower_template'),
+        ('**/templates/**.ltxt',
+            'tower.management.commands.extract.extract_tower_template'),
     ],
     'javascript': [
         # We can't say **.js because that would dive into any libraries.
