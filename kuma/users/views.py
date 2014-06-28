@@ -36,6 +36,11 @@ INTEREST_SUGGESTIONS = [
     "editorial review",
 ]
 
+WELCOME_EMAIL_STRINGS = [
+    "Like words?",
+    "Don't be shy, if you have any doubt, problems, questions: contact us! We are here to help."
+]
+
 
 @permission_required('users.add_userban')
 def ban_user(request, user_id):

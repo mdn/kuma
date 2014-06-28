@@ -1,4 +1,5 @@
 from celery.task import task
+from tower import ugettext_lazy as _
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -15,7 +16,7 @@ def send_welcome_email(user_pk):
     content_html = render_to_string('users/email/welcome/html.ltxt', context)
 
     email = EmailMultiAlternatives(
-        'Take the next step to get involved on MDN!',
+        _('Take the next step to get involved on MDN!'),
         content_plain,
         settings.DEFAULT_FROM_EMAIL,
         [user.email],
