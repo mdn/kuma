@@ -139,7 +139,11 @@
 
           {% include 'wiki/includes/revision_comment.html' %}
 
-      	   {% include 'wiki/includes/review_tags.html' %}
+      	  {% include 'wiki/includes/review_tags.html' %}
+
+          <section class="wiki-block">
+            {{ page_buttons(wiki, document, discard_href, 'bottom') }}
+          </section>
 
         </div>
       </details>
@@ -148,9 +152,7 @@
   </div>
   {% include 'wiki/includes/wiki_notifier.html' %}
 
-  <section class="wiki-block">
-    {{ page_buttons(wiki, document, discard_href, 'bottom') }}
-  </section>
+
 </form>
 
     {% include 'wiki/includes/attachment_list.html' %}
