@@ -2246,6 +2246,11 @@ class Revision(models.Model):
     def localization_in_progress(self):
         return 'inprogress' in [t.name for t in self.localization_tags.all()]
 
+    @property
+    def translation_age(self):
+        return abs((datetime.now() - self.created).days)
+
+
 
 class HelpfulVote(models.Model):
     """Helpful or Not Helpful vote on Document."""
