@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.db import models
+from django.db.models import query
 from django.db.models.signals import post_delete
 from django.utils.html import strip_tags
 from django.utils import timezone
@@ -146,6 +147,13 @@ class FilterGroup(models.Model):
         return self.name
 
 
+class FilterManager(models.Manager):
+    use_for_related_fields = True
+
+    def visible_only(self):
+        return self.filter(visible=True)
+
+
 class Filter(models.Model):
     """
     The model to store custom search filters in the database. This is
@@ -167,6 +175,11 @@ class Filter(models.Model):
     slug = models.CharField(max_length=255, db_index=True,
                             help_text='the slug to be used as a query '
                                       'parameter in the search URL')
+    shortcut = models.CharField(max_length=255, db_index=True,
+                                null=True, blank=True,
+                                help_text='the name of the shortcut to '
+                                          'show in the command and query UI. '
+                                          'e.g. fxos')
     group = models.ForeignKey(FilterGroup, related_name='filters',
                               help_text='E.g. "Topic", "Skill level" etc')
     tags = PrefetchTaggableManager(help_text='A comma-separated list of tags. '
@@ -179,6 +192,12 @@ class Filter(models.Model):
     enabled = models.BooleanField(default=True,
                                   help_text='Whether this filter is shown '
                                             'to users or not.')
+    visible = models.BooleanField(default=True,
+                                  help_text='Whether this filter is shown '
+                                            'at public places, e.g. the '
+                                            'command and query UI')
+
+    objects = FilterManager()
 
     class Meta(object):
         unique_together = (

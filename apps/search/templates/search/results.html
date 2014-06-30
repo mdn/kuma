@@ -16,6 +16,12 @@
   {% endif %}
 {% endblock %}
 
+{% block extrahead %}
+  {% if waffle.flag('search_suggestions') %}
+  {{ css('search-suggestions') }}
+  {% endif %}
+{% endblock %}
+
 {% block bodyclass %}search-results search-results-no-demo{% if waffle.flag('search_doc_navigator') %} search-navigator-flush{% endif %}{% endblock %}
 
 {% macro doc_block(doc, index) -%}
@@ -41,13 +47,12 @@
 
 {% block content %}
  <h1 class="offscreen">{{ _('MDN Site Search') }}</h1>
-
-  <form id="search-form" action="{{ url('search') }}" method="get">
-    <div class="results-search-form">
-      <h2 class="offscreen">{{ _('Search') }}</h2>
-        <label for="search-q" class="offscreen">{{ _('Search') }}</label>
-        <input type="search" name="q" id="search-q" placeholder="{{ _('Search the docs') }}" value="{{ query }}" {% if not query %}autofocus{% endif %} />
-        <button type="submit" class="offscreen">{{ _('Search') }}</button>
+ <h2 class="offscreen">{{ _('Search') }}</h2>
+  <form id="search-form" action="{{ url('search') }}" method="get" class="search">
+    <div class="results-search-form search-form dark">
+      <label for="search-q" class="offscreen">{{ _('Search') }}</label>
+      <input class="search-input" type="search" name="q" id="search-q" placeholder="{{ _('Search the docs') }}" value="{{ query }}" {% if not query %}autofocus{% endif %} />
+      <button type="submit" class="offscreen">{{ _('Search') }}</button>
     </div>
 
     <div class="column-container">
@@ -204,3 +209,46 @@
   </div>
 </form>
 {% endblock %}
+
+{% block js %}
+  {% if waffle.flag('search_doc_navigator') and count and search_ref %}
+  <script>
+  $(document).ready(function() {
+    $('.result-list-item h4 a').mozSearchStore('{{ search_ref }}');
+  });
+  </script>
+  {% endif %}
+  {% if waffle.flag('search_suggestions') %}
+  {{ js('search-suggestions') }}
+  <script>
+  var get_filters = function() {
+    var filtersData = window.mdn.searchFilters || [];
+    var groupSlugs = [];
+    $.each(filtersData, function(idx_group, group){
+      groupSlugs.push(group.slug);
+    });
+    
+    var url = window.location.href;
+    var filters_sel = [];
+    var searchIndex = url.indexOf("?");
+    if (searchIndex != -1 ) {
+      var sPageURL = url.substring(searchIndex +1);
+      var sURLVariables = sPageURL.split('&');
+      for (var i = 0; i < sURLVariables.length; i++) {     
+        var sParameterName = sURLVariables[i].split('=');
+        if($.inArray(sParameterName[0], groupSlugs) != -1){
+          filters_sel.push( {'slug':sParameterName[1],'group':sParameterName[0]} );
+        }
+      }
+      return filters_sel;
+    }
+  }
+  $(function () {
+      $('#search-form').searchSuggestions({
+          ftText: "{{ _("<h2>Welcome to the new way to search MDN!</h2><p>Search as usual, or filter your search by clicking in the arrow (<i class='icon-caret-down' aria-hidden='true'></i>) to show the filters menu.</p><p>Filtering also works by typing shortcuts into the search field (shortcut examples #int, #JS, #CSS).") }}</p>",
+          filters: get_filters()
+      });
+  });
+  </script>
+  {% endif %}
+{% endblock js %}
