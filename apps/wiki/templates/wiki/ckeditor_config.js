@@ -145,6 +145,7 @@
         config.dialog_backgroundCoverOpacity = 0.3;
         config.docType = '<!DOCTYPE html>';
         config.bodyClass = 'text-content redesign';
+        config.disableNativeSpellChecker = false;
 
         if (!CKEDITOR.stylesSet.registered['default']) {
             CKEDITOR.stylesSet.add('default', [
