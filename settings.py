@@ -1210,4 +1210,6 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_ADAPTER = 'kuma.users.adapters.KumaAccountAdapter'
+ACCOUNT_USERNAME_MIN_LENGTH = 3
 SOCIALACCOUNT_ADAPTER = 'kuma.users.adapters.KumaSocialAccountAdapter'
+SOCIALACCOUNT_AUTO_SIGNUP = False  # forces the use of the signup view
