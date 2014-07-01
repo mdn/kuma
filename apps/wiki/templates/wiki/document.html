@@ -175,10 +175,13 @@
           {% endif %}
         <h1>{{ document.title }}</h1>
         {% if waffle.flag('top_contributors') %}
-        <div class="contributor-avatars">
-            <span class="quickstat">
             {% set contributors = document.get_contributors() %}
-            {% trans count=contributors.count() %}
+            {% set contrib_limit = 13 %}
+            {% set contrib_count = contributors.count() %}
+
+        <div class="contributor-avatars" data-all-text="{{ _('Show all') }}&hellip;<span class='hidden'>{{ _('contributors') }}</span>" {% if contrib_count > contrib_limit %}data-has-hidden="1"{% endif %}>
+            <span class="quickstat">
+            {% trans count=contrib_count %}
             by {{ count }} contributor:
             {% pluralize %}
             by {{ count }} contributors:
@@ -186,7 +189,7 @@
             </span>
             <ul>
             {% for contributor in contributors %}
-                <li>
+                <li class="{% if loop.index > contrib_limit %}hidden{% else %}shown{% endif %}">
                 <a href="{{ contributor.get_absolute_url() }}" title="{% trans username=contributor.username %}View profile: {{ username }}{% endtrans %}">
                 <noscript data-class="avatar" data-alt="{{ contributor.username }}" data-src="{{ gravatar_url(contributor, size=34) }}">{{ contributor.username }}</noscript></a>
                 </li>

@@ -333,19 +333,53 @@
         if many contributors, dont show all at once.
     */
     (function (){
+        var hiddenClass = 'hidden';
         var $contributors = $('.contributor-avatars');
-        var $noscripts = $contributors.find('noscript');
-        var $contributorsList = $contributors.find('ul');
-        var numberToShow = 13;
+        var $hiddenContributors;
         var $showAllContributors;
 
-        $contributors.find('a').each(function(index) {
-          $(this).on('click', function(e) {
+        function loadImages(selector) {
+            return $contributors.find(selector).mozLazyloadImage();
+        }
+
+        // Start displaying first contributors in list
+        loadImages('li.shown noscript');
+
+        // Setup "Show all Contributors block"
+        if ($contributors.data('has-hidden')) {
+            $showAllContributors = $('<button type="button" class="transparent">' + $contributors.data('all-text') + '</button>');
+
+            $showAllContributors.on('click', function(e) {
+                e.preventDefault();
+
+                mdn.analytics.trackEvent({
+                    category: 'Top Contributors',
+                    action: 'Show all'
+                });
+
+                // Show all LI elements
+                $hiddenContributors = $contributors.find('li.' + hiddenClass);
+                $hiddenContributors.removeClass(hiddenClass);
+
+                // Start loading images which were hidden
+                loadImages('noscript');
+
+                // Focus on the first hidden element
+                $($hiddenContributors.get(0)).find('a').get(0).focus();
+
+                // Remove the "Show all" button
+                $(this).remove();
+
+            });
+
+            // Inject the show all button
+            $showAllContributors.appendTo($contributors);
+        }
+
+        // Track clicks on avatars for the sake of Google Analytics tracking
+        $contributors.on('click', 'a', function(e) {
             var newTab = (e.metaKey || e.ctrlKey);
             var href = this.href;
-            var callback = function() {
-              location = href;
-            };
             var data = {
                 category: 'Top Contributors',
                 action: 'Click position',
@@ -356,43 +390,14 @@
               mdn.analytics.trackEvent(data);
             } else {
               e.preventDefault();
-              mdn.analytics.trackEvent(data, callback);
+              mdn.analytics.trackEvent(data, function() { location = href; });
             }
-          });
         });
 
-        $contributorsList.on('focusin focusout', function(e) {
+        // Allow focus into and out of the list itself
+        $contributors.find('ul').on('focusin focusout', function(e) {
             $(this)[(e.type == 'focusin' ? 'add' : 'remove') + 'Class']('focused');
         });
-
-        if ($contributors.find('li').length > numberToShow) {
-            $showAllContributors = $('<button type="button" class="transparent">Show all&hellip;<span class="hidden"> contributors</span></button>');
-
-            $showAllContributors.on('click keypress', function(e) {
-                var enterOrSpace = (e.which === 13 || e.which === 32);
-                if (enterOrSpace || e.type === 'click') {
-                    e.preventDefault();
-                    mdn.analytics.trackEvent({
-                        category: 'Top Contributors',
-                        action: 'Show all'
-                    });
-
-                    $contributors.find('li.hidden').removeClass('hidden');
-                    $noscripts.mozLazyloadImage();
-                    if (enterOrSpace) {
-                        $contributors.find('li:eq(' + numberToShow + ') a').focus();
-                    }
-                    $(this).remove();
-                }
-            });
-
-            $contributors.find('li:lt(' + numberToShow + ') noscript').mozLazyloadImage();
-            $contributors.find('li:gt(' + (numberToShow-1) + ')').addClass('hidden');
-            $contributorsList.after($showAllContributors);
-        } else {
-            $noscripts.mozLazyloadImage();
-        }
-
     })();
 
     /*
