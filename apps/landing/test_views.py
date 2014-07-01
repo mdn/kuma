@@ -1,15 +1,8 @@
-from nose.tools import eq_, ok_
-from nose.plugins.skip import SkipTest
-from mock import patch
-from pyquery import PyQuery as pq
+from nose.tools import eq_
 import test_utils
 
-import basket
 
-import constance.config
-from waffle.models import Switch
-
-from devmo.tests import SkippedTestCase, LocalizingClient
+from devmo.tests import LocalizingClient
 from sumo.urlresolvers import reverse
 
 
@@ -47,12 +40,6 @@ class LandingViewsTest(test_utils.TestCase):
 
     def test_home(self):
         url = reverse('landing.views.home')
-        r = self.client.get(url, follow=True)
-        eq_(200, r.status_code)
-
-    def test_search(self):
-        raise SkipTest('Search test disabled until we switch to kuma wiki')
-        url = reverse('landing.views.search')
         r = self.client.get(url, follow=True)
         eq_(200, r.status_code)
 

@@ -9,7 +9,7 @@ from django.shortcuts import render
 
 import constance.config
 
-from devmo import SECTION_USAGE, SECTION_APPS, SECTION_HACKS
+from devmo import SECTION_USAGE
 from feeder.models import Bundle
 from demos.models import Submission
 
@@ -28,17 +28,6 @@ def home(request):
                   {'demos': demos, 'updates': updates,
                     'current_challenge_tag_name':
                     str(constance.config.DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG).strip()})
-
-
-def hacks(request):
-    """Hacks landing page."""
-    return common_landing(request, section=SECTION_HACKS)
-
-
-def apps(request):
-    """Web landing page."""
-    return common_landing(request, section=SECTION_APPS,
-                          extra={'form': SubscriptionForm()})
 
 
 def apps_newsletter(request):
