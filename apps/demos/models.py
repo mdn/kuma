@@ -12,7 +12,7 @@ import magic
 from django.conf import settings
 
 from demos import challenge_utils
-from devmo.urlresolvers import reverse
+from sumo.urlresolvers import reverse
 
 from django.core.exceptions import ValidationError
 

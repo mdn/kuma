@@ -23,7 +23,7 @@ from .models import Submission
 from . import DEMOS_CACHE_NS_KEY, TAG_DESCRIPTIONS, DEMO_LICENSES
 
 # Monkeypatch threadedcomments URL reverse() to use devmo's
-from devmo.urlresolvers import reverse
+from sumo.urlresolvers import reverse
 threadedcommentstags.reverse = reverse
 
 
