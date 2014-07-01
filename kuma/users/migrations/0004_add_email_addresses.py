@@ -9,14 +9,17 @@ class Migration(DataMigration):
 
     def forwards(self, orm):
         seen = set()
+        email_addresses = []
         for user in User.objects.filter(is_active=True):
             if user.email:
-                email_users = User.objects.filter(email=user.email, is_active=True)
+                email_users = (User.objects.filter(email=user.email,
+                                                   is_active=True)
+                                           .only('pk', 'email'))
                 if email_users.count() > 1:
                     print "found duplicate email:", user.email
 
                     for email_user in email_users:
-                        print '  ', email_user.username, email_user.pk
+                        print '  ', email_user.pk
 
                     if user.email in seen:
                         print "but we've already seen this email adress, ignoring"
@@ -27,8 +30,11 @@ class Migration(DataMigration):
                     # email may show up at a later loop
                     seen.add(user.email)
 
-                EmailAddress(user=user, email=user.email,
-                             verified=True, primary=True).save()
+                email_addresses.append(EmailAddress(user=user,
+                                                    email=user.email,
+                                                    verified=True,
+                                                    primary=True))
+        EmailAddress.objects.bulk_create(email_addresses)
 
     def backwards(self, orm):
         EmailAddress.objects.all().delete()
@@ -113,3 +119,6 @@ class Migration(DataMigration):
 
     complete_apps = ['users']
     symmetrical = True
+    depends_on = (
+        ("socialaccount", "0012_auto__chg_field_socialtoken_token_secret"),
+    )

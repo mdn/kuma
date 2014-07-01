@@ -4,16 +4,20 @@ from allauth.account.models import EmailAddress
 from allauth.socialaccount.models import SocialAccount
 from django.utils.timezone import now
 
+
 class Migration(DataMigration):
 
     def forwards(self, orm):
-        now = now()
+        now_date = now()
+        social_accounts = []
         for email_address in EmailAddress.objects.all():
-            SocialAccount.objects.create(user=email_address.user,
-                                         provider='persona',
-                                         uid=email_address.email,
-                                         last_login=now,
-                                         date_joined=now)
+            social_accounts.append(
+                SocialAccount(user=email_address.user,
+                              provider='persona',
+                              uid=email_address.email,
+                              last_login=now_date,
+                              date_joined=now_date))
+        SocialAccount.objects.bulk_create(social_accounts)
 
     def backwards(self, orm):
         SocialAccount.objects.all().delete()
