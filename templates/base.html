@@ -15,7 +15,6 @@
   <link rel="home" href="{{ url('home') }}">
   <link rel="copyright" href="#copyright">
 
-  <link rel="stylesheet" href="//mozorg.cdn.mozilla.net/media/css/tabzilla-min.css">
   {% block site_css %}
     {{ css('mdn', 'all') }}
 
@@ -86,7 +85,7 @@
   <header id="main-header"><div class="center">
 
     <div class="clear header-login">
-      <a href="//www.mozilla.org/" id="tabzilla" class="no-track">mozilla</a>
+      <a href="//www.mozilla.org/" id="tabzilla" class="no-track hidden">mozilla</a>
       {% if not is_sphinx %}
         {% include "includes/login.html" %}
       {% endif %}
@@ -192,8 +191,6 @@
       {{ js(script) }}
     {% endfor %}
   {% endblock %}
-
-  <script src="//mozorg.cdn.mozilla.net/{{ request.locale }}/tabzilla/tabzilla.js" async></script>
 
   {% block js %}{% endblock %}
 </body>
