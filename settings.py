@@ -629,6 +629,13 @@ MINIFY_BUNDLES = {
             'redesign/css/wiki.css',
             'redesign/css/zones.css',
             'redesign/css/diff.css',
+
+            'js/libs/prism/themes/prism.css',
+            'js/libs/prism/plugins/line-highlight/prism-line-highlight.css',
+            'js/libs/prism/plugins/ie8/prism-ie8.css',
+            'js/prism-mdn/plugins/line-numbering/prism-line-numbering.css',
+            'js/prism-mdn/components/prism-json.css',
+            'redesign/css/wiki-syntax.css',
         ),
         'wiki-edit': (
             'redesign/css/wiki-edit.css',
@@ -642,14 +649,6 @@ MINIFY_BUNDLES = {
         ),
         'tagit': (
             'css/libs/jquery.tagit.css',
-        ),
-        'syntax-prism': (
-            'js/libs/prism/themes/prism.css',
-            'js/libs/prism/plugins/line-highlight/prism-line-highlight.css',
-            'js/libs/prism/plugins/ie8/prism-ie8.css',
-            'js/prism-mdn/plugins/line-numbering/prism-line-numbering.css',
-            'js/prism-mdn/components/prism-json.css',
-            'redesign/css/wiki-syntax.css',
         ),
         'promote': (
             'redesign/css/promote.css',

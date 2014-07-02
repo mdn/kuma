@@ -2,29 +2,6 @@
     'use strict';
 
     /*
-       Bug 981409 - Add some CSS fallback for browsers without MathML support.
-
-       This is based on
-       https://developer.mozilla.org/en-US/docs/Web/MathML/Authoring#Fallback_for_Browsers_without)MathML_support
-       and https://github.com/fred-wang/mathml.css.
-    */
-    $('math').length && (function() {
-        // Test for MathML support
-        var $div = $('<div class="offscreen"><math xmlns="http://www.w3.org/1998/Math/MathML"><mspace height="23px" width="77px"/></math></div>').appendTo(document.body);
-        var box = $div.get(0).firstChild.firstChild.getBoundingClientRect();
-        $div.remove();
-
-        var supportsMathML = Math.abs(box.height - 23) <= 1 && Math.abs(box.width - 77) <= 1;
-        if (!supportsMathML) {
-            // Add CSS fallback
-            $('<link href="/media/css/libs/mathml.css" rel="stylesheet" type="text/css" />').appendTo(document.head);
-
-            // Add notification
-            $('#wikiArticle').prepend('<div class="notice"><p>' + gettext('Your browser does not support MathML. A CSS fallback has been used instead.') + '</p></div>');
-        }
-    })();
-
-    /*
         Togglers within articles (i.e.)
     */
     $('.toggleable').mozTogglers();
@@ -194,21 +171,13 @@
     /*
         Syntax highlighting scripts
     */
-    $('article pre').length && ('querySelectorAll' in document) && (function() {
-        var mediaPath = win.mdn.mediaPath;
-        $('<link />').attr({
-            type: 'text/css',
-            rel: 'stylesheet',
-            href: mediaPath + 'css/syntax-prism-min.css?build=' + mdn.build
-        }).appendTo(doc.head);
-
+    $('article pre').length && ('querySelectorAll' in doc) && (function() {
         var syntaxScript = doc.createElement('script');
         syntaxScript.setAttribute('data-manual', '');
         syntaxScript.async = 'true';
-        syntaxScript.src = mediaPath + 'js/syntax-prism-min.js?build=' + mdn.build;
+        syntaxScript.src = mdn.mediaPath + 'js/syntax-prism-min.js?build=' + mdn.build;
         doc.body.appendChild(syntaxScript);
     })();
-
 
     /*
         Set up the scrolling TOC effect
@@ -394,6 +363,31 @@
         }
 
     })();
+
+
+    /*
+       Bug 981409 - Add some CSS fallback for browsers without MathML support.
+
+       This is based on
+       https://developer.mozilla.org/en-US/docs/Web/MathML/Authoring#Fallback_for_Browsers_without)MathML_support
+       and https://github.com/fred-wang/mathml.css.
+    */
+    $('math').length && (function() {
+        // Test for MathML support
+        var $div = $('<div class="offscreen"><math xmlns="http://www.w3.org/1998/Math/MathML"><mspace height="23px" width="77px"/></math></div>').appendTo(document.body);
+        var box = $div.get(0).firstChild.firstChild.getBoundingClientRect();
+        $div.remove();
+
+        var supportsMathML = Math.abs(box.height - 23) <= 1 && Math.abs(box.width - 77) <= 1;
+        if (!supportsMathML) {
+            // Add CSS fallback
+            $('<link href="/media/css/libs/mathml.css" rel="stylesheet" type="text/css" />').appendTo(doc.head);
+
+            // Add notification
+            $('#wikiArticle').prepend('<div class="notice"><p>' + gettext('Your browser does not support MathML. A CSS fallback has been used instead.') + '</p></div>');
+        }
+    })();
+
 
     /*
         jQuery extensions used within the wiki.
