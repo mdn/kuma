@@ -1,5 +1,6 @@
 {% extends "wiki/base.html" %}
 {% from "includes/error_list.html" import errorlist %}
+{% from 'wiki/includes/page_buttons.html' import page_buttons %}
 {% set title = _(document.title + ' | Edit {title}')|fe(title=('Template' if document.is_template else 'Article')) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
 {% set classes = 'edit' %}
@@ -94,7 +95,7 @@
             </p>
           </div>
 
-          {% include 'wiki/includes/page_buttons.html' %}
+          {{ page_buttons(wiki, document, discard_href, 'top') }}
 
           {% if revision_form and not section_id %}
             <ul class="metadata">
@@ -188,6 +189,10 @@
         {% endif %}
       </fieldset>
       {% include 'wiki/includes/wiki_notifier.html' %}
+
+      <section class="wiki-block">
+        {{ page_buttons(wiki, document, discard_href, 'bottom') }}
+      </section>
     </form>
 
     {% include 'wiki/includes/attachment_list.html' %}

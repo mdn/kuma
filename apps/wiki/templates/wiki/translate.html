@@ -1,5 +1,6 @@
 {% extends "wiki/base.html" %}
 {% from "includes/error_list.html" import errorlist %}
+{% from 'wiki/includes/page_buttons.html' import page_buttons %}
 {% from "includes/common_macros.html" import content_editor %}
 {% set title = _('Translate Article | {document}')|f(document=parent.title) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
@@ -32,7 +33,7 @@
         {{ _('Translating article to {locale}' )|f(locale=language) }}.
       </div>
 
-    {% include 'wiki/includes/page_buttons.html' %}
+    {{ page_buttons(wiki, document, discard_href, 'top') }}
     </header>
 
     {% include 'wiki/includes/translate_description.html' %}
@@ -138,7 +139,11 @@
 
           {% include 'wiki/includes/revision_comment.html' %}
 
-      	   {% include 'wiki/includes/review_tags.html' %}
+      	  {% include 'wiki/includes/review_tags.html' %}
+
+          <section class="wiki-block">
+            {{ page_buttons(wiki, document, discard_href, 'bottom') }}
+          </section>
 
         </div>
       </details>
@@ -146,6 +151,8 @@
 
   </div>
   {% include 'wiki/includes/wiki_notifier.html' %}
+
+
 </form>
 
     {% include 'wiki/includes/attachment_list.html' %}
