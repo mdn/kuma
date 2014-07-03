@@ -218,29 +218,20 @@ use-white-logo() {
 /* for use */
 
 /*
-    Workaround for bug in older versions of Stylus. This bug has been fixed by
-    at most version 0.42.1. When production has been updated to that version,
-    the code from the following pull request should work correctly in place of
-    this workaround.
-
-    https://github.com/mozilla/kuma/pull/2362
-*/
-place-important(make-important) {
-    return make-important ? unquote('!important') : unquote('');
-}
-/*
     Allows setting of a property for LTR and RTL without having to deal with duplicating and maintaining selectors:
 
         example:     bidi-style(left, 20px, right, auto)
 */
 bidi-style(ltr-prop, value, inverse-prop, inverse-value, make-important = false) {
-    {ltr-prop}: value place-important(make-important);
+    make-important = make-important ? unquote('!important') : unquote('');
+
+    {ltr-prop}: value make-important;
 
     html[dir="rtl"] & {
         if (ltr-prop != inverse-prop) {
-            {inverse-prop}: value place-important(make-important);
+            {inverse-prop}: value make-important;
         }
-        {ltr-prop}: inverse-value place-important(make-important);
+        {ltr-prop}: inverse-value make-important;
     }
 }
 
