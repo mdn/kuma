@@ -473,7 +473,15 @@ article {
 
     &.warning-review {
         @extend $review-base;
+
+        a,
+        a:hover,
+        a:visited {
+            color: $link-color;
+            border-color: $link-color;
+        }
     }
+
 }
 
 /* document warnings, bugs, etc. */
