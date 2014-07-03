@@ -25,13 +25,13 @@
         {{ browserid_form }}
 
         <p class="clear">
-          <a href="#" class="persona-button persona-login login-link" data-next="{{ next_url }}" data-service="Persona">
+          <a href="#" class="persona-button persona-login login-link" data-next="{{ next_url }}" data-service="Persona" data-optimizely-hook="button-login-persona">
             <span class="persona-icon"><i aria-hidden="true"></i></span>
             <span class="signin">{{ _('Sign in with Persona') }}</span>
           </a>
 
           {% if waffle.flag('oauth_login') %}
-            <a href="#" class="github-button login-link" data-next="{{ next_url }}" data-service="GitHub">
+            <a href="#" class="github-button login-link" data-next="{{ next_url }}" data-service="GitHub" data-optimizely-hook="button-login-github">
                 <span class="github-icon"><i class="icon-github" aria-hidden="true"></i></span>
                 <span class="signin">{{ _('Sign in with GitHub') }}</span>
               </a>
