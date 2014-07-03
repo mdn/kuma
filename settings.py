@@ -340,9 +340,21 @@ STATIC_ROOT = path('static')
 SERVE_MEDIA = False
 
 # Paths that don't require a locale prefix.
-SUPPORTED_NONLOCALES = ('media', 'admin', 'robots.txt', 'services', 'static',
-                        '1', 'files', '@api', 'grappelli', '__debug__',
-                        '.well-known', 'accounts')
+LANGUAGE_URL_IGNORED_PATHS = (
+    'media',
+    'admin',
+    'robots.txt',
+    'services',
+    'static',
+    '1',
+    'files',
+    '@api',
+    'grappelli',
+    '__debug__',
+    '.well-known',
+    'users/persona/login/',
+    'users/github/login/callback/',
+)
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '#%tc(zja8j01!r#h_y)=hy!^k)9az74k+-ib&ij&+**s3-e^_z'
