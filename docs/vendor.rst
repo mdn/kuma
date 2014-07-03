@@ -67,51 +67,9 @@ even easier method when installing a new library from a git repo::
 Using PyPI
 ----------
 
-Sometimes a library isn't in a git repository. It, sadly, happens. Maybe you
-can find a git mirror? If not, it might as well be installed from PyPI.
-
-
-Updating a Library from PyPI
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-The easiest way to update a library from PyPI is to remove it completely and
-then install the new version.
-
-::
-
-    $ cd vendor/packages
-    $ git rm -r $LIBRARY
-    $ cd ..
-    $ git ci -m "Removing version $VERSION of $LIBRARY"
-    $ cd ..
-
-After removing the old version, go ahead and install the new one::
-
-    $ pip install --no-install --build=vendor/packages --src=vendor/src -I $LIBRARY
-
-Finally, add the new library to git::
-
-    $ cd vendor
-    $ git add packages
-    $ git ci -m "Adding version $VERSION of $LIBRARY"
-
-**Caveat developer!** Sometimes a library has dependencies that are already
-installed in the vendor repo. You may need to remove several of them to make
-everything work easily.
-
-
-Adding a Library from PyPI
-^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Adding a new library from PyPI is easy using pip::
-
-    $ pip install --no-install --build=vendor/packages --src=vendor/src -I $LIBRARY
-    $ cd vendor
-    $ git add packages
-    $ vim kuma.pth  # Add any new libraries' paths.
-    $ git ci -m "Adding $LIBRARY"
-
-Make sure you add any dependencies from the new library, as well.
+Follow `the playdoh instructions for non-git based repos
+<http://playdoh.readthedocs.org/en/latest/packages.html#non-git-based-repos-hg-cvs-tarball>`_, replacing
+`vendor-local` with `vendor`.
 
 
 Requirements Files
