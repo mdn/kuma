@@ -3,18 +3,16 @@ from celery.task import task
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.mail import EmailMultiAlternatives
-from django.template import loader
+from django.template.loader import render_to_string
 
 
 @task
 def send_welcome_email(user_pk):
     user = User.objects.get(pk=user_pk)
 
-    template_vars = {'username': user.username}
-    content_plain = loader.render_to_string(
-        'users/email/welcome/plain.ltxt', template_vars)
-    content_html = loader.render_to_string(
-        'users/email/welcome/html.ltxt', template_vars)
+    context = {'username': user.username}
+    content_plain = render_to_string('users/email/welcome/plain.ltxt', context)
+    content_html = render_to_string('users/email/welcome/html.ltxt', context)
 
     email = EmailMultiAlternatives(
         'Take the next step to get involved on MDN!',
