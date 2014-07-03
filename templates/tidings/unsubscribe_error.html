@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% set title = _('Unsubscribe') %}
+{% set crumbs = [(None, title)] %}
+
+{% block content %}
+<article>
+  <h1>{{ _('Unsubscribe Error') }}</h1>
+
+  <p>
+    {% trans %}
+      We could not find your subscription. Either it has already been
+      cancelled, or there was a mistake in the unsubscribe link. Please make
+      sure the entire link from the email made it into the browser. If the last
+      part of the link wraps onto a second line in the email, try copying and
+      pasting the link into the browser.
+    {% endtrans %}
+  </p>
+</article>
+{% endblock %}
