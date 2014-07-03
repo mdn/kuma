@@ -23,6 +23,9 @@ command to alias to something short::
 The ``-s`` flag is important if you want to be able to drop into PDB from
 within tests.
 
+Some tests will fail.  See `Running a Subset`_ below for running the subset
+that is expected to pass.
+
 Some other helpful flags are:
 
 ``-x``:
@@ -47,6 +50,10 @@ like::
 You can also exclude tests that match a regular expression with ``-e``::
 
     ./manage.py test -e "search"
+
+To run the subset of tests that should pass::
+
+    ./manage.py test actioncounters contentflagging demos devmo landing kuma.users search wiki kuma.events
 
 See the output of ``./manage.py test --help`` for more arguments.
 
