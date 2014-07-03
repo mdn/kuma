@@ -28,6 +28,7 @@ profiles_patterns = patterns('',
 )
 
 urlpatterns = patterns('',
+    url(r'^newsletter/?$', 'kuma.users.views.apps_newsletter', name='apps_newsletter'),
     url(r'^profiles/', include(profiles_patterns)),
     url(r'^users/', include(users_patterns)),
 )

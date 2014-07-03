@@ -408,3 +408,9 @@ def profile_edit(request, username):
 @login_required
 def my_profile_edit(request):
     return redirect('users.profile_edit', request.user.username)
+
+
+def apps_newsletter(request):
+    return render(request, 'users/apps_newsletter.html', {})
+
+
