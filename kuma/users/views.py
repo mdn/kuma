@@ -334,12 +334,13 @@ def my_profile(request):
 
 
 def profile_edit(request, username):
-    """View and edit user profile"""
+    """
+    View and edit user profile
+    """
     profile = get_object_or_404(UserProfile, user__username=username)
+
     if not profile.allows_editing_by(request.user):
         return HttpResponseForbidden()
-
-    context = {'profile': profile}
 
     # Map of form field names to tag namespaces
     field_to_tag_ns = (
@@ -348,8 +349,9 @@ def profile_edit(request, username):
     )
 
     if request.method != 'POST':
-        initial = dict(email=profile.user.email, beta=profile.beta_tester)
-
+        initial = {
+            'beta': profile.beta_tester,
+        }
         # Load up initial websites with either user data or required base URL
         for name, meta in UserProfile.website_choices:
             initial['websites_%s' % name] = profile.websites.get(name, '')
@@ -360,28 +362,35 @@ def profile_edit(request, username):
                                        for t in profile.tags.all_ns(ns))
 
         subscription_details = get_subscription_details(profile.user.email)
+        subscription_initial = {}
         if subscribed_to_newsletter(subscription_details):
-            initial['newsletter'] = True
-            initial['agree'] = True
+            subscription_initial['newsletter'] = True
+            subscription_initial['agree'] = True
 
         # Finally, set up the forms.
-        form = UserProfileEditForm(request.locale,
-                                   instance=profile,
-                                   initial=initial)
-
+        profile_form = UserProfileEditForm(instance=profile,
+                                           initial=initial,
+                                           prefix='profile')
+        subscription_form = SubscriptionForm(request.locale,
+                                             prefix='newsletter',
+                                             initial=subscription_initial)
     else:
-        form = UserProfileEditForm(request.locale,
-                                   request.POST,
-                                   request.FILES,
-                                   instance=profile)
-        if form.is_valid():
-            profile_new = form.save(commit=False)
+        profile_form = UserProfileEditForm(data=request.POST,
+                                           files=request.FILES,
+                                           instance=profile,
+                                           prefix='profile')
+        subscription_form = SubscriptionForm(request.locale,
+                                             data=request.POST,
+                                             prefix='newsletter')
+
+        if profile_form.is_valid() and subscription_form.is_valid():
+            profile_new = profile_form.save(commit=False)
 
             # Gather up all websites defined by the model, save them.
-            sites = dict()
+            sites = {}
             for name, meta in UserProfile.website_choices:
                 field_name = 'websites_%s' % name
-                field_value = form.cleaned_data.get(field_name, '')
+                field_value = profile_form.cleaned_data.get(field_name, '')
                 if field_value and field_value != meta['prefix']:
                     sites[name] = field_value
             profile_new.websites = sites
@@ -393,15 +402,19 @@ def profile_edit(request, username):
             # Update tags from form fields
             for field, tag_ns in field_to_tag_ns:
                 tags = [t.lower()
-                        for t in parse_tags(form.cleaned_data.get(field, ''))]
+                        for t in parse_tags(profile_form.cleaned_data.get(field, ''))]
                 profile_new.tags.set_ns(tag_ns, *tags)
 
             newsletter_subscribe(request, profile_new.user.email,
-                                 form.cleaned_data)
+                                 subscription_form.cleaned_data)
             return redirect(profile.user)
-    context['form'] = form
-    context['INTEREST_SUGGESTIONS'] = INTEREST_SUGGESTIONS
 
+    context = {
+        'profile': profile,
+        'profile_form': profile_form,
+        'subscription_form': subscription_form,
+        'INTEREST_SUGGESTIONS': INTEREST_SUGGESTIONS,
+    }
     return render(request, 'users/profile_edit.html', context)
 
 
