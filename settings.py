@@ -398,9 +398,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'devmo.context_processors.next_url',
 
     'jingo_minify.helpers.build_ids',
-
     'constance.context_processors.config',
-    'django_browserid.context_processors.browserid_form',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -436,9 +434,8 @@ MIDDLEWARE_CLASSES = (
 
 # Auth
 AUTHENTICATION_BACKENDS = (
-    'django_browserid.auth.BrowserIDBackend',
     'django.contrib.auth.backends.ModelBackend',
-    "allauth.account.auth_backends.AuthenticationBackend",
+    'allauth.account.auth_backends.AuthenticationBackend',
     'teamwork.backends.TeamworkBackend',
 )
 AUTH_PROFILE_MODULE = 'users.UserProfile'
@@ -486,10 +483,6 @@ INSTALLED_APPS = (
 
     'django.contrib.sitemaps',
     'django.contrib.staticfiles',
-
-    # BrowserID & allauth
-    'django_browserid',
-
 
     # MDN
     'devmo',
@@ -802,12 +795,6 @@ MAX_FILEPATH_LENGTH = 250
 
 ATTACHMENT_HOST = 'mdn.mozillademos.org'
 
-# Auth and permissions related constants
-LOGIN_URL = '/users/login/'
-LOGOUT_URL = '/users/logout/'
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
-
 # Video settings, hard coded here for now.
 # TODO: figure out a way that doesn't need these values
 WIKI_VIDEO_WIDTH = 640
@@ -1116,11 +1103,6 @@ CONSTANCE_CONFIG = dict(
 
 )
 
-BROWSERID_VERIFICATION_URL = 'https://verifier.login.persona.org/verify'
-
-LOGIN_REDIRECT_URL = '/'
-LOGIN_REDIRECT_URL_FAILURE = '/'
-
 BASKET_URL = 'https://basket.mozilla.com'
 BASKET_APPS_NEWSLETTER = 'app-dev'
 
@@ -1214,8 +1196,13 @@ OBI_BASE_URL = 'https://backpack.openbadges.org/'
 # uses Apache mod_proxy instead of mod_wsgi
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
+# Auth and permissions related constants
+LOGIN_URL = '/users/login/'
+LOGOUT_URL = '/users/logout/'
+LOGIN_REDIRECT_URL = '/'
+
 # django-allauth configuration
-# ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_EMAIL_REQUIRED = True

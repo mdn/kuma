@@ -1,24 +1,11 @@
-import urlparse
-
 from django.conf import settings
-from django.contrib import auth
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User, Group
-from django.contrib.sites.models import Site
 from django.shortcuts import redirect
 from django.core.paginator import Paginator
 from django.http import (HttpResponse, HttpResponseRedirect, Http404,
                          HttpResponseForbidden)
 from django.shortcuts import get_object_or_404, render
-from django.utils.http import is_safe_url
-from django.views.decorators.http import require_POST
-from django.views.decorators.clickjacking import xframe_options_sameorigin
-from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.debug import sensitive_post_parameters
-
-from django_browserid.forms import BrowserIDForm
-from django_browserid.auth import get_audience
-from django_browserid import auth as browserid_auth
 
 from access.decorators import login_required
 from allauth.socialaccount.views import SignupView as BaseSignupView
@@ -29,7 +16,6 @@ from teamwork.models import Team
 
 from demos.models import Submission
 from sumo.decorators import ssl_required
-from sumo.urlresolvers import reverse, split_path
 
 from .forms import (UserBanForm, UserProfileEditForm, SubscriptionForm,
                     get_subscription_details, subscribed_to_newsletter,
@@ -58,142 +44,11 @@ INTEREST_SUGGESTIONS = [
 ]
 
 
-def _verify_browserid(form, request):
-    """Verify submitted BrowserID assertion.
-
-    This is broken out into a standalone function because it will probably
-    change in the near future if the django-browserid API changes, and it's
-    handy to mock out in tests this way."""
-    assertion = form.cleaned_data['assertion']
-    backend = browserid_auth.BrowserIDBackend()
-    result = backend.verify(assertion, get_audience(request))
-    return result
-
-
-def _get_latest_user_with_email(email):
-    users = User.objects.filter(email=email).order_by('-last_login')
-    if users.exists():
-        return users[0]
-    else:
-        return None
-
-
-def set_browserid_explained(response):
-    response.set_cookie('browserid_explained', 1, max_age=31536000)
-    return response
-
-
 @ssl_required
 def browserid_realm(request):
     # serve the realm from the environment config
     return HttpResponse(constance.config.BROWSERID_REALM_JSON,
                         content_type='application/json')
-
-
-@csrf_exempt
-@ssl_required
-@require_POST
-@sensitive_post_parameters()
-def browserid_verify(request):
-    """Process a submitted BrowserID assertion.
-
-    If valid, try to find a Django user that matches the verified
-    email address. If not found, we bounce to a profile creation page
-    (ie. browserid_register)."""
-    redirect_to = (_clean_next_url(request) or
-            getattr(settings, 'LOGIN_REDIRECT_URL', reverse('home')))
-    redirect_to_failure = (_clean_next_url(request) or
-            getattr(settings, 'LOGIN_REDIRECT_URL_FAILURE', reverse('home')))
-
-    failure_resp = set_browserid_explained(
-        HttpResponseRedirect(redirect_to_failure))
-
-    # If the form's not valid, then this is a failure.
-    form = BrowserIDForm(data=request.POST)
-    if not form.is_valid():
-        return failure_resp
-
-    # If the BrowserID assersion is not valid, then this is a failure.
-    result = _verify_browserid(form, request)
-    if not result:
-        return failure_resp
-
-    # So far, so good: We have a verified email address. But, no user, yet.
-    email = result['email']
-    user = None
-
-    # Look for first most recently used Django account, use if found.
-    user = _get_latest_user_with_email(email)
-
-    # If we got a user from either the Django or MT paths, complete login for
-    # Django and MT and redirect.
-    if user:
-        user.backend = 'django_browserid.auth.BrowserIDBackend'
-        auth.login(request, user)
-        return set_browserid_explained(HttpResponseRedirect(redirect_to))
-
-    # Retain the verified email in a session, redirect to registration page.
-    request.session[SESSION_VERIFIED_EMAIL] = email
-    request.session[SESSION_REDIRECT_TO] = redirect_to
-    return set_browserid_explained(
-        HttpResponseRedirect(reverse('users.browserid_register')))
-
-
-@ssl_required
-@xframe_options_sameorigin
-def login(request):
-    """Try to log the user in."""
-    next_url = _clean_next_url(request)
-    if request.method == 'GET' and request.user.is_authenticated():
-        if next_url:
-            return redirect(next_url)
-    else:
-        next_url = _clean_next_url(request) or reverse('home')
-    return render(request, 'users/login.html', {'next_url': next_url})
-
-
-@ssl_required
-def logout(request):
-    """Log the user out."""
-    username = request.user.username
-
-    auth.logout(request)
-    next_url = _clean_next_url(request, username) or reverse('home')
-    resp = HttpResponseRedirect(next_url)
-    return resp
-
-
-def _clean_next_url(request, username=None):
-    if 'next' in request.POST:
-        url = request.POST.get('next')
-    elif 'next' in request.GET:
-        url = request.GET.get('next')
-    elif 'HTTP_REFERER' in request.META:
-        url = request.META.get('HTTP_REFERER').decode('latin1', 'ignore')
-    else:
-        return None
-
-    site = Site.objects.get_current()
-    if not is_safe_url(url, site.domain):
-        return None
-    parsed_url = urlparse.urlparse(url)
-
-    # Don't redirect right back to login, logout, register, change email, or
-    # edit profile pages
-    locale, register_url = split_path(reverse(
-        'users.browserid_register'))
-    locale, edit_profile_url = split_path(reverse(
-        'users.profile_edit', args=[username, ]))
-    REDIRECT_HOME_URLS = [settings.LOGIN_URL, settings.LOGOUT_URL,
-                          register_url, edit_profile_url]
-    for home_url in REDIRECT_HOME_URLS:
-        if home_url in parsed_url.path:
-            return None
-
-    # TODO?HACK: can't use urllib.quote_plus because mod_rewrite quotes the
-    # next url value already.
-    url = url.replace(' ', '+')
-    return url
 
 
 @permission_required('users.add_userban')
