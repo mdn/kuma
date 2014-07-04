@@ -67,14 +67,13 @@
 
       {% include 'wiki/includes/revision_comment.html' %}
 
-      <section class="page-meta">
-        <section id="page-tags" class="page-tags">
+      <section id="page-tags" class="page-tags wiki-block">
 
-            <h3><i aria-hidden="true" class="icon-tags"></i>{{ _('Tags') }}</h3>
+          <h3><i aria-hidden="true" class="icon-tags"></i>{{ _('Tags') }}</h3>
 
-          <input id="tagit_tags" type="text" name="tags" value="{% for tag in initial_tags %}{{ tag.name }},{% endfor %}" maxlength="255" />
-        </section>
+        <input id="tagit_tags" type="text" name="tags" value="{% for tag in initial_tags %}{{ tag.name }},{% endfor %}" maxlength="255" />
       </section>
+
 
     </fieldset>
 

@@ -62,6 +62,11 @@ $summary-padding = 5px;
         text-transform: none;
     }
 
+    summary h2 {
+        display: inline-block;
+        margin-bottom: 0;
+    }
+
     h2 {$selector-icon}, h3 {$selector-icon} {
         @extend $right-icons;
     }
@@ -87,7 +92,7 @@ $summary-padding = 5px;
         padding: $summary-padding;
     }
 
-    #page-buttons {
+    .page-buttons {
         z-index: 1; /* Move above the .title and .metadata classes to be clickable. */
     }
 }
@@ -232,20 +237,15 @@ $summary-padding = 5px;
 }
 
 #translate-document {
-    #page-buttons {
-        bidi-style(right, 0, left, auto);
-    }
 
     .description {
         margin: $summary-margin;
         padding: $summary-padding;
     }
 
-    .description, #trans-content {
-        .approved, .localized {
+    .approved, .localized {
             width: 50%;
             bidi-value(float, left, right);
-        }
     }
 
     .translate-display {
@@ -257,12 +257,21 @@ $summary-padding = 5px;
     }
 
     .change-locale {
-        position: relative;
-        top: -20px;
-        margin-top: ($grid-spacing / 2);
+        margin-top: ($grid-spacing * -1);
+        margin-bottom: ($grid-spacing / 2);
         bidi-value(clear, left, right);
         bidi-value(float, left, right);
         set-font-size($smaller-font-size);
+    }
+
+    header .page-buttons {
+        clear: both;
+        margin-bottom: 0;
+    }
+
+
+    #page-comment .icon-comment-alt{
+        display: none;
     }
 }
 
