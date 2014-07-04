@@ -212,5 +212,18 @@
         $menus.parent().find('.submenu').mozKeyboardNav();
     })();
 
+    /*
+        Tabzilla :/
+    */
+    (function() {
+        var $tabzilla = $('#tabzilla');
+
+        $tabzilla.length && $.ajax({
+            url: '//mozorg.cdn.mozilla.net/en-US/tabzilla/tabzilla.js',
+            dataType: 'script',
+            cache: true
+        });
+    })();
+
 
 })(document, jQuery);

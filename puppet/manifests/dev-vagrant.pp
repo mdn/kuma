@@ -24,6 +24,10 @@ class dev {
       package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.13.deb',
       java_install => true,
       java_package => 'openjdk-6-jre-headless',
+    }
+
+    elasticsearch::instance { 'kuma':
+      datadir => '/var/lib/elasticsearch',
       config => {
         'node' => {
           'name' => 'kuma'
@@ -38,8 +42,10 @@ class dev {
       },
     }
 
+
     elasticsearch::plugin{'mobz/elasticsearch-head':
-      module_dir => 'head'
+      module_dir => 'head',
+      instances => ['kuma'],
     }
 
     stage {
@@ -68,6 +74,8 @@ class dev {
         python: stage => langs;
 
         stylus: stage => extras;
+        cleancss: stage => extras;
+        uglify: stage => extras;
 
         site_config: stage => main;
         dev_hacks_post: stage => hacks_post;

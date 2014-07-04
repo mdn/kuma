@@ -15,7 +15,7 @@
   <link rel="home" href="{{ url('home') }}">
   <link rel="copyright" href="#copyright">
 
-  <link rel="stylesheet" href="//mozorg.cdn.mozilla.net/media/css/tabzilla-min.css">
+  <link href="//mozorg.cdn.mozilla.net/media/css/tabzilla-min.css" type="text/css" rel="stylesheet">
   {% block site_css %}
     {{ css('mdn', 'all') }}
 
@@ -192,8 +192,6 @@
       {{ js(script) }}
     {% endfor %}
   {% endblock %}
-
-  <script src="//mozorg.cdn.mozilla.net/{{ request.locale }}/tabzilla/tabzilla.js" async></script>
 
   {% block js %}{% endblock %}
 </body>

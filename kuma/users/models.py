@@ -1,8 +1,5 @@
 import datetime
-import urllib
-import hashlib
 
-from django.conf import settings
 from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db import models
@@ -20,10 +17,8 @@ from devmo.models import ModelBase
 from sumo.models import LocaleField
 from wiki.models import Revision
 
+from .helpers import gravatar_url
 from .tasks import send_welcome_email
-
-DEFAULT_AVATAR = getattr(settings, 'DEFAULT_AVATAR',
-                         settings.MEDIA_URL + 'img/avatar-default.png')
 
 
 class UserBan(models.Model):
@@ -168,26 +163,9 @@ class UserProfile(ModelBase):
         return (constance.config.BETA_GROUP_NAME in
                 self.user.groups.values_list('name', flat=True))
 
-    def gravatar_url(self, secure=True, size=220, rating='pg',
-                default=DEFAULT_AVATAR):
-        """Produce a gravatar image URL from email address."""
-        base_url = (secure and 'https://secure.gravatar.com' or
-            'http://www.gravatar.com')
-        m = hashlib.md5(self.user.email.lower().encode('utf8'))
-        return '%(base_url)s/avatar/%(hash)s?%(params)s' % dict(
-            base_url=base_url, hash=m.hexdigest(),
-            params=urllib.urlencode(dict(
-                s=size, d=default, r=rating
-            ))
-        )
-
     @property
     def gravatar(self):
-        return self.gravatar_url()
-
-    @property
-    def small_gravatar(self):
-        return self.gravatar_url(size=34)
+        return gravatar_url(self.user)
 
     def allows_editing_by(self, user):
         if user == self.user:

@@ -12,10 +12,8 @@ import constance.config
 from product_details import product_details
 from taggit.utils import parse_tags
 from tower import ugettext_lazy as _
-from waffle import switch_is_active
 
 from .models import UserProfile
-from .tasks import send_welcome_email
 
 
 USERNAME_INVALID = _(u'Username may contain only letters, '
@@ -56,6 +54,7 @@ class SubscriptionForm(forms.Form):
 
     def __init__(self, locale, *args, **kwargs):
         super(SubscriptionForm, self).__init__(*args, **kwargs)
+
         regions = product_details.get_regions(locale)
         regions = sorted(regions.iteritems(), key=operator.itemgetter(1))
 
@@ -90,11 +89,10 @@ class UserBanForm(forms.Form):
 
 
 class UserProfileEditForm(forms.ModelForm):
-    beta = forms.BooleanField(label=_('Beta tester'), required=False)
-
-    interests = forms.CharField(label=_('Interests'),
+    beta = forms.BooleanField(label=_(u'Beta tester'), required=False)
+    interests = forms.CharField(label=_(u'Interests'),
                                 max_length=255, required=False)
-    expertise = forms.CharField(label=_('Expertise'),
+    expertise = forms.CharField(label=_(u'Expertise'),
                                 max_length=255, required=False)
 
     class Meta:

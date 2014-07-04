@@ -25,7 +25,7 @@
         var closeTimeout;
         var showTimeout;
 
-        return $(this).each(function() {
+        return this.each(function() {
             var $self = $(this);
             var $li = $self.parent();
             var initialized;
@@ -163,7 +163,7 @@
 
         var $selectedItem;
 
-        return $(this).each(function() {
+        return this.each(function() {
 
             var $items = $(this).find(settings.itemSelector);
             if(!$items.length) return;
@@ -240,7 +240,7 @@
             duration: 200 /* 400 is the default for jQuery */
         }, options);
 
-        $(this).each(function() {
+        this.each(function() {
             var $self = $(this);
             var pieces = getTogglerComponents($self);
             var closedAttribute = 'data-closed';
@@ -328,7 +328,7 @@
         Callback passes two arguments, event.target and the menu-element
     */
     $.fn.mozContextMenu = function(callback) {
-        return $(this).on('contextmenu', function(e) {
+        return this.on('contextmenu', function(e) {
             callback(e.target, $('#' + $(this).attr('contextmenu')));
         });
     };
@@ -337,7 +337,7 @@
         Plugin to lazyload images
     */
     $.fn.mozLazyloadImage = function() {
-        return $(this).each(function() {
+        return this.each(function() {
             var $img = $('<img />');
             var alt = $(this).data('alt');
             $img.on('load', function() {

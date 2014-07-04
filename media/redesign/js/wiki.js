@@ -2,29 +2,6 @@
     'use strict';
 
     /*
-       Bug 981409 - Add some CSS fallback for browsers without MathML support.
-
-       This is based on
-       https://developer.mozilla.org/en-US/docs/Web/MathML/Authoring#Fallback_for_Browsers_without)MathML_support
-       and https://github.com/fred-wang/mathml.css.
-    */
-    $('math').length && (function() {
-        // Test for MathML support
-        var $div = $('<div class="offscreen"><math xmlns="http://www.w3.org/1998/Math/MathML"><mspace height="23px" width="77px"/></math></div>').appendTo(document.body);
-        var box = $div.get(0).firstChild.firstChild.getBoundingClientRect();
-        $div.remove();
-
-        var supportsMathML = Math.abs(box.height - 23) <= 1 && Math.abs(box.width - 77) <= 1;
-        if (!supportsMathML) {
-            // Add CSS fallback
-            $('<link href="/media/css/libs/mathml.css" rel="stylesheet" type="text/css" />').appendTo(document.head);
-
-            // Add notification
-            $('#wikiArticle').prepend('<div class="notice"><p>' + gettext('Your browser does not support MathML. A CSS fallback has been used instead.') + '</p></div>');
-        }
-    })();
-
-    /*
         Togglers within articles (i.e.)
     */
     $('.toggleable').mozTogglers();
@@ -194,21 +171,13 @@
     /*
         Syntax highlighting scripts
     */
-    $('article pre').length && ('querySelectorAll' in document) && (function() {
-        var mediaPath = win.mdn.mediaPath;
-        $('<link />').attr({
-            type: 'text/css',
-            rel: 'stylesheet',
-            href: mediaPath + 'css/syntax-prism-min.css?build=' + mdn.build
-        }).appendTo(doc.head);
-
+    $('article pre').length && ('querySelectorAll' in doc) && (function() {
         var syntaxScript = doc.createElement('script');
         syntaxScript.setAttribute('data-manual', '');
         syntaxScript.async = 'true';
-        syntaxScript.src = mediaPath + 'js/syntax-prism-min.js?build=' + mdn.build;
+        syntaxScript.src = mdn.mediaPath + 'js/syntax-prism-min.js?build=' + mdn.build;
         doc.body.appendChild(syntaxScript);
     })();
-
 
     /*
         Set up the scrolling TOC effect
@@ -333,19 +302,53 @@
         if many contributors, dont show all at once.
     */
     (function (){
+        var hiddenClass = 'hidden';
         var $contributors = $('.contributor-avatars');
-        var $noscripts = $contributors.find('noscript');
-        var $contributorsList = $contributors.find('ul');
-        var numberToShow = 13;
+        var $hiddenContributors;
         var $showAllContributors;
 
-        $contributors.find('a').each(function(index) {
-          $(this).on('click', function(e) {
+        function loadImages(selector) {
+            return $contributors.find(selector).mozLazyloadImage();
+        }
+
+        // Start displaying first contributors in list
+        loadImages('li.shown noscript');
+
+        // Setup "Show all Contributors block"
+        if ($contributors.data('has-hidden')) {
+            $showAllContributors = $('<button type="button" class="transparent">' + $contributors.data('all-text') + '</button>');
+
+            $showAllContributors.on('click', function(e) {
+                e.preventDefault();
+
+                mdn.analytics.trackEvent({
+                    category: 'Top Contributors',
+                    action: 'Show all'
+                });
+
+                // Show all LI elements
+                $hiddenContributors = $contributors.find('li.' + hiddenClass);
+                $hiddenContributors.removeClass(hiddenClass);
+
+                // Start loading images which were hidden
+                loadImages('noscript');
+
+                // Focus on the first hidden element
+                $($hiddenContributors.get(0)).find('a').get(0).focus();
+
+                // Remove the "Show all" button
+                $(this).remove();
+
+            });
+
+            // Inject the show all button
+            $showAllContributors.appendTo($contributors);
+        }
+
+        // Track clicks on avatars for the sake of Google Analytics tracking
+        $contributors.on('click', 'a', function(e) {
             var newTab = (e.metaKey || e.ctrlKey);
             var href = this.href;
-            var callback = function() {
-              location = href;
-            };
             var data = {
                 category: 'Top Contributors',
                 action: 'Click position',
@@ -356,44 +359,40 @@
               mdn.analytics.trackEvent(data);
             } else {
               e.preventDefault();
-              mdn.analytics.trackEvent(data, callback);
+              mdn.analytics.trackEvent(data, function() { location = href; });
             }
-          });
         });
 
-        $contributorsList.on('focusin focusout', function(e) {
+        // Allow focus into and out of the list itself
+        $contributors.find('ul').on('focusin focusout', function(e) {
             $(this)[(e.type == 'focusin' ? 'add' : 'remove') + 'Class']('focused');
         });
-
-        if ($contributors.find('li').length > numberToShow) {
-            $showAllContributors = $('<button type="button" class="transparent">Show all&hellip;<span class="hidden"> contributors</span></button>');
-
-            $showAllContributors.on('click keypress', function(e) {
-                var enterOrSpace = (e.which === 13 || e.which === 32);
-                if (enterOrSpace || e.type === 'click') {
-                    e.preventDefault();
-                    mdn.analytics.trackEvent({
-                        category: 'Top Contributors',
-                        action: 'Show all'
-                    });
-
-                    $contributors.find('li.hidden').removeClass('hidden');
-                    $noscripts.mozLazyloadImage();
-                    if (enterOrSpace) {
-                        $contributors.find('li:eq(' + numberToShow + ') a').focus();
-                    }
-                    $(this).remove();
-                }
-            });
-
-            $contributors.find('li:lt(' + numberToShow + ') noscript').mozLazyloadImage();
-            $contributors.find('li:gt(' + (numberToShow-1) + ')').addClass('hidden');
-            $contributorsList.after($showAllContributors);
-        } else {
-            $noscripts.mozLazyloadImage();
-        }
-
     })();
+
+
+    /*
+       Bug 981409 - Add some CSS fallback for browsers without MathML support.
+
+       This is based on
+       https://developer.mozilla.org/en-US/docs/Web/MathML/Authoring#Fallback_for_Browsers_without)MathML_support
+       and https://github.com/fred-wang/mathml.css.
+    */
+    $('math').length && (function() {
+        // Test for MathML support
+        var $div = $('<div class="offscreen"><math xmlns="http://www.w3.org/1998/Math/MathML"><mspace height="23px" width="77px"/></math></div>').appendTo(document.body);
+        var box = $div.get(0).firstChild.firstChild.getBoundingClientRect();
+        $div.remove();
+
+        var supportsMathML = Math.abs(box.height - 23) <= 1 && Math.abs(box.width - 77) <= 1;
+        if (!supportsMathML) {
+            // Add CSS fallback
+            $('<link href="/media/css/libs/mathml.css" rel="stylesheet" type="text/css" />').appendTo(doc.head);
+
+            // Add notification
+            $('#wikiArticle').prepend('<div class="notice"><p>' + gettext('Your browser does not support MathML. A CSS fallback has been used instead.') + '</p></div>');
+        }
+    })();
+
 
     /*
         jQuery extensions used within the wiki.
@@ -445,4 +444,144 @@
         };
     }
 
+    /*
+        Track YouTube videos
+    */
+    (function(){
+        var $youtubeIframes = $('iframe[src*="youtube.com/embed"]');
+        var players = [];
+        var timeoutFlag = 1;
+        var timer;
+
+        function timeout() {
+            var fraction;
+            timeoutFlag = 1;
+            $.each(players, function(index, player) {
+                if(player.getPlayerState() != 1) return;
+
+                timeoutFlag = 0;
+
+                fraction = player.getCurrentTime() / player.getDuration();
+
+                if(!player.checkpoint) {
+                    player.checkpoint = 0.1 + Math.round(fraction * 10) / 10;
+                }
+
+                if(fraction > player.checkpoint) {
+                    mdn.analytics.trackEvent({
+                        category: 'YouTube',
+                        action: 'Percent Completed',
+                        label: player.getVideoUrl(),
+                        value: Math.round(player.checkpoint * 100)
+                    });
+
+                    // 10% checkpoints for analytics
+                    player.checkpoint += 0.1;
+                }
+            });
+
+            if(timeoutFlag) {
+                timer && clearTimeout(timer);
+            }else{
+                timer = setTimeout(timeout, 6000);
+            }
+        };
+
+        // If the page does not have any YouTube videos
+        if(!$youtubeIframes.length) return;
+
+        var origin = window.location.protocol + "//" + window.location.hostname +
+                    (window.location.port ? ':' + window.location.port: '');
+
+        //Enable JS API on all YouTube iframes, might cause flicker!
+        $youtubeIframes.each(function() {
+            $(this).attr('src', function(i, src){
+                return src + (src.split('?')[1] ? '&':'?') + '&enablejsapi=1&origin=' + origin;
+            });
+        });
+
+        // Load YouTube Iframe API
+        var youtubeScript = doc.createElement('script');
+        youtubeScript.async = 'true';
+        youtubeScript.src = "//www.youtube.com/iframe_api";
+        doc.body.appendChild(youtubeScript);
+
+
+        // Method executed by YouTube API, needs to be global
+        window.onYouTubeIframeAPIReady = function(event) {
+            $youtubeIframes.each(function(i){
+                players[i] = new YT.Player($(this).get(0));
+
+                players[i].addEventListener('onReady', function(){
+                   mdn.analytics.trackEvent({
+                        category: 'YouTube',
+                        action: 'Load',
+                        label: players[i].getVideoUrl()
+                    });
+                });
+                players[i].addEventListener('onStateChange', function(event) {
+                    var action;
+                    switch(event.data) {
+                        case 0: // YT.PlayerState.ENDED
+                          action = 'Finished';
+                          break;
+                        case 1: // YT.PlayerState.PLAYING
+                          action = 'Play';
+                          if(timeoutFlag){
+                            timeout();
+                          }
+                          break;
+                        case 2: // YT.PlayerState.PAUSED
+                          action = 'Pause';
+                          break;
+                        case 3: // YT.PlayerState.BUFFERING
+                          action = 'Buffering';
+                          break;
+                        default:
+                          return;
+                    }
+                    mdn.analytics.trackEvent({
+                        category: 'YouTube',
+                        action: action,
+                        label: players[i].getVideoUrl(),
+                    });
+                });
+                players[i].addEventListener('onPlaybackQualityChange', function(event) {
+                    var value;
+                    //quality is highres, hd1080, hd720, large, medium and small
+                    switch(event.data) {
+                        case 'small':
+                            value = 240;
+                            break;
+                        case 'medium':
+                            value = 360;
+                            break;
+                        case 'large':
+                            value = 480;
+                            break;
+                        case 'hd720':
+                            value = 720;
+                            break;
+                        case 'hd1080':
+                            value = 1080;
+                            break;
+                        case 'highres': //higher than 1080p
+                            value = 1440;
+                            break;
+                        default: //undefined
+                            value = 0;
+                    }
+                    mdn.analytics.trackEvent({
+                        category: 'YouTube',
+                        action: 'Playback Quality',
+                        label: players[i].getVideoUrl(),
+                        value: value
+                    });
+                });
+                players[i].addEventListener('onError', function(event) {
+                    mdn.trackError('YouTube Error: ' + event.data + 'on ' + window.location.href);
+                });
+            });
+        };
+    })();
 })(window, document, jQuery);

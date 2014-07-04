@@ -107,12 +107,6 @@ def update_info(ctx):
 def pre_update(ctx, ref=settings.UPDATE_REF):
     update_code(ref)
     update_info()
-    if ref == DEVMO_CLEANUP_TAG:
-        with ctx.lcd(settings.SRC_DIR):
-            ctx.local("python2.6 manage.py migrate events --delete-ghost-migrations --fake --noinput")
-            ctx.local("python2.6 manage.py migrate users 0002 --fake --noinput")
-            ctx.local("python2.6 manage.py migrate --noinput")
-
 
 
 @task

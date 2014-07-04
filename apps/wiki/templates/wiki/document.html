@@ -175,21 +175,25 @@
           {% endif %}
         <h1>{{ document.title }}</h1>
         {% if waffle.flag('top_contributors') %}
-        <div class="contributor-avatars">
+            {% set contributors = document.get_contributors() %}
+            {% set contrib_limit = 13 %}
+            {% set contrib_count = contributors.count() %}
+
+        <div class="contributor-avatars" data-all-text="{{ _('Show all') }}&hellip;<span class='hidden'>{{ _('contributors') }}</span>" {% if contrib_count > contrib_limit %}data-has-hidden="1"{% endif %}>
             <span class="quickstat">
-            {% trans contributor_count=document.get_contributors()|length %}
-            by {{ contributor_count }} contributor:
+            {% trans count=contrib_count %}
+            by {{ count }} contributor:
             {% pluralize %}
-            by {{ contributor_count }} contributors:
+            by {{ count }} contributors:
             {% endtrans %}
             </span>
             <ul>
-        {% for username, contributor in document.get_contributors().iteritems() %}
-                <li>
-                <a href="{{ contributor.user.get_absolute_url() }}" title="{% trans %}View profile: {{ username }}{% endtrans %}">
-                <noscript data-class="avatar" data-alt="{{ username }}" data-src="{{ contributor.user.get_profile().small_gravatar }}">{{ username }}</noscript></a>
+            {% for contributor in contributors %}
+                <li class="{% if loop.index > contrib_limit %}hidden{% else %}shown{% endif %}">
+                <a href="{{ contributor.get_absolute_url() }}" title="{% trans username=contributor.username %}View profile: {{ username }}{% endtrans %}">
+                <noscript data-class="avatar" data-alt="{{ contributor.username }}" data-src="{{ gravatar_url(contributor, size=34) }}">{{ contributor.username }}</noscript></a>
                 </li>
-        {% endfor %}
+            {% endfor %}
             </ul>
         </div>
         {% endif %}

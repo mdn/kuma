@@ -1,5 +1,6 @@
 {% extends "wiki/base.html" %}
 {% from "includes/error_list.html" import errorlist %}
+{% from 'wiki/includes/page_buttons.html' import page_buttons %}
 {% from "includes/common_macros.html" import content_editor %}
 {% set title = _('Create a New {title}')|fe(title=('Template' if is_template else 'Article')) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
@@ -21,7 +22,7 @@
       <fieldset>
       <header id="article-head">
 
-        {% include 'wiki/includes/page_buttons.html' %}
+        {{ page_buttons(wiki, document, discard_href, 'top') }}
 
         {{ document_form.category|safe }}
 
@@ -76,6 +77,10 @@
       </section>
 
     </fieldset>
+
+      <section class="wiki-block">
+        {{ page_buttons(wiki, document, discard_href, 'bottom') }}
+      </section>
     </form>
 
     {% include 'wiki/includes/attachment_list.html' %}

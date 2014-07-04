@@ -613,6 +613,9 @@ TOWER_ADD_HEADERS = True
 
 # Bundles for JS/CSS Minification
 JINGO_MINIFY_USE_STATIC = False
+CLEANCSS_BIN = '/usr/bin/cleancss'
+UGLIFY_BIN = '/usr/bin/uglifyjs'
+
 MINIFY_BUNDLES = {
     'css': {
         'mdn': (
@@ -644,6 +647,13 @@ MINIFY_BUNDLES = {
             'redesign/css/wiki.css',
             'redesign/css/zones.css',
             'redesign/css/diff.css',
+
+            'js/libs/prism/themes/prism.css',
+            'js/libs/prism/plugins/line-highlight/prism-line-highlight.css',
+            'js/libs/prism/plugins/ie8/prism-ie8.css',
+            'js/prism-mdn/plugins/line-numbering/prism-line-numbering.css',
+            'js/prism-mdn/components/prism-json.css',
+            'redesign/css/wiki-syntax.css',
         ),
         'wiki-edit': (
             'redesign/css/wiki-edit.css',
@@ -657,14 +667,6 @@ MINIFY_BUNDLES = {
         ),
         'tagit': (
             'css/libs/jquery.tagit.css',
-        ),
-        'syntax-prism': (
-            'js/libs/prism/themes/prism.css',
-            'js/libs/prism/plugins/line-highlight/prism-line-highlight.css',
-            'js/libs/prism/plugins/ie8/prism-ie8.css',
-            'js/prism-mdn/plugins/line-numbering/prism-line-numbering.css',
-            'js/prism-mdn/components/prism-json.css',
-            'redesign/css/wiki-syntax.css',
         ),
         'promote': (
             'redesign/css/promote.css',
@@ -775,8 +777,6 @@ MINIFY_BUNDLES = {
     },
 }
 
-JAVA_BIN = '/usr/bin/java'
-
 #
 # Session cookies
 SESSION_COOKIE_SECURE = True
@@ -873,11 +873,19 @@ RECAPTCHA_PRIVATE_KEY = 'SET ME IN SETTINGS_LOCAL'
 RECAPTCHA_PUBLIC_KEY = 'SET ME IN SETTINGS_LOCAL'
 
 # content flagging
-FLAG_REASONS = (
+DEMO_FLAG_REASONS = (
     ('notworking', _('This demo is not working for me')),
     ('inappropriate', _('This demo contains inappropriate content')),
     ('plagarised', _('This demo was not created by the author')),
 )
+
+WIKI_FLAG_REASONS = (
+    ('bad', _('This article is spam/inappropriate')),
+    ('unneeded', _('This article is obsolete/unneeded')),
+    ('duplicate', _('This is a duplicate of another article')),
+)
+
+FLAG_REASONS = DEMO_FLAG_REASONS + WIKI_FLAG_REASONS
 
 # bit.ly
 BITLY_API_KEY = "SET ME IN SETTINGS_LOCAL"
@@ -1150,6 +1158,10 @@ LOGGING = {
             'propagate': True,
             # Use the most permissive setting. It is filtered in the handlers.
             'level': logging.DEBUG,
+        },
+        'cron': {
+            'handlers': ['console'],
+            'level': logging.INFO,
         },
         'django.request': {
             'handlers': ['console'],

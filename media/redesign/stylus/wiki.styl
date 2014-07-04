@@ -205,76 +205,79 @@ article {
     h1 {
         margin-bottom: 20px;
     }
+}
 
-    .contributor-avatars {
-        set-smaller-font-size();
-        color: #777;
-        padding: 10px 10px 6px;
-        border-bottom: 1px solid rgb(241, 241, 241);
-        border-top: 1px solid rgb(241, 241, 241);
-        background: none repeat scroll 0% 0% rgba(234, 239, 243, 0.4);
-        margin-top: -20px;
-        margin-bottom: 20px;
+.contributor-avatars {
+    set-smaller-font-size();
+    color: #777;
+    padding: 10px 10px 6px;
+    border-bottom: 1px solid rgb(241, 241, 241);
+    border-top: 1px solid rgb(241, 241, 241);
+    background: none repeat scroll 0% 0% rgba(234, 239, 243, 0.4);
+    margin-top: -20px;
+    margin-bottom: 20px;
 
-        ul {
-            display: inline;
-            opacity: 0.7;
-            margin-left: 2px;
-            vendorize(transition, opacity .3s ease-in-out);
+    ul {
+        display: inline;
+        opacity: 0.7;
+        margin-left: 2px;
+        vendorize(transition, opacity .3s ease-in-out);
 
-            &:hover,
-            &.focused {
-                opacity: 1;
-            }
+        &:hover,
+        &.focused {
+            opacity: 1;
+        }
 
-            li {
+        li {
+            margin: 0 5px 4px 0;
+
+            &, .no-js  &.hidden {
                 display: inline-block;
-                margin: 0 5px 4px 0;
-
-                &.hidden {
-                    display: none;
-                }
             }
 
-            a {
-                &:focus {
-                    outline: none;
-
-                    img {
-                        vendorize(transform, scale(1.7));
-                    }
-                }
+            &.hidden {
+                display: none;
             }
         }
 
-        .avatar {
-            vertical-align: text-bottom;
-            border-radius: 2px;
-            max-width: 20px;
-            opacity: 0;
-            vendorize(transition, all .2s);
-
-            &.loaded {
-                opacity: 1;
-            }
-
-            &:hover,
-            &:focus{
-                vendorize(transform, scale(1.7));
-            }
-        }
-
-        button {
-            set-smaller-font-size();
-            margin-left: -2px;
-            color: #777;
-            text-transform: none;
-            padding: 5px 0;
-
-            &:hover,
+        a {
             &:focus {
-                color: #4D4E53;
+                outline: none;
+
+                img {
+                    vendorize(transform, scale(1.7));
+                }
             }
+        }
+    }
+
+    .avatar {
+        vertical-align: text-bottom;
+        border-radius: 2px;
+        max-width: 20px;
+        opacity: 0;
+        vendorize(transition, all .2s);
+
+        &.loaded {
+            opacity: 1;
+        }
+
+        &:hover,
+        &:focus{
+            vendorize(transform, scale(1.7));
+        }
+    }
+
+    button {
+        set-smaller-font-size();
+        margin-left: -2px;
+        color: #777;
+        text-transform: none;
+        padding: 5px 0;
+
+        &:hover,
+        &:focus {
+            color: #4D4E53;
         }
     }
 }
@@ -395,17 +398,14 @@ article {
 
 /* edit, language, settings, save, and cancel buttons */
 .page-buttons, #page-buttons {
-    bidi-value(float, right, left);
-    float: right;
-    margin-top: -5px;
-
+    bidi-value(text-align, right, left);
     width: auto;
-    top: 0;
 
     > li {
         margin-left: ($grid-spacing / 2);
         display: inline-block;
         position: relative;
+        bidi-value(text-align, left, right);
 
         a, button, input[type='submit'], input[type='button'] {
             set-smaller-font-size();
@@ -725,6 +725,7 @@ span.cke_skin_kuma {
 
 .guide-links{
     float: right;
+    margin-top: $grid-spacing;
     padding: 0 4px 2px 0;
     color: #999;
 }
@@ -985,6 +986,37 @@ div.note {
     prevent-last-child-spacing(p, margin-bottom);
 }
 
+/* moreinfo styling */
+.moreinfo {
+    position: relative;
+    padding: $gutter-width $gutter-width $gutter-width 30px;
+    margin-bottom: $gutter-width;
+    background: #f4f7f8;
+
+    dl {
+        margin-bottom: 0;
+    }
+
+    dd {
+        margin-bottom: 10px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    &:after {
+        border-top: $gutter-width solid transparent;
+        border-bottom: $gutter-width solid transparent;
+        border-left: 15px solid #fff;
+        content: '';
+        display: block;
+        left: 0;
+        position: absolute;
+        top: 5px;
+    }
+}
+
 #page-comment {
     input {
         padding-top: 10px;
@@ -1170,9 +1202,9 @@ details {
 
     p.add {
         position: absolute;
-        right: $grid-spacing;
+        bidi-style(right, 0, left, 0);
         text-align: right;
-        top: 12px;
+        top: 41px;
     }
 }
 
@@ -1263,6 +1295,10 @@ details {
 
     .page-buttons > li.page-buttons-edit {
         display: none;
+    }
+
+    .page-meta p.add {
+        position: static;
     }
 
     /* display the attachments table as inline */

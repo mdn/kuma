@@ -16,6 +16,8 @@
     gettext: function(x) { return x; },
     // The path to media (images, CSS, JS) in MDN
     mediaPath: '{{ MEDIA_URL }}',
+    // Optimizely API
+    optimizely: window['optimizely'] || [],
     // Wiki-specific settings will be placed here
     wiki: {
       autosuggestTitleUrl: '{{ url('wiki.autosuggest_documents') }}'

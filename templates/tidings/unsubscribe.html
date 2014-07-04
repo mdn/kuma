@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% set title = _('Unsubscribe') %}
+{% set crumbs = [(None, title)] %}
+
+{% block content %}
+  <article>
+    <h1>{{ _('Are you sure you want to unsubscribe?') }}</h1>
+    {# TODO: Once Watches know how to describe themselves, print that description. #}
+    <form action="" method="post">
+      {{ csrf() }}
+      <div class="submit-or-cancel">
+        <input type="submit" value="{{ _('Unsubscribe') }}" />
+        <a href="/"{# Discards l10n. Better ideas? #}>{{ _('Cancel') }}</a>
+      </div>
+    </form>
+  </article>
+{% endblock %}
