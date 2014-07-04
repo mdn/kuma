@@ -85,77 +85,77 @@ def build_json_data_handler(sender, instance, **kwargs):
 
 
 @task
-@transaction.commit_manually
 def move_page(locale, slug, new_slug, email):
-    try:
-        user = User.objects.get(email=email)
-    except User.DoesNotExist:
-        transaction.rollback()
-        logging.error('Page move failed: no user with email address %s' %
-                      email)
-        return
-    try:
-        doc = Document.objects.get(locale=locale, slug=slug)
-    except Document.DoesNotExist:
-        transaction.rollback()
+    with transaction.commit_manually():
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            transaction.rollback()
+            logging.error('Page move failed: no user with email address %s' %
+                          email)
+            return
+        try:
+            doc = Document.objects.get(locale=locale, slug=slug)
+        except Document.DoesNotExist:
+            transaction.rollback()
+            message = """
+    Page move failed.
+
+    Move was requested for document with slug %(slug)s in locale
+    %(locale)s, but no such document exists.
+            """ % {'slug': slug, 'locale': locale}
+            logging.error(message)
+            send_mail('Page move failed', message, settings.DEFAULT_FROM_EMAIL,
+                      [user.email])
+            return
+        try:
+            doc._move_tree(new_slug, user=user)
+        except PageMoveError as e:
+            transaction.rollback()
+            message = """
+    Page move failed.
+
+    Move was requested for document with slug %(slug)s in locale
+    %(locale)s, but could not be completed.
+
+    Diagnostic info:
+
+    %(message)s
+            """ % {'slug': slug, 'locale': locale, 'message': e.message}
+            logging.error(message)
+            send_mail('Page move failed', message, settings.DEFAULT_FROM_EMAIL,
+                      [user.email])
+            return
+        except Exception as e:
+            transaction.rollback()
+            message = """
+    Page move failed.
+
+    Move was requested for document with slug %(slug)s in locale %(locale)s,
+    but could not be completed.
+
+    %(info)s
+            """ % {'slug': slug, 'locale': locale, 'info': e}
+            logging.error(message)
+            send_mail('Page move failed', message, settings.DEFAULT_FROM_EMAIL,
+                      [user.email])
+            return
+
+        transaction.commit()
+
+        # Now that we know the move succeeded, re-render the whole tree.
+        for stale_doc in [doc] + doc.get_descendants():
+            stale_doc.schedule_rendering('max-age=0')
+
+        subject = 'Page move completed: ' + slug + ' (' + locale + ')'
+        full_url = settings.SITE_URL + '/' + locale + '/docs/' + new_slug
         message = """
-Page move failed.
+    Page move completed.
 
-Move was requested for document with slug %(slug)s in locale
-%(locale)s, but no such document exists.
-        """ % {'slug': slug, 'locale': locale}
-        logging.error(message)
-        send_mail('Page move failed', message, settings.DEFAULT_FROM_EMAIL,
+    The move requested for the document with slug %(slug)s in locale
+    %(locale)s, and all its children, has been completed.
+
+    You can now view this document at its new location: %(full_url)s.
+        """ % {'slug': slug, 'locale': locale, 'full_url': full_url}
+        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL,
                   [user.email])
-        return
-    try:
-        doc._move_tree(new_slug, user=user)
-    except PageMoveError as e:
-        transaction.rollback()
-        message = """
-Page move failed.
-
-Move was requested for document with slug %(slug)s in locale
-%(locale)s, but could not be completed.
-
-Diagnostic info:
-
-%(message)s
-        """ % {'slug': slug, 'locale': locale, 'message': e.message}
-        logging.error(message)
-        send_mail('Page move failed', message, settings.DEFAULT_FROM_EMAIL,
-                  [user.email])
-        return
-    except Exception as e:
-        transaction.rollback()
-        message = """
-Page move failed.
-
-Move was requested for document with slug %(slug)s in locale %(locale)s,
-but could not be completed.
-
-%(info)s
-        """ % {'slug': slug, 'locale': locale, 'info': e}
-        logging.error(message)
-        send_mail('Page move failed', message, settings.DEFAULT_FROM_EMAIL,
-                  [user.email])
-        return
-
-    transaction.commit()
-
-    # Now that we know the move succeeded, re-render the whole tree.
-    for stale_doc in [doc] + doc.get_descendants():
-        stale_doc.schedule_rendering('max-age=0')
-    
-    subject = 'Page move completed: ' + slug + ' (' + locale + ')'
-    full_url = settings.SITE_URL + '/' + locale + '/docs/' + new_slug
-    message = """
-Page move completed.
-
-The move requested for the document with slug %(slug)s in locale
-%(locale)s, and all its children, has been completed.
-
-You can now view this document at its new location: %(full_url)s.
-    """ % {'slug': slug, 'locale': locale, 'full_url': full_url}
-    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL,
-              [user.email])
