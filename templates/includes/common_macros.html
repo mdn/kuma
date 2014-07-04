@@ -86,16 +86,16 @@
     {{ li_field(form, 'newsletter') }}
     <li class="newsletter-setting">
       {{ form.country.errors }}
-      <label for="country">{{ form.country.label }}</label>
+      <label for="id_country">{{ form.country.label }}</label>
       {{ form.country }}
     </li>
     <li class="newsletter-setting check">
       {{ form.format.errors }}
       <span class="label">{{ form.format.label }}</span>
       <fieldset class="inline">
-        {% for c in form.fields.format.choices %}
-        <label for="sub-{{ c[0] }}"><input type="radio" name="format" value="{{ c[0] }}" id="sub-{{ c[0] }}" {% if form.fields.format.initial == c %}checked="checked"{% endif %}>{{ c[1] }}</label>
-        {% endfor %}
+      {% for format in form.format %}
+        {{ format }}
+      {% endfor %}
       </fieldset>
     </li>
     <li class="newsletter-setting agree">
