@@ -37,7 +37,7 @@
       <nav>
         <a href="{{ user.get_absolute_url() }}">{{ _('Profile') }}</a>
         |
-        <a href="{{ url('users.logout') }}">{{ _('Sign Out') }}</a>
+        <a href="{{ url('account_logout') }}">{{ _('Sign Out') }}</a>
       </nav>
     {% else %}
       <p>

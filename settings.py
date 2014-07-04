@@ -494,8 +494,8 @@ INSTALLED_APPS = (
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.persona',
+    'allauth.socialaccount.providers.github',
     'wiki',
     'kuma.events',
 
@@ -1197,8 +1197,8 @@ OBI_BASE_URL = 'https://backpack.openbadges.org/'
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Auth and permissions related constants
-LOGIN_URL = '/users/login/'
-LOGOUT_URL = '/users/logout/'
+LOGIN_URL = '/users/signin/'
+LOGOUT_URL = '/users/signout/'
 LOGIN_REDIRECT_URL = '/'
 
 # django-allauth configuration

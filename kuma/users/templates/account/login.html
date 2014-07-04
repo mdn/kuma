@@ -1,43 +1,40 @@
 {% extends "account/base.html" %}
 
-{% block head_title %}{{ _("Sign In") }}{% endblock %}
+{% set title = _('Log In') %}
+
+{% set classes = 'login' %}
 
 {% block content %}
+<article id="login">
 
-<h1>{{ _("Sign In") }}</h1>
+  <h1>{{ _("Sign In") }}</h1>
 
 {% if socialaccount.providers  %}
-<p>{% trans site_name=site.name, signup_url=signup_url %}Please sign in with one
-of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
-for a {{site_name}} account and sign in below:{% endtrans %}</p>
-
-<div class="socialaccount_ballot">
-
-  <ul class="socialaccount_providers">
-  {% with process="login" %}
-    {% include "socialaccount/snippets/provider_list.html" %}
-  {% endwith %}
-  </ul>
-
-  <div class="login-or">{{ _("or") }}</div>
-
-</div>
+  <p>
+    {% with process="login" %}
+      {% include "socialaccount/snippets/provider_list.html" %}
+    {% endwith %}
+  </p>
 
 {% include "socialaccount/snippets/login_extra.html" %}
 
-{% else %}
-<p>{% trans signup_url=signup_url %}If you have not created an account yet, then please
-<a href="{{ signup_url }}">sign up</a> first.{% endtrans %}</p>
 {% endif %}
+  {# hidden form to measure bot submissions from this page #}
+  <form class="hidden" method="post" action="{{ url('users.honeypot') }}">
+    {{ csrf() }}
+    <label for='wpName2'>Username</label>
+    <input id="wpName2" tabindex="1" size="20" placeholder="Enter your username" name="wpName" />
 
-<form class="login" method="POST" action="{{ url('account_login') }}">
-  {{ csrf() }}
-  {{ form.as_p() }}
-  {% if redirect_field_value %}
-  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-  {% endif %}
-  <a class="button secondaryAction" href="{{ url('account_reset_password') }}">{{ _("Forgot Password?") }}</a>
-  <button class="primaryAction" type="submit">{{ _("Sign In") }}</button>
-</form>
+    <label for='wpPassword2'>Password</label>
+    <input id="wpPassword2" tabindex="3" size="20" placeholder="Enter a password" type="password" name="wpPassword" />
 
+    <label for='wpRetype'>Confirm password</label>
+    <input id="wpRetype" tabindex="5" size="20" placeholder="Enter password again" type="password" name="wpRetype" />
+
+    <label for='wpEmail'>Email address (optional)</label>
+    <input id="wpEmail" tabindex="6" size="20" placeholder="Enter yourour email address" type="email" name="wpEmail" />
+
+    <input id="wpCreateaccount" tabindex="10" type="submit" value="Create your account" name="wpCreateaccount" />
+  </form>
+</article>
 {% endblock %}

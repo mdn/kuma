@@ -1,12 +1,15 @@
 from django.conf.urls import include, patterns, url
 
+from allauth.account.views import login, logout
 from teamwork.views import user_roles
 from . import views
 
 users_patterns = patterns('',
     url(r'^social/signup/$', views.signup, name='socialaccount_signup'),
-    url(r'^ban/(?P<user_id>\d+)$', views.ban_user, name='users.ban_user'),
     url(r'^', include('allauth.urls')),
+    url(r"^signin/$", login, name="account_login"),
+    url(r"^signout/$", logout, name="account_logout"),
+    url(r'^ban/(?P<user_id>\d+)$', views.ban_user, name='users.ban_user'),
 )
 
 profiles_patterns = patterns('',
