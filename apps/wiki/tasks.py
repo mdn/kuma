@@ -143,19 +143,19 @@ def move_page(locale, slug, new_slug, email):
 
         transaction.commit()
 
-        # Now that we know the move succeeded, re-render the whole tree.
-        for stale_doc in [doc] + doc.get_descendants():
-            stale_doc.schedule_rendering('max-age=0')
+    # Now that we know the move succeeded, re-render the whole tree.
+    for stale_doc in [doc] + doc.get_descendants():
+        stale_doc.schedule_rendering('max-age=0')
 
-        subject = 'Page move completed: ' + slug + ' (' + locale + ')'
-        full_url = settings.SITE_URL + '/' + locale + '/docs/' + new_slug
-        message = """
-    Page move completed.
+    subject = 'Page move completed: ' + slug + ' (' + locale + ')'
+    full_url = settings.SITE_URL + '/' + locale + '/docs/' + new_slug
+    message = """
+Page move completed.
 
-    The move requested for the document with slug %(slug)s in locale
-    %(locale)s, and all its children, has been completed.
+The move requested for the document with slug %(slug)s in locale
+%(locale)s, and all its children, has been completed.
 
-    You can now view this document at its new location: %(full_url)s.
-        """ % {'slug': slug, 'locale': locale, 'full_url': full_url}
-        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL,
-                  [user.email])
+You can now view this document at its new location: %(full_url)s.
+    """ % {'slug': slug, 'locale': locale, 'full_url': full_url}
+    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL,
+              [user.email])
