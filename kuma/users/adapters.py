@@ -1,3 +1,8 @@
+from django import forms
+from django.contrib.auth.models import User
+
+from tower import ugettext_lazy as _
+
 from allauth.account.adapter import DefaultAccountAdapter
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 
@@ -10,6 +15,13 @@ class KumaAccountAdapter(DefaultAccountAdapter):
         (for now)
         """
         return False
+
+    def clean_username(self, username):
+        username = super(KumaAccountAdapter, self).clean_username(username)
+        if User.objects.filter(username=username).exists():
+            raise forms.ValidationError(_(u'The username you entered '
+                                          u'already exists.'))
+        return username
 
 
 class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):

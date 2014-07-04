@@ -3,41 +3,38 @@ import urlparse
 from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth.decorators import permission_required
-from django.contrib.auth.models import User
-from django.contrib import messages
+from django.contrib.auth.models import User, Group
 from django.contrib.sites.models import Site
 from django.shortcuts import redirect
 from django.core.paginator import Paginator
 from django.http import (HttpResponse, HttpResponseRedirect, Http404,
                          HttpResponseForbidden)
 from django.shortcuts import get_object_or_404, render
-from django.views.decorators.http import require_http_methods, require_POST
+from django.utils.http import is_safe_url
+from django.views.decorators.http import require_POST
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.debug import sensitive_post_parameters
-
-from django.utils.http import is_safe_url
 
 from django_browserid.forms import BrowserIDForm
 from django_browserid.auth import get_audience
 from django_browserid import auth as browserid_auth
 
 from access.decorators import login_required
+from allauth.socialaccount.views import SignupView as BaseSignupView
 from badger.models import Award
 import constance.config
 from taggit.utils import parse_tags
 from teamwork.models import Team
-from waffle import switch_is_active
 
 from demos.models import Submission
 from sumo.decorators import ssl_required
 from sumo.urlresolvers import reverse, split_path
 
-from .forms import (BrowserIDRegisterForm, UserBanForm,
-                    UserProfileEditForm, newsletter_subscribe,
-                    get_subscription_details, subscribed_to_newsletter)
+from .forms import (UserBanForm, UserProfileEditForm, SubscriptionForm,
+                    get_subscription_details, subscribed_to_newsletter,
+                    newsletter_subscribe)
 from .models import UserProfile, UserBan
-from .tasks import send_welcome_email
 
 
 SESSION_VERIFIED_EMAIL = getattr(settings, 'BROWSERID_SESSION_VERIFIED_EMAIL',
@@ -140,58 +137,6 @@ def browserid_verify(request):
     request.session[SESSION_REDIRECT_TO] = redirect_to
     return set_browserid_explained(
         HttpResponseRedirect(reverse('users.browserid_register')))
-
-
-@ssl_required
-@sensitive_post_parameters('password')
-def browserid_register(request):
-    """Handle user creation when assertion is valid, but no existing user"""
-    redirect_to = request.session.get(SESSION_REDIRECT_TO,
-        getattr(settings, 'LOGIN_REDIRECT_URL', reverse('home')))
-    email = request.session.get(SESSION_VERIFIED_EMAIL, None)
-
-    if not email:
-        # This is pointless without a verified email.
-        return HttpResponseRedirect(redirect_to)
-
-    # Set up the initial forms
-    register_form = BrowserIDRegisterForm(request.locale)
-
-    if request.method == 'POST':
-        # If the profile creation form was submitted...
-        if 'register' == request.POST.get('action', None):
-            register_form = BrowserIDRegisterForm(request.locale, request.POST)
-            if register_form.is_valid():
-                # If the registration form is valid, then create a new
-                # Django user.
-                # TODO: This all belongs in model classes
-                username = register_form.cleaned_data['username']
-
-                user = User.objects.create(username=username, email=email)
-                user.set_unusable_password()
-                user.save()
-
-                profile = UserProfile.objects.create(user=user)
-                profile.save()
-
-                user.backend = 'django_browserid.auth.BrowserIDBackend'
-                auth.login(request, user)
-
-                if switch_is_active('welcome_email'):
-                    send_welcome_email.delay(user.pk)
-
-                newsletter_subscribe(request, email,
-                                     register_form.cleaned_data)
-                redirect_to = request.session.get(SESSION_REDIRECT_TO,
-                                                  profile.get_absolute_url())
-                return set_browserid_explained(HttpResponseRedirect(redirect_to))
-
-    # HACK: Pretend the session was modified. Otherwise, the data disappears
-    # for the next request.
-    request.session.modified = True
-
-    return render(request, 'users/browserid_register.html',
-                  {'register_form': register_form})
 
 
 @ssl_required
@@ -399,6 +344,17 @@ def profile_edit(request, username):
             # related resources...
             profile_new.save()
 
+            try:
+                # Beta
+                beta_group = Group.objects.get(name=constance.config.BETA_GROUP_NAME)
+                if profile_form.cleaned_data['beta']:
+                    beta_group.user_set.add(request.user)
+                else:
+                    beta_group.user_set.remove(request.user)
+            except Group.DoesNotExist:
+                # If there's no Beta Testers group, ignore that logic
+                pass
+
             # Update tags from form fields
             for field, tag_ns in field_to_tag_ns:
                 tags = [t.lower()
@@ -427,3 +383,11 @@ def apps_newsletter(request):
     return render(request, 'users/apps_newsletter.html', {})
 
 
+class SignupView(BaseSignupView):
+
+    def get_form_kwargs(self):
+        kwargs = super(SignupView, self).get_form_kwargs()
+        kwargs['locale'] = self.request.locale
+        return kwargs
+
+signup = SignupView.as_view()

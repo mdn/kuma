@@ -803,11 +803,10 @@ MAX_FILEPATH_LENGTH = 250
 ATTACHMENT_HOST = 'mdn.mozillademos.org'
 
 # Auth and permissions related constants
-LOGIN_URL = '/users/login'
-LOGOUT_URL = '/users/logout'
-LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "/"
-REGISTER_URL = '/users/register'
+LOGIN_URL = '/users/login/'
+LOGOUT_URL = '/users/logout/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 # Video settings, hard coded here for now.
 # TODO: figure out a way that doesn't need these values
@@ -1216,12 +1215,18 @@ OBI_BASE_URL = 'https://backpack.openbadges.org/'
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # django-allauth configuration
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
+# ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_LOGOUT_ON_GET = True
-ACCOUNT_EMAIL_VERIFICATION = 'none'
-ACCOUNT_ADAPTER = 'kuma.users.adapters.KumaAccountAdapter'
 ACCOUNT_USERNAME_MIN_LENGTH = 3
+ACCOUNT_ADAPTER = 'kuma.users.adapters.KumaAccountAdapter'
+ACCOUNT_SIGNUP_FORM_CLASS = 'kuma.users.forms.SignupForm'
+ACCOUNT_UNIQUE_EMAIL = False
+
 SOCIALACCOUNT_ADAPTER = 'kuma.users.adapters.KumaSocialAccountAdapter'
+SOCIALACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+SOCIALACCOUNT_EMAIL_REQUIRED = False
 SOCIALACCOUNT_AUTO_SIGNUP = False  # forces the use of the signup view
+SOCIALACCOUNT_QUERY_EMAIL = True  # used by the custom github provider

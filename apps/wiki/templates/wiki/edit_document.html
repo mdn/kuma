@@ -142,7 +142,7 @@
 
         </header>
 
-        {% if request.user.get_profile().wiki_activity()|count == 0 %}
+        {% if request.user.get_profile().wiki_activity().count() == 0 %}
           <section class="first-contrib-welcome">
             <h2>{{_('Thank you for taking the time to improve MDN!')}}</h2>
             <p>
