@@ -249,11 +249,7 @@
         $tabzilla.length && $.ajax({
             url: '//mozorg.cdn.mozilla.net/en-US/tabzilla/tabzilla.js',
             dataType: 'script',
-            cache: true,
-            success: function() {
-                $('<link href="//mozorg.cdn.mozilla.net/media/css/tabzilla-min.css" type="text/css" rel="stylesheet" />').appendTo(doc.head);
-                $tabzilla.removeClass('hidden');
-            }
+            cache: true
         });
     })();
 
