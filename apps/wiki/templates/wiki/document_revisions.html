@@ -92,8 +92,10 @@
       var $pagination = $('.pagination');
       var $next = $pagination.find('.next');
 
+      {% set class='disabled' if not request.user.is_authenticated() %}
+
       if($next.length) {
-        $pagination.append('<li><a href="?limit=all" id="pagination-all">' + gettext('View All') + '</a></li>');
+      $pagination.append('<li title="Sign in to view all history"><a href="?limit=all" id="pagination-all" class="{{ class }}">' + gettext('View All') + '</a></li>');
       }
     });
   </script>
