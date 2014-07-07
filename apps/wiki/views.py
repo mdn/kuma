@@ -47,15 +47,15 @@ from search.store import referrer_url
 from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
 from sumo.utils import paginate, smart_int
+from kuma.users.models import UserProfile
 from wiki import (DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX,
                   SLUG_CLEANSING_REGEX)
 from wiki.decorators import (check_readonly, process_document_path,
                              allow_CORS_GET, prevent_indexing)
 from wiki.events import EditDocumentEvent
-from wiki.forms import (DocumentForm, RevisionForm,
+from wiki.forms import (DocumentForm, RevisionForm, DocumentContentFlagForm,
                         RevisionValidationForm, AttachmentRevisionForm,
-                        TreeMoveForm, DocumentDeletionForm,
-                        DocumentContentFlagForm)
+                        TreeMoveForm, DocumentDeletionForm)
 from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
                          DocumentZone,
                          DocumentTag, ReviewTag, LocalizationTag, Attachment,
@@ -2428,13 +2428,13 @@ def flag(request, document_slug, document_locale):
                             slug=document_slug,
                             locale=document_locale)
 
-    if request.method == POST:
-        form = WikiContentFlagForm(data=request.POST)
+    if request.method == 'POST':
+        form = DocumentContentFlagForm(data=request.POST)
         if form.is_valid():
             flag_type = form.cleaned_data['flag_type']
             recipients = None
             if (flag_type in FLAG_NOTIFICATIONS and
-                FLAG_NOTIFICATIONS[flag_type]):
+                    FLAG_NOTIFICATIONS[flag_type]):
                 recipients = [profile.user.email for profile in
                               UserProfile.objects.filter(
                                   content_flagging_email=True)]
@@ -2447,6 +2447,6 @@ def flag(request, document_slug, document_locale):
                 'wiki.document', locale=document_locale,
                 args=[document_slug]))
     else:
-        form = WikiContentFlagForm(data=request.GET)
+        form = DocumentContentFlagForm(data=request.GET)
     return render(request, 'wiki/flag.html', {
         'form': form, 'doc': doc})
