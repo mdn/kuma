@@ -109,15 +109,17 @@ def bugize_text(content):
 def format_comment(rev):
     """ Massages revision comment content after the fact """
 
-    prev_rev = rev.get_previous()
+    prev_rev = getattr(rev, 'previous_revision', None)
+    if prev_rev is None:
+        prev_rev = rev.get_previous()
     comment = bugize_text(rev.comment if rev.comment else "")
 
     #  If a page move, say so
     if prev_rev and prev_rev.slug != rev.slug:
-        comment += jinja2.Markup('<span class="slug-change">'
-                                 'Moved From <strong>%s</strong> '
-                                 'to <strong>%s</strong></span>') % (
-                                     prev_rev.slug, rev.slug)
+        comment += (jinja2.Markup('<span class="slug-change">'
+                                  'Moved From <strong>%s</strong> '
+                                  'to <strong>%s</strong></span>') %
+                    (prev_rev.slug, rev.slug))
 
     return comment
 

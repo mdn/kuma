@@ -57,6 +57,7 @@ from .content import (get_seo_description, get_content_sections,
 from .exceptions import (UniqueCollision, SlugCollision, PageMoveError,
                          DocumentRenderingInProgress,
                          DocumentRenderedContentNotAvailable)
+from .managers import TransformManager
 from .signals import render_done
 
 add_introspection_rules([], ["^utils\.OverwritingFileField"])
@@ -2119,6 +2120,8 @@ class Revision(models.Model):
 
     is_mindtouch_migration = models.BooleanField(default=False, db_index=True,
             help_text="Did this revision come from MindTouch?")
+
+    objects = TransformManager()
 
     def get_absolute_url(self):
         """Build the absolute URL to this revision"""

@@ -71,6 +71,7 @@ from wiki.tasks import move_page
 from wiki.helpers import format_comment
 import wiki.content
 from wiki import kumascript
+from .queries import MultiQuerySet
 
 
 log = logging.getLogger('k.wiki')
@@ -1466,45 +1467,61 @@ def autosuggest_documents(request):
 @prevent_indexing
 def document_revisions(request, document_slug, document_locale):
     """List all the revisions of a given document."""
-    doc = get_object_or_404(Document,
-                            locale=document_locale,
-                            slug=document_slug)
-    if doc.current_revision is None:
+    document = get_object_or_404(Document,
+                                 locale=document_locale,
+                                 slug=document_slug)
+    if document.current_revision is None:
         raise Http404
+
+    def get_previous(revisions):
+        previous_revisions = (Revision.objects.filter(document=document,
+                                                     is_approved=True)
+                                              .order_by('-created')
+                                              .prefetch_related('document'))
+        for revision in revisions:
+            revision.previous_revision = None
+            for previous_revision in previous_revisions:
+                if previous_revision.created < revision.created:
+                    revision.previous_revision = previous_revision
+                    break
+
+        return revisions
 
     # Grab revisions, but defer summary and content because they can lead to
     # attempts to cache more than memcached allows.
-    revs = (Revision.objects.filter(document=doc)
-                            .defer('summary', 'content')
-                            .order_by('-created', '-id'))
-    if not revs.exists():
-        raise Http404
+    revisions = MultiQuerySet(
+        (Revision.objects.filter(pk=document.current_revision.pk)
+                         .prefetch_related('creator')
+                         .transform(get_previous)),
+        (Revision.objects.filter(document=document)
+                         .order_by('-created', '-id')
+                         .exclude(pk=document.current_revision.pk)
+                         .prefetch_related('creator')
+                         .transform(get_previous))
+    )
 
-    # Get the page from the request, make sure it's an int.
-    try:
-        page = int(request.GET.get('page', 1))
-    except ValueError:
-        page = 1
+    if not revisions.exists():
+        raise Http404
 
     per_page = request.GET.get('limit', 10)
 
-    if per_page != 'all':
+    if per_page == 'all':
+        page = None
+    else:
         try:
             per_page = int(per_page)
         except ValueError:
             per_page = DOCUMENTS_PER_PAGE
-        page = paginate(request, revs, per_page)
-        revs = [r for r in page.object_list]
 
-    # Ensure the current revision appears at the top, no matter where it
-    # appears in the order.
-    curr_id = doc.current_revision.id
-    revs_out = [r for r in revs if r.id == curr_id]
-    revs_out.extend([r for r in revs if r.id != curr_id])
+        page = paginate(request, revisions, per_page)
+        revisions = page.object_list
 
-    return render(request, 'wiki/document_revisions.html',
-                        {'revisions': revs_out, 'document': doc,
-                         'page': page, 'revs': revs, 'curr_id': curr_id})
+    context = {
+        'revisions': revisions,
+        'document': document,
+        'page': page,
+    }
+    return render(request, 'wiki/document_revisions.html', context)
 
 
 @require_GET
