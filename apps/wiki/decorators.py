@@ -12,7 +12,7 @@ from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
 
 from .exceptions import ReadOnlyException
-from .models import Document
+from .utils import locale_and_slug_from_path
 
 
 def prevent_indexing(func):
@@ -37,6 +37,7 @@ def allow_CORS_GET(func):
 
 
 def check_readonly(view):
+    """Decorator to enable readonly mode"""
     def _check_readonly(request, *args, **kwargs):
         if not flag_is_active(request, 'kumaediting'):
             raise ReadOnlyException("kumaediting")
@@ -69,8 +70,8 @@ def process_document_path(func, reverse_name='wiki.document'):
         if document_path:
 
             # Parse the document path into locale and slug.
-            document_locale, document_slug, needs_redirect = (Document
-                    .locale_and_slug_from_path(document_path, request))
+            document_locale, document_slug, needs_redirect = (
+                locale_and_slug_from_path(document_path, request))
 
             # Add check for "local" URL, remove trailing slash
             slug_length = len(document_slug)

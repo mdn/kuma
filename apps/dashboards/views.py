@@ -15,7 +15,6 @@ from sumo.utils import paginate, smart_int
 from kuma.users.helpers import ban_link
 
 from wiki.models import Document, Revision
-from wiki.helpers import format_comment
 
 from dashboards.forms import RevisionDashboardForm
 

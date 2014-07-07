@@ -17,6 +17,8 @@ from tower import ugettext as _
 
 from sumo.urlresolvers import reverse
 
+from .utils import locale_and_slug_from_path
+
 
 # Regex to extract language from MindTouch code elements' function attribute
 MT_SYNTAX_PAT = re.compile(r"""syntax\.(\w+)""")
@@ -439,9 +441,9 @@ class LinkAnnotationFilter(html5lib_Filter):
 
                 # Try to sort out the locale and slug through some of our
                 # redirection logic.
-                locale, slug, needs_redirect = (Document
-                        .locale_and_slug_from_path(href_path,
-                                                   path_locale=href_locale))
+                locale, slug, needs_redirect = (
+                    locale_and_slug_from_path(href_path,
+                                              path_locale=href_locale))
 
                 # Gather up this link for existence check
                 needs_existence_check[locale.lower()][slug.lower()].add(href)

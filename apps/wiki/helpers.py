@@ -14,14 +14,11 @@ import jinja2
 from pyquery import PyQuery as pq
 from tidylib import tidy_document
 from tower import ugettext as _
+from teamwork.shortcuts import build_policy_admin_links
 
 from sumo.urlresolvers import reverse
-import wiki
-import wiki.content
-from wiki import DIFF_WRAP_COLUMN
 
-
-from teamwork.shortcuts import build_policy_admin_links
+from .constants import DIFF_WRAP_COLUMN
 
 
 register.function(build_policy_admin_links)
