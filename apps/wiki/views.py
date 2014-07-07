@@ -143,8 +143,8 @@ def _split_slug(slug):
         root = slug_split[0]
 
         if root in bad_seo_roots:
-           if length > 2:
-            seo_root = root + '/' + slug_split[1]
+            if length > 2:
+                seo_root = root + '/' + slug_split[1]
         else:
             seo_root = root
 
@@ -182,7 +182,7 @@ def _get_doc_and_fallback_reason(document_locale, document_slug):
     try:
         doc = Document.objects.get(locale=document_locale, slug=document_slug)
         if (not doc.current_revision and doc.parent and
-            doc.parent.current_revision):
+                doc.parent.current_revision):
             # This is a translation but its current_revision is None
             # and OK to fall back to parent (parent is approved).
             fallback_reason = 'translation_not_approved'
@@ -1466,20 +1466,26 @@ def autosuggest_documents(request):
 @prevent_indexing
 def document_revisions(request, document_slug, document_locale):
     """List all the revisions of a given document."""
-    doc = get_object_or_404(
-        Document, locale=document_locale, slug=document_slug)
+    doc = get_object_or_404(Document,
+                            locale=document_locale,
+                            slug=document_slug)
     if doc.current_revision is None:
         raise Http404
 
     # Grab revisions, but defer summary and content because they can lead to
     # attempts to cache more than memcached allows.
     revs = (Revision.objects.filter(document=doc)
-                .defer('summary', 'content')
-                .order_by('-created', '-id'))
+                            .defer('summary', 'content')
+                            .order_by('-created', '-id'))
     if not revs.exists():
         raise Http404
 
-    page = None
+    # Get the page from the request, make sure it's an int.
+    try:
+        page = int(request.GET.get('page', 1))
+    except ValueError:
+        page = 1
+
     per_page = request.GET.get('limit', 10)
 
     if per_page != 'all':
@@ -2418,8 +2424,7 @@ def edit_attachment(request, attachment_id):
             return HttpResponseRedirect(attachment.get_absolute_url())
     else:
         form = AttachmentRevisionForm()
-    return render(request, 'wiki/edit_attachment.html',
-                        {'form': form})
+    return render(request, 'wiki/edit_attachment.html', {'form': form})
 
 
 @xframe_options_sameorigin
