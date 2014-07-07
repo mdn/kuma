@@ -17,6 +17,7 @@ from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.core.cache import cache
 from django.db import transaction
+from django.db.models import Q
 from django.http import (HttpResponse, HttpResponseRedirect,
                          HttpResponsePermanentRedirect,
                          Http404, HttpResponseBadRequest)
@@ -2435,9 +2436,12 @@ def flag(request, document_slug, document_locale):
             recipients = None
             if (flag_type in FLAG_NOTIFICATIONS and
                     FLAG_NOTIFICATIONS[flag_type]):
-                recipients = [profile.user.email for profile in
-                              UserProfile.objects.filter(
-                                  content_flagging_email=True)]
+                query = Q(user__email__isnull=True) | Q(user__email='')
+                recipients = (UserProfile.objects.exclude(query)
+                                                 .values_list('user__email',
+                                                              flat=True))
+                recipients = list(recipients)
+
             flag, created = ContentFlag.objects.flag(
                 request=request, object=doc,
                 flag_type=flag_type,
