@@ -27,3 +27,9 @@ class PageMoveError(Exception):
     """
     Exception raised by most failures during page move.
     """
+
+
+class ReadOnlyException(Exception):
+    """
+    A special exception to signal the wiki is read-only
+    """

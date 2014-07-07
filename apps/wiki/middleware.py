@@ -3,8 +3,8 @@ from django.http import HttpResponseRedirect
 
 from sumo.helpers import urlparams
 
-from wiki import ReadOnlyException
-from wiki.models import DocumentZone
+from .exceptions import ReadOnlyException
+from .models import DocumentZone
 
 
 class ReadOnlyMiddleware(object):
