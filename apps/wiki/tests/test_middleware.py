@@ -6,7 +6,8 @@ from sumo.urlresolvers import reverse
 
 from . import TestCaseBase
 
-from wiki.models import DocumentZone, SECONDARY_CACHE_ALIAS
+from wiki.constants import SECONDARY_CACHE_ALIAS
+from wiki.models import DocumentZone
 from wiki.tests import revision
 
 

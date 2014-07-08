@@ -13,7 +13,7 @@ from django.contrib.sites.models import Site
 
 import constance.config
 
-from wiki import KUMASCRIPT_TIMEOUT_ERROR
+from .constants import KUMASCRIPT_TIMEOUT_ERROR
 
 
 def should_use_rendered(doc, params, html=None):

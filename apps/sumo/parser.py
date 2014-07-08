@@ -5,7 +5,6 @@ from tower import ugettext_lazy as _lazy
 from wikimarkup.parser import Parser
 
 from sumo.urlresolvers import reverse
-from wiki.models import Document
 
 
 ALLOWED_ATTRIBUTES = {
@@ -93,6 +92,7 @@ def _get_wiki_link(title, locale):
     found is False if the document does not exist.
 
     """
+    from wiki.models import Document
     d = get_object_fallback(Document, locale=locale, title=title,
                             is_template=False)
     if d:

@@ -23,10 +23,10 @@ import constance.config
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
 from sumo.tests import post, get
-from wiki.cron import calculate_related_documents
 from wiki.events import EditDocumentEvent
+from wiki.constants import REDIRECT_CONTENT
 from wiki.models import (Document, Revision, HelpfulVote,
-                         DocumentTag, Attachment, TOC_DEPTH_H4)
+                         DocumentTag, Attachment)
 from wiki.tests import (TestCaseBase, document, revision, new_document_data,
                         create_topical_parents_docs, make_test_file)
 from devmo.tests import SkippedTestCase
@@ -150,7 +150,6 @@ class DocumentTests(TestCaseBase):
 
         # Ordinarily, a document with no approved revisions cannot have HTML,
         # but we shove it in manually here as a shortcut:
-        from wiki.models import REDIRECT_CONTENT
         redirect_html = REDIRECT_CONTENT % dict(title='Boo', href=target_url)
         redirect = document(html=redirect_html)
         redirect.save()
@@ -1226,4 +1225,4 @@ def _translation_data():
         'keywords': 'keyUno, keyDos, keyTres',
         'summary': 'lipsumo',
         'content': 'loremo ipsumo doloro sito ameto',
-        'toc_depth': TOC_DEPTH_H4}
+        'toc_depth': Revision.TOC_DEPTH_H4}

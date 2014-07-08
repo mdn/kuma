@@ -30,8 +30,7 @@ from wiki.exceptions import (PageMoveError,
                              DocumentRenderedContentNotAvailable,
                              DocumentRenderingInProgress)
 from wiki.models import (Document, Revision,
-                         Attachment, DocumentZone, CATEGORIES,
-                         get_current_or_latest_revision,
+                         Attachment, DocumentZone,
                          TaggedDocument,)
 from wiki.tests import (document, revision, doc_rev, normalize_html,
                         create_template_test_users,
@@ -224,8 +223,8 @@ class DocumentTests(TestCase):
 
     def test_category_inheritance(self):
         """A document's categories must always be those of its parent."""
-        some_category = CATEGORIES[1][0]
-        other_category = CATEGORIES[0][0]
+        some_category = Document.CATEGORIES[1][0]
+        other_category = Document.CATEGORIES[0][0]
 
         # Notice if somebody ever changes the default on the category field,
         # which would invalidate our test:
@@ -764,24 +763,24 @@ class RelatedDocumentTests(TestCase):
 class GetCurrentOrLatestRevisionTests(TestCase):
     fixtures = ['test_users.json']
 
-    """Tests for get_current_or_latest_revision."""
+    """Tests for current_or_latest_revision."""
     def test_single_approved(self):
         """Get approved revision."""
         rev = revision(is_approved=True, save=True)
-        eq_(rev, get_current_or_latest_revision(rev.document))
+        eq_(rev, rev.document.current_or_latest_revision())
 
     def test_multiple_approved(self):
         """When multiple approved revisions exist, return the most recent."""
         r1 = revision(is_approved=True, save=True)
         r2 = revision(is_approved=True, save=True, document=r1.document)
-        eq_(r2, get_current_or_latest_revision(r2.document))
+        eq_(r2, r2.document.current_or_latest_revision())
 
     def test_latest(self):
         """Return latest revision when no current exists."""
         r1 = revision(is_approved=False, save=True,
                       created=datetime.now() - timedelta(days=1))
         r2 = revision(is_approved=False, save=True, document=r1.document)
-        eq_(r2, get_current_or_latest_revision(r1.document))
+        eq_(r2, r1.document.current_or_latest_revision())
 
 
 class DumpAndLoadJsonTests(TestCase):
