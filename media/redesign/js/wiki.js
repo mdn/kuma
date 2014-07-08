@@ -165,7 +165,7 @@
 
             if($sublist.length) {
                 $li.addClass('toggleable closed');
-                $li.find('> a').addClass('toggler').prepend('<i aria-hidden="true" class="icon-caret-up"></i>');
+                $li.find('> a').addClass('toggler').prepend('<i aria-hidden="true" class="fa-caret-up"></i>');
                 $sublist.addClass('toggle-container');
             }
         });

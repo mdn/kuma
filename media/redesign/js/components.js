@@ -61,7 +61,7 @@
                     // Add the close
                     var $closeButton = $('<button type="button" class="submenu-close transparent">\
                         <span class="offscreen">' + gettext('Close submenu') + '</span>\
-                        <i aria-hidden="true" class="icon-remove-sign"></i>\
+                        <i aria-hidden="true" class="fa-remove-sign"></i>\
                     </button>').appendTo($submenu);
 
                     // Hide the submenu when the main menu is blurred for hideDelay
@@ -312,8 +312,8 @@
             }
 
             function setIcon($tog, $li) {
-                var openIcon = $tog.attr('data-open-icon') || 'icon-caret-right';
-                var closedIcon = $tog.attr('data-closed-icon') || 'icon-caret-down';
+                var openIcon = $tog.attr('data-open-icon') || 'fa-caret-right';
+                var closedIcon = $tog.attr('data-closed-icon') || 'fa-caret-down';
                 $tog.find('i').attr('class', (getState($li) ? openIcon : closedIcon));
             }
 
