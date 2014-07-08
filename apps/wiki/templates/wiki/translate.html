@@ -87,7 +87,7 @@
 
             <section class="page-meta">
             <section class="page-tags">
-              <h3><i aria-hidden="true" class="icon-tag"></i>{{ _('Tags') }}</h3>
+              <h3><i aria-hidden="true" class="fa fa-tag"></i>{{ _('Tags') }}</h3>
                 {% set parent_tags = parent.tags.all() %}
               <div id="translate-tags">
                 {% if parent_tags | length %}
@@ -123,7 +123,7 @@
         <div class="localized">
 
             <section id="page-tags" class="page-tags wiki-block">
-              <h2><i aria-hidden="true" class="icon-tag"></i>{{ _('Tags') }} <a href="{{ devmo_url('Project:MDN/Contributing/Editor_guide/Editing#The_tags_box') }}"><i aria-hidden="true" title="{{ _('Learn how to tag an article') }}" class="icon-question-sign editor-help-icon"></i></a></h2>
+              <h2><i aria-hidden="true" class="fa fa-tag"></i>{{ _('Tags') }} <a href="{{ devmo_url('Project:MDN/Contributing/Editor_guide/Editing#The_tags_box') }}"><i aria-hidden="true" title="{{ _('Learn how to tag an article') }}" class="fa fa-question-sign editor-help-icon"></i></a></h2>
               <p>
                 {% trans url=devmo_url('Project:MDN/Contributing/Tagging_standards') %}
                   Categorize the article. It will make the article findable under the right filters in the search engine. <a target="_blank" href="{{ url }}">Read the Tagging Guide</a>.

@@ -39,7 +39,7 @@
     <h2 class="offscreen">{{ _('Web Technologies') }}</h2>
     <div class="column-container">
       <div class="column-home-features">
-        <h3><i aria-hidden="true" class="icon-file-text-alt"></i><span>{{ _('Web<br />Platform') }}</span></h3>
+        <h3><i aria-hidden="true" class="fa fa-file-text-alt"></i><span>{{ _('Web<br />Platform') }}</span></h3>
         <ul>
           <li><a href="{{ devmo_url('Web/Reference/API') }}">{{ _('Web APIs &amp; DOM') }}</a></li>
           <li><a href="{{ devmo_url('Web/HTML') }}">{{ _('HTML') }}</a> &amp; <a href="{{ devmo_url('Web/Guide/HTML/HTML5') }}">{{ _('HTML5') }}</a></li>
@@ -49,7 +49,7 @@
         </ul>
       </div>
       <div class="column-home-features">
-        <h3 class="zones"><i aria-hidden="true" class="icon-suitcase"></i><span>{{ _('Zones') }}</span></h3>
+        <h3 class="zones"><i aria-hidden="true" class="fa fa-suitcase"></i><span>{{ _('Zones') }}</span></h3>
         <ul>
           <li><a href="{{ devmo_url('Firefox') }}">{{ _('Firefox') }}</a></li>
           <li><a href="{{ devmo_url('Firefox_OS') }}">{{ _('Firefox OS') }}</a></li>
@@ -59,7 +59,7 @@
         </ul>
       </div>
       <div class="column-home-features">
-        <h3><i aria-hidden="true" class="icon-wrench"></i><span>{{ _('Developer<br />Tools') }}</span></h3>
+        <h3><i aria-hidden="true" class="fa fa-wrench"></i><span>{{ _('Developer<br />Tools') }}</span></h3>
         <ul>
         <li><a href="{{ devmo_url('Mozilla/Firefox_OS/Using_the_App_Manager') }}">{{ _('Firefox OS App Manager') }}</a></li>
         <li><a href="{{ devmo_url('Tools/Page_Inspector') }}">{{ _('Page Inspector') }}</a></li>
@@ -69,7 +69,7 @@
         </ul>
       </div>
       <div class="column-home-features">
-        <h3 class="connect"><i aria-hidden="true" class="icon-certificate"></i><span>{{ _('Connect') }}</span></h3>
+        <h3 class="connect"><i aria-hidden="true" class="fa fa-certificate"></i><span>{{ _('Connect') }}</span></h3>
         <p>{{ _('Get Web technology news from Mozilla, get help from other developers, and more!') }}</p>
         <p><a href="{{ devmo_url('Mozilla/Connect') }}">{{ _('Learn more and sign up!') }}</a></p>
       </div>
@@ -97,7 +97,7 @@
 <!-- hacks area -->
 <div class="home-hacks"><div class="column-container center">
   <div class="column-hacks" dir="ltr">
-    <h2><i aria-hidden="true" class="icon-star"></i> Hacks Blog<span class="heading-link">{{ _('<a href="http://hacks.mozilla.org">read more at hacks.mozilla.org <i aria-hidden="true" class="icon-arrow-right"></i></a></span>') }}</h2>
+    <h2><i aria-hidden="true" class="fa fa-star"></i> Hacks Blog<span class="heading-link">{{ _('<a href="http://hacks.mozilla.org">read more at hacks.mozilla.org <i aria-hidden="true" class="fa fa-arrow-right"></i></a></span>') }}</h2>
     {{ newsfeed(updates, section_headers=True) }}
   </div>
   <div class="column-involved">
@@ -121,11 +121,11 @@
   </div>
 {% endif %}
 
-<h2><i aria-hidden="true" class="icon-magic blue"></i> {{ _('See & submit demos') }}
+<h2><i aria-hidden="true" class="fa fa-magic blue"></i> {{ _('See & submit demos') }}
   {% if not waffle.flag('derby_closed') %}
-    <a href="{{ url('demos_devderby_landing') }}" class="heading-link">{{ _('MDN Dev Derby <i aria-hidden="true" class="icon-arrow-right"></i>') }}</a>
+    <a href="{{ url('demos_devderby_landing') }}" class="heading-link">{{ _('MDN Dev Derby <i aria-hidden="true" class="fa fa-arrow-right"></i>') }}</a>
   {% else %}
-    <a href="{{ url('demos') }}" class="heading-link">{{ _('MDN Demo Studio <i aria-hidden="true" class="icon-arrow-right"></i>') }}</a>
+    <a href="{{ url('demos') }}" class="heading-link">{{ _('MDN Demo Studio <i aria-hidden="true" class="fa fa-arrow-right"></i>') }}</a>
   {% endif %}
 </h2>
 <div class="home-demos-list">
@@ -139,7 +139,7 @@
 
 <!-- contributions section -->
 <div class="home-contribute"><div class="center">
-  <h2><i aria-hidden="true" class="icon-smile"></i> {{ _('Help improve MDN') }}</h2>
+  <h2><i aria-hidden="true" class="fa fa-smile"></i> {{ _('Help improve MDN') }}</h2>
 
   <div class="column-container">
     <div class="column-half">

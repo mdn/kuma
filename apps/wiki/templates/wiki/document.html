@@ -161,17 +161,17 @@
       <div id="wiki-document-head" class="document-head">
         {% if waffle.flag('search_doc_navigator') %}
           <span class="from-search-previous-box">
-            <a class="button from-search-previous only-icon disabled" title="{{ _('Previous Search Result') }}" data-empty-title="{{ _('No Previous Search Result') }}"><i aria-hidden="true" class="icon-chevron-left"></i></a>
+            <a class="button from-search-previous only-icon disabled" title="{{ _('Previous Search Result') }}" data-empty-title="{{ _('No Previous Search Result') }}"><i aria-hidden="true" class="fa fa-chevron-left"></i></a>
           </span>
           <span class="from-search-navigate-wrap">
-            <a href="#" class="from-search-navigate"><span class="from-search-navigate-up"><i aria-hidden="true" class="icon-double-angle-up"></i></span><span class="from-search-navigate-down"><i aria-hidden="true" class="icon-double-angle-down"></i></span></a>
+            <a href="#" class="from-search-navigate"><span class="from-search-navigate-up"><i aria-hidden="true" class="fa fa-double-angle-up"></i></span><span class="from-search-navigate-down"><i aria-hidden="true" class="fa fa-double-angle-down"></i></span></a>
           </span>
           <div class="from-search-toc">
             <span class="title">{{ _('Your Search Results') }}</span>
             <ol></ol>
           </div>
           <span class="from-search-next-box">
-            <a class="button from-search-next only-icon disabled" title="{{ _('Next Search Result') }}" data-empty-title="{{ _('No Previous Search Result') }}"><i aria-hidden="true" class="icon-chevron-right"></i></a>
+            <a class="button from-search-next only-icon disabled" title="{{ _('Next Search Result') }}" data-empty-title="{{ _('No Previous Search Result') }}"><i aria-hidden="true" class="fa fa-chevron-right"></i></a>
           </span>
           {% endif %}
         <h1>{{ document.title }}</h1>
@@ -224,7 +224,7 @@
             <div class="column-half">
             </div>
             <div class="column-strip quick-links hidden">
-              <a href="#show-quick-links" class="title smaller" id="show-quick-links"><i aria-hidden="true" class="icon-caret-down"></i>{{ _('Show Sidebar') }}</a>
+              <a href="#show-quick-links" class="title smaller" id="show-quick-links"><i aria-hidden="true" class="fa fa-caret-down"></i>{{ _('Show Sidebar') }}</a>
             </div>
           </div>
           {% endif %}
@@ -238,7 +238,7 @@
               {% if toc_html %}
               <!-- table of contents -->
               <div id="toc" class="toc toggleable">
-                <a href="#toc" class="title toggler" data-open-icon="icon-plus" data-closed-icon="icon-minus">{{ _('In This Article') }}<i></i></a>
+                <a href="#toc" class="title toggler" data-open-icon="fa fa-plus" data-closed-icon="fa fa-minus">{{ _('In This Article') }}<i></i></a>
                 <ol class="toggle-container">
                   {{ toc_html|safe }}
                 </ol>
@@ -361,18 +361,18 @@
                   {% if tags.exists() %}
                   <!-- tags if present -->
                   <div class="tag-attach-list tags contributor-sub">
-                    <i aria-hidden="true" class="icon-tags"></i><strong>{{ _('Tags:') }}</strong>
+                    <i aria-hidden="true" class="fa fa-tags"></i><strong>{{ _('Tags:') }}</strong>
                     <ul class="tag-list">{% for tag in tags %}<li><a href="{{ url('wiki.tag', tag.name) }}">{{ tag.name }}</a></li>{% endfor %}</ul>
                   </div>
                   {% endif %}
                   {% trans contributors=user_list(contributors) %}
                   <div class="contributor-sub">
-                    <i aria-hidden="true" class="icon-group"></i><strong>Contributors to this page:</strong> {{ contributors }}
+                    <i aria-hidden="true" class="fa fa-group"></i><strong>Contributors to this page:</strong> {{ contributors }}
                   </div>
                   {% endtrans %}
                   {% if current_revision.creator %}
                     <div class="contributor-sub">
-                      <i aria-hidden="true" class="icon-time"></i><strong>{{ _('Last updated by:') }}</strong>
+                      <i aria-hidden="true" class="fa fa-time"></i><strong>{{ _('Last updated by:') }}</strong>
                       <a href="{{ current_revision.creator.get_absolute_url() }}">{{ current_revision.creator }}</a>,
                       {{ datetimeformat(current_revision.created, format='datetime') }}
                     </div>
@@ -387,7 +387,7 @@
 
               {% if not is_zone_root %}
 
-                <a href="#quick-links" class="title smaller" id="quick-links-toggle"><i aria-hidden="true" class="icon-caret-up"></i>{{ _('Hide Sidebar') }}</a>
+                <a href="#quick-links" class="title smaller" id="quick-links-toggle"><i aria-hidden="true" class="fa fa-caret-up"></i>{{ _('Hide Sidebar') }}</a>
 
                 {% if zone_subnav_html %}
                   <!-- zone subnav -->

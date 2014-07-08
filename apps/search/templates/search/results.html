@@ -21,7 +21,7 @@
 {% macro doc_block(doc, index) -%}
   <li class="result-{{ index }}">
     <div class="column-container">
-      <div class="column-1"><i aria-hidden="true" class="icon-file-text-alt"></i></div>
+      <div class="column-1"><i aria-hidden="true" class="fa fa-file-text-alt"></i></div>
       <div class="column-5 result-list-item">
         <h4><a href="{{ doc.url }}"{% if index == 1 %} tabindex="1"{% endif %}>{{ doc.title }}</a></h4>
         <p>{{ doc.excerpt|safe }}</p>
@@ -128,7 +128,7 @@
 
         {% if count %}
         <div class="search-pane search-results-container">
-          <h3><i aria-hidden="true" class="icon-copy"></i>{{ _('Docs') }}</h3>
+          <h3><i aria-hidden="true" class="fa fa-copy"></i>{{ _('Docs') }}</h3>
 
           <ul class="result-list">
             {% for doc in documents %}
@@ -163,11 +163,11 @@
         <fieldset>
         {% for filter_group in filters %}
           <fieldset>
-            <legend><i aria-hidden="true" class="icon-th-list"></i><span class="offscreen">{{ _('Filter by') }} </span>{{ filter_group.name }}</legend>
+            <legend><i aria-hidden="true" class="fa fa-th-list"></i><span class="offscreen">{{ _('Filter by') }} </span>{{ filter_group.name }}</legend>
             {% for filter in filter_group.options %}
               {% if filter.count == 0 %}
               <label class="inactive">
-                <i aria-hidden="true" class="icon-check-empty"></i>
+                <i aria-hidden="true" class="fa fa-check-empty"></i>
                 <input type="checkbox" class="offscreen" name="{{ filter_group.slug }}" value="{{ filter.slug }}" disabled="disabled">{{ filter.name }}
                 <span class="offscreen"> includes</span>
                 <span class="filter-count">{{ filter.count }}
@@ -176,7 +176,7 @@
               </label>
               {% elif filter.slug in selected_filters %}
               <label class="checked">
-                <i aria-hidden="true" class="icon-check"></i>
+                <i aria-hidden="true" class="fa fa-check"></i>
                 <input type="checkbox" checked="checked" class="offscreen" name="{{ filter_group.slug }}" value="{{ filter.slug }}">
                 <span class="filter-name">{{ filter.name }}</span>
                 <span class="offscreen">includes </span>
@@ -186,7 +186,7 @@
               </label>
               {% else %}
               <label>
-                <i aria-hidden="true" class="icon-check-empty"></i>
+                <i aria-hidden="true" class="fa fa-check-empty"></i>
                 <input type="checkbox" class="offscreen" name="{{ filter_group.slug }}" value="{{ filter.slug }}">
                 <span class="filter-name">{{ filter.name }}</span>
                 <span class="offscreen">includes </span>

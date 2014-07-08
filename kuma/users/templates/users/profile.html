@@ -51,13 +51,13 @@
         <div class="edit">
           {% if show_manage_roles_button %}
               {# TODO: Need a method to detect whether the logged in user can manage any roles, here #}
-              <a href="{{ url('teamwork.views.user_roles', profile.user.username) }}" class="button neutral">{{_("Manage Roles")}}<i aria-hidden="true" class="icon-users"></i></a>
+              <a href="{{ url('teamwork.views.user_roles', profile.user.username) }}" class="button neutral">{{_("Manage Roles")}}<i aria-hidden="true" class="fa fa-users"></i></a>
           {% endif %}
           {{ ban_link(profile.user, request.user) }}
           <!-- Only shown for the user and admins -->
           {% if profile.allows_editing_by(request.user) and request.user == profile.user %}
-              <a id="edit-profile" href="{{ url('users.profile_edit', username=profile.user.username) }}" class="button neutral">{{_("Edit")}}<i aria-hidden="true" class="icon-pencil"></i></a>
-              <button id="advanced-menu" class="neutral only-icon" {{ disabled_attr }} aria-haspopup="true" aria-owns="advanced-menu-submenu" aria-expanded="false"><span>{{ _('Advanced') }}</span><i aria-hidden="true" class="icon-cog"></i></button>
+              <a id="edit-profile" href="{{ url('users.profile_edit', username=profile.user.username) }}" class="button neutral">{{_("Edit")}}<i aria-hidden="true" class="fa fa-pencil"></i></a>
+              <button id="advanced-menu" class="neutral only-icon" {{ disabled_attr }} aria-haspopup="true" aria-owns="advanced-menu-submenu" aria-expanded="false"><span>{{ _('Advanced') }}</span><i aria-hidden="true" class="fa fa-cog"></i></button>
               <div class="submenu" id="advanced-menu-submenu">
                 <!-- this page -->
                 <div class="submenu-column">

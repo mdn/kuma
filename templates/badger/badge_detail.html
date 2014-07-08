@@ -43,7 +43,7 @@
         {% if badge.tags and badge.tags.count() %}
         <ul class="tags">
             {% for tag in badge.tags.all() %}
-                <li><a class="tag" href="{{ url('badger.badges_list', tag_name=tag.name) }}"><i class="icon-tag icon-white"></i> {{ tag.name }}</a></li>
+                <li><a class="tag" href="{{ url('badger.badges_list', tag_name=tag.name) }}"><i class="fa fa-tag fa fa-white"></i> {{ tag.name }}</a></li>
             {% endfor %}
         </ul>
         {% endif %}
