@@ -1471,17 +1471,18 @@ def document_revisions(request, document_slug, document_locale):
         raise Http404
 
     def get_previous(revisions):
-        previous_revisions = (Revision.objects.filter(document=document,
-                                                     is_approved=True)
-                                              .order_by('-created')
-                                              .prefetch_related('document'))
-        for revision in revisions:
-            revision.previous_revision = None
-            for previous_revision in previous_revisions:
-                if previous_revision.created < revision.created:
-                    revision.previous_revision = previous_revision
+        for current_revision in revisions:
+            for previous_revision in revisions:
+                # we filter out all revisions that are not approved
+                # as that's the way the get_previous method does it as well
+                # also let's skip comparing the same revisions
+                if (not previous_revision.is_approved or
+                        current_revision.pk == previous_revision.pk):
+                    continue
+                # we stick to the first revision that we find
+                if previous_revision.created < current_revision.created:
+                    current_revision.previous_revision = previous_revision
                     break
-
         return revisions
 
     per_page = request.GET.get('limit', 10)
@@ -1494,12 +1495,12 @@ def document_revisions(request, document_slug, document_locale):
     # attempts to cache more than memcached allows.
     revisions = MultiQuerySet(
         (Revision.objects.filter(pk=document.current_revision.pk)
-                         .prefetch_related('creator')
+                         .prefetch_related('creator', 'document')
                          .transform(get_previous)),
         (Revision.objects.filter(document=document)
                          .order_by('-created', '-id')
                          .exclude(pk=document.current_revision.pk)
-                         .prefetch_related('creator')
+                         .prefetch_related('creator', 'document')
                          .transform(get_previous))
     )
 
