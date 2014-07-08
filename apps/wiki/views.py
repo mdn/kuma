@@ -1464,7 +1464,8 @@ def autosuggest_documents(request):
 @prevent_indexing
 def document_revisions(request, document_slug, document_locale):
     """List all the revisions of a given document."""
-    document = get_object_or_404(Document,
+    document = get_object_or_404(Document.objects
+                                         .select_related('current_revision'),
                                  locale=document_locale,
                                  slug=document_slug)
     if document.current_revision is None:
