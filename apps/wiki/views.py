@@ -1558,6 +1558,12 @@ def document_revisions(request, document_slug, document_locale):
     if doc.current_revision is None:
         raise Http404
 
+    page = None
+    per_page = request.GET.get('limit', 10)
+    if not request.user.is_authenticated() and per_page == 'all':
+        return render(request, '403.html', {'reason': 'history_access'},
+                     status=403)
+
     # Grab revisions, but defer summary and content because they can lead to
     # attempts to cache more than memcached allows.
     revs = (Revision.objects.filter(document=doc)
@@ -1566,8 +1572,6 @@ def document_revisions(request, document_slug, document_locale):
     if not revs.exists():
         raise Http404
 
-    page = None
-    per_page = request.GET.get('limit', 10)
 
     if per_page != 'all':
         try:
