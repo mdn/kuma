@@ -597,7 +597,7 @@ UGLIFY_BIN = '/usr/bin/uglifyjs'
 MINIFY_BUNDLES = {
     'css': {
         'mdn': (
-            'css/libs/font-awesome/css/font-awesome.css',
+            'css/libs/font-awesome-4.1.0/css/font-awesome.css',
             'redesign/css/main.css',
             'redesign/css/badges.css',
         ),
