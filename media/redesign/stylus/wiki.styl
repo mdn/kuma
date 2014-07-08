@@ -56,11 +56,17 @@ $review-base {
     .center {
         remove-center-spacing();
     }
+
 }
 
 /* the subnav and quick link column of the layout */
 #wiki-left {
     position: relative;
+}
+
+/* Set min height for crumbs and page buttons to avoid jump, when buttons are sticky */
+.article-meta{
+    min-height: 41px;
 }
 
 /* quick links */
@@ -398,8 +404,14 @@ article {
 
 /* edit, language, settings, save, and cancel buttons */
 .page-buttons, #page-buttons {
-    bidi-value(text-align, right, left);
+    bidi-value(float, right, left);
+    padding: 5px 0;
     width: auto;
+
+    &.fixed {
+        overflow-y: inherit;
+        z-index: 50;
+    }
 
     > li {
         margin-left: ($grid-spacing / 2);
@@ -580,17 +592,17 @@ div.bug, div.warning, div.overheadIndicator {
     border: 0 !important; /* overrides plugin selector */
 }
 
+.fixed {
+    position: fixed;
+    top: 0;
+    z-index: 10;
+    overflow-y: auto;
+}
+
 #toc {
     reverse-link-decoration();
     background: $light-background-color;
     padding: 20px 15px;
-
-    &.fixed {
-        position: fixed;
-        top: 0;
-        z-index: 10;
-        overflow-y: auto;
-    }
 
     > ol {
         set-smaller-font-size();
