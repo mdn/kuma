@@ -20,14 +20,14 @@
 <ul class="page-buttons">
   {% if document %}
   <li>
-    <button type="submit" class="button positive btn-save-and-edit" data-optimizely-hook="button-save-and-keep-editing button-save-and-keep-editing-{{ location }}"><span>{{ _('Save and Keep Editing') }}</span><i aria-hidden="true" class="fa fa-edit"></i></button>
+    <button type="submit" class="button positive btn-save-and-edit" data-optimizely-hook="button-save-and-keep-editing button-save-and-keep-editing-{{ location }}"><span>{{ _('Save and Keep Editing') }}</span><i aria-hidden="true" class="fa fa-pencil-square-o"></i></button>
   </li>
   {% endif %}
   <li>
-    <button type="submit" class="button positive btn-save">{{ _('Save Changes') }}<i aria-hidden="true" class="fa fa-save"></i></button>
+    <button type="submit" class="button positive btn-save">{{ _('Save Changes') }}<i aria-hidden="true" class="fa fa-floppy-o"></i></button>
   </li>
   <li>
-    <button type="button" class="btn-preview" data-preview-url="{{ url('wiki.preview') }}">{{ _('Preview Changes') }}<i aria-hidden="true" class="fa fa-play-circle"></i></button>
+    <button type="button" class="btn-preview" data-preview-url="{{ url('wiki.preview') }}">{{ _('Preview Changes') }}<i aria-hidden="true" class="fa fa-play-circle-o"></i></button>
   </li>
   <li>
     <a href="{{ discard_href }}" class="button negative btn-discard">{{ _('Discard Changes') }}<i aria-hidden="true" class="fa fa-undo"></i></a>

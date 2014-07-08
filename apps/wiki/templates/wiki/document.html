@@ -367,12 +367,12 @@
                   {% endif %}
                   {% trans contributors=user_list(contributors) %}
                   <div class="contributor-sub">
-                    <i aria-hidden="true" class="fa fa-group"></i><strong>Contributors to this page:</strong> {{ contributors }}
+                    <i aria-hidden="true" class="fa fa-users"></i><strong>Contributors to this page:</strong> {{ contributors }}
                   </div>
                   {% endtrans %}
                   {% if current_revision.creator %}
                     <div class="contributor-sub">
-                      <i aria-hidden="true" class="fa fa-time"></i><strong>{{ _('Last updated by:') }}</strong>
+                      <i aria-hidden="true" class="fa fa-clock-o"></i><strong>{{ _('Last updated by:') }}</strong>
                       <a href="{{ current_revision.creator.get_absolute_url() }}">{{ current_revision.creator }}</a>,
                       {{ datetimeformat(current_revision.created, format='datetime') }}
                     </div>

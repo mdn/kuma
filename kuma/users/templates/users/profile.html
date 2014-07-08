@@ -39,7 +39,7 @@
             {% set site_meta = site[1] %}
             {% set href = profile.websites[site_name] %}
             {% if href %}
-                <li class="{{site_name}}"><i class="{{site_meta['fa_icon']}}" aria-hidden="true"></i><a href="{{href}}" rel="me external" class="url">{{site_meta['label']}}</a></li>
+                <li class="{{site_name}}"><i class="fa {{site_meta['fa_icon']}}" aria-hidden="true"></i><a href="{{href}}" rel="me external" class="url">{{site_meta['label']}}</a></li>
             {% endif %}
           {% endfor %}
         </ul>

@@ -57,43 +57,43 @@ class UserProfile(ModelBase):
             label=_(u'Website'),
             prefix='http://',
             regex='^https?://',
-            fa_icon='icon-link',
+            fa_icon='fa-link',
         )),
         ('twitter', dict(
             label=_(u'Twitter'),
             prefix='https://twitter.com/',
             regex='^https?://twitter.com/',
-            fa_icon='icon-twitter',
+            fa_icon='fa-twitter',
         )),
         ('github', dict(
             label=_(u'GitHub'),
             prefix='https://github.com/',
             regex='^https?://github.com/',
-            fa_icon='icon-github',
+            fa_icon='fa-github',
         )),
         ('stackoverflow', dict(
             label=_(u'Stack Overflow'),
             prefix='https://stackoverflow.com/users/',
             regex='^https?://stackoverflow.com/users/',
-            fa_icon='icon-stackexchange',
+            fa_icon='fa-stack-overflow',
         )),
         ('linkedin', dict(
             label=_(u'LinkedIn'),
             prefix='https://www.linkedin.com/in/',
             regex='^https?://www.linkedin.com/in/',
-            fa_icon='icon-linkedin',
+            fa_icon='fa-linkedin',
         )),
         ('mozillians', dict(
             label=_(u'Mozillians'),
             prefix='https://mozillians.org/u/',
             regex='^https?://mozillians.org/u/',
-            fa_icon='icon-group',
+            fa_icon='fa-users',
         )),
         ('facebook', dict(
             label=_(u'Facebook'),
             prefix='https://www.facebook.com/',
             regex='^https?://www.facebook.com/',
-            fa_icon='icon-facebook',
+            fa_icon='fa-facebook',
         ))
     ]
     # This could be a ForeignKey, except wikidb might be
