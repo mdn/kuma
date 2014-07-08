@@ -208,6 +208,10 @@ class ViewTests(TestCaseBase):
                                     locale=settings.WIKI_DEFAULT_LANGUAGE),
                             limit='all')
         resp = self.client.get(all_url)
+        eq_(403, resp.status_code)
+
+        self.client.login(username='testuser', password='testpass')
+        resp = self.client.get(all_url)
         eq_(200, resp.status_code)
 
     def test_toc_view(self):
