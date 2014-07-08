@@ -159,7 +159,6 @@
 
       <!-- heading -->
       <div id="wiki-document-head" class="document-head">
-        {% if waffle.flag('search_doc_navigator') %}
           <span class="from-search-previous-box">
             <a class="button from-search-previous only-icon disabled" title="{{ _('Previous Search Result') }}" data-empty-title="{{ _('No Previous Search Result') }}"><i aria-hidden="true" class="icon-chevron-left"></i></a>
           </span>
@@ -173,7 +172,6 @@
           <span class="from-search-next-box">
             <a class="button from-search-next only-icon disabled" title="{{ _('Next Search Result') }}" data-empty-title="{{ _('No Previous Search Result') }}"><i aria-hidden="true" class="icon-chevron-right"></i></a>
           </span>
-          {% endif %}
         <h1>{{ document.title }}</h1>
         {% if waffle.flag('top_contributors') %}
             {% set contributors = document.get_contributors() %}
@@ -420,11 +418,9 @@
 {% endblock %}
 
 {% block js %}
-  {% if waffle.flag('search_doc_navigator') %}
   <script type="text/javascript">
       jQuery('.from-search-toc').mozSearchResults('{{ search_url|safe }}');
   </script>
-  {% endif %}
 
   {% if waffle.flag('promote_script') %}
     <script type="text/javascript">

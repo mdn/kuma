@@ -16,7 +16,7 @@
   {% endif %}
 {% endblock %}
 
-{% block bodyclass %}search-results search-results-no-demo{% if waffle.flag('search_doc_navigator') %} search-navigator-flush{% endif %}{% endblock %}
+{% block bodyclass %}search-results search-results-no-demo search-navigator-flush{% endblock %}
 
 {% macro doc_block(doc, index) -%}
   <li class="result-{{ index }}">
