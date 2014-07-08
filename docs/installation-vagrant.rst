@@ -5,6 +5,10 @@ Core developers often run Kuma in a `Vagrant`_-managed virtual machine to
 simplify :doc:`installation <installation>`. If you're on Mac OS X or Linux
 and looking for a quick way to get started, you should try these instructions.
 
+At the end, you'll earn `the badge`_:
+
+.. image:: https://badges.mozilla.org/media/uploads/badge/2/3/23fef80968a03f3ba32321a7f31ae1e2_image_1372816280_0238.png
+
 .. note:: **If you have problems using vagrant**, please paste any errors to `pastebin`_, and `email dev-mdn@lists.mozilla.org <mailto:dev-mdn@lists.mozilla.org?subject=vagrant%20issue>`_. After you email dev-mdn, you can also ask in `IRC`_
 
 .. _vagrant: http://vagrantup.com/
@@ -90,7 +94,8 @@ Getting up and running
 
        https://developer-local.allizom.org/
 
-#. You're done!
+#. You're done! If you want `the badge`_ send a screenshot of your browser to
+   luke dot crouch at gmail dot com.
 
 
 Enabling Important Site Features
@@ -181,3 +186,4 @@ Developing with Vagrant
        vagrant destroy # Destroy the VM
 
 
+.. _the badge: https://badges.mozilla.org/badges/badge/Installed-and-ran-Kuma
