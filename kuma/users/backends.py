@@ -1,17 +1,15 @@
 import hashlib
 
-from django.contrib.auth.hashers import BasePasswordHasher
-from django.contrib.auth.hashers import mask_hash
+from django.contrib.auth.hashers import BasePasswordHasher, mask_hash
 from django.utils.crypto import constant_time_compare
 from django.utils.datastructures import SortedDict
 
-from tower import ugettext as _, ugettext_lazy as _lazy
+from tower import ugettext as _
 
 
 class Sha256Hasher(BasePasswordHasher):
     """
     SHA-256 password hasher.
-
     """
     algorithm = 'sha256'
     digest = hashlib.sha256

@@ -1,18 +1,12 @@
 import json
 import datetime
 
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.http import require_GET
 
-from jinja2 import escape
-
-from sumo.urlresolvers import reverse
-from sumo.utils import paginate, smart_int
-
-from kuma.users.helpers import ban_link
+from sumo.utils import paginate
 
 from wiki.models import Document, Revision
 
@@ -29,8 +23,8 @@ def revisions(request):
     page = request.GET.get('page', 1)
 
     revisions = (Revision.objects.select_related('creator')
-                        .order_by('-created')
-                        .defer('content'))
+                                 .order_by('-created')
+                                 .defer('content'))
 
     query_kwargs = False
 

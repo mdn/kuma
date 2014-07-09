@@ -1,21 +1,24 @@
 import datetime
 
-from django.conf import settings
 from django.contrib.auth.models import User
+from django.dispatch import receiver
 from django.db import models
 from django.utils.functional import cached_property
 
+from allauth.account.signals import user_signed_up
 import constance.config
 from jsonfield import JSONField
 from taggit_extras.managers import NamespacedTaggableManager
 from timezones.fields import TimeZoneField, MAX_TIMEZONE_LENGTH
 from tower import ugettext_lazy as _
+from waffle import switch_is_active
 
 from devmo.models import ModelBase
 from sumo.models import LocaleField
 from wiki.models import Revision
 
 from .helpers import gravatar_url
+from .tasks import send_welcome_email
 
 
 class UserBan(models.Model):
@@ -171,31 +174,22 @@ class UserProfile(ModelBase):
             return True
         return False
 
-    @property
-    def mindtouch_language(self):
-        if not self.locale:
-            return ''
-        return settings.LANGUAGE_DEKI_MAP[self.locale]
-
-    @property
-    def mindtouch_timezone(self):
-        if not self.timezone:
-            return ''
-        base_seconds = self.timezone._utcoffset.days * 86400
-        offset_seconds = self.timezone._utcoffset.seconds
-        offset_hours = (base_seconds + offset_seconds) / 3600
-        return "%03d:00" % offset_hours
-
     def wiki_activity(self):
         return (Revision.objects.filter(creator=self.user)
                                 .order_by('-created')[:5])
 
 
+@receiver(models.signals.post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created and not kwargs.get('raw', False):
         p, created = UserProfile.objects.get_or_create(user=instance)
 
-# models.signals.post_save.connect(create_user_profile, sender=User)
+
+@receiver(user_signed_up)
+def on_signed_up(sender, request, user, **kwargs):
+    if switch_is_active('welcome_email'):
+        send_welcome_email.delay(user.pk)
+
 
 # from https://github.com/brosner/django-timezones/pull/13
 try:

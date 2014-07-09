@@ -18,32 +18,6 @@
     })();
 
     /*
-        Persona Login file load
-    */
-    (function() {
-        var $loginButton = $('.persona-login');
-
-        $loginButton.length && $.ajax({
-            url: 'https://login.persona.org/include.js',
-            dataType: 'script',
-            cache: true,
-            success: function() {
-                $loginButton.addClass('persona-loaded').on('click', function(e) {
-                    e.preventDefault();
-
-                    if(!$(this).hasClass('toggle')) {
-                        navigator.id.get(function(assertion) {
-                            if(!assertion) return;
-                            $('input[name="assertion"]').val(assertion.toString());
-                            $('form.browserid').first().submit();
-                        }, { siteName: 'Mozilla Developer Network', siteLogo: '/media/redesign/img/opengraph-logo.png' });
-                    }
-                });
-            }
-        });
-    })();
-
-    /*
         Open Auth Login Heading widget
     */
     (function() {
@@ -63,8 +37,6 @@
         });
 
         $('.login-link').on('click', function(e) {
-            e.preventDefault();
-
             // Track event of which was clicked
             var serviceUsed = $(this).data('service'); // "Persona" or "GitHub"
 

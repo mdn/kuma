@@ -1,6 +1,11 @@
-{% extends "users/base.html" %}
-{% set title = _('You\'ve Been Banned') %}
+{% extends "base.html" %}
+{% set title = _("You've Been Banned") %}
 {% set classes = 'profile' %}
+{% set styles = ('users',) %}
+
+{% block breadcrumbs %}
+{% endblock %}
+
 {% block title %}{{ page_title(title) }}{% endblock %}
 
 {% block site_css %}

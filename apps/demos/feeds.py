@@ -15,7 +15,7 @@ from django.utils.translation import ugettext as _
 from django.contrib.auth.models import User
 from django.conf import settings
 
-from devmo.urlresolvers import reverse
+from sumo.urlresolvers import reverse
 
 from . import TAG_DESCRIPTIONS
 from .models import Submission

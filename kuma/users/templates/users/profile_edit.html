@@ -40,6 +40,7 @@
           </figure>
           <ul>
               <li><a href="{{ profile.user.get_absolute_url() }}">{{ _('View profile') }}</a></li>
+              <li><a href="{{ url('socialaccount_connections') }}">{{ _('Social connections') }}</a></li>
             {# TODO: Implement account deletion #}
             {# <li class="delete"><a href="#">{{ _('Delete my account') }}</a></li> #}
           </ul>
@@ -51,27 +52,26 @@
 
               <fieldset class="section notitle" id="personal">
                 <ul>
-                  {{ li_field(form, 'beta') }}
+                  {{ li_field(profile_form, 'beta') }}
                   <li id="field_email" class="field type_email required">
-                    <label for="id_email">{{ _('Email') }}</label>
-                    {{ profile.user.email }} <a href="{{ url('users.change_email') }}">{{ _('Change') }}</a>
-                    <input id="id_email" type="hidden" value="{{ profile.user.email }}" name="email"/>
+                    <label for="id_email">{{ _('Primary Email') }}</label>
+                    {{ profile.user.email }} <a href="{{ url('account_email') }}">{{ _('Change') }}</a>
                   </li>
-                  {{ li_field(form, 'fullname') }}
-                  {{ li_field(form, 'title') }}
-                  {{ li_field(form, 'organization') }}
-                  {{ li_field(form, 'location') }}
-                  {{ li_field(form, 'locale') }}
-                  {{ li_field(form, 'timezone') }}
-                  {{ li_field(form, 'irc_nickname') }}
+                  {{ li_field(profile_form, 'fullname') }}
+                  {{ li_field(profile_form, 'title') }}
+                  {{ li_field(profile_form, 'organization') }}
+                  {{ li_field(profile_form, 'location') }}
+                  {{ li_field(profile_form, 'locale') }}
+                  {{ li_field(profile_form, 'timezone') }}
+                  {{ li_field(profile_form, 'irc_nickname') }}
 
-                  {% set field = form['bio'] %}
+                  {% set field = profile_form['bio'] %}
                   <li class="wordcount{{ ' error' if field.errors }}">
                     <label for="id_bio">{{ _('About me') }} <span class="note"><b id="bio_wordcount" class="counter">150</b> {{ _('words remaining') }}</span></label>
                     {{ field | safe }}
                   </li>
 
-                  {% set field = form['interests'] %}
+                  {% set field = profile_form['interests'] %}
                   <li class="{{ ' error' if field.errors }}">
                     <strong class="label">{{ _('Interests (tags)') }}</strong>
                     <p class="note">{{ _('Separate tags with commas or spaces. Join multi-word tags with double quotes, like "web standards".') }}</p>
@@ -79,7 +79,7 @@
                     {{ field.errors|safe }}
                   </li>
 
-                  {% set field = form['expertise'] %}
+                  {% set field = profile_form['expertise'] %}
                   <li class="{{ ' error' if field.errors }}">
                     <strong class="label">{{ _('Areas of expertise') }}</strong>
                     <p class="note">{{ _('Add your interests first, then declare yourself an expert in selected topics.') }}</p>
@@ -96,7 +96,7 @@
                     {% for site in profile.website_choices %}
                         {% set name = site[0] %}
                         {% set meta = site[1] %}
-                        {{ li_field(form,
+                        {{ li_field(profile_form,
                             'websites_{name}' | f(name=name),
                             classes="site {name}" | f(name=name),
                             label=meta['label'],
@@ -109,7 +109,7 @@
       </div>
 
       <div class="column-4"><div class="profile-newsletter-container">
-        {{ newsletter_widget(form) }}
+        {{ newsletter_widget(subscription_form) }}
         <p class="fm-submit"><button type="submit" class="positive">{{ _('Save Changes') }}<i aria-hidden="true" class="icon-save"></i></button></p>
       </div></div>
 

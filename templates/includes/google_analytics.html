@@ -11,9 +11,6 @@
     {% if request.user.is_authenticated() %}
     	ga('set', 'Signed-In', 'Yes');
 
-    	{% if request.user.get_profile().beta_tester %}
-    		ga('set', 'Beta Tester', 'Yes');
-    	{% endif %}
     {% endif %}
 
     {% if waffle.flag('top_contributors') %}
