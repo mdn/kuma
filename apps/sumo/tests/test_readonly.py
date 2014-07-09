@@ -42,10 +42,8 @@ class ReadOnlyModeTest(test_utils.TestCase):
         assert_raises(DatabaseError, Question.objects.create, id=12)
 
     def test_login_error(self):
-        # TODO(james): Once we're authenticating in Django we can test this.
-        raise SkipTest
         # This tries to do a db write.
-        r = self.client.get(reverse('users.login'))
+        r = self.client.get(reverse('account_login'))
         eq_(r.status_code, 503)
         title = pq(r.content)('title').text()
         assert title.startswith('Maintenance in progress'), title

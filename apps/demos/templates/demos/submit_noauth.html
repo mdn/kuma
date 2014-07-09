@@ -2,7 +2,7 @@
 
 {% set obj = submission %}
 {% set submit_url=url('demos_submit') %}
-{% set login_url='%s?next=%s' % (url('users.login'), submit_url) %}
+{% set login_url='%s?next=%s' % (url('account_login'), submit_url) %}
 {% set signup_url=login_url %}
 
 {% block body_attributes %}id="demos-submit"{% endblock %}
@@ -25,8 +25,8 @@
       <h1 class="page-title">{{_("Submit a New Demo")}}</h1>
 
     {% trans %}
-        <p>Whether you are creating an amazing new way to experience the Web or just 
-        experimenting with the latest technologies, we invite you to submit your own 
+        <p>Whether you are creating an amazing new way to experience the Web or just
+        experimenting with the latest technologies, we invite you to submit your own
         demos to share with (or show off to) other web developers.</p>
     {% endtrans %}
     </header>
@@ -43,7 +43,7 @@
         </ul>
         {% endtrans %}
       </div>
-  
+
       <div id="prepare-demo" class="module notes">
           <h3 class="mod-title">{{_('Preparing Your Demo')}}</h3>
         {% trans %}
@@ -61,7 +61,7 @@
     {% trans %}
         <p>To submit your demo, you need an <strong><a href="{{signup_url}}">MDN account</a></strong>.</p>
     {% endtrans %}
-    
+
     <p class="choices">
         <a href="{{login_url}}" class="button">{{_('Log In to Account')}}</a>
     </p>
