@@ -12,7 +12,7 @@ from waffle.models import Flag
 from devmo.tests import LocalizingClient
 from sumo.tests import TestCase, get_user
 import wiki.content
-from wiki.models import Document, Revision, CATEGORIES
+from wiki.models import Document, Revision
 
 
 class TestCaseBase(TestCase):
@@ -39,7 +39,8 @@ class TestCaseBase(TestCase):
 def document(save=False, **kwargs):
     """Return an empty document with enough stuff filled out that it can be
     saved."""
-    defaults = {'category': CATEGORIES[0][0], 'title': str(datetime.now()),
+    defaults = {'category': Document.CATEGORIES[0][0],
+                'title': str(datetime.now()),
                 'is_redirect': 0}
     defaults.update(kwargs)
     if 'slug' not in kwargs:
@@ -131,7 +132,7 @@ def new_document_data(tags=None):
         'tags': ', '.join(tags or []),
         'firefox_versions': [1, 2],
         'operating_systems': [1, 3],
-        'category': CATEGORIES[0][0],
+        'category': Document.CATEGORIES[0][0],
         'keywords': 'key1, key2',
         'summary': 'lipsum',
         'content': 'lorem ipsum dolor sit amet',

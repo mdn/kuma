@@ -22,9 +22,11 @@
       </ul>
     </div>
     <div id="revision-list">
-      {% if revisions %}
+      {% set revision_count=revisions|length %}
+      {% set user_can_delete=user.has_perm('wiki.delete_revision') %}
+      {% if revision_count > 0 %}
         <form action="{{ url('wiki.compare_revisions', document.full_path) }}" method="get" class="nodisable">
-          {% if revisions | length > 1 %}
+          {% if revision_count > 1 %}
             <div class="compare top">
               <input type="submit" class="link-btn" value="{% if document.parent %}{{ _('Compare Selected Translations') }}{% else %}{{ _('Compare Selected Revisions') }}{% endif %}" />
             </div>
@@ -44,8 +46,8 @@
                 {% if not loop.last %}<input type="radio" name="to" value="{{ rev.id }}" {% if loop.first %}checked="checked"{% endif %} />{% endif %}
               </div>
                <div class="prev">
-              {% if rev.get_previous().id %}
-                <a href="{{ url('wiki.compare_revisions', document.full_path) }}?to={{ rev.id }}&from={{ rev.get_previous().id }}">{{ _('Previous') }}</a>
+              {% if rev.previous_revision %}
+                <a href="{{ url('wiki.compare_revisions', document.full_path) }}?to={{ rev.id }}&amp;from={{ rev.previous_revision.id }}">{{ _('Previous') }}</a>
               {% endif %}
               </div>
               <div class="date">
@@ -57,7 +59,7 @@
               <div class="comment">
                 {{ format_comment(rev) }}
               </div>
-              {% if document.current_revision.id != rev.id and user.has_perm('wiki.delete_revision') %}
+              {% if document.current_revision.id != rev.id and user_can_delete %}
               <div class="creator">
                 <a href="{{ url('wiki.revert_document', document.full_path, rev.id) }}" class="button">{{ _('Revert to this revision') }}</a>
               </div>
@@ -65,7 +67,7 @@
             </li>
             {% if loop.last %}</ul>{% endif %}
           {% endfor %}
-          {% if revisions | length > 1 %}
+          {% if revision_count > 1 %}
             <div class="compare bottom">
               <input type="submit" class="link-btn" value="{% if document.parent %}{{ _('Compare Selected Translations') }}{% else %}{{ _('Compare Selected Revisions') }}{% endif %}" />
             </div>
@@ -92,8 +94,10 @@
       var $pagination = $('.pagination');
       var $next = $pagination.find('.next');
 
+      {% set class='hidden' if not request.user.is_authenticated() %}
+
       if($next.length) {
-        $pagination.append('<li><a href="?limit=all" id="pagination-all">' + gettext('View All') + '</a></li>');
+      $pagination.append('<li title="Sign in to view all history"><a href="?limit=all" id="pagination-all" class="{{ class }}">' + gettext('View All') + '</a></li>');
       }
     });
   </script>

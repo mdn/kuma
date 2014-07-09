@@ -1,57 +1,46 @@
 # coding=utf-8
-
 from datetime import datetime
 import json
 import hashlib
 import logging
 import re
 from urllib import urlencode
-import jinja2
 import mime_types
-import newrelic.agent
 
 try:
     from cStringIO import cStringIO as StringIO
 except:
     from StringIO import StringIO
 
-try:
-    from functools import wraps
-except ImportError:
-    from django.utils.functional import wraps
-
 from django.conf import settings
-from django.db import transaction
-from django.core.exceptions import PermissionDenied
-from django.utils.safestring import mark_safe
-from django.template import RequestContext, loader
-from django.core.cache import cache
 from django.contrib import messages
+from django.core.exceptions import PermissionDenied
+from django.core.cache import cache
+from django.db import transaction
+from django.db.models import Q
 from django.http import (HttpResponse, HttpResponseRedirect,
                          HttpResponsePermanentRedirect,
                          Http404, HttpResponseBadRequest)
 from django.http.multipartparser import MultiPartParser
 from django.shortcuts import (get_object_or_404, render_to_response, redirect,
                               render)
+from django.template import RequestContext, loader
+from django.utils.safestring import mark_safe
 from django.views.decorators.http import (require_GET, require_POST,
                                           require_http_methods, condition)
-from django.views.decorators.clickjacking import xframe_options_exempt
-from django.views.decorators.clickjacking import xframe_options_sameorigin
+from django.views.decorators.clickjacking import (xframe_options_exempt,
+                                                  xframe_options_sameorigin)
 from django.views.decorators.csrf import csrf_exempt
 
+from authkeys.decorators import accepts_auth_key
 import constance.config
-
-from waffle.decorators import waffle_flag
-
-from tower import ugettext_lazy as _lazy
-from tower import ugettext as _
-
-from teamwork.shortcuts import get_object_or_404_or_403
-
+import jinja2
+import newrelic.agent
+from pyquery import PyQuery as pq
 from smuggler.utils import superuser_required
 from smuggler.forms import ImportFileForm
-
-from authkeys.decorators import accepts_auth_key
+from teamwork.shortcuts import get_object_or_404_or_403
+from tower import ugettext_lazy as _lazy, ugettext as _
 
 from access.decorators import permission_required, login_required
 from contentflagging.models import ContentFlag, FLAG_NOTIFICATIONS
@@ -59,88 +48,31 @@ from search.store import referrer_url
 from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
 from sumo.utils import paginate, smart_int
-from wiki import (DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX,
-                  SLUG_CLEANSING_REGEX)
-from wiki.decorators import check_readonly
-from wiki.events import EditDocumentEvent
-from wiki.forms import (DocumentForm, RevisionForm,
-                        RevisionValidationForm, AttachmentRevisionForm,
-                        TreeMoveForm, DocumentDeletionForm,
-                        DocumentContentFlagForm)
-from wiki.models import (Document, Revision, HelpfulVote, EditorToolbar,
-                         DocumentZone,
-                         DocumentTag, ReviewTag, LocalizationTag, Attachment,
-                         DocumentDeletionLog,
-                         DocumentRenderedContentNotAvailable,
-                         CATEGORIES,
-                         REVIEW_FLAG_TAGS_DEFAULT,
-                         DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL,
-                         get_current_or_latest_revision, TOC_DEPTH_H4,
-                         REDIRECT_CONTENT)
-from wiki.tasks import move_page
-from wiki.helpers import format_comment
-import wiki.content
-from wiki import kumascript
+from kuma.users.models import UserProfile
 
-from pyquery import PyQuery as pq
+import wiki.content
+from . import kumascript
+from .constants import (DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX,
+                        SLUG_CLEANSING_REGEX, REVIEW_FLAG_TAGS_DEFAULT,
+                        DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL,
+                        REDIRECT_CONTENT)
+from .decorators import (check_readonly, process_document_path,
+                         allow_CORS_GET, prevent_indexing)
+from .events import EditDocumentEvent
+from .forms import (DocumentForm, RevisionForm, DocumentContentFlagForm,
+                    RevisionValidationForm, AttachmentRevisionForm,
+                    TreeMoveForm, DocumentDeletionForm)
+from .helpers import format_comment
+from .models import (Document, Revision, HelpfulVote, EditorToolbar,
+                     DocumentZone, DocumentTag, ReviewTag, LocalizationTag,
+                     Attachment, DocumentDeletionLog,
+                     DocumentRenderedContentNotAvailable)
+from .queries import MultiQuerySet
+from .tasks import move_page
+from .utils import locale_and_slug_from_path
 
 
 log = logging.getLogger('k.wiki')
-
-
-@newrelic.agent.function_trace()
-def process_document_path(func, reverse_name='wiki.document'):
-    """Decorator to process document_path into locale and slug, with
-    auto-redirect if necessary."""
-
-    # This function takes generic args and kwargs so it can presume as little
-    # as possible on the view method signature.
-    @wraps(func)
-    def process(request, document_path=None, *args, **kwargs):
-
-        if kwargs.get('bypass_process_document_path', False):
-            # Support an option to bypass this decorator altogether, so one
-            # view can directly call another view.
-            del kwargs['bypass_process_document_path']
-            return func(request, document_path, *args, **kwargs)
-
-        document_slug, document_locale = None, None
-        if document_path:
-
-            # Parse the document path into locale and slug.
-            document_locale, document_slug, needs_redirect = (Document
-                    .locale_and_slug_from_path(document_path, request))
-
-            # Add check for "local" URL, remove trailing slash
-            slug_length = len(document_slug)
-            if slug_length and document_slug[slug_length - 1] == '/':
-                needs_redirect = True
-                document_slug = document_slug.rstrip('/')
-
-            if not document_slug:
-                # If there's no slug, then this is just a 404.
-                raise Http404()
-
-            if request.GET.get('raw', False) is not False:
-                # HACK: There are and will be a lot of kumascript templates
-                # based on legacy DekiScript which will attempt to request
-                # old-style URLs. Skip 301 redirects for raw content.
-                needs_redirect = False
-
-            if needs_redirect:
-                # This catches old MindTouch locales, missing locale, and a few
-                # other cases to fire off a 301 Moved permanent redirect.
-                url = reverse('wiki.document', locale=document_locale,
-                              args=[document_slug])
-                url = urlparams(url, query_dict=request.GET)
-                return HttpResponsePermanentRedirect(url)
-
-        # Set the kwargs that decorated methods will expect.
-        kwargs['document_slug'] = document_slug
-        kwargs['document_locale'] = document_locale
-        return func(request, *args, **kwargs)
-
-    return process
 
 
 @newrelic.agent.function_trace()
@@ -169,27 +101,6 @@ def _document_last_modified(request, document_slug, document_locale):
         return None
 
 
-def prevent_indexing(func):
-    """Decorator to prevent a page from being indexable by robots"""
-    @wraps(func)
-    def _added_header(request, *args, **kwargs):
-        response = func(request, *args, **kwargs)
-        response['X-Robots-Tag'] = 'noindex'
-        return response
-    return _added_header
-
-
-def allow_CORS_GET(func):
-    """Decorator to allow CORS for GET requests"""
-    @wraps(func)
-    def _added_header(request, *args, **kwargs):
-        response = func(request, *args, **kwargs)
-        if 'GET' == request.method:
-            response['Access-Control-Allow-Origin'] = "*"
-        return response
-    return _added_header
-
-
 def _format_attachment_obj(attachments):
     attachments_list = []
     for attachment in attachments:
@@ -200,7 +111,7 @@ def _format_attachment_obj(attachments):
             'url': attachment.get_file_url(),
             'size': 0,
             'creator': attachment.current_revision.creator.username,
-            'creatorUrl': attachment.current_revision.creator.get_absolute_url(),
+            'creator_url': attachment.current_revision.creator.get_absolute_url(),
             'revision': attachment.current_revision.id,
             'id': attachment.id,
             'mime': attachment.current_revision.mime_type
@@ -230,8 +141,8 @@ def _split_slug(slug):
         root = slug_split[0]
 
         if root in bad_seo_roots:
-           if length > 2:
-            seo_root = root + '/' + slug_split[1]
+            if length > 2:
+                seo_root = root + '/' + slug_split[1]
         else:
             seo_root = root
 
@@ -269,7 +180,7 @@ def _get_doc_and_fallback_reason(document_locale, document_slug):
     try:
         doc = Document.objects.get(locale=document_locale, slug=document_slug)
         if (not doc.current_revision and doc.parent and
-            doc.parent.current_revision):
+                doc.parent.current_revision):
             # This is a translation but its current_revision is None
             # and OK to fall back to parent (parent is approved).
             fallback_reason = 'translation_not_approved'
@@ -802,7 +713,7 @@ def _document_PUT(request, document_slug, document_locale):
         doc = Document(slug=document_slug, locale=document_locale,
                        title=data.get('title', document_slug),
                        parent_topic=parent_doc,
-                       category=CATEGORIES[0][0])
+                       category=Document.CATEGORIES[0][0])
         doc.save()
         section_id = None  # No section editing for new document!
         is_new = True
@@ -833,9 +744,8 @@ def revision(request, document_slug, document_locale, revision_id):
     """View a wiki document revision."""
     rev = get_object_or_404(Revision, pk=revision_id,
                             document__slug=document_slug)
-    prev = rev.get_previous()
-
-    data = {'document': rev.document, 'revision': rev,
+    data = {'document': rev.document,
+            'revision': rev,
             'comment': format_comment(rev)}
     return render(request, 'wiki/revision.html', data)
 
@@ -850,7 +760,7 @@ def list_documents(request, category=None, tag=None):
         except ValueError:
             raise Http404
         try:
-            category = unicode(dict(CATEGORIES)[category_id])
+            category = unicode(dict(Document.CATEGORIES)[category_id])
         except KeyError:
             raise Http404
 
@@ -933,6 +843,7 @@ def list_documents_with_errors(request):
                    'count': docs.count(),
                    'errors': True})
 
+
 @require_GET
 def list_documents_without_parent(request):
     """Lists wiki documents without parent (no English source document)"""
@@ -943,6 +854,7 @@ def list_documents_without_parent(request):
                   {'documents': paginated_docs,
                    'count': docs.count(),
                    'noparent': True})
+
 
 @require_GET
 def list_top_level_documents(request):
@@ -1001,7 +913,7 @@ def new_document(request):
         initial_data = {}
         initial_html = ''
         initial_tags = ''
-        initial_toc = TOC_DEPTH_H4
+        initial_toc = Revision.TOC_DEPTH_H4
 
         if clone_id:
             try:
@@ -1100,8 +1012,7 @@ def new_document(request):
 
 
 @require_http_methods(['GET', 'POST'])
-@login_required  # TODO: Stop repeating this knowledge here and in
-                 # Document.allows_editing_by.
+@login_required  # TODO: Stop repeating this knowledge here and in Document.allows_editing_by.
 @process_document_path
 @check_readonly
 @prevent_indexing
@@ -1330,9 +1241,9 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
     # Process the content as if it were about to be saved, so that the
     # html_diff is close as possible.
     content = (wiki.content
-                .parse(request.POST['content'])
-                .injectSectionIDs()
-                .serialize())
+                   .parse(request.POST['content'])
+                   .injectSectionIDs()
+                   .serialize())
 
     # Process the original content for a diff, extracting a section if we're
     # editing one.
@@ -1356,16 +1267,16 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
     # Make this response iframe-friendly so we can hack around the
     # save-and-edit iframe button
     return render(request, 'wiki/edit_document.html',
-                        {'collision': True,
-                         'revision_form': rev_form,
-                         'document_form': doc_form,
-                         'content': content,
-                         'current_content': curr_content,
-                         'section_id': section_id,
-                         'original_revision': orig_rev,
-                         'current_revision': curr_rev,
-                         'revision': rev,
-                         'document': doc})
+                  {'collision': True,
+                   'revision_form': rev_form,
+                   'document_form': doc_form,
+                   'content': content,
+                   'current_content': curr_content,
+                   'section_id': section_id,
+                   'original_revision': orig_rev,
+                   'current_revision': curr_rev,
+                   'revision': rev,
+                   'document': doc})
 
 
 @require_http_methods(['GET', 'POST'])
@@ -1389,7 +1300,7 @@ def move(request, document_slug, document_locale):
                 return render(request, 'wiki/move_document.html', {
                     'form': form,
                     'document': doc,
-                    'descendants':  descendants,
+                    'descendants': descendants,
                     'descendants_count': len(descendants),
                     'conflicts': conflicts,
                     'SLUG_CLEANSING_REGEX': SLUG_CLEANSING_REGEX,
@@ -1407,7 +1318,7 @@ def move(request, document_slug, document_locale):
     return render(request, 'wiki/move_document.html', {
         'form': form,
         'document': doc,
-        'descendants':  descendants,
+        'descendants': descendants,
         'descendants_count': len(descendants),
         'SLUG_CLEANSING_REGEX': SLUG_CLEANSING_REGEX,
         'specific_slug': slug_split['specific']
@@ -1436,7 +1347,7 @@ def ckeditor_config(request):
         code = ''
     context = {'editor_config': code, 'redirect_pattern': REDIRECT_CONTENT}
     return render(request, 'wiki/ckeditor_config.js', context,
-                       content_type="application/x-javascript")
+                  content_type="application/x-javascript")
 
 
 @login_required
@@ -1484,7 +1395,7 @@ def get_children(request, document_slug, document_locale):
                     'title': d.title,
                     'slug': d.slug,
                     'locale': d.locale,
-                    'url':  d.get_absolute_url(),
+                    'url': d.get_absolute_url(),
                     'subpages': []
                 }
 
@@ -1553,39 +1464,67 @@ def autosuggest_documents(request):
 @prevent_indexing
 def document_revisions(request, document_slug, document_locale):
     """List all the revisions of a given document."""
-    doc = get_object_or_404(
-        Document, locale=document_locale, slug=document_slug)
-    if doc.current_revision is None:
+    document = get_object_or_404(Document.objects
+                                         .select_related('current_revision'),
+                                 locale=document_locale,
+                                 slug=document_slug)
+    if document.current_revision is None:
         raise Http404
+
+    def get_previous(revisions):
+        for current_revision in revisions:
+            for previous_revision in revisions:
+                # we filter out all revisions that are not approved
+                # as that's the way the get_previous method does it as well
+                # also let's skip comparing the same revisions
+                if (not previous_revision.is_approved or
+                        current_revision.pk == previous_revision.pk):
+                    continue
+                # we stick to the first revision that we find
+                if previous_revision.created < current_revision.created:
+                    current_revision.previous_revision = previous_revision
+                    break
+        return revisions
+
+    per_page = request.GET.get('limit', 10)
+
+    if not request.user.is_authenticated() and per_page == 'all':
+        return render(request, '403.html',
+                      {'reason': 'revisions_login_required'}, status=403)
 
     # Grab revisions, but defer summary and content because they can lead to
     # attempts to cache more than memcached allows.
-    revs = (Revision.objects.filter(document=doc)
-                .defer('summary', 'content')
-                .order_by('-created', '-id'))
-    if not revs.exists():
+    revisions = MultiQuerySet(
+        (Revision.objects.filter(pk=document.current_revision.pk)
+                         .prefetch_related('creator', 'document')
+                         .transform(get_previous)),
+        (Revision.objects.filter(document=document)
+                         .order_by('-created', '-id')
+                         .exclude(pk=document.current_revision.pk)
+                         .prefetch_related('creator', 'document')
+                         .transform(get_previous))
+    )
+
+    if not revisions.exists():
         raise Http404
 
-    page = None
-    per_page = request.GET.get('limit', 10)
-
-    if per_page != 'all':
+    if per_page == 'all':
+        page = None
+    else:
         try:
             per_page = int(per_page)
         except ValueError:
             per_page = DOCUMENTS_PER_PAGE
-        page = paginate(request, revs, per_page)
-        revs = [r for r in page.object_list]
 
-    # Ensure the current revision appears at the top, no matter where it
-    # appears in the order.
-    curr_id = doc.current_revision.id
-    revs_out = [r for r in revs if r.id == curr_id]
-    revs_out.extend([r for r in revs if r.id != curr_id])
+        page = paginate(request, revisions, per_page)
+        revisions = page.object_list
 
-    return render(request, 'wiki/document_revisions.html',
-                        {'revisions': revs_out, 'document': doc,
-                         'page': page, 'revs': revs, 'curr_id': curr_id})
+    context = {
+        'revisions': revisions,
+        'document': document,
+        'page': page,
+    }
+    return render(request, 'wiki/document_revisions.html', context)
 
 
 @require_GET
@@ -1619,11 +1558,9 @@ def compare_revisions(request, document_slug, document_locale):
 
     if request.GET.get('raw', 0):
         response = render(request,
-                                'wiki/includes/revision_diff_table.html',
-                                context)
+                          'wiki/includes/revision_diff_table.html', context)
     else:
-        response = render(request, 'wiki/compare_revisions.html',
-                                context)
+        response = render(request, 'wiki/compare_revisions.html', context)
     return response
 
 
@@ -1677,9 +1614,9 @@ def translate(request, document_slug, document_locale, revision_id=None):
         return render(request, 'handlers/400.html', context, status=400)
 
     if revision_id:
-        initial_rev = get_object_or_404(Revision, pk=revision_id)
+        get_object_or_404(Revision, pk=revision_id)
 
-    based_on_rev = get_current_or_latest_revision(parent_doc)
+    based_on_rev = parent_doc.current_or_latest_revision()
 
     disclose_description = bool(request.GET.get('opendescription'))
 
@@ -1735,7 +1672,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
             initial.update(content=wiki.content.parse(content)
                                                .filterEditorSafety()
                                                .serialize())
-        instance = doc and get_current_or_latest_revision(doc)
+        instance = doc and doc.current_or_latest_revision()
         rev_form = RevisionForm(instance=instance, initial=initial)
 
     if request.method == 'POST':
@@ -1786,7 +1723,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
 
         if doc and user_has_rev_perm and which_form in ['rev', 'both']:
             post_data = request.POST.copy()
-            if not 'slug' in post_data:
+            if 'slug' not in post_data:
                 post_data['slug'] = posted_slug
 
             rev_form = RevisionValidationForm(post_data)
@@ -1809,7 +1746,8 @@ def translate(request, document_slug, document_locale, revision_id=None):
                     # Attempt to set a parent
                     if parent_id:
                         try:
-                            parent_doc = get_object_or_404(Document, id=parent_id)
+                            parent_doc = get_object_or_404(Document,
+                                                           id=parent_id)
                             rev_form.instance.document.parent = parent_doc
                             doc.parent = parent_doc
                             rev_form.instance.based_on.document = doc.original
@@ -1859,10 +1797,10 @@ def subscribe_document(request, document_slug, document_locale):
     status = 0
 
     if EditDocumentEvent.is_notifying(request.user, document):
-      EditDocumentEvent.stop_notifying(request.user, document)
+        EditDocumentEvent.stop_notifying(request.user, document)
     else:
-      EditDocumentEvent.notify(request.user, document)
-      status = 1
+        EditDocumentEvent.notify(request.user, document)
+        status = 1
 
     if request.is_ajax():
         return HttpResponse(json.dumps({'status': status}))
@@ -1888,9 +1826,9 @@ def json_view(request, document_slug=None, document_locale=None):
         return HttpResponseBadRequest()
 
     document = get_object_or_404(Document, **kwargs)
-    content = (wiki.content.parse(document.html)
-                                .injectSectionIDs()
-                                .serialize())
+    (wiki.content.parse(document.html)
+                 .injectSectionIDs()
+                 .serialize())
 
     stale = True
     if request.user.is_authenticated():
@@ -1965,14 +1903,11 @@ def code_sample(request, document_slug, document_locale, sample_id):
     return render(request, 'wiki/code_sample.html', data)
 
 
-# TODO: Fix this view if we are going to use it. document_path
-# is undefined.
 @require_POST
-@process_document_path
-def helpful_vote(request, document_slug, document_locale):
+def helpful_vote(request, document_path):
     """Vote for Helpful/Not Helpful document"""
-    document_locale, document_slug, needs_redirect = (Document
-            .locale_and_slug_from_path(document_path, request))
+    document_locale, document_slug, needs_redirect = (
+        locale_and_slug_from_path(document_path, request))
 
     document = get_object_or_404(
         Document, locale=document_locale, slug=document_slug)
@@ -2008,8 +1943,8 @@ def helpful_vote(request, document_slug, document_locale):
 @transaction.autocommit
 def revert_document(request, document_path, revision_id):
     """Revert document to a specific revision."""
-    document_locale, document_slug, needs_redirect = (Document
-            .locale_and_slug_from_path(document_path, request))
+    document_locale, document_slug, needs_redirect = (
+        locale_and_slug_from_path(document_path, request))
 
     revision = get_object_or_404(Revision, pk=revision_id,
                                  document__slug=document_slug)
@@ -2018,7 +1953,7 @@ def revert_document(request, document_path, revision_id):
     if request.method == 'GET':
         # Render the confirmation page
         return render(request, 'wiki/confirm_revision_revert.html',
-                            {'revision': revision, 'document': document})
+                      {'revision': revision, 'document': document})
 
     document.revert(revision, request.user, request.POST.get('comment'))
     return HttpResponseRedirect(reverse('wiki.document_revisions',
@@ -2030,8 +1965,8 @@ def revert_document(request, document_path, revision_id):
 @check_readonly
 def delete_revision(request, document_path, revision_id):
     """Delete a revision."""
-    document_locale, document_slug, needs_redirect = (Document
-            .locale_and_slug_from_path(document_path, request))
+    document_locale, document_slug, needs_redirect = (
+        locale_and_slug_from_path(document_path, request))
 
     revision = get_object_or_404(Revision, pk=revision_id,
                                  document__slug=document_slug)
@@ -2040,7 +1975,7 @@ def delete_revision(request, document_path, revision_id):
     if request.method == 'GET':
         # Render the confirmation page
         return render(request, 'wiki/confirm_revision_delete.html',
-                            {'revision': revision, 'document': document})
+                      {'revision': revision, 'document': document})
 
     # Handle confirm delete form POST
     log.warning('User %s is deleting revision with id=%s' %
@@ -2069,6 +2004,7 @@ def delete_revision(request, document_path, revision_id):
 
     return HttpResponseRedirect(reverse('wiki.document_revisions',
                                         args=[document.full_path]))
+
 
 @login_required
 @permission_required('wiki.delete_document')
@@ -2108,7 +2044,7 @@ def delete_document(request, document_slug, document_locale):
     return render(request,
                   'wiki/confirm_document_delete.html',
                   {'document': document, 'form': form, 'request': request,
-                   'revision': first_revision, 'prevent' : prevent})
+                   'revision': first_revision, 'prevent': prevent})
 
 
 @login_required
@@ -2505,8 +2441,7 @@ def edit_attachment(request, attachment_id):
             return HttpResponseRedirect(attachment.get_absolute_url())
     else:
         form = AttachmentRevisionForm()
-    return render(request, 'wiki/edit_attachment.html',
-                        {'form': form})
+    return render(request, 'wiki/edit_attachment.html', {'form': form})
 
 
 @xframe_options_sameorigin
@@ -2516,16 +2451,19 @@ def flag(request, document_slug, document_locale):
                             slug=document_slug,
                             locale=document_locale)
 
-    if request.method == POST:
-        form = WikiContentFlagForm(data=request.POST)
+    if request.method == 'POST':
+        form = DocumentContentFlagForm(data=request.POST)
         if form.is_valid():
             flag_type = form.cleaned_data['flag_type']
             recipients = None
             if (flag_type in FLAG_NOTIFICATIONS and
-                FLAG_NOTIFICATIONS[flag_type]):
-                recipients = [profile.user.email for profile in
-                              UserProfile.objects.filter(
-                                  content_flagging_email=True)]
+                    FLAG_NOTIFICATIONS[flag_type]):
+                query = Q(user__email__isnull=True) | Q(user__email='')
+                recipients = (UserProfile.objects.exclude(query)
+                                                 .values_list('user__email',
+                                                              flat=True))
+                recipients = list(recipients)
+
             flag, created = ContentFlag.objects.flag(
                 request=request, object=doc,
                 flag_type=flag_type,
@@ -2535,6 +2473,6 @@ def flag(request, document_slug, document_locale):
                 'wiki.document', locale=document_locale,
                 args=[document_slug]))
     else:
-        form = WikiContentFlagForm(data=request.GET)
+        form = DocumentContentFlagForm(data=request.GET)
     return render(request, 'wiki/flag.html', {
         'form': form, 'doc': doc})

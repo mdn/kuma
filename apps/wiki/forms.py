@@ -15,10 +15,9 @@ from sumo.form_fields import StrippedCharField
 
 import wiki.content
 from wiki.models import (Document, Revision,
-                         AttachmentRevision, valid_slug_parent,
-                         CATEGORIES, REVIEW_FLAG_TAGS, RESERVED_SLUGS,
-                         LOCALIZATION_FLAG_TAGS)
-from wiki import SLUG_CLEANSING_REGEX
+                         AttachmentRevision, valid_slug_parent)
+from .constants import (SLUG_CLEANSING_REGEX, REVIEW_FLAG_TAGS,
+                        LOCALIZATION_FLAG_TAGS, RESERVED_SLUGS)
 
 
 TITLE_REQUIRED = _lazy(u'Please provide a title.')
@@ -56,7 +55,8 @@ OTHER_COLLIDES = _lazy(u'Another document with this metadata already exists.')
 MIDAIR_COLLISION = _lazy(u'This document was modified while you were '
                          'editing it.')
 MIME_TYPE_INVALID = _lazy(u'Files of this type are not permitted.')
-MOVE_REQUIRED = _lazy(u"Changing this document's slug requires moving it and its children.")
+MOVE_REQUIRED = _lazy(u"Changing this document's slug requires "
+                      u"moving it and its children.")
 
 
 class DocumentForm(forms.ModelForm):
@@ -79,7 +79,7 @@ class DocumentForm(forms.ModelForm):
                                              'min_length': SLUG_SHORT,
                                              'max_length': SLUG_LONG})
 
-    category = forms.ChoiceField(choices=CATEGORIES,
+    category = forms.ChoiceField(choices=Document.CATEGORIES,
                                  initial=10,
                                  # Required for non-translations, which is
                                  # enforced in Document.clean().
@@ -122,9 +122,9 @@ class DocumentForm(forms.ModelForm):
         if 'parent_topic' in self.cleaned_data:
             doc.parent_topic = self.cleaned_data['parent_topic']
         doc.save()
-        self.save_m2m()  # not strictly necessary since we didn't change
-                         # any m2m data since we instantiated the doc
-
+        # not strictly necessary since we didn't change
+        # any m2m data since we instantiated the doc
+        self.save_m2m()
         return doc
 
 
@@ -376,9 +376,9 @@ class RevisionValidationForm(RevisionForm):
 
         # "/", "?", and " " disallowed in form input
         if (u'' == original or
-            '/' in original or
-            '?' in original or
-            ' ' in original):
+                '/' in original or
+                '?' in original or
+                ' ' in original):
             is_valid = False
             raise forms.ValidationError(SLUG_INVALID)
 
@@ -390,7 +390,7 @@ class RevisionValidationForm(RevisionForm):
                     super(RevisionValidationForm, self).clean_slug())
 
         # Set the slug back to original
-        #if not is_valid:
+        # if not is_valid:
         self.cleaned_data['slug'] = self.data['slug'] = original
 
         return self.cleaned_data['slug']
@@ -414,7 +414,7 @@ class AttachmentRevisionForm(forms.ModelForm):
         uploaded_file.seek(0)
 
         if mime_type not in \
-               constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES.split():
+                constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES.split():
             raise forms.ValidationError(MIME_TYPE_INVALID)
         return self.cleaned_data['file']
 
@@ -439,14 +439,14 @@ class AttachmentRevisionForm(forms.ModelForm):
 
 class TreeMoveForm(forms.Form):
     title = StrippedCharField(min_length=1, max_length=255,
-                                required=False,
-                                widget=forms.TextInput(
-                                    attrs={'placeholder': TITLE_PLACEHOLDER}),
-                                label=_lazy(u'Title:'),
-                                help_text=_lazy(u'Title of article'),
-                                error_messages={'required': TITLE_REQUIRED,
-                                                'min_length': TITLE_SHORT,
-                                                'max_length': TITLE_LONG})
+                              required=False,
+                              widget=forms.TextInput(
+                                  attrs={'placeholder': TITLE_PLACEHOLDER}),
+                              label=_lazy(u'Title:'),
+                              help_text=_lazy(u'Title of article'),
+                              error_messages={'required': TITLE_REQUIRED,
+                                              'min_length': TITLE_SHORT,
+                                              'max_length': TITLE_LONG})
     slug = StrippedCharField(min_length=1, max_length=255,
                              widget=forms.TextInput(),
                              label=_lazy(u'New slug:'),

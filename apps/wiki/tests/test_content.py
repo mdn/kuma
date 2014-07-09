@@ -18,7 +18,8 @@ from wiki.content import (CodeSyntaxFilter, DekiscriptMacroFilter,
                           get_content_sections, extract_css_classnames,
                           extract_html_attributes,
                           extract_kumascript_macro_names)
-from wiki.models import ALLOWED_TAGS, ALLOWED_ATTRIBUTES, Document
+from wiki.constants import ALLOWED_TAGS, ALLOWED_ATTRIBUTES
+from wiki.models import Document
 from wiki.tests import normalize_html, doc_rev, document
 from wiki.helpers import bugize_text
 

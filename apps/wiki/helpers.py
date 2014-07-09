@@ -14,14 +14,11 @@ import jinja2
 from pyquery import PyQuery as pq
 from tidylib import tidy_document
 from tower import ugettext as _
+from teamwork.shortcuts import build_policy_admin_links
 
 from sumo.urlresolvers import reverse
-import wiki
-import wiki.content
-from wiki import DIFF_WRAP_COLUMN
 
-
-from teamwork.shortcuts import build_policy_admin_links
+from .constants import DIFF_WRAP_COLUMN
 
 
 register.function(build_policy_admin_links)
@@ -109,15 +106,17 @@ def bugize_text(content):
 def format_comment(rev):
     """ Massages revision comment content after the fact """
 
-    prev_rev = rev.get_previous()
+    prev_rev = getattr(rev, 'previous_revision', None)
+    if prev_rev is None:
+        prev_rev = rev.get_previous()
     comment = bugize_text(rev.comment if rev.comment else "")
 
     #  If a page move, say so
     if prev_rev and prev_rev.slug != rev.slug:
-        comment += jinja2.Markup('<span class="slug-change">'
-                                 'Moved From <strong>%s</strong> '
-                                 'to <strong>%s</strong></span>') % (
-                                     prev_rev.slug, rev.slug)
+        comment += (jinja2.Markup('<span class="slug-change">'
+                                  'Moved From <strong>%s</strong> '
+                                  'to <strong>%s</strong></span>') %
+                    (prev_rev.slug, rev.slug))
 
     return comment
 

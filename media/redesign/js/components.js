@@ -364,7 +364,8 @@
             successClass: 'success',
             successMessage: 'Changes have been saved successfully.',
             failClass: 'fail',
-            failMessage: 'Unexpected error. Please try again.'
+            failMessage: 'Unexpected error. Please try again.',
+            hideDelay: 1000
         }, options);
 
         var $container = this;
@@ -406,8 +407,10 @@
                 return this;
             },
 
-            hide: function() {
-                $container.removeClass(settings.showClass);
+            hide: function(delay) {
+                setTimeout(function() {
+                    $container.removeClass(settings.showClass);
+                }, typeof delay == "undefined" ?  settings.hideDelay : delay);
                 return this;
             }
         };

@@ -128,6 +128,9 @@
         if($link.hasClass('disabled')) return;
 
         var $form = $link.closest('form');
+        var notifier = $('.notifier').mozNotifier();
+
+        notifier.setMessage('Updating subscription status.').show();
 
         $link.addClass('disabled');
         $.ajax($form.attr('action'), {
@@ -135,13 +138,21 @@
         	method: 'post',
         	data: $form.serialize()
         }).done(function(data) {
-        	data = JSON.parse(data);
+
+            var message = '';
+
+            data = JSON.parse(data);
             if(data.status == 1) {
                 $link.text($link.data('unsubscribe-text'));
+                message = 'You are now subscribed to this document.';
             }
             else {
                 $link.text($link.data('subscribe-text'));
+                message = 'You have been unsubscribed from this document.';
             }
+
+            notifier.success().setMessage(message).hide(2000);
+
             $link.removeClass('disabled');
         });
     });

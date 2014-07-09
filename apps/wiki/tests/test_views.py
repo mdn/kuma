@@ -39,14 +39,14 @@ from . import TestCaseBase, FakeResponse, make_test_file
 
 from authkeys.models import Key
 
+from wiki.constants import DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL
 from wiki.content import get_seo_description
 from wiki.events import EditDocumentEvent
 from wiki.models import (Document, Revision, Attachment, DocumentZone,
-                         AttachmentRevision, DocumentAttachment, TOC_DEPTH_H4)
+                         AttachmentRevision, DocumentAttachment)
 from wiki.tests import (doc_rev, document, new_document_data, revision,
                         normalize_html, create_template_test_users,
                         make_translation)
-from wiki.views import DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL
 from wiki.forms import MIDAIR_COLLISION
 
 
@@ -207,6 +207,10 @@ class ViewTests(TestCaseBase):
         all_url = urlparams(reverse('wiki.document_revisions', args=(slug,),
                                     locale=settings.WIKI_DEFAULT_LANGUAGE),
                             limit='all')
+        resp = self.client.get(all_url)
+        eq_(403, resp.status_code)
+
+        self.client.login(username='testuser', password='testpass')
         resp = self.client.get(all_url)
         eq_(200, resp.status_code)
 
@@ -1022,7 +1026,7 @@ class DocumentEditingTests(TestCaseBase):
             found_selected = False
             if opt_element.attr('selected'):
                 found_selected = True
-                eq_(str(TOC_DEPTH_H4), opt_element.attr('value'))
+                eq_(str(Revision.TOC_DEPTH_H4), opt_element.attr('value'))
         if not found_selected:
             raise AssertionError("No ToC depth initially selected.")
 

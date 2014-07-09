@@ -7,6 +7,7 @@ from django.db import transaction
 from django.dispatch import receiver
 
 from celery.task import task, group
+import waffle
 
 from devmo.utils import MemcacheLock
 
@@ -36,7 +37,8 @@ def render_stale_documents(immediate=False, log=None):
         raise StaleDocumentsRenderingInProgress
 
     stale_docs = Document.objects.get_by_stale_rendering()
-    if stale_docs.count() == 0:
+    stale_docs_count = stale_docs.count()
+    if stale_docs_count == 0:
         # not stale documents to render
         return
 
@@ -44,7 +46,7 @@ def render_stale_documents(immediate=False, log=None):
         # fetch a logger in case none is given
         log = render_stale_documents.get_logger()
 
-    log.info("Found %s stale documents" % stale_docs.count())
+    log.info("Found %s stale documents" % stale_docs_count)
     response = None
     if lock.acquire():
         try:
@@ -59,10 +61,14 @@ def render_stale_documents(immediate=False, log=None):
                     subtasks.append(subtask)
                     log.info("Deferred rendering for stale %s" % doc)
             if subtasks:
-                # the callback is called at the end of the groyp
                 task_group = group(tasks=subtasks)
-                result = task_group.apply()  # kick off the group
-                response = result.join()
+                if waffle.switch_is_active('render_stale_documents_async'):
+                    # kick off the task group asynchronously
+                    task_group.apply_async()
+                else:
+                    # kick off the task group synchronously
+                    result = task_group.apply()
+                    response = result.join()
         finally:
             lock.release()
     return response
