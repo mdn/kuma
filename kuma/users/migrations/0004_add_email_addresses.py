@@ -8,33 +8,27 @@ from allauth.account.models import EmailAddress
 class Migration(DataMigration):
 
     def forwards(self, orm):
-        seen = set()
-        email_addresses = []
-        for user in User.objects.filter(is_active=True):
-            if user.email:
-                email_users = (User.objects.filter(email=user.email,
-                                                   is_active=True)
-                                           .only('pk', 'email'))
-                if email_users.count() > 1:
-                    print "found duplicate email:", user.email
+        create_users = []
+        already_seen = set()
+        existing_users = list(User.objects.exclude(email='')
+                                          .order_by('-last_login')
+                                          .values_list('pk', 'email'))
 
-                    for email_user in email_users:
-                        print '  ', email_user.pk
+        for user_id, user_email in existing_users:
+            if user_email in already_seen:
+                print "ignoring user %s with %s" % (user_id, user_email)
+                continue
+            else:
+                already_seen.add(user_email)
+                create_users.append((user_id, user_email))
 
-                    if user.email in seen:
-                        print "but we've already seen this email adress, ignoring"
-                        continue
-
-                    user = email_users.order_by('-last_login')[0]
-                    # record that we've already added that since the
-                    # email may show up at a later loop
-                    seen.add(user.email)
-
-                email_addresses.append(EmailAddress(user=user,
-                                                    email=user.email,
-                                                    verified=True,
-                                                    primary=True))
-        EmailAddress.objects.bulk_create(email_addresses)
+        EmailAddress.objects.bulk_create([EmailAddress(user_id=id,
+                                                       email=email,
+                                                       verified=True,
+                                                       primary=True)
+                                          for id, email in create_users])
+        print "ported %s users of %s possible" % (len(already_seen),
+                                                  len(existing_users))
 
     def backwards(self, orm):
         EmailAddress.objects.all().delete()

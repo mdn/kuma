@@ -9,15 +9,14 @@ class Migration(DataMigration):
 
     def forwards(self, orm):
         now_date = now()
-        social_accounts = []
-        for email_address in EmailAddress.objects.all():
-            social_accounts.append(
-                SocialAccount(user=email_address.user,
-                              provider='persona',
-                              uid=email_address.email,
-                              last_login=now_date,
-                              date_joined=now_date))
-        SocialAccount.objects.bulk_create(social_accounts)
+        email_adresses = list(EmailAddress.objects.values_list('user',
+                                                               'email'))
+        SocialAccount.objects.bulk_create([SocialAccount(user_id=user_id,
+                                                         provider='persona',
+                                                         uid=email,
+                                                         last_login=now_date,
+                                                         date_joined=now_date)
+                                          for user_id, email in email_adresses])
 
     def backwards(self, orm):
         SocialAccount.objects.all().delete()
