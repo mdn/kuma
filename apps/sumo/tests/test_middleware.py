@@ -1,5 +1,6 @@
 from django.http import HttpResponsePermanentRedirect
 
+from nose.plugins.skip import SkipTest
 from nose.tools import eq_
 from test_utils import RequestFactory
 
@@ -99,10 +100,11 @@ class BestLanguageTests(TestCase):
         best = get_best_language('pt, fr;q=0.5')
         eq_('pt-PT', best)
 
-#    def test_nonprefix_alias(self):
-#       """We only have a single Norwegian locale."""
-#        best = get_best_language('nn-NO, nb-NO;q=0.7, fr;q=0.3')
-#        eq_('no', best)
+    def test_nonprefix_alias(self):
+        """We only have a single Norwegian locale."""
+        raise SkipTest("Figure out what's up with the Norwegian locales")
+        best = get_best_language('nn-NO, nb-NO;q=0.7, fr;q=0.3')
+        eq_('no', best)
 
     def test_script_alias(self):
         """Our traditional Chinese locale is 'zh-TW'."""
