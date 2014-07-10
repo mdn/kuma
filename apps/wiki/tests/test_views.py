@@ -2893,13 +2893,12 @@ class MindTouchRedirectTests(TestCaseBase):
             eq_('http://testserver%s' % doc['expected'], resp['Location'])
 
     def test_view_param(self):
-        raise SkipTest("WTF does the spot check work but test doesn't?")
         d = document()
         d.locale = settings.WIKI_DEFAULT_LANGUAGE
         d.slug = 'HTML/HTML5'
         d.title = 'HTML 5'
         d.save()
-        mt_url = '/en/%s?view=edit' % (d.slug,)
+        mt_url = '/en-US/%s?view=edit' % (d.slug,)
         resp = self.client.get(mt_url)
         eq_(301, resp.status_code)
         expected_url = 'http://testserver%s$edit' % d.get_absolute_url()
