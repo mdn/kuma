@@ -76,8 +76,8 @@ def user_list(users):
 @contextfunction
 def provider_login_url(context, provider_id, **params):
     """
-    {{ provider_login_url("facebook", next="bla") }}
-    {{ provider_login_url("openid", openid="http://me.yahoo.com", next="bla") }}
+    {{ provider_login_url("github", next="/some/url") }}
+    {{ provider_login_url("persona", next="/some/other/url") }}
     """
     request = context['request']
     provider = providers.registry.by_id(provider_id)
