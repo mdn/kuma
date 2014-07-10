@@ -19,9 +19,9 @@ class TrailingSlashMiddlewareTestCase(TestCase):
         eq_(response.status_code, 404)
 
     def test_remove_trailing_slash(self):
-        response = self.client.get(u'/en-US/home/?xxx=\xc3')
+        response = self.client.get(u'/en-US/docs/files/?xxx=\xc3')
         eq_(response.status_code, 301)
-        assert response['Location'].endswith('/en-US/home?xxx=%C3%83')
+        assert response['Location'].endswith('/en-US/docs/files?xxx=%C3%83')
 
 
 class PlusToSpaceTestCase(TestCase):
