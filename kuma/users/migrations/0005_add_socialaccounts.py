@@ -2,21 +2,29 @@
 from south.v2 import DataMigration
 from allauth.account.models import EmailAddress
 from allauth.socialaccount.models import SocialAccount
-from django.utils.timezone import now
+
+# disabling auto_now and auto_now_add in the SocialAccount model
+# because god damnit the bulk creation wouldn't work otherwise
+SocialAccount._meta.get_field('last_login').auto_now = False
+SocialAccount._meta.get_field('date_joined').auto_now_add = False
 
 
 class Migration(DataMigration):
 
     def forwards(self, orm):
-        now_date = now()
-        email_adresses = list(EmailAddress.objects.values_list('user',
-                                                               'email'))
-        SocialAccount.objects.bulk_create([SocialAccount(user_id=user_id,
+        email_adresses = list(EmailAddress.objects
+                                          .select_related('user')
+                                          .values_list('user',
+                                                       'email',
+                                                       'user__last_login',
+                                                       'user__date_joined'))
+        SocialAccount.objects.bulk_create([SocialAccount(user_id=id,
                                                          provider='persona',
                                                          uid=email,
-                                                         last_login=now_date,
-                                                         date_joined=now_date)
-                                          for user_id, email in email_adresses])
+                                                         last_login=login,
+                                                         date_joined=joined)
+                                          for (id, email, login, joined)
+                                          in email_adresses])
 
     def backwards(self, orm):
         SocialAccount.objects.all().delete()
