@@ -3,6 +3,7 @@
 @import 'includes/grid';
 
 $home-involved-background-y = 50px;
+$blue-background-text-color = #fff;
 
 #home {
     create-home-gradient-background(#00539f);
@@ -16,7 +17,7 @@ $home-involved-background-y = 50px;
     }
 
     /* update main nav menu color */
-    override-main-nav-color(#fff);
+    override-main-nav-color($blue-background-text-color);
 
     /* update the homepage search size */
     minimize-header-search();
@@ -27,12 +28,12 @@ $home-involved-background-y = 50px;
 
     /*  Change open auth text in white */
     .oauth-login-options {
-        color: #fff;
+        color: $blue-background-text-color;
     }
 
     .search-wrap {
         input {
-            set-placeholder-style(color, #fff);
+            set-placeholder-style(color, $blue-background-text-color);
         }
     }
 
@@ -70,7 +71,7 @@ $home-involved-background-y = 50px;
 
             &.blue {
                 background-position: 0 -340px;
-                color: #fff;
+                color: $blue-background-text-color;
             }
 
             &[class^='icon-']:before {
@@ -115,13 +116,19 @@ $home-involved-background-y = 50px;
         set-smaller-font-size();
         font-style: italic;
     }
+
+    .user-state {
+        > {$selector-icon} {
+            color: $blue-background-text-color;
+        }
+    }
 }
 
 /* homepage masthead (search, feature callouts) */
 .home-masthead {
 
     h1 {
-        color: #fff;
+        color: $blue-background-text-color;
         margin: 0 auto;
         width: 60%;
 
@@ -136,9 +143,9 @@ $home-involved-background-y = 50px;
 
         input {
             big-search();
-            color: #fff;
+            color: $blue-background-text-color;
 
-            set-placeholder-style(color, #fff);
+            set-placeholder-style(color, $blue-background-text-color);
         }
     }
 }
@@ -146,12 +153,12 @@ $home-involved-background-y = 50px;
 /* List of four feature columns within the masthead */
 .home-features {
     &, a {
-        color: #fff !important;
+        color: $blue-background-text-color !important;
     }
 
     a {
         text-decoration: underline;
-        outline-color: #fff;
+        outline-color: $blue-background-text-color;
     }
 
     h3 {
@@ -191,7 +198,7 @@ $home-involved-background-y = 50px;
     }
 
     a {
-        color: #fff !important;
+        color: $blue-background-text-color !important;
         display: block;
         padding: 100px $grid-spacing $grid-spacing $grid-spacing;
         position: relative;
@@ -265,7 +272,7 @@ $home-involved-background-y = 50px;
         background: url($media-url-dir + 'home-globe.jpg') -90px $home-involved-background-y no-repeat #f4f7f8;
 
         a {
-            color: #fff;
+            color: $blue-background-text-color;
             text-decoration: none;
             padding: $grid-spacing;
             display: block;
@@ -303,7 +310,7 @@ $home-involved-background-y = 50px;
         .button {
             background-color: #48ade4 !important;
             font-size: $smaller-font-size !important;
-            color: #fff !important;
+            color: $blue-background-text-color !important;
             font-weight: bold;
         }
     }

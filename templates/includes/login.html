@@ -1,8 +1,11 @@
 {% if user.is_authenticated() %}
-  <ul class="user-state">
-    <li><a href="{{ request.user.get_absolute_url() }}">{{ request.user.username }}</a></li>
-    <li><a href="{{ url('account_logout') }}?next={{ next_url }}">{{ _('Sign out') }}</a></li>
-  </ul>
+    <div class="user-state">
+        {% include 'socialaccount/snippets/login_service_icon.html' %}
+        <ul>
+            <li><a href="{{ request.user.get_absolute_url() }}">{{ request.user.username }}</a></li>
+            <li><a href="{{ url('account_logout') }}?next={{ next_url }}">{{ _('Sign out') }}</a></li>
+        </ul>
+    </div>
 {% else %}
   {{ providers_media_js() }}
   <form>
