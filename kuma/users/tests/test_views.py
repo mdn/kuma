@@ -452,10 +452,3 @@ class ProfileViewsTest(TestCase):
             ok_(not isinstance(
                 r.context['profile_form'].fields[field].label, basestring),
                 'Field %s is a string!' % field)
-
-    def _break(self, url, r):
-        logging.debug("URL  %s" % url)
-        logging.debug("STAT %s" % r.status_code)
-        logging.debug("HEAD %s" % r.items())
-        logging.debug("CONT %s" % r.content)
-        ok_(False)
