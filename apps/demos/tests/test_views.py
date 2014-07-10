@@ -5,7 +5,6 @@ from django.conf import settings
 import datetime
 import zipfile
 from os.path import dirname
-import logging
 
 from django.contrib.auth.models import User
 
@@ -104,7 +103,7 @@ class DemoViewsTest(test_utils.TestCase):
 
     def test_submit_loggedout(self):
         r = self.client.get(reverse('demos_submit'))
-        choices = pq(r.content)('p.choices a[href*="login"]')
+        choices = pq(r.content)('p.choices a[href*="signin"]')
         eq_(choices.length, 1)
 
     @logged_in
