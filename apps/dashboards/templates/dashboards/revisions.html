@@ -8,7 +8,7 @@
 {% block content %}
 
     <div class="dashboard">
-
+        {% include 'wiki/includes/wiki_notifier.html' %}
         <h1>{{ title }}</h1>
         <form method="get" id="revision-filter">
             <div class="revision-field">
@@ -62,7 +62,7 @@
     var $filterForm = $('#revision-filter');
     var $pageInput = $('#revision-page');
     var currentLocale = '{{ request.locale }}';
-
+    var notifier = $('.notifier').mozNotifier();
     var controlsTemplate = '\
     <div class="action-bar">\
         <ul id="page-buttons">\
@@ -156,13 +156,14 @@
             history.pushState(null, '', location.pathname + '?' + $this.serialize());
         }
 
+        notifier.setMessage('Hang on! Updating filters…').show();
         $.ajax({
             url: $this.attr('action'),
             data: $this.serialize()
         }).then(function (content) {
             replaceContent(content);
             $this.trigger('ajaxComplete');
-
+            notifier.success('Updated filters.').hide();
             // Reset the page count to 0 in case of new filter
             $pageInput.val(1);
         });
