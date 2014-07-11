@@ -917,14 +917,6 @@ CONSTANCE_DATABASE_CACHE_BACKEND = 'memcache'
 # Settings and defaults controllable by Constance in admin
 CONSTANCE_CONFIG = dict(
 
-    BROWSERID_REALM_JSON = (
-        json.dumps({
-            'realm': ['https://developer.mozilla.org',
-                      'https://marketplace.firefox.com']
-        }),
-        "Define the other sites belonging to this site's BrowserID realm."
-    ),
-
     DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG = (
         "challenge:2011:september",
         "Dev derby current challenge"

@@ -22,7 +22,6 @@ profiles_patterns = patterns('',
 
 urlpatterns = patterns('',
     # BrowserID Realm
-    url(r'^\.well-known/browserid-realm', 'kuma.users.views.browserid_realm', name='users.browserid-realm'),
     url(r'^newsletter/?$', 'kuma.users.views.apps_newsletter', name='apps_newsletter'),
     url(r'^profiles/', include(profiles_patterns)),
     url(r'^users/', include(users_patterns)),

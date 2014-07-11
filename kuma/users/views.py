@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User, Group
 from django.core.paginator import Paginator
-from django.http import HttpResponse, Http404, HttpResponseForbidden
+from django.http import Http404, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, render, redirect
 
 from access.decorators import login_required
@@ -13,7 +13,6 @@ from teamwork.models import Team
 
 from demos.models import Submission
 from demos.views import DEMOS_PAGE_SIZE
-from sumo.decorators import ssl_required
 
 from .forms import (UserBanForm, UserProfileEditForm, NewsletterForm,
                     get_subscription_details, subscribed_to_newsletter,
@@ -36,13 +35,6 @@ INTEREST_SUGGESTIONS = [
     "technical review",
     "editorial review",
 ]
-
-
-@ssl_required
-def browserid_realm(request):
-    # serve the realm from the environment config
-    return HttpResponse(constance.config.BROWSERID_REALM_JSON,
-                        content_type='application/json')
 
 
 @permission_required('users.add_userban')
