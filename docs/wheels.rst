@@ -11,7 +11,7 @@ Updating the Wheels
 
 Wheels are stored on Amazon S3 at pkgs.mozilla.net - file an IT bug to get
 yourself a set of AWS credentials. Once that's done, you can set up AWS CLI
-tools like so:
+tools like so::
 
     sudo pip install awscli
     cat >> ~/src/.awsconfig
