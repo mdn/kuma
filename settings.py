@@ -6,6 +6,7 @@ import json
 
 from django.utils.functional import lazy
 from django.utils.translation import ugettext_lazy as _
+from django.core.urlresolvers import reverse_lazy
 
 from sumo_locales import LOCALES
 
@@ -1201,9 +1202,9 @@ OBI_BASE_URL = 'https://backpack.openbadges.org/'
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Auth and permissions related constants
-LOGIN_URL = '/users/signin/'
-LOGOUT_URL = '/users/signout/'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = reverse_lazy('account_login')
+LOGOUT_URL = reverse_lazy('account_logout')
+LOGIN_REDIRECT_URL = reverse_lazy('home')
 
 # django-allauth configuration
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'

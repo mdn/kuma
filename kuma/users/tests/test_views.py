@@ -43,7 +43,7 @@ class BanTestCase(TestCase):
                           kwargs={'user_id': admin.id})
         resp = client.get(ban_url)
         eq_(302, resp.status_code)
-        ok_(settings.LOGIN_URL in resp['Location'])
+        ok_(str(settings.LOGIN_URL) in resp['Location'])
         client.logout()
 
         # admin has ban permission, can ban.
