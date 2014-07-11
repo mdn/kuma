@@ -9,9 +9,13 @@
 
     ga('create', 'UA-36116321-5', 'mozilla.org');
     {% if request.user.is_authenticated() %}
-    	ga('set', 'Signed-In', 'Yes');
+        ga('set', 'Signed-In', 'Yes');
 
+        {% if request.user.get_profile().beta_tester %}
+            ga('set', 'Beta Tester', 'Yes');
+        {% endif %}
     {% endif %}
+
 
     {% if waffle.flag('search_doc_navigator') %}
     	ga('set', 'docs navigator', 'Yes');
