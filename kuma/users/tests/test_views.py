@@ -155,7 +155,7 @@ class ProfileViewsTest(TestCase):
     def test_my_profile_view(self):
         u = User.objects.get(username='testuser')
         self.client.login(username=u.username, password=TESTUSER_PASSWORD)
-        resp = self.client.get('/profiles/')
+        resp = self.client.get(reverse('users.my_profile'))
         eq_(302, resp.status_code)
         ok_(reverse('users.profile', args=(u.username,)) in
             resp['Location'])
@@ -238,7 +238,7 @@ class ProfileViewsTest(TestCase):
     def test_my_profile_edit(self):
         u = User.objects.get(username='testuser')
         self.client.login(username=u.username, password=TESTUSER_PASSWORD)
-        resp = self.client.get('/profiles/edit/')
+        resp = self.client.get(reverse('users.my_profile_edit'))
         eq_(302, resp.status_code)
         ok_(reverse('users.profile_edit', args=(u.username,)) in
             resp['Location'])
