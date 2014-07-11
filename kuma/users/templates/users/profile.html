@@ -34,12 +34,10 @@
         </figure>
 
         <ul class="links">
-        {% for site in profile.website_choices %}
-            {% set site_name = site[0] %}
-            {% set site_meta = site[1] %}
+        {% for site_name, site_meta in profile.website_choices %}
             {% set href = profile.websites[site_name] %}
             {% if href %}
-                <li class="{{site_name}}"><i class="{{site_meta['fa_icon']}}" aria-hidden="true"></i><a href="{{href}}" rel="me external" class="url">{{site_meta['label']}}</a></li>
+                <li class="{{site_name}}"><i class="{{ site_meta.fa_icon }}" aria-hidden="true"></i><a href="{{ href }}" rel="me external" class="url">{{ site_meta.label }}</a></li>
             {% endif %}
           {% endfor %}
         </ul>
@@ -75,7 +73,7 @@
         {% if profile.title %}<li class="title">{{ profile.title }}</li>{% endif %}
         {% if profile.organization %}<li class="org">{{ profile.organization }}</li>{% endif %}
         {% if profile.location %}<li class="loc">{{ profile.location }}</li>{% endif %}
-	{% if profile.irc_nickname %}<li class="irc">IRC: {{ profile.irc_nickname }}</li>{% endif %}
+        {% if profile.irc_nickname %}<li class="irc">IRC: {{ profile.irc_nickname }}</li>{% endif %}
       </ul>
       {% endif %}
 
@@ -153,12 +151,13 @@
               </thead>
               <tbody>
                 {% for rev in wiki_activity %}
+                {% set previous_rev = rev.get_previous() %}
                 <tr>
                   <th scope="row">
                       <h3><a href="{{ rev.document.get_absolute_url() }}">{{ rev.document.title }}</a></h3>
                       <ul class="actions">
                           <li><a href="{{ rev.document.get_absolute_url() }}$edit" class="edit">{{_("Edit page")}}</a></li>
-                          <li>{% if rev.get_previous() %}<a href="{{ rev.document.get_absolute_url() }}$compare?from={{ rev.get_previous().id }}&to={{ rev.id }}" class="diff">{{_("View complete diff")}}</a>{% endif %}</li>
+                          <li>{% if previous_rev %}<a href="{{ rev.document.get_absolute_url() }}$compare?from={{ previous_rev.id }}&amp;to={{ rev.id }}" class="diff">{{_("View complete diff")}}</a>{% endif %}</li>
                           <li><a href="{{ rev.document.get_absolute_url() }}$history" class="history">{{_("View page history")}}</a></li>
                       </ul>
                   </th>

@@ -1,11 +1,8 @@
-from django.conf import settings
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User, Group
-from django.shortcuts import redirect
 from django.core.paginator import Paginator
-from django.http import (HttpResponse, HttpResponseRedirect, Http404,
-                         HttpResponseForbidden)
-from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponse, Http404, HttpResponseForbidden
+from django.shortcuts import get_object_or_404, render, redirect
 
 from access.decorators import login_required
 from allauth.socialaccount.views import SignupView as BaseSignupView
@@ -15,6 +12,7 @@ from taggit.utils import parse_tags
 from teamwork.models import Team
 
 from demos.models import Submission
+from demos.views import DEMOS_PAGE_SIZE
 from sumo.decorators import ssl_required
 
 from .forms import (UserBanForm, UserProfileEditForm, SubscriptionForm,
@@ -23,10 +21,6 @@ from .forms import (UserBanForm, UserProfileEditForm, SubscriptionForm,
 from .models import UserProfile, UserBan
 
 
-SESSION_VERIFIED_EMAIL = getattr(settings, 'BROWSERID_SESSION_VERIFIED_EMAIL',
-                                 'browserid_verified_email')
-SESSION_REDIRECT_TO = getattr(settings, 'BROWSERID_SESSION_REDIRECT_TO',
-                              'browserid_redirect_to')
 # TODO: Make this dynamic, editable from admin interface
 INTEREST_SUGGESTIONS = [
     "audio", "canvas", "css3", "device", "files", "fonts",
@@ -55,7 +49,6 @@ def browserid_realm(request):
 def ban_user(request, user_id):
     """
     Ban a user.
-
     """
     try:
         user = User.objects.get(pk=user_id)
@@ -69,7 +62,7 @@ def ban_user(request, user_id):
                           reason=form.cleaned_data['reason'],
                           is_active=True)
             ban.save()
-            return HttpResponseRedirect(user.get_absolute_url())
+            return redirect(user)
     form = UserBanForm()
     return render(request,
                   'users/ban_user.html',
@@ -81,12 +74,11 @@ def profile_view(request, username):
     profile = get_object_or_404(UserProfile, user__username=username)
     user = profile.user
 
-    if (UserBan.objects.filter(user=user, is_active=True) and
+    if (user.bans.filter(is_active=True).exists() and
             not request.user.is_superuser):
         return render(request, '403.html',
                       {'reason': "bannedprofile"}, status=403)
 
-    DEMOS_PAGE_SIZE = getattr(settings, 'DEMOS_PAGE_SIZE', 12)
     sort_order = request.GET.get('sort', 'created')
     try:
         page_number = int(request.GET.get('page', 1))

@@ -5,7 +5,6 @@ from django.db import models
 from django.utils import importlib
 
 import test_utils
-from nose import SkipTest
 from nose.tools import assert_raises, eq_
 from pyquery import PyQuery as pq
 

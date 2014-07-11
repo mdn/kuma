@@ -2,16 +2,14 @@ import logging
 import os
 import socket
 import StringIO
-import time
 
 from django.conf import settings
-from django.core.cache import cache, parse_backend_uri
+from django.core.cache import parse_backend_uri
 from django.http import (HttpResponsePermanentRedirect, HttpResponseRedirect,
                          HttpResponse)
 from django.shortcuts import render
 from django.views.decorators.cache import never_cache
 
-import celery.task
 from PIL import Image
 
 from sumo.urlresolvers import reverse
