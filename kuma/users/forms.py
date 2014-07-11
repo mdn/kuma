@@ -42,8 +42,8 @@ class NewsletterForm(forms.Form):
     FORMAT_HTML = 'html'
     FORMAT_TEXT = 'text'
     FORMAT_CHOICES = [
-        (FORMAT_HTML, 'HTML'),
-        (FORMAT_TEXT, 'Plain text'),
+        (FORMAT_HTML, _(u'HTML')),
+        (FORMAT_TEXT, _(u'Plain text')),
     ]
     newsletter = forms.BooleanField(label=_(u'Send me the newsletter'),
                                     required=False)
