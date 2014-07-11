@@ -15,7 +15,7 @@ from demos.models import Submission
 from demos.views import DEMOS_PAGE_SIZE
 from sumo.decorators import ssl_required
 
-from .forms import (UserBanForm, UserProfileEditForm, SubscriptionForm,
+from .forms import (UserBanForm, UserProfileEditForm, NewsletterForm,
                     get_subscription_details, subscribed_to_newsletter,
                     newsletter_subscribe)
 from .models import UserProfile, UserBan
@@ -163,19 +163,19 @@ def profile_edit(request, username):
         profile_form = UserProfileEditForm(instance=profile,
                                            initial=initial,
                                            prefix='profile')
-        subscription_form = SubscriptionForm(request.locale,
-                                             prefix='newsletter',
-                                             initial=subscription_initial)
+        newsletter_form = NewsletterForm(request.locale,
+                                         prefix='newsletter',
+                                         initial=subscription_initial)
     else:
         profile_form = UserProfileEditForm(data=request.POST,
                                            files=request.FILES,
                                            instance=profile,
                                            prefix='profile')
-        subscription_form = SubscriptionForm(request.locale,
-                                             data=request.POST,
-                                             prefix='newsletter')
+        newsletter_form = NewsletterForm(request.locale,
+                                         data=request.POST,
+                                         prefix='newsletter')
 
-        if profile_form.is_valid() and subscription_form.is_valid():
+        if profile_form.is_valid() and newsletter_form.is_valid():
             profile_new = profile_form.save(commit=False)
 
             # Gather up all websites defined by the model, save them.
@@ -209,13 +209,13 @@ def profile_edit(request, username):
                 profile_new.tags.set_ns(tag_ns, *tags)
 
             newsletter_subscribe(request, profile_new.user.email,
-                                 subscription_form.cleaned_data)
+                                 newsletter_form.cleaned_data)
             return redirect(profile.user)
 
     context = {
         'profile': profile,
         'profile_form': profile_form,
-        'subscription_form': subscription_form,
+        'newsletter_form': newsletter_form,
         'INTEREST_SUGGESTIONS': INTEREST_SUGGESTIONS,
     }
     return render(request, 'users/profile_edit.html', context)

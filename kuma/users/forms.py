@@ -31,7 +31,7 @@ EMAIL_LONG = _(u'Email address is too long (%(show_value)s characters). '
 PRIVACY_REQUIRED = _(u'You must agree to the privacy policy.')
 
 
-class SubscriptionForm(forms.Form):
+class NewsletterForm(forms.Form):
     FORMAT_HTML = 'html'
     FORMAT_TEXT = 'text'
     FORMAT_CHOICES = [
@@ -53,7 +53,7 @@ class SubscriptionForm(forms.Form):
                                 required=False)
 
     def __init__(self, locale, *args, **kwargs):
-        super(SubscriptionForm, self).__init__(*args, **kwargs)
+        super(NewsletterForm, self).__init__(*args, **kwargs)
 
         regions = product_details.get_regions(locale)
         regions = sorted(regions.iteritems(), key=operator.itemgetter(1))
@@ -66,7 +66,7 @@ class SubscriptionForm(forms.Form):
         self.fields['country'].initial = country
 
 
-class SignupForm(SubscriptionForm):
+class SignupForm(NewsletterForm):
     """
     The user registration form for allauth.
     """
