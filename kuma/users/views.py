@@ -63,6 +63,10 @@ def ban_user(request, user_id):
 
 
 def profile_view(request, username):
+    """
+    The main profile view that only collects a bunch of user
+    specific data to populate the template context.
+    """
     profile = get_object_or_404(UserProfile, user__username=username)
     user = profile.user
 
@@ -219,11 +223,25 @@ def my_profile_edit(request):
 
 
 def apps_newsletter(request):
+    """
+    Just a placeholder for an old view that we used to have to handle
+    newsletter subscriptions before they were moved into the user profile
+    edit view.
+    """
     return render(request, 'users/apps_newsletter.html', {})
 
 
 class SignupView(BaseSignupView):
+    """
+    The default signup view from the allauth account app, only to
+    additionally pass in the locale to the SignupForm as defined in
+    the ACCOUNT_SIGNUP_FORM_CLASS setting. This is needed to correctly
+    populate the country form field's choices from the product_details
+    app.
 
+    You can remove this class if there is no other modification compared
+    to it's parent class.
+    """
     def get_form_kwargs(self):
         kwargs = super(SignupView, self).get_form_kwargs()
         kwargs['locale'] = self.request.locale

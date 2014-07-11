@@ -32,6 +32,13 @@ PRIVACY_REQUIRED = _(u'You must agree to the privacy policy.')
 
 
 class NewsletterForm(forms.Form):
+    """
+    The base form class to be used for the signup form below as well as
+    in standalone mode on the user profile editing page.
+
+    It populates the country choices with the product_details database
+    depending on the current request's locale.
+    """
     FORMAT_HTML = 'html'
     FORMAT_TEXT = 'text'
     FORMAT_CHOICES = [
@@ -69,6 +76,13 @@ class NewsletterForm(forms.Form):
 class SignupForm(NewsletterForm):
     """
     The user registration form for allauth.
+
+    This overrides the default error messages for the username form field
+    with our own strings.
+
+    Upon successful signup we automatically create a UserProfile object for
+    the new user and subscribe him to the app newsletter if wanted by the
+    user.
     """
     def __init__(self, *args, **kwargs):
         super(SignupForm, self).__init__(*args, **kwargs)
@@ -85,10 +99,20 @@ class SignupForm(NewsletterForm):
 
 
 class UserBanForm(forms.Form):
+    """
+    The form used in the view that enables admins to ban users.
+    """
     reason = forms.CharField(widget=forms.Textarea)
 
 
 class UserProfileEditForm(forms.ModelForm):
+    """
+    The main form to edit user profile data.
+
+    It dynamically adds a bunch of fields for maintaining information
+    about a user's websites and handles expertise and interests fields
+    specially.
+    """
     beta = forms.BooleanField(label=_(u'Beta tester'), required=False)
     interests = forms.CharField(label=_(u'Interests'),
                                 max_length=255, required=False)
