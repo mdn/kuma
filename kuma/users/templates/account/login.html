@@ -10,11 +10,9 @@
   <h1>{{ _("Sign In") }}</h1>
 
 {% if socialaccount.providers  %}
-  <p>
     {% with process="login" %}
       {% include "socialaccount/snippets/provider_list.html" %}
     {% endwith %}
-  </p>
 
 {% include "socialaccount/snippets/login_extra.html" %}
 
