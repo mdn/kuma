@@ -12,17 +12,18 @@ users_patterns = patterns('',
     url(r'^ban/(?P<user_id>\d+)$', views.ban_user, name='users.ban_user'),
 )
 
-profiles_patterns = patterns('',
-    url(r'^edit/?$', views.my_profile_edit, name="users.my_profile_edit"),
-    url(r'^(?P<username>[^/]+)/?$', views.profile_view, name="users.profile"),
-    url(r'^(?P<username>[^/]+)/roles$', user_roles, name="users.roles"),
-    url(r'^(?P<username>[^/]+)/edit$', views.profile_edit, name="users.profile_edit"),
-    url(r'^$', views.my_profile, name="users.my_profile"),
-)
-
 urlpatterns = patterns('',
-    # BrowserID Realm
-    url(r'^newsletter/?$', 'kuma.users.views.apps_newsletter', name='apps_newsletter'),
-    url(r'^profiles/', include(profiles_patterns)),
+    url(r'^profiles/(?P<username>[^/]+)/?$', views.profile_view,
+        name="users.profile"),
+    url(r'^profiles/(?P<username>[^/]+)/roles$', user_roles,
+        name="users.roles"),
+    url(r'^profiles/(?P<username>[^/]+)/edit$', views.profile_edit,
+        name="users.profile_edit"),
+    url(r'^profile/?$', views.my_profile,
+        name="users.my_profile"),
+    url(r'^profile/edit/?$', views.my_profile_edit,
+        name="users.my_profile_edit"),
+    url(r'^newsletter/?$', 'kuma.users.views.apps_newsletter',
+        name='users.apps_newsletter'),
     url(r'^users/', include(users_patterns)),
 )
