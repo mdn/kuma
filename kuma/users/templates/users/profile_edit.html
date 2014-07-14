@@ -26,7 +26,7 @@
 
 {% block content %}
   <form class="submission" method="post" action="">
-      {{ csrf() }}
+    {{ csrf() }}
 
     <div class="column-container">
 
@@ -88,19 +88,15 @@
 
               <fieldset class="section" id="elsewhere">
                 <legend><b>{{ _('My Other Profiles') }}</b></legend>
-
                 <ul>
-                    {% for site in profile.website_choices %}
-                        {% set name = site[0] %}
-                        {% set meta = site[1] %}
-                        {{ li_field(profile_form,
-                            'websites_{name}' | f(name=name),
-                            classes="site {name}" | f(name=name),
-                            label=meta['label'],
-                            icon_class=meta['fa_icon']) }}
-                    {% endfor %}
+                  {% for site_name, site_meta in profile.website_choices %}
+                    {{ li_field(profile_form,
+                                'websites_{name}' | f(name=site_name),
+                                classes='site {name}' | f(name=site_name),
+                                label=site_meta.label,
+                                icon_class=site_meta.fa_icon) }}
+                  {% endfor %}
                 </ul>
-
               </fieldset>
 
       </div>
