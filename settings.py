@@ -373,13 +373,6 @@ JINGO_EXCLUDE_APPS = (
     'registration',
     'grappelli',
     'waffle',
-    # HACK: Jingo only looks at the tail end of the app name
-    # 'allauth',
-    # 'account',  # allauth.account
-    # 'socialaccount',  # allauth.socialaccount
-    'github',  # 'allauth.socialaccount.providers.github',
-    'persona',  # 'allauth.socialaccount.providers.persona',
-    'base_allauth.html',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
