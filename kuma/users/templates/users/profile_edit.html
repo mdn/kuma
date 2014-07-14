@@ -54,7 +54,7 @@
                 <ul>
                   {{ li_field(profile_form, 'beta') }}
                   <li id="field_email" class="field type_email required">
-                    <label for="id_email">{{ _('Primary Email') }}</label>
+                    <label>{{ _('Primary Email') }}</label>
                     {{ profile.user.email }} <a href="{{ url('account_email') }}">{{ _('Change') }}</a>
                   </li>
                   {{ li_field(profile_form, 'fullname') }}
@@ -65,26 +65,23 @@
                   {{ li_field(profile_form, 'timezone') }}
                   {{ li_field(profile_form, 'irc_nickname') }}
 
-                  {% set field = profile_form['bio'] %}
-                  <li class="wordcount{{ ' error' if field.errors }}">
-                    <label for="id_bio">{{ _('About me') }} <span class="note"><b id="bio_wordcount" class="counter">150</b> {{ _('words remaining') }}</span></label>
-                    {{ field | safe }}
+                  <li class="wordcount{{ ' error' if profile_form.bio.errors }}">
+                    <label for="{{ profile_form.bio.id_for_label }}">{{ _('About me') }} <span class="note"><b id="bio_wordcount" class="counter">150</b> {{ _('words remaining') }}</span></label>
+                    {{ profile_form.bio }}
                   </li>
 
-                  {% set field = profile_form['interests'] %}
-                  <li class="{{ ' error' if field.errors }}">
-                    <strong class="label">{{ _('Interests (tags)') }}</strong>
+                  <li class="{{ ' error' if profile_form.interests.errors }}">
+                    <label for="{{ profile_form.interests.id_for_label }}">{{ _('Interests (tags)') }}</label>
                     <p class="note">{{ _('Separate tags with commas or spaces. Join multi-word tags with double quotes, like "web standards".') }}</p>
-                    {{ field | safe }}
-                    {{ field.errors|safe }}
+                    {{ profile_form.interests }}
+                    {{ profile_form.interests.errors }}
                   </li>
 
-                  {% set field = profile_form['expertise'] %}
-                  <li class="{{ ' error' if field.errors }}">
-                    <strong class="label">{{ _('Areas of expertise') }}</strong>
+                  <li class="{{ ' error' if profile_form.expertise.errors }}">
+                    <label for="{{ profile_form.expertise.id_for_label }}">{{ _('Areas of expertise') }}</label>
                     <p class="note">{{ _('Add your interests first, then declare yourself an expert in selected topics.') }}</p>
-                    {{ field | safe }}
-                    {{ field.errors|safe }}
+                    {{ profile_form.expertise }}
+                    {{ profile_form.expertise.errors }}
                   </li>
                 </ul>
               </fieldset>

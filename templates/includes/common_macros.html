@@ -2,7 +2,7 @@
     {% set field = form[field_name] %}
     <li id="field_{{field_name}}" class="field {{ 'type_%s' % field.field.widget.input_type if field.field.widget.input_type }}{{ ' required' if field.field.required }}{{ ' error' if field.errors }} {{classes}}">
         {% if show_label %}
-            <label for="id_{{field_name}}">{% if icon_class %}<i class="{{icon_class}}" aria-hidden="true"></i>{% endif %}{{label or field.label}}</label>
+            <label for="{{ field.id_for_label }}">{% if icon_class %}<i class="{{icon_class}}" aria-hidden="true"></i>{% endif %}{{label or field.label}}</label>
         {% endif %}
         {{ field|safe }}
         {% if note %}
@@ -86,7 +86,7 @@
     {{ li_field(form, 'newsletter') }}
     <li class="newsletter-setting">
       {{ form.country.errors }}
-      <label for="id_country">{{ form.country.label }}</label>
+      <label for="{{ form.country.id_for_label }}">{{ form.country.label }}</label>
       {{ form.country }}
     </li>
     <li class="newsletter-setting check">
@@ -100,7 +100,7 @@
     </li>
     <li class="newsletter-setting agree">
       {{ form.agree.errors }}
-      <label for="id_agree">
+      <label for="{{ form.agree.id_for_label }}">
         {{ form.agree }} {{form.agree.label}}
         {% trans privacy_url='http://www.mozilla.org/en-US/privacy' %}
           to the <a href="{{ privacy_url }}">Privacy Policy</a>
