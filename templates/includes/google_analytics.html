@@ -16,11 +16,6 @@
         {% endif %}
     {% endif %}
 
-
-    {% if waffle.flag('search_doc_navigator') %}
-    	ga('set', 'docs navigator', 'Yes');
-    {% endif %}
-
     {% if waffle.flag('top_contributors') %}
         ga('set', 'top contributors', 'Yes');
     {% endif %}
