@@ -569,6 +569,10 @@ class Document(NotificationsMixin, models.Model):
                     'locale': translation.locale,
                     'localization_tags': [tag.name for tag in
                           translation.current_revision.localization_tags.all()],
+                    'review_tags': [tag.name for tag in
+                          translation.current_revision.review_tags.all()],
+                    'summary': translation.current_revision.summary,
+                    'tags': [tag.name for tag in translation.tags.all()],
                     'title': translation.title,
                     'url': reverse('wiki.document',
                                    args=[translation.full_path],
