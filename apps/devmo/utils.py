@@ -8,11 +8,26 @@ import tempfile
 
 import commonware.log
 import lockfile
+from polib import pofile
 
+from django.conf import settings
 from django.core.cache import get_cache
 
 log = commonware.log.getLogger('mdn.devmo.utils')
 htmlparser = HTMLParser.HTMLParser()
+
+
+def strings_are_translated(strings, locale):
+    # http://stackoverflow.com/a/24339946/571420
+    po = pofile(os.path.join(settings.ROOT, 'locale', locale, 'LC_MESSAGES',
+                             'messages.po'))
+    all_strings_translated = True
+    for string in strings:
+        if not any(e for e in po if e.msgid == string and
+                   (e.translated() and 'fuzzy' not in e.flags)
+                   and not e.obsolete):
+            all_strings_translated = False
+    return all_strings_translated
 
 
 def file_lock(prefix):
