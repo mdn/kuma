@@ -247,6 +247,25 @@ table.activity {
     }
 }
 
+#profile-edit {
+    h1, > {$selector-icon}{
+        bidi-value(float, left, right);
+
+        /* Keep the font size and line height equal to make the icon appear as
+           though it is on the same line. */
+        font-size: 26px;
+        line-height: 40px;
+    }
+
+    > {$selector-icon} {
+        bidi-style(margin-left, 20px, margin-right, 20px);
+    }
+
+    fieldset {
+        clear: both;
+    }
+}
+
 /* Profile edit newsletter */
 .profile-newsletter-container {
     background: #f4f7f8;
