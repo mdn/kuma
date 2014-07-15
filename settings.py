@@ -1206,7 +1206,7 @@ ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_USERNAME_MIN_LENGTH = 3
 ACCOUNT_ADAPTER = 'kuma.users.adapters.KumaAccountAdapter'
 ACCOUNT_SIGNUP_FORM_CLASS = 'kuma.users.forms.SignupForm'
-ACCOUNT_UNIQUE_EMAIL = False
+ACCOUNT_UNIQUE_EMAIL = True
 
 SOCIALACCOUNT_ADAPTER = 'kuma.users.adapters.KumaSocialAccountAdapter'
 SOCIALACCOUNT_EMAIL_VERIFICATION = 'mandatory'
