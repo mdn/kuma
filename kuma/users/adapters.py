@@ -45,3 +45,11 @@ class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
         """
         request.session['sociallogin_provider'] = sociallogin.account.provider
         request.session.modified = True
+
+    def validate_disconnect(self, account, accounts):
+        """
+        Validate whether or not the socialaccount account can be
+        safely disconnected.
+        """
+        if len(accounts) == 1:
+            raise forms.ValidationError(_(u"You cannot remove your only account."))

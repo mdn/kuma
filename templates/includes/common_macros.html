@@ -83,7 +83,11 @@
   {% endif %}
 
   <ol>
-    {{ li_field(form, 'newsletter') }}
+    <li id="newsletter-toggle">
+      {{ form.newsletter.errors }}
+      <label for="{{ form.newsletter.id_for_label }}">{{ form.newsletter.label }}</label>
+      {{ form.newsletter }}
+    </li>
     <li class="newsletter-setting">
       {{ form.country.errors }}
       <label for="{{ form.country.id_for_label }}">{{ form.country.label }}</label>
