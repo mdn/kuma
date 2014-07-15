@@ -5,13 +5,14 @@
  * Users app CSS
  */
 
-article.main {
-    form {
-        ul, li {
-            padding: 0;
-            margin: 0;
-        }
+#browser_register {
+    width: 100%;
 
+    p {
+        width: $main-class-width;
+    }
+
+    form {
         li {
             list-style: none;
         }
@@ -24,20 +25,27 @@ article.main {
         button {
             margin: 5px 0;
         }
+    }
 
-        newsletter-gutter = ($gutter-width / 2);
-        #apps-newsletter-subscribe {
-            margin-top: newsletter-gutter;
-            margin-bottom: 0;
+    fieldset {
+        > ul, > ul > li {
+            padding: 0;
+            margin: 0;
+        }
+    }
 
-            p, ol {
-                margin-bottom: newsletter-gutter;
-            }
+    newsletter-gutter = ($gutter-width / 2);
+    #apps-newsletter-subscribe {
+        margin-top: newsletter-gutter;
+        margin-bottom: 0;
 
-            li {
-                margin-top: 5px;
-                margin-bottom: 5px;
-            }
+        p, ol {
+            margin-bottom: newsletter-gutter;
+        }
+
+        li {
+            margin-top: 5px;
+            margin-bottom: 5px;
         }
     }
 }

@@ -1,9 +1,13 @@
-{% macro errorlist(form) -%}
+{% macro errorlist(form, links=True) -%}
   {% if form.errors %}
     <ul class="errorlist">
       {% for field in form %}
         {% for error in field.errors %}
-          <li><a href="#{{ form.auto_id % field.name }}">{{ error }}</a></li>
+          {% if links %}
+            <li><a href="#{{ form.auto_id % field.name }}">{{ error }}</a></li>
+          {% else %}
+            <li>{{ error }}</li>
+          {% endif %}
         {% endfor %}
       {% endfor %}
       {% for error in form.non_field_errors() %}

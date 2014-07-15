@@ -16,8 +16,8 @@ from tower import ugettext_lazy as _
 from .models import UserProfile
 
 
-USERNAME_INVALID = _(u'Username may contain only letters, '
-                     u'numbers and ./-/_ characters.')
+USERNAME_INVALID = _(u'User name may contain only letters, '
+                     u'numbers, and these characters: . - _')
 USERNAME_REQUIRED = _(u'Username is required.')
 USERNAME_SHORT = _(u'Username is too short (%(show_value)s characters). '
                    u'It must be at least %(limit_value)s characters.')
