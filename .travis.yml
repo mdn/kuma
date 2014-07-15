@@ -17,7 +17,7 @@ before_install:
     - aria2c -j 10 https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/base_wheels.tar.gz
     - aria2c -j 10 https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/travis_wheels.tar.gz
     - aria2c -j 10 https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/product_details_json.tar.gz
-    - aria2c -j 10 https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/mdn/locale.tar.gz
+    - aria2c -j 10 https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/locale/mdn/locale.tar.gz
     - tar xvfz base_wheels.tar.gz
     - tar xvfz travis_wheels.tar.gz
     - tar -C .. -zxf product_details_json.tar.gz

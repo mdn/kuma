@@ -285,7 +285,7 @@ class BrowserIDTestCase(TestCase):
         ok_(u'Hi %s' % new_username in welcome_email.body)
 
 
-    @mock.patch('devmo.helpers.strings_are_translated')
+    @mock.patch('devmo.utils.strings_are_translated')
     @mock.patch('basket.lookup_user')
     @mock.patch('basket.subscribe')
     @mock.patch('basket.unsubscribe')
@@ -330,7 +330,7 @@ class BrowserIDTestCase(TestCase):
         ok_(u'Hi %s' % new_username in welcome_email.body)
 
 
-    @mock.patch('devmo.helpers.strings_are_translated')
+    @mock.patch('devmo.utils.strings_are_translated')
     @mock.patch('basket.lookup_user')
     @mock.patch('basket.subscribe')
     @mock.patch('basket.unsubscribe')
