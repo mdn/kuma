@@ -47,14 +47,13 @@
                an account, <a href="{{ bug_href }}" rel="external">let us know</a>.
                {% endtrans %}</p>
 
-            {{ errorlist(register_form) }}
-
             {{ csrf() }}
             <input type="hidden" name="action" value="register">
             <fieldset>
                 <ul>
                     <li>
                         <label for="id_username">{{ _('Username') }}</label>
+                        {{ errorlist(register_form, links=False) }}
                         {{ register_form.username }}
                         <p class="field-explanation"><small>{{ _("Please enter the name you'd like to display to other users to identify your contributions.") }}</small></p>
                     </li>
@@ -62,7 +61,7 @@
                     {{ newsletter_widget(register_form) }}
 
                     <li class="submit">
-                        <button type="submit" name="create">{{ _('Create my account') }}</button>
+                        <button class="positive" type="submit" name="create">{{ _('Create my account') }}</button>
                     </li>
                 </ul>
             </fieldset>
