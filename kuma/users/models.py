@@ -1,5 +1,6 @@
 import datetime
 
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db import models
@@ -14,12 +15,19 @@ from tower import ugettext_lazy as _
 from waffle import switch_is_active
 
 from devmo.models import ModelBase
+from devmo.utils import strings_are_translated
 from sumo.models import LocaleField
 from wiki.models import Revision
 
 from .helpers import gravatar_url
 from .tasks import send_welcome_email
 
+
+WELCOME_EMAIL_STRINGS = [
+    "Like words?",
+    "Don't be shy, if you have any doubt, problems, questions: contact us! "
+    "We are here to help."
+]
 
 class UserBan(models.Model):
     user = models.ForeignKey(User,
@@ -188,7 +196,9 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(user_signed_up)
 def on_signed_up(sender, request, user, **kwargs):
     if switch_is_active('welcome_email'):
-        send_welcome_email.delay(user.pk)
+        if (request.locale == settings.WIKI_DEFAULT_LANGUAGE or
+            strings_are_translated(WELCOME_EMAIL_STRINGS, request.locale)):
+            send_welcome_email.delay(user.pk)
 
 
 # from https://github.com/brosner/django-timezones/pull/13

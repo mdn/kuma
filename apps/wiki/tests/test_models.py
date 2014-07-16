@@ -131,6 +131,14 @@ class DocumentTests(TestCase):
         doc.tags.set(*expected_tags)
         doc.current_revision.review_tags.set(*expected_review_tags)
 
+        # Create a translation with some tags
+        de_doc = document(parent=doc, locale='de', save=True)
+        de_rev = revision(document=de_doc, save=True)
+        expected_l10n_tags = ['inprogress']
+        de_doc.current_revision.localization_tags.set(*expected_l10n_tags)
+        de_doc.tags.set(*expected_tags)
+        de_doc.current_revision.review_tags.set(*expected_review_tags)
+
         # Ensure the doc's json field is empty at first
         eq_(None, doc.json)
 
@@ -143,13 +151,35 @@ class DocumentTests(TestCase):
         saved_doc = Document.objects.get(pk=doc.pk)
         eq_(json.dumps(data), saved_doc.json)
 
-        # Finally, check on a few fields stored in JSON
+        # Check the fields stored in JSON of the English doc
+        # (the fields are created in build_json_data in models.py)
         eq_(doc.title, data['title'])
-        ok_('translations' in data)
+        eq_(doc.title, data['label'])
+        eq_(doc.get_absolute_url(), data['url'])
+        eq_(doc.id, data['id'])
+        eq_(doc.slug, data['slug'])
         result_tags = sorted([str(x) for x in data['tags']])
         eq_(expected_tags, result_tags)
         result_review_tags = sorted([str(x) for x in data['review_tags']])
         eq_(expected_review_tags, result_review_tags)
+        eq_(doc.locale, data['locale'])
+        eq_(doc.current_revision.summary, data['summary'])
+        eq_(doc.modified.isoformat(), data['modified'])
+        eq_(doc.current_revision.created.isoformat(), data['last_edit'])
+
+        # Check fields of translated doc
+        ok_('translations' in data)
+        eq_(de_doc.locale, data['translations'][0]['locale'])
+        result_l10n_tags = sorted([str(x) for x
+                           in data['translations'][0]['localization_tags']])
+        eq_(expected_l10n_tags, result_l10n_tags)
+        result_tags = sorted([str(x) for x in data['translations'][0]['tags']])
+        eq_(expected_tags, result_tags)
+        result_review_tags = sorted([str(x) for x
+                             in data['translations'][0]['review_tags']])
+        eq_(expected_review_tags, result_review_tags)
+        eq_(de_doc.current_revision.summary, data['translations'][0]['summary'])
+        eq_(de_doc.title, data['translations'][0]['title'])
 
     def test_document_is_template(self):
         """is_template stays in sync with the title"""
