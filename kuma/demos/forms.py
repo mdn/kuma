@@ -1,40 +1,7 @@
 from hashlib import md5
-
 import logging
-import zipfile
 import tarfile
-
-from django import forms
-
-from django.utils.encoding import smart_unicode, smart_str
-
-from django.conf import settings
-
-from django.utils.translation import ugettext_lazy as _
-
-from django.db import models
-
-from django.contrib.auth.models import User, AnonymousUser
-
-from django.core.exceptions import ObjectDoesNotExist
-from django.core import validators
-from django.core.exceptions import ValidationError
-#from uni_form.helpers import FormHelper, Submit, Reset
-from django.core.files.base import ContentFile
-from django.core.files.uploadedfile import InMemoryUploadedFile
-
-from . import (scale_image, TAG_DESCRIPTIONS)
-from .models import Submission
-
-from captcha.fields import ReCaptchaField
-
-import django.forms.fields
-from django.forms.widgets import CheckboxSelectMultiple, RadioSelect
-
-import constance.config
-
-from taggit_extras.utils import parse_tags, split_strip
-
+import zipfile
 
 try:
     from cStringIO import StringIO
@@ -45,6 +12,27 @@ try:
     from PIL import Image
 except ImportError:
     import Image
+
+from django import forms
+from django.conf import settings
+from django.contrib.auth.models import User, AnonymousUser
+from django.core.exceptions import ObjectDoesNotExist
+from django.core import validators
+from django.core.exceptions import ValidationError
+from django.core.files.base import ContentFile
+from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.db import models
+from django.forms.widgets import CheckboxSelectMultiple, RadioSelect
+import django.forms.fields
+from django.utils.encoding import smart_unicode, smart_str
+from django.utils.translation import ugettext_lazy as _
+
+from captcha.fields import ReCaptchaField
+import constance.config
+from taggit_extras.utils import parse_tags, split_strip
+
+from . import (scale_image, TAG_DESCRIPTIONS)
+from .models import Submission
 
 
 SCREENSHOT_MAXW  = getattr(settings, 'DEMO_SCREENSHOT_MAX_WIDTH', 480)

@@ -7,7 +7,7 @@ To run developer-local.allizom.org, run:
     (Consult ~/src/Procfile to see what services are managed by Foreman.)
 
 To run Kuma tests:
-    ~/src/manage.py test actioncounters contentflagging demos devmo landing kuma.users search wiki kuma.events
+    ~/src/manage.py test actioncounters contentflagging kuma.demos devmo landing kuma.users search wiki kuma.events
 
 To run KumaScript tests:
     cd ~/src/kumascript && ./node_modules/.bin/nodeunit tests

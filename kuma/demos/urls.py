@@ -1,17 +1,20 @@
 from django.conf.urls import include, patterns, url
 
-from .feeds import RecentSubmissionsFeed, FeaturedSubmissionsFeed
-from .feeds import TagSubmissionsFeed, ProfileSubmissionsFeed
-from .feeds import SearchSubmissionsFeed
+from .feeds import (FeaturedSubmissionsFeed,
+                    RecentSubmissionsFeed,
+                    ProfileSubmissionsFeed,
+                    SearchSubmissionsFeed,
+                    TagSubmissionsFeed)
 
-from .views import AllView
-from .views import DevDerbyTagView, DevDerbyByDate
-from .views import HomeView
-from .views import SearchView
-from .views import TagView
+from .views import (AllView,
+                    DevDerbyByDate,
+                    DevDerbyTagView,
+                    HomeView,
+                    SearchView,
+                    TagView)
 
 
-urlpatterns = patterns('demos.views',
+urlpatterns = patterns('kuma.demos.views',
 
     url(r'^$', HomeView.as_view(), name='demos'),
 

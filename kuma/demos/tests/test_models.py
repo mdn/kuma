@@ -3,38 +3,35 @@
 # This Python file uses the following encoding: utf-8
 # see also: http://www.python.org/dev/peps/pep-0263/
 import logging
-import zipfile
 from os import unlink
 from os.path import dirname, isfile, isdir
 from shutil import rmtree
+import zipfile
 
 try:
     from cStringIO import StringIO
 except ImportError:
     from StringIO import StringIO
 
+from nose.tools import assert_false, eq_, ok_
 
 from django.conf import settings
+from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.core.files.base import ContentFile
+from django.template.defaultfilters import slugify
+from django.test import TestCase
+
 settings.DEMO_MAX_FILESIZE_IN_ZIP = 1 * 1024 * 1024
 settings.DEMO_MAX_ZIP_FILESIZE = 1 * 1024 * 1024
 
+from ..models import Submission
+from .. import models
 
-from django.test import TestCase
+from . import make_users, build_submission, build_hidden_submission
 
-from django.core.exceptions import ValidationError
-from django.contrib.auth.models import User
+models.DEMO_MAX_FILESIZE_IN_ZIP = 1 * 1024 * 1024
 
-from django.core.files.base import ContentFile
-
-from django.template.defaultfilters import slugify
-
-from nose.tools import assert_false, eq_, ok_
-
-from demos.models import Submission
-import demos.models
-demos.models.DEMO_MAX_FILESIZE_IN_ZIP = 1 * 1024 * 1024
-
-from demos.tests import make_users, build_submission, build_hidden_submission
 
 
 def save_valid_submission(title='hello world',
@@ -68,13 +65,13 @@ class DemoPackageTest(TestCase):
                                                    'hidden-submission-1')
 
         self.submission = build_submission(self.user)
-        self.old_blacklist = demos.models.DEMO_MIMETYPE_BLACKLIST
+        self.old_blacklist = models.DEMO_MIMETYPE_BLACKLIST
 
         hidden_next_demo = build_hidden_submission(self.other_user,
                                                    'hidden-submission-2')
 
     def tearDown(self):
-        demos.models.DEMO_MIMETYPE_BLACKLIST = self.old_blacklist
+        models.DEMO_MIMETYPE_BLACKLIST = self.old_blacklist
         self.user.delete()
 
     def test_demo_package_no_files(self):
@@ -409,7 +406,7 @@ class DemoPackageTest(TestCase):
         )
 
         for blist, fdata in types:
-            demos.models.DEMO_MIMETYPE_BLACKLIST = blist
+            models.DEMO_MIMETYPE_BLACKLIST = blist
 
             s = self.submission
 

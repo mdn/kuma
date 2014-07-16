@@ -1,15 +1,18 @@
 from django import template
-from django.shortcuts import render_to_response
 from django.contrib import admin
 from django.contrib.admin import helpers
-from django.contrib.admin.util import get_deleted_objects, model_ngettext
+from django.contrib.admin.util import get_deleted_objects
+from django.contrib.admin.util import model_ngettext
+from django.core.exceptions import PermissionDenied
+from django.shortcuts import render_to_response
 from django.utils.encoding import force_unicode
 from django.utils.translation import ugettext_lazy, ugettext as _
 
-from .models import Submission
-
 from taggit_extras.managers import NamespacedTaggableManager
 from taggit.forms import TagWidget, TagField
+
+from .models import Submission
+
 
 
 def censor_selected(self, request, queryset):
