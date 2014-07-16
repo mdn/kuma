@@ -1,26 +1,39 @@
-{# This is an email. Whitespace matters! #}
-Hi {{username}}!
+{% autoescape false %}
+{# L10n: This is an email. Whitespace matters! #}
+{{ _('Hi {username}')|f(username=username) }}
 
+{# L10n: This is an email. Whitespace matters! #}
+{% trans %}
 Thanks for creating an account on Mozilla Developer Network (MDN) -- a community
 making great resources for developers like you.
+{% endtrans %}
 
+{# L10n: This is an email. Whitespace matters! #}
+{% trans %}
 You've completed the first step of Getting Started on MDN by creating an
 account. Now, keep going by picking a task on MDN, and doing it! We have a bunch
 of intro tasks you can choose based on your interests.
+{% endtrans %}
 
-Like words?
-https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_1.3A_I_like_words
+{# L10n: This is an email. Whitespace matters! #}
+{{ _('Like words?') }}
+{{ add_utm('https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_1.3A_I_like_words', 'welcome') }}
 
-Like code?
-https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_2.3A_I_like_code
+{# L10n: This is an email. Whitespace matters! #}
+{{ _('Like code?') }}
+{{ add_utm('https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_2.3A_I_like_code', 'welcome') }}
 
-Like both words and code?
-https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_3.3A_I_like_both_words_and_code
+{# L10n: This is an email. Whitespace matters! #}
+{{ _('Like both words and code?') }}
+{{ add_utm('https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_3.3A_I_like_both_words_and_code', 'welcome') }}
 
-Want to translate MDN to your language?
-https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_4.3A_I_want_MDN_in_my_language
+{# L10n: This is an email. Whitespace matters! #}
+{{ _('Want to translate MDN to your language?') }}
+{{ add_utm('https://developer.mozilla.org/en-US/docs/MDN/Getting_started#Option_4.3A_I_want_MDN_in_my_language', 'welcome') }}
 
 
+{# L10n: This is an email. Whitespace matters! #}
+{% trans %}
 Want to talk to someone about MDN? There are a few ways you can do that:
 
 * Mailing list: https://lists.mozilla.org/listinfo/dev-mdc
@@ -38,6 +51,11 @@ Want to talk to someone about MDN? There are a few ways you can do that:
                   community manager Janet Swisher (jms).
 
 * Blog: https://blog.mozilla.org/community/category/developer-engagement
+{% endtrans %}
 
+{# L10n: This is an email. Whitespace matters! #}
+{% trans %}
 Don't be shy, if you have any doubt, problems, questions: contact us! We are
 here to help.
+{% endtrans %}
+{% endautoescape %}

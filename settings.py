@@ -550,7 +550,7 @@ def JINJA_CONFIG():
     from django.core.cache.backends.memcached import CacheClass as MemcachedCacheClass
     from django.core.cache import get_cache
     cache = get_cache('memcache')
-    config = {'extensions': ['tower.template.i18n',
+    config = {'extensions': ['jinja2.ext.i18n', 'tower.template.i18n',
                              'jinja2.ext.with_', 'jinja2.ext.loopcontrols',
                              'jinja2.ext.autoescape'],
               'finalize': lambda x: x if x is not None else ''}
@@ -583,6 +583,8 @@ DOMAIN_METHODS = {
         ('apps/**.py',
             'tower.management.commands.extract.extract_tower_python'),
         ('**/templates/**.html',
+            'tower.management.commands.extract.extract_tower_template'),
+        ('**/templates/**.ltxt',
             'tower.management.commands.extract.extract_tower_template'),
     ],
     'javascript': [
