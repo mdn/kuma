@@ -22,12 +22,10 @@ tools like so::
 
 .. note::
 
-    We're storing the AWS config in the ``~/src`` directory as it's the only
-    way to persist the credentials between recreation of Vagrant instances.
-    We're ignoring the file ``~/src/.awsconfig`` by default in our
-    ``.gitignore`` file though, so it should never land in a public space.
-    To make use of that config file we're setting the ``AWS_CONFIG_FILE``
-    environment variable to ``/home/vagrant/src/.awsconfig`` when you run the
+    We store ``.awsconfig`` in ``~/src`` to persist the credentials.
+    We ``.gitignore`` ``~/src/.awsconfig`` to keep it private.
+    So, set your ``AWS_CONFIG_FILE`` environment variable to
+    ``/home/vagrant/src/.awsconfig`` when you run the
     upload invoke task (unless you're specifying it otherwise).
 
 Then, you can update the wheels like so::

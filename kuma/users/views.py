@@ -29,6 +29,7 @@ from taggit.utils import parse_tags
 from teamwork.models import Team
 from waffle import switch_is_active
 
+from devmo.utils import strings_are_translated
 from demos.models import Submission
 from sumo.decorators import ssl_required
 from sumo.urlresolvers import reverse, split_path
@@ -60,6 +61,10 @@ INTEREST_SUGGESTIONS = [
     "editorial review",
 ]
 
+WELCOME_EMAIL_STRINGS = [
+    "Like words?",
+    "Don't be shy, if you have any doubt, problems, questions: contact us! We are here to help."
+]
 
 def _verify_browserid(form, request):
     """Verify submitted BrowserID assertion.
@@ -202,7 +207,10 @@ def browserid_register(request):
                 auth.login(request, user)
 
                 if switch_is_active('welcome_email'):
-                    send_welcome_email.delay(user.pk)
+                    if (request.locale == settings.WIKI_DEFAULT_LANGUAGE or
+                        strings_are_translated(WELCOME_EMAIL_STRINGS,
+                                               request.locale)):
+                            send_welcome_email.delay(user.pk)
 
                 newsletter_subscribe(request, email,
                                      register_form.cleaned_data)

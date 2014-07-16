@@ -1,6 +1,7 @@
 import datetime
 import re
 import urllib
+from urlobject import URLObject
 import os
 
 from django.conf import settings
@@ -159,3 +160,13 @@ def get_soapbox_messages(url):
 @register.inclusion_tag('devmo/elements/soapbox_messages.html')
 def soapbox_messages(soapbox_messages):
     return {'soapbox_messages': soapbox_messages}
+
+
+@register.function
+def add_utm(url_, campaign, source='notification', medium='email'):
+    """Add the utm_* tracking parameters to a URL."""
+    url_obj = URLObject(url_).add_query_params({
+        'utm_campaign': campaign,
+        'utm_source': source,
+        'utm_medium': medium})
+    return str(url_obj)
