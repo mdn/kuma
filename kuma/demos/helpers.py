@@ -3,14 +3,15 @@ import functools
 import hashlib
 import random
 
-from django.core.cache import cache
+from babel import localedata
+import jinja2
+
 from django.conf import settings
+from django.core.cache import cache
 from django.utils.tzinfo import LocalTimezone
 
-from babel import localedata
 import jingo
 from jingo import register
-import jinja2
 from tower import ugettext as _
 from tower import ugettext, ungettext
 from taggit.models import TaggedItem
@@ -19,11 +20,11 @@ from threadedcomments.forms import ThreadedCommentForm
 from threadedcomments.templatetags import threadedcommentstags
 import threadedcomments.views
 
+from devmo.urlresolvers import reverse
 from .models import Submission
 from . import DEMOS_CACHE_NS_KEY, TAG_DESCRIPTIONS, DEMO_LICENSES
 
-# Monkeypatch threadedcomments URL reverse() to use devmo's
-from devmo.urlresolvers import reverse
+
 threadedcommentstags.reverse = reverse
 
 

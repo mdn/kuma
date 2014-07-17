@@ -3,7 +3,7 @@ from nose.tools import eq_
 from django.conf import settings
 
 from sumo.tests import TestCase
-from demos.helpers import tag_description
+from ..helpers import tag_description
 
 class HelperTestCase(TestCase):
 

@@ -1,10 +1,10 @@
-from django.conf import settings
-
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 
-from sumo.urlresolvers import reverse
+from django.conf import settings
+
 from kuma.users.tests import TestCaseBase
+from sumo.urlresolvers import reverse
 
 
 class SubmitTests(TestCaseBase):

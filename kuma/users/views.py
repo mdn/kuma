@@ -29,7 +29,7 @@ from taggit.utils import parse_tags
 from teamwork.models import Team
 from waffle import switch_is_active
 
-from demos.models import Submission
+from kuma.demos.models import Submission
 from sumo.decorators import ssl_required
 from sumo.urlresolvers import reverse, split_path
 

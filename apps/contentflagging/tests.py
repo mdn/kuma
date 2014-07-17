@@ -21,8 +21,8 @@ from nose.plugins.attrib import attr
 
 from sumo.urlresolvers import reverse
 
-from demos.models import Submission
-from demos.tests.test_models import save_valid_submission
+from kuma.demos.models import Submission
+from kuma.demos.tests.test_models import save_valid_submission
 from devmo.tests import LocalizingClient
 from wiki.models import Document
 
