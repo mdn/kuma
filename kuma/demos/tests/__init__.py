@@ -2,7 +2,7 @@ import datetime
 
 from django.contrib.auth.models import User
 
-from demos.models import Submission
+from ..models import Submission
 
 
 def make_users():

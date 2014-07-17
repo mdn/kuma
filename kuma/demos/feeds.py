@@ -1,19 +1,17 @@
-"""Feeds for submissions"""
 import datetime
 import json
+
 import validate_jsonp
 
-import jingo
-
+from django.conf import settings
+from django.contrib.auth.models import User
 from django.contrib.syndication.views import Feed
-from django.utils.feedgenerator import (SyndicationFeed, Rss201rev2Feed,
-                                        Atom1Feed)
 from django.shortcuts import get_object_or_404
-
+from django.utils.feedgenerator import (Atom1Feed, SyndicationFeed,
+                                        Rss201rev2Feed)
 from django.utils.translation import ugettext as _
 
-from django.contrib.auth.models import User
-from django.conf import settings
+import jingo
 
 from sumo.urlresolvers import reverse
 
@@ -126,12 +124,12 @@ class SubmissionsFeed(Feed):
 
     def item_author_link(self, submission):
         return self.request.build_absolute_uri(
-            reverse('demos.views.profile_detail',
+            reverse('kuma.demos.views.profile_detail',
             args=(submission.creator.username,)))
 
     def item_link(self, submission):
         return self.request.build_absolute_uri(
-            reverse('demos.views.detail',
+            reverse('kuma.demos.views.detail',
             args=(submission.slug,)))
 
     def item_categories(self, submission):

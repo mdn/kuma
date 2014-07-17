@@ -2317,7 +2317,8 @@ def raw_file(request, attachment_id, filename):
     """Serve up an attachment's file."""
     # TODO: For now this just grabs and serves the file in the most
     # naive way. This likely has performance and security implications.
-    attachment = get_object_or_404(Attachment, pk=attachment_id)
+    qs = Attachment.objects.select_related('current_revision')
+    attachment = get_object_or_404(qs, pk=attachment_id)
     if attachment.current_revision is None:
         raise Http404
     if request.get_host() == settings.ATTACHMENT_HOST:

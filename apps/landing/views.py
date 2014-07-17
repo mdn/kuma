@@ -4,7 +4,7 @@ import constance.config
 
 from devmo import SECTION_USAGE
 from feeder.models import Bundle
-from demos.models import Submission
+from kuma.demos.models import Submission
 
 
 def home(request):

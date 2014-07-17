@@ -1,52 +1,42 @@
 from hashlib import md5
-from time import time
 import operator
 from os import makedirs
 from os.path import basename, dirname, isdir
 from shutil import rmtree, copyfileobj
 import re
-
+from time import time
 import zipfile
-import magic
-
-from django.conf import settings
-
-from demos import challenge_utils
-from sumo.urlresolvers import reverse
-
-from django.core.exceptions import ValidationError
-
-from django.db import models
-from django.db.models import Q
-
-from django.db.models.fields.files import FieldFile, ImageFieldFile
-from django.core.files.storage import FileSystemStorage
-
-from django.utils.translation import ugettext_lazy as _
-from django.template.defaultfilters import slugify, filesizeformat
-
-from django.contrib.auth.models import User
-
-from taggit_extras.managers import NamespacedTaggableManager
-
-import south.modelsinspector
-south.modelsinspector.add_ignored_fields(["^taggit\.managers"])
-
-from threadedcomments.models import ThreadedComment
-
-from actioncounters.fields import ActionCounterField
 
 from embedutils import VideoEmbedURLField
-
-from devmo.utils import generate_filename_and_delete_previous
-from . import scale_image, DEMO_LICENSES
-
+import magic
 
 try:
     from PIL import Image
 except ImportError:
     import Image
 
+from django.conf import settings
+from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.core.files.storage import FileSystemStorage
+from django.db import models
+from django.db.models import Q
+from django.db.models.fields.files import FieldFile, ImageFieldFile
+from django.template.defaultfilters import slugify, filesizeformat
+from django.utils.translation import ugettext_lazy as _
+
+import south.modelsinspector
+from taggit_extras.managers import NamespacedTaggableManager
+from threadedcomments.models import ThreadedComment
+
+from actioncounters.fields import ActionCounterField
+from sumo.urlresolvers import reverse
+from devmo.utils import generate_filename_and_delete_previous
+
+from . import challenge_utils, DEMO_LICENSES, scale_image
+
+
+south.modelsinspector.add_ignored_fields(["^taggit\.managers"])
 
 SCREENSHOT_MAXW = getattr(settings, 'DEMO_SCREENSHOT_MAX_WIDTH', 480)
 SCREENSHOT_MAXH = getattr(settings, 'DEMO_SCREENSHOT_MAX_HEIGHT', 360)
@@ -199,7 +189,7 @@ south.modelsinspector.add_introspection_rules([
             'max_upload_size': ['max_upload_size', {'default': 5}],
         },
     )
-], ["^demos.models.ReplacingZipFileField"])
+], ["^kuma.demos.models.ReplacingZipFileField"])
 
 
 class ReplacingImageWithThumbFieldFile(ImageFieldFile):
@@ -276,7 +266,7 @@ south.modelsinspector.add_introspection_rules([
             'full_max_width': ['thumb_max_height', {'default': THUMBNAIL_MAXH}],
         },
     )
-], ["^demos.models.ReplacingImageWithThumbField"])
+], ["^kuma.demos.models.ReplacingImageWithThumbField"])
 
 
 class SubmissionManager(models.Manager):
@@ -490,7 +480,7 @@ class Submission(models.Model):
         return 'Submission "%(title)s"' % dict(title=self.title)
 
     def get_absolute_url(self):
-        return reverse('demos.views.detail', kwargs={'slug': self.slug})
+        return reverse('kuma.demos.views.detail', kwargs={'slug': self.slug})
 
     def _make_unique_slug(self, **kwargs):
         """

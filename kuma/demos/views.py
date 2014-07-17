@@ -1,39 +1,30 @@
 import random
 
 from django.conf import settings
-from django.core.cache import cache
-
-from django.http import HttpResponseRedirect, HttpResponseForbidden
-
-from django.shortcuts import get_object_or_404, render, redirect
-from django.core.urlresolvers import reverse
-
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
-
+from django.core.cache import cache
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.shortcuts import get_object_or_404, render, redirect
 from django.utils.translation import ugettext_lazy as _
-
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.generic import ListView
 
 import constance.config
-
 from taggit.models import Tag
-
 from taggit_extras.utils import parse_tags
-
-from demos.models import Submission
-from demos.forms import SubmissionNewForm, SubmissionEditForm
-from kuma.users.models import UserProfile
-
-from . import DEMOS_CACHE_NS_KEY
-
-from contentflagging.models import ContentFlag, FLAG_NOTIFICATIONS
-from contentflagging.forms import ContentFlagForm
-
 import threadedcomments.views
 from threadedcomments.models import ThreadedComment
 from threadedcomments.forms import ThreadedCommentForm
+
+from contentflagging.models import ContentFlag, FLAG_NOTIFICATIONS
+from contentflagging.forms import ContentFlagForm
+from kuma.users.models import UserProfile
+from . import DEMOS_CACHE_NS_KEY
+from .models import Submission
+from .forms import SubmissionNewForm, SubmissionEditForm
+
 
 DEMOS_PAGE_SIZE = getattr(settings, 'DEMOS_PAGE_SIZE', 12)
 DEMOS_LAST_NEW_COMMENT_ID = 'demos_last_new_comment_id'
@@ -245,7 +236,7 @@ def _like_feedback(request, submission, event):
             submission=submission, event=event
         ))
     return HttpResponseRedirect(reverse(
-        'demos.views.detail', args=(submission.slug,)))
+        'kuma.demos.views.detail', args=(submission.slug,)))
 
 @xframe_options_sameorigin
 def flag(request, slug):
@@ -269,7 +260,7 @@ def flag(request, slug):
                 explanation=form.cleaned_data['explanation'],
                 recipients=recipients)
             return HttpResponseRedirect(reverse(
-                'demos.views.detail', args=(submission.slug,)))
+                'kuma.demos.views.detail', args=(submission.slug,)))
 
     return render(request, 'demos/flag.html', {
         'form': form, 'submission': submission})
@@ -317,7 +308,7 @@ def submit(request):
             _invalidate_submission_listing_helper_cache()
 
             return HttpResponseRedirect(reverse(
-                    'demos.views.detail', args=(new_sub.slug,)))
+                    'kuma.demos.views.detail', args=(new_sub.slug,)))
 
     return render(request, 'demos/submit.html', {'form': form})
 
@@ -343,7 +334,7 @@ def edit(request, slug):
             _invalidate_submission_listing_helper_cache()
 
             return HttpResponseRedirect(reverse(
-                    'demos.views.detail', args=(sub.slug,)))
+                    'kuma.demos.views.detail', args=(sub.slug,)))
 
     return render(request, 'demos/submit.html', {
         'form': form, 'submission': submission, 'edit': True})
@@ -388,7 +379,7 @@ def new_comment(request, slug, parent_id=None):
         request.session[DEMOS_LAST_NEW_COMMENT_ID] = new_comment.id
 
     return HttpResponseRedirect(reverse(
-        'demos.views.detail', args=(submission.slug,)))
+        'kuma.demos.views.detail', args=(submission.slug,)))
 
 
 @xframe_options_sameorigin
@@ -401,7 +392,7 @@ def delete_comment(request, slug, object_id):
     if request.method == "POST":
         tc.delete()
         return HttpResponseRedirect(reverse(
-            'demos.views.detail', args=(submission.slug,)))
+            'kuma.demos.views.detail', args=(submission.slug,)))
     return render(request, 'demos/delete_comment.html', {
         'comment': tc
     })
@@ -418,7 +409,7 @@ def hideshow(request, slug, hide=True):
         submission.save()
 
     return HttpResponseRedirect(reverse(
-            'demos.views.detail', args=(submission.slug,)))
+            'kuma.demos.views.detail', args=(submission.slug,)))
 
 
 def terms(request):

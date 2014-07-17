@@ -11,8 +11,8 @@ import constance.config
 from taggit.utils import parse_tags
 from teamwork.models import Team
 
-from demos.models import Submission
-from demos.views import DEMOS_PAGE_SIZE
+from kuma.demos.models import Submission
+from kuma.demos.views import DEMOS_PAGE_SIZE
 
 from .forms import (UserBanForm, UserProfileEditForm, NewsletterForm,
                     get_subscription_details, subscribed_to_newsletter,

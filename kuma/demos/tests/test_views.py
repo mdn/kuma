@@ -1,34 +1,30 @@
 # coding=utf-8
 
-from django.conf import settings
-
 import datetime
-import zipfile
+import logging
 from os.path import dirname
-
-from django.contrib.auth.models import User
-
-from sumo.urlresolvers import reverse
-from devmo.tests import LocalizingClient
+from StringIO import StringIO
+import zipfile
 
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 import test_utils
 
+from django.conf import settings
+from django.contrib.auth.models import User
+
 import constance.config
-
-from StringIO import StringIO
-
 from taggit_extras.utils import parse_tags
 
-from test_models import save_valid_submission
+from devmo.tests import LocalizingClient
+from sumo.urlresolvers import reverse
+from .. import challenge_utils
+from ..forms import SubmissionEditForm
+from ..models import Submission
+from ..tests import make_users, build_submission, build_hidden_submission
 
-from demos import challenge_utils
-from demos.models import Submission
-from demos.forms import SubmissionEditForm
-from demos.tests import make_users, build_submission, build_hidden_submission
-
+from .test_models import save_valid_submission
 
 SCREENSHOT_PATH = ('%s/fixtures/screenshot_1.png' %
         dirname(dirname(__file__)))
@@ -440,7 +436,7 @@ class DemoViewsTest(test_utils.TestCase):
         s.taggit_tags.set_ns('tech:', 'javascript')
         s.save()
         ok_(len(s.slug) == 50)
-        r = self.client.get(reverse('demos.views.detail', args=(s.slug,)))
+        r = self.client.get(reverse('kuma.demos.views.detail', args=(s.slug,)))
         ok_(r.status_code == 200)
 
     @attr('bug781823')
