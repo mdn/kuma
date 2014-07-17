@@ -20,19 +20,7 @@
     <p>You can try a search or start over on the <a href="{{ url('home') }}">home page</a>.</p>
     <p>If you were following a documentation link, you can sign in and create the page. Otherwise, please <a href="https://bugzilla.mozilla.org/form.doc" rel="nofollow">file a bug</a>. Thanks!</p>
 
-    <p class="clear">
-      <a href="{{ provider_login_url("persona") }}" class="persona-button persona-loaded login-link" data-next="{{ next_url }}" data-service="Persona">
-        <span class="persona-icon"><i aria-hidden="true"></i></span>
-        <span class="signin">{{ _('Sign in with Persona') }}</span>
-      </a>
-
-      {% if waffle.flag('oauth_login') %}
-        <a href="{{ provider_login_url("github") }}" class="github-button login-link" data-next="{{ next_url }}" data-service="GitHub">
-            <span class="github-icon"><i class="icon-github" aria-hidden="true"></i></span>
-            <span class="signin">{{ _('Sign in with GitHub') }}</span>
-          </a>
-      {% endif %}
-    </p>
+    {% include "socialaccount/snippets/provider_list.html" %}
 
     <p class="attrib"><small><a href="http://theoatmeal.com/comics/state_web_summer#tumblr" rel="nofollow">Tumbeasts</a> by Matthew Inman of <a href="http://theoatmeal.com" rel="nofollow">The Oatmeal</a></small></p>
   </section>
