@@ -1,4 +1,4 @@
-(function(doc, $) {
+(function(win, doc, $) {
     'use strict';
 
     var focusClass = 'focused';
@@ -354,68 +354,162 @@
         });
     };
 
-    /*
-        Plugin to show status updates to the user
-    */
-    $.fn.mozNotifier = function(options){
 
-        var settings = $.extend({
-            showClass: 'show-notifier',
-            successClass: 'success',
-            successMessage: 'Changes have been saved successfully.',
-            failClass: 'fail',
-            failMessage: 'Unexpected error. Please try again.',
-            hideDelay: 1000
-        }, options);
+    win.mdn.Notifier = (function() {
+        // Hold onto the one tray
+        var $tray;
+        var defaults = {
+            classes: '', // Classes to apply to the individual notification
+            closable: false, // Should the "x" icon appear
+            icon: true, // Should the icon appear when a state is given
+            duration: 3000, // How long should the item be shown?  '0' means the message needs to be removed manually or via the handle.
+            url: null, // Should clicking the item go anywhere?
+            onclick: null, // What should happen if they click on the notification?
+            onclose: null // What should happen upon closing of individual notification?
+        };
 
-        var $container = this;
-        $container.attr({
-            'role': 'status',
-            'aria-live': 'polite'
-        });
+        var defaultState = { state: 'info', className: 'info', iconName: 'icon-info-sign'  };
+        var states = [
+            { state: 'success', className: 'success', iconName: 'icon-smile' },
+            { state: 'error', className: 'error', iconName: 'icon-frown' },
+            { state: 'warning', className: 'warning', iconName: 'icon-warning-sign'  },
+            defaultState
+        ];
 
-        function setMessage(message, callback) {
-                $container.html(gettext(message));
-                if (typeof callback == 'function'){
-                    callback($container);
-                }
-                return this;
+        // Closes an item
+        function closeItem($item, callback) {
+            $item.fadeOut(300, function() {
+                $item.addClass('closed');
+                callback && callback.apply($item, null);
+            });
         }
 
-        return {
-            success: function(message) {
-                message = message || settings.successMessage;
-                setMessage(message, function() {
-                    $container.addClass(settings.successClass);
-                });
-                return this;
-            },
+        // Updates an item's HTML
+        function updateMessageHTML($item, message) {
+            $item.find('.notification-message').html(message);
+        }
 
-            fail: function(message) {
-                message = message || settings.failMessage;
-                setMessage(message, function(){
-                    $container.addClass(settings.failClass);
-                });
-                return this;
-            },
+        // Enacts options upon an item, used by both discover and growl
+        function applyOptions($item, options) {
+            // Wrap the text in a div
+            $item.html('<div class="notification-message">' + $item.html() + '</div>');
 
-            setMessage: setMessage,
-
-            show: function() {
-                $container.removeClass(settings.successClass + ' ' + settings.failClass);
-                $container.addClass(settings.showClass);
-                return this;
-            },
-
-            hide: function(delay) {
-                setTimeout(function() {
-                    $container.removeClass(settings.showClass);
-                }, typeof delay == "undefined" ?  settings.hideDelay : delay);
-                return this;
+            // Add an icon if needed
+            if(options.icon) {
+                $item.prepend('<div class="notification-img"><i aria-hidden="true" class="'+ defaultState.iconName +'"></i></div>');
             }
-        };
-    }
 
-})(document, jQuery);
+            // Add URL click event
+            if(options.url) {
+                $item.addClass('clickable').on('click', function() {
+                    win.location = defaults.url
+                });
+            }
 
+            // Add desired css class
+            $item.addClass(options.classes);
 
+            // Add item's close and click event if needed
+            if(options.closable) {
+                $('<button class="close" title="' + gettext('Close notification') + '"><i class="icon-remove" aria-hidden="true"></i></button>').on('click', function(e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+
+                    closeItem($item, options.onclose);
+                }).appendTo($item);
+            }
+
+            // Click event for notifications
+            if(options.onclick) {
+                $item.addClass('clickable').on('click', options.onclick);
+            }
+
+            // Add automatic closer
+            if(options.duration) setTimeout(function() {
+                closeItem($item, options.onclose);
+            }, options.duration);
+        }
+
+        // The actual Notifier object component
+        return {
+            // Finds notifications under a given parent,
+            discover: function(parent) {
+                var $notifications = $(parent || doc.body).find('.notification');
+
+                $notifications.each(function() {
+                    var $item = $(this);
+                    applyOptions($item, $item.data());
+                });
+
+                return $notifications;
+            },
+            growl: function(message, options) {
+                // Create the tray for the first message
+                if(!$tray) {
+                    $tray = $('<div class="notification-tray" role="status" aria-live="polite"></div>').appendTo(doc.body);
+                }
+
+                // Merge options with defaults
+                options = $.extend({}, defaults, options || {});
+
+                // Create the growl message, add to tray
+                var $item = $('<div class="notification">' + message + '</div>');
+
+                // Apply options and format notification
+                applyOptions($item, options);
+
+                // Show within the container
+                $item.prependTo($tray);
+
+                // Return a handle for the growl item
+                var handle = {
+                    item: $item,
+                    options: options,
+                    updateMessage: function(message) {
+                        updateMessageHTML(this.item, message);
+                        return this;
+                    },
+                    close: function(delay, callback) {
+                        $item = this.item;
+                        delay = delay || options.duration;
+                        callback = callback || options.onclose;
+
+                        if(delay) {
+                            setTimeout(function() {
+                                closeItem($item, callback);
+                            }, delay);
+                        }
+                        else {
+                            closeItem($item, callback);
+                        }
+                        return this;
+                    }
+                };
+
+                // Add success, fail, warning, and info methods to the handle
+                $.each(states, function() {
+
+                    var stateObj = this;
+                    var state = this.state;
+                    var className = this.className;
+                    var iconName = this.iconName;
+                    handle[state] = function(message, delay) {
+                        var $item = handle.item;
+                        $item.addClass(className);
+
+                        if(message) updateMessageHTML($item, message);
+                        if(delay) this.close(delay);
+                        if(handle.options.icon) {
+                            $item.find('.notification-img i').attr('class', stateObj.iconName);
+                        }
+
+                        return this;
+                    };
+                });
+
+                return handle;
+            }
+        }
+    })();
+
+})(window, document, jQuery);
