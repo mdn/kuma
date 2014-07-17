@@ -498,10 +498,10 @@
         });
 
         // Save-and-edit submits to a hidden iframe, show loading message in notifier
-        var notifier = $('.notifier').mozNotifier();
+        var notifications = [];
         $('.btn-save-and-edit').on('click', function () {
 
-            notifier.setMessage('Saving changes…').show();
+            notifications.push(mdn.Notifier.growl('Saving changes…', { duration: 0 }));
 
             mdn.analytics.trackEvent({
                 category: 'Wiki',
@@ -524,7 +524,8 @@
         $('.btn-save-and-edit').show();
 
         $('#save-and-edit-target').on('load', function () {
-            notifier.success().hide();
+            notifications[0].success(null, 2000);
+            notifications.shift();
 
             if (supportsLocalStorage) {
                 var if_doc = $(this).get(0).contentDocument;
