@@ -1,18 +1,13 @@
-"""
-This file demonstrates writing tests using the unittest module. These will pass
-when you run "manage.py test".
-
-Replace this with more appropriate tests for your application.
-"""
-
-from django.test import TestCase
+import json
 from os import makedirs
 from os.path import dirname, exists, isdir
-from nose.tools import assert_equal, ok_
-import json
-import fileinput
 
-from humans.models import HumansTXT, Human
+import fileinput
+from nose.tools import assert_equal, ok_
+
+from django.test import TestCase
+
+from .models import HumansTXT, Human
 
 APP_DIR = dirname(__file__)
 CONTRIBUTORS_JSON = "%s/fixtures/contributors.json" % APP_DIR
