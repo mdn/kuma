@@ -242,6 +242,14 @@ class SignupView(BaseSignupView):
     You can remove this class if there is no other modification compared
     to it's parent class.
     """
+    def get_form(self, form_class):
+        """
+        Returns an instance of the form to be used in this view.
+        """
+        form = super(SignupView, self).get_form(form_class)
+        form.fields['email'].widget = forms.HiddenInput()
+        return form
+
     def get_form_kwargs(self):
         kwargs = super(SignupView, self).get_form_kwargs()
         kwargs['locale'] = self.request.locale

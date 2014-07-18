@@ -52,18 +52,14 @@
           {% if redirect_field_value %}
           <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
           {% endif %}
+          {# The email field is hidden for now #}
+          {{ form.email }}
           <fieldset>
             <ul>
               <li>
                 <label for="id_username">{{ form.username.label }}</label>
                 {{ form.username }}
                 <p class="field-explanation"><small>{{ _("Please enter the name you'd like to display to other users to identify your contributions.") }}</small></p>
-              </li>
-
-              <li>
-                <label for="id_email">{{ form.email.label }}</label>
-                {{ form.email }}
-                <p class="field-explanation"><small>{{ _("Please enter the email you'd like to add to your account") }}</small></p>
               </li>
 
               {{ newsletter_widget(form) }}
