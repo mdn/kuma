@@ -10,8 +10,8 @@ from django.shortcuts import render
 import constance.config
 
 from devmo import SECTION_USAGE, SECTION_APPS, SECTION_HACKS
-from feeder.models import Bundle
 from kuma.demos.models import Submission
+from kuma.feeder.models import Bundle
 
 from .forms import SubscriptionForm
 
