@@ -514,7 +514,7 @@ INSTALLED_APPS = (
     'test_utils',
 
     # other
-    'humans',
+    'kuma.humans',
 
     'badger',
 )

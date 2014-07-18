@@ -1,6 +1,6 @@
 import cronjobs
 
-from humans.models import HumansTXT
+from .models import HumansTXT
 
 
 @cronjobs.register
