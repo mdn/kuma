@@ -32,7 +32,7 @@
         if(klassParts[0] == 'brush') {
             brush = $.trim(klassParts[1].toLowerCase());
             brush = languages[brush] ? brush : defaultBrush;
-            $pre.html('<code class="language-' + brush + '">' + $.trim($pre.html()) + '</code>');
+            $pre.html('<code class="language-' + brush + '">' + $.trim($pre.html().replace(/</g, '&lt;').replace(/>/g, '&gt;')) + '</code>');
         }
 
         // Accommodate for line-highlighting
