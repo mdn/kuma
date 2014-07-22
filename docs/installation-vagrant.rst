@@ -66,7 +66,7 @@ Install and run everything
 #. Use ``foreman`` inside the VM to start all site services::
 
        foreman start
-   
+
    You should see output like::
 
        20:32:59 web.1        | started with pid 2244
@@ -109,20 +109,25 @@ You will want to make yourself an admin user to enable important site features.
 Enable Important Site Features
 ------------------------------
 
+Some site features are controlled using `django-waffle <http://waffle.readthedocs.org/en/latest/>`_.
+You control these features in the `waffle admin
+<https://developer-local.allizom.org/admin/waffle/>`_.
+
+Some site features are controlled using `constance
+<https://github.com/comoga/django-constance>`_. You control these features in
+the `constance config admin panel`_.
+
 Wiki Editing
 ~~~~~~~~~~~~
 
-Some site features are controlled using `django-waffle <http://waffle.readthedocs.org/en/latest/>`_. You control these features in the `waffle admin
-<https://developer-local.allizom.org/admin/waffle/>`_.
+The central feature of MDN is wiki editing. We use a waffle flag called
+``kumaediting`` to control edits to the wiki. So we can effectively put the
+site into "read-only" and/or "write-by-staff-only" modes.
 
-For example, we use a waffle flag called ``kumaediting`` to control edits to
-the wiki. So we can effectively put the site into a "read-only" mode.
-Be sure to choose "Yes" for the "Everyone" option.
-Some Waffle flags include:
+To enable wiki editing on your MDN vm, `add a waffle flag`_ called
+``kumaediting`` and set "Everyone" to "Yes".
 
--  ``kumaediting``:  Allows creation, editing, and translating of documents
--  ``page_move``:  Allows moving of documents
--  ``events_map``:  Allows display of map on the events page
+.. _add a waffle flag: https://developer-local.allizom.org/admin/waffle/flag/add/
 
 KumaScript
 ~~~~~~~~~~
@@ -130,9 +135,11 @@ KumaScript
 To enable KumaScript (Kuma's template system):
 
 #. Sign in
-#. Visit `the constance config admin panel <https://developer-local.allizom.org/admin/constance/config/>`_
+#. Visit the `constance config admin panel`_
 #. Change ``KUMASCRIPT_TIMEOUT`` to 600
 #. Click "Save" at the bottom
+
+.. _constance config admin panel: https://developer-local.allizom.org/admin/constance/config/
 
 Create pages
 ------------
@@ -148,15 +155,15 @@ Import the entire MDN wiki
 
 MDN content and code are inter-dependent - a.k.a., tightly-coupled. :(
 
-It is often easier to work on Kuma code with a fully-functioning, anonymized copy
-of the MDN database.
+To work on Kuma code with a fully-functioning, anonymized copy of the MDN
+database.
 
 #. Download `devmo_sanitized-latest.sql.bz2 <https://developer.allizom.org/landfill/devmo_sanitized-latest.sql.bz2>`_ (400 MB) from `landfill <https://developer.allizom.org/landfill/>`_
-   
+
 #. Extract it in your kuma directory::
 
     bunzip devmo_sanitized-latest.sql.bz2
-   
+
 #. Import the unzip'd .sql to your local database::
 
      vagrant ssh
@@ -195,7 +202,7 @@ Errors during `vagrant up`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``vagrant up`` starts the virtual machine. The first time you run ``vagrant up`` it
-also `provisions <https://docs.vagrantup.com/v2/cli/provision.html>`_ the vm - 
+also `provisions <https://docs.vagrantup.com/v2/cli/provision.html>`_ the vm -
 i.e., it automatically installs and configures Kuma software on the vm. We
 provision the vm with `puppet`_ manifests in the `puppet/manifests directory
 <https://github.com/mozilla/kuma/tree/master/puppet/manifests>`_.
