@@ -1,3 +1,4 @@
+@import 'includes/mixins';
 @import 'includes/vars';
 
 .beast {
@@ -11,4 +12,10 @@ ol.prose, ul.prose {
 
 ul.prose {
     margin: $grid-spacing 0;
+}
+
+.error {
+    .socialaccount_providers {
+        clearfix();
+    }
 }
