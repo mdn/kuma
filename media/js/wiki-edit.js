@@ -69,14 +69,20 @@
           });
        };
 
-      // Renders the WYSIWYG editor
-      $textarea.each(function () {
-        if (!$('body').is('.is-template')) {
-          $(this).removeAttr('required').ckeditor(setup, {
-            customConfig : '/en-US/docs/ckeditor_config.js'
-          });
-        }
-      });
+        // Renders the WYSIWYG editor
+        $textarea.each(function() {
+            if (!$('body').is('.is-template')) {
+              $(this).removeAttr('required').ckeditor(setup, {
+                customConfig : '/en-US/docs/ckeditor_config.js'
+              });
+            }
+        });
+
+        //Fullscreen button for CKEditor
+        $('#fullscreen-link').on('click', function(e) {
+            CKEDITOR.instances.id_content.execCommand('maximize');
+            e.preventDefault();
+        });
     })();
 
     /*
