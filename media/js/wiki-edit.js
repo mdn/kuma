@@ -24,7 +24,7 @@
           // Switch header and toolbar styles on scroll to keep them on screen
           $(doc).on('scroll', function() {
 
-            // If top of the window is betwen top of #content and top of metadata (first .page-meta) blocks, the header is fixed
+            // If top of the window is betwen top of #content and bottom of content + 200, the header is fixed
             var scrollTop = $(this).scrollTop();
             if (scrollTop >= contentTop) {
 

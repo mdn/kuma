@@ -3,7 +3,7 @@
   {% set desc_form = document_form %}
 {% endif %}
       <details id="trans-description"{% if disclose_description %} open="open"{% endif %}>
-        <summary>{{ _('Translate Description') }}</summary>
+        <summary><h2>{{ _('Translate Description') }}</h2></summary>
         {{ errorlist(desc_form) }}
             <ul class="description">
               <li>
@@ -34,7 +34,8 @@
                     <dd>{{ parent_slug }}</dd>
                   </dl>
                   <dl class="localized">
-                    &nbsp;
+                    <dt>&nbsp;</dt>
+                    <dd>&nbsp;</dd>
                   </dl>
                 </li>
                 {% endif %}
