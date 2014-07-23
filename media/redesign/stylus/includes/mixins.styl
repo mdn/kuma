@@ -436,3 +436,28 @@ $right-icons {
     margin-left: 0 !important;
     margin-right: 10px !important;
 }
+
+
+/*  media block
+    for use when you want an item of defined width on the left and some stuff on the right of it
+    http://www.stubbornella.org/content/2010/06/25/the-media-object-saves-hundreds-of-lines-of-code/ */
+.media,
+.media-body {
+    overflow: hidden;
+    _overflow: visible;
+    zoom: 1;
+}
+
+.media-img {
+    float: left;
+    margin-right: ($grid-spacing / 2);
+
+    img {
+        display: block;
+    }
+}
+
+.media-imgExt {
+    float: right;
+    margin-left: ($grid-spacing / 2);
+}
