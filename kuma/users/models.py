@@ -75,7 +75,7 @@ class UserProfile(ModelBase):
             label=_(u'Stack Overflow'),
             prefix='https://stackoverflow.com/users/',
             regex='^https?://stackoverflow.com/users/',
-            fa_icon='icon-stackexchange',
+            fa_icon='icon-stack-overflow',
         )),
         ('linkedin', dict(
             label=_(u'LinkedIn'),
