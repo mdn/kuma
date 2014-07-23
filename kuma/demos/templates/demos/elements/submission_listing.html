@@ -1,9 +1,9 @@
-    {% set current_sort = request.GET.get('sort', 'created') %} 
+    {% set current_sort = request.GET.get('sort', 'created') %}
     {% set query = request.GET.get('q','') %}
 
     {% if show_sorts %}
     <div class="gallery-head">
-        <h2 class="count">{{ ngettext('{count} Demo', '{count} Demos', paginator.count) | f(count=paginator.count) }}{% if show_submit %} <a class="button positive" href="{{ url('demos.views.submit') }}">Submit a Demo</a>{% endif %}</h2>
+        <h2 class="count">{{ ngettext('{count} Demo', '{count} Demos', paginator.count) | f(count=paginator.count) }}{% if show_submit %} <a class="button positive" href="{{ url('demos_submit') }}">Submit a Demo</a>{% endif %}</h2>
       <ul class="sort">
         {% set sort_orders = (
             ( 'upandcoming', _('Sort demos by most recent likes and views'), _('You are viewing demos by most recent likes and views'), _('Up and Coming') ),
@@ -43,7 +43,7 @@
             if (el.className == 'gallery') { el.className += ' js'; }
         }
     </script>
-    
+
     <div class="gallery-foot">
         {% if page_obj %}
             <p class="showing">{{_('{start}&ndash;{end} of {total}') | f(start=page_obj.start_index(),end=page_obj.end_index(),total=paginator.count) | safe }}</p>

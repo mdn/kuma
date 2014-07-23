@@ -40,14 +40,16 @@
             // Track event of which was clicked
             var serviceUsed = $(this).data('service'); // "Persona" or "GitHub"
 
-            /*
-                TODO:
-                    Waiting on.... https://github.com/mozilla/kuma/pull/2421
+            mdn.analytics.trackEvent({
+                category: 'Sign-in',
+                action: 'Start',
+                label: serviceUsed.toLowerCase()
+            });
 
-                    mdn.analytics.trackEvent(______)
-            */
-
-            console.log('login link clicked!  ', serviceUsed);
+            // We use data-optimizely-hook and associated Optimizely element
+            // targeting for most click goals, but if we are maintaining this
+            // selector for Google Analytics anyway, we might as well use it.
+            mdn.optimizely.push(['trackEvent', 'click-login-button-' + serviceUsed.toLowerCase()]);
         });
     })();
 

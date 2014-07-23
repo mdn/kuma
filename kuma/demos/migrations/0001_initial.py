@@ -7,7 +7,7 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding model 'Submission'
         db.create_table('demos_submission', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -22,15 +22,15 @@ class Migration(SchemaMigration):
             ('comments_total', self.gf('django.db.models.fields.PositiveIntegerField')(default=0)),
             # HACK: This custom field has gone away entirely, so using its
             # superclass as a stand-in
-            #('tags', self.gf('demos.models.ConstrainedTagField')()),
+            #('tags', self.gf('kuma.demos.models.ConstrainedTagField')()),
             ('tags', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
-            ('screenshot_1', self.gf('demos.models.ReplacingImageWithThumbField')(max_length=255)),
-            ('screenshot_2', self.gf('demos.models.ReplacingImageWithThumbField')(max_length=255, blank=True)),
-            ('screenshot_3', self.gf('demos.models.ReplacingImageWithThumbField')(max_length=255, blank=True)),
-            ('screenshot_4', self.gf('demos.models.ReplacingImageWithThumbField')(max_length=255, blank=True)),
-            ('screenshot_5', self.gf('demos.models.ReplacingImageWithThumbField')(max_length=255, blank=True)),
+            ('screenshot_1', self.gf('kuma.demos.models.ReplacingImageWithThumbField')(max_length=255)),
+            ('screenshot_2', self.gf('kuma.demos.models.ReplacingImageWithThumbField')(max_length=255, blank=True)),
+            ('screenshot_3', self.gf('kuma.demos.models.ReplacingImageWithThumbField')(max_length=255, blank=True)),
+            ('screenshot_4', self.gf('kuma.demos.models.ReplacingImageWithThumbField')(max_length=255, blank=True)),
+            ('screenshot_5', self.gf('kuma.demos.models.ReplacingImageWithThumbField')(max_length=255, blank=True)),
             ('video_url', self.gf('embedutils.VideoEmbedURLField')(max_length=200, null=True, blank=True)),
-            ('demo_package', self.gf('demos.models.ReplacingZipFileField')(max_upload_size=62914560, max_length=255)),
+            ('demo_package', self.gf('kuma.demos.models.ReplacingZipFileField')(max_upload_size=62914560, max_length=255)),
             ('source_code_url', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
             ('license_name', self.gf('django.db.models.fields.CharField')(max_length=64)),
             ('creator', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True)),
@@ -45,7 +45,7 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        
+
         # Deleting model 'Submission'
         db.delete_table('demos_submission')
 
@@ -93,7 +93,7 @@ class Migration(SchemaMigration):
             'comments_total': ('django.db.models.fields.PositiveIntegerField', [], {'default': '0'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'creator': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'}),
-            'demo_package': ('demos.models.ReplacingZipFileField', [], {'max_upload_size': '62914560', 'max_length': '255'}),
+            'demo_package': ('kuma.demos.models.ReplacingZipFileField', [], {'max_upload_size': '62914560', 'max_length': '255'}),
             'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'featured': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'hidden': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
@@ -105,16 +105,16 @@ class Migration(SchemaMigration):
             'likes_total': ('django.db.models.fields.IntegerField', [], {'default': '0', 'db_index': 'True', 'blank': 'True'}),
             'modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
             'navbar_optout': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'screenshot_1': ('demos.models.ReplacingImageWithThumbField', [], {'max_length': '255'}),
-            'screenshot_2': ('demos.models.ReplacingImageWithThumbField', [], {'max_length': '255', 'blank': 'True'}),
-            'screenshot_3': ('demos.models.ReplacingImageWithThumbField', [], {'max_length': '255', 'blank': 'True'}),
-            'screenshot_4': ('demos.models.ReplacingImageWithThumbField', [], {'max_length': '255', 'blank': 'True'}),
-            'screenshot_5': ('demos.models.ReplacingImageWithThumbField', [], {'max_length': '255', 'blank': 'True'}),
+            'screenshot_1': ('kuma.demos.models.ReplacingImageWithThumbField', [], {'max_length': '255'}),
+            'screenshot_2': ('kuma.demos.models.ReplacingImageWithThumbField', [], {'max_length': '255', 'blank': 'True'}),
+            'screenshot_3': ('kuma.demos.models.ReplacingImageWithThumbField', [], {'max_length': '255', 'blank': 'True'}),
+            'screenshot_4': ('kuma.demos.models.ReplacingImageWithThumbField', [], {'max_length': '255', 'blank': 'True'}),
+            'screenshot_5': ('kuma.demos.models.ReplacingImageWithThumbField', [], {'max_length': '255', 'blank': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '50', 'db_index': 'True'}),
             'source_code_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'summary': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             # HACK: This custom field has gone away entirely
-            #'tags': ('demos.models.ConstrainedTagField', [], {}),
+            #'tags': ('kuma.demos.models.ConstrainedTagField', [], {}),
             'tags': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'}),
             'video_url': ('embedutils.VideoEmbedURLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'})

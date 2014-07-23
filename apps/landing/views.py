@@ -3,8 +3,8 @@ from django.shortcuts import render
 import constance.config
 
 from devmo import SECTION_USAGE
-from feeder.models import Bundle
 from kuma.demos.models import Submission
+from kuma.feeder.models import Bundle
 
 
 def home(request):
