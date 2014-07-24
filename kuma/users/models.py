@@ -12,8 +12,8 @@ from timezones.fields import TimeZoneField, MAX_TIMEZONE_LENGTH
 from tower import ugettext_lazy as _
 
 from devmo.models import ModelBase
+from kuma.wiki.models import Revision
 from sumo.models import LocaleField
-from wiki.models import Revision
 
 from .helpers import gravatar_url
 

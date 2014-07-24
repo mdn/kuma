@@ -1,5 +1,7 @@
-import json
 import datetime
+import json
+
+from jinja2 import escape
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -7,17 +9,11 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.http import require_GET
 
-from jinja2 import escape
-
+from kuma.users.helpers import ban_link
+from kuma.wiki.models import Document, Revision
 from sumo.urlresolvers import reverse
 from sumo.utils import paginate, smart_int
-
-from kuma.users.helpers import ban_link
-
-from wiki.models import Document, Revision
-
-from dashboards.forms import RevisionDashboardForm
-
+from .forms import RevisionDashboardForm
 from . import PAGE_SIZE
 
 

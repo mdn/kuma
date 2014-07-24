@@ -4,9 +4,8 @@ import test_utils
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 
+from kuma.wiki.tests import revision
 from sumo.tests import TestCase
-from wiki.tests import revision
-
 from ..models import UserBan, UserProfile
 from . import profile
 

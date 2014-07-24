@@ -34,7 +34,7 @@ before_script:
     - mysql -e 'create database kuma;'
 
 script:
-    - python manage.py test --noinput -v2 actioncounters contentflagging dashboards kuma.demos devmo kpi landing search kuma.users wiki kuma.events
+    - python manage.py test --noinput -v2 actioncounters contentflagging dashboards kuma.demos devmo kpi landing search kuma.users kuma.wiki kuma.events
 
 notifications:
     irc:
