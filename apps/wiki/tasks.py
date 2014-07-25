@@ -61,7 +61,7 @@ def render_stale_documents(immediate=False, log=None):
                     subtasks.append(subtask)
                     log.info("Deferred rendering for stale %s" % doc)
             if subtasks:
-                task_group = group(tasks=subtasks)
+                task_group = group(subtasks)
                 if waffle.switch_is_active('render_stale_documents_async'):
                     # kick off the task group asynchronously
                     task_group.apply_async()
