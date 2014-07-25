@@ -117,6 +117,7 @@ class DocumentTests(TestCaseBase):
 
         # Fallback message is shown.
         eq_(1, len(doc('#doc-pending-fallback')))
+        ok_('$translate' in doc('#edit-button').attr('href'))
         # Removing this as it shows up in text(), and we don't want to depend
         # on its localization.
         doc('#doc-pending-fallback').remove()
@@ -134,6 +135,7 @@ class DocumentTests(TestCaseBase):
 
         # Fallback message is shown.
         eq_(1, len(doc('#doc-pending-fallback')))
+        ok_('$translate' in doc('#edit-button').attr('href'))
         # Removing this as it shows up in text(), and we don't want to depend
         # on its localization.
         doc('#doc-pending-fallback').remove()
