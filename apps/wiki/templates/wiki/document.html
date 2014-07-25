@@ -370,7 +370,7 @@
                   {% endtrans %}
                   {% if current_revision.creator %}
                     <div class="contributor-sub">
-                      <i aria-hidden="true" class="icon-time"></i><strong>{{ _('Last updated by:') }}</strong>
+                      <i aria-hidden="true" class="icon-clock-o"></i><strong>{{ _('Last updated by:') }}</strong>
                       <a href="{{ current_revision.creator.get_absolute_url() }}">{{ current_revision.creator }}</a>,
                       {{ datetimeformat(current_revision.created, format='datetime') }}
                     </div>
