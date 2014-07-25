@@ -129,8 +129,14 @@ def datetimeformat(context, value, format='shortdatetime', output='html'):
         # Expecting date value
         raise ValueError
 
-    tzinfo = timezone(settings.TIME_ZONE)
-    tzvalue = tzinfo.localize(value)
+    default_tz = timezone(settings.TIME_ZONE)
+    tzvalue = default_tz.localize(value)
+
+    user = context['request'].user
+    if user.is_authenticated() and user.get_profile().timezone:
+        user_tz = user.get_profile().timezone
+        tzvalue = tzvalue.astimezone(user_tz)
+
     locale = _babel_locale(_contextual_locale(context))
 
     # If within a day, 24 * 60 * 60 = 86400s
