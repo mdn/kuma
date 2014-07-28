@@ -360,6 +360,28 @@
         });
     };
 
+    /*
+        Plugin to toggle button messages
+    */
+    $.fn.toggleMessage = function(options){
+
+        var settings = $.extend({
+            event: 'click',
+            toggleCallback: noop
+        }, options);
+
+        return this.each(function(){
+            $(this).on(settings.event, function(e){
+                var $self = $(this);
+                e.preventDefault();
+                var currentMessage = $self.text();
+                var alternateMessage = $self.attr('data-alternate-message');
+                $self.attr('data-alternate-message', currentMessage)
+                       .html(alternateMessage);
+                settings.toggleCallback();
+            });
+        });
+    };
 
     win.mdn.Notifier = (function() {
         // Hold onto the one tray

@@ -889,7 +889,7 @@ class TranslateTests(TestCaseBase):
         response = self.client.get(translate_uri)
         doc = pq(response.content)
         eq_(rev_es.content, doc('#id_content').text())
-        eq_(rev_enUS.content, doc('article.approved div.boxed').text())
+        eq_(rev_enUS.content, doc('article.approved .translate-rendered').text())
 
         # Post the translation and verify
         data = _translation_data()

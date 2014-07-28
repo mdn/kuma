@@ -76,16 +76,23 @@
               {% endif %}
             {% endif %}
 
+            {% set default_locale = settings.LANGUAGES_DICT[settings.WIKI_DEFAULT_LANGUAGE.lower()] %}
             <div id="content-fields">
               <article class="approved text-content">
                 <header>
-                  <h3>{{ _('Approved {default_locale} version:')|f(default_locale=settings.LANGUAGES_DICT[settings.WIKI_DEFAULT_LANGUAGE.lower()]) }}</h3>
+                    <h3 class="approved-title">{{ _('Approved {locale} version')|f(locale=default_locale) }}:</h3>
+                    <div class="translate-buttons">
+                        <button class="doc-mode-btn" data-alternate-message="{{ _('View Rendered') }}">{{ _('View Source') }}</button>
+                        <button class="hide-original-btn" data-alternate-message="{{ _('Show {locale}')|f(locale=default_locale) }}">{{ _('Hide {locale}')|f(locale=default_locale) }}</button>
+                    </div>
                 </header>
-                <div class="boxed translate-display">
+                <div class="boxed translate-rendered">
                   {{ based_on.content_cleaned|safe }}
                 </div>
+                <div class="boxed translate-source hidden">
+                    <textarea readonly>{{ based_on.content_cleaned|safe }}</textarea>
+                </div>
               </article>
-
               <article class="localized">
                 <header>
                   {% include 'wiki/includes/guide_links.html' %}
