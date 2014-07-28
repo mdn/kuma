@@ -188,7 +188,7 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(user_signed_up)
 def on_signed_up(sender, request, user, **kwargs):
     if switch_is_active('welcome_email'):
-        send_welcome_email.delay(user.pk)
+        send_welcome_email.delay(user.pk, request.locale)
 
 
 # from https://github.com/brosner/django-timezones/pull/13
