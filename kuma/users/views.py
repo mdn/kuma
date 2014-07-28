@@ -1,3 +1,4 @@
+from django import forms
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User, Group
 from django.core.paginator import Paginator
