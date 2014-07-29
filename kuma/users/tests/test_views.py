@@ -452,3 +452,21 @@ class ProfileViewsTest(TestCase):
             ok_(not isinstance(
                 r.context['profile_form'].fields[field].label, basestring),
                 'Field %s is a string!' % field)
+
+
+class SignInTestCase(TestCase):
+    fixtures = ['test_users.json', 'wiki/documents.json']
+
+    def test_allauth_signin_returns_to_doc(self):
+        """When signing in from a doc, return straight to the doc."""
+        url = reverse('wiki.document', args=['article-title'],
+                      locale=settings.WIKI_DEFAULT_LANGUAGE)
+        response = self.client.get(url)
+        # splitting the href string on the - character beceause allauth seems
+        # to mangle it
+        href_start = "javascript:allauth.persona.login('/en"
+        href_mid = "US/docs/article"
+        href_end = "title', 'login')"
+        ok_(href_start in unicode(response.content, 'utf-8'))
+        ok_(href_mid in unicode(response.content, 'utf-8'))
+        ok_(href_end in unicode(response.content, 'utf-8'))
