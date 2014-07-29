@@ -39,8 +39,8 @@
 
       {% if revision_from.tags or revision_to.tags %}
       <dt>{{ _('Tags:') }}</dt>
-      <dd class="rev-from">{{ revision_from.tags }}</dd>
-      <dd class="rev-to">{{ revision_to.tags }}</dd>
+      <dd class="rev-from"> {{ ', '.join(revision_from.tags.split(',')) }}</dd>
+      <dd class="rev-to"> {{ ', '.join(revision_to.tags.split(',')) }}</dd>
       {% endif %}
 
       <dt>{{ _('Content:') }}</dt>
