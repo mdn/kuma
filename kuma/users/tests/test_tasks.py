@@ -22,16 +22,6 @@ class TestWelcomeEmails(TestCase):
         ok_(u'utm_campaign=welcome' in welcome_email.body)
 
     @mock.patch('devmo.utils.strings_are_translated')
-    def test_send_translated_language_email(self, strings_are_translated):
-        strings_are_translated.return_value = True
-        u = User.objects.get(username='testuser')
-        send_welcome_email(u.pk, 'fr')
-
-        welcome_email = mail.outbox[0]
-        expected_to = [u.email]
-        eq_(expected_to, welcome_email.to)
-
-    @mock.patch('devmo.utils.strings_are_translated')
     def test_dont_send_untranslated_language_email(self,
                                                    strings_are_translated):
         strings_are_translated.return_value = False

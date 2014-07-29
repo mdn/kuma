@@ -6,7 +6,6 @@ from django.contrib.auth.models import User
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 
-from devmo.utils import strings_are_translated
 
 WELCOME_EMAIL_STRINGS = [
     "Like words?",
@@ -17,8 +16,7 @@ WELCOME_EMAIL_STRINGS = [
 @task
 def send_welcome_email(user_pk, locale):
     user = User.objects.get(pk=user_pk)
-    if (locale == settings.WIKI_DEFAULT_LANGUAGE or
-        strings_are_translated(WELCOME_EMAIL_STRINGS, locale)):
+    if locale == settings.WIKI_DEFAULT_LANGUAGE:
         context = {'username': user.username}
         content_plain = render_to_string('users/email/welcome/plain.ltxt',
                                          context)
