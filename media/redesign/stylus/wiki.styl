@@ -36,11 +36,33 @@ enable-toc-toggle() {
 
 /* wiki classes to be extended */
 .wiki-block {
+    clearfix();
     padding-top: ($grid-spacing * 2);
     margin-top: ($grid-spacing * 2);
     border-top: 1px solid $button-background;
     padding-left: 0;
     padding-right: 0;
+
+    /* translation page is special */
+
+    details summary + & {
+        padding-top: $grid-spacing;
+        margin-top: 0;
+    }
+
+    #trans-version & {
+        border: 0;
+        padding-top: 0;
+    }
+
+    #trans-meta & {
+        border: 0;
+        padding-top: 0;
+
+        &:last-child {
+            margin-bottom: ($grid-spacing * 2);
+        }
+    }
 }
 
 $review-base {
@@ -506,10 +528,6 @@ div.bug, div.warning, div.overheadIndicator {
 }
 
 /* page attachments block at the bottom of the article */
-#page-attachments {
-    @extend .wiki-block;
-}
-
 #page-attachments-button {
     set-smaller-font-size();
 }
@@ -662,22 +680,19 @@ div.bug, div.warning, div.overheadIndicator {
     }
 }
 
-#page-tags, #page-comment {
-    @extend .wiki-block;
-}
-
 .page-tags {
     ul.tagit {
         background: none;
         min-height: 30px;
+        margin-bottom: -10px;
 
         .tagit-label {
             color: #333333;
             font-weight: normal;
         }
 
-        li.tagit-choice {
-            margin-bottom: 0;
+        li {
+            margin-bottom: -(@margin-bottom);
         }
     }
 }

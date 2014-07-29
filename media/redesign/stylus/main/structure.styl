@@ -656,8 +656,9 @@ p.field-explanation {
 }
 
 label {$selector-icon} {
-    margin-left: 0;
-    margin-right: 10px;
+    $label-icon-margin = 10px;
+    bidi-value(margin-left, 0, $label-icon-margin);
+    bidi-value(margin-right, $label-icon-margin, 0);
 }
 
 /* Login links */

@@ -24,7 +24,7 @@
           // Switch header and toolbar styles on scroll to keep them on screen
           $(doc).on('scroll', function() {
 
-            // If top of the window is betwen top of #content and top of metadata (first .page-meta) blocks, the header is fixed
+            // If top of the window is betwen top of #content and bottom of content + 200, the header is fixed
             var scrollTop = $(this).scrollTop();
             if (scrollTop >= contentTop) {
 
@@ -498,10 +498,10 @@
         });
 
         // Save-and-edit submits to a hidden iframe, show loading message in notifier
-        var notifier = $('.notifier').mozNotifier();
+        var notifications = [];
         $('.btn-save-and-edit').on('click', function () {
 
-            notifier.setMessage('Saving changes…').show();
+            notifications.push(mdn.Notifier.growl('Saving changes…', { duration: 0 }));
 
             mdn.analytics.trackEvent({
                 category: 'Wiki',
@@ -524,7 +524,8 @@
         $('.btn-save-and-edit').show();
 
         $('#save-and-edit-target').on('load', function () {
-            notifier.success().hide();
+            notifications[0].success(null, 2000);
+            notifications.shift();
 
             if (supportsLocalStorage) {
                 var if_doc = $(this).get(0).contentDocument;
