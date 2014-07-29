@@ -2,7 +2,7 @@
 
 {% set display_name = profile.name | default(profile.user.username, true) %}
 {% set username  = profile.user.username %}
-{% set accounts = social_accounts(user) %}
+{% set accounts = social_accounts(profile.user) %}
 
 {% block body_attributes %}{% endblock %}
 

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% from 'includes/common_macros.html' import newsletter_widget, li_field %}
 
-{% set accounts = social_accounts(user) %}
+{% set accounts = social_accounts(profile.user) %}
 
 {% block body_attributes %}{% endblock %}
 
