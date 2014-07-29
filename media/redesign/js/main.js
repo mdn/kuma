@@ -215,12 +215,38 @@
     })();
 
     /*
-        Tabzilla :/
+        Messages / Notifications -- show the initial ones
     */
     (function() {
-        var $tabzilla = $('#tabzilla');
+        // Find where we should put notifications
+        var insertLocation;
 
-        $tabzilla.length && $.ajax({
+        $.each([
+            { selector: '#wikiArticle', method: 'prependTo' },
+            { selector: '#home', method: 'prependTo' },
+            { selector: 'h1', method: 'insertAfter' }
+        ], function() {
+            if(!insertLocation && $(this.selector).length) {
+                insertLocation = this;
+            }
+        });
+
+        if(!insertLocation) {
+            insertLocation = { selector: 'body', method: 'prependTo' };
+        }
+
+        // Inject notifications
+        $.each(mdn.notifications || [], function() {
+            // Make it so
+            $('<div class="notification ' + this.level + ' '  + this.tags + '">' + this.message + '</div>')[insertLocation.method](insertLocation.selector);
+        });
+    })();
+
+    /*
+        Tabzilla
+    */
+    (function() {
+        $('#tabzilla').length && $.ajax({
             url: '//mozorg.cdn.mozilla.net/en-US/tabzilla/tabzilla.js',
             dataType: 'script',
             cache: true
