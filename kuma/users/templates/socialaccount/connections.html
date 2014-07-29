@@ -5,12 +5,6 @@
 {% block content %}
 <h1>{{ _("Account connections") }}</h1>
 
-{% if messages %}
-        {% for message in messages %}
-        <div class="notification {% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</div>
-        {% endfor %}
-{% endif %}
-
 <div class="text-content">
 
   {% if form.accounts %}
