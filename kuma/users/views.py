@@ -2,11 +2,13 @@ from django import forms
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User, Group
 from django.core.paginator import Paginator
+from django.db import transaction
 from django.http import Http404, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, render, redirect
 
 from access.decorators import login_required
 from allauth.socialaccount.views import SignupView as BaseSignupView
+from allauth.socialaccount import helpers
 from badger.models import Award
 import constance.config
 from taggit.utils import parse_tags
@@ -255,5 +257,15 @@ class SignupView(BaseSignupView):
         kwargs = super(SignupView, self).get_form_kwargs()
         kwargs['locale'] = self.request.locale
         return kwargs
+
+    def form_valid(self, form):
+        """
+        We send our welcome email via celery during complete_signup.
+        So, we need to manually commit the user to the db for it.
+        """
+        with transaction.commit_on_success():
+            form.save(self.request)
+        return helpers.complete_social_signup(self.request,
+                                              self.sociallogin)
 
 signup = SignupView.as_view()
