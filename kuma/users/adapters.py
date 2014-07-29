@@ -17,11 +17,22 @@ class KumaAccountAdapter(DefaultAccountAdapter):
         return False
 
     def clean_username(self, username):
+        """
+        When signing up make sure the username isn't already used by
+        a different user.
+        """
         username = super(KumaAccountAdapter, self).clean_username(username)
         if User.objects.filter(username=username).exists():
             raise forms.ValidationError(_(u'The username you entered '
                                           u'already exists.'))
         return username
+
+    def add_message(self, *args, **kwargs):
+        """
+        Adds an extra "account" tag to the success and error messages.
+        """
+        kwargs['extra_tags'] = 'account'
+        super(KumaAccountAdapter, self).add_message(*args, **kwargs)
 
 
 class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
