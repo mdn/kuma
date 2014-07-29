@@ -19,9 +19,9 @@
           </div>
           <div class="submenu oauth-login-picker" aria-hidden="true">
               <ul>
-                  <li><a href="{{ provider_login_url("persona") }}" class="persona-button persona-loaded login-link" data-next="{{ next_url }}" data-service="Persona"><i class="icon-user" aria-hidden="true"></i>Persona</a></li>
+                  <li><a href="{{ provider_login_url("persona", next=next_url) }}" class="persona-button persona-loaded login-link" data-next="{{ next_url }}" data-service="Persona"><i class="icon-user" aria-hidden="true"></i>Persona</a></li>
                 {% if waffle.flag('oauth_login') %}
-                  <li><a href="{{ provider_login_url("github") }}" class="github-button login-link" data-service="GitHub"><i class="icon-github" aria-hidden="true"></i>GitHub</a></li>
+                  <li><a href="{{ provider_login_url("github", next=next_url) }}" class="github-button login-link" data-service="GitHub"><i class="icon-github" aria-hidden="true"></i>GitHub</a></li>
                 {% endif %}
               </ul>
           </div>

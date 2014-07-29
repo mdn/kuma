@@ -114,7 +114,7 @@
                           <label for="{{ profile_form.websites_github.id_for_label }}"><i class="icon-user" aria-hidden="true"></i>Github
                           </label>
                           {% if waffle.flag('oauth_login') %}
-                          <a class="field-management" href="{{ provider_login_url('github', process='connect') }}" title="{% trans %}Connect a GitHub account{% endtrans %}">
+                          <a class="field-management" href="{{ provider_login_url('github', process='connect', next=next_url) }}" title="{% trans %}Connect a GitHub account{% endtrans %}">
                             {% trans %}Use your GitHub account to sign in.{% endtrans %}
                           </a>
                           {% endif %}
