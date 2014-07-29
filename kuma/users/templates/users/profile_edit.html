@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 {% from 'includes/common_macros.html' import newsletter_widget, li_field %}
+
+{% set accounts = social_accounts(user) %}
+
 {% block body_attributes %}{% endblock %}
 
 {% block bodyclass %}profile profile-edit{% endblock %}
@@ -40,7 +43,6 @@
           </figure>
           <ul>
               <li><a href="{{ profile.user.get_absolute_url() }}">{{ _('View profile') }}</a></li>
-              <li><a href="{{ url('socialaccount_connections') }}">{{ _('Social connections') }}</a></li>
             {# TODO: Implement account deletion #}
             {# <li class="delete"><a href="#">{{ _('Delete my account') }}</a></li> #}
           </ul>
@@ -54,10 +56,6 @@
               <fieldset class="section notitle" id="personal">
                 <ul>
                   {{ li_field(profile_form, 'beta') }}
-                  <li id="field_email" class="field type_email required">
-                    <label>{{ _('Primary Email') }}</label>
-                    {{ profile.user.email }} <a href="{{ url('account_email') }}">{{ _('Change') }}</a>
-                  </li>
                   {{ li_field(profile_form, 'fullname') }}
                   {{ li_field(profile_form, 'title') }}
                   {{ li_field(profile_form, 'organization') }}
@@ -87,15 +85,45 @@
                 </ul>
               </fieldset>
 
-              <fieldset class="section" id="elsewhere">
-                <legend><b>{{ _('My Other Profiles') }}</b></legend>
+              <fieldset class="section" id="profiles">
+                <legend><b>{{ _('My Profiles') }}</b></legend>
                 <ul>
+                  {% if accounts.persona %}
+                    <li id="field_websites_persona" class="field site persona">
+                      <label><i class="icon-user" aria-hidden="true"></i>Persona</label>
+                      <a class="field-management" href="{{ url('socialaccount_connections') }}">{{ _('Change') }}</a>
+                      <div class="account">
+                        {% for persona_account in accounts.persona %}{{ persona_account.uid }}{% if not loop.last %}, {% endif %}{% endfor %}
+                      </div>
+                    </li>
+                  {% endif %}
                   {% for site_name, site_meta in profile.website_choices %}
-                    {{ li_field(profile_form,
+                    {% if site_name == 'github' %}
+                      <li id="field_websites_github" class="field site github">
+                      {% if accounts.persona and waffle.flag('oauth_login') %}
+                        <label for="{{ profile_form.websites_github.id_for_label }}"><i class="icon-user" aria-hidden="true"></i>Github</label>
+                        <a class="field-management" href="{{ url('socialaccount_connections') }}">{{ _('Change') }}</a>
+                        <div class="account">
+                          {% for github_account in accounts.persona %}https://github.com/{{ github_account.uid }}{% if not loop.last %}, {% endif %}{% endfor %}
+                        </div>
+                      {% else %}
+                          <label for="{{ profile_form.websites_github.id_for_label }}"><i class="icon-user" aria-hidden="true"></i>Github
+                          </label>
+                          {% if waffle.flag('oauth_login') %}
+                          <a class="field-management" href="{{ provider_login_url('github', process='connect') }}" title="{% trans %}Connect a GitHub account{% endtrans %}">
+                            {% trans %}Use your GitHub account to sign in.{% endtrans %}
+                          </a>
+                          {% endif %}
+                          {{ profile_form.websites_github }}
+                      {% endif %}
+                      </li>
+                    {% else %}
+                     {{ li_field(profile_form,
                                 'websites_{name}' | f(name=site_name),
                                 classes='site {name}' | f(name=site_name),
                                 label=site_meta.label,
                                 icon_class=site_meta.fa_icon) }}
+                    {% endif %}
                   {% endfor %}
                 </ul>
               </fieldset>

@@ -129,7 +129,7 @@
         });
 
         // Update "Other Profiles", preventing "blank" submissions
-        $("#elsewhere input").mozPlaceholder();
+        $("#profiles input").mozPlaceholder();
 
     });
 })();

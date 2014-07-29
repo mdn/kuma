@@ -2,6 +2,7 @@
 
 {% set display_name = profile.name | default(profile.user.username, true) %}
 {% set username  = profile.user.username %}
+{% set accounts = social_accounts(user) %}
 
 {% block body_attributes %}{% endblock %}
 
@@ -21,6 +22,12 @@
     {{ js('demostudio') }}
 {% endblock %}
 
+{% macro account(profile, site_name, site_meta) %}
+  {% if profile.websites[site_name] %}
+    <li class="{{ site_name }}"><i class="{{ site_meta.fa_icon }}" aria-hidden="true"></i><a href="{{ profile.websites[site_name] }}" rel="me external" class="url">{{ site_meta.label }}</a></li>
+  {% endif %}
+{% endmacro %}
+
 {% block content %}
 <section id="content">
 <div class="wrap">
@@ -35,11 +42,18 @@
 
         <ul class="links">
         {% for site_name, site_meta in profile.website_choices %}
-            {% set href = profile.websites[site_name] %}
-            {% if href %}
-                <li class="{{site_name}}"><i class="{{ site_meta.fa_icon }}" aria-hidden="true"></i><a href="{{ href }}" rel="me external" class="url">{{ site_meta.label }}</a></li>
+          {% if site_name == 'github' %}
+            {% if accounts.github and waffle.flag('oauth_login') %}
+              {% for github_account in accounts.github %}
+              <li class="{{ site_name }}"><i class="{{ site_meta.fa_icon }}" aria-hidden="true"></i><a href="https://github.com/{{ github_account.uid }}" rel="me external" class="url">{{ site_meta.label }}</a></li>
+              {% endfor %}
+            {% else %}
+              {{ account(profile, site_name, site_meta) }}
             {% endif %}
-          {% endfor %}
+          {% else %}
+            {{ account(profile, site_name, site_meta) }}
+          {% endif %}
+        {% endfor %}
         </ul>
       </div>
 

@@ -335,7 +335,7 @@ class ProfileViewsTest(TestCase):
         r = self.client.post(url, form, follow=True)
         doc = pq(r.content)
         eq_(1, doc.find('#profile-edit').length)
-        tmpl = '#profile-edit #elsewhere .%s .errorlist'
+        tmpl = '#profile-edit #profiles .%s .errorlist'
         for n in ('website', 'twitter', 'stackoverflow'):
             eq_(1, doc.find(tmpl % n).length)
 
