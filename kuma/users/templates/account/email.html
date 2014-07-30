@@ -6,7 +6,7 @@
   <h1>{{ _("E-mail addresses") }}</h1>
   <div class="text-content">
 
-    {% if user.emailaddress_set.all %}
+    {% if user.emailaddress_set.all().exists() %}
       <p>{{ _("The following e-mail addresses are associated with your account:") }}</p>
 
       <form action="{{ url('account_email') }}" class="email_list" method="post">
