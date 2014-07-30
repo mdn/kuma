@@ -143,8 +143,8 @@ class DocumentTests(TestCaseBase):
         """Make sure documents with REDIRECT directives redirect properly.
 
         Also check the backlink to the redirect page.
-
         """
+        Flag.objects.create(name='redirect_messages', everyone=True)
         target = document(save=True)
         target_url = target.get_absolute_url()
 
