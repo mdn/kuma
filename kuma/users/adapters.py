@@ -27,12 +27,26 @@ class KumaAccountAdapter(DefaultAccountAdapter):
                                           u'already exists.'))
         return username
 
-    def add_message(self, *args, **kwargs):
+    def add_message(self, request, level, message_template,
+                    message_context={}, extra_tags='', *args, **kwargs):
         """
         Adds an extra "account" tag to the success and error messages.
         """
-        kwargs['extra_tags'] = 'account'
-        super(KumaAccountAdapter, self).add_message(*args, **kwargs)
+        # let's ignore some messages
+        unwanted = ('logged_in', 'logged_out')
+        if message_template.endswith(tuple(['messages/%s.txt' % name
+                                            for name in unwanted])):
+            return
+        # and add an extra tag to the account messages
+        extra_tag = 'account'
+        if extra_tags:
+            extra_tags += ' '
+        extra_tags += extra_tag
+        super(KumaAccountAdapter, self).add_message(request, level,
+                                                    message_template,
+                                                    message_context,
+                                                    extra_tags,
+                                                    *args, **kwargs)
 
 
 class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
