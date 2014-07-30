@@ -10,7 +10,7 @@
 <form method="post" action="{{ url('account_logout') }}">
   {{ csrf() }}
   {% if redirect_field_value %}
-  <input type="hidden" name="{{redirect_field_name}}" value="{{redirect_field_value}}"/>
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
   {% endif %}
   <button type="submit">{{ _("Sign Out") }}</button>
 </form>

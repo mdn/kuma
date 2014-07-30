@@ -6,6 +6,6 @@
 
 <h1>{{ _("Confirm E-mail Address") }}</h1>
 
-<p>{% trans email=email_address.email, user_display=user_display(email_address.user) %}You have confirmed that <a href="mailto:{{email}}">{{ email }}</a> is an e-mail address for user {{ user_display }}.{% endtrans %}</p>
+<p>{% trans email=email_address.email, user_display=user_display(email_address.user) %}You have confirmed that <a href="mailto:{{ email }}">{{ email }}</a> is an e-mail address for user {{ user_display }}.{% endtrans %}</p>
 
 {% endblock %}
