@@ -1,26 +1,33 @@
 from celery.task import task
+from tower import ugettext_lazy as _
 
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.mail import EmailMultiAlternatives
-from django.template import loader
+from django.template.loader import render_to_string
+
+
+WELCOME_EMAIL_STRINGS = [
+    "Like words?",
+    "Don't be shy, if you have any doubt, problems, questions: contact us! We are here to help."
+]
 
 
 @task
-def send_welcome_email(user_pk):
+def send_welcome_email(user_pk, locale):
     user = User.objects.get(pk=user_pk)
+    if locale == settings.WIKI_DEFAULT_LANGUAGE:
+        context = {'username': user.username}
+        content_plain = render_to_string('users/email/welcome/plain.ltxt',
+                                         context)
+        content_html = render_to_string('users/email/welcome/html.ltxt',
+                                        context)
 
-    template_vars = {'username': user.username}
-    content_plain = loader.render_to_string(
-        'users/email/welcome/plain.ltxt', template_vars)
-    content_html = loader.render_to_string(
-        'users/email/welcome/html.ltxt', template_vars)
-
-    email = EmailMultiAlternatives(
-        'Take the next step to get involved on MDN!',
-        content_plain,
-        settings.DEFAULT_FROM_EMAIL,
-        [user.email],
-    )
-    email.attach_alternative(content_html, 'text/html')
-    email.send()
+        email = EmailMultiAlternatives(
+            _('Take the next step to get involved on MDN!'),
+            content_plain,
+            settings.DEFAULT_FROM_EMAIL,
+            [user.email],
+        )
+        email.attach_alternative(content_html, 'text/html')
+        email.send()

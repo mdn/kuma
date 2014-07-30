@@ -26,9 +26,8 @@ class TestUserProfileEditForm(test_utils.TestCase):
         for proto, expected_valid in protos:
             for name, site in sites:
                 url = '%s%s' % (proto, site)
-                form = UserProfileEditForm(settings.WIKI_DEFAULT_LANGUAGE, {
+                form = UserProfileEditForm({
                     "email": "lorchard@mozilla.com",
-                    "format": "html",
                     "websites_%s" % name: url
                 })
                 result_valid = form.is_valid()

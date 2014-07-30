@@ -1,19 +1,10 @@
-import time
-
-import basket
-from basket.base import BasketException
-
-from django.conf import settings
-from django.http import HttpResponseServerError
 from django.shortcuts import render
 
 import constance.config
 
-from devmo import SECTION_USAGE, SECTION_APPS, SECTION_HACKS
+from devmo import SECTION_USAGE
 from kuma.demos.models import Submission
 from kuma.feeder.models import Bundle
-
-from .forms import SubscriptionForm
 
 
 def home(request):
@@ -28,48 +19,6 @@ def home(request):
                   {'demos': demos, 'updates': updates,
                     'current_challenge_tag_name':
                     str(constance.config.DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG).strip()})
-
-
-def hacks(request):
-    """Hacks landing page."""
-    return common_landing(request, section=SECTION_HACKS)
-
-
-def apps(request):
-    """Web landing page."""
-    return common_landing(request, section=SECTION_APPS,
-                          extra={'form': SubscriptionForm()})
-
-
-def apps_newsletter(request):
-    if request.method == 'POST':
-        form = SubscriptionForm(request.locale, data=request.POST)
-        context = {'subscription_form': form}
-        if form.is_valid():
-            optin = 'N'
-            if request.locale == 'en-US':
-                optin = 'Y'
-            for i in range(constance.config.BASKET_RETRIES):
-                try:
-                    result = basket.subscribe(email=form.cleaned_data['email'],
-                                 newsletters=settings.BASKET_APPS_NEWSLETTER,
-                                 country=form.cleaned_data['country'],
-                                 format=form.cleaned_data['format'],
-                                 lang=request.locale,
-                                 optin=optin)
-                    if result.get('status') != 'error':
-                        break
-                except BasketException:
-                    if i == constance.config.BASKET_RETRIES:
-                        return HttpResponseServerError()
-                    else:
-                        time.sleep(constance.config.BASKET_RETRY_WAIT * i)
-            del context['subscription_form']
-
-    else:
-        context = {'subscription_form': SubscriptionForm(request.locale)}
-
-    return render(request, 'landing/apps_newsletter.html', context)
 
 
 def learn(request):

@@ -20,10 +20,19 @@
             mediaPath: '{{ MEDIA_URL }}',
             // Optimizely API
             optimizely: win['optimizely'] || [],
+            // Site notifications
+            {% if messages %}notifications: [
+                {% for message in messages %}{message: "{{ message }}", tags: "{{ message.tags }}", level: "{{ message|level_tag }}"}{% if not loop.last %},{% endif %}
+
+{% endfor %}
+            ],
+            {% else %}notifications: [],
+            {% endif %}
+
             // Wiki-specific settings will be placed here
             wiki: {
                 autosuggestTitleUrl: '{{ url('wiki.autosuggest_documents') }}'
-            }
+            },
         };
 
         // Ensures gettext always returns something, is always set

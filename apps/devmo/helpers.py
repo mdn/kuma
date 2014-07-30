@@ -1,13 +1,16 @@
 import datetime
 import re
 import urllib
+from urlobject import URLObject
 import os
 
 from django.conf import settings
 from django.core.cache import cache
 from django.template import defaultfilters
+from django.utils.encoding import force_text
 from django.utils.html import strip_tags
 from django.utils.safestring import mark_safe
+from django.contrib.messages.storage.base import LEVEL_TAGS
 
 import bleach
 from jingo import register
@@ -45,6 +48,12 @@ def inlinei18n(locale):
 @register.function
 def page_title(title):
     return u'%s | MDN' % title
+
+
+@register.filter
+def level_tag(message):
+    return jinja2.Markup(force_text(LEVEL_TAGS.get(message.level, ''),
+                                    strings_only=True))
 
 
 @register.filter
@@ -159,3 +168,13 @@ def get_soapbox_messages(url):
 @register.inclusion_tag('devmo/elements/soapbox_messages.html')
 def soapbox_messages(soapbox_messages):
     return {'soapbox_messages': soapbox_messages}
+
+
+@register.function
+def add_utm(url_, campaign, source='notification', medium='email'):
+    """Add the utm_* tracking parameters to a URL."""
+    url_obj = URLObject(url_).add_query_params({
+        'utm_campaign': campaign,
+        'utm_source': source,
+        'utm_medium': medium})
+    return str(url_obj)

@@ -18,32 +18,6 @@
     })();
 
     /*
-        Persona Login file load
-    */
-    (function() {
-        var $loginButton = $('.persona-login');
-
-        $loginButton.length && $.ajax({
-            url: 'https://login.persona.org/include.js',
-            dataType: 'script',
-            cache: true,
-            success: function() {
-                $loginButton.addClass('persona-loaded').on('click', function(e) {
-                    e.preventDefault();
-
-                    if(!$(this).hasClass('toggle')) {
-                        navigator.id.get(function(assertion) {
-                            if(!assertion) return;
-                            $('input[name="assertion"]').val(assertion.toString());
-                            $('form.browserid').first().submit();
-                        }, { siteName: 'Mozilla Developer Network', siteLogo: '/media/redesign/img/opengraph-logo.png' });
-                    }
-                });
-            }
-        });
-    })();
-
-    /*
         Open Auth Login Heading widget
     */
     (function() {
@@ -63,8 +37,6 @@
         });
 
         $('.login-link').on('click', function(e) {
-            e.preventDefault();
-
             // Track event of which was clicked
             var serviceUsed = $(this).data('service'); // "Persona" or "GitHub"
 
@@ -243,12 +215,38 @@
     })();
 
     /*
-        Tabzilla :/
+        Messages / Notifications -- show the initial ones
     */
     (function() {
-        var $tabzilla = $('#tabzilla');
+        // Find where we should put notifications
+        var insertLocation;
 
-        $tabzilla.length && $.ajax({
+        $.each([
+            { selector: '#wikiArticle', method: 'prependTo' },
+            { selector: '#home', method: 'prependTo' },
+            { selector: 'h1', method: 'insertAfter' }
+        ], function() {
+            if(!insertLocation && $(this.selector).length) {
+                insertLocation = this;
+            }
+        });
+
+        if(!insertLocation) {
+            insertLocation = { selector: 'body', method: 'prependTo' };
+        }
+
+        // Inject notifications
+        $.each(mdn.notifications || [], function() {
+            // Make it so
+            $('<div class="notification ' + this.level + ' '  + this.tags + '">' + this.message + '</div>')[insertLocation.method](insertLocation.selector);
+        });
+    })();
+
+    /*
+        Tabzilla
+    */
+    (function() {
+        $('#tabzilla').length && $.ajax({
             url: '//mozorg.cdn.mozilla.net/en-US/tabzilla/tabzilla.js',
             dataType: 'script',
             cache: true

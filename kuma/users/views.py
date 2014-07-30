@@ -1,49 +1,28 @@
-import urlparse
-
-from django.conf import settings
-from django.contrib import auth
+from django import forms
 from django.contrib.auth.decorators import permission_required
-from django.contrib.auth.models import User
-from django.contrib import messages
-from django.contrib.sites.models import Site
-from django.shortcuts import redirect
+from django.contrib.auth.models import User, Group
 from django.core.paginator import Paginator
-from django.http import (HttpResponse, HttpResponseRedirect, Http404,
-                         HttpResponseForbidden)
-from django.shortcuts import get_object_or_404, render
-from django.views.decorators.http import require_http_methods, require_POST
-from django.views.decorators.clickjacking import xframe_options_sameorigin
-from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.debug import sensitive_post_parameters
-
-from django.utils.http import is_safe_url
-
-from django_browserid.forms import BrowserIDForm
-from django_browserid.auth import get_audience
-from django_browserid import auth as browserid_auth
+from django.db import transaction
+from django.http import Http404, HttpResponseForbidden
+from django.shortcuts import get_object_or_404, render, redirect
 
 from access.decorators import login_required
+from allauth.socialaccount.views import SignupView as BaseSignupView
+from allauth.socialaccount import helpers
 from badger.models import Award
 import constance.config
 from taggit.utils import parse_tags
 from teamwork.models import Team
-from waffle import switch_is_active
 
 from kuma.demos.models import Submission
-from sumo.decorators import ssl_required
-from sumo.urlresolvers import reverse, split_path
+from kuma.demos.views import DEMOS_PAGE_SIZE
 
-from .forms import (BrowserIDRegisterForm, UserBanForm,
-                    UserProfileEditForm, newsletter_subscribe,
-                    get_subscription_details, subscribed_to_newsletter)
+from .forms import (UserBanForm, UserProfileEditForm, NewsletterForm,
+                    get_subscription_details, subscribed_to_newsletter,
+                    newsletter_subscribe)
 from .models import UserProfile, UserBan
-from .tasks import send_welcome_email
 
 
-SESSION_VERIFIED_EMAIL = getattr(settings, 'BROWSERID_SESSION_VERIFIED_EMAIL',
-                                 'browserid_verified_email')
-SESSION_REDIRECT_TO = getattr(settings, 'BROWSERID_SESSION_REDIRECT_TO',
-                              'browserid_redirect_to')
 # TODO: Make this dynamic, editable from admin interface
 INTEREST_SUGGESTIONS = [
     "audio", "canvas", "css3", "device", "files", "fonts",
@@ -61,234 +40,10 @@ INTEREST_SUGGESTIONS = [
 ]
 
 
-def _verify_browserid(form, request):
-    """Verify submitted BrowserID assertion.
-
-    This is broken out into a standalone function because it will probably
-    change in the near future if the django-browserid API changes, and it's
-    handy to mock out in tests this way."""
-    assertion = form.cleaned_data['assertion']
-    backend = browserid_auth.BrowserIDBackend()
-    result = backend.verify(assertion, get_audience(request))
-    return result
-
-
-def _get_latest_user_with_email(email):
-    users = User.objects.filter(email=email).order_by('-last_login')
-    if users.exists():
-        return users[0]
-    else:
-        return None
-
-
-def set_browserid_explained(response):
-    response.set_cookie('browserid_explained', 1, max_age=31536000)
-    return response
-
-
-@csrf_exempt
-@ssl_required
-@login_required
-@require_POST
-def browserid_change_email(request):
-    """Process a submitted BrowserID assertion to change email."""
-    form = BrowserIDForm(data=request.POST)
-    if not form.is_valid():
-        messages.error(request, form.errors)
-        return HttpResponseRedirect(reverse('users.change_email'))
-    result = _verify_browserid(form, request)
-    email = result['email']
-    user = _get_latest_user_with_email(email)
-    if user and user != request.user:
-        messages.error(request, 'That email already belongs to another '
-                       'user.')
-        return HttpResponseRedirect(reverse('users.change_email'))
-    else:
-        user = request.user
-        user.email = email
-        user.save()
-        return redirect('users.profile_edit', user.username)
-
-
-@ssl_required
-def browserid_realm(request):
-    # serve the realm from the environment config
-    return HttpResponse(constance.config.BROWSERID_REALM_JSON,
-                        content_type='application/json')
-
-
-@csrf_exempt
-@ssl_required
-@require_POST
-@sensitive_post_parameters()
-def browserid_verify(request):
-    """Process a submitted BrowserID assertion.
-
-    If valid, try to find a Django user that matches the verified
-    email address. If not found, we bounce to a profile creation page
-    (ie. browserid_register)."""
-    redirect_to = (_clean_next_url(request) or
-            getattr(settings, 'LOGIN_REDIRECT_URL', reverse('home')))
-    redirect_to_failure = (_clean_next_url(request) or
-            getattr(settings, 'LOGIN_REDIRECT_URL_FAILURE', reverse('home')))
-
-    failure_resp = set_browserid_explained(
-        HttpResponseRedirect(redirect_to_failure))
-
-    # If the form's not valid, then this is a failure.
-    form = BrowserIDForm(data=request.POST)
-    if not form.is_valid():
-        return failure_resp
-
-    # If the BrowserID assersion is not valid, then this is a failure.
-    result = _verify_browserid(form, request)
-    if not result:
-        return failure_resp
-
-    # So far, so good: We have a verified email address. But, no user, yet.
-    email = result['email']
-    user = None
-
-    # Look for first most recently used Django account, use if found.
-    user = _get_latest_user_with_email(email)
-
-    # If we got a user from either the Django or MT paths, complete login for
-    # Django and MT and redirect.
-    if user:
-        user.backend = 'django_browserid.auth.BrowserIDBackend'
-        auth.login(request, user)
-        return set_browserid_explained(HttpResponseRedirect(redirect_to))
-
-    # Retain the verified email in a session, redirect to registration page.
-    request.session[SESSION_VERIFIED_EMAIL] = email
-    request.session[SESSION_REDIRECT_TO] = redirect_to
-    return set_browserid_explained(
-        HttpResponseRedirect(reverse('users.browserid_register')))
-
-
-@ssl_required
-@sensitive_post_parameters('password')
-def browserid_register(request):
-    """Handle user creation when assertion is valid, but no existing user"""
-    redirect_to = request.session.get(SESSION_REDIRECT_TO,
-        getattr(settings, 'LOGIN_REDIRECT_URL', reverse('home')))
-    email = request.session.get(SESSION_VERIFIED_EMAIL, None)
-
-    if not email:
-        # This is pointless without a verified email.
-        return HttpResponseRedirect(redirect_to)
-
-    # Set up the initial forms
-    register_form = BrowserIDRegisterForm(request.locale)
-
-    if request.method == 'POST':
-        # If the profile creation form was submitted...
-        if 'register' == request.POST.get('action', None):
-            register_form = BrowserIDRegisterForm(request.locale, request.POST)
-            if register_form.is_valid():
-                # If the registration form is valid, then create a new
-                # Django user.
-                # TODO: This all belongs in model classes
-                username = register_form.cleaned_data['username']
-
-                user = User.objects.create(username=username, email=email)
-                user.set_unusable_password()
-                user.save()
-
-                profile = UserProfile.objects.create(user=user)
-                profile.save()
-
-                user.backend = 'django_browserid.auth.BrowserIDBackend'
-                auth.login(request, user)
-
-                if switch_is_active('welcome_email'):
-                    send_welcome_email.delay(user.pk)
-
-                newsletter_subscribe(request, email,
-                                     register_form.cleaned_data)
-                redirect_to = request.session.get(SESSION_REDIRECT_TO,
-                                                  profile.get_absolute_url())
-                return set_browserid_explained(HttpResponseRedirect(redirect_to))
-
-    # HACK: Pretend the session was modified. Otherwise, the data disappears
-    # for the next request.
-    request.session.modified = True
-
-    return render(request, 'users/browserid_register.html',
-                  {'register_form': register_form})
-
-
-@ssl_required
-@xframe_options_sameorigin
-def login(request):
-    """Try to log the user in."""
-    next_url = _clean_next_url(request)
-    if request.method == 'GET' and request.user.is_authenticated():
-        if next_url:
-            return redirect(next_url)
-    else:
-        next_url = _clean_next_url(request) or reverse('home')
-    return render(request, 'users/login.html', {'next_url': next_url})
-
-
-@ssl_required
-def logout(request):
-    """Log the user out."""
-    username = request.user.username
-
-    auth.logout(request)
-    next_url = _clean_next_url(request, username) or reverse('home')
-    resp = HttpResponseRedirect(next_url)
-    return resp
-
-
-@login_required
-@require_http_methods(['GET'])
-def change_email(request):
-    """Change user's email."""
-    return render(request, 'users/change_email.html')
-
-
-def _clean_next_url(request, username=None):
-    if 'next' in request.POST:
-        url = request.POST.get('next')
-    elif 'next' in request.GET:
-        url = request.GET.get('next')
-    elif 'HTTP_REFERER' in request.META:
-        url = request.META.get('HTTP_REFERER').decode('latin1', 'ignore')
-    else:
-        return None
-
-    site = Site.objects.get_current()
-    if not is_safe_url(url, site.domain):
-        return None
-    parsed_url = urlparse.urlparse(url)
-
-    # Don't redirect right back to login, logout, register, change email, or
-    # edit profile pages
-    locale, register_url = split_path(reverse(
-        'users.browserid_register'))
-    locale, change_email_url = split_path(reverse(
-        'users.change_email'))
-    locale, edit_profile_url = split_path(reverse(
-        'users.profile_edit', args=[username, ]))
-    REDIRECT_HOME_URLS = [settings.LOGIN_URL, settings.LOGOUT_URL,
-                          register_url, change_email_url, edit_profile_url]
-    for home_url in REDIRECT_HOME_URLS:
-        if home_url in parsed_url.path:
-            return None
-
-    # TODO?HACK: can't use urllib.quote_plus because mod_rewrite quotes the
-    # next url value already.
-    url = url.replace(' ', '+')
-    return url
-
-
 @permission_required('users.add_userban')
 def ban_user(request, user_id):
     """
     Ban a user.
-
     """
     try:
         user = User.objects.get(pk=user_id)
@@ -302,7 +57,7 @@ def ban_user(request, user_id):
                           reason=form.cleaned_data['reason'],
                           is_active=True)
             ban.save()
-            return HttpResponseRedirect(user.get_absolute_url())
+            return redirect(user)
     form = UserBanForm()
     return render(request,
                   'users/ban_user.html',
@@ -311,15 +66,18 @@ def ban_user(request, user_id):
 
 
 def profile_view(request, username):
+    """
+    The main profile view that only collects a bunch of user
+    specific data to populate the template context.
+    """
     profile = get_object_or_404(UserProfile, user__username=username)
     user = profile.user
 
-    if (UserBan.objects.filter(user=user, is_active=True) and
+    if (user.bans.filter(is_active=True).exists() and
             not request.user.is_superuser):
         return render(request, '403.html',
                       {'reason': "bannedprofile"}, status=403)
 
-    DEMOS_PAGE_SIZE = getattr(settings, 'DEMOS_PAGE_SIZE', 12)
     sort_order = request.GET.get('sort', 'created')
     try:
         page_number = int(request.GET.get('page', 1))
@@ -367,12 +125,13 @@ def my_profile(request):
 
 
 def profile_edit(request, username):
-    """View and edit user profile"""
+    """
+    View and edit user profile
+    """
     profile = get_object_or_404(UserProfile, user__username=username)
+
     if not profile.allows_editing_by(request.user):
         return HttpResponseForbidden()
-
-    context = {'profile': profile}
 
     # Map of form field names to tag namespaces
     field_to_tag_ns = (
@@ -381,8 +140,9 @@ def profile_edit(request, username):
     )
 
     if request.method != 'POST':
-        initial = dict(email=profile.user.email, beta=profile.beta_tester)
-
+        initial = {
+            'beta': profile.beta_tester,
+        }
         # Load up initial websites with either user data or required base URL
         for name, meta in UserProfile.website_choices:
             initial['websites_%s' % name] = profile.websites.get(name, '')
@@ -393,28 +153,35 @@ def profile_edit(request, username):
                                        for t in profile.tags.all_ns(ns))
 
         subscription_details = get_subscription_details(profile.user.email)
+        subscription_initial = {}
         if subscribed_to_newsletter(subscription_details):
-            initial['newsletter'] = True
-            initial['agree'] = True
+            subscription_initial['newsletter'] = True
+            subscription_initial['agree'] = True
 
         # Finally, set up the forms.
-        form = UserProfileEditForm(request.locale,
-                                   instance=profile,
-                                   initial=initial)
-
+        profile_form = UserProfileEditForm(instance=profile,
+                                           initial=initial,
+                                           prefix='profile')
+        newsletter_form = NewsletterForm(request.locale,
+                                         prefix='newsletter',
+                                         initial=subscription_initial)
     else:
-        form = UserProfileEditForm(request.locale,
-                                   request.POST,
-                                   request.FILES,
-                                   instance=profile)
-        if form.is_valid():
-            profile_new = form.save(commit=False)
+        profile_form = UserProfileEditForm(data=request.POST,
+                                           files=request.FILES,
+                                           instance=profile,
+                                           prefix='profile')
+        newsletter_form = NewsletterForm(request.locale,
+                                         data=request.POST,
+                                         prefix='newsletter')
+
+        if profile_form.is_valid() and newsletter_form.is_valid():
+            profile_new = profile_form.save(commit=False)
 
             # Gather up all websites defined by the model, save them.
-            sites = dict()
+            sites = {}
             for name, meta in UserProfile.website_choices:
                 field_name = 'websites_%s' % name
-                field_value = form.cleaned_data.get(field_name, '')
+                field_value = profile_form.cleaned_data.get(field_name, '')
                 if field_value and field_value != meta['prefix']:
                     sites[name] = field_value
             profile_new.websites = sites
@@ -423,21 +190,82 @@ def profile_edit(request, username):
             # related resources...
             profile_new.save()
 
+            try:
+                # Beta
+                beta_group = Group.objects.get(name=constance.config.BETA_GROUP_NAME)
+                if profile_form.cleaned_data['beta']:
+                    beta_group.user_set.add(request.user)
+                else:
+                    beta_group.user_set.remove(request.user)
+            except Group.DoesNotExist:
+                # If there's no Beta Testers group, ignore that logic
+                pass
+
             # Update tags from form fields
             for field, tag_ns in field_to_tag_ns:
                 tags = [t.lower()
-                        for t in parse_tags(form.cleaned_data.get(field, ''))]
+                        for t in parse_tags(profile_form.cleaned_data.get(field, ''))]
                 profile_new.tags.set_ns(tag_ns, *tags)
 
             newsletter_subscribe(request, profile_new.user.email,
-                                 form.cleaned_data)
+                                 newsletter_form.cleaned_data)
             return redirect(profile.user)
-    context['form'] = form
-    context['INTEREST_SUGGESTIONS'] = INTEREST_SUGGESTIONS
 
+    context = {
+        'profile': profile,
+        'profile_form': profile_form,
+        'newsletter_form': newsletter_form,
+        'INTEREST_SUGGESTIONS': INTEREST_SUGGESTIONS,
+    }
     return render(request, 'users/profile_edit.html', context)
 
 
 @login_required
 def my_profile_edit(request):
     return redirect('users.profile_edit', request.user.username)
+
+
+def apps_newsletter(request):
+    """
+    Just a placeholder for an old view that we used to have to handle
+    newsletter subscriptions before they were moved into the user profile
+    edit view.
+    """
+    return render(request, 'users/apps_newsletter.html', {})
+
+
+class SignupView(BaseSignupView):
+    """
+    The default signup view from the allauth account app, only to
+    additionally pass in the locale to the SignupForm as defined in
+    the ACCOUNT_SIGNUP_FORM_CLASS setting. This is needed to correctly
+    populate the country form field's choices from the product_details
+    app.
+
+    You can remove this class if there is no other modification compared
+    to it's parent class.
+    """
+    def get_form(self, form_class):
+        """
+        Returns an instance of the form to be used in this view.
+        """
+        form = super(SignupView, self).get_form(form_class)
+        form.fields['email'].widget = forms.HiddenInput()
+        return form
+
+    def get_form_kwargs(self):
+        kwargs = super(SignupView, self).get_form_kwargs()
+        kwargs['locale'] = self.request.locale
+        return kwargs
+
+    def form_valid(self, form):
+        """
+        We send our welcome email via celery during complete_signup.
+        So, we need to manually commit the user to the db for it.
+        """
+        with transaction.commit_on_success():
+            form.save(self.request)
+        return helpers.complete_social_signup(self.request,
+                                              self.sociallogin)
+
+signup = SignupView.as_view()

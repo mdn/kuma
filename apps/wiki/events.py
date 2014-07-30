@@ -1,7 +1,5 @@
 import logging
 
-from urlobject import URLObject
-
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core.mail import EmailMessage
@@ -10,6 +8,7 @@ from django.template import Context, loader
 from tower import ugettext as _
 
 from devmo import email_utils
+from devmo.helpers import add_utm
 from tidings.events import InstanceEvent
 from sumo.urlresolvers import reverse
 from wiki.helpers import revisions_unified_diff
@@ -17,13 +16,6 @@ from wiki.models import Document
 
 
 log = logging.getLogger('mdn.wiki.events')
-
-
-EMAIL_URL_TRACKING_PARAMS = {
-    'utm_source': 'Notification',
-    'utm_medium': 'email',
-    'utm_campaign': 'Wiki Doc Edits'
-}
 
 
 def context_dict(revision):
@@ -53,8 +45,8 @@ def context_dict(revision):
     }
 
     for name, url in link_urls.iteritems():
-        url_obj = URLObject(url).add_query_params(EMAIL_URL_TRACKING_PARAMS)
-        link_urls[name] = str(url_obj)
+        url = add_utm(url, 'Wiki Doc Edits')
+        link_urls[name] = url
 
     context = {
         'document_title': document.title,

@@ -198,7 +198,7 @@ table.activity {
 
 .profile-edit {
     /* Set forms to full width so that they resize with the column. */
-    .section li > input[type="text"], select, textarea, #tagit-interests, #tags-expertise {
+    .section li > input[type="text"], select, textarea, #tagit-interests, #tags-expertise, legend {
         width: 100%;
         vendorize(box-sizing, border-box);
     }
@@ -223,19 +223,21 @@ table.activity {
         width: 610px;
     }
 
-    li.tag-expert {
-        display: inline-block;
-        margin: 0 10px 10px 0;
+    li {
+        .tag-expert {
+            display: inline-block;
+            margin: 0 10px 10px 0;
 
-        label {
-            background: #f9f9f9;
-            border: 1px solid #dbd9d1;
-            border-radius: 2px;
-            font-weight: normal;
-            margin: 0;
-            padding: 3px 8px 3px 4px;
-            &:hover {
-                border-color: #bbb;
+            label {
+                background: #f9f9f9;
+                border: 1px solid #dbd9d1;
+                border-radius: 2px;
+                font-weight: normal;
+                margin: 0;
+                padding: 3px 8px 3px 4px;
+                &:hover {
+                    border-color: #bbb;
+                }
             }
         }
     }
@@ -244,6 +246,46 @@ table.activity {
         button {
             vendorize(box-shadow, inherit);
         }
+    }
+}
+
+#profiles {
+    label, .field-management {
+        margin: 0 0 5px;
+    }
+
+    label {
+        bidi-value(float, left, right);
+        bidi-style(margin-right, 10px, margin-left, 10px);
+    }
+
+    .field-management {
+        bidi-value(float, right, left);
+    }
+
+    .account {
+        clear: both;
+    }
+}
+
+
+
+#profile-edit {
+    h1, > {$selector-icon}{
+        bidi-value(float, left, right);
+
+        /* Keep the font size and line height equal to make the icon appear as
+           though it is on the same line. */
+        font-size: 26px;
+        line-height: 40px;
+    }
+
+    > {$selector-icon} {
+        bidi-style(margin-left, 20px, margin-right, 20px);
+    }
+
+    fieldset {
+        clear: both;
     }
 }
 

@@ -6,26 +6,28 @@
 @import 'includes/mixins';
 @import 'includes/grid';
 
+$blue-background-text-color = #fff;
+
 /* Settings which apply to _all_ zone pages */
 .zone {
     create-gradient-background(#00539f, true);
     use-white-logo();
     remove-main-spacing();
-    override-main-nav-color(#fff);
+    override-main-nav-color($blue-background-text-color);
 
     #main-header {
         border-bottom-color: rgba(255, 255, 255, 0.2);
     }
 
     .user-state {
-        a, a:hover, a:focus, a:visited {
-            color: #fff;
+        a, a:hover, a:focus, a:visited, > {$selector-icon} {
+            color: $blue-background-text-color;
         }
     }
 
     /*  Change open auth text in white */
     .oauth-login-options {
-        color: #fff;
+        color: $blue-background-text-color;
     }
 
     /* zone content area needs to be adjusted for zone pages */
@@ -47,12 +49,12 @@
 
     h1 {
         @extend $column-6;
-        color: #fff;
+        color: $blue-background-text-color;
         clear: both;
     }
 
     .zone-landing-header-preview {
-        color: #fff;
+        color: $blue-background-text-color;
         margin-top: $grid-spacing;
 
         .column-strip {
@@ -71,10 +73,10 @@
     }
 
     .crumbs {
-        color: #fff;
+        color: $blue-background-text-color;
 
         a {
-            old-ie(color, #fff);
+            old-ie(color, $blue-background-text-color);
             color: rgba(255, 255, 255, 0.7);
         }
     }
@@ -116,7 +118,7 @@
     }
 
     a.button, button {
-        color: #fff;
+        color: $blue-background-text-color;
         &:not(.transparent) {
             old-ie(background-color, #0095dd); /* old ie */
             background-color: rgba(0, 0, 0, 0.1);
@@ -142,7 +144,7 @@
 
         a {
             font-family: $heading-font-family;
-            color: #fff;
+            color: $blue-background-text-color;
         }
     }
 

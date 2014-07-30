@@ -20,10 +20,9 @@ from threadedcomments.forms import ThreadedCommentForm
 from threadedcomments.templatetags import threadedcommentstags
 import threadedcomments.views
 
-from devmo.urlresolvers import reverse
+from sumo.urlresolvers import reverse
 from .models import Submission
 from . import DEMOS_CACHE_NS_KEY, TAG_DESCRIPTIONS, DEMO_LICENSES
-
 
 threadedcommentstags.reverse = reverse
 

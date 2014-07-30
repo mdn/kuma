@@ -97,16 +97,6 @@ class TestUserProfile(test_utils.TestCase):
         ok_(hasattr(profile_from_db, 'timezone'))
         ok_(str(profile_from_db.timezone) == 'US/Pacific')
 
-    def test_mindtouch_timezone(self):
-        user = User.objects.get(username='testuser')
-        profile = UserProfile.objects.get(user=user)
-        eq_("-08:00", profile.mindtouch_timezone)
-
-    def test_mindtouch_language(self):
-        user = User.objects.get(username='testuser')
-        profile = UserProfile.objects.get(user=user)
-        eq_("en", profile.mindtouch_language)
-
     def test_wiki_activity(self):
         user = User.objects.get(username='testuser')
         profile = UserProfile.objects.get(user=user)

@@ -30,7 +30,7 @@ def user_access_decorator(redirect_func, redirect_url_func, deny_func=None,
             if redirect_func(request.user):
                 # We must call reverse at the view level, else the threadlocal
                 # locale prefixing doesn't take effect.
-                redirect_url = redirect_url_func() or reverse('users.login')
+                redirect_url = redirect_url_func() or reverse('account_login')
 
                 # Redirect back here afterwards?
                 if redirect_field:

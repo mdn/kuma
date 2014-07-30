@@ -196,16 +196,6 @@
         </div>
         {% endif %}
 
-          {% if messages %}
-            {% for message in messages %}
-              {% if 'wiki_redirect' in message.tags %}
-                <div class="redirected-from" id="redirected-from">
-                  <p>{{ message }}</p>
-                </div>
-              {% endif %}
-            {% endfor %}
-          {% endif %}
-
       </div>
       {% endif %}
 

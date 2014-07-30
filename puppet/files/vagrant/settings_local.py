@@ -106,13 +106,6 @@ SITE_URL = 'https://developer-local.allizom.org'
 PROTOCOL = 'https://'
 DOMAIN = 'developer-local.allizom.org'
 
-# See: https://github.com/mozilla/django-browserid/issues/8 (TODO)
-BROWSERID_DISABLE_CERT_CHECK = True
-BROWSERID_CACERT_FILE = None
-
-LOGIN_REDIRECT_URL = '/'
-LOGIN_REDIRECT_URL_FAILURE = '/'
-
 KUMASCRIPT_URL_TEMPLATE = 'http://localhost:9080/docs/{path}'
 
 ATTACHMENT_HOST = 'mdn-local.mozillademos.org'
