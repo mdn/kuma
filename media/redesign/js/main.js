@@ -25,7 +25,7 @@
         var activeClass = 'active';
         var fadeSpeed = 300;
 
-        $container.find('.oauth-login-options').mozMenu({
+        $container.mozMenu({
             fadeInSpeed: fadeSpeed,
             fadeOutSpeed: fadeSpeed,
             onOpen: function() {
@@ -39,7 +39,6 @@
         $('.login-link').on('click', function(e) {
             // Track event of which was clicked
             var serviceUsed = $(this).data('service'); // "Persona" or "GitHub"
-
             mdn.analytics.trackEvent({
                 category: 'Sign-in',
                 action: 'Start',
