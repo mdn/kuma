@@ -127,6 +127,13 @@
             ['Link', 'Unlink', 'Anchor', '-', 'Bold', 'Italic', 'Underline', 'codeButton', 'Strike', 'Superscript', 'RemoveFormat', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight']
         ];
 
+        // Add the spellchecker to the top bar
+        if(window.waffle && waffle.FLAGS.wiki_spellcheck) {
+            config.extraPlugins += ',mdn-spell';
+            config.toolbar_MDN[0].splice(10, 0, 'mdn-spell');
+            config.toolbar_MDN[0].join();
+        }
+
         config.skin = 'kuma';
         config.startupFocus = true;
         config.toolbar = 'MDN';

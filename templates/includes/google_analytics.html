@@ -20,6 +20,10 @@
         ga('set', 'top contributors', 'Yes');
     {% endif %}
 
+    {% if waffle.flag('wiki_spellcheck') %}
+        ga('set', 'Wiki Spellcheck', 'Yes');
+    {% endif %}
+
     (function() {
         // http://cfsimplicity.com/61/removing-analytics-clutter-from-campaign-urls
         var win = window;
