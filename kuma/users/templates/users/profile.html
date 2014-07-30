@@ -2,6 +2,7 @@
 
 {% set display_name = profile.name | default(profile.user.username, true) %}
 {% set username  = profile.user.username %}
+{% set accounts = social_accounts(profile.user) %}
 
 {% block body_attributes %}{% endblock %}
 
@@ -21,6 +22,12 @@
     {{ js('demostudio') }}
 {% endblock %}
 
+{% macro account(profile, site_name, site_meta) %}
+  {% if profile.websites[site_name] %}
+    <li class="{{ site_name }}"><i class="{{ site_meta.fa_icon }}" aria-hidden="true"></i><a href="{{ profile.websites[site_name] }}" rel="me external" class="url">{{ site_meta.label }}</a></li>
+  {% endif %}
+{% endmacro %}
+
 {% block content %}
 <section id="content">
 <div class="wrap">
@@ -34,14 +41,19 @@
         </figure>
 
         <ul class="links">
-        {% for site in profile.website_choices %}
-            {% set site_name = site[0] %}
-            {% set site_meta = site[1] %}
-            {% set href = profile.websites[site_name] %}
-            {% if href %}
-                <li class="{{site_name}}"><i class="{{site_meta['fa_icon']}}" aria-hidden="true"></i><a href="{{href}}" rel="me external" class="url">{{site_meta['label']}}</a></li>
+        {% for site_name, site_meta in profile.website_choices %}
+          {% if site_name == 'github' %}
+            {% if accounts.github and waffle.flag('github_login') %}
+              {% for github_account in accounts.github %}
+              <li class="{{ site_name }}"><i class="{{ site_meta.fa_icon }}" aria-hidden="true"></i><a href="https://github.com/{{ github_account.uid }}" rel="me external" class="url">{{ site_meta.label }}</a></li>
+              {% endfor %}
+            {% else %}
+              {{ account(profile, site_name, site_meta) }}
             {% endif %}
-          {% endfor %}
+          {% else %}
+            {{ account(profile, site_name, site_meta) }}
+          {% endif %}
+        {% endfor %}
         </ul>
       </div>
 
@@ -51,12 +63,12 @@
         <div class="edit">
           {% if show_manage_roles_button %}
               {# TODO: Need a method to detect whether the logged in user can manage any roles, here #}
-              <a href="{{ url('teamwork.views.user_roles', profile.user.username) }}" class="button neutral">{{_("Manage Roles")}}<i aria-hidden="true" class="icon-users"></i></a>
+              <a href="{{ url('teamwork.views.user_roles', profile.user.username) }}" class="button neutral">{{ _("Manage Roles") }}<i aria-hidden="true" class="icon-users"></i></a>
           {% endif %}
           {{ ban_link(profile.user, request.user) }}
           <!-- Only shown for the user and admins -->
           {% if profile.allows_editing_by(request.user) and request.user == profile.user %}
-              <a id="edit-profile" href="{{ url('users.profile_edit', username=profile.user.username) }}" class="button neutral">{{_("Edit")}}<i aria-hidden="true" class="icon-pencil"></i></a>
+              <a id="edit-profile" href="{{ url('users.profile_edit', username=profile.user.username) }}" class="button neutral">{{ _("Edit") }}<i aria-hidden="true" class="icon-pencil"></i></a>
               <button id="advanced-menu" class="neutral only-icon" {{ disabled_attr }} aria-haspopup="true" aria-owns="advanced-menu-submenu" aria-expanded="false"><span>{{ _('Advanced') }}</span><i aria-hidden="true" class="icon-cog"></i></button>
               <div class="submenu" id="advanced-menu-submenu">
                 <!-- this page -->
@@ -75,7 +87,7 @@
         {% if profile.title %}<li class="title">{{ profile.title }}</li>{% endif %}
         {% if profile.organization %}<li class="org">{{ profile.organization }}</li>{% endif %}
         {% if profile.location %}<li class="loc">{{ profile.location }}</li>{% endif %}
-	{% if profile.irc_nickname %}<li class="irc">IRC: {{ profile.irc_nickname }}</li>{% endif %}
+        {% if profile.irc_nickname %}<li class="irc">IRC: {{ profile.irc_nickname }}</li>{% endif %}
       </ul>
       {% endif %}
 
@@ -87,7 +99,7 @@
         {% set tags = profile.tags.all_ns(tag_ns) %}
         {% if tags | length %}
         <div class="tags">
-          <h2>{{_("Interests")}}</h2>
+          <h2>{{ _("Interests") }}</h2>
           <ul class="int-taglist taglist">
             {% for tag in tags%}
                 <li><span rel="tag">{{ tag.name.replace(tag_ns,'') }}</span></li>
@@ -100,7 +112,7 @@
         {% set tags = profile.tags.all_ns(tag_ns) %}
         {% if tags | length %}
         <div class="tags">
-          <h2>{{_("Areas of Expertise")}}</h2>
+          <h2>{{ _("Areas of Expertise") }}</h2>
           <ul class="exp-taglist taglist">
             {% for tag in tags%}
                 <li><span rel="tag">{{ tag.name.replace(tag_ns,'') }}</span></li>
@@ -115,7 +127,7 @@
 
     {% if waffle.flag('badger') and award_list %}
       <section id="profile-badges" class="profile-section">
-        <h2>{{_("Recent Badge Awards")}}</h2>
+        <h2>{{ _("Recent Badge Awards") }}</h2>
         {% include "badger/includes/awards_as_badges_list.html" %}
       </section>
     {% endif %}
@@ -133,33 +145,34 @@
     {% elif profile.user == request.user %}
         <section id="profile-demos" class="profile-section">
           <header class="gallery-head">
-            <h2 class="count">{{_("No Demos")}}</h2>
+            <h2 class="count">{{ _("No Demos") }}</h2>
           </header>
-          <p class="none">{% trans submit_url=url('kuma.demos.views.submit') %}You haven't submitted any web technology demos. Build something awesome and <a href="{{submit_url}}">submit a demo</a>!{% endtrans %}</p>
+          <p class="none">{% trans submit_url=url('kuma.demos.views.submit') %}You haven't submitted any web technology demos. Build something awesome and <a href="{{ submit_url }}">submit a demo</a>!{% endtrans %}</p>
         </section>
     {% endif %}
 
           <section id="docs-activity" class="profile-section">
             <header>
-              <h2>{{_("Recent Docs Activity")}}</h2>
+              <h2>{{ _("Recent Docs Activity") }}</h2>
             </header>
 
             {% if wiki_activity and wiki_activity|length %}
             <table class="activity">
               <thead>
-                <th scope="col" class="page">{{_("Page")}}</th>
-                <th scope="col" class="date">{{_("Date")}}</th>
-                <th scope="col" class="summary">{{_("Comment")}}</th>
+                <th scope="col" class="page">{{ _("Page") }}</th>
+                <th scope="col" class="date">{{ _("Date") }}</th>
+                <th scope="col" class="summary">{{ _("Comment") }}</th>
               </thead>
               <tbody>
                 {% for rev in wiki_activity %}
+                {% set previous_rev = rev.get_previous() %}
                 <tr>
                   <th scope="row">
                       <h3><a href="{{ rev.document.get_absolute_url() }}">{{ rev.document.title }}</a></h3>
                       <ul class="actions">
-                          <li><a href="{{ rev.document.get_absolute_url() }}$edit" class="edit">{{_("Edit page")}}</a></li>
-                          <li>{% if rev.get_previous() %}<a href="{{ rev.document.get_absolute_url() }}$compare?from={{ rev.get_previous().id }}&to={{ rev.id }}" class="diff">{{_("View complete diff")}}</a>{% endif %}</li>
-                          <li><a href="{{ rev.document.get_absolute_url() }}$history" class="history">{{_("View page history")}}</a></li>
+                          <li><a href="{{ rev.document.get_absolute_url() }}$edit" class="edit">{{ _("Edit page") }}</a></li>
+                          <li>{% if previous_rev %}<a href="{{ rev.document.get_absolute_url() }}$compare?from={{ previous_rev.id }}&amp;to={{ rev.id }}" class="diff">{{ _("View complete diff") }}</a>{% endif %}</li>
+                          <li><a href="{{ rev.document.get_absolute_url() }}$history" class="history">{{ _("View page history") }}</a></li>
                       </ul>
                   </th>
                   <td>{{ rev.created.strftime('%B %d, %Y') }}<br />
@@ -173,7 +186,7 @@
                       {# TODO: create user revision activity feed
                 <tr>
                   <td colspan="3">
-                      <a href="/index.php?title=Special:Contributions&feed=rss&target={{profile.user.username | urlencode}}" rel="alternate" class="feed">{{_("Feed")}}</a>
+                      <a href="/index.php?title=Special:Contributions&feed=rss&target={{ profile.user.username | urlencode }}" rel="alternate" class="feed">{{ _("Feed") }}</a>
                   </td>
                 </tr>
                       #}
@@ -185,7 +198,7 @@
 
             {% if profile.user == request.user %}
                 {% trans docs_url=devmo_url('Project:MDN/Contributing/Creating_and_editing_pages') %}
-                <p class="none">You haven't contributed to any MDN docs. <a href="{{docs_url}}">Pitch in!</a></p>
+                <p class="none">You haven't contributed to any MDN docs. <a href="{{ docs_url }}">Pitch in!</a></p>
                 {% endtrans %}
             {% else %}
                 <p class="none">{{ _('This user has no activity.') }}</p>

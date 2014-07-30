@@ -11,7 +11,7 @@
 
 {% block content %}
 
-<section id="content">
+<section id="content" class="text-content">
 <div class="wrap">
 
   <section id="content-main" class="full" role="main">
@@ -42,11 +42,11 @@
 
       <ul class="prose">
       {% if user.username %}
-        {% trans logout_url=url('users.logout') %}
+        {% trans logout_url=url('account_logout') %}
           <li><a href="{{ logout_url }}">Log out</a> to try again.</li>
         {% endtrans %}
       {% else %}
-        {% trans login_url=('{base_url}?next={next}' | f(base_url=url('users.login'), next=request.get_full_path())) %}
+        {% trans login_url=('{base_url}?next={next}' | f(base_url=url('account_login'), next=request.get_full_path())) %}
           <li><a href="{{ login_url }}">Log in</a> to try again.</li>
         {% endtrans %}
       {% endif %}

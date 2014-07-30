@@ -797,7 +797,7 @@ class TranslateTests(TestCaseBase):
         translate_uri = self._translate_uri()
         response = self.client.get(translate_uri)
         eq_(302, response.status_code)
-        expected_url = '%s?next=%s' % (reverse('users.login', locale='en-US'),
+        expected_url = '%s?next=%s' % (reverse('account_login', locale='en-US'),
                                        urlquote(translate_uri))
         ok_(expected_url in response['Location'])
 

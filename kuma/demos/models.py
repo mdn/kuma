@@ -30,11 +30,10 @@ from taggit_extras.managers import NamespacedTaggableManager
 from threadedcomments.models import ThreadedComment
 
 from actioncounters.fields import ActionCounterField
-from devmo.urlresolvers import reverse
+from sumo.urlresolvers import reverse
 from devmo.utils import generate_filename_and_delete_previous
-from . import challenge_utils
-from . import DEMO_LICENSES
-from . import scale_image
+
+from . import challenge_utils, DEMO_LICENSES, scale_image
 
 
 south.modelsinspector.add_ignored_fields(["^taggit\.managers"])

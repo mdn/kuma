@@ -44,8 +44,11 @@ class CustomIndexDashboard(Dashboard):
             collapsible=True,
             models=(
                 'django.contrib.auth.*',
-                'teamwork.*',
                 'kuma.users.*',
+                'allauth.account.*',
+                'allauth.socialaccount.*',
+                'teamwork.*',
+                'authkeys.*',
             ),
         ))
 
@@ -59,6 +62,7 @@ class CustomIndexDashboard(Dashboard):
                 'soapbox.*',
                 'django.contrib.sites.*',
                 'search.*',
+                'djcelery.*',
             ),
         ))
 
@@ -76,6 +80,10 @@ class CustomIndexDashboard(Dashboard):
                 'teamwork.*',
                 'django.contrib.auth.*',
                 'django.contrib.sites.*',
+                'allauth.account.*',
+                'allauth.socialaccount.*',
+                'djcelery.*',
+                'authkeys.*',
             ),
         ))
 

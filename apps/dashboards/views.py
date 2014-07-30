@@ -1,9 +1,6 @@
 import datetime
 import json
 
-from jinja2 import escape
-
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -25,8 +22,8 @@ def revisions(request):
     page = request.GET.get('page', 1)
 
     revisions = (Revision.objects.select_related('creator')
-                        .order_by('-created')
-                        .defer('content'))
+                                 .order_by('-created')
+                                 .defer('content'))
 
     query_kwargs = False
 

@@ -6,6 +6,7 @@
     Classes which should be mirror extensions and mixins - mixins.styl
     These classes are used within wiki content so we must have them available as classes as well
 */
+@import '../includes/vars';
 @import '../includes/mixins';
 
 .offscreen {
@@ -292,8 +293,6 @@ a.persona-button {
 }
 
 a.github-button {
-    margin-left: 20px;
-
     span.github-icon {
         create-gradient(#5d649a, #63397b);
 
@@ -669,6 +668,19 @@ label {$selector-icon} {
     bidi-value(float, none, left);
     bidi-style(right, 200px, left, auto);
     set-font-size($small-bump-font-size);
+
+    ul, > {$selector-icon} {
+        bidi-value(float, left, right);
+
+        /* Keep the line height equal to make the icon appear as though it is on
+           the same line. */
+        line-height: 20px;
+    }
+
+    > {$selector-icon} {
+        bidi-style(margin-right, 10px, margin-left, 10px);
+        set-font-size($small-bump-font-size + 20%);
+    }
 
     li {
         display: inline;

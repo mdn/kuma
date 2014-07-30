@@ -220,7 +220,7 @@
                   <p>Why not <a href="#comment-post">Add your own</a>?</p>
               {% endtrans %}
           {% else %}
-              {% trans login_url=url('users.login') %}
+              {% trans login_url=url('account_login') %}
               <p><a href="{{ login_url }}">Log in</a> to add your own.</p>
               {% endtrans %}
           {% endif %}

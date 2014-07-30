@@ -6,6 +6,7 @@ import json
 
 from django.utils.functional import lazy
 from django.utils.translation import ugettext_lazy as _
+from django.core.urlresolvers import reverse_lazy
 
 from sumo_locales import LOCALES
 
@@ -340,9 +341,21 @@ STATIC_ROOT = path('static')
 SERVE_MEDIA = False
 
 # Paths that don't require a locale prefix.
-SUPPORTED_NONLOCALES = ('media', 'admin', 'robots.txt', 'services', 'static',
-                        '1', 'files', '@api', 'grappelli', '__debug__',
-                        '.well-known')
+LANGUAGE_URL_IGNORED_PATHS = (
+    'media',
+    'admin',
+    'robots.txt',
+    'services',
+    'static',
+    '1',
+    'files',
+    '@api',
+    'grappelli',
+    '__debug__',
+    '.well-known',
+    'users/persona/login/',
+    'users/github/login/callback/',
+)
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '#%tc(zja8j01!r#h_y)=hy!^k)9az74k+-ib&ij&+**s3-e^_z'
@@ -356,10 +369,8 @@ TEMPLATE_LOADERS = (
 
 JINGO_EXCLUDE_APPS = (
     'admin',
-    'admindocs',
-    'registration',
     'grappelli',
-    'waffle'
+    'waffle',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -370,15 +381,16 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.csrf',
     'django.contrib.messages.context_processors.messages',
 
+    'allauth.account.context_processors.account',
+    'allauth.socialaccount.context_processors.socialaccount',
+
     'sumo.context_processors.global_settings',
 
     'devmo.context_processors.i18n',
     'devmo.context_processors.next_url',
 
     'jingo_minify.helpers.build_ids',
-
     'constance.context_processors.config',
-    'django_browserid.context_processors.browserid_form',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -414,8 +426,8 @@ MIDDLEWARE_CLASSES = (
 
 # Auth
 AUTHENTICATION_BACKENDS = (
-    'django_browserid.auth.BrowserIDBackend',
     'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
     'teamwork.backends.TeamworkBackend',
 )
 AUTH_PROFILE_MODULE = 'users.UserProfile'
@@ -464,9 +476,6 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     'django.contrib.staticfiles',
 
-    # BrowserID
-    'django_browserid',
-
     # MDN
     'devmo',
     'docs',
@@ -475,6 +484,11 @@ INSTALLED_APPS = (
     'search',
     'kuma.users',
     'kuma.wiki',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.persona',
+    'allauth.socialaccount.providers.github',
     'kuma.events',
 
     # DEMOS
@@ -536,7 +550,7 @@ def JINJA_CONFIG():
     from django.core.cache.backends.memcached import CacheClass as MemcachedCacheClass
     from django.core.cache import get_cache
     cache = get_cache('memcache')
-    config = {'extensions': ['tower.template.i18n',
+    config = {'extensions': ['jinja2.ext.i18n', 'tower.template.i18n',
                              'jinja2.ext.with_', 'jinja2.ext.loopcontrols',
                              'jinja2.ext.autoescape'],
               'finalize': lambda x: x if x is not None else ''}
@@ -569,6 +583,8 @@ DOMAIN_METHODS = {
         ('apps/**.py',
             'tower.management.commands.extract.extract_tower_python'),
         ('**/templates/**.html',
+            'tower.management.commands.extract.extract_tower_template'),
+        ('**/templates/**.ltxt',
             'tower.management.commands.extract.extract_tower_template'),
     ],
     'javascript': [
@@ -773,13 +789,6 @@ MAX_FILEPATH_LENGTH = 250
 
 ATTACHMENT_HOST = 'mdn.mozillademos.org'
 
-# Auth and permissions related constants
-LOGIN_URL = '/users/login'
-LOGOUT_URL = '/users/logout'
-LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "/"
-REGISTER_URL = '/users/register'
-
 # Video settings, hard coded here for now.
 # TODO: figure out a way that doesn't need these values
 WIKI_VIDEO_WIDTH = 640
@@ -901,14 +910,6 @@ CONSTANCE_DATABASE_CACHE_BACKEND = 'memcache'
 
 # Settings and defaults controllable by Constance in admin
 CONSTANCE_CONFIG = dict(
-
-    BROWSERID_REALM_JSON = (
-        json.dumps({
-            'realm': ['https://developer.mozilla.org',
-                      'https://marketplace.firefox.com']
-        }),
-        "Define the other sites belonging to this site's BrowserID realm."
-    ),
 
     DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG = (
         "challenge:2011:september",
@@ -1096,11 +1097,6 @@ CONSTANCE_CONFIG = dict(
 
 )
 
-BROWSERID_VERIFICATION_URL = 'https://verifier.login.persona.org/verify'
-
-LOGIN_REDIRECT_URL = '/'
-LOGIN_REDIRECT_URL_FAILURE = '/'
-
 BASKET_URL = 'https://basket.mozilla.com'
 BASKET_APPS_NEWSLETTER = 'app-dev'
 
@@ -1193,3 +1189,37 @@ ABSOLUTE_URL_OVERRIDES = {
 }
 
 OBI_BASE_URL = 'https://backpack.openbadges.org/'
+
+# Honor the X-Forwarded-Proto header for environments like local dev VM that
+# uses Apache mod_proxy instead of mod_wsgi
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Auth and permissions related constants
+LOGIN_URL = reverse_lazy('account_login')
+LOGOUT_URL = reverse_lazy('account_logout')
+LOGIN_REDIRECT_URL = reverse_lazy('home')
+
+# django-allauth configuration
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_LOGOUT_ON_GET = True
+ACCOUNT_USERNAME_MIN_LENGTH = 3
+ACCOUNT_ADAPTER = 'kuma.users.adapters.KumaAccountAdapter'
+ACCOUNT_SIGNUP_FORM_CLASS = 'kuma.users.forms.SignupForm'
+ACCOUNT_UNIQUE_EMAIL = True
+
+SOCIALACCOUNT_ADAPTER = 'kuma.users.adapters.KumaSocialAccountAdapter'
+SOCIALACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+SOCIALACCOUNT_EMAIL_REQUIRED = True
+SOCIALACCOUNT_AUTO_SIGNUP = False  # forces the use of the signup view
+SOCIALACCOUNT_QUERY_EMAIL = True  # used by the custom github provider
+SOCIALACCOUNT_PROVIDERS = {
+    'persona': {
+        'REQUEST_PARAMETERS': {
+            'siteName': 'Mozilla Developer Network',
+            'siteLogo': '/media/redesign/img/opengraph-logo.png',
+        }
+    }
+}

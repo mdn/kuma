@@ -1,7 +1,9 @@
-{% extends "users/base.html" %}
+{% extends "socialaccount/base.html" %}
 {% from "includes/error_list.html" import errorlist %}
 {% from 'includes/common_macros.html' import newsletter_widget %}
-{% set title = _('Register') %}
+
+{% set title = _('Signup') %}
+
 {% set classes = 'register' %}
 
 {% block site_css %}
@@ -21,16 +23,19 @@
     <section id="content-main" role="main">
       <article id="browser_register" class="main">
 
-        <h1>{{ _('Register') }}</h1>
-        <p id="persona-explanation">{% trans persona_href='https://login.persona.org/about' %}
-        MDN uses <a href="{{ persona_href }}" rel="external">Persona</a>,
-        a safe and simple way to sign in with just your e-mail address.
-        {% endtrans %}</p>
+        {% if account.get_provider().id == 'persona' %}
+          <h1>{{ _('Sign up') }}</h1>
+          <p id="persona-explanation">{% trans persona_href='https://login.persona.org/about' %}
+          MDN uses <a href="{{ persona_href }}" rel="external">Persona</a>,
+          a safe and simple way to sign in with just your e-mail address.
+          {% endtrans %}</p>
+        {% endif %}
 
-        <form id="create_user" class="boxed submission" method="post" action="">
-          <p>{% trans %}
-            We couldn't find an MDN profile for your Persona. If you're new here,
-            you can pick an MDN username now and complete your registration.
+        <form id="create_user" class="boxed submission" method="post" action="{{ url('socialaccount_signup') }}">
+          <p>{% trans provider_name=account.get_provider().name %}
+            We couldn't find an MDN profile for your {{ provider_name }} account.
+            If you're new here, you can pick an MDN username now and complete your
+            registration.
           {% endtrans %}</p>
           <p>{% trans %}
             You can access everything on the MDN website even without an account,
@@ -41,19 +46,23 @@
             <strong>Having trouble logging in? <a href="{{ bug_href }}" rel="external">Let us know</a>.</strong>
           {% endtrans %}</p>
 
-          {{ errorlist(register_form) }}
+          {{ errorlist(form) }}
 
           {{ csrf() }}
-          <input type="hidden" name="action" value="register">
+          {% if redirect_field_value %}
+          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+          {% endif %}
+          {# The email field is hidden for now #}
+          {{ form.email }}
           <fieldset>
             <ul>
               <li>
-                <label for="id_username">{{ _('Username') }}</label>
-                {{ register_form.username }}
+                <label for="id_username">{{ form.username.label }}</label>
+                {{ form.username }}
                 <p class="field-explanation"><small>{{ _("Please enter the name you'd like to display to other users to identify your contributions.") }}</small></p>
               </li>
 
-              {{ newsletter_widget(register_form) }}
+              {{ newsletter_widget(form) }}
 
               <li class="submit">
                 <button type="submit" name="create">{{ _('Create a New Profile') }}</button>
