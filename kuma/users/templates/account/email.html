@@ -61,7 +61,8 @@
 {% endblock %}
 
 
-{% block extra_body %}
+{% block js %}
+{{ super() }}
 <script type="text/javascript">
 (function() {
   var message = "{{ _("Do you really want to remove the selected e-mail address?") }}";
