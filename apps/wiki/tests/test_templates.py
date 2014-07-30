@@ -12,11 +12,12 @@ from django.test.client import Client
 from django.test.utils import override_settings
 
 import mock
+from BeautifulSoup import BeautifulSoup
 from nose import SkipTest
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
-from BeautifulSoup import BeautifulSoup
+from waffle.models import Flag
 
 import constance.config
 
