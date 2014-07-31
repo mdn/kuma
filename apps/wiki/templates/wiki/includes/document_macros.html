@@ -69,7 +69,6 @@
                 {% if user.is_superuser %}
                   <li><a href="{{ url('admin:wiki_document_change', document.id) }}">{{ _('View in admin') }}</a></li>
                 {% endif %}
-}
 
 {#
     # HACK: https://bugzil.la/972545 - Don't delete pages that have children
