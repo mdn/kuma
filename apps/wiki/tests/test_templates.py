@@ -12,11 +12,12 @@ from django.test.client import Client
 from django.test.utils import override_settings
 
 import mock
+from BeautifulSoup import BeautifulSoup
 from nose import SkipTest
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
-from BeautifulSoup import BeautifulSoup
+from waffle.models import Flag
 
 import constance.config
 
@@ -143,8 +144,8 @@ class DocumentTests(TestCaseBase):
         """Make sure documents with REDIRECT directives redirect properly.
 
         Also check the backlink to the redirect page.
-
         """
+        Flag.objects.create(name='redirect_messages', everyone=True)
         target = document(save=True)
         target_url = target.get_absolute_url()
 
