@@ -35,22 +35,22 @@
         <p>{{ _('Want to talk to someone about MDN? There are a few ways you can do that:') }}</p>
         <ul>
             <li>
-              {% trans list_link='https://lists.mozilla.org/listinfo/dev-mdc' %}
+              {% trans list_link=add_utm('https://lists.mozilla.org/listinfo/dev-mdc', 'welcome') %}
                 Mailing list: <a href="{{ list_link }}">subscribe</a> to tell us about what you're interested in on MDN and ask questions about the site.
               {% endtrans %}
             </li>
             <li>
               {% trans
                 channel_link='irc://irc.mozilla.org/mdn',
-                irc_link='https://wiki.mozilla.org/IRC'
+                irc_link=add_utm('https://wiki.mozilla.org/IRC', 'welcome')
               %}
                 Real-time chat: <a href="{{ irc_link }}">#mdn channel on irc.mozilla.org</a>. (Get more info about <a href="{{ irc_link }}">IRC</a>.) You can find the MDN writing staff admins there: Eric Shepherd (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg), Florian Scholz (fscholz), Chris Mills (chrismills), and community manager Janet Swisher (jms).
               {% endtrans %}
             </li>
             <li>
               {% trans
-                blog_link='https://blog.mozilla.org/community',
-                tagged_link='https://blog.mozilla.org/community/category/developer-engagement/'
+                blog_link=add_utm('https://blog.mozilla.org/community', 'welcome'),
+                tagged_link=add_utm('https://blog.mozilla.org/community/category/developer-engagement/', 'welcome')
               %}Blog: On the <a href="{{ blog_link }}">about:community</a> blog, look for the posts tagged with <a href="{{ tagged_link }}">Developer Engagement</a>.
               {% endtrans %}
             </li>
