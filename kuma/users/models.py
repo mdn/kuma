@@ -1,11 +1,14 @@
 import datetime
 
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 from django.dispatch import receiver
 from django.db import models
 from django.utils.functional import cached_property
 
 from allauth.account.signals import user_signed_up
+from allauth.socialaccount.signals import (pre_social_login,
+                                           social_account_removed)
 import constance.config
 from jsonfield import JSONField
 from taggit_extras.managers import NamespacedTaggableManager
@@ -186,9 +189,40 @@ def create_user_profile(sender, instance, created, **kwargs):
 
 
 @receiver(user_signed_up)
-def on_signed_up(sender, request, user, **kwargs):
+def on_user_signed_up(sender, request, user, **kwargs):
     if switch_is_active('welcome_email'):
         send_welcome_email.delay(user.pk, request.locale)
+
+
+@receiver(pre_social_login)
+def on_pre_social_login(sender, request, sociallogin, **kwargs):
+    """
+    Invoked just after a user successfully authenticates via a
+    social provider, but before the login is actually processed.
+
+    We use it to store the name of the socialaccount provider in
+    the user's session.
+    """
+    request.session['sociallogin_provider'] = sociallogin.account.provider
+    request.session.modified = True
+
+
+@receiver(social_account_removed)
+def on_social_account_removed(sender, request, socialaccount, **kwargs):
+    """
+    Invoked just after a user successfully removed a social account
+
+    We use it to reset the name of the socialaccount provider in
+    the user's session to one that he also has.
+    """
+    user = socialaccount.user
+    try:
+        all_socialaccounts = user.socialaccount_set.all()
+        next_socialaccount = all_socialaccounts[0]
+        request.session['sociallogin_provider'] = next_socialaccount.provider
+        request.session.modified = True
+    except (ObjectDoesNotExist, IndexError):
+        pass
 
 
 # from https://github.com/brosner/django-timezones/pull/13

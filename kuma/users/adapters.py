@@ -59,18 +59,6 @@ class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
         """
         return True
 
-    def pre_social_login(self, request, sociallogin):
-        """
-        Invoked just after a user successfully authenticates via a
-        social provider, but before the login is actually processed
-        (and before the pre_social_login signal is emitted).
-
-        We use it to store the name of the socialaccount provider in
-        the user's session.
-        """
-        request.session['sociallogin_provider'] = sociallogin.account.provider
-        request.session.modified = True
-
     def validate_disconnect(self, account, accounts):
         """
         Validate whether or not the socialaccount account can be
