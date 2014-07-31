@@ -104,11 +104,11 @@
                   {% for site_name, site_meta in profile.website_choices %}
                     {% if site_name == 'github' %}
                       <li id="field_websites_github" class="field site github">
-                      {% if accounts.persona and waffle.flag('github_login') %}
+                      {% if accounts.github and waffle.flag('github_login') %}
                         <label for="{{ profile_form.websites_github.id_for_label }}"><i class="icon-user" aria-hidden="true"></i>Github</label>
                         <a class="field-management" href="{{ url('socialaccount_connections') }}">{{ _('Change') }}</a>
                         <div class="account">
-                          {% for github_account in accounts.persona %}https://github.com/{{ github_account.uid }}{% if not loop.last %}, {% endif %}{% endfor %}
+                          {% for github_account in accounts.github %}https://github.com/{{ github_account.uid }}{% if not loop.last %}, {% endif %}{% endfor %}
                         </div>
                       {% else %}
                           <label for="{{ profile_form.websites_github.id_for_label }}"><i class="icon-user" aria-hidden="true"></i>Github
