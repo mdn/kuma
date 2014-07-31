@@ -30,7 +30,7 @@
 {% set show_left = zone_subnav_html or quick_links_html or approvals_html %}
 {% set show_right = (not is_zone_root and toc_html) %}
 
-{% set buttons = get_document_buttons(document) %}
+{% set buttons = get_document_buttons(document, help_link) %}
 {% set crumbs = build_document_crumbs(document) %}
 
 {% set content_class = 'column-all' %}
