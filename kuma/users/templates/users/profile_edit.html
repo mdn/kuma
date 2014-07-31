@@ -108,7 +108,7 @@
                         <label for="{{ profile_form.websites_github.id_for_label }}"><i class="icon-user" aria-hidden="true"></i>Github</label>
                         <a class="field-management" href="{{ url('socialaccount_connections') }}">{{ _('Change') }}</a>
                         <div class="account">
-                          {% for github_account in accounts.github %}{% if github_account.extra_data %}https://github.com/{{ github_account.extra_data.login }}{% if not loop.last %}, {% endif %}{% endif %}{% endfor %}
+                          {% for github_account in accounts.github %}{% if github_account.extra_data %}{{ github_account.extra_data.html_url }}{% if not loop.last %}, {% endif %}{% endif %}{% endfor %}
                         </div>
                       {% else %}
                           <label for="{{ profile_form.websites_github.id_for_label }}"><i class="icon-user" aria-hidden="true"></i>Github
