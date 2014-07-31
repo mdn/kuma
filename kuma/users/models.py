@@ -203,8 +203,9 @@ def on_pre_social_login(sender, request, sociallogin, **kwargs):
     We use it to store the name of the socialaccount provider in
     the user's session.
     """
-    request.session['sociallogin_provider'] = sociallogin.account.provider
-    request.session.modified = True
+    if 'sociallogin_provider' not in request.session:
+        request.session['sociallogin_provider'] = sociallogin.account.provider
+        request.session.modified = True
 
 
 @receiver(social_account_removed)
