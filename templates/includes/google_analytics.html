@@ -8,6 +8,8 @@
     })(window,document,'script','//www.google-analytics.com/{{ GA_FILE }}.js','ga');
 
     ga('create', 'UA-36116321-5', 'mozilla.org');
+    ga('set', 'anonymizeIp', true);
+
     {% if request.user.is_authenticated() %}
         // dimension1 == 'Signed-In"
         ga('set', 'dimension1', 'Yes');
