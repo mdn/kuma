@@ -55,7 +55,7 @@
     <details><div class="wiki-block">
       <h2><summary>{{ _('Revision Content') }}</summary></h2>
       <article id="wikiArticle" class="text-content">
-        {{ revision.content|wiki_bleach }}
+        {{ revision.content_cleaned|safe }}
       </article>
     </div></details>
 
