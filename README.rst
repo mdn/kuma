@@ -7,7 +7,7 @@ Kuma
    :alt: Build Status
 
 .. image:: https://coveralls.io/repos/mozilla/kuma/badge.png?branch=master
-  :target: https://coveralls.io/r/mozilla/kuma?branch=master
+   :target: https://coveralls.io/r/mozilla/kuma?branch=master
    :alt: Code Coverage Status
 
 .. image:: https://requires.io/github/mozilla/kuma/requirements.png?branch=master
