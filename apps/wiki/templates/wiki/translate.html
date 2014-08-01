@@ -82,7 +82,7 @@
                   <h3>{{ _('Approved {default_locale} version:')|f(default_locale=settings.LANGUAGES_DICT[settings.WIKI_DEFAULT_LANGUAGE.lower()]) }}</h3>
                 </header>
                 <div class="boxed translate-display">
-                  {{ based_on.content|safe }}
+                  {{ based_on.content_cleaned|safe }}
                 </div>
               </article>
 
