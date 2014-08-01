@@ -1,3 +1,4 @@
+<!-- old
 <div class="warning" id="kumascript-errors">
 {% if not request.user.is_authenticated() %}
     <p>{% trans %}
@@ -58,3 +59,69 @@
 </ul>
 {% endif %}
 </div>
+-->
+
+<!-- new -->
+
+<div class="warning" id="kumascript-errors">
+<p>
+
+<!-- please fix plural localization code: -->
+ ngettext('There was a scripting error on this page. While it is being addressed by site editors, you can view partial content below.',
+         'There were scripting errors on this page. While those are being addressed by site editors, you can view partial content below.',
+         len(kumascript_errors))
+<!-- /fix -->
+
+</p>
+{% if request.user.is_authenticated() %}
+  <button>
+  <!-- please fix plural localization code:  -->
+  ngettext('More information about this error',
+       'More information about these errors',
+       len(kumascript_errors))
+  <!-- /fix -->
+  </button>
+  <p>{% trans %}
+    Anyone with an MDN account can edit a document to fix an error. Use the <a href="/docs/MDN/Kuma/Troubleshooting_KumaScript_errors">KumaScript troubleshooting guide</a> as a starting point.
+  {% endtrans %}</p>
+  <div>
+  {% for error in kumascript_errors %}
+    <p>
+    {% if error.args %}
+      {% set err_type = error.args[0] %}
+      {{ _('Error type:') }} <strong class="type">{{ err_type }}</strong><br>
+      <!-- if line and column (no more offest) -->
+        {{ _('Line:') }} <!-- line --><br>
+        {{ _('Column:') }} <!-- col --><br>
+      <!-- / if -->
+      <!-- if problem was in the macro not this document -->
+        {{ _('In macro:') }} <code><!-- macro name --></code> (<!-- link to edit -->)<br>
+      <!-- /if -->
+      <!-- if problem was figuring how which/how to include a macro -->
+        {{ _('Parsing macro:') }} <code><!-- macro name & arguments (the arguments are being output with a funny character in them right now, I think there is a problem with how they are being escaped/unescaped) --></code> (<!-- link to edit or create  -->)<br>
+      <!-- / if -->
+      {{ _('Full text of error:') }}<br>
+    {% endif %}
+    <pre class="message brush: text">{{ error.message }}</pre>
+    </p>
+  {% endfor %}
+  </div>
+{% endif %}
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
