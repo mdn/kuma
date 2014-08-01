@@ -5,8 +5,10 @@ from django.core.paginator import Paginator
 from django.db import transaction
 from django.http import Http404, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, render, redirect
+from django.utils.datastructures import SortedDict
 
 from access.decorators import login_required
+from allauth.account.models import EmailAddress
 from allauth.socialaccount.views import SignupView as BaseSignupView
 from allauth.socialaccount import helpers
 from badger.models import Award
@@ -250,7 +252,33 @@ class SignupView(BaseSignupView):
         Returns an instance of the form to be used in this view.
         """
         form = super(SignupView, self).get_form(form_class)
-        form.fields['email'].widget = forms.HiddenInput()
+        main_email = self.sociallogin.account.extra_data.get('email', None)
+        email_addresses = self.sociallogin.account.extra_data.get('email_addresses', None)
+
+        # if we didn't get any extra email addresses from the provider
+        # but the default email is available, simply hide the form widget
+        if email_addresses is None and main_email is not None:
+            form.fields['email'].widget = forms.HiddenInput()
+
+        # if there are extra email addresses from the provider (like GitHub)
+        elif email_addresses is not None:
+            # build a mapping of the email addresses to their other values
+            # to be used later for resetting the social accounts email addresses
+            self.email_addresses = SortedDict()
+            for email_address in email_addresses:
+                self.email_addresses[email_address['email']] = email_address
+
+            # build the choice list with the given email addresses
+            # if there is a main email address offer that as well (unless it's
+            # already there)
+            if main_email is not None and main_email not in self.email_addresses:
+                self.email_addresses[main_email] = {
+                    'email': main_email,
+                    'verified': False,
+                    'primary': False,
+                }
+            choices = [(email, email) for email in self.email_addresses.keys()]
+            form.fields['email'].widget = forms.Select(choices=choices)
         return form
 
     def get_form_kwargs(self):
@@ -260,12 +288,20 @@ class SignupView(BaseSignupView):
 
     def form_valid(self, form):
         """
+        We use the selected email here and reset the social loging list of
+        email addresses before they get created.
+
         We send our welcome email via celery during complete_signup.
         So, we need to manually commit the user to the db for it.
         """
+        selected_email = form.cleaned_data['email']
+        email_address_data = self.email_addresses.get(selected_email, None)
+        if email_address_data:
+            self.sociallogin.email_addresses = [EmailAddress(*email_address_data)]
         with transaction.commit_on_success():
             form.save(self.request)
         return helpers.complete_social_signup(self.request,
                                               self.sociallogin)
+
 
 signup = SignupView.as_view()
