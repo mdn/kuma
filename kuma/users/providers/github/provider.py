@@ -14,7 +14,7 @@ class KumaGitHubAccount(GitHubAccount):
 
 class KumaGitHubProvider(GitHubProvider):
     """
-    A custom Github provider that addtionally is able to handle the
+    A custom Github provider that additionally is able to handle the
     list of email addresses fetched from the GitHub API and use it
     to populate the list of verified email addresses with it.
 
