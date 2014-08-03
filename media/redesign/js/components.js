@@ -270,12 +270,6 @@
                 e.stopPropagation();
                 settings.onOpen.call(this);
 
-                // If a true click, mark toggler as such so automated togger clicks (like toc) know not to
-                // close without user consent
-                if(e.type == 'click') {
-                    $(this).attr('data-clicked', true);
-                }
-
                 // If I'm an accordion, close the other one
                 var $parent = $self.closest('ol, ul');
                 if($parent.hasClass('accordion')) {
