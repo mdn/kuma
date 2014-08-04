@@ -19,6 +19,7 @@ from django.test.client import Client
 from django.test.utils import override_settings
 
 import constance.config
+from waffle.models import Flag
 
 from devmo.tests import SkippedTestCase
 from kuma.wiki.events import EditDocumentEvent
@@ -116,6 +117,7 @@ class DocumentTests(TestCaseBase):
 
         # Fallback message is shown.
         eq_(1, len(doc('#doc-pending-fallback')))
+        ok_('$translate' in doc('#edit-button').attr('href'))
         # Removing this as it shows up in text(), and we don't want to depend
         # on its localization.
         doc('#doc-pending-fallback').remove()
@@ -133,6 +135,7 @@ class DocumentTests(TestCaseBase):
 
         # Fallback message is shown.
         eq_(1, len(doc('#doc-pending-fallback')))
+        ok_('$translate' in doc('#edit-button').attr('href'))
         # Removing this as it shows up in text(), and we don't want to depend
         # on its localization.
         doc('#doc-pending-fallback').remove()
@@ -143,8 +146,8 @@ class DocumentTests(TestCaseBase):
         """Make sure documents with REDIRECT directives redirect properly.
 
         Also check the backlink to the redirect page.
-
         """
+        Flag.objects.create(name='redirect_messages', everyone=True)
         target = document(save=True)
         target_url = target.get_absolute_url()
 

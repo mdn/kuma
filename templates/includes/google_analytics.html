@@ -8,20 +8,26 @@
     })(window,document,'script','//www.google-analytics.com/{{ GA_FILE }}.js','ga');
 
     ga('create', 'UA-36116321-5', 'mozilla.org');
-    {% if request.user.is_authenticated() %}
-        ga('set', 'Signed-In', 'Yes');
+    ga('set', 'anonymizeIp', true);
 
+    {% if request.user.is_authenticated() %}
+        // dimension1 == 'Signed-In"
+        ga('set', 'dimension1', 'Yes');
+
+        // dimension2 == "Beta Tester"
         {% if request.user.get_profile().beta_tester %}
-            ga('set', 'Beta Tester', 'Yes');
+            ga('set', 'dimension2', 'Yes');
         {% endif %}
     {% endif %}
 
     {% if waffle.flag('top_contributors') %}
-        ga('set', 'top contributors', 'Yes');
+        // dimension4 == "top contributors"
+        ga('set', 'dimension4', 'Yes');
     {% endif %}
 
     {% if waffle.flag('wiki_spellcheck') %}
-        ga('set', 'Wiki Spellcheck', 'Yes');
+        // dimension3 == "Wiki Spellchecker"
+        ga('set', 'dimension3', 'Yes');
     {% endif %}
 
     (function() {

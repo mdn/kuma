@@ -206,16 +206,18 @@
         var scrollFn = debounce(function(e) {
             var scroll = $(doc).scrollTop();
             var pageButtonsHeight = 0;
+            var $mainContent = $('.wiki-main-content');
 
             if(!e || e.type == 'resize') {
                 // Calculate right and offset for page buttons on resize and page load
                 if(buttonDirection == 'right'){
-                    pageButtonsOffset.right = $(win).width() - $('.wiki-main-content').offset().left - $('.wiki-main-content').innerWidth();
+                    pageButtonsOffset.right = $(win).width() - $mainContent.offset().left - $mainContent.innerWidth();
                 }
                 // Should the TOC be one-column (auto-closed) or sidebar'd
                 if($toc.length){
                     if($toggler.css('pointer-events') == 'auto'    || $toggler.find('i').css('display') != 'none') { /* icon check is for old IEs that don't support pointer-events */
-                        if(!$toc.attr('data-closed')) {
+                        // Checking "data-clicked" to ensure we don't override closing/opening if user has done so explicitly
+                        if(!$toc.attr('data-closed') && !$toggler.attr('data-clicked')) {
                             $toggler.trigger('mdn:click');
                         }
                     }
@@ -226,12 +228,11 @@
             }
 
             // Check if page buttons need to be sticky
-            if($pageButtons.attr('data-sticky') == "true"){
+            if($pageButtons.attr('data-sticky') == 'true'){
                 pageButtonsHeight = $pageButtons.innerHeight();
                 if(scroll > pageButtonsOffset.top) {
                     $pageButtons.css('min-width', $pageButtons.css('width'));
                     $pageButtons.css(buttonDirection, pageButtonsOffset[buttonDirection]);
-
                     $pageButtons.addClass(fixedClass);
                 } else {
                     $pageButtons.removeClass(fixedClass);

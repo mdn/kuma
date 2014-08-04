@@ -921,7 +921,7 @@ def new_document(request):
                 initial_title = clone_doc.title
                 initial_html = clone_doc.html
                 initial_tags = clone_doc.tags.all()
-                initial_slug = clone_doc.slug + '_clone'
+                initial_slug = _split_slug(clone_doc.slug)['specific'] + '_clone'
                 if clone_doc.current_revision:
                     initial_toc = clone_doc.current_revision.toc_depth
                 else:
