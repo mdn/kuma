@@ -171,7 +171,7 @@ def soapbox_messages(soapbox_messages):
 
 
 @register.function
-def add_utm(url_, campaign, source='notification', medium='email'):
+def add_utm(url_, campaign, source='developer.mozilla.org', medium='email'):
     """Add the utm_* tracking parameters to a URL."""
     url_obj = URLObject(url_).add_query_params({
         'utm_campaign': campaign,
