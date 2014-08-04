@@ -41,7 +41,6 @@ script:
 
 after_success:
     - coveralls
->>>>>>> master
 
 notifications:
     irc:
