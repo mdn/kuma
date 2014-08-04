@@ -234,6 +234,18 @@ a.button:hover, a.button:focus, a.button:active {
         background-color: transparent;
     }
 
+    &.link {
+        background: rgb(255, 255, 255);
+        box-shadow: none;
+        text-transform: none;
+        color: $link-color;
+        padding: 0;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
     &::-moz-focus-inner {
         margin-top: -1px;
         margin-bottom: -1px;
