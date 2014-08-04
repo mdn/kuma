@@ -1094,6 +1094,10 @@ CONSTANCE_CONFIG = dict(
         'Number of expired sessions to cleanup up in one go.',
     ),
 
+    WELCOME_EMAIL_FROM = (
+        "Janet Swisher <no-reply@mozilla.org>",
+        'Email address from which welcome emails will be sent',
+    ),
 
 )
 

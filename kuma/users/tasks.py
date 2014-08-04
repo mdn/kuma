@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 
+import constance.config
 
 WELCOME_EMAIL_STRINGS = [
     "Like words?",
@@ -26,7 +27,7 @@ def send_welcome_email(user_pk, locale):
         email = EmailMultiAlternatives(
             _('Take the next step to get involved on MDN!'),
             content_plain,
-            settings.DEFAULT_FROM_EMAIL,
+            constance.config.WELCOME_EMAIL_FROM,
             [user.email],
         )
         email.attach_alternative(content_html, 'text/html')
