@@ -5,7 +5,6 @@ from django.contrib.sites.models import Site
 from django.core.mail import EmailMessage
 from django.template import Context, loader
 
-from tidings.events import InstanceEvent
 from tower import ugettext as _
 
 from devmo import email_utils
