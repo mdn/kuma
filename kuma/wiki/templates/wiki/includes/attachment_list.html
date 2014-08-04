@@ -41,7 +41,6 @@
     {{ csrf() }}
     <table cellpadding="0" cellspacing="0" id="page-attachments-new-table" class="hidden">
       <thead>
-        <th class="hidden page-attachment-actions-cell">&nbsp;</th>
         <th>{{ _('File') }}</th>
         <th>{{ _('Title') }}</th>
         <th>{{ _('Description') }}</th>
@@ -49,7 +48,6 @@
       </thead>
       <tbody>
         <tr>
-          <td class="hidden page-attachment-actions-cell"><a href="javascript:;" class="hidden delete-attachment">{{ _('Delete') }}</a></td>
           <td class="page-attachment-actions-file-cell">{{ attachment_form.file | safe }}</td>
           <td>{{ attachment_form.title | safe }}</td>
           <td>{{ attachment_form.description | safe }}</td>
