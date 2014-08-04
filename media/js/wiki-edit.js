@@ -114,6 +114,32 @@
         }
     })();
 
+    /*
+        Switch to source
+    */
+    (function(){
+        $('.doc-mode-btn').toggleMessage().on('click', function(e){
+            e.preventDefault();
+
+            var $source = $('.translate-source textarea');
+            $('.translate-rendered, .translate-source').toggleClass('hidden');
+
+            // Get height of textarea content, first time doc source is viewed
+            if(!$source.data('height')){
+                 $source.height(function(){
+                    return $(this).get(0).scrollHeight;
+                 });
+                 $source.data('height', true);
+            }
+        });
+
+        $('.hide-original-btn').toggleMessage().on('click', function(e){
+            e.preventDefault();
+
+            $('#trans-content').toggleClass('translate-only');
+        });
+    })();
+
   /*
     Plugin for prepopulating the slug fields
   */
