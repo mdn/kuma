@@ -312,15 +312,15 @@ a.github-button {
 .oauth-login-container {
     /* same as user-state, copying down as user-state will go */
     bidi-style(right, 200px, left, auto);
+    set-font-size($small-bump-font-size);
     position: absolute;
     top: 12px;
-    set-font-size($small-bump-font-size);
-
     z-index: 3;
     cursor: pointer;
     border-radius: 8px;
     border: 1px solid transparent;
     display: inline-block;
+    overflow: hidden;
 
     &.active {
         border-color: rgba(255, 255, 255, 0.3);
@@ -377,18 +377,10 @@ a.github-button {
         &:hover, &:active, &:focus {
             background: rgba($link-color, 0.1);
         }
-
-        &:after {
-            position: absolute;
-            top: 6px;
-            bidi-style(right, 10px, left, auto);
-            font-family: FontAwesome;
-            bidi-value(content, "\f0da", "\f0d9");
-            opacity: 0.5;
-        }
     }
 
     {$selector-icon} {
+        background: none;
         bidi-style(margin-right, $icon-margin, margin-left, 0);
     }
 }
