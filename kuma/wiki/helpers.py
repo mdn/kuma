@@ -114,9 +114,9 @@ def format_comment(rev):
     #  If a page move, say so
     if prev_rev and prev_rev.slug != rev.slug:
         comment += (jinja2.Markup('<span class="slug-change">'
-                                  'Moved From <strong>%s</strong> '
-                                  'to <strong>%s</strong></span>') %
-                    (prev_rev.slug, rev.slug))
+                                  '<span>%s</span>'
+                                  ' <i class="icon-long-arrow-right" aria-hidden="true"></i> '
+                                  '<span>%s</span></span>') % (prev_rev.slug, rev.slug))
 
     return comment
 
