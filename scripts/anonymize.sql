@@ -47,10 +47,6 @@ TRUNCATE threadedcomments_freethreadedcomment;
 TRUNCATE threadedcomments_threadedcomment;
 TRUNCATE threadedcomments_testmodel;
 TRUNCATE tidings_watch;
-TRUNCATE users_emailchange;
--- `user_profiles` is the real profiles table, not this. I know, it's weird.
-TRUNCATE users_profile;
-TRUNCATE users_registrationprofile;
 
 UPDATE auth_user SET
     -- username left alone, because it's public info

@@ -248,7 +248,15 @@ $summary-padding = 5px;
             bidi-value(float, left, right);
     }
 
-    .translate-display {
+    .approved {
+        header{
+            height: auto;
+            padding-right: 25px;
+            padding-bottom: 0;
+        }
+    }
+
+    .translate-rendered {
         overflow-x: hidden;
 
         pre {
@@ -270,10 +278,40 @@ $summary-padding = 5px;
     }
 
 
-    #page-comment .icon-comment-alt{
+    #page-comment .icon-comment-alt {
         display: none;
     }
+
+    .translate-only {
+
+        .localized, .approved {
+            width: 100%;
+            float: none;
+        }
+
+        .boxed, .doc-mode-btn {
+            display: none;
+        }
+
+        .translate-buttons {
+            margin-top: 0;
+            margin-left: 10px;
+            display: inline-block;
+        }
+
+        .approved header {
+            padding-right: 0;
+        }
+
+        .approved-title {
+            display: inline-block;
+            float: left;
+        }
+
+    }
+
 }
+
 
 .move-page {
     dl {
@@ -302,7 +340,26 @@ $summary-padding = 5px;
     }
 }
 
+.translate-source {
+    textarea {
+        width: 100%;
+        vendorize(box-sizing, border-box);
+        border: 0;
+        /* Same formatting as CKEditor source view */
+        font-family: 'Courier New', Monospace;
+        font-size: small;
+        white-space: pre;
+    }
+}
 
+.translate-buttons {
+    margin-top: 19px; /* Margin to level buttons with CKEditor top */
+    text-align: right;
+
+    button {
+        margin-bottom: 10px; /* Margin when buttons are stacked */
+    }
+}
 /* CKEditor adjustments, many marked as !important to override CKEditor's issues */
 .ui-autocomplete {
     z-index: 100001 !important; /* Ugly, but have to do this for the autocomplete component to display on top of the CKEditor dialog */
