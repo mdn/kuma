@@ -24,8 +24,10 @@ from kuma.demos.views import DEMOS_PAGE_SIZE
 from .forms import (UserBanForm, UserProfileEditForm, NewsletterForm,
                     get_subscription_details, subscribed_to_newsletter,
                     newsletter_subscribe)
-from .signup import SignupForm
 from .models import UserProfile, UserBan
+# we have to import the signup form here due to allauth's odd form subclassing
+# that requires providing a base form class (see ACCOUNT_SIGNUP_FORM_CLASS)
+from .signup import SignupForm
 
 
 # TODO: Make this dynamic, editable from admin interface
