@@ -26,7 +26,6 @@ class KumaGitHubProvider(GitHubProvider):
 
     def extract_email_addresses(self, data):
         email_addresses = []
-        print data
         for email_address in data.get('email_addresses', []):
             # let's ignore all email address that have not been verified at
             # Github's side
