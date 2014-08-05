@@ -11,7 +11,7 @@
   <title>{% block title %}{{ _('Mozilla Developer Network') }}{% endblock %}</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="index, follow">
+  <meta name="robots" content="{% block robots_value%}index, follow{% endblock %}">
   <link rel="home" href="{{ url('home') }}">
   <link rel="copyright" href="#copyright">
 

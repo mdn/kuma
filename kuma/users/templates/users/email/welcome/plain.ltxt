@@ -33,24 +33,28 @@ of intro tasks you can choose based on your interests.
 
 
 {# L10n: This is an email. Whitespace matters! #}
-{% trans %}
+{% trans
+    list_link=add_utm('https://lists.mozilla.org/listinfo/dev-mdc', 'welcome'),
+    irc_link=add_utm('https://wiki.mozilla.org/IRC', 'welcome'),
+    blog_link=add_utm('https://blog.mozilla.org/community/category/developer-engagement', 'welcome')
+%}
 Want to talk to someone about MDN? There are a few ways you can do that:
 
-* Mailing list: https://lists.mozilla.org/listinfo/dev-mdc
+* Mailing list: {{ list_link }}
 
                 Subscribe to tell us about what you're interested in on MDN and
                 ask questions about the site.
 
 * Real-time chat: #mdn channel on irc.mozilla.org
 
-                  (See https://wiki.mozilla.org/IRC for more info about IRC.)
+                  (See {{ irc_link }} for more info about IRC.)
 
                   You can find the MDN writing staff admins there: Eric Shepherd
                   (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg),
                   Florian Scholz (fscholz), Chris Mills (chrismills), and
                   community manager Janet Swisher (jms).
 
-* Blog: https://blog.mozilla.org/community/category/developer-engagement
+* Blog: {{ blog_link }}
 {% endtrans %}
 
 {# L10n: This is an email. Whitespace matters! #}

@@ -55,7 +55,7 @@ CKEDITOR.config.mdnButtons_tags = ['pre', 'code', 'h2', 'h3', 'h4', 'h5', 'h6'];
             var tags = CKEDITOR.config.mdnButtons_tags;
             var pluginName = 'mdn-buttons';
             var $saveButton = $('.btn-save');
-            var $saveContinueButton = $('.btn-save-and-edit')
+            var $saveContinueButton = $('.btn-save-and-edit').first();
 
             // addCommand and addButton for each tag in the list
             for (var i = 0, j = tags.length; i < j; i++) {
@@ -83,7 +83,7 @@ CKEDITOR.config.mdnButtons_tags = ['pre', 'code', 'h2', 'h3', 'h4', 'h5', 'h6'];
                     }
 
                     editor.updateElement();
-                    $saveButton.click();
+                    $saveButton.first().trigger('click');
                 }
             });
             editor.ui.addButton('mdnSaveExit', {
@@ -98,7 +98,7 @@ CKEDITOR.config.mdnButtons_tags = ['pre', 'code', 'h2', 'h3', 'h4', 'h5', 'h6'];
                     modes : { wysiwyg : 1, source : 1 },
                     exec: function (editor, data) {
                         var saveCallback = $saveContinueButton.data('save_cb') || function () {
-                            $saveContinueButton.click();
+                            $saveContinueButton.trigger('click');
                         };
 
                         editor.updateElement();

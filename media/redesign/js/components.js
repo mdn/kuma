@@ -270,6 +270,12 @@
                 e.stopPropagation();
                 settings.onOpen.call(this);
 
+                // If a true click, mark toggler as such so automated togger clicks (like toc) know not to
+                // close without user consent
+                if(e.type == 'click') {
+                    $(this).attr('data-clicked', true);
+                }
+
                 // If I'm an accordion, close the other one
                 var $parent = $self.closest('ol, ul');
                 if($parent.hasClass('accordion')) {
@@ -354,6 +360,28 @@
         });
     };
 
+    /*
+        Plugin to toggle button messages
+    */
+    $.fn.toggleMessage = function(options){
+
+        var settings = $.extend({
+            event: 'click',
+            toggleCallback: noop
+        }, options);
+
+        return this.each(function(){
+            $(this).on(settings.event, function(e){
+                var $self = $(this);
+                e.preventDefault();
+                var currentMessage = $self.text();
+                var alternateMessage = $self.attr('data-alternate-message');
+                $self.attr('data-alternate-message', currentMessage)
+                       .html(alternateMessage);
+                settings.toggleCallback();
+            });
+        });
+    };
 
     win.mdn.Notifier = (function() {
         // Hold onto the one tray

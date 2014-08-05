@@ -8,13 +8,20 @@
   </ol></nav>
 {%- endmacro %}
 
-{% macro get_document_buttons(document) %}
+{% macro get_document_buttons(document, edit_link) %}
+
   {% if document.parent %}
     {# If there is a parent doc, use it for translating. #}
     {% set translate_url = url('wiki.select_locale', document_path=document.parent.full_path) %}
   {% else %}
     {% set translate_url = url('wiki.select_locale', document_path=document.full_path, locale=document.locale) %}
   {% endif %}
+
+  {% if not edit_link %}
+    {% set edit_link = url('wiki.edit_document', document.full_path, locale=document.locale) %}
+  {% endif %}
+
+
   <ul class="page-buttons" data-sticky="false">{% if not document.is_template %}<li><button id="languages-menu" class="transparent" aria-haspopup="true" aria-owns="languages-menu-submenu" aria-expanded="false"><span>{{ _('Languages') }}</span><i aria-hidden="true" class="icon-globe"></i></button>
 
         <div class="submenu" id="languages-menu-submenu">
@@ -33,7 +40,7 @@
               {% endif %}
             </ul>
           </div>
-        </div></li>{% endif %}<li class="page-buttons-edit"><a href="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}" class="button" data-optimizely-hook="button-edit-doc">{{ _('Edit') }}<i aria-hidden="true" class="icon-pencil"></i></a></li><li><button id="advanced-menu" class="only-icon" aria-haspopup="true" aria-owns="advanced-menu-submenu" aria-expanded="false"><span>{{ _('Advanced') }}</span><i aria-hidden="true" class="icon-cog"></i></button>
+        </div></li>{% endif %}<li class="page-buttons-edit"><a href="{{ edit_link }}" class="button" data-optimizely-hook="button-edit-doc" id="edit-button">{{ _('Edit') }}<i aria-hidden="true" class="icon-pencil"></i></a></li><li><button id="advanced-menu" class="only-icon" aria-haspopup="true" aria-owns="advanced-menu-submenu" aria-expanded="false"><span>{{ _('Advanced') }}</span><i aria-hidden="true" class="icon-cog"></i></button>
 
         <div class="submenu" id="advanced-menu-submenu">
           <!-- this page -->
@@ -54,7 +61,7 @@
                 </li>{% endif %}
                 {% if user.is_authenticated() and not document.is_template %}
                   <li><a href="{{ url('wiki.new_document') }}?parent={{ document.id }}">{{ _('New sub-page') }}</a></li>
-                  <li><a href="{{ url('wiki.new_document') }}?clone={{ document.id }}">{{ _('Clone this page') }}</a></li>
+                  <li><a href="{{ url('wiki.new_document') }}?clone={{ document.id }}{% if document.parent_topic %}&parent={{ document.parent_topic.id }}{% endif %}">{{ _('Clone this page') }}</a></li>
                 {% endif %}
                 {% if user.is_authenticated() and user.has_perm('wiki.move_tree') %}
                   <li><a href="{{ url('wiki.move', document.slug, locale=document.locale) }}">{{ _('Move this page') }}</a></li>

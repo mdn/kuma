@@ -31,12 +31,16 @@ install:
     - pip install -U pip wheel Django==1.4.13
     - pip install --no-index --find-links=travis_wheels -r requirements/compiled.txt
     - pip install --find-links=base_wheels -r requirements/prod.txt -r requirements/dev.txt
+    - pip install coveralls
 
 before_script:
     - mysql -e 'create database kuma;'
 
 script:
-    - python manage.py test --noinput -v2 actioncounters contentflagging dashboards kuma.demos devmo kpi landing search kuma.users wiki kuma.events
+    - coverage run --include=`pwd`/kuma/*,`pwd`/apps/* manage.py test --noinput -v2 actioncounters contentflagging dashboards kuma.demos devmo kpi landing search kuma.users wiki kuma.events
+
+after_success:
+    - coveralls
 
 notifications:
     irc:
