@@ -94,7 +94,6 @@ class SignupForm(NewsletterForm):
         }
 
     def signup(self, request, user):
-        UserProfile.objects.get_or_create(user=user)
         newsletter_subscribe(request, user.email, self.cleaned_data)
 
 
