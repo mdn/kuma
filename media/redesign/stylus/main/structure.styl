@@ -160,25 +160,26 @@ draw-grid();
     }
 
     .submenu {
-        menu-border-width = 5px;
-        menu-arrow-top = -19px;
-        component-submenu(380px, 2, #fff, #333);
+        $menu-border-color = $text-color;
+        $menu-border-width = 5px;
+        $menu-arrow-top = -19px;
+        component-submenu(380px, 2, #fff, $menu-border-color);
 
         top: 40px;
         left: -136px;
-        border-top: menu-border-width solid #404040;
+        border-top: $menu-border-width solid $menu-border-color;
 
         .submenu-column {
             min-height: 90px;
         }
 
         &:before, &:after {
-            top: menu-arrow-top;
+            top: $menu-arrow-top;
             bidi-style(left, 190px, right, auto);
         }
 
         &:after {
-            top: (menu-arrow-top - menu-border-width);
+            top: ($menu-arrow-top - $menu-border-width);
         }
     }
 
