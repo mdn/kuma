@@ -87,8 +87,32 @@
 
     label, .label {
         display: block;
-        font-weight: bold;
+        font-weight: normal;
         margin: 0 0 ($grid-spacing / 4);
+    }
+
+    .inner {
+        display: inline;
+    }
+
+    .outer {
+        set-font-size($base-bump-font-size);
+    }
+
+    .upper {
+        margin-bottom: 0;
+    }
+
+    .choices {
+        list-style-type: none;
+    }
+
+    .choices li {
+        margin-bottom: 5px;
+    }
+
+    .choices li label {
+        display: inline-block;
     }
 
     .check {

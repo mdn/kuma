@@ -21,7 +21,7 @@
 <section id="content">
   <div class="wrap">
     <section id="content-main" role="main">
-      <article id="browser_register" class="main">
+      <article id="browser_register">
 
         {% if account.get_provider().id == 'persona' %}
           <h1>{{ _('Sign up') }}</h1>
@@ -52,7 +52,7 @@
           <fieldset>
             <ul>
               <li>
-                <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+                <label for="{{ form.username.id_for_label }}" class="outer"><b>{{ form.username.label }}</b></label>
                 {{ form.username }}
                 <p class="field-explanation"><small>{{ _("Please enter the name you'd like to display to other users to identify your contributions.") }}</small></p>
               </li>
@@ -60,16 +60,29 @@
               {% if form.email.field.widget.input_type == 'hidden' %}
                 {{ form.email }}
               {% else %}
+
               <li>
-                <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
-                {{ form.email }}
-                <p class="field-explanation"><small>
-                {% if form.email.field.widget.choices %}
-                    {{ _("Please select one of the email addresses provided the authentication service.") }}
-                {% else %}
-                    {{ _("Please enter an email address that you would like to use for your new profile.") }}
-                {% endif %}
+                <label for="{{ form.email.id_for_label }}" class="outer upper"><b>{{ form.email.label }}</b></label>
+                <p class="field-explanation-top"><small>
+                {{ _("We will use this to send you emails related to your account and if you sign up for any additional notifications.") }}
                 </small></p>
+                <ul class="choices">
+                {% for email_choice in form.email %}
+                  {% set id_for_label="{name}_{id}"|f(name=email_choice.name, id=loop.index0) %}
+                  <li>
+                    {% if email_choice.choice_value == form.other_email_value %}
+                      {{ email_choice.tag() }}
+                      <label for="{{ id_for_label }}" class="inner">{% trans %}other:{% endtrans %}</label>
+                      {{ form.other_email }}
+                    {% else %}
+                    <label for="{{ id_for_label }}">
+                      {{ email_choice.tag() }}
+                      {{ email_choice.choice_label|safe }}
+                    </label>
+                    {% endif %}
+                  </li>
+                {% endfor %}
+                </ul>
               </li>
               {% endif %}
 
@@ -86,6 +99,7 @@
               {% endtrans %}
           </p>
         </form>
+
       </article>
     </section>
   </div>
