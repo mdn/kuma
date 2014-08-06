@@ -5,7 +5,7 @@ from south.v2 import DataMigration
 from django.db import models
 from django.db.models import F
 
-from wiki.models import Document
+from kuma.wiki.models import Document
 
 class Migration(DataMigration):
 
