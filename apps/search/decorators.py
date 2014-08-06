@@ -2,7 +2,7 @@ import logging
 from django.db.models.signals import pre_delete
 from elasticsearch.exceptions import ConnectionError
 
-from wiki.signals import render_done
+from kuma.wiki.signals import render_done
 
 from .signals import render_done_handler, pre_delete_handler
 

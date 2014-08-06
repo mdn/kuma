@@ -1,10 +1,8 @@
 from nose.tools import eq_
 
-from search.tests import ElasticTestCase
-
-from wiki.tests import revision
-
+from kuma.wiki.tests import revision
 from search.models import DocumentType
+from search.tests import ElasticTestCase
 
 
 class TestLiveIndexing(ElasticTestCase):

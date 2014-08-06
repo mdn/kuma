@@ -15,7 +15,7 @@ from elasticutils.contrib.django.tasks import index_objects
 
 from sumo.urlresolvers import reverse
 
-from wiki.models import Document
+from kuma.wiki.models import Document
 from taggit_extras.managers import PrefetchTaggableManager
 
 from .decorators import register_mapping_type

@@ -71,7 +71,7 @@ def reverse(viewname, urlconf=None, args=None, kwargs=None, prefix=None,
     # See apps/wiki/tests/test_middleware.py for a test exercising this hack.
     if url.startswith('/docs/'):
         # HACK: Import here, because otherwise it's a circular reference
-        from wiki.models import DocumentZone
+        from kuma.wiki.models import DocumentZone
         # Work out a current locale, from some source.
         zone_locale = locale
         if not zone_locale:

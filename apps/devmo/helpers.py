@@ -1,10 +1,16 @@
 import datetime
+import os
 import re
 import urllib
+
+import bleach
+import jinja2
+import pytz
 from urlobject import URLObject
-import os
 
 from django.conf import settings
+
+from django.contrib.staticfiles.storage import staticfiles_storage
 from django.core.cache import cache
 from django.template import defaultfilters
 from django.utils.encoding import force_text
@@ -12,17 +18,12 @@ from django.utils.html import strip_tags
 from django.utils.safestring import mark_safe
 from django.contrib.messages.storage.base import LEVEL_TAGS
 
-import bleach
 from jingo import register
-import jinja2
-import pytz
 from soapbox.models import Message
 from statici18n.utils import get_filename
-from django.contrib.staticfiles.storage import staticfiles_storage
 
+from kuma.wiki.models import Document
 from sumo.urlresolvers import split_path, reverse
-from wiki.models import Document
-
 from .utils import entity_decode
 
 
