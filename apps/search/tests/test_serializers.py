@@ -24,7 +24,8 @@ class SerializerTests(ElasticTestCase):
             'slug': 'serializer',
             'tags': ['tag'],
             'operator': 'OR',
-            'group': {'name': 'Group', 'slug': 'group', 'order': 1}})
+            'group': {'name': 'Group', 'slug': 'group', 'order': 1},
+            'shortcut': None})
 
     def test_document_serializer(self):
         doc = DocumentS(DocumentType)

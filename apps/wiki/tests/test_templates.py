@@ -515,6 +515,7 @@ class NewRevisionTests(TestCaseBase):
         expected_to = [u'sam@example.com']
         expected_subject = u'[MDN] Page "%s" changed by %s' % (self.d.title,
                                                      new_rev.creator)
+        ok_(len(mail.outbox) > 0, "Edit notification email should have been sent.")
         edited_email = mail.outbox[0]
         eq_(expected_subject, edited_email.subject)
         eq_(expected_to, edited_email.to)
