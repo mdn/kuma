@@ -35,9 +35,9 @@
     {% csrf_token %}
     <div>
       <p>
-        {% trans %}
+        {% blocktrans %}
           The following documents will be permanently removed from the database. This action cannot be undone. To cancel, press the "Back" button in your browser.
-        {% endtrans %}
+        {% endblocktrans %}
       <p>
       <fieldset class="module aligned">
           <div class="form-row">
