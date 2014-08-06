@@ -65,7 +65,6 @@ RewriteRule ^zh_cn/(.*)$  /mwsgi/zh-CN/$1 [L,QSA,NE,NC,E=CORS:True]
 RewriteRule ^zh_tw/(.*)$  /mwsgi/zh-TW/$1 [L,QSA,NE,NC,E=CORS:True]
 
 # These are some known static files
-RewriteCond %{REQUEST_URI} !/forums
 RewriteCond %{REQUEST_URI} !/favicon.ico
 # TODO: Should Django handle robots.txt?
 RewriteCond %{REQUEST_URI} !/robots.txt
