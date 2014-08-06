@@ -4,17 +4,17 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
-from wiki.models import Document
+from kuma.wiki.models import Document
 
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding field 'Document.is_redirect'
         db.add_column('wiki_document', 'is_redirect', self.gf('django.db.models.fields.BooleanField')(default=False, db_index=True), keep_default=False)
 
     def backwards(self, orm):
-        
+
         # Deleting field 'Document.is_redirect'
         db.delete_column('wiki_document', 'is_redirect')
 
