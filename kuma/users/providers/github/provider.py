@@ -11,6 +11,10 @@ class KumaGitHubAccount(GitHubAccount):
     def get_email_addresses(self):
         return self.account.extra_data.get('email_addresses')
 
+    def to_str(self):
+        dflt = super(KumaGitHubAccount, self).to_str()
+        return self.account.extra_data.get('login', dflt)
+
 
 class KumaGitHubProvider(GitHubProvider):
     """
