@@ -23,7 +23,7 @@ from waffle.models import Flag
 
 from devmo.tests import SkippedTestCase
 from kuma.wiki.events import EditDocumentEvent
-from kuma.wiki.constants import REDIRECT_CONTENT
+from kuma.wiki.constants import REDIRECT_CONTENT, TEMPLATE_TITLE_PREFIX
 from kuma.wiki.models import (Document, Revision, HelpfulVote,
                               DocumentTag, Attachment)
 from kuma.wiki.tests import (TestCaseBase, document, revision, new_document_data,
@@ -306,6 +306,20 @@ class NewDocumentTests(TestCaseBase):
         eq_(200, response.status_code)
         doc = pq(response.content)
         eq_(1, len(doc('form#wiki-page-edit input[name="title"]')))
+
+    def test_new_document_preview_button(self):
+        """HTTP GET to new document URL shows preview button for basic doc
+        and not for template doc"""
+        self.client.login(username='admin', password='testpass')
+        response = self.client.get(reverse('wiki.new_document'))
+        eq_(200, response.status_code)
+        doc = pq(response.content)
+        ok_(len(doc('.btn-preview')) > 0)
+
+        response = self.client.get(reverse('wiki.new_document') +
+                                                    '?slug=' + TEMPLATE_TITLE_PREFIX)
+        doc = pq(response.content)
+        eq_(0, len(doc('.btn-preview')))
 
     def test_new_document_form_defaults(self):
         """The new document form should have all all 'Relevant to' options
