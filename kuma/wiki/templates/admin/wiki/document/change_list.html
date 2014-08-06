@@ -9,7 +9,7 @@
             </a>
           <li>
             <a href="add/{% if is_popup %}?_popup=1{% endif %}" class="addlink">
-              {% trans name=cl.opts.verbose_name %}Add {{ name }}{% endtrans %}
+              {% blocktrans with cl.opts.verbose_name as name %}Add {{ name }}{% endblocktrans %}
             </a>
           </li>
           {% endif %}
