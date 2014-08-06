@@ -6,8 +6,8 @@ from nose.tools import eq_
 from kpi.cron import update_l10n_metric
 from kpi.models import Metric, L10N_METRIC_CODE
 from kpi.tests import metric_kind
+from kuma.wiki.tests import document, revision
 from sumo.tests import TestCase
-from wiki.tests import document, revision
 
 
 class CronJobTests(TestCase):

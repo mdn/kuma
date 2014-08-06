@@ -92,7 +92,7 @@ def _get_wiki_link(title, locale):
     found is False if the document does not exist.
 
     """
-    from wiki.models import Document
+    from kuma.wiki.models import Document
     d = get_object_fallback(Document, locale=locale, title=title,
                             is_template=False)
     if d:

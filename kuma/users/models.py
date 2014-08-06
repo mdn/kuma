@@ -17,8 +17,8 @@ from tower import ugettext_lazy as _
 from waffle import switch_is_active
 
 from devmo.models import ModelBase
+from kuma.wiki.models import Revision
 from sumo.models import LocaleField
-from wiki.models import Revision
 
 from .helpers import gravatar_url
 from .tasks import send_welcome_email
