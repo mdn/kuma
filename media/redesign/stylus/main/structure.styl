@@ -600,13 +600,14 @@ footer {
     }
 }
 
-/* for mobile, move the search box under the nav */
+
 @media $media-query-mobile {
 
     .center {
         add-center-spacing(15px);
     }
 
+    /* move the search box under the nav */
     #main-header {
         .main-nav-search {
             display: block;
@@ -629,6 +630,11 @@ footer {
                 }
             }
         }
+    }
+
+    /* add bottom spacing to the footer */
+    footer {
+        padding-bottom: $grid-spacing;
     }
 }
 
