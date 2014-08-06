@@ -1095,7 +1095,7 @@ CONSTANCE_CONFIG = dict(
     ),
 
     WELCOME_EMAIL_FROM = (
-        "Janet Swisher, MDN Community Manager <no-reply@mozilla.org>",
+        "Janet Swisher <no-reply@mozilla.org>",
         'Email address from which welcome emails will be sent',
     ),
 
