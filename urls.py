@@ -72,9 +72,6 @@ urlpatterns = patterns('',
     # Users
     ('', include('kuma.users.urls')),
 
-    # Auth keys
-    (r'^keys/', include('authkeys.urls')),
-
     # Badges
     (r'^badges/', include('badger.urls_simple')),
 
