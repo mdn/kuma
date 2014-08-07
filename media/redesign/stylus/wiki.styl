@@ -196,7 +196,7 @@ article {
     .external-icon:not([href^='https://mdn.mozillademos.org']) {
         white-space: pre-line;
 
-        html[dir="ltr"] &:before, html[dir="rtl"] &:after {
+        html[dir='ltr'] &:before, html[dir='rtl'] &:after {
             content: '\f08e';
             font-family: FontAwesome;
             set-font-size(9px);
@@ -205,7 +205,7 @@ article {
             margin-right: 3px;
         }
 
-        html[dir="rtl"] &:after {
+        html[dir='rtl'] &:after {
             transform: rotateY(180deg);
         }
 
@@ -1153,7 +1153,7 @@ div.note {
 }
 
 #page-attachments-new-table {
-    input[type="text"] {
+    input[type='text'] {
         width: 90%;
 
         .attachment-required {
@@ -1202,13 +1202,13 @@ details {
     summary:before {
         set-font-size(1.25em);
         bidi-value(float, left, right);
-        content: "+";
+        content: '+';
         margin-top: -.15em;
         bidi-style(margin-left, -15px, margin-right, 0);
     }
 
     &.open summary:before {
-        content: "–";
+        content: '–';
         margin-top: -.2em;
         bidi-style(margin-left, -13px, margin-right, 0);
     }
