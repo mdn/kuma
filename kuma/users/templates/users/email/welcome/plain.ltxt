@@ -51,8 +51,8 @@ Want to talk to someone about MDN? There are a few ways you can do that:
 
                   You can find the MDN writing staff admins there: Eric Shepherd
                   (sheppy), Jean-Yves Perrier (teoli), Will Bamberg (wbamberg),
-                  Florian Scholz (fscholz), Chris Mills (chrismills), and
-                  community manager Janet Swisher (jms).
+                  Florian Scholz (fscholz), Chris Mills (chrismills), and 
+                  me (jms), MDN's community manager.
 
 * Blog: {{ blog_link }}
 {% endtrans %}
