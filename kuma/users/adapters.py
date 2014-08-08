@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib import messages
 from django.contrib.auth.models import User
 
 from tower import ugettext_lazy as _
@@ -27,21 +28,29 @@ class KumaAccountAdapter(DefaultAccountAdapter):
                                           u'already exists.'))
         return username
 
+    def message_templates(self, *names):
+        return tuple('messages/%s.txt' % name for name in names)
+
     def add_message(self, request, level, message_template,
                     message_context={}, extra_tags='', *args, **kwargs):
         """
         Adds an extra "account" tag to the success and error messages.
         """
         # let's ignore some messages
-        unwanted = ('logged_in', 'logged_out')
-        if message_template.endswith(tuple(['messages/%s.txt' % name
-                                            for name in unwanted])):
+        if message_template.endswith(self.message_templates('logged_in',
+                                                            'logged_out')):
             return
+
+        # promote the "account_connected" message to success
+        if message_template.endswith(self.message_templates('account_connected')):
+            level = messages.SUCCESS
+
         # and add an extra tag to the account messages
         extra_tag = 'account'
         if extra_tags:
             extra_tags += ' '
         extra_tags += extra_tag
+
         super(KumaAccountAdapter, self).add_message(request, level,
                                                     message_template,
                                                     message_context,
