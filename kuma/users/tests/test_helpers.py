@@ -10,8 +10,7 @@ from pyquery import PyQuery as pq
 
 from sumo.tests import TestCase
 
-from ..helpers import gravatar_url, public_email, display_name, user_list
-from ..models import UserProfile
+from ..helpers import gravatar_url, public_email, user_list
 
 
 class HelperTestCase(TestCase):
@@ -37,14 +36,6 @@ class HelperTestCase(TestCase):
         eq_('<span class="email">'
             '&#110;&#111;&#116;&#46;&#97;&#110;&#46;&#101;&#109;&#97;&#105;'
             '&#108;</span>', public_email('not.an.email'))
-
-    def test_display_name(self):
-        new_user = User.objects.create(pk=40000, username='testuser3')
-        eq_(u'testuser3', display_name(new_user))
-        UserProfile.objects.create(user=new_user)
-        p = new_user.get_profile()
-        p.fullname = u'Test User'
-        eq_(u'Test User', display_name(self.u))
 
     def test_user_list(self):
         User.objects.create(pk=400000, username='testuser3')

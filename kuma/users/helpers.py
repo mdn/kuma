@@ -33,16 +33,6 @@ def gravatar_url(user, secure=True, size=220, rating='pg',
 
 
 @register.function
-def display_name(user):
-    """Return a display name if set, else the username."""
-    try:  # Also mostly for tests.
-        profile = user.get_profile()
-    except ObjectDoesNotExist:
-        return user.username
-    return profile.fullname if profile.fullname else user.username
-
-
-@register.function
 def ban_link(ban_user, banner_user):
     """Returns a link to ban a user"""
     link = ''

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% set display_name = profile.name | default(profile.user.username, true) %}
+{% set display_name = user_display(profile.user) %}
 {% set username  = profile.user.username %}
 {% set accounts = social_accounts(profile.user) %}
 
