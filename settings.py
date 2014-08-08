@@ -407,7 +407,7 @@ MIDDLEWARE_CLASSES = (
     'sumo.middleware.LocaleURLMiddleware',
     'kuma.wiki.middleware.DocumentZoneMiddleware',
     'kuma.wiki.middleware.ReadOnlyMiddleware',
-    'sumo.middleware.Forbidden403Middleware',
+    'devmo.middleware.Forbidden403Middleware',
     'django.middleware.common.CommonMiddleware',
     'sumo.middleware.RemoveSlashMiddleware',
     'commonware.middleware.NoVarySessionMiddleware',

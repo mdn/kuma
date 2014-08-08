@@ -17,7 +17,6 @@ import jinja2
 from pytz import timezone
 from tower import ugettext_lazy as _lazy, ungettext
 
-import sumo.parser
 from sumo.urlresolvers import reverse
 
 
@@ -67,12 +66,6 @@ def urlparams(url_, hash=None, query_dict=None, **query):
     new = urlparse.ParseResult(url_.scheme, url_.netloc, url_.path,
                                url_.params, query_string, fragment)
     return new.geturl()
-
-
-@register.filter
-def wiki_to_html(wiki_markup, locale=settings.WIKI_DEFAULT_LANGUAGE):
-    """Wiki Markup -> HTML jinja2.Markup object"""
-    return jinja2.Markup(sumo.parser.wiki_to_html(wiki_markup, locale=locale))
 
 
 class Paginator(object):
