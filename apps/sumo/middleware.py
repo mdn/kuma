@@ -3,7 +3,7 @@ import re
 import urllib
 
 from django.core import urlresolvers
-from django.http import HttpResponsePermanentRedirect, HttpResponseForbidden
+from django.http import HttpResponsePermanentRedirect
 from django.utils.encoding import iri_to_uri, smart_str, smart_unicode
 
 import jingo
@@ -13,7 +13,6 @@ import tower
 from devmo import get_mysql_error
 from sumo.helpers import urlparams
 from sumo.urlresolvers import Prefixer, set_url_prefixer, split_path
-from sumo.views import handle403
 
 
 # Django compatibility shim. Once we're on Django 1.4, do:
@@ -77,17 +76,6 @@ class LocaleURLMiddleware(object):
 
     def process_exception(self, request, exception):
         set_url_prefixer(None)
-
-
-class Forbidden403Middleware(object):
-    """
-    Renders a 403.html page if response.status_code == 403.
-    """
-    def process_response(self, request, response):
-        if isinstance(response, HttpResponseForbidden):
-            return handle403(request)
-        # If not 403, return response unmodified
-        return response
 
 
 class NoCacheHttpsMiddleware(object):
