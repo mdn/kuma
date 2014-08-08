@@ -1,1 +1,1 @@
-{% trans %}Confirm E-mail Address{% endtrans %}
+{% trans %}Confirm Email Address{% endtrans %}
