@@ -169,8 +169,5 @@
 
 {% block js %}
   {{ super() }}
-  <script>
-        // Create the demos slider
-        jQuery('.home-demos-list').owlCarousel({ lazyLoad: true }).css('height', 'auto');
-  </script>
+  {{ js('home', async=True) }}
 {% endblock %}
