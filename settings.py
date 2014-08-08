@@ -371,6 +371,7 @@ JINGO_EXCLUDE_APPS = (
     'admin',
     'grappelli',
     'waffle',
+    'registration',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -487,7 +488,7 @@ INSTALLED_APPS = (
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.persona',
-    'allauth.socialaccount.providers.github',
+    'kuma.users.providers.github',
     'kuma.events',
 
     # DEMOS
@@ -1210,7 +1211,7 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_USERNAME_MIN_LENGTH = 3
 ACCOUNT_ADAPTER = 'kuma.users.adapters.KumaAccountAdapter'
-ACCOUNT_SIGNUP_FORM_CLASS = 'kuma.users.forms.SignupForm'
+ACCOUNT_SIGNUP_FORM_CLASS = 'kuma.users.forms.NewsletterForm'  # weird but needed
 ACCOUNT_UNIQUE_EMAIL = True
 
 SOCIALACCOUNT_ADAPTER = 'kuma.users.adapters.KumaSocialAccountAdapter'

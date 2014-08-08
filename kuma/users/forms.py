@@ -13,16 +13,10 @@ from product_details import product_details
 from taggit.utils import parse_tags
 from tower import ugettext_lazy as _
 
+
 from .models import UserProfile
 
 
-USERNAME_INVALID = _(u'Username may contain only letters, '
-                     u'numbers and ./-/_ characters.')
-USERNAME_REQUIRED = _(u'Username is required.')
-USERNAME_SHORT = _(u'Username is too short (%(show_value)s characters). '
-                   u'It must be at least %(limit_value)s characters.')
-USERNAME_LONG = _(u'Username is too long (%(show_value)s characters). '
-                  u'It must be %(limit_value)s characters or less.')
 EMAIL_REQUIRED = _(u'Email address is required.')
 EMAIL_SHORT = _(u'Email address is too short (%(show_value)s characters). '
                 u'It must be at least %(limit_value)s characters.')
@@ -72,29 +66,11 @@ class NewsletterForm(forms.Form):
         self.fields['country'].choices = regions
         self.fields['country'].initial = country
 
-
-class SignupForm(NewsletterForm):
-    """
-    The user registration form for allauth.
-
-    This overrides the default error messages for the username form field
-    with our own strings.
-
-    Upon successful signup we automatically create a UserProfile object for
-    the new user and subscribe him to the app newsletter if wanted by the
-    user.
-    """
-    def __init__(self, *args, **kwargs):
-        super(SignupForm, self).__init__(*args, **kwargs)
-        self.fields['username'].error_messages = {
-            'invalid': USERNAME_INVALID,
-            'required': USERNAME_REQUIRED,
-            'min_length': USERNAME_SHORT,
-            'max_length': USERNAME_LONG,
-        }
-
     def signup(self, request, user):
-        UserProfile.objects.get_or_create(user=user)
+        """
+        Used by allauth when successfully signing up a user. This will
+        be ignored if this form is used standalone.
+        """
         newsletter_subscribe(request, user.email, self.cleaned_data)
 
 

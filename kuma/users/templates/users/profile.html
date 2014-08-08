@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% set display_name = profile.name | default(profile.user.username, true) %}
+{% set display_name = user_display(profile.user) %}
 {% set username  = profile.user.username %}
 {% set accounts = social_accounts(profile.user) %}
 
@@ -44,9 +44,9 @@
         {% for site_name, site_meta in profile.website_choices %}
           {% if site_name == 'github' %}
             {% if accounts.github and waffle.flag('github_login') %}
-              {% for github_account in accounts.github %}
-              <li class="{{ site_name }}"><i class="{{ site_meta.fa_icon }}" aria-hidden="true"></i><a href="https://github.com/{{ github_account.uid }}" rel="me external" class="url">{{ site_meta.label }}</a></li>
-              {% endfor %}
+              {% for github_account in accounts.github %}{% if github_account.extra_data %}
+              <li class="{{ site_name }}"><i class="{{ site_meta.fa_icon }}" aria-hidden="true"></i><a href="{{ github_account.extra_data.html_url }}" rel="me external" class="url">{{ site_meta.label }}</a></li>
+              {% endif %}{% endfor %}
             {% else %}
               {{ account(profile, site_name, site_meta) }}
             {% endif %}
@@ -73,9 +73,11 @@
               <div class="submenu" id="advanced-menu-submenu">
                 <!-- this page -->
                 <div class="submenu-column">
-                  <div class="title">{{ _('Advanced') }}</div>
+                  <div class="title">{{ _('Manage') }}</div>
                   <ul>
-                    <li><a href="{{ url('authkeys.list') }}" class="neutral">{{ _("Manage API keys") }}</a></li>
+                    <li><a href="{{ url('socialaccount_connections') }}" class="neutral">{{ _("Account connections") }}</a></li>
+                    <li><a href="{{ url('authkeys.list') }}" class="neutral">{{ _("API keys") }}</a></li>
+                    <li><a href="{{ url('account_email') }}" class="neutral">{{ _("Email addresses") }}</a></li>
                   </ul>
                 </div>
               </div>

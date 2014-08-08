@@ -3,11 +3,11 @@
 {% block title %}{{ page_title(_("Account")) }}{% endblock %}
 
 {% block content %}
-  <h1>{{ _("E-mail addresses") }}</h1>
+  <h1>{{ _("Email addresses") }}</h1>
   <div class="text-content">
 
     {% if user.emailaddress_set.all().exists() %}
-      <p>{{ _("The following e-mail addresses are associated with your account:") }}</p>
+      <p>{{ _("The following email addresses are associated with your account:") }}</p>
 
       <form action="{{ url('account_email') }}" class="email_list" method="post">
       {{ csrf() }}
@@ -45,16 +45,16 @@
 
     {% else %}
 
-      <p>{% trans %}<strong>Warning:</strong>"You have not added any e-mail addresses to this account. Without one you cannot receive notifications, reset your password, etc.{% endtrans %}</p>
+      <p>{% trans %}<strong>Warning:</strong>"You have not added any email addresses to this account. Without one you cannot receive notifications, reset your password, etc.{% endtrans %}</p>
 
     {% endif %}
 
-    <h2>{{ _("Add e-mail address") }}</h2>
+    <h2>{{ _("Add email address") }}</h2>
 
     <form method="post" action="{{ url('account_email') }}" class="add_email">
         {{ csrf() }}
         {{ form.as_p() }}
-        <button name="action_add" type="submit">{{ _("Add E-mail") }}</button>
+        <button name="action_add" type="submit">{{ _("Add Email") }}</button>
     </form>
 
   </div>
@@ -65,7 +65,7 @@
 {{ super() }}
 <script type="text/javascript">
 (function() {
-  var message = "{{ _("Do you really want to remove the selected e-mail address?") }}";
+  var message = "{{ _("Do you really want to remove the selected email address?") }}";
   var actions = document.getElementsByName('action_remove');
   if (actions.length) {
     actions[0].addEventListener("click", function(e) {
