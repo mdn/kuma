@@ -352,7 +352,7 @@
                     .addClass('loaded');
             });
             $.each($(this).data(), function(name, value) {
-                if (name !== "alt") {
+                if (name !== 'alt') {
                     $img.attr(name, value);
                 }
             });
