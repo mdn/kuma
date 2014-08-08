@@ -264,7 +264,7 @@
         }, 10);
 
         // Set it forth!
-        if($toc.length || $pageButtons.attr('data-sticky') == "true"){
+        if($toc.length || $pageButtons.attr('data-sticky') == 'true'){
             scrollFn();
             $(win).on('scroll resize', scrollFn);
         }
@@ -528,8 +528,8 @@
         // If the page does not have any YouTube videos
         if(!$youtubeIframes.length) return;
 
-        var origin = window.location.protocol + "//" + window.location.hostname +
-                    (window.location.port ? ':' + window.location.port: '');
+        var origin = win.location.protocol + '//' + win.location.hostname +
+                    (win.location.port ? ':' + win.location.port: '');
 
         //Enable JS API on all YouTube iframes, might cause flicker!
         $youtubeIframes.each(function() {
@@ -541,12 +541,12 @@
         // Load YouTube Iframe API
         var youtubeScript = doc.createElement('script');
         youtubeScript.async = 'true';
-        youtubeScript.src = "//www.youtube.com/iframe_api";
+        youtubeScript.src = '//www.youtube.com/iframe_api';
         doc.body.appendChild(youtubeScript);
 
 
         // Method executed by YouTube API, needs to be global
-        window.onYouTubeIframeAPIReady = function(event) {
+        win.onYouTubeIframeAPIReady = function(event) {
             $youtubeIframes.each(function(i){
                 players[i] = new YT.Player($(this).get(0));
 
@@ -617,7 +617,7 @@
                     });
                 });
                 players[i].addEventListener('onError', function(event) {
-                    mdn.trackError('YouTube Error: ' + event.data + 'on ' + window.location.href);
+                    mdn.trackError('YouTube Error: ' + event.data + 'on ' + win.location.href);
                 });
             });
         };
