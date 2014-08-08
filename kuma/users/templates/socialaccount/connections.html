@@ -1,4 +1,5 @@
 {% extends "socialaccount/base.html" %}
+{% from "includes/error_list.html" import errorlist %}
 
 {% block title %}{{ page_title(_("Account Connections")) }}{% endblock %}
 
@@ -14,9 +15,7 @@
   {{ csrf() }}
 
   <fieldset>
-   {% if form.non_field_errors() %}
-    <div id="errorlist">{{ form.non_field_errors() }}</div>
-    {% endif %}
+    {{ errorlist(form, safe=True) }}
 
     <ul class="no-bullets">
       {% for base_account in form.accounts %}
