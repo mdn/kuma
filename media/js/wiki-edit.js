@@ -711,10 +711,6 @@
                 $clone.insertBefore($attachmentsNewTableActions);
                 $clone.addClass('dynamic-row');
 
-                // Show the cell actions now!
-                $attachmentsNewTable.find('.page-attachment-actions-cell').removeClass('hidden');
-                $clone.find('.delete-attachment').removeClass('hidden');
-
                 return $clone;
             }
             clone().find('input[type="text"]')[0].focus();
