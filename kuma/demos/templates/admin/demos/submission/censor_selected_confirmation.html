@@ -1,4 +1,5 @@
 {% extends "admin/base_site.html" %}
+{% load i18n %}
 
 {% block breadcrumbs %}
 <div class="breadcrumbs">
@@ -10,7 +11,7 @@
 {% endblock %}
 
 {% block content %}
-    <p>{% trans object_name=object_name %}Are you sure you want to censor the selected {{ object_name }} objects? This cannot be reversed.{% endtrans %}</p>
+    <p>{% blocktrans %}Are you sure you want to censor the selected {{ object_name }} objects? This cannot be reversed.{% endblocktrans %}</p>
     <ul>
         {% for obj in queryset %}
             <li>{{ obj }}</li>

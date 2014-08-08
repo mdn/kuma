@@ -406,8 +406,8 @@ MIDDLEWARE_CLASSES = (
     # LocaleURLMiddleware must be before any middleware that uses
     # sumo.urlresolvers.reverse() to add locale prefixes to URLs:
     'sumo.middleware.LocaleURLMiddleware',
-    'wiki.middleware.DocumentZoneMiddleware',
-    'wiki.middleware.ReadOnlyMiddleware',
+    'kuma.wiki.middleware.DocumentZoneMiddleware',
+    'kuma.wiki.middleware.ReadOnlyMiddleware',
     'sumo.middleware.Forbidden403Middleware',
     'django.middleware.common.CommonMiddleware',
     'sumo.middleware.RemoveSlashMiddleware',
@@ -422,12 +422,11 @@ MIDDLEWARE_CLASSES = (
     'kuma.users.middleware.BanMiddleware',
 
     'badger.middleware.RecentBadgeAwardsMiddleware',
-    'wiki.badges.BadgeAwardingMiddleware',
+    'kuma.wiki.badges.BadgeAwardingMiddleware',
 )
 
 # Auth
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
     'teamwork.backends.TeamworkBackend',
 )
@@ -484,12 +483,12 @@ INSTALLED_APPS = (
     'landing',
     'search',
     'kuma.users',
+    'kuma.wiki',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.persona',
     'kuma.users.providers.github',
-    'wiki',
     'kuma.events',
 
     # DEMOS
@@ -826,7 +825,7 @@ CELERY_SEND_TASK_SENT_EVENT = True
 
 CELERY_IMPORTS = (
     'devmo.tasks',
-    'wiki.tasks',
+    'kuma.wiki.tasks',
     'search.tasks',
     'tidings.events',
     'elasticutils.contrib.django.tasks',
@@ -1096,7 +1095,7 @@ CONSTANCE_CONFIG = dict(
     ),
 
     WELCOME_EMAIL_FROM = (
-        "Janet Swisher, MDN Community Manager <no-reply@mozilla.org>",
+        "Janet Swisher <no-reply@mozilla.org>",
         'Email address from which welcome emails will be sent',
     ),
 

@@ -1,0 +1,39 @@
+
+{% macro page_buttons(wiki, document, discard_href, location) %}
+
+{% if not discard_href %}
+  {% if document %}
+    {% set discard_href = url('wiki.document', document.full_path) %}
+  {% else %}
+    {% set discard_href = url('wiki.new_document') %}
+  {% endif %}
+{% endif %}
+
+
+{% if location == 'top' %}
+  {% if document %}<iframe id="save-and-edit-target" name="save-and-edit-target"></iframe>{% endif %}
+  <input type="hidden" id="new-page-href" value="{{ url('wiki.new_document') }}">
+  <input type="hidden" id="new-page-label" value="{{ _('New Page') }}">
+  <input type="hidden" id="new-page-msg" value="{{ _('Discard changes and create a new document?') }}">
+{% endif %}
+
+<ul class="page-buttons">
+  {% if document %}
+  <li>
+    <button type="submit" class="button positive btn-save-and-edit" data-optimizely-hook="button-save-and-keep-editing button-save-and-keep-editing-{{ location }}"><span>{{ _('Save and Keep Editing') }}</span><i aria-hidden="true" class="icon-edit"></i></button>
+  </li>
+  {% endif %}
+  <li>
+    <button type="submit" class="button positive btn-save">{{ _('Save Changes') }}<i aria-hidden="true" class="icon-save"></i></button>
+  </li>
+  {% if (not document and not is_template) or (document and not document.is_template) %}
+  <li>
+    <button type="button" class="btn-preview" data-preview-url="{{ url('wiki.preview') }}">{{ _('Preview Changes') }}<i aria-hidden="true" class="icon-play-circle"></i></button>
+  </li>
+  {% endif %}
+  <li>
+    <a href="{{ discard_href }}" class="button negative btn-discard">{{ _('Discard Changes') }}<i aria-hidden="true" class="icon-undo"></i></a>
+  </li>
+</ul>
+
+{% endmacro %}

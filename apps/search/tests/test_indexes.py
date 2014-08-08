@@ -1,9 +1,10 @@
 from nose.tools import eq_, ok_
 
 from django.conf import settings
+
 from elasticsearch.exceptions import RequestError
 
-from wiki.models import Document
+from kuma.wiki.models import Document
 from search.models import Index, DocumentType
 from search.tests import ElasticTestCase
 from search.index import get_indexing_es, get_indexes

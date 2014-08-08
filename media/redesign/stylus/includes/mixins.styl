@@ -227,7 +227,7 @@ bidi-style(ltr-prop, value, inverse-prop, inverse-value, make-important = false)
 
     {ltr-prop}: value make-important;
 
-    html[dir="rtl"] & {
+    html[dir='rtl'] & {
         if (ltr-prop != inverse-prop) {
             {inverse-prop}: value make-important;
         }
