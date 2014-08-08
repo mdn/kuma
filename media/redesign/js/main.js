@@ -223,16 +223,13 @@
         $.each([
             { selector: '#wikiArticle', method: 'prependTo' },
             { selector: '#home', method: 'prependTo' },
-            { selector: 'h1', method: 'insertAfter' }
+            { selector: 'h1', method: 'insertAfter' },
+            { selector: 'body', method: 'prependTo' } // Default
         ], function() {
             if(!insertLocation && $(this.selector).length) {
                 insertLocation = this;
             }
         });
-
-        if(!insertLocation) {
-            insertLocation = { selector: 'body', method: 'prependTo' };
-        }
 
         // Inject notifications
         $.each(mdn.notifications || [], function() {
@@ -244,13 +241,11 @@
     /*
         Tabzilla
     */
-    (function() {
-        $('#tabzilla').length && $.ajax({
-            url: '//mozorg.cdn.mozilla.net/en-US/tabzilla/tabzilla.js',
-            dataType: 'script',
-            cache: true
-        });
-    })();
+    $('#tabzilla').length && $.ajax({
+        url: '//mozorg.cdn.mozilla.net/en-US/tabzilla/tabzilla.js',
+        dataType: 'script',
+        cache: true
+    });
 
 
 })(document, jQuery);
