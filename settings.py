@@ -706,6 +706,10 @@ MINIFY_BUNDLES = {
             'redesign/js/main.js',
             'redesign/js/badges.js',
         ),
+        'home': (
+            'js/libs/owl.carousel/owl-carousel/owl.carousel.js',
+            'redesign/js/home.js'
+        ),
         'popup': (
             'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
             'js/modal-control.js',
