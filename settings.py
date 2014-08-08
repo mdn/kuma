@@ -1221,6 +1221,7 @@ SOCIALACCOUNT_AUTO_SIGNUP = False  # forces the use of the signup view
 SOCIALACCOUNT_QUERY_EMAIL = True  # used by the custom github provider
 SOCIALACCOUNT_PROVIDERS = {
     'persona': {
+        'AUDIENCE': 'https://developer.mozilla.org:433',
         'REQUEST_PARAMETERS': {
             'siteName': 'Mozilla Developer Network',
             'siteLogo': '/media/redesign/img/opengraph-logo.png',
