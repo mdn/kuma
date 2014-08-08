@@ -53,6 +53,8 @@
             Track all outgoing links
         */
         trackOutboundLinks: function(target) {
+            target = target || document.body;
+
             $(target).on('click', 'a', function (e) {
                 var $this = $(this);
 
