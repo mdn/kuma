@@ -55,7 +55,10 @@
 
               <fieldset class="section notitle" id="personal">
                 <ul>
-                  {{ li_field(profile_form, 'beta') }}
+                  <li id="field_beta" class="field">
+                    <label for="{{ profile_form.beta.id_for_label }}">{{ profile_form.beta.label }}</label> {{ profile_form.beta }}
+                    <p class="note">{{ _('We\'d love to have your feedback on site changes! Beta testers get access to new features first and we send the occasional email asking for help testing specific things.') }}</p>
+                  </li>
                   <li id="field_email" class="field type_email required">
                     <label>{{ _('Primary Email') }}</label>
                     {{ profile.user.email }} <a href="{{ url('account_email') }}">{{ _('Edit email') }}</a>
