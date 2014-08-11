@@ -202,7 +202,6 @@ URL_REMAPS_CACHE_KEY_TMPL = 'DocumentZoneUrlRemaps:%s'
 REVIEW_FLAG_TAGS = (
     ('technical', _lazy('Technical - code samples, APIs, or technologies')),
     ('editorial', _lazy('Editorial - prose, grammar, or content')),
-    ('template', _lazy('Template - KumaScript code')),
 )
 REVIEW_FLAG_TAGS_DEFAULT = ['technical', 'editorial']
 
