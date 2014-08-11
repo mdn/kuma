@@ -9,8 +9,8 @@
 {% else %}
   {{ providers_media_js() }}
   <form>
-      <div class="oauth-login-container" tabIndex="0">
-          <div class="oauth-login-options">
+      <div class="oauth-login-container">
+          <div class="oauth-login-options" tabIndex="0">
               <span>{{ _('Sign in with') }}</span>
               <span class="oauth-icon oauth-persona" title="{{ _('Sign in with Persona') }}"><i class="icon-user" aria-hidden="true"></i></span>
             {% if waffle.flag('github_login') %}

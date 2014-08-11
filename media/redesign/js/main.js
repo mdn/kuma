@@ -21,7 +21,7 @@
         Open Auth Login Heading widget
     */
     (function() {
-        var $container = $('.oauth-login-container');
+        var $container = $('.oauth-login-options');
         var activeClass = 'active';
         var fadeSpeed = 300;
 
