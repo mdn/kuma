@@ -1,1 +1,1 @@
-{% trans %}The social account has been disconnected.{% endtrans %}
+{% trans %}The account has been disconnected.{% endtrans %}
