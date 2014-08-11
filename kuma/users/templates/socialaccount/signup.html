@@ -52,8 +52,7 @@
 
           {% if has_persona %}
             {{ _("Have an MDN account already?") }}</h2>
-            {% set profile_edit_url = url('users.my_profile_edit') %}
-            {% set github_connect_url = provider_login_url('github', process='connect', next=profile_edit_url) %}
+            {% set github_connect_url = provider_login_url('github', process='connect', next=request.session.sociallogin_next_url|default('/')) %}
             <a href="{{ provider_login_url('persona', process='login', next=github_connect_url) }}">
                 {{ _('Yes, connect with my MDN account') }}
             </a>

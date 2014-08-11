@@ -1,8 +1,11 @@
 import requests
 
+from allauth.account.utils import get_next_redirect_url
 from allauth.socialaccount.providers.oauth2.views import (OAuth2LoginView,
                                                           OAuth2CallbackView)
 from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter
+
+from sumo.urlresolvers import reverse
 
 
 class KumaGitHubOAuth2Adapter(GitHubOAuth2Adapter):
@@ -25,5 +28,16 @@ class KumaGitHubOAuth2Adapter(GitHubOAuth2Adapter):
                                                              extra_data)
 
 
-oauth2_login = OAuth2LoginView.adapter_view(KumaGitHubOAuth2Adapter)
+class KumaOAuth2LoginView(OAuth2LoginView):
+
+    def dispatch(self, request):
+        next_url = (get_next_redirect_url(request) or
+                    reverse('users.my_profile_edit',
+                            locale=request.locale))
+        request.session['sociallogin_next_url'] = next_url
+        request.session.modified = True
+        return super(KumaOAuth2LoginView, self).dispatch(request)
+
+
+oauth2_login = KumaOAuth2LoginView.adapter_view(KumaGitHubOAuth2Adapter)
 oauth2_callback = OAuth2CallbackView.adapter_view(KumaGitHubOAuth2Adapter)
