@@ -1,8 +1,11 @@
+import operator
+
 from django import forms
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User, Group
 from django.core.paginator import Paginator
 from django.db import transaction
+from django.db.models import Q
 from django.http import Http404, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, render, redirect
 from django.utils.datastructures import SortedDict
@@ -10,8 +13,10 @@ from django.utils.datastructures import SortedDict
 from access.decorators import login_required
 from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress
-from allauth.socialaccount.views import SignupView as BaseSignupView
 from allauth.socialaccount import helpers
+from allauth.socialaccount.models import SocialAccount
+from allauth.socialaccount.providers.persona.provider import PersonaProvider
+from allauth.socialaccount.views import SignupView as BaseSignupView
 from badger.models import Award
 import constance.config
 from taggit.utils import parse_tags
@@ -342,8 +347,21 @@ class SignupView(BaseSignupView):
 
     def get_context_data(self, **kwargs):
         context = super(SignupView, self).get_context_data(**kwargs)
+        or_query_emails = []
+        for email_address in self.email_addresses.values():
+            if email_address['verified']:
+                or_query_emails.append(Q(uid=email_address['email']))
+        if or_query_emails:
+            reduced_or_query = reduce(operator.or_, or_query_emails)
+            has_persona = (SocialAccount.objects
+                                        .filter(provider=PersonaProvider.id)
+                                        .filter(reduced_or_query)
+                                        .exists())
+        else:
+            has_persona = False
         context.update({
             'email_addresses': self.email_addresses,
+            'has_persona': has_persona,
         })
         return context
 
