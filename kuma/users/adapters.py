@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 
 from tower import ugettext_lazy as _
 
@@ -51,6 +52,14 @@ class KumaAccountAdapter(DefaultAccountAdapter):
         # promote the "account_connected" message to success
         if message_template.endswith(self.message_templates('account_connected')):
             level = messages.SUCCESS
+
+            # when a next url is set because of a multi step sign-in
+            # (e.g. sign-in with github, verified mail is found in Persona
+            # social accounts, agree to first log in with Persona to connect
+            # instead) we ignore the message "account connected" message as
+            # it would be misleading
+            if 'sociallogin_next_url' in request.session:
+                return
 
         # and add an extra tag to the account messages
         extra_tag = 'account'
