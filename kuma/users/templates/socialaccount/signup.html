@@ -49,6 +49,19 @@
           {% if redirect_field_value %}
           <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
           {% endif %}
+
+          {% if has_persona %}
+            {{ _("Have an MDN account already?") }}</h2>
+            {% set profile_edit_url = url('users.my_profile_edit') %}
+            {% set github_connect_url = provider_login_url('github', process='connect', next=profile_edit_url) %}
+            <a href="{{ provider_login_url('persona', process='login', next=github_connect_url) }}">
+                {{ _('Yes, connect with my MDN account') }}
+            </a>
+            <a href="javascript:;">
+                {{ _('Nope..') }}
+            </a>
+          {% endif %}
+
           <fieldset>
             <ul>
               <li>
