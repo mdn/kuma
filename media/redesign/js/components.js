@@ -389,7 +389,7 @@
         var defaults = {
             classes: '', // Classes to apply to the individual notification
             closable: false, // Should the "x" icon appear
-            icon: true, // Should the icon appear when a state is given
+            level: 'info', // Should the icon appear when a state is given
             duration: 3000, // How long should the item be shown?  '0' means the message needs to be removed manually or via the handle.
             url: null, // Should clicking the item go anywhere?
             onclick: null, // What should happen if they click on the notification?
@@ -403,6 +403,10 @@
             { state: 'warning', className: 'warning', iconName: 'icon-warning-sign'  },
             defaultState
         ];
+        var statesObj = {};
+        $.each(states, function() {
+            statesObj[this.state] = this;
+        });
 
         // Closes an item
         function closeItem($item, callback) {
@@ -423,9 +427,12 @@
             $item.html('<div class="notification-message">' + $item.html() + '</div>');
 
             // Add an icon if needed
-            if(options.icon) {
-                $item.prepend('<div class="notification-img"><i aria-hidden="true" class="'+ defaultState.iconName +'"></i></div>');
+            var icon = defaultState.iconName;
+            if(statesObj[options.level]) {
+                icon = statesObj[options.level].iconName;
             }
+
+            $item.prepend('<div class="notification-img"><i aria-hidden="true" class="'+ icon +'"></i></div>');
 
             // Add URL click event
             if(options.url) {
@@ -523,13 +530,12 @@
                     var iconName = this.iconName;
                     handle[state] = function(message, delay) {
                         var $item = handle.item;
+
                         $item.addClass(className);
+                        $item.find('.notification-img i').attr('class', stateObj.iconName);
 
                         if(message) updateMessageHTML($item, message);
                         if(delay) this.close(delay);
-                        if(handle.options.icon) {
-                            $item.find('.notification-img i').attr('class', stateObj.iconName);
-                        }
 
                         return this;
                     };
