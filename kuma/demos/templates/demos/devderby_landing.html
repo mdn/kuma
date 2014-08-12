@@ -2,299 +2,82 @@
 
 {% block body_attributes %}id="devderby"{% endblock %}
 
-{% block bodyclass %}section-demos devderby landing {% if waffle.flag('derby_closed') %}derby-closed{% endif %}{% endblock %}
+{% block bodyclass %}section-demos devderby landing derby-closed{% endblock %}
 
 {% block extrahead %}
     {{ css('devderby') }}
-    {% if not waffle.flag('derby_closed') %}
-    <link rel="alternate" type="application/atom+xml" title="{{_('Dev Derby Submissions')}}"
-        href="{{ url('demos_feed_tag', tag=current_challenge_tag_name, format='atom') }}" />
-    {% endif %}
 {% endblock %}
 
 {% block title %}{{ page_title(_('Dev Derby')) }}{% endblock %}
 
 {% set submit_url = url('demos_submit')|urlparams(tags=[current_challenge_tag_name]|join(' ')) %}
+{% set demos_url = url('demos') %}
 
 {% block content %}
 <section id="content">
-<div class="wrap">
+    <div class="wrap">
 
-  <header id="page-head">
-    <nav id="nav-derby">
-      <ul>
-        <li><em>{{_("Home")}}</em></li>
-        <li><a href="#upcoming">{{_("Challenges")}}</a></li>
-        <li><a href="{{url('demos_devderby_rules')}}">{{_("Rules")}}</a></li>
-        <li><a href="#tab-judging" rel="tab">{{_("Judging")}}</a></li>
-        <li><a href="#challenge-prizes">{{_("Prizes")}}</a></li>
-        <li><a href="#resources">{{_("Resources")}}</a></li>
-      </ul>
-    </nav>
-  </header>
+      <section id="content-main" class="full" role="main">
+        <header id="derby-head">
+          <p class="presents"><a href="{{ url('demos') }}">{{_("Mozilla Demo Studio")}}</a> {{_("presents")}}</p>
+          <h1><a href="{{url('demos_devderby_landing')}}">{{_("Dev Derby")}}</a></h1>
 
-  <section id="content-main" class="full" role="main">
-    <header id="derby-head">
-      <p class="presents"><a href="{{ url('demos') }}">{{_("Mozilla Demo Studio")}}</a> {{_("presents")}}</p>
-      <h1><a href="{{url('demos_devderby_landing')}}">{{_("Dev Derby")}}</a></h1>
-
-      {% if not waffle.flag('derby_closed') %}
-        <h2>{% trans title=tag_meta(current_challenge_tag_name, "short_title") %}Show us what you can do with {{ title }}{% endtrans %}</h2>
-        <p class="info">{{_("Join the Dev Derby now and submit your demo to win an Android phone or other prizes.")}}</p>
-        <p class="submit">{% trans %}<a href="{{ submit_url }}"><b>Submit</b> Your Demo</a>{% endtrans %}</p>
-      {% else %}
-        <h2>{{ _('Dev Derby on Hiatus') }}</h2>
-        <p>{{ _('The Dev Derby is on hiatus, but will return soon.') }}</p>
-      {% endif %}
-    </header>
-    
-    <div class="column-container">
-  <div class="column-main main">
-    <section id="upcoming">
-      <header>
-        {% if not waffle.flag('derby_closed') %}
-        <h1>{{_("Upcoming Challenges")}}</h1>
-        {% else %}
-        <h1>{{_("Recent Challenges")}}</h1>
-        {% endif %}
-      </header>
-      <ol>
-        <li class="first">
-          {% if not waffle.flag('derby_closed') %}
-            <h2 class="title">{{tag_meta(current_challenge_tag_name, "short_title")}}</h2>
-            <h3 class="date">{{tag_meta(current_challenge_tag_name, "short_dateline")}}</h3>
-            <h4 class="tagline">{{tag_meta(current_challenge_tag_name, "tagline")}}</h4>
-            <h5 class="current">{% trans %}<span><b>Current</b> Derby</span>{% endtrans %}</h5>
-            <p class="desc">{{tag_meta(current_challenge_tag_name, "summary")}}</p>
-          {% else %}
-            <h2 class="title"><a href="{{ devderby_tag_to_date_url("challenge:2013:july") }}">{{tag_meta("challenge:2013:july", "short_title")}}</a></h2>
-            <h3 class="date">{{tag_meta("challenge:2013:july", "short_dateline")}}</h3>
-            <h4 class="tagline"><a href="{{ devderby_tag_to_date_url("challenge:2013:july") }}">{{tag_meta("challenge:2013:july", "tagline")}}</a></h4>
-            {% if not waffle.flag('derby_closed') %}
-            <h5 class="current">{% trans %}<span><b>Current</b> Derby</span>{% endtrans %}</h5>
-            {% endif %}
-            <p class="desc">{{tag_meta("challenge:2013:july", "summary")}}</p>
-          {% endif %}
-        </li>
-        <li class="second">
-          <h2 class="title"><a href="{{ devderby_tag_to_date_url("challenge:2013:may") }}">{{tag_meta("challenge:2013:may", "short_title")}}</a></h2>
-          <h3 class="date">{{tag_meta("challenge:2013:may", "short_dateline")}}</h3>
-          <h4 class="tagline"><a href="{{ devderby_tag_to_date_url("challenge:2013:may") }}">{{tag_meta("challenge:2013:may", "tagline")}}</a></h4>
-          <p class="desc">{{tag_meta("challenge:2013:may", "summary")}}</p>
-        </li>
-        <li class="third">
-          <h2 class="title"><a href="{{ devderby_tag_to_date_url("challenge:2013:june") }}">{{tag_meta("challenge:2013:june", "short_title")}}</a></h2>
-          <h3 class="date">{{tag_meta("challenge:2013:june", "short_dateline")}}</h3>
-          <h4 class="tagline"><a href="{{ devderby_tag_to_date_url("challenge:2013:june") }}">{{tag_meta("challenge:2013:june", "tagline")}}</a></h4>
-          <p class="desc">{{tag_meta("challenge:2013:june", "summary")}}</p>
-        </li>
-      </ol>
-    </section>
-    
-    <section id="current-challenge">
-      {% if not waffle.flag('derby_closed') %}
-      <ul class="tabs">
-        <li class="current"><a href="#tab-challenge">{{_("Current")}}</a></li>
-        <li><a href="#tab-submissions">{{_("Submissions")}}</a></li>
-        <li><a href="#tab-rules">{{_("Rules")}}</a></li>
-        <li><a href="#tab-judging">{{_("Judging")}}</a></li>
-        <li><a href="#tab-previous">{{_("Previous")}}</a></li>
-      </ul>
-      
-      <section id="tab-challenge" class="block">
-        <header>
-          <h1 class="title">{{tag_meta(current_challenge_tag_name, "short_title")}}</h1>
-          <h2 class="date">{{tag_meta(current_challenge_tag_name, "short_dateline")}}</h2>
+            <h2>{{ _("Dev Derby has ended") }}</h2>
+            <p>
+            {% trans %}
+                From 2011 until 2013, web developers created more than 450 demos
+                for the Dev Derby! Find them below, 
+                or <a href="{{ demos_url }}">visit the Demo Studio</a> for many more.
+            {% endtrans %}
+            </p>
         </header>
-        <p class="tagline">{{tag_meta(current_challenge_tag_name, "tagline")}}</p>
-        {{tag_meta(current_challenge_tag_name, "tab_copy")|safe}}
-        {% trans month=tag_meta(current_challenge_tag_name, "short_dateline") %}
-          <p class="demo-submit"><a href="{{ submit_url }}" class="button">Submit your demo</a> for the {{month}} Dev Derby today!</p>
-        {% endtrans %}
+        
+        <div class="column-container">
+            <div class="column-main main">
 
-      </section>
-    
-      <section id="tab-submissions" class="block">
-          {% if submissions_qs|count == 0 %}
-              <p class="none">{{_("Developers must be busy tinkering with their demos. No submissions yet. Be the first!")}}</p>
-              <p class="demo-submit"><a href="{{ submit_url }}" class="button">{{_("Submit Your Demo")}}</a></p>
-          {% else %}
-                <ul class="gallery">
-                    {% set extra_class = cycler(' row-first', '', '')%}
-                    {% for submission in submissions_qs %}
-                        {{ submission_thumb(submission, extra_class) }}
+              <section id="tab-previous" class="block">
+                <header>
+                    <h2>{{_("Previous Dev Derby Challenges")}}</h2>
+                </header>
+                <ul class="previous">
+                    {% for tag_name in previous_challenge_tag_names %}
+                        <li>
+                          <h3><a href="{{ devderby_tag_to_date_url(tag_name) }}"><span>{{ tag_meta(tag_name, 'dateline') }}</span> {{ tag_meta(tag_name, 'short_title') }}</a></h3>
+                          <p class="desc">{{ tag_meta(tag_name, 'summary') }}</p>
+                        </li>
                     {% endfor %}
-                </ul><!-- /.gallery -->
-          {% endif %}
-      </section><!-- /#tab-submissions -->
-      
-      <section id="tab-rules" class="block">
-      {% trans rules_url=url('demos_devderby_rules') %}
-        <p>A summary of the rules can be found below.  For a complete look at the terms of the contest please see the <a href="{{rules_url}}">Dev Derby Contest Official Rules</a>.</p>
-        <ul class="prose">
-          <li>Almost anyone can enter (<a href="{{rules_url}}">see the rules</a> for exceptions).</li>
-          <li>There will be a new contest every month.</li>
-          <li>Your entry must meet certain criteria; <a href="{{rules_url}}">see the rules</a> for the overall criteria and the Current Challenge section for any special criteria for each contest.</li>
-          <li>Each contest runs from the first day of the month to the last day of the month (based on <strong>US Pacific time</strong>).</li>
-          <li>Entries will be judged by a panel of qualified reviewers, who may or may not take into account how many &ldquo;likes&rdquo; your entry receives.</li>
-          <li>The winners of each month's contest will be announced by the <strong>20th of the following month</strong>.</li>
-          <li>You can't win more than once in the same calendar year.</li>
-          <li>Please read the <a href="{{rules_url}}">Dev Derby Contest Official Rules</a> before submitting your entry.</li>
-        </ul>
-      {% endtrans %}
-      </section>
-    
-      <section id="tab-judging" class="block">
-      {% trans %}
-        <p>Entries will be reviewed by a panel of qualified judges, including
-            members of the Mozilla team and outside experts. We will rate the demos
-            across 4 dimensions:</p>
-      {% endtrans %}
-      {% trans %}
-        <ul class="prose">
-            <li><strong>Technology</strong> &ndash; Does the demo showcase the power of open Web technologies?</li>
-            <li><strong>Originality</strong> &ndash; How innovative and unique is the demo?</li>
-            <li><strong>Aesthetics</strong> &ndash; How good is the visual design and interaction experience?</li>
-            <li><strong>Practicality</strong> &ndash; How useful is this demo in enhancing the Web today?</li>
-        </ul>
-      {% endtrans %}
-      {% trans %}
-        <p>The judges will use all four dimensions in scoring each entry, and
-            any additional criteria specified for a particular contest.</p>
-      {% endtrans %}
-      {% trans %}
-        <p>The judges may also take into account how many &ldquo;likes&rdquo;
-            the entries have received from the community. So make sure to share
-            your demo with others and encourage them to visit Dev Derby to
-            &ldquo;vote.&rdquo;</p>
-      {% endtrans %}
-        <h2>{{ _("Expert Judges") }}</h2>
-        <ul class="judges">
-          <li class="vcard">
-            <h3><a href="http://james.padolsey.com/" class="fn url">James Padolsey<img src="{{MEDIA_URL}}img/devderby/judges/jamespadolsey.jpg" alt="" class="photo" width="100" height="100"></a></h3>
-            <h4 class="title">{{ _("UI Developer, CTO at Storygami") }}</h4>
-            <p class="twitter"><a href="http://twitter.com/padolsey" class="url nickname">@padolsey</a></p>
-            <p>
-              {% trans %}
-              James is a London-based UI Developer with a passion for
-              JavaScript, HTML5 and anything that enables him and others to
-              create stuff of value. He's currently freelancing and working on
-              interactive media at Storygami, a new startup that he's the CTO
-              of. James shares opinionated technical articles and code on his
-              website and github.
-              {% endtrans %}
-            </p>
-          </li>
-          <li class="vcard">
-            <h3><a href="http://www.janetswisher.com/" class="fn url">Janet Swisher<img src="{{MEDIA_URL}}img/devderby/judges/janetswisher.jpg" alt="" class="photo" width="100" height="100"></a></h3>
-            <h4 class="title">{{ _("Developer Engagement Community Organizer, Mozilla") }}</h4>
-            <p class="twitter"><a href="http://twitter.com/jmswisher" class="url nickname">@jmswisher</a></p>
-            <p>
-              {% trans %}
-              Janet has been wandering around software development since the
-              twentieth century, and around open source software and
-              documentation since 2004. She started working for Mozilla on
-              developer documentation in 2010, and recently became Community
-              Manager for Developer Engagement. Her superpower is taking things
-              literally.
-              {% endtrans %}
-            </p>
-          </li>
-        </ul>
-      </section>
+                </ul>
+              </section>
 
-      <section id="tab-previous" class="block">
-        <header>
-            <h2>{{_("Previous Dev Derby Challenges")}}</h2>
-        </header>
-        <ul class="previous">
-            {% for tag_name in previous_challenge_tag_names %}
-                <li>
-                  <h3><a href="{{ devderby_tag_to_date_url(tag_name) }}"><span>{{ tag_meta(tag_name, 'dateline') }}</span> {{ tag_meta(tag_name, 'short_title') }}</a></h3>
-                  <p class="desc">{{ tag_meta(tag_name, 'summary') }}</p>
-                </li>
-            {% endfor %}
-        </ul>
-      </section>
-    
-    {% else %}
+              <div style="padding-right: 20px;">
+                <header>
+                    <h2>{{_("Previous Dev Derby Challenges")}}</h2>
+                </header>
+                <ul class="previous">
+                    {% for tag_name in previous_challenge_tag_names %}
+                        <li>
+                          <h3><a href="{{ devderby_tag_to_date_url(tag_name) }}"><span>{{ tag_meta(tag_name, 'dateline') }}</span> {{ tag_meta(tag_name, 'short_title') }}</a></h3>
+                          <p class="desc">{{ tag_meta(tag_name, 'summary') }}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+              </div>
 
-      {% trans %}
-        <div style="padding-right: 20px;">
-          <h2>Dev Derby on Hiatus</h2>
-          <p>The Dev Derby is on hiatus while we work on revamping the contest series. When it returns, you may see some changes in the contest format. However, the Dev Derby mission remains unchanged: to provide a platform that helps web developers learn, share, and push the web forward.</p>
+            </div><!-- /.main -->
+        
+            <section id="resources">
+              <h3>{{_("Resources")}}</h3>
+              <ul>
+                <li class="res-docs"><a href="{{ devmo_url('Web') }}">{{_("Docs")}}</a></li>
+                <li class="res-demos"><a href="{{ url('demos') }}">{{_("Demos")}}</a></li>
+                <li class="res-articles"><a href="{{ url('learn') }}">{{_("Articles")}}</a></li>
+              </ul>
+            </section>
 
-          <p>See you soon!</p>
-        </div>
-      {% endtrans %}
-
-      <div style="padding-right: 20px;">
-        <header>
-            <h2>{{_("Previous Dev Derby Challenges")}}</h2>
-        </header>
-        <ul class="previous">
-            {% for tag_name in previous_challenge_tag_names %}
-                <li>
-                  <h3><a href="{{ devderby_tag_to_date_url(tag_name) }}"><span>{{ tag_meta(tag_name, 'dateline') }}</span> {{ tag_meta(tag_name, 'short_title') }}</a></h3>
-                  <p class="desc">{{ tag_meta(tag_name, 'summary') }}</p>
-                </li>
-            {% endfor %}
-        </ul>
-      </div>
-
-    {% endif %}
-    </section><!-- /#current-challenge -->
-  </div><!-- /.main -->
-      
-  <div class="column-strip sub">
-    {% if previous_winner_qs|count > 0 %}
-    {% set submission = previous_winner_qs[0] %}
-    <section id="prev-winner">
-      <h1>{{_("Previous Winner")}}</h1>
-      <h2 class="title"><a href="{{ url('demos_detail', slug=submission.slug) }}">{{ submission.title }}</a></h2>
-      {# TODO: This should probably be the author's avatar, at some point #}
-      <h3 class="author"><a href="{{ url('demos_detail', slug=submission.slug) }}"><img src="{{ submission.creator.get_profile().gravatar }}" alt="{{ submission.title }}" width="52" height="52"></a> {{ submission_creator(submission) }}</h3>
-      <p class="desc">{{ submission.summary }}</p>
-      <p class="launch"><a href="{{ url('demos_detail', slug=submission.slug) }}">{{_("See the Demo")}}</a></p>
-    </section><!-- /#prev-winner -->
-    {% endif %}
-      
-    <section id="challenge-prizes">
-      {% trans %}
-      <h1>Prizes</h1>
-      <ol>
-        <li class="first">
-          <h3>Android mobile device</h3>
-          <p>Winner gets an Android mobile device from <a rel="external" href="http://www.samsung.com/us/mobile/cell-phones">Samsung</a>.</p>
-        </li>
-        <li class="second">
-          <h3>Rickshaw laptop bag</h3>
-          <p>Runner-up gets a hand-crafted laptop messenger bag from <a rel="external" href="http://www.rickshawbags.com/bags/laptop-messenger-bag/standard/standard-commuter-laptop-bag-black.html">Rickshaw</a>.</p>
-        </li>
-        <li class="third">
-          <h3>MDN t-shirt</h3>
-          <p>3rd place gets a limited edition MDN t-shirt to show off their geek cred.</p>
-        </li>
-      </ol>
-      {% endtrans %}
-    </section><!-- /#challenge-prizes -->
-  </div><!-- /.sub -->
-      
-    </div>
-    
-    <section id="resources">
-      <h3>{{_("Resources")}}</h3>
-      <ul>
-        <li class="res-docs"><a href="{{ devmo_url('Web') }}">{{_("Docs")}}</a></li>
-        <li class="res-demos"><a href="{{ url('demos') }}">{{_("Demos")}}</a></li>
-        <li class="res-articles"><a href="{{ url('learn') }}">{{_("Articles")}}</a></li>
-      </ul>
-    </section>
-    
-  </section><!-- /#content-main -->
-
-</div>
-</section>
+        </div><!-- /.column-container -->
+      </section><!-- /.main -->
+    </div><!-- /.wrap -->
+</section><!-- /.content -->
 {% endblock %}
 
 {% block js %}

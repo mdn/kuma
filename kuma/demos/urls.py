@@ -19,7 +19,7 @@ urlpatterns = patterns('kuma.demos.views',
 
     url(r'^$', HomeView.as_view(), name='demos'),
 
-    url(r'^devderby/?$', RedirectView.as_view(url='/demos', permanent=False)),
+    url(r'^devderby/?$', 'devderby_landing', name='demos_devderby_landing'),
     url(r'^devderby/(?P<year>\d\d\d\d)/(?P<month>[\w]+)/?$',
         DevDerbyByDate.as_view(), name='demos_devderby_by_date'),
     url(r'^devderby/tag/(?P<tag>[^/]+)/?$', DevDerbyTagView.as_view(),
