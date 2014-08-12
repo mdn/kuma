@@ -285,15 +285,23 @@ $dev-program-pad {
                 position: static;
             }
         }
+    }
 
-        .zone-image {
-            opacity: 0.2;
-        }
+    .zone-landing-header .zone-image, .zone-article-header .zone-image {
+        opacity: 0.2;
     }
 }
 
 @media $media-query-mobile {
-    .zone-landing-header .zone-image {
+    .zone-landing-header .zone-image, .zone-article-header .zone-image {
         display: none;
+    }
+
+    .zone-landing h1 {
+        width: auto;
+    }
+
+    .zone-landing-header {
+        display: block;
     }
 }
