@@ -23,12 +23,11 @@
             // Site notifications
             {% if messages %}notifications: [
                 {% for message in messages %}{% if 'wiki_redirect' not in message.tags or waffle.flag('redirect_messages') %}{message: "{{ message }}", tags: "{{ message.tags }}", level: "{{ message|level_tag }}"}{% if not loop.last %},{% endif %}{% endif %}
-
-{% endfor %}
+                {% endfor %}
             ],
-            {% else %}notifications: [],
+            {% else %}
+            notifications: [],
             {% endif %}
-
             // Wiki-specific settings will be placed here
             wiki: {
                 autosuggestTitleUrl: '{{ url('wiki.autosuggest_documents') }}'

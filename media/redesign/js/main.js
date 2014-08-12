@@ -234,8 +234,11 @@
         // Inject notifications
         $.each(mdn.notifications || [], function() {
             // Make it so
-            $('<div class="notification ' + this.level + ' '  + this.tags + '">' + this.message + '</div>')[insertLocation.method](insertLocation.selector);
+            $('<div class="notification ' + this.level + ' ' + this.tags + '" data-level="' + this.level + '">' + this.message + '</div>')[insertLocation.method](insertLocation.selector);
         });
+
+        // Make them official
+        mdn.Notifier.discover();
     })();
 
     /*
