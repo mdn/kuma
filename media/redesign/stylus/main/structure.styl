@@ -74,6 +74,7 @@ draw-grid();
     border-bottom-style: solid;
     border-top: 2px solid #fff;
 
+    /* margin-top will be added to small-mobile media query to ensure oauth widget doesn't overly */
     .logo {
         bidi-value(float, left, right);
         width: 205px;
@@ -639,6 +640,15 @@ footer {
     /* add bottom spacing to the footer */
     footer {
         padding-bottom: $grid-spacing;
+    }
+}
+
+
+@media $media-query-small-mobile {
+    #main-header {
+        .logo {
+            margin-top: 60px;
+        }
     }
 }
 
