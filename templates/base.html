@@ -64,7 +64,7 @@
     {% include "includes/google_analytics.html" %}
   {% endif %}
 </head>
-<body {% block body_attributes %}{% endblock %} class="{% block bodyclass %}{% endblock %}">
+<body {% block body_attributes %}{% endblock %} class="{% block bodyclass %}{% endblock %}"{% if request.user.is_authenticated() %} data-login-service="{{ request.session.sociallogin_provider }}"{% endif %}>
 
   {% include "includes/config.html" %}
 
