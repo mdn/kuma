@@ -262,7 +262,7 @@ class SignupView(BaseSignupView):
         form = super(SignupView, self).get_form(form_class)
         form.fields['email'].label = _('Email address')
 
-        email = self.sociallogin.account.extra_data.get('email', None)
+        email = self.sociallogin.account.extra_data.get('email') or None
         extra_email_addresses = (self.sociallogin
                                      .account
                                      .extra_data
