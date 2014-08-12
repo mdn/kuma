@@ -99,6 +99,11 @@ h4 {
         display: inline-block;
         text-decoration: none;
     }
+
+    &.no-margin {
+        bidi-style(margin-left, 0, margin-right, 0);
+        bidi-style(margin-right, 0, margin-left, 0);
+    }
 }
 
 hr {
