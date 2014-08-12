@@ -320,15 +320,6 @@ a.github-button {
     border-radius: 8px;
     border: 1px solid transparent;
     display: inline-block;
-    overflow: hidden;
-
-    &.active {
-        border-color: rgba(255, 255, 255, 0.3);
-
-        .oauth-login-picker {
-            display: block;
-        }
-    }
 
     {$selector-icon} {
         margin-left: 0;
@@ -342,6 +333,17 @@ a.github-button {
 .oauth-login-options {
     padding: 4px 8px;
     background: rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+
+    &.active {
+        border-color: rgba(255, 255, 255, 0.3);
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+
+        .oauth-login-picker {
+            display: block;
+        }
+    }
 }
 
 .oauth-icon {
@@ -368,6 +370,8 @@ a.github-button {
     display: none;
     background: #fff;
     position: relative;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
 
     a {
         display: block;
