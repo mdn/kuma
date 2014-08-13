@@ -266,13 +266,15 @@ class SignupView(BaseSignupView):
         self.email_addresses = SortedDict()
         form = super(SignupView, self).get_form(form_class)
         form.fields['email'].label = _('Email address')
+        self.matching_user = User.objects.none()
         initial_username = form.initial.get('username', None)
-        if initial_username is None:
-            self.matching_user = User.objects.none()
-        else:
-            self.matching_user = User.objects.filter(username=initial_username)
-            if self.matching_user.exists():
+        if initial_username is not None:
+            try:
+                self.matching_user = User.objects.get(username=initial_username)
+                # deleting the initial username because we found a matching user
                 del form.initial['username']
+            except User.DoesNotExist:
+                pass
 
         email = self.sociallogin.account.extra_data.get('email') or None
         extra_email_addresses = (self.sociallogin

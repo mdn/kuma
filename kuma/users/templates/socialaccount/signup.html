@@ -80,9 +80,9 @@
                 <label for="{{ form.username.id_for_label }}" class="outer"><b>{{ form.username.label }}</b></label>
                 {% if form.username.errors %}
                   {{ form.username.errors }}
-                {% elif matching_user.exists() %}
+                {% elif matching_user %}
                   <ul class="errorlist">
-                    <li>{% trans username=matching_user.0.username %}Your GitHub username {{ username }} is already taken. Please choose another.{% endtrans %}</li>
+                    <li>{% trans username=matching_user.username %}Your GitHub username {{ username }} is already taken. Please choose another.{% endtrans %}</li>
                   </ul>
                 {% endif %}
                 {{ form.username }}
