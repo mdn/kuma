@@ -1,5 +1,4 @@
 {% extends "socialaccount/base.html" %}
-{% from "includes/error_list.html" import errorlist %}
 {% from 'includes/common_macros.html' import newsletter_widget %}
 
 {% set title = _('Signup') %}
@@ -43,7 +42,11 @@
             your own profile page.
           {% endtrans %}</p>
 
-          {{ errorlist(form) }}
+          {% if form.errors %}
+            {% for error in form.non_field_errors() %}
+              <div class="notification error">{{ error }}</div>
+            {% endfor %}
+          {% endif %}
 
           {{ csrf() }}
           {% if redirect_field_value %}
@@ -76,8 +79,9 @@
 
           <fieldset>
             <ul>
-              <li>
+              <li class="{{ ' error' if form.username.errors }}">
                 <label for="{{ form.username.id_for_label }}" class="outer"><b>{{ form.username.label }}</b></label>
+                {{ form.username.errors }}
                 {{ form.username }}
                 <p class="field-explanation"><small>{{ _("Please enter the name you'd like to display to other users to identify your contributions.") }}</small></p>
               </li>
@@ -86,11 +90,9 @@
                 {{ form.email }}
               {% else %}
 
-              <li>
-                <label for="{{ form.email.id_for_label }}" class="outer upper"><b>{{ form.email.label }}</b></label>
-                <p class="field-explanation-top"><small>
-                {{ _("We will use this to send you emails related to your account and if you sign up for any additional notifications.") }}
-                </small></p>
+              <li class="{{ ' error' if form.email.errors or form.other_email.errors }}">
+                <label for="{{ form.email.id_for_label }}" class="outer"><b>{{ form.email.label }}</b></label>
+                {{ form.email.errors }}
                 <ul class="choices">
                 {% set matching_uids = matching_accounts.values_list('uid', flat=True) %}
                 {% for email_choice in form.email %}
@@ -98,8 +100,9 @@
                   <li class="{{ 'exists' if email_choice.choice_value in matching_uids }}">
                     {% if email_choice.choice_value == form.other_email_value %}
                       {{ email_choice.tag() }}
-                      <label for="{{ id_for_label }}" class="inner">{% trans %}other:{% endtrans %}</label>
+                      <label for="{{ id_for_label }}" class="inner">{{ _('other:') }}</label>
                       {{ form.other_email }}
+                      {{ form.other_email.error }}
                     {% else %}
                     <label for="{{ id_for_label }}">
                       {{ email_choice.tag() }}
@@ -109,6 +112,9 @@
                   </li>
                 {% endfor %}
                 </ul>
+                <p class="field-explanation"><small>
+                  {{ _("We will use this to send you emails related to your account and if you sign up for any additional notifications.") }}
+                </small></p>
               </li>
               {% endif %}
 
