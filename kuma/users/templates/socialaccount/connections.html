@@ -58,12 +58,11 @@
   <p>{{ _("You have no connected accounts.") }}</p>
   {% endif %}
 
-  <h2>{{ _("Connect an account") }}</h2>
+  <h2>{{ _("Connect a new account") }}</h2>
 
   {% with process="connect" %}
   {% include "socialaccount/snippets/provider_list.html" %}
   {% endwith %}
-
 
   {% include "socialaccount/snippets/login_extra.html" %}
 
