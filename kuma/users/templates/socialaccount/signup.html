@@ -79,7 +79,7 @@
 
           <fieldset>
             <ul>
-              <li class="{{ ' error' if form.username.errors }}">
+              <li class="{{ 'error' if form.username.errors }}">
                 <label for="{{ form.username.id_for_label }}" class="outer"><b>{{ form.username.label }}</b></label>
                 {{ form.username.errors }}
                 {{ form.username }}
@@ -90,7 +90,7 @@
                 {{ form.email }}
               {% else %}
 
-              <li class="{{ ' error' if form.email.errors or form.other_email.errors }}">
+              <li class="{{ 'error' if form.email.errors or form.other_email.errors }}">
                 <label for="{{ form.email.id_for_label }}" class="outer"><b>{{ form.email.label }}</b></label>
                 {{ form.email.errors }}
                 <ul class="choices">
