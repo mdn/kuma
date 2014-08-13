@@ -72,7 +72,7 @@
                   <li>
                     {% if email_choice.choice_value == form.other_email_value %}
                       {{ email_choice.tag() }}
-                      <label for="{{ id_for_label }}" class="inner">{% trans %}other:{% endtrans %}</label>
+                      <label for="{{ id_for_label }}" class="inner other-label">{% trans %}other:{% endtrans %}</label>
                       {{ form.other_email }}
                     {% else %}
                     <label for="{{ id_for_label }}">
@@ -104,4 +104,21 @@
     </section>
   </div>
 </section>
+{% endblock %}
+
+{% block js %}
+{{ super() }}
+<script>
+(function ($) {
+    'use strict';
+
+    var $otherLabel = $('.other-label');
+    var $otherRadio = $otherLabel.prev();
+    $otherLabel.next().on('focus', function() {
+      $otherRadio.prop('checked', true);
+    });
+
+})(jQuery);
+</script>
+
 {% endblock %}
