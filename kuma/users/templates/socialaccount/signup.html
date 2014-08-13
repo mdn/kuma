@@ -2,7 +2,7 @@
 {% from "includes/error_list.html" import errorlist %}
 {% from 'includes/common_macros.html' import newsletter_widget %}
 
-{% set title = _('Signup') %}
+{% set title = _('Finish setting up your MDN account') %}
 
 {% set classes = 'register' %}
 
@@ -22,28 +22,34 @@
   <div class="wrap">
     <section id="content-main" role="main">
       <article id="browser_register">
+          <h1>{{ _('Finish setting up your MDN account') }}</h1>
 
-        {% if account.get_provider().id == 'persona' %}
-          <h1>{{ _('Sign up') }}</h1>
-          <p id="persona-explanation">{% trans persona_href='https://login.persona.org/about' %}
-          MDN uses <a href="{{ persona_href }}" rel="external">Persona</a>,
-          a safe and simple way to sign in with just your email address.
-          {% endtrans %}</p>
-        {% endif %}
+          <form id="create_user" class="boxed submission" method="post" action="{{ url('socialaccount_signup') }}">
 
-        <form id="create_user" class="boxed submission" method="post" action="{{ url('socialaccount_signup') }}">
-          <p>{% trans provider_name=account.get_provider().name %}
-            We couldn't find an MDN profile for your {{ provider_name }} account.
-            If you're new here, you can pick an MDN username now and complete your
-            registration.
-          {% endtrans %}</p>
-          <p>{% trans %}
-            You can access everything on the MDN website even without an account,
-            but when you join you'll be able to edit docs, submit demos, and have
-            your own profile page.
-          {% endtrans %}</p>
+              <p>{% trans provider_name=account.get_provider().name %}
+              Thanks for signing in to MDN with {{ provider_name }}. You have
+              one more step to join MDN and set up your account: <strong>choose
+              a user name</strong>.
+              {% endtrans %}<p>
 
-          {{ errorlist(form) }}
+              <p>{% trans %}
+              You can access everything on the MDN website even without an
+              account. However, by joining MDN, you'll be able to edit docs,
+              submit demos, and have your own profile page.
+              {% endtrans %}</p>
+
+              <p>{% trans %}
+              To set up your account, please <strong>choose a user name</strong>
+              for MDN. Your user name will be displayed on MDN to identify any
+              contributions (edits, demos, etc.) that you make.
+              {% endtrans %}</p>
+
+              <p>{% trans bug_href='https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cc=jkarahalis%40mozilla.com&cf_fx_iteration=---&cf_fx_points=---&component=Login&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-791=X&flag_type-800=X&flag_type-803=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=All&priority=--&product=Mozilla%20Developer%20Network&rep_platform=All&status_whiteboard=%5Btrouble-logging-in%5D&target_milestone=---&version=unspecified&format=__standard__' %}
+              If you're <strong>having trouble</strong> signing in or creating
+              an account, <strong><a href="{{ bug_href }}" rel="external">let us know</a></strong>.
+              {% endtrans %}</p>
+
+              {{ errorlist(form) }}
 
           {{ csrf() }}
           {% if redirect_field_value %}
@@ -89,15 +95,10 @@
               {{ newsletter_widget(form) }}
 
               <li class="submit">
-                <button type="submit" name="create">{{ _('Create a New Profile') }}</button>
+                <button type="submit" name="create">{{ _('Create my account') }}</button>
               </li>
             </ul>
           </fieldset>
-          <p class="trouble">
-              {% trans bug_href='https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cc=jkarahalis%40mozilla.com&cf_fx_iteration=---&cf_fx_points=---&component=Login&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-791=X&flag_type-800=X&flag_type-803=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=All&priority=--&product=Mozilla%20Developer%20Network&rep_platform=All&status_whiteboard=%5Btrouble-logging-in%5D&target_milestone=---&version=unspecified&format=__standard__' %}
-              <strong>Having trouble logging in? <a href="{{ bug_href }}" rel="external">Let us know</a>.</strong>
-              {% endtrans %}
-          </p>
         </form>
 
       </article>
