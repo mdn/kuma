@@ -95,7 +95,21 @@
 
               <li class="{{ 'error' if form.email.errors or form.other_email.errors }}">
                 <label for="{{ form.email.id_for_label }}" class="outer"><b>{{ form.email.label }}</b></label>
-                {{ form.email.errors }}
+                <ul class="errorlist">
+                  {% for error in form.email.errors %}
+                    <li>
+                    {# we have to handle this error message here to have access to the request #}
+                    {% if error == form.duplicate_email_error_label %}
+                      {% trans persona_login_url=persona_login_url, provider_name=account.get_provider().name %}
+                      An account already exists with the selected email address.
+                      <a href="{{ persona_login_url }}">Connect your {{ provider_name }} account to it.</a>
+                      {% endtrans %}
+                    {% else %}
+                      {{ error }}
+                    {% endif %}
+                    </li>
+                  {% endfor %}
+                </ul>
                 <ul class="choices">
                 {% set matching_uids = matching_accounts.values_list('uid', flat=True) %}
                 {% for email_choice in form.email %}

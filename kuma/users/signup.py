@@ -28,6 +28,7 @@ class SignupForm(BaseSignupForm):
     other_email = forms.CharField(required=False,
                                   widget=forms.TextInput(attrs={'type': 'email'}))
     other_email_value = '_other'
+    duplicate_email_error_label = '_duplicate_email'
 
     def __init__(self, *args, **kwargs):
         super(SignupForm, self).__init__(*args, **kwargs)
@@ -71,7 +72,4 @@ class SignupForm(BaseSignupForm):
         return cleaned_data
 
     def raise_duplicate_email_error(self):
-        try:
-            super(SignupForm, self).raise_duplicate_email_error()
-        except forms.ValidationError as e:
-            self._errors['email'] = self.error_class(e.messages)
+        raise forms.ValidationError(self.duplicate_email_error_label)
