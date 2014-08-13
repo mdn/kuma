@@ -56,9 +56,9 @@
             <ul>
               <li class="{{ ' error' if form.username.errors }}">
                 <label for="{{ form.username.id_for_label }}" class="outer"><b>{{ form.username.label }}</b></label>
+                {{ form.username.errors }}
                 {{ form.username }}
                 <p class="field-explanation"><small>{{ _("Please enter the name you'd like to display to other users to identify your contributions.") }}</small></p>
-                {{ form.username.errors }}
               </li>
               {# The email field is hidden if only one email is provided #}
               {% if form.email.field.widget.input_type == 'hidden' %}
@@ -66,10 +66,8 @@
               {% else %}
 
               <li class="{{ ' error' if form.email.errors or form.other_email.errors }}">
-                <label for="{{ form.email.id_for_label }}" class="outer upper"><b>{{ form.email.label }}</b></label>
-                <p class="field-explanation-top"><small>
-                {{ _("We will use this to send you emails related to your account and if you sign up for any additional notifications.") }}
-                </small></p>
+                <label for="{{ form.email.id_for_label }}" class="outer"><b>{{ form.email.label }}</b></label>
+                {{ form.email.errors }}
                 <ul class="choices">
                 {% for email_choice in form.email %}
                   {% set id_for_label="{name}_{id}"|f(name=email_choice.name, id=loop.index0) %}
@@ -88,7 +86,9 @@
                   </li>
                 {% endfor %}
                 </ul>
-                {{ form.email.errors }}
+                <p class="field-explanation"><small>
+                  {{ _("We will use this to send you emails related to your account and if you sign up for any additional notifications.") }}
+                </small></p>
               </li>
               {% endif %}
 
