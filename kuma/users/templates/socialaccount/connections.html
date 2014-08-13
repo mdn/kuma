@@ -47,6 +47,7 @@
 
   <p>
     <button type="submit">{{ _("Disconnect") }}</button>
+    <a href="{{ url('users.profile_edit', username=request.user.username) }}" class="button neutral">{{ _("Edit profile") }}</a>
   </p>
 
   </fieldset>
@@ -57,12 +58,11 @@
   <p>{{ _("You have no connected accounts.") }}</p>
   {% endif %}
 
-  <h2>{{ _("Connect an account") }}</h2>
+  <h2>{{ _("Connect a new account") }}</h2>
 
   {% with process="connect" %}
   {% include "socialaccount/snippets/provider_list.html" %}
   {% endwith %}
-
 
   {% include "socialaccount/snippets/login_extra.html" %}
 
