@@ -47,6 +47,7 @@
 
   <p>
     <button type="submit">{{ _("Disconnect") }}</button>
+    <a href="{{ url('users.profile_edit', username=request.user.username) }}" class="button neutral">{{ _("Edit profile") }}</a>
   </p>
 
   </fieldset>
