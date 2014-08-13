@@ -266,7 +266,7 @@ class SignupView(BaseSignupView):
         self.email_addresses = SortedDict()
         form = super(SignupView, self).get_form(form_class)
         form.fields['email'].label = _('Email address')
-        self.matching_user = User.objects.none()
+        self.matching_user = None
         initial_username = form.initial.get('username', None)
         if initial_username is not None:
             try:
