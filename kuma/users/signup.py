@@ -65,3 +65,9 @@ class SignupForm(BaseSignupForm):
             # the regular email validation
             self.clean_email()
         return cleaned_data
+
+    def raise_duplicate_email_error(self):
+        try:
+            super(SignupForm, self).raise_duplicate_email_error()
+        except forms.ValidationError as e:
+            self._errors['email'] = self.error_class(e.messages)
