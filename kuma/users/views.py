@@ -266,6 +266,13 @@ class SignupView(BaseSignupView):
         self.email_addresses = SortedDict()
         form = super(SignupView, self).get_form(form_class)
         form.fields['email'].label = _('Email address')
+        initial_username = form.initial.get('username', None)
+        if initial_username is None:
+            self.matching_user = User.objects.none()
+        else:
+            self.matching_user = User.objects.filter(username=initial_username)
+            if self.matching_user.exists():
+                del form.initial['username']
 
         email = self.sociallogin.account.extra_data.get('email') or None
         extra_email_addresses = (self.sociallogin
@@ -360,6 +367,7 @@ class SignupView(BaseSignupView):
             matching_accounts = SocialAccount.objects.none()
         context.update({
             'email_addresses': self.email_addresses,
+            'matching_user': self.matching_user,
             'matching_accounts': matching_accounts,
         })
         return context
