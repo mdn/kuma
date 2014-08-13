@@ -353,15 +353,14 @@ class SignupView(BaseSignupView):
                 or_query_emails.append(Q(uid=email_address['email']))
         if or_query_emails:
             reduced_or_query = reduce(operator.or_, or_query_emails)
-            has_persona = (SocialAccount.objects
-                                        .filter(provider=PersonaProvider.id)
-                                        .filter(reduced_or_query)
-                                        .exists())
+            matching_accounts = (SocialAccount.objects
+                                              .filter(provider=PersonaProvider.id)
+                                              .filter(reduced_or_query))
         else:
-            has_persona = False
+            matching_accounts = SocialAccount.objects.none()
         context.update({
             'email_addresses': self.email_addresses,
-            'has_persona': has_persona,
+            'matching_accounts': matching_accounts,
         })
         return context
 
