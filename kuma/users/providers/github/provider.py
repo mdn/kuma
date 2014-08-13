@@ -33,7 +33,8 @@ class KumaGitHubProvider(GitHubProvider):
         for email_address in data.get('email_addresses', []):
             # let's ignore all email address that have not been verified at
             # Github's side
-            if not email_address.get('verified', False):
+            if (not email_address.get('verified', False) or
+                    not email_address.get('email', '').strip()):
                 continue
             email_addresses.append(EmailAddress(email=email_address['email'],
                                                 verified=True,
