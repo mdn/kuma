@@ -335,6 +335,8 @@ a.github-button {
     padding: 4px 8px;
     background: rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+    display: block;
+    color: inherit;
 
     &.active {
         border-color: rgba(255, 255, 255, 0.3);
@@ -344,6 +346,10 @@ a.github-button {
         .oauth-login-picker {
             display: block;
         }
+    }
+
+    &:hover, &:active, &:focus {
+        text-decoration: none;
     }
 }
 
@@ -378,6 +384,7 @@ a.github-button {
         display: block;
         padding: 6px 8px;
         position: relative;
+        font-weight: normal;
 
         &:hover, &:active, &:focus {
             background: rgba($link-color, 0.1);

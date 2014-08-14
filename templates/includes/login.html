@@ -10,13 +10,13 @@
   {{ providers_media_js() }}
   <form>
       <div class="oauth-login-container">
-          <div class="oauth-login-options" tabIndex="0">
+          <a href="{{ url('account_login') }}" class="oauth-login-options">
               <span>{{ _('Sign in with') }}</span>
               <span class="oauth-icon oauth-persona" title="{{ _('Sign in with Persona') }}"><i class="icon-user" aria-hidden="true"></i></span>
             {% if waffle.flag('github_login') %}
               <span class="oauth-icon oauth-github" title="{{ _('Sign in with GitHub') }}"><i class="icon-github" aria-hidden="true"></i></span>
             {% endif %}
-          </div>
+          </a>
           <div class="submenu oauth-login-picker" aria-hidden="true">
               <ul>
                   <li><a href="{{ provider_login_url("persona", next=next_url) }}" class="persona-button persona-loaded login-link" data-next="{{ next_url }}" data-service="Persona"><i class="icon-user" aria-hidden="true"></i>Persona</a></li>
