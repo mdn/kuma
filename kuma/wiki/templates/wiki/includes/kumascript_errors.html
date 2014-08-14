@@ -1,60 +1,44 @@
 <div class="warning" id="kumascript-errors">
-{% if not request.user.is_authenticated() %}
-    <p>{% trans %}
-    There were scripting errors on this page. While those are being addressed by
-    site editors, you can view partial content below.
-    {% endtrans %}</p>
-{% else %}
-<p>{{ _("There are scripting messages on this page:") }}</p>
-<ul>
+<p>
+{{ ngettext(
+  'There was a scripting error on this page. While it is being addressed by site editors, you can view partial content below.',
+  'There were scripting errors on this page. While those are being addressed by site editors, you can view partial content below.',
+  kumascript_errors|count)
+}}
+
+</p>
+{% if request.user.is_authenticated() %}
+  <button type="button">
+{{ ngettext(
+  'More information about this error',
+  'More information about these errors',
+  kumascript_errors|count)
+}}
+  </button>
+  <p>{% trans %}
+    Anyone with an MDN account can edit a document to fix an error. Use the <a href="/docs/MDN/Kuma/Troubleshooting_KumaScript_errors">KumaScript troubleshooting guide</a> as a starting point.
+  {% endtrans %}</p>
+  <div>
   {% for error in kumascript_errors %}
-    <li class="error error-{{ error.level }}">
-      {% if error.args %}
-        {% set err_type = error.args[0] %}
-        <strong class="type">{{ err_type }}</strong>
-        {% if err_type == 'TemplateExecutionError' %}
-          {% set options = error.args[2] %}
-          {% set token = options.token %}
-          {% set template_name = token.name %}
-          {% set template_args = token.args %}
-          {% set template_slug = 'Template:{name}' | f(name=template_name) %}
-          {% if '$' not in template_name %}
-              {% set template_path = ('{locale}/{slug}' | f(locale='en-US', slug=template_slug)) %}
-              {% set edit_url = url('wiki.edit_document', template_path) %}
-          {% endif %}
-          <span>
-            at document offset {{ token['offset'] }}
-            in macro <code>{{ template_name }} ({{ template_args }})</code>
-            {% if edit_url %}
-                ( <a href="{{ edit_url }}">edit</a> ):
-            {% endif %}
-          </span>
-        {% endif %}
-        {% if err_type == 'TemplateLoadingError' %}
-          {% set options = error.args[2] %}
-          {% set template_name = options.name %}
-          {% set template_slug = 'Template:{name}' | f(name=template_name) %}
-          {% if '$' not in template_name %}
-              {% set template_path = ('{locale}/{slug}' | f(locale='en-US', slug=template_slug)) %}
-              {% set edit_url = url('wiki.edit_document', template_path) %}
-              {% set new_url = url('wiki.new_document') %}
-          {% endif %}
-          <span>
-            for <code>{{ template_slug }}</code> (
-                {% if 'status 404' in error.message and new_url %}
-                    <a href="{{ new_url }}?slug={{ template_slug }}">new</a>
-                {% elif edit_url %}
-                    <a href="{{ edit_url }}">edit</a>
-                {% elif '$' in template_name %}
-                    {{ _("Note: '$' in macro names is not supported") }}
-                {% endif %}
-            ):
-          </span>
-        {% endif %}
-      {% endif %}
-      <pre class="message brush: text">{{ error.message }}</pre>
-    </li>
+    <p>
+    {% if error.args %}
+      {% set err_type = error.args[0] %}
+      {{ _('Error type:') }} <strong class="type">{{ err_type }}</strong><br>
+      <!-- if line and column (no more offest) -->
+        {{ _('Line:') }} <!-- line --><br>
+        {{ _('Column:') }} <!-- col --><br>
+      <!-- / if -->
+      <!-- if problem was in the macro not this document -->
+        {{ _('In macro:') }} <code><!-- macro name --></code> (<!-- link to edit -->)<br>
+      <!-- /if -->
+      <!-- if problem was figuring how which/how to include a macro -->
+        {{ _('Parsing macro:') }} <code><!-- macro name & arguments (the arguments are being output with a funny character in them right now, I think there is a problem with how they are being escaped/unescaped) --></code> (<!-- link to edit or create  -->)<br>
+      <!-- / if -->
+      {{ _('Full text of error:') }}<br>
+    {% endif %}
+    <pre class="message brush: text">{{ error.message }}</pre>
+    </p>
   {% endfor %}
-</ul>
+  </div>
 {% endif %}
 </div>
