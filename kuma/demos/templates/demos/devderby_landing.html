@@ -26,28 +26,14 @@
             <p>
             {% trans %}
                 From 2011 until 2013, web developers created more than 450 demos
-                for the Dev Derby! Find them below, 
+                for the Dev Derby! Find them below,
                 or <a href="{{ demos_url }}">visit the Demo Studio</a> for many more.
             {% endtrans %}
             </p>
         </header>
-        
+
         <div class="column-container">
             <div class="column-main main">
-
-              <section id="tab-previous" class="block">
-                <header>
-                    <h2>{{_("Previous Dev Derby Challenges")}}</h2>
-                </header>
-                <ul class="previous">
-                    {% for tag_name in previous_challenge_tag_names %}
-                        <li>
-                          <h3><a href="{{ devderby_tag_to_date_url(tag_name) }}"><span>{{ tag_meta(tag_name, 'dateline') }}</span> {{ tag_meta(tag_name, 'short_title') }}</a></h3>
-                          <p class="desc">{{ tag_meta(tag_name, 'summary') }}</p>
-                        </li>
-                    {% endfor %}
-                </ul>
-              </section>
 
               <div style="padding-right: 20px;">
                 <header>
@@ -64,7 +50,7 @@
               </div>
 
             </div><!-- /.main -->
-        
+
             <section id="resources">
               <h3>{{_("Resources")}}</h3>
               <ul>
