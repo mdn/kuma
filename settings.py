@@ -487,7 +487,7 @@ INSTALLED_APPS = (
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.persona',
+    'kuma.users.providers.persona',
     'kuma.users.providers.github',
     'kuma.events',
 
