@@ -353,7 +353,7 @@ LANGUAGE_URL_IGNORED_PATHS = (
     'grappelli',
     '__debug__',
     '.well-known',
-    'users/persona/login/',
+    'users/persona/',
     'users/github/login/callback/',
 )
 
