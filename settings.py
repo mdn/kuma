@@ -775,7 +775,6 @@ MINIFY_BUNDLES = {
 # Session cookies
 SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_HTTPONLY = True
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 # Cookie prefix from PHPBB settings.
 PHPBB_COOKIE_PREFIX = 'phpbb3_jzxvr'
