@@ -74,6 +74,7 @@
                   <li class="wordcount{{ ' error' if profile_form.bio.errors }}">
                     <label for="{{ profile_form.bio.id_for_label }}">{{ _('About me') }} <span class="note"><b id="bio_wordcount" class="counter">150</b> {{ _('words remaining') }}</span></label>
                     {{ profile_form.bio }}
+                    {{ profile_form.bio.errors }}
                   </li>
 
                   <li class="{{ ' error' if profile_form.interests.errors }}">

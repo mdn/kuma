@@ -100,10 +100,6 @@
         set-font-size($base-bump-font-size);
     }
 
-    .upper {
-        margin-bottom: 0;
-    }
-
     .choices {
         list-style-type: none;
     }
@@ -114,6 +110,10 @@
 
     .choices li label {
         display: inline-block;
+    }
+
+    .choices li.exists label {
+        text-decoration:line-through;
     }
 
     .check {

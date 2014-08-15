@@ -1,8 +1,11 @@
+import operator
+
 from django import forms
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User, Group
 from django.core.paginator import Paginator
 from django.db import transaction
+from django.db.models import Q
 from django.http import Http404, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, render, redirect
 from django.utils.datastructures import SortedDict
@@ -10,8 +13,10 @@ from django.utils.datastructures import SortedDict
 from access.decorators import login_required
 from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress
-from allauth.socialaccount.views import SignupView as BaseSignupView
 from allauth.socialaccount import helpers
+from allauth.socialaccount.models import SocialAccount
+from allauth.socialaccount.providers.persona.provider import PersonaProvider
+from allauth.socialaccount.views import SignupView as BaseSignupView
 from badger.models import Award
 import constance.config
 from taggit.utils import parse_tags
@@ -261,6 +266,15 @@ class SignupView(BaseSignupView):
         self.email_addresses = SortedDict()
         form = super(SignupView, self).get_form(form_class)
         form.fields['email'].label = _('Email address')
+        self.matching_user = None
+        initial_username = form.initial.get('username', None)
+        if initial_username is not None:
+            try:
+                self.matching_user = User.objects.get(username=initial_username)
+                # deleting the initial username because we found a matching user
+                del form.initial['username']
+            except User.DoesNotExist:
+                pass
 
         email = self.sociallogin.account.extra_data.get('email') or None
         extra_email_addresses = (self.sociallogin
@@ -342,8 +356,21 @@ class SignupView(BaseSignupView):
 
     def get_context_data(self, **kwargs):
         context = super(SignupView, self).get_context_data(**kwargs)
+        or_query_emails = []
+        for email_address in self.email_addresses.values():
+            if email_address['verified']:
+                or_query_emails.append(Q(uid=email_address['email']))
+        if or_query_emails:
+            reduced_or_query = reduce(operator.or_, or_query_emails)
+            matching_accounts = (SocialAccount.objects
+                                              .filter(provider=PersonaProvider.id)
+                                              .filter(reduced_or_query))
+        else:
+            matching_accounts = SocialAccount.objects.none()
         context.update({
             'email_addresses': self.email_addresses,
+            'matching_user': self.matching_user,
+            'matching_accounts': matching_accounts,
         })
         return context
 

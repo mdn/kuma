@@ -28,6 +28,7 @@ class SignupForm(BaseSignupForm):
     other_email = forms.CharField(required=False,
                                   widget=forms.TextInput(attrs={'type': 'email'}))
     other_email_value = '_other'
+    duplicate_email_error_label = '_duplicate_email'
 
     def __init__(self, *args, **kwargs):
         super(SignupForm, self).__init__(*args, **kwargs)
@@ -62,6 +63,13 @@ class SignupForm(BaseSignupForm):
             # and set the cleaned data to the cleaned other_email value
             self.cleaned_data['email'] = self.cleaned_data['other_email']
             # then run the usual email clean method again to apply
-            # the regular email validation
-            self.clean_email()
+            # the regular email validation and put the error into the
+            # email field specific value
+            try:
+                self.clean_email()
+            except forms.ValidationError as e:
+                self._errors['email'] = self.error_class(e.messages)
         return cleaned_data
+
+    def raise_duplicate_email_error(self):
+        raise forms.ValidationError(self.duplicate_email_error_label)
