@@ -8,7 +8,7 @@
 
 </p>
 {% if request.user.is_authenticated() %}
-  <button type="button">
+  <button type="button" class="kumascript-detail-toggle" data-alternate-message="{{ _('Hide error information') }}">
     {{ ngettext(
       'More information about this error',
       'More information about these errors',
