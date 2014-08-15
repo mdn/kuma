@@ -58,7 +58,15 @@
       </div>
 
       <div class="main">
-        <h1 class="page-title"><span class="nickname">{{ profile.user.username }}</span> {% if profile.fullname %}<b>(<span class="fn">{{ profile.fullname }}</span>)</b>{% endif %}</h1>
+        <h1 class="page-title">
+            <span class="nickname">{{ profile.user.username }}</span>
+            {% if profile.fullname %}
+                <b>(<span class="fn">{{ profile.fullname }}</span>)</b>
+            {% endif %}
+            {% if user.is_authenticated and user.username == profile.user.username %}
+                {% include 'socialaccount/snippets/login_service_icon.html' %}
+            {% endif %}
+        </h1>
 
         <div class="edit">
           {% if show_manage_roles_button %}
