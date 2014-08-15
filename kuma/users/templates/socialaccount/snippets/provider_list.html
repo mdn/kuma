@@ -12,13 +12,25 @@
         {% if provider.id == "persona" %}
           <li><a href="{{ provider_login_url(provider.id, process=process, next=next_url) }}" class="persona-button persona-loaded login-link" data-next="{{ next_url }}" data-service="{{ provider.name }}">
             <span class="persona-icon"><i aria-hidden="true"></i></span>
-            <span class="signin">{{ _('Sign in with Persona') }}</span>
+            <span class="signin">
+            {% if process == "connect" %}
+              {{ _('Connect with Persona') }}
+            {% else %}
+              {{ _('Sign in with Persona') }}
+            {% endif %}
+            </span>
           </a></li>
         {% elif provider.id == "github" %}
           {% if waffle.flag('github_login') %}
             <li><a href="{{ provider_login_url(provider.id, process=process, next=next_url) }}" class="github-button login-link" data-next="{{ next_url }}" data-service="{{ provider.name }}">
               <span class="github-icon"><i class="icon-github" aria-hidden="true"></i></span>
-              <span class="signin">{{ _('Sign in with GitHub') }}</span>
+              <span class="signin">
+              {% if process == "connect" %}
+                {{ _('Connect with GitHub') }}
+              {% else %}
+                {{ _('Sign in with GitHub') }}
+              {% endif %}
+              </span>
             </a></li>
           {% endif %}
         {# {% else %}
