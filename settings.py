@@ -353,7 +353,7 @@ LANGUAGE_URL_IGNORED_PATHS = (
     'grappelli',
     '__debug__',
     '.well-known',
-    'users/persona/login/',
+    'users/persona/',
     'users/github/login/callback/',
 )
 
@@ -487,7 +487,7 @@ INSTALLED_APPS = (
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.persona',
+    'kuma.users.providers.persona',
     'kuma.users.providers.github',
     'kuma.events',
 
@@ -775,7 +775,6 @@ MINIFY_BUNDLES = {
 # Session cookies
 SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_HTTPONLY = True
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 # Cookie prefix from PHPBB settings.
 PHPBB_COOKIE_PREFIX = 'phpbb3_jzxvr'
