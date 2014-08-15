@@ -370,8 +370,7 @@
                 $("<input type='hidden' name='title' />").val(title).appendTo($form);
 
                 // Add the CSRF ?
-                $('input[name=csrfmiddlewaretoken]').clone().appendTo($form);
-
+                $('#wiki-page-edit, #translate-document').find('input[name=csrfmiddlewaretoken]').clone().appendTo($form);
                 // Submit the form, and then get rid of it
                 $form.get(0).submit();
                 $form.remove();
