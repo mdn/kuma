@@ -9,36 +9,59 @@
 </p>
 {% if request.user.is_authenticated() %}
   <button type="button">
-{{ ngettext(
-  'More information about this error',
-  'More information about these errors',
-  kumascript_errors|count)
-}}
+    {{ ngettext(
+      'More information about this error',
+      'More information about these errors',
+      kumascript_errors|count)
+    }}
   </button>
-  <p>{% trans %}
-    Anyone with an MDN account can edit a document to fix an error. Use the <a href="/docs/MDN/Kuma/Troubleshooting_KumaScript_errors">KumaScript troubleshooting guide</a> as a starting point.
-  {% endtrans %}</p>
-  <div>
-  {% for error in kumascript_errors %}
-    <p>
-    {% if error.args %}
-      {% set err_type = error.args[0] %}
-      {{ _('Error type:') }} <strong class="type">{{ err_type }}</strong><br>
-      <!-- if line and column (no more offest) -->
-        {{ _('Line:') }} <!-- line --><br>
-        {{ _('Column:') }} <!-- col --><br>
-      <!-- / if -->
-      <!-- if problem was in the macro not this document -->
-        {{ _('In macro:') }} <code><!-- macro name --></code> (<!-- link to edit -->)<br>
-      <!-- /if -->
-      <!-- if problem was figuring how which/how to include a macro -->
-        {{ _('Parsing macro:') }} <code><!-- macro name & arguments (the arguments are being output with a funny character in them right now, I think there is a problem with how they are being escaped/unescaped) --></code> (<!-- link to edit or create  -->)<br>
-      <!-- / if -->
-      {{ _('Full text of error:') }}<br>
-    {% endif %}
-    <pre class="message brush: text">{{ error.message }}</pre>
-    </p>
-  {% endfor %}
+  <div class="kumascript-details hidden">
+      <p>{% trans %}
+        Anyone with an MDN account can edit a document to fix an error. Use the <a href="/docs/MDN/Kuma/Troubleshooting_KumaScript_errors">KumaScript troubleshooting guide</a> as a starting point.
+      {% endtrans %}</p>
+
+      <ul>
+      {% for error in kumascript_errors %}
+        <li>
+        {% if error.args %}
+
+        {% set err_type = error.args[0] %}
+        {% set options = error.args[2] %}
+        {% set template_name = options.name %}
+        {% set template_args = options.args %}
+
+        {% if '$' not in template_name %}
+            {% set template_slug = 'Template:{name}' | f(name=template_name) %}
+            {% set edit_url = url('wiki.edit_document', template_slug) %}
+            {% set new_url = url('wiki.new_document') + '?slug=Template:{name}' | f(name=options.name) %}
+        {% endif %}
+
+          {{ _('Error type:') }} <strong class="type">{{ err_type }}</strong><br>
+
+          {#  TODO:  Provide line and column instead off "offset" property, if possible
+          <!-- if line and column (no more offest) -->
+            {{ _('Line:') }} <!-- line --><br>
+            {{ _('Column:') }} {{ options.offset }}<br>
+          <!-- / if -->
+          #}
+
+            {{ _('In macro:') }} <code>{{ options.name }}</code>
+
+            {% if 'status 404' in error.message %}
+                {% if new_url %}
+                    (<a href="{{ new_url }}">{{ _('Create Template') }}</a>)
+                {% endif %}
+            {% elif edit_url  %}
+                (<a href="{{ edit_url }}">{{ _('Edit Template') }}</a>)
+            {% endif %}<br>
+
+            {{ _('Parsing macro:') }} <code>{{ options.name }}({{ options.token.args }})</code> (<a href="{{ url('wiki.edit_document', document.slug) }}">{{ _('Edit Document') }}</a>)<br>
+          {{ _('Full text of error:') }}<br>
+        {% endif %}
+        <pre class="message brush: text">{{ error.message }}</pre>
+        </li>
+      {% endfor %}
+      </ul>
   </div>
 {% endif %}
 </div>
