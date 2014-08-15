@@ -22,7 +22,7 @@
     <ul class="demo-buttons">
       <li class="submit"><a href="{{ url('demos_submit') }}" class="button positive"><b></b>{{_("Submit a Demo")}}</a></li>
       <li class="learnmore menu"><a href="#learn-pop" class="button">{{ _('Learn More') }}</a>
-        <div id="learn-pop" aria-hidden="true">        
+        <div id="learn-pop" aria-hidden="true">
           {% trans %}
           <p>Welcome to the Mozilla Demo Studio, where developers like you can develop, share, demonstrate, and learn all about Web technologies. See what's possible by exploring Demo Studio:</p>
           <ul>
@@ -34,9 +34,6 @@
         </div>
       </li>
     </ul>
-    <p id="derby-cta">
-      <a href="{{url('demos_devderby_landing')}}">{% trans %}<span>Join the</span> <em>Dev Derby</em> &amp; Win Prizes <br/><strong>Learn More</strong>{% endtrans %}</a>
-    </p>
   </header>
 
   {% if featured_submission_list | length >= 3 %}
@@ -49,7 +46,7 @@
       <li class="nav-prev"><a href="#demo-prev" class="prev" title="{{_("See the previous demo")}}">{{_("Previous")}}</a></li>
   		<li class="nav-next"><a href="#demo-next" class="next" title="{{_("See the next demo")}}">{{_("Next")}}</a></li>
     </ul>
-  
+
     {% set submission = featured_submission_list[1] %}
     <div id="demo-main">
       {# <strong class="flag">{{_("Derby Winner")}}</strong> #}
@@ -59,7 +56,7 @@
         </a>
         <div class="demo-details">
           <h2 class="demo-title">
-              <a href="{{ url('demos_detail', slug=submission.slug) }}">{{ submission.title }}</a>  
+              <a href="{{ url('demos_detail', slug=submission.slug) }}">{{ submission.title }}</a>
           </h2>
           <p class="byline vcard">
             {{ profile_link(submission.creator, show_gravatar=True) }}
@@ -74,7 +71,7 @@
         </div>
       </div>
     </div>
-    
+
     {% set submission = featured_submission_list[0] %}
     <div id="demo-prev" class="side">
       <div class="preview">
@@ -86,7 +83,7 @@
         </h2>
       </div>
     </div>
-    
+
     {% set submission = featured_submission_list[2] %}
     <div id="demo-next" class="side">
       <div class="preview">
@@ -102,7 +99,7 @@
   {% endif %}
 
   <section id="content-main" class="full" role="main">
-  
+
     <div id="search-browse">
       <form class="demo-search" method="GET" action="{{ url('demos_search') }}">
         <p>
@@ -110,9 +107,9 @@
           <noscript><button type="submit">{{_("Search")}}</button></noscript>
         </p>
       </form>
-      
+
       {% trans %}<b>or</b>{% endtrans %}
-      
+
       <div id="demo-tags" class="menu">
         <a href="#tags-list" class="button neutral">{{_("Browse by Technology")}}</a>
         <ul id="tags-list">
@@ -122,7 +119,7 @@
                 {% endif %}
             {% endfor %}
         </ul>
-      </div> 
+      </div>
     </div>
 
     {{ submission_listing(request, submission_list,  is_paginated, paginator, page_obj,
@@ -138,11 +135,11 @@
 
 {% block js %}
 {{ super() }}
-    
+
 <script type="text/javascript">
 // <![CDATA[
 /* Featured demos */
-  
+
   $(document).ready(function() {
 
     var $featuredDemos = $("#featured-demos"),
@@ -185,7 +182,7 @@
         '{{ url('demos_feed_featured', format='json') }}';
 
     // Hide buttons until feed loaded.
-    $(".nav-slide .next, .nav-slide .prev").hide(); 
+    $(".nav-slide .next, .nav-slide .prev").hide();
 
     // Load the feed, wire everything up once the data's been received.
     $.getJSON(featured_demos_feed_url, function (demos) {
@@ -194,7 +191,7 @@
         if (!demos || demos.length == 0) {
             return;
         }
-            
+
         // Start the current index at 1, since 0 and 2 should already be in prev
         // and next positions.
         var curr_idx = 1;
@@ -231,7 +228,7 @@
                   .attr("href", demo.link)
                 .end()
                 .find(".launch a").attr("href", demo.link + "/launch").end()
-                ;         
+                ;
         }
 
         // Create functions for next and previous movement
@@ -242,7 +239,7 @@
                 .find(".preview img").attr("src", demo ? demo.screenshot : "").end()
                 .find(".demo-title a").attr("href", demo ? demo.link : "#").end()
                 .find(".demo-title b").text(demo ? demo.title : "").end()
-                ; 
+                ;
           };
         }
         updatePrevFeaturedDemo = createDemoUpdates(-1, $demoPrev);
@@ -251,12 +248,12 @@
         // Show the next button and wire up click handler.
         $next_btn.show().click(function() {
 
-            if (curr_idx == demos.length-1) { 
+            if (curr_idx == demos.length-1) {
                 // If we're already at the end of the list, do nothing.
-                return; 
+                return;
             }
-            curr_idx++; 
-            
+            curr_idx++;
+
             // Fade out from right-to-left, update on fade out, fade back in if
             // there's a demo to show
             $demoNextPreview.fadeOut(200, updateNextFeaturedDemo);
@@ -279,16 +276,16 @@
                 // No prev demo, so fade out the control.
                 $prev_btn.fadeOut();
             }
-            
+
             return false;
         });
 
         // Show the previous button and wire up click handler.
         $prev_btn.show().click(function() {
 
-            if (curr_idx == 0) { 
+            if (curr_idx == 0) {
                 // If we're already at the start of the list, do nothing.
-                return; 
+                return;
             }
             curr_idx--;
 
@@ -314,7 +311,7 @@
                 // No next demo, so fade out the control.
                 $next_btn.fadeOut();
             }
-            
+
             return false;
         });
 

@@ -250,14 +250,6 @@ class DemoViewsTest(test_utils.TestCase):
         assert pq(r.content)('input[name="hidden"][type="checkbox"]')
 
     @logged_in
-    def test_derby_field(self):
-        s = save_valid_submission('hello world')
-
-        edit_url = reverse('demos_edit', args=[s.slug])
-        r = self.client.get(edit_url)
-        assert pq(r.content)('fieldset#devderby-submit')
-
-    @logged_in
     def test_edit_no_tags(self):
         s = save_valid_submission('hello world')
         edit_url = reverse('demos_edit', args=[s.slug])

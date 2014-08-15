@@ -90,26 +90,6 @@
                 </ul>
             </fieldset>
 
-      {% if form.fields.challenge_tags %}
-            <fieldset id="devderby-submit" class="inline">
-                <legend><b>
-                {% trans derby_url = url('demos_devderby_landing') %}
-                    Submit your demo to the <a href="{{ derby_url }}" onclick="window.open(this.href);return false;">Dev Derby</a>!
-                {% endtrans %}
-                </b></legend>
-                <a href="{{url('demos_devderby_landing')}}" onclick="window.open(this.href);return false;">
-                  <img class="derby-logo" src="{{ MEDIA_URL }}img/devderby/logo-devderby-sm.png" alt="" width="190" height="60"/>
-                </a>
-                <p>{{_("Check the appropriate Dev Derby box and make sure you select the relevant technologies above to be considered for the developer challenge.")}}</p>
-                <ul id="challenge-tags">
-                  {{ li_field(form, 'challenge_tags', show_label=False) }}
-                </ul>
-                  <div class="notice">
-                      <p>Each Derby ends at 11:59:59 p.m. PT on the last day of its month.</p>
-                  </div>
-            </fieldset>
-      {% endif %}
-
           </ul>
 
         </fieldset>
