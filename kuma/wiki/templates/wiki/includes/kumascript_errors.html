@@ -1,60 +1,67 @@
 <div class="warning" id="kumascript-errors">
-{% if not request.user.is_authenticated() %}
-    <p>{% trans %}
-    There were scripting errors on this page. While those are being addressed by
-    site editors, you can view partial content below.
-    {% endtrans %}</p>
-{% else %}
-<p>{{ _("There are scripting messages on this page:") }}</p>
-<ul>
-  {% for error in kumascript_errors %}
-    <li class="error error-{{ error.level }}">
-      {% if error.args %}
+<p>
+{{ ngettext(
+  'There was a scripting error on this page. While it is being addressed by site editors, you can view partial content below.',
+  'There were scripting errors on this page. While those are being addressed by site editors, you can view partial content below.',
+  kumascript_errors|count)
+}}
+
+</p>
+{% if request.user.is_authenticated() %}
+  <button type="button" class="kumascript-detail-toggle" data-alternate-message="{{ _('Hide error information') }}">
+    {{ ngettext(
+      'More information about this error',
+      'More information about these errors',
+      kumascript_errors|count)
+    }}
+  </button>
+  <div class="kumascript-details hidden">
+      <p>{% trans %}
+        Anyone with an MDN account can edit a document to fix an error. Use the <a href="/docs/MDN/Kuma/Troubleshooting_KumaScript_errors">KumaScript troubleshooting guide</a> as a starting point.
+      {% endtrans %}</p>
+
+      <ul>
+      {% for error in kumascript_errors %}
+        <li>
+        {% if error.args %}
+
         {% set err_type = error.args[0] %}
-        <strong class="type">{{ err_type }}</strong>
-        {% if err_type == 'TemplateExecutionError' %}
-          {% set options = error.args[2] %}
-          {% set token = options.token %}
-          {% set template_name = token.name %}
-          {% set template_args = token.args %}
-          {% set template_slug = 'Template:{name}' | f(name=template_name) %}
-          {% if '$' not in template_name %}
-              {% set template_path = ('{locale}/{slug}' | f(locale='en-US', slug=template_slug)) %}
-              {% set edit_url = url('wiki.edit_document', template_path) %}
-          {% endif %}
-          <span>
-            at document offset {{ token['offset'] }}
-            in macro <code>{{ template_name }} ({{ template_args }})</code>
-            {% if edit_url %}
-                ( <a href="{{ edit_url }}">edit</a> ):
-            {% endif %}
-          </span>
+        {% set options = error.args[2] %}
+        {% set template_name = options.name %}
+        {% set template_args = options.args %}
+
+        {% if '$' not in template_name %}
+            {% set template_slug = 'Template:{name}' | f(name=template_name) %}
+            {% set edit_url = url('wiki.edit_document', template_slug) %}
+            {% set new_url = url('wiki.new_document') + '?slug=Template:{name}' | f(name=options.name) %}
         {% endif %}
-        {% if err_type == 'TemplateLoadingError' %}
-          {% set options = error.args[2] %}
-          {% set template_name = options.name %}
-          {% set template_slug = 'Template:{name}' | f(name=template_name) %}
-          {% if '$' not in template_name %}
-              {% set template_path = ('{locale}/{slug}' | f(locale='en-US', slug=template_slug)) %}
-              {% set edit_url = url('wiki.edit_document', template_path) %}
-              {% set new_url = url('wiki.new_document') %}
-          {% endif %}
-          <span>
-            for <code>{{ template_slug }}</code> (
-                {% if 'status 404' in error.message and new_url %}
-                    <a href="{{ new_url }}?slug={{ template_slug }}">new</a>
-                {% elif edit_url %}
-                    <a href="{{ edit_url }}">edit</a>
-                {% elif '$' in template_name %}
-                    {{ _("Note: '$' in macro names is not supported") }}
+
+          {{ _('Error type:') }} <strong class="type">{{ err_type }}</strong><br>
+
+          {#  TODO:  Provide line and column instead off "offset" property, if possible
+          <!-- if line and column (no more offest) -->
+            {{ _('Line:') }} <!-- line --><br>
+            {{ _('Column:') }} {{ options.offset }}<br>
+          <!-- / if -->
+          #}
+
+            {{ _('In macro:') }} <code>{{ options.name }}</code>
+
+            {% if 'status 404' in error.message %}
+                {% if new_url %}
+                    (<a href="{{ new_url }}">{{ _('Create Template') }}</a>)
                 {% endif %}
-            ):
-          </span>
+            {% elif edit_url  %}
+                (<a href="{{ edit_url }}">{{ _('Edit Template') }}</a>)
+            {% endif %}<br>
+
+            {{ _('Parsing macro:') }} <code>{{ options.name }}({{ options.token.args }})</code> (<a href="{{ url('wiki.edit_document', document.slug) }}">{{ _('Edit Document') }}</a>)<br>
+          {{ _('Full text of error:') }}<br>
         {% endif %}
-      {% endif %}
-      <pre class="message brush: text">{{ error.message }}</pre>
-    </li>
-  {% endfor %}
-</ul>
+        <pre class="message brush: text">{{ error.message }}</pre>
+        </li>
+      {% endfor %}
+      </ul>
+  </div>
 {% endif %}
 </div>

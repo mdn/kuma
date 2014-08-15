@@ -364,7 +364,6 @@
         Plugin to toggle button messages
     */
     $.fn.toggleMessage = function(options){
-
         var settings = $.extend({
             event: 'click',
             toggleCallback: noop
