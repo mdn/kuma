@@ -323,6 +323,16 @@
     });
 
     /*
+        Toggle kumascript error detail pane
+    */
+    $('.kumascript-detail-toggle').toggleMessage({
+        toggleCallback: function() {
+            $('.kumascript-details').toggleClass('hidden');
+        }
+    });
+
+
+    /*
         Stack overflow search form, used for dev program
         ex: http://stackoverflow.com/search?q=[firefox]+or+[firefox-os]+or+[html5-apps]+foobar
     */
