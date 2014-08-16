@@ -116,7 +116,6 @@
 
         config.extraPlugins = 'definitionlist,mdn-buttons,mdn-link,mdn-syntaxhighlighter,mdn-keystrokes,mdn-attachments,mdn-image,mdn-enterkey,mdn-wrapstyle,mdn-table,tablesort,mdn-sampler,mdn-sample-finder,mdn-maximize,mdn-redirect,youtube,autogrow,texzilla';
         config.removePlugins = 'link,image,tab,enterkey,table,maximize';
-        config.entities = false;
 
         config.toolbar_MDN = [
             ['Source', 'mdnSave', 'mdnSaveExit', '-', 'PasteText', 'PasteFromWord', '-', 'SpellChecker', 'Scayt', '-', 'Find', 'Replace', '-', 'ShowBlocks'],
@@ -134,6 +133,8 @@
             config.toolbar_MDN[0].join();
         }
 
+        config.entities = false;
+        config.forcePasteAsPlainText = true;
         config.skin = 'kuma';
         config.startupFocus = true;
         config.toolbar = 'MDN';
