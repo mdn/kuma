@@ -6,6 +6,7 @@ import urllib
 import bleach
 import jinja2
 import pytz
+import json as jsonlib
 from urlobject import URLObject
 
 from django.conf import settings
@@ -26,6 +27,11 @@ from kuma.wiki.models import Document
 from sumo.urlresolvers import split_path, reverse
 from .utils import entity_decode
 
+from babel import localedata
+from babel.dates import format_date, format_time, format_datetime
+from babel.numbers import format_decimal
+from tower import ugettext_lazy as _lazy, ungettext
+from pytz import timezone
 
 # Yanking filters from Django.
 register.filter(strip_tags)
@@ -170,7 +176,6 @@ def get_soapbox_messages(url):
 def soapbox_messages(soapbox_messages):
     return {'soapbox_messages': soapbox_messages}
 
-
 @register.function
 def add_utm(url_, campaign, source='developer.mozilla.org', medium='email'):
     """Add the utm_* tracking parameters to a URL."""
@@ -179,3 +184,72 @@ def add_utm(url_, campaign, source='developer.mozilla.org', medium='email'):
         'utm_source': source,
         'utm_medium': medium})
     return str(url_obj)
+
+class DateTimeFormatError(Exception):
+    """Called by the datetimeformat function when receiving invalid format."""
+    pass
+
+@register.filter
+def json(s):
+    return jsonlib.dumps(s)
+
+def _babel_locale(locale):
+    """Return the Babel locale code, given a normal one."""
+    # Babel uses underscore as separator.
+    return locale.replace('-', '_')
+
+
+def _contextual_locale(context):
+    """Return locale from the context, falling back to a default if invalid."""
+    locale = context['request'].locale
+    if not localedata.exists(locale):
+        locale = settings.LANGUAGE_CODE
+    return locale
+
+
+@register.function
+@jinja2.contextfunction
+def datetimeformat(context, value, format='shortdatetime', output='html'):
+    """
+    Returns date/time formatted using babel's locale settings. Uses the
+    timezone from settings.py
+    """
+    if not isinstance(value, datetime.datetime):
+        # Expecting date value
+        raise ValueError
+
+    default_tz = timezone(settings.TIME_ZONE)
+    tzvalue = default_tz.localize(value)
+
+    user = context['request'].user
+    profile = user.get_profile()
+    if user.is_authenticated() and profile.timezone:
+        user_tz = profile.timezone
+        tzvalue = user_tz.normalize(tzvalue.astimezone(user_tz))
+
+    locale = _babel_locale(_contextual_locale(context))
+
+    # If within a day, 24 * 60 * 60 = 86400s
+    if format == 'shortdatetime':
+        # Check if the date is today
+        if value.toordinal() == datetime.date.today().toordinal():
+            formatted = _lazy(u'Today at %s') % format_time(
+                                    tzvalue, format='short', locale=locale)
+        else:
+            formatted = format_datetime(tzvalue, format='short', locale=locale)
+    elif format == 'longdatetime':
+        formatted = format_datetime(tzvalue, format='long', locale=locale)
+    elif format == 'date':
+        formatted = format_date(tzvalue, locale=locale)
+    elif format == 'time':
+        formatted = format_time(tzvalue, locale=locale)
+    elif format == 'datetime':
+        formatted = format_datetime(tzvalue, locale=locale)
+    else:
+        # Unknown format
+        raise DateTimeFormatError
+
+    if output == 'json':
+        return formatted
+    return jinja2.Markup('<time datetime="%s">%s</time>' % \
+                         (tzvalue.isoformat(), formatted))

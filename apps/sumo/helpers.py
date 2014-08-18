@@ -103,69 +103,6 @@ class Paginator(object):
         t = env.get_template('includes/paginator.html').render(c)
         return jinja2.Markup(t)
 
-
-def _babel_locale(locale):
-    """Return the Babel locale code, given a normal one."""
-    # Babel uses underscore as separator.
-    return locale.replace('-', '_')
-
-
-def _contextual_locale(context):
-    """Return locale from the context, falling back to a default if invalid."""
-    locale = context['request'].locale
-    if not localedata.exists(locale):
-        locale = settings.LANGUAGE_CODE
-    return locale
-
-
-@register.function
-@jinja2.contextfunction
-def datetimeformat(context, value, format='shortdatetime', output='html'):
-    """
-    Returns date/time formatted using babel's locale settings. Uses the
-    timezone from settings.py
-    """
-    if not isinstance(value, datetime.datetime):
-        # Expecting date value
-        raise ValueError
-
-    default_tz = timezone(settings.TIME_ZONE)
-    tzvalue = default_tz.localize(value)
-
-    user = context['request'].user
-    profile = user.get_profile()
-    if user.is_authenticated() and profile.timezone:
-        user_tz = profile.timezone
-        tzvalue = user_tz.normalize(tzvalue.astimezone(user_tz))
-
-    locale = _babel_locale(_contextual_locale(context))
-
-    # If within a day, 24 * 60 * 60 = 86400s
-    if format == 'shortdatetime':
-        # Check if the date is today
-        if value.toordinal() == datetime.date.today().toordinal():
-            formatted = _lazy(u'Today at %s') % format_time(
-                                    tzvalue, format='short', locale=locale)
-        else:
-            formatted = format_datetime(tzvalue, format='short', locale=locale)
-    elif format == 'longdatetime':
-        formatted = format_datetime(tzvalue, format='long', locale=locale)
-    elif format == 'date':
-        formatted = format_date(tzvalue, locale=locale)
-    elif format == 'time':
-        formatted = format_time(tzvalue, 'HH:mm', locale=locale)
-    elif format == 'datetime':
-        formatted = format_datetime(tzvalue, locale=locale)
-    else:
-        # Unknown format
-        raise DateTimeFormatError
-
-    if output == 'json':
-        return formatted
-    return jinja2.Markup('<time datetime="%s">%s</time>' % \
-                         (tzvalue.isoformat(), formatted))
-
-
 _whitespace_then_break = re.compile(r'[\r\n\t ]+[\r\n]+')
 
 
