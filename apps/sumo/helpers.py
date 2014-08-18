@@ -133,9 +133,10 @@ def datetimeformat(context, value, format='shortdatetime', output='html'):
     tzvalue = default_tz.localize(value)
 
     user = context['request'].user
-    if user.is_authenticated() and user.get_profile().timezone:
-        user_tz = user.get_profile().timezone
-        tzvalue = tzvalue.astimezone(user_tz)
+    profile = user.get_profile()
+    if user.is_authenticated() and profile.timezone:
+        user_tz = profile.timezone
+        tzvalue = user_tz.normalize(tzvalue.astimezone(user_tz))
 
     locale = _babel_locale(_contextual_locale(context))
 
