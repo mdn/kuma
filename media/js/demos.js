@@ -6,7 +6,7 @@ $(document).ready(function () {
 
         var $el = $(this),
             $form = $el.find('form');
-        
+
         // Wire up reply form reveal link in threaded comments.
         $el.find('.show_reply').click(function () {
             $form.slideDown();
@@ -27,7 +27,7 @@ $(document).ready(function () {
       interval: 250,
       over: function() {
         var $demo = $(this),
-            content = $demo.html(), 
+            content = $demo.html(),
             offs = $demo.offset(),
             $contentContainer = $('body'),
             fadeDuration = 200,
@@ -40,9 +40,9 @@ $(document).ready(function () {
 
         $demoHover = $contentContainer.find('div.demohover');
 
-        if ($demo.parents('#featured-demos').length) {
+        if($demo.parents('#featured-demos').length) {
           $demoHover.addClass('featured');
-        };
+        }
 
         $demoHover
             .addClass( $(this).attr('class') )
@@ -53,7 +53,7 @@ $(document).ready(function () {
                     $(this).remove();
                 });
             });
-      }, 
+      },
       out: function() { /* do nothing */ }
     });
 
@@ -66,8 +66,8 @@ $(document).ready(function () {
     $('#demos-head .learnmore .button').click(function(){
       $learnPop.slideToggle(slideSpeed).removeAttr('aria-hidden');
       $(this).blur();
-      if ($tagsList.is(':visible')) { 
-        $tagsList.hide().attr('aria-hidden', 'true'); 
+      if ($tagsList.is(':visible')) {
+        $tagsList.hide().attr('aria-hidden', 'true');
       }
       return false;
     });
@@ -76,8 +76,8 @@ $(document).ready(function () {
     $('#demos-head .tags .button, #demo-tags .button').click(function() {
       $tagsList.slideToggle(slideSpeed).removeAttr('aria-hidden');
       $(this).blur();
-      if ($learnPop.is(':visible')) { 
-        $learnPop.hide().attr('aria-hidden', 'true'); 
+      if ($learnPop.is(':visible')) {
+        $learnPop.hide().attr('aria-hidden', 'true');
       }
       return false;
     });

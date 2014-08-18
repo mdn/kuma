@@ -12,7 +12,9 @@
     (function() {
         var $mainItems = $('#main-nav > ul > li');
         $mainItems.find('> a').mozMenu({
-            brickOnClick: function(e) { return e.target.tagName == 'I'; }
+            brickOnClick: function(e) {
+                return e.target.tagName == 'I';
+            }
         });
         $mainItems.find('.submenu').mozKeyboardNav();
     })();
@@ -76,8 +78,8 @@
                     return;
                 }
 
-                e && e.preventDefault();
-                timeout && clearTimeout(timeout);
+                if(e) e.preventDefault();
+                if(timeout) clearTimeout(timeout);
                 timeout = setTimeout(function() {
                     if(isAdd) {
                         $navItems.fadeOut(100, function() {
@@ -98,7 +100,7 @@
                         timeout = setTimeout(function() {
                             $searchWrap.removeClass('expanded');
                             $navItems.fadeIn(400);
-                        } , 500);
+                        }, 500);
                     }
                 }, delay);
             };
@@ -148,7 +150,7 @@
     $(doc).ajaxSend(function(event, xhr, settings) {
         function getCookie(name) {
             var cookieValue = null;
-            if (doc.cookie && doc.cookie != '') {
+            if (doc.cookie && doc.cookie !== '') {
                 var cookies = doc.cookie.split(';');
                 for (var i = 0; i < cookies.length; i++) {
                     var cookie = jQuery.trim(cookies[i]);
@@ -193,7 +195,7 @@
     });
     $('#skip-main').each(function() { // Only one, so using each as closure
         var id = this.href.split('#')[1];
-        id && $('#' + id).attr('role', 'main');
+        if(id) $('#' + id).attr('role', 'main');
     });
 
     /*
@@ -244,7 +246,7 @@
     /*
         Tabzilla
     */
-    $('#tabzilla').length && $.ajax({
+    if($('#tabzilla').length) $.ajax({
         url: '//mozorg.cdn.mozilla.net/en-US/tabzilla/tabzilla.js',
         dataType: 'script',
         cache: true
@@ -253,13 +255,12 @@
     /*
         Track users successfully logging in and out
     */
-    ('localStorage' in win) && (function() {
+    if('localStorage' in win) (function() {
         var serviceKey = 'login-service';
         var serviceStored = localStorage.getItem(serviceKey);
         var serviceCurrent = $('body').data(serviceKey);
 
         try {
-
             // User just logged in
             if(serviceCurrent && !serviceStored) {
                 localStorage.setItem(serviceKey, serviceCurrent);
@@ -283,9 +284,8 @@
                     label: serviceStored
                 });
             }
-
         }
-        catch (e) {
+        catch(e) {
             // Browser probably doesn't support localStorage
         }
     })();

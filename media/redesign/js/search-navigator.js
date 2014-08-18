@@ -182,7 +182,7 @@
         // Set in motion the process to show and populate or hide the navigator!
         if(!url) {
             if(key) {
-                url = key
+                url = key;
             }
         }
         else {

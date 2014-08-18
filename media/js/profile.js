@@ -112,7 +112,7 @@
                 var color = placeholder.parent().css("color");
                 var length;
 
-                if(words[0] == ""){ words.length = 0; }
+                if(words[0] === ""){ words.length = 0; }
                 currcount = limit - words.length;
                 placeholder.text(currcount);
 

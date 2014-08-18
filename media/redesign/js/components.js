@@ -50,7 +50,7 @@
                 // If no submenu, go
                 if(!$submenu.length) {
                     clear(showTimeout);
-                    $.fn.mozMenu.$openMenu && closeSubmenu(getOpenParent());
+                    if($.fn.mozMenu.$openMenu) closeSubmenu(getOpenParent());
                     return;
                 }
 
@@ -119,7 +119,7 @@
                         var firstLink = $submenu.find('a').get(0);
                         if(firstLink) {
                             try { // Putting in try/catch because of opacity/focus issues in IE
-                                $(firstLink).addClass(focusClass) && firstLink.focus();
+                                if($(firstLink).addClass(focusClass)) firstLink.focus();
                             }
                             catch(e){
                                 console.log('Exception! ', e);
@@ -138,14 +138,14 @@
 
         // Clears the current timeout, interrupting fade-ins and outs as necessary
         function clear(timeout) {
-            timeout && clearTimeout(timeout);
+            if(timeout) clearTimeout(timeout);
         }
 
         // Closes a given submenu
         function closeSubmenu($sub) {
             closeTimeout = setTimeout(function() {
                 // Set the z-index to one less so another menu would get top spot if overlapping and opening
-                $sub && $sub.css('z-index', 99998).removeClass('open').attr('aria-hidden', 'true').fadeOut(settings.fadeOutSpeed);
+                if($sub) $sub.css('z-index', 99998).removeClass('open').attr('aria-hidden', 'true').fadeOut(settings.fadeOutSpeed);
                 settings.onClose();
             }, settings.hideDelay);
         }
@@ -165,8 +165,8 @@
 
         return this.each(function() {
 
-            var $items = $(this).find(settings.itemSelector);
-            if(!$items.length) return;
+            var $children = $(this).find(settings.itemSelector);
+            if(!$children.length) return;
 
             var $self = $(this);
 
@@ -174,10 +174,11 @@
                 var code = e.keyCode;
                 var charCode = e.charCode;
                 var numberKeyStart = 49;
+                var $items;
 
                 // If we should always get fresh items, do so
                 if(settings.alwaysCollectItems) {
-                    var $items = $(this).find(settings.itemSelector);
+                    $items = $(this).find(settings.itemSelector);
                 }
 
                 // Up and down buttons
@@ -204,7 +205,7 @@
                     var $prev = $($items.get(index - 1));
 
                     if(code == 38) {    // up
-                        $prev.length && selectItem($prev);
+                        if($prev.length) selectItem($prev);
                     }
                     else if(code == 40) {    // down
                         selectItem($next.length ? $next : $items.first());
@@ -213,7 +214,7 @@
                 // Number keys: 1, 2, 3, etc.
                 else if(charCode >= numberKeyStart && charCode <= 57) {
                     var item = $items.get(charCode - numberKeyStart);
-                    item && selectItem(item);
+                    if(item) selectItem(item);
                 }
                 // Enter key
                 else if(code == 13) {
@@ -261,7 +262,7 @@
                 e.stopPropagation();
                 if(e.keyCode == 27) {
                     $(this).siblings('a').trigger('mdn:click').focus();
-                };
+                }
             });
 
             // Click event to show/hide
@@ -412,7 +413,7 @@
         function closeItem($item, callback) {
             $item.fadeOut(300, function() {
                 $item.addClass('closed');
-                callback && callback.apply($item, null);
+                if(callback) callback.apply($item, null);
             });
         }
 
@@ -437,7 +438,7 @@
             // Add URL click event
             if(options.url) {
                 $item.addClass('clickable').on('click', function() {
-                    win.location = defaults.url
+                    win.location = defaults.url;
                 });
             }
 
@@ -543,7 +544,7 @@
 
                 return handle;
             }
-        }
+        };
     })();
 
 })(window, document, jQuery);

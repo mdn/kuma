@@ -103,7 +103,7 @@
             Sends universal analytics client side error
         */
         trackError: function(description) {
-            win.ga && ga('send', 'exception', {
+            if(win.ga) ga('send', 'exception', {
                 'exDescription': description
             });
         }

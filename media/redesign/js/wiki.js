@@ -180,7 +180,7 @@
     /*
         Syntax highlighting scripts
     */
-    $('article pre').length && ('querySelectorAll' in doc) && (function() {
+    if($('article pre').length && ('querySelectorAll' in doc)) (function() {
         var syntaxScript = doc.createElement('script');
         syntaxScript.setAttribute('data-manual', '');
         syntaxScript.async = 'true';
@@ -331,7 +331,7 @@
 
         var value = $(this).find('#stack-search').val();
 
-        if(value != '') {
+        if(value !== '') {
             win.location = 'http://stackoverflow.com/search?q=[firefox]+or+[firefox-os]+or+[html5-apps]+' + value;
         }
     });
@@ -415,7 +415,7 @@
        https://developer.mozilla.org/en-US/docs/Web/MathML/Authoring#Fallback_for_Browsers_without)MathML_support
        and https://github.com/fred-wang/mathml.css.
     */
-    $('math').length && (function() {
+    if($('math').length) (function() {
         // Test for MathML support
         var $div = $('<div class="offscreen"><math xmlns="http://www.w3.org/1998/Math/MathML"><mspace height="23px" width="77px"/></math></div>').appendTo(document.body);
         var box = $div.get(0).firstChild.firstChild.getBoundingClientRect();
@@ -451,7 +451,7 @@
         },
         // Used within the wiki new/move pages
         slugifyString: function(str, allowSlash, allowMultipleUnderscores) {
-            var regex = new RegExp('[\?\&\"\'\#\*\$' + (allowSlash ? '' : '\/') + ' +?]', 'g');
+            var regex = new RegExp('[?&\"\'#*$' + (allowSlash ? '' : '\/') + ' +?]', 'g');
 
             // Remove anything from the slug that could cause big problems
             // "$" is used for verb delimiter in URLs
@@ -519,17 +519,17 @@
             });
 
             if(timeoutFlag) {
-                timer && clearTimeout(timer);
-            }else{
+                if(timer) clearTimeout(timer);
+            }
+            else {
                 timer = setTimeout(timeout, 6000);
             }
-        };
+        }
 
         // If the page does not have any YouTube videos
         if(!$youtubeIframes.length) return;
 
-        var origin = win.location.protocol + '//' + win.location.hostname +
-                    (win.location.port ? ':' + win.location.port: '');
+        var origin = win.location.protocol + '//' + win.location.hostname + (win.location.port ? ':' + win.location.port: '');
 
         //Enable JS API on all YouTube iframes, might cause flicker!
         $youtubeIframes.each(function() {

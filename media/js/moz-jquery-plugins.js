@@ -29,9 +29,9 @@
             // Shows an 'invalid' style if something good isn't picked
             requireValidOption: false,
             // Callback for selection;  true selection or 'silent' selection
-            onSelect: function(selectionObj, isSilent){},
+            onSelect: function(selectionObj, isSilent) {},
             // Callback for when a selection is deselected via this plugin
-            onDeselect: function(oldSelection){},
+            onDeselect: function(oldSelection) {},
             // URL to hit to retrieve results
             autocompleteURL: '',
             // Element to style and add 'valid' and 'invalid' classes to
@@ -198,7 +198,7 @@
             this.options.select = function(event, ui, isSilent) {
                 // Set the selection
                 var selection = self.selection = ui.item;
-                if(selection.value != undefined) {
+                if(selection.value !== undefined) {
                         // Call the select method if present
                     if(select) select.call(self, event, ui);
                     // Set the INPUT element's value to the item value
@@ -270,14 +270,14 @@
                             .attr('title', item.url)
                             .append($('<a></a>').text(item.label))
                             .appendTo(list);
-                }
+                };
             }
         },
 
         reposition: function() {
-            this.menu.element.position( $.extend({
+            this.menu.element.position($.extend({
                 of: this.element
-            }, this.options.position ))
+            }, this.options.position));
         }
     });
 
@@ -290,7 +290,7 @@
             var placeholder = $input.attr('placeholder');
 
             var valCheck = function() {
-                var box = $input[0]
+                var box = $input[0];
                 if(box.value == placeholder) {
                      box.value = '';
                 }
@@ -301,7 +301,7 @@
             $input.bind({
                 blur: valCheck,
                 focus: function() {
-                    if($input.val() == '') {
+                    if($input.val() === '') {
                         $input.val(placeholder);
                     }
                 }

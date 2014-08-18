@@ -1,7 +1,7 @@
 function PromoteMDN(userSettings) {
 
     // For the time being, we are not gonna do anything if querySelectorAll is not available in the browser
-    if (!'querySelectorAll' in document) {
+    if (!('querySelectorAll' in document)) {
         return;
     }
 
@@ -131,8 +131,7 @@ function PromoteMDN(userSettings) {
                 if (text.match(keywordRegex)) {
                     var exactWord = keywordRegex.exec(text);
                     exactWord = exactWord[0].trim();
-                    var link = '<a href="'+ dataset[keyword] + options.trackingString +'" class="'+ options.linkClass
-                        +'">' + exactWord + '</a>';
+                    var link = '<a href="'+ dataset[keyword] + options.trackingString +'" class="'+ options.linkClass +'">' + exactWord + '</a>';
                     placeholder = getPlaceholder(placeholderIndex);
                     placeholderIndex++;
                     text = text.replace(exactWord, placeholder);
@@ -150,8 +149,8 @@ function PromoteMDN(userSettings) {
             text = text.replace(l, anchorsExisting[l]);
         }
 
-        for(var l in anchorsNew) {
-            text = text.replace(l, ' ' + anchorsNew[l] + ' ');
+        for(var c in anchorsNew) {
+            text = text.replace(c, ' ' + anchorsNew[l] + ' ');
         }
 
         o.innerHTML = text;
@@ -190,9 +189,9 @@ function PromoteMDN(userSettings) {
         }
 
         return out;
-    };
+    }
 
     function getPlaceholder(placeholderIndex) {
         return '{_m$d$n_repl$ace_' + placeholderIndex + '_}';
     }
-};
+}
