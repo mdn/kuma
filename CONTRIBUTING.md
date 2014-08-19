@@ -1,17 +1,31 @@
 Contributing Code
 =================
 
-  *  You agree to license your contributions under [MPL 2][MPL2]
-  *  Discuss large changes on the [dev-mdn mailing list][dev-mdn]
-     or on a [bugzilla bug][mdn-backlog] before coding.
-  *  Python code style should follow [PEP8 standards][pep8] whenever possible.
-  *  Write tests!  The Django site has [good testing docs][django-testing]
+  * You agree to license your contributions under [MPL 2][MPL2]
+  * Discuss large changes on the [dev-mdn mailing list][dev-mdn]
+    or on a [bugzilla bug][mdn-backlog] before coding.
+  * Python code style should follow [PEP8 standards][pep8] whenever possible.
+  * All commit messages must start with "bug NNNNNNN" or "fix bug NNNNNNN"
+    * Reason: Make it easy for someone to consume the commit log and reach originating requests for all changes
+    * Exceptions: "Merge" and "Revert" commits
+    * Notes:
+      * "fix bug NNNNNNN" - will trigger a github bot to automatically mark bug as "RESOLVED:FIXED"
+      * If a pull request has multiple commits, we should squash commits together or re-word commit messages so that each commit message contains a bug number
+
+  * MDN module [owner or peer][peers] must review and merge all pull requests.
+    * Reason: Owner and peers are and accountable for the quality of MDN code changes
+    * Exceptions: Owners/peers may commit directly to master for critical security/down-time fixes; they must file a bug for follow-up review.
+
+  * MDN reviewers must verify sufficient test coverage on all changes - either by new or existing tests
+    * Reason: Automated tests reduce human error involved in reviews
+    * Notes: The Django site has [good testing docs][django-testing]
 
 [MPL2]: http://www.mozilla.org/MPL/2.0/
 [dev-mdn]: https://lists.mozilla.org/listinfo/dev-mdn
 [mdn-backlog]: http://mzl.la/mdn_backlog
 [pep8]: http://www.python.org/dev/peps/pep-0008/
 [django-testing]: https://docs.djangoproject.com/en/dev/topics/testing/
+[peers]: https://wiki.mozilla.org/Modules/All#MDN
 
 What to work on
 ===============
