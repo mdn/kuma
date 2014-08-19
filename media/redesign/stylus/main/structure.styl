@@ -310,14 +310,51 @@ a.github-button {
     }
 }
 
-/* open auth login widget */
-.oauth-login-container {
-    /* same as user-state, copying down as user-state will go */
+/* Login widget and profile (logged in) links */
+.header-login {
     bidi-style(right, 200px, left, auto);
-    set-font-size($small-bump-font-size);
     position: absolute;
     top: 12px;
+    set-font-size($small-bump-font-size);
     z-index: 3;
+}
+
+.user-state {
+    bidi-value(float, none, left);
+
+    ul, > {$selector-icon} {
+        bidi-value(float, left, right);
+
+        /* Keep the line height equal to make the icon appear as though it is on
+           the same line. */
+        line-height: 20px;
+    }
+
+    > {$selector-icon} {
+        bidi-style(margin-right, 10px, margin-left, 10px);
+        set-font-size($small-bump-font-size + 20%);
+    }
+
+    li {
+        display: inline;
+        bidi-value(text-align, right, left);
+
+        & + li {
+            border-left: 1px solid #bbb;
+            margin-left: 8px;
+            padding-left: @margin-left + 2;
+            bidi-style(border-left, 1px solid #bbb, border-right, 0);
+            bidi-style(padding-right, 10px, padding-left, 10px);
+            bidi-style(margin-right, 8px, margin-left, 6px);
+        }
+    }
+
+    a, a:hover, a:focus, a:visited {
+        color: $link-color;
+    }
+}
+
+.oauth-login-container {
     border-radius: 8px;
     border: 1px solid transparent;
     display: inline-block;
@@ -579,31 +616,6 @@ footer {
             }
         }
     }
-
-    #tabzilla {
-        display: none;
-    }
-
-    /* open auth login button */
-    .oauth-login-container {
-        bidi-style(right, 0, left, auto);
-    }
-
-    #main-header {
-        .user-state {
-            position: relative;
-            right: auto;
-            top: auto;
-            float: none;
-            width: auto;
-            margin-top: 10px;
-        }
-
-        .logo {
-            margin: ($grid-spacing / 2) 0;
-            float: none;
-        }
-    }
 }
 
 
@@ -611,6 +623,40 @@ footer {
 
     .center {
         add-center-spacing(15px);
+    }
+
+    #tabzilla {
+        display: none;
+    }
+
+    .header-clear {
+        display: none;
+    }
+
+    #main-header {
+        .logo {
+            margin: ($grid-spacing / 2) 0;
+            width: 140px;
+            height: 40px;
+            background-size: auto;
+        }
+    }
+
+    .header-login {
+        bidi-style(right, $gutter-width, left, auto);
+    }
+
+    .user-state {
+        li {
+            display: block;
+
+            & + li {
+                padding-left: 0;
+                bidi-style(border-left, none, border-right, none);
+                bidi-style(padding-right, 0, padding-left, 0);
+                bidi-style(margin-right, 0, margin-left, 0);
+            }
+        }
     }
 
     /* move the search box under the nav */
@@ -644,11 +690,11 @@ footer {
     }
 }
 
-
 @media $media-query-small-mobile {
+
     #main-header {
         .logo {
-            margin-top: 60px;
+            width: 44px;
         }
     }
 }
@@ -672,45 +718,6 @@ label {$selector-icon} {
     $label-icon-margin = 10px;
     bidi-value(margin-left, 0, $label-icon-margin);
     bidi-value(margin-right, $label-icon-margin, 0);
-}
-
-/* Login links */
-.user-state {
-    position: absolute;
-    top: 12px;
-    bidi-value(float, none, left);
-    bidi-style(right, 200px, left, auto);
-    set-font-size($small-bump-font-size);
-
-    ul, > {$selector-icon} {
-        bidi-value(float, left, right);
-
-        /* Keep the line height equal to make the icon appear as though it is on
-           the same line. */
-        line-height: 20px;
-    }
-
-    > {$selector-icon} {
-        bidi-style(margin-right, 10px, margin-left, 10px);
-        set-font-size($small-bump-font-size + 20%);
-    }
-
-    li {
-        display: inline;
-
-        & + li {
-            border-left: 1px solid #bbb;
-            margin-left: 8px;
-            padding-left: @margin-left + 2;
-            bidi-style(border-left, 1px solid #bbb, border-right, 0);
-            bidi-style(padding-right, 10px, padding-left, 10px);
-            bidi-style(margin-right, 8px, margin-left, 6px);
-        }
-    }
-
-    a, a:hover, a:focus, a:visited {
-        color: $link-color;
-    }
 }
 
 for i in (2 3 4) {
