@@ -30,8 +30,8 @@ from .utils import entity_decode
 from babel import localedata
 from babel.dates import format_date, format_time, format_datetime
 from babel.numbers import format_decimal
-from tower import ugettext_lazy as _lazy, ungettext
 from pytz import timezone
+from tower import ugettext_lazy as _lazy, ungettext
 
 # Yanking filters from Django.
 register.filter(strip_tags)
@@ -69,18 +69,6 @@ def isotime(t):
     if not hasattr(t, 'tzinfo'):
         return
     return _append_tz(t).astimezone(pytz.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-
-
-@register.filter
-def datetimeformat(value,
-                   out_format='%Y-%m-%d',
-                   in_format='%Y-%m-%dT%H:%M:%S'):
-    if isinstance(value, unicode):
-        try:
-            value = datetime.datetime.strptime(value, in_format)
-        except:
-            pass
-    return value.strftime(out_format)
 
 
 def _append_tz(t):
@@ -176,6 +164,7 @@ def get_soapbox_messages(url):
 def soapbox_messages(soapbox_messages):
     return {'soapbox_messages': soapbox_messages}
 
+
 @register.function
 def add_utm(url_, campaign, source='developer.mozilla.org', medium='email'):
     """Add the utm_* tracking parameters to a URL."""
@@ -185,13 +174,16 @@ def add_utm(url_, campaign, source='developer.mozilla.org', medium='email'):
         'utm_medium': medium})
     return str(url_obj)
 
+
 class DateTimeFormatError(Exception):
     """Called by the datetimeformat function when receiving invalid format."""
     pass
 
+
 @register.filter
 def json(s):
     return jsonlib.dumps(s)
+
 
 def _babel_locale(locale):
     """Return the Babel locale code, given a normal one."""

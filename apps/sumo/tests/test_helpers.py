@@ -3,7 +3,6 @@ from collections import namedtuple
 from datetime import datetime
 
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.forms.fields import CharField
 
 from babel.dates import format_date, format_time, format_datetime
