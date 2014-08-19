@@ -38,7 +38,6 @@
         <button class="secondaryAction" type="submit" name="action_primary" >{{ _("Make Primary") }}</button>
         <button class="secondaryAction" type="submit" name="action_send" >{{ _("Re-send Verification") }}</button>
         <button class="primaryAction" type="submit" name="action_remove" >{{ _("Remove") }}</button>
-        <a href="{{ url('users.profile_edit', username=request.user.username) }}" class="button neutral">{{ _("Edit profile") }}</a>
       </p>
 
       </fieldset>
@@ -55,8 +54,14 @@
     <form method="post" action="{{ url('account_email') }}" class="add_email">
         {{ csrf() }}
         {{ form.as_p() }}
-        <button name="action_add" type="submit">{{ _("Add Email") }}</button>
+        <p class="buttonHolder">
+            <button name="action_add" type="submit">{{ _("Add Email") }}</button>
+        </p>
     </form>
+
+    <p>
+    <a href="{{ url('users.profile_edit', username=request.user.username) }}" class="button neutral">{{ _("Edit profile") }}</a>
+    </p>
 
   </div>
 {% endblock %}
