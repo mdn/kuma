@@ -307,6 +307,23 @@ class NewDocumentTests(TestCaseBase):
         doc = pq(response.content)
         eq_(1, len(doc('form#wiki-page-edit input[name="title"]')))
 
+    @attr('bug1052047')
+    def test_new_document_includes_review_block(self):
+        """
+        New document page includes 'Review Needed?' section.
+        https://bugzil.la/1052047
+        """
+        self.client.login(username='admin', password='testpass')
+        response = self.client.get(reverse('wiki.new_document'))
+
+        test_strings = ['Review needed?', 'Technical', 'Editorial']
+        eq_(200, response.status_code)
+
+        # TODO: push test_strings functionality up into a test helper
+        for test_string in test_strings:
+            ok_(test_string in response.content)
+
+
     def test_new_document_preview_button(self):
         """HTTP GET to new document URL shows preview button for basic doc
         and not for template doc"""
