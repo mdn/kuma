@@ -462,14 +462,12 @@ class SignInTestCase(TestCase):
         url = reverse('wiki.document', args=['article-title'],
                       locale=settings.WIKI_DEFAULT_LANGUAGE)
         response = self.client.get(url)
-        # splitting the href string on the - character beceause allauth seems
-        # to mangle it
-        href_start = "javascript:allauth.persona.login('/en"
-        href_mid = "US/docs/article"
-        href_end = "title', 'login')"
-        ok_(href_start in unicode(response.content, 'utf-8'))
-        ok_(href_mid in unicode(response.content, 'utf-8'))
-        ok_(href_end in unicode(response.content, 'utf-8'))
+
+        doc = pq(response.content)
+        persona_login_links = doc.find('.launch-persona-login')
+        ok_(len(persona_login_links) > 0)
+        for login_link in persona_login_links:
+            ok_(url in pq(login_link).attr('data-next'))
 
 
 class Test404Case(TestCase):

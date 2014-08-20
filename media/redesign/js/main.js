@@ -18,7 +18,7 @@
     })();
 
     /*
-        Open Auth Login Heading widget
+        All login functionality -- Open Auth Login Heading widget and standard login buttons
     */
     (function() {
         var $container = $('.oauth-login-options');
@@ -36,19 +36,38 @@
             }
         });
 
-        $('.login-link').on('click', function(e) {
+        // Service click callback
+        var trackingCallback = function() {
             // Track event of which was clicked
-            var serviceUsed = $(this).data('service'); // "Persona" or "GitHub"
+            var serviceUsed = $(this).data('service').toLowerCase(); // "Persona" or "GitHub"
             mdn.analytics.trackEvent({
                 category: 'Authentication',
                 action: 'Started sign-in',
-                label: serviceUsed.toLowerCase()
+                label: serviceUsed
             });
 
             // We use data-optimizely-hook and associated Optimizely element
             // targeting for most click goals, but if we are maintaining this
             // selector for Google Analytics anyway, we might as well use it.
-            mdn.optimizely.push(['trackEvent', 'click-login-button-' + serviceUsed.toLowerCase()]);
+            mdn.optimizely.push(['trackEvent', 'click-login-button-' + serviceUsed]);
+        };
+
+        // Track clicks on all login launching links
+        $('.login-link').on('click', trackingCallback);
+
+        // Ensure the login widget GitHub icon as clickable elements
+        $container.find('.oauth-github').on('click', function(e) {
+            e.stopPropagation();
+            trackingCallback.apply(this, arguments);
+            window.location = $(this).data('href');
+        });
+
+        // Ensure "launch-persona-login" elements launch the Persona window
+        // Used for both login and connecting accounts, so don't assume login
+        $(doc.body).on('click', '.launch-persona-login', function(e) {
+            e.preventDefault();
+            var $this = $(this);
+            if(win.allauth) allauth.persona.login($this.data('next'), $this.data('process') || 'login');
         });
     })();
 

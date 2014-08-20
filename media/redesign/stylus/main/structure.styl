@@ -282,12 +282,6 @@ a.persona-button, a.github-button {
 }
 
 a.persona-button {
-    visibility: hidden;
-
-    &.persona-loaded {
-        visibility: visible;
-    }
-
     i {
         background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAQAAAD9CzEMAAABjElEQVR4Ae3WQYQbURjA8ccwhBCGYU+5LiGUEkoJPZUQQk5LWJawLMuSUyhLCTnlVIZSQk6llKGUEIZSQsg1hBCWZZnTEMK/KqqyMcn7Zubd9vddh7+5fN9TenC54wchOws86iid0fmoQJ+IQ3NqWQRKLIg3wEoXKBNy3Hes5AGXFaf1kgdG6KkkC7xii54gWeAL+l7LAxZP6OvJA1UkZvLADRJbbGmgh0xRFrBZIfNBFqgjtZQFOsjZksAlUqHsD1wiZD7LAooWEksK8lUxRF8l2bLTNUm6rsfoqUsC8oUdpDmZA06JKKcJ2PziuFbaV8UZc+J1s3gXObGJDkoSkB//tyheApwziD3/U67IJw04NBmy5rSAe95IAmW6jJF6ZEQT53ggT5816Ux4Hxdo8kA2fNzDwDs2ZOc3uf1AiZBsfdsP+GSv9j9QxYQZ1r/AT8xo7AJFTPF3gQ6mbHH+BgLMuVDkiDDHU1Qwaa64xqSN4hNGKXzTgQZtPuLhETB9Nmv0TA/mKx4et7T/AHu690RA5bMsAAAAAElFTkSuQmCC') 0 0 no-repeat;
         background-size: cover;
@@ -335,6 +329,7 @@ a.github-button {
     padding: 4px 8px;
     background: rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+    cursor: default;
 
     &.active {
         border-color: rgba(255, 255, 255, 0.3);
@@ -356,6 +351,7 @@ a.github-button {
     color: #fff;
     display: inline-block;
     create-gradient(#43a6e2, #287cc2);
+    cursor: pointer;
 
     {$selector-icon} {
     	bidi-style(margin-left, 0, margin-right, 0);
