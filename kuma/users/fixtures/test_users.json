@@ -165,6 +165,7 @@
             "deki_user_id": 0,
             "homepage": "http://adminuser.com/",
             "location": "Adminville",
+            "timezone": "Asia/Kolkata",
             "user": 10
         },
         "model": "users.userprofile",

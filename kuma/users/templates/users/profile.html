@@ -131,7 +131,7 @@
         </div>
         {% endif %}
 
-        <div class="memberSince">{{ _('Member since {date}') | f(date=profile.user.date_joined.strftime('%B %d, %Y')) }}</div>
+        <div class="memberSince">{{ _('Member since') }} {{ datetimeformat(profile.user.date_joined, format='date') }}</div>
       </div>
     </section>
 
@@ -185,8 +185,8 @@
                           <li><a href="{{ rev.document.get_absolute_url() }}$history" class="history">{{ _("View page history") }}</a></li>
                       </ul>
                   </th>
-                  <td>{{ rev.created.strftime('%B %d, %Y') }}<br />
-                      {{ rev.created.strftime('%I:%M %p') }}</td>
+                  <td>{{ datetimeformat(rev.created, format='date') }}<br />
+                      {{ datetimeformat(rev.created, format='time') }}</td>
                   {# TODO: auto-generate smart comment like "N words changed." #}
                   <td>{{ format_comment(rev) }}</td>
                 </tr>
