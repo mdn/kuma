@@ -58,6 +58,23 @@
     },
     {
         "fields": {
+            "user": 7,
+            "uid": "testuser@test.com",
+            "provider": "persona",
+            "last_login": "2011-06-03 16:12:08",
+            "date_joined": "2011-06-03 16:12:08",
+            "extra_data": {"status": "okay",
+                            "audience": "https://developer-local.allizom.org",
+                            "expires": 1408466018450,
+                            "email": "testuser@test.com",
+                            "issuer": "gmail.login.persona.org"}
+
+        },
+        "model": "socialaccount.socialaccount",
+        "pk": 7
+    },
+    {
+        "fields": {
             "date_joined": "2011-06-03 16:12:08",
             "email": "testuser2@test.com",
             "first_name": "Test2",
