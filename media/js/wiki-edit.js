@@ -156,7 +156,7 @@
 
           var populate = function () {
               // Bail if the fields value has changed
-              if ($field.data(_changed) == true) return;
+              if ($field.data(_changed) === true) return;
 
               var values = [], field_val, field_val_raw, split;
               dependencies.each(function() {
@@ -349,8 +349,8 @@
             var $titleNode = $('#id_title');
             var data;
 
-            if(CKEDITOR.instances['id_content']) {
-                data = $.trim(CKEDITOR.instances['id_content'].getSnapshot());
+            if(CKEDITOR.instances.id_content) {
+                data = $.trim(CKEDITOR.instances.id_content.getSnapshot());
             }
             else if(ace_editor && ace_editor) {
                 data = $.trim(ace_editor.getSession().getValue());
@@ -386,7 +386,7 @@
     function initMetadataEditButton () {
 
         if ($('#article-head .metadata').length) {
-            var show_meta = function (ev) {
+            var showMeta = function (ev) {
                 // Disable and hide the save-and-edit button when editing
                 // metadata, since that can change the URL of the page and
                 // tangle up where the iframe posts.
@@ -394,13 +394,13 @@
                 $('#article-head .title').hide();
                 $('#article-head .metadata').show();
                 $('#article-head .metadata #id_title').focus();
-            }
+            };
 
             // Properties button reveals the metadata fields
-            $('#btn-properties').on('click', show_meta);
+            $('#btn-properties').on('click', showMeta);
             // Form errors reveal the metadata fields, since they're the most
             // likely culprits
-            $('#edit-document .errorlist').each(show_meta);
+            $('#edit-document .errorlist').each(showMeta);
 
         } else {
             $('#btn-properties').hide();
@@ -503,7 +503,7 @@
         });
     }
     function hideDraftBox() {
-        $draftDiv && $draftDiv.css('display', 'none');
+        if($draftDiv) $draftDiv.css('display', 'none');
     }
 
 
@@ -651,12 +651,12 @@
             DRAFT_TIMEOUT_ID = setTimeout(saveDraft, 3000);
         };
         if(isTemplate) {
-            ace_editor.on && ace_editor.on('change', callback);
+            if(ace_editor.on) ace_editor.on('change', callback);
         }
         else {
             try {
                 var $content = $('#id_content');
-                $content.ckeditorGet && $content.ckeditorGet().on('key', callback);
+                if($content.ckeditorGet) $content.ckeditorGet().on('key', callback);
             }
             catch(e) {
                 console.log(e);
@@ -779,23 +779,23 @@
                     }
                     else { // We have to cherry pick which were good and which were bad
                         $.each(invalidIndexes, function() {
-                            if(this == 0) {
+                            if(this === 0) {
                                 // Add message to the clone row
                                 $('<div class="attachment-error"></div>')
                                     .appendTo($attachmentsFormCloneRow.find('.page-attachment-actions-file-cell'))
-                                    .text(result[this]['error'])
+                                    .text(result[this]['error']);
                             }
                         });
                     }
                 }
                 else {
                     // Show error message?
-                    console.warn('No textarea')
+                    console.warn('No textarea');
                 }
             }
-            catch(e) {
+            catch(ex) {
                 // Show error message?
-                console.warn('Exception! ', e);
+                console.warn('Exception! ', ex);
             }
             $pageAttachmentsSpinner.css('opacity', 0);
         });
@@ -810,7 +810,7 @@
             var valid = true;
             $attachmentsNewTable.find('input[required], textarea[required]').each(function() {
                 var $this = $(this);
-                if($this.val() == '') {
+                if($this.val() === '') {
                     e.preventDefault();
                     e.stopPropagation();
                     $this.addClass('attachment-required');
@@ -822,7 +822,9 @@
             });
             if(!valid) {
                 running = false;
-                setTimeout(function() { $attachmentsForm.data('disabled', false); }, 200);
+                setTimeout(function() {
+                    $attachmentsForm.data('disabled', false);
+                }, 200);
                 return;
             }
 
