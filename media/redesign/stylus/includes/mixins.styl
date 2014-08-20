@@ -406,6 +406,7 @@ $checkbox-label-container {
     }
 }
 
+
 /* Dropdown menus that hide advanced feature, such as the "This Page" menu on
    article pages, the "Advanced" menu on profiles, etc. */
 $advanced-menu {
@@ -459,4 +460,16 @@ $right-icons {
 .media-imgExt {
     float: right;
     margin-left: ($grid-spacing / 2);
+}
+
+/* Styles for code blocks - used for wiki document and WYSIWYG editor */
+$code-block {
+    background: rgba(234, 239, 242, 0.25);
+    border-left: 6px solid rgba(0, 83, 159, 0.65);
+    background-image:  url($media-url-dir + 'blueprint-dark.png');
+    background-position: top center;
+    background-repeat: repeat;
+
+    vendorize(tab-size, 4);
+    vendorize(hyphens, none);
 }
