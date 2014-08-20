@@ -22,8 +22,8 @@ class OldProfileTestCase(TestCase):
     fixtures = ['test_users.json']
 
     def test_old_profile_url_gone(self):
-        resp = self.client.get('/users/edit', follow=True)
-        eq_(404, resp.status_code)
+        response = self.client.get('/users/edit', follow=True)
+        eq_(404, response.status_code)
 
 
 class BanTestCase(TestCase):
@@ -470,3 +470,31 @@ class SignInTestCase(TestCase):
         ok_(href_start in unicode(response.content, 'utf-8'))
         ok_(href_mid in unicode(response.content, 'utf-8'))
         ok_(href_end in unicode(response.content, 'utf-8'))
+
+
+class Test404Case(TestCase):
+    fixtures = ['test_users.json']
+
+    def test_404_logins(self):
+        """The login buttons should display on the 404 page"""
+        response = self.client.get('/something-doesnt-exist', follow=True)
+        doc = pq(response.content)
+
+        login_block = doc.find('.socialaccount_providers')
+        ok_(len(login_block) > 0)
+        eq_(404, response.status_code)
+
+    def test_404_already_logged_in(self):
+        """The login buttons should not display on the 404 page when the user is logged in"""
+        client = LocalizingClient()
+
+        # View page as a logged in user
+        client.login(username='testuser',
+                     password='testpass')
+        response = client.get('/something-doesnt-exist', follow=True)
+        doc = pq(response.content)
+
+        login_block = doc.find('.socialaccount_providers')
+        eq_(len(login_block), 0)
+        eq_(404, response.status_code)
+        client.logout()
