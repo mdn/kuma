@@ -1,13 +1,13 @@
 {% extends "account/base.html" %}
 
-{% block title %}{{ page_title(_("Account")) }}{% endblock %}
+{% block title %}{{ page_title(_("Email addresses")) }}{% endblock %}
 
 {% block content %}
   <h1>{{ _("Email addresses") }}</h1>
   <div class="text-content">
 
     {% if user.emailaddress_set.all().exists() %}
-      <p>{{ _("The following email addresses are associated with your account:") }}</p>
+      <p>{{ _("The following email addresses are associated with your profile:") }}</p>
 
       <form action="{{ url('account_email') }}" class="email_list" method="post">
       {{ csrf() }}
@@ -23,9 +23,9 @@
 
                 {{ emailaddress.email }}
                 {% if emailaddress.verified %}
-                  <strong class="verified">{{ _("Verified") }}</strong>
+                  <strong class="verified">{{ _("Confirmed") }}</strong>
                 {% else %}
-                  <span class="unverified">{{ _("Unverified") }}</span>
+                  <span class="unverified">{{ _("Unconfirmed") }}</span>
                 {% endif %}
               {% if emailaddress.primary %}<em class="primary">{{ _("Primary") }}</em>{% endif %}
             </label>
@@ -36,7 +36,7 @@
 
       <p class="buttonHolder">
         <button class="secondaryAction" type="submit" name="action_primary" >{{ _("Make Primary") }}</button>
-        <button class="secondaryAction" type="submit" name="action_send" >{{ _("Re-send Verification") }}</button>
+        <button class="secondaryAction" type="submit" name="action_send" >{{ _("Re-send Confirmation") }}</button>
         <button class="primaryAction" type="submit" name="action_remove" >{{ _("Remove") }}</button>
       </p>
 
@@ -45,7 +45,7 @@
 
     {% else %}
 
-      <p>{% trans %}<strong>Warning:</strong>"You have not added any email addresses to this account. Without one you cannot receive notifications, reset your password, etc.{% endtrans %}</p>
+      <p>{% trans %}<strong>Warning:</strong>"You have not added any email addresses to this profile. Without one you cannot receive notifications, reset your password, etc.{% endtrans %}</p>
 
     {% endif %}
 

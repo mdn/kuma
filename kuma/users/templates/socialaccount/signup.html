@@ -110,7 +110,7 @@
                     {# we have to handle this error message here to have access to the request #}
                     {% if error == form.duplicate_email_error_label %}
                       {% trans persona_login_url=persona_login_url, provider_name=account.get_provider().name %}
-                      An account already exists with the selected email address.
+                      A profile already exists with the selected email address.
                       <a href="{{ persona_login_url }}" class="launch-persona-login" data-next="{{ persona_next_url }}">Connect your {{ provider_name }} account to it.</a>
                       {% endtrans %}
                     {% else %}

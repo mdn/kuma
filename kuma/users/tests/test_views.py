@@ -470,7 +470,7 @@ class SignInTestCase(TestCase):
         url = reverse('persona_login')
         r = self.client.post(url, follow=True)
         eq_(200, r.status_code)
-        ok_('Social Network Login Failure' in r.content)
+        ok_('Sign In Failure' in r.content)
 
     @mock.patch('requests.post')
     def test_persona_signin_verification_okay(self, mock_post):
@@ -486,7 +486,7 @@ class SignInTestCase(TestCase):
         r = self.client.post(url, follow=True)
 
         eq_(200, r.status_code)
-        ok_('Social Network Login Failure' not in r.content)
+        ok_('Sign In Failure' not in r.content)
         ok_('Sign out' in r.content)
         u = User.objects.get(email=user_email)
         ok_(str(u.username) in r.content)
@@ -559,7 +559,7 @@ class SignUpTestCase(TestCase):
         url = reverse('persona_login')
         r = self.client.post(url, follow=True)
         eq_(200, r.status_code)
-        ok_('Social Network Login Failure' not in r.content)
+        ok_('Sign In Failure' not in r.content)
         # Page renders
         # Page Title
         # Username field

@@ -525,7 +525,7 @@ class ReadOnlyTests(TestCaseBase):
         self.client.login(username='testuser2', password='testpass')
         resp = self.client.get(self.edit_url)
         eq_(403, resp.status_code)
-        ok_('Your account has been banned from making edits.' in resp.content)
+        ok_('Your profile has been banned from making edits.' in resp.content)
 
         # ban testuser01 and testuser2
         kumabanned.users = User.objects.filter(Q(username='testuser2') |
@@ -542,13 +542,13 @@ class ReadOnlyTests(TestCaseBase):
         self.client.login(username='testuser2', password='testpass')
         resp = self.client.get(self.edit_url)
         eq_(403, resp.status_code)
-        ok_('Your account has been banned from making edits.' in resp.content)
+        ok_('Your profile has been banned from making edits.' in resp.content)
 
         # testuser01 cannot access
         self.client.login(username='testuser01', password='testpass')
         resp = self.client.get(self.edit_url)
         eq_(403, resp.status_code)
-        ok_('Your account has been banned from making edits.' in resp.content)
+        ok_('Your profile has been banned from making edits.' in resp.content)
 
 
 class KumascriptIntegrationTests(TestCaseBase):

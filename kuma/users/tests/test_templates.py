@@ -27,8 +27,8 @@ class SignupTests(TestCase):
         r = self.client.post(url, follow=True)
 
         eq_(200, r.status_code)
-        ok_('Social Network Login Failure' not in r.content)
-        test_strings = ['set up your MDN profile', 'choose a username',
+        ok_('Sign In Failure' not in r.content)
+        test_strings = ['Create your MDN profile to continue', 'choose a username',
                         'having trouble']
         verify_strings_in_response(test_strings, r)
 
@@ -50,7 +50,7 @@ class AccountEmailTests(TestCaseBase):
         r = self.client.get(url)
         eq_(200, r.status_code)
 
-        test_strings = ['Make Primary', 'Re-send Verification', 'Remove',
+        test_strings = ['Make Primary', 'Re-send Confirmation', 'Remove',
                         'Add Email', 'Edit profile']
         verify_strings_in_response(test_strings, r)
 
