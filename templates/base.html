@@ -180,8 +180,8 @@
   {% block site_js %}
     <!--[if lte IE 8]><script src="/media/redesign/js/libs/selectivizr-1.0.2/selectivizr-build.js"></script><![endif]-->
 
-    {{ js('main') }}
     {{ providers_media_js() }}
+    {{ js('main') }}
 
     {% if waffle.flag('ga_outbound_links') %}
       <script>
