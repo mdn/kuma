@@ -20,7 +20,7 @@ class AccountEmailTests(test_utils.TestCase):
 
         eq_(200, r.status_code)
         ok_(len(r.redirect_chain) > 0)
-        ok_('Sign In' in r.content)
+        ok_('Please sign in' in r.content)
 
     def test_account_email_page(self):
         u = User.objects.get(username='testuser')
@@ -47,7 +47,7 @@ class SocialAccountConnectionsTests(test_utils.TestCase):
 
         eq_(200, r.status_code)
         ok_(len(r.redirect_chain) > 0)
-        ok_('Sign In' in r.content)
+        ok_('Please sign in' in r.content)
 
     def test_account_connections_page(self):
         u = User.objects.get(username='testuser')

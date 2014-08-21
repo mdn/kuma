@@ -7,7 +7,13 @@
 {% block content %}
 <article id="login">
 
-  <h1>{{ _("Sign In") }}</h1>
+    <h1>{{ _("Please sign in") }}</h1>
+
+    <p>{% trans %}
+    In order to contribute, you need to sign in to MDN. You can sign in using
+    any of the services below. A MDN profile will be created for you if you
+    don't already have one.
+    {% endtrans %}</p>
 
 {% if socialaccount.providers  %}
     {% with process="login" %}
