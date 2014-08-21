@@ -33,7 +33,7 @@
         $pre.addClass('language-' + defaultBrush);
 
         // Format PRE content for Prism highlighting
-        $pre.html('<code class="language-' + brush + '">' + $.trim($pre.html().replace(/</g, '&lt;').replace(/>/g, '&gt;')) + '</code>');
+        $pre.html('<code class="language-' + brush + '">' + $.trim($pre.html()) + '</code>');
 
         // Do we need to highlight any lines?
         // Legacy format: highlight:[8,9,10,11,17,18,19,20]
