@@ -1,19 +1,19 @@
 import logging
 
-from django.conf import settings
-from django.contrib.auth.models import User
-from django.core.paginator import PageNotAnInteger
-
 import mock
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 
+from django.conf import settings
+from django.contrib.auth.models import User
+from django.core.paginator import PageNotAnInteger
+
 from devmo.tests import mock_lookup_user, LocalizingClient
 from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
-
 from ..models import UserProfile, UserBan
+from . import verify_strings_in_response
 
 TESTUSER_PASSWORD = 'testpass'
 
@@ -454,8 +454,45 @@ class ProfileViewsTest(TestCase):
                 'Field %s is a string!' % field)
 
 
+class AccountConnectionTestCase(TestCase):
+    pass
+
+
 class SignInTestCase(TestCase):
-    fixtures = ['test_users.json', 'wiki/documents.json']
+    """ Test Sign-in flow for users with existing accounts. """
+    fixtures = ['test_users.json',]
+
+    @mock.patch('requests.post')
+    def test_persona_signin_verification_fails(self, mock_post):
+        mock_post.return_value = mock_resp = mock.Mock()
+        mock_resp.json.return_value={"status": "fail"}
+
+        url = reverse('persona_login')
+        r = self.client.post(url, follow=True)
+        eq_(200, r.status_code)
+        ok_('Social Network Login Failure' in r.content)
+
+    @mock.patch('requests.post')
+    def test_persona_signin_verification_okay(self, mock_post):
+        user_email = "testuser@test.com"
+        mock_post.return_value = mock_resp = mock.Mock()
+        mock_resp.json.return_value={
+            "status": "okay",
+            "email": user_email,
+            "audience": "https://developer-local.allizom.org"
+        }
+
+        url = reverse('persona_login')
+        r = self.client.post(url, follow=True)
+
+        eq_(200, r.status_code)
+        ok_('Social Network Login Failure' not in r.content)
+        ok_('Sign out' in r.content)
+        u = User.objects.get(email=user_email)
+        ok_(str(u.username) in r.content)
+
+    def test_github_signin(self):
+        pass
 
     def test_allauth_signin_returns_to_doc(self):
         """When signing in from a doc, return straight to the doc."""
@@ -508,3 +545,26 @@ class Test404Case(TestCase):
         eq_(len(login_block), 0)
         eq_(404, response.status_code)
         client.logout()
+
+
+class SignUpTestCase(TestCase):
+    """ Test Sign-in flow for users without existing accounts. """
+
+    @mock.patch('requests.post')
+    def test_persona_signup_valid_assertion_page_copy(self, mock_post):
+        mock_post.return_value = mock_resp = mock.Mock()
+        mock_resp.json.return_value={"status": "okay",
+                                     "email": "testuser2@test.com"}
+
+        url = reverse('persona_login')
+        r = self.client.post(url, follow=True)
+        eq_(200, r.status_code)
+        ok_('Social Network Login Failure' not in r.content)
+        # Page renders
+        # Page Title
+        # Username field
+        # Email field not there / hidden
+        pass
+
+    def test_github_signup(self):
+        pass

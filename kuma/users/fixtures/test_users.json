@@ -75,6 +75,16 @@
     },
     {
         "fields": {
+            "user": 7,
+            "email": "testuser@test.com",
+            "verified": "True",
+            "primary": "True"
+        },
+        "model": "account.emailaddress",
+        "pk": 7
+    },
+    {
+        "fields": {
             "date_joined": "2011-06-03 16:12:08",
             "email": "testuser2@test.com",
             "first_name": "Test2",
