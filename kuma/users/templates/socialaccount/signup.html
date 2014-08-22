@@ -46,7 +46,7 @@
               </div>
           {% endif %}
 
-          <form id="create_user" class="boxed submission" method="post" action="{{ url('socialaccount_signup') }}">
+          <form class="submission" method="post" action="{{ url('socialaccount_signup') }}">
 
               <p>{% trans provider_name=account.get_provider().name %}
               Thanks for signing in to MDN with {{ provider_name }}. You have
