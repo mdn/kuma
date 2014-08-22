@@ -744,12 +744,12 @@ class KumascriptIntegrationTests(TestCaseBase):
             "logs": [
                 {"level": "debug",
                  "message": "Message #1",
-                 "args": ['TestError'],
+                 "args": ['TestError', {}, {'name': 'SomeMacro', 'token':{'args':'arguments here'}}],
                  "time": "12:32:03 GMT-0400 (EDT)",
                  "timestamp": "1331829123101000"},
                 {"level": "warning",
                  "message": "Message #2",
-                 "args": ['TestError'],
+                 "args": ['TestError', {}, {'name': 'SomeMacro2'}],
                  "time": "12:33:58 GMT-0400 (EDT)",
                  "timestamp": "1331829238052000"},
                 {"level": "info",
@@ -804,6 +804,7 @@ class KumascriptIntegrationTests(TestCaseBase):
         eq_(trap['headers']['X-FireLogger'], '1.2')
         for error in expected_errors['logs']:
             ok_(error['message'] in response.content)
+            eq_(response.status_code, 200)
 
     @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0,
                                  KUMASCRIPT_MAX_AGE=600)
