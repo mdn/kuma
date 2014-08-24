@@ -768,11 +768,11 @@ def list_documents(request, category=None, tag=None):
     # stinks and is hard to customize.
     tag_obj = None
     if tag:
-        matching_tags = DocumentTag.objects.filter(name=tag)
+        matching_tags = DocumentTag.objects.filter(name.lower()=tag.lower())
         if len(matching_tags) == 0:
             raise Http404
         for matching_tag in matching_tags:
-            if matching_tag.name == tag:
+            if (matching_tag.name).lower() == tag.lower():
                 tag_obj = matching_tag
     docs = Document.objects.filter_for_list(locale=request.locale,
                                              category=category_id,
