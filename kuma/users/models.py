@@ -86,7 +86,7 @@ class UserProfile(ModelBase):
         ('linkedin', dict(
             label=_(u'LinkedIn'),
             prefix='https://www.linkedin.com/',
-            regex='^https?://www.linkedin.com/(in|/pub)',
+            regex='^https?:\/\/www.linkedin.com\/(in|pub)',
             fa_icon='icon-linkedin',
         )),
         ('mozillians', dict(
