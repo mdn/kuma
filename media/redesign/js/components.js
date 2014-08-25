@@ -41,6 +41,11 @@
             // Find a submenu.    If one doesn't exist, no need to go further
             var $submenu = (settings.submenu || $li.find('.submenu'));
 
+            $submenu.on('touchend', 'a[href]', function(e) {
+                e.preventDefault();
+                win.location = this.href;
+            });
+
             // Add a mouseenter / focus event to get the showing of the submenu in motion
             $self.on('mouseenter focus', function() {
 
