@@ -20,8 +20,6 @@
       {% include "socialaccount/snippets/provider_list.html" %}
     {% endwith %}
 
-{% include "socialaccount/snippets/login_extra.html" %}
-
 {% endif %}
   {# hidden form to measure bot submissions from this page #}
   <form class="hidden" method="post" action="{{ url('users.honeypot') }}">
