@@ -85,14 +85,17 @@
   <!-- Header -->
   <header id="main-header"><div class="center">
 
-    <div class="clear header-login">
-      <a href="//www.mozilla.org/" id="tabzilla" class="no-track">mozilla</a>
-      {% if not is_sphinx %}
-        {% include "includes/login.html" %}
-      {% endif %}
-    </div>
+    <a href="//www.mozilla.org/" id="tabzilla" class="no-track">mozilla</a>
+
+    <div class="clear header-clear"></div>
 
     <a href="{{ url('home') }}" class="logo">{{ _('Mozilla Developer Network') }}</a>
+
+    <div class="header-login">
+        {% if not is_sphinx %}
+            {% include "includes/login.html" %}
+        {% endif %}
+    </div>
 
     <nav id="main-nav" role="navigation"><ul><li><a href="{{ devmo_url('Zones') }}">{{ _('Zones') }}<i aria-hidden="true" class="icon-caret-down"></i></a>
 
