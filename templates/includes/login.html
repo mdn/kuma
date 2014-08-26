@@ -15,7 +15,7 @@
     <form>
       <div class="oauth-login-container">
           <div class="oauth-login-options" tabIndex="0">
-              <span>{{ _('Sign in with') }}</span>
+              <span class="oauth-login-options-text">{{ _('Sign in with') }}</span>
               <span class="oauth-icon oauth-persona launch-persona-login" data-service="Persona" data-next="{{ next_url }}" title="{{ _('Persona') }}"><i class="icon-user" aria-hidden="true"></i></span>
             {% if waffle.flag('github_login') %}
               <span class="oauth-icon oauth-github" data-service="GitHub" data-href="{{ github_url }}" title="{{ _('GitHub') }}"><i class="icon-github" aria-hidden="true"></i></span>

@@ -17,7 +17,6 @@
         $mainItems.find('.submenu').mozKeyboardNav();
     })();
 
-
     /*
         Search animation
     */

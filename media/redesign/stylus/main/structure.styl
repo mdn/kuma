@@ -41,7 +41,7 @@
     margin-left: ($grid-spacing * 2);
 }
 
-/* grid setup for direct class use */
+/* grid setup for direct class uses */
 draw-grid();
 
 /* centers pieces of the page, mostly the header, footer, and main elements */
@@ -367,11 +367,19 @@ a.github-button {
     background: rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     cursor: default;
+    position: relative;
 
     &.active {
         border-color: rgba(255, 255, 255, 0.3);
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
+
+        .submenu-close {
+            color: inherit;
+            position: absolute;
+            top: 4px;
+            bidi-style(left, -6px, right, auto);
+        }
 
         .oauth-login-picker {
             display: block;
@@ -570,6 +578,10 @@ footer {
                 }
             }
         }
+    }
+
+    .active .oauth-login-options-text {
+        visibility: hidden;
     }
 
     .oauth-icon {
