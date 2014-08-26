@@ -54,7 +54,8 @@ class SocialAccountConnectionsTests(test_utils.TestCase):
         self.client.login(username=u.username, password=TESTUSER_PASSWORD)
         url = reverse('socialaccount_connections')
         r = self.client.get(url)
-        test_strings = ['Disconnect', 'Connect a new account', 'Edit profile']
+        test_strings = ['Disconnect', 'Connect a new account', 'Edit profile',
+                        'Connect with']
 
         eq_(200, r.status_code)
         for test_string in test_strings:
