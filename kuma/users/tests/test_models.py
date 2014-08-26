@@ -1,12 +1,17 @@
 from django.contrib.auth.models import User
+from django.test import RequestFactory
+from django.utils.importlib import import_module
 
 import test_utils
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 
+from allauth.socialaccount.models import SocialLogin, SocialAccount
+
+from devmo.tests import LocalizingClient
 from kuma.wiki.tests import revision
 from sumo.tests import TestCase
-from ..models import UserBan, UserProfile
+from ..models import UserBan, UserProfile, on_pre_social_login
 from . import profile
 
 
@@ -122,3 +127,40 @@ class BanTestCase(TestCase):
         ban.save()
         testuser_unbanned = User.objects.get(username='testuser')
         ok_(testuser_unbanned.is_active)
+
+
+class SocialAccountSignalReceiverTestCase(TestCase):
+    fixtures = ['test_users.json']
+
+    def setUp(self):
+        """ extra setUp to make a working session """
+        from django.conf import settings
+        engine = import_module(settings.SESSION_ENGINE)
+        store = engine.SessionStore()
+        store.save()
+        self.client = LocalizingClient()
+        self.client.cookies[settings.SESSION_COOKIE_NAME] = store.session_key
+
+    @attr('bug1055870')
+    def test_pre_social_login_overwrites_session_var(self):
+        """ https://bugzil.la/1055870 """
+        # Set up a pre-existing GitHub sign-in session
+        request = RequestFactory().get('/')
+        session = self.client.session
+        session['sociallogin_provider'] = 'github'
+        session.save()
+        request.session = session
+
+        # Set up a Persona SocialLogin
+        account = SocialAccount.objects.get(user__username='testuser')
+        sociallogin = SocialLogin(account=account)
+        sender = SocialLogin
+
+        # Verify the social_login receiver over-writes the provider
+        # stored in the session
+        on_pre_social_login(sender=sender, request=request,
+                            sociallogin=sociallogin)
+        eq_(account.provider,
+            request.session['sociallogin_provider'],
+            "receiver should have over-written sociallogin_provider "
+            "session variable")
