@@ -768,7 +768,7 @@ def list_documents(request, category=None, tag=None):
     # stinks and is hard to customize.
     tag_obj = None
     if tag:
-        matching_tags = DocumentTag.objects.filter(name.lower()=tag.lower())
+        matching_tags = DocumentTag.objects.filter(name__iexact=tag)
         if len(matching_tags) == 0:
             raise Http404
         for matching_tag in matching_tags:
