@@ -66,6 +66,13 @@
     // Need to be ported to v4.
     // config.extraPlugins = 'definitionlist,mdn-link,mdn-image,mdn-enterkey,mdn-wrapstyle,mdn-table,youtube,texzilla';
 
+    // Add the spellchecker to the top bar
+    // if(window.waffle && waffle.FLAGS.wiki_spellcheck) {
+    //    config.extraPlugins += ',mdn-spell';
+    //    config.toolbar_MDN[0].splice(10, 0, 'mdn-spell');
+    //    config.toolbar_MDN[0].join();
+    // }
+
     // Disable the Advanced Content Filter because too many pages
     // use unlimited HTML.
     config.allowedContent = true;
@@ -76,9 +83,10 @@
     config.startupFocus = true;
     config.bodyClass = 'text-content redesign';
     config.contentsCss = [
-      mdn.mediaPath + 'css/wiki-screen.css?{{ BUILD_ID_JS }}',
       mdn.mediaPath + 'redesign/css/main.css?{{ BUILD_ID_JS }}',
+      mdn.mediaPath + 'redesign/css/wiki.css?{{ BUILD_ID_JS }}',
       mdn.mediaPath + 'redesign/css/wiki-wysiwyg.css?{{ BUILD_ID_JS }}',
+      mdn.mediaPath + 'redesign/css/wiki-syntax.css?{{ BUILD_ID_JS }}',
       mdn.mediaPath + 'css/libs/font-awesome/css/font-awesome.min.css?{{ BUILD_ID_JS }}',
       '/en-US/docs/Template:CustomCSS?raw=1'
     ];
