@@ -410,23 +410,4 @@
   <script type="text/javascript">
       jQuery('.from-search-toc').mozSearchResults('{{ search_url|safe }}');
   </script>
-
-  {% if waffle.flag('promote_script') %}
-    <script type="text/javascript">
-        (function($) {
-            var searchElements = ['article p, article li'];
-            $(searchElements.join(',')).length && $.ajax({
-                url: '/media/redesign/js/promote.js',
-                dataType: 'script',
-                cache: true,
-                success: function() {
-                    PromoteMDN({
-                        searchElements: searchElements,
-                        linkClass: 'promote-link'
-                    });
-                }
-            });
-    })(jQuery);
-    </script>
-  {% endif %}
 {% endblock %}
