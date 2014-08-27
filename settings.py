@@ -392,6 +392,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
     'jingo_minify.helpers.build_ids',
     'constance.context_processors.config',
+
+    'search.context_processors.search_filters',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -637,6 +639,9 @@ MINIFY_BUNDLES = {
         'search': (
             'redesign/css/search.css',
         ),
+        'search-suggestions': (
+            'redesign/css/search-suggestions.css',
+        ),
         'wiki': (
             'redesign/css/wiki.css',
             'redesign/css/zones.css',
@@ -753,6 +758,9 @@ MINIFY_BUNDLES = {
             'js/prism-mdn/plugins/line-numbering/prism-line-numbering.js',
             'js/libs/prism/plugins/line-highlight/prism-line-highlight.js',
             'js/syntax-prism.js',
+        ),
+        'search-suggestions': (
+            'js/search-suggestions.js',
         ),
         'wiki': (
             'redesign/js/search-navigator.js',

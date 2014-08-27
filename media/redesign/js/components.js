@@ -193,7 +193,8 @@
 
                 // If we should always get fresh items, do so
                 if(settings.alwaysCollectItems) {
-                    var $items = $(this).find(settings.itemSelector);
+                    $items = $(this).find(settings.itemSelector);
+                    $selectedItem = null;
                 }
 
                 // Up and down buttons

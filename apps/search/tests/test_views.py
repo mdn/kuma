@@ -38,7 +38,8 @@ class ViewTests(ElasticTestCase):
                       'slug': 'tagged',
                       'tags': ['tagged'],
                       'operator': 'OR',
-                      'group': {'name': 'Group', 'slug': 'group', 'order': 1}
+                      'group': {'name': 'Group', 'slug': 'group', 'order': 1},
+                      'shortcut': None})
                       }])
 
         test_view1 = Test1SearchView.as_view()

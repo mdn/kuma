@@ -2,7 +2,7 @@ from rest_framework import serializers, pagination
 
 from .fields import (SearchQueryField, DocumentExcerptField,
                      LocaleField, SiteURLField)
-from .models import Filter
+from .models import Filter, FilterGroup
 
 
 class FilterURLSerializer(serializers.Serializer):
@@ -62,21 +62,39 @@ class DocumentSerializer(BaseDocumentSerializer):
                                     source='parent')
 
 
-class FilterGroupSerializer(serializers.Serializer):
+class FilterSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Filter
+        depth = 1
+        fields = ('name', 'slug', 'shortcut')
+        read_only_fields = ('name', 'slug', 'shortcut')
+
+
+class GroupWithFiltersSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(read_only=True)
+    slug = serializers.CharField(read_only=True)
+    order = serializers.CharField(read_only=True)
+    filters = FilterSerializer(source='filters.visible_only', read_only=True)
+
+    class Meta:
+        model = FilterGroup
+        depth = 1
+        fields = ('name', 'slug', 'order', 'filters')
+
+
+class GroupSerializer(serializers.Serializer):
     name = serializers.CharField(read_only=True)
     slug = serializers.CharField(read_only=True)
     order = serializers.CharField(read_only=True)
 
 
-class FilterSerializer(serializers.ModelSerializer):
+class FilterWithGroupSerializer(FilterSerializer):
     tags = serializers.SerializerMethodField('tag_names')
-    group = FilterGroupSerializer(source='group', read_only=True)
+    group = GroupSerializer(source='group', read_only=True)
 
     def tag_names(self, obj):
         return obj.tags.values_list('name', flat=True)
 
-    class Meta:
-        model = Filter
-        depth = 1
-        fields = ('name', 'slug', 'tags', 'operator', 'group')
-        read_only_fields = ('name', 'slug', 'operator')
+    class Meta(FilterSerializer.Meta):
+        fields = FilterSerializer.Meta.fields + ('tags', 'operator', 'group')

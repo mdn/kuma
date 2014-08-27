@@ -32,6 +32,7 @@
             wiki: {
                 autosuggestTitleUrl: '{{ url('wiki.autosuggest_documents') }}'
             },
+            searchFilters: {{ command_search_filters|jsonencode }}
         };
 
         // Ensures gettext always returns something, is always set
