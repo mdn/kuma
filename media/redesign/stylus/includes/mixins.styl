@@ -2,7 +2,7 @@
     Provides man mixins for use within the MDN theme.
 */
 
-@import 'vars'
+@import 'vars';
 
 VENDOR-PREFIXES = '-webkit-' '-moz-' '-ms-';
 
@@ -18,17 +18,17 @@ remify(value) {
     u = unit(value);
 
     if (u is 'px') {
-        return unit(value/base-font-size, 'rem')
+        return unit(value/$base-font-size, 'rem')
     } else {
         return unit(value, u)
     }
 }
 
 set-smaller-font-size() {
-    set-font-size(smaller-font-size);
+    set-font-size($smaller-font-size);
 }
 set-larger-font-size() {
-    set-font-size(base-bump-font-size);
+    set-font-size($base-bump-font-size);
 }
 
 
@@ -76,10 +76,10 @@ reverse-link-decoration() {
 /* generates a background property for header and zones */
 create-gradient-background(color = '', use-gradient = false) {
     if use-gradient {
-        background-image: url(media-url-dir + 'header-background.png'), url(media-url-dir + 'mdn-header-gradient.png');
+        background-image: url($media-url-dir + 'header-background.png'), url($media-url-dir + 'mdn-header-gradient.png');
         background-repeat: repeat, repeat-x;
     } else {
-        background-image: url(media-url-dir + 'header-background.png');
+        background-image: url($media-url-dir + 'header-background.png');
         background-repeat: repeat;
     }
     background-position: 0 0, 0 0, 0 0;
@@ -90,7 +90,7 @@ create-gradient-background(color = '', use-gradient = false) {
 
 create-home-gradient-background(color) {
     create-gradient-background(color);
-    background-image: url(media-url-dir + 'header-background.png'), url(media-url-dir + 'blueprint.png'), url(media-url-dir + 'mdn-header-gradient.png');
+    background-image: url($media-url-dir + 'header-background.png'), url($media-url-dir + 'blueprint.png'), url($media-url-dir + 'mdn-header-gradient.png');
     background-repeat: repeat, repeat, repeat-x;
 }
 
@@ -115,40 +115,18 @@ generate-arrow(arrow-width = 10px) {
     }
 }
 
-/* use this in the case of having to override styles from old template :( */
-compat-important(prop, value) {
-    {prop}: value !important;
-}
-
-/* Override an !important set by compat-important() with another !important.
-     This should be removed after all CSS has been migrated to Stylus. */
-override-compat-important(prop, value) {
-        compat-important(prop, value);
-}
-
-/* used for style which are only present to override other styles -- these will be deleted once legacy design is gone */
-compat-only(prop, value, more-selector = '') {
-    compat-important(prop, value);
-
-    if more-selector {
-        & {more-selector} {
-            compat-important(prop, value);
-        }
-    }
-}
-
 /* used to denote an old IE style */
 old-ie(prop, value, important = false) {
     {prop}: value (important ? unquote('!important') : '');
 }
 
 /* used to create sliding animations */
-slider(duration=default-animation-duration, maximum-height = 10000px) {
+slider(duration=$default-animation-duration, maximum-height = 10000px) {
     overflow-y: hidden;
     max-height: maximum-height;
     vendorize(transition-property, all);
     vendorize(transition-duration, duration);
-    vendorize(transition-timing-function, slide-timing-function);
+    vendorize(transition-timing-function, $slide-timing-function);
 
     &.closed {
         max-height: 0;
@@ -156,16 +134,18 @@ slider(duration=default-animation-duration, maximum-height = 10000px) {
 }
 
 /* sets the base styles for messages (review, warning, error, notice, etc.) */
-set-message-base() {
-    compat-only(border-width, 5px);
-    compat-only(border-style, solid);
-    padding: (grid-spacing / 2);
-    margin-bottom: grid-spacing;
+set-message-base(remove-last-spacing = true) {
+    border-width: 5px;
+    border-style: solid;
+    padding: ($grid-spacing / 2);
+    margin-bottom: $grid-spacing;
     set-smaller-font-size();
 
-    & *:last-child {
-        margin-bottom: 0;
-        padding-bottom: 0;
+    if(remove-last-spacing) {
+        & *:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
     }
 }
 
@@ -179,7 +159,7 @@ remove-main-spacing() {
     }
 }
 
-add-center-spacing(spacing = gutter-width) {
+add-center-spacing(spacing = $gutter-width) {
     padding-left: spacing;
     padding-right: spacing;
 }
@@ -192,7 +172,7 @@ remove-center-spacing() {
 /* overrides the navigation menu color - zones and homepage */
 override-main-nav-color(hex) {
     #main-nav > ul > li > a, .user-state a {
-        compat-important(color, hex);
+        color: hex;
     }
 
     #main-nav > ul > li {
@@ -204,7 +184,7 @@ override-main-nav-color(hex) {
             }
 
             input {
-                 set-placeholder-style(color, hex);
+                set-placeholder-style(color, hex);
             }
         }
     }
@@ -238,29 +218,20 @@ use-white-logo() {
 /* for use */
 
 /*
-   Workaround for bug in older versions of Stylus. This bug has been fixed by
-   at most version 0.42.1. When production has been updated to that version,
-   the code from the following pull request should work correctly in place of
-   this workaround.
-
-   https://github.com/mozilla/kuma/pull/2362
-*/
-place-important(make-important) {
-    return make-important ? unquote('!important') : unquote('');
-}
-/*
     Allows setting of a property for LTR and RTL without having to deal with duplicating and maintaining selectors:
 
         example:     bidi-style(left, 20px, right, auto)
 */
 bidi-style(ltr-prop, value, inverse-prop, inverse-value, make-important = false) {
-    {ltr-prop}: value place-important(make-important);
+    make-important = make-important ? unquote('!important') : unquote('');
 
-    .html-rtl & {
+    {ltr-prop}: value make-important;
+
+    html[dir='rtl'] & {
         if (ltr-prop != inverse-prop) {
-            {inverse-prop}: value place-important(make-important);
+            {inverse-prop}: value make-important;
         }
-        {ltr-prop}: inverse-value place-important(make-important);
+        {ltr-prop}: inverse-value make-important;
     }
 }
 
@@ -282,7 +253,7 @@ bidi-value-vendorize(prop, ltr, rtl, make-important = false) {
     These are not dynamic but serve as mixins so that styles wont be repeated throughout files
 */
 heading-1() {
-    set-font-size((content-block-margin * 2));
+    set-font-size(($content-block-margin * 2));
     letter-spacing: -2px;
 }
 
@@ -298,7 +269,7 @@ big-search() {
     background: rgba(255, 255, 255, 0.2);
     border: 0;
     border-radius: 3px;
-    font-family: heading-font-family;
+    font-family: $heading-font-family;
     letter-spacing: -1px;
     width: 60%;
 }
@@ -315,20 +286,19 @@ offscreen() {
 }
 
 clearfix() {
-    &:before, &:after {
-        content: ' ';
-        display: table;
-    }
+    clear:both;
 
     &:after {
+        content: ' ';
         clear: both;
+        display: table;
     }
 }
 
 title-header() {
     font-weight: bold;
     text-transform: uppercase;
-    color: text-color;
+    color: $text-color;
     text-decoration: none;
     display: block;
 }
@@ -336,7 +306,7 @@ title-header() {
 /* submenu generator: used in the main navigation and wiki */
 component-submenu(menu-width, num-columns, background-color, arrow-border-color) {
     position: absolute;
-    padding: grid-spacing;
+    padding: $grid-spacing;
     background: background-color;
     display: none;
     width: menu-width;
@@ -348,7 +318,7 @@ component-submenu(menu-width, num-columns, background-color, arrow-border-color)
         if num-columns is 1 {
             col-width = 100%;
         } else {
-            col-width = ((menu-width - (num-columns * grid-spacing) - 1) / num-columns) + (grid-spacing / 2);
+            col-width = ((menu-width - (num-columns * $grid-spacing) - 1) / num-columns) + ($grid-spacing / 2);
         }
         vertical-align: text-top;
         width: col-width;
@@ -356,14 +326,8 @@ component-submenu(menu-width, num-columns, background-color, arrow-border-color)
 
         &:nth-child(even) {
             bidi-style(border-left, 1px dotted #d4dde4, border-right, 0);
-            bidi-style(padding-left, grid-spacing, padding-right, 0);
+            bidi-style(padding-left, $grid-spacing, padding-right, 0);
         }
-    }
-
-    .title {
-        compat-only(font-size, base-font-size);
-        compat-only(padding-left, 0);
-        compat-only(background, none);
     }
 
     a {
@@ -386,14 +350,14 @@ component-submenu(menu-width, num-columns, background-color, arrow-border-color)
         z-index: 1;
     }
 
-    @media media-query-mobile {
+    @media $media-query-mobile {
         .submenu-column, .submenu-column:nth-child(even) {
             bidi-style(border-left, 0, border-right, 0);
             bidi-style(padding-left, 0, padding-right, 0);
         }
     }
 
-    @media media-query-small-mobile {
+    @media $media-query-small-mobile {
         & {
             width: auto;
 
@@ -417,7 +381,7 @@ component-submenu-close() {
         }
     }
 
-    @media media-query-tablet {
+    @media $media-query-tablet {
         .submenu-close {
             display: block;
         }
@@ -427,8 +391,8 @@ component-submenu-close() {
 
 
 /* When an element contains a label and a checkbox in order (as on the edit
-     profile page and elsewhere) make them appear on the same line, with the
-     checkbox to the left of the label. */
+   profile page and elsewhere) make them appear on the same line, with the
+   checkbox to the left of the label. */
 $checkbox-label-container {
     clearfix();
 
@@ -442,14 +406,15 @@ $checkbox-label-container {
     }
 }
 
+
 /* Dropdown menus that hide advanced feature, such as the "This Page" menu on
-     article pages, the "Advanced" menu on profiles, etc. */
+   article pages, the "Advanced" menu on profiles, etc. */
 $advanced-menu {
-    component-submenu(160px, 1, button-background, button-shadow-color);
+    component-submenu(160px, 1, $button-background, $button-shadow-color);
     bidi-style(right, 0, left, auto);
     top: 40px;
     z-index: 3;
-    border-top: 1px solid button-shadow-color;
+    border-top: 1px solid $button-shadow-color;
     width: 160px !important; /* needs this due to overriding media query rule of component */
 
     bdi {
@@ -468,6 +433,43 @@ $advanced-menu {
 }
 
 $right-icons {
-  margin-left: 0 !important;
-  margin-right: 10px !important;
+    margin-left: 0 !important;
+    margin-right: 10px !important;
+}
+
+
+/*  media block
+    for use when you want an item of defined width on the left and some stuff on the right of it
+    http://www.stubbornella.org/content/2010/06/25/the-media-object-saves-hundreds-of-lines-of-code/ */
+.media,
+.media-body {
+    overflow: hidden;
+    _overflow: visible;
+    zoom: 1;
+}
+
+.media-img {
+    float: left;
+    margin-right: ($grid-spacing / 2);
+
+    img {
+        display: block;
+    }
+}
+
+.media-imgExt {
+    float: right;
+    margin-left: ($grid-spacing / 2);
+}
+
+/* Styles for code blocks - used for wiki document and WYSIWYG editor */
+$code-block {
+    background: rgba(234, 239, 242, 0.25);
+    border-left: 6px solid rgba(0, 83, 159, 0.65);
+    background-image:  url($media-url-dir + 'blueprint-dark.png');
+    background-position: top center;
+    background-repeat: repeat;
+
+    vendorize(tab-size, 4);
+    vendorize(hyphens, none);
 }

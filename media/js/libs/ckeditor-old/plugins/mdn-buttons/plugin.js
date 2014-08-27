@@ -4,7 +4,7 @@
 CKEDITOR.config.mdnButtons_tags = ['pre', 'code', 'h2', 'h3', 'h4', 'h5', 'h6'];
 
 (function(){
-    
+
     // make a generic command object that wraps text in <tag>
     var tagCommand = function(tag) {
         var command = {
@@ -26,7 +26,7 @@ CKEDITOR.config.mdnButtons_tags = ['pre', 'code', 'h2', 'h3', 'h4', 'h5', 'h6'];
                         return;
                     }
                     // WebKit
-                    else if(CKEDITOR.env.webkit && enclosedNode.$.nodeType == 3 && enclosedNode.$.parentNode && 
+                    else if(CKEDITOR.env.webkit && enclosedNode.$.nodeType == 3 && enclosedNode.$.parentNode &&
                             enclosedNode.$.parentNode.nodeName == upperTag) {
                         editor.execCommand('removeFormat');
                         return;
@@ -45,7 +45,7 @@ CKEDITOR.config.mdnButtons_tags = ['pre', 'code', 'h2', 'h3', 'h4', 'h5', 'h6'];
         };
         return command;
     };
-    
+
     CKEDITOR.plugins.add('mdn-buttons', {
 
         requires: ['selection', 'removeformat'],
@@ -54,9 +54,9 @@ CKEDITOR.config.mdnButtons_tags = ['pre', 'code', 'h2', 'h3', 'h4', 'h5', 'h6'];
 
             var tags = CKEDITOR.config.mdnButtons_tags;
             var pluginName = 'mdn-buttons';
-            var $saveButton = $('#btn-save');
-            var $saveContinueButton = $('#btn-save-and-edit')
-            
+            var $saveButton = $('.btn-save');
+            var $saveContinueButton = $('.btn-save-and-edit').first();
+
             // addCommand and addButton for each tag in the list
             for (var i = 0, j = tags.length; i < j; i++) {
                 var tag = tags[i];
@@ -73,7 +73,7 @@ CKEDITOR.config.mdnButtons_tags = ['pre', 'code', 'h2', 'h3', 'h4', 'h5', 'h6'];
             // Add the removeformat filter to all of our custom elements
             editor.config.removeFormatTags += ',' + CKEDITOR.config.mdnButtons_tags.join(',');
             editor._.removeFormatRegex = new RegExp('^(?:' + editor.config.removeFormatTags.replace( /,/g,'|') + ')$', 'i');
-            
+
             // Configure "Save and Exit"
             editor.addCommand(pluginName + '-save-exit', {
                 modes : { wysiwyg : 1, source : 1 },
@@ -81,9 +81,9 @@ CKEDITOR.config.mdnButtons_tags = ['pre', 'code', 'h2', 'h3', 'h4', 'h5', 'h6'];
                     if(!$saveButton.length) {
                         $saveButton = $('.edited-section-ui.current .btn-save');
                     }
-                    
+
                     editor.updateElement();
-                    $saveButton.click();
+                    $saveButton.first().trigger('click');
                 }
             });
             editor.ui.addButton('mdnSaveExit', {
@@ -91,16 +91,16 @@ CKEDITOR.config.mdnButtons_tags = ['pre', 'code', 'h2', 'h3', 'h4', 'h5', 'h6'];
                 className: 'cke_button_save_exit',
                 command: pluginName + '-save-exit'
             });
-            
+
             // Add "Save and Continue", if that button is present
             if($saveContinueButton.length) {
                 editor.addCommand(pluginName + '-save', {
                     modes : { wysiwyg : 1, source : 1 },
                     exec: function (editor, data) {
-                        var saveCallback = $saveContinueButton.data('save_cb') || function () { 
-                            $saveContinueButton.click(); 
+                        var saveCallback = $saveContinueButton.data('save_cb') || function () {
+                            $saveContinueButton.trigger('click');
                         };
-                        
+
                         editor.updateElement();
                         saveCallback();
                     }
@@ -112,9 +112,6 @@ CKEDITOR.config.mdnButtons_tags = ['pre', 'code', 'h2', 'h3', 'h4', 'h5', 'h6'];
                 });
             }
 
-            // Some localized strings are stashed on #page-buttons...
-            var pb = $('#page-buttons');
-
             // Define command and button for "New Page"
             editor.addCommand(pluginName + '-newpage', {
                 exec: function (editor, data) {
@@ -124,8 +121,8 @@ CKEDITOR.config.mdnButtons_tags = ['pre', 'code', 'h2', 'h3', 'h4', 'h5', 'h6'];
                         return cancel_btn.click();
                     }
                     // Otherwise, try treating as a new wiki page
-                    var msg = pb.attr('data-new-page-msg'),
-                        href = pb.attr('data-new-page-href');
+                    var msg = $('#new-page-msg').val(),
+                        href = $('#new-page-href').val();
                     if (!msg || !href) { return; }
                     if (window.confirm(msg)) {
                         window.location.href = href;
@@ -133,7 +130,7 @@ CKEDITOR.config.mdnButtons_tags = ['pre', 'code', 'h2', 'h3', 'h4', 'h5', 'h6'];
                 }
             });
             editor.ui.addButton('mdnNewPage', {
-                label: pb.attr('data-new-page-label'),
+                label: $('#new-page-label').val(),
                 className: 'cke_button_newpage',
                 command: pluginName + '-newpage'
             });
@@ -142,11 +139,11 @@ CKEDITOR.config.mdnButtons_tags = ['pre', 'code', 'h2', 'h3', 'h4', 'h5', 'h6'];
             editor.addCommand(pluginName + '-preview', {
                 exec: function (editor, data) {
                     editor.updateElement();
-                    $('#btn-preview').click();
+                    $('.btn-preview').click();
                 }
             });
             editor.ui.addButton('mdnPreview', {
-                label: $('#btn-preview').text(),
+                label: $('.btn-preview').text(),
                 className: 'cke_button_preview',
                 command: pluginName + '-preview'
             });

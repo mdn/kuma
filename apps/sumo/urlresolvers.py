@@ -71,10 +71,10 @@ def reverse(viewname, urlconf=None, args=None, kwargs=None, prefix=None,
     # See apps/wiki/tests/test_middleware.py for a test exercising this hack.
     if url.startswith('/docs/'):
         # HACK: Import here, because otherwise it's a circular reference
-        from wiki.models import DocumentZone
+        from kuma.wiki.models import DocumentZone
         # Work out a current locale, from some source.
         zone_locale = locale
-        if not zone_locale: 
+        if not zone_locale:
             if prefixer:
                 zone_locale = prefixer.locale
             else:
@@ -158,8 +158,11 @@ class Prefixer(object):
     def fix(self, path):
         path = path.lstrip('/')
         url_parts = [self.request.META['SCRIPT_NAME']]
-
-        if path.partition('/')[0] not in settings.SUPPORTED_NONLOCALES:
+        if path.endswith('/'):
+            check_path = path
+        else:
+            check_path = path + '/'
+        if not check_path.startswith(settings.LANGUAGE_URL_IGNORED_PATHS):
             locale = self.locale if self.locale else self.get_language()
             url_parts.append(locale)
 

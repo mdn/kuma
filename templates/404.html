@@ -20,25 +20,9 @@
     <p>You can try a search or start over on the <a href="{{ url('home') }}">home page</a>.</p>
     <p>If you were following a documentation link, you can sign in and create the page. Otherwise, please <a href="https://bugzilla.mozilla.org/form.doc" rel="nofollow">file a bug</a>. Thanks!</p>
 
-    <form class="browserid" action="{{url('users.browserid_verify') }}" method="POST">
-        <input id="next" name="next" type="hidden" value="{{ next_url }}"/>
-        {{ browserid_form }}
-
-        <p class="clear">
-          <a href="#" class="persona-button persona-login" data-next="{{ next_url }}">
-            <span class="persona-icon"><i aria-hidden="true"></i></span>
-            <span class="signin">{{ _('Sign in with Persona') }}</span>
-          </a>
-
-          {% if waffle.flag('oauth_login') %}
-            <a href="#" class="github-button" data-next="{{ next_url }}">
-                <span class="github-icon"><i class="icon-github" aria-hidden="true"></i></span>
-                <span class="signin">{{ _('Sign in with GitHub') }}</span>
-              </a>
-          {% endif %}
-        </p>
-
-    </form>
+    {% if not user.is_authenticated() %}
+        {% include "socialaccount/snippets/provider_list.html" %}
+    {% endif %}
 
     <p class="attrib"><small><a href="http://theoatmeal.com/comics/state_web_summer#tumblr" rel="nofollow">Tumbeasts</a> by Matthew Inman of <a href="http://theoatmeal.com" rel="nofollow">The Oatmeal</a></small></p>
   </section>
@@ -54,6 +38,6 @@
 
 {% block js %}
 <script type="text/javascript">
-mdn.analytics.trackEvent(['Error', '404']);
+mdn.analytics.trackError('404: ' + window.location);
 </script>
 {% endblock %}

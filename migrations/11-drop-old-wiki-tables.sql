@@ -16,5 +16,5 @@ DROP TABLE IF EXISTS
     wiki_revision,
     wiki_taggeddocument;
 
-DELETE FROM south_migrationhistory 
+DELETE FROM south_migrationhistory
     WHERE app_name="wiki";

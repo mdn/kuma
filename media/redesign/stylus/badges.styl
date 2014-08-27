@@ -188,7 +188,7 @@ dl.award dd.awarded_to img.avatar {
     display: none;
 }
 
-input[type="submit"].delete-badge {
+input[type='submit'].delete-badge {
     margin: 0 auto;
     display: inherit;
 }
@@ -200,8 +200,8 @@ input[type="submit"].delete-badge {
     vendorize(transition-duration, 1s);
     width: 300px;
     position: fixed;
-    top: (grid-spacing / 2);
-    right: (grid-spacing / 2);
+    top: ($grid-spacing / 2);
+    right: ($grid-spacing / 2);
     z-index: 9999;
     opacity: 0;
 
@@ -210,12 +210,12 @@ input[type="submit"].delete-badge {
     }
 
     li {
-        margin-bottom: (grid-spacing / 2);
+        margin-bottom: ($grid-spacing / 2);
         width: 100%;
     }
 
     .badge-notify {
-        color: text-color;
+        color: $text-color;
         text-transform: uppercase;
     }
 
@@ -230,7 +230,7 @@ input[type="submit"].delete-badge {
 .badge-list {
 
     li {
-        margin: 0 (grid-spacing / 2) (grid-spacing / 2) 0;
+        margin: 0 ($grid-spacing / 2) ($grid-spacing / 2) 0;
         width: 300px;
         display: inline-block;
         vertical-align: text-top;
@@ -239,13 +239,13 @@ input[type="submit"].delete-badge {
     img {
         width: 60px;
         float: left;
-        margin: 0 (grid-spacing / 2) 0 0;
+        margin: 0 ($grid-spacing / 2) 0 0;
     }
 
     a {
         overflow: auto;
         display: block;
-        padding: (grid-spacing / 2);
+        padding: ($grid-spacing / 2);
         background: #f4f7f8;
         border: 1px solid #ddd;
         border-radius: 4px;
@@ -272,7 +272,7 @@ input[type="submit"].delete-badge {
 
     .badge-headline {
         font-weight: bold;
-        color: text-color;
+        color: $text-color;
         set-font-size(18px);
         font-weight: bold;
         line-height: 22px;

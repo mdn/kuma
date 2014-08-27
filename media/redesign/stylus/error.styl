@@ -1,8 +1,9 @@
-@import 'includes/vars'
+@import 'includes/mixins';
+@import 'includes/vars';
 
 .beast {
     float: right;
-    margin: grid-spacing 0 grid-spacing grid-spacing;
+    margin: $grid-spacing 0 $grid-spacing $grid-spacing;
 }
 
 ol.prose, ul.prose {
@@ -10,5 +11,5 @@ ol.prose, ul.prose {
 }
 
 ul.prose {
-    margin: grid-spacing 0;
+    margin: $grid-spacing 0;
 }

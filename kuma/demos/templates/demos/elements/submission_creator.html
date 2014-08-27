@@ -1,0 +1,2 @@
+{% set display_name = submission.creator.first_name | default(submission.creator.username, true) %}
+<a href="{{ submission.creator.get_absolute_url() }}" class="url fn" title="{{_('See {display_name}\'s profile') | f(display_name=display_name)}}">{{ display_name }}</a>

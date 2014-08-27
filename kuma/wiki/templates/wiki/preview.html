@@ -1,0 +1,27 @@
+{% extends "wiki/base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% set classes = 'document' %}
+{% block bodyclass %}document{% endblock %}
+
+{% block content %}
+
+    {% if kumascript_errors %}
+        {% include 'wiki/includes/kumascript_errors.html' %}
+    {% endif %}
+
+    <div class="warning warning-review">
+        <p>{{ _('This is a preview of an unsaved document.') }}</p>
+    </div>
+
+    <div class="page-title">
+        <h1 class="page-title">{{ title }}</h1>
+    </div>
+
+    <article id="wikiArticle" class="text-content">
+        {{ content|safe }}
+    </article>
+
+{% endblock %}
+
+{% block breadcrumbs %}
+{% endblock %}

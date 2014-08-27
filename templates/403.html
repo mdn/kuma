@@ -11,12 +11,12 @@
 
 {% block content %}
 
-<section id="content">
+<section id="content" class="text-content">
 <div class="wrap">
 
   <section id="content-main" class="full" role="main">
 
-    <h1 class="page-title">Permission Denied</h1>
+    <h1 class="page-title">{{ _('Permission Denied') }}</h1>
 
     {% if reason == 'kumaediting' %}
       <p class="notice">{{ _('The wiki is in read-only mode.') }}</p>
@@ -24,6 +24,8 @@
       <p class="notice">{{ _('Your account has been banned from making edits.') }}</p>
     {% elif reason == 'bannedprofile' %}
       <p class="notice">{{ _("This user's account has been banned.") }}</p>
+    {% elif reason == 'revisions_login_required' %}
+      <p class="notice">{{ _("You must sign in to view all history") }}</p>
     {% endif %}
 
     <img src="{{ MEDIA_URL }}img/beast-403.png" alt="" class="beast 403">
@@ -40,13 +42,12 @@
 
       <ul class="prose">
       {% if user.username %}
-        {% trans logout_url=url('users.logout') %}
+        {% trans logout_url=url('account_logout') %}
           <li><a href="{{ logout_url }}">Log out</a> to try again.</li>
         {% endtrans %}
       {% else %}
-        {% trans login_url=('{base_url}?next={next}' | f(base_url=url('users.login'), next=request.get_full_path())), register_url=url('users.register') %}
+        {% trans login_url=('{base_url}?next={next}' | f(base_url=url('account_login'), next=request.get_full_path())) %}
           <li><a href="{{ login_url }}">Log in</a> to try again.</li>
-          <li><a href="{{ register_url }}">Register</a> to edit docs and submit demos.</li>
         {% endtrans %}
       {% endif %}
         {% trans demos_url=url('demos'), docs_url=devmo_url('Web') %}

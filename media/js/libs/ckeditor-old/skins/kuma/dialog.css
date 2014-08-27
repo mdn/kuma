@@ -4,7 +4,7 @@ body .cke_dialog{visibility:visible;padding:20px;background:rgba(0,0,0,.3);font:
 .cke_skin_kuma table.cke_dialog.cke_browser_gecko{display:block;}
 .cke_skin_kuma .cke_dialog_body{z-index:1; padding:20px; background-color:#fff; position:relative;_position:static;}
 .cke_skin_kuma .cke_dialog_tl,.cke_skin_kuma .cke_dialog_tr,.cke_skin_kuma .cke_dialog_tc,.cke_skin_kuma .cke_dialog_bl,.cke_skin_kuma .cke_dialog_br,.cke_skin_kuma .cke_dialog_bc,.cke_skin_kuma .cke_dialog_ml,.cke_skin_kuma .cke_dialog_mr{display:none;}
-.cke_skin_kuma .cke_dialog_title{font: 200 20px/1.2 "Bebas Neue", "League Gothic", Haettenschweiler, sans-serif; text-transform: uppercase; letter-spacing: .5px; margin: 0 0 1em; cursor:move; position:relative; }
+.cke_skin_kuma .cke_dialog_title{font-weight: bold; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; margin: 0 0 1em; cursor:move; position:relative; }
 
 .cke_skin_kuma .cke_dialog_contents { overflow: auto; margin: 10px 0 0; }
 .cke_skin_kuma .cke_dialog_footer { font-size: 12px; text-align: right; position: relative; }
@@ -69,7 +69,7 @@ body .cke_dialog{visibility:visible;padding:20px;background:rgba(0,0,0,.3);font:
 .cke_skin_kuma .cke_dialog_contents a.colorChooser{display:block;margin-top:6px;margin-left:10px;width:80px;}
 .cke_skin_kuma .cke_rtl .cke_dialog_contents a.colorChooser{margin-right:10px;}
 
-.cke_skin_kuma a.cke_dialog_ui_button { padding: .35em .75em .15em; display: inline-block; color: #333; background: #eee; font: 200 15px/1.1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif; text-decoration: none; text-transform: uppercase; letter-spacing: .5px; border: 0; -moz-border-radius: .2em; -webkit-border-radius: .2em; border-radius: .2em; -moz-box-shadow: 1px 1px 0 rgba(0,0,0,.25); -webkit-box-shadow: 1px 1px 0 rgba(0,0,0,.25); box-shadow: 1px 1px 0 rgba(0,0,0,.25); }
+.cke_skin_kuma a.cke_dialog_ui_button { padding: .35em .75em .15em; display: inline-block; color: #333; background: #eee; text-decoration: none; text-transform: uppercase; border: 0; -moz-border-radius: .2em; -webkit-border-radius: .2em; border-radius: .2em; -moz-box-shadow: 1px 1px 0 rgba(0,0,0,.25); -webkit-box-shadow: 1px 1px 0 rgba(0,0,0,.25); box-shadow: 1px 1px 0 rgba(0,0,0,.25); }
 
 .cke_skin_kuma a.cke_dialog_ui_button {  }
 .cke_skin_kuma a.cke_dialog_ui_button_ok span,.cke_skin_kuma a.cke_dialog_ui_button_cancel span{  }
@@ -79,28 +79,28 @@ body .cke_dialog{visibility:visible;padding:20px;background:rgba(0,0,0,.3);font:
 
 
 .cke_skin_kuma a.cke_dialog_ui_button_ok {
-  padding: .35em 20px .15em; 
+  padding: .35em 20px .15em;
   background: #cce3f4;
-  background: -moz-linear-gradient(top, #cce3f4 0, #c0d7ea 100%); 
+  background: -moz-linear-gradient(top, #cce3f4 0, #c0d7ea 100%);
   background: -webkit-linear-gradient(top, #cce3f4 0, #c0d7ea 100%);
   background: linear-gradient(top, #cce3f4 0, #c0d7ea 100%);
 }
 .cke_skin_kuma a.cke_dialog_ui_button_ok:hover, a.cke_skin_kuma .cke_dialog_ui_button_ok:focus, a.cke_skin_kuma .cke_dialog_ui_button_ok:active {
   background: #abd5f4;
-  background: -moz-linear-gradient(top, #abd5f4 0, #a7cee9 100%); 
+  background: -moz-linear-gradient(top, #abd5f4 0, #a7cee9 100%);
   background: -webkit-linear-gradient(top, #abd5f4 0, #a7cee9 100%);
   background: linear-gradient(top, #abd5f4 0, #a7cee9 100%);
 }
 
-.cke_skin_kuma a.cke_dialog_ui_button_cancel { 
-  background: #f2d2c6; 
-  background: -moz-linear-gradient(top, #f2d2c6 0, #efc6b7 100%); 
+.cke_skin_kuma a.cke_dialog_ui_button_cancel {
+  background: #f2d2c6;
+  background: -moz-linear-gradient(top, #f2d2c6 0, #efc6b7 100%);
   background: -webkit-linear-gradient(top, #f2d2c6 0, #efc6b7 100%);
   background: linear-gradient(top, #f2d2c6 0, #efc6b7 100%);
 }
 .cke_skin_kuma a.cke_dialog_ui_button_cancel:hover, .cke_skin_kuma a.cke_dialog_ui_button_cancel:focus, .cke_skin_kuma a.cke_dialog_ui_button_cancel:active {
   background: #f8b8a0;
-  background: -moz-linear-gradient(top, #f8b8a0 0, #f8a688 100%); 
+  background: -moz-linear-gradient(top, #f8b8a0 0, #f8a688 100%);
   background: -webkit-linear-gradient(top, #f8b8a0 0, #f8a688 100%);
   background: linear-gradient(top, #f8b8a0 0, #f8a688 100%);
 }

@@ -1,0 +1,10 @@
+{% extends "account/base.html" %}
+
+{% block title %}{{ page_title(_("Verify Your Email Address")) }}{% endblock %}
+
+{% block content %}
+    <h1>{{ _("Verify Your Email Address") }}</h1>
+
+    <p>{% trans %}We have sent an email to you for verification. Follow the link provided to finalize the signup process. Please contact us if you do not receive it within a few minutes.{% endtrans %}</p>
+
+{% endblock %}

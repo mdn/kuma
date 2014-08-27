@@ -1,0 +1,1 @@
+{% trans email=email %}You cannot remove your primary email address ({{email}}).{% endtrans %}

@@ -22,12 +22,6 @@ class RedirectToTestcase(TestCase):
         assert isinstance(resp, HttpResponsePermanentRedirect)
         eq_(reverse('home'), resp['location'])
 
-    def test_redirect_kwargs(self):
-        resp = redirect_to(self.rf.get('/'), url='users.confirm_email',
-                           activation_key='1234')
-        eq_(reverse('users.confirm_email', args=['1234']),
-            resp['location'])
-
 
 
 class RobotsTestCase(TestCase):

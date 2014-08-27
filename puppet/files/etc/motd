@@ -1,15 +1,16 @@
 
-Welcome to Kuma (developer-dev.mozilla.org)
+Welcome to Kuma.
+
+To run developer-local.allizom.org, run:
+    foreman start
+
+    (Consult ~/src/Procfile to see what services are managed by Foreman.)
+
+To run Kuma tests:
+    ~/src/manage.py test actioncounters contentflagging kuma.demos devmo landing kuma.users search kuma.wiki kuma.events
+
+To run KumaScript tests:
+    cd ~/src/kumascript && ./node_modules/.bin/nodeunit tests
 
 To update this dev environment:
     sudo puppet apply /home/vagrant/src/puppet/manifests/dev-vagrant.pp
-
-Use Foreman to start & monitor services necessary for development:
-    foreman start
-
-Consult ~/src/Procfile to see what services are managed by Foreman.
-
-To run tests:
-    ~/src/manage.py test actioncounters contentflagging demos devmo landing users search wiki
-    (cd ~/src/kumascript && ./node_modules/.bin/nodeunit tests)
-

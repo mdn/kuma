@@ -1,0 +1,39 @@
+{% extends "wiki/base.html" %}
+{% set title = _('Revert Revision | {document}')|f(document=document.title) %}
+{% block title %}{{ page_title(title) }}{% endblock %}
+{% block bodyclass %}revert-document{% endblock %}
+
+{% block content %}
+
+      <article id="delete-revision">
+
+        <h1>{{ _('Are you sure you want to revert to this revision?') }}</h1>
+
+        <label><strong>{{ _('Document') }}</strong></label>
+        <div>{{ document.title }}</div>
+
+        <label><strong>{{ _('Creator') }}</strong></label>
+        <div><a href="{{ revision.creator.get_absolute_url() }}">{{ revision.creator }}</a></div>
+        <label><strong>{{ _('Date') }}</strong></label>
+        <div>{{ datetimeformat(revision.created, format='longdatetime') }}</div>
+        <label><strong>{{ _('Content') }}</strong></label>
+        <pre class="brush: html">{{ revision.content }}</pre>
+        <label><strong>{{ _('Tags') }}</strong></label>
+        <div>{{ revision.tags }}</div>
+        <form action="" method="post">
+          {{ csrf() }}
+
+          <label><strong>{{ _('Comment') }}</strong></label>
+          {{ _('Why are you reverting to this revision?') }}
+          <textarea name="comment"></textarea>
+          <p>
+            {{ _('You are about to revert the document to this revision.  Click "revert" to revert to the content&nbsp;above.')|safe }}
+          </p>
+          <div class="submit">
+            <input type="submit" value="{{ _('Revert') }}" />
+            <a href="{{ url('wiki.document_revisions', document.slug) }}">{{ _('Cancel') }}</a>
+          </div>
+        </form>
+      </article>
+
+{% endblock %}

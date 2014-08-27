@@ -4,7 +4,7 @@ from django.db.models import loading
 
 from notifications.models import Watch, WatchFilter
 from sumo.tests import TestCase
-from users.tests import user
+from kuma.users.tests import user
 
 
 def watch(save=False, **kwargs):

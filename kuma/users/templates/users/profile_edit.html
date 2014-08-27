@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+{% from 'includes/common_macros.html' import newsletter_widget, li_field %}
+
+{% set accounts = social_accounts(profile.user) %}
+
+{% block body_attributes %}{% endblock %}
+
+{% block bodyclass %}profile profile-edit{% endblock %}
+
+{% block title %}{{ page_title(_('Edit Your Profile')) }}{% endblock %}
+
+{% block site_css %}
+    {{ super() }}
+    {{ css('demostudio') }}
+    {{ css('jquery-ui') }}
+    {{ css('profile') }}
+    {{ css('newsletter') }}
+    {{ css('submission') }}
+{% endblock %}
+
+{% block site_js %}
+    {{ super() }}
+    {{ js('jquery-ui') }}
+    {{ js('demostudio') }}
+    {{ js('libs/tagit') }}
+    {{ js('profile') }}
+    {{ js('newsletter',) }}
+{% endblock %}
+
+{% block content %}
+  <form class="submission" method="post" action="">
+    {{ csrf() }}
+
+    <div class="column-container">
+
+      <div class="column-2">
+        <div class="extra">
+          <figure class="acc-avatar">
+            <img src="{{ profile.gravatar }}" alt="{{ profile.user.username }}" width="120" height="120" class="photo avatar">
+            <figcaption>
+                {{ _('Change your avatar at') }} <a href="http://gravatar.com" rel="external">gravatar.com</a>
+            </figcaption>
+          </figure>
+          <ul>
+              <li><a href="{{ profile.user.get_absolute_url() }}">{{ _('View profile') }}</a></li>
+            {# TODO: Implement account deletion #}
+            {# <li class="delete"><a href="#">{{ _('Delete my account') }}</a></li> #}
+          </ul>
+        </div>
+      </div>
+
+      <div id="profile-edit" class="column-half">
+        <h1 class="page-title">{{ profile.user.username }}</h1>
+            {% include 'socialaccount/snippets/login_service_icon.html' %}
+
+              <fieldset class="section notitle" id="personal">
+                <ul>
+                  <li id="field_beta" class="field">
+                    <label for="{{ profile_form.beta.id_for_label }}">{{ profile_form.beta.label }}</label> {{ profile_form.beta }}
+                    <p class="note">{{ _('We\'d love to have your feedback on site changes! Beta testers get access to new features first and we send the occasional email asking for help testing specific things.') }}</p>
+                  </li>
+                  <li id="field_email" class="field type_email required">
+                    <label>{{ _('Primary Email') }}</label>
+                    {{ profile.user.email }} <a href="{{ url('account_email') }}">{{ _('Edit email') }}</a>
+                  </li>
+                  {{ li_field(profile_form, 'fullname') }}
+                  {{ li_field(profile_form, 'title') }}
+                  {{ li_field(profile_form, 'organization') }}
+                  {{ li_field(profile_form, 'location') }}
+                  {{ li_field(profile_form, 'locale') }}
+                  {{ li_field(profile_form, 'timezone') }}
+                  {{ li_field(profile_form, 'irc_nickname') }}
+
+                  <li class="wordcount{{ ' error' if profile_form.bio.errors }}">
+                    <label for="{{ profile_form.bio.id_for_label }}">{{ _('About me') }} <span class="note"><b id="bio_wordcount" class="counter">150</b> {{ _('words remaining') }}</span></label>
+                    {{ profile_form.bio }}
+                    {{ profile_form.bio.errors }}
+                  </li>
+
+                  <li class="{{ ' error' if profile_form.interests.errors }}">
+                    <label for="{{ profile_form.interests.id_for_label }}">{{ _('Interests (tags)') }}</label>
+                    <p class="note">{{ _('Separate tags with commas or spaces. Join multi-word tags with double quotes, like "web standards".') }}</p>
+                    {{ profile_form.interests }}
+                    {{ profile_form.interests.errors }}
+                  </li>
+
+                  <li class="{{ ' error' if profile_form.expertise.errors }}">
+                    <label for="{{ profile_form.expertise.id_for_label }}">{{ _('Areas of expertise') }}</label>
+                    <p class="note">{{ _('Add your interests first, then declare yourself an expert in selected topics.') }}</p>
+                    {{ profile_form.expertise }}
+                    {{ profile_form.expertise.errors }}
+                  </li>
+                </ul>
+              </fieldset>
+
+              <fieldset class="section" id="profiles">
+                <legend><b>{{ _('My Profiles') }}</b></legend>
+                <ul>
+                  <li id="field_websites_persona" class="field site persona">
+                    <label><i class="icon-user" aria-hidden="true"></i>Persona</label>
+                    {% if accounts.persona %}
+                    <a class="field-management" href="{{ url('socialaccount_connections') }}">{{ _('Change') }}</a>
+                    <div class="account">
+                      {% for persona_account in accounts.persona %}{{ persona_account.uid }}{% if not loop.last %}, {% endif %}{% endfor %}
+                    </div>
+                    {% else %}
+                    <a class="field-management" href="{{ provider_login_url('persona', process='connect', next=next_url) }}">
+                      {{ _('Use your Persona account to sign in.') }}
+                    </a>
+                    <div class="account"></div>
+                    {% endif %}
+                  </li>
+                  {% for site_name, site_meta in profile.website_choices %}
+                    {% if site_name == 'github' %}
+                      <li id="field_websites_github" class="field site github">
+                      {% if accounts.github and waffle.flag('github_login') %}
+                        <label for="{{ profile_form.websites_github.id_for_label }}"><i class="icon-user" aria-hidden="true"></i>Github</label>
+                        <a class="field-management" href="{{ url('socialaccount_connections') }}">{{ _('Change') }}</a>
+                        <div class="account">
+                          {% for github_account in accounts.github %}{% if github_account.extra_data %}{{ github_account.get_profile_url() }}{% if not loop.last %}, {% endif %}{% endif %}{% endfor %}
+                        </div>
+                      {% else %}
+                          <label for="{{ profile_form.websites_github.id_for_label }}"><i class="icon-user" aria-hidden="true"></i>Github
+                          </label>
+                          {% if waffle.flag('github_login') %}
+                          <a class="field-management" href="{{ provider_login_url('github', process='connect', next=next_url) }}">
+                            {{ _('Use your GitHub account to sign in.') }}
+                          </a>
+                          {% endif %}
+                          {{ profile_form.websites_github }}
+                      {% endif %}
+                      </li>
+                    {% else %}
+                     {{ li_field(profile_form,
+                                'websites_{name}' | f(name=site_name),
+                                classes='site {name}' | f(name=site_name),
+                                label=site_meta.label,
+                                icon_class=site_meta.fa_icon) }}
+                    {% endif %}
+                  {% endfor %}
+                </ul>
+              </fieldset>
+
+      </div>
+
+      <div class="column-4"><div class="profile-newsletter-container">
+        {{ newsletter_widget(newsletter_form) }}
+        <p class="fm-submit"><button type="submit" class="positive">{{ _('Save Changes') }}<i aria-hidden="true" class="icon-save"></i></button></p>
+      </div></div>
+
+    </div>
+
+    <div class="column-container">
+      <div class="column-2"></div>
+      <div class="column-half">
+        <p class="fm-submit"><button type="submit" class="positive">{{ _('Save Changes') }}<i aria-hidden="true" class="icon-save"></i></button></p>
+      </div>
+    </div>
+
+  </form>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+// <![CDATA[
+    var INTEREST_SUGGESTIONS = {{ INTEREST_SUGGESTIONS | jsonencode }};
+// ]]>
+</script>
+{% include "socialaccount/snippets/login_extra.html" %}
+{% endblock %}

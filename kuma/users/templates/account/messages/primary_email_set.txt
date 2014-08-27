@@ -1,0 +1,1 @@
+{% trans %}Primary email address set.{% endtrans %}

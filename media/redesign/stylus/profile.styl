@@ -1,15 +1,15 @@
-@import 'includes/vars'
-@import 'includes/mixins'
-@import 'main/components'
+@import 'includes/vars';
+@import 'includes/mixins';
+@import 'main/components';
 
 /*** Display ***/
 
 #profile-head {
-    background: light-background-color;
-    margin-bottom: grid-spacing;
+    background: $light-background-color;
+    margin-bottom: $grid-spacing;
     min-height: 200px;
     overflow: hidden;
-    padding: grid-spacing;
+    padding: $grid-spacing;
     position: relative;
 
     b {
@@ -19,7 +19,7 @@
     }
 
     .photo {
-        margin: 0 0 (grid-spacing / 2);
+        margin: 0 0 ($grid-spacing / 2);
     }
 
     .extra {
@@ -27,7 +27,7 @@
     }
 
     .links {
-        border-spacing: (grid-spacing / 2);
+        border-spacing: ($grid-spacing / 2);
         display: table;
         set-smaller-font-size();
         margin: -(@border-spacing); // Offset outer border
@@ -42,7 +42,7 @@
         }
 
         i {
-            set-font-size(base-font-size);
+            set-font-size($base-font-size);
             text-align: center;
         }
 
@@ -52,16 +52,11 @@
     }
 
     .edit > a {
-        compat-only(margin, 0 5px 0 0);
+        margin: 0 5px 0 0;
     }
 
     .submenu {
         @extend $advanced-menu;
-
-        a {
-            compat-only(float, none);
-            compat-only(margin, 0);
-        }
     }
 
     .main {
@@ -77,16 +72,16 @@
     .info {
         li {
             display: inline;
-            margin-right: (grid-spacing / 2);
+            margin-right: ($grid-spacing / 2);
 
             &:before {
                 color: #a19f93;
-                content: "/";
+                content: '/';
                 margin-right: @margin-right;
             }
 
             &:first-child:before {
-                content: "";
+                content: '';
                 margin: 0;
             }
         }
@@ -96,7 +91,7 @@
         margin-bottom: 5px;
 
         h2 {
-            set-font-size(base-font-size);
+            set-font-size($base-font-size);
             margin-bottom: 0;
         }
 
@@ -118,25 +113,25 @@
         top: @padding;
         right: @padding;
 
-        a {
+        & > a {
             float: left;
-            margin-left: (grid-spacing / 2);
+            margin-left: ($grid-spacing / 2);
         }
     }
 }
 
 .profile-section {
     clear: both;
-    margin-bottom: grid-spacing;
+    margin-bottom: $grid-spacing;
 }
 
 .gallery-foot {
-    background: light-background-color;
+    background: $light-background-color;
 }
 
 #docs-activity {
     header {
-        margin-bottom: (grid-spacing / 2);
+        margin-bottom: ($grid-spacing / 2);
         h2 {
             display: inline;
         }
@@ -154,8 +149,8 @@ table.activity {
 
     th {
         h3 {
-            set-font-size(base-bump-font-size);
-            margin: 0 0 (grid-spacing / 4);
+            set-font-size($base-bump-font-size);
+            margin: 0 0 ($grid-spacing / 4);
         }
         &.date {
             width: 120px;
@@ -166,7 +161,7 @@ table.activity {
     }
 
     thead {
-        background: header-background-color;
+        background: $header-background-color;
         th {
             font-weight: bold;
         }
@@ -179,7 +174,7 @@ table.activity {
 
         tr {
             &:nth-child(even) {
-                background: light-background-color;
+                background: $light-background-color;
             }
         }
 
@@ -203,7 +198,7 @@ table.activity {
 
 .profile-edit {
     /* Set forms to full width so that they resize with the column. */
-    .section li > input[type="text"], select, textarea, #tagit-interests, #tags-expertise {
+    .section li > input[type='text'], select, textarea, #tagit-interests, #tags-expertise, legend {
         width: 100%;
         vendorize(box-sizing, border-box);
     }
@@ -211,7 +206,7 @@ table.activity {
     .extra {
         set-smaller-font-size();
         figcaption {
-            margin: (grid-spacing / 2) 0;
+            margin: ($grid-spacing / 2) 0;
         }
     }
 
@@ -228,19 +223,21 @@ table.activity {
         width: 610px;
     }
 
-    li.tag-expert {
-        display: inline-block;
-        margin: 0 10px 10px 0;
+    li {
+        .tag-expert {
+            display: inline-block;
+            margin: 0 10px 10px 0;
 
-        label {
-            background: #f9f9f9;
-            border: 1px solid #dbd9d1;
-            border-radius: 2px;
-            font-weight: normal;
-            margin: 0;
-            padding: 3px 8px 3px 4px;
-            &:hover {
-                border-color: #bbb;
+            label {
+                background: #f9f9f9;
+                border: 1px solid #dbd9d1;
+                border-radius: 2px;
+                font-weight: normal;
+                margin: 0;
+                padding: 3px 8px 3px 4px;
+                &:hover {
+                    border-color: #bbb;
+                }
             }
         }
     }
@@ -252,10 +249,50 @@ table.activity {
     }
 }
 
+#profiles {
+    label, .field-management {
+        margin: 0 0 5px;
+    }
+
+    label {
+        bidi-value(float, left, right);
+        bidi-style(margin-right, 10px, margin-left, 10px);
+    }
+
+    .field-management {
+        bidi-value(float, right, left);
+    }
+
+    .account {
+        clear: both;
+    }
+}
+
+
+
+#profile-edit {
+    h1, > {$selector-icon}{
+        bidi-value(float, left, right);
+
+        /* Keep the font size and line height equal to make the icon appear as
+           though it is on the same line. */
+        font-size: 26px;
+        line-height: 40px;
+    }
+
+    > {$selector-icon} {
+        bidi-style(margin-left, 20px, margin-right, 20px);
+    }
+
+    fieldset {
+        clear: both;
+    }
+}
+
 /* Profile edit newsletter */
 .profile-newsletter-container {
     background: #f4f7f8;
-    padding: grid-spacing;
+    padding: $grid-spacing;
     overflow: hidden;
 
     .fm-submit {
@@ -278,13 +315,17 @@ table.activity {
 
 #field_beta {
     @extend $checkbox-label-container;
+
+    > p {
+        clear: left;
+    }
 }
 
 .profile-display, .profile-edit {
     .page-title {
         set-font-size(26px);
         letter-spacing: 0;
-        margin-bottom: (grid-spacing / 2);
+        margin-bottom: ($grid-spacing / 2);
     }
 }
 
@@ -296,13 +337,13 @@ table.activity {
 }
 
 /* For tablet and lower, move the profile buttons below the user name */
-@media media-query-tablet {
+@media $media-query-tablet {
     .profile-display {
         .edit {
             position: relative;
             top: auto;
             right: auto;
-            margin: 0 0 grid-spacing 0;
+            margin: 0 0 $grid-spacing 0;
 
             a {
                 float: none;
@@ -313,18 +354,18 @@ table.activity {
     }
 
     .profile-newsletter-container {
-        margin-bottom: (grid-spacing * 1.5);
+        margin-bottom: ($grid-spacing * 1.5);
     }
 }
 
-@media media-query-small-mobile {
+@media $media-query-small-mobile {
     .profile-display #profile-head .edit {
         margin: 0;
 
         & > a {
             display: block;
             text-align: center;
-            override-compat-important(margin, (grid-spacing / 2) 0);
+            margin: ($grid-spacing / 2) 0;
         }
 
         #edit-profile i {
@@ -337,7 +378,7 @@ table.activity {
     }
 }
 
-@media media-query-mobile {
+@media $media-query-mobile {
     .profile-newsletter-container {
         #apps-newsletter-subscribe {
             margin: 0;

@@ -1,174 +1,169 @@
 /*
-  Additional formatting for the real page content; i.e. text in the <main> element
-  We cannot put these styles in the tags.styl file because they don't apply to the entire layout
+    Additional formatting for the real page content; i.e. text in the <main> element
+    We cannot put these styles in the tags.styl file because they don't apply to the entire layout
 */
 
-table-blue = #d4dde4;
+$table-blue = #d4dde4;
 
 .text-content {
 
-  /* tables */
-  table {
-    border-collapse: collapse;
-    border: solid #e0e0dc;
-    border-width: 1px 0 0 1px;
+    /* tables */
+    table {
+        border-collapse: collapse;
+        border: solid #e0e0dc;
+        border-width: 1px 0 0 1px;
 
-    &.topicpage-table {
-        clear: both;
-        width: auto;
+        &.topicpage-table {
+            clear: both;
+            width: auto;
 
-        td {
-            padding: 10px;
-            vertical-align: top;
-            width: 50%;
+            td {
+                padding: 10px;
+                vertical-align: top;
+                width: 50%;
+            }
+
+            small {
+                font-size: $smaller-font-size;
+            }
         }
 
-        small {
-            font-size: smaller-font-size;
+        &.standard-table {
+            border: 2px solid #fff;
+
+            td {
+                background-color: rgba($table-blue, 0.15);
+                border: @border;
+                box-shadow: inset 0 -1px 0 0 rgba($table-blue, 0.5);
+            }
+
+            td.header, th {
+                border: @border;
+                border-bottom: 2px solid rgba($table-blue, 1);
+                background: rgba($table-blue, 0.5);
+                font-family: 'Open Sans Light', sans-serif;
+                font-size: 14px;
+                padding: 2px 8px 4px;
+                font-weight: bold;
+            }
+        }
+
+        &.fullwidth-table {
+            background: #fff;
+            border: 1px solid rgba($table-blue, 0.5);
+            margin-bottom: $grid-spacing;
+            width: 100%;
+
+            td {
+                border: 1px solid #ccc;
+                padding: 5px 15px;
+                text-align: left;
+                vertical-align: top;
+            }
+
+            td.header, th {
+                background: rgba($table-blue, 0.5);
+                border: 1px solid rgba($table-blue, 1);
+                font-weight: bold;
+                padding: 0 5px;
+            }
         }
     }
 
-    &.standard-table {
-        border: 2px solid #fff;
-
-        td {
-            background-color: rgba(table-blue, 0.15);
-            border: @border;
-            box-shadow: inset 0 -1px 0 0 rgba(table-blue, 0.5);
-        }
-
-        td.header, th {
-            border: @border;
-            border-bottom: 2px solid rgba(table-blue, 1);
-            background: rgba(table-blue, 0.5);
-            font-family: 'Open Sans Light', sans-serif;
-            font-size: 14px;
-            padding: 2px 8px 4px;
-            font-weight: bold;
-        }
+    td, th {
+        border: solid #e0e0dc;
+        border-width: 0 1px 1px 0;
+        padding: 6px;
+        text-align: start;
     }
 
-    &.fullwidth-table {
-        background: #fff;
-        border: 1px solid rgba(table-blue, 0.5);
-        margin-bottom: grid-spacing;
-        width: 100%;
-
-        td {
-            border: 1px solid #ccc;
-            padding: 5px 15px;
-            text-align: left;
-            vertical-align: top;
-        }
-
-        td.header, th {
-            background: rgba(table-blue, 0.5);
-            border: 1px solid rgba(table-blue, 1);
-            font-weight: bold;
-            padding: 0 5px;
-        }
+    thead th {
+        background: rgba($table-blue, 0.5);
     }
-  }
 
-  td, th {
-    border: solid #e0e0dc;
-    border-width: 0 1px 1px 0;
-    padding: 6px;
-    text-align: start;
-  }
-
-  thead th {
-    background: rgba(table-blue, 0.5);
-  }
-
-  /* lists and definitions */
-  ul {
-    list-style: disc;
-
+    /* lists and definitions */
     ul {
-      list-style: circle;
+        list-style: disc;
+
+        ul {
+            list-style: circle;
+        }
     }
-  }
 
-  ul ul, ol ol, ul ol, ol ul {
-    margin-bottom: 0;
-    padding-top: 6px;
-  }
-
-  ul, ol {
-    bidi-style(padding-left, (grid-spacing * 2), padding-right, 0);
-    margin-bottom: content-block-margin;
-
-    &.no-bullets {
-      list-style-type: none;
-      bidi-style(padding-left, 0, padding-right, 0);
+    ul ul, ol ol, ul ol, ol ul {
+        margin-bottom: 0;
+        padding-top: 6px;
     }
-  }
 
-  ol {
-    list-style-type: decimal;
-  }
+    ul, ol {
+        bidi-style(padding-left, ($grid-spacing * 2), padding-right, 0);
+        margin-bottom: $content-block-margin;
 
-  li {
-    padding-bottom: 6px;
-  }
-  prevent-last-child-spacing(li, padding-bottom);
+        &.no-bullets {
+            list-style-type: none;
+            bidi-style(padding-left, 0, padding-right, 0);
+        }
+    }
 
-  dt {
-    font-style: normal;
-    font-weight: bold;
-  }
+    ol {
+        list-style-type: decimal;
+    }
 
-  dd {
-    margin-bottom: content-block-margin;
-    padding-left: grid-spacing;
-  }
+    li {
+        padding-bottom: 6px;
+    }
+    prevent-last-child-spacing(li, padding-bottom);
 
-  span.alllinks {
-      display: block;
-      text-align: right;
-  }
+    dt {
+        font-style: normal;
+        font-weight: bold;
+    }
 
-  img {
-      &.lwrap {
-          padding: 0 20px 10px 0;
-      }
-      &.rwrap {
-          padding: 0 0 10px 20px;
-      }
-  }
+    dd {
+        margin-bottom: $content-block-margin;
+        padding-left: $grid-spacing;
+    }
 
-  .originaldocinfo, .licenseblock {
-      background: #f1f1f1;
-      border: 1px solid #ccc;
-      font-family: Verdana, Tahoma, sans-serif;
-      font-size: smaller-font-size;
-      padding: 10px;
-  }
+    span.alllinks {
+        display: block;
+        text-align: right;
+    }
 
-  .originaldocinfo {
-      h2 {
-          font-size: base-font-size;
-      }
+    img {
+        &.lwrap {
+            padding: 0 20px 10px 0;
+        }
+        &.rwrap {
+            padding: 0 0 10px 20px;
+        }
+    }
 
-      ul {
-          margin: 0;
-      }
-  }
+    .originaldocinfo, .licenseblock {
+        background: #f1f1f1;
+        border: 1px solid #ccc;
+        font-family: Verdana, Tahoma, sans-serif;
+        font-size: $smaller-font-size;
+        padding: 10px;
+    }
 
-  .licenseblock {
-      p {
-          margin-bottom: @padding;
-          &:last-child {
-              margin-bottom: 0;
-          }
-      }
-  }
+    .originaldocinfo {
+        h2 {
+            font-size: $base-font-size;
+        }
 
-  /* links */
-  a.new {
-    color: #900;
-  }
+        ul {
+            margin: 0;
+        }
+    }
+
+    .licenseblock {
+        p {
+            margin-bottom: @padding;
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
 }
 
 ul.directory-tree {
@@ -180,11 +175,11 @@ ul.directory-tree {
     }
     ul {
         padding-left: 0;
-        background: url(media-url-dir + 'tree-vline.png') repeat-y;
+        background: url($media-url-dir + 'tree-vline.png') repeat-y;
 
         li {
             padding-left: 16px;
-            background: url(media-url-dir + 'tree-node.png') no-repeat;
+            background: url($media-url-dir + 'tree-node.png') no-repeat;
         }
     }
 
@@ -194,32 +189,35 @@ ul.directory-tree {
 }
 
 .notice {
-  position: relative;
-  top: -(grid-spacing / 2);
-  background: #fcf6d4;
-  border: 1px solid #e5d5c1;
-  box-shadow: 1px 1px 0 rgba(0,0,0,.1);
-  clear: both;
-  margin: (grid-spacing / 2) 0 (grid-spacing / 4);
-  padding: (grid-spacing / 2) (grid-spacing * .75) 0;
+    position: relative;
+    top: -($grid-spacing / 2);
+    background: #fcf6d4;
+    border: 1px solid #e5d5c1;
+    box-shadow: 1px 1px 0 rgba(0,0,0,.1);
+    clear: both;
+    margin: ($grid-spacing / 2) 0 ($grid-spacing / 4);
+    padding: ($grid-spacing / 2) ($grid-spacing * .75) 0;
 
-  p, ul {
-    margin-bottom: (grid-spacing / 2);
-  }
+    p, ul {
+        margin-bottom: ($grid-spacing / 2);
+    }
 
-  &.success {
-    background: #effdfb;
-    border-color: #beede5;
-  }
+    &.success {
+        background: #effdfb;
+        border-color: #beede5;
+    }
 
-  &.error {
-    border-color: #e1a696;
-  }
+    &.error {
+        border-color: #e1a696;
+    }
 }
 
 ul.tagit {
     li.tagit-new {
+        border-radius: 2px;
         display: inline-block;
+        padding: 3px 4px 4px 10px;
+
         input {
             background: transparent;
             border: 0;
@@ -243,7 +241,7 @@ ul.tagit {
             }
 
             .ui-icon-close {
-                background: url("../img/icn-delete.png") center -96px no-repeat;
+                background: url('../img/icn-delete.png') center -96px no-repeat;
                 cursor: pointer;
                 display: inline-block;
                 height: 15px;
@@ -305,13 +303,6 @@ ul.tagit {
     }
 }
 
-table.compat-table {
-    td.header, th {
-        background: rgba(212, 221, 228, 0.5);
-        font-weight: 700;
-    }
-}
-
 div.bug {
     font-style: italic;
 }
@@ -329,7 +320,7 @@ div.callout-box {
 }
 
 p.footnote {
-    font-size: smaller-font-size;
+    font-size: $smaller-font-size;
     font-style: italic;
     color: #716d65;
 }
@@ -342,9 +333,17 @@ div.tip {
 
 /* Classes created by the WYSIWYG */
 .twocolumns {
-    vendorize(column-count, 2)
+    vendorize(column-count, 2);
 }
 .threecolumns {
     vendorize(column-count, 3);
 }
 
+ul.errorlist {
+    color: #900;
+    font-weight: bold;
+
+    li {
+        margin: 5px 0;
+    }
+}

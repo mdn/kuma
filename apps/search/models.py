@@ -15,7 +15,7 @@ from elasticutils.contrib.django.tasks import index_objects
 
 from sumo.urlresolvers import reverse
 
-from wiki.models import Document
+from kuma.wiki.models import Document
 from taggit_extras.managers import PrefetchTaggableManager
 
 from .decorators import register_mapping_type
@@ -289,6 +289,15 @@ class DocumentType(MappingType, Indexable):
             'locale': {'type': 'string', 'index': 'not_analyzed'},
             'modified': {'type': 'date'},
             'slug': {'type': 'string', 'index': 'not_analyzed'},
+            'parent': {
+                'type': 'nested',
+                'properties': {
+                    'id': {'type': 'long', 'index': 'not_analyzed'},
+                    'title': {'type': 'string', 'analyzer': 'kuma_title'},
+                    'slug': {'type': 'string', 'index': 'not_analyzed'},
+                    'locale': {'type': 'string', 'index': 'not_analyzed'},
+                }
+            },
             'summary': {
                 'type': 'string',
                 'analyzer': 'kuma_content',
@@ -341,6 +350,15 @@ class DocumentType(MappingType, Indexable):
             doc['_boost'] = 4.0
         else:
             doc['_boost'] = 1.0
+        if obj.parent:
+            doc['parent'] = {
+                'id': obj.parent.id,
+                'title': obj.parent.title,
+                'locale': obj.parent.locale,
+                'slug': obj.parent.slug,
+            }
+        else:
+            doc['parent'] = {}
 
         return doc
 
@@ -386,12 +404,3 @@ class DocumentType(MappingType, Indexable):
             if field in self.es_meta.highlight:
                 return u'…'.join(self.es_meta.highlight[field])
         return self.summary
-
-    def get_url(self):
-        path = reverse('wiki.document', locale=self.locale, args=[self.slug])
-        return '%s%s' % (settings.SITE_URL, path)
-
-    def get_edit_url(self):
-        path = reverse('wiki.edit_document', locale=self.locale,
-                       args=[self.slug])
-        return '%s%s' % (settings.SITE_URL, path)

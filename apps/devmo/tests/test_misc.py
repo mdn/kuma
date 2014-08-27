@@ -1,4 +1,3 @@
-import logging
 import shlex
 import urllib2
 
@@ -6,10 +5,7 @@ from nose.tools import eq_
 from nose import SkipTest
 import test_utils
 
-from django.conf import settings
-
 from devmo.helpers import devmo_url
-from devmo import urlresolvers
 
 from devmo.context_processors import next_url
 from django.core.handlers.wsgi import WSGIRequest
@@ -43,12 +39,12 @@ def parse_robots(base_url):
 
 
 def _make_request(path):
-        req = WSGIRequest({
-            'REQUEST_METHOD': 'GET',
-            'PATH_INFO': path,
-            'wsgi.input': StringIO()})
-        req.user = AnonymousUser()
-        return req
+    req = WSGIRequest({
+        'REQUEST_METHOD': 'GET',
+        'PATH_INFO': path,
+        'wsgi.input': StringIO()})
+    req.user = AnonymousUser()
+    return req
 
 
 class TestDevMoRobots(test_utils.TestCase):
@@ -112,30 +108,8 @@ class TestDevMoHelpers(test_utils.TestCase):
         eq_(devmo_url(context, localized_page), '/zh_tw/HTML')
 
 
-class TestDevMoUrlResolvers(test_utils.TestCase):
-    def test_prefixer_get_language(self):
-
-        # Skipping this test for now, because it hits unreliable prod resources
-        raise SkipTest()
-
-        # language precedence is GET param > cookie > Accept-Language
-        req = test_utils.RequestFactory().get('/', {'lang': 'es'})
-        prefixer = urlresolvers.Prefixer(req)
-        eq_(prefixer.get_language(), 'es')
-
-        req = test_utils.RequestFactory().get('/')
-        req.COOKIES['lang'] = 'de'
-        prefixer = urlresolvers.Prefixer(req)
-        eq_(prefixer.get_language(), 'de')
-
-        req = test_utils.RequestFactory().get('/')
-        req.META['HTTP_ACCEPT_LANGUAGE'] = 'fr'
-        prefixer = urlresolvers.Prefixer(req)
-        eq_(prefixer.get_language(), 'fr')
-
-
 class TestDevMoNextUrl(test_utils.TestCase):
-    """ Tests that the next_url value is properly set, 
+    """ Tests that the next_url value is properly set,
     including query string """
     def test_basic(self):
         path = '/one/two'

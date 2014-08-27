@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 
 {% block body_attributes %}id="home"{% endblock %}
-{% set styles = ('home',) %}
+
+{% block site_css %}
+	{{ super() }}
+	{{ css('home', 'all') }}
+{% endblock %}
 
 {% block extrahead %}
   <meta name="google-site-verification" content="Phj8dHc2oKwic3FGPsKIhdOBk_1wnCTnKwjcjiLgJPc">
@@ -35,7 +39,7 @@
     <h2 class="offscreen">{{ _('Web Technologies') }}</h2>
     <div class="column-container">
       <div class="column-home-features">
-        <h3><i aria-hidden="true" class="icon-file-text-alt"></i><span>{{ _('Web<br />Platform') }}</span></h3>
+        <h3><i aria-hidden="true" class="icon-file-text"></i><span>{{ _('Web<br />Platform') }}</span></h3>
         <ul>
           <li><a href="{{ devmo_url('Web/Reference/API') }}">{{ _('Web APIs &amp; DOM') }}</a></li>
           <li><a href="{{ devmo_url('Web/HTML') }}">{{ _('HTML') }}</a> &amp; <a href="{{ devmo_url('Web/Guide/HTML/HTML5') }}">{{ _('HTML5') }}</a></li>
@@ -135,7 +139,7 @@
 
 <!-- contributions section -->
 <div class="home-contribute"><div class="center">
-  <h2><i aria-hidden="true" class="icon-smile"></i> {{ _('Help improve MDN') }}</h2>
+  <h2><i aria-hidden="true" class="icon-smile-o"></i> {{ _('Help improve MDN') }}</h2>
 
   <div class="column-container">
     <div class="column-half">

@@ -1,5 +1,8 @@
+@import 'includes/vars';
+@import 'includes/mixins';
+
 /*
-  Used for revision diff'ing tables, in the wiki and the dashboards
+    Used for revision diff'ing tables, in the wiki and the dashboards
 */
 
 .revision-diff {
@@ -56,6 +59,7 @@ td.diff_header {
 
 /* Slug change callout */
 .slug-change {
+    set-smaller-font-size();
     background: #d4dde4;
     border: 1px solid #cae1f4;
     padding: 4px 6px;
@@ -63,6 +67,14 @@ td.diff_header {
     display: inline-block;
     margin: 4px 0;
     clear: both;
+
+    {$selector-icon} {
+        bidi-style(margin-left, 0, margin-right, 0);
+    }
+
+    span {
+        white-space: nowrap;
+    }
 
     a {
         color: #444;

@@ -235,8 +235,9 @@ a:hover.cke_colorauto,a:hover.cke_colormore,a:focus.cke_colorauto,a:focus.cke_co
 .cke_skin_kuma .cke_browser_iequirks .cke_fontSize .cke_text{width:32px;}
 html .cke_skin_kuma{visibility:inherit;}
 html.cke_skin_kuma_container{visibility:visible;}
-.cke_skin_kuma .cke_toolbox { clear:both; padding: 5px 5px 35px 5px; margin: -9px -9px 0; border: solid #fff; border-width: 9px 9px 0; 
-  background: -moz-linear-gradient(bottom, rgba(255,255,255,.1) 0, rgba(255,255,255,1) 30px, #e6e6e6 31px, #e6e6e6 100%); 
+.cke_skin_kuma .cke_toolbox { clear:both; padding: 5px 5px 35px 5px; margin: -9px -9px 0; border: solid #fff; border-width: 9px 9px 0;
+  background: #e6e6e6;
+  background: -moz-linear-gradient(bottom, rgba(255,255,255,.1) 0, rgba(255,255,255,1) 30px, #e6e6e6 31px, #e6e6e6 100%);
   background: -webkit-linear-gradient(bottom, rgba(255,255,255,.1) 0, rgba(255,255,255,1) 30px, #e6e6e6 31px, #e6e6e6 100%);
   background: linear-gradient(bottom, rgba(255,255,255,.1) 0, rgba(255,255,255,1) 30px, #e6e6e6 31px, #e6e6e6 100%);
 }
@@ -248,8 +249,8 @@ html.cke_skin_kuma_container{visibility:visible;}
 .mdn-buttons-button.h4 {background-position:-136px -6px;}
 .mdn-buttons-button.h5 {background-position:-180px -6px;}
 .mdn-buttons-button.h6 {background-position:-225px -6px;}
-.mdn-buttons-button.pre {background: url(/media/js/libs/ckeditor/plugins/mdn-buttons/button-pre.png) no-repeat center center;} 
-.mdn-buttons-button.code {background: url(/media/js/libs/ckeditor/plugins/mdn-buttons/button-code.png) no-repeat center center;} 
+.mdn-buttons-button.pre {background: url(/media/js/libs/ckeditor/plugins/mdn-buttons/button-pre.png) no-repeat center center;}
+.mdn-buttons-button.code {background: url(/media/js/libs/ckeditor/plugins/mdn-buttons/button-code.png) no-repeat center center;}
 .cke_skin_kuma  .cke_button_launch .cke_icon {background-position:0 -224px;}
 .cke_skin_kuma .cke_path { display: block; float: none; margin-top: -31px; background: url("images/sprites.png") 0 -500px repeat-x; padding: 2px; font-size: 0.8em; clear:both; border-radius: 6px; }
 .cke_skin_kuma .cke_path a, .cke_skin_kuma .cke_path .cke_empty { float:none; color: #333; text-decoration:none; border-radius: 6px; opacity:0.7; }

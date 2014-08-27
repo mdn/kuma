@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% set title = _("You've Been Banned") %}
+{% set classes = 'profile' %}
+{% set styles = ('users',) %}
+
+{% block breadcrumbs %}
+{% endblock %}
+
+{% block title %}{{ page_title(title) }}{% endblock %}
+
+{% block site_css %}
+    {{ super() }}
+    {{ css('user-banned') }}
+{% endblock %}
+
+{% block content %}
+<article id="profile-banned">
+  <h1>{{ title }}</h1>
+  <p>
+    {{ _('You have been banned for the following reasons:') }}
+  </p>
+  <ul>
+  {% if bans | length %}
+    {% for ban in bans %}
+      <li>{{ ban.reason }}</li>
+    {% endfor %}
+  {% endif %}
+  </ul>
+
+  {% trans %}
+  <p><a href="mailto:mdn-admins@mozilla.org?subject=Ban Appeal">Click here</a> to appeal this ban.</p>
+  {% endtrans %}
+
+</article>
+{% endblock %}

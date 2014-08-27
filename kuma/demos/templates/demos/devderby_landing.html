@@ -1,0 +1,71 @@
+{% extends "demos/base.html" %}
+
+{% block body_attributes %}id="devderby"{% endblock %}
+
+{% block bodyclass %}section-demos devderby landing derby-closed{% endblock %}
+
+{% block extrahead %}
+    {{ css('devderby') }}
+{% endblock %}
+
+{% block title %}{{ page_title(_('Dev Derby')) }}{% endblock %}
+
+{% set submit_url = url('demos_submit')|urlparams(tags=[current_challenge_tag_name]|join(' ')) %}
+{% set demos_url = url('demos') %}
+
+{% block content %}
+<section id="content">
+    <div class="wrap">
+
+      <section id="content-main" class="full" role="main">
+        <header id="derby-head">
+          <p class="presents"><a href="{{ url('demos') }}">{{_("Mozilla Demo Studio")}}</a> {{_("presents")}}</p>
+          <h1><a href="{{url('demos_devderby_landing')}}">{{_("Dev Derby")}}</a></h1>
+
+            <h2>{{ _("Dev Derby has ended") }}</h2>
+            <p>
+            {% trans %}
+                From 2011 until 2013, web developers created more than 450 demos
+                for the Dev Derby! Find them below,
+                or <a href="{{ demos_url }}">visit the Demo Studio</a> for many more.
+            {% endtrans %}
+            </p>
+        </header>
+
+        <div class="column-container">
+            <div class="column-main main">
+
+              <div style="padding-right: 20px;">
+                <header>
+                    <h2>{{_("Previous Dev Derby Challenges")}}</h2>
+                </header>
+                <ul class="previous">
+                    {% for tag_name in previous_challenge_tag_names %}
+                        <li>
+                          <h3><a href="{{ devderby_tag_to_date_url(tag_name) }}"><span>{{ tag_meta(tag_name, 'dateline') }}</span> {{ tag_meta(tag_name, 'short_title') }}</a></h3>
+                          <p class="desc">{{ tag_meta(tag_name, 'summary') }}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+              </div>
+
+            </div><!-- /.main -->
+
+            <section id="resources">
+              <h3>{{_("Resources")}}</h3>
+              <ul>
+                <li class="res-docs"><a href="{{ devmo_url('Web') }}">{{_("Docs")}}</a></li>
+                <li class="res-demos"><a href="{{ url('demos') }}">{{_("Demos")}}</a></li>
+                <li class="res-articles"><a href="{{ url('learn') }}">{{_("Articles")}}</a></li>
+              </ul>
+            </section>
+
+        </div><!-- /.column-container -->
+      </section><!-- /.main -->
+    </div><!-- /.wrap -->
+</section><!-- /.content -->
+{% endblock %}
+
+{% block js %}
+    {{ js('demostudio_devderby_landing') }}
+{% endblock %}

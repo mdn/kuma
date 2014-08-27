@@ -1,16 +1,16 @@
-@import 'includes/mixins'
-@import 'includes/vars'
+@import 'includes/mixins';
+@import 'includes/vars';
 
 .calendar {
     /* The calendar has lots of wasted space when extended to 100% width. Reduce
        the width, and keep header content aligned. */
     #page-head, #map_canvas {
         width: 1000px;
-        override-compat-important(margin, 0 auto grid-spacing);
+        margin: 0 auto $grid-spacing;
     }
 
     #page-head {
-        margin-bottom: grid-spacing;
+        margin-bottom: $grid-spacing;
         text-align: center;
     }
 
@@ -45,6 +45,6 @@ table.events {
     }
 
     td, th {
-        padding: 5px (grid-spacing * .75);
+        padding: 5px ($grid-spacing * .75);
     }
 }

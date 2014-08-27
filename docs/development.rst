@@ -87,12 +87,11 @@ Running the test suite is easy::
     ./manage.py test -s --noinput --logging-clear-handlers
 
 Note that this will try (and fail) to run tests that depend on apps disabled
-via ``INSTALLED_APPS``. You should run a subset of tests specified in
-`scripts/build.sh <../scripts/build.sh>`_, at the bottom of the script.
+via ``INSTALLED_APPS``. You should run a subset of tests::
+
+    ./manage.py test actioncounters contentflagging demos devmo landing kuma.users search wiki kuma.events
 
 For more information, see the :doc:`test documentation <tests>`.
-
-.. _run the tests from the root folder: https://bugzilla.mozilla.org/show_bug.cgi?id=756536#c2
 
 Kumascript tests
 ----------------

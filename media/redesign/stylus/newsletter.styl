@@ -1,17 +1,17 @@
-@import 'includes/mixins'
-@import 'includes/vars'
+@import 'includes/mixins';
+@import 'includes/vars';
 
 #apps-newsletter-subscribe {
-    #field_newsletter {
-      @extend $checkbox-label-container;
+    #newsletter-toggle {
+        @extend $checkbox-label-container;
     }
 
     .newsletter-setting {
         display: none; /* Prevents flash of content */
-        padding-left: grid-spacing;
+        padding-left: $grid-spacing;
 
         .no-js & {
-        	display: block;
+            display: block;
         }
     }
 }

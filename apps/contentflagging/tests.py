@@ -19,14 +19,19 @@ from django.contrib.sessions.models import Session
 from nose.tools import assert_equal, with_setup, assert_false, eq_, ok_
 from nose.plugins.attrib import attr
 
+from sumo.urlresolvers import reverse
+
+from devmo.tests import LocalizingClient
+from kuma.demos.models import Submission
+from kuma.demos.tests.test_models import save_valid_submission
+from kuma.wiki.models import Document
 from .models import ContentFlag
 from .utils import get_ip, get_unique
 
 class DemoPackageTest(TestCase):
+    fixtures = ['test_users.json', 'wiki/documents.json']
 
     def setUp(self):
-        settings.DEBUG = True
-
         self.user1 = User.objects.create_user('tester1', 
                 'tester2@tester.com', 'tester1')
         self.user1.save()
@@ -34,11 +39,6 @@ class DemoPackageTest(TestCase):
         self.user2 = User.objects.create_user('tester2', 
                 'tester2@tester.com', 'tester2')
         self.user2.save()
-
-    def tearDown(self):
-        #for sql in connection.queries:
-        #    logging.debug("SQL %s" % sql)
-        pass
 
     def mk_request(self, user=None, ip='192.168.123.123', 
             user_agent='FakeBrowser 1.0'):
@@ -130,4 +130,75 @@ class DemoPackageTest(TestCase):
 
         eq_(4, len(ContentFlag.objects.all()))
 
+    def test_flag_dict(self):
+        request = self.mk_request()
+        objects_to_flag = [
+            {'obj': save_valid_submission(),
+             'flag_type': 'notworking',
+             'explanation': 'I am not good at computer.'},
+            {'obj': Document.objects.get(pk=4),
+             'flag_type': 'bad',
+             'explanation': 'This is in fact not a pipe.'},
+            {'obj': Document.objects.get(pk=8),
+             'flag_type': 'unneeded',
+             'explanation': 'Camels are for Perl, not Python.'},
+        ]
+        for o in objects_to_flag:
+            flag, created = ContentFlag.objects.flag(request=request,
+                                                     object=o['obj'],
+                                                     flag_type=o['flag_type'],
+                                                     explanation=o['explanation'])
+        flag_dict = ContentFlag.objects.flags_by_type()
 
+        # These are translation proxy objects, not strings, so we have
+        # to pull them off the model class.
+        sub = Submission._meta.verbose_name_plural
+        doc = Document._meta.verbose_name_plural
+
+        ok_(sub in flag_dict)
+        eq_(1, len(flag_dict[sub]))
+        eq_('hello world',
+            flag_dict[sub][0].content_object.title)
+
+        ok_(doc in flag_dict)
+        eq_(2, len(flag_dict[doc]))
+        eq_('le title',
+            flag_dict[doc][0].content_object.title)
+        eq_('getElementByID',
+            flag_dict[doc][1].content_object.title)
+
+class ViewTests(TestCase):
+    fixtures = ['test_users.json', 'wiki/documents.json']
+
+    def setUp(self):
+        self.client = LocalizingClient()
+
+    def mk_request(self, user=None, ip='192.168.123.123', 
+            user_agent='FakeBrowser 1.0'):
+        request = HttpRequest()
+        request.user = user and user or AnonymousUser()
+        request.method = 'GET'
+        request.META['REMOTE_ADDR'] = ip
+        request.META['HTTP_USER_AGENT'] = user_agent
+        return request
+
+    def test_flagged_view(self):
+        request = self.mk_request()
+        objects_to_flag = [
+            {'obj': save_valid_submission(),
+             'flag_type': 'notworking',
+             'explanation': 'I am not good at computer.'},
+            {'obj': Document.objects.get(pk=4),
+             'flag_type': 'bad',
+             'explanation': 'This is in fact not a pipe.'},
+            {'obj': Document.objects.get(pk=8),
+             'flag_type': 'unneeded',
+             'explanation': 'Camels are for Perl, not Python.'},
+        ]
+        for o in objects_to_flag:
+            flag, created = ContentFlag.objects.flag(request=request,
+                                                     object=o['obj'],
+                                                     flag_type=o['flag_type'],
+                                                     explanation=o['explanation'])
+        resp = self.client.get(reverse('contentflagging.flagged'))
+        eq_(200, resp.status_code)

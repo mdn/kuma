@@ -1,24 +1,42 @@
 <script type="text/javascript">
-  {% if not is_sphinx %}
-  {{ waffle.wafflejs() }}
-  {% endif %}
-  {% if waffle.flag('static-i18njs') %}
-  {{ inlinei18n(request.locale) }}
-  {% endif %}
-  // This represents the site configuration
-  window.mdn = {
-    build: '{{ BUILD_ID_JS }}',
-    // Properties and settings for CKEditor will go here
-    ckeditor: {},
-    // Feature test results and methods will be placed here
-    features: {},
-    // Ensures gettext always returns something, is always set
-    gettext: function(x) { return x; },
-    // The path to media (images, CSS, JS) in MDN
-    mediaPath: '{{ MEDIA_URL }}',
-    // Wiki-specific settings will be placed here
-    wiki: {
-      autosuggestTitleUrl: '{{ url('wiki.autosuggest_documents') }}'
-    }
-  };
+    (function(win) {
+        'use strict';
+
+        {% if not is_sphinx %}
+            {{ waffle.wafflejs() }}
+        {% endif %}
+        {% if waffle.flag('static-i18njs') %}
+            {{ inlinei18n(request.locale) }}
+        {% endif %}
+
+        // This represents the site configuration
+        win.mdn = {
+            build: '{{ BUILD_ID_JS }}',
+            // Properties and settings for CKEditor will go here
+            ckeditor: {},
+            // Feature test results and methods will be placed here
+            features: {},
+            // The path to media (images, CSS, JS) in MDN
+            mediaPath: '{{ MEDIA_URL }}',
+            // Optimizely API
+            optimizely: win['optimizely'] || [],
+            // Site notifications
+            {% if messages %}notifications: [
+                {% for message in messages %}{% if 'wiki_redirect' not in message.tags or waffle.flag('redirect_messages') %}{message: "{{ message }}", tags: "{{ message.tags }}", level: "{{ message|level_tag }}"}{% if not loop.last %},{% endif %}{% endif %}
+                {% endfor %}
+            ],
+            {% else %}
+            notifications: [],
+            {% endif %}
+            // Wiki-specific settings will be placed here
+            wiki: {
+                autosuggestTitleUrl: '{{ url('wiki.autosuggest_documents') }}'
+            },
+        };
+
+        // Ensures gettext always returns something, is always set
+        win.gettext = function(x) {
+            return x;
+        }
+    })(window);
 </script>

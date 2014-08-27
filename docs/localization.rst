@@ -243,6 +243,8 @@ convert it to a ``unicode`` object::
         unicode(WELCOME) % request.user.username
 
 
+.. _get-localizations:
+
 Getting the Localizations
 =========================
 
@@ -265,33 +267,72 @@ if you're a git fan.)
 
 Updating the Localizations
 ==========================
+Updating strings is easy. But when we add or update strings, we need to update
+`Verbatim <http://localize.mozilla.org/>`_ templates and PO files for
+localizers. If you commit changes to SVN without updating Verbatim,
+localizers will have merge head-aches.
 
-When strings are added or updated, we need to update the templates and PO files
-for localizers. This needs to be coordinated with someone who has rights to
-update the data on `Verbatim <http://localize.mozilla.org/>`_. If you commit
-new strings to SVN and they are not updated right away on Verbatim, there will
-be big merging headaches.
+1.  Check out the localizations (See `get-localizations`_)
+2.  Run the following in the virtual machine (see :doc:`installation-vagrant <installation-vagrant>`)::
 
-Updating strings is pretty easy. Check out the localizations as above, then run
-the following in the virtual machine (see :doc:`installation-vagrant <installation-vagrant>`
-for more on setting up the virtual machine)::
+        $ python manage.py extract
 
-    $ python manage.py extract
+3.  Commit the POT file.
 
-Congratulations! You've now updated the POT file. Now commit the POT file.
+    If you used ``svn checkout`` above::
 
-If you used ``svn checkout`` above::
+        $ cd locale
+        $ svn up
+        $ svn ci -m "MDN string update YYYY-MM-DD"
 
-    $ cd locale
-    $ svn up
-    $ svn ci -m "MDN string update YYYY-MM-DD"
+    If you used ``git svn clone`` above::
 
-If you used ``git svn clone`` above::
+        $ cd locale
+        $ git svn fetch
+        $ git add -A
+        $ git commit -m "MDN string update YYYY-MM-DD"
+        $ git svn dcommit
 
-    $ cd locale
-    $ git svn fetch
-    $ git add -A
-    $ git commit -m "MDN string update YYYY-MM-DD"
-    $ git svn dcommit
+4.  Go to the `MDN templates on Verbatim
+    <https://localize.mozilla.org/templates/mdn/>`_
 
-After committing, send an email to Milos Dinic to update verbatim.
+5.  Click 'Update all from VCS'
+
+6.  ssh to sm-verbatim01 (See `L10n:Verbtim
+    <https://wiki.mozilla.org/L10n:Verbatim>`_ on wiki.mozilla.org)
+
+7.  Update all locales against templates::
+
+        sudo su verbatim
+        cd /data/www/localize.mozilla.org/verbatim/pootle_env/Pootle
+        POOTLE_SETTINGS=localsettings.py python2.6 manage.py
+        update_against_templates --project=mdn -v 2
+
+Adding a new Locale
+===================
+Adding a new locale is also easy.
+
+1.  Check out the localizations (See `get-localizations`_)
+
+2.  Follow `the "Add locale" instructions on wiki.mozilla.org
+    <https://wiki.mozilla.org/L10n:Verbatim#Adding_a_locale_to_a_Verbatim_project>`_.
+
+3.  Update your locale repo to get the new locale::
+
+        $ cd locale
+        $ svn up
+
+4.  Add the locale to `MDN_LANGUAGES` in `settings.py`
+
+5.  Verify django loads new locale without errors by visiting the locale's home
+    page. E.g., https://developer-local.allizom.org/ml/
+
+6.  BONUS: Use `podebug` to test a fake translation of the locale::
+
+        $ cd locale
+        $ podebug --rewrite=bracket templates/LC_MESSAGES/messages.pot
+        ml/LC_MESSAGES/messages.po
+        $ ./compile-mo.sh .
+
+    Restart the django server and re-visit the new locale to verify it shows
+    "translated" strings in the locale.

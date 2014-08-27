@@ -44,8 +44,11 @@ class CustomIndexDashboard(Dashboard):
             collapsible=True,
             models=(
                 'django.contrib.auth.*',
+                'kuma.users.*',
+                'allauth.account.*',
+                'allauth.socialaccount.*',
                 'teamwork.*',
-                'users.*',
+                'authkeys.*',
             ),
         ))
 
@@ -58,6 +61,8 @@ class CustomIndexDashboard(Dashboard):
                 'constance.*',
                 'soapbox.*',
                 'django.contrib.sites.*',
+                'search.*',
+                'djcelery.*',
             ),
         ))
 
@@ -68,13 +73,17 @@ class CustomIndexDashboard(Dashboard):
             exclude=(
                 'wiki.*',
                 'demos.*',
-                'users.*',
+                'kuma.users.*',
                 'waffle.*',
                 'constance.*',
                 'soapbox.*',
                 'teamwork.*',
                 'django.contrib.auth.*',
                 'django.contrib.sites.*',
+                'allauth.account.*',
+                'allauth.socialaccount.*',
+                'djcelery.*',
+                'authkeys.*',
             ),
         ))
 

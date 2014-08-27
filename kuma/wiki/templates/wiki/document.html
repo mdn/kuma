@@ -1,0 +1,432 @@
+{% extends "wiki/base.html" %}
+{% block title %}{{ page_title(document.title + seo_parent_title) }}{% endblock %}
+
+{% from "wiki/includes/document_macros.html" import build_document_crumbs, get_document_quick_links, get_document_buttons, get_document_subnav, get_approvals_html, document_watch with context %}
+
+{% if fallback_reason == 'no_translation' %}
+  {% set help_link = url('wiki.translate', document_path=document.full_path, locale=document.locale)|urlparams(tolocale=request.locale) %}
+{% elif fallback_reason == 'translation_not_approved' %}
+  {% set help_link = url('wiki.translate', document_path=document.parent.full_path, locale=document.parent.locale)|urlparams(tolocale=request.locale) %}
+{% endif %}
+
+{% set is_logged_in = request.user.is_authenticated() %}
+{% set canonical = request.build_absolute_uri(document.get_absolute_url()) %}
+
+{% if document.is_template %}
+  {% set macro_name = document.slug|replace('Template:','', 1) %}
+  {% set template_search_link = url('search', locale=document.locale)|urlparams(locale='*', kumascript_macros=macro_name) %}
+{% endif %}
+
+{% set current_revision = document.current_revision %}
+{% if (is_logged_in and current_revision and document.allows_revision_by(user)) and (current_revision.needs_technical_review() or current_revision.needs_editorial_review()) %}
+  {% set approvals_html = get_approvals_html(document, request.user) %}
+{% endif %}
+
+{% set zone_stack = document.find_zone_stack() %}
+{% set is_zone = zone_stack|length %}
+{% set is_zone_root = is_zone and zone_stack[0].document == document %}
+{% set is_translated = document.other_translations.exists() %}
+
+{% set show_left = zone_subnav_html or quick_links_html or approvals_html %}
+{% set show_right = (not is_zone_root and toc_html) %}
+
+{% set buttons = get_document_buttons(document, help_link) %}
+{% set crumbs = build_document_crumbs(document) %}
+
+{% set content_class = 'column-all' %}
+{% if show_left and show_right %}
+  {% set content_class = 'column-half' %}
+{% elif show_left or show_right %}
+  {% set content_class = 'column-main' %}
+{% endif %}
+
+{% block bodyclass %}document {% if is_zone %}zone{% endif %} {% if is_zone_root %}zone-landing{% endif %}{% endblock %}
+{% block body_attributes %}data-slug="{{ document.slug }}" contextmenu="edit-history-menu"{% endblock body_attributes %}
+
+{% block main_content_id %}document-main{% endblock %}
+
+{% block site_css %}
+    {{ super() }}
+    {% if zone_stack %}
+      {% for zone in zone_stack|reverse() %}
+        <link rel="stylesheet" type="text/css" href="{{ url('wiki.styles', zone.document.full_path) }}">
+      {% endfor %}
+    {% endif %}
+{% endblock %}
+
+{% block extrahead %}
+  <link rel="alternate" type="application/json" href="{{ url('wiki.json_slug', document.full_path) }}">
+  <link rel="canonical" href="{{ canonical }}" >
+
+  {% if is_translated %}
+    {% for translation in document.other_translations %}
+      <link rel="alternate" hreflang="{{ translation.locale }}" href="{{ translation.get_absolute_url() }}" title="{{ translation.title }}">
+    {% endfor %}
+  {% endif %}
+
+  <!-- document-specific social tags -->
+  <meta property="og:title" content="{{ document.title }}">
+  <meta property="og:url" content="{{ canonical }}">
+  <meta name="twitter:url" content="{{ canonical }}">
+  <meta name="twitter:title" content="{{ document.title }}">
+  {% if seo_summary %}
+  <meta property="og:description" content="{{ seo_summary }}">
+  <meta name="description" content="{{ seo_summary }}">
+  <meta name="twitter:description" content="{{ seo_summary }}">
+  {% endif %}
+{% endblock %}
+
+{% block lang_switcher %}
+  {% if (document.is_localizable or document.parent) and is_translated %}
+    <form class="languages go" method="get" action="{{ devmo_url('Web') }}">
+      <label for="language">{{ _('Other languages:') }}</label>
+      <select id="language" class="wiki-l10n" name="next" dir="ltr">
+        <option value="{{ document.get_absolute_url() }}" selected>
+          {{ document.language }}
+        </option>
+        {% for translation in document.other_translations %}
+          <option value="{{ translation.get_absolute_url() }}">
+            {{ translation.language }}
+          </option>
+        {%- endfor %}
+      </select>
+      <noscript><button type="submit">{{ _('Go') }}</button></noscript>
+    </form>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+
+  {% if is_zone %}
+      {% if is_zone_root %}
+
+        <div class="zone-landing-header" id="document-main"><div class="center">
+          <!-- edit, settings buttons -->
+          {{ buttons }}
+
+          <!-- crumbs -->
+          {{ crumbs }}
+
+          <h1>{{ document.title }}</h1>
+
+          {% set summary = document|selector_content_find('.summary') %}
+          {% if (zone_subnav_html or quick_links_html) %}
+          <div class="column-container zone-landing-header-preview">
+            <div class="column-strip">
+              <div class="zone-landing-header-preview-base">
+                {% if zone_subnav_html %}
+                  <!-- zone subnav -->
+                  {{ get_document_subnav(zone_subnav_html) }}
+                {% endif %}
+
+                {% if quick_links_html %}
+                  <!-- quick links -->
+                  {{ get_document_quick_links(quick_links_html) }}
+                {% endif %}
+              </div>
+              <div class="zone-landing-header-spacing"></div>
+            </div>
+            <div class="column-5 masthead-text"><p>{{ summary }}</p></div>
+          </div>
+          {% else %}
+            <div class="column-5 masthead-text"><p>{{ summary }}</p></div>
+          {% endif %}
+
+          <div class="zone-image"></div>
+        </div></div>
+      {% else %}
+        <div class="zone-article-header" id="document-main"><div class="center">
+          <!-- zone title -->
+          <div class="zone-title"><a href="{{ zone_stack[0].document.get_absolute_url() }}">{{ zone_stack[0].document.title }}</a></div>
+          <!-- zone image -->
+          <div class="zone-image"></div>
+        </div></div>
+      {% endif %}
+
+    {% endif %} <!-- end is_zone -->
+
+
+    <div class="wiki-main-content" {% if not is_zone %}id="document-main"{% endif %}><div class="center">
+      {% if not is_zone_root %}
+      <div class="article-meta">
+        <!-- action buttons -->
+        {{ buttons }}
+
+        <!-- crumbs -->
+        {{ crumbs }}
+      </div>
+
+      <!-- heading -->
+      <div id="wiki-document-head" class="document-head">
+          <span class="from-search-previous-box">
+            <a class="button from-search-previous only-icon disabled" title="{{ _('Previous Search Result') }}" data-empty-title="{{ _('No Previous Search Result') }}"><i aria-hidden="true" class="icon-chevron-left"></i></a>
+          </span>
+          <span class="from-search-navigate-wrap">
+            <a href="#" class="from-search-navigate"><span class="from-search-navigate-up"><i aria-hidden="true" class="icon-double-angle-up"></i></span><span class="from-search-navigate-down"><i aria-hidden="true" class="icon-double-angle-down"></i></span></a>
+          </span>
+          <div class="from-search-toc">
+            <span class="title">{{ _('Your Search Results') }}</span>
+            <ol></ol>
+          </div>
+          <span class="from-search-next-box">
+            <a class="button from-search-next only-icon disabled" title="{{ _('Next Search Result') }}" data-empty-title="{{ _('No Previous Search Result') }}"><i aria-hidden="true" class="icon-chevron-right"></i></a>
+          </span>
+        <h1>{{ document.title }}</h1>
+        {% if waffle.flag('top_contributors') %}
+            {% set contributors = document.get_contributors() %}
+            {% set contrib_limit = 13 %}
+            {% set contrib_count = contributors.count() %}
+
+        <div class="contributor-avatars" data-all-text="{{ _('Show all') }}&hellip;<span class='hidden'>{{ _('contributors') }}</span>" {% if contrib_count > contrib_limit %}data-has-hidden="1"{% endif %}>
+            <span class="quickstat">
+            {% trans count=contrib_count %}
+            by {{ count }} contributor:
+            {% pluralize %}
+            by {{ count }} contributors:
+            {% endtrans %}
+            </span>
+            <ul>
+            {% for contributor in contributors %}
+                <li class="{% if loop.index > contrib_limit %}hidden{% else %}shown{% endif %}">
+                <a href="{{ contributor.get_absolute_url() }}" title="{% trans username=contributor.username %}View profile: {{ username }}{% endtrans %}">
+                <noscript data-class="avatar" data-alt="{{ contributor.username }}" data-src="{{ gravatar_url(contributor, size=34) }}">{{ contributor.username }}</noscript></a>
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+      </div>
+      {% endif %}
+
+      <!-- start the main content container -->
+        <div id="wiki-column-container" class="{% if show_right %}wiki-right-present{% else %}wiki-right-closed wiki-right-none{% endif %} {% if show_left %}wiki-left-present{% else %}wiki-left-closed wiki-left-none{% endif %}">
+
+          {% if show_left and not is_zone_root %}
+          <!-- additional controls row; hidden unless needed -->
+          <div id="wiki-controls" class="column-container column-container-reverse">
+            <div class="column-strip">
+              <!-- Show TOC "show" link -->
+            </div>
+            <div class="column-half">
+            </div>
+            <div class="column-strip quick-links hidden">
+              <a href="#show-quick-links" class="title smaller" id="show-quick-links"><i aria-hidden="true" class="icon-caret-down"></i>{{ _('Show Sidebar') }}</a>
+            </div>
+          </div>
+          {% endif %}
+
+          <!-- content row with three strips -->
+          <div class="column-container column-container-reverse">
+
+            {% if show_right %}
+              <!-- TOC, approvals, etc -->
+              <div class="column-strip wiki-column" id="wiki-right">
+              {% if toc_html %}
+              <!-- table of contents -->
+              <div id="toc" class="toc toggleable">
+                <a href="#toc" class="title toggler" data-open-icon="icon-plus" data-closed-icon="icon-minus">{{ _('In This Article') }}<i></i></a>
+                <ol class="toggle-container">
+                  {{ toc_html|safe }}
+                </ol>
+              </div>
+              {% endif %}
+              </div>
+            {% endif %}
+
+            {# determine the article content based on template status #}
+            {% if not document.is_template %}
+              {% set document_html_safe = body_html|safe %}
+            {% else %}
+              {% set document_html_safe = document_html|safe %}
+            {% endif %}
+
+            <!-- center: main article content -->
+            <div id="wiki-content" class="{{ content_class }} wiki-column text-content">
+
+              {% if is_logged_in and document_html %}
+                {% if render_raw_fallback %}
+                  <div id="doc-render-raw-fallback" class="warning">
+                  {% trans url=document.get_absolute_url() %}
+                    This document is being rendered for the first time by the system.
+                    Please <a href="{{ url }}">reload this page</a> in a few minutes
+                    to see full content.
+                  {% endtrans %}
+                  </div>
+                {% elif document.is_rendering_in_progress %}
+                  <div id="doc-rendering-in-progress" class="warning">
+                  {% trans url=document.get_absolute_url(), started_at=document.render_started_at %}
+                    An update to this document
+                    <abbr title="{{ started_at }}">is currently in progress</abbr>.
+                    If the content below seems stale or if something is missing,
+                    please <a href="{{ url }}">reload this page</a> in a few minutes.
+                  {% endtrans %}
+                  </div>
+                {% elif document.is_rendering_scheduled and not kumascript_errors %}
+                  <div id="doc-rendering-scheduled" class="warning">
+                  {% trans url=document.get_absolute_url(), scheduled_at=document.render_scheduled_at %}
+                    An update to this document
+                    <abbr title="{{ scheduled_at }}">has been scheduled</abbr>.
+                    If the content below seems stale or if something is missing,
+                    please <a href="{{ url }}">reload this page</a> in a few minutes.
+                  {% endtrans %}
+                  </div>
+                {% endif %}
+              {% endif %}
+
+              {% if kumascript_errors %}
+                {% include 'wiki/includes/kumascript_errors.html' %}
+              {% endif %}
+
+              {% if document.current_revision %}
+                {% if document.current_revision.needs_technical_review() %}
+                  <div class="warning warning-review"><p>{% trans %}
+                    This article is in need of a technical review.
+                  {% endtrans %}</p></div>
+                {% endif %}
+                {% if document.current_revision.needs_editorial_review() %}
+                  <div class="warning warning-review"><p>{% trans %}
+                    This article is in need of an editorial review.
+                  {% endtrans %}</p></div>
+                {% endif %}
+                {% if document.current_revision.localization_in_progress() %}
+                  {% if document.current_revision.translation_age >= 10 %}
+                      <div class="warning warning-review"><p>{% trans translate_url=url('wiki.edit_document', document.full_path, locale=document.locale) %}
+                        This translation is incomplete. Please help <a href="{{ translate_url }}">translate this article</a> from English.
+                      {% endtrans %}</p></div>
+                  {% else %}
+                      <div class="warning warning-review"><p>
+                        {{ _('This translation is in progress.') }}
+                      </p></div>
+                  {% endif %}
+                {% endif %}
+              {% endif %}
+              {% if fallback_reason %}
+                <div id="doc-pending-fallback" class="warning">
+                  {% trans help_link=help_link, locale=settings.LOCALES[request.locale].native %}
+                    Our volunteers haven't translated this article into {{ locale }} yet.
+                    <a href="{{ help_link }}">Join us and help get the job done!</a>
+                  {% endtrans %}
+                </div>
+              {% endif %}
+
+              <!-- just the article content -->
+              <article id="wikiArticle">
+                {% if not fallback_reason %}
+                  {% if not document_html %}
+                    {{ _("This article doesn't have any content yet.") }}
+                  {% elif document.is_template %}
+                    <pre class="brush: js">{{ document_html }}</pre>
+                    {% trans search_link=template_search_link, title=document.title %}
+                      Search for
+                      <a href="{{ search_link }}">pages that use {{ title }}</a>
+                      to see example use cases and how many pages use this macro.
+                    {% endtrans %}
+                  {% else %}
+                    {{ document_html_safe }}
+                  {% endif %}
+                {% elif fallback_reason == 'no_translation' %}
+                  {{ document_html_safe }}
+                {% elif fallback_reason == 'translation_not_approved' %}
+                  {{ document.parent.html|safe }}
+                {% else %}
+                  {{ _("This article doesn't have approved content yet.") }}
+                {% endif %}
+              </article>
+
+              {% if not is_zone_root %}
+
+                <!-- attachments list -->
+                {% if document.attachments.all().exists() %}
+                  {% include 'wiki/includes/attachment_list.html' %}
+                {% endif %}
+
+                <!-- contributors -->
+                <div class="wiki-block contributors">
+                  <h2 class="offscreen">{{ _('Document Tags and Contributors') }}</h2>
+                  {% set tags = document.tags.all() %}
+                  {% if tags.exists() %}
+                  <!-- tags if present -->
+                  <div class="tag-attach-list tags contributor-sub">
+                    <i aria-hidden="true" class="icon-tags"></i><strong>{{ _('Tags:') }}</strong>
+                    <ul class="tag-list">{% for tag in tags %}<li><a href="{{ url('wiki.tag', tag.name) }}">{{ tag.name }}</a></li>{% endfor %}</ul>
+                  </div>
+                  {% endif %}
+                  {% trans contributors=user_list(contributors) %}
+                  <div class="contributor-sub">
+                    <i aria-hidden="true" class="icon-group"></i><strong>Contributors to this page:</strong> {{ contributors }}
+                  </div>
+                  {% endtrans %}
+                  {% if current_revision.creator %}
+                    <div class="contributor-sub">
+                      <i aria-hidden="true" class="icon-clock-o"></i><strong>{{ _('Last updated by:') }}</strong>
+                      <a href="{{ current_revision.creator.get_absolute_url() }}">{{ current_revision.creator }}</a>,
+                      {{ datetimeformat(current_revision.created, format='datetime') }}
+                    </div>
+                  {% endif %}
+                </div>
+              {% endif %}
+            </div>
+
+            {% if show_left %}
+              <!-- quick links and zone subnav strip -->
+              <div id="wiki-left" class="column-strip wiki-column">
+
+              {% if not is_zone_root %}
+
+                <a href="#quick-links" class="title smaller" id="quick-links-toggle"><i aria-hidden="true" class="icon-caret-up"></i>{{ _('Hide Sidebar') }}</a>
+
+                {% if zone_subnav_html %}
+                  <!-- zone subnav -->
+                  {{ get_document_subnav(zone_subnav_html) }}
+                {% endif %}
+
+                {% if quick_links_html %}
+                  <!-- quick links -->
+                  {{ get_document_quick_links(quick_links_html) }}
+                {% endif %}
+
+                <!-- approvals -->
+                {% if approvals_html %}
+                  {{ approvals_html }}
+                {% endif %}
+
+              {% endif %}
+
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div> <!-- ends "main-content" -->
+
+  <menu type="context" id="edit-history-menu">
+    <menuitem data-action="$edit" label="{{_('Edit page')}}"></menuitem>
+    <menuitem data-action="$history" label="{{_('View page history')}}"></menuitem>
+  </menu>
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript">
+      jQuery('.from-search-toc').mozSearchResults('{{ search_url|safe }}');
+  </script>
+
+  {% if waffle.flag('promote_script') %}
+    <script type="text/javascript">
+        (function($) {
+            var searchElements = ['article p, article li'];
+            $(searchElements.join(',')).length && $.ajax({
+                url: '/media/redesign/js/promote.js',
+                dataType: 'script',
+                cache: true,
+                success: function() {
+                    PromoteMDN({
+                        searchElements: searchElements,
+                        linkClass: 'promote-link'
+                    });
+                }
+            });
+    })(jQuery);
+    </script>
+  {% endif %}
+{% endblock %}

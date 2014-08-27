@@ -1,67 +1,78 @@
-@import 'includes/vars'
+@import 'includes/vars';
+@import 'includes/mixins';
 
 /* styles for the WYSIWYG editor which we cannot take directly from screen.css */
 html, body {
-  background: #fff;
+    background: #fff;
 }
 html.maximized {
-  overflow-y: auto !important;
+    overflow-y: auto !important;
 }
 body {
-  font: 14px/1.5 'Open Sans', sans-serif;
-  padding: 0 grid-spacing;
+    font: 14px/1.5 'Open Sans', sans-serif;
+    padding: 0 $grid-spacing;
 }
 
 
 /* seo and callout plugin styles */
 .seoSummary {
-  padding: 3px;
-  border: 1px dotted #ccc;
-  position: relative;
+    padding: 3px;
+    border: 1px dotted #ccc;
+    position: relative;
 
-  &:before {
-    set-font-size(10px);
-    content: 'SEO Summary';
-    position: absolute;
-    top: -16px;
-    left: 0;
-    z-index: 10;
-    border: 1px dotted #fc0;
-    background: #fffea1;
-    display: block;
-    opacity: 0.8;
-    cursor: default;
-  }
+    &:before {
+        set-font-size(10px);
+        content: 'SEO Summary';
+        position: absolute;
+        top: -16px;
+        left: 0;
+        z-index: 10;
+        border: 1px dotted #fc0;
+        background: #fffea1;
+        display: block;
+        opacity: 0.8;
+        cursor: default;
+    }
 }
 
 .summary {
-  background: #f4f7f8;
-  font-weight: bold;
-  padding: grid-spacing;
-  margin-bottom: grid-spacing;
+    background: #f4f7f8;
+    font-weight: bold;
+    padding: $grid-spacing;
+    margin-bottom: $grid-spacing;
 
-  p:last-child {
-    margin-bottom: 0;
-  }
+    p:last-child {
+        margin-bottom: 0;
+    }
 }
 
 /* syntax highlighter update */
 pre {
-  position: relative;
+    position: relative;
 }
 pre:before {
-  set-smaller-font-size();
-  font-family: arial, sans-serif;
-  font-style: italic;
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  z-index: 10;
-  color: #666;
+    set-smaller-font-size();
+    font-family: arial, sans-serif;
+    font-style: italic;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    z-index: 10;
+    color: #666;
+}
+
+pre {
+    @extend $code-block;
+    font-family: Consolas,Monaco,"Andale Mono",monospace;
+    direction: ltr;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
 }
 
 createLanguageQuery(lang, content) {
-  unquote("pre[class^='brush:" + lang + "']:before, pre[class^='brush: " + lang + "']:before { content: '" + content + "' }");
+    unquote("pre[class^='brush:" + lang + "']:before, pre[class^='brush: " + lang + "']:before { content: '" + content + "' }");
 }
 createLanguageQuery('js', 'JavaScript');
 createLanguageQuery('json', 'JSON');
@@ -78,11 +89,11 @@ createLanguageQuery('xml', 'XML');
 
 /* Notify the user that a given list item will open */
 li[data-default-state='open'] > a:after {
-  content: '(defaults to "open")';
-  color: #666;
-  set-smaller-font-size();
-  font-family: arial, sans-serif;
-  font-style: italic;
-  display: inline-block;
-  padding-left: 6px;
+    content: '(defaults to "open")';
+    color: #666;
+    set-smaller-font-size();
+    font-family: arial, sans-serif;
+    font-style: italic;
+    display: inline-block;
+    padding-left: 6px;
 }

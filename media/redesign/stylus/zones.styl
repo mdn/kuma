@@ -2,30 +2,32 @@
     These styles compliment the wiki styles when the page is a zone landing page or is simply in the zone.
 */
 
-@import 'includes/vars'
-@import 'includes/mixins'
-@import 'includes/grid'
+@import 'includes/vars';
+@import 'includes/mixins';
+@import 'includes/grid';
+
+$blue-background-text-color = #fff;
 
 /* Settings which apply to _all_ zone pages */
 .zone {
     create-gradient-background(#00539f, true);
     use-white-logo();
     remove-main-spacing();
-    override-main-nav-color(#fff);
+    override-main-nav-color($blue-background-text-color);
 
     #main-header {
         border-bottom-color: rgba(255, 255, 255, 0.2);
     }
 
     .user-state {
-        a, a:hover, a:focus, a:visited {
-            color: #fff;
+        a, a:hover, a:focus, a:visited, > {$selector-icon} {
+            color: $blue-background-text-color;
         }
     }
 
     /*  Change open auth text in white */
     .oauth-login-options {
-        color: #fff;
+        color: $blue-background-text-color;
     }
 
     /* zone content area needs to be adjusted for zone pages */
@@ -34,7 +36,7 @@
     }
 
     .wiki-main-content {
-        padding-top: first-content-top-padding !important;
+        padding-top: $first-content-top-padding !important;
 
         .center {
             add-center-spacing();
@@ -47,13 +49,13 @@
 
     h1 {
         @extend $column-6;
-        color: #fff;
+        color: $blue-background-text-color;
         clear: both;
     }
 
     .zone-landing-header-preview {
-        color: #fff;
-        margin-top: grid-spacing;
+        color: $blue-background-text-color;
+        margin-top: $grid-spacing;
 
         .column-strip {
             position: relative;
@@ -71,10 +73,10 @@
     }
 
     .crumbs {
-        color: #fff;
+        color: $blue-background-text-color;
 
         a {
-            old-ie(color, #fff);
+            old-ie(color, $blue-background-text-color);
             color: rgba(255, 255, 255, 0.7);
         }
     }
@@ -84,7 +86,7 @@
     }
 
     h3.title {
-        set-font-size(base-font-size);
+        set-font-size($base-font-size);
         margin: 6px 0 0 0;
     }
 }
@@ -94,13 +96,13 @@
     position: relative;
 
     > .center {
-        padding-top: first-content-top-padding;
+        padding-top: $first-content-top-padding;
     }
 
     .masthead-text {
         p {
             set-larger-font-size();
-            font-weight: light-font-weight;
+            font-weight: $light-font-weight;
         }
     }
 
@@ -116,17 +118,17 @@
     }
 
     a.button, button {
-        compat-important(color, #fff);
+        color: $blue-background-text-color;
         &:not(.transparent) {
-            old-ie(background-color, #0095dd, true); /* old ie */
-            compat-important(background-color, rgba(0, 0, 0, 0.1));
+            old-ie(background-color, #0095dd); /* old ie */
+            background-color: rgba(0, 0, 0, 0.1);
             vendorize(box-shadow, inset 0 -1px rgba(0, 0, 0, .1));
         }
     }
 }
 
 .zone-landing-lists li {
-    padding: list-item-spacing 0;
+    padding: $list-item-spacing 0;
     prevent-last-child-spacing(padding-bottom);
 }
 
@@ -134,15 +136,15 @@
 
 /*    Basic zone article pages */
 .zone-article-header {
-    padding: grid-spacing 0;
+    padding: $grid-spacing 0;
     overflow: hidden;
 
     .zone-title {
         heading-2();
 
         a {
-            font-family: heading-font-family;
-            color: #fff;
+            font-family: $heading-font-family;
+            color: $blue-background-text-color;
         }
     }
 
@@ -165,23 +167,23 @@
 
 .zone-subnav-container {
     background: #fff;
-    margin-bottom: grid-spacing;
+    margin-bottom: $grid-spacing;
     position: relative;
     z-index: 10;
 }
 
 .zone-callout {
     position: relative;
-    padding: grid-spacing;
+    padding: $grid-spacing;
     background: #f4f7f8;
-    margin: (grid-spacing + (grid-spacing / 2)) 0;
+    margin: ($grid-spacing + ($grid-spacing / 2)) 0;
 
     table {
         width: 100%;
     }
     td {
         vertical-align: bottom;
-        padding-right: grid-spacing;
+        padding-right: $grid-spacing;
     }
 }
 
@@ -189,7 +191,7 @@
 /* Styles specific to the Connect page (formerly the Developer Program page),
    because it's a specific zone */
 .dev-program-block {
-    margin-bottom: (grid-spacing * 2);
+    margin-bottom: ($grid-spacing * 2);
     prevent-last-child-spacing('*', margin-bottom);
 
     ul {
@@ -198,21 +200,21 @@
 }
 
 .dev-program-first {
-    margin-top: -(grid-spacing * 4);
+    margin-top: -($grid-spacing * 4);
 }
 
-.dev-program-pad {
-    background: light-background-color;
-    padding: (grid-spacing);
+$dev-program-pad {
+    background: $light-background-color;
+    padding: ($grid-spacing);
     prevent-last-child-spacing(p, margin-bottom);
 }
 
 .dev-program-callouts {
-    margin-left: grid-margin;
-    margin-right: grid-margin;
+    margin-left: $grid-margin;
+    margin-right: $grid-margin;
 
     .dev-program-callout {
-        @extend .dev-program-pad;
+        @extend $dev-program-pad;
 
         h2 {
             set-larger-font-size();
@@ -221,7 +223,7 @@
 }
 
 .stack-form {
-    margin-bottom: content-block-margin;
+    margin-bottom: $content-block-margin;
 
     input {
         display: inline-block;
@@ -232,13 +234,13 @@
         width: 16px;
         height: 16px;
         display: inline-block;
-        background-image: url(media-url-dir + 'stackoverflow.png');
-        margin-right: icon-margin;
+        background-image: url($media-url-dir + 'stackoverflow.png');
+        margin-right: $icon-margin;
     }
 }
 
 .dev-program-explanation {
-    @extend .dev-program-pad;
+    @extend $dev-program-pad;
 }
 
 .dev-program-hacks {
@@ -270,28 +272,36 @@
     }
 }
 
-@media media-query-tablet {
+@media $media-query-tablet {
     .zone-landing {
         .zone-subnav-container {
             margin-top: 0;
         }
 
         .zone-landing-header-preview .column-strip, .zone-landing-header-preview .masthead-text {
-            width: get-grid-dimension(media-query-tablet, 6);
+            width: get-grid-dimension($media-query-tablet, 6);
 
             .zone-landing-header-preview-base {
                 position: static;
             }
         }
+    }
 
-        .zone-image {
-            opacity: 0.2;
-        }
+    .zone-landing-header .zone-image, .zone-article-header .zone-image {
+        opacity: 0.2;
     }
 }
 
-@media media-query-mobile {
-    .zone-landing-header .zone-image {
+@media $media-query-mobile {
+    .zone-landing-header .zone-image, .zone-article-header .zone-image {
         display: none;
+    }
+
+    .zone-landing h1 {
+        width: auto;
+    }
+
+    .zone-landing-header {
+        display: block;
     }
 }

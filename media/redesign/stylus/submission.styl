@@ -1,17 +1,17 @@
-@import 'includes/vars'
-@import 'includes/mixins'
+@import 'includes/vars';
+@import 'includes/mixins';
 
 .submission {
     .section {
-        set-font-size(small-bump-font-size);
-        margin: 0 0 grid-spacing;
+        set-font-size($small-bump-font-size);
+        margin: 0 0 $grid-spacing;
         padding: 35px 0 0;
         position: relative;
 
         & > legend {
             b {
                 display: block;
-                set-font-size(base-bump-font-size);
+                set-font-size($base-bump-font-size);
                 position: absolute;
             }
         }
@@ -22,7 +22,7 @@
     }
 
     li {
-        margin: 0 0 (grid-spacing / 2);
+        margin: 0 0 ($grid-spacing / 2);
     }
 
     input[readonly] {
@@ -46,7 +46,11 @@
     }
 
     p.note {
-        margin: (grid-spacing / 4) 0;
+        margin: ($grid-spacing / 4) 0;
+    }
+
+    .trouble {
+        margin-top: $grid-spacing;
     }
 
     .inline {
@@ -57,7 +61,7 @@
             }
         }
         li {
-            margin: 0 0 (grid-spacing / 4);
+            margin: 0 0 ($grid-spacing / 4);
         }
         label {
             display: inline;
@@ -71,20 +75,45 @@
     }
 
     .other-value {
-        margin-top: (grid-spacing / 4);
+        margin-top: ($grid-spacing / 4);
         label {
             display: block;
         }
     }
 
-    input[type="url"], input[type="email"], input[type="text"] {
-        width: 450px;
+    input[type='url'], input[type='email'], input[type='text'] {
+        width: 350px;
+        max-width: 100%;
     }
 
     label, .label {
         display: block;
-        font-weight: bold;
-        margin: 0 0 (grid-spacing / 4);
+        font-weight: normal;
+        margin: 0 0 ($grid-spacing / 4);
+    }
+
+    .inner {
+        display: inline;
+    }
+
+    .outer {
+        set-font-size($base-bump-font-size);
+    }
+
+    .choices {
+        list-style-type: none;
+    }
+
+    .choices li {
+        margin-bottom: 5px;
+    }
+
+    .choices li label {
+        display: inline-block;
+    }
+
+    .choices li.exists label {
+        text-decoration:line-through;
     }
 
     .check {

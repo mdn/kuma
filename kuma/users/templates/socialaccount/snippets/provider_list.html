@@ -1,0 +1,29 @@
+{% if socialaccount.providers %}
+  <ul class="no-bullets socialaccount_providers">
+    {% for provider in socialaccount.providers %}
+        {% if provider.id == "openid" %}
+            {% for brand in provider.get_brands() %}
+              <li><a title="{{ brand.name }}"
+                 class="socialaccount_provider {{ provider.id }} {{ brand.id }}"
+                 href="{{ provider_login_url(provider.id, openid=brand.openid_url, process=process, next=next_url) }}"
+                 >{{ brand.name }}</a></li>
+            {% endfor %}
+        {% endif %}
+        {% if provider.id == "persona" %}
+          <li><a href="{{ provider_login_url(provider.id, process=process, next=next_url) }}" class="persona-button persona-loaded login-link" data-next="{{ next_url }}" data-service="{{ provider.name }}">
+            <span class="persona-icon"><i aria-hidden="true"></i></span>
+            <span class="signin">{{ _('Sign in with Persona') }}</span>
+          </a></li>
+        {% elif provider.id == "github" %}
+          {% if waffle.flag('github_login') %}
+            <li><a href="{{ provider_login_url(provider.id, process=process, next=next_url) }}" class="github-button login-link" data-next="{{ next_url }}" data-service="{{ provider.name }}">
+              <span class="github-icon"><i class="icon-github" aria-hidden="true"></i></span>
+              <span class="signin">{{ _('Sign in with GitHub') }}</span>
+            </a></li>
+          {% endif %}
+        {# {% else %}
+          <li><a title="{{ provider.name }}" class="socialaccount_provider {{ provider.id }}" href="{{ provider_login_url(provider.id, process=process, next=next_url) }}">{{ provider.name }}</a></li> #}
+        {% endif %}
+    {% endfor %}
+  </ul>
+{% endif %}

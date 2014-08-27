@@ -24,7 +24,7 @@
           // Switch header and toolbar styles on scroll to keep them on screen
           $(doc).on('scroll', function() {
 
-            // If top of the window is betwen top of #content and top of metadata (first .page-meta) blocks, the header is fixed
+            // If top of the window is betwen top of #content and bottom of content + 200, the header is fixed
             var scrollTop = $(this).scrollTop();
             if (scrollTop >= contentTop) {
 
@@ -79,7 +79,66 @@
       });
     })();
 
+    /*
+        Calculate rendering max age in seconds from days, minutes and seconds
+    */
+    (function() {
+        var seconds = $('#id_render_max_age').val();
+        var getValue = function(selector) {
+             return parseInt($(selector).val()) || 0;
+        };
 
+        var setAge = function() {
+            $('#id_render_max_age').val(
+                (((getValue('.duration-container #days') * 24) +
+                getValue('.duration-container #hours')) * 60 +
+                getValue('.duration-container #minutes')) * 60
+            );
+        };
+
+        $('.duration-container input').on('change', setAge);
+
+        if(seconds !== ''){
+            //convert seconds to days, hours, minutes
+            var days = Math.floor(seconds / (60 * 60 * 24));
+            seconds -= days * (60 * 60 * 24);
+            var hours = Math.floor(seconds / (60 * 60));
+            seconds -= hours * (60 * 60);
+            var minutes = Math.floor(seconds / 60);
+
+            $('.duration-container #days').val(days);
+            $('.duration-container #hours').val(hours);
+            $('.duration-container #minutes').val(minutes);
+        }else{
+            setAge();
+        }
+    })();
+
+    /*
+        Switch to source
+    */
+    (function(){
+        $('.doc-mode-btn').toggleMessage().on('click', function(e){
+            e.preventDefault();
+
+            var $source = $('.translate-source textarea');
+            $('.translate-rendered, .translate-source').toggleClass('hidden');
+
+            // Get height of textarea content, first time doc source is viewed
+            if(!$source.data('height')){
+                 $source.height(function(){
+                    return $(this).get(0).scrollHeight;
+                 });
+                 $source.data('height', true);
+            }
+        });
+
+        $('.hide-original-btn').toggleMessage().on('click', function(e){
+            e.preventDefault();
+
+            $('#trans-content').toggleClass('translate-only');
+        });
+    })();
 
   /*
     Plugin for prepopulating the slug fields
@@ -107,8 +166,7 @@
               });
 
               var s = values.join(' ');
-
-              s = $.slugifyString(s);
+              s = $.slugifyString(s, false, true);
 
               // Trim to first num_chars chars
               s = s.substring(0, maxLength);
@@ -130,8 +188,7 @@
     var DRAFT_TIMEOUT_ID;
 
     var supportsLocalStorage = ('localStorage' in win);
-    var formId = 'wiki-page-edit';
-    var formSelector;
+    var $form = $('#wiki-page-edit');
     var isTranslation;
     var isTemplate;
 
@@ -141,13 +198,12 @@
 
         $('select.enable-if-js').removeAttr('disabled');
 
-        // If the form is a translate form, update the formId
-        var translateFormId = 'translate-document';
-        if($('#' + translateFormId).length) {
-            formId = translateFormId;
+        // If the form is a translate form, update the $form object
+        var $translateForm = $('#translate-document');
+        if($translateForm.length) {
+            $form = $translateForm;
             isTranslation = true;
         }
-        formSelector = '#' + formId;
 
         if($body.hasClass('is-template')) {
             isTemplate = 1;
@@ -285,7 +341,7 @@
      * Initialize the article preview functionality.
      */
     function initArticlePreview() {
-        $('#btn-preview').on('click', function(e) {
+        $('.btn-preview').on('click', function(e) {
             e.preventDefault();
 
             // Ensure that content is available and exists
@@ -314,8 +370,7 @@
                 $("<input type='hidden' name='title' />").val(title).appendTo($form);
 
                 // Add the CSRF ?
-                $('input[name=csrfmiddlewaretoken]').clone().appendTo($form);
-
+                $('#wiki-page-edit, #translate-document').find('input[name=csrfmiddlewaretoken]').clone().appendTo($form);
                 // Submit the form, and then get rid of it
                 $form.get(0).submit();
                 $form.remove();
@@ -457,22 +512,29 @@
     //
     function initSaveAndEditButtons () {
         // Save button submits to top-level
-        $('#btn-save').on('click', function () {
+        $('.btn-save').on('click', function () {
             if (supportsLocalStorage) {
                 // Clear any preserved content.
                 clearDraft();
             }
             clearTimeout(DRAFT_TIMEOUT_ID);
-            $(formSelector)
-                .attr('action', '')
-                .removeAttr('target');
+            $form.attr('action', '').removeAttr('target');
             return true;
         });
 
-        // Save-and-edit submits to a hidden iframe, style the button with a
-        // loading anim.
-        $('#btn-save-and-edit').on('click', function () {
-            var savedTa = $(formSelector + ' textarea[name=content]').val();
+        // Save-and-edit submits to a hidden iframe, show loading message in notifier
+        var notifications = [];
+        $('.btn-save-and-edit').on('click', function () {
+
+            notifications.push(mdn.Notifier.growl('Saving changes…', { duration: 0 }));
+
+            mdn.analytics.trackEvent({
+                category: 'Wiki',
+                action: 'Button',
+                label: 'Save and Keep Editing'
+            });
+
+            var savedTa = $form.find('textarea[name=content]').val();
             if (supportsLocalStorage) {
                 // Preserve editor content, because saving to the iframe can
                 // yield things like 403 / login-required errors that bust out
@@ -481,16 +543,15 @@
             }
             clearTimeout(DRAFT_TIMEOUT_ID);
             // Redirect the editor form to the iframe.
-            $(formSelector)
-                .attr('action', '?iframe=1')
-                .attr('target', 'save-and-edit-target');
-            // Change the button to a loading state style
-            $(this).addClass('loading');
+            $form.attr('action', '?iframe=1').attr('target', 'save-and-edit-target');
             return true;
         });
-        $('#btn-save-and-edit').show();
+        $('.btn-save-and-edit').show();
 
         $('#save-and-edit-target').on('load', function () {
+            notifications[0].success(null, 2000);
+            notifications.shift();
+
             if (supportsLocalStorage) {
                 var if_doc = $(this).get(0).contentDocument;
                 if (typeof(if_doc) != 'undefined') {
@@ -505,18 +566,16 @@
                         // We also need to update the form's current_rev to
                         // avoid triggering a conflict, since we just saved in
                         // the background.
-                        $(formSelector + ' input[name=current_rev]').val(
+                        $form.find('input[name=current_rev]').val(
                             ir.attr('data-current-revision'));
 
-                    } else if ($(formSelector, if_doc).hasClass('conflict')) {
+                    } else if ($form.add(if_doc).hasClass('conflict')) {
                         // HACK: If we detect a conflict in the iframe while
                         // doing save-and-edit, force a full-on save in order
                         // to surface the issue. There's no easy way to bust
                         // the iframe otherwise, since this was a POST.
-                        $(formSelector)
-                            .attr('action', '')
-                            .attr('target', '');
-                        $('#btn-save').click();
+                        $form.attr('action', '').attr('target', '');
+                        $('.btn-save').click();
 
                     }
 
@@ -525,16 +584,23 @@
                 }
             }
             // Stop loading state on button
-            $('#btn-save-and-edit').removeClass('loading');
+            $('.btn-save-and-edit').removeClass('loading');
             // Clear the review comment
             $('#id_comment').val('');
             // Re-enable the form; it gets disabled to prevent double-POSTs
-            $(formSelector)
-                .data('disabled', false)
-                .removeClass('disabled');
+            $form.data('disabled', false).removeClass('disabled');
             return true;
         });
 
+        // Track submissions of the edit page form
+        $form.on('submit', function() {
+            mdn.optimizely.push(['trackEvent', 'editpage-submit']);
+            mdn.analytics.trackEvent({
+                category: 'Wiki',
+                action: 'Form submission',
+                label: 'Edit page'
+            });
+        });
     }
 
     function updateDraftState(action) {
@@ -547,7 +613,7 @@
 
     function saveDraft(val) {
         if (supportsLocalStorage) {
-            localStorage.setItem(DRAFT_NAME, val || $(formSelector + ' textarea[name=content]').val());
+            localStorage.setItem(DRAFT_NAME, val || $form.find('textarea[name=content]').val());
             updateDraftState(gettext('saved'));
         }
     }
@@ -568,7 +634,7 @@
                 },
 
                 treatedDraft = $.trim(treatDraft(prev_draft)),
-                treatedServer = treatDraft($(formSelector + ' textarea[name=content]').val().trim());
+                treatedServer = treatDraft($form.find('textarea[name=content]').val().trim());
             if (prev_draft){
                 // draft matches server so discard draft
                 if (treatedDraft == treatedServer) {
@@ -598,7 +664,7 @@
         }
 
         // Clear draft upon discard
-       $('#btn-discard').on('click', function() {
+       $('.btn-discard').on('click', function() {
             clearTimeout(DRAFT_TIMEOUT_ID);
            clearDraft();
        });
@@ -643,10 +709,6 @@
                 $clone.find('.attachment-error').remove();
                 $clone.insertBefore($attachmentsNewTableActions);
                 $clone.addClass('dynamic-row');
-
-                // Show the cell actions now!
-                $attachmentsNewTable.find('.page-attachment-actions-cell').removeClass('hidden');
-                $clone.find('.delete-attachment').removeClass('hidden');
 
                 return $clone;
             }

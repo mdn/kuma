@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% set title = _('Unsubscribe') %}{# Having this change to "Unsubscribed" draws my eye and bothers me. #}
+{% set crumbs = [(None, title)] %}
+
+{% block content %}
+<article>
+  <h1>{{ _('Unsubscribed') }}</h1>
+
+  <p>{{ _('You have been unsubscribed.') }}</p>
+</article>
+{% endblock %}

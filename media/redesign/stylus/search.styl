@@ -1,13 +1,13 @@
-@import 'includes/vars'
-@import 'includes/mixins'
-@import 'includes/grid'
+@import 'includes/vars';
+@import 'includes/mixins';
+@import 'includes/grid';
 
 body.search-results {
-    create-gradient-background(header-background-color);
+    create-gradient-background($header-background-color);
 }
 
 main {
-    compat-important(background, transparent); /* temporarily important until we migrate all CSS */
+    background: inherit;
 }
 
 /* update the header search size */
@@ -15,18 +15,14 @@ minimize-header-search();
 
 /* search pane used by multiple blocks */
 .search-pane {
-    padding: grid-spacing;
+    padding: $grid-spacing;
     background: #fff;
-    margin-bottom: (grid-spacing / 2);
+    margin-bottom: ($grid-spacing / 2);
 }
 
 /* block mentioning the number of results returned */
-h3 {selector-icon}, fieldset {selector-icon} {
-    bidi-style(margin-right, (grid-spacing * .75), margin-left, 0);
-}
-
-p {
-    compat-only(padding-left, 0);
+h3 {$selector-icon}, fieldset {$selector-icon} {
+    bidi-style(margin-right, ($grid-spacing * .75), margin-left, 0);
 }
 
 .search-results-explanation {
@@ -40,7 +36,7 @@ p {
 
 /* search form */
 .results-search-form {
-    margin-bottom: (grid-spacing * 2);
+    margin-bottom: ($grid-spacing * 2);
 
     input {
         big-search();
@@ -49,10 +45,10 @@ p {
 }
 
 .search-results-container {
-    padding: grid-spacing;
+    padding: $grid-spacing;
 
     h3 {
-        margin-bottom: grid-spacing;
+        margin-bottom: $grid-spacing;
     }
 }
 
@@ -61,14 +57,14 @@ p {
 
     .column-1 {
         text-align: center;
-        color: link-color;
+        color: $link-color;
     }
 
     h4 {
         set-larger-font-size();
     }
 
-    h4, {selector-icon} { /* bug #938074 */
+    h4, {$selector-icon} { /* bug #938074 */
         line-height: 30px;
         margin-bottom: 0;
     }
@@ -80,7 +76,7 @@ p {
 
     li {
         slider();
-        padding: 10px 0 grid-spacing 0;
+        padding: 10px 0 $grid-spacing 0;
 
         &.closed {
             margin-bottom: 0;
@@ -89,7 +85,7 @@ p {
 }
 
 .search-meta {
-    margin-top: (grid-spacing / 4);
+    margin-top: ($grid-spacing / 4);
 
     a {
         color: #6a7b86;
@@ -101,15 +97,15 @@ p {
     set-smaller-font-size();
     font-style: italic;
 
-    {selector-icon} {
+    {$selector-icon} {
         margin-right: 6px !important;
         margin-left: 0;
     }
 
     a {
-        color: text-color;
+        color: $text-color;
         display: inline-block;
-        margin-right: (grid-spacing / 2);
+        margin-right: ($grid-spacing / 2);
     }
 
     prevent-last-child-spacing(a, margin-right);
@@ -117,7 +113,7 @@ p {
 
 .search-results-more {
     clearfix();
-    padding: 0 grid-spacing;
+    padding: 0 $grid-spacing;
 }
 
 /* sidebar topic listings */
@@ -130,7 +126,7 @@ p {
         legend {
             set-font-size(24px);
             letter-spacing: -0.5px;
-            margin: -7px 0 (grid-spacing / 2);
+            margin: -7px 0 ($grid-spacing / 2);
 
             i {
                 margin-left: 0;
@@ -140,7 +136,7 @@ p {
 
     label {
         display: block;
-        padding-bottom: (grid-spacing / 2);
+        padding-bottom: ($grid-spacing / 2);
 
         .icon-check {
             margin-right: 5px;
@@ -150,8 +146,8 @@ p {
             margin-right: 7px;
         }
         &:hover .filter-name,
-        input[type="checkbox"]:focus+ .filter-name{
-            color: link-color;
+        input[type='checkbox']:focus+ .filter-name{
+            color: $link-color;
         }
 
         &.inactive {
@@ -187,12 +183,12 @@ input.filter-button {
 }
 
 /* mobile media page */
-@media media-query-mobile {
+@media $media-query-mobile {
     .result-list .column-1 {
         display: none;
     }
 
     .search-results-filters {
-        margin-top: grid-spacing;
+        margin-top: $grid-spacing;
     }
 }

@@ -8,7 +8,7 @@
 
 {% block content %}
 
-<section id="content">
+<section id="content" class="text-content">
 <div class="wrap">
 
   <section id="content-main" class="full" role="main">
@@ -22,7 +22,7 @@
       <p>We're sorry {{ name }}, we're afraid we can't do that.</p>
       {% endtrans %}
     {% else %}
-      {% trans name=user.username %}
+      {% trans %}
       <p>We're sorry, we're afraid we can't do that.</p>
       {% endtrans %}
     {% endif %}
@@ -33,9 +33,8 @@
         <li><a href="/logout">Log out</a> to try again.</li>
         {% endtrans %}
       {% else %}
-        {% trans register_url=url('users.register'), login_url=url('users.login') %}
+        {% trans login_url=url('account_login') %}
         <li><a href="{{ login_url }}">Log in</a> to try again.</li>
-        <li><a href="{{ register_url }}">Register</a> to edit docs and submit demos.</li>
         {% endtrans %}
       {% endif %}
         {% trans %}

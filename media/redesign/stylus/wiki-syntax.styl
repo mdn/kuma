@@ -1,33 +1,30 @@
 /*
-	Updates in this file modify or enhance the code provided by Prism.js
+    Updates in this file modify or enhance the code provided by Prism.js
 */
 
-@import 'includes/vars'
+@import 'includes/vars';
+@import 'includes/mixins';
 
 code[class*='language-'], pre[class*='language-'] {
     color: inherit;
     text-shadow: none;
 }
 
-pre[class*="language-"] {
-    margin-bottom: 20px;
+pre[class*='language-'] {
+    margin: 0 0 24px 0;
 
     span.comment {
         display: inherit;
     }
 }
 
-.error pre[class*="language-"] {
+.error pre[class*='language-'] {
     margin: 10px 0 0 0;
     background: none;
 }
 
 :not(pre)>code[class*='language-'], pre[class*='language-'] {
-    background: rgba(234, 239, 242, 0.25);
-    border-left: 6px solid rgba(0, 83, 159, 0.65);
-    background-image:  url(media-url-dir + 'blueprint-dark.png');
-    background-position: top center;
-    background-repeat: repeat;
+    @extend $code-block;
 }
 
 /*
@@ -39,7 +36,7 @@ pre em code[class*='language-'] {
     background: transparent;
 }
 
-pre[class*="language-"].twopartsyntaxbox, pre[class*="language-"].syntaxbox {
-  background: rgba(212, 221, 228, 0.5);
-  margin-bottom: 0;
+pre.twopartsyntaxbox, pre.syntaxbox {
+    background: rgba(212, 221, 228, 0.5) !important;
+    margin-bottom: 0;
 }
