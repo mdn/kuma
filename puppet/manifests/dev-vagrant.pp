@@ -3,6 +3,7 @@
 #
 
 import "classes/*.pp"
+include apt
 
 $DB_NAME = "kuma"
 $DB_USER = "kuma"
@@ -13,7 +14,39 @@ Exec {
     logoutput => true
 }
 
+
 class dev {
+    apt::key { 'elasticsearch':
+      key => 'D88E42B4',
+      key_source => 'http://packages.elasticsearch.org/GPG-KEY-elasticsearch',
+    }
+    class { 'elasticsearch':
+      package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.13.deb',
+      java_install => true,
+      java_package => 'openjdk-6-jre-headless',
+    }
+
+    elasticsearch::instance { 'kuma':
+      datadir => '/var/lib/elasticsearch',
+      config => {
+        'node' => {
+          'name' => 'kuma'
+        },
+        'index' => {
+          'number_of_replicas' => '0',
+          'number_of_shards'   => '1'
+        },
+        'network' => {
+          'host' => '0.0.0.0'
+        }
+      },
+    }
+
+
+    elasticsearch::plugin{'mobz/elasticsearch-head':
+      module_dir => 'head',
+      instances => ['kuma'],
+    }
 
     stage {
         hacks: before => Stage[pre];
@@ -35,13 +68,14 @@ class dev {
         mysql: stage => basics;
         memcache: stage => basics;
         rabbitmq: stage => basics;
-        elasticsearch: stage => basics;
         foreman: stage => basics;
 
         nodejs: stage => langs;
         python: stage => langs;
 
         stylus: stage => extras;
+        cleancss: stage => extras;
+        uglify: stage => extras;
 
         site_config: stage => main;
         dev_hacks_post: stage => hacks_post;

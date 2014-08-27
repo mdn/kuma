@@ -1,0 +1,104 @@
+{% extends "wiki/base.html" %}
+{% set title = _('Revision History | {document}')|fe(document=document.title) %}
+{% block title %}{{ page_title(title) }}{% endblock %}
+
+{% block content %}
+
+  <article id="revision-history">
+
+    <h1>{{ _('History of') }} <a href="{{ url('wiki.document', document.full_path, locale=document.locale) }}">{{ _('{title}')|fe(title=document.title) }}</a></h1>
+
+    <div class="choice-list">
+      <label>{{ _('Revision history for:') }}</label>
+      <ul>
+        {% if document.parent %}
+          <li>
+            <a href="{{ url('wiki.document_revisions', document.parent.full_path, locale=document.parent.locale) }}">{{ document.parent.language }}</a>
+          </li>
+        {% endif %}
+        <li>
+          <span>{{ document.language }}</span>
+        </li>
+      </ul>
+    </div>
+    <div id="revision-list">
+      {% set revision_count=revisions|length %}
+      {% set user_can_delete=user.has_perm('wiki.delete_revision') %}
+      {% if revision_count > 0 %}
+        <form action="{{ url('wiki.compare_revisions', document.full_path) }}" method="get" class="nodisable">
+          {% if revision_count > 1 %}
+            <div class="compare top">
+              <input type="submit" class="link-btn" value="{% if document.parent %}{{ _('Compare Selected Translations') }}{% else %}{{ _('Compare Selected Revisions') }}{% endif %}" />
+            </div>
+          {% endif %}
+          {% set reached_current = False %}
+          {% for rev in revisions %}
+            {% if document.current_revision == rev %}
+              {% set reached_current = True %}
+            {% endif %}
+            {% set is_current = document.current_revision.id == rev %}
+            {% if loop.first %}<ul>{% endif %}
+            <li class="{% if document.current_revision.id == rev %}current{% endif %}">
+              <div class="radio">
+                {% if not current %}<input type="radio" name="from" value="{{ rev.id }}" {% if loop.index == 2 %}checked="checked"{% endif %} />{% endif %}
+              </div>
+              <div class="radio">
+                {% if not loop.last %}<input type="radio" name="to" value="{{ rev.id }}" {% if loop.first %}checked="checked"{% endif %} />{% endif %}
+              </div>
+               <div class="prev">
+              {% if rev.previous_revision %}
+                <a href="{{ url('wiki.compare_revisions', document.full_path) }}?to={{ rev.id }}&amp;from={{ rev.previous_revision.id }}">{{ _('Previous') }}</a>
+              {% endif %}
+              </div>
+              <div class="date">
+                <a href="{{ url('wiki.revision', document.full_path, rev.id) }}" rel="nofollow, noindex">{{ datetimeformat(rev.created, format='datetime') }}</a>
+              </div>
+              <div class="creator">
+                <a href="{{ rev.creator.get_absolute_url() }}">{{ rev.creator }}</a>
+              </div>
+              <div class="comment">
+                {{ format_comment(rev) }}
+              </div>
+              {% if document.current_revision.id != rev.id and user_can_delete %}
+              <div class="creator">
+                <a href="{{ url('wiki.revert_document', document.full_path, rev.id) }}" class="button">{{ _('Revert to this revision') }}</a>
+              </div>
+              {% endif %}
+            </li>
+            {% if loop.last %}</ul>{% endif %}
+          {% endfor %}
+          {% if revision_count > 1 %}
+            <div class="compare bottom">
+              <input type="submit" class="link-btn" value="{% if document.parent %}{{ _('Compare Selected Translations') }}{% else %}{{ _('Compare Selected Revisions') }}{% endif %}" />
+            </div>
+          {% endif %}
+        </form>
+      {% else %}
+        {{ _('This document has no revisions.') }}
+      {% endif %}
+    </div>
+  </article>
+
+  {% if page %}
+    {{ page|paginator }}
+  {% endif %}
+
+{% endblock %}
+
+ {% block site_js %}
+  {{ super() }}
+  {{ js('framebuster') }}
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      var $pagination = $('.pagination');
+      var $next = $pagination.find('.next');
+
+      {% set class='hidden' if not request.user.is_authenticated() %}
+
+      if($next.length) {
+      $pagination.append('<li title="Sign in to view all history"><a href="?limit=all" id="pagination-all" class="{{ class }}">' + gettext('View All') + '</a></li>');
+      }
+    });
+  </script>
+{% endblock %}

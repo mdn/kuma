@@ -2,9 +2,9 @@
     'use strict';
 
     var $parent = $('#apps-newsletter-subscribe');
-    var $checkbox = $parent.find('#id_newsletter');
+    var $checkbox = $('#newsletter-toggle').find('input:checkbox');
     var $settings = $parent.find('.newsletter-setting');
-    var $agree = $parent.find('#id_agree');
+    var $agree = $settings.filter('.agree').find('input:checkbox');
     var required = 'required';
 
     if(!$checkbox.is(':checked')) {

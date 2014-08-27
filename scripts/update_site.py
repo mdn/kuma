@@ -12,7 +12,7 @@ Options:
 import os
 import sys
 from textwrap import dedent
-from optparse import  OptionParser
+from optparse import OptionParser
 
 RM_SETTINGS_PYC = "rm -f settings*.pyc"
 GIT_PULL = "git pull -q origin master"
@@ -62,12 +62,13 @@ def update_site(debug):
         (CHDIR, os.path.join(here, 'vendor')),
         # This seems like a bad idea - it pulls from master, while the web app
         # itself has a submodule pointing at a specific vendor-lib commit ID
-        (EXEC,  GIT_RESET_HARD),
-        (EXEC,  GIT_SUBMODULE_SYNC),
-        (EXEC,  GIT_SUBMODULE_UPDATE),
-        (CHDIR, os.path.join(here)),
+        (EXEC, GIT_RESET_HARD),
+        (EXEC, GIT_SUBMODULE_SYNC),
+        (EXEC, GIT_SUBMODULE_UPDATE),
+        (CHDIR, here),
         (EXEC, 'python2.6 vendor/src/schematic/schematic migrations/'),
-        (EXEC, 'python2.6 manage.py migrate'),
+        (EXEC, 'python2.6 manage.py syncdb --noinput'),
+        (EXEC, 'python2.6 manage.py migrate --noinput'),
         (EXEC, 'python2.6 manage.py update_badges'),
         (EXEC, 'python2.6 manage.py collectstatic --noinput'),
         (EXEC, './scripts/compile-stylesheets'),

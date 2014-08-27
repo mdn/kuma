@@ -1,7 +1,7 @@
 CKEDITOR.dialog.add( 'mdn-sample-finder', function( editor ) {
 
 	var topLabel = gettext('Sample Finder'),
-		docInfo = window.documentInfo,
+		docInfo = mdn.wiki.document,
 		autoCompleteUrl = mdn.wiki.autosuggestTitleUrl,
 		autoCompleteTextbox,
 		$autoCompleteTextbox,
@@ -12,6 +12,10 @@ CKEDITOR.dialog.add( 'mdn-sample-finder', function( editor ) {
 	function toggleSelectDisplay(show) {
 		jQuery(sectionsSelectParent).css("display", show ? "block" : "none");
 	}
+
+    function unescapeHTML(html) {
+        return jQuery("<div />").html(html).text();
+    }
 
 	function updateSelectOptions(items) {
 		clearSelect();
@@ -42,7 +46,7 @@ CKEDITOR.dialog.add( 'mdn-sample-finder', function( editor ) {
 						label : gettext('Document'),
 						'default' : '',
 						setup : function( data )
-						{ 
+						{
 							// Do the moz autocomplete stuff
 							if(!autoCompleteTextbox) {
 
@@ -109,7 +113,7 @@ CKEDITOR.dialog.add( 'mdn-sample-finder', function( editor ) {
 			this.setupContent();
 
 			if(docInfo && docInfo.sections.length) {
-				$autoCompleteTextbox.val(docInfo.title);
+				$autoCompleteTextbox.val(unescapeHTML(docInfo.title));
 				updateSelectOptions(docInfo.sections);
 				toggleSelectDisplay(1);
 				sectionsSelect.getInputElement().$.focus();

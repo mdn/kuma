@@ -1,0 +1,2 @@
+{% set display_name = user.first_name | default(user.username, true) %}
+<a href="{{ user.get_absolute_url() }}" class="url fn" title="{{_('See {display_name}\'s profile') | f(display_name=display_name)}}">{% if show_gravatar %}<img src="{{ user.get_profile().gravatar }}" class="photo avatar" width="{{ gravatar_size }}" height="{{ gravatar_size }}" border="0" /> {% endif %}<span>{{ display_name }}</span></a>

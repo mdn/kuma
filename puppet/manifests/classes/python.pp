@@ -29,7 +29,7 @@ class python_prereqs {
         "install-extras":
             require => Exec["install-pip"],
             # we install 1.4.9 here separately because 1.4.x can't be packaged as a wheel file
-            command => '/usr/local/bin/pip2.6 install wheel virtualenv Django==1.4.9';
+            command => '/usr/local/bin/pip2.6 install wheel virtualenv "Django<1.5"';
     }
     exec {
         "create-virtualenv":
@@ -45,7 +45,8 @@ class python_wheels {
     exec {
         "download-wheels":
             cwd => "/home/vagrant/src/puppet/cache/wheels",
-            command => "/usr/bin/axel -a https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/base_wheels.tar.gz && /bin/tar xvfz *.tar.gz && /bin/rm base_wheels.tar.gz",
+            timeout => 1800, # Too long, but this can take awhile
+            command => "/usr/bin/axel https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/base_wheels.tar.gz && /bin/tar xfz *.tar.gz && /bin/rm base_wheels.tar.gz",
             creates => '/home/vagrant/src/puppet/cache/wheels/base_wheels',
             require => File["/home/vagrant/src/puppet/cache/wheels"],
             user => 'vagrant';

@@ -1,0 +1,168 @@
+{% extends "socialaccount/base.html" %}
+{% from 'includes/common_macros.html' import newsletter_widget %}
+
+{% set title = _('Signup') %}
+
+{% set classes = 'register' %}
+
+{% block site_css %}
+    {{ super() }}
+    {{ css('newsletter') }}
+    {{ css('submission') }}
+{% endblock %}
+
+{% block site_js %}
+    {{ super() }}
+    {{ js('newsletter',) }}
+{% endblock %}
+
+{% block content %}
+<section id="content">
+  <div class="wrap">
+    <section id="content-main" role="main">
+      <article id="browser_register">
+
+        {% if account.get_provider().id == 'persona' %}
+          <h1>{{ _('Sign up') }}</h1>
+          <p id="persona-explanation">{% trans persona_href='https://login.persona.org/about' %}
+          MDN uses <a href="{{ persona_href }}" rel="external">Persona</a>,
+          a safe and simple way to sign in with just your email address.
+          {% endtrans %}</p>
+        {% endif %}
+
+        <form id="create_user" class="boxed submission" method="post" action="{{ url('socialaccount_signup') }}">
+          <p>{% trans %}
+            You can access everything on the MDN website without an account,
+            but when you join you'll be able to create, edit, or translate
+            articles, and submit a demos.
+          {% endtrans %}</p>
+
+          {% if form.errors %}
+            {% for error in form.non_field_errors() %}
+              <div class="notification error">{{ error }}</div>
+            {% endfor %}
+          {% endif %}
+
+          {{ csrf() }}
+          {% if redirect_field_value %}
+          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+          {% endif %}
+
+          {% set github_connect_url = provider_login_url('github', process='connect', next=request.session.sociallogin_next_url|default('/')) %}
+          {% set persona_login_url = provider_login_url('persona', process='login', next=github_connect_url) %}
+          {% if matching_accounts.exists() %}
+            <div class="notification warning">
+              {% trans count=matching_accounts.count(), persona_login_url=persona_login_url %}
+                An account already exists with an email address below. Do you already have an MDN account?
+                <a href="{{ persona_login_url }}">Yes, connect with my MDN account</a>
+              {% pluralize %}
+                An account already exists with one of these email addresses below. Do you already have an MDN account?
+                <a href="{{ persona_login_url }}">Yes, connect with my MDN account</a>
+              {% endtrans %}
+            </div>
+          {% elif account.provider == 'github' %}
+            {# Only show this notification if we're sure it's not the Persona based MDN account #}
+            <div class="notification">
+              {% trans persona_login_url=persona_login_url %}
+                Have an MDN account already? <a href="{{ persona_login_url }}">Yes, connect with my MDN account</a>
+              {% endtrans %}
+            </div>
+          {% endif %}
+
+          <fieldset>
+            <ul>
+              <li class="{{ 'error' if form.username.errors }}">
+                <label for="{{ form.username.id_for_label }}" class="outer"><b>{{ form.username.label }}</b></label>
+                {% if form.username.errors %}
+                  {{ form.username.errors }}
+                {% elif matching_user %}
+                  <ul class="errorlist">
+                    <li>{% trans username=matching_user.username %}Your GitHub username {{ username }} is already taken. Please choose another.{% endtrans %}</li>
+                  </ul>
+                {% endif %}
+                {{ form.username }}
+                <p class="field-explanation"><small>{{ _("Please enter the name you'd like to display to other users to identify your contributions.") }}</small></p>
+              </li>
+              {# The email field is hidden if only one email is provided #}
+              {% if form.email.field.widget.input_type == 'hidden' %}
+                {{ form.email }}
+              {% else %}
+
+              <li class="{{ 'error' if form.email.errors or form.other_email.errors }}">
+                <label for="{{ form.email.id_for_label }}" class="outer"><b>{{ form.email.label }}</b></label>
+                <ul class="errorlist">
+                  {% for error in form.email.errors %}
+                    <li>
+                    {# we have to handle this error message here to have access to the request #}
+                    {% if error == form.duplicate_email_error_label %}
+                      {% trans persona_login_url=persona_login_url, provider_name=account.get_provider().name %}
+                      An account already exists with the selected email address.
+                      <a href="{{ persona_login_url }}">Connect your {{ provider_name }} account to it.</a>
+                      {% endtrans %}
+                    {% else %}
+                      {{ error }}
+                    {% endif %}
+                    </li>
+                  {% endfor %}
+                </ul>
+                <ul class="choices">
+                {% set matching_uids = matching_accounts.values_list('uid', flat=True) %}
+                {% for email_choice in form.email %}
+                  {% set id_for_label="{name}_{id}"|f(name=email_choice.name, id=loop.index0) %}
+                  <li class="{{ 'exists' if email_choice.choice_value in matching_uids }}">
+                    {% if email_choice.choice_value == form.other_email_value %}
+                      {{ email_choice.tag() }}
+                      <label for="{{ id_for_label }}" class="inner other-label">{{ _('other:') }}</label>
+                      {{ form.other_email }}
+                      {{ form.other_email.error }}
+                    {% else %}
+                    <label for="{{ id_for_label }}">
+                      {{ email_choice.tag() }}
+                      {{ email_choice.choice_label|safe }}
+                    </label>
+                    {% endif %}
+                  </li>
+                {% endfor %}
+                </ul>
+                <p class="field-explanation"><small>
+                  {{ _("We will use this to send you emails related to your account and if you sign up for any additional notifications.") }}
+                </small></p>
+              </li>
+              {% endif %}
+
+              {{ newsletter_widget(form) }}
+
+              <li class="submit">
+                <button type="submit" name="create">{{ _('Create a New Profile') }}</button>
+              </li>
+            </ul>
+          </fieldset>
+          <p class="trouble">
+              {% trans bug_href='https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cc=jkarahalis%40mozilla.com&cf_fx_iteration=---&cf_fx_points=---&component=Login&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-791=X&flag_type-800=X&flag_type-803=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=All&priority=--&product=Mozilla%20Developer%20Network&rep_platform=All&status_whiteboard=%5Btrouble-logging-in%5D&target_milestone=---&version=unspecified&format=__standard__' %}
+              <strong>Having trouble logging in? <a href="{{ bug_href }}" rel="external">Let us know</a>.</strong>
+              {% endtrans %}
+          </p>
+        </form>
+
+      </article>
+    </section>
+  </div>
+</section>
+{% endblock %}
+
+{% block js %}
+{{ super() }}
+<script>
+(function ($) {
+    'use strict';
+
+    var $otherLabel = $('.other-label');
+    var $otherRadio = $otherLabel.prev();
+    $otherLabel.next().on('focus', function() {
+      $otherRadio.prop('checked', true);
+    });
+
+})(jQuery);
+</script>
+
+{% endblock %}

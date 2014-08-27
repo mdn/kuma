@@ -1,3 +1,43 @@
+@font-face {
+  font-family: "Carto Bold";
+  src: url('../fonts/CartoGothicStd-Bold-webfont.eot'); /* IE9 */
+  src: url('../fonts/CartoGothicStd-Bold-webfont.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
+       url('../fonts/CartoGothicStd-Bold-webfont.woff') format('woff'), /* Modern browsers */
+       url('../fonts/CartoGothicStd-Bold-webfont.ttf') format('truetype'); /* Older Webkits */
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "League Gothic";
+  src: url('../fonts/League_Gothic-webfont.eot'); /* IE9 */
+  src: url('../fonts/League_Gothic-webfont.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
+       url('../fonts/League_Gothic-webfont.woff') format('woff'), /* Modern browsers */
+       url('../fonts/League_Gothic-webfont.ttf') format('truetype'); /* Older Webkits */
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Bebas Neue";
+  src: url('../fonts/BebasNeue-webfont.eot'); /* IE9 */
+  src: url('../fonts/BebasNeue-webfont.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
+       url('../fonts/BebasNeue-webfont.woff') format('woff'), /* Modern browsers */
+       url('../fonts/BebasNeue-webfont.ttf') format('truetype'); /* Older Webkits */
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Milk";
+  src: url('../fonts/ABTSmilk.eot'); /* IE9 */
+  src: url('../fonts/ABTSmilk.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
+       url('../fonts/ABTSmilk.woff') format('woff'), /* Modern browsers */
+       url('../fonts/ABTSmilk.ttf') format('truetype'); /* Older Webkits */
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* @Background *********/
 .section-demos { background: url("../img/demos/bg-demostudio.jpg") center 50px no-repeat; min-width: 960px; }
 .section-demos #content-main { margin: 20px -20px 40px; padding: 20px 20px 10px; background: #c0c4c8; background: rgba(255,255,255,.6); -moz-border-radius: 8px; -webkit-border-radius: 8px; border-radius: 8px; -moz-box-shadow: 1px 1px 4px rgba(0,0,0,.25); -webkit-box-shadow: 1px 1px 4px rgba(0,0,0,.25); box-shadow: 1px 1px 4px rgba(0,0,0,.25); }
@@ -9,7 +49,7 @@
 #demostudio.landing #content-main { background: transparent; border-radius: 0; -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
 
 /* @Buttons *********/
-.section-demos button, .section-demos .button { display: inline-block; padding: .35em 14px .25em; color: #fff; border: 1px solid #8f4d4f; border-color: rgba(255,255,255,.2);
+.section-demos button, .section-demos .button { display: inline-block; padding: .35em 14px .25em; border: 1px solid #8f4d4f; border-color: rgba(255,255,255,.2);
   font: 1em/1 "Bebas Neue", "League Gothic", "Arial Narrow", sans-serif; letter-spacing: .05em; text-decoration: none;
   background: #861215 url("../img/button-shade.png") 0 .85em repeat-x;
   -moz-border-radius: 5px;
@@ -586,7 +626,7 @@ body.popup .page-title { font: 200 1.714em/1 "Bebas Neue", "League Gothic", Haet
 #nav-toolbar .crumbs li.crumb-one { padding-left: 0; margin-left: 0; background: none; }
 #nav-toolbar .crumbs li a { text-decoration: underline; }
 
-.html-rtl #nav-toolbar .crumbs { float: right; }
-.html-rtl #nav-toolbar .crumbs li { padding-left: 13px; margin-left: 6px; background-position: 0 -798px; }
-.html-rtl #nav-toolbar .crumbs li.crumb-one { background: url("../img/wiki/nav-arrows.png") 0 -798px no-repeat; }
-.html-rtl #nav-toolbar .crumbs li:last-child { background: none; }
+html[dir="rtl"] #nav-toolbar .crumbs { float: right; }
+html[dir="rtl"] #nav-toolbar .crumbs li { padding-left: 13px; margin-left: 6px; background-position: 0 -798px; }
+html[dir="rtl"] #nav-toolbar .crumbs li.crumb-one { background: url("../img/wiki/nav-arrows.png") 0 -798px no-repeat; }
+html[dir="rtl"] #nav-toolbar .crumbs li:last-child { background: none; }

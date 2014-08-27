@@ -2,9 +2,9 @@
     Used to style the dashboard widgets in the dashboard apps
 */
 
-@import 'includes/vars'
-@import 'includes/mixins'
-@import 'includes/grid'
+@import 'includes/vars';
+@import 'includes/mixins';
+@import 'includes/grid';
 
 /* New revision dashboard styles */
 .dashboard-table {
@@ -34,7 +34,7 @@
             background: #f7f7f7;
 
             &:hover {
-            background: #f4f7f8;
+                background: #f4f7f8;
             }
         }
 
@@ -56,7 +56,7 @@
 
     .dashboard-detail {
         display: none;
-        padding: 0 grid-spacing;
+        padding: 0 $grid-spacing;
     }
 
     .dashboard-revision, .dashboard-title, .dashboard-comment, .dashboard-author {
@@ -73,7 +73,7 @@
     #page-buttons {
         li {
             display: inline-block;
-            margin-right: list-item-spacing;
+            margin-right: $list-item-spacing;
         }
     }
 }
@@ -85,11 +85,11 @@
     }
     label {
         display: inline-block;
-        margin-right: list-item-spacing;
+        margin-right: $list-item-spacing;
     }
     .revision-field {
         display: inline-block;
-        margin: 0 grid-spacing (grid-spacing / 2) 0;
+        margin: 0 $grid-spacing ($grid-spacing / 2) 0;
         white-space: nowrap;
     }
 }

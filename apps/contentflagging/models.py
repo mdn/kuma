@@ -1,11 +1,6 @@
 """Models for content moderation flagging"""
-import logging
-
 from django.db import models
 from django.conf import settings
-from django.db.models import F
-
-from django.core.exceptions import MultipleObjectsReturned
 
 from django.core import urlresolvers
 from django.core.mail import send_mail
@@ -19,9 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from django.template import Context, loader
 
-from devmo.models import UserProfile
-
-from .utils import get_ip, get_unique
+from .utils import get_unique
 
 
 FLAG_REASONS = getattr(settings, "FLAG_REASONS", (
@@ -31,12 +24,18 @@ FLAG_REASONS = getattr(settings, "FLAG_REASONS", (
     ('fakeauthor',    _('The author is fake')),
 ))
 
+FLAG_STATUS_FLAGGED = "flagged"
+FLAG_STATUS_REJECTED = "rejected"
+FLAG_STATUS_NOTIFIED = "notified"
+FLAG_STATUS_HIDDEN = "hidden"
+FLAG_STATUS_DELETED = "deleted"
+
 FLAG_STATUSES = getattr(settings, "FLAG_STATUSES", (
-    ("flagged",  _("Flagged")),
-    ("rejected", _("Flag rejected by moderator")),
-    ("notified", _("Creator notified")),
-    ("hidden",   _("Content hidden by moderator")),
-    ("deleted",  _("Content deleted by moderator")),
+    (FLAG_STATUS_FLAGGED,  _("Flagged")),
+    (FLAG_STATUS_REJECTED, _("Flag rejected by moderator")),
+    (FLAG_STATUS_NOTIFIED, _("Creator notified")),
+    (FLAG_STATUS_HIDDEN,   _("Content hidden by moderator")),
+    (FLAG_STATUS_DELETED,  _("Content deleted by moderator")),
 ))
 
 FLAG_NOTIFICATIONS = {}
@@ -64,7 +63,7 @@ class ContentFlagManager(models.Manager):
                 defaults=dict(content_type=content_type,
                               object_pk=object.pk, ip=ip,
                               user_agent=user_agent, user=user,
-                              flag_type=flag_type, 
+                              flag_type=flag_type,
                               explanation=explanation))
 
         if recipients:
@@ -77,6 +76,19 @@ class ContentFlagManager(models.Manager):
                                         'object':object,'flag_type':flag_type}))
             send_mail(subject, content, settings.DEFAULT_FROM_EMAIL, recipients)
         return cf
+
+    def flags_by_type(self, status=FLAG_STATUS_FLAGGED):
+        """Return a dict of flags by content type."""
+        flags = self.filter(flag_status=status).prefetch_related('content_object')
+        flag_dict = {}
+        for flag in flags:
+            model_name = flag.content_type.model_class()._meta.verbose_name_plural
+            if model_name not in flag_dict:
+                flag_dict[model_name] = []
+            flag_dict[model_name].append(flag)
+        return flag_dict
+
+        
 
 
 class ContentFlag(models.Model):

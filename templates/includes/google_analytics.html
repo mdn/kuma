@@ -1,43 +1,52 @@
 {% if config.GOOGLE_ANALYTICS_ACCOUNT != '0' %}
+{% set GA_FILE = 'analytics_debug' if settings.TEMPLATE_DEBUG else 'analytics' %}
 <script type="text/javascript">
-  // http://cfsimplicity.com/61/removing-analytics-clutter-from-campaign-urls
-  var removeUtms  =   function(){
-      var location = window.location;
-      if (location.hash.indexOf('utm') != -1) {
-          var anchor = location.hash.match(/#(?!utm)[^&]+/);
-          anchor  =   anchor ? anchor[0] : '';
-          if(!anchor && window.history.replaceState){
-              history.replaceState({}, '', location.pathname + location.search);
-          } else {
-              location.hash = anchor;
-          }
-      }
-  };
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', '{{ config.GOOGLE_ANALYTICS_ACCOUNT }}'],
-            ['_setAllowAnchor', true],
-{% if request.user.is_authenticated() %}
-            ['_setCustomVar', 7, 'Signed-In', 'Yes', 1],
-{% if request.user.get_profile().beta_tester %}
-            ['_setCustomVar', 9, 'Beta Tester', 'Yes', 1],
-{% endif %}
-{% endif %}
-{% if waffle.flag('search_doc_navigator') %}
-            ['_setCustomVar', 8, 'docs navigator', 'Yes', 1],
-{% endif %}
-{% if waffle.flag('top_contributors') %}
-            ['_setCustomVar', 10, 'top contributors', 'Yes', 1],
-{% endif %}
-            ['_trackPageview']);
-  _gaq.push(removeUtms);
 
-  {% set GA_FILE = 'u/ga_debug.js' if settings.TEMPLATE_DEBUG else 'ga.js' %}
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/{{ GA_FILE }}.js','ga');
 
-  (function(a, d) {
-    var ga = d.createElement(a); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == d.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/{{ GA_FILE }}';
-    var s = d.getElementsByTagName(a)[0]; s.parentNode.insertBefore(ga, s);
-  })('script', document);
+    ga('create', 'UA-36116321-5', 'mozilla.org');
+    ga('set', 'anonymizeIp', true);
 
+    {% if request.user.is_authenticated() %}
+        // dimension1 == 'Signed-In"
+        ga('set', 'dimension1', 'Yes');
+
+        // dimension2 == "Beta Tester"
+        {% if request.user.get_profile().beta_tester %}
+            ga('set', 'dimension2', 'Yes');
+        {% endif %}
+    {% endif %}
+
+    {% if waffle.flag('top_contributors') %}
+        // dimension4 == "top contributors"
+        ga('set', 'dimension4', 'Yes');
+    {% endif %}
+
+    {% if waffle.flag('wiki_spellcheck') %}
+        // dimension3 == "Wiki Spellchecker"
+        ga('set', 'dimension3', 'Yes');
+    {% endif %}
+
+    (function() {
+        // http://cfsimplicity.com/61/removing-analytics-clutter-from-campaign-urls
+        var win = window;
+        var removeUtms = function(){
+            var location = win.location;
+            if (location.hash.indexOf('utm') != -1) {
+                var anchor = location.hash.match(/#(?!utm)[^&]+/);
+                anchor = anchor ? anchor[0] : '';
+                if(!anchor && win.history.replaceState){
+                    history.replaceState({}, '', location.pathname + location.search);
+                } else {
+                    location.hash = anchor;
+                }
+            }
+        };
+
+        ga('send', 'pageview', removeUtms(win.location + ''));
+    })();
 </script>
 {% endif %}

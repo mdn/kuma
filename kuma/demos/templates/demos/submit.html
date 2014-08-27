@@ -1,0 +1,266 @@
+{% extends "demos/base.html" %}
+{% set obj = submission %}
+
+{% block site_css %}
+    {{ super() }}
+    {{ css('submission',) }}
+{% endblock %}
+
+{% block body_attributes %}id="submit"{% endblock %}
+{% block bodyclass %}{% endblock %}
+{% block title %}
+    {% if edit %}
+        {{ page_title(_('{subtitle} | Demo Studio') | f(subtitle=_("Edit {demo_title}") | f(demo_title=submission.title))) }}
+    {% else %}
+        {{ page_title(_('{subtitle} | Demo Studio') | f(subtitle=_('Submit a New Demo'))) }}
+    {% endif %}
+{% endblock %}
+
+{% macro li_field(form, field_name, classes='', note='', image=False, show_label=True) %}
+    {% set field = form[field_name] %}
+    <li id="field_{{field_name}}" class="field {{ 'type_%s' % field.field.widget.input_type if field.field.widget.input_type }}{{ ' required' if field.field.required }}{{ ' error' if field.errors }} {{classes}}">
+        {% if show_label %}
+            <label for="id_{{field_name}}">{{field.label}}</label>
+        {% endif %}
+        {{ field|safe }}
+        {% if edit %}
+            {% if 'file' == field.field.widget.input_type and obj[field_name] %}
+                {% if image %}
+                    <p><img width="360" class="current_file" src="{{obj[field_name].url}}" /></p>
+                {% else %}
+                    {# <span class="current_file">{{ obj[field_name] }}</span> #}
+                {% endif %}
+            {% endif %}
+        {% endif %}
+        {% if note %}
+            <p class="note">{{ note }}</p>
+        {% endif %}
+        {{ field.errors|safe }}
+    </li>
+{% endmacro %}
+
+{% block content %}
+
+  <header id="demos-head">
+    <h1><a href="{{ url('demos') }}">{{_("Mozilla Demo Studio")}}</a></h1>
+  </header>
+
+  <div class="column-container">
+    <div class="column-main">
+      <header>
+        <h1>
+          {% if edit %}
+              {{_("Edit {demo_title}") | f(demo_title=submission.title)}}
+          {% else %}
+              {{_("Submit a New Demo")}}
+          {% endif %}
+        </h1>
+
+        {% if not edit %}
+        {% trans %}
+            <p>Whether you are creating an amazing new way to experience the Web or just
+            experimenting with the latest technologies, we invite you to submit your own
+            demos to share with (or show off to) other web developers.</p>
+            <p>Please complete the form below to ensure your demo is submitted to the
+            Demo Studio successfully.</p>
+        {% endtrans %}
+        {% endif %}
+      </header>
+      <form enctype="multipart/form-data" action="" method="POST" id="demo-submit" class="submission">
+        {{ csrf() }}
+        <fieldset class="section">
+          <legend><b>{{_('Describe Your Demo')}}</b></legend>
+
+          {% trans %}
+              <p>Tell us more about your demo, including the name, description and the
+              technologies used. Please list the browsers you have tested it with.</p>
+          {% endtrans %}
+
+          <ul>
+            {{ li_field(form, 'title') }}
+            {{ li_field(form, 'summary') }}
+            {{ li_field(form, 'description') }}
+
+            {{ li_field(form, 'hidden') }}
+
+            <fieldset class="inline">
+                <legend><b>{{_('Select up to five technologies used in your demo.')}}</b></legend>
+                <ul id="tech-tags" class="cols-4">
+                  {{ li_field(form, 'tech_tags', show_label=False) }}
+                </ul>
+            </fieldset>
+
+          </ul>
+
+        </fieldset>
+
+        <fieldset class="section">
+            <legend><b>{{_('Show Off Your Demo')}}</b></legend>
+              <ul>
+                  <li id="field_screenshots" class="field">
+                      <fieldset class="inline">
+                        <legend><b>{{_('Provide at least one screenshot of your demo in action')}}</b></legend>
+                          <ul class="screenshots">
+                              {{ li_field(form, 'screenshot_1', image=True) }}
+                              {{ li_field(form, 'screenshot_2', image=True) }}
+                              {{ li_field(form, 'screenshot_3', image=True) }}
+                              {{ li_field(form, 'screenshot_4', image=True) }}
+                              {{ li_field(form, 'screenshot_5', image=True) }}
+                          </ul>
+                      </fieldset>
+                      <p class="note">{{_('JPEG and PNG supported. Minimum size of 480x360.')}}</p>
+                  </li>
+                  {{ li_field(form, 'video_url', note=_('We support YouTube and Vimeo')) }}
+                  {{ li_field(form, 'navbar_optout', note=_('If your demo has problems when displayed in an &lt;iframe&gt;, try changing this.')) }}
+              </ul>
+        </fieldset>
+
+        <div id="prepare-demo" class="module aside notes">
+          <h3 class="mod-title">{{_('Preparing Your Demo')}}</h3>
+          {% trans signup_url=url('account_login') %}
+          <ul>
+            <li>Your demo's source code should be packaged inside a ZIP file.</li>
+            <li>The main page of your demo should be a file named <code>index.html</code> in the root of the ZIP.</li>
+            <li>Your demo should be built on client-side technology (HTML, CSS, JavaScript). Server-side languages like PHP and Ruby are not supported.</li>
+            <li>If your demo requires external resources, it should use AJAX to access them.</li>
+            <li>To submit your demo, you need an <a href="{{signup_url}}">MDN account</a>.</li>
+            <li>Please identify in the demo details box any 3rd party content that can't be licensed under the CC-BY-SA license and include links to the authors' websites.</li>
+          </ul>
+          {% endtrans %}
+        </div>
+
+        <fieldset class="section">
+          <legend><b>{{_('Provide the Source Code')}}</b></legend>
+          {% if form.fields.demo_package %}
+          {% trans %}
+              <p>Upload a ZIP file of your source code, in which the main page of your
+              demo is named <code>index.html</code> in the root directory.</p>
+          {% endtrans %}
+          {% else %}
+              <div class="notice">
+                  <p>You cannot edit your source code since the Dev Derby submission
+                  deadline has passed, but you may add or update the link and license.</p>
+              </div>
+          {% endif %}
+          <ul>
+      {% if form.fields.demo_package %}
+            {{ li_field(form, 'demo_package') }}
+      {% endif %}
+            {{ li_field(form, 'source_code_url') }}
+            {{ li_field(form, 'license_name') }}
+          </ul>
+        </fieldset>
+
+
+        {% if not edit %}
+        <fieldset class="section notitle">
+          <ul>
+            {{ li_field(form, 'captcha') }}
+            <li id="field_accept_terms" class="check field{{ ' error' if form.accept_terms.errors }}">
+            <strong class="label">
+              <label>
+                  {{ form.accept_terms|safe }}
+                  {% trans terms_url=url('demos_terms') %}
+                      I accept the
+                      <a href="{{ terms_url }}#tfc">Terms for Contributors</a> and
+                      <a href="{{ terms_url }}#rrd">Rights Representation Details</a>
+                  {% endtrans %}
+              </label>
+             </strong>
+             {{ form.accept_terms.errors|safe }}
+            </li>
+          </ul>
+        </fieldset>
+        {% endif %}
+
+       <p class="fm-submit">
+          {% if not edit %}
+              <button type="submit" name="action_create">{{ _("Submit demo") }}</button>
+              {{_('or')}} <a href="{{ url('demos') }}">{{_('Discard Demo')}}</a>
+          {% else %}
+              <button type="submit" name="action_edit">{{ _("Save changes") }}</button>
+              or <a href="{{ url('demos_detail', slug=submission.slug) }}">{{_('Discard Changes')}}</a>
+          {% endif %}
+       </p>
+
+      </form>
+    </div>
+    <div class="column-strip">
+      <aside id="update-profile" class="module aside">
+        <h1 class="mod-title">{{_('Update Your Profile')}}</h1>
+        {% trans %}
+        <p>Share your developer interests and areas of expertise with the MDN
+        community. We'll be able to bring you a better, more customized experience
+        and you will have a place to show off the amazing work you do.</p>
+        {% endtrans %}
+        <p><a href="{{ request.user.get_absolute_url() }}" class="go">{{_("Go to your profile")}}</a></p>
+      </aside>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block js %}
+{{ super() }}
+
+<script type="text/javascript">
+// <![CDATA[
+	$(document).ready(function(){
+		$("#tech-tags input[type=checkbox]").click(function(){
+		  var count = $("#tech-tags input[type=checkbox]:checked").length >= 5;
+		  $("#tech-tags input[type=checkbox]").not(":checked").attr("disabled",count);
+
+		  $("#tech-tags input[type=checkbox]").each(function(){
+		    if ($(this).is(":disabled")) {
+		      $(this).parents("label").addClass("disabled");
+		    }
+		    else {
+		      $(this).parents("label").removeClass("disabled");
+		    }
+		  });
+
+		});
+	});
+// ]]>
+</script>
+
+<script type="text/javascript">
+// <![CDATA[
+
+  /* Add isChildOf method to determine if the element is a descendant of another specified element.
+   * Usage: $(element).isChildOf(filter_string)
+   */
+  (function($) {
+    $.fn.extend({
+      isChildOf: function( filter_string ) {
+        var parents = $(this).parents().get();
+        for ( j = 0; j < parents.length; j++ ) {
+          if ( $(parents[j]).is(filter_string) ) {
+            return true;
+          }
+        }
+        return false;
+      }
+    });
+  })(jQuery);
+
+	$("input.filebutton").each(function(){
+    var text = $(this).attr("title");
+    var file = $(this).val();
+
+    if ( $(this).isChildOf(".fileslist") ) {
+      $(this).closest("p").addClass("replaced").append('<div class="replacement"><span class="button">'+text+'</span></div>');
+    }
+    else {
+		  $(this).closest("li, p").addClass("replaced").append('<div class="replacement"><span class="button">'+text+'</span><input class="filename" type="text" readonly="readonly" value="'+file+'"></div>');
+      $(this).change(function(){
+        var file = $(this).val();
+        $(this).closest("li, p").find(".filename").attr("value",file);
+      });
+    }
+	});
+
+// ]]>
+</script>
+
+{% endblock %}

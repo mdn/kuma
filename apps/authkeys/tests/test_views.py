@@ -1,20 +1,11 @@
-import logging
-import time
-
 from pyquery import PyQuery as pq
 
-from django.conf import settings
-from django.db import connection
-
-from django.contrib.auth.models import AnonymousUser, User
+from django.contrib.auth.models import User
 
 from django.test import TestCase
 from django.test.client import Client
 
-from nose.tools import assert_equal, with_setup, assert_false, eq_, ok_
-from nose.plugins.attrib import attr
-
-from django.db import models
+from nose.tools import eq_, ok_
 
 from sumo.urlresolvers import reverse
 

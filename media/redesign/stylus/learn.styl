@@ -1,28 +1,28 @@
-@import 'includes/vars'
-@import 'includes/mixins'
+@import 'includes/vars';
+@import 'includes/mixins';
 
 .section-learning {
     #page-head {
         clear: both;
-        margin-bottom: grid-spacing;
+        margin-bottom: $grid-spacing;
         padding: 0;
         text-align: center;
 
         .crumb {
-            margin-top: -(grid-spacing);
+            margin-top: -($grid-spacing);
             text-align: left;
 
             a:before {
-                content: "\00AB\00A0";
+                content: '\00AB\00A0';
             }
         }
 
         p {
-            margin: grid-spacing auto 0;
+            margin: $grid-spacing auto 0;
             text-align: justify;
 
             &.intro {
-                set-font-size(base-bump-font-size);
+                set-font-size($base-bump-font-size);
             }
         }
 
@@ -33,25 +33,25 @@
 
         .page-title {
             letter-spacing: 1px;
-            margin: 0 0 grid-spacing;
+            margin: 0 0 $grid-spacing;
             text-transform: uppercase;
         }
     }
 
     .column-container {
-        margin: grid-spacing 0;
+        margin: $grid-spacing 0;
     }
 }
 
 #blackboard {
-    background: #242424 url("../img/boardframe-top.jpg") center top no-repeat;
+    background: #242424 url('../img/boardframe-top.jpg') center top no-repeat;
     box-shadow: 0 2px 3px rgba(0,0,0,.25);
-    margin: grid-spacing auto;
+    margin: $grid-spacing auto;
     padding: 60px 0 0;
     width: 940px;
 
     ul {
-        background: url("../img/boardframe-btm.png") center bottom no-repeat;
+        background: url('../img/boardframe-btm.png') center bottom no-repeat;
         overflow: auto;
         padding: 0 60px 50px 0;
 
@@ -100,15 +100,15 @@
 
 h2 {
     #sub-html & {
-        background-image: url("../img/chalk-html.png");
+        background-image: url('../img/chalk-html.png');
     }
 
     #sub-css & {
-        background-image: url("../img/chalk-css.png");
+        background-image: url('../img/chalk-css.png');
     }
 
     #sub-js & {
-        background-image: url("../img/chalk-js.png");
+        background-image: url('../img/chalk-js.png');
     }
 }
 
@@ -116,13 +116,13 @@ h2 {
     background: #deded4;
     background: rgba(209, 209, 193, .5);
     clear: both;
-    margin: (grid-spacing * 2) 0;
+    margin: ($grid-spacing * 2) 0;
     min-height: 80px;
-    padding: grid-spacing grid-spacing (grid-spacing / 4) 140px;
+    padding: $grid-spacing $grid-spacing ($grid-spacing / 4) 140px;
     position: relative;
 
     h2 {
-        set-font-size(base-font-size);
+        set-font-size($base-font-size);
         line-height: 1.22;
     }
 
@@ -140,10 +140,10 @@ h2 {
 
     span {
         position: absolute;
-        top: grid-spacing;
-        left: grid-spacing;
-        background: url("../img/p2pu-webcraft.png") no-repeat 0 0;
-        content: "";
+        top: $grid-spacing;
+        left: $grid-spacing;
+        background: url('../img/p2pu-webcraft.png') no-repeat 0 0;
+        content: '';
         height: 80px;
         width: 101px;
     }
@@ -152,13 +152,12 @@ h2 {
 #learn-fineprint {
     clear: both;
     set-font-size(11px);
-    margin: grid-spacing grid-spacing (grid-spacing * 2);
+    margin: $grid-spacing $grid-spacing ($grid-spacing * 2);
 }
 
 .learn-module h2 {
-    background: url("../img/icons-learnlevels.png") no-repeat;
+    background: url('../img/icons-learnlevels.png') no-repeat;
     color: #a36100;
-    font: 200 36px/1 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif;
     min-height: 56px;
     padding: 12px 18px 0 68px;
     text-transform: uppercase;
@@ -196,7 +195,7 @@ h2 {
             position: absolute;
             top: -1px;
             left: 0;
-            background: url("../img/icons-tags.png") 0 0 no-repeat;
+            background: url('../img/icons-tags.png') 0 0 no-repeat;
             content: '';
             height: 17px;
             width: 14px;
@@ -214,7 +213,7 @@ h2 {
     li {
         position: relative;
         border-bottom: 1px dotted #ccc;
-        padding: (grid-spacing / 2) 0;
+        padding: ($grid-spacing / 2) 0;
         background: none;
 
         &:first-child {
@@ -243,7 +242,7 @@ h2 {
         visibility: hidden;
         width: 340px;
         vendorize(transition, bottom .4s ease-out);
-        vendorize(transition-property, unquote("bottom, opacity, visibility"));
+        vendorize(transition-property, unquote('bottom, opacity, visibility'));
     }
 
     &.visible .bubble {
@@ -258,7 +257,7 @@ h2 {
         border-radius: 5px;
         color: #ccc;
         set-font-size(11px);
-        padding: (grid-spacing / 2);
+        padding: ($grid-spacing / 2);
         text-shadow: 0 0 1px #000;
         vendorize(box-shadow, 0 2px 2px rgba(0,0,0,.15));
     }

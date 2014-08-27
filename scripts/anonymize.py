@@ -71,10 +71,8 @@ TABLES_TO_DUMP=[x.strip() for x in """
     threadedcomments_freethreadedcomment
     threadedcomments_testmodel
     threadedcomments_threadedcomment
+    tidings_watch
     user_profiles
-    users_emailchange
-    users_profile
-    users_registrationprofile
     waffle_flag
     waffle_flag_groups
     waffle_flag_users
@@ -86,9 +84,7 @@ TABLES_TO_DUMP=[x.strip() for x in """
     wiki_documentattachment
     wiki_documenttag
     wiki_editortoolbar
-    wiki_firefoxversion
     wiki_helpfulvote
-    wiki_operatingsystem
     wiki_relateddocument
     wiki_reviewtag
     wiki_reviewtaggedrevision
@@ -105,14 +101,20 @@ def print_debug(s):
     if not opts.quiet and opts.debug: print s
 
 
+def sysprint(command):
+    """ Helper to print all system commands in debug mode """
+    print_debug("command: %s" % command)
+    os.system(command)
+
+
 def main():
-    now = datetime.now().strftime('%Y%m%d') 
+    now = datetime.now().strftime('%Y%m%d')
 
     usage = """\
         %%prog [options] DB_NAME
 
-        Performs the steps needed to produce an anonymized DB dump. 
-        
+        Performs the steps needed to produce an anonymized DB dump.
+
         Examples:
 
         %%prog mdn_prod
@@ -197,29 +199,31 @@ def main():
 
     output_dump_fn = '%s-anon-%s.sql.gz' % (input_db, now)
 
+    # TODO: replace dump, create, import with mysqldbcopy
+    # https://dev.mysql.com/doc/mysql-utilities/1.3/en/mysqldbcopy.html
     if not opts.skip_input_dump and not opts.input:
         print_info("Dumping input DB to %s" % input_dump_fn)
         dump_cmd = ('mysqldump %(mysql_conn)s %(input_db)s %(tables)s | '
                     'gzip > %(input_dump_fn)s' % dict(
             mysql_conn=mysql_conn,
             input_db=input_db, tables=' '.join(TABLES_TO_DUMP),
-            input_dump_fn=input_dump_fn 
+            input_dump_fn=input_dump_fn
         ))
         print_debug('\t%s' % dump_cmd)
-        os.system(dump_cmd)
+        sysprint(dump_cmd)
 
     temp_db = '%s_anontmp_%s' % (input_db, now)
 
     if not opts.skip_temp_create:
         print_info('Creating temporary DB %s' % temp_db)
-        os.system('mysqladmin %(mysql_conn)s -f drop %(temp_db)s' %
+        sysprint('mysqladmin %(mysql_conn)s -f drop %(temp_db)s' %
                   dict(mysql_conn=mysql_conn, temp_db=temp_db))
-        os.system('mysqladmin %(mysql_conn)s create %(temp_db)s' %
+        sysprint('mysqladmin %(mysql_conn)s create %(temp_db)s' %
                   dict(mysql_conn=mysql_conn, temp_db=temp_db))
 
     if not opts.skip_temp_import:
         print_info('Importing the input dump into the temporary DB')
-        os.system('cat %(input_dump_fn)s | gzip -dc | mysql %(mysql_conn)s '
+        sysprint('cat %(input_dump_fn)s | gzip -dc | mysql %(mysql_conn)s '
                   '%(temp_db)s' % dict(
             input_dump_fn=input_dump_fn, mysql_conn=mysql_conn,
             temp_db=temp_db
@@ -228,7 +232,7 @@ def main():
     if not opts.skip_anonymize:
         anon_sql_fn = os.path.join(base_dir, 'anonymize.sql')
         print_info('Applying %s to the temporary DB' % anon_sql_fn)
-        os.system('cat %(anon_sql_fn)s | mysql %(mysql_conn)s '
+        sysprint('cat %(anon_sql_fn)s | mysql %(mysql_conn)s '
                   '%(temp_db)s' % dict(
             anon_sql_fn=anon_sql_fn, mysql_conn=mysql_conn,
             temp_db=temp_db
@@ -239,14 +243,14 @@ def main():
         dump_cmd = ('mysqldump %(mysql_conn)s %(temp_db)s | '
                     'gzip > %(output_dump_fn)s' % dict(
             mysql_conn=mysql_conn, temp_db=temp_db,
-            output_dump_fn=output_dump_fn 
+            output_dump_fn=output_dump_fn
         ))
         print_debug('\t%s' % dump_cmd)
-        os.system(dump_cmd)
+        sysprint(dump_cmd)
 
     if not opts.skip_drop_temp_db:
         print_info("Dropping temporary db %s" % temp_db)
-        os.system('mysqladmin %(mysql_conn)s -f drop %(temp_db)s' %
+        sysprint('mysqladmin %(mysql_conn)s -f drop %(temp_db)s' %
                   dict(mysql_conn=mysql_conn, temp_db=temp_db))
 
     if not opts.skip_delete_input and not opts.input:

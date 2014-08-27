@@ -3,7 +3,7 @@ from datetime import date, timedelta
 import cronjobs
 
 from kpi.models import Metric, MetricKind, L10N_METRIC_CODE
-from wiki.models import Document
+from kuma.wiki.models import Document
 
 
 @cronjobs.register

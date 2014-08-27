@@ -16,7 +16,7 @@ carrot==0.10.7
 celery==2.5.5
 django-celery==2.5.5
 django-threadedcomments==0.5.2
-feedparser==4.1
+feedparser==5.1.3
 html5lib==0.90
 jsonpickle==0.3.1
 kombu==2.2.0
@@ -36,6 +36,10 @@ django-appconf==0.6
 urllib3==1.8
 elasticutils==0.9.1
 elasticsearch==0.4.5
+django-allauth==0.17.0
+requests-oauthlib==0.4.1
+python-openid==2.2.5
+oauthlib==0.6.3
 
 ## Forked, temporary or otherwise
 # 2012-08-02
@@ -62,8 +66,7 @@ django-authority==0.4
 django-cronjobs==0.1
 # -e git://github.com/brosner/django-timezones.git@adf2fb3dcb353733bc8f8742388e2e34f17e3d70#egg=django-timezones
 django-timezones==0.2
-# -e git://github.com/kennethreitz/requests.git@1a7c91f6581c80122ed8cd1fdf4a8ca38c842453#egg=requests
-requests==1.1.0
+requests==2.3.0
 # -e git://github.com/andymckay/django-statsd.git@d77e1c60ae07d9a253e084f11969c2803f1800d3#egg=django-statsd
 django-statsd-mozilla==0.3.8.5
 # -e git://github.com/erikrose/django-tidings.git@6ee3ac5069dfa76cd85b8fb43def72919731b05e#egg=django-tidings

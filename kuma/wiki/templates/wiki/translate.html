@@ -1,0 +1,175 @@
+{% extends "wiki/base.html" %}
+{% from "includes/error_list.html" import errorlist %}
+{% from 'wiki/includes/page_buttons.html' import page_buttons %}
+{% from "includes/common_macros.html" import content_editor %}
+{% set title = _('Translate Article | {document}')|f(document=parent.title) %}
+{% block title %}{{ page_title(title) }}{% endblock %}
+{% block bodyclass%}translate{% endblock %}
+
+{% block extrahead %}
+  {{ css('home') }}
+{% endblock %}
+
+{% block site_css %}
+    {{ super() }}
+    {{ css('wiki-edit') }}
+    {{ css('jquery-ui') }}
+{% endblock %}
+
+{% block content %}
+  {% set language = settings.LANGUAGES_DICT[locale.lower()] %}
+
+    <form action="" method="post" data-json-url="{{ url('wiki.json') }}" id="translate-document">
+      {{ csrf() }}
+      <input type="hidden" name="form" value="both" />
+
+      <div id="localize-document" class="editing">
+        <header id="article-head">
+          <div class="title">
+           <h1>{{ _('<span class="action">Translating</span> <em>{title}</em>')|fe(title=parent.title) }}</h1>
+          </div>
+
+          <div class="change-locale">
+            {{ _('Translating article to {locale}' )|f(locale=language) }}.
+          </div>
+
+          {{ page_buttons(wiki, document, discard_href, 'top') }}
+        </header>
+
+        {% include 'wiki/includes/translate_description.html' %}
+
+        {% if revision_form %}
+          <details id="trans-content" open="open">
+            <summary><h2>{{ _('Translate Content') }}</h2></summary>
+            {{ errorlist(revision_form) }}
+            {# TODO: restore keywords and summary when we restore search app
+            <ul class="description">
+              <li>
+                <dl class="approved">
+                  <dt>{{ _('Keywords:') }}</dt>
+                  <dd>{{ based_on.keywords }}</dd>
+                </dl>
+                <dl class="localized">
+                  <dt><label for="{{ revision_form.keywords.auto_id }}" title="{{ revision_form.keywords.help_text }}">{{ _('Keywords in {locale}:')|f(locale=language) }}</label></dt>
+                  <dd>{{ revision_form.keywords|safe }}</dd>
+                </dl>
+              </li>
+              <li>
+                <dl class="approved">
+                  <dt>{{ _('Search result summary:') }}</dt>
+                  <dd>{{ based_on.summary }}</dd>
+                </dl>
+                <dl class="localized">
+                  <dt><label for="{{ revision_form.summary.auto_id }}" title="{{ revision_form.summary.help_text }}">{{ _('Search result summary in {locale}:')|f(locale=language) }}</label></dt>
+                  <dd>{{ revision_form.summary|safe }}</dd>
+                </dl>
+              </li>
+            </ul>
+            #}
+            {% if document.current_revision and document.current_revision.based_on %}
+              {% if parent.current_revision != document.current_revision.based_on %}
+                {# Diff between the English version the current translation is based on and the current English version. #}
+                {% set revision_from = document.current_revision.based_on %}
+                {% set revision_to = parent.current_revision %}
+                {% include 'wiki/includes/revision_diff.html' %}
+                {# TODO: 'change revisions' link and modal selector #}
+              {% endif %}
+            {% endif %}
+
+            {% set default_locale = settings.LANGUAGES_DICT[settings.WIKI_DEFAULT_LANGUAGE.lower()] %}
+            <div id="content-fields">
+              <article class="approved text-content">
+                <header>
+                    <h3 class="approved-title">{{ _('Approved {locale} version')|f(locale=default_locale) }}:</h3>
+                    <div class="translate-buttons">
+                        <button class="doc-mode-btn" data-alternate-message="{{ _('View Rendered') }}">{{ _('View Source') }}</button>
+                        <button class="hide-original-btn" data-alternate-message="{{ _('Show {locale}')|f(locale=default_locale) }}">{{ _('Hide {locale}')|f(locale=default_locale) }}</button>
+                    </div>
+                </header>
+                <div class="boxed translate-rendered">
+                  {{ based_on.content_cleaned|safe }}
+                </div>
+                <div class="boxed translate-source hidden">
+                    <textarea readonly>{{ based_on.content_cleaned|safe }}</textarea>
+                </div>
+              </article>
+              <article class="localized">
+                <header>
+                  {% include 'wiki/includes/guide_links.html' %}
+                  <h3>{{ _('{locale} translation:')|f(locale=language) }}</h3>
+                </header>
+                <div class="ckeditor-container editor-container">
+                  {{ content_editor(revision_form.content) }}
+                </div>
+              </article>
+            </div>
+            {{ revision_form.hidden_fields()|join|safe }}
+          </details>
+          <details id="trans-meta" open="open">
+            <summary><h2>{{ _('Translate Tags') }}</h2></summary>
+            <div class="wiki-block">
+              <p>
+                {% trans url=devmo_url('Project:MDN/Contributing/Tagging_standards') %}
+                Categorize the article. It will make the article findable under the right filters in the search engine. <a target="_blank" href="{{ url }}">Read the Tagging Guide</a>.
+                {% endtrans %}
+              </p>
+                <div class="approved">
+                  <section class="page-tags">
+                  <h3>{{ _('English tags') }}</h3>
+                    {% set parent_tags = parent.tags.all() %}
+                    <div id="translate-tags">
+                      {% if parent_tags | length %}
+                        <ul class="tag-list tagit ui-widget ui-widget-content">
+                          {% for parent_tag in parent_tags %}
+                          <li class="tagit-choice ui-widget-content ui-state-default">
+                              <a class="text tagit-label" href="{{url('wiki.tag', parent_tag.name)}}">{{ parent_tag.name }}</a>
+                          </li>
+                          {% endfor %}
+                        </ul>
+                      {% else %}
+                        <p>{{ _('This document has no tags.') }}</p>
+                      {% endif %}
+                    </div>
+                  </section>
+                </div>
+                <div class="localized">
+                  <section id="page-tags" class="page-tags">
+                  <h3>{{ _('{locale} tags')|f(locale=language) }}</h3>
+                    <input id="tagit_tags" type="text" name="tags" value="{% if document.tags %}{% for tag in document.tags.all() %}{{ tag.name }},{% endfor %}{% endif %}" maxlength="255">
+                  </section>
+                </div>
+              </div>
+          </details>
+          <details id="trans-version" open="open">
+            <summary><h2>{{ _('Version Notes') }}</h2></summary>
+              <section class="wiki-block">
+                <h3>{{_('Localization flags')}}</h3>
+                {{ revision_form.localization_tags|safe }}
+              </section>
+
+              {% include 'wiki/includes/review_tags.html' %}
+
+              {% include 'wiki/includes/revision_comment.html' %}
+
+          </details>
+        {% endif %}
+
+        <section class="wiki-block">
+                {{ page_buttons(wiki, document, discard_href, 'bottom') }}
+        </section>
+
+      </div>
+    </form>
+
+  {% include 'wiki/includes/attachment_list.html' %}
+
+{% endblock %}
+
+{% block js %}
+  {{ js('jquery-ui') }}
+
+  {% include 'wiki/includes/tag_suggestions.html' %}
+  {% include 'wiki/includes/ckeditor_scripts.html' %}
+  {{ js('wiki-edit') }}
+
+{% endblock %}

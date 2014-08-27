@@ -2,7 +2,7 @@
     {% set field = form[field_name] %}
     <li id="field_{{field_name}}" class="field {{ 'type_%s' % field.field.widget.input_type if field.field.widget.input_type }}{{ ' required' if field.field.required }}{{ ' error' if field.errors }} {{classes}}">
         {% if show_label %}
-            <label for="id_{{field_name}}">{% if icon_class %}<i class="{{icon_class}}" aria-hidden="true"></i>{% endif %}{{label or field.label}}</label>
+            <label for="{{ field.id_for_label }}">{% if icon_class %}<i class="{{icon_class}}" aria-hidden="true"></i>{% endif %}{{label or field.label}}</label>
         {% endif %}
         {{ field|safe }}
         {% if note %}
@@ -35,14 +35,14 @@
     {% if user.is_authenticated() %}
       {{ _('Welcome, <span class="user">{user}</span>.')|fe(user=user) }}
       <nav>
-        <a href="{{ profile_url(user) }}">{{ _('Profile') }}</a>
+        <a href="{{ user.get_absolute_url() }}">{{ _('Profile') }}</a>
         |
-        <a href="{{ url('users.logout') }}">{{ _('Sign Out') }}</a>
+        <a href="{{ url('account_logout') }}">{{ _('Sign Out') }}</a>
       </nav>
     {% else %}
       <p>
-        {% trans login_url=url('users.login'), register_url=url('users.register') %}
-          Want to contribute?<br /> <a href="{{ login_url }}">Sign In</a> or <a href="{{ register_url }}">Register</a>
+        {% trans login_url=url('account_login') %}
+          Want to contribute?<br /> <a href="{{ login_url }}">Log in</a>
         {% endtrans %}
       </p>
     {% endif %}
@@ -60,7 +60,7 @@
 {% endmacro %}
 
 {% macro optimizely_script() %}
-  {% if config.OPTIMIZELY_PROJECT_ID and config.OPTIMIZELY_PROJECT_ID != '0' %}
+  {% if waffle.switch('enable_optimizely') and config.OPTIMIZELY_PROJECT_ID and config.OPTIMIZELY_PROJECT_ID != '0' %}
   <script src="//cdn.optimizely.com/js/{{ config.OPTIMIZELY_PROJECT_ID }}.js"></script>
   {% endif %}
 {% endmacro %}
@@ -74,33 +74,29 @@
     Sign up now for news about Firefox OS, Firefox Marketplace and the Open Web apps ecosystem. <strong>Join us!</strong>
   {% endtrans %}</p>
 
-  {% if messages %}
-  <ul class="messages">
-    {% for message in messages %}
-    <li {% if message.tags %} class="notice {{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-  </ul>
-  {% endif %}
-
   <ol>
-    {{ li_field(form, 'newsletter') }}
+    <li id="newsletter-toggle">
+      {{ form.newsletter.errors }}
+      <label for="{{ form.newsletter.id_for_label }}">{{ form.newsletter.label }}</label>
+      {{ form.newsletter }}
+    </li>
     <li class="newsletter-setting">
       {{ form.country.errors }}
-      <label for="country">{{ form.country.label }}</label>
+      <label for="{{ form.country.id_for_label }}">{{ form.country.label }}</label>
       {{ form.country }}
     </li>
     <li class="newsletter-setting check">
       {{ form.format.errors }}
       <span class="label">{{ form.format.label }}</span>
       <fieldset class="inline">
-        {% for c in form.fields.format.choices %}
-        <label for="sub-{{ c[0] }}"><input type="radio" name="format" value="{{ c[0] }}" id="sub-{{ c[0] }}" {% if form.fields.format.initial == c %}checked="checked"{% endif %}>{{ c[1] }}</label>
-        {% endfor %}
+      {% for format in form.format %}
+        {{ format }}
+      {% endfor %}
       </fieldset>
     </li>
     <li class="newsletter-setting agree">
       {{ form.agree.errors }}
-      <label for="id_agree">
+      <label for="{{ form.agree.id_for_label }}">
         {{ form.agree }} {{form.agree.label}}
         {% trans privacy_url='http://www.mozilla.org/en-US/privacy' %}
           to the <a href="{{ privacy_url }}">Privacy Policy</a>

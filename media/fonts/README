@@ -1,0 +1,14 @@
+The only fonts that remain in this directory are those that are used by the Demo
+Studio and the Dev Derby. We have not updated the styles of those sites to use
+new fonts because the sites might be removed or completely redesigned soon.
+
+All other fonts actively used on MDN are in media/redesign/fonts.
+
+The font Milk is a special case. It is actively used in the redesign, but is
+also used by the Demo Studio. For this reason, the files for Milk live in
+media/redesign/fonts but are also symlinked from this directory. This allows us
+to blow away this directory when the Demo Studio and Dev Derby are updated
+without affecting other usage of Milk in the redesign. (We could alternatively
+update the @font-face rule in demos.css to point to the permanent copies in
+media/redesign/fonts, but the symlinks also allow us to see, in one place, all
+of the fonts used by the Demo Studio and Dev Derby.)

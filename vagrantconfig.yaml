@@ -6,17 +6,8 @@
 nfs: true
 gui: false
 ip_address: 192.168.10.55
-memory_size: 768
+memory_size: 1024
 number_cpus: 2
-box: "kuma-ubuntu"
-virtual_box_url: "https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/vagrant/mdn/kuma-ubuntu-20140129.box"
-vmware_box_url: "http://people.mozilla.com/~jleidel/vagrant/kuma-precise-vmware.box"
+box: "hashicorp/precise32"
 package_name: "kuma-ubuntu.box"
 mount_point: "/home/vagrant/src"
-
-aws_region: "us-east-1"
-# Ubuntu 12.04, 64-bit, ebs, http://cloud-images.ubuntu.com/releases/precise/release-20130624/
-aws_ami: "ami-23d9a94a"
-aws_instance_type: "t1.micro"
-aws_box_url: "https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box"
-rs_box_url: "https://github.com/mitchellh/vagrant-rackspace/raw/master/dummy.box"

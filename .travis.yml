@@ -17,24 +17,30 @@ before_install:
     - aria2c -j 10 https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/base_wheels.tar.gz
     - aria2c -j 10 https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/travis_wheels.tar.gz
     - aria2c -j 10 https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/product_details_json.tar.gz
+    - aria2c -j 10 https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/locale/mdn/locale.tar.gz
     - tar xvfz base_wheels.tar.gz
     - tar xvfz travis_wheels.tar.gz
     - tar -C .. -zxf product_details_json.tar.gz
-    - wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.20.5.deb
-    - sudo dpkg -i elasticsearch-0.20.5.deb
+    - tar xvfz locale.tar.gz
+    - wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.13.deb
+    - sudo dpkg -i elasticsearch-0.90.13.deb
     - sudo service elasticsearch start
 
 install:
     # we install 1.4.9 here separately because 1.4.x can't be packaged as a wheel file
-    - pip install -U pip wheel Django==1.4.9
+    - pip install -U pip wheel Django==1.4.13
     - pip install --no-index --find-links=travis_wheels -r requirements/compiled.txt
-    - pip install --no-index --find-links=base_wheels -r requirements/prod.txt -r requirements/dev.txt
+    - pip install --find-links=base_wheels -r requirements/prod.txt -r requirements/dev.txt
+    - pip install coveralls
 
 before_script:
     - mysql -e 'create database kuma;'
 
 script:
-    - python manage.py test --noinput -v2 actioncounters contentflagging dashboards demos devmo kpi landing search users wiki
+    - coverage run --include=`pwd`/kuma/*,`pwd`/apps/* manage.py test --noinput -v2 actioncounters contentflagging dashboards kuma.demos devmo kpi landing search kuma.users kuma.wiki kuma.events
+
+after_success:
+    - coveralls
 
 notifications:
     irc:

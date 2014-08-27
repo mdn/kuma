@@ -1,10 +1,13 @@
 {% extends "search/base.html" %}
-{% set locale = request.GET.get('locale', request.locale) %}
+
+{% set locale = request.locale %}
 {% if locale in settings.LOCALES %}
   {% set locale_native = settings.LOCALES[locale].native %}
 {% endif %}
+{% set default_locale_native = settings.LOCALES[settings.LANGUAGE_CODE].native %}
 {% set meta = (('WT.oss', q),
                ('WT.oss_r', num_results)) %}
+
 {% block title %}
   {% if query %}
     {{ page_title(_('Search Results for "{query}"')|f(query=query)) }}
@@ -13,7 +16,9 @@
   {% endif %}
 {% endblock %}
 
-{% block bodyclass %}search-results search-results-no-demo{% if waffle.flag('search_doc_navigator') %} search-navigator-flush{% endif %}{% endblock %}
+{% block robots_value %}noindex, follow{% endblock %}
+
+{% block bodyclass %}search-results search-results-no-demo search-navigator-flush{% endblock %}
 
 {% macro doc_block(doc, index) -%}
   <li class="result-{{ index }}">
@@ -24,21 +29,19 @@
         <p>{{ doc.excerpt|safe }}</p>
         <p class="search-meta"><a href="{{ doc.url }}">{{ doc.url|replace('https://', '') }}</a>
         {% if waffle.flag('search_explanation') %}Score: <span title="explanation: {{ doc.explanation }}">{{ doc.score }}</span>{% endif%}
+        {% if doc.parent %}
+            {% trans parent_url=doc.parent.url, parent_title=doc.parent.title, parent_language=settings.LOCALES[doc.parent.locale].native %}
+            translated from <a href="{{ parent_url }}" title="{{ parent_title }}">{{ parent_title }} ({{ parent_language }})</a>
+            {% endtrans %}
+        {% endif %}
         </p>
       </div>
-      {# Hiding until search has this capability #}{#
-      <div class="column-strip result-list-link">
-        <a href=""><i aria-hidden="true" class="icon-code"></i>{{ _('Code Sample') }}</a>
-        <a href=""><i aria-hidden="true" class="icon-play-circle"></i>{{ _('Demo Sample') }}</a>
-      </div>
-      #}
     </div>
   </li>
- {% endmacro %}
+{% endmacro %}
 
 
- {% block content %}
-
+{% block content %}
  <h1 class="offscreen">{{ _('MDN Site Search') }}</h1>
 
   <form id="search-form" action="{{ url('search') }}" method="get">
@@ -59,17 +62,34 @@
             <p>
             {% if locale_native %}
               {% if query %}
-                {% trans count=count, locale_native=locale_native %}
-                  {{ count }} document found for "{{ query }}" in {{ locale_native }}.
-                {% pluralize %}
-                  {{ count }} documents found for "{{ query }}" in {{ locale_native }}.
-                {% endtrans %}
+                {% if locale_native == default_locale_native %}
+                    {% trans count=count %}
+                      {{ count }} document found for "{{ query }}" in {{ locale_native }}.
+                    {% pluralize %}
+                      {{ count }} documents found for "{{ query }}" in {{ locale_native }}.
+                    {% endtrans %}
+                {% else %}
+                    {% trans count=count %}
+                      {{ count }} document found for "{{ query }}" in {{ locale_native }} and {{ default_locale_native }}.
+                    {% pluralize %}
+                      {{ count }} documents found for "{{ query }}" in {{ locale_native }} and {{ default_locale_native }}.
+                    {% endtrans %}
+                {% endif %}
               {% else %}
-                {% trans count=count, locale_native=locale_native %}
-                  {{ count }} document found in {{ locale_native }}.
-                {% pluralize %}
-                  {{ count }} documents found in {{ locale_native }}.
-                {% endtrans %}
+                {% if locale_native == default_locale_native %}
+                    {% trans count=count %}
+                      {{ count }} document found in {{ locale_native }}.
+                    {% pluralize %}
+                      {{ count }} documents found in {{ locale_native }}.
+                    {% endtrans %}
+                {% else %}
+                    {% trans count=count %}
+                      {{ count }} document found in {{ locale_native }} and {{ default_locale_native }}.
+                    {% pluralize %}
+                      {{ count }} documents found in {{ locale_native }} and {{ default_locale_native }}.
+                    {% endtrans %}
+                {% endif %}
+
               {% endif %}
             {% else %}
               {% if query %}
@@ -87,23 +107,17 @@
               {% endif %}
             {% endif %}
             {% if count %}
-              &middot;
               {% if not previous and not next %}
-                {{ _('Displaying all results.') }}
+                {{ _('Showing all results.') }}
               {% else %}
-                {% trans count=count %}
-                  Displaying {{ count }} search result.
-                {% pluralize %}
-                  Displaying {{ start }}-{{ end }} of {{ count }} search results.
-                {% endtrans %}
+                {% trans %}Showing results {{ start }} to {{ end }}.{% endtrans %}
               {% endif %}
             {% endif %}
 
             {% if locale != settings.LANGUAGE_CODE %}
-              &middot;
               <a href="{{ url('search', locale=settings.LANGUAGE_CODE, ) }}?q={{ query }}">
-                {% trans default_locale_native = settings.LOCALES[settings.LANGUAGE_CODE].native %}
-                Search again in {{ default_locale_native }}
+                {% trans %}
+                Search again in {{ default_locale_native }} only
                 {% endtrans %}
               </a>
             {% endif %}

@@ -1,0 +1,72 @@
+{% extends "wiki/base.html" %}
+{# L10n: {n} is the revision number, {t} is the title of the document. {c} is the category. #}
+{% set title = _('Attachment {n} | {t}')|f(n=revision.id, t=attachment.title) %}
+{% block title %}{{ page_title(title) }}{% endblock %}
+{% set meta = [('robots', 'noindex, nofollow')] %}
+{% set classes = 'document' %}
+
+{% block content %}
+
+  <article>
+
+    <h1>{{ attachment.title }}</h1>
+
+    <details class="h2" open="open">
+      <summary>{{ _('Attachment Information') }}</summary>
+      <div class="revision-info">
+        <ul>
+          <li>
+            <mark>{{ _('Revision slug:') }}</mark>
+            <span><a href="{{ attachment.get_file_url() }}">{{ revision.slug }}</a></span>
+          </li>
+          <li>
+            <mark>{{ _('Revision title:') }}</mark>
+            <span>{{ revision.title }}</span>
+          </li>
+          <li class="revision-id">
+            <mark>{{ _('Revision id:') }}</mark>
+            <span>{{ revision.id }}</span>
+          </li>
+          <li class="revision-created">
+            <mark>{{ _('Created:') }}</mark>
+            <span>{{ datetimeformat(revision.created, format='datetime') }}</span>
+          </li>
+          <li>
+            <mark>{{ _('Creator:') }}</mark>
+            <span><a href="{{ revision.creator.get_absolute_url() }}">{{ revision.creator }}</a></span>
+          </li>
+          <li>
+            <mark>{{ _('MIME Type:') }}</mark>
+            <span>{{ revision.mime_type }}</span>
+          </li>
+          <li>
+            <mark>{{ _('MIME Type:') }}</mark>
+            <span>{{ _('%s bytes') % attachment.size }}</span>
+          </li>
+
+          <li class="revision-is-current">
+            <mark>{{ _('Is approved?') }}</mark>
+            <span>{{ revision.is_approved|yesno }}</span>
+          </li>
+          <li>
+            <mark>{{ _('Is current revision?') }}</mark>
+            <span>{{ (revision == attachment.current_revision)|yesno }}</span>
+          </li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="h2">
+      <summary>{{ _('Attachment Preview') }}</summary>
+      <div>
+        {% if preview_content %}
+          {{ preview_content|safe }}
+        {% else %}
+          {{ _('No preview is available.') }}
+        {% endif %}
+      </div>
+    </details>
+
+  </article>
+
+{% endblock %}

@@ -8,7 +8,6 @@
 {% block content %}
 
     <div class="dashboard">
-
         <h1>{{ title }}</h1>
         <form method="get" id="revision-filter">
             <div class="revision-field">
@@ -62,7 +61,6 @@
     var $filterForm = $('#revision-filter');
     var $pageInput = $('#revision-page');
     var currentLocale = '{{ request.locale }}';
-
     var controlsTemplate = '\
     <div class="action-bar">\
         <ul id="page-buttons">\
@@ -156,13 +154,14 @@
             history.pushState(null, '', location.pathname + '?' + $this.serialize());
         }
 
+        var notification = mdn.Notifier.growl(gettext('Hang on! Updating filters…'), { duration: 0 });
         $.ajax({
             url: $this.attr('action'),
             data: $this.serialize()
         }).then(function (content) {
             replaceContent(content);
             $this.trigger('ajaxComplete');
-
+            notification.success(gettext('Updated filters.'), 2000);
             // Reset the page count to 0 in case of new filter
             $pageInput.val(1);
         });

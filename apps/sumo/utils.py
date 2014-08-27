@@ -1,10 +1,10 @@
-from django.core import paginator
+from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.utils.http import urlencode
 
 
 def paginate(request, queryset, per_page=20):
     """Get a Paginator, abstracting some common paging actions."""
-    p = paginator.Paginator(queryset, per_page)
+    paginator = Paginator(queryset, per_page)
 
     # Get the page from the request, make sure it's an int.
     try:
@@ -14,9 +14,9 @@ def paginate(request, queryset, per_page=20):
 
     # Get a page of results, or the first page if there's a problem.
     try:
-        paginated = p.page(page)
-    except (paginator.EmptyPage, paginator.InvalidPage):
-        paginated = p.page(1)
+        paginated = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        paginated = paginator.page(1)
 
     base = request.build_absolute_uri(request.path)
 

@@ -1,47 +1,29 @@
 {% if user.is_authenticated() %}
-  <ul class="user-state">
-    {% set username = request.user.username %}
-      <li><a href="{{ url('devmo.views.profile_view', username=username) }}">{{ _('{username}') | f(username=username) }}</a></li>
-      <li><a href="{{ url('users.logout') }}?next={{ next_url }}">{{ _('Sign out') }}</a></li>
-  </ul>
+    <div class="user-state">
+        {% include 'socialaccount/snippets/login_service_icon.html' %}
+        <ul>
+            <li><a href="{{ request.user.get_absolute_url() }}">{{ user_display(request.user) }}</a></li>
+            <li><a href="{{ url('account_logout') }}?next={{ next_url }}">{{ _('Sign out') }}</a></li>
+        </ul>
+    </div>
 {% else %}
-
-    <form class="browserid" action="{{url('users.browserid_verify') }}" method="POST">
-    <input id="next" name="next" type="hidden" value="{{ next_url }}"/>
-    {{ browserid_form }}
-    {% set toggle = 'toggle' %}
-    {% if request.COOKIES.get('browserid_explained', 0) == '1' %}
-      {% set toggle = '' %}
-    {% endif %}
-    </form>
-
-        {% if waffle.flag('oauth_login') %}
-
-            <form>
-                <div class="oauth-login-container" tabIndex="0">
-                    <div class="oauth-login-options">
-                        <span>{{ _('Sign in with') }}</span>
-                        <span class="oauth-icon oauth-persona" title="{{ _('Sign in with Persona') }}"><i class="icon-user" aria-hidden="true"></i></span>
-                        <span class="oauth-icon oauth-github" title="{{ _('Sign in with GitHub') }}"><i class="icon-github" aria-hidden="true"></i></span>
-                    </div>
-                    <div class="submenu oauth-login-picker" aria-hidden="true">
-                        <ul>
-                            <li><a href="#" class="persona-button persona-login" data-next="{{ next_url }}"><i class="icon-user" aria-hidden="true"></i>Persona</a></li>
-                            <li><a href=""><i class="icon-github" aria-hidden="true"></i>GitHub</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </form>
-
-        {% else %}
-            <ul class="user-state signed-out">
-                <li class="user-signin menu">
-
-                    <a href="#" class="persona-button persona-login" data-next="{{ next_url }}">
-                        <span class="persona-icon"><i aria-hidden="true"></i></span>
-                        <span class="signin">{{ _('Sign in with Persona') }}</span>
-                    </a>
-                </li>
-            </ul>
-        {% endif %}
+  <form>
+      <div class="oauth-login-container">
+          <div class="oauth-login-options" tabIndex="0">
+              <span>{{ _('Sign in with') }}</span>
+              <span class="oauth-icon oauth-persona" title="{{ _('Sign in with Persona') }}"><i class="icon-user" aria-hidden="true"></i></span>
+            {% if waffle.flag('github_login') %}
+              <span class="oauth-icon oauth-github" title="{{ _('Sign in with GitHub') }}"><i class="icon-github" aria-hidden="true"></i></span>
+            {% endif %}
+          </div>
+          <div class="submenu oauth-login-picker" aria-hidden="true">
+              <ul>
+                  <li><a href="{{ provider_login_url("persona", next=next_url) }}" class="persona-button persona-loaded login-link" data-next="{{ next_url }}" data-service="Persona"><i class="icon-user" aria-hidden="true"></i>Persona</a></li>
+                {% if waffle.flag('github_login') %}
+                  <li><a href="{{ provider_login_url("github", next=next_url) }}" class="github-button login-link" data-service="GitHub"><i class="icon-github" aria-hidden="true"></i>GitHub</a></li>
+                {% endif %}
+              </ul>
+          </div>
+      </div>
+  </form>
 {% endif %}

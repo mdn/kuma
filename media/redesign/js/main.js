@@ -1,4 +1,4 @@
-(function(doc, $) {
+(function(win, doc, $) {
     'use strict';
 
     /*
@@ -18,14 +18,14 @@
     })();
 
     /*
-        GitHub Login
+        Open Auth Login Heading widget
     */
     (function() {
-        var $container = $('.oauth-login-container');
+        var $container = $('.oauth-login-options');
         var activeClass = 'active';
         var fadeSpeed = 300;
 
-        $container.find('.oauth-login-options').mozMenu({
+        $container.mozMenu({
             fadeInSpeed: fadeSpeed,
             fadeOutSpeed: fadeSpeed,
             onOpen: function() {
@@ -34,6 +34,21 @@
             onClose: function() {
                 $container.removeClass(activeClass);
             }
+        });
+
+        $('.login-link').on('click', function(e) {
+            // Track event of which was clicked
+            var serviceUsed = $(this).data('service'); // "Persona" or "GitHub"
+            mdn.analytics.trackEvent({
+                category: 'Authentication',
+                action: 'Started sign-in',
+                label: serviceUsed.toLowerCase()
+            });
+
+            // We use data-optimizely-hook and associated Optimizely element
+            // targeting for most click goals, but if we are maintaining this
+            // selector for Google Analytics anyway, we might as well use it.
+            mdn.optimizely.push(['trackEvent', 'click-login-button-' + serviceUsed.toLowerCase()]);
         });
     })();
 
@@ -94,30 +109,6 @@
             on('blur', createExpander(600));
     })();
 
-    /*
-        Persona Login
-    */
-    (function() {
-        var $loginButton = $('.persona-login');
-
-        $loginButton.length && $.ajax({
-            url: 'https://login.persona.org/include.js',
-            dataType: 'script',
-            cache: true,
-            success: function() {
-                $loginButton.addClass('persona-loaded').on('click', function(e) {
-                    if(!$(this).hasClass('toggle')) {
-                        navigator.id.get(function(assertion) {
-                            if(!assertion) return;
-                            $('input[name="assertion"]').val(assertion.toString());
-                            $('form.browserid').first().submit();
-                        });
-                        return false;
-                    }
-                });
-            }
-        });
-    })();
 
     /*
         Account for the footer language change dropdown and other dropdowns marked as autosubmit
@@ -222,5 +213,81 @@
         $menus.parent().find('.submenu').mozKeyboardNav();
     })();
 
+    /*
+        Messages / Notifications -- show the initial ones
+    */
+    (function() {
+        // Find where we should put notifications
+        var insertLocation;
 
-})(document, jQuery);
+        $.each([
+            { selector: '#wikiArticle', method: 'prependTo' },
+            { selector: '#home', method: 'prependTo' },
+            { selector: 'h1', method: 'insertAfter' },
+            { selector: 'body', method: 'prependTo' } // Default
+        ], function() {
+            if(!insertLocation && $(this.selector).length) {
+                insertLocation = this;
+            }
+        });
+
+        // Inject notifications
+        $.each(mdn.notifications || [], function() {
+            // Make it so
+            $('<div class="notification ' + this.level + ' ' + this.tags + '" data-level="' + this.level + '">' + this.message + '</div>')[insertLocation.method](insertLocation.selector);
+        });
+
+        // Make them official
+        mdn.Notifier.discover();
+    })();
+
+    /*
+        Tabzilla
+    */
+    $('#tabzilla').length && $.ajax({
+        url: '//mozorg.cdn.mozilla.net/en-US/tabzilla/tabzilla.js',
+        dataType: 'script',
+        cache: true
+    });
+
+    /*
+        Track users successfully logging in and out
+    */
+    ('localStorage' in win) && (function() {
+        var serviceKey = 'login-service';
+        var serviceStored = localStorage.getItem(serviceKey);
+        var serviceCurrent = $('body').data(serviceKey);
+
+        try {
+
+            // User just logged in
+            if(serviceCurrent && !serviceStored) {
+                localStorage.setItem(serviceKey, serviceCurrent);
+
+                mdn.optimizely.push(['trackEvent', 'login-' + serviceCurrent]);
+                mdn.analytics.trackEvent({
+                    category: 'Authentication',
+                    action: 'Finished sign-in',
+                    label: serviceCurrent
+                });
+            }
+
+            // User just logged out
+            else if(!serviceCurrent && serviceStored) {
+                localStorage.removeItem(serviceKey);
+
+                mdn.optimizely.push(['trackEvent', 'logout-' + serviceStored]);
+                mdn.analytics.trackEvent({
+                    category: 'Authentication',
+                    action: 'Signed out',
+                    label: serviceStored
+                });
+            }
+
+        }
+        catch (e) {
+            // Browser probably doesn't support localStorage
+        }
+    })();
+
+})(window, document, jQuery);

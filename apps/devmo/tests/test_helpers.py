@@ -1,9 +1,18 @@
-from nose.tools import eq_, ok_
+from datetime import datetime
+from nose.tools import eq_, ok_, assert_raises
+from pytz import timezone
 import test_utils
 from soapbox.models import Message
 
-from devmo.helpers import urlencode, get_soapbox_messages, datetimeformat
-
+from devmo.helpers import (urlencode, soapbox_messages, get_soapbox_messages,
+                           datetimeformat, DateTimeFormatError, json)
+from django.conf import settings
+from django.contrib.auth.models import User
+from babel import localedata
+from babel.dates import format_date, format_time, format_datetime
+from babel.numbers import format_decimal
+from sumo.urlresolvers import reverse
+from pyquery import PyQuery as pq
 
 class TestUrlEncode(test_utils.TestCase):
 
@@ -43,3 +52,112 @@ class TestSoapbox(test_utils.TestCase):
         eq_(m.message, get_soapbox_messages(
             "/en-US/demos/devderby")[0].message)
         eq_(m.message, get_soapbox_messages("/de/demos/devderby")[0].message)
+
+    def test_message_with_url_is_link(self):
+        m = Message(message="Go to http://bit.ly/sample-demo", is_global=True, is_active=True, url="/")
+        m.save()
+        ok_('Go to <a href="http://bit.ly/sample-demo">'
+            'http://bit.ly/sample-demo</a>' in
+            soapbox_messages(get_soapbox_messages("/")))
+
+class TestDateTimeFormat(test_utils.TestCase):
+    fixtures = ['test_users.json']
+
+    def setUp(self):
+        url_ = reverse('home')
+        self.context = {'request': test_utils.RequestFactory().get(url_)}
+        self.context['request'].locale = u'en-US'
+        self.context['request'].user = User.objects.get(username='testuser01')
+
+    def test_today(self):
+        """Expects shortdatetime, format: Today at {time}."""
+        date_today = datetime.today()
+        value_returned = unicode(datetimeformat(self.context, date_today))
+        value_expected = 'Today at %s' % format_time(date_today,
+                                                     format='short',
+                                                     locale=u'en_US')
+        eq_(pq(value_returned)('time').text(), value_expected)
+
+    def test_locale(self):
+        """Expects shortdatetime in French."""
+        self.context['request'].locale = u'fr'
+        value_test = datetime.fromordinal(733900)
+        value_expected = format_datetime(value_test, format='short',
+                                         locale=u'fr')
+        value_returned = datetimeformat(self.context, value_test)
+        eq_(pq(value_returned)('time').text(), value_expected)
+
+    def test_default(self):
+        """Expects shortdatetime."""
+        value_test = datetime.fromordinal(733900)
+        value_expected = format_datetime(value_test, format='short',
+                                         locale=u'en_US')
+        value_returned = datetimeformat(self.context, value_test)
+        eq_(pq(value_returned)('time').text(), value_expected)
+
+    def test_longdatetime(self):
+        """Expects long format."""
+        value_test = datetime.fromordinal(733900)
+        tzvalue = timezone(settings.TIME_ZONE).localize(value_test)
+        value_expected = format_datetime(tzvalue, format='long',
+                                         locale=u'en_US')
+        value_returned = datetimeformat(self.context, value_test,
+                                        format='longdatetime')
+        eq_(pq(value_returned)('time').text(), value_expected)
+
+    def test_date(self):
+        """Expects date format."""
+        value_test = datetime.fromordinal(733900)
+        value_expected = format_date(value_test, locale=u'en_US')
+        value_returned = datetimeformat(self.context, value_test,
+                                        format='date')
+        eq_(pq(value_returned)('time').text(), value_expected)
+
+    def test_time(self):
+        """Expects time format."""
+        value_test = datetime.fromordinal(733900)
+        value_expected = format_time(value_test, locale=u'en_US')
+        value_returned = datetimeformat(self.context, value_test,
+                                        format='time')
+        eq_(pq(value_returned)('time').text(), value_expected)
+
+    def test_datetime(self):
+        """Expects datetime format."""
+        value_test = datetime.fromordinal(733900)
+        value_expected = format_datetime(value_test, locale=u'en_US')
+        value_returned = datetimeformat(self.context, value_test,
+                                        format='datetime')
+        eq_(pq(value_returned)('time').text(), value_expected)
+
+    def test_unknown_format(self):
+        """Unknown format raises DateTimeFormatError."""
+        date_today = datetime.today()
+        assert_raises(DateTimeFormatError, datetimeformat, self.context,
+                      date_today, format='unknown')
+
+    def test_invalid_value(self):
+        """Passing invalid value raises ValueError."""
+        assert_raises(ValueError, datetimeformat, self.context, 'invalid')
+
+    def test_json_helper(self):
+        eq_('false', json(False))
+        eq_('{"foo": "bar"}', json({'foo': 'bar'}))
+
+    def test_user_timezone(self):
+        """Shows time in user timezone."""
+        value_test = datetime.fromordinal(733900)
+        # Choose user with non default timezone
+        user = User.objects.get(username='admin')
+        self.context['request'].user = user
+
+        # Convert tzvalue to user timezone
+        default_tz = timezone(settings.TIME_ZONE)
+        user_tz = user.get_profile().timezone
+        tzvalue = default_tz.localize(value_test)
+        tzvalue = user_tz.normalize(tzvalue.astimezone(user_tz))
+
+        value_expected = format_datetime(tzvalue, format='long',
+                                         locale=u'en_US')
+        value_returned = datetimeformat(self.context, value_test,
+                                        format='longdatetime')
+        eq_(pq(value_returned)('time').text(), value_expected)

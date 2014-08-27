@@ -15,33 +15,31 @@
         var klass = $.trim($pre.attr('class'));
 
         // Split on ';' to accommodate for old line numbering
-        var semiSplit = klass.split(';');
-        var klassParts = semiSplit[0].split(':');
-        var brush;
-        var lines;
+        var brush = defaultBrush;
+        var lineSearch;
 
-        // Style all as HTML initially
-        $pre.addClass('language-' + defaultBrush);
+        // Parse classname to look for brush
+        var brushSearch = klass.match(/brush: ?(.*)/);
+        if(brushSearch && brushSearch[1]) {
+            brush = $.trim(brushSearch[1].replace(';', ' ').split(' ')[0].toLowerCase());
+        }
 
         // Some boxes shouldn't be numbered
         if($pre.hasClass('syntaxbox') || $pre.hasClass('twopartsyntaxbox')) {
           $pre.attr('data-prism-prevent-line-number', 1);
         }
 
-        // Format PRE content for Prism highlighting
-        if(klassParts[0] == 'brush') {
-            brush = $.trim(klassParts[1].toLowerCase());
-            brush = languages[brush] ? brush : defaultBrush;
-            $pre.html('<code class="language-' + brush + '">' + $.trim($pre.html()) + '</code>');
-        }
+        // Style all as HTML initially
+        $pre.addClass('language-' + defaultBrush);
 
-        // Accommodate for line-highlighting
-        // highlight:[8,9,10,11,17,18,19,20]
-        if(semiSplit.length > 1) {
-            lines = semiSplit[1].match(/\[(.*)\]/);
-            if(lines && lines.length > 1) {
-                $pre.attr('data-line', lines[1]);
-            }
+        // Format PRE content for Prism highlighting
+        $pre.html('<code class="language-' + brush + '">' + $.trim($pre.html()) + '</code>');
+
+        // Do we need to highlight any lines?
+        // Legacy format: highlight:[8,9,10,11,17,18,19,20]
+        lineSearch = klass.match(/highlight: ?\[(.*)\]/);
+        if(lineSearch && lineSearch[1]) {
+            $pre.attr('data-line', lineSearch[1]);;
         }
     });
 

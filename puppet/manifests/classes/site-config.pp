@@ -142,11 +142,16 @@ class kuma_config {
             command => "/home/vagrant/env/bin/python ./vendor/src/schematic/schematic migrations/",
             require => [ Exec["kuma_update_product_details"],
                 Service["mysql"], File["/home/vagrant/logs"] ];
+        "kuma_django_syncdb":
+            user => "vagrant",
+            cwd => "/home/vagrant/src",
+            command => "/home/vagrant/env/bin/python manage.py syncdb --noinput",
+            require => [ Exec["kuma_sql_migrate"] ];
         "kuma_south_migrate":
             user => "vagrant",
             cwd => "/home/vagrant/src",
-            command => "/home/vagrant/env/bin/python manage.py migrate",
-            require => [ Exec["kuma_sql_migrate"] ];
+            command => "/home/vagrant/env/bin/python manage.py migrate --noinput",
+            require => [ Exec["kuma_django_syncdb"] ];
         "kuma_update_feeds":
             user => "vagrant",
             cwd => "/home/vagrant/src",
@@ -158,7 +163,7 @@ class kuma_config {
             cwd => "/home/vagrant/src",
             command => "/home/vagrant/env/bin/python manage.py reindex -p 5",
             timeout => 600,
-            require => [ Service["elasticsearch"], Exec["kuma_south_migrate"] ];
+            require => [ Service["elasticsearch-kuma"], Exec["kuma_south_migrate"] ];
     }
 }
 

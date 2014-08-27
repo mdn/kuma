@@ -98,25 +98,27 @@ function PromoteMDN(userSettings) {
     options = extend(defaults, userSettings || {});
     dataset = extend(dataset, options.extraLinks);
 
-    var replaceCount = 0;
-    var linkRegex = /<a[^>]*>(.*?)<\/a>/g;
-    var re = new RegExp(linkRegex);
+    var replaceCount = 0,
+        linkRegex = /<a[^>]*>(.*?)<\/a>/,
+        linkGlobalMatchRegex = new RegExp(linkRegex + 'g'),
+        linkReplaceMatchRegex = new RegExp(linkRegex);
 
     var elements = document.querySelectorAll(options.searchElements.join(', '));
-    forEach(elements, function(o){
-        var text = o.innerHTML;
-        var placeholder;
-        var placeholderIndex = 0;
-        var anchors_existing = [];
-        var anchors_new = [];
 
-        var match = text.match(linkRegex);
+    forEach(elements, function(o){
+        var text = o.innerHTML,
+            placeholder,
+            placeholderIndex = 0,
+            anchorsExisting = [],
+            anchorsNew = [];
+
+        var match = text.match(linkGlobalMatchRegex);
         if (match && match.length) {
             for(var i = 0; i < match.length; i++) {
-                var anchor = re.exec(text);
+                var anchor = linkReplaceMatchRegex.exec(text);
                 placeholder = getPlaceholder(placeholderIndex);
-                anchors_existing[placeholder] = anchor[0];
-                text = text.replace(re, placeholder);
+                anchorsExisting[placeholder] = anchor[0];
+                text = text.replace(linkReplaceMatchRegex, placeholder);
                 placeholderIndex++;
             }
         }
@@ -134,7 +136,7 @@ function PromoteMDN(userSettings) {
                     placeholder = getPlaceholder(placeholderIndex);
                     placeholderIndex++;
                     text = text.replace(exactWord, placeholder);
-                    anchors_new[placeholder] = link;
+                    anchorsNew[placeholder] = link;
                     delete dataset[keyword];
                     replaceCount++;
                 }
@@ -144,12 +146,12 @@ function PromoteMDN(userSettings) {
         }
 
         // Now let's replace placeholders with actual anchor tags, pre-existed ones and new ones.
-        for(var l in anchors_existing) {
-            text = text.replace(l, anchors_existing[l]);
+        for(var l in anchorsExisting) {
+            text = text.replace(l, anchorsExisting[l]);
         }
 
-        for(var l in anchors_new) {
-            text = text.replace(l, ' ' + anchors_new[l] + ' ');
+        for(var l in anchorsNew) {
+            text = text.replace(l, ' ' + anchorsNew[l] + ' ');
         }
 
         o.innerHTML = text;

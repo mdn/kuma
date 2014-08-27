@@ -90,7 +90,7 @@
 
             // Setting the main search input with the store query
             if(data.query) {
-                $('#main-q').val(data.query);
+                $('#main-q').attr('data-value', data.query);
             }
 
             // Before we go into processing, let's ensure that *this* page's slug is in the list
@@ -109,7 +109,12 @@
             // Add a delegation event for link clicks in the naviagotr
             $navigatorList = $('.from-search-toc ol');
             $navigatorList.on('click', 'a', function() {
-                mdn.analytics.trackEvent(['Search doc navigator', 'Click', $(this).attr('href'), doc.id]);
+                mdn.analytics.trackEvent({
+                    category: 'Search doc navigator',
+                    action: 'Click',
+                    label: $(this).attr('href'),
+                    value: doc.id
+                });
             });
 
             // Since we know the navigator should display, generate the HTML and show the navigation
@@ -130,7 +135,12 @@
                         $nextLink
                             .attr('href', nextDoc.url)
                             .on('click', function() {
-                                mdn.analytics.trackEvent(['Search doc navigator', 'Click next', nextDoc.url, nextDoc.id]);
+                                mdn.analytics.trackEvent({
+                                    category: 'Search doc navigator',
+                                    action: 'Click next',
+                                    label: nextDoc.url,
+                                    value: nextDoc.id
+                                });
                             })
                             .removeClass('disabled');
                     }
@@ -144,7 +154,12 @@
                         $prevLink
                             .attr('href', prevDoc.url)
                             .on('click', function() {
-                                mdn.analytics.trackEvent(['Search doc navigator', 'Click previous', prevDoc.url, prevDoc.id])
+                                mdn.analytics.trackEvent({
+                                    category: 'Search doc navigator',
+                                    action: 'Click previous',
+                                    label: prevDoc.url,
+                                    value: prevDoc.id
+                                });
                             })
                             .removeClass('disabled'); // also add a spacer
                     }

@@ -3,7 +3,7 @@ from nose.tools import ok_, eq_
 from search.models import Filter, FilterGroup
 from search.tests import ElasticTestCase
 
-from search.fields import DocumentExcerptField, SearchQueryField
+from search.fields import DocumentExcerptField, SearchQueryField, SiteURLField
 from search.models import DocumentType
 from search.serializers import FilterSerializer, DocumentSerializer
 from search.queries import DocumentS
@@ -71,3 +71,12 @@ class FieldTests(ElasticTestCase):
         field = SearchQueryField()
         field.context = {'request': request}
         eq_(field.to_native(None), 'test')
+
+    def test_SiteURLField(self):
+        class FakeValue(object):
+            slug = 'Firefox'
+            locale = 'de'
+
+        field = SiteURLField('wiki.document', args=['slug'])
+        value = field.to_native(FakeValue())
+        ok_('/de/docs/Firefox' in value)

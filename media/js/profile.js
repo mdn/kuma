@@ -30,7 +30,7 @@
     // Rebuild the list of expertise tags and checkboxes.
     var rebuildExpertiseTaglist = debounce(function () {
         var taglist = $("#tags-expertise");
-        var interests = $("#id_interests");
+        var interests = $("#id_profile-interests");
         var i_tags = interests.val().split(",");
 
         // Completely rebuild the list of expertise tags. Seems wasteful, but
@@ -57,7 +57,7 @@
     // Update the checked tags in expertise tag list from the text field
     var updateTaglistFromField = debounce(function () {
         var taglist = $("#tags-expertise");
-        var expertise = $("#id_expertise");
+        var expertise = $("#id_profile-expertise");
         var eTags = expertise.val().split(",");
 
         $("#tags-expertise .tag-expert input[type=checkbox]").removeAttr("checked");
@@ -72,19 +72,20 @@
         var tags = $("#tags-expertise .tag-expert input[type=checkbox]:checked")
             .map(function () { return $(this).val(); })
             .get().join(",");
-        $("#id_expertise").val(tags);
+        $("#id_profile-expertise").val(tags);
     });
 
     $(document).ready(function(){
 
         // Convert interests text field into a tag-it widget
-        $("#id_interests").hide()
+        $("#id_profile-interests").hide()
             .after("<ul id='tagit-interests'></ul>")
             .change(rebuildExpertiseTaglist);
+
         $("#tagit-interests").tagit({
             availableTags: INTEREST_SUGGESTIONS,
             singleField: true,
-            singleFieldNode: $("#id_interests"),
+            singleFieldNode: $("#id_profile-interests"),
             onTagAdded: rebuildExpertiseTaglist,
             onTagRemoved: rebuildExpertiseTaglist,
             onTagClicked: rebuildExpertiseTaglist
@@ -92,7 +93,8 @@
 
         // Convert the expertise text field into tag list with checkboxes sync'd to
         // interests
-        $("#id_expertise").hide().after("<ul id='tags-expertise' class='taglist'></ul>");
+        $("#id_profile-expertise").hide().after("<ul id='tags-expertise' class='taglist'></ul>");
+
         $("#tags-expertise").click(updateFieldFromTaglist);
         rebuildExpertiseTaglist();
 
@@ -129,7 +131,6 @@
         });
 
         // Update "Other Profiles", preventing "blank" submissions
-        $("#elsewhere input").mozPlaceholder();
-
+        $("#profiles input").mozPlaceholder();
     });
 })();

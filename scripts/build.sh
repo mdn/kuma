@@ -70,6 +70,7 @@ NOSE_PLUGINS = [
 NOSE_ARGS = [
     '--logging-clear-handlers',
     '--with-xunit',
+    '--traverse-namespace',  # needed for finding tests under the kuma namespace
 ]
 ES_INDEX_PREFIX = 'mdn_$JOB_NAME'
 ES_URLS = ['http://jenkins-es20:9200']

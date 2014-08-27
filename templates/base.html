@@ -11,13 +11,14 @@
   <title>{% block title %}{{ _('Mozilla Developer Network') }}{% endblock %}</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="index, follow">
+  <meta name="robots" content="{% block robots_value%}index, follow{% endblock %}">
   <link rel="home" href="{{ url('home') }}">
   <link rel="copyright" href="#copyright">
 
-  <link rel="stylesheet" href="//mozorg.cdn.mozilla.net/media/css/tabzilla-min.css">
+  <link href="//mozorg.cdn.mozilla.net/media/css/tabzilla-min.css" type="text/css" rel="stylesheet">
   {% block site_css %}
     {{ css('mdn', 'all') }}
+
     {% for style in styles %}
       {{ css(style) }}
     {% endfor %}
@@ -44,8 +45,14 @@
   <!-- non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
   <link rel="apple-touch-icon-precomposed" href="{{ MEDIA_URL }}redesign/img/favicon57.png">
   <!-- basic favicon -->
-  <link rel="shortcut icon" href="{{ MEDIA_URL }}redesign/img/favicon32.png">
-
+  {% if request.META.SERVER_NAME in settings.PRODUCTION_URL %}
+    {% set favicon_suffix = '' %}
+  {% elif request.META.SERVER_NAME in settings.STAGING_URL %}
+    {% set favicon_suffix = '-staging' %}
+  {% else %}
+    {% set favicon_suffix = '-local' %}
+  {% endif %}
+  <link rel="shortcut icon" href="{{ MEDIA_URL }}redesign/img/favicon32{{ favicon_suffix }}.png">
   <!--[if IE]>
   <meta http-equiv="imagetoolbar" content="no">
   <script src="{{ MEDIA_URL }}js/libs/html5.js"></script>
@@ -57,7 +64,7 @@
     {% include "includes/google_analytics.html" %}
   {% endif %}
 </head>
-<body {% block body_attributes %}{% endblock %} class="html-{{ DIR }} {% block bodyclass %}{% endblock %}">
+<body {% block body_attributes %}{% endblock %} class="{% block bodyclass %}{% endblock %}"{% if request.user.is_authenticated() %} data-login-service="{{ request.session.sociallogin_provider }}"{% endif %}>
 
   {% include "includes/config.html" %}
 
@@ -130,7 +137,7 @@
       </li><li><a href="{{ devmo_url('Tools') }}">{{ _('Tools') }}</a></li><li><a href="{{ url('demos') }}">{{ _('Demos') }}</a></li><li><a href="{{ devmo_url('Mozilla/Connect') }}">{{ _('Connect') }}</a></li>{% if not is_sphinx %}<li class="main-nav-search"><form action="{{ url('search') }}" method="get" role="search">
         <div class="search-wrap">
           <label for="main-q" class="offscreen">{{ _('Search') }}</label>
-          <input type="search" id="main-q" name="q" data-placeholder="{{ _('SEARCH') }}" data-value="{{ query }}" value="" />
+          <input type="search" id="main-q" name="q" data-placeholder="{{ _('Search') }}" data-value="{{ query }}" value="" />
           <span class="search-trigger"><i aria-hidden="true" class="icon-search"></i></span>&nbsp;
           <button type="submit" class="offscreen">{{ _('Search') }}</button>
         </div>
@@ -169,16 +176,16 @@
   {% if not waffle.flag('static-i18njs') %}
   <script src="{{ url('jsi18n') }}build:{{ BUILD_ID_JS }}"></script>
   {% endif %}
-  <script src="//mozorg.cdn.mozilla.net/{{ request.locale }}/tabzilla/tabzilla.js" async></script>
 
   {% block site_js %}
-    <!--[if lte IE 8]><script src="/media/redesign/js/libs/selectivizr-1.0.2/selectivizr-build.js?build={{ BUILD_ID_JS }}"></script><![endif]-->
+    <!--[if lte IE 8]><script src="/media/redesign/js/libs/selectivizr-1.0.2/selectivizr-build.js"></script><![endif]-->
 
     {{ js('main') }}
+    {{ providers_media_js() }}
 
     {% if waffle.flag('ga_outbound_links') %}
       <script>
-        mdn.analytics.trackOutboundLinks(document.body);
+        mdn.analytics.trackOutboundLinks();
       </script>
     {% endif %}
 

@@ -1,0 +1,14 @@
+{% extends "openid/base.html" %}
+
+{% block title %}{{ page_title(_("OpenID Sign In")) }}{% endblock %}
+
+{% block content %}
+<h1>{{ _("OpenID Sign In") }}</h1>
+
+<form id="openid_login_form" class="openid_login" method="post" action="{{ url('openid_login') }}">
+{{ csrf() }}
+{{ form.as_p() }}
+<button type="submit">_("Sign In")</button>
+</form>
+
+{% endblock %}

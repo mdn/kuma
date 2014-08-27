@@ -95,35 +95,6 @@ MIGRATION_DATABASES = {
     },
 }
 
-CACHES = {
-    'default': {
-        # HACK: We currently have 'default' memcache disabled in production.
-        # This reflects that in local dev.
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        #'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        #'LOCATION': [
-        #    '127.0.0.1:11211',
-        #],
-        'TIMEOUT': 3600,
-        'KEY_PREFIX': 'kuma',
-    },
-    'secondary': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': [
-            '127.0.0.1:11211',
-        ],
-        'TIMEOUT': 3600,
-        'KEY_PREFIX': 'kuma',
-    }
-}
-
-# TODO: Switch this to 'default' when main cache issues are resolved
-SECONDARY_CACHE_ALIAS = 'secondary'
-
-# Use IP:PORT pairs separated by semicolons.
-CACHE_BACKEND = 'memcached://localhost:11211?timeout=60'
-CONSTANCE_DATABASE_CACHE_BACKEND = CACHE_BACKEND
-
 # This is used to hash some things in Django.
 SECRET_KEY = 'jenny8675309'
 
@@ -134,13 +105,6 @@ LOG_LEVEL = logging.DEBUG
 SITE_URL = 'https://developer-local.allizom.org'
 PROTOCOL = 'https://'
 DOMAIN = 'developer-local.allizom.org'
-
-# See: https://github.com/mozilla/django-browserid/issues/8 (TODO)
-BROWSERID_DISABLE_CERT_CHECK = True
-BROWSERID_CACERT_FILE = None
-
-LOGIN_REDIRECT_URL = '/'
-LOGIN_REDIRECT_URL_FAILURE = '/'
 
 KUMASCRIPT_URL_TEMPLATE = 'http://localhost:9080/docs/{path}'
 
@@ -160,3 +124,5 @@ if SENTRY_DSN:
     INSTALLED_APPS = INSTALLED_APPS + (
         'raven.contrib.django.raven_compat',
     )
+
+SOCIALACCOUNT_PROVIDERS['persona']['AUDIENCE'] = 'https://developer-local.allizom.org'

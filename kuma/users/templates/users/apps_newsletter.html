@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block body_attributes %}id="apps"{% endblock %}
+
+{% block bodyclass %}section-apps landing{% endblock %}
+
+{% block title %}{{ page_title(_('Firefox Apps & Hacks Newsletter')) }}{% endblock %}
+
+{% block content %}
+
+<section id="content">
+  <div class="wrap">
+    <section id="content-main" class="full" role="main">
+      <p>{% trans profile_edit_url=url('users.my_profile_edit') %}<a href="{{ profile_edit_url }}">Edit your profile</a> to join the newsletter.{% endtrans %}</p>
+    </section>
+  </div>
+</section>
+
+{% endblock %}

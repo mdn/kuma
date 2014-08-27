@@ -1,0 +1,85 @@
+{% extends "account/base.html" %}
+
+{% block title %}{{ page_title(_("Account")) }}{% endblock %}
+
+{% block content %}
+  <h1>{{ _("Email addresses") }}</h1>
+  <div class="text-content">
+
+    {% if user.emailaddress_set.all().exists() %}
+      <p>{{ _("The following email addresses are associated with your account:") }}</p>
+
+      <form action="{{ url('account_email') }}" class="email_list" method="post">
+      {{ csrf() }}
+      <fieldset class="blockLabels">
+
+      <ul class="no-bullets">
+        {% for emailaddress in user.emailaddress_set.all() %}
+        <li>
+          <div class="ctrlHolder">
+            <label for="email_radio_{{ loop.index }}" class="{% if emailaddress.primary %}primary_email{%endif%}">
+
+              <input id="email_radio_{{ loop.index }}" type="radio" name="email" {% if emailaddress.primary %}checked="checked"{%endif %} value="{{ emailaddress.email }}"/>
+
+                {{ emailaddress.email }}
+                {% if emailaddress.verified %}
+                  <strong class="verified">{{ _("Verified") }}</strong>
+                {% else %}
+                  <span class="unverified">{{ _("Unverified") }}</span>
+                {% endif %}
+              {% if emailaddress.primary %}<em class="primary">{{ _("Primary") }}</em>{% endif %}
+            </label>
+           </div>
+        </li>
+        {% endfor %}
+      </ul>
+
+      <p class="buttonHolder">
+        <button class="secondaryAction" type="submit" name="action_primary" >{{ _("Make Primary") }}</button>
+        <button class="secondaryAction" type="submit" name="action_send" >{{ _("Re-send Verification") }}</button>
+        <button class="primaryAction" type="submit" name="action_remove" >{{ _("Remove") }}</button>
+      </p>
+
+      </fieldset>
+      </form>
+
+    {% else %}
+
+      <p>{% trans %}<strong>Warning:</strong>"You have not added any email addresses to this account. Without one you cannot receive notifications, reset your password, etc.{% endtrans %}</p>
+
+    {% endif %}
+
+    <h2>{{ _("Add email address") }}</h2>
+
+    <form method="post" action="{{ url('account_email') }}" class="add_email">
+        {{ csrf() }}
+        {{ form.as_p() }}
+        <p class="buttonHolder">
+            <button name="action_add" type="submit">{{ _("Add Email") }}</button>
+        </p>
+    </form>
+
+    <p>
+    <a href="{{ url('users.profile_edit', username=request.user.username) }}" class="button neutral">{{ _("Edit profile") }}</a>
+    </p>
+
+  </div>
+{% endblock %}
+
+
+{% block js %}
+{{ super() }}
+<script type="text/javascript">
+(function() {
+  var message = "{{ _("Do you really want to remove the selected email address?") }}";
+  var actions = document.getElementsByName('action_remove');
+  if (actions.length) {
+    actions[0].addEventListener("click", function(e) {
+      if (! confirm(message)) {
+        e.preventDefault();
+      }
+    });
+  }
+})();
+</script>
+{% endblock %}

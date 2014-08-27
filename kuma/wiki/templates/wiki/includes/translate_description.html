@@ -1,0 +1,71 @@
+{% set desc_form = revision_form %}
+{% if document_form %}
+  {% set desc_form = document_form %}
+{% endif %}
+      <details id="trans-description"{% if disclose_description %} open="open"{% endif %}>
+        <summary><h2>{{ _('Translate Description') }}</h2></summary>
+        {{ errorlist(desc_form) }}
+            <ul class="description">
+              <li>
+                <dl class="approved">
+                  <dt>{{ _('Title:') }}</dt>
+                  <dd>{{ parent.title }}</dd>
+                </dl>
+                <dl class="localized">
+                  <dt><label for="{{ desc_form.title.auto_id }}" title="{{ desc_form.title.help_text }}">{{ _('Title in {locale}:')|f(locale=language) }}</label></dt>
+                  <dd>{{ desc_form.title|safe }}</dd>
+                </dl>
+              </li>
+              {% if document_form %}
+                <li>
+                  <dl class="approved">
+                    <dt>{{ _('Slug:') }}</dt>
+                    <dd>{{ specific_slug }}</dd>
+                  </dl>
+                  <dl class="localized">
+                    <dt><label for="{{ desc_form.slug.auto_id }}" title="{{ desc_form.slug.help_text }}">{{ _('Slug in {locale}:')|f(locale=language) }}</label></dt>
+                    <dd>{{ desc_form.slug|safe }}</dd>
+                  </dl>
+                </li>
+                {% if parent_slug %}
+                <li>
+                  <dl class="approved">
+                    <dt>{{ _('Parent:') }}</dt>
+                    <dd>{{ parent_slug }}</dd>
+                  </dl>
+                  <dl class="localized">
+                    <dt>&nbsp;</dt>
+                    <dd>&nbsp;</dd>
+                  </dl>
+                </li>
+                {% endif %}
+              {% endif %}
+              {% if not document.is_template %}
+                <li>
+                  <dl class="approved">
+                    <dt>&nbsp;</dt>
+                    <dd>&nbsp;</dd>
+                  </dl>
+                  <dl class="localized">
+                    <dt><label><abbr title="{{_('Generate table of contents')}}">{{_('TOC:')}}</abbr></label></dt>
+                    <dd>{{ revision_form.toc_depth | safe }}</dd>
+                  </dl>
+                </li>
+              {% endif %}
+              {% if revision_form and revision_form.instance.based_on %}
+              <li class="metadata-choose-parent">
+                <dl class="approved">
+                  <dt>&nbsp;</dt>
+                  <dd>&nbsp;</dd>
+                </dl>
+                <dl class="localized">
+                  <dt><label>{{_('Lookup:')}}</label>
+                    <input type="text" id="parent_text" />
+                    <input type="hidden" name="parent_id" id="parent_id" value="{{ parent.id }}" />
+                  </dt>
+                  <dd>{{_('Find the translation source with the lookup above and then click "Save Changes.')}}</dd>
+                </dl>
+              </li>
+              {% endif %}
+            </ul>
+      </details>
