@@ -1,6 +1,8 @@
 import random
 from string import letters
 
+from nose.tools import ok_
+
 from django.contrib.auth.models import User
 
 from devmo.tests import LocalizingClient
@@ -11,6 +13,7 @@ from ..models import UserProfile
 
 class TestCaseBase(TestCase):
     """Base TestCase for the users app test cases."""
+    fixtures = ['test_users.json']
 
     def setUp(self):
         super(TestCaseBase, self).setUp()
@@ -35,3 +38,9 @@ def user(save=False, **kwargs):
     if save:
         u.save()
     return u
+
+
+def verify_strings_in_response(test_strings, response):
+    for test_string in test_strings:
+        ok_(test_string in response.content,
+            msg="Expected '%s' in content." % test_string)

@@ -1,18 +1,39 @@
+import mock
 from nose.tools import eq_, ok_
-import test_utils
 
 from django.contrib.auth.models import User
 
 from sumo.urlresolvers import reverse
-from devmo.tests import LocalizingClient
+from sumo.tests import TestCase
 from .test_views import TESTUSER_PASSWORD
+from . import verify_strings_in_response, TestCaseBase
 
 
-class AccountEmailTests(test_utils.TestCase):
+# TODO: Figure out why TestCaseBase doesn't work here
+class SignupTests(TestCase):
     fixtures = ['test_users.json']
 
-    def setUp(self):
-        self.client = LocalizingClient()
+    @mock.patch('requests.post')
+    def test_signup_page(self, mock_post):
+        user_email = "newuser@test.com"
+        mock_post.return_value = mock_resp = mock.Mock()
+        mock_resp.json.return_value={
+            "status": "okay",
+            "email": user_email,
+            "audience": "https://developer-local.allizom.org"
+        }
+
+        url = reverse('persona_login')
+        r = self.client.post(url, follow=True)
+
+        eq_(200, r.status_code)
+        ok_('Social Network Login Failure' not in r.content)
+        test_strings = ['set up your MDN profile', 'choose a username',
+                        'having trouble']
+        verify_strings_in_response(test_strings, r)
+
+
+class AccountEmailTests(TestCaseBase):
 
     def test_account_email_page_requires_signin(self):
         url = reverse('account_email')
@@ -27,19 +48,14 @@ class AccountEmailTests(test_utils.TestCase):
         self.client.login(username=u.username, password=TESTUSER_PASSWORD)
         url = reverse('account_email')
         r = self.client.get(url)
+        eq_(200, r.status_code)
+
         test_strings = ['Make Primary', 'Re-send Verification', 'Remove',
                         'Add Email', 'Edit profile']
-
-        eq_(200, r.status_code)
-        for test_string in test_strings:
-            ok_(test_string in r.content)
+        verify_strings_in_response(test_strings, r)
 
 
-class SocialAccountConnectionsTests(test_utils.TestCase):
-    fixtures = ['test_users.json']
-
-    def setUp(self):
-        self.client = LocalizingClient()
+class SocialAccountConnectionsTests(TestCaseBase):
 
     def test_account_connections_page_requires_signin(self):
         url = reverse('socialaccount_connections')
@@ -58,6 +74,4 @@ class SocialAccountConnectionsTests(test_utils.TestCase):
                         'Connect with']
 
         eq_(200, r.status_code)
-        for test_string in test_strings:
-            ok_(test_string in r.content,
-                msg="Expected %s in content" % test_string)
+        verify_strings_in_response(test_strings, r)
