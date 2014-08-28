@@ -414,11 +414,11 @@ class ProfileViewsTest(TestCase):
         r = self.client.get(url, follow=True)
         doc = pq(r.content)
 
-        test_tags = [u'science,Technology,paradox,knowledge,modeling,big data,Science'
-                     u'vector,meme,heuristics,harmony,mathesis universalis,Universalis'
-                     u'symmetry,mathematics,computer graphics,field,chemistry,Chemistry'
-                     u'religion,astronomy,physics,biology,literature,Litererature'
-                     u'spirituality,Art,Philosophy,Psychology,Business,Music,music'
+        test_tags = [u'science,Technology,paradox,knowledge,modeling,big data,'
+                     u'vector,meme,heuristics,harmony,mathesis universalis,'
+                     u'symmetry,mathematics,computer graphics,field,chemistry,'
+                     u'religion,astronomy,physics,biology,literature,'
+                     u'spirituality,Art,Philosophy,Psychology,Business,Music,'
                      u'Computer Science']
 
         form = self._get_current_form_field_values(doc)
