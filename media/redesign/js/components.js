@@ -16,7 +16,7 @@
             fadeInSpeed: null,
             fadeOutSpeed: null,
             submenu: null,
-            focusOnOpen: false,
+            focusOnOpen: true,
             brickOnClick: false,
             onOpen: noop,
             onClose: noop
@@ -66,7 +66,7 @@
                     var $closeButton = $('<button type="button" class="submenu-close transparent">\
                         <span class="offscreen">' + gettext('Close submenu') + '</span>\
                         <i aria-hidden="true" class="icon-remove-sign"></i>\
-                    </button>').appendTo($submenu);
+                    </button>').prependTo($submenu);
 
                     // Hide the submenu when the main menu is blurred for hideDelay
                     $self.on('mouseleave focusout', function() {
@@ -126,7 +126,7 @@
 
                     // Find the first link for improved usability
                     if($submenu.settings.focusOnOpen) {
-                        var firstLink = $submenu.find('a').get(0);
+                        var firstLink = $submenu.find('a, button').get(0);
                         if(firstLink) {
                             try { // Putting in try/catch because of opacity/focus issues in IE
                                 $(firstLink).addClass(focusClass) && firstLink.focus();
