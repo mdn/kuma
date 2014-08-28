@@ -294,7 +294,6 @@ class ProfileViewsTest(TestCase):
             u'github': u'http://github.com/lmorchard',
             u'stackoverflow': u'http://stackoverflow.com/users/lmorchard',
             u'linkedin': u'https://www.linkedin.com/in/testuser',
-            u'linkedin': u'http://www.linkedin.com/pub/sean-parker/0/1/826',
             u'mozillians': u'https://mozillians.org/u/testuser',
             u'facebook': u'https://www.facebook.com/test.user'
         }
