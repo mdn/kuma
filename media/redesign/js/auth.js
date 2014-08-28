@@ -50,6 +50,7 @@
         $options.mozMenu({
             fadeInSpeed: fadeSpeed,
             fadeOutSpeed: fadeSpeed,
+            focusOnOpen: false,
             onOpen: function() {
                 $options.addClass(activeClass);
                 if(doMoveCloseButton()) {
