@@ -54,7 +54,7 @@
                 // If no submenu, go
                 if(!$submenu.length) {
                     clear(showTimeout);
-                    closeSubmenu($.fn.mozMenu.$openMenu.submenu);
+                    if($.fn.mozMenu.$openMenu) closeSubmenu($.fn.mozMenu.$openMenu.submenu);
                     return;
                 }
 
