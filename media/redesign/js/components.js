@@ -27,10 +27,10 @@
 
         return this.each(function() {
             var $self = $(this);
-            var $li = $self.parent();
+            var $parent = $self.parent();
             var initialized;
 
-            // Brick on click?
+            // Prevent the default behavior of the trigger element if this is set
             var brick = settings.brickOnClick;
             if(brick) {
                 $self.on('click', function(e) {
@@ -38,8 +38,12 @@
                 });
             }
 
-            // Find a submenu.    If one doesn't exist, no need to go further
-            var $submenu = (settings.submenu || $li.find('.submenu'));
+            // Find the trigger element's submenu
+            var $submenu = $self.submenu = (settings.submenu || $parent.find('.submenu'));
+
+            // Provide the settings to both the submenu and item as either can be found independently
+            // The settings for the current menu and the "$.fn.mozMenu.$openMenu" can be different
+            $self.settings = $submenu.settings = settings;
 
             // Add a mouseenter / focus event to get the showing of the submenu in motion
             $self.on('mouseenter focus', function() {
@@ -50,7 +54,7 @@
                 // If no submenu, go
                 if(!$submenu.length) {
                     clear(showTimeout);
-                    $.fn.mozMenu.$openMenu && closeSubmenu(getOpenParent());
+                    closeSubmenu($.fn.mozMenu.$openMenu.submenu);
                     return;
                 }
 
@@ -71,7 +75,11 @@
                     });
 
                     // Hide the submenu when the submenu is blurred for hideDelay
-                    $submenu.on('mouseleave focusout', function() {
+                    $submenu.on('mouseleave focusout', function(e) {
+                        // "focuseout" is firing on child elements and sending off a bunch of moot
+                        // close requests, so we stop that
+                        if(e.type == 'focusout' && e.target != $submenu.get(0)) return;
+
                         clear(showTimeout);
                         closeSubmenu($submenu);
                     });
@@ -91,15 +99,17 @@
                         }
                     });
 
+                    // Close button should close the submenu
                     $closeButton.on('click', function(){
-                        closeSubmenu($(this).parent());
+                        closeSubmenu($submenu || $(this).parent());
                     });
                 }
+
                 // If there's an open submenu and it's not this one, close it
                 // Used for tab navigation from submenu to the next menu item
                 if($.fn.mozMenu.$openMenu && $.fn.mozMenu.$openMenu != $self) {
                     clear(showTimeout);
-                    closeSubmenu(getOpenParent());
+                    closeSubmenu($.fn.mozMenu.$openMenu.submenu);
                 }
                 else if($.fn.mozMenu.$openMenu == $self) {
                     clear(closeTimeout);
@@ -112,42 +122,48 @@
                 // Show my submenu after the showDelay
                 showTimeout = setTimeout(function() {
                     // Setting z-index here so that current menu is always on top
-                    $submenu.css('z-index', 99999).addClass('open').attr('aria-hidden', 'false').fadeIn(settings.fadeInSpeed);
+                    $submenu.css('z-index', 99999).addClass('open').attr('aria-hidden', 'false').fadeIn($submenu.settings.fadeInSpeed);
 
                     // Find the first link for improved usability
-                    if(settings.focusOnOpen) {
+                    if($submenu.settings.focusOnOpen) {
                         var firstLink = $submenu.find('a').get(0);
                         if(firstLink) {
                             try { // Putting in try/catch because of opacity/focus issues in IE
                                 $(firstLink).addClass(focusClass) && firstLink.focus();
                             }
                             catch(e){
-                                console.log('Exception! ', e);
+                                console.log('Menu focus exception! ', e);
                             }
                         }
                     }
-                    settings.onOpen();
-                }, settings.showDelay);
+                    $submenu.settings.onOpen();
+                }, $submenu.settings.showDelay);
             });
         });
 
         // Gets the open parent
         function getOpenParent() {
-            return $.fn.mozMenu.$openMenu.parent().find('.submenu');
+            return $.fn.mozMenu.$openMenu.submenu;
         }
 
         // Clears the current timeout, interrupting fade-ins and outs as necessary
         function clear(timeout) {
-            timeout && clearTimeout(timeout);
+            if(timeout) clearTimeout(timeout);
         }
 
         // Closes a given submenu
         function closeSubmenu($sub) {
             closeTimeout = setTimeout(function() {
                 // Set the z-index to one less so another menu would get top spot if overlapping and opening
-                $sub && $sub.css('z-index', 99998).removeClass('open').attr('aria-hidden', 'true').fadeOut(settings.fadeOutSpeed);
-                settings.onClose();
-            }, settings.hideDelay);
+                if($sub) {
+                    $sub.css('z-index', 99998)
+                            .removeClass('open')
+                            .attr('aria-hidden', 'true')
+                            .fadeOut($sub.settings.fadeOutSpeed, function() {
+                                $sub.settings.onClose();
+                            });
+                }
+            }, $sub.settings.hideDelay);
         }
     };
 

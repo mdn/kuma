@@ -36,18 +36,31 @@
         Open Auth Login Heading widget and standard login buttons
     */
     (function() {
-        var $container = $('.oauth-login-options');
+        var $container = $('.oauth-login-container');
+        var $options = $container.find('.oauth-login-options');
         var activeClass = 'active';
         var fadeSpeed = 300;
 
-        $container.mozMenu({
+        // The options text is only hidden on tablets and lower, so only do the
+        // JavaScript piece of the CSS is controlling text visibility
+        var doMoveCloseButton = function() {
+            return $container.find('.oauth-login-options-text').css('visibility') == 'hidden';
+        };
+
+        $options.mozMenu({
             fadeInSpeed: fadeSpeed,
             fadeOutSpeed: fadeSpeed,
             onOpen: function() {
-                $container.addClass(activeClass);
+                $options.addClass(activeClass);
+                if(doMoveCloseButton()) {
+                    $container.find('.submenu-close').attr('tabIndex', -1).appendTo($options);
+                }
             },
             onClose: function() {
-                $container.removeClass(activeClass);
+                if(doMoveCloseButton()) {
+                    $container.find('.submenu-close').removeAttr('tabIndex').appendTo($container.find('.oauth-login-picker'));
+                }
+                $options.removeClass(activeClass);
             }
         });
 
