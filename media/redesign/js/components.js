@@ -45,6 +45,11 @@
             // The settings for the current menu and the "$.fn.mozMenu.$openMenu" can be different
             $self.settings = $submenu.settings = settings;
 
+            $submenu.on('touchend', 'a[href]', function(e) {
+                e.preventDefault();
+                win.location = this.href;
+            });
+
             // Add a mouseenter / focus event to get the showing of the submenu in motion
             $self.on('mouseenter focus', function() {
 
