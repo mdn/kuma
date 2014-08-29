@@ -36,7 +36,8 @@ import kuma.wiki.content
 from kuma.wiki.content import get_seo_description
 from kuma.wiki.events import EditDocumentEvent
 from kuma.wiki.models import (Document, Revision, Attachment, DocumentZone,
-                              AttachmentRevision, DocumentAttachment)
+                              AttachmentRevision, DocumentAttachment,
+                              DocumentTag)
 from kuma.wiki.tests import (doc_rev, document, new_document_data, revision,
                              normalize_html, create_template_test_users,
                              make_translation)
@@ -4094,3 +4095,27 @@ class DocumentZoneTests(TestCaseBase):
         middle_expected = ('<link rel="stylesheet" type="text/css" href="%s"' %
                            styles_url)
         ok_(middle_expected in response.content)
+
+
+class ListDocumentTests(TestCaseBase):
+    """Tests for list_documents view"""
+
+    fixtures = ['test_users.json', 'wiki/documents.json']
+
+    def test_case_insensitive_tags(self):
+        """
+        Bug 976071 - Tags shouldn't be case sensitive
+        https://bugzil.la/976071
+        """
+        lower_tag = DocumentTag.objects.create(name='foo', slug='foo')
+        lower_tag.save()
+
+        doc = Document.objects.get(pk=1)
+        doc.save()
+        doc.tags.set(lower_tag)
+
+        response = self.client.get(reverse('wiki.tag', args=['foo',]))
+        ok_(doc.slug in response.content.decode('utf-8'))
+
+        response = self.client.get(reverse('wiki.tag', args=['Foo',]))
+        ok_(doc.slug in response.content.decode('utf-8'))
