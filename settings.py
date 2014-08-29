@@ -703,8 +703,8 @@ MINIFY_BUNDLES = {
             'js/libs/jquery-2.1.0.js',
             'redesign/js/components.js',
             'redesign/js/analytics.js',
-            'redesign/js/auth.js',
             'redesign/js/main.js',
+            'redesign/js/auth.js',
             'redesign/js/badges.js',
         ),
         'home': (
