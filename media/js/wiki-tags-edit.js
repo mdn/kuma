@@ -1,6 +1,7 @@
 (function($) {
     $(document).ready(function() {
 
+        var $form = $('#wiki-page-edit');
         var $idTagsField = $('#tagit_tags');
 
         // Create a hidden input type for the purposes of saving
@@ -23,6 +24,15 @@
                     }
                 });
                 hiddenTags.val(itemTexts.join(','));
+
+                // Check whether there are net changes in tags
+                if(window.waffle && window.waffle.flag_is_active('dirtiness_tracking')) {
+                    if (undefined !== originalTags && hiddenTags.val() !== originalTags) {
+                        $('#page-tags').addClass('dirty').trigger('mdn:dirty');
+                    } else {
+                        $('#page-tags').removeClass('dirty').trigger('mdn:clean');
+                    }
+                }
             };
         };
 
@@ -41,5 +51,13 @@
 
         // Remove the hidden field since it wont be submitted anyways
         $idTagsField.remove();
+
+        // Keep track of tag dirtiness
+        if(window.waffle && window.waffle.flag_is_active('dirtiness_tracking')) {
+            var originalTags = hiddenTags.val();
+            $form.on('mdn:save-success', function() {
+                originalTags = hiddenTags.val();
+            });
+        }
     })
 })(jQuery);
