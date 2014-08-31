@@ -59,12 +59,12 @@
       'toolbar,undo,wsc,wysiwygarea,' +
       // MDN's plugins.
       'mdn-attachment,mdn-format,mdn-link-launch,mdn-redirect,mdn-sample-finder,mdn-sampler,mdn-syntaxhighlighter,' +
-      'mdn-system-integration,mdn-toggle-block,' +
+      'mdn-system-integration,mdn-table-customization,mdn-toggle-block,' +
       // Other plugins.
       'descriptionlist,tablesort';
 
     // Need to be ported to v4.
-    // config.extraPlugins = 'mdn-link,mdn-image,mdn-wrapstyle,mdn-table,youtube,texzilla';
+    // config.extraPlugins = 'mdn-link,mdn-image,mdn-wrapstyle,youtube,texzilla';
 
     // Add the spellchecker to the top bar
     // if(window.waffle && waffle.FLAGS.wiki_spellcheck) {
