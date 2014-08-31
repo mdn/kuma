@@ -1,0 +1,15 @@
+dl {
+	padding-left: 0;
+}
+
+dt {
+	font-weight: bold;
+	margin-top: 10px;
+}
+dt:first-child {
+	margin-top: 0;
+}
+
+dd {
+	margin-left: 20px;
+}
