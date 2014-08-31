@@ -64,7 +64,7 @@
       'descriptionlist,tablesort';
 
     // Need to be ported to v4.
-    // config.extraPlugins = 'mdn-link,mdn-image,mdn-enterkey,mdn-wrapstyle,mdn-table,youtube,texzilla';
+    // config.extraPlugins = 'mdn-link,mdn-image,mdn-wrapstyle,mdn-table,youtube,texzilla';
 
     // Add the spellchecker to the top bar
     // if(window.waffle && waffle.FLAGS.wiki_spellcheck) {
