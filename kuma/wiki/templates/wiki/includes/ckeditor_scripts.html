@@ -10,7 +10,7 @@
 <script>
   // Define the path to non-core plugins.
   (
-    'scayt,wsc,mdn-attachment,mdn-format,mdn-redirect,mdn-sample-finder,mdn-sampler,' +
+    'scayt,wsc,mdn-attachment,mdn-link-launch,mdn-format,mdn-redirect,mdn-sample-finder,mdn-sampler,' +
     'mdn-syntaxhighlighter,mdn-system-integration,mdn-toggle-block,descriptionlist,tablesort'
   ).split(',').forEach(function(pluginName) {
     CKEDITOR.plugins.addExternal(pluginName, '{{ MEDIA_URL }}js/libs/ckeditor/source/plugins/' + pluginName + '/');

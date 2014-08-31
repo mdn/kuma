@@ -63,6 +63,7 @@ var CKBUILDER_CONFIG = {
 		wsc: 1,
 		wysiwygarea: 1,
 		'mdn-attachment': 1,
+		'mdn-link-launch': 1,
 		'mdn-format': 1,
 		'mdn-redirect': 1,
 		'mdn-sample-finder': 1,
