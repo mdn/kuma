@@ -70,6 +70,15 @@
 
   {{ soapbox_messages(get_soapbox_messages(request.path)) }}
 
+  {% if waffle.flag('github_beta_notice') %}
+    <div class="global-notice">
+      <div class="wrap center">
+          <p><bdi>Help us <a href="https://wiki.mozilla.org/MDN/Development/GitHub_Beta">test GitHub Sign-in</a> on our stage server.</bdi></p>
+      </div>
+    </div>
+  {% endif %}
+
+
   {% if waffle.flag('badger') %}
     {% include "badger/includes/recent_badge_awards.html" %}
   {% endif %}
