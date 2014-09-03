@@ -411,6 +411,7 @@
             onclose: null // What should happen upon closing of individual notification?
         };
 
+        var processedKey = 'data-processed';
         var defaultState = { state: 'info', className: 'info', iconName: 'icon-info-sign'  };
         var states = [
             { state: 'success', className: 'success', iconName: 'icon-smile' },
@@ -438,6 +439,13 @@
 
         // Enacts options upon an item, used by both discover and growl
         function applyOptions($item, options) {
+            // Don't process a notification more than once
+            if($item.attr(processedKey)) {
+                return;
+            }
+            $item.attr(processedKey, true);
+
+
             // Wrap the text in a div
             $item.html('<div class="notification-message">' + $item.html() + '</div>');
 
@@ -484,8 +492,7 @@
         return {
             // Finds notifications under a given parent,
             discover: function(parent) {
-                var $notifications = $(parent || doc.body).find('.notification');
-
+                var $notifications = $(parent || doc.body).find('.notification:not([' + processedKey + '])');
                 $notifications.each(function() {
                     var $item = $(this);
                     applyOptions($item, $item.data());
