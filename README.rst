@@ -25,18 +25,21 @@ Development
 
                 https://github.com/mozilla/kuma/issues?state=open (Engineering)
 
-                https://github-pr-triage.herokuapp.com/mozilla/kuma (PR Queue)
+                https://prs.paas.allizom.org/mozilla:kuma,kuma-lib,kumascript,mozhacks (PR Queue)
 :Dev Docs:      https://kuma.readthedocs.org/en/latest/installation-vagrant.html
 :CI Server:     https://travis-ci.org/mozilla/kuma
 :Mailing list:  https://lists.mozilla.org/listinfo/dev-mdn
 :IRC:           irc://irc.mozilla.org/mdndev
-:Servers:       https://developer-dev.allizom.org/ (dev)
+
+                http://logs.glob.uno/?c=mozilla%23mdndev (logs)
+:Servers:       http://mzl.la/deployed-mdn (What's Deployed)
+
+                https://developer-dev.allizom.org/ (dev)
 
                 https://developer.allizom.org/ (stage)
 
                 https://developer.mozilla.org/ (prod)
 
-                http://mzl.la/deployed-mdn (What's Deployed)
 
 Getting Started
 ===============
