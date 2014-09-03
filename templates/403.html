@@ -21,9 +21,9 @@
     {% if reason == 'kumaediting' %}
       <p class="notice">{{ _('The wiki is in read-only mode.') }}</p>
     {% elif reason == 'kumabanned' %}
-      <p class="notice">{{ _('Your account has been banned from making edits.') }}</p>
+      <p class="notice">{{ _('Your profile has been banned from making edits.') }}</p>
     {% elif reason == 'bannedprofile' %}
-      <p class="notice">{{ _("This user's account has been banned.") }}</p>
+      <p class="notice">{{ _("This user's profile has been banned.") }}</p>
     {% elif reason == 'revisions_login_required' %}
       <p class="notice">{{ _("You must sign in to view all history") }}</p>
     {% endif %}
@@ -43,11 +43,11 @@
       <ul class="prose">
       {% if user.username %}
         {% trans logout_url=url('account_logout') %}
-          <li><a href="{{ logout_url }}">Log out</a> to try again.</li>
+          <li><a href="{{ logout_url }}">Sign out</a> to try again.</li>
         {% endtrans %}
       {% else %}
         {% trans login_url=('{base_url}?next={next}' | f(base_url=url('account_login'), next=request.get_full_path())) %}
-          <li><a href="{{ login_url }}">Log in</a> to try again.</li>
+          <li><a href="{{ login_url }}">Sign in</a> to try again.</li>
         {% endtrans %}
       {% endif %}
         {% trans demos_url=url('demos'), docs_url=devmo_url('Web') %}

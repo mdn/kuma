@@ -8,7 +8,7 @@
 <div class="text-content">
 
   {% if form.accounts %}
-  <p>{% trans %}You can sign in to your account using any of the following:{% endtrans %}</p>
+  <p>{% trans %}You can sign in to your profile using any of the following:{% endtrans %}</p>
 
   <form method="post" action="{{ url('socialaccount_connections') }}">
   {{ csrf() }}
