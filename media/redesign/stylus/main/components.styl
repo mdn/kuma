@@ -234,6 +234,22 @@ notification-theme($color) {
 
     &.warning {
         notification-theme($warning);
+
+        /* warning clashes with a class in CustomCSS so we have to re-assert border-width and link colour
+           the CustomCSS class might be changeable in the future but we can't change the notifier class
+           because it is part of a django module . See also .notification-button. */
+        border-width: @border-width;
+        font-style: normal;
+
+        a, a:visited, a:hover, a:focus {
+            border-bottom: 0;
+            color: $link-color;
+            text-decoration: none;
+        }
+
+        a:hover, a:focus {
+            text-decoration: underline;
+        }
     }
 
     &.error {
@@ -270,8 +286,14 @@ notification-theme($color) {
     margin: 5px 5px 0 0;
     padding: 2px 5px 3px;
     text-transform: none;
-}
 
+    .notification.warning & { /* see comment for &.warning */
+        border: @border;
+        margin: @margin;
+        padding: @padding;
+    }
+
+}
 
 .notification-tray {
     position: fixed;
