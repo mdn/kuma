@@ -99,12 +99,70 @@
         });
     })();
 
+    // Track users successfully logging in
+    $(document).on('mdn:login', function(service) {
+        mdn.optimizely.push(['trackEvent', 'logout-' + service]);
+        mdn.analytics.trackEvent({
+            category: 'Authentication',
+            action: 'Signed out',
+            label: service
+        });
+    });
 
+    // Track users successfully logging out
+    $(document).on('mdn:logout', function(service) {
+        mdn.optimizely.push(['trackEvent', 'login-' + service]);
+        mdn.analytics.trackEvent({
+            category: 'Authentication',
+            action: 'Finished sign-in',
+            label: service
+        });
+    });
 
     /*
-        Track users successfully logging in and out
+        Show notifications about account association status as part of the
+        registration process.
     */
     ('localStorage' in win) && (function() {
+        try {
+            var $browserRegister = $('#browser_register');
+            var matchKey = 'account-match-for';
+            var matchCurrent = $browserRegister.data(matchKey);
+            var matchStored = localStorage.getItem(matchKey);
+
+            // The user is on the registration page and has been notified that
+            // there is an MDN profile with a matching email address.
+            if(matchCurrent && !matchStored) {
+                localStorage.setItem(matchKey, matchCurrent);
+            }
+
+            // After seeing the notice, the user tried to sign in with a second
+            // social account, but was again directed to the registration page.
+            // This will happen if the second social account was also not
+            // tied to an MDN profile.
+            else if(!matchCurrent && matchStored && $browserRegister.length) {
+                localStorage.removeItem(matchKey);
+            }
+
+            // After seeing the notice, the user tried to sign in with a second
+            // social account and was successful.
+            $(document).on('mdn:login', function(service) {
+                if(matchStored) {
+                    mdn.Notifier.growl('You can now use ' + matchStored + ' to sign in to this MDN profile.', { duration: 0, closable: true }).success();
+                    localStorage.removeItem(matchKey);
+                }
+            });
+        }
+        catch (e) {
+            // Browser probably doesn't support localStorage
+        }
+    })();
+
+    /*
+        Fire off events when the user logs in and logs out.
+    */
+    ('localStorage' in win) && (function() {
+        var login, logout;
         var serviceKey = 'login-service';
         var serviceStored = localStorage.getItem(serviceKey);
         var serviceCurrent = $(doc.body).data(serviceKey);
@@ -114,25 +172,13 @@
             // User just logged in
             if(serviceCurrent && !serviceStored) {
                 localStorage.setItem(serviceKey, serviceCurrent);
-
-                mdn.optimizely.push(['trackEvent', 'login-' + serviceCurrent]);
-                mdn.analytics.trackEvent({
-                    category: 'Authentication',
-                    action: 'Finished sign-in',
-                    label: serviceCurrent
-                });
+                $(document).trigger('mdn:login', [ serviceCurrent ]);
             }
 
             // User just logged out
             else if(!serviceCurrent && serviceStored) {
                 localStorage.removeItem(serviceKey);
-
-                mdn.optimizely.push(['trackEvent', 'logout-' + serviceStored]);
-                mdn.analytics.trackEvent({
-                    category: 'Authentication',
-                    action: 'Signed out',
-                    label: serviceStored
-                });
+                $(document).trigger('mdn:logout', [ serviceStored ]);
             }
 
         }
@@ -140,7 +186,5 @@
             // Browser probably doesn't support localStorage
         }
     })();
-
-
 
 })(window, document, jQuery);
