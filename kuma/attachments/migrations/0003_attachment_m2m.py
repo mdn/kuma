@@ -1,32 +1,29 @@
 # encoding: utf-8
 import datetime
 from south.db import db
-from south.v2 import DataMigration
+from south.v2 import SchemaMigration
 from django.db import models
 
-class Migration(DataMigration):
-
-    permissions = (
-        ("disallow_add_attachment", "Cannot upload attachment"),
-    )
+class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        db.send_pending_create_signals()
-
-        ct = orm['contenttypes.ContentType'].objects.get(
-                app_label='wiki', model='attachment')
-        for p in self.permissions:
-            perm, created = orm['auth.permission'].objects.get_or_create(
-                content_type=ct, codename=p[0], defaults=dict(name=p[1]))
+        
+        # Adding model 'DocumentAttachment'
+        db.create_table('wiki_documentattachment', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('file', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['attachments.Attachment'])),
+            ('document', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['wiki.Document'])),
+            ('attached_by', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True)),
+            ('name', self.gf('django.db.models.fields.TextField')()),
+        ))
+        db.send_create_signal('attachments', ['DocumentAttachment'])
 
 
     def backwards(self, orm):
-        ct = orm['contenttypes.ContentType'].objects.get(
-                app_label='wiki', model='attachment')
-        for p in self.permissions:
-            orm['auth.permission'].objects.filter(content_type=ct,
-                                                  codename=p[0]).delete()
- 
+        
+        # Deleting model 'DocumentAttachment'
+        db.delete_table('wiki_documentattachment')
+
 
     models = {
         'auth.group': {
@@ -76,18 +73,18 @@ class Migration(DataMigration):
             'secret': ('django.db.models.fields.CharField', [], {'max_length': '10', 'null': 'True', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True', 'blank': 'True'})
         },
-        'wiki.attachment': {
+        'attachments.attachment': {
             'Meta': {'object_name': 'Attachment'},
-            'current_revision': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'current_rev'", 'null': 'True', 'to': "orm['wiki.AttachmentRevision']"}),
+            'current_revision': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'current_rev'", 'null': 'True', 'to': "orm['attachments.AttachmentRevision']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'mindtouch_attachment_id': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'db_index': 'True'}),
             'modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'null': 'True', 'db_index': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'})
         },
-        'wiki.attachmentrevision': {
+        'attachments.attachmentrevision': {
             'Meta': {'object_name': 'AttachmentRevision'},
-            'attachment': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'revisions'", 'to': "orm['wiki.Attachment']"}),
+            'attachment': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'revisions'", 'to': "orm['attachments.Attachment']"}),
             'comment': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             'creator': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'created_attachment_revisions'", 'to': "orm['auth.User']"}),
@@ -106,6 +103,7 @@ class Migration(DataMigration):
             'category': ('django.db.models.fields.IntegerField', [], {'db_index': 'True'}),
             'current_revision': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'current_for+'", 'null': 'True', 'to': "orm['wiki.Revision']"}),
             'defer_rendering': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'db_index': 'True'}),
+            'files': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['attachments.Attachment']", 'through': "orm['wiki.DocumentAttachment']", 'symmetrical': 'False'}),
             'html': ('django.db.models.fields.TextField', [], {}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_localizable': ('django.db.models.fields.BooleanField', [], {'default': 'True', 'db_index': 'True'}),
@@ -123,6 +121,14 @@ class Migration(DataMigration):
             'rendered_html': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'})
+        },
+        'wiki.documentattachment': {
+            'Meta': {'object_name': 'DocumentAttachment'},
+            'attached_by': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'}),
+            'document': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['wiki.Document']"}),
+            'file': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['attachments.Attachment']"}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.TextField', [], {})
         },
         'wiki.documenttag': {
             'Meta': {'object_name': 'DocumentTag'},
@@ -184,7 +190,7 @@ class Migration(DataMigration):
             'based_on': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['wiki.Revision']", 'null': 'True', 'blank': 'True'}),
             'comment': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'content': ('django.db.models.fields.TextField', [], {}),
-            'created': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
+            'created': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'db_index': 'True'}),
             'creator': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'created_revisions'", 'to': "orm['auth.User']"}),
             'document': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'revisions'", 'to': "orm['wiki.Document']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),

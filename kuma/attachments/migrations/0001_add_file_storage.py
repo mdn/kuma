@@ -11,7 +11,7 @@ class Migration(SchemaMigration):
         # Adding model 'AttachmentRevision'
         db.create_table('wiki_attachmentrevision', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('attachment', self.gf('django.db.models.fields.related.ForeignKey')(related_name='revisions', to=orm['wiki.Attachment'])),
+            ('attachment', self.gf('django.db.models.fields.related.ForeignKey')(related_name='revisions', to=orm['attachments.Attachment'])),
             ('file', self.gf('django.db.models.fields.files.FileField')(max_length=500)),
             ('title', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, db_index=True)),
             ('slug', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, db_index=True)),
@@ -24,18 +24,18 @@ class Migration(SchemaMigration):
             ('mindtouch_old_id', self.gf('django.db.models.fields.IntegerField')(unique=True, null=True, db_index=True)),
             ('is_mindtouch_migration', self.gf('django.db.models.fields.BooleanField')(default=False, db_index=True)),
         ))
-        db.send_create_signal('wiki', ['AttachmentRevision'])
+        db.send_create_signal('attachments', ['AttachmentRevision'])
 
         # Adding model 'Attachment'
         db.create_table('wiki_attachment', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('current_revision', self.gf('django.db.models.fields.related.ForeignKey')(related_name='current_rev', null=True, to=orm['wiki.AttachmentRevision'])),
+            ('current_revision', self.gf('django.db.models.fields.related.ForeignKey')(related_name='current_rev', null=True, to=orm['attachments.AttachmentRevision'])),
             ('title', self.gf('django.db.models.fields.CharField')(max_length=255, db_index=True)),
             ('slug', self.gf('django.db.models.fields.CharField')(max_length=255, db_index=True)),
             ('mindtouch_attachment_id', self.gf('django.db.models.fields.IntegerField')(null=True, db_index=True)),
             ('modified', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, null=True, db_index=True, blank=True)),
         ))
-        db.send_create_signal('wiki', ['Attachment'])
+        db.send_create_signal('attachments', ['Attachment'])
 
 
     def backwards(self, orm):
@@ -95,18 +95,18 @@ class Migration(SchemaMigration):
             'secret': ('django.db.models.fields.CharField', [], {'max_length': '10', 'null': 'True', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True', 'blank': 'True'})
         },
-        'wiki.attachment': {
+        'attachments.attachment': {
             'Meta': {'object_name': 'Attachment'},
-            'current_revision': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'current_rev'", 'null': 'True', 'to': "orm['wiki.AttachmentRevision']"}),
+            'current_revision': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'current_rev'", 'null': 'True', 'to': "orm['attachments.AttachmentRevision']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'mindtouch_attachment_id': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'db_index': 'True'}),
             'modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'null': 'True', 'db_index': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'})
         },
-        'wiki.attachmentrevision': {
+        'attachments.attachmentrevision': {
             'Meta': {'object_name': 'AttachmentRevision'},
-            'attachment': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'revisions'", 'to': "orm['wiki.Attachment']"}),
+            'attachment': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'revisions'", 'to': "orm['attachments.Attachment']"}),
             'comment': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             'creator': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'created_attachment_revisions'", 'to': "orm['auth.User']"}),
