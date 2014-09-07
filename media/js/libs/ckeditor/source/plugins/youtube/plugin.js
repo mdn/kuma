@@ -116,14 +116,14 @@
 											id : 'txtWidth',
 											width : '60px',
 											label : editor.lang.youtube.txtWidth,
-											default : '640'
+											'default' : '640'
 										},
 										{
 											type : 'text',
 											id : 'txtHeight',
 											width : '60px',
 											label : editor.lang.youtube.txtHeight,
-											default : '360'
+											'default' : '360'
 										}
 									]
 								}
