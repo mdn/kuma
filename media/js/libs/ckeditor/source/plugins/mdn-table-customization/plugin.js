@@ -8,35 +8,20 @@ CKEDITOR.plugins.add('mdn-table-customization', {
       var dialogName = evt.data.name,
         dialogDefinition = evt.data.definition;
 
-      if (dialogName != 'table')
+      if (dialogName != 'table' && dialogName != 'tableProperties')
         return;
 
-      var infoTab = dialogDefinition.getContents('info'),
-        borderWidthField = infoTab.elements[0].children[0].children[4],
-        tableWidthField = infoTab.elements[0].children[1].children[0].children[0],
-        tableHeightField = infoTab.elements[0].children[1].children[1].children[0],
-        cellSpacingField = infoTab.elements[0].children[1].children[3],
-        cellPaddingField = infoTab.elements[0].children[1].children[4];
+      var infoTab = dialogDefinition.getContents('info');
 
-      borderWidthField.style = 'display:none';
-      borderWidthField['default'] = 0;
+      infoTab.remove('txtWidth');
+      infoTab.remove('txtHeight');
+      infoTab.remove('txtCellSpace');
+      infoTab.remove('txtCellPad');
+      infoTab.remove('txtBorder');
 
-      delete tableWidthField.setup;
-      delete tableWidthField['default'];
-      tableWidthField.style = 'display:none';
+      var advTab = dialogDefinition.getContents('advanced');
 
-      tableHeightField.style = 'display:none';
-
-      delete cellSpacingField['default'];
-      cellSpacingField.style = 'display:none';
-
-      delete cellPaddingField['default'];
-      cellPaddingField.style = 'display:none';
-
-      var advTab = dialogDefinition.getContents('advanced'),
-        classesField = advTab.elements[0].children[1].children[1].children[0];
-
-      classesField['default'] = 'standard-table';
+      advTab.get('advCSSClasses')['default'] = 'standard-table';
     });
   }
 });
