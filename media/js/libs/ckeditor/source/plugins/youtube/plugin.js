@@ -12,6 +12,8 @@
 
 	CKEDITOR.plugins.add( 'youtube',
 	{
+		icons: 'youtube', // %REMOVE_LINE_CORE%
+		
 		init: function( editor )
 		{
 			// Backport language
@@ -34,7 +36,6 @@
 			{
 				label: editor.lang.youtube.button,
 				command: 'youtube',
-				icon: this.path + 'images/icon.png',
 				toolbar: 'insert'
 			});
 
