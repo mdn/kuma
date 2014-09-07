@@ -63,15 +63,13 @@
       // Other plugins.
       'descriptionlist,tablesort,texzilla,youtube';
 
+    // Add the spellchecker to the top bar.
+    if(window.waffle && waffle.FLAGS.wiki_spellcheck) {
+      config.plugins += ',mdn-spell';
+    }
+
     // Need to be ported to v4.
     // config.extraPlugins = 'mdn-link,mdn-image,mdn-wrapstyle';
-
-    // Add the spellchecker to the top bar
-    // if(window.waffle && waffle.FLAGS.wiki_spellcheck) {
-    //    config.extraPlugins += ',mdn-spell';
-    //    config.toolbar_MDN[0].splice(10, 0, 'mdn-spell');
-    //    config.toolbar_MDN[0].join();
-    // }
 
     // Disable the Advanced Content Filter because too many pages
     // use unlimited HTML.
