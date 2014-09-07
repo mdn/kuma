@@ -1,7 +1,7 @@
 'use strict';
 
 CKEDITOR.plugins.add('texzilla', {
-  icons: 'texzilla',
+  icons: 'texzilla', // %REMOVE_LINE_CORE%
 
   init: function(editor) {
     CKEDITOR.dialog.add('texzilla', this.path + 'dialogs/texzilla.js');
