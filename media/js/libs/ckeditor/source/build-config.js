@@ -73,6 +73,7 @@ var CKBUILDER_CONFIG = {
 		'mdn-table-customization': 1,
 		'mdn-toggle-block': 1,
 		descriptionlist: 1,
-		tablesort: 1
+		tablesort: 1,
+		texzilla: 1
 	}
 };

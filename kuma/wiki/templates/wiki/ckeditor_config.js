@@ -61,10 +61,10 @@
       'mdn-attachment,mdn-format,mdn-link-launch,mdn-redirect,mdn-sample-finder,mdn-sampler,mdn-syntaxhighlighter,' +
       'mdn-system-integration,mdn-table-customization,mdn-toggle-block,' +
       // Other plugins.
-      'descriptionlist,tablesort';
+      'descriptionlist,tablesort,texzilla';
 
     // Need to be ported to v4.
-    // config.extraPlugins = 'mdn-link,mdn-image,mdn-wrapstyle,youtube,texzilla';
+    // config.extraPlugins = 'mdn-link,mdn-image,mdn-wrapstyle,youtube';
 
     // Add the spellchecker to the top bar
     // if(window.waffle && waffle.FLAGS.wiki_spellcheck) {
