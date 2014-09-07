@@ -74,6 +74,7 @@ var CKBUILDER_CONFIG = {
 		'mdn-toggle-block': 1,
 		descriptionlist: 1,
 		tablesort: 1,
-		texzilla: 1
+		texzilla: 1,
+		youtube: 1
 	}
 };
