@@ -217,6 +217,7 @@
         if ($body.is('.edit, .new, .translate')) {
             initMetadataEditButton();
             initSaveAndEditButtons();
+            initDirtinessTracking();
             initArticlePreview();
             initAttachmentsActions();
             if(!isTemplate) {
@@ -589,6 +590,8 @@
             $('#id_comment').val('');
             // Re-enable the form; it gets disabled to prevent double-POSTs
             $form.data('disabled', false).removeClass('disabled');
+            // Trigger a `mdn:save-success` event so dirtiness can be reset throughout the page
+            $form.trigger('mdn:save-success');
             return true;
         });
 
@@ -829,6 +832,76 @@
             // Show the spinner
             $pageAttachmentsSpinner.css('opacity', 1);
         });
+    }
+
+    //
+    // Initializes logic that keeps track of whether changes have been made to the article
+    // So far three sections contribute to dirtiness: Metadata, editor content and tags
+    //
+    function initDirtinessTracking() {
+      // These are all fields that count towards an edit, excluding the editor and tags
+      var $metaDataFields = $('.metadata input:not([type="hidden"]), .metadata select');
+      var editor = CKEDITOR.instances['id_content'];
+
+      function onDirty() {
+        $('.btn-save-and-edit').attr('disabled', false);
+        $('.btn-save').attr('disabled', false);
+      }
+      // Called when everything is clean
+      function onClean() {
+        $('.btn-save-and-edit').attr('disabled', true);
+        $('.btn-save').attr('disabled', true);
+      }
+
+      function resetDirty() {
+        editor.resetDirty();
+        $metaDataFields.each(function() {
+          var $this = $(this);
+          $this.data('original', $this.val());
+        })
+        $form.find('.dirty').removeClass('dirty');
+        $form.trigger('mdn:clean');
+      }
+
+      // Three custom events are used to track changes throughout the page
+      // Dirtiness is marked by the class `dirty`, cleanliness by `clean`
+      $form.on('mdn:save-success', resetDirty)
+      .on('mdn:dirty', onDirty)
+      .on('mdn:clean', function() { // Gets triggered when a section is clean, others may still be dirty
+        if (!$('.dirty').length)
+          onClean();
+      });
+
+      // Keep track of editor dirtiness
+      var editorDirty = false;
+      function checkEditorDirtiness() {
+        var wasDirty = editorDirty;
+        editorDirty = editor.checkDirty();
+        if (editorDirty && !wasDirty) {
+          $form.find('.editor-container').addClass('dirty').trigger('mdn:dirty');
+        } else if (!editorDirty && wasDirty) {
+          $form.find('.editor-container').removeClass('dirty').trigger('mdn:clean');
+        }
+      }
+      editor.on('contentDom', function() {
+        // CKEditor 4.2 allows the 'change' event to be used though that's not in yet
+        editor.document.on('keyup', checkEditorDirtiness);
+        editor.on('paste setData', checkEditorDirtiness);
+      });
+
+      // Keep track of metadata dirtiness
+      $metaDataFields.on('change input', function() {
+        var $this = $(this);
+        if ($this.val() !== $this.data('original')) {
+          if (!$this.hasClass('dirty')) {
+            $this.addClass('dirty').trigger('mdn:dirty');
+          }
+        } else {
+          $this.removeClass('dirty').trigger('mdn:clean');
+        }
+      });
+
+      resetDirty();
     }
 
     $(doc).ready(init);
