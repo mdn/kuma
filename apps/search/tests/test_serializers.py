@@ -33,12 +33,12 @@ class SerializerTests(ElasticTestCase):
         list_data = doc_serializer.data
         eq_(len(list_data), 7)
         ok_(isinstance(list_data, list))
-        eq_(list_data[0]['title'], 'le title')
+        eq_(list_data[0]['title'], 'an article title')
 
         doc_serializer = DocumentSerializer(doc[0], many=False)
         dict_data = doc_serializer.data
         ok_(isinstance(dict_data, dict))
-        eq_(dict_data['title'], 'le title')
+        eq_(dict_data['title'], 'an article title')
 
 
 class FieldTests(ElasticTestCase):
