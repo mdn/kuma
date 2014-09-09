@@ -2,7 +2,6 @@ from datetime import datetime
 import time
 
 from django.contrib.auth.models import User, Group, Permission
-from django.core.files import temp as tempfile
 from django.template.defaultfilters import slugify
 
 from html5lib.filters._base import Filter as html5lib_Filter
@@ -204,17 +203,6 @@ def create_topical_parents_docs():
     d2.parent_topic = d1
     d2.save()
     return d1, d2
-
-
-def make_test_file(content=None):
-    if content == None:
-        content = 'I am a test file for upload.'
-    # Shamelessly stolen from Django's own file-upload tests.
-    tdir = tempfile.gettempdir()
-    file_for_upload = tempfile.NamedTemporaryFile(suffix=".txt", dir=tdir)
-    file_for_upload.write(content)
-    file_for_upload.seek(0)
-    return file_for_upload
 
 
 class FakeResponse:

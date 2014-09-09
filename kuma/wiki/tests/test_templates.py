@@ -27,7 +27,7 @@ from kuma.wiki.constants import REDIRECT_CONTENT, TEMPLATE_TITLE_PREFIX
 from kuma.wiki.models import (Document, Revision, HelpfulVote,
                               DocumentTag, Attachment)
 from kuma.wiki.tests import (TestCaseBase, document, revision, new_document_data,
-                             create_topical_parents_docs, make_test_file)
+                             create_topical_parents_docs)
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
 from sumo.tests import post, get
@@ -228,47 +228,6 @@ class DocumentTests(TestCaseBase):
         for input in hidden_inputs:
             if input['name'] == 'toc_depth':
                 eq_(0, input['value'])
-
-
-class AttachmentTests(TestCaseBase):
-    fixtures = ['test_users.json']
-
-    def setUp(self):
-        self.old_allowed_types = constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES
-        constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES = 'text/plain'
-
-    def tearDown(self):
-        constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES = self.old_allowed_types
-
-    @attr('security')
-    def test_xss_file_attachment_title(self):
-        title = '"><img src=x onerror=prompt(navigator.userAgent);>'
-        # use view to create new attachment
-        file_for_upload = make_test_file()
-        post_data = {
-            'title': title,
-            'description': 'xss',
-            'comment': 'xss',
-            'file': file_for_upload,
-        }
-        self.client = Client()  # file views don't need LocalizingClient
-        self.client.login(username='admin', password='testpass')
-        resp = self.client.post(reverse('wiki.new_attachment'), data=post_data)
-        eq_(302, resp.status_code)
-
-        # now stick it in/on a document
-        attachment = Attachment.objects.get(title=title)
-        rev = revision(content='<img src="%s" />' % attachment.get_file_url(),
-                      save=True)
-
-        # view it and verify markup is escaped
-        response = self.client.get(rev.document.get_absolute_url())
-        eq_(200, response.status_code)
-        doc = pq(response.content)
-        eq_('%s xss' % title,
-            doc('#page-attachments-table .attachment-name-cell').text())
-        ok_('&gt;&lt;img src=x onerror=prompt(navigator.userAgent);&gt;' in
-            doc('#page-attachments-table .attachment-name-cell').html())
 
 
 class RevisionTests(TestCaseBase):

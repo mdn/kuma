@@ -10,8 +10,8 @@ from sumo.urlresolvers import reverse
 
 from access.decorators import login_required, permission_required
 from .decorators import check_readonly
-from .models import (Document, DocumentZone, DocumentTag, Revision,
-                     EditorToolbar, Attachment, AttachmentRevision)
+from .models import (Document, DocumentZone, DocumentTag,
+                     Revision, EditorToolbar)
 
 
 def dump_selected_documents(self, request, queryset):
@@ -320,21 +320,6 @@ class RevisionAdmin(admin.ModelAdmin):
     search_fields = ('title', 'slug', 'summary', 'content', 'tags')
 
 
-class AttachmentAdmin(admin.ModelAdmin):
-    fields = ('current_revision', 'mindtouch_attachment_id')
-    list_display = ('title', 'slug', 'modified', 'mindtouch_attachment_id')
-    ordering = ('title',)
-    search_fields = ('title',)
-
-
-class AttachmentRevisionAdmin(admin.ModelAdmin):
-    fields = ('attachment', 'file', 'title', 'slug',
-              'mime_type', 'description', 'is_approved')
-    list_display = ('title', 'created')
-    ordering = ('-created', 'title')
-    search_fields = ('title', 'description')
-
-
 class DocumentTagAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug')
     search_fields = ('name',)
@@ -350,5 +335,3 @@ admin.site.register(DocumentZone, DocumentZoneAdmin)
 admin.site.register(DocumentTag, DocumentTagAdmin)
 admin.site.register(Revision, RevisionAdmin)
 admin.site.register(EditorToolbar, admin.ModelAdmin)
-admin.site.register(Attachment, AttachmentAdmin)
-admin.site.register(AttachmentRevision, AttachmentRevisionAdmin)

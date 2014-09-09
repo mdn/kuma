@@ -3,7 +3,6 @@ from datetime import datetime
 import json
 import hashlib
 import logging
-import mime_types
 import re
 from urllib import urlencode
 
@@ -37,7 +36,6 @@ from django.views.decorators.clickjacking import (xframe_options_exempt,
 from django.views.decorators.csrf import csrf_exempt
 
 import constance.config
-import jinja2
 from smuggler.utils import superuser_required
 from smuggler.forms import ImportFileForm
 from teamwork.shortcuts import get_object_or_404_or_403
@@ -46,6 +44,9 @@ from access.decorators import permission_required, login_required
 from authkeys.decorators import accepts_auth_key
 from contentflagging.models import ContentFlag, FLAG_NOTIFICATIONS
 import kuma.wiki.content
+from kuma.attachments.forms import AttachmentRevisionForm
+from kuma.attachments.models import Attachment
+from kuma.attachments.utils import attachments_json
 from kuma.users.models import UserProfile
 from search.store import referrer_url
 from sumo.helpers import urlparams
@@ -60,12 +61,12 @@ from .decorators import (check_readonly, process_document_path,
                          allow_CORS_GET, prevent_indexing)
 from .events import EditDocumentEvent
 from .forms import (DocumentForm, RevisionForm, DocumentContentFlagForm,
-                    RevisionValidationForm, AttachmentRevisionForm,
-                    TreeMoveForm, DocumentDeletionForm)
+                    RevisionValidationForm, TreeMoveForm,
+                    DocumentDeletionForm)
 from .helpers import format_comment
 from .models import (Document, Revision, HelpfulVote, EditorToolbar,
                      DocumentZone, DocumentTag, ReviewTag, LocalizationTag,
-                     Attachment, DocumentDeletionLog,
+                     DocumentDeletionLog,
                      DocumentRenderedContentNotAvailable)
 from .queries import MultiQuerySet
 from .tasks import move_page
@@ -99,33 +100,6 @@ def _document_last_modified(request, document_slug, document_locale):
 
     except Document.DoesNotExist:
         return None
-
-
-def _format_attachment_obj(attachments):
-    attachments_list = []
-    for attachment in attachments:
-        obj = {
-            'title': attachment.title,
-            'date': str(attachment.current_revision.created),
-            'description': attachment.current_revision.description,
-            'url': attachment.get_file_url(),
-            'size': 0,
-            'creator': attachment.current_revision.creator.username,
-            'creator_url': attachment.current_revision.creator.get_absolute_url(),
-            'revision': attachment.current_revision.id,
-            'id': attachment.id,
-            'mime': attachment.current_revision.mime_type
-        }
-        # Adding this to prevent "UnicodeEncodeError" for certain media
-        try:
-            obj['size'] = attachment.current_revision.file.size
-        except:
-            pass
-
-        obj['html'] = mark_safe(loader.render_to_string('wiki/includes/attachment_row.html',
-                                                        {'attachment': obj}))
-        attachments_list.append(obj)
-    return attachments_list
 
 
 def _split_slug(slug):
@@ -591,7 +565,7 @@ def document(request, document_slug, document_locale):
     seo_parent_title = _get_seo_parent_title(slug_dict, document_locale)
 
     # Retrieve file attachments
-    attachments = _format_attachment_obj(doc.attachments)
+    attachments = attachments_json(doc.attachments)
 
     # Retrieve pre-parsed content hunks
     if doc.is_template:
@@ -800,14 +774,6 @@ def list_tags(request):
     tags = DocumentTag.objects.order_by('name')
     tags = paginate(request, tags, per_page=DOCUMENTS_PER_PAGE)
     return render(request, 'wiki/list_tags.html', {'tags': tags})
-
-@require_GET
-def list_files(request):
-    """Returns listing of all files"""
-    files = paginate(request,
-                     Attachment.objects.order_by('title'),
-                     per_page=DOCUMENTS_PER_PAGE)
-    return render(request, 'wiki/list_files.html', {'files': files})
 
 @require_GET
 def list_documents_for_review(request, tag=None):
@@ -1211,7 +1177,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
         parent_path = parent_doc.get_absolute_url()
         parent_slug = parent_doc.slug
 
-    attachments = _format_attachment_obj(doc.attachments)
+    attachments = attachments_json(doc.attachments)
     allow_add_attachment = (
         Attachment.objects.allow_add_attachment_by(request.user))
 
@@ -1765,7 +1731,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
 
     attachments = []
     if doc and doc.attachments:
-        attachments = _format_attachment_obj(doc.attachments)
+        attachments = attachments_json(doc.attachments)
 
     context = {
         'parent': parent_doc,
@@ -2311,138 +2277,6 @@ def load_documents(request):
     return render_to_response('admin/wiki/document/load_data_form.html',
                               context,
                               context_instance=RequestContext(request))
-
-
-def raw_file(request, attachment_id, filename):
-    """Serve up an attachment's file."""
-    # TODO: For now this just grabs and serves the file in the most
-    # naive way. This likely has performance and security implications.
-    qs = Attachment.objects.select_related('current_revision')
-    attachment = get_object_or_404(qs, pk=attachment_id)
-    if attachment.current_revision is None:
-        raise Http404
-    if request.get_host() == settings.ATTACHMENT_HOST:
-        rev = attachment.current_revision
-        resp = HttpResponse(rev.file.read(), mimetype=rev.mime_type)
-        resp["Last-Modified"] = rev.created
-        resp["Content-Length"] = rev.file.size
-        resp['X-Frame-Options'] = 'ALLOW-FROM: %s' % settings.DOMAIN
-        return resp
-    else:
-        return HttpResponsePermanentRedirect(attachment.get_file_url())
-
-
-def mindtouch_file_redirect(request, file_id, filename):
-    """Redirect an old MindTouch file URL to a new kuma file URL."""
-    attachment = get_object_or_404(Attachment, mindtouch_attachment_id=file_id)
-    return HttpResponsePermanentRedirect(attachment.get_file_url())
-
-
-def attachment_detail(request, attachment_id):
-    """Detail view of an attachment."""
-    attachment = get_object_or_404(Attachment, pk=attachment_id)
-    preview_content = ''
-    current = attachment.current_revision
-
-    if current.mime_type in ['image/png', 'image/jpeg', 'image/jpg', 'image/gif']:
-        preview_content = jinja2.Markup('<img src="%s" alt="%s" />') % (attachment.get_file_url(), attachment.title)
-
-    return render(request, 'wiki/attachment_detail.html',
-                        {'attachment': attachment,
-                         'preview_content': preview_content,
-                         'revision': attachment.current_revision})
-
-
-def attachment_history(request, attachment_id):
-    """Detail view of an attachment."""
-    # For now this is just attachment_detail with a different
-    # template. At some point in the near future, it'd be nice to add
-    # a few extra bits, like the ability to set an arbitrary revision
-    # to be current.
-    attachment = get_object_or_404(Attachment, pk=attachment_id)
-    return render(request, 'wiki/attachment_history.html',
-                        {'attachment': attachment,
-                         'revision': attachment.current_revision})
-
-
-@require_POST
-@xframe_options_sameorigin
-@login_required
-def new_attachment(request):
-    """Create a new Attachment object and populate its initial
-    revision."""
-
-    # No access if no permissions to upload
-    if not Attachment.objects.allow_add_attachment_by(request.user):
-        raise PermissionDenied
-
-    document = None
-    document_id = request.GET.get('document_id', None)
-    if document_id:
-        try:
-            document = Document.objects.get(id=int(document_id))
-        except (Document.DoesNotExist, ValueError):
-            pass
-
-    form = AttachmentRevisionForm(data=request.POST, files=request.FILES)
-    if form.is_valid():
-        rev = form.save(commit=False)
-        rev.creator = request.user
-        attachment = Attachment.objects.create(title=rev.title,
-                                               slug=rev.slug)
-        rev.attachment = attachment
-        rev.save()
-
-        if document is not None:
-            attachment.attach(document, request.user,
-                              rev.filename())
-
-        if request.POST.get('is_ajax', ''):
-            response = render(
-                request,
-                'wiki/includes/attachment_upload_results.html',
-                {'result': json.dumps(_format_attachment_obj([attachment]))})
-        else:
-            return HttpResponseRedirect(attachment.get_absolute_url())
-    else:
-        if request.POST.get('is_ajax', ''):
-            allowed_types = ', '.join(map(mime_types.guess_extension,
-                                constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES.split()))
-            error_obj = {
-                'title': request.POST.get('is_ajax', ''),
-                'error': _(u'The file provided is not valid. '
-                           u'File must be one of these types: ' + allowed_types + u'.')
-            }
-            response = render(
-                request,
-                'wiki/includes/attachment_upload_results.html',
-                {'result': json.dumps([error_obj])})
-        else:
-            response = render(request, 'wiki/edit_attachment.html',
-                                    {'form': form})
-    return response
-
-
-@login_required
-def edit_attachment(request, attachment_id):
-
-    # No access if no permissions to upload
-    if not request.user.has_perm('wiki.change_attachment'):
-        raise PermissionDenied
-
-    attachment = get_object_or_404(Attachment,
-                                   pk=attachment_id)
-    if request.method == 'POST':
-        form = AttachmentRevisionForm(data=request.POST, files=request.FILES)
-        if form.is_valid():
-            rev = form.save(commit=False)
-            rev.creator = request.user
-            rev.attachment = attachment
-            rev.save()
-            return HttpResponseRedirect(attachment.get_absolute_url())
-    else:
-        form = AttachmentRevisionForm()
-    return render(request, 'wiki/edit_attachment.html', {'form': form})
 
 
 @xframe_options_sameorigin
