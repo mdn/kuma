@@ -10,7 +10,7 @@ class Migration(DataMigration):
         """
         Switch the 'disallow_add_attachment' permission to belong to
         the attachments app instead of the wiki app.
-        
+
         """
         from django.core.exceptions import ObjectDoesNotExist
 
@@ -20,8 +20,22 @@ class Migration(DataMigration):
         ContentType, Permission = (orm['contenttypes.ContentType'],
                                    orm['auth.Permission'])
 
-        attachments_ctype = ContentType.objects.get(app_label='attachments',
-                                                   model='attachment')
+        """
+        For existing environments, we --fake up to 0003 migration. So, the
+        migrations don't create ContentType or Permission models. So, we need
+        to send the table create signals that create the necessary attachments
+        ContentType and Permission objects, and then get the attachments
+        ContentType model
+        """
+        try:
+            attachments_ctype = ContentType.objects.get(app_label='attachments',
+                                                       model='attachment')
+        except ContentType.DoesNotExist:
+            db.send_create_signal('attachments', ['AttachmentRevision'])
+            db.send_create_signal('attachments', ['Attachment'])
+            db.send_create_signal('attachments', ['DocumentAttachment'])
+            attachments_ctype = ContentType.objects.get(app_label='attachments',
+                                                       model='attachment')
 
         try:
             # Both of these are in the try/except because they might
