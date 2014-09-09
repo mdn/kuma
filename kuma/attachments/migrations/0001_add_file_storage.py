@@ -96,7 +96,7 @@ class Migration(SchemaMigration):
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True', 'blank': 'True'})
         },
         'attachments.attachment': {
-            'Meta': {'object_name': 'Attachment'},
+            'Meta': {'object_name': 'Attachment', 'db_table': "'wiki_attachment'"},
             'current_revision': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'current_rev'", 'null': 'True', 'to': "orm['attachments.AttachmentRevision']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'mindtouch_attachment_id': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'db_index': 'True'}),
@@ -105,12 +105,12 @@ class Migration(SchemaMigration):
             'title': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'})
         },
         'attachments.attachmentrevision': {
-            'Meta': {'object_name': 'AttachmentRevision'},
+            'Meta': {'object_name': 'AttachmentRevision', 'db_table': "'wiki_attachmentrevision'"},
             'attachment': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'revisions'", 'to': "orm['attachments.Attachment']"}),
-            'comment': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'comment': ('django.db.models.fields.CharField', [], {'max_length': '255', 'blank': 'True'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             'creator': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'created_attachment_revisions'", 'to': "orm['auth.User']"}),
-            'description': ('django.db.models.fields.TextField', [], {}),
+            'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'file': ('django.db.models.fields.files.FileField', [], {'max_length': '500'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_approved': ('django.db.models.fields.BooleanField', [], {'default': 'True', 'db_index': 'True'}),
