@@ -1,8 +1,8 @@
 from django.conf.urls import include, patterns, url
 from django.views.generic import TemplateView
 
+from kuma.attachments.feeds import AttachmentsFeed
 from .feeds import (DocumentsRecentFeed, DocumentsReviewFeed, RevisionsFeed,
-                    AttachmentsFeed,
                     DocumentsUpdatedTranslationParentFeed,)
 
 
@@ -64,7 +64,6 @@ urlpatterns = patterns('kuma.wiki.views',
 
     # Special pages
     url(r'^/templates$', 'list_templates', name='wiki.list_templates'),
-    url(r'^/files$', 'list_files', name='wiki.list_files'),
     url(r'^/tags$', 'list_tags', name='wiki.list_tags'),
     url(r'^/tag/(?P<tag>.+)$', 'list_documents', name='wiki.tag'),
     url(r'^/new$', 'new_document', name='wiki.new_document'),
@@ -101,7 +100,7 @@ urlpatterns = patterns('kuma.wiki.views',
     url(r'^/feeds/(?P<format>[^/]+)/revisions/?',
         RevisionsFeed(), name="wiki.feeds.recent_revisions"),
     url(r'^/feeds/(?P<format>[^/]+)/files/?',
-        AttachmentsFeed(), name="wiki.feeds.recent_files"),
+        AttachmentsFeed(), name="attachments.feeds.recent_files"),
 
     (r'^/(?P<document_path>[^\$]+)', include(document_patterns)),
 )
