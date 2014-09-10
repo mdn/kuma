@@ -30,6 +30,51 @@
         ga('set', 'dimension3', 'Yes');
     {% endif %}
 
+    {% if waffle.flag('social_account_research') and (not user.is_authenticated()) %}
+        // Measure Twitter use in an anonymous way. Create a special <img>
+        // element that should only load if the user is logged in. If the image
+        // loads, set a GA dimension.
+        // http://www.tomanthony.co.uk/blog/detect-visitor-social-networks/
+        (function() {
+            var twitterImage = document.createElement('img');
+            twitterImage.src = 'https://twitter.com/login?redirect_after_login=%2Fimages%2Fspinner.gif';
+            twitterImage.addEventListener('load', function() {
+                ga('set', 'dimension5', 'Yes');
+            });
+        })();
+
+        // Track Facebook use in an anonymous way using the Facebook SDK.
+        // https://developers.facebook.com/docs/reference/javascript/FB.getLoginStatus
+        (function() {
+            var facebookAppID = '{{ config.FACEBOOK_RESEARCH_APP_ID }}';
+            if(facebookAppID) {
+                window.fbAsyncInit = function() {
+                    FB.init({
+                        appId: facebookAppID,
+                        status: true,
+                        cookie: true,
+                        xfbml: true,
+                        version: 'v1.0'
+                    });
+
+                    FB.getLoginStatus(function(response) {
+                        if(response.status === 'not_authorized' || response.status === 'connected') {
+                            ga('set', 'dimension6', 'Yes');
+                        }
+                    });
+                };
+
+                (function(d, s, id){
+                    var js, fjs = d.getElementsByTagName(s)[0];
+                    if (d.getElementById(id)) {return;}
+                    js = d.createElement(s); js.id = id;
+                    js.src = "//connect.facebook.net/en_US/sdk.js";
+                    fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));
+            }
+        })();
+    {% endif %}
+
     (function() {
         // http://cfsimplicity.com/61/removing-analytics-clutter-from-campaign-urls
         var win = window;

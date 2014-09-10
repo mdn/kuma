@@ -1122,6 +1122,11 @@ CONSTANCE_CONFIG = dict(
         'Email address from which welcome emails will be sent',
     ),
 
+    FACEBOOK_RESEARCH_APP_ID = (
+        '',
+        'ID of the Facebook application used to determine whether an MDN user is logged in with Facebook',
+    ),
+
 )
 
 BASKET_URL = 'https://basket.mozilla.com'
