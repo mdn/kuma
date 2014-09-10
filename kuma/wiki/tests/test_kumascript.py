@@ -33,3 +33,10 @@ class KumascriptClientTests(TestCaseBase):
         for n in ('title', 'slug', 'locale', 'path'):
             eq_(env_vars[n], result_vars[n])
         eq_(sorted([u'foo', u'bar', u'baz']), sorted(result_vars['tags']))
+
+    def test_url_normalization(self):
+        """Ensure that template URLs are normalized to lowercase for kumascript"""
+        eq_(kumascript._format_slug_for_request('Template:SomEthing'), 'Template:something')
+        eq_(kumascript._format_slug_for_request('Template:SomEthing:Template:More'),
+            'Template:something:template:more')
+
