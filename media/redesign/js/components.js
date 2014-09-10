@@ -445,14 +445,23 @@
             }
             $item.attr(processedKey, true);
 
-
-            // Wrap the text in a div
-            $item.html('<div class="notification-message">' + $item.html() + '</div>');
+            // Populating notification content via vanilla JS so we don't lose any
+            // attached events to elements within the message itself
+            // The jQuery version is ugly: http://stackoverflow.com/a/4399718
+            var $messageWrapper = $('<div class="notification-message"></div>');
+            var children = $item.get(0).childNodes;
+            while(children && children.length) {
+                $messageWrapper.get(0).appendChild(children[0]);
+            }
+            $messageWrapper.appendTo($item);
 
             // Add an icon if needed
             var icon = defaultState.iconName;
             if(statesObj[options.level]) {
                 icon = statesObj[options.level].iconName;
+            }
+            if(options.level) {
+                $item.addClass(options.level);
             }
 
             $item.prepend('<div class="notification-img"><i aria-hidden="true" class="'+ icon +'"></i></div>');
