@@ -1,6 +1,5 @@
 import re
 
-import magic
 from tower import ugettext_lazy as _lazy
 from tower import ugettext as _
 
@@ -8,7 +7,6 @@ from django import forms
 from django.conf import settings
 from django.forms.widgets import CheckboxSelectMultiple
 
-import constance.config
 
 from contentflagging.forms import ContentFlagForm
 import kuma.wiki.content
@@ -16,7 +14,7 @@ from sumo.form_fields import StrippedCharField
 from .constants import (SLUG_CLEANSING_REGEX, REVIEW_FLAG_TAGS,
                         LOCALIZATION_FLAG_TAGS, RESERVED_SLUGS)
 from .models import (Document, Revision,
-                     AttachmentRevision, valid_slug_parent)
+                     valid_slug_parent)
 
 
 TITLE_REQUIRED = _lazy(u'Please provide a title.')
@@ -53,7 +51,6 @@ OTHER_COLLIDES = _lazy(u'Another document with this metadata already exists.')
 
 MIDAIR_COLLISION = _lazy(u'This document was modified while you were '
                          'editing it.')
-MIME_TYPE_INVALID = _lazy(u'Files of this type are not permitted.')
 MOVE_REQUIRED = _lazy(u"Changing this document's slug requires "
                       u"moving it and its children.")
 
@@ -393,47 +390,6 @@ class RevisionValidationForm(RevisionForm):
         self.cleaned_data['slug'] = self.data['slug'] = original
 
         return self.cleaned_data['slug']
-
-
-class AttachmentRevisionForm(forms.ModelForm):
-    # Unlike the DocumentForm/RevisionForm split, we have only one
-    # form for file attachments. The handling view will determine if
-    # this is a new revision of an existing file, or the first version
-    # of a new file.
-    #
-    # As a result of this, calling save(commit=True) is off-limits.
-    class Meta:
-        model = AttachmentRevision
-        fields = ('file', 'title', 'description', 'comment')
-
-    def clean_file(self):
-        uploaded_file = self.cleaned_data['file']
-        m_mime = magic.Magic(mime=True)
-        mime_type = m_mime.from_buffer(uploaded_file.read(1024)).split(';')[0]
-        uploaded_file.seek(0)
-
-        if mime_type not in \
-                constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES.split():
-            raise forms.ValidationError(MIME_TYPE_INVALID)
-        return self.cleaned_data['file']
-
-    def save(self, commit=True):
-        if commit:
-            raise NotImplementedError
-        rev = super(AttachmentRevisionForm, self).save(commit=False)
-
-        uploaded_file = self.cleaned_data['file']
-        m_mime = magic.Magic(mime=True)
-        mime_type = m_mime.from_buffer(uploaded_file.read(1024)).split(';')[0]
-        rev.slug = uploaded_file.name
-
-        # TODO: we probably want a "manually fix the mime-type"
-        # ability in the admin.
-        if mime_type is None:
-            mime_type = 'application/octet-stream'
-        rev.mime_type = mime_type
-
-        return rev
 
 
 class TreeMoveForm(forms.Form):
