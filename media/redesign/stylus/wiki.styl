@@ -193,7 +193,15 @@ article, .quick-links {
 article {
     position: relative;
 
-    .external-icon:not([href^='https://mdn.mozillademos.org']) {
+    a {
+        text-decoration: none;
+
+        &:hover, &:focus, &:active {
+            text-decoration: underline;
+        }
+    }
+
+    .external-icon:not([href^='https://mdn.mozillademos.org']):not(.ignore-external) {
         white-space: pre-line;
 
         html[dir='ltr'] &:before, html[dir='rtl'] &:after {
@@ -216,13 +224,6 @@ article {
         }
     }
 
-    a {
-        text-decoration: none;
-
-        &:hover, &:focus, &:active {
-            text-decoration: underline;
-        }
-    }
 }
 
 /* header and draft notices */
