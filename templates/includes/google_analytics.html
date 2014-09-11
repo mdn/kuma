@@ -7,7 +7,7 @@
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
     })(window,document,'script','//www.google-analytics.com/{{ GA_FILE }}.js','ga');
 
-    ga('create', 'UA-36116321-5', 'mozilla.org');
+    ga('create', '{{ config.GOOGLE_ANALYTICS_ACCOUNT }}', 'mozilla.org');
     ga('set', 'anonymizeIp', true);
 
     {% if request.user.is_authenticated() %}
