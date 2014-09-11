@@ -217,7 +217,7 @@
         if ($body.is('.edit, .new, .translate')) {
             initMetadataEditButton();
             initSaveAndEditButtons();
-            if(window.waffle && window.waffle.flag_is_active('dirtiness_tracking')) {
+            if(!$body.is('.is-template') && window.waffle && window.waffle.flag_is_active('dirtiness_tracking')) {
                 initDirtinessTracking();
             }
             initArticlePreview();
