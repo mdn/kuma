@@ -1,6 +1,8 @@
 (function(win, doc, $) {
     'use strict';
 
+    var $doc = $(doc);
+
     /*
         Persona Login via Django AllAuth
     */
@@ -100,21 +102,21 @@
     })();
 
     // Track users successfully logging in
-    $(document).on('mdn:login', function(service) {
-        mdn.optimizely.push(['trackEvent', 'logout-' + service]);
+    $doc.on('mdn:login', function(e, service) {
+        mdn.optimizely.push(['trackEvent', 'login-' + service]);
         mdn.analytics.trackEvent({
             category: 'Authentication',
-            action: 'Signed out',
+            action: 'Finished sign-in',
             label: service
         });
     });
 
     // Track users successfully logging out
-    $(document).on('mdn:logout', function(service) {
-        mdn.optimizely.push(['trackEvent', 'login-' + service]);
+    $doc.on('mdn:logout', function(e, service) {
+        mdn.optimizely.push(['trackEvent', 'logout-' + service]);
         mdn.analytics.trackEvent({
             category: 'Authentication',
-            action: 'Finished sign-in',
+            action: 'Signed out',
             label: service
         });
     });
@@ -146,7 +148,7 @@
 
             // After seeing the notice, the user tried to sign in with a second
             // social account and was successful.
-            $(document).on('mdn:login', function(service) {
+            $doc.on('mdn:login', function(service) {
                 if(matchStored) {
                     mdn.Notifier.growl('You can now use ' + matchStored + ' to sign in to this MDN profile.', { duration: 0, closable: true }).success();
                     localStorage.removeItem(matchKey);
@@ -172,13 +174,13 @@
             // User just logged in
             if(serviceCurrent && !serviceStored) {
                 localStorage.setItem(serviceKey, serviceCurrent);
-                $(document).trigger('mdn:login', [ serviceCurrent ]);
+                $doc.trigger('mdn:login', [ serviceCurrent ]);
             }
 
             // User just logged out
             else if(!serviceCurrent && serviceStored) {
                 localStorage.removeItem(serviceKey);
-                $(document).trigger('mdn:logout', [ serviceStored ]);
+                $doc.trigger('mdn:logout', [ serviceStored ]);
             }
 
         }
