@@ -446,7 +446,9 @@ article {
             set-smaller-font-size();
 
             &.disabled, &[disabled] {
-                opacity: 0.8;
+                opacity: 0.4;
+                vendorize(box-shadow, none);
+                cursor: not-allowed;
             }
         }
 
