@@ -4,11 +4,14 @@ from django import forms
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 
 from tower import ugettext_lazy as _
 
-from allauth.account.adapter import DefaultAccountAdapter
+from allauth.account.adapter import DefaultAccountAdapter, get_adapter
+from allauth.exceptions import ImmediateHttpResponse
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
+from allauth.socialaccount.models import SocialLogin
 
 
 REMOVE_BUG_URL = "https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=---&comment=Please%20delete%20my%20MDN%20account.%20My%20username%20is%3A%0D%0A%0D%0A[username]&component=User%20management&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-791=X&flag_type-800=X&flag_type-803=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=All&priority=--&product=Mozilla%20Developer%20Network&rep_platform=All&short_desc=Account%20deletion%20request%20for%20[username]&status_whiteboard=[account-mod]&target_milestone=---&version=unspecified&format=__standard__"
@@ -106,3 +109,37 @@ class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
         if len(accounts) == 1:
             raise forms.ValidationError(REMOVE_MESSAGE %
                                         {'bug_form_url': REMOVE_BUG_URL})
+
+    def pre_social_login(self, request, sociallogin):
+        """
+        Invoked just after a user successfully authenticates via a
+        social provider, but before the login is actually processed.
+
+        We use it to:
+            1. Check if the user is connecting accounts via signup page
+            2. store the name of the socialaccount provider in the user's session.
+        """
+        session_login_data = request.session.get('socialaccount_sociallogin', None)
+        request_login = sociallogin
+
+        # Is there already a sociallogin_provider in the session?
+        if (session_login_data):
+            session_login = SocialLogin.deserialize(session_login_data)
+            # If the provider in the session is different from the provider in the
+            # request, the user is connecting a new provider to an existing account
+            if session_login.account.provider != request_login.account.provider:
+                # Does the request sociallogin match an existing user?
+                # if not getattr(request_login, 'is_existing', False):
+                if not request_login.is_existing:
+                    # go straight back to signup page with an error message
+                    # BEFORE allauth over-writes the session sociallogin
+                    level = messages.ERROR
+                    message = "socialaccount/messages/account_not_found.txt"
+                    get_adapter().add_message(request, level, message)
+                    url = reverse('socialaccount_signup')
+                    resp = HttpResponseRedirect(url)
+                    raise ImmediateHttpResponse(resp)
+        # TODO: Can the code that uses this just use request.session['socialaccount_sociallogin'].account.provider instead?
+        request.session['sociallogin_provider'] = (sociallogin
+                                                   .account.provider)
+        request.session.modified = True
