@@ -844,7 +844,8 @@
     //
     function initDirtinessTracking() {
       // These are all fields that count towards an edit, excluding the editor and tags
-      var $metaDataFields = $('.metadata input:not([type="hidden"]), .metadata select');
+      var metaSelector = 'input:not([type="hidden"]), textarea, select';
+      var $metaDataFields = $form.find(metaSelector);
       var editor = CKEDITOR.instances['id_content'];
 
       function onDirty() {
@@ -861,7 +862,13 @@
         editor.resetDirty();
         $metaDataFields.each(function() {
           var $this = $(this);
-          $this.data('original', $this.val());
+          var value = $this.val();
+
+          if($this.attr('type') == 'checkbox') {
+            value = this.checked;
+          }
+
+          $this.data('original', value);
         })
         $form.find('.dirty').removeClass('dirty');
         $form.trigger('mdn:clean');
@@ -887,16 +894,34 @@
           $form.find('.editor-container').removeClass('dirty').trigger('mdn:clean');
         }
       }
+
+      var interval;
       editor.on('contentDom', function() {
-        // CKEditor 4.2 allows the 'change' event to be used though that's not in yet
+        // Basic events we know trigger a change
         editor.document.on('keyup', checkEditorDirtiness);
         editor.on('paste setData', checkEditorDirtiness);
+
+        // Since CKE doesn't provide us a change event yet, a constant check is still the best way to
+        // determine if the editor has changed.
+        if(interval) clearInterval(interval);
+        interval = setInterval(checkEditorDirtiness, 1500); // 1 seconds is arbitrary, we can update as desired
       });
 
+      $(win).on('beforeunload', function() {
+        if(interval) clearInterval(interval);
+      });
+
+
       // Keep track of metadata dirtiness
-      $metaDataFields.on('change input', function() {
+      $form.on('change input', metaSelector, function() {
         var $this = $(this);
-        if ($this.val() !== $this.data('original')) {
+        var value = $this.val();
+
+        if($this.attr('type').toLowerCase() == 'checkbox') {
+            value = this.checked;
+        }
+
+        if (value !== $this.data('original')) {
           if (!$this.hasClass('dirty')) {
             $this.addClass('dirty').trigger('mdn:dirty');
           }
