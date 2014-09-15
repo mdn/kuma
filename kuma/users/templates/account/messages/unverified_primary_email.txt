@@ -1,1 +1,1 @@
-{% trans %}Your primary email address must be verified.{% endtrans %}
+{% trans %}Your primary email address must be confirmed.{% endtrans %}
