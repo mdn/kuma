@@ -43,6 +43,7 @@ from teamwork.shortcuts import get_object_or_404_or_403
 from access.decorators import permission_required, login_required
 from authkeys.decorators import accepts_auth_key
 from contentflagging.models import ContentFlag, FLAG_NOTIFICATIONS
+from devmo.decorators import never_cache
 import kuma.wiki.content
 from kuma.attachments.forms import AttachmentRevisionForm
 from kuma.attachments.models import Attachment
@@ -837,6 +838,7 @@ def list_top_level_documents(request):
 @login_required
 @check_readonly
 @prevent_indexing
+@never_cache
 @transaction.autocommit  # For rendering bookkeeping, needs immediate updates
 @newrelic.agent.function_trace()
 def new_document(request):
@@ -982,6 +984,7 @@ def new_document(request):
 @process_document_path
 @check_readonly
 @prevent_indexing
+@never_cache
 @transaction.autocommit  # For rendering bookkeeping, needs immediate updates
 @newrelic.agent.function_trace()
 def edit_document(request, document_slug, document_locale, revision_id=None):
@@ -1544,6 +1547,7 @@ def select_locale(request, document_slug, document_locale):
 @process_document_path
 @check_readonly
 @prevent_indexing
+@never_cache
 @transaction.autocommit  # For rendering bookkeeping, needs immediate updates
 def translate(request, document_slug, document_locale, revision_id=None):
     """Create a new translation of a wiki document.
