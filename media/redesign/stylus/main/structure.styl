@@ -352,6 +352,7 @@ a.github-button {
     border-radius: 8px;
     border: 1px solid transparent;
     display: inline-block;
+    min-width: 90px;
 
     {$selector-icon} {
         margin-left: 0;
@@ -376,15 +377,20 @@ a.github-button {
 
         .submenu-close {
             color: inherit;
+            margin: 0;
             position: absolute;
-            top: 4px;
-            bidi-style(left, -6px, right, auto);
+            top: 0px;
+            bidi-style(right, -6px, left, auto);
         }
 
         .oauth-login-picker {
             display: block;
         }
     }
+}
+
+.oauth-login-options-text-no-icons {
+    display: none;
 }
 
 .oauth-icon {
@@ -584,12 +590,21 @@ footer {
         }
     }
 
-    .active .oauth-login-options-text {
-        visibility: hidden;
+    .oauth-login-options-text {
+        bidi-style(padding-right, 20px, padding-left, 0);
+    }
+
+    /* remove options to click icons to sign in on smaller screens where a corse pointer is more likely to be present */
+    .oauth-login-options-text-icons {
+        display: none;
+    }
+
+    .oauth-login-options-text-no-icons {
+        display: inline;
     }
 
     .oauth-icon {
-        pointer-events: none;
+        display: none;
     }
 }
 
