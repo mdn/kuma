@@ -71,7 +71,6 @@
   var message = "{{ _("Do you really want to remove the selected email address?") }}";
   var actions = document.getElementsByName('action_remove');
   for (var i = 0; i < actions.length; i++) {
-    console.log('loop');
     actions[i].addEventListener("click", function(e) {
       if (! confirm(message)) {
         e.preventDefault();
