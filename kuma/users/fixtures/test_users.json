@@ -166,6 +166,18 @@
     },
     {
         "fields": {
+            "user": 8,
+            "uid": "testuser2@test.com",
+            "provider": "github",
+            "last_login": "2011-06-03 16:12:08",
+            "date_joined": "2011-06-03 16:12:08",
+            "extra_data": {}
+        },
+        "model": "socialaccount.socialaccount",
+        "pk": 8
+    },
+    {
+        "fields": {
             "date_joined": "2011-06-03 16:12:08",
             "email": "testuser01@test.com",
             "first_name": "Test",

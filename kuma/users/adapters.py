@@ -3,8 +3,7 @@ import re
 from django import forms
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
 
 from tower import ugettext_lazy as _
 
@@ -123,22 +122,21 @@ class KumaSocialAccountAdapter(DefaultSocialAccountAdapter):
         request_login = sociallogin
 
         # Is there already a sociallogin_provider in the session?
-        if (session_login_data):
+        if session_login_data:
             session_login = SocialLogin.deserialize(session_login_data)
             # If the provider in the session is different from the provider in the
             # request, the user is connecting a new provider to an existing account
             if session_login.account.provider != request_login.account.provider:
                 # Does the request sociallogin match an existing user?
-                # if not getattr(request_login, 'is_existing', False):
                 if not request_login.is_existing:
                     # go straight back to signup page with an error message
                     # BEFORE allauth over-writes the session sociallogin
                     level = messages.ERROR
                     message = "socialaccount/messages/account_not_found.txt"
                     get_adapter().add_message(request, level, message)
-                    url = reverse('socialaccount_signup')
-                    resp = HttpResponseRedirect(url)
-                    raise ImmediateHttpResponse(resp)
+                    raise ImmediateHttpResponse(
+                        redirect('socialaccount_signup')
+                    )
         # TODO: Can the code that uses this just use request.session['socialaccount_sociallogin'].account.provider instead?
         request.session['sociallogin_provider'] = (sociallogin
                                                    .account.provider)
