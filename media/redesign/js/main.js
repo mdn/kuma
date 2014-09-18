@@ -11,9 +11,7 @@
     */
     (function() {
         var $mainItems = $('#main-nav > ul > li');
-        $mainItems.find('> a').mozMenu({
-            brickOnClick: function(e) { return e.target.tagName == 'I'; }
-        });
+        $mainItems.find('> a').mozMenu();
         $mainItems.find('.submenu').mozKeyboardNav();
     })();
 
