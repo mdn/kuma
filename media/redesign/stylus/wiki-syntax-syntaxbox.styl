@@ -1,0 +1,22 @@
+/*
+    Syntax boxes are used for short, non-functional code snippets.
+    .syntaxbox is used anywhere (DOM, JS, CSS, ...)
+    .twopartsyntaxbox is used for CSS properties
+*/
+
+pre.syntaxbox,
+pre.twopartsyntaxbox {
+    background: $code-block-background-alt-color;
+}
+
+pre.twopartsyntaxbox {
+    margin-bottom: 0;
+}
+
+/* Allow the content of the syntax box to wrap, to prevent horizontal scrolling */
+
+pre.syntaxbox code[class*="language-"],
+pre.twopartsyntaxbox code[class*="language-"] {
+    white-space: pre-line;
+}
+
