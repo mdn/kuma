@@ -30,23 +30,31 @@
             var $parent = $self.parent();
             var initialized;
 
-            // Prevent the default behavior of the trigger element if this is set
-            var brick = settings.brickOnClick;
-            if(brick) {
-                $self.on('click', function(e) {
-                    if(typeof brick != 'function' || brick(e)) e.preventDefault();
-                });
-            }
-
             // Find the trigger element's submenu
             var $submenu = $self.submenu = (settings.submenu || $parent.find('.submenu'));
+
+            // Prevent the default behavior of the trigger element if this is set
+            var brick = settings.brickOnClick;
+            if(brick && $submenu.length) {
+                $self.on('click', function(e) {
+                    if((typeof brick == 'function' && brick(e)) || brick) e.preventDefault();
+                });
+            }
 
             // Provide the settings to both the submenu and item as either can be found independently
             // The settings for the current menu and the "$.fn.mozMenu.$openMenu" can be different
             $self.settings = $submenu.settings = settings;
 
             // Add a mouseenter / focus event to get the showing of the submenu in motion
-            $self.on('mouseenter focus', function() {
+            var assumeMobile = false;
+            $self.on('touchstart mouseenter focus', function(startEvent) {
+                if(startEvent.type == 'touchstart') {
+                    startEvent.stopImmediatePropagation();
+                    if($self.submenu.length) {
+                        startEvent.preventDefault();
+                    }
+                    assumeMobile = true;
+                }
 
                 // If this is a fake focus set by us, ignore this
                 if($submenu.ignoreFocus) return;
@@ -85,9 +93,11 @@
                     });
 
                     // Cancel the close timeout if moving from main menu item to submenu
-                    $submenu.on('mouseenter focusin', function() {
-                        clear(closeTimeout);
-                    });
+                    if(!assumeMobile) {
+                        $submenu.on('mouseenter focusin', function() {
+                            clear(closeTimeout);
+                        });
+                    }
 
                     // Close if it's the last link and they press tab *or* the hit escape
                     $submenu.on('keyup', function(e) {
