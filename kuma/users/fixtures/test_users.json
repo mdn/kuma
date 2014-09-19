@@ -119,6 +119,53 @@
     },
     {
         "fields": {
+            "user": 8,
+            "uid": "testuser2@test.com",
+            "provider": "persona",
+            "last_login": "2011-06-03 16:12:08",
+            "date_joined": "2011-06-03 16:12:08",
+            "extra_data": {"status": "okay",
+                            "audience": "https://developer-local.allizom.org",
+                            "expires": 1408466018450,
+                            "email": "testuser2@test.com",
+                            "issuer": "gmail.login.persona.org"}
+
+        },
+        "model": "socialaccount.socialaccount",
+        "pk": 8
+    },
+    {
+        "fields": {
+            "user": 8,
+            "email": "testuser2@test.com",
+            "verified": "True",
+            "primary": "True"
+        },
+        "model": "account.emailaddress",
+        "pk": 8
+    },
+    {
+        "fields": {
+            "user": 8,
+            "email": "testuser2+verified@test.com",
+            "verified": "True",
+            "primary": "False"
+        },
+        "model": "account.emailaddress",
+        "pk": 9
+    },
+    {
+        "fields": {
+            "user": 8,
+            "email": "testuser2+unverified@test.com",
+            "verified": "False",
+            "primary": "False"
+        },
+        "model": "account.emailaddress",
+        "pk": 10
+    },
+    {
+        "fields": {
             "date_joined": "2011-06-03 16:12:08",
             "email": "testuser01@test.com",
             "first_name": "Test",

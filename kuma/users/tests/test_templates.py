@@ -6,7 +6,8 @@ from django.contrib.auth.models import User
 from sumo.urlresolvers import reverse
 from sumo.tests import TestCase
 from .test_views import TESTUSER_PASSWORD
-from . import verify_strings_in_response, TestCaseBase
+from . import (verify_strings_in_response, verify_strings_not_in_response,
+               TestCaseBase)
 
 
 # TODO: Figure out why TestCaseBase doesn't work here
@@ -43,8 +44,21 @@ class AccountEmailTests(TestCaseBase):
         ok_(len(r.redirect_chain) > 0)
         ok_('Please sign in' in r.content)
 
-    def test_account_email_page(self):
+    def test_account_email_page_single_email(self):
         u = User.objects.get(username='testuser')
+        self.client.login(username=u.username, password=TESTUSER_PASSWORD)
+        url = reverse('account_email')
+        r = self.client.get(url)
+        eq_(200, r.status_code)
+
+        test_strings = ['is your <em>primary</em> email address']
+        verify_strings_in_response(test_strings, r)
+
+        test_strings = ['Make Primary', 'Re-send Confirmation', 'Remove']
+        verify_strings_not_in_response(test_strings, r)
+
+    def test_account_email_page_multiple_emails(self):
+        u = User.objects.get(username='testuser2')
         self.client.login(username=u.username, password=TESTUSER_PASSWORD)
         url = reverse('account_email')
         r = self.client.get(url)
