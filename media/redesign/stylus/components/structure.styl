@@ -6,51 +6,14 @@
     Classes which should be mirror extensions and mixins - mixins.styl
     These classes are used within wiki content so we must have them available as classes as well
 */
-@import '../includes/vars';
-@import '../includes/mixins';
 
-.offscreen {
-    offscreen();
-}
-
-.clear {
-    clearfix();
-}
-
-.title {
-    title-header();
-}
-
-.smaller {
-    set-smaller-font-size();
-}
-
-.larger {
-    set-larger-font-size();
-}
-
-.grid-padding {
-    padding: $grid-spacing;
-}
-
-.heading-link {
-    font-style: italic;
-    set-font-size($base-font-size);
-    font-weight: normal;
-    display: inline-block;
-    margin-left: ($grid-spacing * 2);
-}
+@require '../includes/vars';
+@require '../includes/mixins';
+@require '../includes/mixin_draw-grid';
 
 /* grid setup for direct class uses */
 draw-grid();
 
-/* centers pieces of the page, mostly the header, footer, and main elements */
-.center {
-    margin: 0 auto;
-    position: relative;
-    max-width: $max-width-default;
-    add-center-spacing();
-}
 
 /* global notices (via soapbox) */
 .global-notice {
@@ -485,55 +448,7 @@ a.github-button {
     }
 }
 
-main {
-    background: #fff;
-    min-height: 200px;
 
-    > .center {
-        padding-top: $first-content-top-padding;
-    }
-}
-
-/* footer */
-footer {
-    set-smaller-font-size();
-    background: #fff;
-    padding:  $first-content-top-padding 0 0 0;
-
-    p, label {
-        font-style: italic;
-    }
-
-    p {
-        bidi-style(padding-left, 92px, padding-right, 0, true);
-        padding-top: 10px;
-        padding-bottom: 0;
-        position: relative;
-        min-height: 62px;
-
-        &:after {
-            bidi-style(left, 0, right, 0);
-            content: '';
-            display: block;
-            width: 65px;
-            height: 60px
-            background-image: url($logo-sprite-url);
-            background-position: 0px -83px;
-            background-size: 205px auto;
-            background-repeat: no-repeat;
-            position: absolute;
-            top: 0;
-        }
-    }
-
-    .column-strip {
-        padding-top: 10px;
-    }
-
-    label {
-        padding-right: 4px;
-    }
-}
 
 /* feature testing */
 #feature-test-element {
@@ -550,16 +465,6 @@ footer {
     @media $media-query-mobile { z-index: 4; }
 }
 
-/* simple hiding of elements */
-.hidden {
-    display: none;
-}
-
-/* disabling of elements */
-.disabled, [disabled] {
-    pointer-events: none;
-    cursor: default;
-}
 
 /* tablet updates */
 @media $media-query-tablet {
@@ -783,7 +688,7 @@ ol.pagination {
         padding: 0 2px;
 
         &.prev, &.prev a {
-            bidi-style(padding-left, 0, padding-right, auto);
+            bidi-style(padding-left, 0, padding-right, inherit);
         }
 
         a {

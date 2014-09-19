@@ -13,49 +13,8 @@
     .column-container-reverse reverses the floats so that the last visual element appears first in the child list for a11y
 */
 
-@import 'vars';
-@import 'mixins';
-
-
-/* column width definitions */
-$column-1 {
-    width: 5.5%;
-}
-$column-2 {
-    width: 14%;
-}
-$column-3, $column-strip, $column-quarter {
-    width: 22.5%;
-}
-$column-4, $column-third {
-    width: 31%;
-}
-$column-5 {
-    width: 39.5%;
-}
-$column-6, $column-half {
-    width: 48%;
-}
-$column-7 {
-    width: 56.5%;
-}
-$column-8 {
-    width: 65%;
-}
-$column-9, $column-main {
-    width: $grid-width-column-main;
-}
-$column-10 {
-    width: 82%;
-}
-$column-11 {
-    width: 90.5%;
-}
-$column-12, $column-all {
-    width: auto;
-    margin: 0;
-    float: none;
-}
+@require '../includes/vars';
+@require '../includes/mixins';
 
 /* Outputs relevant grid styles once */
 draw-grid() {

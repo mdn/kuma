@@ -138,12 +138,14 @@ $table-blue = #d4dde4;
         }
     }
 
+    $licenseblock-padding = 10px;
+
     .originaldocinfo, .licenseblock {
         background: #f1f1f1;
         border: 1px solid #ccc;
         font-family: Verdana, Tahoma, sans-serif;
         font-size: $smaller-font-size;
-        padding: 10px;
+        padding: $licenseblock-padding;
     }
 
     .originaldocinfo {
@@ -158,7 +160,7 @@ $table-blue = #d4dde4;
 
     .licenseblock {
         p {
-            margin-bottom: @padding;
+            margin-bottom: $licenseblock-padding;
             &:last-child {
                 margin-bottom: 0;
             }

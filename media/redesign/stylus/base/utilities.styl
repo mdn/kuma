@@ -1,0 +1,75 @@
+@require '../includes/vars';
+@require '../includes/mixins';
+
+/*
+    Utility classes
+*/
+
+.offscreen {
+    offscreen();
+}
+
+.clear {
+    clearfix();
+}
+
+/* centers pieces of the page, mostly the header, footer, and main elements */
+.center {
+    margin: 0 auto;
+    position: relative;
+    max-width: $max-width-default;
+    add-center-spacing();
+}
+
+/* simple hiding of elements */
+.hidden {
+    display: none;
+}
+
+.title {
+    title-header();
+}
+
+.smaller {
+    set-smaller-font-size();
+}
+
+.larger {
+    set-larger-font-size();
+}
+
+.grid-padding {
+    padding: $grid-spacing;
+}
+
+.heading-link {
+    font-style: italic;
+    set-font-size($base-font-size);
+    font-weight: normal;
+    display: inline-block;
+    margin-left: ($grid-spacing * 2);
+}
+
+/*  media block
+    for use when you want an item of defined width on the left and some stuff on the right of it
+    http://www.stubbornella.org/content/2010/06/25/the-media-object-saves-hundreds-of-lines-of-code/ */
+.media,
+.media-body {
+    overflow: hidden;
+    _overflow: visible;
+    zoom: 1;
+}
+
+.media-img {
+    float: left;
+    margin-right: ($grid-spacing / 2);
+
+    img {
+        display: block;
+    }
+}
+
+.media-imgExt {
+    float: right;
+    margin-left: ($grid-spacing / 2);
+}
