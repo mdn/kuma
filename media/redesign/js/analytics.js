@@ -38,7 +38,8 @@
             };
 
             // If Analytics has loaded, go ahead with tracking
-            if (ga) {
+            // Checking for ".create" due to Ghostery mocking of ga
+            if (ga && ga.create) {
                 // Send event to GA
                 ga('send', data);
             }
@@ -103,7 +104,7 @@
             Sends universal analytics client side error
         */
         trackError: function(description) {
-            win.ga && ga('send', 'exception', {
+            win.ga && ga.create && ga('send', 'exception', {
                 'exDescription': description
             });
         }
