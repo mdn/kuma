@@ -45,8 +45,9 @@
 
         // The options text is only hidden on tablets and lower, so only do the
         // JavaScript piece of the CSS is controlling text visibility
+        var $noIconsElement = $container.find('.oauth-login-options-text-no-icons');
         var doMoveCloseButton = function() {
-            return $container.find('.oauth-login-options-text').css('visibility') == 'hidden';
+            return $noIconsElement.css('display') != 'none';
         };
 
         $options.mozMenu({
