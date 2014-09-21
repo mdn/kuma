@@ -74,6 +74,7 @@ var CKBUILDER_CONFIG = {
 		'mdn-system-integration': 1,
 		'mdn-table-customization': 1,
 		'mdn-toggle-block': 1,
+		'mdn-wrapstyle': 1,
 		descriptionlist: 1,
 		tablesort: 1,
 		texzilla: 1,

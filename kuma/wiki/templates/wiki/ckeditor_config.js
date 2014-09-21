@@ -59,7 +59,7 @@
       'toolbar,undo,wsc,wysiwygarea,' +
       // MDN's plugins.
       'mdn-attachment,mdn-format,mdn-image-attachment,mdn-link-launch,mdn-redirect,mdn-sample-finder,mdn-sampler,' +
-      'mdn-syntaxhighlighter,mdn-system-integration,mdn-table-customization,mdn-toggle-block,' +
+      'mdn-syntaxhighlighter,mdn-system-integration,mdn-table-customization,mdn-toggle-block,mdn-wrapstyle,' +
       // Other plugins.
       'descriptionlist,tablesort,texzilla,youtube';
 
@@ -69,7 +69,7 @@
     }
 
     // Need to be ported to v4.
-    // config.extraPlugins = 'mdn-link,mdn-wrapstyle';
+    // config.extraPlugins = 'mdn-link';
 
     // Disable the Advanced Content Filter because too many pages
     // use unlimited HTML.
@@ -96,15 +96,15 @@
     if(!CKEDITOR.stylesSet.registered['default']) {
       CKEDITOR.stylesSet.add('default', [
         { name: 'None', element: 'p' },
-        { name: 'Note box', element: 'div', attributes: { 'class': 'note' }, wrap: true },
-        { name: 'Warning box', element: 'div', attributes: { 'class': 'warning' }, wrap: true },
-        { name: 'Callout box', element: 'div', attributes: { 'class': 'geckoVersionNote' }, wrap: true },
-        { name: 'Two columns', element: 'div', attributes: { 'class': 'twocolumns' }, wrap: true },
-        { name: 'Three columns', element: 'div', attributes: { 'class': 'threecolumns' }, wrap: true },
-        { name: 'SEO Summary', element: 'span', attributes: { 'class': 'seoSummary' }, wrap: false },
-        { name: 'Article Summary', element: 'div', attributes: { 'class': 'summary' }, wrap: true },
-        { name: 'Syntax Box', element: 'div', attributes: { 'class': 'syntaxbox' }, wrap: false },
-        { name: 'Right Sidebar', element: 'div', attributes: { 'class': 'standardSidebar' }, wrap: false }
+        { name: 'Note box', element: 'div', attributes: { 'class': 'note' }, type: 'wrap' },
+        { name: 'Warning box', element: 'div', attributes: { 'class': 'warning' }, type: 'wrap' },
+        { name: 'Callout box', element: 'div', attributes: { 'class': 'geckoVersionNote' }, type: 'wrap' },
+        { name: 'Two columns', element: 'div', attributes: { 'class': 'twocolumns' }, type: 'wrap' },
+        { name: 'Three columns', element: 'div', attributes: { 'class': 'threecolumns' }, type: 'wrap' },
+        { name: 'Article Summary', element: 'div', attributes: { 'class': 'summary' }, type: 'wrap' },
+        { name: 'Syntax Box', element: 'div', attributes: { 'class': 'syntaxbox' } },
+        { name: 'Right Sidebar', element: 'div', attributes: { 'class': 'standardSidebar' } },
+        { name: 'SEO Summary', element: 'span', attributes: { 'class': 'seoSummary' } }
       ]);
     }
 
