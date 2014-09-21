@@ -3,7 +3,7 @@
 CKEDITOR.plugins.add('mdn-table-customization', {
   requires: 'table',
 
-  init: function(editor) {
+  onLoad: function() {
     CKEDITOR.on('dialogDefinition', function(evt) {
       var dialogName = evt.data.name,
         dialogDefinition = evt.data.definition;

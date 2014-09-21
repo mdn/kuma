@@ -1,7 +1,7 @@
 'use strict';
 
 CKEDITOR.plugins.add('mdn-attachment', {
-  init: function(editor) {
+  onLoad: function() {
     // Utility method for updating the attachments dropdown
     // Should be used within the mdn-link and image dialogs
     mdn.ckeditor.updateAttachments = function(select, url, filter) {
