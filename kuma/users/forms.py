@@ -4,6 +4,7 @@ import time
 from django import forms
 from django.conf import settings
 from django.http import HttpResponseServerError
+from django.contrib.auth.models import User
 
 import basket
 from basket.base import BasketException
@@ -94,6 +95,9 @@ class UserProfileEditForm(forms.ModelForm):
                                 max_length=255, required=False)
     expertise = forms.CharField(label=_(u'Expertise'),
                                 max_length=255, required=False)
+    username = forms.RegexField(label=_(u'Username'), regex=r'^[\w_\+-]+$',
+                                max_length=30, required=False,
+                                error_message=_(u"Usernames can only contain letters, numbers and -, _, + characters."))
 
     class Meta:
         model = UserProfile
@@ -119,6 +123,13 @@ class UserProfileEditForm(forms.ModelForm):
                                           "subset of interests"))
 
         return self.cleaned_data['expertise']
+
+    def clean_username(self):
+        new_username = self.cleaned_data['username']
+
+        if User.objects.exclude(pk=self.instance.user.pk).filter(username=new_username).exists():
+            raise forms.ValidationError(_("Username already in use."))
+        return new_username
 
 
 def newsletter_subscribe(request, email, cleaned_data):

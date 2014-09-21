@@ -154,6 +154,7 @@ def profile_edit(request, username):
     if request.method != 'POST':
         initial = {
             'beta': profile.beta_tester,
+            'username': profile.user.username,
         }
         # Load up initial websites with either user data or required base URL
         for name, meta in UserProfile.website_choices:
@@ -186,7 +187,14 @@ def profile_edit(request, username):
                                          data=request.POST,
                                          prefix='newsletter')
 
+        # Don't validate if the username hasn't changed so people can keep already existing invalid usernames.
+        username_changed = request.user.username != request.POST['profile-username']
+
         if profile_form.is_valid() and newsletter_form.is_valid():
+            if username_changed:
+                profile.user.username = profile_form.cleaned_data['username']
+                profile.user.save()
+
             profile_new = profile_form.save(commit=False)
 
             # Gather up all websites defined by the model, save them.
