@@ -62,6 +62,7 @@
                     <label>{{ _('Primary Email') }}</label>
                     {{ profile.user.email }} <a href="{{ url('account_email') }}">{{ _('Edit email') }}</a>
                   </li>
+                  {{ li_field(profile_form, 'username') }}
                   {{ li_field(profile_form, 'fullname') }}
                   {{ li_field(profile_form, 'title') }}
                   {{ li_field(profile_form, 'organization') }}

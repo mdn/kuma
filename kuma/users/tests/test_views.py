@@ -125,8 +125,8 @@ class ProfileViewsTest(UserTestCase):
     def _get_current_form_field_values(self, doc):
         # Scrape out the existing significant form field values.
         form = dict()
-        for fn in ('email', 'fullname', 'title', 'organization', 'location',
-                   'irc_nickname', 'bio', 'interests'):
+        for fn in ('username', 'email', 'fullname', 'title', 'organization',
+                   'location', 'irc_nickname', 'bio', 'interests'):
             form[fn] = doc.find('#profile-edit *[name="profile-%s"]' %
                                 fn).val()
         form['country'] = 'us'
