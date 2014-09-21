@@ -1,9 +1,11 @@
 import operator
 import time
+import re
 
 from django import forms
 from django.conf import settings
 from django.http import HttpResponseServerError
+from django.contrib.auth.models import User
 
 import basket
 from basket.base import BasketException
@@ -119,6 +121,29 @@ class UserProfileEditForm(forms.ModelForm):
                                           "subset of interests"))
 
         return self.cleaned_data['expertise']
+
+
+class UsernameEditForm(forms.ModelForm):
+    """
+    A form for changing a user's username.
+    """
+    error_messages = {
+        'invalid_username': _("Usernames may only contain letters, numbers and _, ., - characters."),
+    }
+
+    class Meta:
+        model = User
+        fields = ("username",)
+
+    def clean_username(self):
+        username = self.cleaned_data["username"]
+        if re.match(r'^[\w.-]+$', username):
+            return username
+        else:
+            raise forms.ValidationError(
+                self.error_messages['invalid_username'],
+                code='invalid_username',
+            )
 
 
 def newsletter_subscribe(request, email, cleaned_data):
