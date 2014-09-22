@@ -122,7 +122,7 @@ class AllauthPersonaTestCase(UserTestCase):
             verify_strings_in_response(expected_strings, r)
             unexpected_strings = (
                 'Thanks for signing in to MDN with Persona.',
-                '<form class="submission" method="post" '
+                '<form class="submission readable-line-length" method="post" '
                 'action="/en-US/users/account/signup">',
                 '<input name="username" maxlength="30" type="text"'
                 ' autofocus="autofocus" required="required" '
@@ -160,7 +160,7 @@ class AllauthPersonaTestCase(UserTestCase):
                 # * Hidden email address field, pre-populated with the
                 #   address used to authenticate to Persona.
                 'Thanks for signing in to MDN with Persona.',
-                '<form class="submission" method="post" '
+                '<form class="submission readable-line-length" method="post" '
                 'action="/en-US/users/account/signup">',
                 '<input name="username" maxlength="30" '
                 'type="text" autofocus="autofocus"'
