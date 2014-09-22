@@ -1,10 +1,12 @@
 from django.conf import settings
+from django import forms
 
 from nose.tools import eq_
 import test_utils
 
+from ..adapters import (KumaAccountAdapter, USERNAME_CHARACTERS,
+                        USERNAME_EMAIL)
 from ..forms import UserProfileEditForm
-
 
 class TestUserProfileEditForm(test_utils.TestCase):
 
@@ -51,3 +53,33 @@ class TestUserProfileEditForm(test_utils.TestCase):
                 })
                 result_valid = form.is_valid()
                 eq_(expected_valid, result_valid)
+
+
+class AllauthUsernameTests(test_utils.TestCase):
+    def test_email_username(self):
+        """
+        Trying to use an email address as a username fails, with a
+        message saying an email address can't be used as a username.
+        """
+        bad_usernames = (
+            'testuser@example.com',
+            '@testuser',
+        )
+        adapter = KumaAccountAdapter()
+        for username in bad_usernames:
+            self.assertRaisesMessage(forms.ValidationError,
+                                     USERNAME_EMAIL,
+                                     adapter.clean_username,
+                                     username)
+
+    def test_bad_username(self):
+        """
+        Illegal usernames fail with our custom error message rather
+        than the misleading allauth one which suggests '@' is a legal
+        character.
+        """
+        adapter = KumaAccountAdapter()
+        self.assertRaisesMessage(forms.ValidationError,
+                                 USERNAME_CHARACTERS,
+                                 adapter.clean_username,
+                                 'dolla$dolla$bill')

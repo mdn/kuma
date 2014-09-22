@@ -1,3 +1,5 @@
+import re
+
 from django import forms
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -14,6 +16,10 @@ REMOVE_MESSAGE = _(u"Sorry, you must have at least one connected account so "
                    u"you can sign in. To disconnect this account connect a "
                    u"different one first. To delete your MDN profile please "
                    u'<a href="%(bug_form_url)s" rel="nofollow">file a bug</a>.')
+USERNAME_CHARACTERS = _(u'Required. 30 characters or fewer. Letters, digits and '
+                        u'./+/-/_ characters.')
+USERNAME_EMAIL = _(u'An email address cannot be used as a username.')
+USERNAME_REGEX = re.compile(r'^[\w.+-]+$')
 
 
 class KumaAccountAdapter(DefaultAccountAdapter):
@@ -28,8 +34,16 @@ class KumaAccountAdapter(DefaultAccountAdapter):
     def clean_username(self, username):
         """
         When signing up make sure the username isn't already used by
-        a different user.
+        a different user, and doesn't contain invalid characters.
         """
+        # We have stricter username requirements than django-allauth,
+        # because we don't want to allow '@' in usernames. So we check
+        # that before calling super() to make sure we catch those
+        # problems and show our error messages.
+        if '@' in username:
+            raise forms.ValidationError(USERNAME_EMAIL)
+        if not USERNAME_REGEX.match(username):
+            raise forms.ValidationError(USERNAME_CHARACTERS)
         username = super(KumaAccountAdapter, self).clean_username(username)
         if User.objects.filter(username=username).exists():
             raise forms.ValidationError(_(u'The username you entered '
