@@ -3,7 +3,8 @@ from .serializers import GroupWithFiltersSerializer
 
 
 def search_filters(request):
-    if request.path.startswith('/search'):
+    if hasattr(request, 'path') and \
+           request.path.startswith('/search'):
         return
 
     groups = FilterGroup.objects.all()

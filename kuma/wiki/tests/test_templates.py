@@ -545,6 +545,10 @@ class NewRevisionTests(TestCaseBase):
         eq_(self.d.current_revision, new_rev.based_on)
 
         # Assert notifications fired and have the expected content:
+        eq_(1, len(mail.outbox)) # Regression check:
+                                 # messing with context processors can
+                                 # cause notification emails to error
+                                 # and stop being sent.
         expected_to = [u'sam@example.com']
         expected_subject = u'[MDN] Page "%s" changed by %s' % (self.d.title,
                                                      new_rev.creator)
