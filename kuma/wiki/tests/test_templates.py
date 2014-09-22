@@ -59,6 +59,21 @@ class DocumentTests(TestCaseBase):
         eq_(r.document.title, doc('main#content div.document-head h1').text())
         eq_(r.document.html, doc('article#wikiArticle').text())
 
+    def test_custom_css_waffle(self):
+        """
+        Verify KUMA_CUSTOM_CSS_PATH is only included when waffle flag is
+        active.
+        """
+        r = revision(save=True, content='Some text.', is_approved=True)
+        response = self.client.get(r.document.get_absolute_url())
+        eq_(200, response.status_code)
+        ok_(constance.config.KUMA_CUSTOM_CSS_PATH not in response.content)
+
+        Flag.objects.create(name='enable_customcss', everyone=True)
+        response = self.client.get(r.document.get_absolute_url())
+        eq_(200, response.status_code)
+        ok_(constance.config.KUMA_CUSTOM_CSS_PATH in response.content)
+
     @attr("breadcrumbs")
     def test_document_breadcrumbs(self):
         """Create docs with topical parent/child rel, verify breadcrumbs."""
