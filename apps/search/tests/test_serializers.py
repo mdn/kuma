@@ -5,7 +5,7 @@ from search.tests import ElasticTestCase
 
 from search.fields import DocumentExcerptField, SearchQueryField, SiteURLField
 from search.models import DocumentType
-from search.serializers import FilterSerializer, DocumentSerializer
+from search.serializers import FilterWithGroupSerializer, DocumentSerializer
 from search.queries import DocumentS
 
 
@@ -18,13 +18,14 @@ class SerializerTests(ElasticTestCase):
         filter_ = Filter.objects.create(name='Serializer', slug='serializer',
                                         group=group)
         filter_.tags.add('tag')
-        filter_serializer = FilterSerializer(filter_)
+        filter_serializer = FilterWithGroupSerializer(filter_)
         eq_(filter_serializer.data, {
             'name': 'Serializer',
             'slug': 'serializer',
             'tags': ['tag'],
             'operator': 'OR',
-            'group': {'name': 'Group', 'slug': 'group', 'order': 1}})
+            'group': {'name': 'Group', 'slug': 'group', 'order': 1},
+            'shortcut': None})
 
     def test_document_serializer(self):
         doc = DocumentS(DocumentType)
@@ -32,12 +33,12 @@ class SerializerTests(ElasticTestCase):
         list_data = doc_serializer.data
         eq_(len(list_data), 7)
         ok_(isinstance(list_data, list))
-        eq_(list_data[0]['title'], 'le title')
+        eq_(list_data[0]['title'], 'an article title')
 
         doc_serializer = DocumentSerializer(doc[0], many=False)
         dict_data = doc_serializer.data
         ok_(isinstance(dict_data, dict))
-        eq_(dict_data['title'], 'le title')
+        eq_(dict_data['title'], 'an article title')
 
 
 class FieldTests(ElasticTestCase):

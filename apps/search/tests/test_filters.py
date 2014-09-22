@@ -83,4 +83,4 @@ class FilterTests(ElasticTestCase):
         response = view(request)
         eq_(response.data['count'], 7)
         eq_(len(response.data['documents']), 7)
-        eq_(response.data['documents'][0]['slug'], 'le-title')
+        eq_(response.data['documents'][0]['slug'], 'article-title')
