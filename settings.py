@@ -345,6 +345,7 @@ LANGUAGE_URL_IGNORED_PATHS = (
     'media',
     'admin',
     'robots.txt',
+    'contribute.json',
     'services',
     'static',
     '1',

@@ -1,4 +1,6 @@
+from django.conf import settings
 from django.shortcuts import render
+from django.views import static
 
 import constance.config
 
@@ -19,6 +21,11 @@ def home(request):
                   {'demos': demos, 'updates': updates,
                     'current_challenge_tag_name':
                     str(constance.config.DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG).strip()})
+
+
+def contribute_json(request):
+    return static.serve(request, 'contribute.json',
+                        document_root=settings.ROOT)
 
 
 def learn(request):
