@@ -311,7 +311,7 @@ class SignupView(BaseSignupView):
                     label = _('%(email)s Unverified')
                 email = email_address['email']
                 choices.append((email, label % {'email': email}))
-            choices.append((form.other_email_value, _('other:')))
+            choices.append((form.other_email_value, _('Other:')))
             email_select = forms.RadioSelect(choices=choices,
                                              attrs={'id': 'email'})
             form.fields['email'].widget = email_select
