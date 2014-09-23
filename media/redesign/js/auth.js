@@ -147,14 +147,18 @@
                 localStorage.removeItem(matchKey);
             }
 
-            // After seeing the notice, the user tried to sign in with a second
-            // social account and was successful.
-            $doc.on('mdn:login', function(service) {
-                if(matchStored) {
+            // After seeing the notice, the user took an action that resulted in
+            // them landing on another page. Either the user abandoned the
+            // registration process or the user tried to sign in with a second
+            // social account and was successful. In either case, the
+            // localStorage item should be immediately removed.
+            else if(!matchCurrent && matchStored) {
+                $doc.on('mdn:login', function(service) {
                     mdn.Notifier.growl('You can now use ' + matchStored + ' to sign in to this MDN profile.', { duration: 0, closable: true }).success();
-                    localStorage.removeItem(matchKey);
-                }
-            });
+                });
+                localStorage.removeItem(matchKey);
+            }
+
         }
         catch (e) {
             // Browser probably doesn't support localStorage
