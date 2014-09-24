@@ -1,6 +1,6 @@
-from nose.tools import eq_
+from nose.tools import eq_, ok_
 import test_utils
-
+from django.test.client import Client
 
 from devmo.tests import LocalizingClient
 from sumo.urlresolvers import reverse
@@ -33,7 +33,7 @@ class LearnViewsTest(test_utils.TestCase):
 
 
 class LandingViewsTest(test_utils.TestCase):
-    fixtures = ['test_data.json', ]
+    fixtures = ['test_data.json']
 
     def setUp(self):
         self.client = LocalizingClient()
@@ -47,3 +47,11 @@ class LandingViewsTest(test_utils.TestCase):
         url = reverse('landing.views.promote_buttons')
         r = self.client.get(url, follow=True)
         eq_(200, r.status_code)
+
+    def test_contribute_json(self):
+        # using the non-localizing client here as contribute.json
+        # is not-localizable
+        client = Client()
+        r = client.get(reverse('contribute_json'))
+        eq_(200, r.status_code)
+        ok_('application/json' in r['Content-Type'])
