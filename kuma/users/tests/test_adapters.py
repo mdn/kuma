@@ -1,4 +1,3 @@
-import mock
 from nose.plugins.attrib import attr
 from nose.tools import eq_, assert_raises
 

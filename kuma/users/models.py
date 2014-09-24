@@ -6,7 +6,7 @@ from django.dispatch import receiver
 from django.db import models
 from django.utils.functional import cached_property
 
-from allauth.account.signals import user_signed_up
+from allauth.account.signals import user_signed_up, email_confirmed
 from allauth.socialaccount.signals import social_account_removed
 import constance.config
 from jsonfield import JSONField
@@ -190,7 +190,21 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(user_signed_up)
 def on_user_signed_up(sender, request, user, **kwargs):
     if switch_is_active('welcome_email'):
-        send_welcome_email.delay(user.pk, request.locale)
+        # only send if the user has already verified at least one email address
+        if user.emailaddress_set.filter(verified=True).exists():
+            send_welcome_email.delay(user.pk, request.locale)
+
+
+@receiver(email_confirmed)
+def on_email_confirmed(sender, request, email_address, **kwargs):
+    if switch_is_active('welcome_email'):
+        # only send if the user has exactly one verified (the given)
+        # email address, in other words if it was just confirmed
+        if not (email_address.user
+                             .emailaddress_set.exclude(pk=email_address.pk)
+                                              .exists()):
+            send_welcome_email.delay(email_address.user.pk, request.locale)
+
 
 
 @receiver(social_account_removed)
