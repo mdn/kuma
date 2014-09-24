@@ -13,7 +13,6 @@ from devmo.tests import mock_lookup_user, LocalizingClient
 from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
 from ..models import UserProfile, UserBan
-from . import verify_strings_in_response
 
 TESTUSER_PASSWORD = 'testpass'
 
@@ -476,7 +475,7 @@ class SignInTestCase(TestCase):
     def test_persona_signin_verification_okay(self, mock_post):
         user_email = "testuser@test.com"
         mock_post.return_value = mock_resp = mock.Mock()
-        mock_resp.json.return_value={
+        mock_resp.json.return_value = {
             "status": "okay",
             "email": user_email,
             "audience": "https://developer-local.allizom.org"
@@ -553,8 +552,8 @@ class SignUpTestCase(TestCase):
     @mock.patch('requests.post')
     def test_persona_signup_valid_assertion_page_copy(self, mock_post):
         mock_post.return_value = mock_resp = mock.Mock()
-        mock_resp.json.return_value={"status": "okay",
-                                     "email": "testuser2@test.com"}
+        mock_resp.json.return_value = {"status": "okay",
+                                       "email": "testuser2@test.com"}
 
         url = reverse('persona_login')
         r = self.client.post(url, follow=True)

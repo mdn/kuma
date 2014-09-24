@@ -1,1 +1,1 @@
-{% trans %}The account has been disconnected.{% endtrans %}
+{% trans %}Account successfully disconnected.{% endtrans %}
