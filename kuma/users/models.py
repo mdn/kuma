@@ -7,8 +7,7 @@ from django.db import models
 from django.utils.functional import cached_property
 
 from allauth.account.signals import user_signed_up
-from allauth.socialaccount.signals import (pre_social_login,
-                                           social_account_removed)
+from allauth.socialaccount.signals import social_account_removed
 import constance.config
 from jsonfield import JSONField
 from taggit_extras.managers import NamespacedTaggableManager
@@ -192,20 +191,6 @@ def create_user_profile(sender, instance, created, **kwargs):
 def on_user_signed_up(sender, request, user, **kwargs):
     if switch_is_active('welcome_email'):
         send_welcome_email.delay(user.pk, request.locale)
-
-
-@receiver(pre_social_login)
-def on_pre_social_login(sender, request, sociallogin, **kwargs):
-    """
-    Invoked just after a user successfully authenticates via a
-    social provider, but before the login is actually processed.
-
-    We use it to store the name of the socialaccount provider in
-    the user's session.
-    """
-    request.session['sociallogin_provider'] = (sociallogin
-                                               .account.provider)
-    request.session.modified = True
 
 
 @receiver(social_account_removed)
