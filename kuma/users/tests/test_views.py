@@ -11,7 +11,6 @@ from django.utils.importlib import import_module
 from allauth.socialaccount.models import SocialAccount
 
 from devmo.tests import mock_lookup_user, LocalizingClient
-from sumo.helpers import urlparams
 from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
 from ..models import UserProfile, UserBan
@@ -124,7 +123,8 @@ class ProfileViewsTest(TestCase):
         form = dict()
         for fn in ('email', 'fullname', 'title', 'organization', 'location',
                    'irc_nickname', 'bio', 'interests'):
-            form[fn] = doc.find('#profile-edit *[name="profile-%s"]' % fn).val()
+            form[fn] = doc.find('#profile-edit *[name="profile-%s"]' %
+                                fn).val()
         form['country'] = 'us'
         form['format'] = 'html'
         return form
@@ -322,7 +322,8 @@ class ProfileViewsTest(TestCase):
         doc = pq(r.content)
         for k, v in test_sites.items():
             eq_(v,
-                doc.find('#profile-edit *[name="profile-websites_%s"]' % k).val())
+                doc.find('#profile-edit *[name="profile-websites_%s"]' %
+                         k).val())
 
         # Come up with some bad sites, either invalid URL or bad URL prefix
         bad_sites = {
@@ -598,15 +599,13 @@ class AllauthPersonaTestCase(TestCase):
                 'status': 'okay',
                 'email': self.persona_signup_email,
             }
-            r = self.client.post(reverse('persona_login'),
-                                 follow=True)
+            self.client.post(reverse('persona_login'), follow=True)
             data = {'username': self.persona_signup_username,
                     'email': self.persona_signup_email}
-            r = self.client.post(
-                reverse('socialaccount_signup',
-                        locale=settings.WIKI_DEFAULT_LANGUAGE),
-                data=data,
-                follow=True)
+            self.client.post(reverse('socialaccount_signup',
+                                     locale=settings.WIKI_DEFAULT_LANGUAGE),
+                             data=data,
+                             follow=True)
             new_count = User.objects.count()
             # Did we get a new user?
             eq_(old_count + 1, new_count)
@@ -637,18 +636,17 @@ class AllauthPersonaTestCase(TestCase):
                 'status': 'okay',
                 'email': self.persona_signup_email,
             }
-            r = self.client.post(reverse('persona_login'),
-                                 follow=True)
+            self.client.post(reverse('persona_login'), follow=True)
             data = {'username': self.persona_signup_username,
                     'email': self.persona_signup_email}
-            r = self.client.post(
-                reverse('socialaccount_signup',
-                        locale=settings.WIKI_DEFAULT_LANGUAGE),
-                data=data,
-                follow=True)
+            self.client.post(reverse('socialaccount_signup',
+                                     locale=settings.WIKI_DEFAULT_LANGUAGE),
+                             data=data,
+                             follow=True)
             socialaccount = None
             try:
-                socialaccount = SocialAccount.objects.order_by('-date_joined')[0]
+                socialaccount = (SocialAccount.objects
+                                              .order_by('-date_joined')[0])
             except IndexError:
                 pass
             ok_(socialaccount is not None)
