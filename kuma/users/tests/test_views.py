@@ -523,7 +523,7 @@ class AllauthPersonaTestCase(TestCase):
         with mock.patch('requests.post') as requests_mock:
             requests_mock.return_value.json.return_value = {
                 'status': 'okay',
-                'email': 'personatestuser1@example.com',
+                'email': 'views_persona_auth@example.com',
             }
             r = self.client.post(reverse('persona_login'),
                                  follow=True)
@@ -590,8 +590,8 @@ class AllauthPersonaTestCase(TestCase):
         store = engine.SessionStore()
         store.save()
         self.client.cookies[settings.SESSION_COOKIE_NAME] = store.session_key
-        persona_signup_email = 'personatestuser2@example.com'
-        persona_signup_username = 'personatestuser2'
+        persona_signup_email = 'views_persona_django_user@example.com'
+        persona_signup_username = 'views_persona_django_user'
 
         with mock.patch('requests.post') as requests_mock:
             old_count = User.objects.count()
@@ -630,8 +630,8 @@ class AllauthPersonaTestCase(TestCase):
         store = engine.SessionStore()
         store.save()
         self.client.cookies[settings.SESSION_COOKIE_NAME] = store.session_key
-        persona_signup_email = 'personatestuser3@example.com'
-        persona_signup_username = 'personatestuser3'
+        persona_signup_email = 'views_persona_socialaccount@example.com'
+        persona_signup_username = 'views_persona_socialaccount'
 
         with mock.patch('requests.post') as requests_mock:
             requests_mock.return_value.json.return_value = {
