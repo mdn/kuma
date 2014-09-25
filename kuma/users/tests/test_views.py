@@ -494,8 +494,6 @@ class AllauthPersonaTestCase(TestCase):
 
     """
     fixtures = ['test_users.json']
-    persona_signup_email = 'personatestuser@example.com'
-    persona_signup_username = 'personatestuser'
     existing_persona_email = 'testuser@test.com'
     existing_persona_username = 'testuser'
 
@@ -525,7 +523,7 @@ class AllauthPersonaTestCase(TestCase):
         with mock.patch('requests.post') as requests_mock:
             requests_mock.return_value.json.return_value = {
                 'status': 'okay',
-                'email': self.persona_signup_email,
+                'email': 'personatestuser1@example.com',
             }
             r = self.client.post(reverse('persona_login'),
                                  follow=True)
@@ -592,16 +590,18 @@ class AllauthPersonaTestCase(TestCase):
         store = engine.SessionStore()
         store.save()
         self.client.cookies[settings.SESSION_COOKIE_NAME] = store.session_key
+        persona_signup_email = 'personatestuser2@example.com'
+        persona_signup_username = 'personatestuser2'
 
         with mock.patch('requests.post') as requests_mock:
             old_count = User.objects.count()
             requests_mock.return_value.json.return_value = {
                 'status': 'okay',
-                'email': self.persona_signup_email,
+                'email': persona_signup_email,
             }
             self.client.post(reverse('persona_login'), follow=True)
-            data = {'username': self.persona_signup_username,
-                    'email': self.persona_signup_email}
+            data = {'username': persona_signup_username,
+                    'email': persona_signup_email}
             self.client.post(reverse('socialaccount_signup',
                                      locale=settings.WIKI_DEFAULT_LANGUAGE),
                              data=data,
@@ -618,8 +618,8 @@ class AllauthPersonaTestCase(TestCase):
                 pass
             ok_(user)
             ok_(user.is_active)
-            eq_(self.persona_signup_username, user.username)
-            eq_(self.persona_signup_email, user.email)
+            eq_(persona_signup_username, user.username)
+            eq_(persona_signup_email, user.email)
             eq_('!', user.password)
 
     def test_persona_signup_create_socialaccount(self):
@@ -630,15 +630,17 @@ class AllauthPersonaTestCase(TestCase):
         store = engine.SessionStore()
         store.save()
         self.client.cookies[settings.SESSION_COOKIE_NAME] = store.session_key
+        persona_signup_email = 'personatestuser3@example.com'
+        persona_signup_username = 'personatestuser3'
 
         with mock.patch('requests.post') as requests_mock:
             requests_mock.return_value.json.return_value = {
                 'status': 'okay',
-                'email': self.persona_signup_email,
+                'email': persona_signup_email,
             }
             self.client.post(reverse('persona_login'), follow=True)
-            data = {'username': self.persona_signup_username,
-                    'email': self.persona_signup_email}
+            data = {'username': persona_signup_username,
+                    'email': persona_signup_email}
             self.client.post(reverse('socialaccount_signup',
                                      locale=settings.WIKI_DEFAULT_LANGUAGE),
                              data=data,
@@ -651,8 +653,8 @@ class AllauthPersonaTestCase(TestCase):
                 pass
             ok_(socialaccount is not None)
             eq_('persona', socialaccount.provider)
-            eq_(self.persona_signup_email, socialaccount.uid)
-            eq_({'status': 'okay', 'email': self.persona_signup_email},
+            eq_(persona_signup_email, socialaccount.uid)
+            eq_({'status': 'okay', 'email': persona_signup_email},
                 socialaccount.extra_data)
-            user = User.objects.get(username=self.persona_signup_username)
+            user = User.objects.get(username=persona_signup_username)
             eq_(user.id, socialaccount.user.id)
