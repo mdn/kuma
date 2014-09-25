@@ -108,9 +108,9 @@
         {% set tag_ns = 'profile:interest:' %}
         {% set tags = profile.tags.all_ns(tag_ns) %}
         {% if tags | length %}
-        <div class="tags">
+        <div class="profile-tags">
           <h2>{{ _("Interests") }}</h2>
-          <ul class="int-taglist taglist">
+          <ul>
             {% for tag in tags%}
                 <li><span rel="tag">{{ tag.name.replace(tag_ns,'') }}</span></li>
             {% endfor %}
@@ -121,9 +121,9 @@
         {% set tag_ns = 'profile:expertise:' %}
         {% set tags = profile.tags.all_ns(tag_ns) %}
         {% if tags | length %}
-        <div class="tags">
+        <div class="profile-tags">
           <h2>{{ _("Areas of Expertise") }}</h2>
-          <ul class="exp-taglist taglist">
+          <ul>
             {% for tag in tags%}
                 <li><span rel="tag">{{ tag.name.replace(tag_ns,'') }}</span></li>
             {% endfor %}
