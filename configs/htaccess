@@ -59,10 +59,10 @@ RewriteRule ^es4(/.*)?$ http://wiki.ecmascript.org/ [R]
 
 # HACK: Django will eventually redirect the user to the right spot, but skip a
 # couple of redirects for these known legacy locales
-RewriteRule ^en/(.*)$     /mwsgi/en-US/$1 [L,QSA,NE,NC,E=CORS:True]
-RewriteRule ^cn/(.*)$     /mwsgi/zh-CN/$1 [L,QSA,NE,NC,E=CORS:True]
-RewriteRule ^zh_cn/(.*)$  /mwsgi/zh-CN/$1 [L,QSA,NE,NC,E=CORS:True]
-RewriteRule ^zh_tw/(.*)$  /mwsgi/zh-TW/$1 [L,QSA,NE,NC,E=CORS:True]
+RewriteRule ^en/(.*)$     /mwsgi/en-US/$1 [L,QSA,NE,NC]
+RewriteRule ^cn/(.*)$     /mwsgi/zh-CN/$1 [L,QSA,NE,NC]
+RewriteRule ^zh_cn/(.*)$  /mwsgi/zh-CN/$1 [L,QSA,NE,NC]
+RewriteRule ^zh_tw/(.*)$  /mwsgi/zh-TW/$1 [L,QSA,NE,NC]
 
 # These are some known static files
 RewriteCond %{REQUEST_URI} !/favicon.ico
@@ -72,9 +72,4 @@ RewriteCond %{REQUEST_URI} !/block_862be.html
 RewriteCond %{REQUEST_URI} !/block_f90c2.html
 
 # Everything else passes through the Django handler
-RewriteRule ^(.*)$ /mwsgi/$1 [L,QSA,NE,E=CORS:True]
-
-# Allow wide-open CORS on the site.
-Header set Access-Control-Allow-Origin "*" env=CORS
-Header set Access-Control-Allow-Methods "GET" env=CORS
-Header set Access-Control-Allow-Credentials "false" env=CORS
+RewriteRule ^(.*)$ /mwsgi/$1 [L,QSA,NE]
