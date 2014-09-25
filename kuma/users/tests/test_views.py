@@ -1,5 +1,3 @@
-import logging
-
 import mock
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
@@ -8,8 +6,12 @@ from pyquery import PyQuery as pq
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.paginator import PageNotAnInteger
+from django.utils.importlib import import_module
+
+from allauth.socialaccount.models import SocialAccount
 
 from devmo.tests import mock_lookup_user, LocalizingClient
+from sumo.helpers import urlparams
 from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
 from ..models import UserProfile, UserBan
@@ -185,7 +187,7 @@ class ProfileViewsTest(TestCase):
         eq_(0, doc.find('#profile-head .edit .button').length)
 
         self.client.login(username=user.username,
-                password=TESTUSER_PASSWORD)
+                          password=TESTUSER_PASSWORD)
 
         url = reverse('users.profile', args=(user.username,))
         r = self.client.get(url, follow=True)
@@ -280,7 +282,7 @@ class ProfileViewsTest(TestCase):
 
         user = User.objects.get(username='testuser')
         self.client.login(username=user.username,
-                password=TESTUSER_PASSWORD)
+                          password=TESTUSER_PASSWORD)
 
         url = reverse('users.profile_edit',
                       args=(user.username,))
@@ -319,7 +321,8 @@ class ProfileViewsTest(TestCase):
         r = self.client.get(url, follow=True)
         doc = pq(r.content)
         for k, v in test_sites.items():
-            eq_(v, doc.find('#profile-edit *[name="profile-websites_%s"]' % k).val())
+            eq_(v,
+                doc.find('#profile-edit *[name="profile-websites_%s"]' % k).val())
 
         # Come up with some bad sites, either invalid URL or bad URL prefix
         bad_sites = {
@@ -351,7 +354,7 @@ class ProfileViewsTest(TestCase):
 
         user = User.objects.get(username='testuser')
         self.client.login(username=user.username,
-                password=TESTUSER_PASSWORD)
+                          password=TESTUSER_PASSWORD)
 
         url = reverse('users.profile_edit',
                       args=(user.username,))
@@ -371,7 +374,7 @@ class ProfileViewsTest(TestCase):
         p = UserProfile.objects.get(user=user)
 
         result_tags = [t.name.replace('profile:interest:', '')
-                for t in p.tags.all_ns('profile:interest:')]
+                       for t in p.tags.all_ns('profile:interest:')]
         result_tags.sort()
         test_tags.sort()
         eq_(test_tags, result_tags)
@@ -386,7 +389,7 @@ class ProfileViewsTest(TestCase):
         p = UserProfile.objects.get(user=user)
 
         result_tags = [t.name.replace('profile:expertise:', '')
-                for t in p.tags.all_ns('profile:expertise')]
+                       for t in p.tags.all_ns('profile:expertise')]
         result_tags.sort()
         test_expertise.sort()
         eq_(test_expertise, result_tags)
@@ -441,81 +444,16 @@ class ProfileViewsTest(TestCase):
         unsubscribe.return_value = True
         user = User.objects.get(username='testuser')
         self.client.login(username=user.username,
-            password=TESTUSER_PASSWORD)
+                          password=TESTUSER_PASSWORD)
 
         url = reverse('users.profile_edit',
-            args=(user.username,))
+                      args=(user.username,))
         r = self.client.get(url, follow=True)
         for field in r.context['profile_form'].fields:
             # if label is localized it's a lazy proxy object
             ok_(not isinstance(
                 r.context['profile_form'].fields[field].label, basestring),
                 'Field %s is a string!' % field)
-
-
-class AccountConnectionTestCase(TestCase):
-    pass
-
-
-class SignInTestCase(TestCase):
-    """ Test Sign-in flow for users with existing accounts. """
-    fixtures = ['test_users.json',]
-
-    @mock.patch('requests.post')
-    def test_persona_signin_verification_fails(self, mock_post):
-        mock_post.return_value = mock_resp = mock.Mock()
-        mock_resp.json.return_value={"status": "fail"}
-
-        url = reverse('persona_login')
-        r = self.client.post(url, follow=True)
-        eq_(200, r.status_code)
-        ok_('Sign In Failure' in r.content)
-
-    @mock.patch('requests.post')
-    def test_persona_signin_verification_okay(self, mock_post):
-        user_email = "testuser@test.com"
-        mock_post.return_value = mock_resp = mock.Mock()
-        mock_resp.json.return_value = {
-            "status": "okay",
-            "email": user_email,
-            "audience": "https://developer-local.allizom.org"
-        }
-
-        url = reverse('persona_login')
-        r = self.client.post(url, follow=True)
-
-        eq_(200, r.status_code)
-        ok_('Sign In Failure' not in r.content)
-        ok_('Sign out' in r.content)
-        u = User.objects.get(email=user_email)
-        ok_(str(u.username) in r.content)
-
-    def test_github_signin(self):
-        pass
-
-    def test_allauth_signin_returns_to_doc(self):
-        """When signing in from a doc, return straight to the doc."""
-        url = reverse('wiki.document', args=['article-title'],
-                      locale=settings.WIKI_DEFAULT_LANGUAGE)
-        response = self.client.get(url)
-
-        doc = pq(response.content)
-        persona_login_links = doc.find('.launch-persona-login')
-        ok_(len(persona_login_links) > 0)
-        for login_link in persona_login_links:
-            ok_(url in pq(login_link).attr('data-next'))
-
-    def test_persona_form_data(self):
-        """Ensure the stub Persona form is placed within the document"""
-        url = reverse('wiki.document', args=['article-title'],
-                      locale=settings.WIKI_DEFAULT_LANGUAGE)
-        response = self.client.get(url)
-
-        doc = pq(response.content)
-        persona_form = doc.find('#_persona_login')
-        ok_(len(persona_form) > 0)
-        ok_(persona_form.attr('data-csrf-token-url'))
-        ok_(persona_form.attr('data-request'))
 
 
 class Test404Case(TestCase):
@@ -531,7 +469,10 @@ class Test404Case(TestCase):
         eq_(404, response.status_code)
 
     def test_404_already_logged_in(self):
-        """The login buttons should not display on the 404 page when the user is logged in"""
+        """
+        The login buttons should not display on the 404 page when the
+        user is logged in
+        """
         client = LocalizingClient()
 
         # View page as a logged in user
@@ -546,24 +487,174 @@ class Test404Case(TestCase):
         client.logout()
 
 
-class SignUpTestCase(TestCase):
-    """ Test Sign-in flow for users without existing accounts. """
+class AllauthPersonaTestCase(TestCase):
+    """
+    Test sign-up/in flow with Persona.
 
-    @mock.patch('requests.post')
-    def test_persona_signup_valid_assertion_page_copy(self, mock_post):
-        mock_post.return_value = mock_resp = mock.Mock()
-        mock_resp.json.return_value = {"status": "okay",
-                                       "email": "testuser2@test.com"}
+    """
+    fixtures = ['test_users.json']
+    persona_signup_email = 'personatestuser@example.com'
+    persona_signup_username = 'personatestuser'
+    existing_persona_email = 'testuser@test.com'
+    existing_persona_username = 'testuser'
 
-        url = reverse('persona_login')
-        r = self.client.post(url, follow=True)
-        eq_(200, r.status_code)
-        ok_('Sign In Failure' not in r.content)
-        # Page renders
-        # Page Title
-        # Username field
-        # Email field not there / hidden
-        pass
+    def test_persona_auth_failure(self):
+        """
+        Failed Persona auth does not crash or otherwise error, but
+        correctly redirects to an explanatory page.
+        """
+        with mock.patch('requests.post') as requests_mock:
+            requests_mock.return_value.json.return_value = {
+                'status': 'failure',
+                'reason': 'this email address has been naughty'
+            }
+            r = self.client.post(reverse('persona_login'),
+                                 follow=True)
+            eq_(200, r.status_code)
+            eq_(r.redirect_chain,
+                [('http://testserver/users/persona/complete?process=&next=',
+                  302)])
 
-    def test_github_signup(self):
-        pass
+    def test_persona_auth_success(self):
+        """
+        Successful Persona auth of a new (i.e., no connected social
+        account with that email) user redirects to the signup
+        completion page.
+        """
+        with mock.patch('requests.post') as requests_mock:
+            requests_mock.return_value.json.return_value = {
+                'status': 'okay',
+                'email': self.persona_signup_email,
+            }
+            r = self.client.post(reverse('persona_login'),
+                                 follow=True)
+            eq_(200, r.status_code)
+            expected_redirects = [
+                ('http://testserver/users/persona/complete?process=&next=',
+                 302),
+                ('http://testserver/users/account/signup',
+                 302),
+            ]
+            for red in expected_redirects:
+                ok_(red in r.redirect_chain)
+
+    def test_persona_signin(self):
+        """
+        When an existing user signs in with Persona, using the email
+        address associated with their account, authentication is
+        successful and redirects to the home page when no explicit
+        'next' is provided.
+        """
+        with mock.patch('requests.post') as requests_mock:
+            requests_mock.return_value.json.return_value = {
+                'status': 'okay',
+                'email': self.existing_persona_email,
+            }
+            r = self.client.post(reverse('persona_login'),
+                                 follow=True)
+            eq_(200, r.status_code)
+            expected_redirects = [
+                ('http://testserver/users/persona/complete?process=&next=',
+                 302),
+                ('http://testserver/en-US/',
+                 301)
+            ]
+            for red in expected_redirects:
+                ok_(red in r.redirect_chain)
+
+    def test_persona_signin_next(self):
+        """
+        When an existing user successfully authenticates with Persona,
+        from a page which supplied a 'next' parameter, they are
+        redirected back to that page following authentication.
+        """
+        with mock.patch('requests.post') as requests_mock:
+            requests_mock.return_value.json.return_value = {
+                'status': 'okay',
+                'email': self.existing_persona_email,
+            }
+            doc_url = reverse('wiki.document', args=['article-title'],
+                              locale=settings.WIKI_DEFAULT_LANGUAGE)
+            r = self.client.post(reverse('persona_login'),
+                                 data={'next': doc_url},
+                                 follow=True)
+            ok_(('http://testserver%s' % doc_url, 302) in r.redirect_chain)
+
+    def test_persona_signup_create_django_user(self):
+        """
+        Signing up with Persona creates a new Django User instance.
+        """
+        # This setup is necessary any time we do the full sign-up
+        # workflow, because otherwise the session doesn't save/persist
+        # properly. See Django ticket 10899.
+        engine = import_module(settings.SESSION_ENGINE)
+        store = engine.SessionStore()
+        store.save()
+        self.client.cookies[settings.SESSION_COOKIE_NAME] = store.session_key
+
+        with mock.patch('requests.post') as requests_mock:
+            old_count = User.objects.count()
+            requests_mock.return_value.json.return_value = {
+                'status': 'okay',
+                'email': self.persona_signup_email,
+            }
+            r = self.client.post(reverse('persona_login'),
+                                 follow=True)
+            data = {'username': self.persona_signup_username,
+                    'email': self.persona_signup_email}
+            r = self.client.post(
+                reverse('socialaccount_signup',
+                        locale=settings.WIKI_DEFAULT_LANGUAGE),
+                data=data,
+                follow=True)
+            new_count = User.objects.count()
+            # Did we get a new user?
+            eq_(old_count + 1, new_count)
+
+            # Does it have the right attributes?
+            user = None
+            try:
+                user = User.objects.order_by('-date_joined')[0]
+            except IndexError:
+                pass
+            ok_(user)
+            ok_(user.is_active)
+            eq_(self.persona_signup_username, user.username)
+            eq_(self.persona_signup_email, user.email)
+            eq_('!', user.password)
+
+    def test_persona_signup_create_socialaccount(self):
+        """
+        Signing up with Persona creates a new SocialAccount instance.
+        """
+        engine = import_module(settings.SESSION_ENGINE)
+        store = engine.SessionStore()
+        store.save()
+        self.client.cookies[settings.SESSION_COOKIE_NAME] = store.session_key
+
+        with mock.patch('requests.post') as requests_mock:
+            requests_mock.return_value.json.return_value = {
+                'status': 'okay',
+                'email': self.persona_signup_email,
+            }
+            r = self.client.post(reverse('persona_login'),
+                                 follow=True)
+            data = {'username': self.persona_signup_username,
+                    'email': self.persona_signup_email}
+            r = self.client.post(
+                reverse('socialaccount_signup',
+                        locale=settings.WIKI_DEFAULT_LANGUAGE),
+                data=data,
+                follow=True)
+            socialaccount = None
+            try:
+                socialaccount = SocialAccount.objects.order_by('-date_joined')[0]
+            except IndexError:
+                pass
+            ok_(socialaccount is not None)
+            eq_('persona', socialaccount.provider)
+            eq_(self.persona_signup_email, socialaccount.uid)
+            eq_({'status': 'okay', 'email': self.persona_signup_email},
+                socialaccount.extra_data)
+            user = User.objects.get(username=self.persona_signup_username)
+            eq_(user.id, socialaccount.user.id)
