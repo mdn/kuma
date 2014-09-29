@@ -7,8 +7,8 @@ from search.views import SearchView
 
 
 class FilterTests(ElasticTestCase):
-    fixtures = ['test_users.json', 'wiki/documents.json',
-                'search/filters.json']
+    fixtures = ElasticTestCase.fixtures + ['wiki/documents.json',
+                                           'search/filters.json']
 
     def test_search_query(self):
         class SearchQueryView(SearchView):
@@ -83,4 +83,3 @@ class FilterTests(ElasticTestCase):
         response = view(request)
         eq_(response.data['count'], 7)
         eq_(len(response.data['documents']), 7)
-        eq_(response.data['documents'][0]['slug'], 'le-title')

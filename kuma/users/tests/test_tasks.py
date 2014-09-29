@@ -11,11 +11,11 @@ from allauth.account.models import EmailAddress
 from allauth.account.signals import user_signed_up
 
 from kuma.users.tasks import send_welcome_email
-from sumo.tests import TestCase
+
+from . import UserTestCase
 
 
-class TestWelcomeEmails(TestCase):
-    fixtures = ['test_users.json']
+class TestWelcomeEmails(UserTestCase):
 
     def test_default_language_email(self):
         u = User.objects.get(username='testuser')

@@ -1,15 +1,10 @@
-import logging
-import time
 import base64
 
-from django.db import models
-from django.conf import settings
 from django.contrib.auth.models import AnonymousUser, User
 from django.test import TestCase
-from django.test.client import Client
 from django.http import HttpRequest
 
-from nose.tools import assert_equal, with_setup, assert_false, eq_, ok_
+from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 
 from authkeys.models import Key
@@ -17,12 +12,6 @@ from authkeys.decorators import accepts_auth_key
 
 
 class KeyDecoratorsTest(TestCase):
-
-    def setUp(self):
-        pass
-
-    def tearDown(self):
-        pass
 
     @attr('current')
     def test_key_auth_decorator(self):
@@ -40,8 +29,8 @@ class KeyDecoratorsTest(TestCase):
 
         cases = ((key.key, secret, True),
                  (key.key, 'FAKE', False),
-                 ('FAKE',  secret, False),
-                 ('FAKE',  'FAKE', False))
+                 ('FAKE', secret, False),
+                 ('FAKE', 'FAKE', False))
 
         for k, s, success in cases:
 

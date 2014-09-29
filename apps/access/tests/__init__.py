@@ -5,11 +5,10 @@ import test_utils
 
 import access
 from forums.models import Forum, Thread
-from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
 
 
-class AccessTests(TestCase):
+class AccessTests(test_utils.TestCase):
     """Test stuff in access/__init__.py"""
     fixtures = ['users.json', 'posts.json', 'forums_permissions.json']
 

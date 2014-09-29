@@ -19,7 +19,6 @@ class TestNeverCache(test_utils.TestCase):
         response = view(request)
         eq_(200, response.status_code)
         [ok_(value in response['Cache-Control'])
-         for value in ['no-cache', 'no-store', 'must-revalidate']
-        ]
+         for value in ['no-cache', 'no-store', 'must-revalidate']]
         ok_('no-cache' in response['Pragma'])
         eq_('0', response['Expires'])

@@ -6,7 +6,6 @@ from search.tests import ElasticTestCase
 
 
 class TestLiveIndexing(ElasticTestCase):
-    fixtures = ['test_users.json']
 
     def test_live_indexing_docs(self):
         S = DocumentType.search

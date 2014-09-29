@@ -1,11 +1,12 @@
+import test_utils
 from nose.tools import eq_
 
 from django.conf import settings
 
-from sumo.tests import TestCase
 from ..helpers import tag_description
 
-class HelperTestCase(TestCase):
+
+class HelperTestCase(test_utils.TestCase):
 
     def test_tag_description_no_description(self):
         settings.TAG_DESCRIPTIONS = {"tag_name": "test_tag",

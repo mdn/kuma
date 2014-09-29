@@ -10,8 +10,8 @@ from search.queries import DocumentS
 
 
 class SerializerTests(ElasticTestCase):
-    fixtures = ['test_users.json', 'wiki/documents.json',
-                'search/filters.json']
+    fixtures = ElasticTestCase.fixtures + ['wiki/documents.json',
+                                           'search/filters.json']
 
     def test_filter_serializer(self):
         group = FilterGroup.objects.get(name='Group')
@@ -32,12 +32,12 @@ class SerializerTests(ElasticTestCase):
         list_data = doc_serializer.data
         eq_(len(list_data), 7)
         ok_(isinstance(list_data, list))
-        eq_(list_data[0]['title'], 'le title')
+        ok_(1 in [data['id'] for data in list_data])
 
         doc_serializer = DocumentSerializer(doc[0], many=False)
         dict_data = doc_serializer.data
         ok_(isinstance(dict_data, dict))
-        eq_(dict_data['title'], 'le title')
+        eq_(dict_data['id'], doc[0]['id'])
 
 
 class FieldTests(ElasticTestCase):

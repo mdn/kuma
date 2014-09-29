@@ -1,13 +1,12 @@
 from __future__ import absolute_import
+import test_utils
 from nose.tools import eq_, ok_
-
-from test_utils import TestCase
 
 from search.store import referrer_url
 from search.utils import QueryURLObject
 
 
-class URLTests(TestCase):
+class URLTests(test_utils.TestCase):
 
     def test_pop_query_param(self):
         original = 'http://example.com/?spam=eggs'

@@ -5,19 +5,14 @@ from nose.tools import ok_
 
 from django.contrib.auth.models import User
 
-from devmo.tests import LocalizingClient
-from sumo.tests import TestCase
+from devmo.tests import KumaTestCase
 
 from ..models import UserProfile
 
 
-class TestCaseBase(TestCase):
+class UserTestCase(KumaTestCase):
     """Base TestCase for the users app test cases."""
     fixtures = ['test_users.json']
-
-    def setUp(self):
-        super(TestCaseBase, self).setUp()
-        self.client = LocalizingClient()
 
 
 def profile(user, **kwargs):

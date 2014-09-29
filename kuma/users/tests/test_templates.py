@@ -8,15 +8,13 @@ from django.utils.importlib import import_module
 
 from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
-from sumo.tests import TestCase
 from .test_views import TESTUSER_PASSWORD
 from . import (verify_strings_in_response, verify_strings_not_in_response,
-               TestCaseBase)
+               UserTestCase)
 
 
-# TODO: Figure out why TestCaseBase doesn't work here
-class SignupTests(TestCase):
-    fixtures = ['test_users.json']
+class SignupTests(UserTestCase):
+    localizing_client = False
 
     @mock.patch('requests.post')
     def test_signup_page(self, mock_post):
@@ -39,7 +37,8 @@ class SignupTests(TestCase):
         verify_strings_in_response(test_strings, r)
 
 
-class AccountEmailTests(TestCaseBase):
+class AccountEmailTests(UserTestCase):
+    localizing_client = True
 
     def test_account_email_page_requires_signin(self):
         url = reverse('account_email')
@@ -74,7 +73,8 @@ class AccountEmailTests(TestCaseBase):
         verify_strings_in_response(test_strings, r)
 
 
-class SocialAccountConnectionsTests(TestCaseBase):
+class SocialAccountConnectionsTests(UserTestCase):
+    localizing_client = True
 
     def test_account_connections_page_requires_signin(self):
         url = reverse('socialaccount_connections')
@@ -96,10 +96,10 @@ class SocialAccountConnectionsTests(TestCaseBase):
         verify_strings_in_response(test_strings, r)
 
 
-class AllauthPersonaTestCase(TestCase):
-    fixtures = ['test_users.json']
+class AllauthPersonaTestCase(UserTestCase):
     existing_persona_email = 'testuser@test.com'
     existing_persona_username = 'testuser'
+    localizing_client = False
 
     def test_persona_auth_failure_copy(self):
         """
@@ -146,8 +146,8 @@ class AllauthPersonaTestCase(TestCase):
                 'status': 'okay',
                 'email': persona_signup_email,
             }
-            r = self.client.post(reverse('persona_login'),
-                                 follow=True)
+            response = self.client.post(reverse('persona_login'),
+                                        follow=True)
             expected_strings = (
                 # Test that we got:
                 #
@@ -169,14 +169,14 @@ class AllauthPersonaTestCase(TestCase):
                 '<input type="hidden" name="email" '
                 'value="%s" id="id_email" />' % persona_signup_email,
             )
-            verify_strings_in_response(expected_strings, r)
+            verify_strings_in_response(expected_strings, response)
             unexpected_strings = (
                 '<Account Sign In Failure',
                 '<An error occurred while attempting to sign '
                 'in with your account.',
             )
             for s in unexpected_strings:
-                ok_(s not in r.content)
+                ok_(s not in response.content)
 
     def test_persona_signin_copy(self):
         """

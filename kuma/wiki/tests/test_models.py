@@ -8,6 +8,7 @@ import mock
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from nose import SkipTest
+import test_utils
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -28,8 +29,9 @@ from kuma.wiki import tasks
 from kuma.wiki.tests import (document, revision, doc_rev, normalize_html,
                              create_template_test_users,
                              create_topical_parents_docs)
+from kuma.users.tests import UserTestCase
+
 from sumo import ProgrammingError
-from sumo.tests import TestCase
 
 
 def _objects_eq(manager, list_):
@@ -45,9 +47,8 @@ def redirect_rev(title, redirect_to):
         save=True)
 
 
-class DocumentTests(TestCase):
+class DocumentTests(UserTestCase):
     """Tests for the Document model"""
-    fixtures = ['test_users.json']
 
     @attr('bug875349')
     def test_json_data(self):
@@ -304,7 +305,7 @@ class DocumentTests(TestCase):
         ok_(d3.parents == [d1, d2])
 
 
-class PermissionTests(TestCase):
+class PermissionTests(test_utils.TestCase):
 
     def setUp(self):
         """Set up the permissions, groups, and users needed for the tests"""
@@ -354,10 +355,8 @@ class PermissionTests(TestCase):
                                 user, msg[expected], slug))
 
 
-class DocumentTestsWithFixture(TestCase):
+class DocumentTestsWithFixture(UserTestCase):
     """Document tests which need the users fixture"""
-
-    fixtures = ['test_users.json']
 
     def test_redirect_document_non_redirect(self):
         """Assert redirect_document on non-redirects returns None."""
@@ -517,9 +516,8 @@ class DocumentTestsWithFixture(TestCase):
         eq_(sample_js.strip(), result['js'].strip())
 
 
-class TaggedDocumentTests(TestCase):
+class TaggedDocumentTests(UserTestCase):
     """Tests for tags in Documents and Revisions"""
-    fixtures = ['test_users.json']
 
     @attr('tags')
     def test_revision_tags(self):
@@ -544,9 +542,8 @@ class TaggedDocumentTests(TestCase):
         eq_(1, Document.objects.filter(tags__name='alpha').count())
 
 
-class RevisionTests(TestCase):
+class RevisionTests(UserTestCase):
     """Tests for the Revision model"""
-    fixtures = ['test_users.json']
 
     def test_approved_revision_updates_html(self):
         """Creating an approved revision updates document.html"""
@@ -688,8 +685,8 @@ class RevisionTests(TestCase):
         ok_('editorial' not in reverted_tags)
 
 
-class RelatedDocumentTests(TestCase):
-    fixtures = ['test_users.json', 'wiki/documents.json']
+class RelatedDocumentTests(UserTestCase):
+    fixtures = UserTestCase.fixtures + ['wiki/documents.json']
 
     def test_related_documents_calculated(self):
         d = Document.objects.get(pk=1)
@@ -718,8 +715,7 @@ class RelatedDocumentTests(TestCase):
         eq_(0, d.related_documents.count())
 
 
-class GetCurrentOrLatestRevisionTests(TestCase):
-    fixtures = ['test_users.json']
+class GetCurrentOrLatestRevisionTests(UserTestCase):
 
     """Tests for current_or_latest_revision."""
     def test_single_approved(self):
@@ -741,8 +737,7 @@ class GetCurrentOrLatestRevisionTests(TestCase):
         eq_(r2, r1.document.current_or_latest_revision())
 
 
-class DumpAndLoadJsonTests(TestCase):
-    fixtures = ['test_users.json', ]
+class DumpAndLoadJsonTests(UserTestCase):
 
     def test_roundtrip(self):
         # Create some documents and revisions here, rather than use a fixture
@@ -843,8 +838,7 @@ class DumpAndLoadJsonTests(TestCase):
             eq_(uploader.id, d_curr.current_revision.creator_id)
 
 
-class DeferredRenderingTests(TestCase):
-    fixtures = ['test_users.json', ]
+class DeferredRenderingTests(UserTestCase):
 
     def setUp(self):
         super(DeferredRenderingTests, self).setUp()
@@ -1079,9 +1073,8 @@ class DeferredRenderingTests(TestCase):
         ok_(errors, r_errors)
 
 
-class RenderExpiresTests(TestCase):
+class RenderExpiresTests(UserTestCase):
     """Tests for max-age and automatic document rebuild"""
-    fixtures = ['test_users.json']
 
     def test_find_stale_documents(self):
         now = datetime.now()
@@ -1181,10 +1174,8 @@ class RenderExpiresTests(TestCase):
         ok_(d1_fresh.last_rendered_at > earlier)
 
 
-class PageMoveTests(TestCase):
+class PageMoveTests(UserTestCase):
     """Tests for page-moving and associated functionality."""
-
-    fixtures = ['test_users.json']
 
     @attr('move')
     def test_children_simple(self):
@@ -1765,9 +1756,8 @@ class PageMoveTests(TestCase):
                 ok_(s in e.args[0])
 
 
-class DocumentZoneTests(TestCase):
+class DocumentZoneTests(UserTestCase):
     """Tests for content zones in topic hierarchies"""
-    fixtures = ['test_users.json']
 
     def test_find_roots(self):
         """Ensure sub pages can find the content zone root"""
@@ -1818,9 +1808,8 @@ class DocumentZoneTests(TestCase):
         eq_(zone_stack[1], root_zone)
 
 
-class DocumentParsingTests(TestCase):
+class DocumentParsingTests(UserTestCase):
     """Tests exercising content parsing methods"""
-    fixtures = ['test_users.json']
 
     def test_get_section_content(self):
         src = """

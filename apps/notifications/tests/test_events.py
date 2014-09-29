@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import mock
+import test_utils
 from nose.tools import eq_
 
 from django.conf import settings
@@ -13,7 +14,6 @@ from notifications.events import (Event, _unique_by_email, EventUnion,
 from notifications.models import Watch, EmailUser
 from notifications.tests import watch, watch_filter, ModelsTestCase
 from notifications.tests.models import MockModel
-from sumo.tests import TestCase
 from kuma.users.tests import user
 
 
@@ -46,7 +46,7 @@ class FilteredContentTypeEvent(ContentTypeEvent):
     filters = set(['color', 'flavor'])
 
 
-class UsersWatchingTests(TestCase):
+class UsersWatchingTests(test_utils.TestCase):
     """Unit tests for Event._users_watching_by_filter()"""
 
     @staticmethod
@@ -205,7 +205,7 @@ class UsersWatchingTests(TestCase):
                           exclude=user())
 
 
-class EventUnionTests(TestCase):
+class EventUnionTests(test_utils.TestCase):
     """Tests for EventUnion"""
 
     @staticmethod
@@ -254,7 +254,7 @@ class EventUnionTests(TestCase):
         assert _mails.called
 
 
-class NotificationTests(TestCase):
+class NotificationTests(test_utils.TestCase):
     """Tests for Event methods that create, examine, and destroy watches."""
 
     def test_lifecycle(self):
@@ -338,7 +338,7 @@ class CascadingDeleteTests(ModelsTestCase):
         assert not Watch.objects.count(), 'Cascade delete failed.'
 
 
-class MailTests(TestCase):
+class MailTests(test_utils.TestCase):
     """Tests for mail-sending and templating"""
 
     @mock.patch_object(settings._wrapped, 'CONFIRM_ANONYMOUS_WATCHES', False)

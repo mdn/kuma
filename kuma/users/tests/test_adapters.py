@@ -3,20 +3,18 @@ from nose.tools import eq_, assert_raises
 
 from django.contrib.auth.models import User
 from django.contrib import messages as django_messages
-from django.contrib.messages.storage.fallback import FallbackStorage
 from django.utils.importlib import import_module
 from django.test import RequestFactory
 
 from allauth.exceptions import ImmediateHttpResponse
 from allauth.socialaccount.models import SocialLogin, SocialAccount
 
-from devmo.tests import LocalizingClient
 from kuma.users.adapters import KumaSocialAccountAdapter
-from sumo.tests import TestCase
+
+from . import UserTestCase
 
 
-class KumaSocialAccountAdapterTestCase(TestCase):
-    fixtures = ['test_users.json']
+class KumaSocialAccountAdapterTestCase(UserTestCase):
 
     def setUp(self):
         """ extra setUp to make a working session """
@@ -24,7 +22,6 @@ class KumaSocialAccountAdapterTestCase(TestCase):
         engine = import_module(settings.SESSION_ENGINE)
         store = engine.SessionStore()
         store.save()
-        self.client = LocalizingClient()
         self.client.cookies[settings.SESSION_COOKIE_NAME] = store.session_key
         self.adapter = KumaSocialAccountAdapter()
 
@@ -63,12 +60,7 @@ class KumaSocialAccountAdapterTestCase(TestCase):
         session['socialaccount_sociallogin'] = github_login.serialize()
         session.save()
         request.session = session
-
-        # django 1.4 RequestFactory requests can't be used to test views that
-        # call messages.add (https://code.djangoproject.com/ticket/17971)
-        # FIXME: HACK from http://stackoverflow.com/q/11938164/571420
-        messages = FallbackStorage(request)
-        request._messages = messages
+        messages = self.get_messages(request)
 
         # Set up an un-matching Persona SocialLogin for request
         persona_account = SocialAccount(user=User(), provider='persona',
@@ -77,5 +69,6 @@ class KumaSocialAccountAdapterTestCase(TestCase):
 
         assert_raises(ImmediateHttpResponse,
                       self.adapter.pre_social_login, request, persona_login)
-        for m in messages:
-            eq_(django_messages.ERROR, m.level)
+        queued_messages = list(messages)
+        eq_(len(queued_messages), 1)
+        eq_(django_messages.ERROR, queued_messages[0].level)

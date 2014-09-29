@@ -10,15 +10,15 @@ import time
 from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
 
-from kuma.wiki.tests import (TestCaseBase, document, revision, make_translation,
-                             wait_add_rev)
+from kuma.users.tests import UserTestCase
+from kuma.wiki.tests import (WikiTestCase, document, revision,
+                             make_translation, wait_add_rev)
 from sumo.urlresolvers import reverse
 
 
-class FeedTests(TestCaseBase):
+class FeedTests(UserTestCase, WikiTestCase):
     """Tests for the wiki feeds"""
-
-    fixtures = ['test_users.json']
+    localizing_client = True
 
     def test_updated_translation_parent_feed(self):
         # Get the feed URL for reuse.

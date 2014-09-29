@@ -7,10 +7,10 @@ import mock
 from nose.tools import eq_, ok_
 
 from kuma.wiki import kumascript
-from . import TestCaseBase, document
+from . import WikiTestCase, document
 
 
-class KumascriptClientTests(TestCaseBase):
+class KumascriptClientTests(WikiTestCase):
 
     def test_env_vars(self):
         """Exercise building of env var headers for kumascript"""

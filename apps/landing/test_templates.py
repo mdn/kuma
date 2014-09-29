@@ -1,14 +1,10 @@
 from nose.tools import eq_, ok_
-import test_utils
 
 from sumo.urlresolvers import reverse
-from devmo.tests import LocalizingClient, override_constance_settings
+from devmo.tests import KumaTestCase, override_constance_settings
 
 
-class HomeTests(test_utils.TestCase):
-    def setUp(self):
-        self.client = LocalizingClient()
-
+class HomeTests(KumaTestCase):
     def test_google_analytics(self):
         url = reverse('landing.views.home')
 

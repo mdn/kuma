@@ -8,26 +8,19 @@ from html5lib.filters._base import Filter as html5lib_Filter
 from nose.tools import nottest
 from waffle.models import Flag
 
-from devmo.tests import LocalizingClient
+from devmo.tests import KumaTestCase
 import kuma.wiki.content
 from kuma.wiki.models import Document, Revision
-from sumo.tests import TestCase, get_user
+from sumo.tests import get_user
 
 
-class TestCaseBase(TestCase):
+class WikiTestCase(KumaTestCase):
     """Base TestCase for the wiki app test cases."""
 
     def setUp(self):
-        super(TestCaseBase, self).setUp()
-        self.client = LocalizingClient()
-
-        ke_flag, created = Flag.objects.get_or_create(name='kumaediting')
-        ke_flag.everyone = True
-        ke_flag.save()
-        self.kumaediting_flag = ke_flag
-
-    def tearDown(self):
-        self.kumaediting_flag.delete()
+        super(WikiTestCase, self).setUp()
+        self.kumaediting_flag, created = Flag.objects.get_or_create(
+            name='kumaediting', everyone=True)
 
 
 # Model makers. These make it clearer and more concise to create objects in
@@ -174,7 +167,7 @@ def create_template_test_users():
         groups[x] = [group]
 
     users = {}
-    for x in  ('none', 'add', 'change', 'all'):
+    for x in ('none', 'add', 'change', 'all'):
         user, created = User.objects.get_or_create(username='user_%s' % x,
             defaults=dict(email='user_%s@example.com',
                           is_active=True, is_staff=False, is_superuser=False))

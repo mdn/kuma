@@ -1,19 +1,15 @@
 from django.conf import settings, UserSettingsHolder
-from django.utils.functional import wraps
+from django.contrib.messages.storage.fallback import FallbackStorage
 from django.test.client import Client
+from django.utils.functional import wraps
 
 import constance.config
 from constance.backends import database as constance_database
 
+from nose import SkipTest
 import test_utils
-from nose.plugins.skip import SkipTest
 
 from sumo.urlresolvers import split_path
-
-
-class SkippedTestCase(test_utils.TestCase):
-    def setUp(self):
-        raise SkipTest()
 
 
 class overrider(object):
@@ -117,3 +113,28 @@ class LocalizingClient(LocalizingMixin, Client):
     # If you use this, you might also find the force_locale=True argument to
     # sumo.urlresolvers.reverse() handy, in case you need to force locale
     # prepending in a one-off case or do it outside a mock request.
+
+
+class KumaTestCase(test_utils.TestCase):
+    localizing_client = False
+    skipme = False
+
+    def setUp(self):
+        if self.skipme:
+            raise SkipTest
+
+        super(KumaTestCase, self).setUp()
+        if self.localizing_client:
+            self.client = LocalizingClient()
+
+    def get_messages(self, request):
+        # django 1.4 RequestFactory requests can't be used to test views that
+        # call messages.add (https://code.djangoproject.com/ticket/17971)
+        # FIXME: HACK from http://stackoverflow.com/q/11938164/571420
+        messages = FallbackStorage(request)
+        request._messages = messages
+        return messages
+
+
+class SkippedTestCase(KumaTestCase):
+    skipme = True

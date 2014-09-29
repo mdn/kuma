@@ -4,15 +4,15 @@ from django.core.cache import get_cache
 from nose.tools import eq_
 from sumo.urlresolvers import reverse
 
+from kuma.users.tests import UserTestCase
 from kuma.wiki.constants import SECONDARY_CACHE_ALIAS
 from kuma.wiki.models import DocumentZone
 from kuma.wiki.tests import revision
 
-from . import TestCaseBase
+from . import WikiTestCase
 
 
-class DocumentZoneMiddlewareTestCase(TestCaseBase):
-    fixtures = ['test_users.json']
+class DocumentZoneMiddlewareTestCase(UserTestCase, WikiTestCase):
 
     def setUp(self):
         super(DocumentZoneMiddlewareTestCase, self).setUp()

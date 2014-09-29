@@ -15,9 +15,6 @@ class KeyViewsTest(TestCase):
                          email="tester23@example.com")
         self.user.save()
 
-    def tearDown(self):
-        self.user.delete()
-
     @attr('current')
     def test_secret_generation(self):
         """Generated secret should be saved as a hash and pass a check"""

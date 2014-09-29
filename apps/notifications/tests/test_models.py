@@ -1,8 +1,8 @@
+import test_utils
 from nose.tools import eq_
 
 from notifications.models import WatchFilter
 from notifications.tests import watch_filter
-from sumo.tests import TestCase
 
 
 # TODO: write a test to ensure that event types don't collide
@@ -10,7 +10,7 @@ from sumo.tests import TestCase
 # E.g. No duplicates in this list: [et.lower() for et in EVENT_TYPES]
 
 
-class WatchFilterTests(TestCase):
+class WatchFilterTests(test_utils.TestCase):
     """Tests for WatchFilter"""
 
     def test_value_range(self):

@@ -3,7 +3,6 @@ from pyquery import PyQuery as pq
 from django.contrib.auth.models import User
 
 from django.test import TestCase
-from django.test.client import Client
 
 from nose.tools import eq_, ok_
 
@@ -16,14 +15,13 @@ from authkeys.views import ITEMS_PER_PAGE
 class KeyViewsTest(TestCase):
 
     def setUp(self):
-        self.username = 'tester23'
-        self.password = 'trustno1'
+        username = 'tester23'
+        password = 'trustno1'
         self.email = 'tester23@example.com'
 
-        self.user = User(username=self.username,
-                         email=self.email)
-        self.user.set_password(self.password)
-        self.user.save()
+        self.user = User.objects.create_user(username, self.email, password)
+
+        self.client.login(username=username, password=password)
 
         self.user2 = User(username='someone', email='someone@example.com')
         self.user2.save()
@@ -35,18 +33,7 @@ class KeyViewsTest(TestCase):
         self.key3 = Key(user=self.user2, description='Test Key 3')
         self.key3.save()
 
-        self.client = Client()
-
-    def tearDown(self):
-        self.user.delete()
-        self.user2.delete()
-        self.key1.delete()
-        self.key2.delete()
-        self.key3.delete()
-
     def test_new_key(self):
-        self.client.login(username=self.username,
-                          password=self.password)
         data = {"description": "This is meant for a test app"}
         url = reverse('authkeys.new', locale='en-US')
 
@@ -83,9 +70,6 @@ class KeyViewsTest(TestCase):
 
     def test_list_key(self):
         """The current user's keys should be shown, but only that user's"""
-        self.client.login(username=self.username,
-                          password=self.password)
-
         url = reverse('authkeys.list', locale='en-US')
         resp = self.client.get(url)
         eq_(200, resp.status_code)
@@ -98,9 +82,6 @@ class KeyViewsTest(TestCase):
                 eq_(key.description, key_row.find('.description').text())
 
     def test_key_history(self):
-        self.client.login(username=self.username,
-                          password=self.password)
-
         # Assemble some sample log lines
         log_lines = []
         for i in range(0, ITEMS_PER_PAGE * 2):
@@ -116,7 +97,7 @@ class KeyViewsTest(TestCase):
         # Iterate through 2 expected pages...
         for qs, offset in (('', 0), ('?page=2', ITEMS_PER_PAGE)):
             url = '%s%s' % (reverse('authkeys.history', args=(self.key1.pk,),
-                                        locale='en-US'), qs)
+                                    locale='en-US'), qs)
             resp = self.client.get(url)
             eq_(200, resp.status_code)
             page = pq(resp.content)
@@ -134,9 +115,6 @@ class KeyViewsTest(TestCase):
 
     def test_delete_key(self):
         """User should be able to delete own keys, but no one else's"""
-        self.client.login(username=self.username,
-                          password=self.password)
-
         url = reverse('authkeys.delete', args=(self.key3.pk,),
                       locale='en-US')
         resp = self.client.get(url, follow=True)

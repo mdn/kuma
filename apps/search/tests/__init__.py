@@ -1,15 +1,15 @@
+from __future__ import absolute_import
 import time
 
 from django.conf import settings
 
-from nose import SkipTest
 from elasticsearch.exceptions import ConnectionError, NotFoundError
 from rest_framework.test import APIRequestFactory
-from test_utils import TestCase
 
-from devmo.tests import LocalizingMixin
+from devmo.tests import LocalizingMixin, KumaTestCase
 from sumo.urlresolvers import reset_url_prefixer
 from sumo.middleware import LocaleURLMiddleware
+from kuma.users.tests import UserTestCase
 
 from search.index import get_index, get_indexing_es
 
@@ -20,9 +20,8 @@ class LocalizingAPIRequestFactory(LocalizingMixin, APIRequestFactory):
 factory = LocalizingAPIRequestFactory()
 
 
-class ElasticTestCase(TestCase):
+class ElasticTestCase(UserTestCase):
     """Base class for Elastic Search tests, providing some conveniences"""
-    skipme = False
 
     @classmethod
     def setUpClass(cls):
@@ -64,9 +63,6 @@ class ElasticTestCase(TestCase):
             settings.ES_LIVE_INDEX = cls._old_es_live_index
 
     def setUp(self):
-        if self.skipme:
-            raise SkipTest
-
         super(ElasticTestCase, self).setUp()
         self.setup_indexes()
 
