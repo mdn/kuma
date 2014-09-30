@@ -179,11 +179,7 @@
   {% if waffle.flag('search_suggestions') %}
     {{ js('search-suggestions') }}
     <script>
-      $(function () {
-        $('#home-search-form').searchSuggestions({
-          ftText: "{{ _("<h2>Welcome to the new way to search MDN!</h2><p>Search as usual, or filter your search by clicking in the arrow (<i class='icon-caret-down' aria-hidden='true'></i>) to show the filters menu.</p><p>Filtering also works by typing shortcuts into the search field (shortcut examples #int, #JS, #CSS).") }}</p>"
-        });
-      });
+        jQuery('#home-search-form').searchSuggestions();
     </script>
   {% endif %}
 {% endblock %}

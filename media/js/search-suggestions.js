@@ -119,7 +119,7 @@
                   $filtersLeft.hide();
                 }
               },
-              addFilter:function(slug,group,shortcut){ 
+              addFilter:function(slug,group,shortcut){
                 var self = this;
                 var shortcut = (shortcut || slug);
                 var filter = $('<span></span>')
@@ -334,7 +334,9 @@
                     var topic = {'filter': $(e).data('topic'), 'group': $(e).data('group')};
                     return topic;
                 });
-                var topicsString = topics.map(function(t){ return t.group+'='+t.filter; }).join('&');
+                var topicsString = topics.map(function(t){
+                    return t.group+'='+t.filter;
+                }).join('&');
                 var searchQuery = encodeURIComponent($searchInput.val());
 
                 // Redirects to search
@@ -343,23 +345,26 @@
 
 
             // Show first time notification in the first visit
-            if(!localStorage.getItem('supressSearchSuggestions') || settings.ftForce ) {
-                var $closeButton = $('<button></button>')
-                    .addClass('close')
-                    .attr('type', 'button')
-                    .html('<i aria-hidden="true" class="icon-remove"></i>')
-                    .on('click', function(){
-                        $firstTimePop.remove();
-                    })
-                var $firstTimePop = $('<div></div>')
-                    .addClass('notificaton-first-time')
-                    .append(settings.ftText)
-                    .append($closeButton);
+            try {
+                if(!localStorage.getItem('supressSearchSuggestions') || settings.ftForce ) {
+                    var $closeButton = $('<button></button>')
+                        .addClass('close')
+                        .attr('type', 'button')
+                        .html('<i aria-hidden="true" class="icon-remove"></i>')
+                        .on('click', function(){
+                            $firstTimePop.remove();
+                        })
+                    var $firstTimePop = $('<div></div>')
+                        .addClass('notificaton-first-time')
+                        .append(settings.ftText)
+                        .append($closeButton);
 
-                $search.after($firstTimePop);
-                localStorage.setItem('supressSearchSuggestions', 1);
+                    $search.after($firstTimePop);
+                    localStorage.setItem('supressSearchSuggestions', 1);
+                }
+            } catch(ex) {
+                // Localstroage error
             }
-
         });
     };
 
