@@ -1,3 +1,4 @@
+from collections import namedtuple
 from datetime import datetime
 
 from django.conf import settings
@@ -5,6 +6,7 @@ from django.contrib.auth.models import User
 from django.test import RequestFactory
 
 from babel.dates import format_date, format_time, format_datetime
+import jingo
 from nose.tools import eq_, ok_, assert_raises
 from pyquery import PyQuery as pq
 from pytz import timezone
@@ -12,7 +14,7 @@ from soapbox.models import Message
 import test_utils
 
 from devmo.helpers import (urlencode, soapbox_messages, get_soapbox_messages,
-                           datetimeformat, DateTimeFormatError, json)
+                           datetimeformat, DateTimeFormatError, json, number)
 from kuma.users.tests import UserTestCase
 from sumo.urlresolvers import reverse
 
@@ -158,3 +160,14 @@ class TestDateTimeFormat(UserTestCase):
         value_returned = datetimeformat(self.context, value_test,
                                         format='longdatetime')
         eq_(pq(value_returned)('time').text(), value_expected)
+
+
+class TestHelpers(test_utils.TestCase):
+
+    def setUp(self):
+        jingo.load_helpers()
+
+    def test_number(self):
+        context = {'request': namedtuple('R', 'locale')('en-US')}
+        eq_('5,000', number(context, 5000))
+        eq_('', number(context, None))

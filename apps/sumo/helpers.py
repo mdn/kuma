@@ -129,19 +129,6 @@ def json(s):
     return jsonlib.dumps(s)
 
 
-@register.function
-@jinja2.contextfunction
-def number(context, n):
-    """Return the localized representation of an integer or decimal.
-
-    For None, print nothing.
-
-    """
-    if n is None:
-        return ''
-    return format_decimal(n, locale=_babel_locale(_contextual_locale(context)))
-
-
 @register.filter
 def timesince(d, now=None):
     """Take two datetime objects and return the time between d and now as a

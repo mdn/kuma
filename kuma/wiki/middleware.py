@@ -13,9 +13,8 @@ class ReadOnlyMiddleware(object):
     """
     def process_exception(self, request, exception):
         if isinstance(exception, ReadOnlyException):
-            return render(request, '403.html',
-                                {'reason': exception.args[0]},
-                                status=403)
+            context = {'reason': exception.args[0]}
+            return render(request, '403.html', context, status=403)
         return None
 
 
