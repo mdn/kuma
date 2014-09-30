@@ -94,7 +94,7 @@ def has_perm_or_owns_or_403(perm, owner_attr, obj_lookup, perm_obj_lookup,
     """Act like permission_required_or_403 but also grant permission to owners.
 
     Arguments:
-        perm: authority permission to check, e.g. 'forums_forum.edit_forum'
+        perm: authority permission to check, e.g. 'wiki_document.add_document'
 
         owner_attr: Attr of model object that references the owner
 
