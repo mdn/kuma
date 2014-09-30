@@ -1,16 +1,18 @@
 from datetime import datetime
+
+from django.conf import settings
+from django.contrib.auth.models import User
+from django.test import RequestFactory
+
+from babel.dates import format_date, format_time, format_datetime
 from nose.tools import eq_, ok_, assert_raises
+from pyquery import PyQuery as pq
 from pytz import timezone
-import test_utils
 from soapbox.models import Message
+import test_utils
 
 from devmo.helpers import (urlencode, soapbox_messages, get_soapbox_messages,
                            datetimeformat, DateTimeFormatError, json)
-from django.conf import settings
-from django.contrib.auth.models import User
-from babel.dates import format_date, format_time, format_datetime
-from pyquery import PyQuery as pq
-
 from kuma.users.tests import UserTestCase
 from sumo.urlresolvers import reverse
 
@@ -60,7 +62,7 @@ class TestDateTimeFormat(UserTestCase):
     def setUp(self):
         super(TestDateTimeFormat, self).setUp()
         url_ = reverse('home')
-        self.context = {'request': test_utils.RequestFactory().get(url_)}
+        self.context = {'request': RequestFactory().get(url_)}
         self.context['request'].locale = u'en-US'
         self.context['request'].user = User.objects.get(username='testuser01')
 

@@ -25,12 +25,13 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
         store.save()
         self.client.cookies[settings.SESSION_COOKIE_NAME] = store.session_key
         self.adapter = KumaSocialAccountAdapter()
+        self.rf = RequestFactory()
 
     @attr('bug1055870')
     def test_pre_social_login_overwrites_session_var(self):
         """ https://bugzil.la/1055870 """
         # Set up a pre-existing GitHub sign-in session
-        request = RequestFactory().get('/')
+        request = self.rf.get('/')
         session = self.client.session
         session['sociallogin_provider'] = 'github'
         session.save()
@@ -56,7 +57,7 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
         github_account = SocialAccount.objects.get(user__username='testuser2')
         github_login = SocialLogin(account=github_account)
 
-        request = RequestFactory().get('/')
+        request = self.rf.get('/')
         session = self.client.session
         session['socialaccount_sociallogin'] = github_login.serialize()
         session.save()
@@ -90,7 +91,7 @@ class KumaAccountAdapterTestCase(UserTestCase):
     def test_account_connected_message(self):
         """ https://bugzil.la/1054461 """
         message_template = 'socialaccount/messages/account_connected.txt'
-        request = RequestFactory().get('/')
+        request = self.rf.get('/')
 
         # first check for the case in which the next url in the account
         # connection process is the frontpage, there shouldn't be a message

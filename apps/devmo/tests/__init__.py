@@ -128,7 +128,7 @@ class KumaTestCase(test_utils.TestCase):
             self.client = LocalizingClient()
 
     def get_messages(self, request):
-        # django 1.4 RequestFactory requests can't be used to test views that
+        # Django 1.4 RequestFactory requests can't be used to test views that
         # call messages.add (https://code.djangoproject.com/ticket/17971)
         # FIXME: HACK from http://stackoverflow.com/q/11938164/571420
         messages = FallbackStorage(request)

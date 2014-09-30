@@ -1,3 +1,4 @@
+from django.test import RequestFactory
 from nose.tools import eq_, raises
 from pyquery import PyQuery as pq
 import jingo
@@ -13,7 +14,7 @@ class MockRequestTests(test_utils.TestCase):
 
     def setUp(self):
         super(MockRequestTests, self).setUp()
-        request = test_utils.RequestFactory()
+        request = RequestFactory()
         request.locale = 'en-US'
         self.request = request
 

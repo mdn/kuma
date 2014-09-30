@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User, AnonymousUser
 from django.http import HttpResponse
 
+from django.test import RequestFactory
 from nose.tools import eq_
 import test_utils
 
@@ -14,23 +15,24 @@ def simple_view(request):
 
 class LogoutRequiredTestCase(test_utils.TestCase):
     fixtures = ['users.json']
+    rf = RequestFactory()
 
     def test_logged_out_default(self):
-        request = test_utils.RequestFactory().get('/foo')
+        request = self.rf.get('/foo')
         request.user = AnonymousUser()
         view = logout_required(simple_view)
         response = view(request)
         eq_(200, response.status_code)
 
     def test_logged_in_default(self):
-        request = test_utils.RequestFactory().get('/foo')
+        request = self.rf.get('/foo')
         request.user = User.objects.get(username='jsocol')
         view = logout_required(simple_view)
         response = view(request)
         eq_(302, response.status_code)
 
     def test_logged_in_argument(self):
-        request = test_utils.RequestFactory().get('/foo')
+        request = self.rf.get('/foo')
         request.user = User.objects.get(username='jsocol')
         view = logout_required('/bar')(simple_view)
         response = view(request)
@@ -40,9 +42,10 @@ class LogoutRequiredTestCase(test_utils.TestCase):
 
 class LoginRequiredTestCase(test_utils.TestCase):
     fixtures = ['users.json']
+    rf = RequestFactory()
 
     def test_logged_out_default(self):
-        request = test_utils.RequestFactory().get('/foo')
+        request = self.rf.get('/foo')
         request.user = AnonymousUser()
         view = login_required(simple_view)
         response = view(request)
@@ -50,7 +53,7 @@ class LoginRequiredTestCase(test_utils.TestCase):
 
     def test_logged_in_default(self):
         """Active user login."""
-        request = test_utils.RequestFactory().get('/foo')
+        request = self.rf.get('/foo')
         request.user = User.objects.get(username='jsocol')
         view = login_required(simple_view)
         response = view(request)
@@ -58,7 +61,7 @@ class LoginRequiredTestCase(test_utils.TestCase):
 
     def test_logged_in_inactive(self):
         """Inactive user login not allowed by default."""
-        request = test_utils.RequestFactory().get('/foo')
+        request = self.rf.get('/foo')
         user = User.objects.get(username='rrosario')
         user.is_active = False
         user.save()
@@ -69,7 +72,7 @@ class LoginRequiredTestCase(test_utils.TestCase):
 
     def test_logged_in_inactive_allow(self):
         """Inactive user login explicitly allowed."""
-        request = test_utils.RequestFactory().get('/foo')
+        request = self.rf.get('/foo')
         user = User.objects.get(username='rrosario')
         user.is_active = False
         user.save()
@@ -81,16 +84,17 @@ class LoginRequiredTestCase(test_utils.TestCase):
 
 class PermissionRequiredTestCase(test_utils.TestCase):
     fixtures = ['users.json']
+    rf = RequestFactory()
 
     def test_logged_out_default(self):
-        request = test_utils.RequestFactory().get('/foo')
+        request = self.rf.get('/foo')
         request.user = AnonymousUser()
         view = permission_required('perm')(simple_view)
         response = view(request)
         eq_(302, response.status_code)
 
     def test_logged_in_default(self):
-        request = test_utils.RequestFactory().get('/foo')
+        request = self.rf.get('/foo')
         request.user = User.objects.get(username='jsocol')
         view = permission_required('perm')(simple_view)
         response = view(request)
@@ -98,7 +102,7 @@ class PermissionRequiredTestCase(test_utils.TestCase):
 
     def test_logged_in_inactive(self):
         """Inactive user is denied access."""
-        request = test_utils.RequestFactory().get('/foo')
+        request = self.rf.get('/foo')
         user = User.objects.get(username='admin')
         user.is_active = False
         user.save()
@@ -108,7 +112,7 @@ class PermissionRequiredTestCase(test_utils.TestCase):
         eq_(403, response.status_code)
 
     def test_logged_in_admin(self):
-        request = test_utils.RequestFactory().get('/foo')
+        request = self.rf.get('/foo')
         request.user = User.objects.get(username='admin')
         view = permission_required('perm')(simple_view)
         response = view(request)

@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 
+from django.test import RequestFactory
 from nose.tools import eq_
 import test_utils
 
@@ -14,7 +15,7 @@ class AccessTests(test_utils.TestCase):
 
     def setUp(self):
         url = reverse('forums.threads', args=[u'test-forum'])
-        self.context = {'request': test_utils.RequestFactory().get(url)}
+        self.context = {'request': RequestFactory().get(url)}
         self.forum_1 = Forum.objects.get(pk=1)
         self.forum_2 = Forum.objects.get(pk=2)
 
