@@ -1,6 +1,8 @@
 (function(win, doc, $) {
     'use strict';
 
+    var noop = function() { };
+
     $.fn.searchSuggestions = function(options) {
         return $(this).each(function() {
 
@@ -11,9 +13,9 @@
             var settings = $.extend({
                 sizeLimit: 15,
                 filters: false,
-                onAddFilter: function() {},
-                onRemoveFilter: function() {},
-                ftText: "<h2>Welcome to the new way to search MDN!</h2><p>Search as usual, or filter your search by clicking in the arrow (<i class='icon-caret-down' aria-hidden='true'></i>) to show the filters menu.</p><p>Filtering also works by typing shortcuts into the search field (shortcut examples #int, #JS, #CSS).</p>",
+                onAddFilter: noop,
+                onRemoveFilter: noop,
+                ftText: gettext("<h2>Welcome to the new way to search MDN!</h2><p>Search as usual, or filter your search by clicking in the arrow (<i class='icon-caret-down' aria-hidden='true'></i>) to show the filters menu.</p><p>Filtering also works by typing shortcuts into the search field (shortcut examples #int, #JS, #CSS).</p>"),
                 ftForce: false
             }, options);
 
@@ -27,7 +29,7 @@
             var $filtersRight = $('<div></div>')
               .addClass('filter-arrow')
               .html('<i class="icon-chevron-left " aria-hidden="true"></i>')
-              .on('click', function(){
+              .on('click', function() {
                 $searchFilters.scrollLeft($searchFilters.scrollLeft() - 40);
               })
               .appendTo($search);
@@ -39,7 +41,7 @@
             var $filtersLeft = $('<div></div>')
               .addClass('filter-arrow')
               .html('<i class="icon-chevron-right " aria-hidden="true"></i>')
-              .on('click', function(){
+              .on('click', function() {
                 $searchFilters.scrollLeft($searchFilters.scrollLeft() + 40);
               })
               .appendTo($search);
@@ -76,25 +78,25 @@
             var populated;
 
             var fnSuggestions = {
-              prepareInput: function(){
+              prepareInput: function() {
                   this.storeSize(settings.sizeLimit);
               },
               storeSize: function(size) {
                 $searchInput.attr('size', size || $searchInput.val().length < settings.sizeLimit ? settings.sizeLimit : $searchInput.val().length);
               },
-              parse: function(s){
+              parse: function(s) {
                   var matches = s.match(/^(#\S+)\s+|\s(#\S+)\s+/);
                   return matches ? matches[1] || matches[2] : matches;
               },
-              open: function(){
+              open: function() {
                 $suggestions.attr('data-hidden', 'false');
                 $suggestions.slideDown();
               },
-              close: function(){
+              close: function() {
                 $suggestions.attr('data-hidden', 'true');
                 $suggestions.slideUp();
               },
-              populate: function(){
+              populate: function() {
                 if($suggestions.attr('data-hidden') == 'false') {
                     var fs = $searchInput.val().match(/#(\S+)/) || [];
                     this.recoverTopics(fs[1] || '');
@@ -108,18 +110,18 @@
                     }
                 }
               },
-              showarrows:function(){
+              showarrows: function() {
                 // max-width of $searchFilters is 70% in search-suggestions.styl
                 var max_width = 69 / 100 * $search.width();
                 if($searchFilters.width() > max_width){
-                  $filtersRight.css('display','inline-block');
-                  $filtersLeft.css('display','inline-block');
+                  $filtersRight.css('display', 'inline-block');
+                  $filtersLeft.css('display', 'inline-block');
                 }else{
                   $filtersRight.hide();
                   $filtersLeft.hide();
                 }
               },
-              addFilter:function(slug,group,shortcut){
+              addFilter: function(slug, group, shortcut) {
                 var self = this;
                 var shortcut = (shortcut || slug);
                 var filter = $('<span></span>')
@@ -133,7 +135,7 @@
                     .addClass('close')
                     .attr('type', 'button')
                     .html('<i aria-hidden="true" class="icon-remove"></i>')
-                    .on('click', function(){
+                    .on('click', function() {
                         $(filter).remove();
                         $.each(filtersData, function(index, groupFilters){
                           if(groupFilters.slug === group){
@@ -152,24 +154,24 @@
 
                 self.showarrows();
               },
-              parseAndAddFilters: function(){
+              parseAndAddFilters: function() {
                   var toParse = $searchInput.val();
                   var filter = true;
                   var filters = [];
                   var self = this;
-                  while(filter){
+                  while(filter) {
                       filter = self.parse(toParse);
-                      if(filter){
+                      if(filter) {
                           filters.push(filter);
                           toParse = toParse.replace(filter, '').trim();
                       }
                   }
 
                   if(filters.length >= 1){
-                      filters.forEach(function(entry){
-                        $.each(filtersData, function(idx_group, group){
+                      filters.forEach(function(entry) {
+                        $.each(filtersData, function(idx_group, group) {
                             var groupSlug = group.slug;
-                            $.each(group.filters, function(idx_filter, filter){
+                            $.each(group.filters, function(idx_filter, filter) {
                                 if(typeof(filter) !== 'undefined' && (filter.shortcut || filter.slug) === entry.replace('#','')){
                                     self.addFilter(filter.slug, groupSlug, filter.shortcut);
                                     filtersData[idx_group].filters[idx_filter].shortcut = 'hidden';
@@ -192,16 +194,16 @@
                   }
                   return valueResult;
               },
-              removeFilterFromList: function(slug){
-                  $.each(filtersData, function(idx_group, group){
-                      $.each(group.filters, function(idx_filter, filter){
+              removeFilterFromList: function(slug) {
+                  $.each(filtersData, function(idx_group, group ){
+                      $.each(group.filters, function(idx_filter, filter) {
                           if(typeof(filter) !== 'undefined' && filter.slug === slug){
                               filtersData[idx_group].filters[idx_filter].shortcut = 'hidden';
                           }
                       });
                   });
               },
-              recoverTopics: function(f){
+              recoverTopics: function(f) {
                   // clean suggestion div
                   $suggestions.empty();
                   var self = this;
@@ -268,7 +270,7 @@
             }
 
             // events
-            $search.on('click', function(){
+            $search.on('click', function() {
                 $searchInput.focus();
             });
 
@@ -305,7 +307,7 @@
                 }
             })
 
-            $rightColumFilters.on('change', function(){
+            $rightColumFilters.on('change', function() {
               var rslug = $(this).val();
               var rgroup = $(this).attr('name');
               var rshortcut = '';
@@ -331,11 +333,11 @@
                 e.preventDefault();
 
                 var topics = $.makeArray($form.find('.topic')).map(function(e){
-                    var topic = {'filter': $(e).data('topic'), 'group': $(e).data('group')};
+                    var topic = { 'filter': $(e).data('topic'), 'group': $(e).data('group') };
                     return topic;
                 });
                 var topicsString = topics.map(function(t){
-                    return t.group+'='+t.filter;
+                    return t.group + '=' + t.filter;
                 }).join('&');
                 var searchQuery = encodeURIComponent($searchInput.val());
 
@@ -351,7 +353,7 @@
                         .addClass('close')
                         .attr('type', 'button')
                         .html('<i aria-hidden="true" class="icon-remove"></i>')
-                        .on('click', function(){
+                        .on('click', function() {
                             $firstTimePop.remove();
                         })
                     var $firstTimePop = $('<div></div>')
