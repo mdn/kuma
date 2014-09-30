@@ -2,9 +2,9 @@ from django import forms
 
 from nose.tools import eq_
 from pyquery import PyQuery as pq
+import test_utils
 
 from sumo.form_fields import StrippedCharField
-from sumo.tests import TestCase
 
 
 class ExampleForm(forms.Form):
@@ -23,7 +23,7 @@ class ExampleForm(forms.Form):
     time = forms.TimeField()
 
 
-class TestFields(TestCase):
+class TestFields(test_utils.TestCase):
     """We're not breaking CharField when monkey patching in
     sumo/monkeypatch.py."""
     def setUp(self):

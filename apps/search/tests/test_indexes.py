@@ -11,7 +11,7 @@ from search.index import get_indexing_es, get_indexes
 
 
 class TestIndexes(ElasticTestCase):
-    fixtures = ['test_users.json', 'wiki/documents.json']
+    fixtures = ElasticTestCase.fixtures + ['wiki/documents.json']
 
     def tearDown(self):
         super(TestIndexes, self).tearDown()

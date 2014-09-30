@@ -1,14 +1,13 @@
+import test_utils
 from nose.tools import ok_
 
 from django.contrib.auth.models import Group, Permission, User
 from django.contrib.contenttypes.models import ContentType
 
-from sumo.tests import TestCase
-
 from ..models import Attachment
 
 
-class AttachmentTests(TestCase):
+class AttachmentTests(test_utils.TestCase):
     def test_permissions(self):
         """Ensure that the negative and positive permissions for adding
         attachments work."""
@@ -71,5 +70,3 @@ class AttachmentTests(TestCase):
         u7.user_permissions.add(p2)
         u7.save()
         ok_(Attachment.objects.allow_add_attachment_by(u7))
-
-

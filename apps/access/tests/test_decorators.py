@@ -6,14 +6,13 @@ import test_utils
 
 from access.decorators import (logout_required, login_required,
                                permission_required)
-from sumo.tests import TestCase
 
 
 def simple_view(request):
     return HttpResponse()
 
 
-class LogoutRequiredTestCase(TestCase):
+class LogoutRequiredTestCase(test_utils.TestCase):
     fixtures = ['users.json']
 
     def test_logged_out_default(self):
@@ -39,7 +38,7 @@ class LogoutRequiredTestCase(TestCase):
         eq_('/bar', response['location'])
 
 
-class LoginRequiredTestCase(TestCase):
+class LoginRequiredTestCase(test_utils.TestCase):
     fixtures = ['users.json']
 
     def test_logged_out_default(self):
@@ -80,7 +79,7 @@ class LoginRequiredTestCase(TestCase):
         eq_(200, response.status_code)
 
 
-class PermissionRequiredTestCase(TestCase):
+class PermissionRequiredTestCase(test_utils.TestCase):
     fixtures = ['users.json']
 
     def test_logged_out_default(self):

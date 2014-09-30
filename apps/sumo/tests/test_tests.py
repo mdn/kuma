@@ -2,15 +2,14 @@
 
 from django.core.cache import cache
 
+import test_utils
 from nose.tools import eq_
-
-from sumo.tests import TestCase
 
 
 CACHE_KEY = 'sumo_cache_flushing_test'
 
 
-class CacheFlushingTests(TestCase):
+class CacheFlushingTests(test_utils.TestCase):
     """Tests that make sure SUMO's base TestCase flushes memcached.
 
     This whole class comprises one conceptual test in two parts, which must

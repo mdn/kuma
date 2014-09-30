@@ -1,21 +1,19 @@
-import test_utils
-
 from nose.tools import eq_, ok_
 
 from pyquery import PyQuery as pq
 from waffle.models import Flag
 
 from sumo.urlresolvers import reverse
-from devmo.tests import LocalizingClient
+from devmo.tests import KumaTestCase
 
 from ..cron import calendar_reload
 
 
-class EventsViewsTest(test_utils.TestCase):
+class EventsViewsTest(KumaTestCase):
     fixtures = ['calendar.json']
 
     def setUp(self):
-        self.client = LocalizingClient()
+        super(EventsViewsTest, self).setUp()
         calendar_reload()
 
     def test_events(self):

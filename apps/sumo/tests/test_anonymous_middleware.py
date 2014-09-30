@@ -6,10 +6,9 @@ from django.conf import settings
 import test_utils
 
 from sumo.anonymous import AnonymousIdentityMiddleware
-from sumo.tests import TestCase
 
 
-class TestAnonymousMiddleware(TestCase):
+class TestAnonymousMiddleware(test_utils.TestCase):
     """Tests for the anonymous middleware."""
     def setUp(self):
         super(TestAnonymousMiddleware, self).setUp()

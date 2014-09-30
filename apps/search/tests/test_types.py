@@ -6,7 +6,7 @@ from search.tests import ElasticTestCase
 
 
 class DocumentTypeTests(ElasticTestCase):
-    fixtures = ['test_users.json', 'wiki/documents.json']
+    fixtures = ElasticTestCase.fixtures + ['wiki/documents.json']
 
     def test_get_excerpt_strips_html(self):
         self.refresh()

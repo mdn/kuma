@@ -1,21 +1,14 @@
 from django.contrib.auth.models import User
 
-import test_utils
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 
-
 from kuma.wiki.tests import revision
-from sumo.tests import TestCase
 from ..models import UserBan, UserProfile
-from . import profile
+from . import profile, UserTestCase
 
 
-class TestUserProfile(test_utils.TestCase):
-    fixtures = ['test_users.json']
-
-    def setUp(self):
-        pass
+class TestUserProfile(UserTestCase):
 
     def test_user_get_profile(self):
         """user.get_profile() returns what you'd expect."""
@@ -100,12 +93,11 @@ class TestUserProfile(test_utils.TestCase):
     def test_wiki_activity(self):
         user = User.objects.get(username='testuser')
         profile = UserProfile.objects.get(user=user)
-        revision(save=True, is_approved=True)
-        eq_(1, len(profile.wiki_activity()))
+        rev = revision(save=True, is_approved=True)
+        ok_(rev.pk in profile.wiki_activity().values_list('pk', flat=True))
 
 
-class BanTestCase(TestCase):
-    fixtures = ['test_users.json']
+class BanTestCase(UserTestCase):
 
     @attr('bans')
     def test_ban_user(self):

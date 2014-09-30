@@ -6,8 +6,8 @@ from search.views import SearchView
 
 
 class ViewTests(ElasticTestCase):
-    fixtures = ['test_users.json', 'wiki/documents.json',
-                'search/filters.json']
+    fixtures = ElasticTestCase.fixtures + ['wiki/documents.json',
+                                           'search/filters.json']
 
     def test_search_rendering(self):
         """The search view """

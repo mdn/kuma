@@ -8,13 +8,11 @@ from jinja2 import Markup
 from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
 
-from sumo.tests import TestCase
-
+from . import UserTestCase
 from ..helpers import gravatar_url, public_email, user_list
 
 
-class HelperTestCase(TestCase):
-    fixtures = ['test_users.json']
+class HelperTestCase(UserTestCase):
 
     def setUp(self):
         super(HelperTestCase, self).setUp()

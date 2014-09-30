@@ -2,8 +2,9 @@ from django.conf import settings
 from django.core.management import call_command
 from django.db.models import loading
 
+import test_utils
+
 from notifications.models import Watch, WatchFilter
-from sumo.tests import TestCase
 from kuma.users.tests import user
 
 
@@ -29,7 +30,7 @@ def watch_filter(save=False, **kwargs):
     return f
 
 
-class ModelsTestCase(TestCase):
+class ModelsTestCase(test_utils.TestCase):
     """Does some pre-setup and post-teardown work to create tables for any
     of your test models.
 

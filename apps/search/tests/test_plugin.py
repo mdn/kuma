@@ -1,13 +1,14 @@
+from __future__ import absolute_import
 from django.contrib.sites.models import Site
 
 import mock
+import test_utils
 from nose.tools import eq_
 
-from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
 
 
-class OpenSearchTestCase(TestCase):
+class OpenSearchTestCase(test_utils.TestCase):
     """Test the SUMO OpenSearch plugin."""
 
     @mock.patch_object(Site.objects, 'get_current')

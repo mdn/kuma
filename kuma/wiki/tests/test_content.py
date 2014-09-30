@@ -7,8 +7,9 @@ from jinja2 import escape, Markup
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
+import test_utils
 
-
+from kuma.users.tests import UserTestCase
 import kuma.wiki.content
 from kuma.wiki.content import (CodeSyntaxFilter, DekiscriptMacroFilter,
                                SectionTOCFilter, SectionIDFilter,
@@ -21,11 +22,9 @@ from kuma.wiki.constants import ALLOWED_TAGS, ALLOWED_ATTRIBUTES
 from kuma.wiki.models import Document
 from kuma.wiki.tests import normalize_html, doc_rev, document
 from kuma.wiki.helpers import bugize_text
-from sumo.tests import TestCase
 
 
-class ContentSectionToolTests(TestCase):
-    fixtures = ['test_users.json']
+class ContentSectionToolTests(UserTestCase):
 
     def test_section_pars_for_empty_docs(self):
         doc = document(title='Doc', locale=u'fr', slug=u'doc', save=True,
@@ -1005,7 +1004,7 @@ class ContentSectionToolTests(TestCase):
         eq_(normalize_html(expected), normalize_html(result))
 
 
-class AllowedHTMLTests(TestCase):
+class AllowedHTMLTests(test_utils.TestCase):
     simple_tags = (
         'div', 'span', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre',
         'code', 'dl', 'dt', 'dd', 'table',
@@ -1079,7 +1078,7 @@ class AllowedHTMLTests(TestCase):
         eq_(normalize_html(expected), normalize_html(result))
 
 
-class SearchParserTests(TestCase):
+class SearchParserTests(test_utils.TestCase):
     """Tests for document parsers that extract content for search indexing"""
 
     def test_css_classname_extraction(self):
@@ -1118,7 +1117,7 @@ class SearchParserTests(TestCase):
         eq_(sorted(expected), sorted(result))
 
 
-class GetSEODescriptionTests(TestCase):
+class GetSEODescriptionTests(test_utils.TestCase):
 
     def test_summary_section(self):
         content = (

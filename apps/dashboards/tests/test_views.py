@@ -1,16 +1,14 @@
-import json
-
 from nose.plugins.attrib import attr
 from nose.tools import eq_, ok_
 
-from sumo.tests import TestCase
+from kuma.users.tests import UserTestCase
 from sumo.urlresolvers import reverse
 
 from pyquery import PyQuery as pq
 
 
-class RevisionsDashTest(TestCase):
-    fixtures = ['test_users.json', 'wiki/documents.json']
+class RevisionsDashTest(UserTestCase):
+    fixtures = UserTestCase.fixtures + ['wiki/documents.json']
 
     @attr('dashboards')
     def test_main_view(self):

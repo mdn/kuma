@@ -1,13 +1,13 @@
 from django.core.exceptions import ValidationError
 from django.utils import translation
 
+import test_utils
 from nose.tools import eq_
 
 from sumo.form_fields import _format_decimal, TypedMultipleChoiceField
-from sumo.tests import TestCase
 
 
-class TestFormatDecimal(TestCase):
+class TestFormatDecimal(test_utils.TestCase):
 
     def test_default_locale(self):
         """Default locale just works"""
@@ -38,7 +38,7 @@ class TestFormatDecimal(TestCase):
         eq_('1,234.567', num)
 
 
-class TypedMultipleChoiceFieldTestCase(TestCase):
+class TypedMultipleChoiceFieldTestCase(test_utils.TestCase):
     """TypedMultipleChoiceField is just like MultipleChoiceField
     except, instead of validating, it coerces types."""
 
