@@ -1,6 +1,7 @@
 from nose.plugins.attrib import attr
-from nose.tools import eq_, assert_raises
+from nose.tools import eq_, ok_, assert_raises
 
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib import messages as django_messages
 from django.utils.importlib import import_module
@@ -9,7 +10,8 @@ from django.test import RequestFactory
 from allauth.exceptions import ImmediateHttpResponse
 from allauth.socialaccount.models import SocialLogin, SocialAccount
 
-from kuma.users.adapters import KumaSocialAccountAdapter
+from sumo.urlresolvers import reverse
+from kuma.users.adapters import KumaSocialAccountAdapter, KumaAccountAdapter
 
 from . import UserTestCase
 
@@ -18,7 +20,6 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
 
     def setUp(self):
         """ extra setUp to make a working session """
-        from django.conf import settings
         engine = import_module(settings.SESSION_ENGINE)
         store = engine.SessionStore()
         store.save()
@@ -72,3 +73,53 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
         queued_messages = list(messages)
         eq_(len(queued_messages), 1)
         eq_(django_messages.ERROR, queued_messages[0].level)
+
+
+class KumaAccountAdapterTestCase(UserTestCase):
+    localizing_client = True
+
+    def setUp(self):
+        """ extra setUp to make a working session """
+        engine = import_module(settings.SESSION_ENGINE)
+        store = engine.SessionStore()
+        store.save()
+        self.client.cookies[settings.SESSION_COOKIE_NAME] = store.session_key
+        self.adapter = KumaAccountAdapter()
+
+    @attr('bug1054461')
+    def test_account_connected_message(self):
+        """ https://bugzil.la/1054461 """
+        message_template = 'socialaccount/messages/account_connected.txt'
+        request = RequestFactory().get('/')
+
+        # first check for the case in which the next url in the account
+        # connection process is the frontpage, there shouldn't be a message
+        session = self.client.session
+        session['sociallogin_next_url'] = '/'
+        session.save()
+        request.session = session
+        request.user = User.objects.get(username='testuser')
+        request.locale = 'en-US'
+        messages = self.get_messages(request)
+
+        self.adapter.add_message(request, django_messages.INFO,
+                                 message_template)
+        eq_(len(messages), 0)
+
+        # secondly check for the case in which the next url in the connection
+        # process is the profile edit page, there should be a message
+        session = self.client.session
+        next_url = reverse('users.profile_edit',
+                           kwargs={'username': request.user.username},
+                           locale=request.locale)
+        session['sociallogin_next_url'] = next_url
+        session.save()
+        request.session = session
+        messages = self.get_messages(request)
+
+        self.adapter.add_message(request, django_messages.INFO,
+                                 message_template)
+        queued_messages = list(messages)
+        eq_(len(queued_messages), 1)
+        eq_(django_messages.SUCCESS, queued_messages[0].level)
+        ok_('connected' in queued_messages[0].message)

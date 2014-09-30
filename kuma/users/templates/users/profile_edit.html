@@ -50,8 +50,7 @@
       </div>
 
       <div id="profile-edit" class="column-half">
-        <h1 class="page-title">{{ profile.user.username }}</h1>
-            {% include 'socialaccount/snippets/login_service_icon.html' %}
+        <h1 class="page-title">{% include 'socialaccount/snippets/login_service_icon.html' %}{{ profile.user.username }}</h1>
 
               <fieldset class="section notitle" id="personal">
                 <ul>
