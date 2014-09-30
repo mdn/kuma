@@ -1,10 +1,8 @@
 from nose.plugins.attrib import attr
 from nose.tools import eq_, ok_, assert_raises
 
-from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib import messages as django_messages
-from django.utils.importlib import import_module
 from django.test import RequestFactory
 
 from allauth.exceptions import ImmediateHttpResponse
@@ -17,15 +15,12 @@ from . import UserTestCase
 
 
 class KumaSocialAccountAdapterTestCase(UserTestCase):
+    rf = RequestFactory()
 
     def setUp(self):
         """ extra setUp to make a working session """
-        engine = import_module(settings.SESSION_ENGINE)
-        store = engine.SessionStore()
-        store.save()
-        self.client.cookies[settings.SESSION_COOKIE_NAME] = store.session_key
+        super(KumaSocialAccountAdapterTestCase, self).setUp()
         self.adapter = KumaSocialAccountAdapter()
-        self.rf = RequestFactory()
 
     @attr('bug1055870')
     def test_pre_social_login_overwrites_session_var(self):
@@ -78,13 +73,11 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
 
 class KumaAccountAdapterTestCase(UserTestCase):
     localizing_client = True
+    rf = RequestFactory()
 
     def setUp(self):
         """ extra setUp to make a working session """
-        engine = import_module(settings.SESSION_ENGINE)
-        store = engine.SessionStore()
-        store.save()
-        self.client.cookies[settings.SESSION_COOKIE_NAME] = store.session_key
+        super(KumaAccountAdapterTestCase, self).setUp()
         self.adapter = KumaAccountAdapter()
 
     @attr('bug1054461')
