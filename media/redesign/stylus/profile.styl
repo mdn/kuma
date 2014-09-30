@@ -271,20 +271,15 @@ table.activity {
 
 
 #profile-edit {
-    h1, > {$selector-icon}{
-        bidi-value(float, left, right);
-
-        /* Keep the font size and line height equal to make the icon appear as
-           though it is on the same line. */
+    h1 {
         font-size: 26px;
-        line-height: 40px;
+
+        > {$selector-icon} {
+            bidi-style(margin-left, 0, margin-right, $icon-margin);
+        }
     }
 
-    > {$selector-icon} {
-        bidi-style(margin-left, 20px, margin-right, 20px);
-    }
-
-    fieldset {
+    h1, fieldset {
         clear: both;
     }
 }
