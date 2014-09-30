@@ -1,10 +1,8 @@
 from nose.plugins.attrib import attr
 from nose.tools import eq_, ok_, assert_raises
 
-from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib import messages as django_messages
-from django.utils.importlib import import_module
 from django.test import RequestFactory
 
 from allauth.exceptions import ImmediateHttpResponse
@@ -17,20 +15,18 @@ from . import UserTestCase
 
 
 class KumaSocialAccountAdapterTestCase(UserTestCase):
+    rf = RequestFactory()
 
     def setUp(self):
         """ extra setUp to make a working session """
-        engine = import_module(settings.SESSION_ENGINE)
-        store = engine.SessionStore()
-        store.save()
-        self.client.cookies[settings.SESSION_COOKIE_NAME] = store.session_key
+        super(KumaSocialAccountAdapterTestCase, self).setUp()
         self.adapter = KumaSocialAccountAdapter()
 
     @attr('bug1055870')
     def test_pre_social_login_overwrites_session_var(self):
         """ https://bugzil.la/1055870 """
         # Set up a pre-existing GitHub sign-in session
-        request = RequestFactory().get('/')
+        request = self.rf.get('/')
         session = self.client.session
         session['sociallogin_provider'] = 'github'
         session.save()
@@ -56,7 +52,7 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
         github_account = SocialAccount.objects.get(user__username='testuser2')
         github_login = SocialLogin(account=github_account)
 
-        request = RequestFactory().get('/')
+        request = self.rf.get('/')
         session = self.client.session
         session['socialaccount_sociallogin'] = github_login.serialize()
         session.save()
@@ -77,20 +73,18 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
 
 class KumaAccountAdapterTestCase(UserTestCase):
     localizing_client = True
+    rf = RequestFactory()
 
     def setUp(self):
         """ extra setUp to make a working session """
-        engine = import_module(settings.SESSION_ENGINE)
-        store = engine.SessionStore()
-        store.save()
-        self.client.cookies[settings.SESSION_COOKIE_NAME] = store.session_key
+        super(KumaAccountAdapterTestCase, self).setUp()
         self.adapter = KumaAccountAdapter()
 
     @attr('bug1054461')
     def test_account_connected_message(self):
         """ https://bugzil.la/1054461 """
         message_template = 'socialaccount/messages/account_connected.txt'
-        request = RequestFactory().get('/')
+        request = self.rf.get('/')
 
         # first check for the case in which the next url in the account
         # connection process is the frontpage, there shouldn't be a message

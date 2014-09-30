@@ -2,9 +2,9 @@ import shlex
 import urllib2
 from StringIO import StringIO
 
-from django.core.handlers.wsgi import WSGIRequest
 from django.contrib.auth.models import AnonymousUser
-
+from django.core.handlers.wsgi import WSGIRequest
+from django.test import RequestFactory
 
 from nose.tools import eq_
 from nose import SkipTest
@@ -100,7 +100,7 @@ class TestDevMoHelpers(UserTestCase):
 
         en_only_page = '/en/HTML/HTML5'
         localized_page = '/en/HTML'
-        req = test_utils.RequestFactory().get('/')
+        req = RequestFactory().get('/')
         context = {'request': req}
 
         req.locale = 'en-US'

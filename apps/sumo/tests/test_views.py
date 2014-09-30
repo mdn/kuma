@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect
+from django.test import RequestFactory
 
 import test_utils
 from nose.tools import eq_
@@ -9,7 +10,7 @@ from sumo.views import redirect_to
 
 
 class RedirectToTestcase(test_utils.TestCase):
-    rf = test_utils.RequestFactory()
+    rf = RequestFactory()
 
     def test_redirect_to(self):
         resp = redirect_to(self.rf.get('/'), url='home', permanent=False)

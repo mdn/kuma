@@ -1,5 +1,6 @@
 from django.http import HttpResponsePermanentRedirect
 
+from django.test import RequestFactory
 from nose.plugins.skip import SkipTest
 from nose.tools import eq_
 import test_utils
@@ -24,8 +25,7 @@ class TrailingSlashMiddlewareTestCase(test_utils.TestCase):
 
 
 class PlusToSpaceTestCase(test_utils.TestCase):
-
-    rf = test_utils.RequestFactory()
+    rf = RequestFactory()
     ptsm = PlusToSpaceMiddleware()
 
     def test_plus_to_space(self):
