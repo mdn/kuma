@@ -46,7 +46,7 @@
               </div>
           {% endif %}
 
-          <form class="submission" method="post" action="{{ url('socialaccount_signup') }}">
+          <form class="submission readable-line-length" method="post" action="{{ url('socialaccount_signup') }}">
 
               <p>{% trans provider_name=account.get_provider().name %}
               Thanks for signing in to MDN with {{ provider_name }}. You have
@@ -147,7 +147,7 @@
               {{ newsletter_widget(form) }}
 
               <li class="submit">
-                <button type="submit" name="create">{{ _('Create my MDN profile') }}</button>
+                <button class="positive" type="submit" name="create">{{ _('Create my MDN profile') }}</button>
               </li>
             </ul>
           </fieldset>
