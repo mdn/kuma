@@ -6,12 +6,12 @@ from django.conf import settings
 from elasticsearch.exceptions import ConnectionError, NotFoundError
 from rest_framework.test import APIRequestFactory
 
-from devmo.tests import LocalizingMixin, KumaTestCase
+from devmo.tests import LocalizingMixin
 from sumo.urlresolvers import reset_url_prefixer
 from sumo.middleware import LocaleURLMiddleware
 from kuma.users.tests import UserTestCase
 
-from search.index import get_index, get_indexing_es
+from ..index import get_index, get_indexing_es
 
 
 class LocalizingAPIRequestFactory(LocalizingMixin, APIRequestFactory):
@@ -83,7 +83,7 @@ class ElasticTestCase(UserTestCase):
 
     def setup_indexes(self, empty=False, wait=True):
         """(Re-)create ES indexes."""
-        from search.commands import es_reindex_cmd
+        from ..commands import es_reindex_cmd
 
         if empty:
             # Removes the index and creates a new one with nothing in

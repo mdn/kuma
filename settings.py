@@ -394,7 +394,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'jingo_minify.helpers.build_ids',
     'constance.context_processors.config',
 
-    'search.context_processors.search_filters',
+    'kuma.search.context_processors.search_filters',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -484,7 +484,7 @@ INSTALLED_APPS = (
     'docs',
     'kuma.feeder',
     'landing',
-    'search',
+    'kuma.search',
     'kuma.users',
     'kuma.wiki',
     'kuma.attachments',
@@ -836,7 +836,7 @@ CELERY_SEND_TASK_SENT_EVENT = True
 CELERY_IMPORTS = (
     'devmo.tasks',
     'kuma.wiki.tasks',
-    'search.tasks',
+    'kuma.search.tasks',
     'tidings.events',
     'elasticutils.contrib.django.tasks',
 )

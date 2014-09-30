@@ -1,8 +1,9 @@
 from nose.tools import ok_, eq_
 
 from kuma.wiki.models import Document
-from search.models import DocumentType
-from search.tests import ElasticTestCase
+
+from . import ElasticTestCase
+from ..models import DocumentType
 
 
 class DocumentTypeTests(ElasticTestCase):

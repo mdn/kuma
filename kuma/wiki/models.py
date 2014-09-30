@@ -35,7 +35,7 @@ from tidings.models import NotificationsMixin
 import waffle
 
 from kuma.attachments.models import Attachment, DocumentAttachment
-from search.decorators import register_live_index
+from kuma.search.decorators import register_live_index
 from sumo import ProgrammingError
 from sumo.models import LocaleField
 from sumo.urlresolvers import reverse, split_path
@@ -1468,7 +1468,7 @@ Full traceback:
         return EditDocumentEvent.is_notifying(user, self)
 
     def get_mapping_type(self):
-        from search.models import DocumentType
+        from kuma.search.models import DocumentType
         return DocumentType
 
     def get_contributors(self):

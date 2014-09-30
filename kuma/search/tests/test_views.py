@@ -1,8 +1,8 @@
 from nose.tools import eq_
 
-from search.models import Index, Filter, FilterGroup
-from search.tests import ElasticTestCase
-from search.views import SearchView
+from . import ElasticTestCase
+from ..models import Index, Filter, FilterGroup
+from ..views import SearchView
 
 
 class ViewTests(ElasticTestCase):

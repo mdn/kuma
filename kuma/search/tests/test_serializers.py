@@ -1,12 +1,10 @@
 from nose.tools import ok_, eq_
 
-from search.models import Filter, FilterGroup
-from search.tests import ElasticTestCase
-
-from search.fields import DocumentExcerptField, SearchQueryField, SiteURLField
-from search.models import DocumentType
-from search.serializers import FilterWithGroupSerializer, DocumentSerializer
-from search.queries import DocumentS
+from . import ElasticTestCase
+from ..fields import DocumentExcerptField, SearchQueryField, SiteURLField
+from ..models import DocumentType, Filter, FilterGroup
+from ..serializers import FilterWithGroupSerializer, DocumentSerializer
+from ..queries import DocumentS
 
 
 class SerializerTests(ElasticTestCase):

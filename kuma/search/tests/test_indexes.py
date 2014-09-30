@@ -5,9 +5,10 @@ from django.conf import settings
 from elasticsearch.exceptions import RequestError
 
 from kuma.wiki.models import Document
-from search.models import Index, DocumentType
-from search.tests import ElasticTestCase
-from search.index import get_indexing_es, get_indexes
+
+from . import ElasticTestCase
+from ..models import Index, DocumentType
+from ..index import get_indexing_es, get_indexes
 
 
 class TestIndexes(ElasticTestCase):

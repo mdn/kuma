@@ -45,7 +45,7 @@ Running a Subset
 You can run part of the test suite by specifying the apps you want to run,
 like::
 
-    ./manage.py test kuma search
+    ./manage.py test kuma
 
 You can also exclude tests that match a regular expression with ``-e``::
 
@@ -53,7 +53,7 @@ You can also exclude tests that match a regular expression with ``-e``::
 
 To run the subset of tests that should pass::
 
-    ./manage.py test actioncounters contentflagging devmo landing kuma search
+    ./manage.py test actioncounters contentflagging devmo landing kuma
 
 See the output of ``./manage.py test --help`` for more arguments.
 
