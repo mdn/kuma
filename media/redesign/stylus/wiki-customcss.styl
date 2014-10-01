@@ -2096,7 +2096,9 @@ a.new.glossaryLink:active {
 a.new.glossaryLink:hover {
     text-decoration: underline;
 }
+
 /* download buttons */
+
 a.download-button {
     margin-bottom: 20px;
     padding: 10px;
@@ -2121,14 +2123,38 @@ a.download-button:link {
 a.download-button .right-align {
     float: right;
 }
+
 /* download box stuff */
+
 li.download-box {
+    position: relative;
     text-align: center;
-    vertical-align: middle;
+    img {
+        float: none;
+    }
 }
-li.download-box img {
-    float: none;
+
+.download-desc {
+    padding-bottom: 3em;
 }
+
+.download-button {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    -webkit-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+}
+
+@media $media-query-mobile {
+    .download-desc > span:first-child {
+        font-weight: 700;
+        display: block;
+    }
+}
+
+/* -- */
+
 span.comment {
     display: none;
 }
