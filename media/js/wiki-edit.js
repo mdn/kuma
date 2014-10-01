@@ -848,14 +848,30 @@
       var $metaDataFields = $form.find(metaSelector);
       var editor = CKEDITOR.instances['id_content'];
 
+      function setEditorButtonsEnabled(enabled) {
+        var saveContinue = editor.getCommand('mdn-buttons-save');
+        var saveEdit = editor.getCommand('mdn-buttons-save-exit');
+
+        var state = CKEDITOR.TRISTATE_OFF;
+        if (!enabled)
+            state = CKEDITOR.TRISTATE_DISABLED;
+
+        if (saveContinue)
+            saveContinue.setState(state);
+        if (saveEdit)
+            saveEdit.setState(state);
+      }
+
       function onDirty() {
         $('.btn-save-and-edit').attr('disabled', false);
         $('.btn-save').attr('disabled', false);
+        setEditorButtonsEnabled(true);
       }
       // Called when everything is clean
       function onClean() {
         $('.btn-save-and-edit').attr('disabled', true);
         $('.btn-save').attr('disabled', true);
+        setEditorButtonsEnabled(false);
       }
 
       function resetDirty() {
@@ -905,6 +921,10 @@
         // determine if the editor has changed.
         if(interval) clearInterval(interval);
         interval = setInterval(checkEditorDirtiness, 1500); // 1 seconds is arbitrary, we can update as desired
+      });
+      editor.on('instanceReady', function(e) {
+        if (e.editor == editor)
+            setEditorButtonsEnabled(false);
       });
 
       $(win).on('beforeunload', function() {
