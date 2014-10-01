@@ -517,7 +517,7 @@ INSTALLED_APPS = (
     'taggit',
     'dbgettext',
 
-    'dashboards',
+    'kuma.dashboards',
     'kpi',
     'statici18n',
     'rest_framework',
@@ -579,7 +579,7 @@ DOMAIN_METHODS = {
     'messages': [
         ('vendor/**', 'ignore'),
         ('apps/access/**', 'ignore'),
-        ('apps/dashboards/**', 'ignore'),
+        ('kuma/dashboards/**', 'ignore'),
         ('apps/kadmin/**', 'ignore'),
         ('apps/sumo/**', 'ignore'),
         ('apps/**.py',

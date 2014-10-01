@@ -51,7 +51,7 @@ urlpatterns = patterns('',
         name='jsi18n'),
 
     url(r'^files/', include('kuma.attachments.urls')),
-    url(r'^', include('dashboards.urls')),
+    url(r'^', include('kuma.dashboards.urls')),
 
     # Flagged content.
     url(r'^flagged/$',
