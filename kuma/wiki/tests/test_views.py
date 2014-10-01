@@ -28,7 +28,7 @@ from authkeys.models import Key
 from devmo.tests import override_constance_settings
 from . import WikiTestCase, FakeResponse
 
-from kuma.users.tests import UserTestCase
+from kuma.users.tests import UserTestCase, user
 from kuma.wiki.constants import DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL
 from kuma.wiki.content import get_seo_description
 from kuma.wiki.events import EditDocumentEvent
@@ -3293,10 +3293,10 @@ class APITests(UserTestCase, WikiTestCase):
         self.password = 'trustno1'
         self.email = 'tester23@example.com'
 
-        self.user = User(username=self.username,
-                         email=self.email)
-        self.user.set_password(self.password)
-        self.user.save()
+        self.user = user(username=self.username,
+                         email=self.email,
+                         password=self.password,
+                         save=True)
 
         self.key = Key(user=self.user, description='Test Key 1')
         self.secret = self.key.generate_secret()
