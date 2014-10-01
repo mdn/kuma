@@ -89,12 +89,7 @@ class TestIndexes(ElasticTestCase):
         # then create it again and see if it blows up
         es = get_indexing_es()
 
-        try:
-            es.indices.create(index.prefixed_name)
-        except RequestError:
-            pass
-        else:
-            assert False
+        self.assertRaises(RequestError, es.indices.create, index.prefixed_name)
 
         # then delete it and check if recreating works without blowing up
         index.delete()

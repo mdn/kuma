@@ -79,7 +79,7 @@ class TestUserProfile(UserTestCase):
             profile = UserProfile.objects.get(user=user)
             profile.gravatar
         except UnicodeEncodeError:
-            ok_(False, "There should be no UnicodeEncodeError")
+            self.fail("There should be no UnicodeEncodeError")
 
     def test_locale_timezone_fields(self):
         """We've added locale and timezone fields. Verify defaults."""

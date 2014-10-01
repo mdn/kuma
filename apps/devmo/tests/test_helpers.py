@@ -26,7 +26,7 @@ class TestUrlEncode(test_utils.TestCase):
             s = u"Someguy Dude\xc3\xaas Lastname"
             urlencode(s)
         except KeyError:
-            ok_(False, "There should be no KeyError")
+            self.fail("There should be no KeyError")
 
 
 class TestSoapbox(test_utils.TestCase):

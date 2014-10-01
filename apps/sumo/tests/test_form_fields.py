@@ -42,19 +42,11 @@ class TypedMultipleChoiceFieldTestCase(test_utils.TestCase):
     """TypedMultipleChoiceField is just like MultipleChoiceField
     except, instead of validating, it coerces types."""
 
-    def assertRaisesErrorWithMessage(self, error, message, callable, *args,
-                                     **kwargs):
-        self.assertRaises(error, callable, *args, **kwargs)
-        try:
-            callable(*args, **kwargs)
-        except error, e:
-            eq_(message, str(e))
-
     def test_typedmultiplechoicefield_71(self):
         f = TypedMultipleChoiceField(choices=[(1, "+1"), (-1, "-1")],
                                      coerce=int)
         eq_([1], f.clean(['1']))
-        self.assertRaisesErrorWithMessage(
+        self.assertRaisesMessage(
             ValidationError,
             "[u'Select a valid choice. 2 is not one of the available choices."
             "']", f.clean, ['2'])
@@ -77,12 +69,12 @@ class TypedMultipleChoiceFieldTestCase(test_utils.TestCase):
         # Don't do this!
         f = TypedMultipleChoiceField(choices=[('A', 'A'), ('B', 'B')],
                                      coerce=int)
-        self.assertRaisesErrorWithMessage(
+        self.assertRaisesMessage(
             ValidationError,
             "[u'Select a valid choice. B is not one of the available choices."
             "']", f.clean, ['B'])
         # Required fields require values
-        self.assertRaisesErrorWithMessage(
+        self.assertRaisesMessage(
             ValidationError, "[u'This field is required.']", f.clean, [])
 
     def test_typedmultiplechoicefield_75(self):

@@ -141,10 +141,10 @@ class DocumentTests(UserTestCase):
             try:
                 d.delete()
                 if active:
-                    ok_(False, 'Exception on delete when active')
+                    self.fail('Exception on delete when active')
             except Exception:
                 if not active:
-                    ok_(False, 'No exception on delete when not active')
+                    self.fail('No exception on delete when not active')
 
     def test_delete_tagged_document(self):
         """Make sure deleting a tagged doc deletes its tag relationships."""
@@ -827,7 +827,7 @@ class DumpAndLoadJsonTests(UserTestCase):
             # The original primary key should have gone away.
             try:
                 d_curr = Document.objects.get(pk=d_orig.pk)
-                ok_(False, "This should have been an error")
+                self.fail("This should have been an error")
             except Document.DoesNotExist:
                 pass
 
@@ -940,8 +940,8 @@ class DeferredRenderingTests(UserTestCase):
         self.d1.save()
         try:
             self.d1.render('', 'http://testserver/')
-            ok_(False, "An attempt to render while another appears to be in "
-                       "progress should be disallowed")
+            self.fail("An attempt to render while another appears to be in "
+                      "progress should be disallowed")
         except DocumentRenderingInProgress:
             pass
 
@@ -959,8 +959,8 @@ class DeferredRenderingTests(UserTestCase):
         try:
             self.d1.render('', 'http://testserver/')
         except DocumentRenderingInProgress:
-            ok_(False, "A timed-out rendering should not be considered as "
-                       "still in progress")
+            self.fail("A timed-out rendering should not be considered as "
+                      "still in progress")
 
     @mock.patch('kuma.wiki.kumascript.get')
     def test_long_render_sets_deferred(self, mock_kumascript_get):
@@ -1055,8 +1055,8 @@ class DeferredRenderingTests(UserTestCase):
         self.d1.save()
         try:
             result_rendered, _ = self.d1.get_rendered(None, 'http://testserver/')
-            ok_(False, "We should have gotten a "
-                       "DocumentRenderedContentNotAvailable exception")
+            self.fail("We should have gotten a "
+                      "DocumentRenderedContentNotAvailable exception")
         except DocumentRenderedContentNotAvailable:
             pass
         ok_(mock_render_document_delay.called)
@@ -1730,12 +1730,10 @@ class PageMoveTests(UserTestCase):
         grandchild_doc.parent_topic = child_doc
         grandchild_doc.save()
 
-        conflict = revision(title='Conflict page for page-move error handling',
-                            slug='test-move-error-messaging/moved/grandchild',
-                            is_approved=True,
-                            save=True)
-        conflict_doc = conflict.document
-
+        revision(title='Conflict page for page-move error handling',
+                 slug='test-move-error-messaging/moved/grandchild',
+                 is_approved=True,
+                 save=True)
         # TODO: Someday when we're on Python 2.7, we can use
         # assertRaisesRegexp. Until then, we have to manually catch
         # and inspect the exception.
