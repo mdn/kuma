@@ -387,13 +387,13 @@ class DemoViewsTest(UserTestCase):
         # Ensure the new screenshot and thumbnail URL code works when there's a
         # screenshot present.
         try:
-            r = self.client.get(reverse('demos_all'))
-            r = self.client.get(reverse('demos_tag', args=['tech:javascript']))
-            r = self.client.get(reverse('demos_detail', args=[s.slug]))
-            r = self.client.get(reverse('demos_feed_recent', args=['atom']))
-            r = self.client.get(reverse('demos_feed_featured', args=['json']))
+            self.client.get(reverse('demos_all'))
+            self.client.get(reverse('demos_tag', args=['tech:javascript']))
+            self.client.get(reverse('demos_detail', args=[s.slug]))
+            self.client.get(reverse('demos_feed_recent', args=['atom']))
+            self.client.get(reverse('demos_feed_featured', args=['json']))
         except:
-            ok_(False, "No exceptions should have been thrown")
+            self.fail("No exceptions should have been thrown")
 
         # Forcibly delete the screenshot - should not be possible from
         # user-facing UI per form validation, but we should at least not throw
@@ -404,13 +404,13 @@ class DemoViewsTest(UserTestCase):
 
         # Big bucks, no whammies...
         try:
-            r = self.client.get(reverse('demos_all'))
-            r = self.client.get(reverse('demos_tag', args=['tech:javascript']))
-            r = self.client.get(reverse('demos_detail', args=[s.slug]))
-            r = self.client.get(reverse('demos_feed_recent', args=['atom']))
-            r = self.client.get(reverse('demos_feed_featured', args=['json']))
+            self.client.get(reverse('demos_all'))
+            self.client.get(reverse('demos_tag', args=['tech:javascript']))
+            self.client.get(reverse('demos_detail', args=[s.slug]))
+            self.client.get(reverse('demos_feed_recent', args=['atom']))
+            self.client.get(reverse('demos_feed_featured', args=['json']))
         except:
-            ok_(False, "No exceptions should have been thrown")
+            self.fail("No exceptions should have been thrown")
 
     @attr('bug745902')
     def test_long_slug(self):

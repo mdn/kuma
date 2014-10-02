@@ -169,7 +169,7 @@ class ProfileViewsTest(UserTestCase):
         try:
             self.client.get(url, follow=True)
         except PageNotAnInteger:
-            ok_(False, "Non-numeric page number should not cause an error")
+            self.fail("Non-numeric page number should not cause an error")
 
     @mock.patch('basket.lookup_user')
     @mock.patch('basket.subscribe')

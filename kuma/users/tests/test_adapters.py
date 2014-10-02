@@ -1,5 +1,5 @@
 from nose.plugins.attrib import attr
-from nose.tools import eq_, ok_, assert_raises
+from nose.tools import eq_, ok_
 
 from django.contrib.auth.models import User
 from django.contrib import messages as django_messages
@@ -64,8 +64,8 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
                                         uid='noone@inexistant.com')
         persona_login = SocialLogin(account=persona_account)
 
-        assert_raises(ImmediateHttpResponse,
-                      self.adapter.pre_social_login, request, persona_login)
+        self.assertRaises(ImmediateHttpResponse,
+                          self.adapter.pre_social_login, request, persona_login)
         queued_messages = list(messages)
         eq_(len(queued_messages), 1)
         eq_(django_messages.ERROR, queued_messages[0].level)

@@ -116,9 +116,9 @@ class LocaleRedirectTests(UserTestCase, WikiTestCase):
         try:
             self.client.get(url, follow=True)
         except Http404, e:
-            ok_(True)
+            pass
         except Exception, e:
-            ok_(False, "The only exception should be a 404, not this: %s" % e)
+            self.fail("The only exception should be a 404, not this: %s" % e)
 
     def _create_en_and_de_docs(self):
         en = settings.WIKI_DEFAULT_LANGUAGE
@@ -812,7 +812,7 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
         try:
             trap['data'].decode('utf8')
         except UnicodeDecodeError:
-            ok_(False, "Data wasn't posted as utf8")
+            self.fail("Data wasn't posted as utf8")
 
 
 class DocumentSEOTests(UserTestCase, WikiTestCase):
