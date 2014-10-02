@@ -1,6 +1,3 @@
-import random
-from string import letters
-
 from nose.tools import ok_
 
 from django.contrib.auth.models import User
@@ -22,17 +19,14 @@ def profile(user, **kwargs):
 
 
 def user(save=False, **kwargs):
-    defaults = {
-        'password': 'sha1$d0fcb$661bd5197214051ed4de6da4ecdabe17f5549c7c'
-    }
     if 'username' not in kwargs:
-        defaults['username'] = ''.join(random.choice(letters)
-                                       for x in xrange(15))
-    defaults.update(kwargs)
-    u = User(**defaults)
+        kwargs['username'] = User.objects.make_random_password(length=15)
+    password = kwargs.pop('password', 'password')
+    user = User(**kwargs)
+    user.set_password(password)
     if save:
-        u.save()
-    return u
+        user.save()
+    return user
 
 
 def verify_strings_in_response(test_strings, response):

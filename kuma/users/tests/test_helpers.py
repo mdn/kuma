@@ -8,7 +8,7 @@ from jinja2 import Markup
 from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
 
-from . import UserTestCase
+from . import UserTestCase, user
 from ..helpers import gravatar_url, public_email, user_list
 
 
@@ -36,7 +36,7 @@ class HelperTestCase(UserTestCase):
             '&#108;</span>', public_email('not.an.email'))
 
     def test_user_list(self):
-        User.objects.create(pk=400000, username='testuser3')
+        user(pk=400000, username='testuser3', save=True)
         users = User.objects.all()
         list = user_list(users)
         assert isinstance(list, Markup)

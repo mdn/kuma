@@ -1,15 +1,14 @@
-from pyquery import PyQuery as pq
-
-from django.contrib.auth.models import User
-
 from django.test import TestCase
 
 from nose.tools import eq_, ok_
+from pyquery import PyQuery as pq
 
 from sumo.urlresolvers import reverse
 
 from authkeys.models import Key
 from authkeys.views import ITEMS_PER_PAGE
+
+from kuma.users.tests import user
 
 
 class KeyViewsTest(TestCase):
@@ -19,12 +18,13 @@ class KeyViewsTest(TestCase):
         password = 'trustno1'
         self.email = 'tester23@example.com'
 
-        self.user = User.objects.create_user(username, self.email, password)
+        self.user = user(username=username, email=self.email,
+                         password=password, save=True)
 
         self.client.login(username=username, password=password)
 
-        self.user2 = User(username='someone', email='someone@example.com')
-        self.user2.save()
+        self.user2 = user(username='someone', email='someone@example.com',
+                          save=True)
 
         self.key1 = Key(user=self.user, description='Test Key 1')
         self.key1.save()
