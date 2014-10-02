@@ -281,13 +281,15 @@ class SignupView(BaseSignupView):
         # For Persona users, see if we can find matching user by email address
         if self.sociallogin.account.provider == 'persona':
             try:
-                matching_emailaddress = EmailAddress.objects.get(email=email)
+                matching_addresses = EmailAddress.objects.filter(email=email,
+                                                                 verified=True)
+                matching_emailaddress = matching_addresses[0]
                 self.matching_user = matching_emailaddress.user
                 email_address = {'email': email,
                                  'verified': matching_emailaddress.verified,
                                  'primary': matching_emailaddress.primary}
                 self.email_addresses[email] = email_address
-            except EmailAddress.DoesNotExist:
+            except IndexError:
                 pass
 
         extra_email_addresses = (self.sociallogin
