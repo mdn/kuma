@@ -1,3 +1,5 @@
+@require 'includes/vars';
+
 /*
 
 Copied from the custom CSS macro template https://developer.mozilla.org/en-US/docs/Template:CustomCSS
@@ -69,7 +71,7 @@ table#fullwidth-table td.thirdColumn {
 }
 /* remove left margin from Font Awesome icons inside wiki
      content; this is messing up document content */
-#wikiArticle i[class^="icon-"] {
+#wikiArticle {$selector-icon} {
     margin-left: 0px;
 }
 /* Iframe for live sample centered (Test) */
@@ -2016,7 +2018,7 @@ dd.landingPageList {
     border-color: rgba(0,0,0,0.05);
 }
 /* sidebar quick links stuff */
-.quick-links .sidebar-icon i[class^="icon-"] {
+.quick-links .sidebar-icon {$selector-icon} {
     top: 10px;
     position: absolute;
     left: 12px;
