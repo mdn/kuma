@@ -37,7 +37,7 @@ before_script:
     - mysql -e 'create database kuma;'
 
 script:
-    - coverage run --include=`pwd`/kuma/*,`pwd`/apps/* manage.py test --noinput -v2 actioncounters contentflagging kuma.dashboards kuma.demos devmo kpi landing search kuma.users kuma.wiki kuma.events kuma.attachments
+    - coverage run --include=`pwd`/kuma/*,`pwd`/apps/* manage.py test --noinput -v2 actioncounters authkeys contentflagging devmo kpi kuma landing search
 
 after_success:
     - coveralls
