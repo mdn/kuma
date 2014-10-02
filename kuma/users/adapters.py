@@ -18,8 +18,8 @@ REMOVE_MESSAGE = _(u"Sorry, you must have at least one connected account so "
                    u"you can sign in. To disconnect this account connect a "
                    u"different one first. To delete your MDN profile please "
                    u'<a href="%(bug_form_url)s" rel="nofollow">file a bug</a>.')
-USERNAME_CHARACTERS = _(u'Required. 30 characters or fewer. Letters, digits and '
-                        u'./+/-/_ characters.')
+USERNAME_CHARACTERS = _(u'Username may contain only letters, numbers, and these '
+                        u'characters: . - _ +')
 USERNAME_EMAIL = _(u'An email address cannot be used as a username.')
 USERNAME_REGEX = re.compile(r'^[\w.+-]+$')
 
