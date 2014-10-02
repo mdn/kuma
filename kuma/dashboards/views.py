@@ -6,10 +6,9 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.http import require_GET
 
-from kuma.users.helpers import ban_link
 from kuma.wiki.models import Document, Revision
-from sumo.urlresolvers import reverse
-from sumo.utils import paginate, smart_int
+from sumo.utils import paginate
+
 from .forms import RevisionDashboardForm
 from . import PAGE_SIZE
 
@@ -46,7 +45,7 @@ def revisions(request):
         start_date = filter_form.cleaned_data['start_date']
         if start_date:
             end_date = (filter_form.cleaned_data['end_date'] or
-                                datetime.datetime.now())
+                        datetime.datetime.now())
             query_kwargs['created__range'] = [start_date, end_date]
 
     if query_kwargs:
@@ -66,13 +65,12 @@ def revisions(request):
 
     # Serve the response HTML conditionally upon reques type
     if request.is_ajax():
-        return render(request,
-            'dashboards/includes/revision_dashboard_body.html',
-            context)
+        template = 'dashboards/includes/revision_dashboard_body.html'
     else:
+        template = 'dashboards/revisions.html'
         context['form'] = filter_form
 
-    return render(request, 'dashboards/revisions.html', context)
+    return render(request, template, context)
 
 
 @require_GET
@@ -84,8 +82,8 @@ def user_lookup(request):
         user = request.GET.get('user', '')
         if user:
             matches = User.objects.filter(username__istartswith=user)
-            for u in matches:
-                userlist.append({'label': u.username})
+            for match in matches:
+                userlist.append({'label': match.username})
 
     data = json.dumps(userlist)
     return HttpResponse(data,
@@ -101,8 +99,8 @@ def topic_lookup(request):
         topic = request.GET.get('topic', '')
         if topic:
             matches = Document.objects.filter(slug__icontains=topic)
-            for d in matches:
-                topiclist.append({'label': d.slug})
+            for match in matches:
+                topiclist.append({'label': match.slug})
 
     data = json.dumps(topiclist)
     return HttpResponse(data,
