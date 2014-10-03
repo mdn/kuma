@@ -31,9 +31,11 @@ class TestWelcomeEmails(UserTestCase):
                                                    strings_are_translated):
         strings_are_translated.return_value = False
         u = User.objects.get(username='testuser')
-        send_welcome_email(u.pk, 'de')
-
+        send_welcome_email(u.pk, 'tlh')  # Qapla'
         eq_([], mail.outbox)
+
+        send_welcome_email(u.pk, 'de')  # Servus
+        eq_(1, len(mail.outbox))
 
     def test_welcome_mail_for_verified_email(self):
         Switch.objects.get_or_create(name='welcome_email', active=True)

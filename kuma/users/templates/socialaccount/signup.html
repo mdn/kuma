@@ -60,11 +60,20 @@
               submit demos, and have your own profile page.
               {% endtrans %}</p>
 
-              <p>{% trans input_guidance=('choose a username' if form.email.field.widget.input_type == 'hidden' else 'choose a username and email address') %}
-              To set up your MDN profile, please <strong>{{ input_guidance }}</strong>.
-              Your username will be displayed on MDN to identify any
-              contributions (edits, demos, etc.) that you make.
-              {% endtrans %}</p>
+              <p>{% if form.email.field.widget.input_type == 'hidden' %}
+                  {% trans %}
+                  To set up your MDN profile, please <strong>choose a username</strong>.
+                  Your username will be displayed on MDN to identify any
+                  contributions (edits, demos, etc.) that you make.
+                  {% endtrans %}
+              {% else %}
+                  {% trans %}
+                  To set up your MDN profile, please <strong>choose a username and email address</strong>.
+                  Your username will be displayed on MDN to identify any
+                  contributions (edits, demos, etc.) that you make.
+                  {% endtrans %}
+              {% endif %}
+              </p>
 
               <p>{% trans bug_href='https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cc=jkarahalis%40mozilla.com&cf_fx_iteration=---&cf_fx_points=---&component=Account%20Help&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-791=X&flag_type-800=X&flag_type-803=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=All&priority=--&product=Mozilla%20Developer%20Network&rep_platform=All&status_whiteboard=%5Btrouble-logging-in%5D&target_milestone=---&version=unspecified&format=__standard__' %}
               If you're <strong>having trouble</strong> signing in or creating
