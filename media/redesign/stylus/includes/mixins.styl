@@ -240,12 +240,15 @@ bidi-value(prop, ltr, rtl, make-important = false) {
 }
 
 bidi-value-vendorize(prop, ltr, rtl, make-important = false) {
-    for prefix in VENDOR-PREFIXES {
-        bidi-style(unquote(prefix + prop), ltr, prop, rtl, make-important);
-    }
-    bidi-style(prop, ltr, prop, rtl, make-important);
-}
+    make-important = make-important ? unquote('!important') : unquote('');
 
+    vendorize(prop, ltr make-important);
+
+    html[dir='rtl'] & {
+        vendorize(prop, rtl make-important);
+    }
+
+}
 
 /*
     MIXINS LIKE CLASSES
