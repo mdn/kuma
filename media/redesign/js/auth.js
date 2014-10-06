@@ -47,7 +47,7 @@
         // JavaScript piece of the CSS is controlling text visibility
         var $noIconsElement = $container.find('.oauth-login-options-text-no-icons');
         var doMoveCloseButton = function() {
-            return $noIconsElement.css('display') != 'none';
+            return $noIconsElement.css('display') !== 'none';
         };
 
         $options.mozMenu({
@@ -126,7 +126,7 @@
         Show notifications about account association status as part of the
         registration process.
     */
-    ('localStorage' in win) && (function() {
+    if('localStorage' in win) (function() {
         try {
             var $browserRegister = $('#browser_register');
             var matchKey = 'account-match-for';
@@ -168,7 +168,7 @@
     /*
         Fire off events when the user logs in and logs out.
     */
-    ('localStorage' in win) && (function() {
+    if('localStorage' in win) (function() {
         var login, logout;
         var serviceKey = 'login-service';
         var serviceStored = localStorage.getItem(serviceKey);
