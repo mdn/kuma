@@ -32,7 +32,7 @@
                 return JSON.stringify(value);
             },
             deserialize: function(value) {
-                if(typeof value != 'string') {
+                if(typeof value !== 'string') {
                     return undefined;
                 }
                 try {
@@ -95,8 +95,8 @@
 
             // Before we go into processing, let's ensure that *this* page's slug is in the list
             $.each(data.documents, function() {
-                if(this.slug == pageSlug) {
-                    found = true;
+                if(this.slug === pageSlug) {
+                    found = this.slug;
                 }
             });
 
@@ -113,7 +113,7 @@
                     category: 'Search doc navigator',
                     action: 'Click',
                     label: $(this).attr('href'),
-                    value: doc.id
+                    value: found
                 });
             });
 
@@ -125,7 +125,7 @@
                     href: doc.url
                 });
 
-                if(doc.slug == pageSlug) {
+                if(doc.slug === pageSlug) {
                     link.addClass('current');
 
                     // see if we can find the next page in the loaded documents
@@ -182,7 +182,7 @@
         // Set in motion the process to show and populate or hide the navigator!
         if(!url) {
             if(key) {
-                url = key
+                url = key;
             }
         }
         else {
