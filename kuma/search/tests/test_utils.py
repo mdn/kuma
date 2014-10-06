@@ -2,8 +2,8 @@ from __future__ import absolute_import
 import test_utils
 from nose.tools import eq_, ok_
 
-from search.store import referrer_url
-from search.utils import QueryURLObject
+from ..store import referrer_url
+from ..utils import QueryURLObject
 
 
 class URLTests(test_utils.TestCase):

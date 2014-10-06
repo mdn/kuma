@@ -1,9 +1,9 @@
 from nose.tools import ok_, eq_
 
-from search.filters import (SearchQueryBackend, HighlightFilterBackend,
-                            LanguageFilterBackend, DatabaseFilterBackend)
-from search.tests import ElasticTestCase
-from search.views import SearchView
+from . import ElasticTestCase
+from ..filters import (SearchQueryBackend, HighlightFilterBackend,
+                       LanguageFilterBackend, DatabaseFilterBackend)
+from ..views import SearchView
 
 
 class FilterTests(ElasticTestCase):

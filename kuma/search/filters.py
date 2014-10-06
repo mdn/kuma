@@ -7,7 +7,7 @@ from elasticutils.contrib.django import F
 from rest_framework.filters import BaseFilterBackend
 from waffle import flag_is_active
 
-from search.models import DocumentType, Filter, FilterGroup
+from .models import DocumentType, Filter, FilterGroup
 
 
 def get_filters(getter_func):
