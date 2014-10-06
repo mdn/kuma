@@ -7,13 +7,13 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding field 'Revision.toc_depth'
         db.add_column('wiki_revision', 'toc_depth', self.gf('django.db.models.fields.IntegerField')(default=1), keep_default=False)
 
 
     def backwards(self, orm):
-        
+
         # Deleting field 'Revision.toc_depth'
         db.delete_column('wiki_revision', 'toc_depth')
 
@@ -58,7 +58,7 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        'notifications.watch': {
+        'tidings.watch': {
             'Meta': {'object_name': 'Watch'},
             'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['contenttypes.ContentType']", 'null': 'True', 'blank': 'True'}),
             'email': ('django.db.models.fields.EmailField', [], {'db_index': 'True', 'max_length': '75', 'null': 'True', 'blank': 'True'}),

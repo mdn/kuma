@@ -58,9 +58,6 @@ TABLES_TO_DUMP=[x.strip() for x in """
     feeder_feed
     gallery_image
     gallery_video
-    notifications_eventwatch
-    notifications_watch
-    notifications_watchfilter
     schema_version
     soapbox_message
     south_migrationhistory

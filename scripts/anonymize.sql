@@ -8,7 +8,7 @@
 --
 -- Confidential, private or personal data is any data that contains the
 -- following:
--- 
+--
 --     First Name
 --     Last Name
 --     Physical Address Information
@@ -18,10 +18,10 @@
 --     Gender
 --     Any database record or data which could be tied to the identity of an
 --         individual
--- 
+--
 -- When exporting this data, referred as Personally Identifiable Information
 -- (PII) data must be removed such that no data would be specifically tied to
--- an individual. 
+-- an individual.
 
 SET @common_hash_secret=rand();
 
@@ -40,9 +40,6 @@ TRUNCATE djcelery_periodictask;
 TRUNCATE djcelery_periodictasks;
 TRUNCATE djcelery_taskstate;
 TRUNCATE djcelery_workerstate;
-TRUNCATE notifications_eventwatch;
-TRUNCATE notifications_watch;
-TRUNCATE notifications_watchfilter;
 TRUNCATE threadedcomments_freethreadedcomment;
 TRUNCATE threadedcomments_threadedcomment;
 TRUNCATE threadedcomments_testmodel;
@@ -50,9 +47,9 @@ TRUNCATE tidings_watch;
 
 UPDATE auth_user SET
     -- username left alone, because it's public info
-    password = NULL, 
+    password = NULL,
     email = CONCAT('user-', id, '@example.com'),
-    first_name = ROUND(RAND()*1000000), 
+    first_name = ROUND(RAND()*1000000),
     last_name = ROUND(RAND()*1000000);
 
 -- Does this table need more scrubbing? It's profile data made intentionally
