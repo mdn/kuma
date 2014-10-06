@@ -83,9 +83,10 @@
     "yui" : false, // Yahoo User Interface
 
     // Custom Globals
-    "globals" : {
-        "ga": true,
-        "mdn": true,
-        "gettext": true
-    } // additional predefined global variables
+    "predef" : [
+        "ga", // Google Analytics
+        "mdn", // Our internal MDN object
+        "gettext", // Our l10n object
+        "YT" // YouTube (used within wiki)
+    ]
 }

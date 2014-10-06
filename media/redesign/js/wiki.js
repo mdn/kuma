@@ -400,7 +400,7 @@
             var data = {
                 category: 'Top Contributors',
                 action: 'Click position',
-                label: index
+                label: href
             };
 
             if (newTab) {
