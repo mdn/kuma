@@ -524,11 +524,12 @@ class SectionIDFilter(html5lib_Filter):
         if non_safe:
             for c in non_safe:
                 text = text.replace(c, hex(ord(c)).replace('0x', '.').upper())
+        # Strip leading, trailing and multiple whitespace, convert remaining whitespace to _
+        text = u'_'.join(text.split())
         non_ascii = [c for c in text if ord(c) > 128]
         if non_ascii:
             for c in non_ascii:
                 text = text.replace(c, self.encode_non_ascii(c))
-        text = text.replace(' ', '_')
         return text
 
     def encode_non_ascii(self, c):

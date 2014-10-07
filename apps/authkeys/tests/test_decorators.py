@@ -1,16 +1,13 @@
-import logging
-import time
 import base64
 
-from django.db import models
-from django.conf import settings
-from django.contrib.auth.models import AnonymousUser, User
+from django.contrib.auth.models import AnonymousUser
 from django.test import TestCase
-from django.test.client import Client
 from django.http import HttpRequest
 
-from nose.tools import assert_equal, with_setup, assert_false, eq_, ok_
+from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
+
+from kuma.users.tests import user
 
 from authkeys.models import Key
 from authkeys.decorators import accepts_auth_key
@@ -18,19 +15,12 @@ from authkeys.decorators import accepts_auth_key
 
 class KeyDecoratorsTest(TestCase):
 
-    def setUp(self):
-        pass
-
-    def tearDown(self):
-        pass
-
     @attr('current')
     def test_key_auth_decorator(self):
 
-        user = User(username="test23", email="test23@example.com")
-        user.save()
+        u = user(username="test23", email="test23@example.com", save=True)
 
-        key = Key(user=user)
+        key = Key(user=u)
         secret = key.generate_secret()
         key.save()
 
@@ -40,8 +30,8 @@ class KeyDecoratorsTest(TestCase):
 
         cases = ((key.key, secret, True),
                  (key.key, 'FAKE', False),
-                 ('FAKE',  secret, False),
-                 ('FAKE',  'FAKE', False))
+                 ('FAKE', secret, False),
+                 ('FAKE', 'FAKE', False))
 
         for k, s, success in cases:
 
@@ -60,6 +50,6 @@ class KeyDecoratorsTest(TestCase):
                 ok_(not request.user.is_authenticated())
             else:
                 ok_(request.user.is_authenticated())
-                ok_(request.user == user)
+                ok_(request.user == u)
                 ok_(request.authkey)
                 ok_(request.authkey == key)

@@ -1,4 +1,3 @@
-from django.conf import settings
 from django import forms
 
 from nose.tools import eq_
@@ -7,6 +6,7 @@ import test_utils
 from ..adapters import (KumaAccountAdapter, USERNAME_CHARACTERS,
                         USERNAME_EMAIL)
 from ..forms import UserProfileEditForm
+
 
 class TestUserProfileEditForm(test_utils.TestCase):
 

@@ -1,15 +1,15 @@
 from django.http import HttpResponsePermanentRedirect
 
+from django.test import RequestFactory
 from nose.plugins.skip import SkipTest
 from nose.tools import eq_
-from test_utils import RequestFactory
+import test_utils
 
 from sumo.middleware import PlusToSpaceMiddleware
-from sumo.tests import TestCase
 from sumo.urlresolvers import get_best_language
 
 
-class TrailingSlashMiddlewareTestCase(TestCase):
+class TrailingSlashMiddlewareTestCase(test_utils.TestCase):
     def test_no_trailing_slash(self):
         response = self.client.get(u'/en-US/ohnoez')
         eq_(response.status_code, 404)
@@ -24,8 +24,7 @@ class TrailingSlashMiddlewareTestCase(TestCase):
         assert response['Location'].endswith('/en-US/docs/files?xxx=%C3%83')
 
 
-class PlusToSpaceTestCase(TestCase):
-
+class PlusToSpaceTestCase(test_utils.TestCase):
     rf = RequestFactory()
     ptsm = PlusToSpaceMiddleware()
 
@@ -69,7 +68,7 @@ class PlusToSpaceTestCase(TestCase):
         eq_('/ja/pa%20th?s=%E3%82%A2', response['location'])
 
 
-class BestLanguageTests(TestCase):
+class BestLanguageTests(test_utils.TestCase):
     def test_english_only(self):
         """Any way you slice it, this should be 'en-US'."""
         best = get_best_language('en-US, en;q=0.5')

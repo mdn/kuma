@@ -1,5 +1,5 @@
 # This Python file uses the following encoding: utf-8
-from datetime import datetime, timedelta
+from datetime import datetime
 import time
 import urllib
 
@@ -15,7 +15,6 @@ from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core import mail
 from django.utils.http import urlquote
-from django.test.client import Client
 from django.test.utils import override_settings
 
 import constance.config
@@ -26,8 +25,10 @@ from kuma.wiki.events import EditDocumentEvent
 from kuma.wiki.constants import REDIRECT_CONTENT, TEMPLATE_TITLE_PREFIX
 from kuma.wiki.models import (Document, Revision, HelpfulVote,
                               DocumentTag, Attachment)
-from kuma.wiki.tests import (TestCaseBase, document, revision, new_document_data,
+from kuma.wiki.tests import (WikiTestCase, document, revision, new_document_data,
                              create_topical_parents_docs)
+from kuma.users.tests import UserTestCase
+
 from sumo.urlresolvers import reverse
 from sumo.helpers import urlparams
 from sumo.tests import post, get
@@ -46,9 +47,8 @@ https://testserver/en-US/docs/%s$history
 """
 
 
-class DocumentTests(TestCaseBase):
+class DocumentTests(UserTestCase, WikiTestCase):
     """Tests for the Document template"""
-    fixtures = ['test_users.json']
 
     def test_document_view(self):
         """Load the document view page and verify the title and content."""
@@ -245,9 +245,9 @@ class DocumentTests(TestCaseBase):
                 eq_(0, input['value'])
 
 
-class RevisionTests(TestCaseBase):
+class RevisionTests(UserTestCase, WikiTestCase):
     """Tests for the Revision template"""
-    fixtures = ['test_users.json']
+    localizing_client = True
 
     def test_revision_view(self):
         """Load the revision view page and verify the title and content."""
@@ -265,13 +265,12 @@ class RevisionTests(TestCaseBase):
         eq_(r.content,
             doc('#doc-source pre').text())
         eq_('Created: Jan 1, 2011 12:00:00 AM',
-            doc('div.revision-info li.revision-created')
-                .text().strip())
+            doc('div.revision-info li.revision-created').text().strip())
 
 
-class NewDocumentTests(TestCaseBase):
+class NewDocumentTests(UserTestCase, WikiTestCase):
     """Tests for the New Document template"""
-    fixtures = ['test_users.json']
+    localizing_client = True
 
     def test_new_document_GET_with_perm(self):
         """HTTP GET to new document URL renders the form."""
@@ -296,7 +295,6 @@ class NewDocumentTests(TestCaseBase):
         # TODO: push test_strings functionality up into a test helper
         for test_string in test_strings:
             ok_(test_string in response.content)
-
 
     def test_new_document_preview_button(self):
         """HTTP GET to new document URL shows preview button for basic doc
@@ -445,9 +443,9 @@ class NewDocumentTests(TestCaseBase):
         eq_('ask', Document.objects.all()[0].slug)
 
 
-class NewRevisionTests(TestCaseBase):
+class NewRevisionTests(UserTestCase, WikiTestCase):
     """Tests for the New Revision template"""
-    fixtures = ['test_users.json']
+    localizing_client = True
 
     def setUp(self):
         super(NewRevisionTests, self).setUp()
@@ -519,6 +517,10 @@ class NewRevisionTests(TestCaseBase):
         eq_(self.d.current_revision, new_rev.based_on)
 
         # Assert notifications fired and have the expected content:
+        eq_(1, len(mail.outbox)) # Regression check:
+                                 # messing with context processors can
+                                 # cause notification emails to error
+                                 # and stop being sent.
         expected_to = [u'sam@example.com']
         expected_subject = u'[MDN] Page "%s" changed by %s' % (self.d.title,
                                                      new_rev.creator)
@@ -589,9 +591,9 @@ class NewRevisionTests(TestCaseBase):
             locale='en-US')
 
 
-class DocumentEditTests(TestCaseBase):
+class DocumentEditTests(UserTestCase, WikiTestCase):
     """Test the editing of document level fields."""
-    fixtures = ['test_users.json']
+    localizing_client = True
 
     def setUp(self):
         super(DocumentEditTests, self).setUp()
@@ -648,9 +650,9 @@ class DocumentEditTests(TestCaseBase):
         eq_(new_title, doc.title)
 
 
-class DocumentListTests(TestCaseBase):
+class DocumentListTests(UserTestCase, WikiTestCase):
     """Tests for the All and Category template"""
-    fixtures = ['test_users.json']
+    localizing_client = True
 
     def setUp(self):
         super(DocumentListTests, self).setUp()
@@ -708,9 +710,9 @@ class DocumentListTests(TestCaseBase):
         eq_(1, len(doc('#document-list ul.documents li')))
 
 
-class CompareRevisionTests(TestCaseBase):
+class CompareRevisionTests(UserTestCase, WikiTestCase):
     """Tests for Review Revisions"""
-    fixtures = ['test_users.json']
+    localizing_client = True
 
     def setUp(self):
         super(CompareRevisionTests, self).setUp()
@@ -783,9 +785,8 @@ class CompareRevisionTests(TestCaseBase):
         eq_(404, response.status_code)
 
 
-class TranslateTests(TestCaseBase):
+class TranslateTests(UserTestCase, WikiTestCase):
     """Tests for the Translate page"""
-    fixtures = ['test_users.json']
 
     def setUp(self):
         super(TranslateTests, self).setUp()
@@ -1030,9 +1031,9 @@ def _test_form_maintains_based_on_rev(client, doc, view, post_data,
     eq_(orig_rev, fred_rev.based_on)
 
 
-class ArticlePreviewTests(TestCaseBase):
+class ArticlePreviewTests(UserTestCase, WikiTestCase):
     """Tests for preview view and template."""
-    fixtures = ['test_users.json']
+    localizing_client = True
 
     def setUp(self):
         super(ArticlePreviewTests, self).setUp()
@@ -1067,8 +1068,7 @@ class ArticlePreviewTests(TestCaseBase):
         eq_('/es/docs/prueba', link[0].attrib['href'])
 
 
-class HelpfulVoteTests(SkippedTestCase):
-    fixtures = ['test_users.json']
+class HelpfulVoteTests(UserTestCase, SkippedTestCase):
 
     def setUp(self):
         super(HelpfulVoteTests, self).setUp()
@@ -1124,9 +1124,8 @@ class HelpfulVoteTests(SkippedTestCase):
         assert votes[0].helpful
 
 
-class SelectLocaleTests(TestCaseBase):
+class SelectLocaleTests(UserTestCase, WikiTestCase):
     """Test the locale selection page"""
-    fixtures = ['test_users.json']
 
     def setUp(self):
         super(SelectLocaleTests, self).setUp()
@@ -1143,8 +1142,7 @@ class SelectLocaleTests(TestCaseBase):
             len(doc('#select-locale ul.locales li')))
 
 
-class RevisionDeleteTestCase(SkippedTestCase):
-    fixtures = ['test_users.json']
+class RevisionDeleteTestCase(UserTestCase, SkippedTestCase):
 
     def setUp(self):
         super(RevisionDeleteTestCase, self).setUp()

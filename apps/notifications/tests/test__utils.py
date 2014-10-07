@@ -1,10 +1,10 @@
+import test_utils
 from nose.tools import eq_
 
 from notifications.utils import merge
-from sumo.tests import TestCase
 
 
-class MergeTests(TestCase):
+class MergeTests(test_utils.TestCase):
     """Unit tests for merge()"""
     # Also accidentally tests peekable, though that could use its own tests
 

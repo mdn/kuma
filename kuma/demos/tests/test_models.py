@@ -2,7 +2,6 @@
 
 # This Python file uses the following encoding: utf-8
 # see also: http://www.python.org/dev/peps/pep-0263/
-import logging
 from os import unlink
 from os.path import dirname, isfile, isdir
 from shutil import rmtree
@@ -31,7 +30,6 @@ from .. import models
 from . import make_users, build_submission, build_hidden_submission
 
 models.DEMO_MAX_FILESIZE_IN_ZIP = 1 * 1024 * 1024
-
 
 
 def save_valid_submission(title='hello world',
@@ -87,11 +85,9 @@ class DemoPackageTest(TestCase):
         zf.close()
         s.demo_package.save('play_demo.zip', ContentFile(fout.getvalue()))
 
-        try:
-            s.clean()
-            ok_(False, "There should be a validation exception")
-        except ValidationError, e:
-            ok_('ZIP file contains no acceptable files' in e.messages)
+        self.assertRaisesMessage(ValidationError,
+                                 'ZIP file contains no acceptable files',
+                                 s.clean)
 
         unlink(s.demo_package.path)
 
@@ -105,12 +101,9 @@ class DemoPackageTest(TestCase):
         zf.close()
         s.demo_package.save('play_demo.zip', ContentFile(fout.getvalue()))
 
-        try:
-            s.clean()
-            ok_(False, "There should be a validation exception")
-        except ValidationError, e:
-            ok_('HTML index not found in ZIP' in e.messages)
-
+        self.assertRaisesMessage(ValidationError,
+                                 'HTML index not found in ZIP',
+                                 s.clean)
         unlink(s.demo_package.path)
 
     def test_demo_package_no_index(self):
@@ -123,11 +116,9 @@ class DemoPackageTest(TestCase):
         zf.close()
         s.demo_package.save('play_demo.zip', ContentFile(fout.getvalue()))
 
-        try:
-            s.clean()
-            ok_(False, "There should be a validation exception")
-        except ValidationError, e:
-            ok_('HTML index not found in ZIP' in e.messages)
+        self.assertRaisesMessage(ValidationError,
+                                 'HTML index not found in ZIP',
+                                 s.clean)
 
         unlink(s.demo_package.path)
 
@@ -142,11 +133,9 @@ class DemoPackageTest(TestCase):
         zf.close()
         s.demo_package.save('play_demo.zip', ContentFile(fout.getvalue()))
 
-        try:
-            s.clean()
-            ok_(False, "There should be a validation exception")
-        except ValidationError, e:
-            ok_('ZIP file contains no acceptable files' in e.messages)
+        self.assertRaisesMessage(ValidationError,
+                                 'ZIP file contains no acceptable files',
+                                 s.clean)
 
         unlink(s.demo_package.path)
 
@@ -162,9 +151,8 @@ class DemoPackageTest(TestCase):
 
         try:
             s.clean()
-            ok_(True, "This last one should be okay")
         except:
-            ok_(False, "The last zip file should have been okay")
+            self.fail("The last zip file should have been okay")
 
         unlink(s.demo_package.path)
 
@@ -180,9 +168,8 @@ class DemoPackageTest(TestCase):
 
         try:
             s.clean()
-            ok_(True, "This last one should be okay")
         except:
-            ok_(False, "The last zip file should have been okay")
+            self.fail("The last zip file should have been okay")
 
         unlink(s.demo_package.path)
 
@@ -377,12 +364,9 @@ class DemoPackageTest(TestCase):
         zf.close()
         s.demo_package.save('play_demo.zip', ContentFile(fout.getvalue()))
 
-        try:
-            s.clean()
-            ok_(False, "There should be a validation exception")
-        except ValidationError, e:
-            ok_('ZIP file contains a file that is too large: bigfile.txt'
-                in e.messages)
+        self.assertRaisesMessage(ValidationError,
+                                 'ZIP file contains a file that is too large: bigfile.txt',
+                                 s.clean)
 
         unlink(s.demo_package.path)
 
@@ -418,11 +402,9 @@ class DemoPackageTest(TestCase):
 
             s.demo_package.save('play_demo.zip', ContentFile(fout.getvalue()))
 
-            try:
-                s.clean()
-                ok_(False, "There should be a validation exception")
-            except ValidationError, e:
-                ok_('ZIP file contains an unacceptable file: badfile' in e.messages)
+            self.assertRaisesMessage(ValidationError,
+                                     'ZIP file contains an unacceptable file: badfile',
+                                     s.clean)
 
     def test_hidden_demo_next_prev(self):
         """Ensure hidden demos do not display when next() or previous() are called"""
@@ -432,7 +414,6 @@ class DemoPackageTest(TestCase):
         eq_(s.next(), None)
 
     def test_hidden_demo_shows_to_creator_and_admin(self):
-        """Demo package with at least index.html in root is valid"""
         s = self.submission
         s.hidden = True
 
@@ -442,7 +423,6 @@ class DemoPackageTest(TestCase):
         ok_(s.allows_hiding_by(self.admin_user))
 
     def test_censored_demo_shows_only_in_admin_interface(self):
-        """Demo package with at least index.html in root is valid"""
         s = self.submission
         s.censor()
 

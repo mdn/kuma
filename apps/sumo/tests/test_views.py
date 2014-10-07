@@ -1,15 +1,15 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect
+from django.test import RequestFactory
 
+import test_utils
 from nose.tools import eq_
-from test_utils import RequestFactory
 
-from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
 from sumo.views import redirect_to
 
 
-class RedirectToTestcase(TestCase):
+class RedirectToTestcase(test_utils.TestCase):
     rf = RequestFactory()
 
     def test_redirect_to(self):
@@ -23,8 +23,7 @@ class RedirectToTestcase(TestCase):
         eq_(reverse('home'), resp['location'])
 
 
-
-class RobotsTestCase(TestCase):
+class RobotsTestCase(test_utils.TestCase):
     # Use the hard-coded URL because it's well-known.
     old_setting = settings.ENGAGE_ROBOTS
 

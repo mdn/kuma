@@ -1,6 +1,5 @@
-@import 'includes/vars';
-@import 'includes/mixins';
-@import 'includes/grid';
+@require 'includes/vars';
+@require 'includes/mixins';
 
 $home-involved-background-y = 50px;
 $blue-background-text-color = #fff;
@@ -138,15 +137,14 @@ $blue-background-text-color = #fff;
         }
     }
 
-    .home-search-form {
-        padding: ($grid-spacing * 2) 0;
+    .search-form {
+      padding: ($grid-spacing * 2) 0;
 
-        input {
-            big-search();
-            color: $blue-background-text-color;
-
-            set-placeholder-style(color, $blue-background-text-color);
-        }
+      input#home-q {
+          big-search();
+          color: #fff;
+          set-placeholder-style(color, #fff);
+      }
     }
 }
 

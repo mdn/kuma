@@ -11,9 +11,9 @@ from django.utils.encoding import smart_str
 
 import cronjobs
 
-from . import tasks
+from kuma.search.models import DocumentType
+
 from .models import Document
-from search.models import DocumentType
 
 
 @cronjobs.register

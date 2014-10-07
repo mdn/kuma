@@ -1,4 +1,3 @@
-from datetime import date
 import time
 
 from nose.tools import eq_
@@ -7,12 +6,10 @@ from kpi.cron import update_l10n_metric
 from kpi.models import Metric, L10N_METRIC_CODE
 from kpi.tests import metric_kind
 from kuma.wiki.tests import document, revision
-from sumo.tests import TestCase
+from kuma.users.tests import UserTestCase
 
 
-class CronJobTests(TestCase):
-
-    fixtures = ['test_users.json']
+class CronJobTests(UserTestCase):
 
     def test_update_l10n_metric_cron(self):
         """Verify the cron job creates the correct metric."""
@@ -43,10 +40,7 @@ class CronJobTests(TestCase):
         eq_(100, metrics[0].value)
 
         # Update the en-US document
-        rev2 = revision(
-            document=doc,
-            is_approved=True,
-            save=True)
+        revision(document=doc, is_approved=True, save=True)
 
         # Run it and verify results.
         # Value should be 0%

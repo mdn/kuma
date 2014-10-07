@@ -8,15 +8,13 @@ from django.utils.importlib import import_module
 
 from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
-from sumo.tests import TestCase
 from .test_views import TESTUSER_PASSWORD
 from . import (verify_strings_in_response, verify_strings_not_in_response,
-               TestCaseBase)
+               UserTestCase)
 
 
-# TODO: Figure out why TestCaseBase doesn't work here
-class SignupTests(TestCase):
-    fixtures = ['test_users.json']
+class SignupTests(UserTestCase):
+    localizing_client = False
 
     @mock.patch('requests.post')
     def test_signup_page(self, mock_post):
@@ -39,7 +37,8 @@ class SignupTests(TestCase):
         verify_strings_in_response(test_strings, r)
 
 
-class AccountEmailTests(TestCaseBase):
+class AccountEmailTests(UserTestCase):
+    localizing_client = True
 
     def test_account_email_page_requires_signin(self):
         url = reverse('account_email')
@@ -74,7 +73,8 @@ class AccountEmailTests(TestCaseBase):
         verify_strings_in_response(test_strings, r)
 
 
-class SocialAccountConnectionsTests(TestCaseBase):
+class SocialAccountConnectionsTests(UserTestCase):
+    localizing_client = True
 
     def test_account_connections_page_requires_signin(self):
         url = reverse('socialaccount_connections')
@@ -96,12 +96,10 @@ class SocialAccountConnectionsTests(TestCaseBase):
         verify_strings_in_response(test_strings, r)
 
 
-class AllauthPersonaTestCase(TestCase):
-    fixtures = ['test_users.json']
-    persona_signup_email = 'personatestuser@example.com'
-    persona_signup_username = 'personatestuser'
+class AllauthPersonaTestCase(UserTestCase):
     existing_persona_email = 'testuser@test.com'
     existing_persona_username = 'testuser'
+    localizing_client = False
 
     def test_persona_auth_failure_copy(self):
         """
@@ -124,7 +122,7 @@ class AllauthPersonaTestCase(TestCase):
             verify_strings_in_response(expected_strings, r)
             unexpected_strings = (
                 'Thanks for signing in to MDN with Persona.',
-                '<form class="submission" method="post" '
+                '<form class="submission readable-line-length" method="post" '
                 'action="/en-US/users/account/signup">',
                 '<input name="username" maxlength="30" type="text"'
                 ' autofocus="autofocus" required="required" '
@@ -141,13 +139,15 @@ class AllauthPersonaTestCase(TestCase):
         message and the Persona-specific signup form, correctly
         populated, and does not display the failure copy.
         """
+        persona_signup_email = 'templates_persona_auth_copy@example.com'
+
         with mock.patch('requests.post') as requests_mock:
             requests_mock.return_value.json.return_value = {
                 'status': 'okay',
-                'email': self.persona_signup_email,
+                'email': persona_signup_email,
             }
-            r = self.client.post(reverse('persona_login'),
-                                 follow=True)
+            response = self.client.post(reverse('persona_login'),
+                                        follow=True)
             expected_strings = (
                 # Test that we got:
                 #
@@ -160,23 +160,23 @@ class AllauthPersonaTestCase(TestCase):
                 # * Hidden email address field, pre-populated with the
                 #   address used to authenticate to Persona.
                 'Thanks for signing in to MDN with Persona.',
-                '<form class="submission" method="post" '
+                '<form class="submission readable-line-length" method="post" '
                 'action="/en-US/users/account/signup">',
                 '<input name="username" maxlength="30" '
                 'type="text" autofocus="autofocus"'
                 ' required="required" '
                 'placeholder="Username" id="id_username" />',
                 '<input type="hidden" name="email" '
-                'value="%s" id="id_email" />' % self.persona_signup_email,
+                'value="%s" id="id_email" />' % persona_signup_email,
             )
-            verify_strings_in_response(expected_strings, r)
+            verify_strings_in_response(expected_strings, response)
             unexpected_strings = (
                 '<Account Sign In Failure',
                 '<An error occurred while attempting to sign '
                 'in with your account.',
             )
             for s in unexpected_strings:
-                ok_(s not in r.content)
+                ok_(s not in response.content)
 
     def test_persona_signin_copy(self):
         """
@@ -264,6 +264,9 @@ class AllauthPersonaTestCase(TestCase):
         indication that Persona was used to log in, and a logout link
         appear in the auth tools section of the page.
         """
+        persona_signup_email = 'templates_persona_signup_copy@example.com'
+        persona_signup_username = 'templates_persona_signup_copy'
+
         engine = import_module(settings.SESSION_ENGINE)
         store = engine.SessionStore()
         store.save()
@@ -272,12 +275,12 @@ class AllauthPersonaTestCase(TestCase):
         with mock.patch('requests.post') as requests_mock:
             requests_mock.return_value.json.return_value = {
                 'status': 'okay',
-                'email': self.persona_signup_email,
+                'email': persona_signup_email,
             }
             r = self.client.post(reverse('persona_login'),
                                  follow=True)
-            data = {'username': self.persona_signup_username,
-                    'email': self.persona_signup_email}
+            data = {'username': persona_signup_username,
+                    'email': persona_signup_email}
             r = self.client.post(
                 reverse('socialaccount_signup',
                         locale=settings.WIKI_DEFAULT_LANGUAGE),
@@ -285,7 +288,7 @@ class AllauthPersonaTestCase(TestCase):
 
             profile_url = reverse(
                 'users.profile',
-                kwargs={'username': self.persona_signup_username},
+                kwargs={'username': persona_signup_username},
                 locale=settings.WIKI_DEFAULT_LANGUAGE)
             signout_url = urlparams(
                 reverse('account_logout',

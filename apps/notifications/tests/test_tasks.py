@@ -1,13 +1,13 @@
+import test_utils
 from nose.tools import eq_
 
 from notifications.models import Watch
 from notifications.tasks import claim_watches
 from notifications.tests import watch
-from sumo.tests import TestCase
 from kuma.users.tests import user
 
 
-class ClaimWatchesTests(TestCase):
+class ClaimWatchesTests(test_utils.TestCase):
     def test_none(self):
         """No anonymous watches to claim."""
         u = user(email='some@bo.dy', save=True)

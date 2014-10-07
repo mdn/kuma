@@ -150,29 +150,6 @@ needed.
 
 Many core MDN contributors create a personal ``User:<username>`` page as a testing sandbox.
 
-Import the entire MDN wiki
---------------------------
-
-MDN content and code are inter-dependent - a.k.a., tightly-coupled. :(
-
-To work on Kuma code with a fully-functioning, anonymized copy of the MDN
-database.
-
-#. Download `devmo_sanitized-latest.sql.bz2 <https://developer.allizom.org/landfill/devmo_sanitized-latest.sql.bz2>`_ (400 MB) from `landfill <https://developer.allizom.org/landfill/>`_
-
-#. Extract it in your kuma directory::
-
-    bunzip devmo_sanitized-latest.sql.bz2
-
-#. Import the unzip'd .sql to your local database::
-
-     vagrant ssh
-     mysql -uroot kuma < /path/to/database/dump.sql
-
-#. (Optional) Download the ``attachments-....tar.gz`` from
-   `landfill <https://developer.allizom.org/landfill/>`_ and extract it into
-   "/media/attachments".
-
 
 Developing with Vagrant
 -----------------------

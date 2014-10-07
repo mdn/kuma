@@ -2,21 +2,21 @@ from nose.tools import eq_
 
 from django.contrib.auth.models import User
 
+from kuma.users.tests import UserTestCase
 from kuma.wiki.models import DocumentZone
 from kuma.wiki.helpers import (revisions_unified_diff,
                                document_zone_management_links, tojson)
-from kuma.wiki.tests import TestCaseBase, revision
+from kuma.wiki.tests import WikiTestCase, revision
 
 
-class HelpTests(TestCaseBase):
+class HelpTests(WikiTestCase):
 
     def test_tojson(self):
         eq_(tojson({'title': '<script>alert("Hi!")</script>'}),
             '{"title": "&lt;script&gt;alert(&quot;Hi!&quot;)&lt;/script&gt;"}')
 
 
-class RevisionsUnifiedDiffTests(TestCaseBase):
-    fixtures = ['test_users.json']
+class RevisionsUnifiedDiffTests(UserTestCase, WikiTestCase):
 
     def test_from_revision_none(self):
         rev = revision()
@@ -27,9 +27,8 @@ class RevisionsUnifiedDiffTests(TestCaseBase):
         eq_("Diff is unavailable.", diff)
 
 
-class DocumentZoneTests(TestCaseBase):
+class DocumentZoneTests(UserTestCase, WikiTestCase):
     """Tests for DocumentZone helpers"""
-    fixtures = ['test_users.json']
 
     def setUp(self):
         super(DocumentZoneTests, self).setUp()

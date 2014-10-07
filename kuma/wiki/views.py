@@ -48,8 +48,8 @@ import kuma.wiki.content
 from kuma.attachments.forms import AttachmentRevisionForm
 from kuma.attachments.models import Attachment
 from kuma.attachments.utils import attachments_json
+from kuma.search.store import referrer_url
 from kuma.users.models import UserProfile
-from search.store import referrer_url
 from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
 from sumo.utils import paginate, smart_int

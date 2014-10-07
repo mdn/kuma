@@ -2,24 +2,24 @@ from nose.tools import eq_
 
 from django.http import HttpResponse
 from django.conf import settings
+from django.test import RequestFactory
 
 import test_utils
 
 from sumo.anonymous import AnonymousIdentityMiddleware
-from sumo.tests import TestCase
 
 
-class TestAnonymousMiddleware(TestCase):
+class TestAnonymousMiddleware(test_utils.TestCase):
     """Tests for the anonymous middleware."""
     def setUp(self):
         super(TestAnonymousMiddleware, self).setUp()
-
         self.middleware = AnonymousIdentityMiddleware()
+        self.rf = RequestFactory()
 
     def test_cookie_set(self):
         """The anonymous cookie is set when the anonymous id is created."""
         # Create and process a request
-        request = test_utils.RequestFactory().request()
+        request = self.rf.request()
         self.middleware.process_request(request)
 
         # Make sure anonymous id isn't set then access it to generate it
@@ -38,7 +38,7 @@ class TestAnonymousMiddleware(TestCase):
     def test_cookie_not_set(self):
         """The anonymous cookie isn't set if it isn't created."""
         # Create and process a request
-        request = test_utils.RequestFactory().request()
+        request = self.rf.request()
         self.middleware.process_request(request)
 
         # Check if anonymous id is set (without creating one)
@@ -55,7 +55,7 @@ class TestAnonymousMiddleware(TestCase):
         """Anonymous cookie is already set.
         Make sure the value is read correctly and a new one isn't set."""
         # Create, add the anonymous cookie and process a request
-        request = test_utils.RequestFactory().request()
+        request = self.rf.request()
         anon_id = '63de20c227be94560e3c679330c678ee'
         request.COOKIES[settings.ANONYMOUS_COOKIE_NAME] = anon_id
         self.middleware.process_request(request)

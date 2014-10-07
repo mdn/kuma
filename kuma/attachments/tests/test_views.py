@@ -6,12 +6,12 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.files.base import ContentFile
 from django.core.files import temp as tempfile
-from django.test.client import Client
 
 import constance.config
 
+from kuma.users.tests import UserTestCase
 from kuma.wiki.models import Document
-from kuma.wiki.tests import document, revision, TestCaseBase
+from kuma.wiki.tests import document, revision, WikiTestCase
 from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
 
@@ -19,17 +19,16 @@ from ..models import Attachment, AttachmentRevision, DocumentAttachment
 from ..utils import make_test_file
 
 
-class AttachmentTests(TestCaseBase):
-    fixtures = ['test_users.json']
+class AttachmentTests(UserTestCase, WikiTestCase):
 
     def setUp(self):
         self.old_allowed_types = constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES
         constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES = 'text/plain'
         super(AttachmentTests, self).setUp()
-        self.client = Client()  # file views don't need LocalizingClient
         self.client.login(username='admin', password='testpass')
 
     def tearDown(self):
+        super(AttachmentTests, self).tearDown()
         constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES = self.old_allowed_types
 
     def _post_new_attachment(self):

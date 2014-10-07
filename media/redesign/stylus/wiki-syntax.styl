@@ -2,8 +2,8 @@
     Updates in this file modify or enhance the code provided by Prism.js
 */
 
-@import 'includes/vars';
-@import 'includes/mixins';
+@require 'includes/vars';
+@require 'includes/mixins';
 
 code[class*='language-'],
 pre[class*='language-'] {
@@ -19,15 +19,21 @@ pre[class*='language-'] {
     }
 }
 
+.error pre[class*='language-'] {
+    margin: 10px 0 0 0;
+    background: none;
+}
+
 :not(pre)>code[class*='language-'],
 pre[class*='language-'] {
     @extend $code-block;
 }
 
-/* Some places in the wiki feature <pre><em><code> */
-
+/*
+    Some places in the wiki feature <pre><em><code>
+*/
 pre em code[class*='language-'] {
-    background: none transparent;
+    background: none;
     border-left: 0;
 }
 

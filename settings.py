@@ -393,6 +393,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
     'jingo_minify.helpers.build_ids',
     'constance.context_processors.config',
+
+    'kuma.search.context_processors.search_filters',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -482,7 +484,7 @@ INSTALLED_APPS = (
     'docs',
     'kuma.feeder',
     'landing',
-    'search',
+    'kuma.search',
     'kuma.users',
     'kuma.wiki',
     'kuma.attachments',
@@ -517,7 +519,7 @@ INSTALLED_APPS = (
     'taggit',
     'dbgettext',
 
-    'dashboards',
+    'kuma.dashboards',
     'kpi',
     'statici18n',
     'rest_framework',
@@ -579,7 +581,7 @@ DOMAIN_METHODS = {
     'messages': [
         ('vendor/**', 'ignore'),
         ('apps/access/**', 'ignore'),
-        ('apps/dashboards/**', 'ignore'),
+        ('kuma/dashboards/**', 'ignore'),
         ('apps/kadmin/**', 'ignore'),
         ('apps/sumo/**', 'ignore'),
         ('apps/**.py',
@@ -638,6 +640,9 @@ MINIFY_BUNDLES = {
         ),
         'search': (
             'redesign/css/search.css',
+        ),
+        'search-suggestions': (
+            'redesign/css/search-suggestions.css',
         ),
         'wiki': (
             'redesign/css/wiki.css',
@@ -756,6 +761,9 @@ MINIFY_BUNDLES = {
             'js/libs/prism/plugins/line-highlight/prism-line-highlight.js',
             'js/syntax-prism.js',
         ),
+        'search-suggestions': (
+            'js/search-suggestions.js',
+        ),
         'wiki': (
             'redesign/js/search-navigator.js',
             'redesign/js/wiki.js',
@@ -828,7 +836,7 @@ CELERY_SEND_TASK_SENT_EVENT = True
 CELERY_IMPORTS = (
     'devmo.tasks',
     'kuma.wiki.tasks',
-    'search.tasks',
+    'kuma.search.tasks',
     'tidings.events',
     'elasticutils.contrib.django.tasks',
 )

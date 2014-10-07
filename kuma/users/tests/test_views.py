@@ -10,48 +10,48 @@ from django.utils.importlib import import_module
 
 from allauth.socialaccount.models import SocialAccount
 
-from devmo.tests import mock_lookup_user, LocalizingClient
-from sumo.tests import TestCase
+from devmo.tests import mock_lookup_user
 from sumo.urlresolvers import reverse
+
+from . import UserTestCase
 from ..models import UserProfile, UserBan
 
 TESTUSER_PASSWORD = 'testpass'
 
 
-class OldProfileTestCase(TestCase):
-    fixtures = ['test_users.json']
+class OldProfileTestCase(UserTestCase):
+    localizing_client = True
 
     def test_old_profile_url_gone(self):
         response = self.client.get('/users/edit', follow=True)
         eq_(404, response.status_code)
 
 
-class BanTestCase(TestCase):
-    fixtures = ['test_users.json']
+class BanTestCase(UserTestCase):
+    localizing_client = True
 
     @attr('bans')
     def test_ban_permission(self):
         """The ban permission controls access to the ban view."""
-        client = LocalizingClient()
         admin = User.objects.get(username='admin')
         testuser = User.objects.get(username='testuser')
 
         # testuser doesn't have ban permission, can't ban.
-        client.login(username='testuser',
-                     password='testpass')
+        self.client.login(username='testuser',
+                          password='testpass')
         ban_url = reverse('users.ban_user',
                           kwargs={'user_id': admin.id})
-        resp = client.get(ban_url)
+        resp = self.client.get(ban_url)
         eq_(302, resp.status_code)
         ok_(str(settings.LOGIN_URL) in resp['Location'])
-        client.logout()
+        self.client.logout()
 
         # admin has ban permission, can ban.
-        client.login(username='admin',
-                     password='testpass')
+        self.client.login(username='admin',
+                          password='testpass')
         ban_url = reverse('users.ban_user',
                           kwargs={'user_id': testuser.id})
-        resp = client.get(ban_url)
+        resp = self.client.get(ban_url)
         eq_(200, resp.status_code)
 
     @attr('bans')
@@ -59,14 +59,13 @@ class BanTestCase(TestCase):
         testuser = User.objects.get(username='testuser')
         admin = User.objects.get(username='admin')
 
-        client = LocalizingClient()
-        client.login(username='admin', password='testpass')
+        self.client.login(username='admin', password='testpass')
 
         data = {'reason': 'Banned by unit test.'}
         ban_url = reverse('users.ban_user',
                           kwargs={'user_id': testuser.id})
 
-        resp = client.post(ban_url, data)
+        resp = self.client.post(ban_url, data)
         eq_(302, resp.status_code)
         ok_(testuser.get_absolute_url() in resp['Location'])
 
@@ -106,13 +105,13 @@ class BanTestCase(TestCase):
         self.assertNotEqual(response.status_code, 403)
 
 
-class ProfileViewsTest(TestCase):
-    fixtures = ['test_users.json']
+class ProfileViewsTest(UserTestCase):
+    localizing_client = True
 
     def setUp(self):
+        super(ProfileViewsTest, self).setUp()
         self.old_debug = settings.DEBUG
         settings.DEBUG = True
-        self.client = LocalizingClient()
         self.client.logout()
 
     def tearDown(self):
@@ -170,7 +169,7 @@ class ProfileViewsTest(TestCase):
         try:
             self.client.get(url, follow=True)
         except PageNotAnInteger:
-            ok_(False, "Non-numeric page number should not cause an error")
+            self.fail("Non-numeric page number should not cause an error")
 
     @mock.patch('basket.lookup_user')
     @mock.patch('basket.subscribe')
@@ -457,8 +456,7 @@ class ProfileViewsTest(TestCase):
                 'Field %s is a string!' % field)
 
 
-class Test404Case(TestCase):
-    fixtures = ['test_users.json']
+class Test404Case(UserTestCase):
 
     def test_404_logins(self):
         """The login buttons should display on the 404 page"""
@@ -474,30 +472,25 @@ class Test404Case(TestCase):
         The login buttons should not display on the 404 page when the
         user is logged in
         """
-        client = LocalizingClient()
-
         # View page as a logged in user
-        client.login(username='testuser',
-                     password='testpass')
-        response = client.get('/something-doesnt-exist', follow=True)
+        self.client.login(username='testuser',
+                          password='testpass')
+        response = self.client.get('/something-doesnt-exist', follow=True)
         doc = pq(response.content)
 
         login_block = doc.find('.socialaccount_providers')
         eq_(len(login_block), 0)
         eq_(404, response.status_code)
-        client.logout()
+        self.client.logout()
 
 
-class AllauthPersonaTestCase(TestCase):
+class AllauthPersonaTestCase(UserTestCase):
     """
     Test sign-up/in flow with Persona.
-
     """
-    fixtures = ['test_users.json']
-    persona_signup_email = 'personatestuser@example.com'
-    persona_signup_username = 'personatestuser'
     existing_persona_email = 'testuser@test.com'
     existing_persona_username = 'testuser'
+    localizing_client = False
 
     def test_persona_auth_failure(self):
         """
@@ -525,7 +518,7 @@ class AllauthPersonaTestCase(TestCase):
         with mock.patch('requests.post') as requests_mock:
             requests_mock.return_value.json.return_value = {
                 'status': 'okay',
-                'email': self.persona_signup_email,
+                'email': 'views_persona_auth@example.com',
             }
             r = self.client.post(reverse('persona_login'),
                                  follow=True)
@@ -592,16 +585,18 @@ class AllauthPersonaTestCase(TestCase):
         store = engine.SessionStore()
         store.save()
         self.client.cookies[settings.SESSION_COOKIE_NAME] = store.session_key
+        persona_signup_email = 'views_persona_django_user@example.com'
+        persona_signup_username = 'views_persona_django_user'
 
         with mock.patch('requests.post') as requests_mock:
             old_count = User.objects.count()
             requests_mock.return_value.json.return_value = {
                 'status': 'okay',
-                'email': self.persona_signup_email,
+                'email': persona_signup_email,
             }
             self.client.post(reverse('persona_login'), follow=True)
-            data = {'username': self.persona_signup_username,
-                    'email': self.persona_signup_email}
+            data = {'username': persona_signup_username,
+                    'email': persona_signup_email}
             self.client.post(reverse('socialaccount_signup',
                                      locale=settings.WIKI_DEFAULT_LANGUAGE),
                              data=data,
@@ -618,8 +613,8 @@ class AllauthPersonaTestCase(TestCase):
                 pass
             ok_(user)
             ok_(user.is_active)
-            eq_(self.persona_signup_username, user.username)
-            eq_(self.persona_signup_email, user.email)
+            eq_(persona_signup_username, user.username)
+            eq_(persona_signup_email, user.email)
             eq_('!', user.password)
 
     def test_persona_signup_create_socialaccount(self):
@@ -630,15 +625,17 @@ class AllauthPersonaTestCase(TestCase):
         store = engine.SessionStore()
         store.save()
         self.client.cookies[settings.SESSION_COOKIE_NAME] = store.session_key
+        persona_signup_email = 'views_persona_socialaccount@example.com'
+        persona_signup_username = 'views_persona_socialaccount'
 
         with mock.patch('requests.post') as requests_mock:
             requests_mock.return_value.json.return_value = {
                 'status': 'okay',
-                'email': self.persona_signup_email,
+                'email': persona_signup_email,
             }
             self.client.post(reverse('persona_login'), follow=True)
-            data = {'username': self.persona_signup_username,
-                    'email': self.persona_signup_email}
+            data = {'username': persona_signup_username,
+                    'email': persona_signup_email}
             self.client.post(reverse('socialaccount_signup',
                                      locale=settings.WIKI_DEFAULT_LANGUAGE),
                              data=data,
@@ -646,13 +643,13 @@ class AllauthPersonaTestCase(TestCase):
             socialaccount = None
             try:
                 socialaccount = (SocialAccount.objects
-                                              .order_by('-date_joined')[0])
+                                              .filter(user__username=persona_signup_username))[0]
             except IndexError:
                 pass
             ok_(socialaccount is not None)
             eq_('persona', socialaccount.provider)
-            eq_(self.persona_signup_email, socialaccount.uid)
-            eq_({'status': 'okay', 'email': self.persona_signup_email},
+            eq_(persona_signup_email, socialaccount.uid)
+            eq_({'status': 'okay', 'email': persona_signup_email},
                 socialaccount.extra_data)
-            user = User.objects.get(username=self.persona_signup_username)
+            user = User.objects.get(username=persona_signup_username)
             eq_(user.id, socialaccount.user.id)

@@ -1,7 +1,7 @@
-from sumo.tests import TestCase
+import test_utils
 
 
-class TestLocaleMiddleware(TestCase):
+class TestLocaleMiddleware(test_utils.TestCase):
     def test_default_redirect(self):
         # User wants en-us, we send en-US
         response = self.client.get('/search', follow=True,

@@ -4,8 +4,8 @@ import re
 
 from django.contrib.auth.models import User
 
+import test_utils
 from nose.tools import eq_
-from test_utils import TestCase  # So others can import it from here
 
 import sumo
 from sumo.urlresolvers import reverse
@@ -35,7 +35,7 @@ def get_user(username='testuser'):
             ' users fixture.' % username)
 
 
-class MigrationTests(TestCase):
+class MigrationTests(test_utils.TestCase):
     """Sanity checks for the SQL migration scripts"""
 
     @staticmethod

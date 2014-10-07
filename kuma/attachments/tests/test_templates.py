@@ -2,25 +2,25 @@ from nose.plugins.attrib import attr
 from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
 
-from django.test.client import Client
-
 import constance.config
 
-from kuma.wiki.tests import revision, TestCaseBase
+from kuma.users.tests import UserTestCase
+from kuma.wiki.tests import revision, WikiTestCase
 from sumo.urlresolvers import reverse
 
 from ..models import Attachment
 from ..utils import make_test_file
 
 
-class AttachmentTests(TestCaseBase):
-    fixtures = ['test_users.json']
+class AttachmentTests(UserTestCase, WikiTestCase):
 
     def setUp(self):
+        super(AttachmentTests, self).setUp()
         self.old_allowed_types = constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES
         constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES = 'text/plain'
 
     def tearDown(self):
+        super(AttachmentTests, self).tearDown()
         constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES = self.old_allowed_types
 
     @attr('security')
@@ -34,9 +34,9 @@ class AttachmentTests(TestCaseBase):
             'comment': 'xss',
             'file': file_for_upload,
         }
-        self.client = Client()  # file views don't need LocalizingClient
         self.client.login(username='admin', password='testpass')
-        resp = self.client.post(reverse('attachments.new_attachment'), data=post_data)
+        resp = self.client.post(reverse('attachments.new_attachment'),
+                                data=post_data)
         eq_(302, resp.status_code)
 
         # now stick it in/on a document

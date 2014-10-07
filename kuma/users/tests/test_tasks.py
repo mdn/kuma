@@ -11,11 +11,11 @@ from allauth.account.models import EmailAddress
 from allauth.account.signals import user_signed_up
 
 from kuma.users.tasks import send_welcome_email
-from sumo.tests import TestCase
+
+from . import UserTestCase, user
 
 
-class TestWelcomeEmails(TestCase):
-    fixtures = ['test_users.json']
+class TestWelcomeEmails(UserTestCase):
 
     def test_default_language_email(self):
         u = User.objects.get(username='testuser')
@@ -31,41 +31,45 @@ class TestWelcomeEmails(TestCase):
                                                    strings_are_translated):
         strings_are_translated.return_value = False
         u = User.objects.get(username='testuser')
-        send_welcome_email(u.pk, 'de')
-
+        send_welcome_email(u.pk, 'tlh')  # Qapla'
         eq_([], mail.outbox)
+
+        send_welcome_email(u.pk, 'de')  # Servus
+        eq_(1, len(mail.outbox))
 
     def test_welcome_mail_for_verified_email(self):
         Switch.objects.get_or_create(name='welcome_email', active=True)
-        user = User.objects.create_user('welcome',
-                                        'welcome@tester.com',
-                                        'welcome')
+        u = user(username='welcome',
+                 email='welcome@tester.com',
+                 password='welcome',
+                 save=True)
         request = RequestFactory().get('/')
         request.locale = 'en-US'
-        user_signed_up.send(sender=user.__class__, request=request, user=user)
+        user_signed_up.send(sender=u.__class__, request=request, user=u)
 
         # no email sent
         eq_(len(mail.outbox), 0)
 
-        EmailAddress.objects.create(user=user,
+        EmailAddress.objects.create(user=u,
                                     email='welcome@tester.com',
                                     verified=True)
 
-        user_signed_up.send(sender=user.__class__, request=request, user=user)
+        user_signed_up.send(sender=u.__class__, request=request, user=u)
 
         # only one email, the welcome email, is sent, no confirmation needed
         eq_(len(mail.outbox), 1)
         welcome_email = mail.outbox[0]
-        expected_to = [user.email]
+        expected_to = [u.email]
         eq_(expected_to, welcome_email.to)
         ok_(u'utm_campaign=welcome' in welcome_email.body)
 
     def test_welcome_mail_for_unverified_email(self):
         Switch.objects.get_or_create(name='welcome_email', active=True)
-        user = User.objects.create_user('welcome2',
-                                        'welcome2@tester.com',
-                                        'welcome2')
-        email_address = EmailAddress.objects.create(user=user,
+        u = user(username='welcome2',
+                 email='welcome2@tester.com',
+                 password='welcome2',
+                 save=True)
+        email_address = EmailAddress.objects.create(user=u,
                                                     email='welcome2@tester.com',
                                                     verified=False)
         request = RequestFactory().get('/')
@@ -97,7 +101,7 @@ class TestWelcomeEmails(TestCase):
 
         # now add second unverified email address to the user
         # and check if the usual confirmation email is sent out
-        email_address2 = EmailAddress.objects.create(user=user,
+        email_address2 = EmailAddress.objects.create(user=u,
                                                      email='welcome3@tester.com',
                                                      verified=False)
         email_address2.send_confirmation(request)

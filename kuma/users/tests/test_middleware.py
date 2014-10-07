@@ -2,22 +2,19 @@ from django.contrib.auth.models import User
 
 from nose.plugins.attrib import attr
 
-from devmo.tests import LocalizingClient
-from sumo.tests import TestCase
-
+from . import UserTestCase
 from ..models import UserBan
 
 
-class BanTestCase(TestCase):
-    fixtures = ['test_users.json']
+class BanTestCase(UserTestCase):
+    localizing_client = True
 
     @attr('bans')
     def test_ban_middleware(self):
         """Ban middleware functions correctly."""
-        client = LocalizingClient()
-        client.login(username='testuser', password='testpass')
+        self.client.login(username='testuser', password='testpass')
 
-        resp = client.get('/')
+        resp = self.client.get('/')
         self.assertTemplateNotUsed(resp, 'users/user_banned.html')
 
         admin = User.objects.get(username='admin')
@@ -27,5 +24,5 @@ class BanTestCase(TestCase):
                       is_active=True)
         ban.save()
 
-        resp = client.get('/')
+        resp = self.client.get('/')
         self.assertTemplateUsed(resp, 'users/user_banned.html')

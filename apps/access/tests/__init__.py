@@ -1,21 +1,21 @@
 from django.contrib.auth.models import User
 
+from django.test import RequestFactory
 from nose.tools import eq_
 import test_utils
 
 import access
 from forums.models import Forum, Thread
-from sumo.tests import TestCase
 from sumo.urlresolvers import reverse
 
 
-class AccessTests(TestCase):
+class AccessTests(test_utils.TestCase):
     """Test stuff in access/__init__.py"""
     fixtures = ['users.json', 'posts.json', 'forums_permissions.json']
 
     def setUp(self):
         url = reverse('forums.threads', args=[u'test-forum'])
-        self.context = {'request': test_utils.RequestFactory().get(url)}
+        self.context = {'request': RequestFactory().get(url)}
         self.forum_1 = Forum.objects.get(pk=1)
         self.forum_2 = Forum.objects.get(pk=2)
 

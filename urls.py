@@ -36,7 +36,7 @@ urlpatterns = patterns('',
     (r'^admin/', include('smuggler.urls')),
     (r'^admin/', include(admin.site.urls)),
 
-    (r'^search', include('search.urls')),
+    (r'^search', include('kuma.search.urls')),
 
     # Special-case here because this used to live in the wiki app and
     # needs to keep its historical URL.
@@ -51,7 +51,7 @@ urlpatterns = patterns('',
         name='jsi18n'),
 
     url(r'^files/', include('kuma.attachments.urls')),
-    url(r'^', include('dashboards.urls')),
+    url(r'^', include('kuma.dashboards.urls')),
 
     # Flagged content.
     url(r'^flagged/$',

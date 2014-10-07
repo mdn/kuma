@@ -2,15 +2,15 @@
 Kuma
 ====
 
-.. image:: https://travis-ci.org/mozilla/kuma.png?branch=master
+.. image:: https://travis-ci.org/mozilla/kuma.svg?branch=master
    :target: https://travis-ci.org/mozilla/kuma
    :alt: Build Status
 
-.. image:: https://coveralls.io/repos/mozilla/kuma/badge.png?branch=master
+.. image:: https://img.shields.io/coveralls/mozilla/kuma/master.svg
    :target: https://coveralls.io/r/mozilla/kuma?branch=master
    :alt: Code Coverage Status
 
-.. image:: https://requires.io/github/mozilla/kuma/requirements.png?branch=master
+.. image:: https://requires.io/github/mozilla/kuma/requirements.svg?branch=master
    :target: https://requires.io/github/mozilla/kuma/requirements/?branch=master
    :alt: Requirements Status
 

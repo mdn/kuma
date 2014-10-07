@@ -1,28 +1,15 @@
+from django.test import RequestFactory
 from nose.tools import eq_, raises
 from pyquery import PyQuery as pq
 import jingo
-from test_utils import RequestFactory
-
-from sumo.tests import TestCase
-from sumo.urlresolvers import reverse
-from devmo.tests import LocalizingClient
+import test_utils
 
 
 def setup():
     jingo.load_helpers()
 
 
-def test_breadcrumb():
-    """Make sure breadcrumb links start with /."""
-    c = LocalizingClient()
-    response = c.get(reverse('search'))
-
-    doc = pq(response.content)
-    href = doc('.breadcrumbs a')[0]
-    eq_('/', href.attrib['href'][0])
-
-
-class MockRequestTests(TestCase):
+class MockRequestTests(test_utils.TestCase):
     """Base class for tests that need a mock request"""
 
     def setUp(self):

@@ -1,16 +1,19 @@
 import shlex
 import urllib2
+from StringIO import StringIO
+
+from django.contrib.auth.models import AnonymousUser
+from django.core.handlers.wsgi import WSGIRequest
+from django.test import RequestFactory
 
 from nose.tools import eq_
 from nose import SkipTest
 import test_utils
 
 from devmo.helpers import devmo_url
-
 from devmo.context_processors import next_url
-from django.core.handlers.wsgi import WSGIRequest
-from django.contrib.auth.models import AnonymousUser
-from StringIO import StringIO
+
+from kuma.users.tests import UserTestCase
 
 
 def parse_robots(base_url):
@@ -65,7 +68,7 @@ class TestDevMoRobots(test_utils.TestCase):
             ("Disallow", "/skins"),
             ("Disallow", "/template:"),
         ]
-        eq_(parse_robots('http://developer.mozilla.org'),  rules)
+        eq_(parse_robots('http://developer.mozilla.org'), rules)
         eq_(parse_robots('https://developer.mozilla.org'), rules)
 
     def test_stage_bug607996(self):
@@ -77,18 +80,18 @@ class TestDevMoRobots(test_utils.TestCase):
         ]
 
         # TODO: update to kuma when kuma staging server is up
-        #No https://mdn.staging.mozilla.com, this serves up Sumo
+        # No https://mdn.staging.mozilla.com, this serves up Sumo
         eq_(parse_robots('http://mdn.staging.mozilla.com'), rules)
 
         eq_(parse_robots('https://developer-stage.mozilla.org'), rules)
-        eq_(parse_robots('http://developer-stage.mozilla.org'),  rules)
+        eq_(parse_robots('http://developer-stage.mozilla.org'), rules)
 
         eq_(parse_robots('https://developer-stage9.mozilla.org'), rules)
-        eq_(parse_robots('http://developer-stage9.mozilla.org'),  rules)
+        eq_(parse_robots('http://developer-stage9.mozilla.org'), rules)
 
 
-class TestDevMoHelpers(test_utils.TestCase):
-    fixtures = ['test_users.json', 'wiki/documents.json']
+class TestDevMoHelpers(UserTestCase):
+    fixtures = UserTestCase.fixtures + ['wiki/documents.json']
 
     def test_devmo_url(self):
 
@@ -97,7 +100,7 @@ class TestDevMoHelpers(test_utils.TestCase):
 
         en_only_page = '/en/HTML/HTML5'
         localized_page = '/en/HTML'
-        req = test_utils.RequestFactory().get('/')
+        req = RequestFactory().get('/')
         context = {'request': req}
 
         req.locale = 'en-US'
@@ -117,5 +120,4 @@ class TestDevMoNextUrl(test_utils.TestCase):
 
     def test_querystring(self):
         path = '/one/two?something'
-        req = _make_request(path)
         eq_(next_url(_make_request(path))['next_url'], path)
