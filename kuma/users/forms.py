@@ -91,9 +91,11 @@ class UserProfileEditForm(forms.ModelForm):
     """
     beta = forms.BooleanField(label=_(u'Beta tester'), required=False)
     interests = forms.CharField(label=_(u'Interests'),
-                                max_length=255, required=False)
+                                max_length=255, required=False,
+                                widget=forms.TextInput(attrs={'class':'tags'}))
     expertise = forms.CharField(label=_(u'Expertise'),
-                                max_length=255, required=False)
+                                max_length=255, required=False,
+                                widget=forms.TextInput(attrs={'class':'tags'}))
 
     class Meta:
         model = UserProfile

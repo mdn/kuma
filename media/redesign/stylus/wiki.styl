@@ -559,65 +559,6 @@ div.bug, div.warning, div.overheadIndicator {
     min-height: 1px; /* ensures that when TOC becomes fixed, the column has width */
 }
 
-/* tag and file icons under the TOC */
-.tag-attach-list {
-    position: relative;
-
-    ul, > a {
-        set-smaller-font-size();
-        display: inline-block;
-    }
-
-    ul {
-        bidi-style(padding-left, 6px, padding-right, 0);
-        display: inline;
-        margin-bottom: 0;
-
-        li {
-            margin-bottom: 0;
-        }
-    }
-
-    > a {
-        text-decoration: none;
-        &:hover {
-            text-decoration: underline;
-        }
-    }
-}
-
-.tags {
-    li {
-        display: inline-block;
-        margin-bottom: 7px;
-    }
-}
-
-.tags a, .tagit li {
-    set-smaller-font-size();
-    padding: 1px 4px;
-    border: 1px solid #cee9f9 !important; /* overrides plugin selector */
-    text-decoration: none;
-    border-radius: 4px;
-    background: $light-background-color !important; /* overrides plugin selector */
-
-    .close {
-        color: #cee9f9 !important; /* overrides plugin selector */
-    }
-}
-
-.tag-list li {
-    margin-right: 6px;
-}
-
-.tagit li {
-    set-font-size($base-font-size);
-}
-
-.tagit, .tagit-new {
-    border: 0 !important; /* overrides plugin selector */
-}
-
 .fixed {
     position: fixed;
     top: 0;
@@ -685,23 +626,6 @@ div.bug, div.warning, div.overheadIndicator {
 
     .column-container-reverse {
         margin-left: 0;
-    }
-}
-
-.page-tags {
-    ul.tagit {
-        background: none;
-        min-height: 30px;
-        margin-bottom: -10px;
-
-        .tagit-label {
-            color: #333333;
-            font-weight: normal;
-        }
-
-        li {
-            margin-bottom: -(@margin-bottom);
-        }
     }
 }
 
@@ -1068,18 +992,6 @@ div.note {
     }
 }
 
-#translate-tags {
-    bidi-value(float, left, right);
-
-    ul.tagit {
-        padding: 0;
-
-        li.tagit-choice {
-            padding-right: 10px;
-        }
-    }
-}
-
 #delete-revision {
     label {
         display: block;
@@ -1301,19 +1213,6 @@ details {
 
     #wiki-right {
         enable-toc-toggle();
-
-        .tag-attach-list {
-            display: inline-block;
-
-            {$selector-icon} {
-                left: 0;
-                margin-left: 0;
-            }
-
-            ul {
-                margin-left: 20px;
-            }
-        }
     }
 
     #wiki-column-container, #wiki-content {

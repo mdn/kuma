@@ -347,9 +347,9 @@
                   {% set tags = document.tags.all() %}
                   {% if tags.exists() %}
                   <!-- tags if present -->
-                  <div class="tag-attach-list tags contributor-sub">
-                    <i aria-hidden="true" class="icon-tags"></i><strong>{{ _('Tags:') }}</strong>
-                    <ul class="tag-list">{% for tag in tags %}<li><a href="{{ url('wiki.tag', tag.name) }}">{{ tag.name }}</a></li>{% endfor %}</ul>
+                  <div class="tag-attach-list contributor-sub">
+                    <i aria-hidden="true" class="icon-tags"></i><strong>{{ _('Tags:') }}</strong>&nbsp;
+                    <ul class="tags tags-small">{% for tag in tags %}<li><a href="{{ url('wiki.tag', tag.name) }}">{{ tag.name }}</a></li>{% endfor %}</ul>
                   </div>
                   {% endif %}
                   {% trans contributors=user_list(contributors) %}

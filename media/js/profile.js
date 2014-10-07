@@ -91,9 +91,12 @@
             onTagClicked: rebuildExpertiseTaglist
         });
 
+        // Set the new tag element text
+        $('#tagit-interests .tagit-new input').attr('placeholder', gettext('New interest...'));
+
         // Convert the expertise text field into tag list with checkboxes sync'd to
         // interests
-        $("#id_profile-expertise").hide().after("<ul id='tags-expertise' class='taglist'></ul>");
+        $("#id_profile-expertise").hide().after("<ul id='tags-expertise' class='tags'></ul>");
 
         $("#tags-expertise").click(updateFieldFromTaglist);
         rebuildExpertiseTaglist();
