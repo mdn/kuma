@@ -7,12 +7,12 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding field 'Revision.tags'
         db.add_column('wiki_revision', 'tags', self.gf('django.db.models.fields.CharField')(default='', max_length=255, blank=True), keep_default=False)
 
     def backwards(self, orm):
-        
+
         # Deleting field 'Revision.tags'
         db.delete_column('wiki_revision', 'tags')
 
@@ -54,7 +54,7 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        'notifications.watch': {
+        'tidings.watch': {
             'Meta': {'object_name': 'Watch'},
             'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['contenttypes.ContentType']", 'null': 'True', 'blank': 'True'}),
             'email': ('django.db.models.fields.EmailField', [], {'db_index': 'True', 'max_length': '75', 'null': 'True', 'blank': 'True'}),

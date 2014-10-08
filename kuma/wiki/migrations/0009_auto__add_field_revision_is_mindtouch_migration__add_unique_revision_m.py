@@ -7,7 +7,7 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         db.add_column('wiki_revision', 'is_mindtouch_migration', self.gf('django.db.models.fields.BooleanField')(default=True, db_index=True), keep_default=False)
 
         # Bug: This was already done in migration 0007 with unique=True
@@ -15,7 +15,7 @@ class Migration(SchemaMigration):
         # db.create_unique('wiki_revision', ['mindtouch_old_id'])
 
     def backwards(self, orm):
-        
+
         # Removing unique constraint on 'Revision', fields ['mindtouch_old_id']
         db.delete_unique('wiki_revision', ['mindtouch_old_id'])
 
@@ -60,7 +60,7 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        'notifications.watch': {
+        'tidings.watch': {
             'Meta': {'object_name': 'Watch'},
             'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['contenttypes.ContentType']", 'null': 'True', 'blank': 'True'}),
             'email': ('django.db.models.fields.EmailField', [], {'db_index': 'True', 'max_length': '75', 'null': 'True', 'blank': 'True'}),
