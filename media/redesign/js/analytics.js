@@ -65,11 +65,11 @@
                 }
 
                 var host = this.hostname;
-                if(host && host != location.hostname) {
-                    var newTab = (this.target == '_blank' || e.metaKey || e.ctrlKey);
+                if(host && host !== location.hostname) {
+                    var newTab = (this.target === '_blank' || e.metaKey || e.ctrlKey);
                     var href = this.href;
                     var callback = function() {
-                        location = href;
+                        win.location = href;
                     };
                     var data = {
                         category: 'Outbound Links',
@@ -104,9 +104,11 @@
             Sends universal analytics client side error
         */
         trackError: function(description) {
-            win.ga && ga.create && ga('send', 'exception', {
-                'exDescription': description
-            });
+            if(win.ga && ga.create) {
+                ga('send', 'exception', {
+                    'exDescription': description
+                });
+            }
         }
     };
 })(window, document, jQuery);

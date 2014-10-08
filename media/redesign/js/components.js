@@ -37,7 +37,7 @@
             var brick = settings.brickOnClick;
             if(brick && $submenu.length) {
                 $self.on('click', function(e) {
-                    if((typeof brick == 'function' && brick(e)) || brick) e.preventDefault();
+                    if((typeof brick === 'function' && brick(e)) || brick) e.preventDefault();
                 });
             }
 
@@ -48,7 +48,7 @@
             // Add a mouseenter / focus event to get the showing of the submenu in motion
             var assumeMobile = false;
             $self.on('touchstart mouseenter focus', function(startEvent) {
-                if(startEvent.type == 'touchstart') {
+                if(startEvent.type === 'touchstart') {
                     startEvent.stopImmediatePropagation();
                     if($self.submenu.length) {
                         startEvent.preventDefault();
@@ -71,10 +71,10 @@
                     initialized = 1;
 
                     // Add the close
-                    var $closeButton = $('<button type="button" class="submenu-close transparent">\
-                        <span class="offscreen">' + gettext('Close submenu') + '</span>\
-                        <i aria-hidden="true" class="icon-remove-sign"></i>\
-                    </button>').appendTo($submenu);
+                    var $closeButton = $('<button type="button" class="submenu-close transparent">' +
+                        '<span class="offscreen">' + gettext('Close submenu') + '</span>' +
+                        '<i aria-hidden="true" class="icon-remove-sign"></i>' +
+                    '</button>').appendTo($submenu);
 
                     // Hide the submenu when the main menu is blurred for hideDelay
                     $self.on('mouseleave focusout', function() {
@@ -86,7 +86,7 @@
                     $submenu.on('mouseleave focusout', function(e) {
                         // "focuseout" is firing on child elements and sending off a bunch of moot
                         // close requests, so we stop that
-                        if(e.type == 'focusout' && e.target != $submenu.get(0)) return;
+                        if(e.type === 'focusout' && e.target !== $submenu.get(0)) return;
 
                         clear(showTimeout);
                         closeSubmenu($submenu);
@@ -101,7 +101,7 @@
 
                     // Close if it's the last link and they press tab *or* the hit escape
                     $submenu.on('keyup', function(e) {
-                        if(e.keyCode == 27) { // Escape
+                        if(e.keyCode === 27) { // Escape
                             closeSubmenu($submenu);
                             $submenu.ignoreFocus = true;
                             setTimeout(function() { $submenu.ignoreFocus = false; }, 10);
@@ -117,11 +117,11 @@
 
                 // If there's an open submenu and it's not this one, close it
                 // Used for tab navigation from submenu to the next menu item
-                if($.fn.mozMenu.$openMenu && $.fn.mozMenu.$openMenu != $self) {
+                if($.fn.mozMenu.$openMenu && $.fn.mozMenu.$openMenu !== $self) {
                     clear(showTimeout);
                     closeSubmenu($.fn.mozMenu.$openMenu.submenu);
                 }
-                else if($.fn.mozMenu.$openMenu == $self) {
+                else if($.fn.mozMenu.$openMenu === $self) {
                     clear(closeTimeout);
                 }
 
@@ -139,7 +139,8 @@
                         var firstLink = $submenu.find('a').get(0);
                         if(firstLink) {
                             try { // Putting in try/catch because of opacity/focus issues in IE
-                                $(firstLink).addClass(focusClass) && firstLink.focus();
+                                $(firstLink).addClass(focusClass);
+                                firstLink.focus();
                             }
                             catch(e){
                                 console.log('Menu focus exception! ', e);
@@ -208,7 +209,7 @@
                 }
 
                 // Up and down buttons
-                if(code == 38 || code == 40) {
+                if(code === 38 || code === 40) {
                     e.preventDefault();
                     e.stopPropagation();
 
@@ -230,20 +231,20 @@
                     var $next = $($items.get(index + 1));
                     var $prev = $($items.get(index - 1));
 
-                    if(code == 38) {    // up
-                        $prev.length && selectItem($prev);
+                    if(code === 38) {    // up
+                        if($prev.length) selectItem($prev);
                     }
-                    else if(code == 40) {    // down
+                    else if(code === 40) {    // down
                         selectItem($next.length ? $next : $items.first());
                     }
                 }
                 // Number keys: 1, 2, 3, etc.
                 else if(charCode >= numberKeyStart && charCode <= 57) {
                     var item = $items.get(charCode - numberKeyStart);
-                    item && selectItem(item);
+                    if(item) selectItem(item);
                 }
                 // Enter key
-                else if(code == 13) {
+                else if(code === 13) {
                     settings.onEnterKey($selectedItem);
                 }
             });
@@ -286,9 +287,9 @@
             $self.on('keyup', '.toggle-container', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                if(e.keyCode == 27) {
+                if(e.keyCode === 27) {
                     $(this).siblings('a').trigger('mdn:click').focus();
-                };
+                }
             });
 
             // Click event to show/hide
@@ -299,7 +300,7 @@
 
                 // If a true click, mark toggler as such so automated togger clicks (like toc) know not to
                 // close without user consent
-                if(e.type == 'click') {
+                if(e.type === 'click') {
                     $(this).attr('data-clicked', true);
                 }
 
@@ -307,7 +308,7 @@
                 var $parent = $self.closest('ol, ul');
                 if($parent.hasClass('accordion')) {
                     var $current = $parent.find('> .current');
-                    if($current.length && $current.get(0) != $self.get(0)) {
+                    if($current.length && $current.get(0) !== $self.get(0)) {
                         toggle($current, true);
                     }
                 }
@@ -317,7 +318,7 @@
             });
 
             // The toggler can be initially opened via a data- attribute
-            if($self.attr('data-default-state') == 'open') {
+            if($self.attr('data-default-state') === 'open') {
                 toggle($self);
             }
 
@@ -439,7 +440,7 @@
         function closeItem($item, callback) {
             $item.fadeOut(300, function() {
                 $item.addClass('closed');
-                callback && callback.apply($item, null);
+                if(callback) callback.apply($item, null);
             });
         }
 
@@ -480,7 +481,7 @@
             // Add URL click event
             if(options.url) {
                 $item.addClass('clickable').on('click', function() {
-                    win.location = defaults.url
+                    win.location = defaults.url;
                 });
             }
 
@@ -585,7 +586,7 @@
 
                 return handle;
             }
-        }
+        };
     })();
 
 })(window, document, jQuery);
