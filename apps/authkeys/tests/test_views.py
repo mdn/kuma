@@ -76,7 +76,7 @@ class KeyViewsTest(TestCase):
         page = pq(resp.content)
 
         for ct, key in ((1, self.key1), (1, self.key2), (0, self.key3)):
-            key_row = page.find('.keys #key-%s' % key.pk)
+            key_row = page.find('.option-list #key-%s' % key.pk)
             eq_(ct, key_row.length)
             if ct > 0:
                 eq_(key.description, key_row.find('.description').text())
@@ -129,7 +129,7 @@ class KeyViewsTest(TestCase):
         eq_(200, resp.status_code)
 
         page = pq(resp.content)
-        eq_(self.key1.description, page.find('.key .description').text())
+        eq_(self.key1.description, page.find('.description').text())
 
         resp = self.client.post(url, follow=False)
         ok_(302, resp.status_code)
