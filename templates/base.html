@@ -197,7 +197,7 @@
 
     {% if waffle.flag('ga_outbound_links') %}
       <script>
-        mdn.analytics.trackOutboundLinks();
+        if(window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();
       </script>
     {% endif %}
 
