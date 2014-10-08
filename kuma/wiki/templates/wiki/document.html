@@ -408,6 +408,6 @@
 
 {% block js %}
   <script type="text/javascript">
-      jQuery('.from-search-toc').mozSearchResults('{{ search_url|safe }}');
+      if(window.jQuery) jQuery('.from-search-toc').mozSearchResults('{{ search_url|safe }}');
   </script>
 {% endblock %}
