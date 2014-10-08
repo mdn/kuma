@@ -936,8 +936,9 @@
       $form.on('change input', metaSelector, function() {
         var $this = $(this);
         var value = $this.val();
+        var typeAttr = $this.attr('type');
 
-        if($this.attr('type').toLowerCase() == 'checkbox') {
+        if(typeAttr && typeAttr.toLowerCase() == 'checkbox') {
             value = this.checked;
         }
 
