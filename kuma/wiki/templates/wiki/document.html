@@ -336,11 +336,6 @@
 
               {% if not is_zone_root %}
 
-                <!-- attachments list -->
-                {% if document.attachments.all().exists() %}
-                  {% include 'attachments/includes/attachment_list.html' %}
-                {% endif %}
-
                 <!-- contributors -->
                 <div class="wiki-block contributors">
                   <h2 class="offscreen">{{ _('Document Tags and Contributors') }}</h2>
