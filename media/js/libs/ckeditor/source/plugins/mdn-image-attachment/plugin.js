@@ -3,7 +3,7 @@
 (function() {
 
   CKEDITOR.plugins.add('mdn-image-attachment', {
-    requires: 'image',
+    requires: 'image,mdn-attachment',
 
     onLoad: function() {
       CKEDITOR.on('dialogDefinition', function(evt) {
@@ -28,7 +28,7 @@
               var attachmentAlt = mdn.ckeditor.getObjectByUrl(value);
 
               dialog.setValueOf('info', 'txtUrl', value);
-              if(!dialog.getValueOf('info', 'txtAlt') && attachmentAlt) {
+              if (!dialog.getValueOf('info', 'txtAlt') && attachmentAlt) {
                 dialog.setValueOf('info', 'txtAlt', attachmentAlt.description);
               }
             }
@@ -47,8 +47,12 @@
       // when creating image, but only when editing existing one.
       // We want to update attachment's list every time we open the dialog.
       editor.on('dialogShow', function(evt) {
-        var dialog = evt.data,  
-          select = dialog.getContentElement('info', 'attachment');
+        var dialog = evt.data;
+
+        if (dialog.getName() != 'image')
+          return;
+
+        var select = dialog.getContentElement('info', 'attachment');
 
         mdn.ckeditor.updateAttachments(select, dialog.getValueOf('info', 'txtUrl'), imageAttachmentFilter);
       });
