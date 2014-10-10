@@ -22,7 +22,7 @@
 <section id="content">
   <div class="wrap">
     <section id="content-main" role="main">
-      <article id="browser_register" {% if matching_accounts.exists() %}data-account-match-for="{{ provider.name }}"{% endif %}>
+      <article id="browser_register" {% if matching_accounts.exists() and provider.id != 'persona' %}data-account-match-for="{{ provider.name }}"{% endif %}>
           <h1>{{ _('Create your MDN profile to continue') }}</h1>
           {% if matching_accounts.exists() and provider.id == 'persona' %}
             {% set connections_url = provider_login_url('github', process='login', next=url('socialaccount_connections')) %}
