@@ -6,20 +6,24 @@
 var CKBUILDER_CONFIG = {
 	skin: 'moono',
 	ignore: [
-		'dev',
-		'README.md',
-		'.gitignore',
-		'.gitattributes',
-		'.idea',
-		'.mailmap',
-		'.DS_Store',
-		'tests',
-		'package.json',
 		'bender.js',
 		'.bender',
 		'bender-err.log',
 		'bender-out.log',
-		'node_modules'
+		'dev',
+		'.DS_Store',
+		'.gitignore',
+		'.gitattributes',
+		'Gruntfile.js',
+		'.idea',
+		'.jscsrc',
+		'.jshintignore',
+		'.jshintrc',
+		'.mailmap',
+		'node_modules',
+		'package.json',
+		'README.md',
+		'tests'
 	],
 
 	/* Should be kept in sync with the list in ckeditor_config.js. */
