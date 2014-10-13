@@ -34,7 +34,7 @@ def get_url_prefixer():
 
 
 def reverse(viewname, urlconf=None, args=None, kwargs=None, prefix=None,
-            force_locale=False, locale=None):
+            force_locale=False, locale=None, unprefixed=False):
     """Wraps Django's reverse to prepend the correct locale.
 
     force_locale -- Ordinarily, if get_url_prefixer() returns None, we return
@@ -56,7 +56,9 @@ def reverse(viewname, urlconf=None, args=None, kwargs=None, prefix=None,
         prefixer = Prefixer(locale=locale)
     else:
         prefixer = get_url_prefixer()
-        if not prefixer and force_locale:
+        if unprefixed:
+            prefixer = None
+        elif not prefixer and force_locale:
             prefixer = Prefixer()
 
     if prefixer:
