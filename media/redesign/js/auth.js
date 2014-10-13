@@ -104,6 +104,7 @@
 
     // Track users successfully logging in
     $doc.on('mdn:login', function(e, service) {
+        mdn.optimizely.push(['trackEvent', 'login']);
         mdn.optimizely.push(['trackEvent', 'login-' + service]);
         mdn.analytics.trackEvent({
             category: 'Authentication',
@@ -114,6 +115,7 @@
 
     // Track users successfully logging out
     $doc.on('mdn:logout', function(e, service) {
+        mdn.optimizely.push(['trackEvent', 'logout']);
         mdn.optimizely.push(['trackEvent', 'logout-' + service]);
         mdn.analytics.trackEvent({
             category: 'Authentication',
