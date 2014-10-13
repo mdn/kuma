@@ -18,12 +18,11 @@ class KumaGitHubOAuth2Adapter(GitHubOAuth2Adapter):
     email_url = 'https://api.github.com/user/emails'
 
     def complete_login(self, request, app, token, **kwargs):
-        with requests.Session() as session:
-            session.params = {'access_token': token.token}
-            profile_data = session.get(self.profile_url)
-            extra_data = profile_data.json()
-            email_data = session.get(self.email_url)
-            extra_data['email_addresses'] = email_data.json()
+        params = {'access_token': token.token}
+        profile_data = requests.get(self.profile_url, params=params)
+        extra_data = profile_data.json()
+        email_data = requests.get(self.email_url, params=params)
+        extra_data['email_addresses'] = email_data.json()
         return self.get_provider().sociallogin_from_response(request,
                                                              extra_data)
 
