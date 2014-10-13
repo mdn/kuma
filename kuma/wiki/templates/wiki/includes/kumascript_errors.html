@@ -47,7 +47,7 @@
                         (<a href="{{ edit_url }}">{{ _('Edit Template') }}</a>)
                     {% endif %}<br>
 
-                    {{ _('Parsing macro:') }} <code>{{ template_name }}({% if error_meta.token %}{{ error_meta.token.args }}{% endif %})</code> (<a href="{{ url('wiki.edit_document', document.slug) }}">{{ _('Edit Document') }}</a>)<br>
+                    {{ _('Parsing macro:') }} <code>{{ template_name }}({% if error_meta.token %}{{ error_meta.token.args }}{% endif %})</code> {% if document %}(<a href="{{ url('wiki.edit_document', document.slug) }}">{{ _('Edit Document') }}</a>){% endif %}
                 {% endif %}
             {% endif %}
 
