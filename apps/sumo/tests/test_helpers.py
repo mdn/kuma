@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from collections import namedtuple
 from datetime import datetime
 
 from django.forms.fields import CharField
@@ -8,7 +7,8 @@ import jingo
 from nose.tools import eq_
 import test_utils
 
-from sumo.helpers import timesince, label_with_help, urlparams, yesno, number
+from sumo.helpers import (timesince, label_with_help, urlparams, yesno,
+                          collapse_linebreaks)
 
 
 def render(s, context={}):
@@ -63,10 +63,6 @@ class TestHelpers(test_utils.TestCase):
         eq_('Yes', yesno(1))
         eq_('No', yesno(0))
 
-    def test_number(self):
-        context = {'request': namedtuple('R', 'locale')('en-US')}
-        eq_('5,000', number(context, 5000))
-        eq_('', number(context, None))
 
 
 class TimesinceTests(test_utils.TestCase):
