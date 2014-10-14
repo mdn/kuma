@@ -1,7 +1,0 @@
-# robots.txt for support.mozilla.com
-User-Agent: *
-
-Disallow: /admin/
-{% for (l, n) in settings.LANGUAGES %}
-Disallow: /{{ l }}/forums/
-{% endfor %}

@@ -6,9 +6,7 @@ from django.core import urlresolvers
 from django.http import HttpResponsePermanentRedirect, HttpResponseForbidden
 from django.utils.encoding import iri_to_uri, smart_str, smart_unicode
 
-import jingo
 import tower
-
 
 from devmo import get_mysql_error
 from sumo.helpers import urlparams
@@ -115,17 +113,6 @@ class PlusToSpaceMiddleware(object):
             if hasattr(request, 'locale'):
                 new = u'/%s%s' % (request.locale, new)
             return HttpResponsePermanentRedirect(new)
-
-
-class ReadOnlyMiddleware(object):
-
-    def process_request(self, request):
-        if request.method == 'POST':
-            return jingo.render(request, 'sumo/read-only.html', status=503)
-
-    def process_exception(self, request, exception):
-        if isinstance(exception, DatabaseError):
-            return jingo.render(request, 'sumo/read-only.html', status=503)
 
 
 def is_valid_path(request, path):

@@ -321,9 +321,6 @@ LOCALE_PATHS = (
     path('locale'),
 )
 
-# Use the real robots.txt?
-ENGAGE_ROBOTS = False
-
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = path('media')

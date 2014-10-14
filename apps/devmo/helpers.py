@@ -248,3 +248,16 @@ def datetimeformat(context, value, format='shortdatetime', output='html'):
         return formatted
     return jinja2.Markup('<time datetime="%s">%s</time>' % \
                          (tzvalue.isoformat(), formatted))
+
+
+@register.function
+@jinja2.contextfunction
+def number(context, n):
+    """Return the localized representation of an integer or decimal.
+
+    For None, print nothing.
+
+    """
+    if n is None:
+        return ''
+    return format_decimal(n, locale=_babel_locale(_contextual_locale(context)))
