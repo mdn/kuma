@@ -25,7 +25,7 @@ from tower import ugettext_lazy as _
 from kuma.demos.models import Submission
 from kuma.demos.views import DEMOS_PAGE_SIZE
 
-from .forms import (UserBanForm, UserProfileEditForm, NewsletterForm,
+from .forms import (UserBanForm, UserProfileEditForm, UsernameEditForm, NewsletterForm,
                     get_subscription_details, subscribed_to_newsletter,
                     newsletter_subscribe)
 from .models import UserProfile, UserBan
@@ -168,6 +168,9 @@ def profile_edit(request, username):
         if subscribed_to_newsletter(subscription_details):
             subscription_initial['newsletter'] = True
             subscription_initial['agree'] = True
+        username_initial = {
+            'username': request.user.username,
+        }
 
         # Finally, set up the forms.
         profile_form = UserProfileEditForm(instance=profile,
@@ -176,6 +179,7 @@ def profile_edit(request, username):
         newsletter_form = NewsletterForm(request.locale,
                                          prefix='newsletter',
                                          initial=subscription_initial)
+        username_form = UsernameEditForm(initial=username_initial)
     else:
         profile_form = UserProfileEditForm(data=request.POST,
                                            files=request.FILES,
@@ -184,8 +188,16 @@ def profile_edit(request, username):
         newsletter_form = NewsletterForm(request.locale,
                                          data=request.POST,
                                          prefix='newsletter')
+        username_form = UsernameEditForm(data=request.POST,
+                                         instance=request.user)
 
-        if profile_form.is_valid() and newsletter_form.is_valid():
+        # Don't validate if the username hasn't changed so people can keep already existing invalid usernames.
+        username_changed = request.user.username != request.POST['username']
+
+        if profile_form.is_valid() and newsletter_form.is_valid() and (not username_changed or username_form.is_valid()):
+            if username_changed:
+                username_form.save()
+
             profile_new = profile_form.save(commit=False)
 
             # Gather up all websites defined by the model, save them.
@@ -220,12 +232,13 @@ def profile_edit(request, username):
 
             newsletter_subscribe(request, profile_new.user.email,
                                  newsletter_form.cleaned_data)
-            return redirect(profile.user)
+            return redirect(request.user)
 
     context = {
         'profile': profile,
         'profile_form': profile_form,
         'newsletter_form': newsletter_form,
+        'username_form': username_form,
         'INTEREST_SUGGESTIONS': INTEREST_SUGGESTIONS,
     }
     return render(request, 'users/profile_edit.html', context)
