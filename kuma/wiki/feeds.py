@@ -14,7 +14,7 @@ from django.utils.feedgenerator import (SyndicationFeed, Rss201rev2Feed,
 from django.utils.translation import ugettext as _
 
 from sumo.urlresolvers import reverse
-from kuma.users.models import UserProfile
+from kuma.users.helpers import gravatar_url
 from .helpers import diff_table, tag_diff_table, compare_url, colorize_diff
 from .models import Document, Revision
 
@@ -33,10 +33,10 @@ class DocumentsFeed(Feed):
         return super(DocumentsFeed, self).__call__(request, *args, **kwargs)
 
     def feed_extra_kwargs(self, obj):
-        return {'request': self.request, }
+        return {'request': self.request}
 
     def item_extra_kwargs(self, obj):
-        return {'obj': obj, }
+        return {'obj': obj}
 
     def get_object(self, request, format):
         if format == 'json':
@@ -107,9 +107,7 @@ class DocumentJSONFeedGenerator(SyndicationFeed):
             else:
                 revision = document
 
-            profile = UserProfile.objects.get(user=revision.creator)
-            if hasattr(profile, 'gravatar'):
-                item_out['author_avatar'] = profile.gravatar
+            item_out['author_avatar'] = gravatar_url(revision.creator)
 
             summary = revision.summary
             if summary:
@@ -164,6 +162,8 @@ class DocumentsRecentFeed(DocumentsFeed):
                                          category=self.category,
                                          locale=locale)
                         .filter(current_revision__isnull=False)
+                        .prefetch_related('current_revision',
+                                          'current_revision__creator')
                         .order_by('-current_revision__created')
                         [:MAX_FEED_ITEMS])
 
@@ -191,6 +191,8 @@ class DocumentsReviewFeed(DocumentsRecentFeed):
         return (Document.objects
                         .filter_for_review(tag_name=tag, locale=locale)
                         .filter(current_revision__isnull=False)
+                        .prefetch_related('current_revision',
+                                          'current_revision__creator')
                         .order_by('-current_revision__created')
                         [:MAX_FEED_ITEMS])
 
@@ -212,11 +214,11 @@ class DocumentsUpdatedTranslationParentFeed(DocumentsFeed):
 
     def items(self):
         return (Document.objects
-                .filter(locale=self.locale)
-                .filter(parent__isnull=False)
-                .filter(modified__lt=F('parent__modified'))
-                .order_by('-parent__current_revision__created')
-                .all()[:MAX_FEED_ITEMS])
+                        .prefetch_related('parent')
+                        .filter(locale=self.locale, parent__isnull=False)
+                        .filter(modified__lt=F('parent__modified'))
+                        .order_by('-parent__current_revision__created')
+                        [:MAX_FEED_ITEMS])
 
     def item_description(self, item):
         # TODO: Needs to be a jinja template?
@@ -279,6 +281,7 @@ class RevisionsFeed(DocumentsFeed):
         if self.request.GET.get('all_locales', False) is False:
             items = items.filter(document__locale=self.request.locale)
 
+        items = items.prefetch_related('creator', 'document')
         return items.order_by('-created')[start:finish]
 
     def item_title(self, item):
