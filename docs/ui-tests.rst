@@ -1,28 +1,28 @@
-==================
+==============================
 Clientside Testing with Intern
-==================
+==============================
 
-The clientside testing tool for the MDN front-end is `Intern <http://intern.io>`_, a Selenium WebDriver API which allows developers to write automated testing via JavaScript.  Intern is an open source project created and maintained by `SitePen <http://sitepen.com>`_.
+The clientside testing tool for the MDN front-end is `Intern <http://intern.io>`_, a Selenium WebDriver API which allows developers to write automated testing via JavaScript. Intern is an open source project created and maintained by `SitePen <http://sitepen.com>`_.
 
-===============
+=======================
 Installing Dependencies
-===============
+=======================
 
-1.  Download the most current release of Selenium `WebDriver <http://selenium-release.storage.googleapis.com/index.html>`_.  Download the current standalone version which is a `.jar` file.
+1. Download the most current release of Selenium `WebDriver <http://selenium-release.storage.googleapis.com/index.html>`_. Download the current standalone version which is a `.jar` file.
 
-2.  Use NPM or another package manager to install Intern:
+2. From the `tests/ui/` directory, use NPM or another package manager to install Intern::
 
     npm install intern
 
 Do *not* install Intern globally -- path issues may occur.
 
-Firefox appears to work out of the box, but `Chrome <https://code.google.com/p/selenium/wiki/ChromeDriver>` and `Safari <https://code.google.com/p/selenium/wiki/SafariDriver>` drivers must be downloaded and installed separately.
+Firefox appears to work out of the box, but `Chrome <https://code.google.com/p/selenium/wiki/ChromeDriver>`_ and `Safari <https://code.google.com/p/selenium/wiki/SafariDriver>`_ drivers must be downloaded and installed separately.
 
-============
+===================
 Adding a Test Suite
-============
+===================
 
-To add a test suite, place your JavaScript file within the `intern-tests/tests` directory.   Use the following as a template for your test suite:
+To add a test suite, place your JavaScript file within the `tests/ui/tests` directory. Use the following as a template for your test suite code::
 
     define([
         'intern!object',
@@ -32,7 +32,7 @@ To add a test suite, place your JavaScript file within the `intern-tests/tests` 
 
         registerSuite({
 
-        	  // Unique, short name for test suite
+            // Unique, short name for test suite
             name: '',
 
             // Anything to run before each test (setup)
@@ -49,32 +49,30 @@ To add a test suite, place your JavaScript file within the `intern-tests/tests` 
     });
 
 
-To run your new tests with, add the new suite path to the `intern-tests/_tests.js` file.
+To run your new tests with, add the new suite path to the `tests/ui/_tests.js` file.
 
-=========
+=============
 Running Tests
-=========
+=============
 
-1.  From the command line, start WebDriver:
+1. From the command line, start WebDriver::
 
     # Substitute your WebDriver version in the `#` chars
     java -jar /path/to/selenium-server-standalone-#.#.#.jar
 
-2.  From within the `intern-tests/` directory, run intern on your local intern config file (omitting the `.js`):
+2. From within the `tests/ui/` directory, run intern on your local intern config file (omitting the `.js`)::
 
     node_modules/.bin/intern-runner config=intern-local
 
-The above runs the entire suite of tests.  Custom functionality has been added to allow for command line arguments to be passed to modify configuration, namely `b` to set which browsers to run in and `t` for which test suites to run:
+The above runs the entire suite of tests. Custom functionality has been added to allow for command line arguments to be passed to modify configuration, namely `b` to set which browsers to run in and `t` for which test suites to run::
 
     node_modules/.bin/intern-runner config=intern-local b=firefox,chrome t=auth,homepage
 
-===============
+=========================
 Identifying Test Failures
-===============
+=========================
 
-Tests are run for each browser cited in the config's `environments` setting.  A sample output with error may look like:
-
-::
+Tests are run for each browser cited in the config's `environments` setting. A sample output with error may look like::
 
     $ ./node_modules/.bin/intern-runner config=intern-local
 
@@ -105,7 +103,7 @@ Tests are run for each browser cited in the config's `environments` setting.  A 
     ----------------------|-----------|-----------|-----------|-----------|
     File                  |   % Stmts |% Branches |   % Funcs |   % Lines |
     ----------------------|-----------|-----------|-----------|-----------|
-       intern-tests/      |       100 |       100 |       100 |       100 |
+       ui/                |       100 |       100 |       100 |       100 |
           intern-local.js |       100 |       100 |       100 |       100 |
     ----------------------|-----------|-----------|-----------|-----------|
     All files             |       100 |       100 |       100 |       100 |
