@@ -1,5 +1,5 @@
 @require 'includes/vars';
-
+@require 'includes/mixins';
 /*
 
 Copied from the custom CSS macro template https://developer.mozilla.org/en-US/docs/Template:CustomCSS
@@ -26,11 +26,12 @@ eventually emptying this file.
     display: table;
     border-collapse: separate;
     border-spacing: 20px;
-}
-.equalColumnHeights div {
-    display: table-cell;
-    width: 50%;
-    height: 100%;
+
+    div {
+        display: table-cell;
+        width: 50%;
+        height: 100%;
+    }
 }
 /* Use for large table (.thirdColumn + .***Bg) */
 table#fullwidth-table td.thirdColumn {
@@ -86,10 +87,11 @@ table#fullwidth-table td.thirdColumn {
         display: table;
         border-collapse: separate;
         border-spacing: 20px 0;
-    }
-    .topicpage-table .section:first-of-type {
-        margin-right: 20px;
-        border-right: solid 6px rgba(212,221,228,0.5);
+        
+        .section:first-of-type {
+            margin-right: 20px;
+            border-right: solid 6px rgba(212,221,228,0.5);
+        }
     }
     html[dir="rtl"] .topicpage-table .section:first-of-type {
         border-left: solid 6px rgba(212,221,228,0.5);
@@ -437,7 +439,7 @@ div.index ol {
 [dir="rtl"] .cssprop {
     clear: right;
     margin: 0 0 $grid-spacing 0;
-    padding: 14px 0 14px 40px;
+    padding: 14px 40px 14px 0;
     border-right: 6px solid rgba(255,203,0,0.5);
 }
 .cssprop li {
