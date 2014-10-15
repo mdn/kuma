@@ -60,28 +60,6 @@ define([
             var remote = this.remote;
 
             utils.getTestPersonaLoginCredentials(function(credentials) {
-                utils.completePersonaLogin(credentials.email, credentials.password, remote, function() {
-                    return remote
-                        .then(function() {
-                                remote
-                                    .getCurrentUrl()
-                                    .then(dfd.callback(function(url) {
-                                        assert.isTrue(url.indexOf('/account/signup') != -1);
-                                    }));
-                        });
-                });
-
-            });
-
-            return dfd;
-        },
-
-        'Logging in with Persona for the first time sends user to registration page': function() {
-
-            var dfd = this.async(config.testTimeout);
-            var remote = this.remote;
-
-            utils.getTestPersonaLoginCredentials(function(credentials) {
                 return utils.completePersonaLogin(credentials.email, credentials.password, remote, function() {
                     return remote
                         .then(function() {
