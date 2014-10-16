@@ -16,6 +16,13 @@ Contributing Code
     * Reason: Owner and peers are and accountable for the quality of MDN code changes
     * Exceptions: Owners/peers may commit directly to master for critical security/down-time fixes; they must file a bug for follow-up review.
 
+  * Pull requests that contain changes to database migrations or any other code changes
+    that modify the database layout MUST have been reviewed at least by two
+    [peers][peers], one of which MUST be a module owner.
+    * Reason: Changes to database tables are critical and may lead to loss of data.
+    * Exceptions: None.
+    * Notes: A great way to get a 2nd review is to explain the migration to someone who wasn't involved in its development or 1st review.
+
   * MDN reviewers must verify sufficient test coverage on all changes - either by new or existing tests
     * Reason: Automated tests reduce human error involved in reviews
     * Notes: The Django site has [good testing docs][django-testing]
