@@ -1,0 +1,142 @@
+$webkit = '-webkit-';
+$moz = '-moz-';
+$ie = '-ms-';
+$unprefixed = '';
+
+$prefix-properties = {
+// - Animations
+'animation': $webkit $unprefixed,
+'animation-name': $webkit $unprefixed,
+'animation-duration': $webkit $unprefixed,
+'animation-timing-function': $webkit $unprefixed,
+'animation-delay': $webkit $unprefixed,
+'animation-iteration-count': $webkit $unprefixed,
+'animation-direction': $webkit $unprefixed,
+'animation-fill-mode': $webkit $unprefixed,
+'animation-play-state': $webkit $unprefixed,
+// - Appearance
+'appearance': $moz $webkit $unprefixed,
+// - Backface visibility
+'backface-visibility': $webkit $unprefixed,
+// - Box
+'border-radius': $unprefixed,
+'box-shadow': $unprefixed,
+'box-sizing': $unprefixed,
+// - Content columns
+'columns': $moz $webkit $unprefixed,
+'column-count': $moz $webkit $unprefixed,
+'column-gap': $moz $webkit $unprefixed,
+'column-width': $moz $webkit $ie $unprefixed,
+'column-rule': $moz $webkit $unprefixed,
+'break-before': $unprefixed, // webkit uses different syntax, can't prefix this way
+'break-inside': $unprefixed, // webkit uses different syntax, can't prefix this way
+'break-after': $unprefixed, // webkit uses different syntax, can't prefix this way
+// - Flex Box
+'flex': $webkit $unprefixed,
+'flex-flow': $webkit $unprefixed,
+'flex-direction': $webkit $unprefixed,
+'flex-wrap': $webkit $unprefixed,
+'align-content': $webkit $unprefixed,
+'align-items': $webkit $unprefixed,
+'align-self': $webkit $unprefixed,
+'justify-content': $webkit $unprefixed,
+'order': $webkit $unprefixed,
+// - Hyphens
+'hyphens': $moz $webkit $ie $unprefixed,
+'tab-size': $moz $unprefixed,
+// - Transformations
+'perspective': $moz $webkit $unprefixed,
+'perspective-origin': $moz $webkit $unprefixed,
+'transform': $webkit $ie $unprefixed,
+'transform-origin': $webkit $ie $unprefixed,
+// - Transitions
+'transition': $moz $webkit $unprefixed,
+'transition-property': $moz $webkit $unprefixed,
+'transition-delay': $moz $webkit $unprefixed,
+'transition-duration': $moz $webkit $unprefixed,
+'transition-transform': $moz $webkit $unprefixed,
+'transition-timing-function': $moz $webkit $unprefixed,
+}
+
+/*
+
+$prefix-attributes = {
+
+}
+
+$prefix-pseudo = {
+
+}
+
+
+
+// Placeholder text
+placeholder($color = $input-color-placeholder)
+  &::-moz-placeholder // Firefox
+    color $color
+    opacity 1 // See https//github.com/twbs/bootstrap/pull/11526
+  &:-ms-input-placeholder // Internet Explorer 10+
+    color $color
+  &::-webkit-input-placeholder // Safari and Chrome
+    color $color
+
+// Transformations
+// scale($ratio...)
+//   -webkit-transform s("scale(%s)", join(', ', $ratio))
+//   -ms-transform s("scale(%s)", join(', ', $ratio)) // IE9 only
+//   -o-transform s("scale(%s)", join(', ', $ratio))
+//   transform s("scale(%s)", join(', ', $ratio))
+// scaleX($ratio)
+//   -webkit-transform s("scaleX(%s)", $ratio)
+//   -ms-transform s("scaleX(%s)", $ratio) // IE9 only
+//   -o-transform s("scaleX(%s)", $ratio)
+//   transform s("scaleX(%s)", $ratio)
+// scaleY($ratio)
+//   -webkit-transform s("scaleY(%s)", $ratio)
+//   -ms-transform s("scaleY(%s)", $ratio) // IE9 only
+//   -o-transform s("scaleY(%s)", $ratio)
+//   transform s("scaleY(%s)", $ratio)
+// skew($x, $y)
+//   -webkit-transform s("skewX(%s) skewY(%s)", $x, $y)
+//   -ms-transform s("skewX(%s) skewY(%s)", $x, $y) // See https//github.com/twbs/bootstrap/issues/4885 IE9+
+//   -o-transform s("skewX(%s) skewY(%s)", $x, $y)
+//   transform s("skewX(%s) skewY(%s)", $x, $y)
+// translate($x, $y)
+//   -webkit-transform s("translate(%s, %s)", $x, $y)
+//   -ms-transform s("translate(%s, %s)", $x, $y) // IE9 only
+//   -o-transform s("translate(%s, %s)", $x, $y)
+//   transform s("translate(%s, %s)", $x, $y)
+// translate3d($x, $y, $z)
+//   -webkit-transform s("translate3d(%s, %s, %s)", $x, $y, $z)
+//   transform s("translate3d(%s, %s, %s)", $x, $y, $z)
+// rotate($degrees)
+//   -webkit-transform s("rotate(%s)", $degrees)
+//   -ms-transform s("rotate(%s)", $degrees) // IE9 only
+//   -o-transform s("rotate(%s)", $degrees)
+//   transform s("rotate(%s)", $degrees)
+// rotateX($degrees)
+//   -webkit-transform s("rotateX(%s)", $degrees)
+//   -ms-transform s("rotateX(%s)", $degrees) // IE9 only
+//   -o-transform s("rotateX(%s)", $degrees)
+//   transform s("rotateX(%s)", $degrees)
+// rotateY($degrees)
+//   -webkit-transform s("rotateY(%s)", $degrees)
+//   -ms-transform s("rotateY(%s)", $degrees) // IE9 only
+//   -o-transform s("rotateY(%s)", $degrees)
+//   transform s("rotateY(%s)", $degrees)
+
+
+// Transitions
+
+
+
+// User select
+// For selecting text on the page
+
+// user-select($select)
+//   -webkit-user-select $select
+//   -moz-user-select $select
+//   -ms-user-select $select // IE10+
+//   user-select $select
+
+*/
