@@ -1,4 +1,5 @@
 @require 'includes/vars';
+@require 'includes/mixins';
 
 /*
 
@@ -1447,53 +1448,19 @@ html[dir="rtl"] .warningHeader {
     border-color: rgba(0,0,0,0.05);
 }
 /* style for next and previous pages in tutorial */
-a.nextPage,
-a.previousPage {
-    color: #fff !important;
-    text-shadow: 1px 1px 1px #000;
+
+.previousPage {
+    bidi-value(float, left, right);
+    bidi-style(margin-right, ($grid-spacing), margin-left, 0);
+    margin-bottom: $grid-spacing;
 }
-a.nextPage {
-    display: inline-block;
-    margin: 0 3px 1em;
-    font-size: 1.25em;
+
+.nextPage {
+    bidi-value(float, right, left);
+    bidi-style(margin-left, ($grid-spacing), margin-right, 0);
+    margin-top: $grid-spacing;
 }
-a.nextPage:link,
-a.nextPage:visited {
-    background-color: #069;
-}
-a.nextPage:hover,
-a.nextPage:focus {
-    background-color: #0099e6;
-}
-a.nextPage {
-    float: right;
-}
-[dir="rtl"] a.nextPage {
-    background-position: left 40% !important;
-    padding: 0.35em 0.75em 0.2em !important;
-    position: left;
-}
-a.previousPage {
-    display: block;
-    margin: 0 1em 2em 0;
-    font-size: 1.25em;
-}
-a.previousPage:link,
-a.previousPage:visited {
-    background-color: #069;
-}
-a.previousPage:hover,
-a.previousPage:focus {
-    background-color: #0099e6;
-}
-a.previousPage {
-    float: left;
-}
-[dir="rtl"] a.previousPage {
-    background-position: left 40% !important;
-    padding: 0.35em 0.75em 0.2em !important;
-    position: right;
-}
+
 /* styles for liveSample link : https://developer.mozilla.org/en-US/docs/Template:LiveSample */
 a.liveSample {
     display: inline-block;
