@@ -129,7 +129,7 @@
 
         var $form = $link.closest('form');
 
-        var notification = mdn.Notifier.growl(gettext('Updating subscription status'), { duration: 0 });
+        var notification = mdn.Notifier.growl($link.data('subscribe-status'), { duration: 0 });
 
         $link.addClass('disabled');
         $.ajax($form.attr('action'), {
@@ -142,14 +142,14 @@
             data = JSON.parse(data);
             if(Number(data.status) === 1) {
                 $link.text($link.data('unsubscribe-text'));
-                message = 'You are now subscribed to this document.';
+                message = $link.data('subscribe-message');
             }
             else {
                 $link.text($link.data('subscribe-text'));
-                message = 'You have been unsubscribed from this document.';
+                message = $link.data('unsubscribe-message');
             }
 
-            notification.success(gettext(message), 2000);
+            notification.success(message, 2000);
 
             $link.removeClass('disabled');
         });
