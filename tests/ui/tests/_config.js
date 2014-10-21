@@ -1,20 +1,30 @@
-define({
+define(['intern'], function(intern) {
 
-    // URLs
-    homepageUrl: 'http://developer-local.allizom.org/',
+    var domain = intern.args.d || 'developer-local.allizom.org';
+    var httpsAddress = 'https://' + domain + '/';
+    var defaultLocale = 'en-US';
 
-    // Locales
-    defaultLocale: 'en-US',
+    return {
 
-    // Important media queries
-    mediaQueries: {
-        smallDesktop: 1200,
-        tablet: 1024,
-        mobile: 768,
-        smallMobile: 480
-    },
+        // URLs
+        domain: domain,
+        url: httpsAddress,
+        homepageUrl: httpsAddress + defaultLocale,
 
-    // Async testing in milliseconds
-    testTimeout: 22000,
+        // Locales
+        defaultLocale: defaultLocale,
+
+        // Important media queries
+        mediaQueries: {
+            smallDesktop: 1200,
+            tablet: 1024,
+            mobile: 768,
+            smallMobile: 480
+        },
+
+        // Async testing in milliseconds
+        testTimeout: 22000
+
+    };
 
 });

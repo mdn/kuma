@@ -64,9 +64,9 @@ Running Tests
 
     node_modules/.bin/intern-runner config=intern-local
 
-The above runs the entire suite of tests. Custom functionality has been added to allow for command line arguments to be passed to modify configuration, namely `b` to set which browsers to run in and `t` for which test suites to run::
+The above runs the entire suite of tests. Custom functionality has been added to allow for command line arguments to be passed to modify configuration, namely `b` to set which browsers to run in, `t` for which test suites to run, and `d` for which domain to run on::
 
-    node_modules/.bin/intern-runner config=intern-local b=firefox,chrome t=auth,homepage
+    node_modules/.bin/intern-runner config=intern-local b=firefox,chrome t=auth,homepage d=developer-local.allizom.org
 
 =========================
 Identifying Test Failures
