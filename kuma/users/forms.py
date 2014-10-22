@@ -14,15 +14,9 @@ from product_details import product_details
 from taggit.utils import parse_tags
 from tower import ugettext_lazy as _
 
-
+from .constants import USERNAME_CHARACTERS, USERNAME_REGEX
 from .models import UserProfile
 
-
-EMAIL_REQUIRED = _(u'Email address is required.')
-EMAIL_SHORT = _(u'Email address is too short (%(show_value)s characters). '
-                u'It must be at least %(limit_value)s characters.')
-EMAIL_LONG = _(u'Email address is too long (%(show_value)s characters). '
-               u'It must be %(limit_value)s characters or less.')
 PRIVACY_REQUIRED = _(u'You must agree to the privacy policy.')
 
 
@@ -157,9 +151,9 @@ class UserProfileEditForm(forms.ModelForm):
     expertise = forms.CharField(label=_(u'Expertise'),
                                 max_length=255, required=False,
                                 widget=forms.TextInput(attrs={'class': 'tags'}))
-    username = forms.RegexField(label=_(u'Username'), regex=r'^[\w_\+-]+$',
+    username = forms.RegexField(label=_(u'Username'), regex=USERNAME_REGEX,
                                 max_length=30, required=False,
-                                error_message=_(u'Usernames can only contain letters, numbers and -, _, + characters.'))
+                                error_message=USERNAME_CHARACTERS)
 
     class Meta:
         model = UserProfile
