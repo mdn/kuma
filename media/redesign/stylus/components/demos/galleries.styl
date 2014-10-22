@@ -1,0 +1,203 @@
+/* Galleries */
+.gallery {
+  list-style: none;
+}
+.gallery:after {
+  content: ".";
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+}
+.gallery li {
+  padding: 0;
+  background-image: none;
+}
+.landing .gallery,
+.plain .gallery,
+.profile .gallery {
+  margin: 0 20px 1em;
+}
+.gallery .demo {
+  position: relative;
+  float: left;
+  width: 200px;
+  margin: 0 0 1.4em 20px;
+  padding: 168px 5px 0;
+}
+.gallery .demo.row-first {
+  margin-left: 0;
+  clear: left;
+}
+.demo .demo-title {
+  font: normal 1.285em/1 "Bebas Neue", "League Gothic", "Arial Narrow", sans-serif;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0 0 0.15em;
+}
+.demo .demo-title a:link,
+.demo .demo-title a:visited {
+  color: #000;
+}
+.demo .demo-title a:hover,
+.demo .demo-title a:focus,
+.demo .demo-title a:active {
+  color: #414f55;
+  text-decoration: underline;
+}
+.demo .demo-title img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 2px;
+  background: #fff;
+  -moz-box-shadow: 3px 3px 1px rgba(0,0,0,0.25);
+  -webkit-box-shadow: 3px 3px 1px rgba(0,0,0,0.25);
+  box-shadow: 3px 3px 1px rgba(0,0,0,0.25);
+}
+.demo .demo-title a:hover img,
+.demo .demo-title a:focus img,
+.demo .demo-title a:active img {
+  -moz-box-shadow: 3px 3px 1px rgba(0,0,0,0.4);
+  -webkit-box-shadow: 3px 3px 1px rgba(0,0,0,0.4);
+  box-shadow: 3px 3px 1px rgba(0,0,0,0.4);
+}
+.demo .flag {
+  position: absolute;
+  left: 10px;
+  top: -2px;
+  background: #e23737;
+  color: #fff;
+  font-weight: normal;
+  text-transform: uppercase;
+  font-size: 12px;
+  padding: 4px 10px 2px;
+  border: 1px solid #b52c2c;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+  -moz-box-shadow: 2px -2px 0 rgba(0,0,0,0.1);
+  -webkit-box-shadow: 2px -2px 0 rgba(0,0,0,0.1);
+  box-shadow: 2px -2px 0 rgba(0,0,0,0.1);
+  -moz-transform-origin: top left;
+  -moz-transform: rotate(90deg) translateY(-25px);
+  -webkit-transform-origin: top left;
+  -webkit-transform: rotate(90deg) translateY(-25px);
+  transform-origin: top left;
+  transform: rotate(90deg) translateY(-25px);
+}
+.demohover .flag {
+  left: 17px;
+  top: 5px;
+}
+.demo .byline {
+  font-size: 0.786em;
+  font-weight: bold;
+  margin: 0 0 0.5em;
+}
+.demo .byline a {
+  color: #555;
+}
+.demo .stats {
+  float: left;
+  clear: both;
+  width: 100%;
+  margin: 0.25em 0 0.75em;
+  list-style: none;
+  font-size: 0.786em;
+  color: #999;
+}
+.demo .stats li {
+  display: inline;
+  margin-right: 8px;
+  padding-left: 22px;
+  background: url("/media/img/demos/demobox-icons.png") no-repeat;
+}
+.demo .stats .views {
+  padding-left: 25px;
+  background-position: 0 -799px;
+}
+.demo .stats .likes {
+  background-position: 0 -850px;
+}
+.demo .stats .comments {
+  padding: 0;
+  background: none;
+}
+.demo .stats .comments a {
+  color: #999;
+  padding-left: 22px;
+  background: url("/media/img/demos/demobox-icons.png") 0 -900px no-repeat;
+}
+.demo .stats .comments a:hover,
+.demo .stats .comments a:focus,
+.demo .stats .comments a:active {
+  color: #333;
+}
+.demo .desc {
+  font-size: 0.786em;
+  margin: 0 0 0.75em;
+}
+.demo .descLink {
+  color: #79120e;
+  font-weight: bold;
+}
+.demo .launch {
+  position: absolute;
+  top: 120px;
+  right: 12px;
+  font-size: 1.2em;
+}
+.demo .launch .button {
+  color: #fff;
+}
+.hasJS .gallery .extra {
+  display: none;
+}
+.demohover {
+  display: none;
+  position: absolute;
+  z-index: 99;
+  margin: -8px -8px 0;
+  border: 1px solid #ddd;
+  -moz-border-radius: 9px;
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
+  -moz-box-shadow: 0 0 5px rgba(255,255,255,0.75);
+  -webkit-box-shadow: 0 0 5px rgba(255,255,255,0.75);
+  box-shadow: 0 0 5px rgba(255,255,255,0.75);
+}
+.demohover .in {
+  position: relative;
+  width: 194px;
+  padding: 175px 12px 1px;
+  background: #fff;
+  background: rgba(255,255,255,0.95);
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
+}
+.demohover .demo-title {
+  font-size: 1.285em;
+}
+.demohover .demo-title img {
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  padding: 2px;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.demohover .demo-title a:hover img,
+.demohover .demo-title a:focus img,
+.demohover .demo-title a:active img {
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.demohover .extra {
+  display: block;
+}
+.demohover .launch {
+  top: 120px;
+  right: 15px;
+}

@@ -624,8 +624,7 @@ MINIFY_BUNDLES = {
             'redesign/css/jquery-ui-customizations.css',
         ),
         'demostudio': (
-            'css/demos.css',
-            'redesign/css/demo-studio.css',
+            'redesign/css/demos.css',
         ),
         'devderby': (
             'css/devderby.css',
