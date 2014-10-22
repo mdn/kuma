@@ -49,6 +49,12 @@
         </div>
       </div>
 
+      {% if request.user != profile.user %}
+      <div class="notification warning">
+      {% trans %}You're editing a different profile than your own. Please take care!{% endtrans %}
+      </div>
+      {% endif %}
+
       <div id="profile-edit" class="column-half">
         <h1 class="page-title">{% include 'socialaccount/snippets/login_service_icon.html' %}{{ profile.user.username }}</h1>
 
