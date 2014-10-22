@@ -594,14 +594,26 @@ class AllauthPersonaTestCase(UserTestCase):
             }
             self.client.post(reverse('persona_login'), follow=True)
             data = {'username': persona_signup_username,
-                    'email': persona_signup_email}
-            self.client.post(reverse('socialaccount_signup',
-                                     locale=settings.WIKI_DEFAULT_LANGUAGE),
-                             data=data,
-                             follow=True)
-            new_count = User.objects.count()
+                    'email': persona_signup_email,
+                    'newsletter': True}
+            signup_url = reverse('socialaccount_signup',
+                                 locale=settings.WIKI_DEFAULT_LANGUAGE)
+            response = self.client.post(signup_url, data=data, follow=True)
+            eq_(response.status_code, 200)
+            eq_(response.context['form'].errors,
+                {'__all__': ['You must agree to the privacy policy.']})
+
+            # We didn't create a new user.
+            eq_(old_count, User.objects.count())
+
+            data.update({'agree': True})
+            response = self.client.post(signup_url, data=data, follow=True)
+            eq_(response.status_code, 200)
+            # not on the signup page anymore
+            ok_('form' not in response.context)
+
             # Did we get a new user?
-            eq_(old_count + 1, new_count)
+            eq_(old_count + 1, User.objects.count())
 
             # Does it have the right attributes?
             testuser = None
