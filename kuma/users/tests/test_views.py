@@ -10,7 +10,6 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core.paginator import PageNotAnInteger
-from django.utils.importlib import import_module
 
 from allauth.socialaccount.models import SocialAccount, SocialApp
 from allauth.socialaccount.providers import registry
@@ -584,13 +583,6 @@ class AllauthPersonaTestCase(UserTestCase):
         """
         Signing up with Persona creates a new Django User instance.
         """
-        # This setup is necessary any time we do the full sign-up
-        # workflow, because otherwise the session doesn't save/persist
-        # properly. See Django ticket 10899.
-        engine = import_module(settings.SESSION_ENGINE)
-        store = engine.SessionStore()
-        store.save()
-        self.client.cookies[settings.SESSION_COOKIE_NAME] = store.session_key
         persona_signup_email = 'views_persona_django_user@example.com'
         persona_signup_username = 'views_persona_django_user'
 
@@ -627,10 +619,6 @@ class AllauthPersonaTestCase(UserTestCase):
         """
         Signing up with Persona creates a new SocialAccount instance.
         """
-        engine = import_module(settings.SESSION_ENGINE)
-        store = engine.SessionStore()
-        store.save()
-        self.client.cookies[settings.SESSION_COOKIE_NAME] = store.session_key
         persona_signup_email = 'views_persona_socialaccount@example.com'
         persona_signup_username = 'views_persona_socialaccount'
 
