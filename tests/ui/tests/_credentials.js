@@ -1,7 +1,9 @@
-define({
+define(['intern'], function(intern) {
 
-    // Persona credentials for logging in
-    personaUsername: 'TBD',
-    personaPassword: 'TBD'
+    return {
+        // Persona credentials for logging in
+        personaUsername: intern.args.u || '',
+        personaPassword: intern.args.p || ''
+    };
 
 });

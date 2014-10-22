@@ -2,8 +2,9 @@ define([
     'intern!object',
     'intern/chai!assert',
     'base/_config',
+    'base/_credentials',
     'base/_utils'
-], function(registerSuite, assert, config, utils) {
+], function(registerSuite, assert, config, realCredentials, utils) {
 
     registerSuite({
 
@@ -23,6 +24,7 @@ define([
         },
 
         'Hovering over the header nav widget opens submenu': function() {
+
             return this.remote
                         .findByCssSelector('.oauth-login-picker')
                         .isDisplayed()
@@ -65,11 +67,48 @@ define([
                         .then(function() {
                                 remote
                                     .getCurrentUrl()
-                                    .then(dfd.callback(function(url) {
+                                    .then(function(url) {
                                         assert.isTrue(url.indexOf('/account/signup') != -1);
-                                    }));
+                                        return utils.completePersonaLogout(remote).sleep(4000).then(dfd.callback(function() {
+                                            return true;
+                                        }));
+                                    });
                         });
                 });
+
+            });
+
+            return dfd;
+        },
+
+        'Logging in with Persona with real credentials works': function() {
+
+            var dfd = this.async(config.testTimeout);
+            var remote = this.remote;
+
+            utils.completePersonaLogin(realCredentials.personaUsername, realCredentials.personaPassword, remote, function() {
+
+                return remote
+                    .sleep(4000)
+                    .findByCssSelector('.user-state-profile')
+                    .click()
+                    .end()
+                    .findById('edit-profile')
+                    .click()
+                    .end()
+                    .findByCssSelector('.fm-submit button[type=submit]')
+                    .click()
+                    .end()
+                    .findByCssSelector('.memberSince')
+                    .click() // Just ensuring the element is there
+                    .end()
+                    .findByCssSelector('.user-state-signout')
+                    .click()
+                    .end()
+                    .findByCssSelector('.oauth-login-container')
+                    .then(dfd.callback(function() {
+                        assert.isTrue(true, 'User can sign out without problems');
+                    }));
 
             });
 

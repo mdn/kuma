@@ -64,9 +64,11 @@ Running Tests
 
     node_modules/.bin/intern-runner config=intern-local
 
-The above runs the entire suite of tests. Custom functionality has been added to allow for command line arguments to be passed to modify configuration, namely `b` to set which browsers to run in, `t` for which test suites to run, and `d` for which domain to run on::
+The above runs the entire suite of tests. Custom functionality has been added to allow for command line arguments to be passed to modify configuration, namely `b` to set which browsers to run in, `t` for which test suites to run, `u` to provide a username for Persona, `p` to provide a password for Persona, and `d` for which domain to run on::
 
-    node_modules/.bin/intern-runner config=intern-local b=firefox,chrome t=auth,homepage d=developer-local.allizom.org
+    node_modules/.bin/intern-runner config=intern-local b=firefox,chrome t=auth,homepage d=developer-local.allizom.org u=someone@somewhere.com p=8675309
+
+The user credentials must be Persona-only (not GMail or Mozilla LDAP lookups).  User credentials are the only required custom command line arguments.
 
 =========================
 Identifying Test Failures
