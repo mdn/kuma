@@ -273,11 +273,11 @@
         var scrollElements = $('#wikiArticle').find('h2,h3,h4,h5,h6');
 
         scrollElements.on('scrollSpy:enter', function() {
-            $toc.find("a[href='#" + $(this).attr('id') + "']").css('font-weight', 'bold');
+            $toc.find("a[href='#" + $(this).attr('id') + "']").addClass('current');
         });
 
         scrollElements.on('scrollSpy:exit', function() {
-            $toc.find("a[href='#" + $(this).attr('id') + "']").css('font-weight', 'normal');
+            $toc.find("a[href='#" + $(this).attr('id') + "']").removeClass('current');
         });
 
         scrollElements.scrollSpy();
