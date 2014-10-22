@@ -90,3 +90,84 @@ html {
 #demostudio.landing, #demostudio.detail {
     background-position: center 0px;
 }
+
+
+/* Adjustments to demo home for mobile widths */
+@media $media-query-tablet {
+
+    #demos-head .demo-buttons {
+        display: none;
+    }
+
+    .landing #demos-head {
+        padding: 0;
+
+        h1 {
+            position: static;
+            margin: 0 auto;
+        }
+    }
+
+    #demo-main .demo-details {
+        top: 20px;
+        bottom: auto;
+    }
+
+}
+
+@media $media-query-mobile {
+
+    #demo-prev, #demo-next {
+        display: none;
+    }
+
+}
+
+@media $media-query-small-mobile {
+
+    #featured-demos .nav-slide .prev {
+        left: 20px;
+    }
+
+    #featured-demos .nav-slide .next {
+        right: 20px;
+    }
+
+    .landing #demo-main {
+        width: auto;
+        height: auto;
+        position: relative;
+        left: auto;
+        margin-left: 0;
+        padding: 11px 0 0;
+    }
+
+    .landing #demo-main .demo-details {
+        left: 20px;
+        width: auto;
+    }
+
+    .landing #demo-main .preview img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .landing #demo-main .preview {
+        width: auto;
+        height: auto;
+    }
+
+    .landing #search-browse #demo-tags {
+        float: none;
+        width: auto;
+    }
+
+    .landing #search-browse .demo-search {
+        width: auto;
+    }
+
+    .landing #featured-demos {
+        height: auto;
+        margin-bottom: 20px;
+    }
+}
