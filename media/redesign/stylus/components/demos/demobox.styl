@@ -1,13 +1,13 @@
+@require '../../includes/vars';
+
 /* Demo Detail */
 #demobox {
   position: relative;
   margin-top: -10px;
   min-height: 420px;
-  padding: 10px 585px 0 0;
   color: #fff;
   font-size: 0.928em;
   text-shadow: 1px 1px 0 rgba(0,0,0,0.6);
-  background: url("/media/img/demos/bg-mainscreen.png") right 10px no-repeat;
 }
 #demobox a {
   color: #fff;
@@ -16,6 +16,9 @@
   margin-top: 10px;
   padding: 15px 30px 0;
   border-top: 2px solid #6b7684;
+  @media $media-query-small-mobile {
+    padding: 15px 0 0;
+  }
 }
 #demobox h1 {
   font-size: 1.695em;
@@ -36,6 +39,9 @@
   min-height: 40px;
   border: solid #6b7684;
   border-width: 2px 0;
+  @media $media-query-small-mobile {
+    padding: 15px 0 15px;
+  }
 }
 #demobox .tools:after {
   content: ".";
@@ -52,6 +58,12 @@
   position: absolute;
   left: 30px;
   top: 15px;
+  @media $media-query-small-mobile {
+    position: static;
+    padding-right: 15px;
+    margin-bottom: 15px;
+    width: 100%;
+  }
 }
 #demobox .launch .button {
   font-size: 1.539em;
@@ -101,6 +113,10 @@
   position: relative;
   z-index: 99;
   margin-top: 8px;
+
+  @media $media-query-small-mobile {
+    margin-top: 4px;
+  }
 }
 #share-opts {
   margin: 0.75em 0;
@@ -131,6 +147,10 @@
   font-size: 0.857em;
   list-style: none;
   margin: 15px 0 0 30px;
+
+  @media $media-query-small-mobile {
+    margin: 15px 0 0 0;
+  }
 }
 #demobox .stats li {
   float: left;
@@ -150,6 +170,9 @@
 #demobox .tags {
   font-size: 0.857em;
   margin: 10px 30px;
+  @media $media-query-small-mobile {
+    margin: 10px 0;
+  }
 }
 #demobox #share-opts li {
   float: none;
@@ -232,18 +255,54 @@
   -o-transform: rotate(-35deg);
   transform: rotate(-35deg);
 }
-#demobox .screenshots {
-  width: 434px;
-  position: absolute;
-  right: 58px;
-  top: 21px;
-  overflow: hidden;
+
+$demo-preview-width = 434px;
+$demo-preview-height = 325px;
+
+#demobox .demo-preview{
+    padding: 11px 58px 72px;
+    margin: 0 auto;
+    background:url("/media/img/demos/bg-mainscreen.png") center top;
+    background-size: contain;
+    width: $demo-preview-width;
+    @media $media-query-tablet {
+        padding: (11px / 2 ) (58px / 2 ) (72px / 2);
+        margin-top: 48px;
+        width: ($demo-preview-width / 2);
+    }
+
+    @media $media-query-mobile {
+        margin-top: $grid-spacing;
+        margin-bottom: $grid-spacing;
+    }
 }
+
+#demobox .screenshots{
+    margin:0 auto;
+    position:relative;
+    width: $demo-preview-width;
+    @media $media-query-tablet {
+        width: ($demo-preview-width / 2);
+    }
+}
+
+#demobox img {
+    width: $demo-preview-width;
+    @media $media-query-tablet {
+        width: ($demo-preview-width / 2);
+    }
+}
+
 #demobox .slider {
   margin: 0;
-  width: 434px;
-  height: 325px;
+  width: $demo-preview-width;
+  height: $demo-preview-height;
   overflow: hidden;
+
+    @media $media-query-tablet {
+        width: ($demo-preview-width / 2);
+        height: ($demo-preview-height / 2);
+    }
 }
 #demobox .slider .panel {
   margin: 0;

@@ -52,7 +52,9 @@
 
 /*  media block
     for use when you want an item of defined width on the left and some stuff on the right of it
-    http://www.stubbornella.org/content/2010/06/25/the-media-object-saves-hundreds-of-lines-of-code/ */
+    http://www.stubbornella.org/content/2010/06/25/the-media-object-saves-hundreds-of-lines-of-code/
+    add .media-reverse to .media if you want the defined width stuff on the right (it still has to come first in the source)
+    add .media-mobile-stack or .media-small-mobile-stack to stack the stuff on mobile */
 .media,
 .media-body {
     overflow: hidden;
@@ -61,15 +63,53 @@
 }
 
 .media-img {
-    float: left;
-    margin-right: ($grid-spacing / 2);
+    bidi-value(float, left, right);
+    bidi-style(margin-right, ($grid-spacing / 2), margin-left, 0);
 
     img {
         display: block;
     }
+
+    .media-reverse & {
+        bidi-value(float, right, left);
+        bidi-style(margin-left, ($grid-spacing / 2), margin-right, 0);
+    }
 }
 
-.media-imgExt {
-    float: right;
-    margin-left: ($grid-spacing / 2);
+/* declaration for stacking the two items */
+media-stack() {
+    .media-body,
+    .media-img {
+        float: none;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    &.media-reverse {
+        display: table;
+        caption-side: top;
+        width: 100%;
+
+        .media-img {
+            display: table-cell;
+        }
+        .media-body {
+            display: table-caption;
+        }
+    }
+
 }
+
+/* triggers for stacking */
+.media-mobile-stack {
+    @media $media-query-mobile {
+        media-stack();
+    }
+}
+
+.media-small-mobile-stack {
+    @media $media-query-small-mobile {
+        media-stack();
+    }
+}
+

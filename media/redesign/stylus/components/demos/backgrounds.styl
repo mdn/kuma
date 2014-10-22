@@ -1,3 +1,5 @@
+@require '../../includes/vars';
+
 /* Background */
 .section-demos {
   background: url("/media/img/demos/bg-demostudio.jpg") center 50px no-repeat;
@@ -14,6 +16,11 @@
   -moz-box-shadow: 1px 1px 4px rgba(0,0,0,0.25);
   -webkit-box-shadow: 1px 1px 4px rgba(0,0,0,0.25);
   box-shadow: 1px 1px 4px rgba(0,0,0,0.25);
+
+  @media $media-query-small-mobile {
+    margin: 20px 0;
+    padding: 20px 0 10px;
+  }
 }
 #demostudio.detail {
   background: url("/media/img/demos/bg-demodetail.jpg") center 55px no-repeat;
@@ -24,6 +31,10 @@
   -moz-box-shadow: none;
   -webkit-box-shadow: none;
   box-shadow: none;
+
+  @media $media-query-small-mobile {
+    padding: 0;
+  }
 }
 #demostudio.landing {
   background: url("/media/img/demos/bg-demolanding.jpg") center 50px no-repeat;

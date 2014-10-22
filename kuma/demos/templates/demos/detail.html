@@ -60,246 +60,251 @@
 
   <section id="content-main" role="main" class="full">
 
-    <section id="demobox">
-      <div class="demo-info">
-        <h1 class="page-title">{{submission.title}}</h1>
-        <p class="byline">
-          {% trans creator_link=submission_creator(submission), create_date=datetimeformat(submission.created, 'date')|e %}
-            By {{ creator_link }} on {{ create_date }}
-          {% endtrans %}
-        </p>
+    <section id="demobox" class="media media-mobile-stack media-reverse">
+      <div class="media-img">
+          <div class="demo-preview">
+            <div class="screenshots">
+              <ul class="nav-slide">
+                  <li class="nav-prev"><a href="#" class="prev" title="{{_('See the previous image')}}">{{_('Previous')}}</a></li>
+                  <li class="nav-next"><a href="#" class="next" title="{{_('See the next image')}}">{{_('Next')}}</a></li>
+              </ul>
 
-        {# This should only be added for derby winners #}
-        {# <p class="flag"><strong>{{_('You Like')}}</strong></p> #}
-
-
-        <div class="demo-desc">
-          <p>{{ submission.summary }}</p>
-        </div>
-      </div>
-
-      <ul class="tools">
-        <li class="launch"><a href="{{ url('demos_launch', slug=submission.slug) }}" target="{{ "_blank" if submission.navbar_optout }}" class="button"><strong>{{_('Launch Demo')}}</strong></a></li>
-        <li>
-            {% set likes = submission.likes.get_total_for_request(request) %}
-            <form id="demo-unlike" target="like_receiver" method="post"
-                action="{{ url('demos_unlike', slug=submission.slug) }}?iframe=1"
-                style="{{ likes > 0 and ' ' or 'display: none' }}">
-                {{ csrf() }}
-                <button type="submit" class="unlike" title="{{_('You like this demo. Undo?')}}"><span>{{_('You Like')}}</button>
-              </form>
-              <form id="demo-like" target="like_receiver" method="post"
-                  action="{{ url('demos_like', slug=submission.slug) }}?iframe=1"
-                  style="{{ likes > 0 and 'display: none' or ' ' }}">
-                {{ csrf() }}
-                <button type="submit" class="like" title="{{_('Do you like this demo?')}}"><span>{{_('Like It')}}</span></button>
-              </form>
-              <iframe style="display: none" id="like_receiver" name="like_receiver"></iframe>
-        </li>
-
-        <li class="share"><a href="#share-opts" id="sharetoggle" title="{{_('Share this demo with your social network')}}">{{_("Share It")}}</a>
-          <ul id="share-opts">
-            <li class="sharetitle">{{_('Share It')}}</li>
-            <li class="twitter"><a href="{{ 'http://twitter.com/share'|urlparams(url=short_url, text=submission.title.encode('utf-8'), via="mozhacks") }}">{{_('Share on Twitter')}}</a></li>
-            <li class="facebook"><a href="{{ 'http://www.facebook.com/sharer.php'|urlparams(u=full_url, t=submission.title.encode('utf-8')) }}">{{_('Share on Facebook')}}</a></li>
-            <li class="link"><input id="shorturl" type="text" readonly="readonly" value="{{ short_url }}"></li>
-          </ul>
-          <script type="text/javascript">
-              var so = document.getElementById('share-opts');
-              so.className = 'js';
-              so.style.display = 'none';
-            </script>
-        </li>
-      </ul>
-
-      <div class="demo-meta">
-        {% if tech_tags_for_object(submission)|length > 0 %}
-        <p class="tags">
-            {{_('Built using')}}
-            {% for tag in tags_for_object(submission) %}
-                {% if tag.name.startswith('tech:') %}
-                    <a title="{{_('See more demos made with {tag_title}') | f(tag_title=tag_title(tag)) }}" href="{{ url('demos_tag', tag=tag.name) }}">{{ tag_title(tag) }}</a>{% if not loop.last %}, {% endif %}
+              <ul class="slider">
+                {% if submission.video_url %}
+                    <li class="panel">{{ submission.video_url.embed_html }}</li>
                 {% endif %}
-            {% endfor %}
-        </p>
-        {% endif %}
+                {% for idx in range(1, 6) %}
+                  {% set screenshot_url = submission.screenshot_url(idx) %}
+                  {% if screenshot_url %}
+                    <li class="panel">
+                      <img src="{{ screenshot_url }}" alt="" width="434" height="325">
+                    </li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
 
-        <ul class="stats">
-            {% set launches = submission.launches.total %}
-            {% set likes = submission.likes.total %}
-            {% set comments = submission.comments_total %}
-            <li class="views" title="{{ ngettext('This demo has been viewed {count} time', 'This demo has been viewed {count} times', launches) | f(count=launches) }}">{{ngettext('{count} view', '{count} views', launches) | f(count=launches) }}</li>
-            <li class="likes" title="{{ ngettext('{count} person liked this demo', '{count} people liked this demo', likes) | f(count=likes) }}">{{ngettext('{count} like', '{count} likes', likes) | f(count=likes) }}</li>
-            <li class="comments" title="{{ ngettext('There is {count} comment for this demo', 'There are {count} comments for this demo', comments) | f(count=comments) }}">{{ _('{comment_count} comments') | f(comment_count=comments) }}</li>
-        </ul>
-      </div>
-
-    <div class="screenshots">
-      <ul class="nav-slide">
-          <li class="nav-prev"><a href="#" class="prev" title="{{_('See the previous image')}}">{{_('Previous')}}</a></li>
-          <li class="nav-next"><a href="#" class="next" title="{{_('See the next image')}}">{{_('Next')}}</a></li>
-      </ul>
-
-      <ul class="slider">
-        {% if submission.video_url %}
-            <li class="panel">{{ submission.video_url.embed_html }}</li>
-        {% endif %}
-        {% for idx in range(1, 6) %}
-          {% set screenshot_url = submission.screenshot_url(idx) %}
-          {% if screenshot_url %}
-            <li class="panel">
-              <img src="{{ screenshot_url }}" alt="" width="434" height="325">
-            </li>
-          {% endif %}
-        {% endfor %}
-      </ul>
-
-    </div><!-- /.screenshots -->
-        <script type="text/javascript">
-            var els = document.getElementsByTagName('div');
-            for (var i=0,el; el=els[i]; i++) {
-                if (el.className == 'screenshots') {
-                    el.className += ' js';
-                    el.parentNode.style.overflow = 'hidden';
+            </div><!-- /.screenshots -->
+            <script type="text/javascript">
+                var els = document.getElementsByTagName('div');
+                for (var i=0,el; el=els[i]; i++) {
+                    if (el.className == 'screenshots') {
+                        el.className += ' js';
+                        el.parentNode.style.overflow = 'hidden';
+                    }
                 }
-            }
-        </script>
+            </script>
+          </div>
+      </div>
+      <div class="media-body">
+          <div class="demo-info">
+            <h1 class="page-title">{{submission.title}}</h1>
+            <p class="byline">
+              {% trans creator_link=submission_creator(submission), create_date=datetimeformat(submission.created, 'date')|e %}
+                By {{ creator_link }} on {{ create_date }}
+              {% endtrans %}
+            </p>
 
+            {# This should only be added for derby winners #}
+            {# <p class="flag"><strong>{{_('You Like')}}</strong></p> #}
+
+
+            <div class="demo-desc">
+              <p>{{ submission.summary }}</p>
+            </div>
+          </div>
+
+          <ul class="tools">
+            <li class="launch"><a href="{{ url('demos_launch', slug=submission.slug) }}" target="{{ "_blank" if submission.navbar_optout }}" class="button"><strong>{{_('Launch Demo')}}</strong></a></li>
+            <li>
+                {% set likes = submission.likes.get_total_for_request(request) %}
+                <form id="demo-unlike" target="like_receiver" method="post"
+                    action="{{ url('demos_unlike', slug=submission.slug) }}?iframe=1"
+                    style="{{ likes > 0 and ' ' or 'display: none' }}">
+                    {{ csrf() }}
+                    <button type="submit" class="unlike" title="{{_('You like this demo. Undo?')}}"><span>{{_('You Like')}}</button>
+                  </form>
+                  <form id="demo-like" target="like_receiver" method="post"
+                      action="{{ url('demos_like', slug=submission.slug) }}?iframe=1"
+                      style="{{ likes > 0 and 'display: none' or ' ' }}">
+                    {{ csrf() }}
+                    <button type="submit" class="like" title="{{_('Do you like this demo?')}}"><span>{{_('Like It')}}</span></button>
+                  </form>
+                  <iframe style="display: none" id="like_receiver" name="like_receiver"></iframe>
+            </li>
+
+            <li class="share"><a href="#share-opts" id="sharetoggle" title="{{_('Share this demo with your social network')}}">{{_("Share It")}}</a>
+              <ul id="share-opts">
+                <li class="sharetitle">{{_('Share It')}}</li>
+                <li class="twitter"><a href="{{ 'http://twitter.com/share'|urlparams(url=short_url, text=submission.title.encode('utf-8'), via="mozhacks") }}">{{_('Share on Twitter')}}</a></li>
+                <li class="facebook"><a href="{{ 'http://www.facebook.com/sharer.php'|urlparams(u=full_url, t=submission.title.encode('utf-8')) }}">{{_('Share on Facebook')}}</a></li>
+                <li class="link"><input id="shorturl" type="text" readonly="readonly" value="{{ short_url }}"></li>
+              </ul>
+              <script type="text/javascript">
+                  var so = document.getElementById('share-opts');
+                  so.className = 'js';
+                  so.style.display = 'none';
+                </script>
+            </li>
+          </ul>
+
+          <div class="demo-meta">
+            {% if tech_tags_for_object(submission)|length > 0 %}
+            <p class="tags">
+                {{_('Built using')}}
+                {% for tag in tags_for_object(submission) %}
+                    {% if tag.name.startswith('tech:') %}
+                        <a title="{{_('See more demos made with {tag_title}') | f(tag_title=tag_title(tag)) }}" href="{{ url('demos_tag', tag=tag.name) }}">{{ tag_title(tag) }}</a>{% if not loop.last %}, {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </p>
+            {% endif %}
+
+            <ul class="stats">
+                {% set launches = submission.launches.total %}
+                {% set likes = submission.likes.total %}
+                {% set comments = submission.comments_total %}
+                <li class="views" title="{{ ngettext('This demo has been viewed {count} time', 'This demo has been viewed {count} times', launches) | f(count=launches) }}">{{ngettext('{count} view', '{count} views', launches) | f(count=launches) }}</li>
+                <li class="likes" title="{{ ngettext('{count} person liked this demo', '{count} people liked this demo', likes) | f(count=likes) }}">{{ngettext('{count} like', '{count} likes', likes) | f(count=likes) }}</li>
+                <li class="comments" title="{{ ngettext('There is {count} comment for this demo', 'There are {count} comments for this demo', comments) | f(count=comments) }}">{{ _('{comment_count} comments') | f(comment_count=comments) }}</li>
+            </ul>
+          </div>
+      </div>
     </section><!-- /#demobox -->
 
-    <section class="demo-more">
+    <div class="column-container">
+        <section class="column-8 demo-more">
 
-      {# only shown to admins and the demo owner #}
-      {# TODO: The whole UL should be hidden if none of the conditions are met. Logged-out users get served an empty list, which is invalid HTML and can trigger layout weirdness. #}
-      {% set p_edit = submission.allows_editing_by(request.user) %}
-      {% set p_delete = submission.allows_deletion_by(request.user) %}
-      {% set p_hide = submission.allows_hiding_by(request.user) %}
-      {% set show_buttons = ( p_edit or p_delete or p_hide ) %}
+          {# only shown to admins and the demo owner #}
+          {# TODO: The whole UL should be hidden if none of the conditions are met. Logged-out users get served an empty list, which is invalid HTML and can trigger layout weirdness. #}
+          {% set p_edit = submission.allows_editing_by(request.user) %}
+          {% set p_delete = submission.allows_deletion_by(request.user) %}
+          {% set p_hide = submission.allows_hiding_by(request.user) %}
+          {% set show_buttons = ( p_edit or p_delete or p_hide ) %}
 
-      {% if show_buttons %}
-      <ul id="demo-manage">
+          {% if show_buttons %}
+          <ul id="demo-manage">
 
-        {% if p_edit %}
-            <li><a href="{{ url('demos_edit', slug=submission.slug) }}"
-                class="button edit">{{_('Edit Demo')}}</a></li>
-        {% endif %}
+            {% if p_edit %}
+                <li><a href="{{ url('demos_edit', slug=submission.slug) }}"
+                    class="button edit">{{_('Edit Demo')}}</a></li>
+            {% endif %}
 
-        {% if p_delete %}
-            <li><a href="{{ url('demos_delete', slug=submission.slug) }}"
-                class="button remove modal">{{_("Remove demo")}}</a></li>
-        {% endif %}
-        {% if p_hide %}
-            {% if submission.hidden %}
-                <li><form id="demo-show" method="post" action="{{ url('demos_show', slug=submission.slug) }}">{{ csrf() }}
-                    <button type="submit"><span class="button remove">{{_("Show demo")}}</span></button></form></li>
+            {% if p_delete %}
+                <li><a href="{{ url('demos_delete', slug=submission.slug) }}"
+                    class="button remove modal">{{_("Remove demo")}}</a></li>
+            {% endif %}
+            {% if p_hide %}
+                {% if submission.hidden %}
+                    <li><form id="demo-show" method="post" action="{{ url('demos_show', slug=submission.slug) }}">{{ csrf() }}
+                        <button type="submit"><span class="button remove">{{_("Show demo")}}</span></button></form></li>
+                {% else %}
+                    <li><form id="demo-hide" method="post" action="{{ url('demos_hide', slug=submission.slug) }}">{{ csrf() }}
+                        <button type="submit"><span class="button remove">{{_("Hide demo")}}</span></button></form></li>
+                {% endif %}
+            {% endif %}
+
+          </ul>
+          {% endif %}
+
+          {% if submission.description %}
+          <section class="moreabout">
+            <h1>{{_('More About This Demo From The Author')}}</h1>
+            <p>{{ submission.description | nl2br }}</p>
+          </section>
+          {% endif %}
+
+          <section id="comments">
+            <header>
+              {% if submission.comments_total == 0 %}
+                  <h1>{{_('No comments yet.')}}</h1>
+              {% else %}
+                  <h1>{{ ngettext('{comments_total} comment so far', '{comments_total} comments so far', submission.comments_total) | f(comments_total=submission.comments_total) }}</h1>
+              {% endif %}
+              {% if request.user.is_authenticated() %}
+                  {% trans %}
+                      <p>Why not <a href="#comment-post">Add your own</a>?</p>
+                  {% endtrans %}
+              {% else %}
+                  {% trans login_url=url('account_login') %}
+                  <p><a href="{{ login_url }}">Log in</a> to add your own.</p>
+                  {% endtrans %}
+              {% endif %}
+            </header>
+
+            <ol id="comments-list" class="hfeed">
+                {{ comments_tree(request, submission, get_threaded_comment_tree(submission)) }}
+            </ol>
+            <script type="text/javascript">
+                document.getElementById('comments-list').className += ' js';
+            </script>
+
+            {% if request.user.is_authenticated() %}
+                <form id="comment-post" class="comment_form" method="POST" action="{{ url('demos_new_comment', slug=submission.slug) }}">
+                  {{ csrf() }}
+                  <fieldset>
+                      <legend><span>{{_('Add your comment')}}</span></legend>
+                      <div><textarea id="your-comment" name="comment" rows="6" cols="60"></textarea></div>
+                      <p><button type="submit">{{_('Comment')}}</button></p>
+                  </fieldset>
+                </form>
+            {% endif %}
+
+          </section>
+        </section>
+
+        <section id="demo-sub" class="column-4">
+
+          <div class="module" id="source">
+            <h3 class="mod-title">{{_('Get the Source Code')}}</h3>
+            <p class="download"><a href="{{ url('demos_download', slug=submission.slug) }}">{% trans file_ksize=(submission.demo_package.size/1024)|round(2,'ceil')|e %}Download the Source <span class="note">{{file_ksize}} KB &middot; ZIP File</span>{% endtrans %}</a></p>
+            {% if submission.source_code_url %}
+            <p class="browse"><a href="{{ submission.source_code_url }}">Browse the Source
+                {# TODO: Show "hosted by {{domain}}?" #}
+                {% if false %}<span class="note">Hosted on GitHub</span>{% endif %}</a></p>
+            {% endif %}
+            {% if submission.license_name == 'mpl' %}
+                {% set license_class = 'mpl' %}
+            {% elif submission.license_name == 'gpl' %}
+                {% set license_class = 'gpl' %}
+            {% elif submission.license_name == 'bsd' %}
+                {% set license_class = 'bsd' %}
+            {% elif submission.license_name == 'apache' %}
+                {% set license_class = 'apache' %}
             {% else %}
-                <li><form id="demo-hide" method="post" action="{{ url('demos_hide', slug=submission.slug) }}">{{ csrf() }}
-                    <button type="submit"><span class="button remove">{{_("Hide demo")}}</span></button></form></li>
+                {% set license_class = 'publicdomain' %}
             {% endif %}
-        {% endif %}
+            <p class="license {{ license_class }}">
+                {% trans link=license_link(submission.license_name)|e, title=license_title(submission.license_name)|e %}
+                    This demo is released under the <a href="{{link}}">{{title}}</a> license.
+                {% endtrans %}
+            </p>
+          </div>
 
-      </ul>
-      {% endif %}
-
-      {% if submission.description %}
-      <section class="moreabout">
-        <h1>{{_('More About This Demo From The Author')}}</h1>
-        <p>{{ submission.description | nl2br }}</p>
-      </section>
-      {% endif %}
-
-      <section id="comments">
-        <header>
-          {% if submission.comments_total == 0 %}
-              <h1>{{_('No comments yet.')}}</h1>
-          {% else %}
-              <h1>{{ ngettext('{comments_total} comment so far', '{comments_total} comments so far', submission.comments_total) | f(comments_total=submission.comments_total) }}</h1>
+          {% if more_by | length > 1 %}
+          <div class="module" id="moreby">
+            <h3 class="mod-title">{{ _('More by {creator}')|fe(creator=submission_creator(submission)) }}</h3>
+            <ul class="gallery">
+              {% for more_submission in more_by %}
+                {% if more_submission.id != submission.id %}
+                    <li><a href="{{ more_submission.get_absolute_url() }}"><img src="{{ more_submission.thumbnail_url(1) }}" alt="{{ more_submission.title }}" title="{{ more_submission.title }}" width="80" height="60"></a></li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
           {% endif %}
-          {% if request.user.is_authenticated() %}
-              {% trans %}
-                  <p>Why not <a href="#comment-post">Add your own</a>?</p>
-              {% endtrans %}
-          {% else %}
-              {% trans login_url=url('account_login') %}
-              <p><a href="{{ login_url }}">Log in</a> to add your own.</p>
-              {% endtrans %}
-          {% endif %}
-        </header>
 
-        <ol id="comments-list" class="hfeed">
-            {{ comments_tree(request, submission, get_threaded_comment_tree(submission)) }}
-        </ol>
-        <script type="text/javascript">
-            document.getElementById('comments-list').className += ' js';
-        </script>
+          <div id="demo-report">
+            <h3>{{ _("Report a Problem") }}</h3>
+            <ul>
+                <li><a class="modal" href="{{ url('demos_flag', slug=submission.slug) }}?flag_type=notworking" title="{{_('Flag Content')}}">{{_('Demo is not working')}}</a></li>
+                <li><a class="modal" href="{{ url('demos_flag', slug=submission.slug) }}?flag_type=inappropriate" title="{{_('Flag Content')}}">{{_('Demo is inappropriate')}}</a></li>
+                <li><a class="modal" href="{{ url('demos_flag', slug=submission.slug) }}?flag_type=plagarised" title="{{_('Flag Content')}}">{{_('Demo is not by this author')}}</a></li>
+            </ul>
+          </div>
 
-        {% if request.user.is_authenticated() %}
-            <form id="comment-post" class="comment_form" method="POST" action="{{ url('demos_new_comment', slug=submission.slug) }}">
-              {{ csrf() }}
-              <fieldset>
-                  <legend><span>{{_('Add your comment')}}</span></legend>
-                  <div><textarea id="your-comment" name="comment" rows="6" cols="60"></textarea></div>
-                  <p><button type="submit">{{_('Comment')}}</button></p>
-              </fieldset>
-            </form>
-        {% endif %}
-
+        </section>
       </section>
-    </section>
-
-    <section id="demo-sub">
-
-      <div class="module" id="source">
-        <h3 class="mod-title">{{_('Get the Source Code')}}</h3>
-        <p class="download"><a href="{{ url('demos_download', slug=submission.slug) }}">{% trans file_ksize=(submission.demo_package.size/1024)|round(2,'ceil')|e %}Download the Source <span class="note">{{file_ksize}} KB &middot; ZIP File</span>{% endtrans %}</a></p>
-        {% if submission.source_code_url %}
-        <p class="browse"><a href="{{ submission.source_code_url }}">Browse the Source
-            {# TODO: Show "hosted by {{domain}}?" #}
-            {% if false %}<span class="note">Hosted on GitHub</span>{% endif %}</a></p>
-        {% endif %}
-        {% if submission.license_name == 'mpl' %}
-            {% set license_class = 'mpl' %}
-        {% elif submission.license_name == 'gpl' %}
-            {% set license_class = 'gpl' %}
-        {% elif submission.license_name == 'bsd' %}
-            {% set license_class = 'bsd' %}
-        {% elif submission.license_name == 'apache' %}
-            {% set license_class = 'apache' %}
-        {% else %}
-            {% set license_class = 'publicdomain' %}
-        {% endif %}
-        <p class="license {{ license_class }}">
-            {% trans link=license_link(submission.license_name)|e, title=license_title(submission.license_name)|e %}
-                This demo is released under the <a href="{{link}}">{{title}}</a> license.
-            {% endtrans %}
-        </p>
-      </div>
-
-      {% if more_by | length > 1 %}
-      <div class="module" id="moreby">
-        <h3 class="mod-title">{{ _('More by {creator}')|fe(creator=submission_creator(submission)) }}</h3>
-        <ul class="gallery">
-          {% for more_submission in more_by %}
-            {% if more_submission.id != submission.id %}
-                <li><a href="{{ more_submission.get_absolute_url() }}"><img src="{{ more_submission.thumbnail_url(1) }}" alt="{{ more_submission.title }}" title="{{ more_submission.title }}" width="80" height="60"></a></li>
-            {% endif %}
-          {% endfor %}
-        </ul>
-      </div>
-      {% endif %}
-
-      <div id="demo-report">
-        <h3>{{ _("Report a Problem") }}</h3>
-        <ul>
-            <li><a class="modal" href="{{ url('demos_flag', slug=submission.slug) }}?flag_type=notworking" title="{{_('Flag Content')}}">{{_('Demo is not working')}}</a></li>
-            <li><a class="modal" href="{{ url('demos_flag', slug=submission.slug) }}?flag_type=inappropriate" title="{{_('Flag Content')}}">{{_('Demo is inappropriate')}}</a></li>
-            <li><a class="modal" href="{{ url('demos_flag', slug=submission.slug) }}?flag_type=plagarised" title="{{_('Flag Content')}}">{{_('Demo is not by this author')}}</a></li>
-        </ul>
-      </div>
-
-    </section>
-
-  </section>
+    </div>
 
 </div>
 </section>
