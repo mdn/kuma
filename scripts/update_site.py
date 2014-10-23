@@ -68,6 +68,11 @@ def update_site(debug):
         (CHDIR, here),
         (EXEC, 'python2.6 vendor/src/schematic/schematic migrations/'),
         (EXEC, 'python2.6 manage.py syncdb --noinput'),
+
+        # TODO remove those two lines after deploying the wiki/attachments fix
+        (EXEC, "python2.6 manage.py migrate feeder --delete-ghost-migrations --fake --noinput"),
+        (EXEC, "python2.6 manage.py migrate wiki --noinput"),
+
         (EXEC, 'python2.6 manage.py migrate --noinput'),
         (EXEC, 'python2.6 manage.py update_badges'),
         (EXEC, 'python2.6 manage.py collectstatic --noinput'),
