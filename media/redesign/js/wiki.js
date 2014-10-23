@@ -632,4 +632,15 @@
             });
         };
     })();
+
+    /*
+         Manually activate the sticky page button experiment if the page has a
+         table of contents (the current sticky button implementation has a bug
+         where it only works on pages that have tables of content).
+
+         This will be removed when we finish running the experiment.
+    */
+    if($('#toc').length) {
+        mdn.optimizely.push(['activate', 2127730778]);
+    }
 })(window, document, jQuery);
