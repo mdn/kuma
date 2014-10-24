@@ -110,7 +110,13 @@
     <div class="home-involved-card"><a href="{{ devmo_url('Project:MDN/Contributing') }}">
       <h2 class="title">{{ _('Get Involved') }}</h2>
 
-      <p class="numbers">{{ _('<span class="row1">Join <span class="number">5,453</span> contributors</span> <span class="row2">in <span class="number">36</span> languages and locales</span> <span class="row3">around the world.</span>') }}</p>
+      <p class="numbers">
+         <span class="row1">
+             {{ _('Join') }} <span class="number">{{ stats.contributors }}</span> {{ _('contributors') }}
+         </span>
+         <span class="row2">{{ _('in') }} <span class="number">{{ stats.locales }}</span> {{ _('languages and locales') }}</span>
+         <span class="row3">{{ _('around the world.') }}</span>
+      </p>
       <p><span class="button">{{ _('Help improve MDN') }}</span></p>
     </a></div>
   </div>

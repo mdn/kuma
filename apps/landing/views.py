@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.shortcuts import render
 from django.views import static
+from django.db import connection
 
 import constance.config
 
@@ -17,8 +18,28 @@ def home(request):
     for s in SECTION_USAGE:
         updates += Bundle.objects.recent_entries(s.updates)[:5]
 
+    community_stats = {}
+
+    cursor = connection.cursor()
+
+    cursor.execute("select count(creator_id) from (select distinct creator_id from wiki_revision where created >= DATE_SUB(NOW(), INTERVAL 1 YEAR)) as contributors_last_12_months")
+    contributors = cursor.fetchone()
+
+    cursor.execute("select count(locale) from (select distinct wd.locale from wiki_document wd, wiki_revision wr where wd.id = wr.document_id and wr.created >= DATE_SUB(NOW(), INTERVAL 1 YEAR)) as locales_last_12_months")
+    locales = cursor.fetchone()
+
+    try:
+        community_stats['contributors'] = contributors[0]
+    except IndexError:
+        community_stats['contributors'] = 5453
+
+    try:
+        community_stats['locales'] = locales[0]
+    except IndexError:
+        community_stats['locales'] = 36
+
     return render(request, 'landing/homepage.html',
-                  {'demos': demos, 'updates': updates,
+            {'demos': demos, 'updates': updates, 'stats': community_stats,
                     'current_challenge_tag_name':
                     str(constance.config.DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG).strip()})
 
