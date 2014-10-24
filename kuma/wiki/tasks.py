@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.db import transaction
 from django.dispatch import receiver
+from django.db import connection
+from django.core.cache import get_cache
 
 import waffle
 
@@ -165,3 +167,40 @@ You can now view this document at its new location: %(full_url)s.
     """ % {'slug': slug, 'locale': locale, 'full_url': full_url}
     send_mail(subject, message, settings.DEFAULT_FROM_EMAIL,
               [user.email])
+
+@task
+def update_community_stats():
+    c = connection.cursor()
+    try:
+        c.execute("SELECT count(creator_id) \
+                        FROM \
+                          (SELECT DISTINCT creator_id \
+                           FROM wiki_revision \
+                           WHERE created >= DATE_SUB(NOW(), INTERVAL 1 YEAR)) AS contributors_last_12_month")
+        contributors = c.fetchone()
+
+        c.execute("SELECT count(locale) \
+                        FROM \
+                          (SELECT DISTINCT wd.locale \
+                           FROM wiki_document wd, wiki_revision wr \
+                           WHERE wd.id = wr.document_id \
+                           AND wr.created >= DATE_SUB(NOW(), INTERVAL 1 YEAR)) AS locales_last_12_months")
+        locales = c.fetchone()
+    finally:
+        c.close()
+
+    community_stats = {}
+
+    try:
+        community_stats['contributors'] = contributors[0]
+    except IndexError:
+        community_stats['contributors'] = None
+
+    try:
+        community_stats['locales'] = locales[0]
+    except IndexError:
+        community_stats['locales'] = None
+
+    cache = get_cache('memcache')
+    cache.add('community_stats', community_stats, 86400)
+
