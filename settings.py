@@ -608,7 +608,7 @@ TOWER_ADD_HEADERS = True
 
 # Bundles for JS/CSS Minification
 JINGO_MINIFY_USE_STATIC = False
-CLEANCSS_BIN = '/usr/bin/cleancss'
+CLEANCSS_BIN = '/usr/local/bin/cleancss'
 UGLIFY_BIN = '/usr/bin/uglifyjs'
 
 MINIFY_BUNDLES = {

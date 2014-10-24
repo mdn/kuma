@@ -7,4 +7,9 @@ class cleancss {
             Package['nodejs'],
         ]
     }
+    file { '/usr/local/bin/cleancss':
+        ensure => link,
+        target=> "/usr/bin/cleancss",
+        require => Exec['cleancss-install'],
+    }
 }
