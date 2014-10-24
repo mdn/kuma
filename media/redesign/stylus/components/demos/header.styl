@@ -1,8 +1,14 @@
+@require '../../includes/vars';
+
 /* Header */
 #demos-head {
   position: relative;
   padding: 40px 0 0 260px;
   min-height: 40px;
+
+  @media $media-query-small-mobile {
+    padding: 0;
+  }
 }
 .landing #demos-head {
   padding: 40px 240px 0 360px;
@@ -16,6 +22,10 @@
   text-indent: -999em;
   overflow: hidden;
   background: url("/media/img/demos/logo-demostudio-lt.png") 0 0 no-repeat;
+
+  @media $media-query-small-mobile {
+    position: static;
+  }
 }
 .landing #demos-head h1 {
   left: 100px;
