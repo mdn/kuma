@@ -22,10 +22,19 @@ def home(request):
 
     cursor = connection.cursor()
 
-    cursor.execute("select count(creator_id) from (select distinct creator_id from wiki_revision where created >= DATE_SUB(NOW(), INTERVAL 1 YEAR)) as contributors_last_12_months")
+    cursor.execute("SELECT count(creator_id) \
+                    FROM \
+                      (SELECT DISTINCT creator_id \
+                       FROM wiki_revision \
+                       WHERE created >= DATE_SUB(NOW(), INTERVAL 1 YEAR)) AS contributors_last_12_month")
     contributors = cursor.fetchone()
 
-    cursor.execute("select count(locale) from (select distinct wd.locale from wiki_document wd, wiki_revision wr where wd.id = wr.document_id and wr.created >= DATE_SUB(NOW(), INTERVAL 1 YEAR)) as locales_last_12_months")
+    cursor.execute("SELECT count(locale) \
+                    FROM \
+                      (SELECT DISTINCT wd.locale \
+                       FROM wiki_document wd, wiki_revision wr \
+                       WHERE wd.id = wr.document_id \
+                       AND wr.created >= DATE_SUB(NOW(), INTERVAL 1 YEAR)) AS locales_last_12_months")
     locales = cursor.fetchone()
 
     try:
