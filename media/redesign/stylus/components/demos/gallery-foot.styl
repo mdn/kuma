@@ -45,11 +45,6 @@
 .gallery-foot .paging li:first-child {
   border: 0;
 }
-.gallery-foot li.prev {
-  padding-right: 0;
-  border-right: 0;
-  margin-right: 0;
-}
 .gallery-foot .paging a {
   background: url("/media/img/paging-arrows.png") no-repeat;
 }
@@ -87,6 +82,10 @@
 .paging li.first a:focus,
 .paging li.first a:active {
   background-position: 100% -347px;
+}
+.gallery-foot .paging li.last {
+    padding-right: 12px;
+    margin-right: 8px;
 }
 .gallery-foot .paging li.last a {
   display: inline-block;
@@ -127,4 +126,76 @@
 .section-demos .gallery-foot .feed a {
   color: #fff;
   background: url("/media/img/icons-welcome.png") 0 -499px no-repeat;
+}
+
+@media $media-query-mobile {
+    .gallery-foot {
+        font-size: 1em;
+    }
+
+    .gallery-foot .showing,
+    .gallery-foot .paging,
+    .gallery-foot .feed {
+        width: auto;
+        float: none;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .gallery-foot .showing {
+        margin-top: 0;
+    }
+
+    /* jog left to center between prev and next */
+    .gallery-foot li.prev ~ li.last {
+        padding-right: 50px;
+    }
+
+    /* jog right if there is no prev */
+    .gallery-foot li.next {
+        padding-left: 90px;
+    }
+
+    .gallery-foot li.prev + li.next {
+        padding-left: 12px;
+    }
+
+    /* jog left if there is no next */
+    .gallery-foot .paging li.prev:last-child {
+        margin-right: 170px;
+    }
+}
+
+@media $media-query-small-mobile {
+    /* jog left to center between prev and next */
+    .gallery-foot li.prev ~ li.last {
+        padding-right: 12px;
+    }
+
+    /* jog right if there is no prev */
+    .gallery-foot li.next {
+        padding-left: 60px;
+    }
+
+    .gallery-foot li.prev + li.next {
+        padding-left: 12px;
+    }
+
+    /* jog left if there is no next */
+    .gallery-foot .paging li.prev:last-child {
+        margin-right: 60px;
+    }
+
+    /* just arrows */
+
+    .gallery-foot .paging li.prev a,
+    .gallery-foot .paging li.next a {
+        display: inline-block;
+        overflow: hidden;
+        vertical-align: bottom;
+        width: 0px;
+        padding-left: 13px;
+        padding-right: 0;
+    }
+
 }
