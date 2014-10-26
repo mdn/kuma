@@ -95,9 +95,12 @@
       mdn.mediaPath + 'redesign/css/wiki.css?{{ BUILD_ID_JS }}',
       mdn.mediaPath + 'redesign/css/wiki-wysiwyg.css?{{ BUILD_ID_JS }}',
       mdn.mediaPath + 'redesign/css/wiki-syntax.css?{{ BUILD_ID_JS }}',
-      mdn.mediaPath + 'css/libs/font-awesome/css/font-awesome.min.css?{{ BUILD_ID_JS }}',
-      '/en-US/docs/Template:CustomCSS?raw=1'
+      mdn.mediaPath + 'css/libs/font-awesome/css/font-awesome.min.css?{{ BUILD_ID_JS }}'
     ];
+
+    if (window.waffle && waffle.FLAGS.enable_customcss) {
+      config.contentsCss.push('{{ config.KUMA_CUSTOM_CSS_PATH }}?raw=1');
+    }
 
     config.dialog_backgroundCoverColor = 'black';
     config.dialog_backgroundCoverOpacity = 0.3;
