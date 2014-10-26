@@ -29,7 +29,6 @@ var CKBUILDER_CONFIG = {
 	/* Should be kept in sync with the list in ckeditor_config.js. */
 	plugins: {
 		a11yhelp: 1,
-		about: 1,
 		autogrow: 1,
 		basicstyles: 1,
 		bidi: 1,
@@ -52,7 +51,6 @@ var CKBUILDER_CONFIG = {
 		maximize: 1,
 		pastefromword: 1,
 		pastetext: 1,
-		preview: 1,
 		removeformat: 1,
 		resize: 1,
 		scayt: 1,
