@@ -1,8 +1,8 @@
 (function () {
   'use strict';
 
-  CKEDITOR.on('instanceReady', function(ev) {
-    var writer = ev.editor.dataProcessor.writer;
+  CKEDITOR.on('instanceReady', function(evt) {
+    var writer = evt.editor.dataProcessor.writer;
 
     // Tighten up the indentation a bit from the default of wide tabs.
     writer.indentationChars = ' ';
@@ -24,19 +24,13 @@
       });
     }
 
-    // Need to be ported to v4.
-    // Retrieve nodes important to moving the path bar to the top
-    // var tbody = ev.editor._.cke_contents.$.parentNode.parentNode;
-    // var pathP = tbody.lastChild.childNodes[0].childNodes[1];
-    // var toolbox = tbody.childNodes[0].childNodes[0].childNodes[0];
-
-    // if(toolbox && pathP) {
-    //   toolbox.appendChild(pathP);
-    // }
+    // By default autogrow is executed for the first time on
+    // editor#focus. We want to resize editor after it loads.
+    evt.editor.execCommand('autogrow');
 
     // Callback for inline, if necessary.
     var callback = CKEDITOR.inlineCallback;
-    callback && callback(ev);
+    callback && callback(evt);
   });
 
   // Provide redirect pattern for corresponding plugin.
@@ -53,13 +47,13 @@
     // Should be kept in sync with the list in ckeditor/source/build-config.js.
     // Defining plugins list explicitly lets us to switch easily between dev and build versions.
     config.plugins =
-      'a11yhelp,about,basicstyles,bidi,blockquote,clipboard,contextmenu,dialogadvtab,elementspath,enterkey,' +
+      'a11yhelp,about,autogrow,basicstyles,bidi,blockquote,clipboard,contextmenu,dialogadvtab,elementspath,enterkey,' +
       'entities,find,htmlwriter,image,indentlist,language,link,list,liststyle,magicline,maximize,pastefromword,' +
-      'pastetext,preview,removeformat,resize,scayt,showblocks,showborders,sourcearea,stylescombo,tab,table,tabletools,' +
+      'pastetext,preview,removeformat,scayt,showblocks,showborders,sourcearea,stylescombo,tab,table,tabletools,' +
       'toolbar,undo,wsc,wysiwygarea,' +
       // MDN's plugins.
-      'mdn-attachment,mdn-format,mdn-image-attachment,mdn-link-customization,mdn-link-launch,mdn-redirect,' +
-      'mdn-sample-finder,mdn-sampler,mdn-syntaxhighlighter,mdn-system-integration,mdn-table-customization,' +
+      'mdn-attachment,mdn-format,mdn-sticky-toolbar,mdn-image-attachment,mdn-link-customization,mdn-link-launch,' +
+      'mdn-redirect,mdn-sample-finder,mdn-sampler,mdn-syntaxhighlighter,mdn-system-integration,mdn-table-customization,' +
       'mdn-toggle-block,mdn-wrapstyle,' +
       // Other plugins.
       'descriptionlist,tablesort,texzilla,youtube';
