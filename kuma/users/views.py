@@ -15,7 +15,6 @@ from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress
 from allauth.socialaccount import helpers
 from allauth.socialaccount.models import SocialAccount
-from allauth.socialaccount.providers.persona.provider import PersonaProvider
 from allauth.socialaccount.views import SignupView as BaseSignupView
 from badger.models import Award
 import constance.config
@@ -268,7 +267,8 @@ class SignupView(BaseSignupView):
         form.fields['email'].label = _('Email address')
         self.matching_user = None
         initial_username = form.initial.get('username', None)
-        if initial_username is not None:
+        # For GitHub users, see if we can find matching user by username
+        if self.sociallogin.account.provider == 'github':
             try:
                 self.matching_user = User.objects.get(username=initial_username)
                 # deleting the initial username because we found a matching user
@@ -277,6 +277,21 @@ class SignupView(BaseSignupView):
                 pass
 
         email = self.sociallogin.account.extra_data.get('email') or None
+
+        # For Persona users, see if we can find matching user by email address
+        if self.sociallogin.account.provider == 'persona':
+            try:
+                matching_addresses = EmailAddress.objects.filter(email=email,
+                                                                 verified=True)
+                matching_emailaddress = matching_addresses[0]
+                self.matching_user = matching_emailaddress.user
+                email_address = {'email': email,
+                                 'verified': matching_emailaddress.verified,
+                                 'primary': matching_emailaddress.primary}
+                self.email_addresses[email] = email_address
+            except IndexError:
+                pass
+
         extra_email_addresses = (self.sociallogin
                                      .account
                                      .extra_data
@@ -311,7 +326,7 @@ class SignupView(BaseSignupView):
                     label = _('%(email)s Unverified')
                 email = email_address['email']
                 choices.append((email, label % {'email': email}))
-            choices.append((form.other_email_value, _('other:')))
+            choices.append((form.other_email_value, _('Other:')))
             email_select = forms.RadioSelect(choices=choices,
                                              attrs={'id': 'email'})
             form.fields['email'].widget = email_select
@@ -356,14 +371,21 @@ class SignupView(BaseSignupView):
 
     def get_context_data(self, **kwargs):
         context = super(SignupView, self).get_context_data(**kwargs)
-        or_query_emails = []
-        for email_address in self.email_addresses.values():
-            if email_address['verified']:
-                or_query_emails.append(Q(uid=email_address['email']))
-        if or_query_emails:
-            reduced_or_query = reduce(operator.or_, or_query_emails)
+        or_query = []
+        # For GitHub users, find matching Persona social accounts by emails
+        if self.sociallogin.account.provider == 'github':
+            for email_address in self.email_addresses.values():
+                if email_address['verified']:
+                    or_query.append(Q(uid=email_address['email']))
+
+        # For Persona users, find matching GitHub social accounts directly
+        elif self.sociallogin.account.provider == 'persona':
+            if self.matching_user:
+                or_query.append(Q(user=self.matching_user, provider='github'))
+
+        if or_query:
+            reduced_or_query = reduce(operator.or_, or_query)
             matching_accounts = (SocialAccount.objects
-                                              .filter(provider=PersonaProvider.id)
                                               .filter(reduced_or_query))
         else:
             matching_accounts = SocialAccount.objects.none()

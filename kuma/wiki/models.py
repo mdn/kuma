@@ -26,7 +26,6 @@ from django.utils.decorators import available_attrs
 from django.utils.functional import cached_property
 
 import constance.config
-import jingo
 from south.modelsinspector import add_introspection_rules
 from taggit.models import ItemBase, TagBase
 from taggit.managers import TaggableManager
@@ -35,7 +34,8 @@ from teamwork.models import Team
 from tidings.models import NotificationsMixin
 import waffle
 
-from search.decorators import register_live_index
+from kuma.attachments.models import Attachment, DocumentAttachment
+from kuma.search.decorators import register_live_index
 from sumo import ProgrammingError
 from sumo.models import LocaleField
 from sumo.urlresolvers import reverse, split_path
@@ -55,8 +55,7 @@ from .exceptions import (UniqueCollision, SlugCollision, PageMoveError,
                          DocumentRenderedContentNotAvailable)
 from .managers import (TransformManager, DocumentManager,
                        TaggedDocumentManager, DeletedDocumentManager,
-                       DocumentAdminManager, DocumentZoneManager,
-                       AttachmentManager)
+                       DocumentAdminManager, DocumentZoneManager)
 from .signals import render_done
 
 add_introspection_rules([], ["^utils\.OverwritingFileField"])
@@ -227,8 +226,8 @@ class Document(NotificationsMixin, models.Model):
                                                through='RelatedDocument',
                                                symmetrical=False)
 
-    files = models.ManyToManyField('Attachment',
-                                   through='DocumentAttachment')
+    files = models.ManyToManyField(Attachment,
+                                   through=DocumentAttachment)
 
     # JSON representation of Document for API results, built on save
     json = models.TextField(editable=False, blank=True, null=True)
@@ -1469,7 +1468,7 @@ Full traceback:
         return EditDocumentEvent.is_notifying(user, self)
 
     def get_mapping_type(self):
-        from search.models import DocumentType
+        from kuma.search.models import DocumentType
         return DocumentType
 
     def get_contributors(self):
@@ -1795,177 +1794,3 @@ class EditorToolbar(models.Model):
 
     def __unicode__(self):
         return self.name
-
-
-def rev_upload_to(instance, filename):
-    """Generate a path to store a file attachment."""
-    # TODO: We could probably just get away with strftime formatting
-    # in the 'upload_to' argument here, but this does a bit more to be
-    # extra-safe with potential duplicate filenames.
-    #
-    # For now, the filesystem storage path will look like this:
-    #
-    # attachments/year/month/day/attachment_id/md5/filename
-    #
-    # The md5 hash here is of the full timestamp, down to the
-    # microsecond, of when the path is generated.
-    now = datetime.now()
-    return "attachments/%(date)s/%(id)s/%(md5)s/%(filename)s" % {
-        'date': now.strftime('%Y/%m/%d'),
-        'id': instance.attachment.id,
-        'md5': hashlib.md5(str(now)).hexdigest(),
-        'filename': filename
-    }
-
-
-class DocumentAttachment(models.Model):
-    """
-    Intermediary between Documents and Attachments. Allows storing the
-    user who attached a file to a document, and a (unique for that
-    document) name for referring to the file from the document.
-
-    """
-    file = models.ForeignKey('Attachment')
-    document = models.ForeignKey(Document)
-    attached_by = models.ForeignKey(User, null=True)
-    name = models.TextField()
-
-
-class Attachment(models.Model):
-    """
-    An attachment which can be inserted into one or more wiki documents.
-
-    There is no direct database-level relationship between attachments
-    and documents; insertion of an attachment is handled through
-    markup in the document.
-    """
-    class Meta(object):
-        permissions = (
-            ("disallow_add_attachment", "Cannot upload attachment"),
-        )
-
-    objects = AttachmentManager()
-
-    current_revision = models.ForeignKey('AttachmentRevision', null=True,
-                                         related_name='current_rev')
-
-    # These get filled from the current revision.
-    title = models.CharField(max_length=255, db_index=True)
-    slug = models.CharField(max_length=255, db_index=True)
-
-    # This is somewhat like the bookkeeping we do for Documents, but
-    # is also slightly more permanent because storing this ID lets us
-    # map from old MindTouch file URLs (which are based on the ID) to
-    # new kuma file URLs.
-    mindtouch_attachment_id = models.IntegerField(
-        help_text="ID for migrated MindTouch resource",
-        null=True, db_index=True)
-    modified = models.DateTimeField(auto_now=True, null=True, db_index=True)
-
-    @models.permalink
-    def get_absolute_url(self):
-        return ('wiki.attachment_detail', (), {'attachment_id': self.id})
-
-    def get_file_url(self):
-        uri = reverse('wiki.raw_file', kwargs={
-            'attachment_id': self.id,
-            'filename': self.current_revision.filename(),
-        })
-        return '%s%s%s' % (settings.PROTOCOL, settings.ATTACHMENT_HOST, uri)
-
-    def attach(self, document, user, name):
-        if self.id not in document.attachments.values_list('id', flat=True):
-            intermediate = DocumentAttachment(file=self,
-                                              document=document,
-                                              attached_by=user,
-                                              name=name)
-            intermediate.save()
-
-    def get_embed_html(self):
-        """
-        Return suitable initial HTML for embedding this file in an
-        article, generated from a template.
-
-        The template searching is from most specific to least
-        specific, based on mime-type. For example, an attachment with
-        mime-type 'image/png' will try to load the following
-        templates, in order, and use the first one found:
-
-        * wiki/attachments/image_png.html
-
-        * wiki/attachments/image.html
-
-        * wiki/attachments/generic.html
-        """
-        rev = self.current_revision
-        env = jingo.get_env()
-        t = env.select_template([
-            'wiki/attachments/%s.html' % rev.mime_type.replace('/', '_'),
-            'wiki/attachments/%s.html' % rev.mime_type.split('/')[0],
-            'wiki/attachments/generic.html'])
-        return t.render({'attachment': rev})
-
-
-class AttachmentRevision(models.Model):
-    """
-    A revision of an attachment.
-    """
-    attachment = models.ForeignKey(Attachment, related_name='revisions')
-
-    file = models.FileField(upload_to=rev_upload_to, max_length=500)
-
-    title = models.CharField(max_length=255, null=True, db_index=True)
-    slug = models.CharField(max_length=255, null=True, db_index=True)
-
-    # This either comes from the MindTouch import or, for new files,
-    # from the (as-yet-unwritten) upload view using the Python
-    # mimetypes library to figure it out.
-    #
-    # TODO: do we want to make this an explicit set of choices? That'd
-    # rule out certain types of attachments, but might be a lot safer.
-    mime_type = models.CharField(max_length=255, db_index=True)
-
-    description = models.TextField(blank=True)  # Does not allow wiki markup
-
-    created = models.DateTimeField(default=datetime.now)
-    comment = models.CharField(max_length=255, blank=True)
-    creator = models.ForeignKey(User,
-                                related_name='created_attachment_revisions')
-    is_approved = models.BooleanField(default=True, db_index=True)
-
-    # As with document revisions, bookkeeping for the MindTouch
-    # migration.
-    #
-    # TODO: Do we actually need full file revision history from
-    # MindTouch?
-    mindtouch_old_id = models.IntegerField(
-        help_text="ID for migrated MindTouch resource revision",
-        null=True, db_index=True, unique=True)
-    is_mindtouch_migration = models.BooleanField(
-        default=False, db_index=True,
-        help_text="Did this revision come from MindTouch?")
-
-    def filename(self):
-        return self.file.path.split('/')[-1]
-
-    def save(self, *args, **kwargs):
-        super(AttachmentRevision, self).save(*args, **kwargs)
-        if self.is_approved and (
-                not self.attachment.current_revision or
-                self.attachment.current_revision.id < self.id):
-            self.make_current()
-
-    def make_current(self):
-        """Make this revision the current one for the attachment."""
-        self.attachment.title = self.title
-        self.attachment.slug = self.slug
-        self.attachment.current_revision = self
-        self.attachment.save()
-
-    def get_previous(self):
-        previous_revisions = self.attachment.revisions.filter(
-            is_approved=True,
-            created__lt=self.created,
-        ).order_by('-created')
-        if len(previous_revisions):
-            return previous_revisions[0]

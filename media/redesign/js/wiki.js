@@ -40,7 +40,7 @@
             mdn.analytics.trackEvent({
                 category: 'Wiki',
                 action: 'Sidebar',
-                label: this.id == 'quick-links-toggle' ? 'Hide' : 'Show'
+                label: (this.id === 'quick-links-toggle' ? 'Hide' : 'Show')
             });
 
         });
@@ -85,7 +85,7 @@
 
         function noop(){}
         function setMinHeight() {
-            if($('.zone-landing-header-preview-base').css('position') == 'absolute') {
+            if($('.zone-landing-header-preview-base').css('position') === 'absolute') {
                 $('.wiki-main-content').css('min-height', $subnav.height());
             }
         }
@@ -105,13 +105,13 @@
             onOpen: function(){
                 mdn.analytics.trackEvent({
                     category: 'Search doc navigator',
-                    action: 'Open on hover',
+                    action: 'Open on hover'
                 });
             },
             onClose: function() {
                 mdn.analytics.trackEvent({
                     category: 'Search doc navigator',
-                    action: 'Close on blur',
+                    action: 'Close on blur'
                 });
             }
         });
@@ -129,27 +129,27 @@
 
         var $form = $link.closest('form');
 
-        var notification = mdn.Notifier.growl(gettext('Updating subscription status'), { duration: 0 });
+        var notification = mdn.Notifier.growl($link.data('subscribe-status'), { duration: 0 });
 
         $link.addClass('disabled');
         $.ajax($form.attr('action'), {
-        	cache: false,
-        	method: 'post',
-        	data: $form.serialize()
+            cache: false,
+            method: 'post',
+            data: $form.serialize()
         }).done(function(data) {
 
             var message;
             data = JSON.parse(data);
-            if(data.status == 1) {
+            if(Number(data.status) === 1) {
                 $link.text($link.data('unsubscribe-text'));
-                message = 'You are now subscribed to this document.';
+                message = $link.data('subscribe-message');
             }
             else {
                 $link.text($link.data('subscribe-text'));
-                message = 'You have been unsubscribed from this document.';
+                message = $link.data('unsubscribe-message');
             }
 
-            notification.success(gettext(message), 2000);
+            notification.success(message, 2000);
 
             $link.removeClass('disabled');
         });
@@ -180,7 +180,7 @@
     /*
         Syntax highlighting scripts
     */
-    $('article pre').length && ('querySelectorAll' in doc) && (function() {
+    if($('article pre').length && ('querySelectorAll' in doc)) (function() {
         var syntaxScript = doc.createElement('script');
         syntaxScript.setAttribute('data-manual', '');
         syntaxScript.async = 'true';
@@ -201,21 +201,21 @@
         var pageButtonsOffset = $pageButtons.offset();
 
         // Get button alignment according to text direction
-        var buttonDirection = ($('html').attr('dir') == 'rtl') ? 'left' : 'right';
+        var buttonDirection = ($('html').attr('dir') === 'rtl') ? 'left' : 'right';
 
         var scrollFn = debounce(function(e) {
             var scroll = $(doc).scrollTop();
             var pageButtonsHeight = 0;
             var $mainContent = $('.wiki-main-content');
 
-            if(!e || e.type == 'resize') {
+            if(!e || e.type === 'resize') {
                 // Calculate right and offset for page buttons on resize and page load
-                if(buttonDirection == 'right'){
+                if(buttonDirection === 'right'){
                     pageButtonsOffset.right = $(win).width() - $mainContent.offset().left - $mainContent.innerWidth();
                 }
                 // Should the TOC be one-column (auto-closed) or sidebar'd
                 if($toc.length){
-                    if($toggler.css('pointer-events') == 'auto'    || $toggler.find('i').css('display') != 'none') { /* icon check is for old IEs that don't support pointer-events */
+                    if($toggler.css('pointer-events') === 'auto' || $toggler.find('i').css('display') !== 'none') { /* icon check is for old IEs that don't support pointer-events */
                         // Checking "data-clicked" to ensure we don't override closing/opening if user has done so explicitly
                         if(!$toc.attr('data-closed') && !$toggler.attr('data-clicked')) {
                             $toggler.trigger('mdn:click');
@@ -228,7 +228,7 @@
             }
 
             // Check if page buttons need to be sticky
-            if($pageButtons.attr('data-sticky') == 'true'){
+            if($pageButtons.attr('data-sticky') === 'true'){
                 pageButtonsHeight = $pageButtons.innerHeight();
                 if(scroll > pageButtonsOffset.top) {
                     $pageButtons.css('min-width', $pageButtons.css('width'));
@@ -245,7 +245,7 @@
             // Styling for sticky ToC
             var maxHeight = win.innerHeight - parseInt($toc.css('padding-top'), 10) - parseInt($toc.css('padding-bottom'), 10) - pageButtonsHeight;
 
-            if(scroll + pageButtonsHeight > tocOffset.top && $toggler.css('pointer-events') == 'none') {
+            if(scroll + pageButtonsHeight > tocOffset.top && $toggler.css('pointer-events') === 'none') {
                 $toc.css({
                     width: $toc.css('width'),
                     top: pageButtonsHeight,
@@ -264,7 +264,7 @@
         }, 10);
 
         // Set it forth!
-        if($toc.length || $pageButtons.attr('data-sticky') == 'true'){
+        if($toc.length || $pageButtons.attr('data-sticky') === 'true'){
             scrollFn();
             $(win).on('scroll resize', scrollFn);
         }
@@ -297,7 +297,7 @@
     */
     $('.wiki-l10n').on('change', function() {
         if(this.value) {
-            location = this.value;
+            win.location = this.value;
         }
     });
 
@@ -341,7 +341,7 @@
 
         var value = $(this).find('#stack-search').val();
 
-        if(value != '') {
+        if(value !== '') {
             win.location = 'http://stackoverflow.com/search?q=[firefox]+or+[firefox-os]+or+[html5-apps]+' + value;
         }
     });
@@ -400,20 +400,20 @@
             var data = {
                 category: 'Top Contributors',
                 action: 'Click position',
-                label: index
+                label: href
             };
 
             if (newTab) {
               mdn.analytics.trackEvent(data);
             } else {
               e.preventDefault();
-              mdn.analytics.trackEvent(data, function() { location = href; });
+              mdn.analytics.trackEvent(data, function() { win.location = href; });
             }
         });
 
         // Allow focus into and out of the list itself
         $contributors.find('ul').on('focusin focusout', function(e) {
-            $(this)[(e.type == 'focusin' ? 'add' : 'remove') + 'Class']('focused');
+            $(this)[(e.type === 'focusin' ? 'add' : 'remove') + 'Class']('focused');
         });
     })();
 
@@ -425,7 +425,7 @@
        https://developer.mozilla.org/en-US/docs/Web/MathML/Authoring#Fallback_for_Browsers_without)MathML_support
        and https://github.com/fred-wang/mathml.css.
     */
-    $('math').length && (function() {
+    if($('math').length) (function() {
         // Test for MathML support
         var $div = $('<div class="offscreen"><math xmlns="http://www.w3.org/1998/Math/MathML"><mspace height="23px" width="77px"/></math></div>').appendTo(document.body);
         var box = $div.get(0).firstChild.firstChild.getBoundingClientRect();
@@ -461,7 +461,7 @@
         },
         // Used within the wiki new/move pages
         slugifyString: function(str, allowSlash, allowMultipleUnderscores) {
-            var regex = new RegExp('[\?\&\"\'\#\*\$' + (allowSlash ? '' : '\/') + ' +?]', 'g');
+            var regex = new RegExp('[?&\"\'#*$' + (allowSlash ? '' : '\/') + ' +?]', 'g');
 
             // Remove anything from the slug that could cause big problems
             // "$" is used for verb delimiter in URLs
@@ -505,7 +505,7 @@
             var fraction;
             timeoutFlag = 1;
             $.each(players, function(index, player) {
-                if(player.getPlayerState() != 1) return;
+                if(player.getPlayerState() !== 1) return;
 
                 timeoutFlag = 0;
 
@@ -529,11 +529,11 @@
             });
 
             if(timeoutFlag) {
-                timer && clearTimeout(timer);
+                if(timer) clearTimeout(timer);
             }else{
                 timer = setTimeout(timeout, 6000);
             }
-        };
+        }
 
         // If the page does not have any YouTube videos
         if(!$youtubeIframes.length) return;
@@ -591,7 +591,7 @@
                     mdn.analytics.trackEvent({
                         category: 'YouTube',
                         action: action,
-                        label: players[i].getVideoUrl(),
+                        label: players[i].getVideoUrl()
                     });
                 });
                 players[i].addEventListener('onPlaybackQualityChange', function(event) {
@@ -632,4 +632,15 @@
             });
         };
     })();
+
+    /*
+         Manually activate the sticky page button experiment if the page has a
+         table of contents (the current sticky button implementation has a bug
+         where it only works on pages that have tables of content).
+
+         This will be removed when we finish running the experiment.
+    */
+    if($('#toc').length) {
+        mdn.optimizely.push(['activate', 2127730778]);
+    }
 })(window, document, jQuery);

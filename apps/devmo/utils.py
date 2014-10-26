@@ -19,8 +19,12 @@ htmlparser = HTMLParser.HTMLParser()
 
 def strings_are_translated(strings, locale):
     # http://stackoverflow.com/a/24339946/571420
-    po = pofile(os.path.join(settings.ROOT, 'locale', locale, 'LC_MESSAGES',
-                             'messages.po'))
+    pofile_path = os.path.join(settings.ROOT, 'locale', locale, 'LC_MESSAGES',
+                               'messages.po')
+    try:
+        po = pofile(pofile_path)
+    except IOError:  # in case the file doesn't exist or couldn't be parsed
+        return False
     all_strings_translated = True
     for string in strings:
         if not any(e for e in po if e.msgid == string and

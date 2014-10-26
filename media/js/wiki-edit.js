@@ -217,6 +217,9 @@
         if ($body.is('.edit, .new, .translate')) {
             initMetadataEditButton();
             initSaveAndEditButtons();
+            if(!$body.is('.is-template') && window.waffle && window.waffle.flag_is_active('dirtiness_tracking')) {
+                initDirtinessTracking();
+            }
             initArticlePreview();
             initAttachmentsActions();
             if(!isTemplate) {
@@ -589,6 +592,10 @@
             $('#id_comment').val('');
             // Re-enable the form; it gets disabled to prevent double-POSTs
             $form.data('disabled', false).removeClass('disabled');
+            // Trigger a `mdn:save-success` event so dirtiness can be reset throughout the page
+            if(window.waffle && window.waffle.flag_is_active('dirtiness_tracking')) {
+                $form.trigger('mdn:save-success');
+            }
             return true;
         });
 
@@ -829,6 +836,122 @@
             // Show the spinner
             $pageAttachmentsSpinner.css('opacity', 1);
         });
+    }
+
+    //
+    // Initializes logic that keeps track of whether changes have been made to the article
+    // So far three sections contribute to dirtiness: Metadata, editor content and tags
+    //
+    function initDirtinessTracking() {
+      // These are all fields that count towards an edit, excluding the editor and tags
+      var metaSelector = 'input:not([type="hidden"]), textarea, select';
+      var $metaDataFields = $form.find(metaSelector);
+      var editor = CKEDITOR.instances['id_content'];
+
+      function setEditorButtonsEnabled(enabled) {
+        var saveContinue = editor.getCommand('mdn-buttons-save');
+        var saveEdit = editor.getCommand('mdn-buttons-save-exit');
+
+        var state = CKEDITOR.TRISTATE_OFF;
+        if (!enabled)
+            state = CKEDITOR.TRISTATE_DISABLED;
+
+        if (saveContinue)
+            saveContinue.setState(state);
+        if (saveEdit)
+            saveEdit.setState(state);
+      }
+
+      function onDirty() {
+        $('.btn-save-and-edit').attr('disabled', false);
+        $('.btn-save').attr('disabled', false);
+        setEditorButtonsEnabled(true);
+      }
+      // Called when everything is clean
+      function onClean() {
+        $('.btn-save-and-edit').attr('disabled', true);
+        $('.btn-save').attr('disabled', true);
+        setEditorButtonsEnabled(false);
+      }
+
+      function resetDirty() {
+        editor.resetDirty();
+        $metaDataFields.each(function() {
+          var $this = $(this);
+          var value = $this.val();
+
+          if($this.attr('type') == 'checkbox') {
+            value = this.checked;
+          }
+
+          $this.data('original', value);
+        })
+        $form.find('.dirty').removeClass('dirty');
+        $form.trigger('mdn:clean');
+      }
+
+      // Three custom events are used to track changes throughout the page
+      // Dirtiness is marked by the class `dirty`, cleanliness by `clean`
+      $form.on('mdn:save-success', resetDirty)
+      .on('mdn:dirty', onDirty)
+      .on('mdn:clean', function() { // Gets triggered when a section is clean, others may still be dirty
+        if (!$('.dirty').length)
+          onClean();
+      });
+
+      // Keep track of editor dirtiness
+      var editorDirty = false;
+      function checkEditorDirtiness() {
+        var wasDirty = editorDirty;
+        editorDirty = editor.checkDirty();
+        if (editorDirty && !wasDirty) {
+          $form.find('.editor-container').addClass('dirty').trigger('mdn:dirty');
+        } else if (!editorDirty && wasDirty) {
+          $form.find('.editor-container').removeClass('dirty').trigger('mdn:clean');
+        }
+      }
+
+      var interval;
+      editor.on('contentDom', function() {
+        // Basic events we know trigger a change
+        editor.document.on('keyup', checkEditorDirtiness);
+        editor.on('paste setData', checkEditorDirtiness);
+
+        // Since CKE doesn't provide us a change event yet, a constant check is still the best way to
+        // determine if the editor has changed.
+        if(interval) clearInterval(interval);
+        interval = setInterval(checkEditorDirtiness, 1500); // 1 seconds is arbitrary, we can update as desired
+      });
+      editor.on('instanceReady', function(e) {
+        if (e.editor == editor)
+            setEditorButtonsEnabled(false);
+      });
+
+      $(win).on('beforeunload', function() {
+        if(interval) clearInterval(interval);
+      });
+
+
+      // Keep track of metadata dirtiness
+      $form.on('change input', metaSelector, function() {
+        var $this = $(this);
+        var value = $this.val();
+        var typeAttr = $this.attr('type');
+
+        if(typeAttr && typeAttr.toLowerCase() == 'checkbox') {
+            value = this.checked;
+        }
+
+        if (value !== $this.data('original')) {
+          if (!$this.hasClass('dirty')) {
+            $this.addClass('dirty').trigger('mdn:dirty');
+          }
+        } else {
+          $this.removeClass('dirty').trigger('mdn:clean');
+        }
+      });
+
+      resetDirty();
     }
 
     $(doc).ready(init);

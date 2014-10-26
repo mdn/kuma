@@ -1,22 +1,14 @@
 # -*- coding: utf-8 -*-
-from collections import namedtuple
 from datetime import datetime
 
-from django.conf import settings
 from django.forms.fields import CharField
 
-from babel.dates import format_date, format_time, format_datetime
 import jingo
-from nose.tools import eq_, assert_raises
-from pytz import timezone
-from pyquery import PyQuery as pq
+from nose.tools import eq_
 import test_utils
 
-from sumo.helpers import (datetimeformat, DateTimeFormatError,
-                          collapse_linebreaks, url, json, timesince,
-                          label_with_help, urlparams, yesno, number)
-from sumo.tests import TestCase
-from sumo.urlresolvers import reverse
+from sumo.helpers import (timesince, label_with_help, urlparams, yesno,
+                          collapse_linebreaks)
 
 
 def render(s, context={}):
@@ -24,7 +16,7 @@ def render(s, context={}):
     return t.render(**context)
 
 
-class TestHelpers(TestCase):
+class TestHelpers(test_utils.TestCase):
 
     def setUp(self):
         jingo.load_helpers()
@@ -71,13 +63,9 @@ class TestHelpers(TestCase):
         eq_('Yes', yesno(1))
         eq_('No', yesno(0))
 
-    def test_number(self):
-        context = {'request': namedtuple('R', 'locale')('en-US')}
-        eq_('5,000', number(context, 5000))
-        eq_('', number(context, None))
 
 
-class TimesinceTests(TestCase):
+class TimesinceTests(test_utils.TestCase):
     """Tests for the timesince filter"""
 
     def test_none(self):

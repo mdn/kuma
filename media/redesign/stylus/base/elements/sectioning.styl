@@ -1,0 +1,92 @@
+@require '../../includes/vars';
+@require '../../includes/mixins';
+
+/*
+    Sectioning elements - things that contribute to document outline
+    Section, article, aside, header, footer, main (main is not actually sectioning, did you know that?)
+*/
+
+
+/*
+    aside
+*/
+
+aside {
+    @extend $column-half;
+    prevent-last-child-bottom-spacing();
+
+    float: right;
+    border: 1px solid $header-background-color;
+    background: $light-background-color;
+    padding: $grid-spacing;
+    margin-left: $grid-spacing;
+    margin-bottom: $grid-spacing;
+}
+
+/*
+    main
+*/
+
+main {
+    background: #fff;
+    min-height: 200px;
+
+    > .center {
+        padding-top: $first-content-top-padding;
+    }
+}
+
+/*
+    footer
+*/
+
+footer {
+    set-smaller-font-size();
+    background: #fff;
+    padding:  $first-content-top-padding 0 0 0;
+
+    p, label {
+        font-style: italic;
+    }
+
+    p {
+        bidi-style(padding-left, 92px, padding-right, 0, true);
+        padding-top: 10px;
+        padding-bottom: 0;
+        position: relative;
+        min-height: 62px;
+
+        &:after {
+            bidi-style(left, 0, right, 0);
+            content: '';
+            display: block;
+            width: 65px;
+            height: 60px
+            background-image: url($logo-sprite-url);
+            background-position: 0px -83px;
+            background-size: 205px auto;
+            background-repeat: no-repeat;
+            position: absolute;
+            top: 0;
+        }
+    }
+
+    .column-strip {
+        padding-top: 10px;
+    }
+
+    label {
+        padding-right: 4px;
+    }
+}
+
+/*
+    hr
+*/
+
+hr {
+    border-top: 1px solid $text-color;
+    height: 0;
+    margin: $grid-spacing 0;
+}
+

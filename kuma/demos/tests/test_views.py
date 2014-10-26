@@ -1,7 +1,5 @@
 # coding=utf-8
-
 import datetime
-import logging
 from os.path import dirname
 from StringIO import StringIO
 import zipfile
@@ -9,7 +7,6 @@ import zipfile
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
-import test_utils
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -17,8 +14,9 @@ from django.contrib.auth.models import User
 import constance.config
 from taggit_extras.utils import parse_tags
 
-from devmo.tests import LocalizingClient
 from sumo.urlresolvers import reverse
+from kuma.users.tests import UserTestCase
+
 from .. import challenge_utils
 from ..forms import SubmissionEditForm
 from ..models import Submission
@@ -59,12 +57,12 @@ def make_challenge_tag():
     return datetime.date.today().strftime('%Y:%B').lower()
 
 
-class DemoListViewsTest(test_utils.TestCase):
-    fixtures = ['test_users.json']
+class DemoListViewsTest(UserTestCase):
+    localizing_client = True
 
     def setUp(self):
+        super(DemoListViewsTest, self).setUp()
         self.user, self.admin_user, self.other_user = make_users()
-        self.client = LocalizingClient()
 
     def test_all_demos_includes_hidden_for_staff(self):
         build_submission(self.user)
@@ -88,14 +86,14 @@ class DemoListViewsTest(test_utils.TestCase):
             self.fail("Search should not ISE.")
 
 
-class DemoViewsTest(test_utils.TestCase):
-    fixtures = ['test_users.json']
+class DemoViewsTest(UserTestCase):
+    localizing_client = True
 
     def setUp(self):
+        super(DemoViewsTest, self).setUp()
         self.testuser = User.objects.get(username='testuser')
         self.testuser.set_password(TESTUSER_PASSWORD)
         self.testuser.save()
-        self.client = LocalizingClient()
 
     def test_submit_loggedout(self):
         r = self.client.get(reverse('demos_submit'))
@@ -389,13 +387,13 @@ class DemoViewsTest(test_utils.TestCase):
         # Ensure the new screenshot and thumbnail URL code works when there's a
         # screenshot present.
         try:
-            r = self.client.get(reverse('demos_all'))
-            r = self.client.get(reverse('demos_tag', args=['tech:javascript']))
-            r = self.client.get(reverse('demos_detail', args=[s.slug]))
-            r = self.client.get(reverse('demos_feed_recent', args=['atom']))
-            r = self.client.get(reverse('demos_feed_featured', args=['json']))
+            self.client.get(reverse('demos_all'))
+            self.client.get(reverse('demos_tag', args=['tech:javascript']))
+            self.client.get(reverse('demos_detail', args=[s.slug]))
+            self.client.get(reverse('demos_feed_recent', args=['atom']))
+            self.client.get(reverse('demos_feed_featured', args=['json']))
         except:
-            ok_(False, "No exceptions should have been thrown")
+            self.fail("No exceptions should have been thrown")
 
         # Forcibly delete the screenshot - should not be possible from
         # user-facing UI per form validation, but we should at least not throw
@@ -406,13 +404,13 @@ class DemoViewsTest(test_utils.TestCase):
 
         # Big bucks, no whammies...
         try:
-            r = self.client.get(reverse('demos_all'))
-            r = self.client.get(reverse('demos_tag', args=['tech:javascript']))
-            r = self.client.get(reverse('demos_detail', args=[s.slug]))
-            r = self.client.get(reverse('demos_feed_recent', args=['atom']))
-            r = self.client.get(reverse('demos_feed_featured', args=['json']))
+            self.client.get(reverse('demos_all'))
+            self.client.get(reverse('demos_tag', args=['tech:javascript']))
+            self.client.get(reverse('demos_detail', args=[s.slug]))
+            self.client.get(reverse('demos_feed_recent', args=['atom']))
+            self.client.get(reverse('demos_feed_featured', args=['json']))
         except:
-            ok_(False, "No exceptions should have been thrown")
+            self.fail("No exceptions should have been thrown")
 
     @attr('bug745902')
     def test_long_slug(self):

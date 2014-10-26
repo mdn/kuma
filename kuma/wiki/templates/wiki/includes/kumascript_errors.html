@@ -17,7 +17,7 @@
   </button>
   <div class="kumascript-details hidden">
       <p>{% trans %}
-        Anyone with an MDN account can edit a document to fix an error. Use the <a href="/docs/MDN/Kuma/Troubleshooting_KumaScript_errors">KumaScript troubleshooting guide</a> as a starting point.
+        Anyone with an MDN profile can edit a document to fix an error. Use the <a href="/docs/MDN/Kuma/Troubleshooting_KumaScript_errors">KumaScript troubleshooting guide</a> as a starting point.
       {% endtrans %}</p>
 
       <ul>
@@ -47,7 +47,7 @@
                         (<a href="{{ edit_url }}">{{ _('Edit Template') }}</a>)
                     {% endif %}<br>
 
-                    {{ _('Parsing macro:') }} <code>{{ template_name }}({% if error_meta.token %}{{ error_meta.token.args }}{% endif %})</code> (<a href="{{ url('wiki.edit_document', document.slug) }}">{{ _('Edit Document') }}</a>)<br>
+                    {{ _('Parsing macro:') }} <code>{{ template_name }}({% if error_meta.token %}{{ error_meta.token.args }}{% endif %})</code> {% if document %}(<a href="{{ url('wiki.edit_document', document.slug) }}">{{ _('Edit Document') }}</a>){% endif %}
                 {% endif %}
             {% endif %}
 

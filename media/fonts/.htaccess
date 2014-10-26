@@ -1,12 +1,3 @@
-# CORS only for mozilla domains
-SetEnvIf Origin "https?://(.*\.mozilla\.(com|org|net))" CORS=$0
-SetEnvIf Origin "https?://(mdn\.mozillademos\.org)" CORS=$0
-Header set Access-Control-Allow-Origin %{CORS}e env=CORS
-
-# block hotlinking by referer to .woff, .eof, .ttf files except mozilla domains
-RewriteCond "%{HTTP_REFERER}" "!https?://.*\.mozilla\.(com|org|net)/.*$"
-RewriteRule \.(woff|eot|ttf)$ - [F,NC,L,E=!CORS]
-
 <FilesMatch "\.(ttf|woff|eot)$">
     Header append vary "Origin"
     ExpiresActive On

@@ -119,10 +119,10 @@
                     {% set parent_tags = parent.tags.all() %}
                     <div id="translate-tags">
                       {% if parent_tags | length %}
-                        <ul class="tag-list tagit ui-widget ui-widget-content">
+                        <ul class="tags">
                           {% for parent_tag in parent_tags %}
-                          <li class="tagit-choice ui-widget-content ui-state-default">
-                              <a class="text tagit-label" href="{{url('wiki.tag', parent_tag.name)}}">{{ parent_tag.name }}</a>
+                          <li>
+                              <a href="{{url('wiki.tag', parent_tag.name)}}">{{ parent_tag.name }}</a>
                           </li>
                           {% endfor %}
                         </ul>
@@ -135,7 +135,7 @@
                 <div class="localized">
                   <section id="page-tags" class="page-tags">
                   <h3>{{ _('{locale} tags')|f(locale=language) }}</h3>
-                    <input id="tagit_tags" type="text" name="tags" value="{% if document.tags %}{% for tag in document.tags.all() %}{{ tag.name }},{% endfor %}{% endif %}" maxlength="255">
+                    <input id="tagit_tags" type="text" name="tags" value="{% if document.tags %}{% for tag in document.tags.all() %}{{ tag.name }},{% endfor %}{% endif %}" maxlength="255" class="tags">
                   </section>
                 </div>
               </div>
@@ -161,7 +161,7 @@
       </div>
     </form>
 
-  {% include 'wiki/includes/attachment_list.html' %}
+  {% include 'attachments/includes/attachment_list.html' %}
 
 {% endblock %}
 

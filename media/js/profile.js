@@ -29,8 +29,8 @@
 
     // Rebuild the list of expertise tags and checkboxes.
     var rebuildExpertiseTaglist = debounce(function () {
-        var taglist = $("#tags-expertise");
-        var interests = $("#id_profile-interests");
+        var taglist = $('#tags-expertise');
+        var interests = $('#id_profile-interests');
         var i_tags = interests.val().split(",");
 
         // Completely rebuild the list of expertise tags. Seems wasteful, but
@@ -39,7 +39,7 @@
         taglist.empty();
         $.each(i_tags, function (idx, tag) {
             tag = $.trim(tag);
-            if (INTEREST_SUGGESTIONS.indexOf(tag) == -1) return;
+            if(window.INTEREST_SUGGESTIONS.indexOf(tag) === -1) return;
 
             taglist.append('<li class="tag-expert">' +
                 '<label for="expert-' + idx + '">' +
@@ -56,73 +56,77 @@
 
     // Update the checked tags in expertise tag list from the text field
     var updateTaglistFromField = debounce(function () {
-        var taglist = $("#tags-expertise");
-        var expertise = $("#id_profile-expertise");
-        var eTags = expertise.val().split(",");
+        var taglist = $('#tags-expertise');
+        var expertise = $('#id_profile-expertise');
+        var eTags = expertise.val().split(',');
 
-        $("#tags-expertise .tag-expert input[type=checkbox]").removeAttr("checked");
+        $('#tags-expertise .tag-expert input[type=checkbox]').removeAttr('checked');
         $.each(eTags, function(idx, tag) {
             tag = $.trim(tag);
-            $('#tags-expertise .tag-expert input[value="' + tag + '"]').attr("checked", "checked");
+            $('#tags-expertise .tag-expert input[value=' + tag + ']').attr('checked', 'checked');
         });
     });
 
     // Update the expertise text field from checked boxes in tag list
     var updateFieldFromTaglist = debounce(function () {
-        var tags = $("#tags-expertise .tag-expert input[type=checkbox]:checked")
+        var tags = $('#tags-expertise .tag-expert input[type=checkbox]:checked')
             .map(function () { return $(this).val(); })
-            .get().join(",");
-        $("#id_profile-expertise").val(tags);
+            .get().join(',');
+        $('#id_profile-expertise').val(tags);
     });
 
     $(document).ready(function(){
 
         // Convert interests text field into a tag-it widget
-        $("#id_profile-interests").hide()
-            .after("<ul id='tagit-interests'></ul>")
+        $('#id_profile-interests').hide()
+            .after('<ul id="tagit-interests"></ul>')
             .change(rebuildExpertiseTaglist);
 
-        $("#tagit-interests").tagit({
-            availableTags: INTEREST_SUGGESTIONS,
+        $('#tagit-interests').tagit({
+            availableTags: window.INTEREST_SUGGESTIONS,
             singleField: true,
-            singleFieldNode: $("#id_profile-interests"),
+            singleFieldNode: $('#id_profile-interests'),
             onTagAdded: rebuildExpertiseTaglist,
             onTagRemoved: rebuildExpertiseTaglist,
             onTagClicked: rebuildExpertiseTaglist
         });
 
+        // Set the new tag element text
+        $('#tagit-interests .tagit-new input').attr('placeholder', gettext('New interest...'));
+
         // Convert the expertise text field into tag list with checkboxes sync'd to
         // interests
-        $("#id_profile-expertise").hide().after("<ul id='tags-expertise' class='taglist'></ul>");
+        $("#id_profile-expertise").hide().after("<ul id='tags-expertise' class='tags'></ul>");
 
-        $("#tags-expertise").click(updateFieldFromTaglist);
+        $('#tags-expertise').click(updateFieldFromTaglist);
         rebuildExpertiseTaglist();
 
         // word count
-        $(".wordcount").each(function(i, el){
+        $('.wordcount').each(function(i, el){
 
             var $el = $(el);
-            var placeholder = $el.find(".counter");
+            var placeholder = $el.find('.counter');
             var limit = parseInt(placeholder.text(), 10);
             var currcount = 0;
-            var field = $el.children("textarea");
+            var field = $el.children('textarea');
 
             function updateWordCount() {
-                var words = $.trim(field.val()).split(" ");
-                var color = placeholder.parent().css("color");
+                var words = $.trim(field.val()).split(' ');
+                var color = placeholder.parent().css('color');
+                var invalidColor = '#900';
                 var length;
 
-                if(words[0] == ""){ words.length = 0; }
+                if(words[0] === ''){ words.length = 0; }
                 currcount = limit - words.length;
                 placeholder.text(currcount);
 
                 length = words.length;
 
-                if(length >= limit && color != "#900" ) {
-                    placeholder.parent().css("color", "#900");
+                if(length >= limit && color !== invalidColor) {
+                    placeholder.parent().css('color', invalidColor);
                 }
-                else if(words.length < limit && color == "#900") {
-                    placeholder.parent().css("color", "");
+                else if(words.length < limit && color === invalidColor) {
+                    placeholder.parent().css('color', '');
                 }
             }
 
@@ -131,6 +135,6 @@
         });
 
         // Update "Other Profiles", preventing "blank" submissions
-        $("#profiles input").mozPlaceholder();
+        $('#profiles input').mozPlaceholder();
     });
 })();

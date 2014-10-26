@@ -18,6 +18,12 @@
   <meta name="twitter:description" content="{{ seo_description }}">
   <meta name="twitter:title" content="{{ social_title }}">
   <meta property="og:title" content="{{ social_title }}">
+
+  {{ css('home') }}
+  {% if waffle.flag('search_suggestions') %}
+  {{ css('search-suggestions') }}
+  {% endif %}
+
 {% endblock %}
 
 {% block content %}
@@ -27,13 +33,13 @@
 
   <h1>{{ _('Shared knowledge <span>for the Open Web</span>') }}</h1>
 
-  <div class="home-search-form">
-    <form action="{{ url('search') }}" method="get">
+  <form id="home-search-form" action="{{ url('search') }}" method="get" class="search">
+    <div class="home-search-form search-form">
       <label for="home-q" class="offscreen">{{ _('Search') }}</label>
-      <input type="search" id="home-q" name="q" placeholder="{{ _('Search the docs') }}" />
+      <input class="search-input" type="search" id="home-q" name="q" placeholder="{{ _('Search the docs') }}" />
       <button type="submit" class="offscreen">{{ _('Search') }}</button>
-    </form>
-  </div>
+    </div>
+  </form>
 
   <div class="home-features">
     <h2 class="offscreen">{{ _('Web Technologies') }}</h2>
@@ -104,7 +110,7 @@
     <div class="home-involved-card"><a href="{{ devmo_url('Project:MDN/Contributing') }}">
       <h2 class="title">{{ _('Get Involved') }}</h2>
 
-      <p class="numbers">{{ _('<span class="row1">Join <span class="number">3,414</span> contributors</span> <span class="row2">in <span class="number">31</span> languages and locales</span> <span class="row3">around the world.</span>') }}</p>
+      <p class="numbers">{{ _('<span class="row1">Join <span class="number">5,453</span> contributors</span> <span class="row2">in <span class="number">36</span> languages and locales</span> <span class="row3">around the world.</span>') }}</p>
       <p><span class="button">{{ _('Help improve MDN') }}</span></p>
     </a></div>
   </div>
@@ -170,4 +176,10 @@
 {% block js %}
   {{ super() }}
   {{ js('home', async=True) }}
+  {% if waffle.flag('search_suggestions') %}
+    {{ js('search-suggestions') }}
+    <script>
+        jQuery('#home-search-form').searchSuggestions();
+    </script>
+  {% endif %}
 {% endblock %}

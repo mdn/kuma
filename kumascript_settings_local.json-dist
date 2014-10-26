@@ -20,19 +20,12 @@
         "template_class": "EJSTemplate",
         "autorequire": {
             "mdn": "MDN:Common",
-            "Culture": "DekiScript:Culture",
             "Date": "DekiScript:Date",
-            "Json": "DekiScript:Json",
-            "List": "DekiScript:List",
-            "Map": "DekiScript:Map",
-            "Meta": "DekiScript:Meta",
-            "Num": "DekiScript:Num",
             "Page": "DekiScript:Page",
             "String": "DekiScript:String",
             "Uri": "DekiScript:Uri",
             "Web": "DekiScript:Web",
-            "Wiki": "DekiScript:Wiki",
-            "Xml": "DekiScript:Xml"
+            "Wiki": "DekiScript:Wiki"
         }
     }
 }

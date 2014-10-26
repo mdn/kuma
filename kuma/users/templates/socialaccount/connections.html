@@ -5,10 +5,10 @@
 {% block content %}
 <h1>{{ _("Account connections") }}</h1>
 
-<div class="text-content">
+<div class="text-content readable-line-length">
 
   {% if form.accounts %}
-  <p>{% trans %}You can sign in to your account using any of the following:{% endtrans %}</p>
+  <p>{% trans %}You can sign in to your profile using any of the following:{% endtrans %}</p>
 
   <form method="post" action="{{ url('socialaccount_connections') }}">
   {{ csrf() }}
@@ -63,8 +63,6 @@
   {% with process="connect" %}
   {% include "socialaccount/snippets/provider_list.html" %}
   {% endwith %}
-
-  {% include "socialaccount/snippets/login_extra.html" %}
 
 </div>
 

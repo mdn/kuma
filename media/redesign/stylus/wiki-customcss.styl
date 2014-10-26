@@ -1,0 +1,2378 @@
+@require 'includes/vars';
+@require 'includes/mixins';
+
+/*
+
+Copied from the custom CSS macro template https://developer.mozilla.org/en-US/docs/Template:CustomCSS
+This file was added to by the contributors as part of the redesign migration, it contains:
+- legacy classes in use from old versions of the MDN
+- new classes created to when contibutors needed something the devs did not provide
+- fixes for bugs filed that the dev team did not get to
+
+In a perfect world we go through the contents of this file and integrate it with the dev team's CSS files
+eventually emptying this file.
+
+ */
+/* Used for footnotes in {{PricePointTable}} (footnotes styles should be unified) */
+.footnote {
+    vertical-align: super;
+    font-size: 60%;
+}
+/* Make the 2nd breadcrumbs disappear, only if the page has been regenerated with a modern template */
+.column-container #wikiArticle .themeUpdated {
+    display: none;
+}
+/* Used to wrap columns that should all be the same height */
+.equalColumnHeights {
+    display: table;
+    border-collapse: separate;
+    border-spacing: 20px;
+}
+.equalColumnHeights div {
+    display: table-cell;
+    width: 50%;
+    height: 100%;
+}
+/* Use for large table (.thirdColumn + .***Bg) */
+table#fullwidth-table td.thirdColumn {
+    width: 30%;
+}
+.greenBg {
+    width: 30%;
+    background-color: #80ff80;
+}
+.lightGreenBg {
+    background-color: #dcffdc;
+}
+.yellowBg {
+    background-color: #ffffdc;
+}
+.orangeBg {
+    background-color: #ffa064;
+}
+.redBg {
+    background-color: #f66;
+}
+/* highlighted (bottom) link in call-out boxes */
+.callout-link-container {
+    position: relative;
+    height: 100%;
+}
+.callout-link-wrapper {
+    padding-top: 32px;
+}
+.callout-link {
+    font-style: italic;
+    font-size: 14px;
+    font-weight: normal;
+    display: block;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+/* remove left margin from Font Awesome icons inside wiki
+     content; this is messing up document content */
+#wikiArticle {$selector-icon} {
+    margin-left: 0px;
+}
+/* Iframe for live sample centered (Test) */
+.centered iframe {
+    display: block;
+    margin: 0 auto;
+    border: none;
+}
+/* Simulate two columns for landing page, if enough space is available    */
+@media (min-width:1050px) {
+    .topicpage-table {
+        display: table;
+        border-collapse: separate;
+        border-spacing: 20px 0;
+    }
+    .topicpage-table .section:first-of-type {
+        margin-right: 20px;
+        border-right: solid 6px rgba(212,221,228,0.5);
+    }
+    html[dir="rtl"] .topicpage-table .section:first-of-type {
+        border-left: solid 6px rgba(212,221,228,0.5);
+        border-right: none;
+    }
+    .landing {
+        display: table-row;
+    }
+    .section {
+        display: table-cell;
+        width: 50%;
+    }
+}
+/* For Landing page boxes; these are boxes displayed within columns on landing
+     pages, such as the Community and Related boxes. */
+.landingPageBox {
+    width: 100%;
+    padding: 0px;
+    border-bottom: 1px solid #bbb;
+    margin-bottom: 3px;
+}
+.landingPageBox ul {
+    padding-left: 44px;
+}
+/* Wide column box */
+.wideColumnBox {
+    column-width: 375px;
+    -moz-column-width: 375px;
+    -webkit-column-width: 375px;
+    -o-column-width: 375px;
+    -ms-column-width: 375px;
+}
+.wideColumnBoxList li {
+    line-height: 1.5;
+    list-style-type: none;
+    padding-left: 0;
+    page-break-inside: avoid;
+}
+/* Multi-column boxes for lists of longer links; this will adapt based on screen width */
+.multiColumnList {
+    column-width: 250px;
+    -moz-column-width: 250px;
+    -webkit-column-width: 250px;
+    -o-column-width: 250px;
+    -ms-column-width: 250px;
+}
+.multiColumnList li {
+    line-height: 1.5;
+    list-style-type: none;
+    padding-left: 0;
+    page-break-inside: avoid;
+}
+/* Multi-column boxes for smaller links, such as API terms */
+.smallMultiColumnList {
+    column-width: 120px;
+    -moz-column-width: 120px;
+    -webkit-column-width: 120px;
+    -o-column-width: 120px;
+    -ms-column-width: 120px;
+}
+.smallMultiColumnList li {
+    list-style-type: none;
+    padding-left: 0;
+    page-break-inside: avoid;
+}
+/* Multi-column box for smaller text */
+.horizFlexboxContainer {
+    display: flex;
+    display: -webkit-flex;
+    flex-flow: column nowrap;
+    -webkit-flex-flow: column nowrap;
+    justify-content: center;
+    -webkit-justify-content: center;
+    align-content: center;
+    -webkit-align-content: center;
+    align-items: center;
+    -webkit-align-items: center;
+    flex-direction: column;
+    -webkit-flex-direction: column;
+}
+div.smallTextMultiColumnBoxHeading {
+    background-color: #aac;
+    border-radius: 10px 10px 0 0;
+    border: 2px solid #ccc;
+    order: 1;
+    -webkit-order: 1;
+    width: 75%;
+    padding: 10px;
+    flex: 0 1 auto;
+    -webkit-flex: 0 1 auto;
+    font-weight: bold;
+}
+div.smallTextMultiColumnBoxList {
+    border: 2px solid #ccc;
+    background-color: #ddf;
+    border-top: 0;
+    border-radius: 0 0 10px 10px;
+    width: 75%;
+    padding: 10px;
+    order: 2;
+    -webkit-order: 2;
+    flex: 0 1 auto;
+    -webkit-flex: 0 1 auto;
+}
+div.smallTextMultiColumnBoxList ul {
+    column-width: 100px;
+    -moz-column-width: 100px;
+    -webkit-column-width: 100px;
+    -o-column-width: 100px;
+    -ms-column-width: 100px;
+}
+div.smallTextMultiColumnBoxList li {
+    list-style-type: none;
+    padding-left: 0;
+    font-size: 80%;
+}
+/* For ending "text alongside images" blocks; add this class to the first block that shouldn't be next to the image */
+.endImageWrapping {
+    clear: both;
+}
+/* Fancy Table of content for main pages of tutorial*/
+.fancyTOC {
+    counter-reset: fancyTOC;
+    -moz-columns: 18em;
+    columns: 18em;
+    margin-bottom: 1em;
+}
+.fancyTOC .button {
+    display: block;
+    margin-right: 0;
+    margin-bottom: 0.25em;
+    background-color: #a24c4c;
+    color: #fff;
+    font-size: 1.5em;
+    line-height: 1.5;
+}
+.fancyTOC a::before {
+    counter-increment: fancyTOC;
+    content: counter(fancyTOC) ". ";
+}
+.fancyTOC a::after {
+    content: ' »';
+}
+.fancyTOC .button:hover,
+.fancyTOC .button:focus,
+.fancyTOC .button:active {
+    background-color: #c26c6c;
+}
+/* In index, dim obsolete, deprecated or non-standard element instead of striking through them */
+s.deprecatedElement,
+s.obsoleteElement,
+s.nonStdElement {
+    text-decoration: none;
+    opacity: 0.3;
+}
+/* Add widgeted index, here adding an HTML5 badge as the bullet of the li element if class="html5" */
+div.index.widgeted {
+    -webkit-column-width: 10em;
+    -moz-column-width: 10em;
+    columns: 10em;
+}
+div.index.widgeted li {
+    padding-left: 18px;
+}
+div.index.widgeted li.html5 {
+    background-image: url("/files/3855/HTML5_Badge_16.png");
+    background-repeat: no-repeat;
+    background-position: left 4px;
+}
+[dir="rtl"] div.index.widgeted li {
+    padding-right: 18px;
+}
+[dir="rtl"] div.index.widgeted li.html5 {
+    background-image: url("/files/3855/HTML5_Badge_16.png");
+    background-repeat: no-repeat;
+    background-position: right 4px;
+}
+[dir="rtl"] div.index.widgeted span {
+    padding-right: 24px;
+}
+/* Add widgeted index, adding a Webcomponent badge of the li element if class="webcomp" */
+div.index.widgeted li.webcomp::after {
+    font-family: FontAwesome;
+    content: " \f085";
+}
+/* Quicknav template styles : https://developer.mozilla.org/en-US/docs/Template:quicknav -------- */
+#wikiArticle {
+    position: relative;
+}
+.quicknav {
+    position: fixed;
+    top: 237px;
+    left: 33px;
+    background: #fff;
+    z-index: 1;
+}
+.quicknav dl {
+    max-width: 0;
+    max-height: 300px;
+    overflow: auto;
+    margin: 0;
+    padding: 10px 0;
+    border: 1px solid transparent;
+    border-left: none;
+    -webkit-transition: border 0.5s ease 0.1s, max-width 0.5s ease 0.1s, padding 0.5s linear 0.1s;
+    -moz-transition: border 0.5s ease 0.1s, max-width 0.5s ease 0.1s, padding 0.5s linear 0.1s;
+    -ms-transition: border 0.5s ease 0.1s, max-width 0.5s ease 0.1s, padding 0.5s linear 0.1s;
+    -o-transition: border 0.5s ease 0.1s, max-width 0.5s ease 0.1s, padding 0.5s linear 0.1s;
+    transition: border 0.5s ease 0.1s, max-width 0.5s ease 0.1s, padding 0.5s linear 0.1s;
+}
+.quicknav dt,
+.quicknav dd {
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+}
+.quicknav dt {
+    font-weight: 700;
+}
+.quicknav dd + dt {
+    margin-top: 0.5em;
+}
+.quicknav:hover dl {
+    max-width: 300px;
+    padding: 10px 20px 10px 10px;
+    border-color: #ecece7;
+}
+.quicknav .showme {
+    display: block;
+    position: absolute;
+    top: 10px;
+    left: -31px;
+    width: 30px;
+    font: 2em sans-serif;
+    color: #ccc;
+    text-align: center;
+    background: #fff;
+    border-radius: 5px 0 0 5px;
+    border: 1px solid #ecece7;
+    border-right: none;
+}
+.quicknav:hover .showme {
+    color: #333;
+}
+.cleared {
+    clear: both;
+}
+/* This style has problem ! Style attribute of BR element is not work in Kuma */
+.clearLeft {
+    clear: left;
+}
+/* ltr page only ? */
+/* span.comment { display:none; } */
+#wikiArticle .breadcrumbs {
+    display: block;
+    margin-bottom: 1em;
+}
+/* The HTML5 landing page has some special-case stuff, handled here */
+/*
+table.html5ArticleToc { border-width: 5px }*/
+table.html5ArticleToc {
+    border-style: none;
+    border-width: 0;
+    background-color: transparent;
+    border-color: transparent;
+    width: 100%;
+}
+.html5ArticleToc thead th {
+    padding: 0.5em 1em;
+}
+.html5ArticleToc tbody td {
+    vertical-align: middle;
+}
+.html5ArticleToc ul {
+    margin: 0;
+    padding: 0;
+}
+.html5ArticleToc ul li {
+    display: inline;
+    margin: 0 0.25em;
+}
+
+table.withoutBorder,
+table.withoutBorder td,
+table.withoutBorder tr,
+table.withoutBorder th {
+    border: none;
+}
+td.horizontalLine {
+    border-left: none;
+}
+td.column {
+    border-bottom: none;
+}
+td.bottomPart {
+    border-top: none;
+}
+/* Use the verticalText class on a table cell to rotate its contents 90° */
+td.verticalText {
+    width: 3em;
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+table.blockTable {
+    border-collapse: collapse;
+}
+table.blockTable,
+table.blockTable td {
+    margin: 1px;
+    padding: 1px;
+}
+table.blockTable .verticalColumn {
+    border-left: none;
+    border-right: none;
+}
+/* The index page for HTML / CSS */
+div.index {
+    -webkit-columns: 18em;
+    -moz-column-width: 18em;
+    columns: 18em;
+}
+div.index > span {
+    font-family: Georgia, Times, 'Times New Roman', serif;
+    font-size: 1.6em;
+}
+div.index ul,
+div.index ol {
+    margin-left: 0;
+    padding-left: 0;
+    list-style-type: none;
+}
+/* Stuff used for the syntax information about CSS, HTML, and so forth */
+/* ul.cssprop    box used by each CSS Property reference page*/
+.cssprop {
+    background-color: rgba(255,203,0,0.1);
+}
+[dir="ltr"] .cssprop {
+    clear: left;
+    border-left: 6px solid rgba(255,203,0,0.5);
+}
+[dir="rtl"] .cssprop {
+    clear: right;
+    border-right: 6px solid rgba(255,203,0,0.5);
+}
+.cssprop li {
+    display: table-row;
+    padding: 3px;
+    margin: 0;
+}
+.cssprop li dfn {
+    display: table-cell;
+    padding: 0 5px;
+    border-bottom: none;
+    white-space: pre;
+    cursor: inherit;
+}
+.cssprop li dfn:after {
+    content: ":";
+}
+.cssprop li li {
+    display: list-item;
+    list-style-type: disc;
+    line-height: 1;
+}
+/* ul.htmlelt box used by each HTML Element reference page */
+.htmlelt {
+    display: table;
+    padding: 11px 22px;
+    background-color: rgba(255,149,0,0.1);
+}
+[dir="ltr"] .htmlelt {
+    clear: left;
+    border-left: 6px solid rgba(255,149,0,0.5);
+}
+[dir="rtl"] .htmlelt {
+    clear: right;
+    border-right: 6px solid rgba(255,149,0,0.5);
+}
+.htmlelt li {
+    display: table-row;
+    padding: 3px;
+    margin: 0;
+    text-align: left;
+}
+.htmlelt li dfn {
+    display: table-cell;
+    padding: 0 5px;
+    border-bottom: none;
+    white-space: pre;
+    cursor: inherit;
+}
+.htmlelt li dfn:after {
+    content: ":";
+}
+.htmlelt li li {
+    display: list-item;
+    list-style-type: disc;
+    line-height: 1;
+}
+/* ul.audionodebox used by each AudioNode object reference page*/
+.audionodebox {
+    display: table;
+    padding: 11px 22px;
+    background-color: rgba(117,195,165,0.1);
+}
+[dir="ltr"] .audionodebox {
+    clear: left;
+    border-left: 6px solid rgba(117,195,165,0.5);
+}
+[dir="rtl"] .audionodebox {
+    clear: right;
+    border-right: 6px solid rgba(117,195,165,0.5);
+}
+.audionodebox li,
+.summary-box-js li,
+.summary-box-events li {
+    display: table-row;
+    padding: 3px;
+    margin: 0;
+    text-align: left;
+}
+.audionodebox li dfn,
+.summary-box-js li dfn,
+.summary-box-events li dfn {
+    display: table-cell;
+    padding: 0 5px;
+    border-bottom: none;
+    white-space: pre;
+    cursor: inherit;
+}
+.audionodebox li dfn:after,
+.summary-box-js li dfn:after,
+.summary-box-events li dfn:after {
+    content: ":";
+}
+.audionodebox li li,
+.summary-box-js li li,
+.summary-box-events li li {
+    display: list-item;
+    list-style-type: disc;
+    line-height: 1;
+}
+/* https://developer.mozilla.org/en-US/docs/Template:HTML:Element_Navigation */
+table.HTMLElmNav {
+    margin: 1em auto;
+    border-width: 5px;
+}
+table.HTMLElmNav th,
+table.HTMLElmNav td {
+    text-align: center;
+}
+.method {
+    margin-left: 10px;
+    margin-bottom: 2em;
+    margin-top: 1em;
+}
+.method > .name {
+    display: block;
+    font-size: 13pt;
+    margin-bottom: 0.2em;
+}
+.method > .name > .param:after {
+    content: ",";
+    padding-right: 0.5em;
+}
+.method > .name > .param:last-of-type:after {
+    content: "";
+}
+.method > .name > .param > .name:after {
+    content: " as ";
+    font-weight: normal;
+}
+.method > .name > .param:not(.required) {
+    font-style: italic;
+}
+.method > .name > .param:not(.required):before {
+    content: "[";
+}
+.method > .name > .param:not(.required):after {
+    content: "]";
+}
+.method > .description {
+    display: block;
+    font-size: 10pt;
+    color: #444;
+    font-style: italic;
+    margin-bottom: 7px;
+}
+.method > .name > .returns: before {
+    content: " returns ";
+    font-weight: normal;
+    font-style: italic;
+}
+.method > .name > .returns {
+    font-weight: 700;
+}
+.method > .params {
+    display: block;
+    color: #555;
+}
+.method > .params > .param {
+    display: block;
+    margin-bottom: 5px;
+}
+.method > .params > .param > .name {
+    font-weight: 700;
+    margin-right: 0.5em;
+    min-width: 80px;
+    display: inline-block;
+}
+.method > .params > .param > .description {
+    display: inline-block;
+    width: 300px;
+    vertical-align: top;
+    margin-right: 30px;
+}
+.method > .params > .param > .type {
+    display: inline-block;
+    width: 150px;
+    vertical-align: top;
+    font-weight: 700;
+}
+.method > .params > .param > .type:before {
+    content: "Type ";
+    color: #888;
+    font-weight: normal;
+}
+.method > .params > .param > .default {
+    display: inline-block;
+    width: 150px;
+    vertical-align: top;
+    font-weight: 700;
+}
+.method > .params > .param > .default:before {
+    content: "Default ";
+    color: #888;
+    font-weight: normal;
+}
+/* version compatibility banners and notes */
+.geckoVersionNote {
+    background-color: #e0e0ff;
+    background-image: -moz-radial-gradient(0px 0 45deg, circle farthest-corner, #e0e0ff 0%, #f8f8ff 80%);
+    border-left: 5px solid #008;
+}
+.geckoVersionNote p {
+    padding-left: 4px;
+    border: 0;
+}
+.geckoVersionHeading {
+    background-color: #008;
+    background-image: -moz-linear-gradient(left, #008 50%, #e0e0ff 80%);
+    color: #fff;
+    font: 16px/1.7 Verdana, Tahoma, sans-serif;
+    margin-top: 0;
+    margin-left: 0;
+    margin-bottom: 4px;
+    height: 42px;
+}
+.geckoVersionHeading a:link {
+    color: #ddd;
+}
+.geckoVersionHeading a:visited {
+    color: #eee;
+}
+.geckoVersionHeading a:hover,
+.geckoVersionHeading a:focus {
+    color: #fdd;
+}
+.experimentalIcon {
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    color: #ffa500;
+    background-color: #fff;
+    border: 3px solid #ffa500;
+}
+.nonstandardIcon {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    color: #f00;
+    background-color: #f00;
+    border: 1px solid #f00;
+}
+.obsoleteIcon {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    color: #000;
+    background-color: #000;
+    border: 1px solid #000;
+}
+.deprecatedIcon {
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    color: #000;
+    background-color: #fff;
+    border: 3px solid #000;
+}
+/* Used to to create icon-badged APIs inline */
+.indexListRow {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-align-content: stretch;
+    -ms-flex-line-pack: stretch;
+    align-content: stretch;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+/*width:100%;*/
+}
+.indexListTerm {
+    -webkit-order: 0;
+    -ms-flex-order: 0;
+    order: 0;
+    -webkit-flex: 0 1 auto;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    -webkit-align-self: flex-start;
+    -ms-flex-item-align: start;
+    align-self: flex-start;
+}
+.indexListBadges {
+    -webkit-order: 0;
+    -ms-flex-order: 0;
+    order: 0;
+    -webkit-flex: 0 1 auto;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    -webkit-align-self: auto;
+    -ms-flex-item-align: auto;
+    align-self: flex-end;
+    padding-left: 6px;
+    margin-right: 6px;
+}
+.badge {
+    position: relative;
+    top: -2px;
+    display: inline-block;
+    cursor: default;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    padding: 0.1em 0.6em;
+    font-size: 70%;
+    font-weight: 700;
+    height: 1.4em;
+    vertical-align: middle;
+    line-height: 1.3;
+}
+.badgeText {
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+}
+.banner {
+    display: block;
+    overflow: hidden;
+    font-size: 12px;
+    font-weight: normal;
+    margin: 10px 0px;
+    padding: 2px 10px;
+}
+.bannerHeading {
+    text-align: inherit;
+    font-weight: bold;
+    padding-bottom: 2px;
+}
+.bannerText {
+    text-align: center;
+    font-weight: normal;
+}
+.icon {
+    padding-left: 3.1em;
+}
+[dir=rtl] .icon {
+    padding-left: 0.8em;
+    padding-right: 3.1em;
+}
+.icon:before {
+    content: "";
+    position: absolute;
+    left: -2px;
+    top: 50%;
+    margin-top: -1.5em;
+    width: 2.8em;
+    height: 2.8em;
+    background: #fff no-repeat center center;
+    background-size: 2.6em;
+    border-radius: 100%;
+    border: 1px solid #aaa;
+    border-right: none;
+    box-sizing: border-box;
+    -moz-boxsizing: border-box;
+}
+[dir=rtl] .icon:before {
+    left: auto;
+    right: -2px;
+    border: 1px solid #aaa;
+    border-left: none;
+}
+/* Used for badging obsolete APIs */
+.nonstandardBadge {
+    background: linear-gradient(to right, #f0de00 30%, #f0ff19);
+    color: #000;
+    text-shadow: 1px 1px 0 #ddd;
+}
+/* Used for badging Gecko minimum version requirements */
+.geckoVersionBadge {
+    background: rgba(117,195,165,0.44);
+    color: #000;
+    text-shadow: 1px 1px 0 #ddd;
+    border: 5px solid rgba(0,0,0,0.05);
+}
+/* Used for badging Firefox minimum version requirements */
+.firefoxVersionBadge {
+    background-color: #fedf9e;
+    background-image: linear-gradient(to right, #fedf9e 30%, #fef1d4);
+    background-repeat: no-repeat;
+    background-size: contain;
+    overflow: hidden;
+    color: #000;
+    text-shadow: 1px 1px 0 #ccc;
+    white-space: nowrap;
+}
+.firefoxVersionBadge a:link {
+    color: #000;
+    text-decoration: underline;
+}
+.firefoxVersionBadge a:visited {
+    color: #000;
+    text-decoration: underline;
+}
+.firefoxVersionBadge a:hover {
+    color: #853;
+    text-decoration: none;
+}
+.firefoxVersionBadge a:active {
+    color: #858;
+    text-decoration: none;
+}
+/* Used for badging APIs not implemented in Firefox */
+.unimplementedBadge {
+    background-color: #ffb6c1;
+    color: #000;
+    text-shadow: 1px 1px 0 #ddd;
+    border-color: #ff1493;
+}
+/* Used for badging non-standard APIs */
+.obsoleteBadge {
+    background: linear-gradient(to right, #febcbc 30%, #fffff0);
+    color: #000;
+    text-shadow: 1px 1px 0 #ddd;
+    border-color: #f00;
+}
+/* Used for badging deprecated APIs */
+.deprecatedBadge {
+    background: linear-gradient(to right, #ccf 30%, #eef);
+    color: #000;
+    text-shadow: 1px 1px 0 #ddd;
+    border-color: #00f;
+}
+/* Used for badging experimental APIs */
+.experimentalBadge {
+    background: linear-gradient(to right, #ffefd9 40%, #fffde0);
+    color: #000;
+    text-shadow: 1px 1px 0 #ddd;
+}
+/* Used for badging privileged APIs */
+.privilegedBadge {
+    background: linear-gradient(to right, #ffbd19 30%, #ffb200);
+    color: #000;
+    text-shadow: 1px 1px 0 #ddd;
+}
+[dir=rtl] .privilegedBadge {
+    background: linear-gradient(to left, #ffbd19 30%, #ffb200);
+}
+.icon.privilegedBadge:before {
+    background-color: #ffa500;
+    background-image: url("https://mdn.mozillademos.org/files/5061/firefoxos-logo-sm.png");
+}
+.sidebar-box {
+    margin-left: 16px;
+    margin-bottom: 2.5em;
+    border-right: 1px solid #ecf1f3;
+    padding: 12px;
+    background: #f1f6f8 url("img/toc-bg.png") 0 0 no-repeat;
+    font: 12px Verdana, Tahoma, sans-serif;
+}
+.sidebar-box h2,
+.sidebar-box h3,
+.sidebar-box h5 {
+    margin-bottom: 0.5em;
+    font-family: inherit;
+    font-weight: 700;
+}
+.sidebar-box h2 {
+    font-size: 1.5em;
+}
+.sidebar-box h3 {
+    font-size: 1.1em;
+}
+.sidebar-box h5 {
+    font-size: 0.9em;
+}
+.sidebar-box > ul {
+    float: left;
+    text-align: left;
+    display: block;
+    padding: 0;
+    margin: auto 0;
+    position: relative;
+}
+.sidebar-box ul > li {
+    list-style-type: none;
+}
+.tab-content-box {
+    border-right: 1px solid #ecf1f3;
+    margin-left: 16px;
+    padding: 12px;
+    background: #fff;
+    font: 12px Verdana, Tahoma, sans-serif;
+}
+.tab-content-box h2,
+.tab-content-box h3,
+.tab-content-box h5 {
+    margin-bottom: 0.5em;
+    font-family: inherit;
+    font-weight: 700;
+}
+.tab-content-box h2 {
+    font-size: 1.5em;
+}
+.tab-content-box h3 {
+    font-size: 1.1em;
+}
+.tab-content-box h5 {
+    font-size: 0.9em;
+}
+/* Horizontal tab boxes */
+.htab {
+    margin: 0 auto 1em;
+    display: inline-block;
+}
+.htab > ul > li {
+    width: 150px;
+    height: 28px;
+    list-style-type: none;
+    display: inline;
+    padding-bottom: 3px;
+    border: 1px solid #ddd;
+    border-radius: 3px 3px 0 0;
+    padding-top: 5px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: normal;
+    margin: auto;
+    position: relative;
+    padding-left: 6px;
+    padding-right: 6px;
+    border-bottom: none;
+    opacity: 0.5;
+    -ms-filter: unqoute("progid:DXImageTransform.Microsoft.Alpha(Opacity=50)");
+    filter: unqoute("progid:DXImageTransform.Microsoft.Alpha(Opacity=50)");
+}
+.htab > ul > li.selected {
+    opacity: 1 !important;
+    -ms-filter: unqoute("progid:DXImageTransform.Microsoft.Alpha(Opacity=100)");
+    filter: unqoute("progid:DXImageTransform.Microsoft.Alpha(Opacity=100)");
+    border: 1px solid #ddd;
+    border-bottom: none;
+    z-index: 10;
+    background-color: #eaeff2 !important;
+    position: relative;
+    font-weight: bold;
+}
+.htab>ul>li>a {
+    cursor: pointer;
+}
+.htab>ul>li.selected a {
+    color: #000;
+}
+.htab>ul {
+    width: 150px;
+    text-align: left;
+    display: inline;
+    padding: 0;
+    margin: 0 auto;
+    position: relative;
+    top: 0;
+}
+.htab>div {
+    background-color: #f1f6f8;
+    margin-top: 0;
+    border: 1px solid #ddd;
+    padding: 12px;
+    position: relative;
+    z-index: 9;
+    word-wrap: break-word;
+}
+/* Compatibility tables */
+table.compat-table {
+    border: 1px solid #bbb;
+    border-collapse: collapse;
+}
+table.compat-table {
+    border-color: rgba(0,0,0,0);
+    margin: 0;
+}
+table.compat-table td {
+    padding: 5px;
+    border: 1px solid rgba(212,221,228,0.25);
+    font-size: 12px;
+    background: #fff;
+    vertical-align: top;
+    word-wrap: break-word;
+}
+table.compat-table th,
+table.compat-table td.header {
+    border: 1px solid rgba(212,221,228,0);
+    background: none;
+    font-weight: 200;
+    font-family: 'Open Sans Light', sans-serif;
+    font-size: 16px;
+    line-height: 100%;
+    padding: 2px 4px 8px;
+/* From content.styl
+        background: rgba(212, 221, 228, 0.5);
+        font-weight: 700;
+        */
+}
+div.action-driven {
+    display: inline-block;
+    float: none;
+    min-height: 8.5em;
+    margin: 0.8em;
+    box-shadow: 0.2em 0.1em 0.1em #808080;
+    vertical-align: top;
+}
+div.action-driven > div {
+    font: 400 20px 'Bebas Neue', 'League Gothic', Haettenschweiler, Impact, 'Arial Narrow', Meiryo, sans-serif;
+    text-transform: uppercase;
+}
+/* standard coloring */
+.notice.experimental {
+    color: 0;
+    background-color: rgba(255,203,0,0.5);
+    border-color: rgba(0,0,0,0.05);
+    border-style: solid !important;
+    border-width: 5px !important;
+}
+/* New theme action-driven */
+.card-grid > li > span:first-of-type {
+    font-weight: bold;
+}
+ul.card-grid {
+    list-style-type: none;
+    padding-left: 0;
+}
+ul.card-grid li {
+    margin-bottom: 25px;
+    padding: 10px;
+}
+@media only screen and (min-width:760px) {
+    ul.card-grid {
+        list-style: none outside none;
+        padding-left: 40px;
+    }
+    .card-grid {
+        border-spacing: 30px 0px;
+        padding-bottom: 25px;
+    }
+    .card-grid > li > span:first-of-type {
+        font-weight: normal;
+    }
+    .card-grid > li {
+        background-color: #ccc;
+        background-image: -moz-linear-gradient(center top, #ddd 0px, #bbb 100%);
+        border-radius: 6px;
+        background-clip: padding-box;
+        box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
+        display: table-cell;
+        margin: 3px 12px 20px;
+        padding: 20px;
+        position: relative;
+        vertical-align: top;
+        width: 200px;
+        word-wrap: break-word;
+        z-index: 1;
+        min-height: 130px;
+    }
+    .card-grid > li:before {
+        left: 1px;
+        position: absolute;
+        right: 1px;
+        top: 1px;
+        z-index: -1;
+    }
+    .card-grid > li img {
+        float: left;
+        max-width: 35%;
+    }
+    .double-card {
+        width: 430px !important;
+    }
+    .card-grid > li > ul > li {
+        margin-bottom: 0px;
+        list-style-type: disc;
+        padding-bottom: 0px;
+        padding-top: 6px;
+    }
+    .card-grid > li > ul {
+        margin-bottom: 25px;
+    }
+    .card-grid > li span {
+        display: block;
+        font-family: 'Open Sans Light', Arial, Helvetica, sans-serif;
+        font-size: 22px;
+        letter-spacing: -1px;
+        line-height: 22px;
+        margin-bottom: 12px;
+    }
+}
+.card-grid > li {
+    background-color: rgba(234,239,242,0.5);
+    border-radius: 0;
+    box-shadow: 3px 3px 0 3px rgba(212,221,228,0.5);
+    background-image: none;
+}
+/*-----------------
+        for Topic page
+*/
+table.topicpage-table,
+table.topicpage-table td,
+table.topicpage-table tr,
+table.topicpage-table th {
+    border: none;
+}
+.topicpage-table .section {
+    padding-right: 1em;
+}
+/* New theme */
+dl {
+    margin-bottom: 20px;
+}
+.center .topicpage-table h2 {
+    font-family: 'Open Sans Light', sans-serif;
+}
+.topicpage-table ul {
+    padding-left: 20px;
+}
+.topicpage2col {
+    margin: 1em 0;
+    padding: 0 10px;
+    zoom: 1;
+}
+.topicpage2col::after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+.topicpage2col .A,
+.topicpage2col .B {
+    width: 50%;
+    position: relative;
+}
+.html-ltr .topicpage2col .A,
+.html-rtl .topicpage2col .B {
+    float: left;
+    left: -10px;
+}
+.html-ltr .topicpage2col .B,
+.html-rtl .topicpage2col .A {
+    float: right;
+    right: -10px;
+}
+.topicpage2col h2 {
+    background-image: url("/media/img/icons-sections.png");
+    background-repeat: no-repeat;
+    margin: 0 0 0.25em;
+    padding: 18px 18px 0 65px;
+    min-height: 48px;
+    font: 400 28px/1 'Bebas Neue', 'League Gothic', Haettenschweiler, Impact, 'Arial Narrow', Meiryo, sans-serif;
+    text-transform: uppercase;
+    border: none;
+}
+.html-rtl .topicpage2col h2 {
+    padding: 18px 65px 0 18px;
+}
+.html-ltr .topicpage2col .Documentation {
+    background-position: 0 0;
+}
+.html-ltr .topicpage2col .Community {
+    background-position: 0 -200px;
+}
+.html-ltr .topicpage2col .Tools {
+    background-position: 0 -400px;
+}
+.html-ltr .topicpage2col .Related_Topics {
+    background-position: 0 -600px;
+}
+.html-rtl .topicpage2col .Documentation {
+    background-position: right 0;
+}
+.html-rtl .topicpage2col .Community {
+    background-position: right -200px;
+}
+.html-rtl .topicpage2col .Tools {
+    background-position: right -400px;
+}
+.html-rtl .topicpage2col .Related_Topics {
+    background-position: right -600px;
+}
+/* ----------------------------
+        Styles for Indicator
+*/
+.inlineIndicator,
+.indicatorInHeadline,
+.blockIndicator,
+.overheadIndicator {
+/*box-shadow: 1px 1px 1px #CCC*/
+    margin: 0px 0px 1.5em;
+    border: 5px solid;
+    padding: 10px 10px 0px 10px;
+    background: none repeat scroll 0% 0%;
+    font-size: 12px;
+}
+.redesign .inlineIndicator,
+.redesign .indicatorInHeadline,
+.redesign .blockIndicator,
+.redesign .overheadIndicator {
+/* background-color:rgba(255,203,0,0.75); */
+    border-color: rgba(0,0,0,0.05);
+    border-style: solid !important;
+/* font-size: 11px; */
+    padding: 10px;
+}
+.redesign .inlineIndicator,
+.redesign .indicatorInHeadline {
+    border-width: 0;
+    border-left-width: 4px;
+    font-size: 10px;
+    font-family: Helvetica, Arial, sans-serif;
+    min-width: 20px;
+    border-radius: 2px;
+    letter-spacing: 1px;
+    padding: 6px 6px 4px 6px;
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 11px;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    font-weight: normal;
+    line-height: normal;
+}
+/* styles for inline indicator */
+.inlineIndicator /* This class is base of inlineIndicator */,
+.megaWarningInline {
+    border-width: 1px;
+    border-style: solid;
+    font-size: 12px;
+    white-space: nowrap;
+    padding: 0 2px;
+    margin: 0 2px;
+}
+.todoInline {
+    border-left-width: 8px;
+    white-space: normal;
+}
+.megaWarningInline {
+    background: #f00;
+    border-color: #818151;
+    color: #fff;
+    font-size: small;
+    font-weight: 700;
+    float: right;
+    vertical-align: middle;
+/* Mega warnings: deep red backgrounds etc */
+}
+.notXPCOMInline,
+.noscriptInline {
+    font-weight: 700;
+}
+/* styles for overhead indicator */
+/*.overheadIndicator */
+/* This class is base of overheadIndicator */
+.standardNoteHeader,
+.standardNoteBlock {
+    border: 1px solid #000;
+    overflow: hidden;
+    margin: 10px 0;
+    padding: 0 10px;
+    text-align: center;
+}
+/*.overheadIndicator p,*/
+.blockIndicator p {
+    margin: 4px 0;
+}
+.draftHeader strong {
+    display: block;
+    padding-top: 10px;
+}
+.draftHeader div {
+    font-size: x-small;
+    padding-bottom: 10px;
+}
+html[dir="rtl"] .warningHeader {
+    padding: 1em 130px 1em 1em !important;
+    background-position: 99% 10px !important;
+}
+/* styles for Method indicator */
+.indicatorInHeadline,
+.standardNoteMethod {
+    border: 1px solid #000;
+    padding: 1px 2px;
+    white-space: nowrap;
+    vertical-align: middle;
+    font-size: 12px;
+    float: right;
+}
+[dir="rtl"] .indicatorInHeadline,
+[dir="rtl"] .standardNoteMethod {
+    float: left;
+}
+.renamedMethod,
+.noscriptMethod,
+.deprecatedMethod,
+.unimplementedMethod {
+    font-weight: 700;
+}
+/* color setting */
+#wikiArticle i.icon-beaker {
+    color: #09d;
+}
+/* experimental */
+#wikiArticle i.icon-warning-sign {
+    color: #db0;
+}
+/* non-standard */
+#wikiArticle i.icon-thumbs-down-alt {
+    color: #000;
+}
+/* deprecated */
+#wikiArticle i.icon-trash {
+    color: #d00;
+}
+/* obsolete */
+#wikiArticle i.icon-stethoscope {
+    color: #483d8b;
+}
+/* unimplemented */
+.draft {
+    background: #ffc;
+    border-color: #990;
+}
+.redesign .draft {
+    background: rgba(255,203,0,0.5);
+    border-color: rgba(0,0,0,0.05);
+}
+.htmlVer {
+    background: #cee;
+    border-color: #267373;
+}
+.redesign .htmlVer {
+    border-color: rgba(0,0,0,0.05);
+}
+.nonStandard {
+    background: rgba(193,56,50,0.85);
+    color: #fff;
+    border-color: rgba(0,0,0,0.05);
+}
+.nonStandard a,
+.nonStandard a:hover,
+.nonStandard a:visited,
+.warning a,
+.warning a:hover,
+.warning a:visited {
+    color: #ff0;
+    border-bottom: 1px solid #ff0;
+    text-decoration: none;
+}
+.unimplemented {
+    background: rgba(193,56,50,0.35);
+    border-color: rgba(0,0,0,0.05);
+}
+.deprecated {
+    background: rgba(0,0,0,0.1);
+    border-color: rgba(0,0,0,0.05);
+}
+.domLevel {
+    border-color: rgba(0,0,0,0.05);
+}
+.todo {
+    border-color: rgba(0,0,0,0.05);
+}
+.minVer,
+.jsMinVer,
+.mbMinVer {
+    background: #ffffe1;
+    border-color: rgba(0,0,0,0.05);
+}
+.mobileOnly {
+    border-color: rgba(0,0,0,0.05);
+    background: #ffe1be;
+}
+.renamed {
+    background: #d4f3ff;
+    border-color: #818151;
+}
+.projectSpecific {
+    background: #ffe1be;
+    border-color: rgba(0,0,0,0.05);
+}
+.prefixBox {
+    background: #e4edf7;
+    border-color: rgba(0,0,0,0.05);
+}
+.experimental {
+    background: #ffefd9;
+    border-color: rgba(0,0,0,0.05);
+}
+.readOnly {
+    background: rgba(0,0,0,0.65);
+    border-color: rgba(0,0,0,0.15);
+    color: #fff;
+}
+.noscript {
+    background: #f00;
+    border-color: rgba(0,0,0,0.05);
+    color: #fff;
+}
+.projectSpecific {
+    background: #ffe1be;
+    border-color: #818151;
+}
+/* Banner used to indicate support only in specific Gecko projects */
+.translationInProgress {
+    background: #a3f5a3;
+    border-color: rgba(0,0,0,0.05);
+}
+/* style for next and previous pages in tutorial */
+
+.previousPage {
+    bidi-value(float, left, right);
+    bidi-style(margin-right, ($grid-spacing), margin-left, 0);
+    margin-bottom: $grid-spacing;
+}
+
+.nextPage {
+    bidi-value(float, right, left);
+    bidi-style(margin-left, ($grid-spacing), margin-right, 0);
+    margin-top: $grid-spacing;
+}
+
+/* styles for liveSample link : https://developer.mozilla.org/en-US/docs/Template:LiveSample */
+a.liveSample {
+    display: inline-block;
+    margin: 0 3px 1em;
+    font-size: 1.25em;
+    color: #fff;
+}
+a.liveSample:link,
+a.liveSample:visited {
+    background-color: #069;
+}
+a.liveSample:hover,
+a.liveSample:focus {
+    background-color: #0099e6;
+}
+[dir="rtl"] a.liveSample {
+    background-position: left 40% !important;
+    padding: 0.35em 0.75em 0.2em !important;
+}
+/* callout boxes etc */
+.standardSidebar {
+    border: 1px solid #777;
+    margin: 0 0 15px 15px;
+    padding: 0 15px 5px;
+    float: right;
+    background: #eee;
+    font-size: 0.85em;
+    position: relative;
+    z-index: 2;
+}
+[dir="rtl"] .standardSidebar {
+    margin: 0 15px 15px 0;
+    float: left;
+}
+/* Colored text for INCORRECT/BAD and CORRECT/GOOD values (and BEST)*/
+.correct {
+    color: #008000;
+}
+.incorrect {
+    color: #f00;
+}
+.best {
+    color: #396;
+}
+/* Item in a list of item that has been done */
+.done {
+    text-decoration: line-through;
+}
+/* Specific items for tutorials */
+.tuto_details,
+.tuto_example {
+    border: 1px solid #36b;
+    padding: 0.5em;
+    margin-bottom: 1em;
+}
+.tuto_details {
+    background: #f4f4f4;
+}
+.tuto_example {
+    background: #fffff4;
+}
+.tuto_type {
+    font-weight: 700;
+    text-align: left;
+}
+/* This is a specific item for the CSS tutorial: https://developer.mozilla.org/en-US/docs/CSS/Getting_Started/Selectors */
+/* To be removed once we have Live Examples */
+a.tutospecial:link,
+a.tutospecial:visited {
+    padding: 1px 10px;
+    color: #fff;
+    background: #555;
+    border-radius: 3px;
+    border: 1px outset #333;
+/* fallback for next line */
+    border: 1px outset rgba(50,50,50,0.5);
+    font-family: georgia, serif;
+    font-size: 14px;
+    font-style: italic;
+    text-decoration: none;
+}
+a.tutospecial:hover,
+a.tutospecial:focus,
+a.tutospecial:active {
+    background-color: #666;
+}
+#tutochallenge {
+    display: none;
+}
+#tutochallenge a.hideAnswer {
+    font-size: 12px;
+    text-align: right;
+    display: block;
+}
+#tutochallenge:target {
+    display: block;
+}
+#tutochallenge + a {
+    font-size: 12px;
+    text-align: right;
+    display: block;
+}
+#tutochallenge:target + a {
+    display: none;
+}
+/* Fix for mdn-min.css : https://developer.mozilla.org/media/css/mdn-min.css */
+[dir="rtl"] dd {
+    margin: 0 22px 0.5em 0;
+}
+[dir="rtl"] th,
+[dir="rtl"] caption {
+    text-align: right;
+}
+[dir="rtl"] .title h1 {
+    padding: 0 18px 0 0 !important;
+}
+/* Fix for wiki-min.css : https://developer.mozilla.org/media/css/wiki-min.css */
+div.bug,
+div.warning {
+    overflow: hidden;
+}
+.page-content dd {
+    margin: 0.5em;
+}
+/* [dir="rtl"] .translate #page-buttons { } */
+[dir="rtl"] .hasJS #nav-main #nav-sub-docs,
+[dir="rtl"] #nav-main .menu:hover #nav-sub-docs {
+    margin-left: -300px;
+}
+[dir="rtl"] #nav-main #nav-sub-docs li {
+    float: right;
+}
+[dir="rtl"] #nav-main #nav-sub-docs p {
+    text-align: left;
+}
+[dir="rtl"] .page-content ul {
+    padding-left: 0;
+    padding-right: 22px;
+}
+[dir="rtl"] .page-content dd {
+    padding-left: 0;
+    padding-right: 15px;
+}
+/* for B2G docs, to allow use of B2G lookalike UX elements */
+/* For display of Firefox OS UX screenshots in a grid */
+table.fxosScreenGrid,
+table.fxosScreenGrid tr {
+    border: none;
+}
+table.fxosScreenGrid td,
+table.fxosScreenGrid th {
+    border: none;
+    width: 340px;
+    vertical-align: top;
+}
+div.fxosLiveSampleWrapper {
+    width: 328px;
+    padding: 6px 4px;
+    text-align: center;
+    border: 1px solid #b8b2a4;
+    background-color: #f3ecdd;
+}
+.rightButtonBox {
+    float: right;
+    width: 250px;
+    position: relative;
+    z-index: 2;
+}
+[dir="rtl"] .rightButtonBox {
+    margin: 0 15px 15px 0;
+    float: left;
+}
+/* ----------------------------------
+* Buttons
+* ---------------------------------- */
+.b2g-button::-moz-focus-inner {
+    border: none;
+    outline: none;
+}
+.b2g-button {
+    width: 100%;
+    height: 3.8rem;
+    margin: 0 0 1rem;
+    padding: 0 1.5rem;
+    -moz-box-sizing: border-box;
+    display: inline-block;
+    vertical-align: middle;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    background: #fafafa url("https://developer.mozilla.org/media/gaia/shared/style/buttons/images/ui/default.png") repeat-x left bottom;
+    border: 0.1rem solid #a6a6a6;
+    border-radius: 0.2rem;
+    font: 500 1.6rem/3.8rem 'MozTT', Sans-serif;
+    color: #333;
+    text-align: center;
+    text-shadow: 0.1rem 0.1rem 0 rgba(255,255,255,0.3);
+    text-decoration: none;
+    outline: none;
+}
+/* Press (default & recommend) */
+.b2g-button:active,
+.b2g-button.recommend:active,
+.b2g-button:hover,
+.b2g-button.recommend:hover {
+    border-color: #008aaa;
+    background: #008aaa;
+    text-decoration: none;
+    color: #333;
+}
+/* For styling bug links */
+.bug-resolved {
+    text-decoration: line-through;
+}
+/* Bages for the Spec2 template */
+.spec-ED:before,
+.spec-WD:before,
+.spec-CR:before,
+.spec-PR:before,
+.spec-REC:before,
+.spec-RFC:before,
+.spec-Living:before,
+.spec-Standard:before,
+.spec-Draft:before {
+    display: inline-block;
+    font: 0.6em Helvetica, Arial, sans-serif;
+    margin: 0 0.6em 0 0;
+    padding: 0.55em 0.45em 0.45em;
+    vertical-align: top;
+}
+.redesign .spec-ED:before,
+.redesign .spec-WD:before,
+.redesign .spec-CR:before,
+.redesign .spec-PR:before,
+.redesign .spec-REC:before,
+.redesign .spec-RFC:before,
+.redesign .spec-Living:before,
+.redesign .spec-Standard:before,
+.redesign .spec-Draft:before {
+    font: 0.7em Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    min-width: 20px;
+    border-radius: 2px;
+    letter-spacing: 1px;
+    margin: 0.2em 0.6em 0 0;
+    padding: 0.45em 0.35em 0.35em;
+    color: inherit;
+}
+.spec-ED:before,
+.spec-WD:before,
+.spec-CR:before,
+.spec-PR:before,
+.spec-REC:before,
+.spec-RFC:before,
+.spec-Living:before,
+.spec-Standard:before,
+.spec-Draft:before {
+    color: #fff;
+}
+.spec-ED:before {
+    content: 'ED';
+    background-color: #e61919;
+}
+.redesign .spec-ED:before {
+    background-color: rgba(230,25,25,0.25);
+    border-left: 4px solid #e61919;
+    color: #e61919;
+}
+.spec-WD:before {
+    content: 'WD';
+    background-color: #e66e33;
+}
+.redesign .spec-WD:before {
+    background-color: rgba(230,110,51,0.25);
+    border-left: 4px solid #e66e33;
+    color: #e66e33;
+}
+.spec-CR:before {
+    content: 'CR';
+    background-color: #cfd510;
+}
+.redesign .spec-CR:before {
+    background-color: rgba(0,151,142,0.25);
+    border-left: 4px solid #00978e;
+    color: #00978e;
+}
+.spec-PR:before {
+    content: 'PR';
+    background-color: #72ac35;
+}
+.redesign .spec-PR:before {
+    background-color: rgba(114,172,53,0.25);
+    border-left: 4px solid #72ac35;
+    color: #72ac35;
+}
+.spec-REC:before {
+    content: 'REC';
+    background-color: #309c40;
+}
+.redesign .spec-REC:before {
+    background-color: rgba(48,156,64,0.25);
+    border-left: 4px solid #309c40;
+    color: #309c40;
+}
+.spec-Living:before {
+    content: 'LS';
+    background-color: #000;
+}
+.redesign .spec-Living:before {
+    background-color: rgba(0,83,159,0.25);
+    border-left: 4px solid #00539f;
+    color: #00539f;
+}
+.spec-RFC:before {
+    content: 'RFC';
+    background-color: #000;
+}
+.redesign .spec-RFC:before {
+    background-color: rgba(0,83,159,0.25);
+    border-left: 4px solid #00539f;
+    color: #00539f;
+}
+.spec-Standard:before {
+    content: 'ST';
+    background-color: #000;
+}
+.redesign .spec-Standard:before {
+    background-color: rgba(0,83,159,0.25);
+    border-left: 4px solid #00539f;
+    color: #00539f;
+}
+.spec-Draft:before {
+    content: 'D';
+    background-color: #e66e33;
+}
+.redesign .spec-Draft:before {
+    background-color: rgba(230,110,51,0.25);
+    border-left: 4px solid #e66e33;
+    color: #e66e33;
+}
+.redesign .spec-ED {
+    color: #e61919;
+}
+.redesign .spec-WD {
+    color: #e66e33;
+}
+.redesign .spec-CR {
+    color: #00978e;
+}
+.redesign .spec-PR {
+    color: #72ac35;
+}
+.redesign .spec-REC {
+    color: #309c40;
+}
+.redesign .spec-RFC {
+    color: #309c40;
+}
+.redesign .spec-Living {
+    color: #00539f;
+}
+.redesign .spec-Standard {
+    color: #00539f;
+}
+.redesign .spec-Draft {
+    color: #e66e33;
+}
+/* Template link style */
+.templateLink {
+    border: 1px solid #ccc;
+    padding: 1px;
+}
+/*
+ * Colorized icons
+ */
+#wikiArticle i.icon-beaker,
+#wikiArticle i.icon-warning-sign,
+#wikiArticle i.icon-thumbs-down-alt,
+#wikiArticle i.icon-stethoscope,
+#wikiArticle i.icon-trash {
+    cursor: default;
+}
+#wikiArticle i.icon-beaker {
+    color: #09d;
+}
+/* experimental */
+#wikiArticle i.icon-warning-sign {
+    color: #db0;
+}
+/* non-standard */
+#wikiArticle i.icon-thumbs-down-alt {
+    color: #000;
+}
+/* deprecated */
+#wikiArticle i.icon-trash {
+    color: #d00;
+}
+/* obsolete */
+#wikiArticle i.icon-stethoscope {
+    color: #483d8b;
+}
+/* unimplemented */
+/*
+ * Landing page lists
+ */
+dt.landingPageList,
+dd.landingPageList {
+    page-break-after: avoid;
+}
+/*
+ * "Mozilla only" banners
+ */
+.bannerWrapper {
+    overflow: hidden;
+    padding-right: 2px;
+}
+.mozOnlyBanner {
+    background-color: #c33b1d;
+    background-image: url("https://developer.mozilla.org/files/5429/firefox.png"), radial-gradient(circle 16px at 18px 18px, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 11px, rgba(0,0,0,0) 18px), linear-gradient(to right, #c33b1d 40%, #dda820);
+    background-repeat: no-repeat;
+    background-size: contain;
+    border-top-left-radius: 18px;
+    border-bottom-left-radius: 18px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    height: 36px;
+    overflow: hidden;
+    color: #fff;
+    box-shadow: 0 0 3px #111;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "DejaVu Sans", Lucida, Arial, Helvetica, sans-serif;
+}
+.mozOnlyBanner dt {
+    font-weight: bold;
+    font-size: 16px;
+    text-shadow: 1px 1px 0 #222;
+    padding-left: 42px;
+    margin-left: 0px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+}
+.mozOnlyBanner dd {
+    font-size: 11px;
+    text-shadow: 1px 1px 0 #222;
+    padding-left: 42px;
+    margin-left: 0px;
+    margin-top: 0px;
+    padding-top: 0px;
+}
+/* 一時的なスタイル */
+[lang="ja"] #doc-contributors time[datetime*="200"]::after {
+    content: " （※最終更新日から 2 年以上経過しています）";
+    color: #f00;
+}
+/* redesign htabs */
+.redesign .htab>ul>li {
+    height: 32px;
+    border: 1px solid rgba(212,221,228,0);
+    border-radius: 0;
+    font-size: 14px;
+    font-weight: 200;
+    font-family: 'Open Sans Light', sans-serif;
+    background-color: #f1f6f8 !important;
+    color: #4d4e53;
+    opacity: 0.75;
+    -ms-filter: unqoute("progid:DXImageTransform.Microsoft.Alpha(Opacity=75)");
+    filter: unqoute("progid:DXImageTransform.Microsoft.Alpha(Opacity=75)");
+}
+.redesign .htab>ul>li.selected {
+    border: 0 solid rgba(212,221,228,0.25);
+    border-top: 2px solid #d4dde4;
+    padding-top: 4px;
+    background-color: #eaeff2 !important;
+}
+.redesign .htab>div {
+    background-color: #eaeff2;
+    border: 0 solid rgba(212,221,228,0.25);
+}
+.redesign .htab > ul > li > a {
+    text-decoration: none;
+    padding: 2px 18px 4px;
+}
+.redesign .htab > ul > li > a:hover,
+.redesign .htab > ul > li > a:focus {
+    text-decoration: underline;
+}
+/* new modules */
+.summary-box-events {
+    display: table;
+    background-color: rgba(0,150,221,0.1);
+    padding: 11px 22px;
+}
+.redesign[dir="ltr"] .summary-box-events {
+    clear: left;
+    border-left: 6px solid rgba(0,150,221,0.5);
+}
+.redesign[dir="rtl"] .summary-box-events {
+    clear: right;
+    border-right: 6px solid rgba(0,150,221,0.5);
+}
+.summary-box-js {
+    display: table;
+    background-color: rgba(230,96,0,0.1);
+    padding: 11px 22px;
+}
+.redesign[dir="ltr"] .summary-box-js {
+    clear: left;
+    border-left: 6px solid rgba(230,96,0,0.5);
+}
+.redesign[dir="rtl"] .summary-box-js {
+    clear: right;
+    border-right: 6px solid rgba(230,96,0,0.5);
+}
+.redesign .standardNote,
+.redesign .optional,
+.renamed {
+    background: rgba(0,83,159,0.2);
+    border-color: rgba(0,0,0,0.05);
+}
+.redesign .obsolete,
+.redesign .notXPCOM {
+    background: rgba(230,96,0,0.45);
+    border-color: rgba(0,0,0,0.05);
+}
+/* sidebar quick links stuff */
+.quick-links .sidebar-icon {$selector-icon} {
+    top: 10px;
+    position: absolute;
+    left: 12px;
+    display: block;
+    opacity: 0.3;
+}
+/* new community box */
+.communitybox {
+    background-color: #00539f;
+    background-image: url("/media/redesign/img/blueprint.png");
+}
+.communitybox,
+.communitybox a,
+.communitybox a:hover,
+.communitybox a:focus,
+.communitybox a:visited {
+    color: #fff;
+}
+.communitybox .communitysubhead {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 11px;
+    padding-bottom: 6px;
+}
+.communitybox ul {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style-type: none;
+}
+.communitybox ul.communitymailinglist li {
+    display: inline-block;
+    margin-right: 4px;
+    margin-top: 6px;
+}
+.communitybox ul.communitymailinglist a {
+    background: rgba(255,255,255,0.3);
+    display: inline-block;
+    color: #fff;
+    padding: 3px 6px;
+    border-radius: 3px;
+}
+.communitybox .communitycontact {
+    font-size: 14px;
+    margin-top: 13px;
+}
+.communitybox .communitycontact a {
+    border-bottom: 1px solid rgba(255,255,255,0.6);
+}
+.communitybox .communitycontact a:hover,
+.communitybox .communitycontact a:focus {
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.9);
+}
+.communitybox strong {
+    font-size: 15px;
+    font-weight: bold;
+}
+/* Default glossary links style to ease readability */
+a.glossaryLink:link,
+a.glossaryLink:hover,
+a.glossaryLink:visited,
+a.glossaryLink:focus,
+a.glossaryLink:active {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px dashed #aaa;
+    cursor: help;
+}
+a.new.glossaryLink:link,
+a.new.glossaryLink:hover,
+a.new.glossaryLink:visited,
+a.new.glossaryLink:focus,
+a.new.glossaryLink:active {
+    color: #900;
+    border-bottom: none;
+}
+a.new.glossaryLink:hover {
+    text-decoration: underline;
+}
+
+/* download buttons */
+
+a.download-button {
+    margin-bottom: 20px;
+    padding: 10px;
+    text-align: center;
+    border-radius: 4px;
+    display: inline-block;
+    background-color: #81bc2e;
+    white-space: nowrap;
+    color: #fff;
+    text-shadow: 0px 1px 0px rgba(0,0,0,0.25);
+    box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.2), 0px -1px 0px 0px rgba(0,0,0,0.3) inset;
+}
+a.download-button:hover {
+    color: #c8c8c8;
+}
+a.download-button:visited {
+    color: #fff;
+}
+a.download-button:link {
+    color: #fff;
+}
+a.download-button .right-align {
+    float: right;
+}
+
+/* download box stuff */
+
+li.download-box {
+    position: relative;
+    text-align: center;
+    img {
+        float: none;
+    }
+}
+
+.download-desc {
+    padding-bottom: 3em;
+}
+
+.download-button {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    -webkit-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+}
+
+@media $media-query-mobile {
+    .download-desc > span:first-child {
+        font-weight: 700;
+        display: block;
+    }
+}
+
+/* -- */
+
+span.comment {
+    display: none;
+}
+pre span.comment {
+    display: inline;
+}
+/* "Add a page" button for the Inbox */
+div.addpage-button {
+    width: 100%;
+    text-align: center;
+}
+a.addpage-button {
+    margin-bottom: 20px;
+    padding: 18px 40px;
+    text-align: center;
+    border-radius: 6px;
+    font-size: 28px;
+    display: inline-block;
+    background-color: #70a300;
+    white-space: nowrap;
+    color: #fff;
+    text-shadow: 0px 1px 0px rgba(0,0,0,0.25);
+    box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.2), 0px -1px 0px 0px rgba(0,0,0,0.3) inset;
+}
+a.addpage-button:hover {
+    color: #c8c8c8;
+}
+a.addpage-button:visited {
+    color: #fff;
+}
+a.addpage-button:link {
+    color: #fff;
+}
+a.addpage-button div {
+    color: #fff;
+    text-align: center;
+    font-size: 11px;
+}
+a.addpage-button .right-align {
+    float: right;
+}
+/* This is styling for the Learning Box place on articles */
+.text-content table.learn-box {
+    border: 1px solid #f69855;
+    border-left: 5px solid #f69855;
+}
+.text-content table.learn-box th {
+    background-color: #fce1ce;
+    border: 1px solid #f69855;
+    border-right: none;
+    vertical-align: top;
+    padding: 6px;
+    font-family: "Open Sans", sans-serif;
+    font-weight: bold;
+    text-align: right;
+}
+.text-content table.learn-box td {
+    border: 1px solid #f69855;
+    border-left: none;
+    box-shadow: none;
+    font-style: italic;
+    background-color: #fef9f5;
+}
+.fa-trash:before {
+    content: "\f014";
+}
+
+/* flame ads */
+
+$flame-mobile-max = 420px;
+$flame-tablet-max = 650px;
+$flame-desktop-max = 1200px;
+$flame-mobile-mq = 'all and (max-width : ' + $flame-mobile-max + ')';
+$flame-tablet-mq = 'all and (min-width : ' + ($flame-mobile-max + 1px) +') and (max-width : ' + $flame-tablet-max + ')';
+$flame-large-desktop-mq = 'all and (min-width : ' + ($flame-desktop-max + 1px) + ')';
+
+.flame {
+    background: #0156a2;
+    background: linear-gradient(90deg,rgba(255,255,255,0) 9px,rgba(255,255,255,0.1) 9px),linear-gradient(rgba(255,255,255,0) 9px,rgba(255,255,255,0.1) 9px),linear-gradient(#008ed7,#0156a2);
+    background-size: 10px 10px,10px 10px,cover;
+    color: #fff;
+    display: table;
+    font-size: 18px;
+    font-family: 'Open Sans Light';
+    line-height: 1.1;
+    position: relative;
+    width: 100%;
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    }
+
+    @media $flame-mobile-mq {
+        display: block;
+        overflow: hidden;
+    }
+}
+
+.flame-logo {
+    background: url('/media/redesign/img/fxos_logo.png') no-repeat 20px center;
+    color: rgba(0,0,0,0);
+    display: table-cell;
+    font-size: 0;
+    padding: 20px 0 17px 20px;
+    vertical-align: middle;
+    width: 165px;
+
+    @media $flame-tablet-mq, $flame-mobile-mq {
+        background-size: 100px
+        display: block;
+        height: 30px;
+        width: 100px;
+    }
+}
+
+.flame-body {
+    display: table-cell;
+    padding: 20px;
+    vertical-align: middle;
+
+    @media $flame-mobile-mq {
+        padding: 0 120px 20px 20px;
+    }
+
+    @media $flame-tablet-mq {
+        display: block;
+        padding-top: 0;
+        padding-right: 50px;
+    }
+
+    & > br {
+        @media $flame-large-desktop-mq {
+            display: none;
+        }
+    }
+
+    .flame:hover &,
+    .flame:focus & {
+        text-decoration: underline
+    }
+}
+
+.flame-cta {
+    display: table-cell;
+    font-size: 14px;
+    padding: 20px 20px 17px 150px;
+    text-transform: uppercase;
+    text-align: center;
+    vertical-align: middle;
+    width: 30%;
+
+    @media $flame-mobile-mq {
+        display: block;
+        padding: 0 0 20px 20px;
+        text-align: left;
+        font-size: 12px
+    }
+
+    &:before,
+    &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    /* grey background */
+    &:before {
+        background-color: #4d4e53;
+        padding-left: 10px;
+        width: 30%;
+
+        @media $flame-mobile-mq {
+            display: none
+         }
+    }
+
+    /* flame picture */
+    &:after {
+        background: url("/media/redesign/img/flame.png") 0 -5px no-repeat;
+        margin-right: -115px;
+        top: -1px;
+        right: 30%;
+        width: 200px;
+
+        @media $flame-mobile-mq {
+            right: auto;
+            top: 30px;
+            right: 0;
+            width: 140px;
+            margin: 0;
+        }
+    }
+}
+
+.flame-cta-body {
+    position: relative;
+    color: #c7c9d1;
+
+    .flame:hover &,
+    .flame:focus & {
+        color: #fff;
+    }
+
+    @media $flame-mobile-mq {
+        color: #fff
+    }
+
+    & > i {
+        position: absolute;
+        top: 50%;
+        left: 100%;
+        padding-left: 5px;
+    }
+}
+
+@media $flame-tablet-mq {
+    .flame-cta {
+        width: 50%
+    }
+
+    .flame-cta:after {
+        right: 50%
+    }
+
+    .flame-cta:before {
+        width: 50%
+    }
+}
+
+@media $flame-large-desktop-mq {
+    .wiki-right-closed,
+    .wiki-left-closed {
+
+        .flame-cta {
+            padding-left: 120px
+        }
+
+        .flame-cta-body > br {
+            display: none
+        }
+
+        .flame-cta-body > i {
+            position: static
+        }
+    }
+}
+
+/*end!*/

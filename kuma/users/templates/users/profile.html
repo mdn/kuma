@@ -108,9 +108,9 @@
         {% set tag_ns = 'profile:interest:' %}
         {% set tags = profile.tags.all_ns(tag_ns) %}
         {% if tags | length %}
-        <div class="tags">
+        <div class="profile-tags">
           <h2>{{ _("Interests") }}</h2>
-          <ul class="int-taglist taglist">
+          <ul>
             {% for tag in tags%}
                 <li><span rel="tag">{{ tag.name.replace(tag_ns,'') }}</span></li>
             {% endfor %}
@@ -121,9 +121,9 @@
         {% set tag_ns = 'profile:expertise:' %}
         {% set tags = profile.tags.all_ns(tag_ns) %}
         {% if tags | length %}
-        <div class="tags">
+        <div class="profile-tags">
           <h2>{{ _("Areas of Expertise") }}</h2>
-          <ul class="exp-taglist taglist">
+          <ul>
             {% for tag in tags%}
                 <li><span rel="tag">{{ tag.name.replace(tag_ns,'') }}</span></li>
             {% endfor %}
@@ -137,7 +137,9 @@
 
     {% if waffle.flag('badger') and award_list %}
       <section id="profile-badges" class="profile-section">
-        <h2>{{ _("Recent Badge Awards") }}</h2>
+        <header>
+            <h2>{{ _("Recent Badge Awards") }}</h2>
+        </header>
         {% include "badger/includes/awards_as_badges_list.html" %}
       </section>
     {% endif %}
@@ -169,9 +171,9 @@
             {% if wiki_activity and wiki_activity|length %}
             <table class="activity">
               <thead>
-                <th scope="col" class="page">{{ _("Page") }}</th>
-                <th scope="col" class="date">{{ _("Date") }}</th>
-                <th scope="col" class="summary">{{ _("Comment") }}</th>
+                <th scope="col" class="activity-page">{{ _("Page") }}</th>
+                <th scope="col" class="activity-date">{{ _("Date") }}</th>
+                <th scope="col" class="activity-summary">{{ _("Comment") }}</th>
               </thead>
               <tbody>
                 {% for rev in wiki_activity %}
@@ -179,7 +181,7 @@
                 <tr>
                   <th scope="row">
                       <h3><a href="{{ rev.document.get_absolute_url() }}">{{ rev.document.title }}</a></h3>
-                      <ul class="actions">
+                      <ul class="activity-actions">
                           <li><a href="{{ rev.document.get_absolute_url() }}$edit" class="edit">{{ _("Edit page") }}</a></li>
                           <li>{% if previous_rev %}<a href="{{ rev.document.get_absolute_url() }}$compare?from={{ previous_rev.id }}&amp;to={{ rev.id }}" class="diff">{{ _("View complete diff") }}</a>{% endif %}</li>
                           <li><a href="{{ rev.document.get_absolute_url() }}$history" class="history">{{ _("View page history") }}</a></li>

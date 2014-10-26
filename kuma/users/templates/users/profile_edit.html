@@ -44,14 +44,13 @@
           <ul>
               <li><a href="{{ profile.user.get_absolute_url() }}">{{ _('View profile') }}</a></li>
             {# TODO: Implement account deletion #}
-            {# <li class="delete"><a href="#">{{ _('Delete my account') }}</a></li> #}
+            {# <li class="delete"><a href="#">{{ _('Delete my profile') }}</a></li> #}
           </ul>
         </div>
       </div>
 
       <div id="profile-edit" class="column-half">
-        <h1 class="page-title">{{ profile.user.username }}</h1>
-            {% include 'socialaccount/snippets/login_service_icon.html' %}
+        <h1 class="page-title">{% include 'socialaccount/snippets/login_service_icon.html' %}{{ profile.user.username }}</h1>
 
               <fieldset class="section notitle" id="personal">
                 <ul>
@@ -104,7 +103,7 @@
                       {% for persona_account in accounts.persona %}{{ persona_account.uid }}{% if not loop.last %}, {% endif %}{% endfor %}
                     </div>
                     {% else %}
-                    <a class="field-management" href="{{ provider_login_url('persona', process='connect', next=next_url) }}">
+                    <a href="{{ url('account_login') }}" class="field-management launch-persona-login" data-next="{{ next_url }}" data-service="Persona" data-process="connect">
                       {{ _('Use your Persona account to sign in.') }}
                     </a>
                     <div class="account"></div>
@@ -114,13 +113,13 @@
                     {% if site_name == 'github' %}
                       <li id="field_websites_github" class="field site github">
                       {% if accounts.github and waffle.flag('github_login') %}
-                        <label for="{{ profile_form.websites_github.id_for_label }}"><i class="icon-user" aria-hidden="true"></i>Github</label>
+                        <label for="{{ profile_form.websites_github.id_for_label }}"><i class="icon-github" aria-hidden="true"></i>GitHub</label>
                         <a class="field-management" href="{{ url('socialaccount_connections') }}">{{ _('Change') }}</a>
                         <div class="account">
                           {% for github_account in accounts.github %}{% if github_account.extra_data %}{{ github_account.get_profile_url() }}{% if not loop.last %}, {% endif %}{% endif %}{% endfor %}
                         </div>
                       {% else %}
-                          <label for="{{ profile_form.websites_github.id_for_label }}"><i class="icon-user" aria-hidden="true"></i>Github
+                          <label for="{{ profile_form.websites_github.id_for_label }}"><i class="icon-github" aria-hidden="true"></i>GitHub
                           </label>
                           {% if waffle.flag('github_login') %}
                           <a class="field-management" href="{{ provider_login_url('github', process='connect', next=next_url) }}">
@@ -166,5 +165,4 @@
     var INTEREST_SUGGESTIONS = {{ INTEREST_SUGGESTIONS | jsonencode }};
 // ]]>
 </script>
-{% include "socialaccount/snippets/login_extra.html" %}
 {% endblock %}

@@ -1,9 +1,12 @@
 {% extends "account/base.html" %}
 
-{% block title %}{{ page_title(_("Account Inactive")) }}{% endblock %}
-
+{% block title %}{{ page_title(_("Profile Inactive")) }}{% endblock %}
 {% block content %}
-<h1>{{ _("Account Inactive") }}</h1>
+<div class="text-content readable-line-length">
 
-<p>{{ _("This account is inactive.") }}</p>
+  <h1>{{ _("Profile Inactive") }}</h1>
+
+  <p>{{ _("This profile is inactive.") }}</p>
+
+</div>
 {% endblock %}

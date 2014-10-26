@@ -6,9 +6,8 @@ from django.dispatch import receiver
 from django.db import models
 from django.utils.functional import cached_property
 
-from allauth.account.signals import user_signed_up
-from allauth.socialaccount.signals import (pre_social_login,
-                                           social_account_removed)
+from allauth.account.signals import user_signed_up, email_confirmed
+from allauth.socialaccount.signals import social_account_removed
 import constance.config
 from jsonfield import JSONField
 from taggit_extras.managers import NamespacedTaggableManager
@@ -85,8 +84,8 @@ class UserProfile(ModelBase):
         )),
         ('linkedin', dict(
             label=_(u'LinkedIn'),
-            prefix='https://www.linkedin.com/in/',
-            regex='^https?://www.linkedin.com/in/',
+            prefix='https://www.linkedin.com/',
+            regex='^https?:\/\/www.linkedin.com\/(in|pub)',
             fa_icon='icon-linkedin',
         )),
         ('mozillians', dict(
@@ -191,21 +190,21 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(user_signed_up)
 def on_user_signed_up(sender, request, user, **kwargs):
     if switch_is_active('welcome_email'):
-        send_welcome_email.delay(user.pk, request.locale)
+        # only send if the user has already verified at least one email address
+        if user.emailaddress_set.filter(verified=True).exists():
+            send_welcome_email.delay(user.pk, request.locale)
 
 
-@receiver(pre_social_login)
-def on_pre_social_login(sender, request, sociallogin, **kwargs):
-    """
-    Invoked just after a user successfully authenticates via a
-    social provider, but before the login is actually processed.
+@receiver(email_confirmed)
+def on_email_confirmed(sender, request, email_address, **kwargs):
+    if switch_is_active('welcome_email'):
+        # only send if the user has exactly one verified (the given)
+        # email address, in other words if it was just confirmed
+        if not (email_address.user
+                             .emailaddress_set.exclude(pk=email_address.pk)
+                                              .exists()):
+            send_welcome_email.delay(email_address.user.pk, request.locale)
 
-    We use it to store the name of the socialaccount provider in
-    the user's session.
-    """
-    if 'sociallogin_provider' not in request.session:
-        request.session['sociallogin_provider'] = sociallogin.account.provider
-        request.session.modified = True
 
 
 @receiver(social_account_removed)

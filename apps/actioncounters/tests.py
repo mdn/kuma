@@ -1,8 +1,4 @@
-import logging
-import time
-
 from django.conf import settings
-from django.db import connection
 
 from django.core.exceptions import MultipleObjectsReturned
 
@@ -10,44 +6,30 @@ from django.contrib.auth.models import AnonymousUser
 
 from django.http import HttpRequest
 from django.test import TestCase
-from django.test.client import Client
 
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
-from django.contrib.sessions.models import Session
 
-from nose.tools import assert_equal, with_setup, assert_false, eq_, ok_
+from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 
-from django.db import models
-
-from .utils import get_ip, get_unique
+from .utils import get_unique
 from .models import TestModel, ActionCounterUnique
-from .fields import ActionCounterField
 
 
 class ActionCountersTest(TestCase):
 
     def setUp(self):
         settings.DEBUG = True
-
         self.user1 = User.objects.create_user(
             'tester1', 'tester2@tester.com', 'tester1')
-        self.user1.save()
-
         self.user2 = User.objects.create_user(
             'tester2', 'tester2@tester.com', 'tester2')
-        self.user2.save()
 
         self.obj_1 = TestModel(title="alpha")
         self.obj_1.save()
 
-    def tearDown(self):
-        #for sql in connection.queries:
-        #    logging.debug("SQL %s" % sql)
-        pass
-
-    def mk_request(self, user=None, ip='192.168.123.123', 
+    def mk_request(self, user=None, ip='192.168.123.123',
             user_agent='FakeBrowser 1.0'):
         request = HttpRequest()
         request.user = user and user or AnonymousUser()
@@ -100,7 +82,7 @@ class ActionCountersTest(TestCase):
         # Try get_unique_for_request, which should turn up the single unique
         # record created earlier.
         try:
-            (u, created) = ActionCounterUnique.objects.get_unique_for_request(obj_1, 
+            (u, created) = ActionCounterUnique.objects.get_unique_for_request(obj_1,
                                action_name, request)
             eq_(False, created)
         except MultipleObjectsReturned, e:
@@ -198,13 +180,13 @@ class ActionCountersTest(TestCase):
         MAX = obj_1.boogs.field.max_total_per_unique
         MIN = obj_1.boogs.field.min_total_per_unique
 
-        UNIQUES = ( 
+        UNIQUES = (
             dict(user=self.user1),
             dict(user=self.user2),
-            dict(ip='192.168.123.123'), 
-            dict(ip='192.168.123.150', user_agent="Safari 1.0"), 
-            dict(ip='192.168.123.150', user_agent="Mozilla 1.0"), 
-            dict(ip='192.168.123.160'), 
+            dict(ip='192.168.123.123'),
+            dict(ip='192.168.123.150', user_agent="Safari 1.0"),
+            dict(ip='192.168.123.150', user_agent="Mozilla 1.0"),
+            dict(ip='192.168.123.160'),
         )
 
         for unique in UNIQUES:
@@ -245,4 +227,3 @@ class ActionCountersTest(TestCase):
         Sounds dumb, but it was a bug at one point."""
         request = self.mk_request()
         eq_(0, self.obj_1.likes.get_total_for_request(request))
-

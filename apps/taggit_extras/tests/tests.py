@@ -1,17 +1,6 @@
-from unittest import TestCase as UnitTestCase
-import logging
+from django.test import TestCase
 
-import django
-from django.conf import settings
-from django.core.exceptions import ValidationError
-from django.db import connection
-from django.test import TestCase, TransactionTestCase
-
-from taggit.managers import TaggableManager
-from taggit_extras.managers import NamespacedTaggableManager
-from taggit.models import Tag, TaggedItem
-from taggit_extras.tests.models import (Food)
-from taggit.utils import parse_tags, edit_string_for_tags
+from taggit_extras.tests.models import Food
 
 
 class BaseTaggingTest(object):
@@ -56,7 +45,7 @@ class NamespacedTaggableManagerTest(BaseTaggingTestCase):
         for ns in expected_ns:
             self.assert_tags_equal(ns_tags[ns], expected_tags[ns])
             self.assert_tags_equal(apple.tags.all_ns(ns), expected_tags[ns])
-    
+
     def test_clear_ns(self):
         """Tags can be selectively cleared by namespace"""
         apple = self.food_model.objects.create(name="apple")
@@ -66,18 +55,18 @@ class NamespacedTaggableManagerTest(BaseTaggingTestCase):
         apple.tags.add(*tags_not_cleared)
         apple.tags.clear_ns('a:')
         self.assert_tags_equal(apple.tags.all(), tags_not_cleared)
-    
+
     def test_set_ns(self):
         """Tags can be selectively set by namespace"""
         apple = self.food_model.objects.create(name="apple")
-        
+
         tags_before_set = ['a:1', 'a:2', 'a:3']
         tags_after_set = ['a:4', 'a:5', 'a:6']
         tags_not_set = ['1', '2', 'b:1', 'b:2', 'c:1']
-        
+
         apple.tags.add(*tags_before_set)
         apple.tags.add(*tags_not_set)
-        
+
         apple.tags.set_ns('a:', *tags_after_set)
 
         self.assert_tags_equal(apple.tags.all(), tags_after_set + tags_not_set)

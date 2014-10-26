@@ -321,9 +321,6 @@ LOCALE_PATHS = (
     path('locale'),
 )
 
-# Use the real robots.txt?
-ENGAGE_ROBOTS = False
-
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = path('media')
@@ -345,6 +342,7 @@ LANGUAGE_URL_IGNORED_PATHS = (
     'media',
     'admin',
     'robots.txt',
+    'contribute.json',
     'services',
     'static',
     '1',
@@ -392,6 +390,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
     'jingo_minify.helpers.build_ids',
     'constance.context_processors.config',
+
+    'kuma.search.context_processors.search_filters',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -481,9 +481,10 @@ INSTALLED_APPS = (
     'docs',
     'kuma.feeder',
     'landing',
-    'search',
+    'kuma.search',
     'kuma.users',
     'kuma.wiki',
+    'kuma.attachments',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -515,7 +516,7 @@ INSTALLED_APPS = (
     'taggit',
     'dbgettext',
 
-    'dashboards',
+    'kuma.dashboards',
     'kpi',
     'statici18n',
     'rest_framework',
@@ -577,7 +578,7 @@ DOMAIN_METHODS = {
     'messages': [
         ('vendor/**', 'ignore'),
         ('apps/access/**', 'ignore'),
-        ('apps/dashboards/**', 'ignore'),
+        ('kuma/dashboards/**', 'ignore'),
         ('apps/kadmin/**', 'ignore'),
         ('apps/sumo/**', 'ignore'),
         ('apps/**.py',
@@ -607,7 +608,7 @@ TOWER_ADD_HEADERS = True
 
 # Bundles for JS/CSS Minification
 JINGO_MINIFY_USE_STATIC = False
-CLEANCSS_BIN = '/usr/bin/cleancss'
+CLEANCSS_BIN = '/usr/local/bin/cleancss'
 UGLIFY_BIN = '/usr/bin/uglifyjs'
 
 MINIFY_BUNDLES = {
@@ -623,8 +624,7 @@ MINIFY_BUNDLES = {
             'redesign/css/jquery-ui-customizations.css',
         ),
         'demostudio': (
-            'css/demos.css',
-            'redesign/css/demo-studio.css',
+            'redesign/css/demos.css',
         ),
         'devderby': (
             'css/devderby.css',
@@ -636,6 +636,9 @@ MINIFY_BUNDLES = {
         ),
         'search': (
             'redesign/css/search.css',
+        ),
+        'search-suggestions': (
+            'redesign/css/search-suggestions.css',
         ),
         'wiki': (
             'redesign/css/wiki.css',
@@ -704,6 +707,7 @@ MINIFY_BUNDLES = {
             'redesign/js/components.js',
             'redesign/js/analytics.js',
             'redesign/js/main.js',
+            'redesign/js/auth.js',
             'redesign/js/badges.js',
         ),
         'home': (
@@ -752,6 +756,9 @@ MINIFY_BUNDLES = {
             'js/prism-mdn/plugins/line-numbering/prism-line-numbering.js',
             'js/libs/prism/plugins/line-highlight/prism-line-highlight.js',
             'js/syntax-prism.js',
+        ),
+        'search-suggestions': (
+            'js/search-suggestions.js',
         ),
         'wiki': (
             'redesign/js/search-navigator.js',
@@ -825,7 +832,7 @@ CELERY_SEND_TASK_SENT_EVENT = True
 CELERY_IMPORTS = (
     'devmo.tasks',
     'kuma.wiki.tasks',
-    'search.tasks',
+    'kuma.search.tasks',
     'tidings.events',
     'elasticutils.contrib.django.tasks',
 )
@@ -1120,6 +1127,11 @@ CONSTANCE_CONFIG = dict(
         'Email address from which welcome emails will be sent',
     ),
 
+    FACEBOOK_RESEARCH_APP_ID = (
+        '',
+        'ID of the Facebook application used to determine whether an MDN user is logged in with Facebook',
+    ),
+
 )
 
 BASKET_URL = 'https://basket.mozilla.com'
@@ -1233,7 +1245,7 @@ ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_USERNAME_MIN_LENGTH = 3
 ACCOUNT_ADAPTER = 'kuma.users.adapters.KumaAccountAdapter'
 ACCOUNT_SIGNUP_FORM_CLASS = 'kuma.users.forms.NewsletterForm'  # weird but needed
-ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_UNIQUE_EMAIL = False
 
 SOCIALACCOUNT_ADAPTER = 'kuma.users.adapters.KumaSocialAccountAdapter'
 SOCIALACCOUNT_EMAIL_VERIFICATION = 'mandatory'

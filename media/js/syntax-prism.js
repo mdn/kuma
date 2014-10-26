@@ -37,9 +37,9 @@
 
         // Do we need to highlight any lines?
         // Legacy format: highlight:[8,9,10,11,17,18,19,20]
-        lineSearch = klass.match(/highlight: ?\[(.*)\]/);
+        lineSearch = klass.match(/highlight:? ?\[(.*)\]/);
         if(lineSearch && lineSearch[1]) {
-            $pre.attr('data-line', lineSearch[1]);;
+            $pre.attr('data-line', lineSearch[1]);
         }
     });
 

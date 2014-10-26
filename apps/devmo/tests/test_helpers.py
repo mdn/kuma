@@ -1,18 +1,23 @@
+from collections import namedtuple
 from datetime import datetime
-from nose.tools import eq_, ok_, assert_raises
-from pytz import timezone
-import test_utils
-from soapbox.models import Message
 
-from devmo.helpers import (urlencode, soapbox_messages, get_soapbox_messages,
-                           datetimeformat, DateTimeFormatError, json)
 from django.conf import settings
 from django.contrib.auth.models import User
-from babel import localedata
+from django.test import RequestFactory
+
 from babel.dates import format_date, format_time, format_datetime
-from babel.numbers import format_decimal
-from sumo.urlresolvers import reverse
+import jingo
+from nose.tools import eq_, ok_, assert_raises
 from pyquery import PyQuery as pq
+from pytz import timezone
+from soapbox.models import Message
+import test_utils
+
+from devmo.helpers import (urlencode, soapbox_messages, get_soapbox_messages,
+                           datetimeformat, DateTimeFormatError, json, number)
+from kuma.users.tests import UserTestCase
+from sumo.urlresolvers import reverse
+
 
 class TestUrlEncode(test_utils.TestCase):
 
@@ -23,14 +28,7 @@ class TestUrlEncode(test_utils.TestCase):
             s = u"Someguy Dude\xc3\xaas Lastname"
             urlencode(s)
         except KeyError:
-            ok_(False, "There should be no KeyError")
-
-
-class TestDateTimeFormat(test_utils.TestCase):
-
-    def test_utf8_urlencode(self):
-        s = u"2013-05-20T15:06:45"
-        eq_('2013-05-20', datetimeformat(s))
+            self.fail("There should be no KeyError")
 
 
 class TestSoapbox(test_utils.TestCase):
@@ -54,18 +52,19 @@ class TestSoapbox(test_utils.TestCase):
         eq_(m.message, get_soapbox_messages("/de/demos/devderby")[0].message)
 
     def test_message_with_url_is_link(self):
-        m = Message(message="Go to http://bit.ly/sample-demo", is_global=True, is_active=True, url="/")
+        m = Message(message="Go to http://bit.ly/sample-demo", is_global=True,
+                    is_active=True, url="/")
         m.save()
         ok_('Go to <a href="http://bit.ly/sample-demo">'
             'http://bit.ly/sample-demo</a>' in
             soapbox_messages(get_soapbox_messages("/")))
 
-class TestDateTimeFormat(test_utils.TestCase):
-    fixtures = ['test_users.json']
 
+class TestDateTimeFormat(UserTestCase):
     def setUp(self):
+        super(TestDateTimeFormat, self).setUp()
         url_ = reverse('home')
-        self.context = {'request': test_utils.RequestFactory().get(url_)}
+        self.context = {'request': RequestFactory().get(url_)}
         self.context['request'].locale = u'en-US'
         self.context['request'].user = User.objects.get(username='testuser01')
 
@@ -161,3 +160,14 @@ class TestDateTimeFormat(test_utils.TestCase):
         value_returned = datetimeformat(self.context, value_test,
                                         format='longdatetime')
         eq_(pq(value_returned)('time').text(), value_expected)
+
+
+class TestHelpers(test_utils.TestCase):
+
+    def setUp(self):
+        jingo.load_helpers()
+
+    def test_number(self):
+        context = {'request': namedtuple('R', 'locale')('en-US')}
+        eq_('5,000', number(context, 5000))
+        eq_('', number(context, None))

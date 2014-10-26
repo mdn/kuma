@@ -1,1 +1,1 @@
-{% trans %}The account has been connected.{% endtrans %}
+{% trans %}Account successfully connected.{% endtrans %}

@@ -2,11 +2,9 @@
 import base64
 import datetime
 import json
-import logging
 import time
 
 import mock
-from nose import SkipTest
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
@@ -17,10 +15,8 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core.cache import cache
-from django.core.files.base import ContentFile
-from django.core.files import temp as tempfile
 from django.db.models import Q
-from django.test.client import (Client, FakePayload, encode_multipart,
+from django.test.client import (FakePayload, encode_multipart,
                                 BOUNDARY, CONTENT_TYPE_RE, MULTIPART_CONTENT)
 from django.http import Http404
 from django.utils.encoding import smart_str
@@ -30,26 +26,26 @@ from waffle.models import Flag
 
 from authkeys.models import Key
 from devmo.tests import override_constance_settings
-from . import TestCaseBase, FakeResponse, make_test_file
+from . import WikiTestCase, FakeResponse
+
+from kuma.users.tests import UserTestCase, user
 from kuma.wiki.constants import DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL
-import kuma.wiki.content
 from kuma.wiki.content import get_seo_description
 from kuma.wiki.events import EditDocumentEvent
-from kuma.wiki.models import (Document, Revision, Attachment, DocumentZone,
-                              AttachmentRevision, DocumentAttachment)
+from kuma.wiki.models import Document, Revision, DocumentZone, DocumentTag
 from kuma.wiki.tests import (doc_rev, document, new_document_data, revision,
                              normalize_html, create_template_test_users,
                              make_translation)
 from kuma.wiki.forms import MIDAIR_COLLISION
+
 from sumo.tests import post, get
 from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
 
 
-class RedirectTests(TestCaseBase):
+class RedirectTests(UserTestCase, WikiTestCase):
     """Tests for the REDIRECT wiki directive"""
-
-    fixtures = ['test_users.json']
+    localizing_client = True
 
     def test_redirect_suppression(self):
         """The document view shouldn't redirect when passed redirect=no."""
@@ -82,20 +78,17 @@ class RedirectTests(TestCaseBase):
                 slug)
 
         doc = document(title='blah', slug=slug, html=html, save=True,
-        locale=settings.WIKI_DEFAULT_LANGUAGE)
-        doc.save()
+                       locale=settings.WIKI_DEFAULT_LANGUAGE)
         rev = revision(document=doc, content=html, is_approved=True, save=True)
-        rev.save()
 
         response = self.client.get(doc.get_absolute_url(), follow=True)
         self.assertContains(response, html)
 
 
-class LocaleRedirectTests(TestCaseBase):
+class LocaleRedirectTests(UserTestCase, WikiTestCase):
     """Tests for fallbacks to en-US and such for slug lookups."""
     # Some of these may fail or be invalid if your WIKI_DEFAULT_LANGUAGE is de.
-
-    fixtures = ['test_users.json']
+    localizing_client = True
 
     def test_fallback_to_translation(self):
         """If a slug isn't found in the requested locale but is in the default
@@ -123,23 +116,21 @@ class LocaleRedirectTests(TestCaseBase):
         try:
             self.client.get(url, follow=True)
         except Http404, e:
-            ok_(True)
+            pass
         except Exception, e:
-            ok_(False, "The only exception should be a 404, not this: %s" % e)
+            self.fail("The only exception should be a 404, not this: %s" % e)
 
     def _create_en_and_de_docs(self):
         en = settings.WIKI_DEFAULT_LANGUAGE
-        en_doc = document(locale=en, slug='english-slug')
-        en_doc.save()
-        de_doc = document(locale='de', parent=en_doc)
-        de_doc.save()
-        de_rev = revision(document=de_doc, is_approved=True)
-        de_rev.save()
+        en_doc = document(locale=en, slug='english-slug', save=True)
+        de_doc = document(locale='de', parent=en_doc, save=True)
+        de_rev = revision(document=de_doc, is_approved=True, save=True)
         return en_doc, de_doc
 
 
-class ViewTests(TestCaseBase):
-    fixtures = ['test_users.json', 'wiki/documents.json']
+class ViewTests(UserTestCase, WikiTestCase):
+    fixtures = UserTestCase.fixtures + ['wiki/documents.json']
+    localizing_client = True
 
     @attr('bug875349')
     def test_json_view(self):
@@ -147,7 +138,6 @@ class ViewTests(TestCaseBase):
         expected_review_tags = sorted(['tech', 'editorial'])
 
         doc = Document.objects.get(pk=1)
-        doc.save()
         doc.tags.set(*expected_tags)
         doc.current_revision.review_tags.set(*expected_review_tags)
 
@@ -192,7 +182,6 @@ class ViewTests(TestCaseBase):
             rev = revision(document=doc, content=html,
                            comment='Revision %s' % i,
                            is_approved=True, save=True)
-            rev.save()
 
         url = reverse('wiki.document_revisions', args=(slug,),
                       locale=settings.WIKI_DEFAULT_LANGUAGE)
@@ -216,9 +205,7 @@ class ViewTests(TestCaseBase):
 
         doc = document(title='blah', slug=slug, html=html, save=True,
                        locale=settings.WIKI_DEFAULT_LANGUAGE)
-        doc.save()
         rev = revision(document=doc, content=html, is_approved=True, save=True)
-        rev.save()
 
         url = reverse('wiki.toc', args=[slug],
                       locale=settings.WIKI_DEFAULT_LANGUAGE)
@@ -334,14 +321,13 @@ class ViewTests(TestCaseBase):
         ok_('<a href="#">Hahaha</a>' in ct)
 
 
-class PermissionTests(TestCaseBase):
-
-    fixtures = ['test_users.json']
+class PermissionTests(UserTestCase, WikiTestCase):
+    localizing_client = True
 
     def setUp(self):
         """Set up the permissions, groups, and users needed for the tests"""
         super(PermissionTests, self).setUp()
-        (self.perms, self.groups, self.users, self.superuser) = (
+        self.perms, self.groups, self.users, self.superuser = (
             create_template_test_users())
 
     def test_template_permissions(self):
@@ -405,9 +391,9 @@ class PermissionTests(TestCaseBase):
                             (user, msg[is_add], slug))
 
 
-class ConditionalGetTests(TestCaseBase):
+class ConditionalGetTests(UserTestCase, WikiTestCase):
     """Tests for conditional GET on document view"""
-    fixtures = ['test_users.json']
+    localizing_client = True
 
     def test_last_modified(self):
         """Ensure the last-modified stamp of a document is cached"""
@@ -472,9 +458,10 @@ class ConditionalGetTests(TestCaseBase):
         ok_(not cache.get(cache_key))
 
 
-class ReadOnlyTests(TestCaseBase):
+class ReadOnlyTests(UserTestCase, WikiTestCase):
     """Tests readonly scenarios"""
-    fixtures = ['test_users.json', 'wiki/documents.json']
+    fixtures = UserTestCase.fixtures + ['wiki/documents.json']
+    localizing_client = True
 
     def setUp(self):
         super(ReadOnlyTests, self).setUp()
@@ -525,7 +512,7 @@ class ReadOnlyTests(TestCaseBase):
         self.client.login(username='testuser2', password='testpass')
         resp = self.client.get(self.edit_url)
         eq_(403, resp.status_code)
-        ok_('Your account has been banned from making edits.' in resp.content)
+        ok_('Your profile has been banned from making edits.' in resp.content)
 
         # ban testuser01 and testuser2
         kumabanned.users = User.objects.filter(Q(username='testuser2') |
@@ -542,23 +529,23 @@ class ReadOnlyTests(TestCaseBase):
         self.client.login(username='testuser2', password='testpass')
         resp = self.client.get(self.edit_url)
         eq_(403, resp.status_code)
-        ok_('Your account has been banned from making edits.' in resp.content)
+        ok_('Your profile has been banned from making edits.' in resp.content)
 
         # testuser01 cannot access
         self.client.login(username='testuser01', password='testpass')
         resp = self.client.get(self.edit_url)
         eq_(403, resp.status_code)
-        ok_('Your account has been banned from making edits.' in resp.content)
+        ok_('Your profile has been banned from making edits.' in resp.content)
 
 
-class KumascriptIntegrationTests(TestCaseBase):
+class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
     """
     Tests for usage of the kumascript service.
 
     Note that these tests really just check whether or not the service was
     used, and are not integration tests meant to exercise the real service.
     """
-    fixtures = ['test_users.json']
+    localizing_client = True
 
     def setUp(self):
         super(KumascriptIntegrationTests, self).setUp()
@@ -825,12 +812,12 @@ class KumascriptIntegrationTests(TestCaseBase):
         try:
             trap['data'].decode('utf8')
         except UnicodeDecodeError:
-            ok_(False, "Data wasn't posted as utf8")
+            self.fail("Data wasn't posted as utf8")
 
 
-class DocumentSEOTests(TestCaseBase):
+class DocumentSEOTests(UserTestCase, WikiTestCase):
     """Tests for the document seo logic"""
-    fixtures = ['test_users.json']
+    localizing_client = True
 
     def test_seo_title(self):
         self.client.login(username='admin', password='testpass')
@@ -925,10 +912,9 @@ class DocumentSEOTests(TestCaseBase):
           u'I am awesome. A link is also cool')
 
 
-class DocumentEditingTests(TestCaseBase):
+class DocumentEditingTests(UserTestCase, WikiTestCase):
     """Tests for the document-editing view"""
-
-    fixtures = ['test_users.json']
+    localizing_client = True
 
     def test_noindex_post(self):
         self.client.login(username='admin', password='testpass')
@@ -1894,10 +1880,10 @@ class DocumentEditingTests(TestCaseBase):
                                                args=[doc.full_path]), data)
             page = pq(response.content)
             for t in yes_tags:
-                eq_(1, page.find('.tag-list li a:contains("%s")' % t).length,
+                eq_(1, page.find('.tags li a:contains("%s")' % t).length,
                     '%s should NOT appear in document view tags' % t)
             for t in no_tags:
-                eq_(0, page.find('.tag-list li a:contains("%s")' % t).length,
+                eq_(0, page.find('.tags li a:contains("%s")' % t).length,
                     '%s should appear in document view tags' % t)
 
             # Check for the document slug (title in feeds) in the tag listing
@@ -2329,9 +2315,9 @@ class DocumentEditingTests(TestCaseBase):
             "kumascript should have been used")
 
 
-class DocumentWatchTests(TestCaseBase):
+class DocumentWatchTests(UserTestCase, WikiTestCase):
     """Tests for un/subscribing to document edit notifications."""
-    fixtures = ['test_users.json']
+    localizing_client = True
 
     def setUp(self):
         super(DocumentWatchTests, self).setUp()
@@ -2367,8 +2353,8 @@ class DocumentWatchTests(TestCaseBase):
             'Watch was not destroyed'
 
 
-class SectionEditingResourceTests(TestCaseBase):
-    fixtures = ['test_users.json']
+class SectionEditingResourceTests(UserTestCase, WikiTestCase):
+    localizing_client = True
 
     def test_raw_source(self):
         """The raw source for a document can be requested"""
@@ -2808,7 +2794,7 @@ class SectionEditingResourceTests(TestCaseBase):
             set([t.name for t in changed.review_tags.all()]))
 
 
-class MindTouchRedirectTests(TestCaseBase):
+class MindTouchRedirectTests(UserTestCase, WikiTestCase):
     """
     Test that we appropriately redirect old-style MindTouch URLs to
     new-style kuma URLs.
@@ -2822,7 +2808,7 @@ class MindTouchRedirectTests(TestCaseBase):
     # out from the ones the legacy MindTouch handling will emit, so
     # instead we just test that A) we did issue a redirect and B) the
     # URL we constructed is enough for the document views to go on.
-    fixtures = ['test_users.json']
+    localizing_client = True
 
     server_prefix = 'http://testserver/%s/docs' % settings.WIKI_DEFAULT_LANGUAGE
     namespace_urls = (
@@ -2902,10 +2888,11 @@ class MindTouchRedirectTests(TestCaseBase):
         eq_(expected_url, resp['Location'])
 
 
-class AutosuggestDocumentsTests(TestCaseBase):
+class AutosuggestDocumentsTests(WikiTestCase):
     """
     Test the we're properly filtering out the Redirects from the document list
     """
+    localizing_client = True
 
     def test_autosuggest_no_term(self):
         url = reverse('wiki.autosuggest_documents',
@@ -2987,8 +2974,8 @@ class AutosuggestDocumentsTests(TestCaseBase):
         eq_(len(valid_documents), len(pq(resp.content).find('.documents li')))
 
 
-class CodeSampleViewTests(TestCaseBase):
-    fixtures = ['test_users.json']
+class CodeSampleViewTests(UserTestCase, WikiTestCase):
+    localizing_client = True
 
     @override_constance_settings(
         KUMA_WIKI_IFRAME_ALLOWED_HOSTS='^https?\:\/\/testserver')
@@ -3088,10 +3075,9 @@ class CodeSampleViewTests(TestCaseBase):
         eq_(if3.attr('src'), '')
 
 
-class DeferredRenderingViewTests(TestCaseBase):
+class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
     """Tests for the deferred rendering system and interaction with views"""
-
-    fixtures = ['test_users.json']
+    localizing_client = True
 
     def setUp(self):
         super(DeferredRenderingViewTests, self).setUp()
@@ -3297,8 +3283,8 @@ class DeferredRenderingViewTests(TestCaseBase):
                 (do_login, param, expected, resp.content))
 
 
-class APITests(TestCaseBase):
-    fixtures = ['test_users.json']
+class APITests(UserTestCase, WikiTestCase):
+    localizing_client = True
 
     def setUp(self):
         super(APITests, self).setUp()
@@ -3307,10 +3293,10 @@ class APITests(TestCaseBase):
         self.password = 'trustno1'
         self.email = 'tester23@example.com'
 
-        self.user = User(username=self.username,
-                         email=self.email)
-        self.user.set_password(self.password)
-        self.user.save()
+        self.user = user(username=self.username,
+                         email=self.email,
+                         password=self.password,
+                         save=True)
 
         self.key = Key(user=self.user, description='Test Key 1')
         self.secret = self.key.generate_secret()
@@ -3650,342 +3636,8 @@ class APITests(TestCaseBase):
         return response
 
 
-class AttachmentTests(TestCaseBase):
-    fixtures = ['test_users.json']
-
-    def setUp(self):
-        self.old_allowed_types = constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES
-        constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES = 'text/plain'
-        super(AttachmentTests, self).setUp()
-        self.client = Client()  # file views don't need LocalizingClient
-        self.client.login(username='admin', password='testpass')
-
-    def tearDown(self):
-        constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES = self.old_allowed_types
-
-    def _post_new_attachment(self):
-        file_for_upload = make_test_file(
-            content='A test file uploaded into kuma.')
-        post_data = {
-            'title': 'Test uploaded file',
-            'description': 'A test file uploaded into kuma.',
-            'comment': 'Initial upload',
-            'file': file_for_upload,
-        }
-
-        resp = self.client.post(reverse('wiki.new_attachment'), data=post_data)
-        return resp
-
-    def test_legacy_redirect(self):
-        test_user = User.objects.get(username='testuser2')
-        test_file_content = 'Meh meh I am a test file.'
-        test_files = (
-            {'file_id': 97, 'filename': 'Canvas_rect.png',
-             'title': 'Canvas rect', 'slug': 'canvas-rect'},
-            {'file_id': 107, 'filename': 'Canvas_smiley.png',
-             'title': 'Canvas smiley', 'slug': 'canvas-smiley'},
-            {'file_id': 86, 'filename': 'Canvas_lineTo.png',
-             'title': 'Canvas lineTo', 'slug': 'canvas-lineto'},
-            {'file_id': 55, 'filename': 'Canvas_arc.png',
-             'title': 'Canvas arc', 'slug': 'canvas-arc'},
-        )
-        for f in test_files:
-            a = Attachment(title=f['title'], slug=f['slug'],
-                           mindtouch_attachment_id=f['file_id'])
-            a.save()
-            now = datetime.datetime.now()
-            r = AttachmentRevision(
-                attachment=a,
-                mime_type='text/plain',
-                title=f['title'],
-                slug=f['slug'],
-                description='',
-                created=now,
-                is_approved=True)
-            r.creator = test_user
-            r.file.save(f['filename'], ContentFile(test_file_content))
-            r.make_current()
-            mindtouch_url = reverse('wiki.mindtouch_file_redirect',
-                                    args=(),
-                                    kwargs={'file_id': f['file_id'],
-                                            'filename': f['filename']})
-            resp = self.client.get(mindtouch_url)
-            eq_(301, resp.status_code)
-            ok_(a.get_file_url() in resp['Location'])
-
-    def test_new_attachment(self):
-        resp = self._post_new_attachment()
-        eq_(302, resp.status_code)
-
-        attachment = Attachment.objects.get(title='Test uploaded file')
-        eq_(resp['Location'],
-            'http://testserver%s' % attachment.get_absolute_url())
-
-        rev = attachment.current_revision
-        eq_('admin', rev.creator.username)
-        eq_('A test file uploaded into kuma.', rev.description)
-        eq_('Initial upload', rev.comment)
-        ok_(rev.is_approved)
-
-    def test_edit_attachment(self):
-        file_for_upload = make_test_file(
-            content='I am a test file for editing.')
-
-        post_data = {
-            'title': 'Test editing file',
-            'description': 'A test file for editing.',
-            'comment': 'Initial upload',
-            'file': file_for_upload,
-        }
-
-        resp = self.client.post(reverse('wiki.new_attachment'), data=post_data)
-
-        tdir = tempfile.gettempdir()
-        edited_file_for_upload = tempfile.NamedTemporaryFile(suffix=".txt",
-                                                             dir=tdir)
-        edited_file_for_upload.write(
-            'I am a new version of the test file for editing.')
-        edited_file_for_upload.seek(0)
-
-        post_data = {
-            'title': 'Test editing file',
-            'description': 'A test file for editing.',
-            'comment': 'Second revision.',
-            'file': edited_file_for_upload,
-        }
-
-        attachment = Attachment.objects.get(title='Test editing file')
-
-        resp = self.client.post(reverse('wiki.edit_attachment',
-                                        kwargs={
-                                            'attachment_id': attachment.id,
-                                        }),
-                                data=post_data)
-
-        eq_(302, resp.status_code)
-
-        # Re-fetch because it's been updated.
-        attachment = Attachment.objects.get(title='Test editing file')
-        eq_(resp['Location'],
-            'http://testserver%s' % attachment.get_absolute_url())
-
-        eq_(2, attachment.revisions.count())
-
-        rev = attachment.current_revision
-        eq_('admin', rev.creator.username)
-        eq_('Second revision.', rev.comment)
-        ok_(rev.is_approved)
-
-        url = attachment.get_file_url()
-        resp = self.client.get(url, HTTP_HOST=settings.ATTACHMENT_HOST)
-        eq_('text/plain', rev.mime_type)
-        ok_('I am a new version of the test file for editing.' in resp.content)
-
-    def test_attachment_raw_requires_attachment_host(self):
-        resp = self._post_new_attachment()
-        attachment = Attachment.objects.get(title='Test uploaded file')
-
-        url = attachment.get_file_url()
-        resp = self.client.get(url)
-        eq_(301, resp.status_code)
-        eq_(attachment.get_file_url(), resp['Location'])
-
-        url = attachment.get_file_url()
-        resp = self.client.get(url, HTTP_HOST=settings.ATTACHMENT_HOST)
-        eq_('ALLOW-FROM: %s' % settings.DOMAIN, resp['x-frame-options'])
-        eq_(200, resp.status_code)
-
-    def test_attachment_detail(self):
-        file_for_upload = make_test_file(
-            content='I am a test file for attachment detail view.')
-
-        post_data = {
-            'title': 'Test file for viewing',
-            'description': 'A test file for viewing.',
-            'comment': 'Initial upload',
-            'file': file_for_upload,
-        }
-
-        resp = self.client.post(reverse('wiki.new_attachment'), data=post_data)
-
-        attachment = Attachment.objects.get(title='Test file for viewing')
-
-        resp = self.client.get(reverse('wiki.attachment_detail',
-                                       kwargs={
-                                           'attachment_id': attachment.id,
-                                       }))
-        eq_(200, resp.status_code)
-
-    def test_get_previous(self):
-        """
-        AttachmentRevision.get_previous() should return this revisions's
-        files's most recent approved revision."""
-        test_user = User.objects.get(username='testuser2')
-        a = Attachment(title='Test attachment for get_previous',
-                       slug='test-attachment-for-get-previous')
-        a.save()
-        r = AttachmentRevision(
-            attachment=a,
-            mime_type='text/plain',
-            title=a.title,
-            slug=a.slug,
-            description='',
-            comment='Initial revision.',
-            created=datetime.datetime.now() - datetime.timedelta(seconds=30),
-            creator=test_user,
-            is_approved=True)
-        r.file.save('get_previous_test_file.txt',
-                    ContentFile('I am a test file for get_previous'))
-        r.save()
-        r.make_current()
-
-        r2 = AttachmentRevision(
-            attachment=a,
-            mime_type='text/plain',
-            title=a.title,
-            slug=a.slug,
-            description='',
-            comment='First edit..',
-            created=datetime.datetime.now(),
-            creator=test_user,
-            is_approved=True)
-        r2.file.save('get_previous_test_file.txt',
-                     ContentFile('I am a test file for get_previous'))
-        r2.save()
-        r2.make_current()
-
-        eq_(r, r2.get_previous())
-
-    def test_mime_type_filtering(self):
-        """Don't allow uploads outside of the explicitly-permitted
-        mime-types."""
-        #SLIGHT HACK: this requires the default set of allowed
-        #mime-types specified in settings.py. Specifically, adding
-        #'text/html' to that set will make this test fail.
-        test_user = User.objects.get(username='testuser2')
-        a = Attachment(title='Test attachment for file type filter',
-                       slug='test-attachment-for-file-type-filter')
-        a.save()
-        r = AttachmentRevision(
-            attachment=a,
-            mime_type='text/plain',
-            title=a.title,
-            slug=a.slug,
-            description='',
-            comment='Initial revision.',
-            created=datetime.datetime.now() - datetime.timedelta(seconds=30),
-            creator=test_user,
-            is_approved=True)
-        r.file.save('mime_type_filter_test_file.txt',
-                    ContentFile('I am a test file for mime-type filtering'))
-
-        # Shamelessly stolen from Django's own file-upload tests.
-        tdir = tempfile.gettempdir()
-        file_for_upload = tempfile.NamedTemporaryFile(suffix=".html",
-                                                      dir=tdir)
-        file_for_upload.write('<html>I am a file that tests'
-                              'mime-type filtering.</html>.')
-        file_for_upload.seek(0)
-
-        post_data = {
-            'title': 'Test disallowed file type',
-            'description': 'A file kuma should disallow on type.',
-            'comment': 'Initial upload',
-            'file': file_for_upload,
-        }
-
-        resp = self.client.post(reverse('wiki.edit_attachment',
-                                        kwargs={'attachment_id': a.id}),
-                                data=post_data)
-        eq_(200, resp.status_code)
-        ok_('Files of this type are not permitted.' in resp.content)
-
-    def test_intermediate(self):
-        """
-        Test that the intermediate DocumentAttachment gets created
-        correctly when adding an Attachment with a document_id.
-
-        """
-        doc = document(locale='en', slug='attachment-test-intermediate')
-        doc.save()
-        rev = revision(document=doc, is_approved=True)
-        rev.save()
-
-        file_for_upload = make_test_file(
-            content='A file for testing intermediate attachment model.')
-
-        post_data = {
-            'title': 'Intermediate test file',
-            'description': 'Intermediate test file',
-            'comment': 'Initial upload',
-            'file': file_for_upload,
-        }
-
-        add_url = urlparams(reverse('wiki.new_attachment'),
-                            document_id=doc.id)
-        resp = self.client.post(add_url, data=post_data)
-        eq_(302, resp.status_code)
-
-        eq_(1, doc.files.count())
-
-        intermediates = DocumentAttachment.objects.filter(document__pk=doc.id)
-        eq_(1, intermediates.count())
-
-        intermediate = intermediates[0]
-        eq_('admin', intermediate.attached_by.username)
-        eq_(file_for_upload.name.split('/')[-1], intermediate.name)
-
-    def test_files_dict(self):
-        doc = document(locale='en', slug='attachment-test-files-dict')
-        doc.save()
-        rev = revision(document=doc, is_approved=True)
-        rev.save()
-
-        test_file_1 = make_test_file(
-            content='A file for testing the files dict')
-
-        post_data = {
-            'title': 'Files dict test file',
-            'description': 'Files dict test file',
-            'comment': 'Initial upload',
-            'file': test_file_1,
-        }
-
-        add_url = urlparams(reverse('wiki.new_attachment'),
-                            document_id=doc.id)
-        self.client.post(add_url, data=post_data)
-
-        test_file_2 = make_test_file(
-            content='Another file for testing the files dict')
-
-        post_data = {
-            'title': 'Files dict test file 2',
-            'description': 'Files dict test file 2',
-            'comment': 'Initial upload',
-            'file': test_file_2,
-        }
-
-        self.client.post(add_url, data=post_data)
-
-        doc = Document.objects.get(pk=doc.id)
-
-        files_dict = doc.files_dict()
-
-        file1 = files_dict[test_file_1.name.split('/')[-1]]
-        eq_('admin', file1['attached_by'])
-        eq_('Files dict test file', file1['description'])
-        eq_('text/plain', file1['mime_type'])
-        ok_(test_file_1.name.split('/')[-1] in file1['url'])
-
-        file2 = files_dict[test_file_2.name.split('/')[-1]]
-        eq_('admin', file2['attached_by'])
-        eq_('Files dict test file 2', file2['description'])
-        eq_('text/plain', file2['mime_type'])
-        ok_(test_file_2.name.split('/')[-1] in file2['url'])
-
-
-class PageMoveTests(TestCaseBase):
-    fixtures = ['test_users.json']
+class PageMoveTests(UserTestCase, WikiTestCase):
+    localizing_client = True
 
     def setUp(self):
         page_move_flag = Flag.objects.create(name='page_move')
@@ -4023,8 +3675,8 @@ class PageMoveTests(TestCaseBase):
         eq_(200, resp.status_code)
 
 
-class DocumentZoneTests(TestCaseBase):
-    fixtures = ['test_users.json']
+class DocumentZoneTests(UserTestCase, WikiTestCase):
+    localizing_client = True
 
     def setUp(self):
         super(DocumentZoneTests, self).setUp()
@@ -4094,3 +3746,26 @@ class DocumentZoneTests(TestCaseBase):
         middle_expected = ('<link rel="stylesheet" type="text/css" href="%s"' %
                            styles_url)
         ok_(middle_expected in response.content)
+
+
+class ListDocumentTests(UserTestCase, WikiTestCase):
+    """Tests for list_documents view"""
+    localizing_client = True
+    fixtures = UserTestCase.fixtures + ['wiki/documents.json']
+
+    def test_case_insensitive_tags(self):
+        """
+        Bug 976071 - Tags shouldn't be case sensitive
+        https://bugzil.la/976071
+        """
+        lower_tag = DocumentTag.objects.create(name='foo', slug='foo')
+        lower_tag.save()
+
+        doc = Document.objects.get(pk=1)
+        doc.tags.set(lower_tag)
+
+        response = self.client.get(reverse('wiki.tag', args=['foo']))
+        ok_(doc.slug in response.content.decode('utf-8'))
+
+        response = self.client.get(reverse('wiki.tag', args=['Foo']))
+        ok_(doc.slug in response.content.decode('utf-8'))

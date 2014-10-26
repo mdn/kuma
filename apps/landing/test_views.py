@@ -1,15 +1,10 @@
-from nose.tools import eq_
-import test_utils
+from nose.tools import eq_, ok_
 
-
-from devmo.tests import LocalizingClient
+from devmo.tests import KumaTestCase
 from sumo.urlresolvers import reverse
 
 
-class LearnViewsTest(test_utils.TestCase):
-
-    def setUp(self):
-        self.client = LocalizingClient()
+class LearnViewsTest(KumaTestCase):
 
     def test_learn(self):
         url = reverse('landing.views.learn')
@@ -32,11 +27,8 @@ class LearnViewsTest(test_utils.TestCase):
         eq_(200, r.status_code)
 
 
-class LandingViewsTest(test_utils.TestCase):
-    fixtures = ['test_data.json', ]
-
-    def setUp(self):
-        self.client = LocalizingClient()
+class LandingViewsTest(KumaTestCase):
+    fixtures = ['test_data.json']
 
     def test_home(self):
         url = reverse('landing.views.home')
@@ -47,3 +39,8 @@ class LandingViewsTest(test_utils.TestCase):
         url = reverse('landing.views.promote_buttons')
         r = self.client.get(url, follow=True)
         eq_(200, r.status_code)
+
+    def test_contribute_json(self):
+        r = self.client.get(reverse('contribute_json'))
+        eq_(200, r.status_code)
+        ok_('application/json' in r['Content-Type'])

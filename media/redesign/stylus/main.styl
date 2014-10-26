@@ -2,18 +2,16 @@
     Main stylesheet for the site, standalone
 */
 
-/* configuration and functionality - no output */
-@import 'includes/vars';
-@import 'includes/mixins';
+@require 'base/fonts/opensans';
+@require 'base/fonts/moztt';
 
-/* stylesheets also used elsewhere - output */
-@import 'includes/grid';
+/* stylesheets used only in main  */
+@require 'base/elements';
+@require 'base/utilities';
+@require 'base/icons';
 
-/* stylesheets used only in main - output  */
-@import 'main/fonts';
-@import 'main/reset';
-@import 'main/globals';
-@import 'main/tags';
-@import 'main/components';
-@import 'main/structure';
-@import 'main/content';
+/* components also used elsewhere */
+@require 'components/components';
+@require 'components/content';
+@require 'components/structure';
+@require 'components/tags';

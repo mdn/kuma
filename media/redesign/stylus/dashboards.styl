@@ -2,9 +2,8 @@
     Used to style the dashboard widgets in the dashboard apps
 */
 
-@import 'includes/vars';
-@import 'includes/mixins';
-@import 'includes/grid';
+@require 'includes/vars';
+@require 'includes/mixins';
 
 /* New revision dashboard styles */
 .dashboard-table {
@@ -27,14 +26,14 @@
         cursor: pointer;
 
         &:hover {
-            background: #f4f7f8;
+            background: $light-background-color;
         }
 
         &:nth-child(even) {
             background: #f7f7f7;
 
             &:hover {
-                background: #f4f7f8;
+                background: $light-background-color;
             }
         }
 

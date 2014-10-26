@@ -67,7 +67,7 @@
                 invalidClass = 'ui-autocomplete-input-invalid',
                 styleElement = this.styleElement;
 
-            if(valid == 'all') {
+            if(valid === 'all') {
                 styleElement.removeClass(validClass).removeClass(invalidClass);
             }
             else if(valid) {
@@ -187,7 +187,7 @@
                         cache.terms[term] = data;
 
                         // Respond with data *if* this is the last request
-                        if(xhr == self.lastXHR) {
+                        if(xhr === self.lastXHR) {
                             response(data);
                         }
                     });
@@ -198,7 +198,7 @@
             this.options.select = function(event, ui, isSilent) {
                 // Set the selection
                 var selection = self.selection = ui.item;
-                if(selection.value != undefined) {
+                if(selection.value !== undefined) {
                         // Call the select method if present
                     if(select) select.call(self, event, ui);
                     // Set the INPUT element's value to the item value
@@ -228,7 +228,7 @@
                 }
 
                 // Stop ENTER key presses from submitting forms...
-                if(e && e.keyCode == 13) {
+                if(e && e.keyCode === 13) {
                     e.preventDefault();
                     e.stopPropagation();
                     if(lookup) {
@@ -270,14 +270,14 @@
                             .attr('title', item.url)
                             .append($('<a></a>').text(item.label))
                             .appendTo(list);
-                }
+                };
             }
         },
 
         reposition: function() {
             this.menu.element.position( $.extend({
                 of: this.element
-            }, this.options.position ))
+            }, this.options.position ));
         }
     });
 
@@ -290,8 +290,8 @@
             var placeholder = $input.attr('placeholder');
 
             var valCheck = function() {
-                var box = $input[0]
-                if(box.value == placeholder) {
+                var box = $input[0];
+                if(box.value === placeholder) {
                      box.value = '';
                 }
             };
@@ -301,7 +301,7 @@
             $input.bind({
                 blur: valCheck,
                 focus: function() {
-                    if($input.val() == '') {
+                    if($input.val() === '') {
                         $input.val(placeholder);
                     }
                 }

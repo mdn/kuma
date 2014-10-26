@@ -1,19 +1,16 @@
 from django.conf import settings, UserSettingsHolder
-from django.utils.functional import wraps
+from django.contrib.messages.storage.fallback import FallbackStorage
 from django.test.client import Client
+from django.utils.functional import wraps
+from django.utils.importlib import import_module
 
 import constance.config
 from constance.backends import database as constance_database
 
+from nose import SkipTest
 import test_utils
-from nose.plugins.skip import SkipTest
 
 from sumo.urlresolvers import split_path
-
-
-class SkippedTestCase(test_utils.TestCase):
-    def setUp(self):
-        raise SkipTest()
 
 
 class overrider(object):
@@ -79,6 +76,7 @@ class override_settings(overrider):
     def disable(self):
         settings._wrapped = self.old_settings
 
+
 def mock_lookup_user():
     return {u'confirmed': True,
             u'country': u'us',
@@ -93,6 +91,32 @@ def mock_lookup_user():
             u'token': u'cdaa9e5d-2023-5f59-974d-83f6a29514ec'}
 
 
+class SessionAwareClient(Client):
+    """
+    Just a small override to patch the session property to be able to
+    use the sessions.
+    """
+    def _session(self):
+        """
+        Obtains the current session variables.
+
+        Backported the else clause from Django 1.7 to make sure there
+        is a session available during tests.
+        """
+        if 'django.contrib.sessions' in settings.INSTALLED_APPS:
+            engine = import_module(settings.SESSION_ENGINE)
+            cookie = self.cookies.get(settings.SESSION_COOKIE_NAME, None)
+            if cookie:
+                return engine.SessionStore(cookie.value)
+            else:
+                session = engine.SessionStore()
+                session.save()
+                self.cookies[settings.SESSION_COOKIE_NAME] = session.session_key
+                return session
+        return {}
+    session = property(_session)
+
+
 class LocalizingMixin(object):
     def request(self, **request):
         """Make a request, but prepend a locale if there isn't one already."""
@@ -105,7 +129,7 @@ class LocalizingMixin(object):
         return super(LocalizingMixin, self).request(**request)
 
 
-class LocalizingClient(LocalizingMixin, Client):
+class LocalizingClient(LocalizingMixin, SessionAwareClient):
     """Client which prepends a locale so test requests can get through
     LocaleURLMiddleware without resulting in a locale-prefix-adding 301.
 
@@ -113,7 +137,32 @@ class LocalizingClient(LocalizingMixin, Client):
     {mock out reverse() and make LocaleURLMiddleware not fire}.
 
     """
-
     # If you use this, you might also find the force_locale=True argument to
     # sumo.urlresolvers.reverse() handy, in case you need to force locale
     # prepending in a one-off case or do it outside a mock request.
+
+
+class KumaTestCase(test_utils.TestCase):
+    client_class = SessionAwareClient
+    localizing_client = False
+    skipme = False
+
+    @classmethod
+    def setUpClass(cls):
+        if cls.skipme:
+            raise SkipTest
+        if cls.localizing_client:
+            cls.client_class = LocalizingClient
+        super(KumaTestCase, cls).setUpClass()
+
+    def get_messages(self, request):
+        # Django 1.4 RequestFactory requests can't be used to test views that
+        # call messages.add (https://code.djangoproject.com/ticket/17971)
+        # FIXME: HACK from http://stackoverflow.com/q/11938164/571420
+        messages = FallbackStorage(request)
+        request._messages = messages
+        return messages
+
+
+class SkippedTestCase(KumaTestCase):
+    skipme = True

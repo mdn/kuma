@@ -177,7 +177,7 @@
                 Categorize the article. It will make the article findable under the right filters in the search engine. <a target="_blank" href="{{ url }}">Read the Tagging Guide</a>.
               {% endtrans %}
               </p>
-              <input id="tagit_tags" type="text" name="tags" value="{% for tag in tags %}{{ tag.name }},{% endfor %}" maxlength="255" />
+              <input id="tagit_tags" type="text" name="tags" value="{% for tag in tags %}{{ tag.name }},{% endfor %}" maxlength="255" class="tags" />
             </section>
 
             {% include 'wiki/includes/revision_comment.html' %}
@@ -192,7 +192,7 @@
       </section>
     </form>
 
-    {% include 'wiki/includes/attachment_list.html' %}
+    {% include 'attachments/includes/attachment_list.html' %}
 
     <!-- Add information about this document in JSON format for use in CKEditor -->
     <script type="text/javascript">

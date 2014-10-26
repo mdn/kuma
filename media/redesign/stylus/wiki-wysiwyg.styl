@@ -1,5 +1,5 @@
-@import 'includes/vars';
-@import 'includes/mixins';
+@require 'includes/vars';
+@require 'includes/mixins';
 
 /* styles for the WYSIWYG editor which we cannot take directly from screen.css */
 html, body {
@@ -36,7 +36,7 @@ body {
 }
 
 .summary {
-    background: #f4f7f8;
+    background: $light-background-color;
     font-weight: bold;
     padding: $grid-spacing;
     margin-bottom: $grid-spacing;

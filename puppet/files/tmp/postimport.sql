@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS `devmo_calendar` CASCADE;
 DROP TABLE IF EXISTS `wiki_document` CASCADE;
 DROP TABLE IF EXISTS `wiki_documenttag` CASCADE;
 DROP TABLE IF EXISTS `wiki_revision` CASCADE;
-DROP TABLE IF EXISTS `wiki_firefoxversion` CASCADE; 
+DROP TABLE IF EXISTS `wiki_firefoxversion` CASCADE;
 DROP TABLE IF EXISTS `wiki_operatingsystem` CASCADE;
 DROP TABLE IF EXISTS `wiki_helpfulvote` CASCADE;
 DROP TABLE IF EXISTS `wiki_relateddocument` CASCADE;
@@ -41,9 +41,6 @@ ALTER TABLE feeder_entry ENGINE=InnoDB;
 ALTER TABLE feeder_feed ENGINE=InnoDB;
 ALTER TABLE gallery_image ENGINE=InnoDB;
 ALTER TABLE gallery_video ENGINE=InnoDB;
-ALTER TABLE notifications_eventwatch ENGINE=InnoDB;
-ALTER TABLE notifications_watch ENGINE=InnoDB;
-ALTER TABLE notifications_watchfilter ENGINE=InnoDB;
 ALTER TABLE schema_version ENGINE=InnoDB;
 ALTER TABLE south_migrationhistory ENGINE=InnoDB;
 ALTER TABLE tagging_tag ENGINE=InnoDB;
@@ -154,7 +151,7 @@ INSERT INTO `services` VALUES (1,'AUTH','http://services.mindtouch.com/deki/draf
 UNLOCK TABLES;
 
 -- De-anonymize the Admin user
-UPDATE `users` 
+UPDATE `users`
 SET user_name='Admin',
     user_real_name='Admin',
     user_password='77da245e656a56818e6d7d874e1dd5c7',
@@ -170,7 +167,7 @@ SET user_name='Admin',
 WHERE user_id=10611;
 
 -- User ID 115908 is apparently the Anonymous user in current data dumps
-UPDATE `users` 
+UPDATE `users`
 SET user_name='Anonymous',
     user_real_name='Anonymous',
     user_password='',

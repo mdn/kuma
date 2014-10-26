@@ -1,5 +1,5 @@
-@import 'includes/mixins';
-@import 'includes/grid';
+@require 'includes/vars';
+@require 'includes/mixins';
 
 /* mixins applying only to the wiki */
 make-wiki-blocks-flat() {
@@ -193,7 +193,15 @@ article, .quick-links {
 article {
     position: relative;
 
-    .external-icon:not([href^='https://mdn.mozillademos.org']) {
+    a {
+        text-decoration: none;
+
+        &:hover, &:focus, &:active {
+            text-decoration: underline;
+        }
+    }
+
+    .external-icon:not([href^='https://mdn.mozillademos.org']):not(.ignore-external) {
         white-space: pre-line;
 
         html[dir='ltr'] &:before, html[dir='rtl'] &:after {
@@ -216,13 +224,6 @@ article {
         }
     }
 
-    a {
-        text-decoration: none;
-
-        &:hover, &:focus, &:active {
-            text-decoration: underline;
-        }
-    }
 }
 
 /* header and draft notices */
@@ -444,8 +445,10 @@ article {
         a, button, input[type='submit'], input[type='button'] {
             set-smaller-font-size();
 
-            &.disabled {
-                opacity: 0.8;
+            &.disabled, &[disabled] {
+                opacity: 0.4;
+                vendorize(box-shadow, none);
+                cursor: not-allowed;
             }
         }
 
@@ -556,65 +559,6 @@ div.bug, div.warning, div.overheadIndicator {
     min-height: 1px; /* ensures that when TOC becomes fixed, the column has width */
 }
 
-/* tag and file icons under the TOC */
-.tag-attach-list {
-    position: relative;
-
-    ul, > a {
-        set-smaller-font-size();
-        display: inline-block;
-    }
-
-    ul {
-        bidi-style(padding-left, 6px, padding-right, 0);
-        display: inline;
-        margin-bottom: 0;
-
-        li {
-            margin-bottom: 0;
-        }
-    }
-
-    > a {
-        text-decoration: none;
-        &:hover {
-            text-decoration: underline;
-        }
-    }
-}
-
-.tags {
-    li {
-        display: inline-block;
-        margin-bottom: 7px;
-    }
-}
-
-.tags a, .tagit li {
-    set-smaller-font-size();
-    padding: 1px 4px;
-    border: 1px solid #cee9f9 !important; /* overrides plugin selector */
-    text-decoration: none;
-    border-radius: 4px;
-    background: $light-background-color !important; /* overrides plugin selector */
-
-    .close {
-        color: #cee9f9 !important; /* overrides plugin selector */
-    }
-}
-
-.tag-list li {
-    margin-right: 6px;
-}
-
-.tagit li {
-    set-font-size($base-font-size);
-}
-
-.tagit, .tagit-new {
-    border: 0 !important; /* overrides plugin selector */
-}
-
 .fixed {
     position: fixed;
     top: 0;
@@ -682,23 +626,6 @@ div.bug, div.warning, div.overheadIndicator {
 
     .column-container-reverse {
         margin-left: 0;
-    }
-}
-
-.page-tags {
-    ul.tagit {
-        background: none;
-        min-height: 30px;
-        margin-bottom: -10px;
-
-        .tagit-label {
-            color: #333333;
-            font-weight: normal;
-        }
-
-        li {
-            margin-bottom: -(@margin-bottom);
-        }
     }
 }
 
@@ -1031,7 +958,7 @@ div.note {
     position: relative;
     padding: $gutter-width $gutter-width $gutter-width 30px;
     margin-bottom: $gutter-width;
-    background: #f4f7f8;
+    background: $light-background-color;
 
     dl {
         margin-bottom: 0;
@@ -1062,18 +989,6 @@ div.note {
         padding-top: 10px;
         padding-bottom: @padding-top;
         width: 98%;
-    }
-}
-
-#translate-tags {
-    bidi-value(float, left, right);
-
-    ul.tagit {
-        padding: 0;
-
-        li.tagit-choice {
-            padding-right: 10px;
-        }
     }
 }
 
@@ -1298,26 +1213,13 @@ details {
 
     #wiki-right {
         enable-toc-toggle();
-
-        .tag-attach-list {
-            display: inline-block;
-
-            {$selector-icon} {
-                left: 0;
-                margin-left: 0;
-            }
-
-            ul {
-                margin-left: 20px;
-            }
-        }
     }
 
     #wiki-column-container, #wiki-content {
         width: auto !important;
     }
 
-    #quick-links-toggle,  #wiki-controls {
+    #quick-links-toggle,  #wiki-controls, .page-print {
         display: none;
     }
 }
@@ -1373,7 +1275,13 @@ details {
 @media print {
 
     /* hide sections not important to the article */
-    #wiki-left, #wiki-right, #wiki-controls, .crumbs, .page-buttons, #page-attachments, .offline-notice, .contributors, .redirected-from, #offline-dialog-content, a.edit-section {
+    #wiki-left, #wiki-right, #wiki-controls, .crumbs, .page-buttons, #page-attachments, .offline-notice, .contributors, .redirected-from, #offline-dialog-content, a.edit-section, .from-search-previous-box, .from-search-navigate-wrap, .from-search-next-box {
         display: none;
     }
+
+    .from-search {
+        padding-left: 0;
+    }
 }
+
+@require 'wiki-customcss';

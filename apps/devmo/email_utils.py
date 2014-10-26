@@ -4,11 +4,11 @@ from functools import wraps
 
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
+from django.test import RequestFactory
 from django.utils import translation
 
 import jingo
 import tower
-from test_utils import RequestFactory
 
 
 log = logging.getLogger('mdn.email')

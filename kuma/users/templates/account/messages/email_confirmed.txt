@@ -1,1 +1,1 @@
-{% trans email=email %}You have confirmed {{email}}.{% endtrans %}
+{% trans email=email %}You have confirmed {{ email }}.{% endtrans %}

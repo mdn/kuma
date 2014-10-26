@@ -1,0 +1,18 @@
+@require '../../includes/vars';
+@require '../../includes/mixins';
+
+/*
+    Styles for overall document.  Minimally styles the canvas.
+*/
+
+html {
+    background: #fff;
+    font-size: $base-font-size;
+}
+
+body {
+    font-family: $site-font-family;
+    line-height: 1.5;
+    color: $text-color;
+    create-gradient-background($header-background-color);
+}

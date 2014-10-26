@@ -1,10 +1,10 @@
 from nose.tools import eq_
 
+import test_utils
 from sumo.utils import smart_int
-from sumo.tests import TestCase
 
 
-class SmartIntTestCase(TestCase):
+class SmartIntTestCase(test_utils.TestCase):
     def test_sanity(self):
         eq_(10, smart_int('10'))
         eq_(10, smart_int('10.5'))

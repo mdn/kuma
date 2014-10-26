@@ -1,46 +1,35 @@
-import logging
-import time
-
-from django.conf import settings
-from django.db import connection
-
 from django.core.exceptions import MultipleObjectsReturned
 
 from django.contrib.auth.models import AnonymousUser
 
-from django.http import HttpRequest
-from django.test import TestCase
-from django.test.client import Client
-
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
-from django.contrib.sessions.models import Session
+from django.http import HttpRequest
 
-from nose.tools import assert_equal, with_setup, assert_false, eq_, ok_
+from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 
 from sumo.urlresolvers import reverse
 
-from devmo.tests import LocalizingClient
 from kuma.demos.models import Submission
 from kuma.demos.tests.test_models import save_valid_submission
 from kuma.wiki.models import Document
-from .models import ContentFlag
-from .utils import get_ip, get_unique
+from kuma.users.tests import UserTestCase
 
-class DemoPackageTest(TestCase):
-    fixtures = ['test_users.json', 'wiki/documents.json']
+from .models import ContentFlag
+from .utils import get_unique
+
+
+class DemoPackageTest(UserTestCase):
+    fixtures = UserTestCase.fixtures + ['wiki/documents.json']
 
     def setUp(self):
-        self.user1 = User.objects.create_user('tester1', 
+        self.user1 = User.objects.create_user('tester1',
                 'tester2@tester.com', 'tester1')
-        self.user1.save()
-
-        self.user2 = User.objects.create_user('tester2', 
+        self.user2 = User.objects.create_user('tester2',
                 'tester2@tester.com', 'tester2')
-        self.user2.save()
 
-    def mk_request(self, user=None, ip='192.168.123.123', 
+    def mk_request(self, user=None, ip='192.168.123.123',
             user_agent='FakeBrowser 1.0'):
         request = HttpRequest()
         request.user = user and user or AnonymousUser()
@@ -167,13 +156,12 @@ class DemoPackageTest(TestCase):
         eq_('getElementByID',
             flag_dict[doc][1].content_object.title)
 
-class ViewTests(TestCase):
-    fixtures = ['test_users.json', 'wiki/documents.json']
 
-    def setUp(self):
-        self.client = LocalizingClient()
+class ViewTests(UserTestCase):
+    fixtures = UserTestCase.fixtures + ['wiki/documents.json']
+    localizing_client = True
 
-    def mk_request(self, user=None, ip='192.168.123.123', 
+    def mk_request(self, user=None, ip='192.168.123.123',
             user_agent='FakeBrowser 1.0'):
         request = HttpRequest()
         request.user = user and user or AnonymousUser()

@@ -4,6 +4,9 @@ $link-color = #0095dd;
 $menu-link-color = $text-color;
 $header-background-color = #eaeff2;
 $light-background-color = #f4f7f8;
+$code-block-background-color = #fafbfc;
+$code-block-background-alt-color = #dde4e9;
+$code-block-border-color = #558abb;
 
 /* typography */
 $light-font-weight = 200;
@@ -27,7 +30,7 @@ $button-shadow-color = #bbbfc2;
 $grid-spacing = 20px;
 $grid-margin = 3%;
 $grid-column-selector = '> [class^="column-"]';
-$grid-width-column-main = 73.5%;
+$grid-width-column-main = $calc-col-width(9);
 
 $max-width-default = 1400px;
 
@@ -56,3 +59,54 @@ $selector-icon = 'i[class^="icon-"]';
 /* paths */
 $media-url-dir = '/media/redesign/img/';
 $logo-sprite-url = $media-url-dir + 'logo_sprite.svg?2014-01';
+
+/* grid - 12 columns assuming a 3% margin */
+$calc-col-width($col-span) {
+    $grid-margin-numb = unit($grid-margin, '');
+    $col-percent = (100 - $grid-margin-numb * 11) / 12 * $col-span + $grid-margin-numb * ($col-span - 1);
+    if($col-percent > 100) {
+        $col-percent = 100;
+    }
+    $col-percent = unit($col-percent, unquote('%'));
+    $col-percent = round($col-percent, 3);
+    return $col-percent;
+}
+
+$column-1 {
+    width: $calc-col-width(1) ; // 5.583%;
+}
+$column-2 {
+    width: $calc-col-width(2) ; // 14.167%;
+}
+$column-3, $column-strip, $column-quarter {
+    width: $calc-col-width(3) ; // 22.75%;
+}
+$column-4, $column-third {
+    width: $calc-col-width(4) ; // 31.333%;
+}
+$column-5 {
+    width: $calc-col-width(5) ; // 39.917%;
+}
+$column-6, $column-half {
+    width: $calc-col-width(6) ; // 48.5%;
+}
+$column-7 {
+    width: $calc-col-width(7) ; // 57.083%;
+}
+$column-8 {
+    width: $calc-col-width(8) ; // 65.667%;
+}
+$column-9, $column-main {
+    width: $grid-width-column-main; // 74.25%
+}
+$column-10 {
+    width: $calc-col-width(10) ; // 82.833%;
+}
+$column-11 {
+    width: $calc-col-width(11) ; // 91.417%;
+}
+$column-12, $column-all {
+    width: auto;
+    margin: 0;
+    float: none;
+}
