@@ -30,6 +30,7 @@ var CKBUILDER_CONFIG = {
 	plugins: {
 		a11yhelp: 1,
 		about: 1,
+		autogrow: 1,
 		basicstyles: 1,
 		bidi: 1,
 		blockquote: 1,
@@ -55,6 +56,7 @@ var CKBUILDER_CONFIG = {
 		removeformat: 1,
 		resize: 1,
 		scayt: 1,
+		sharedspace: 1,
 		showblocks: 1,
 		showborders: 1,
 		sourcearea: 1,
@@ -68,6 +70,7 @@ var CKBUILDER_CONFIG = {
 		wysiwygarea: 1,
 		'mdn-attachment': 1,
 		'mdn-format': 1,
+		'mdn-sticky-toolbar': 1,
 		'mdn-image-attachment': 1,
 		'mdn-link-customization': 1,
 		'mdn-link-launch': 1,
