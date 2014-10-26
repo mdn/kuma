@@ -47,9 +47,9 @@
     // Should be kept in sync with the list in ckeditor/source/build-config.js.
     // Defining plugins list explicitly lets us to switch easily between dev and build versions.
     config.plugins =
-      'a11yhelp,about,autogrow,basicstyles,bidi,blockquote,clipboard,contextmenu,dialogadvtab,elementspath,enterkey,' +
+      'a11yhelp,autogrow,basicstyles,bidi,blockquote,clipboard,contextmenu,dialogadvtab,elementspath,enterkey,' +
       'entities,find,htmlwriter,image,indentlist,language,link,list,liststyle,magicline,maximize,pastefromword,' +
-      'pastetext,preview,removeformat,scayt,showblocks,showborders,sourcearea,stylescombo,tab,table,tabletools,' +
+      'pastetext,removeformat,scayt,showblocks,showborders,sourcearea,stylescombo,tab,table,tabletools,' +
       'toolbar,undo,wsc,wysiwygarea,' +
       // MDN's plugins.
       'mdn-attachment,mdn-format,mdn-sticky-toolbar,mdn-image-attachment,mdn-link-customization,mdn-link-launch,' +
@@ -62,6 +62,24 @@
     if(window.waffle && waffle.FLAGS.wiki_spellcheck) {
       config.plugins += ',mdn-spell';
     }
+
+    config.removeButtons = 'Cut,Copy,PasteFromWord';
+    config.toolbarGroups = [
+      { name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
+      { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
+      { name: 'editing', groups: [ 'find', 'selection', 'spellchecker' ] },
+      { name: 'forms' },
+      { name: 'tools' },
+      { name: 'others' },
+      { name: 'about' },
+      { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+      { name: 'colors' },
+      { name: 'links' },
+      '/',
+      { name: 'styles', groups: [ 'styles', 'blocks' ] },
+      { name: 'paragraph', groups: [ 'list', 'indent', 'align', 'bidi' ] },
+      { name: 'insert' }
+    ];
 
     // Disable the Advanced Content Filter because too many pages
     // use unlimited HTML.
