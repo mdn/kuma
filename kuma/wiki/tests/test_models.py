@@ -8,11 +8,11 @@ import mock
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from nose import SkipTest
+import test_utils
 
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from django.contrib.auth.models import User, Group, Permission
-from django.contrib.contenttypes.models import ContentType
 
 import constance.config
 from waffle.models import Switch
@@ -24,14 +24,14 @@ from kuma.wiki.exceptions import (PageMoveError,
                                   DocumentRenderedContentNotAvailable,
                                   DocumentRenderingInProgress)
 from kuma.wiki.models import (Document, Revision,
-                              Attachment, DocumentZone,
-                              TaggedDocument,)
+                              DocumentZone, TaggedDocument)
 from kuma.wiki import tasks
 from kuma.wiki.tests import (document, revision, doc_rev, normalize_html,
                              create_template_test_users,
                              create_topical_parents_docs)
+from kuma.users.tests import UserTestCase
+
 from sumo import ProgrammingError
-from sumo.tests import TestCase
 
 
 def _objects_eq(manager, list_):
@@ -47,75 +47,8 @@ def redirect_rev(title, redirect_to):
         save=True)
 
 
-class AttachmentTests(TestCase):
-
-    def test_permissions(self):
-        """Ensure that the negative and positive permissions for adding
-        attachments work."""
-        # Get the negative and positive permissions
-        ct = ContentType.objects.get(app_label='wiki', model='attachment')
-        p1 = Permission.objects.get(codename='disallow_add_attachment',
-                                    content_type=ct)
-        p2 = Permission.objects.get(codename='add_attachment',
-                                    content_type=ct)
-
-        # Create a group with the negative permission.
-        g1, created = Group.objects.get_or_create(name='cannot_attach')
-        g1.permissions = [p1]
-        g1.save()
-
-        # Create a group with the positive permission.
-        g2, created = Group.objects.get_or_create(name='can_attach')
-        g2.permissions = [p2]
-        g2.save()
-
-        # User with no explicit permission is allowed
-        u2, created = User.objects.get_or_create(username='test_user2')
-        ok_(Attachment.objects.allow_add_attachment_by(u2))
-
-        # User in group with negative permission is disallowed
-        u3, created = User.objects.get_or_create(username='test_user3')
-        u3.groups = [g1]
-        u3.save()
-        ok_(not Attachment.objects.allow_add_attachment_by(u3))
-
-        # Superusers can do anything, despite group perms
-        u1, created = User.objects.get_or_create(username='test_super',
-                                                 is_superuser=True)
-        u1.groups = [g1]
-        u1.save()
-        ok_(Attachment.objects.allow_add_attachment_by(u1))
-
-        # User with negative permission is disallowed
-        u4, created = User.objects.get_or_create(username='test_user4')
-        u4.user_permissions.add(p1)
-        u4.save()
-        ok_(not Attachment.objects.allow_add_attachment_by(u4))
-
-        # User with positive permission overrides group
-        u5, created = User.objects.get_or_create(username='test_user5')
-        u5.groups = [g1]
-        u5.user_permissions.add(p2)
-        u5.save()
-        ok_(Attachment.objects.allow_add_attachment_by(u5))
-
-        # Group with positive permission takes priority
-        u6, created = User.objects.get_or_create(username='test_user6')
-        u6.groups = [g1, g2]
-        u6.save()
-        ok_(Attachment.objects.allow_add_attachment_by(u6))
-
-        # positive permission takes priority, period.
-        u7, created = User.objects.get_or_create(username='test_user7')
-        u7.user_permissions.add(p1)
-        u7.user_permissions.add(p2)
-        u7.save()
-        ok_(Attachment.objects.allow_add_attachment_by(u7))
-
-
-class DocumentTests(TestCase):
+class DocumentTests(UserTestCase):
     """Tests for the Document model"""
-    fixtures = ['test_users.json']
 
     @attr('bug875349')
     def test_json_data(self):
@@ -208,10 +141,10 @@ class DocumentTests(TestCase):
             try:
                 d.delete()
                 if active:
-                    ok_(False, 'Exception on delete when active')
+                    self.fail('Exception on delete when active')
             except Exception:
                 if not active:
-                    ok_(False, 'No exception on delete when not active')
+                    self.fail('No exception on delete when not active')
 
     def test_delete_tagged_document(self):
         """Make sure deleting a tagged doc deletes its tag relationships."""
@@ -372,7 +305,7 @@ class DocumentTests(TestCase):
         ok_(d3.parents == [d1, d2])
 
 
-class PermissionTests(TestCase):
+class PermissionTests(test_utils.TestCase):
 
     def setUp(self):
         """Set up the permissions, groups, and users needed for the tests"""
@@ -422,10 +355,8 @@ class PermissionTests(TestCase):
                                 user, msg[expected], slug))
 
 
-class DocumentTestsWithFixture(TestCase):
+class DocumentTestsWithFixture(UserTestCase):
     """Document tests which need the users fixture"""
-
-    fixtures = ['test_users.json']
 
     def test_redirect_document_non_redirect(self):
         """Assert redirect_document on non-redirects returns None."""
@@ -585,9 +516,8 @@ class DocumentTestsWithFixture(TestCase):
         eq_(sample_js.strip(), result['js'].strip())
 
 
-class TaggedDocumentTests(TestCase):
+class TaggedDocumentTests(UserTestCase):
     """Tests for tags in Documents and Revisions"""
-    fixtures = ['test_users.json']
 
     @attr('tags')
     def test_revision_tags(self):
@@ -612,9 +542,8 @@ class TaggedDocumentTests(TestCase):
         eq_(1, Document.objects.filter(tags__name='alpha').count())
 
 
-class RevisionTests(TestCase):
+class RevisionTests(UserTestCase):
     """Tests for the Revision model"""
-    fixtures = ['test_users.json']
 
     def test_approved_revision_updates_html(self):
         """Creating an approved revision updates document.html"""
@@ -756,8 +685,8 @@ class RevisionTests(TestCase):
         ok_('editorial' not in reverted_tags)
 
 
-class RelatedDocumentTests(TestCase):
-    fixtures = ['test_users.json', 'wiki/documents.json']
+class RelatedDocumentTests(UserTestCase):
+    fixtures = UserTestCase.fixtures + ['wiki/documents.json']
 
     def test_related_documents_calculated(self):
         d = Document.objects.get(pk=1)
@@ -786,8 +715,7 @@ class RelatedDocumentTests(TestCase):
         eq_(0, d.related_documents.count())
 
 
-class GetCurrentOrLatestRevisionTests(TestCase):
-    fixtures = ['test_users.json']
+class GetCurrentOrLatestRevisionTests(UserTestCase):
 
     """Tests for current_or_latest_revision."""
     def test_single_approved(self):
@@ -809,8 +737,7 @@ class GetCurrentOrLatestRevisionTests(TestCase):
         eq_(r2, r1.document.current_or_latest_revision())
 
 
-class DumpAndLoadJsonTests(TestCase):
-    fixtures = ['test_users.json', ]
+class DumpAndLoadJsonTests(UserTestCase):
 
     def test_roundtrip(self):
         # Create some documents and revisions here, rather than use a fixture
@@ -900,7 +827,7 @@ class DumpAndLoadJsonTests(TestCase):
             # The original primary key should have gone away.
             try:
                 d_curr = Document.objects.get(pk=d_orig.pk)
-                ok_(False, "This should have been an error")
+                self.fail("This should have been an error")
             except Document.DoesNotExist:
                 pass
 
@@ -911,8 +838,7 @@ class DumpAndLoadJsonTests(TestCase):
             eq_(uploader.id, d_curr.current_revision.creator_id)
 
 
-class DeferredRenderingTests(TestCase):
-    fixtures = ['test_users.json', ]
+class DeferredRenderingTests(UserTestCase):
 
     def setUp(self):
         super(DeferredRenderingTests, self).setUp()
@@ -1014,8 +940,8 @@ class DeferredRenderingTests(TestCase):
         self.d1.save()
         try:
             self.d1.render('', 'http://testserver/')
-            ok_(False, "An attempt to render while another appears to be in "
-                       "progress should be disallowed")
+            self.fail("An attempt to render while another appears to be in "
+                      "progress should be disallowed")
         except DocumentRenderingInProgress:
             pass
 
@@ -1033,8 +959,8 @@ class DeferredRenderingTests(TestCase):
         try:
             self.d1.render('', 'http://testserver/')
         except DocumentRenderingInProgress:
-            ok_(False, "A timed-out rendering should not be considered as "
-                       "still in progress")
+            self.fail("A timed-out rendering should not be considered as "
+                      "still in progress")
 
     @mock.patch('kuma.wiki.kumascript.get')
     def test_long_render_sets_deferred(self, mock_kumascript_get):
@@ -1129,8 +1055,8 @@ class DeferredRenderingTests(TestCase):
         self.d1.save()
         try:
             result_rendered, _ = self.d1.get_rendered(None, 'http://testserver/')
-            ok_(False, "We should have gotten a "
-                       "DocumentRenderedContentNotAvailable exception")
+            self.fail("We should have gotten a "
+                      "DocumentRenderedContentNotAvailable exception")
         except DocumentRenderedContentNotAvailable:
             pass
         ok_(mock_render_document_delay.called)
@@ -1147,9 +1073,8 @@ class DeferredRenderingTests(TestCase):
         ok_(errors, r_errors)
 
 
-class RenderExpiresTests(TestCase):
+class RenderExpiresTests(UserTestCase):
     """Tests for max-age and automatic document rebuild"""
-    fixtures = ['test_users.json']
 
     def test_find_stale_documents(self):
         now = datetime.now()
@@ -1249,10 +1174,8 @@ class RenderExpiresTests(TestCase):
         ok_(d1_fresh.last_rendered_at > earlier)
 
 
-class PageMoveTests(TestCase):
+class PageMoveTests(UserTestCase):
     """Tests for page-moving and associated functionality."""
-
-    fixtures = ['test_users.json']
 
     @attr('move')
     def test_children_simple(self):
@@ -1807,12 +1730,10 @@ class PageMoveTests(TestCase):
         grandchild_doc.parent_topic = child_doc
         grandchild_doc.save()
 
-        conflict = revision(title='Conflict page for page-move error handling',
-                            slug='test-move-error-messaging/moved/grandchild',
-                            is_approved=True,
-                            save=True)
-        conflict_doc = conflict.document
-
+        revision(title='Conflict page for page-move error handling',
+                 slug='test-move-error-messaging/moved/grandchild',
+                 is_approved=True,
+                 save=True)
         # TODO: Someday when we're on Python 2.7, we can use
         # assertRaisesRegexp. Until then, we have to manually catch
         # and inspect the exception.
@@ -1833,9 +1754,8 @@ class PageMoveTests(TestCase):
                 ok_(s in e.args[0])
 
 
-class DocumentZoneTests(TestCase):
+class DocumentZoneTests(UserTestCase):
     """Tests for content zones in topic hierarchies"""
-    fixtures = ['test_users.json']
 
     def test_find_roots(self):
         """Ensure sub pages can find the content zone root"""
@@ -1886,9 +1806,8 @@ class DocumentZoneTests(TestCase):
         eq_(zone_stack[1], root_zone)
 
 
-class DocumentParsingTests(TestCase):
+class DocumentParsingTests(UserTestCase):
     """Tests exercising content parsing methods"""
-    fixtures = ['test_users.json']
 
     def test_get_section_content(self):
         src = """

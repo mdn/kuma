@@ -4,14 +4,14 @@ cache: apt
 python:
     - "2.6"
 
-env: FORCE_DB=1 PYTHONPATH=. DJANGO_SETTINGS_MODULE=settings_travis
+env: FORCE_DB=1 PYTHONPATH=. DJANGO_SETTINGS_MODULE=settings_travis DEBIAN_FRONTEND=noninteractive
 
 services:
     - memcached
 
 before_install:
     - sudo apt-get update -qq
-    - sudo apt-get install build-essential aria2 libxml2-dev libxslt-dev libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev zlib1g-dev sqlite3 libtidy-dev
+    - sudo apt-get -y install build-essential aria2 libxml2-dev libxslt-dev libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev zlib1g-dev sqlite3 libtidy-dev
     - sudo ln -s /usr/lib/`uname -i`-linux-gnu/libfreetype.so /usr/lib
     - sudo ln -s /usr/lib/`uname -i`-linux-gnu/libz.so /usr/lib
     - aria2c -j 10 https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/base_wheels.tar.gz
@@ -23,11 +23,11 @@ before_install:
     - tar -C .. -zxf product_details_json.tar.gz
     - tar xvfz locale.tar.gz
     - wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.13.deb
-    - sudo dpkg -i elasticsearch-0.90.13.deb
+    - sudo dpkg --force-confdef -i elasticsearch-0.90.13.deb
     - sudo service elasticsearch start
 
 install:
-    # we install 1.4.9 here separately because 1.4.x can't be packaged as a wheel file
+    # we install 1.4.x here separately because 1.4.x can't be packaged as a wheel file
     - pip install -U pip wheel Django==1.4.13
     - pip install --no-index --find-links=travis_wheels -r requirements/compiled.txt
     - pip install --find-links=base_wheels -r requirements/prod.txt -r requirements/dev.txt
@@ -37,7 +37,7 @@ before_script:
     - mysql -e 'create database kuma;'
 
 script:
-    - coverage run --include=`pwd`/kuma/*,`pwd`/apps/* manage.py test --noinput -v2 actioncounters contentflagging dashboards kuma.demos devmo kpi landing search kuma.users kuma.wiki kuma.events
+    - coverage run --include=`pwd`/kuma/*,`pwd`/apps/* manage.py test --noinput -v2 access actioncounters authkeys contentflagging devmo kpi kuma landing sumo
 
 after_success:
     - coveralls

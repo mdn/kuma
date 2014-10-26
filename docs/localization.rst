@@ -293,6 +293,8 @@ localizers will have merge head-aches.
         $ git commit -m "MDN string update YYYY-MM-DD"
         $ git svn dcommit
 
+.. note:: You need verbatim permissions for the following. If you don't have permissions, email `groovecoder <mailto:lcrouch@mozilla.com>`_ or `mathjazz <mailto:matjaz@mozilla.com>`_ to do the following ...
+
 4.  Go to the `MDN templates on Verbatim
     <https://localize.mozilla.org/templates/mdn/>`_
 

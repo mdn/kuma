@@ -2,16 +2,17 @@
     Updates in this file modify or enhance the code provided by Prism.js
 */
 
-@import 'includes/vars';
-@import 'includes/mixins';
+@require 'includes/vars';
+@require 'includes/mixins';
 
-code[class*='language-'], pre[class*='language-'] {
+code[class*='language-'],
+pre[class*='language-'] {
     color: inherit;
     text-shadow: none;
 }
 
 pre[class*='language-'] {
-    margin: 0 0 24px 0;
+    margin: 0 0 $grid-spacing 0;
 
     span.comment {
         display: inherit;
@@ -23,7 +24,8 @@ pre[class*='language-'] {
     background: none;
 }
 
-:not(pre)>code[class*='language-'], pre[class*='language-'] {
+:not(pre)>code[class*='language-'],
+pre[class*='language-'] {
     @extend $code-block;
 }
 
@@ -31,12 +33,11 @@ pre[class*='language-'] {
     Some places in the wiki feature <pre><em><code>
 */
 pre em code[class*='language-'] {
-    background-image: none;
+    background: none;
     border-left: 0;
-    background: transparent;
 }
 
-pre.twopartsyntaxbox, pre.syntaxbox {
-    background: rgba(212, 221, 228, 0.5) !important;
-    margin-bottom: 0;
-}
+/* components based on the above */
+
+@import 'wiki-syntax-syntaxbox';
+@import 'wiki-syntax-error';

@@ -1,51 +1,48 @@
 {% extends "account/base.html" %}
 
-{% block title %}{{ page_title(_("Account")) }}{% endblock %}
+{% block title %}{{ page_title(_("Email addresses")) }}{% endblock %}
 
 {% block content %}
+<div class="text-content readable-line-length">
   <h1>{{ _("Email addresses") }}</h1>
-  <div class="text-content">
 
     {% if user.emailaddress_set.all().exists() %}
-      <p>{{ _("The following email addresses are associated with your account:") }}</p>
 
-      <form action="{{ url('account_email') }}" class="email_list" method="post">
-      {{ csrf() }}
-      <fieldset class="blockLabels">
+      <p>{{ _('{email} is your <em>primary</em> email address')|fe(email=user.email) }}</p>
 
-      <ul class="no-bullets">
+      {% if user.emailaddress_set.count() > 1  %}
+
+        <p>{{ _("You've also added the following email addresses:") }}</p>
+
+        <ul class="option-list">
         {% for emailaddress in user.emailaddress_set.all() %}
-        <li>
-          <div class="ctrlHolder">
-            <label for="email_radio_{{ loop.index }}" class="{% if emailaddress.primary %}primary_email{%endif%}">
-
-              <input id="email_radio_{{ loop.index }}" type="radio" name="email" {% if emailaddress.primary %}checked="checked"{%endif %} value="{{ emailaddress.email }}"/>
-
-                {{ emailaddress.email }}
-                {% if emailaddress.verified %}
-                  <strong class="verified">{{ _("Verified") }}</strong>
-                {% else %}
-                  <span class="unverified">{{ _("Unverified") }}</span>
-                {% endif %}
-              {% if emailaddress.primary %}<em class="primary">{{ _("Primary") }}</em>{% endif %}
-            </label>
-           </div>
-        </li>
+            {% if emailaddress.primary %}
+            {% else %}
+              <li>
+                <form action="{{ url('account_email') }}" class="email_list" method="post">
+                  {{ csrf() }}
+                  {{ emailaddress.email }}
+                  <input id="email_radio_{{ loop.index }}" type="hidden" name="email" value="{{ emailaddress.email }}"/>
+                  <span class="option-list-options">
+                    {% if emailaddress.verified %}
+                      <button class="button positive" type="submit" name="action_primary" >{{ _("Make Primary") }}</button>
+                    {% else %}
+                      <button class="button" type="submit" name="action_send" >{{ _("Re-send Confirmation") }}</button>
+                    {% endif %}
+                    <button class="button transparent only-icon" type="submit" name="action_remove" ><span>{{ _("Remove") }}</span><i aria-hidden="true" class="icon-trash"></i></button>
+                  </span>
+                </form>
+              </li>
+            {% endif %}
         {% endfor %}
-      </ul>
+        </ul>
+        <br class="clear">
 
-      <p class="buttonHolder">
-        <button class="secondaryAction" type="submit" name="action_primary" >{{ _("Make Primary") }}</button>
-        <button class="secondaryAction" type="submit" name="action_send" >{{ _("Re-send Verification") }}</button>
-        <button class="primaryAction" type="submit" name="action_remove" >{{ _("Remove") }}</button>
-      </p>
-
-      </fieldset>
-      </form>
+      {% endif %}
 
     {% else %}
 
-      <p>{% trans %}<strong>Warning:</strong>"You have not added any email addresses to this account. Without one you cannot receive notifications, reset your password, etc.{% endtrans %}</p>
+      <p>{% trans %}<strong>Warning:</strong>"You have not added any email addresses to this profile. Without one you cannot receive notifications.{% endtrans %}</p>
 
     {% endif %}
 
@@ -73,8 +70,8 @@
 (function() {
   var message = "{{ _("Do you really want to remove the selected email address?") }}";
   var actions = document.getElementsByName('action_remove');
-  if (actions.length) {
-    actions[0].addEventListener("click", function(e) {
+  for (var i = 0; i < actions.length; i++) {
+    actions[i].addEventListener("click", function(e) {
       if (! confirm(message)) {
         e.preventDefault();
       }

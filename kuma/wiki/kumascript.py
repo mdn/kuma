@@ -13,7 +13,7 @@ from django.contrib.sites.models import Site
 
 import constance.config
 
-from .constants import KUMASCRIPT_TIMEOUT_ERROR
+from .constants import KUMASCRIPT_TIMEOUT_ERROR, TEMPLATE_TITLE_PREFIX
 
 
 def should_use_rendered(doc, params, html=None):
@@ -50,6 +50,7 @@ def post(request, content, locale=settings.LANGUAGE_CODE,
         url=request.build_absolute_uri('/'),
         locale=locale
     )
+
     add_env_headers(headers, env_vars)
     data = content.encode('utf8')
     resp = requests.post(ks_url,
@@ -82,6 +83,15 @@ def _get_attachment_metadata_dict(attachment):
     }
 
 
+def _format_slug_for_request(slug):
+    """Formats a document slug which will play nice with kumascript caching"""
+    # http://bugzil.la/1063580
+    index = slug.find(TEMPLATE_TITLE_PREFIX)
+    if index != -1:
+        slug = '%s%s' % (TEMPLATE_TITLE_PREFIX, slug[(index + len(TEMPLATE_TITLE_PREFIX)):].lower())
+    return slug
+
+
 def get(document, cache_control, base_url, timeout=None):
     """Perform a kumascript GET request for a document locale and slug."""
     if not cache_control:
@@ -100,12 +110,18 @@ def get(document, cache_control, base_url, timeout=None):
     document_slug = document.slug
     max_age = constance.config.KUMASCRIPT_MAX_AGE
 
+    # 1063580 - Kumascript converts template name calls to lower case and bases
+    # caching keys off of that.
+    document_slug_for_kumascript = document_slug
+    if document.is_template:
+        document_slug_for_kumascript = _format_slug_for_request(document_slug)
+
     resp_body, resp_errors = None, None
 
     try:
         url_tmpl = settings.KUMASCRIPT_URL_TEMPLATE
         url = unicode(url_tmpl).format(path=u'%s/%s' %
-                                       (document_locale, document_slug))
+                                       (document_locale, document_slug_for_kumascript))
 
         ck_etag, ck_modified, ck_body, ck_errors = (
                 build_cache_keys(document_slug, document_locale))

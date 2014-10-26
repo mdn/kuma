@@ -1,0 +1,48 @@
+@require '../../includes/vars';
+
+/* Background */
+.section-demos {
+  background: url("/media/img/demos/bg-demostudio.jpg") center 50px no-repeat;
+  min-width: 960px;
+}
+.section-demos #content-main {
+  margin: 20px -20px 40px;
+  padding: 20px 20px 10px;
+  background: #c0c4c8;
+  background: rgba(255,255,255,0.6);
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  border-radius: 8px;
+  -moz-box-shadow: 1px 1px 4px rgba(0,0,0,0.25);
+  -webkit-box-shadow: 1px 1px 4px rgba(0,0,0,0.25);
+  box-shadow: 1px 1px 4px rgba(0,0,0,0.25);
+
+  @media $media-query-small-mobile {
+    margin: 20px 0;
+    padding: 20px 0 10px;
+  }
+}
+#demostudio.detail {
+  background: url("/media/img/demos/bg-demodetail.jpg") center 55px no-repeat;
+}
+#demostudio.detail #content-main {
+  background: transparent;
+  padding: 0 20px;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+
+  @media $media-query-small-mobile {
+    padding: 0;
+  }
+}
+#demostudio.landing {
+  background: url("/media/img/demos/bg-demolanding.jpg") center 50px no-repeat;
+}
+#demostudio.landing #content-main {
+  background: transparent;
+  border-radius: 0;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}

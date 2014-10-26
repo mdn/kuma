@@ -54,11 +54,23 @@ class apache_config {
             Apache::Loadmodule['vhost_alias'],
         ];
     }
+    file { "/etc/apache2/conf.d/all-servers.conf":
+        source => "/home/vagrant/src/etc/apache/all-servers.conf",
+        require => [
+            Package['apache2'],
+            Apache::Loadmodule['env'],
+            Apache::Loadmodule['setenvif'],
+            Apache::Loadmodule['headers'],
+        ];
+    }
     service { "apache2":
         ensure    => running,
         enable    => true,
         require   => [ Package['apache2'], ],
-        subscribe => File['/etc/apache2/conf.d/mozilla-kuma-apache.conf']
+        subscribe => [
+            File['/etc/apache2/conf.d/mozilla-kuma-apache.conf'],
+            File['/etc/apache2/conf.d/all-servers.conf'],
+        ]
     }
 }
 

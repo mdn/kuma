@@ -1,6 +1,8 @@
-@import 'includes/vars';
-@import 'includes/mixins';
-@import 'main/components';
+@require 'includes/vars';
+@require 'includes/mixins';
+@require 'components/components';
+@require 'components/tagit';
+@require 'components/activity';
 
 /*** Display ***/
 
@@ -87,21 +89,6 @@
         }
     }
 
-    .tags {
-        margin-bottom: 5px;
-
-        h2 {
-            set-font-size($base-font-size);
-            margin-bottom: 0;
-        }
-
-        li {
-            display: inline;
-            set-smaller-font-size();
-            margin: 0 10px 0 0;
-        }
-    }
-
     .memberSince {
         color: #6a9412;
         set-smaller-font-size();
@@ -127,6 +114,21 @@
 
 .gallery-foot {
     background: $light-background-color;
+}
+
+.profile-tags {
+    margin-bottom: $grid-spacing;
+
+    h2 {
+        set-font-size($base-font-size);
+        margin-bottom: 0;
+    }
+
+    li {
+        display: inline;
+        set-smaller-font-size();
+        margin: 0 10px 0 0;
+    }
 }
 
 #docs-activity {
@@ -216,32 +218,6 @@ table.activity {
         }
     }
 
-    ul.tagit {
-        background: #fff;
-        border: 1px solid #cbc8b9;
-        padding: 6px 8px;
-        width: 610px;
-    }
-
-    li {
-        .tag-expert {
-            display: inline-block;
-            margin: 0 10px 10px 0;
-
-            label {
-                background: #f9f9f9;
-                border: 1px solid #dbd9d1;
-                border-radius: 2px;
-                font-weight: normal;
-                margin: 0;
-                padding: 3px 8px 3px 4px;
-                &:hover {
-                    border-color: #bbb;
-                }
-            }
-        }
-    }
-
     .submission {
         button {
             vendorize(box-shadow, inherit);
@@ -268,30 +244,23 @@ table.activity {
     }
 }
 
-
-
 #profile-edit {
-    h1, > {$selector-icon}{
-        bidi-value(float, left, right);
-
-        /* Keep the font size and line height equal to make the icon appear as
-           though it is on the same line. */
+    h1 {
         font-size: 26px;
-        line-height: 40px;
+
+        > {$selector-icon} {
+            bidi-style(margin-left, 0, margin-right, $icon-margin);
+        }
     }
 
-    > {$selector-icon} {
-        bidi-style(margin-left, 20px, margin-right, 20px);
-    }
-
-    fieldset {
+    h1, fieldset {
         clear: both;
     }
 }
 
 /* Profile edit newsletter */
 .profile-newsletter-container {
-    background: #f4f7f8;
+    background: $light-background-color;
     padding: $grid-spacing;
     overflow: hidden;
 

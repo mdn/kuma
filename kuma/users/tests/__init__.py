@@ -1,20 +1,19 @@
-import random
-from string import letters
+from nose.tools import ok_
 
 from django.contrib.auth.models import User
+from allauth.account.models import EmailAddress
 
-from devmo.tests import LocalizingClient
-from sumo.tests import TestCase
+from devmo.tests import KumaTestCase
 
 from ..models import UserProfile
 
 
-class TestCaseBase(TestCase):
-    """Base TestCase for the users app test cases."""
+random_str = User.objects.make_random_password
 
-    def setUp(self):
-        super(TestCaseBase, self).setUp()
-        self.client = LocalizingClient()
+
+class UserTestCase(KumaTestCase):
+    """Base TestCase for the users app test cases."""
+    fixtures = ['test_users.json']
 
 
 def profile(user, **kwargs):
@@ -24,14 +23,34 @@ def profile(user, **kwargs):
 
 
 def user(save=False, **kwargs):
-    defaults = {
-        'password': 'sha1$d0fcb$661bd5197214051ed4de6da4ecdabe17f5549c7c'
-    }
     if 'username' not in kwargs:
-        defaults['username'] = ''.join(random.choice(letters)
-                                       for x in xrange(15))
-    defaults.update(kwargs)
-    u = User(**defaults)
+        kwargs['username'] = random_str(length=15)
+    password = kwargs.pop('password', 'password')
+    user = User(**kwargs)
+    user.set_password(password)
     if save:
-        u.save()
-    return u
+        user.save()
+    return user
+
+
+def email(save=False, **kwargs):
+    if 'user' not in kwargs:
+        kwargs['user'] = user(save=True)
+    if 'email' not in kwargs:
+        kwargs['email'] = '%s@%s.com' % (random_str(), random_str())
+    email = EmailAddress(**kwargs)
+    if save:
+        email.save()
+    return email
+
+
+def verify_strings_in_response(test_strings, response):
+    for test_string in test_strings:
+        ok_(test_string in response.content,
+            msg="Expected '%s' in content." % test_string)
+
+
+def verify_strings_not_in_response(test_strings, response):
+    for test_string in test_strings:
+        ok_(test_string not in response.content,
+            msg="Found unexpected '%s' in content." % test_string)

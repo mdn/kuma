@@ -16,15 +16,30 @@
       <img id="beast404re" src="{{ MEDIA_URL }}img/beast-404_RE.png" alt="">
       <img class="beast 404" src="{{ MEDIA_URL }}img/beast-404.png" alt="">
     </div>
-    <p>We're sorry, we couldn't find what you were looking for.</p>
-    <p>You can try a search or start over on the <a href="{{ url('home') }}">home page</a>.</p>
-    <p>If you were following a documentation link, you can sign in and create the page. Otherwise, please <a href="https://bugzilla.mozilla.org/form.doc" rel="nofollow">file a bug</a>. Thanks!</p>
+
+    <p>{% trans %}
+    We're sorry, we couldn't find what you were looking for.
+    {% endtrans %}</p>
+
+    <p>{% trans homepage_url=url('home') %}
+    You can try a search or start over on the <a href="{{ homepage_url }}">home page</a>.
+    {% endtrans %}</p>
+
+    <p>{% trans bug_form_url='https://bugzilla.mozilla.org/form.doc' %}
+    If you were following a documentation link, you can sign in and create the page. Otherwise, please <a href="{{ bug_form_url }}" rel="nofollow">file a bug</a>. Thanks!
+    {% endtrans %}</p>
 
     {% if not user.is_authenticated() %}
         {% include "socialaccount/snippets/provider_list.html" %}
     {% endif %}
 
-    <p class="attrib"><small><a href="http://theoatmeal.com/comics/state_web_summer#tumblr" rel="nofollow">Tumbeasts</a> by Matthew Inman of <a href="http://theoatmeal.com" rel="nofollow">The Oatmeal</a></small></p>
+    <p class="attrib"><small>{% trans tumbeasts_url='http://theoatmeal.com/comics/state_web_summer#tumblr', oatmeal_url='http://theoatmeal.com' %}
+        <a href="{{ tumbeasts_url }}" rel="nofollow">Tumbeasts</a> by Matthew Inman of <a href="{{ oatmeal_url }}" rel="nofollow">The Oatmeal</a>
+    {% endtrans %}</small></p>
+
+    {% if waffle.flag('social_account_research') and (not user.is_authenticated()) %}
+        {% include "users/snippets/social_account_research_notice.html" %}
+    {% endif %}
   </section>
 </div>
 </section>

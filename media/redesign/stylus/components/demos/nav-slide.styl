@@ -1,0 +1,73 @@
+/* featured demos - navigate between demos */
+#featured-demos .nav-slide {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  height: 0;
+}
+#featured-demos .nav-slide a {
+  opacity: 0.85;
+  position: absolute;
+  z-index: 30;
+  top: 270px;
+  width: 65px;
+  height: 65px;
+  text-indent: -999em;
+  overflow: hidden;
+  background: transparent url("/media/img/demos/nav-slide.png") no-repeat;
+}
+#featured-demos .nav-slide .next {
+  right: 180px;
+  background-position: 0 0;
+}
+#featured-demos .nav-slide .next:hover,
+#featured-demos .nav-slide .next:focus,
+#featured-demos .nav-slide .next:active {
+  background-position: 0 -100px;
+}
+#featured-demos .nav-slide .prev {
+  left: 180px;
+  background-position: 0 -200px;
+}
+#featured-demos .nav-slide .prev:hover,
+#featured-demos .nav-slide .prev:focus,
+#featured-demos .nav-slide .prev:active {
+  background-position: 0 -300px;
+}
+
+
+/* demobox - on demo detail page navigate between thumbnails */
+#demobox .nav-slide {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#demobox .nav-slide a {
+  opacity: 0.85;
+  position: absolute;
+  z-index: 30;
+  top: 40%;
+  width: 65px;
+  height: 65px;
+  text-indent: -999em;
+  overflow: hidden;
+  background: transparent url("/media/img/demos/nav-slide.png") no-repeat;
+}
+#demobox .nav-slide .next {
+  right: -65px;
+  background-position: 0 0;
+}
+#demobox .nav-slide .next:hover,
+#featured-demos .nav-slide .next:focus,
+#featured-demos .nav-slide .next:active {
+  background-position: 0 -100px;
+}
+#demobox .nav-slide .prev {
+  left: -65px;
+  background-position: 0 -200px;
+}
+#demobox .nav-slide .prev:hover,
+#featured-demos .nav-slide .prev:focus,
+#featured-demos .nav-slide .prev:active {
+  background-position: 0 -300px;
+}

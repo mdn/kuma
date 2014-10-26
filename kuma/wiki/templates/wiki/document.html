@@ -336,20 +336,15 @@
 
               {% if not is_zone_root %}
 
-                <!-- attachments list -->
-                {% if document.attachments.all().exists() %}
-                  {% include 'wiki/includes/attachment_list.html' %}
-                {% endif %}
-
                 <!-- contributors -->
                 <div class="wiki-block contributors">
                   <h2 class="offscreen">{{ _('Document Tags and Contributors') }}</h2>
                   {% set tags = document.tags.all() %}
                   {% if tags.exists() %}
                   <!-- tags if present -->
-                  <div class="tag-attach-list tags contributor-sub">
-                    <i aria-hidden="true" class="icon-tags"></i><strong>{{ _('Tags:') }}</strong>
-                    <ul class="tag-list">{% for tag in tags %}<li><a href="{{ url('wiki.tag', tag.name) }}">{{ tag.name }}</a></li>{% endfor %}</ul>
+                  <div class="tag-attach-list contributor-sub">
+                    <i aria-hidden="true" class="icon-tags"></i><strong>{{ _('Tags:') }}</strong>&nbsp;
+                    <ul class="tags tags-small">{% for tag in tags %}<li><a href="{{ url('wiki.tag', tag.name) }}">{{ tag.name }}</a></li>{% endfor %}</ul>
                   </div>
                   {% endif %}
                   {% trans contributors=user_list(contributors) %}
@@ -408,25 +403,6 @@
 
 {% block js %}
   <script type="text/javascript">
-      jQuery('.from-search-toc').mozSearchResults('{{ search_url|safe }}');
+      if(window.jQuery) jQuery('.from-search-toc').mozSearchResults('{{ search_url|safe }}');
   </script>
-
-  {% if waffle.flag('promote_script') %}
-    <script type="text/javascript">
-        (function($) {
-            var searchElements = ['article p, article li'];
-            $(searchElements.join(',')).length && $.ajax({
-                url: '/media/redesign/js/promote.js',
-                dataType: 'script',
-                cache: true,
-                success: function() {
-                    PromoteMDN({
-                        searchElements: searchElements,
-                        linkClass: 'promote-link'
-                    });
-                }
-            });
-    })(jQuery);
-    </script>
-  {% endif %}
 {% endblock %}

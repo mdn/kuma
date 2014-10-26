@@ -1,7 +1,7 @@
 {% extends "socialaccount/base.html" %}
 {% from 'includes/common_macros.html' import newsletter_widget %}
 
-{% set title = _('Signup') %}
+{% set title = _('Create your MDN profile to continue') %}
 
 {% set classes = 'register' %}
 
@@ -16,26 +16,72 @@
     {{ js('newsletter',) }}
 {% endblock %}
 
+{% set provider = account.get_provider() %}
+
 {% block content %}
 <section id="content">
   <div class="wrap">
     <section id="content-main" role="main">
-      <article id="browser_register">
+      <article id="browser_register" {% if matching_accounts.exists() and provider.id != 'persona' %}data-account-match-for="{{ provider.name }}"{% endif %}>
+          <h1>{{ _('Create your MDN profile to continue') }}</h1>
+          {% if matching_accounts.exists() and provider.id == 'persona' %}
+            {% set connections_url = provider_login_url('github', process='login', next=url('socialaccount_connections')) %}
+            <div class="notification warning">
+              {% trans %}
+              A profile already exists with this email address. To connect Persona to your MDN profile, <a href="{{ connections_url }}">you need to sign in and visit your social account connections.</a>
+              {% endtrans %}
+            </div>
 
-        {% if account.get_provider().id == 'persona' %}
-          <h1>{{ _('Sign up') }}</h1>
-          <p id="persona-explanation">{% trans persona_href='https://login.persona.org/about' %}
-          MDN uses <a href="{{ persona_href }}" rel="external">Persona</a>,
-          a safe and simple way to sign in with just your email address.
-          {% endtrans %}</p>
-        {% endif %}
+          {% else %}
+            {% set github_connect_url = provider_login_url('github', process='connect', next=request.session.sociallogin_next_url|default('/')) %}
+            {% set persona_login_url = url('account_login') %}
+            {% set persona_next_url = github_connect_url %}
 
-        <form id="create_user" class="boxed submission" method="post" action="{{ url('socialaccount_signup') }}">
-          <p>{% trans %}
-            You can access everything on the MDN website without an account,
-            but when you join you'll be able to create, edit, or translate
-            articles, and submit a demos.
-          {% endtrans %}</p>
+            {% if matching_accounts.exists() and provider.id == 'github' %}
+
+            <div class="notification warning">
+              {% trans count=matching_accounts.count(), persona_login_url=persona_login_url, persona_next_url=persona_next_url %}
+                  A profile already exists with an email address below. Do you already have an MDN profile?
+                  <a href="{{ persona_login_url }}" class="launch-persona-login" data-next="{{ persona_next_url }}">Yes, connect with my MDN profile</a>
+                  {% pluralize %}
+                  A profile already exists with one of these email addresses below. Do you already have an MDN profile?
+                  <a href="{{ persona_login_url }}" class="launch-persona-login" data-next="{{ persona_next_url }}">Yes, connect with my MDN profile</a>
+              {% endtrans %}</div>
+            {% endif %}
+
+          <form class="submission readable-line-length" method="post" action="{{ url('socialaccount_signup') }}">
+
+              <p>{% trans provider_name=provider.name %}
+              Thanks for signing in to MDN with {{ provider_name }}. You have
+              one more step to join MDN: <strong>create your MDN
+              profile</strong>.
+              {% endtrans %}<p>
+
+              <p>{% trans %}
+              You can access everything on the MDN website even without an MDN
+              profile. However, by joining MDN, you'll be able to edit docs,
+              submit demos, and have your own profile page.
+              {% endtrans %}</p>
+
+              <p>{% if form.email.field.widget.input_type == 'hidden' %}
+                  {% trans %}
+                  To set up your MDN profile, please <strong>choose a username</strong>.
+                  Your username will be displayed on MDN to identify any
+                  contributions (edits, demos, etc.) that you make.
+                  {% endtrans %}
+              {% else %}
+                  {% trans %}
+                  To set up your MDN profile, please <strong>choose a username and email address</strong>.
+                  Your username will be displayed on MDN to identify any
+                  contributions (edits, demos, etc.) that you make.
+                  {% endtrans %}
+              {% endif %}
+              </p>
+
+              <p>{% trans bug_href='https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cc=jkarahalis%40mozilla.com&cf_fx_iteration=---&cf_fx_points=---&component=Account%20Help&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-791=X&flag_type-800=X&flag_type-803=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=All&priority=--&product=Mozilla%20Developer%20Network&rep_platform=All&status_whiteboard=%5Btrouble-logging-in%5D&target_milestone=---&version=unspecified&format=__standard__' %}
+              If you're <strong>having trouble</strong> signing in or creating
+              an MDN profile, <strong><a href="{{ bug_href }}" rel="external">let us know</a></strong>.
+              {% endtrans %}</p>
 
           {% if form.errors %}
             {% for error in form.non_field_errors() %}
@@ -48,26 +94,6 @@
           <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
           {% endif %}
 
-          {% set github_connect_url = provider_login_url('github', process='connect', next=request.session.sociallogin_next_url|default('/')) %}
-          {% set persona_login_url = provider_login_url('persona', process='login', next=github_connect_url) %}
-          {% if matching_accounts.exists() %}
-            <div class="notification warning">
-              {% trans count=matching_accounts.count(), persona_login_url=persona_login_url %}
-                An account already exists with an email address below. Do you already have an MDN account?
-                <a href="{{ persona_login_url }}">Yes, connect with my MDN account</a>
-              {% pluralize %}
-                An account already exists with one of these email addresses below. Do you already have an MDN account?
-                <a href="{{ persona_login_url }}">Yes, connect with my MDN account</a>
-              {% endtrans %}
-            </div>
-          {% elif account.provider == 'github' %}
-            {# Only show this notification if we're sure it's not the Persona based MDN account #}
-            <div class="notification">
-              {% trans persona_login_url=persona_login_url %}
-                Have an MDN account already? <a href="{{ persona_login_url }}">Yes, connect with my MDN account</a>
-              {% endtrans %}
-            </div>
-          {% endif %}
 
           <fieldset>
             <ul>
@@ -95,9 +121,9 @@
                     <li>
                     {# we have to handle this error message here to have access to the request #}
                     {% if error == form.duplicate_email_error_label %}
-                      {% trans persona_login_url=persona_login_url, provider_name=account.get_provider().name %}
-                      An account already exists with the selected email address.
-                      <a href="{{ persona_login_url }}">Connect your {{ provider_name }} account to it.</a>
+                      {% trans persona_login_url=persona_login_url, provider_name=provider.name %}
+                      A profile already exists with the selected email address.
+                      <a href="{{ persona_login_url }}" class="launch-persona-login" data-next="{{ persona_next_url }}">Connect your {{ provider_name }} account to it.</a>
                       {% endtrans %}
                     {% else %}
                       {{ error }}
@@ -112,7 +138,7 @@
                   <li class="{{ 'exists' if email_choice.choice_value in matching_uids }}">
                     {% if email_choice.choice_value == form.other_email_value %}
                       {{ email_choice.tag() }}
-                      <label for="{{ id_for_label }}" class="inner other-label">{{ _('other:') }}</label>
+                      <label for="{{ id_for_label }}" class="inner other-label">{{ _('Other:') }}</label>
                       {{ form.other_email }}
                       {{ form.other_email.error }}
                     {% else %}
@@ -125,7 +151,7 @@
                 {% endfor %}
                 </ul>
                 <p class="field-explanation"><small>
-                  {{ _("We will use this to send you emails related to your account and if you sign up for any additional notifications.") }}
+                    {{ _('What email address should we use to send you MDN-related messages and notifications? This address will <strong>not</strong> be displayed on MDN and will be used according to our <a href="{privacy_url}">privacy policy</a>.')|f(privacy_url='//www.mozilla.org/privacy/websites/')|safe }}
                 </small></p>
               </li>
               {% endif %}
@@ -133,16 +159,13 @@
               {{ newsletter_widget(form) }}
 
               <li class="submit">
-                <button type="submit" name="create">{{ _('Create a New Profile') }}</button>
+                <button class="positive" type="submit" name="create">{{ _('Create my MDN profile') }}</button>
               </li>
             </ul>
           </fieldset>
-          <p class="trouble">
-              {% trans bug_href='https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cc=jkarahalis%40mozilla.com&cf_fx_iteration=---&cf_fx_points=---&component=Login&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-791=X&flag_type-800=X&flag_type-803=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=All&priority=--&product=Mozilla%20Developer%20Network&rep_platform=All&status_whiteboard=%5Btrouble-logging-in%5D&target_milestone=---&version=unspecified&format=__standard__' %}
-              <strong>Having trouble logging in? <a href="{{ bug_href }}" rel="external">Let us know</a>.</strong>
-              {% endtrans %}
-          </p>
         </form>
+
+        {% endif %}
 
       </article>
     </section>

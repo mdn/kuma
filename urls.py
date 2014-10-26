@@ -36,8 +36,13 @@ urlpatterns = patterns('',
     (r'^admin/', include('smuggler.urls')),
     (r'^admin/', include(admin.site.urls)),
 
-    (r'^search', include('search.urls')),
+    (r'^search', include('kuma.search.urls')),
 
+    # Special-case here because this used to live in the wiki app and
+    # needs to keep its historical URL.
+    url(r'^docs/files$',
+        'kuma.attachments.views.list_files',
+        name='attachments.list_files'),
     (r'^docs', include('kuma.wiki.urls')),
 
     # Javascript translations.
@@ -45,24 +50,8 @@ urlpatterns = patterns('',
         {'domain': 'javascript', 'packages': [settings.ROOT_PACKAGE]},
         name='jsi18n'),
 
-    url(r'^', include('dashboards.urls')),
-
-    # Files.
-    url(r'^files/new/$',
-        'kuma.wiki.views.new_attachment',
-        name='wiki.new_attachment'),
-    url(r'^files/(?P<attachment_id>\d+)/$',
-        'kuma.wiki.views.attachment_detail',
-        name='wiki.attachment_detail'),
-    url(r'^files/(?P<attachment_id>\d+)/edit/$',
-        'kuma.wiki.views.edit_attachment',
-        name='wiki.edit_attachment'),
-    url(r'^files/(?P<attachment_id>\d+)/history/$',
-        'kuma.wiki.views.attachment_history',
-        name='wiki.attachment_history'),
-    url(r'^files/(?P<attachment_id>\d+)/(?P<filename>.+)$',
-        'kuma.wiki.views.raw_file',
-        name='wiki.raw_file'),
+    url(r'^files/', include('kuma.attachments.urls')),
+    url(r'^', include('kuma.dashboards.urls')),
 
     # Flagged content.
     url(r'^flagged/$',
@@ -97,7 +86,7 @@ if settings.SERVE_MEDIA:
 # with local instances' ability to serve media.
 urlpatterns += patterns('',
                         url(r'^@api/deki/files/(?P<file_id>\d+)/=(?P<filename>.+)$',
-                            'kuma.wiki.views.mindtouch_file_redirect',
-                            name='wiki.mindtouch_file_redirect'),
+                            'kuma.attachments.views.mindtouch_file_redirect',
+                            name='attachments.mindtouch_file_redirect'),
                         (r'^(?P<path>.*)$', 'kuma.wiki.views.mindtouch_to_kuma_redirect'),
 )

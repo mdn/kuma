@@ -1,13 +1,13 @@
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
+import test_utils
 
+from kuma.users.tests import UserTestCase
 from kuma.wiki.forms import RevisionForm, RevisionValidationForm, TreeMoveForm
 from kuma.wiki.tests import doc_rev, normalize_html
-from sumo.tests import TestCase
 
 
-class FormEditorSafetyFilterTests(TestCase):
-    fixtures = ['test_users.json']
+class FormEditorSafetyFilterTests(UserTestCase):
 
     @attr('bug821986')
     def test_form_onload_attr_filter(self):
@@ -20,8 +20,7 @@ class FormEditorSafetyFilterTests(TestCase):
         ok_('onload' not in rev_form.initial['content'])
 
 
-class FormSectionEditingTests(TestCase):
-    fixtures = ['test_users.json']
+class FormSectionEditingTests(UserTestCase):
 
     def test_form_loaded_with_section(self):
         """RevisionForm given section_id should load initial content for only
@@ -86,8 +85,7 @@ class FormSectionEditingTests(TestCase):
             normalize_html(new_rev.content))
 
 
-class RevisionValidationTests(TestCase):
-    fixtures = ['test_users.json']
+class RevisionValidationTests(UserTestCase):
 
     def test_form_rejects_empty_slugs_with_parent(self):
         """RevisionValidationForm should reject empty slugs, even if there
@@ -99,15 +97,13 @@ class RevisionValidationTests(TestCase):
         ok_(not rev_form.is_valid())
 
 
-class TreeMoveFormTests(TestCase):
-    fixtures = ['test_users.json', 'wiki/documents.json']
+class TreeMoveFormTests(UserTestCase):
+    fixtures = UserTestCase.fixtures + ['wiki/documents.json']
 
     def test_form_properly_strips_leading_cruft(self):
         """
         Tests that leading slash and {locale}/docs/ is removed if included
         """
-
-        #[submitted_value, properly_cleaned_value]
         comparisons = [
             ['/somedoc', 'somedoc'],  # leading slash
             ['/en-US/docs/mynewplace', 'mynewplace'],  # locale and docs

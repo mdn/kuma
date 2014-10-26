@@ -70,6 +70,15 @@
 
   {{ soapbox_messages(get_soapbox_messages(request.path)) }}
 
+  {% if waffle.flag('github_beta_notice') %}
+    <div class="global-notice">
+      <div class="wrap center">
+          <p><bdi>Help us <a href="https://wiki.mozilla.org/MDN/Development/GitHub_Beta">test GitHub Sign-in</a> on our stage server.</bdi></p>
+      </div>
+    </div>
+  {% endif %}
+
+
   {% if waffle.flag('badger') %}
     {% include "badger/includes/recent_badge_awards.html" %}
   {% endif %}
@@ -85,14 +94,17 @@
   <!-- Header -->
   <header id="main-header"><div class="center">
 
-    <div class="clear header-login">
-      <a href="//www.mozilla.org/" id="tabzilla" class="no-track">mozilla</a>
-      {% if not is_sphinx %}
-        {% include "includes/login.html" %}
-      {% endif %}
-    </div>
+    <a href="//www.mozilla.org/" id="tabzilla" class="no-track">mozilla</a>
+
+    <div class="clear header-clear"></div>
 
     <a href="{{ url('home') }}" class="logo">{{ _('Mozilla Developer Network') }}</a>
+
+    <div class="header-login">
+        {% if not is_sphinx %}
+            {% include "includes/login.html" %}
+        {% endif %}
+    </div>
 
     <nav id="main-nav" role="navigation"><ul><li><a href="{{ devmo_url('Zones') }}">{{ _('Zones') }}<i aria-hidden="true" class="icon-caret-down"></i></a>
 
@@ -178,14 +190,14 @@
   {% endif %}
 
   {% block site_js %}
-    <!--[if lte IE 8]><script src="/media/redesign/js/libs/selectivizr-1.0.2/selectivizr-build.js"></script><![endif]-->
+    <!--[if lte IE 8]><script src="/media/js/libs/selectivizr-1.0.2/selectivizr-build.js"></script><![endif]-->
 
-    {{ js('main') }}
     {{ providers_media_js() }}
+    {{ js('main') }}
 
     {% if waffle.flag('ga_outbound_links') %}
       <script>
-        mdn.analytics.trackOutboundLinks();
+        if(window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();
       </script>
     {% endif %}
 

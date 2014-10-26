@@ -27,22 +27,34 @@
 
         return this.each(function() {
             var $self = $(this);
-            var $li = $self.parent();
+            var $parent = $self.parent();
             var initialized;
 
-            // Brick on click?
+            // Find the trigger element's submenu
+            var $submenu = $self.submenu = (settings.submenu || $parent.find('.submenu'));
+
+            // Prevent the default behavior of the trigger element if this is set
             var brick = settings.brickOnClick;
-            if(brick) {
+            if(brick && $submenu.length) {
                 $self.on('click', function(e) {
-                    if(typeof brick != 'function' || brick(e)) e.preventDefault();
+                    if((typeof brick === 'function' && brick(e)) || brick) e.preventDefault();
                 });
             }
 
-            // Find a submenu.    If one doesn't exist, no need to go further
-            var $submenu = (settings.submenu || $li.find('.submenu'));
+            // Provide the settings to both the submenu and item as either can be found independently
+            // The settings for the current menu and the "$.fn.mozMenu.$openMenu" can be different
+            $self.settings = $submenu.settings = settings;
 
             // Add a mouseenter / focus event to get the showing of the submenu in motion
-            $self.on('mouseenter focus', function() {
+            var assumeMobile = false;
+            $self.on('touchstart mouseenter focus', function(startEvent) {
+                if(startEvent.type === 'touchstart') {
+                    startEvent.stopImmediatePropagation();
+                    if($self.submenu.length) {
+                        startEvent.preventDefault();
+                    }
+                    assumeMobile = true;
+                }
 
                 // If this is a fake focus set by us, ignore this
                 if($submenu.ignoreFocus) return;
@@ -50,7 +62,7 @@
                 // If no submenu, go
                 if(!$submenu.length) {
                     clear(showTimeout);
-                    $.fn.mozMenu.$openMenu && closeSubmenu(getOpenParent());
+                    if($.fn.mozMenu.$openMenu) closeSubmenu($.fn.mozMenu.$openMenu.submenu);
                     return;
                 }
 
@@ -59,10 +71,10 @@
                     initialized = 1;
 
                     // Add the close
-                    var $closeButton = $('<button type="button" class="submenu-close transparent">\
-                        <span class="offscreen">' + gettext('Close submenu') + '</span>\
-                        <i aria-hidden="true" class="icon-remove-sign"></i>\
-                    </button>').appendTo($submenu);
+                    var $closeButton = $('<button type="button" class="submenu-close transparent">' +
+                        '<span class="offscreen">' + gettext('Close submenu') + '</span>' +
+                        '<i aria-hidden="true" class="icon-remove-sign"></i>' +
+                    '</button>').appendTo($submenu);
 
                     // Hide the submenu when the main menu is blurred for hideDelay
                     $self.on('mouseleave focusout', function() {
@@ -71,19 +83,25 @@
                     });
 
                     // Hide the submenu when the submenu is blurred for hideDelay
-                    $submenu.on('mouseleave focusout', function() {
+                    $submenu.on('mouseleave focusout', function(e) {
+                        // "focuseout" is firing on child elements and sending off a bunch of moot
+                        // close requests, so we stop that
+                        if(e.type === 'focusout' && e.target !== $submenu.get(0)) return;
+
                         clear(showTimeout);
                         closeSubmenu($submenu);
                     });
 
                     // Cancel the close timeout if moving from main menu item to submenu
-                    $submenu.on('mouseenter focusin', function() {
-                        clear(closeTimeout);
-                    });
+                    if(!assumeMobile) {
+                        $submenu.on('mouseenter focusin', function() {
+                            clear(closeTimeout);
+                        });
+                    }
 
                     // Close if it's the last link and they press tab *or* the hit escape
                     $submenu.on('keyup', function(e) {
-                        if(e.keyCode == 27) { // Escape
+                        if(e.keyCode === 27) { // Escape
                             closeSubmenu($submenu);
                             $submenu.ignoreFocus = true;
                             setTimeout(function() { $submenu.ignoreFocus = false; }, 10);
@@ -91,17 +109,19 @@
                         }
                     });
 
+                    // Close button should close the submenu
                     $closeButton.on('click', function(){
-                        closeSubmenu($(this).parent());
+                        closeSubmenu($submenu || $(this).parent());
                     });
                 }
+
                 // If there's an open submenu and it's not this one, close it
                 // Used for tab navigation from submenu to the next menu item
-                if($.fn.mozMenu.$openMenu && $.fn.mozMenu.$openMenu != $self) {
+                if($.fn.mozMenu.$openMenu && $.fn.mozMenu.$openMenu !== $self) {
                     clear(showTimeout);
-                    closeSubmenu(getOpenParent());
+                    closeSubmenu($.fn.mozMenu.$openMenu.submenu);
                 }
-                else if($.fn.mozMenu.$openMenu == $self) {
+                else if($.fn.mozMenu.$openMenu === $self) {
                     clear(closeTimeout);
                 }
 
@@ -112,42 +132,49 @@
                 // Show my submenu after the showDelay
                 showTimeout = setTimeout(function() {
                     // Setting z-index here so that current menu is always on top
-                    $submenu.css('z-index', 99999).addClass('open').attr('aria-hidden', 'false').fadeIn(settings.fadeInSpeed);
+                    $submenu.css('z-index', 99999).addClass('open').attr('aria-hidden', 'false').fadeIn($submenu.settings.fadeInSpeed);
 
                     // Find the first link for improved usability
-                    if(settings.focusOnOpen) {
+                    if($submenu.settings.focusOnOpen) {
                         var firstLink = $submenu.find('a').get(0);
                         if(firstLink) {
                             try { // Putting in try/catch because of opacity/focus issues in IE
-                                $(firstLink).addClass(focusClass) && firstLink.focus();
+                                $(firstLink).addClass(focusClass);
+                                firstLink.focus();
                             }
                             catch(e){
-                                console.log('Exception! ', e);
+                                console.log('Menu focus exception! ', e);
                             }
                         }
                     }
-                    settings.onOpen();
-                }, settings.showDelay);
+                    $submenu.settings.onOpen();
+                }, $submenu.settings.showDelay);
             });
         });
 
         // Gets the open parent
         function getOpenParent() {
-            return $.fn.mozMenu.$openMenu.parent().find('.submenu');
+            return $.fn.mozMenu.$openMenu.submenu;
         }
 
         // Clears the current timeout, interrupting fade-ins and outs as necessary
         function clear(timeout) {
-            timeout && clearTimeout(timeout);
+            if(timeout) clearTimeout(timeout);
         }
 
         // Closes a given submenu
         function closeSubmenu($sub) {
             closeTimeout = setTimeout(function() {
                 // Set the z-index to one less so another menu would get top spot if overlapping and opening
-                $sub && $sub.css('z-index', 99998).removeClass('open').attr('aria-hidden', 'true').fadeOut(settings.fadeOutSpeed);
-                settings.onClose();
-            }, settings.hideDelay);
+                if($sub) {
+                    $sub.css('z-index', 99998)
+                            .removeClass('open')
+                            .attr('aria-hidden', 'true')
+                            .fadeOut($sub.settings.fadeOutSpeed, function() {
+                                $sub.settings.onClose();
+                            });
+                }
+            }, $sub.settings.hideDelay);
         }
     };
 
@@ -177,11 +204,12 @@
 
                 // If we should always get fresh items, do so
                 if(settings.alwaysCollectItems) {
-                    var $items = $(this).find(settings.itemSelector);
+                    $items = $(this).find(settings.itemSelector);
+                    $selectedItem = null;
                 }
 
                 // Up and down buttons
-                if(code == 38 || code == 40) {
+                if(code === 38 || code === 40) {
                     e.preventDefault();
                     e.stopPropagation();
 
@@ -203,20 +231,20 @@
                     var $next = $($items.get(index + 1));
                     var $prev = $($items.get(index - 1));
 
-                    if(code == 38) {    // up
-                        $prev.length && selectItem($prev);
+                    if(code === 38) {    // up
+                        if($prev.length) selectItem($prev);
                     }
-                    else if(code == 40) {    // down
+                    else if(code === 40) {    // down
                         selectItem($next.length ? $next : $items.first());
                     }
                 }
                 // Number keys: 1, 2, 3, etc.
                 else if(charCode >= numberKeyStart && charCode <= 57) {
                     var item = $items.get(charCode - numberKeyStart);
-                    item && selectItem(item);
+                    if(item) selectItem(item);
                 }
                 // Enter key
-                else if(code == 13) {
+                else if(code === 13) {
                     settings.onEnterKey($selectedItem);
                 }
             });
@@ -259,9 +287,9 @@
             $self.on('keyup', '.toggle-container', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                if(e.keyCode == 27) {
+                if(e.keyCode === 27) {
                     $(this).siblings('a').trigger('mdn:click').focus();
-                };
+                }
             });
 
             // Click event to show/hide
@@ -272,7 +300,7 @@
 
                 // If a true click, mark toggler as such so automated togger clicks (like toc) know not to
                 // close without user consent
-                if(e.type == 'click') {
+                if(e.type === 'click') {
                     $(this).attr('data-clicked', true);
                 }
 
@@ -280,7 +308,7 @@
                 var $parent = $self.closest('ol, ul');
                 if($parent.hasClass('accordion')) {
                     var $current = $parent.find('> .current');
-                    if($current.length && $current.get(0) != $self.get(0)) {
+                    if($current.length && $current.get(0) !== $self.get(0)) {
                         toggle($current, true);
                     }
                 }
@@ -290,7 +318,7 @@
             });
 
             // The toggler can be initially opened via a data- attribute
-            if($self.attr('data-default-state') == 'open') {
+            if($self.attr('data-default-state') === 'open') {
                 toggle($self);
             }
 
@@ -395,6 +423,7 @@
             onclose: null // What should happen upon closing of individual notification?
         };
 
+        var processedKey = 'data-processed';
         var defaultState = { state: 'info', className: 'info', iconName: 'icon-info-sign'  };
         var states = [
             { state: 'success', className: 'success', iconName: 'icon-smile' },
@@ -411,7 +440,7 @@
         function closeItem($item, callback) {
             $item.fadeOut(300, function() {
                 $item.addClass('closed');
-                callback && callback.apply($item, null);
+                if(callback) callback.apply($item, null);
             });
         }
 
@@ -422,13 +451,29 @@
 
         // Enacts options upon an item, used by both discover and growl
         function applyOptions($item, options) {
-            // Wrap the text in a div
-            $item.html('<div class="notification-message">' + $item.html() + '</div>');
+            // Don't process a notification more than once
+            if($item.attr(processedKey)) {
+                return;
+            }
+            $item.attr(processedKey, true);
+
+            // Populating notification content via vanilla JS so we don't lose any
+            // attached events to elements within the message itself
+            // The jQuery version is ugly: http://stackoverflow.com/a/4399718
+            var $messageWrapper = $('<div class="notification-message"></div>');
+            var children = $item.get(0).childNodes;
+            while(children && children.length) {
+                $messageWrapper.get(0).appendChild(children[0]);
+            }
+            $messageWrapper.appendTo($item);
 
             // Add an icon if needed
             var icon = defaultState.iconName;
             if(statesObj[options.level]) {
                 icon = statesObj[options.level].iconName;
+            }
+            if(options.level) {
+                $item.addClass(options.level);
             }
 
             $item.prepend('<div class="notification-img"><i aria-hidden="true" class="'+ icon +'"></i></div>');
@@ -436,7 +481,7 @@
             // Add URL click event
             if(options.url) {
                 $item.addClass('clickable').on('click', function() {
-                    win.location = defaults.url
+                    win.location = defaults.url;
                 });
             }
 
@@ -468,8 +513,7 @@
         return {
             // Finds notifications under a given parent,
             discover: function(parent) {
-                var $notifications = $(parent || doc.body).find('.notification');
-
+                var $notifications = $(parent || doc.body).find('.notification:not([' + processedKey + '])');
                 $notifications.each(function() {
                     var $item = $(this);
                     applyOptions($item, $item.data());
@@ -542,7 +586,7 @@
 
                 return handle;
             }
-        }
+        };
     })();
 
 })(window, document, jQuery);

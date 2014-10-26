@@ -9,12 +9,12 @@
         <p>{{ _('Hi {username}!')|f(username=username) }}</p>
         <p>
           {% trans mdn_link=add_utm('https://developer.mozilla.org', 'welcome') %}
-            Thanks for creating an account on <a href="{{ mdn_link }}">Mozilla Developer Network (MDN)</a> - a community making great resources for developers like you.
+            Thanks for creating a profile on <a href="{{ mdn_link }}">Mozilla Developer Network (MDN)</a> - a community making great resources for developers like you.
           {% endtrans %}
         </p>
         <p>
           {% trans started_link=add_utm('https://developer.mozilla.org/docs/MDN/Getting_started', 'welcome') %}
-            You've completed the first step of <a href="{{ started_link }}">Getting Started on MDN</a> by creating an account.
+            You've completed the first step of <a href="{{ started_link }}">Getting Started on MDN</a> by creating a profile.
           {% endtrans %}
         </p>
         <p>

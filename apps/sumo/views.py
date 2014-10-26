@@ -45,15 +45,6 @@ def redirect_to(request, url, permanent=True, **kwargs):
     return HttpResponseRedirect(dest)
 
 
-def robots(request):
-    """Generate a robots.txt."""
-    if not settings.ENGAGE_ROBOTS:
-        template = 'Disallow: /'
-    else:
-        template = jingo.render(request, 'sumo/robots.html')
-    return HttpResponse(template, mimetype='text/plain')
-
-
 @never_cache
 def monitor(request):
 

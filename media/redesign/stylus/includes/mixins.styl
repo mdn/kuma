@@ -1,8 +1,8 @@
+@require 'vars';
+
 /*
     Provides man mixins for use within the MDN theme.
 */
-
-@import 'vars';
 
 VENDOR-PREFIXES = '-webkit-' '-moz-' '-ms-';
 
@@ -240,12 +240,15 @@ bidi-value(prop, ltr, rtl, make-important = false) {
 }
 
 bidi-value-vendorize(prop, ltr, rtl, make-important = false) {
-    for prefix in VENDOR-PREFIXES {
-        bidi-style(unquote(prefix + prop), ltr, prop, rtl, make-important);
-    }
-    bidi-style(prop, ltr, prop, rtl, make-important);
-}
+    make-important = make-important ? unquote('!important') : unquote('');
 
+    vendorize(prop, ltr make-important);
+
+    html[dir='rtl'] & {
+        vendorize(prop, rtl make-important);
+    }
+
+}
 
 /*
     MIXINS LIKE CLASSES
@@ -270,7 +273,6 @@ big-search() {
     border: 0;
     border-radius: 3px;
     font-family: $heading-font-family;
-    letter-spacing: -1px;
     width: 60%;
 }
 
@@ -438,34 +440,10 @@ $right-icons {
 }
 
 
-/*  media block
-    for use when you want an item of defined width on the left and some stuff on the right of it
-    http://www.stubbornella.org/content/2010/06/25/the-media-object-saves-hundreds-of-lines-of-code/ */
-.media,
-.media-body {
-    overflow: hidden;
-    _overflow: visible;
-    zoom: 1;
-}
-
-.media-img {
-    float: left;
-    margin-right: ($grid-spacing / 2);
-
-    img {
-        display: block;
-    }
-}
-
-.media-imgExt {
-    float: right;
-    margin-left: ($grid-spacing / 2);
-}
-
 /* Styles for code blocks - used for wiki document and WYSIWYG editor */
 $code-block {
-    background: rgba(234, 239, 242, 0.25);
-    border-left: 6px solid rgba(0, 83, 159, 0.65);
+    background: $code-block-background-color;
+    border-left: 6px solid $code-block-border-color;
     background-image:  url($media-url-dir + 'blueprint-dark.png');
     background-position: top center;
     background-repeat: repeat;
@@ -473,3 +451,4 @@ $code-block {
     vendorize(tab-size, 4);
     vendorize(hyphens, none);
 }
+

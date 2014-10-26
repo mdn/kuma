@@ -7,27 +7,28 @@
     These are your API keys. They're useful for building applications that
     perform tasks on MDN on your behalf. If you have stopped using any of
     them, or suspect one has been exposed to parties you don't trust with your
-    account, click the <span class="button">X</span> to delete the key.  It's
-    easy to create a replacement key at any time.
+    account delete the key. It's easy to create a replacement key at any time.
 {% endtrans %}</p>
 <p><a class="button positive" href="{{ url('authkeys.new') }}">{{ _('Create a new key') }}</a></p>
 {% if not keys %}
     <p>{{ _("You have no API keys, yet.") }}</p>
 {% else %}
-    <table class="keys" cellpadding="4">
+    <ul class="option-list">
         {% for key in keys %}
-        <tr class="key" id="key-{{ key.pk }}">
-            <td class="actions">
-                <a class="button negative"
-                   title="{{ _('Delete key') }}"
-                   href="{{ url('authkeys.delete', pk=key.pk) }}">{{ _('X') }}</a>
-                <a class="button positive"
+        <li id="key-{{ key.pk }}">
+            <span class="created">{{ key.created }}</span> &nbsp;
+            <span class="description">{{ key.description }}</span>
+            <span class="option-list-options">
+                <a class="button"
                    title="{{ _('View key usage history') }}"
                    href="{{ url('authkeys.history', pk=key.pk) }}">{{ _('History ({count})') | f(count=key.history.count()) }}</a>
-            </td>
-            <td class="created">{{ key.created }}</td>
-            <td class="description">{{ key.description }}</td>
-        </tr>
+                <a class="button transparent only-icon"
+                   href="{{ url('authkeys.delete', pk=key.pk) }}">
+                   <span>{{ _('Delete key') }}</span><i aria-hidden="true" class="icon-trash"></i>
+                </a>
+            </span>
+
+        </li>
         {% endfor %}
     </table>
 {% endif %}

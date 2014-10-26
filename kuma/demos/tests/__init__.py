@@ -8,16 +8,10 @@ from ..models import Submission
 def make_users():
     user = User.objects.create_user(
         'tester', 'tester@tester.com', 'tester')
-    user.save()
-
     admin_user = User.objects.create_superuser(
         'admin_tester', 'admin_tester@tester.com', 'admint_tester')
-    admin_user.save()
-
     other_user = User.objects.create_user(
         'visitor', 'visitor@visitor.com', 'visitor')
-    other_user.save()
-
     return (user, admin_user, other_user)
 
 

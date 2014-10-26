@@ -1,0 +1,255 @@
+{% extends "search/base.html" %}
+
+{% set locale = request.locale %}
+{% if locale in settings.LOCALES %}
+  {% set locale_native = settings.LOCALES[locale].native %}
+{% endif %}
+{% set default_locale_native = settings.LOCALES[settings.LANGUAGE_CODE].native %}
+{% set meta = (('WT.oss', q),
+               ('WT.oss_r', num_results)) %}
+
+{% block title %}
+  {% if query %}
+    {{ page_title(_('Search Results for "{query}"')|f(query=query)) }}
+  {% else %}
+    {{ page_title(_('Search')) }}
+  {% endif %}
+{% endblock %}
+
+{% block extrahead %}
+  {% if waffle.flag('search_suggestions') %}
+  {{ css('search-suggestions') }}
+  {% endif %}
+{% endblock %}
+
+{% block robots_value %}noindex, follow{% endblock %}
+
+{% block bodyclass %}search-results search-results-no-demo search-navigator-flush{% endblock %}
+
+{% macro doc_block(doc, index) -%}
+  <li class="result-{{ index }}">
+    <div class="column-container">
+      <div class="column-1"><i aria-hidden="true" class="icon-file-text-alt"></i></div>
+      <div class="column-5 result-list-item">
+        <h4><a href="{{ doc.url }}"{% if index == 1 %} tabindex="1"{% endif %}>{{ doc.title }}</a></h4>
+        <p>{{ doc.excerpt|safe }}</p>
+        <p class="search-meta"><a href="{{ doc.url }}">{{ doc.url|replace('https://', '') }}</a>
+        {% if waffle.flag('search_explanation') %}Score: <span title="explanation: {{ doc.explanation }}">{{ doc.score }}</span>{% endif%}
+        {% if doc.parent %}
+            {% trans parent_url=doc.parent.url, parent_title=doc.parent.title, parent_language=settings.LOCALES[doc.parent.locale].native %}
+            translated from <a href="{{ parent_url }}" title="{{ parent_title }}">{{ parent_title }} ({{ parent_language }})</a>
+            {% endtrans %}
+        {% endif %}
+        </p>
+      </div>
+    </div>
+  </li>
+{% endmacro %}
+
+
+{% block content %}
+ <h1 class="offscreen">{{ _('MDN Site Search') }}</h1>
+ <h2 class="offscreen">{{ _('Search') }}</h2>
+  <form id="search-form" action="{{ url('search') }}" method="get" class="search">
+    <div class="results-search-form search-form dark">
+      <label for="search-q" class="offscreen">{{ _('Search') }}</label>
+      <input class="search-input" type="search" name="q" id="search-q" placeholder="{{ _('Search the docs') }}" value="{{ query }}" {% if not query %}autofocus{% endif %} />
+      <button type="submit" class="offscreen">{{ _('Search') }}</button>
+    </div>
+
+    <div class="column-container">
+      <!-- left results -->
+      <div class="column-main">
+
+        <div id="search-results-close-container">
+          <div class="search-pane search-results-explanation">
+            <h2>{{ _('Results') }}</h2>
+            <p>
+            {% if locale_native %}
+              {% if query %}
+                {% if locale_native == default_locale_native %}
+                    {% trans count=count %}
+                      {{ count }} document found for "{{ query }}" in {{ locale_native }}.
+                    {% pluralize %}
+                      {{ count }} documents found for "{{ query }}" in {{ locale_native }}.
+                    {% endtrans %}
+                {% else %}
+                    {% trans count=count %}
+                      {{ count }} document found for "{{ query }}" in {{ locale_native }} and {{ default_locale_native }}.
+                    {% pluralize %}
+                      {{ count }} documents found for "{{ query }}" in {{ locale_native }} and {{ default_locale_native }}.
+                    {% endtrans %}
+                {% endif %}
+              {% else %}
+                {% if locale_native == default_locale_native %}
+                    {% trans count=count %}
+                      {{ count }} document found in {{ locale_native }}.
+                    {% pluralize %}
+                      {{ count }} documents found in {{ locale_native }}.
+                    {% endtrans %}
+                {% else %}
+                    {% trans count=count %}
+                      {{ count }} document found in {{ locale_native }} and {{ default_locale_native }}.
+                    {% pluralize %}
+                      {{ count }} documents found in {{ locale_native }} and {{ default_locale_native }}.
+                    {% endtrans %}
+                {% endif %}
+
+              {% endif %}
+            {% else %}
+              {% if query %}
+                {% trans count=count %}
+                  {{ count }} document found for "{{ query }}".
+                {% pluralize %}
+                  {{ count }} documents found for "{{ query }}".
+                {% endtrans %}
+              {% else %}
+                {% trans count=count %}
+                  {{ count }} document found.
+                {% pluralize %}
+                  {{ count }} documents found.
+                {% endtrans %}
+              {% endif %}
+            {% endif %}
+            {% if count %}
+              {% if not previous and not next %}
+                {{ _('Showing all results.') }}
+              {% else %}
+                {% trans %}Showing results {{ start }} to {{ end }}.{% endtrans %}
+              {% endif %}
+            {% endif %}
+
+            {% if locale != settings.LANGUAGE_CODE %}
+              <a href="{{ url('search', locale=settings.LANGUAGE_CODE, ) }}?q={{ query }}">
+                {% trans %}
+                Search again in {{ default_locale_native }} only
+                {% endtrans %}
+              </a>
+            {% endif %}
+            {% if request.user.is_superuser %}
+              Search index: {{ index.name }} (created: {{ index.created_at }})
+            {% endif %}
+            </p>
+          </div>
+        </div>
+
+        {% if count %}
+        <div class="search-pane search-results-container">
+          <h3><i aria-hidden="true" class="icon-copy"></i>{{ _('Docs') }}</h3>
+
+          <ul class="result-list">
+            {% for doc in documents %}
+              {{ doc_block(doc, loop.index) }}
+            {% endfor %}
+          </ul>
+
+          <div class="search-results-more">
+
+            <div class="pager">
+              {% if previous %}
+                <a class="button" href="{{ previous }}" id="search-result-previous">
+                {{ _('Previous') }}
+                </a>
+              {% endif %}
+              {% if next %}
+                <a class="button" href="{{ next }}" id="search-result-next">
+                {{ _('Next') }}
+                </a>
+              {% endif %}
+              </div>
+
+          </div>
+        </div>
+
+        {% endif %}
+      </div>
+
+      {% if filters %}
+      <!-- right filters -->
+      <div class="column-strip search-results-filters">
+        <fieldset>
+        {% for filter_group in filters %}
+          <fieldset>
+            <legend><i aria-hidden="true" class="icon-th-list"></i><span class="offscreen">{{ _('Filter by') }} </span>{{ filter_group.name }}</legend>
+            {% for filter in filter_group.options %}
+              {% if filter.count == 0 %}
+              <label class="inactive">
+                <i aria-hidden="true" class="icon-check-empty"></i>
+                <input type="checkbox" class="offscreen" name="{{ filter_group.slug }}" value="{{ filter.slug }}" disabled="disabled">{{ filter.name }}
+                <span class="offscreen"> includes</span>
+                <span class="filter-count">{{ filter.count }}
+                  <span class="offscreen">documents</span>
+                </span>
+              </label>
+              {% elif filter.slug in selected_filters %}
+              <label class="checked">
+                <i aria-hidden="true" class="icon-check"></i>
+                <input type="checkbox" checked="checked" class="offscreen" name="{{ filter_group.slug }}" value="{{ filter.slug }}">
+                <span class="filter-name">{{ filter.name }}</span>
+                <span class="offscreen">includes </span>
+                <span class="filter-count">{{ filter.count }}
+                  <span class="offscreen">documents</span>
+                </span>
+              </label>
+              {% else %}
+              <label>
+                <i aria-hidden="true" class="icon-check-empty"></i>
+                <input type="checkbox" class="offscreen" name="{{ filter_group.slug }}" value="{{ filter.slug }}">
+                <span class="filter-name">{{ filter.name }}</span>
+                <span class="offscreen">includes </span>
+                  <span class="filter-count">{{ filter.count }} <span class="offscreen">documents</span>
+                </span>
+              </label>
+              {% endif %}
+            {% endfor %}
+          </fieldset>
+        {% endfor %}
+          <input class="filter-button" type="submit" value="{{ _('Filter') }}" />
+      {% endif %}
+      </fieldset>
+    </div>
+  </div>
+</form>
+{% endblock %}
+
+{% block js %}
+  {% if waffle.flag('search_doc_navigator') and count and search_ref %}
+  <script>
+    // Push search results into storage for docs navigator
+    jQuery('.result-list-item h4 a').mozSearchStore('{{ search_ref }}');
+  </script>
+  {% endif %}
+  {% if waffle.flag('search_suggestions') %}
+  {{ js('search-suggestions') }}
+  <script>
+  (function($) {
+    var get_filters = function() {
+        var filtersData = window.mdn.searchFilters || [];
+        var groupSlugs = [];
+        $.each(filtersData, function(idx_group, group){
+            groupSlugs.push(group.slug);
+        });
+
+        var url = window.location.href;
+        var filters_sel = [];
+        var searchIndex = url.indexOf('?');
+        if (searchIndex != -1 ) {
+            var sPageURL = url.substring(searchIndex +1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++) {
+                var sParameterName = sURLVariables[i].split('=');
+                if($.inArray(sParameterName[0], groupSlugs) != -1){
+                    filters_sel.push({ 'slug': sParameterName[1], 'group': sParameterName[0] });
+                }
+            }
+            return filters_sel;
+        }
+    };
+
+    $('#search-form').searchSuggestions({
+        filters: get_filters()
+    });
+  })(jQuery);
+  </script>
+  {% endif %}
+{% endblock js %}

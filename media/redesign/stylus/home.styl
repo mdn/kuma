@@ -1,6 +1,5 @@
-@import 'includes/vars';
-@import 'includes/mixins';
-@import 'includes/grid';
+@require 'includes/vars';
+@require 'includes/mixins';
 
 $home-involved-background-y = 50px;
 $blue-background-text-color = #fff;
@@ -138,15 +137,16 @@ $blue-background-text-color = #fff;
         }
     }
 
-    .home-search-form {
-        padding: ($grid-spacing * 2) 0;
+    .search-form {
+      padding: ($grid-spacing * 2) 0;
 
-        input {
-            big-search();
-            color: $blue-background-text-color;
-
-            set-placeholder-style(color, $blue-background-text-color);
-        }
+      input#home-q {
+          big-search();
+          set-placeholder-style(letter-spacing, -1px);
+          set-placeholder-style(color, $text-color);
+          color: $text-color;
+          background-color: #fff;
+      }
     }
 }
 
@@ -269,7 +269,7 @@ $blue-background-text-color = #fff;
     }
 
     .home-involved-card {
-        background: url($media-url-dir + 'home-globe.jpg') -90px $home-involved-background-y no-repeat #f4f7f8;
+        background: url($media-url-dir + 'home-globe.jpg') -90px $home-involved-background-y no-repeat $light-background-color;
 
         a {
             color: $blue-background-text-color;
@@ -519,7 +519,7 @@ $blue-background-text-color = #fff;
 html[dir='rtl'] #home {
 
     h2 {
-        > $selector-icon:before {
+        > {$selector-icon}:before {
             margin-right: 22px;
         }
 

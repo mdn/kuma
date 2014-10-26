@@ -76,6 +76,7 @@ class dev {
         stylus: stage => extras;
         cleancss: stage => extras;
         uglify: stage => extras;
+        csslint: stage => extras;
 
         site_config: stage => main;
         dev_hacks_post: stage => hacks_post;

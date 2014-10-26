@@ -23,7 +23,6 @@ urlpatterns = patterns('kuma.demos.views',
         DevDerbyByDate.as_view(), name='demos_devderby_by_date'),
     url(r'^devderby/tag/(?P<tag>[^/]+)/?$', DevDerbyTagView.as_view(),
         name='demos_devderby_tag'),
-    url(r'^devderby/rules/?$', 'devderby_rules', name='demos_devderby_rules'),
 
     url(r'^terms', 'terms', name='demos_terms'),
 

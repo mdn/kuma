@@ -7,8 +7,9 @@ from jinja2 import escape, Markup
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
+import test_utils
 
-
+from kuma.users.tests import UserTestCase
 import kuma.wiki.content
 from kuma.wiki.content import (CodeSyntaxFilter, DekiscriptMacroFilter,
                                SectionTOCFilter, SectionIDFilter,
@@ -21,11 +22,9 @@ from kuma.wiki.constants import ALLOWED_TAGS, ALLOWED_ATTRIBUTES
 from kuma.wiki.models import Document
 from kuma.wiki.tests import normalize_html, doc_rev, document
 from kuma.wiki.helpers import bugize_text
-from sumo.tests import TestCase
 
 
-class ContentSectionToolTests(TestCase):
-    fixtures = ['test_users.json']
+class ContentSectionToolTests(UserTestCase):
 
     def test_section_pars_for_empty_docs(self):
         doc = document(title='Doc', locale=u'fr', slug=u'doc', save=True,
@@ -400,9 +399,9 @@ class ContentSectionToolTests(TestCase):
             (u'Outils facilitant le développement HTML',
              'Outils_facilitant_le_d.C3.A9veloppement_HTML'),
             (u'例:\u00a0スキューと平行移動',
-             '.E4.BE.8B.3A.C2.A0.E3.82.B9.E3.82.AD.E3.83.A5.E3.83.BC.E3.81.A8.E5.B9.B3.E8.A1.8C.E7.A7.BB.E5.8B.95'),
+             '.E4.BE.8B.3A_.E3.82.B9.E3.82.AD.E3.83.A5.E3.83.BC.E3.81.A8.E5.B9.B3.E8.A1.8C.E7.A7.BB.E5.8B.95'),
             (u'例:\u00a0回転',
-             '.E4.BE.8B.3A.C2.A0.E5.9B.9E.E8.BB.A2'),
+             '.E4.BE.8B.3A_.E5.9B.9E.E8.BB.A2'),
             (u'Documentação',
              'Documenta.C3.A7.C3.A3o'),
             (u'Lektury uzupełniające',
@@ -626,7 +625,7 @@ class ContentSectionToolTests(TestCase):
             result = kuma.wiki.content.filter_out_noinclude(doc_src)
             eq_('', result)
         except:
-            ok_(False, "There should not have been an exception")
+            self.fail("There should not have been an exception")
 
     def test_sample_code_extraction(self):
         sample_html = u"""
@@ -1005,7 +1004,7 @@ class ContentSectionToolTests(TestCase):
         eq_(normalize_html(expected), normalize_html(result))
 
 
-class AllowedHTMLTests(TestCase):
+class AllowedHTMLTests(test_utils.TestCase):
     simple_tags = (
         'div', 'span', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre',
         'code', 'dl', 'dt', 'dd', 'table',
@@ -1079,7 +1078,7 @@ class AllowedHTMLTests(TestCase):
         eq_(normalize_html(expected), normalize_html(result))
 
 
-class SearchParserTests(TestCase):
+class SearchParserTests(test_utils.TestCase):
     """Tests for document parsers that extract content for search indexing"""
 
     def test_css_classname_extraction(self):
@@ -1118,7 +1117,7 @@ class SearchParserTests(TestCase):
         eq_(sorted(expected), sorted(result))
 
 
-class GetSEODescriptionTests(TestCase):
+class GetSEODescriptionTests(test_utils.TestCase):
 
     def test_summary_section(self):
         content = (

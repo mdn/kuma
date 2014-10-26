@@ -32,7 +32,7 @@
                   <li><bdi><a rel="internal" href="{{ url('wiki.document', translation.full_path, locale=translation.locale) }}" title="{{ translation.title }}">{{ translation.language }}</a></bdi></li>
                 {% endfor %}
               {% else %}
-                <li class="smaller">{{ _('No translations exist for this document.') }}</li>
+                <li class="smaller">{{ _('No translations exist for this article.') }}</li>
               {% endif %}
 
               {% if document.is_localizable %}
@@ -50,13 +50,23 @@
                 <li><a href="{{ url('wiki.document_revisions', document.full_path) }}">{{_('History')}}</a></li>
                 {% if user.is_authenticated() and document %}
                   <li class="page-watch">
+                    {% set subscribe_status = _('Updating subscription status') %}
+                    <form action="{{ url('wiki.subscribe_document', document.slug, locale=document.locale) }}" method="post">
+                        {{ csrf() }}
+                        <a href="#" data-subscribe-status="{{ subscribe_status }}" data-subscribe-text="{{ _('Subscribe to this article') }}" data-unsubscribe-text="{{ _('Unsubscribe from this article') }}" data-subscribe-message="{{ _('You are now subscribed to this article.') }}" data-unsubscribe-message="{{ _('You have been unsubscribed from this article.') }}">
+                        {% if document.is_watched_by(user) %}{{ _('Unsubscribe from this article') }}{% else %}{{ _('Subscribe to this article') }}{% endif %}
+                        </a>
+                    </form>
 
-                  	<form action="{{ url('wiki.subscribe_document', document.slug) }}" method="post">
-                  		{{ csrf() }}
-	                  	<a href="#" data-subscribe-text="{{ _('Subscribe') }}" data-unsubscribe-text="{{ _('Unsubscribe') }}">
-	                  	{% if document.is_watched_by(user) %}{{ _('Unsubscribe') }}{% else %}{{ _('Subscribe') }}{% endif %}
-	                  	</a>
-                  	</form>
+                    {% if document.parent %}
+                    {% set parent_language = document.parent.language %}
+                    <form action="{{ url('wiki.subscribe_document', document.parent.slug, locale=document.parent.locale) }}" method="post">
+                        {{ csrf() }}
+                        <a href="#" data-subscribe-status="{{ subscribe_status }}" data-subscribe-text="{{ _('Subscribe to {language} version')|f(language=parent_language) }}" data-unsubscribe-text="{{ _('Unsubscribe from {language} version')|f(language=parent_language) }}" data-subscribe-message="{{ _('You are now subscribed to the {language} version of this article.')|f(language=parent_language) }}" data-unsubscribe-message="{{ _('You have been unsubscribed from the {language} version of this article.')|f(language=parent_language) }}">
+                        {% if document.parent.is_watched_by(user) %}{{ _('Unsubscribe from {language} version')|f(language=parent_language) }}{% else %}{{ _('Subscribe to {language} version')|f(language=parent_language) }}{% endif %}
+                        </a>
+                    </form>
+                    {% endif %}
 
                 </li>{% endif %}
                 {% if user.is_authenticated() and not document.is_template %}
@@ -139,7 +149,7 @@
         {% endif %}
         </ul>
         <input type="hidden" value="{{ document.current_revision.id }}" name="revision_id" />
-        <button type="submit">{{ _('Submit Review') }}</button>
+        <button type="submit">{{ _('Review completed') }}</button>
       </form>
     </section>
     {% endif %}
