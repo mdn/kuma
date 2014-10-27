@@ -116,6 +116,7 @@ MDN_LANGUAGES = (
                  'en-US',
                  'ar',
                  'bn-BD',
+                 'bn-IN',
                  'de',
                  'el',
                  'es',
