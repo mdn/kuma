@@ -1,8 +1,9 @@
 define([
     'intern/dojo/node!http',
     'intern/dojo/Deferred',
-    'base/_config'
-], function(http, Deferred, config) {
+    'base/_config',
+    'intern/chai!assert'
+], function(http, Deferred, config, assert) {
 
     return {
 
@@ -65,6 +66,8 @@ define([
         },
 
         completePersonaLogout: function(remote) {
+            // Completes a "hard" logout of Persona via persona.org
+
             return remote
                         .get('https://login.persona.org/')
                         .execute('return jQuery("a.signOut").click();');
@@ -107,6 +110,20 @@ define([
             })();
 
             return dfd.promise;
+        },
+
+        checkExistsAndDisplayed: function(cssSelector) {
+            // Shortcut method for ensuring a single element exists and is displaying
+
+            return function() {
+                return this.remote
+                        .findByCssSelector(cssSelector)
+                        .isDisplayed()
+                        .then(function(bool) {
+                            assert.isTrue(bool);
+                        });
+            };
+
         }
     };
 
