@@ -59,9 +59,23 @@ define([
                                 .click()
                                 .switchToWindow(handles[0])
                                 .sleep(6000) // TODO:  Make this programmatic; i.e. an API call to poll when first window has loaded new page
+                                .end()
                                 .then(callback);
-
                     });
+        },
+
+        completePersonaLogout: function(remote) {
+            return remote
+                        .get('https://login.persona.org/')
+                        .execute('return jQuery("a.signOut").click();');
+
+                        // Using jQuery's click() method because WebDriver not registering the click on an inline link
+                        /*
+                        .findByCssSelector('a.signOut')
+                        .moveMouseTo(12, 12)
+                        .sleep(2000)
+                        click();
+                        */
         },
 
         pollForRemote: function(item, remoteFunction, callback, timeout) {
@@ -80,7 +94,6 @@ define([
             (function poll() {
                 item[remoteFunction]().then(function() {
 
-                    console.log('ping ', arguments[0]);
                     if(callback.apply(this, arguments)) {
                         dfd.resolve();
                     }

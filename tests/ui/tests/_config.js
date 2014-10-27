@@ -10,6 +10,7 @@ define(['intern'], function(intern) {
         domain: domain,
         url: httpsAddress,
         homepageUrl: httpsAddress + defaultLocale,
+        demosHomepageUrl: httpsAddress + defaultLocale + '/demos',
 
         // Locales
         defaultLocale: defaultLocale,
