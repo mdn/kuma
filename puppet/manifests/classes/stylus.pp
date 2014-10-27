@@ -1,7 +1,7 @@
 # Get stylus
 class stylus {
     exec { 'stylus-install':
-        command => '/usr/bin/npm install -g stylus@0.43.1',
+        command => '/usr/bin/npm install -g stylus@0.49.2',
         creates => '/usr/bin/stylus',
         require => [
             Package['nodejs'],
