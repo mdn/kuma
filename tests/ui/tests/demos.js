@@ -1,8 +1,8 @@
 define([
     'intern!object',
     'intern/chai!assert',
-    'base/_config',
-    'base/_utils'
+    'base/lib/config',
+    'base/lib/utils'
 ], function(registerSuite, assert, config, utils) {
 
     registerSuite({
@@ -13,9 +13,9 @@ define([
             return this.remote.get(config.demosHomepageUrl);
         },
 
-        'The featured demo widget works correctly': utils.checkExistsAndDisplayed('#demo-main'),
+        'The featured demo widget is present': utils.assertExistsAndDisplayed('#demo-main'),
 
-        'The demo search form is present': utils.checkExistsAndDisplayed('#search-demos')
+        'The demo search form is present': utils.assertExistsAndDisplayed('#search-demos')
 
     });
 

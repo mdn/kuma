@@ -2,8 +2,8 @@ define([
     'intern!object',
     'intern/chai!assert',
     'intern/dojo/node!leadfoot/keys',
-    'base/_config',
-    'base/_utils'
+    'base/lib/config',
+    'base/lib/utils'
 ], function(registerSuite, assert, keys, config, utils) {
 
     registerSuite({
@@ -121,7 +121,7 @@ define([
 
         },
 
-        'Tabzilla loads properly': utils.checkExistsAndDisplayed('#tabzilla')
+        'Tabzilla loads properly': utils.assertExistsAndDisplayed('#tabzilla')
 
     });
 

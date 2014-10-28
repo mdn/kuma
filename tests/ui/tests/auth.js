@@ -1,9 +1,9 @@
 define([
     'intern!object',
     'intern/chai!assert',
-    'base/_config',
-    'base/_credentials',
-    'base/_utils'
+    'base/lib/config',
+    'base/lib/credentials',
+    'base/lib/utils'
 ], function(registerSuite, assert, config, realCredentials, utils) {
 
     registerSuite({
@@ -14,7 +14,7 @@ define([
             return utils.openLoginWidget(this.remote);
         },
 
-        'Hovering over the header nav widget opens submenu': utils.checkExistsAndDisplayed('.oauth-login-picker'),
+        'Hovering over the header nav widget opens submenu': utils.assertExistsAndDisplayed('.oauth-login-picker'),
 
         'Clicking Persona link opens new window': function() {
 
@@ -44,16 +44,14 @@ define([
             var remote = this.remote;
 
             utils.getTestPersonaLoginCredentials(function(credentials) {
-                return utils.completePersonaLogin(credentials.email, credentials.password, remote, function() {
+                return utils.completePersonaWindow(remote, credentials.email, credentials.password).then(function() {
                     return remote
                         .then(function() {
-                                remote
+                                return remote
                                     .getCurrentUrl()
                                     .then(function(url) {
                                         assert.isTrue(url.indexOf('/account/signup') != -1);
-                                        return utils.completePersonaLogout(remote).sleep(4000).then(dfd.callback(function() {
-                                            return true;
-                                        }));
+                                        return utils.completePersonaLogout(remote).sleep(4000).then(dfd.resolve);
                                     });
                         });
                 });
@@ -68,7 +66,7 @@ define([
             var dfd = this.async(config.testTimeout);
             var remote = this.remote;
 
-            utils.completePersonaLogin(realCredentials.personaUsername, realCredentials.personaPassword, remote, function() {
+            utils.completePersonaWindow(remote, realCredentials.personaUsername, realCredentials.personaPassword, function() {
 
                 return remote
                     .findByCssSelector('.user-state-profile')

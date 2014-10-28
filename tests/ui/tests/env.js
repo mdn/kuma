@@ -1,8 +1,8 @@
 define([
     'intern!object',
     'intern/chai!assert',
-    'base/_config',
-    'base/_utils'
+    'base/lib/config',
+    'base/lib/utils'
 ], function(registerSuite, assert, config, utils) {
 
     var testObject = {
@@ -25,7 +25,7 @@ define([
 
     requiredObjects.forEach(function(property) {
         testObject[property + ' object is provided to MDN'] = function() {
-            return utils.checkWindowPropertyExists(this.remote, property);
+            return utils.assertWindowPropertyExists(this.remote, property);
         };
     });
 

@@ -1,7 +1,7 @@
 define([
     'intern/dojo/node!http',
     'intern/dojo/Deferred',
-    'base/_config',
+    'base/lib/config',
     'intern/chai!assert'
 ], function(http, Deferred, config, assert) {
 
@@ -46,7 +46,7 @@ define([
 
         },
 
-        completePersonaLogin: function(username, password, remote, callback) {
+        completePersonaWindow: function(remote, username, password, callback) {
             // Provided a username and passwords, clicks the Persona link in the site
             // header, waits for the window to load, and logs the user into Persona
 
@@ -79,6 +79,19 @@ define([
                                 .end()
                                 .then(callback);
                     });
+        },
+
+        completePersonaLogin: function(remote, username, password) {
+            // Opens the login widget, completes the personal login, done
+
+            var dfd = new Deferred();
+            var self = this;
+
+            self.openLoginWidget(remote).then(function() {
+                self.completePersonaWindow(remote, username, password, dfd.resolve);
+            });
+
+            return dfd.promise;
         },
 
         completePersonaLogout: function(remote) {
@@ -128,7 +141,7 @@ define([
             return dfd.promise;
         },
 
-        checkExistsAndDisplayed: function(cssSelector) {
+        assertExistsAndDisplayed: function(cssSelector) {
             // Shortcut method for ensuring a single element exists and is displaying
 
             return function() {
@@ -142,11 +155,11 @@ define([
 
         },
 
-        checkWindowPropertyExists: function(remote, property) {
+        assertWindowPropertyExists: function(remote, property) {
             // Ensures a window[key] property exists in the page
             // Missing global properties could be a sign of a huge problem
 
-            remote.execute('return typeof window.' + property + ' != "undefined"').then(function(result) {
+            return remote.execute('return typeof window.' + property + ' != "undefined"').then(function(result) {
                 assert.isTrue(result);
             });
         }
