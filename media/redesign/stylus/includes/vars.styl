@@ -1,7 +1,20 @@
+/* vendors */
+/* - this is a global variable set by stylus to 'moz webkit o ms official' by default
+   - as far as I can tell it only uses it for @keyframes
+   - and they're going to remove it in 1.0
+   - anyway, we get csslint errors if ms is in this list
+*/
+vendors =  webkit official;
+/* our custom variable for prefixing */
+VENDOR-PREFIXES = '-webkit-' '-moz-' '-ms-';
+/* custom list of properties and their valid prefixes for vendors we support */
+@require 'prefixes';
+
 /* colors */
 $text-color = #4d4e53;
 $link-color = #0095dd;
 $menu-link-color = $text-color;
+$blue-background-text-color = #fff;
 $header-background-color = #eaeff2;
 $light-background-color = #f4f7f8;
 $code-block-background-color = #fafbfc;
