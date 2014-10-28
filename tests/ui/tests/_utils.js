@@ -124,6 +124,15 @@ define([
                         });
             };
 
+        },
+
+        checkWindowPropertyExists: function(remote, property) {
+            // Ensures a window[key] property exists in the page
+            // Missing global properties could be a sign of a huge problem
+
+            remote.execute('return typeof window.' + property + ' != "undefined"').then(function(result) {
+                assert.isTrue(result);
+            });
         }
     };
 

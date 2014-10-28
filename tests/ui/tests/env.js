@@ -1,10 +1,12 @@
 define([
     'intern!object',
     'intern/chai!assert',
-    'base/_config'
-], function(registerSuite, assert, config) {
+    'base/_config',
+    'base/_utils'
+], function(registerSuite, assert, config, utils) {
 
     var testObject = {
+
         name: 'env',
 
         before: function() {
@@ -21,11 +23,9 @@ define([
         'Tabzilla'
     ];
 
-    requiredObjects.forEach(function(variable) {
-        testObject[variable + ' object is provided to MDN'] = function() {
-            this.remote.execute('return typeof window.' + variable + ' != "undefined"').then(function(result) {
-                assert.isTrue(result);
-            })
+    requiredObjects.forEach(function(property) {
+        testObject[property + ' object is provided to MDN'] = function() {
+            return utils.checkWindowPropertyExists(this.remote, property);
         };
     });
 
