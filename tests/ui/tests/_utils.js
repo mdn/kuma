@@ -7,6 +7,22 @@ define([
 
     return {
 
+        openLoginWidget: function(remote) {
+            // Simply hovers over the top login widget so that login links can be clicked
+
+            var pollForRemote = this.pollForRemote;
+
+            return remote
+                        .get(config.homepageUrl)
+                        .findByCssSelector('.oauth-login-options')
+                        .moveMouseTo(5, 5)
+                        .end()
+                        .findByCssSelector('.oauth-login-picker')
+                        .then(function(element) {
+                            return pollForRemote(element, 'isDisplayed');
+                        });
+        },
+
         getTestPersonaLoginCredentials: function(callback) {
             // Makes a GET request to get a test email address
             // and password for Persona
