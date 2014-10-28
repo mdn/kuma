@@ -2,8 +2,9 @@ define([
     'intern!object',
     'intern/chai!assert',
     'intern/dojo/node!leadfoot/keys',
-    'base/_config'
-], function(registerSuite, assert, keys, config) {
+    'base/_config',
+    'base/_utils'
+], function(registerSuite, assert, keys, config, utils) {
 
     registerSuite({
 
@@ -58,7 +59,6 @@ define([
                         .then(function(size) {
                             windowSize = size;
                         })
-                        .end()
                         .setWindowSize(config.mediaQueries.mobile, 400)
                         .findById('home-q')
                         .isDisplayed()
@@ -76,50 +76,34 @@ define([
                         .findByCssSelector('#main-nav a')
                         .moveMouseTo(5, 5)
                         .end()
-                        .sleep(2000) // TODO:  Make this programmatic; i.e. an API call to poll when the email field is visible
                         .findById('nav-zones-submenu')
-                        .isDisplayed()
-                        .then(function(isDisplayed) {
-                            assert.isTrue(isDisplayed);
+                        .then(function(element) {
+                            return utils.pollForRemote(element, 'isDisplayed').then(function() {
+                                // Polling proves it's true :)
+                                assert.isTrue(true);
+                            });
                         });
 
         },
 
         'Focusing on the header search box expands the input': function() {
 
-            var remote = this.remote;
+            var originalSize;
 
-            return remote
-                        .findById('main-q')
-                        .then(function(searchBox) {
-                            return searchBox
-                                        .getSize()
-                                        .then(function(originalSize) {
-                                            return remote
-                                                        .moveMouseTo(5, 5)
-                                                        .then(function() {
-                                                            return searchBox
-                                                                        .click()
-                                                                        .then(function() {
-                                                                            return remote
-                                                                                        .sleep(2000)
-                                                                                        .then(function() {
-                                                                                            return searchBox
-                                                                                                        .getSize()
-                                                                                                        .then(function(newSize) {
-                                                                                                            assert.isTrue(newSize.width > originalSize.width);
-                                                                                                        });
-                                                                                        });
-
-                                                                        });
-
-
-                                                        });
-
-
-                                        });
-                        });
-
+            return this.remote
+                            .findById('main-q')
+                            .getSize()
+                            .then(function(size) {
+                                originalSize = size;
+                            })
+                            .click()
+                            .end()
+                            .sleep(2000) // wait for animation
+                            .findById('main-q')
+                            .getSize()
+                            .then(function(newSize) {
+                                assert.isTrue(newSize.width > originalSize.width);
+                            });
         },
 
         'Changing the footer\'s language selector changes locale via URL': function() {
@@ -137,16 +121,7 @@ define([
 
         },
 
-        'Tabzilla loads properly': function() {
-
-            return this.remote
-                        .findById('tabzilla')
-                        .isDisplayed()
-                        .then(function(bool) {
-                            assert.isTrue(bool);
-                        });
-
-        }
+        'Tabzilla loads properly': utils.checkExistsAndDisplayed('#tabzilla')
 
     });
 

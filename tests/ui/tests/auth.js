@@ -11,28 +11,10 @@ define([
         name: 'auth',
 
         beforeEach: function() {
-
-            return this.remote
-                        .get(config.homepageUrl)
-                        .findByCssSelector('.oauth-login-options')
-                        .moveMouseTo(5, 5)
-                        .end()
-                        .findByCssSelector('.oauth-login-picker')
-                        .then(function(element) {
-                            return utils.pollForRemote(element, 'isDisplayed');
-                        });
+            return utils.openLoginWidget(this.remote);
         },
 
-        'Hovering over the header nav widget opens submenu': function() {
-
-            return this.remote
-                        .findByCssSelector('.oauth-login-picker')
-                        .isDisplayed()
-                        .then(function(bool) {
-                            assert.isTrue(bool);
-                        });
-
-        },
+        'Hovering over the header nav widget opens submenu': utils.checkExistsAndDisplayed('.oauth-login-picker'),
 
         'Clicking Persona link opens new window': function() {
 
@@ -89,26 +71,33 @@ define([
             utils.completePersonaLogin(realCredentials.personaUsername, realCredentials.personaPassword, remote, function() {
 
                 return remote
-                    .sleep(4000)
                     .findByCssSelector('.user-state-profile')
-                    .click()
-                    .end()
-                    .findById('edit-profile')
-                    .click()
-                    .end()
-                    .findByCssSelector('.fm-submit button[type=submit]')
-                    .click()
-                    .end()
-                    .findByCssSelector('.memberSince')
-                    .click() // Just ensuring the element is there
-                    .end()
-                    .findByCssSelector('.user-state-signout')
-                    .click()
-                    .end()
-                    .findByCssSelector('.oauth-login-container')
-                    .then(dfd.callback(function() {
-                        assert.isTrue(true, 'User can sign out without problems');
-                    }));
+                    .then(function(element) {
+                        utils.pollForRemote(element, 'isDisplayed')
+                                .then(function() {
+                                    return element
+                                                .click()
+                                                .then(function() {
+                                                    return remote
+                                                                .findById('edit-profile')
+                                                                .click()
+                                                                .end()
+                                                                .findByCssSelector('.fm-submit button[type=submit]')
+                                                                .click()
+                                                                .end()
+                                                                .findByCssSelector('.memberSince')
+                                                                .click() // Just ensuring the element is there
+                                                                .end()
+                                                                .findByCssSelector('.user-state-signout')
+                                                                .click()
+                                                                .end()
+                                                                .findByCssSelector('.oauth-login-container')
+                                                                .then(dfd.callback(function() {
+                                                                    assert.isTrue(true, 'User can sign out without problems');
+                                                                }));
+                                                });
+                                });
+                    });
 
             });
 
@@ -140,7 +129,6 @@ define([
                         });
 
         }
-
     });
 
 });

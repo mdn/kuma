@@ -1,10 +1,27 @@
 define([
     'intern/dojo/node!http',
     'intern/dojo/Deferred',
-    'base/_config'
-], function(http, Deferred, config) {
+    'base/_config',
+    'intern/chai!assert'
+], function(http, Deferred, config, assert) {
 
     return {
+
+        openLoginWidget: function(remote) {
+            // Simply hovers over the top login widget so that login links can be clicked
+
+            var pollForRemote = this.pollForRemote;
+
+            return remote
+                        .get(config.homepageUrl)
+                        .findByCssSelector('.oauth-login-options')
+                        .moveMouseTo(5, 5)
+                        .end()
+                        .findByCssSelector('.oauth-login-picker')
+                        .then(function(element) {
+                            return pollForRemote(element, 'isDisplayed');
+                        });
+        },
 
         getTestPersonaLoginCredentials: function(callback) {
             // Makes a GET request to get a test email address
@@ -65,6 +82,8 @@ define([
         },
 
         completePersonaLogout: function(remote) {
+            // Completes a "hard" logout of Persona via persona.org
+
             return remote
                         .get('https://login.persona.org/')
                         .execute('return jQuery("a.signOut").click();');
@@ -107,6 +126,29 @@ define([
             })();
 
             return dfd.promise;
+        },
+
+        checkExistsAndDisplayed: function(cssSelector) {
+            // Shortcut method for ensuring a single element exists and is displaying
+
+            return function() {
+                return this.remote
+                        .findByCssSelector(cssSelector)
+                        .isDisplayed()
+                        .then(function(bool) {
+                            assert.isTrue(bool);
+                        });
+            };
+
+        },
+
+        checkWindowPropertyExists: function(remote, property) {
+            // Ensures a window[key] property exists in the page
+            // Missing global properties could be a sign of a huge problem
+
+            remote.execute('return typeof window.' + property + ' != "undefined"').then(function(result) {
+                assert.isTrue(result);
+            });
         }
     };
 
