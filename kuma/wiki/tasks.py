@@ -202,5 +202,5 @@ def update_community_stats():
         community_stats['locales'] = None
 
     cache = get_cache('memcache')
-    cache.add('community_stats', community_stats, 86400)
+    cache.set('community_stats', community_stats, 86400)
 
