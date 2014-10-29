@@ -12,7 +12,7 @@
 
 	CKEDITOR.plugins.add( 'youtube',
 	{
-		icons: 'youtube', // %REMOVE_LINE_CORE%
+		icons: 'youtube-moono', // %REMOVE_LINE_CORE%
 		
 		init: function( editor )
 		{
@@ -34,6 +34,7 @@
 
 			editor.ui.addButton( 'youtube',
 			{
+				icon: 'youtube-moono',
 				label: editor.lang.youtube.button,
 				command: 'youtube',
 				toolbar: 'insert'
