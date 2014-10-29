@@ -4,6 +4,7 @@ import time
 from django import forms
 from django.conf import settings
 from django.http import HttpResponseServerError
+from django.contrib.auth.models import User
 
 import basket
 from basket.base import BasketException
@@ -13,15 +14,9 @@ from product_details import product_details
 from taggit.utils import parse_tags
 from tower import ugettext_lazy as _
 
-
+from .constants import USERNAME_CHARACTERS, USERNAME_REGEX
 from .models import UserProfile
 
-
-EMAIL_REQUIRED = _(u'Email address is required.')
-EMAIL_SHORT = _(u'Email address is too short (%(show_value)s characters). '
-                u'It must be at least %(limit_value)s characters.')
-EMAIL_LONG = _(u'Email address is too long (%(show_value)s characters). '
-               u'It must be %(limit_value)s characters or less.')
 PRIVACY_REQUIRED = _(u'You must agree to the privacy policy.')
 
 
@@ -152,10 +147,13 @@ class UserProfileEditForm(forms.ModelForm):
     beta = forms.BooleanField(label=_(u'Beta tester'), required=False)
     interests = forms.CharField(label=_(u'Interests'),
                                 max_length=255, required=False,
-                                widget=forms.TextInput(attrs={'class':'tags'}))
+                                widget=forms.TextInput(attrs={'class': 'tags'}))
     expertise = forms.CharField(label=_(u'Expertise'),
                                 max_length=255, required=False,
-                                widget=forms.TextInput(attrs={'class':'tags'}))
+                                widget=forms.TextInput(attrs={'class': 'tags'}))
+    username = forms.RegexField(label=_(u'Username'), regex=USERNAME_REGEX,
+                                max_length=30, required=False,
+                                error_message=USERNAME_CHARACTERS)
 
     class Meta:
         model = UserProfile
@@ -181,3 +179,13 @@ class UserProfileEditForm(forms.ModelForm):
                                           "subset of interests"))
 
         return self.cleaned_data['expertise']
+
+    def clean_username(self):
+        new_username = self.cleaned_data['username']
+
+        if (self.instance is not None and
+                User.objects.exclude(pk=self.instance.user.pk)
+                            .filter(username=new_username)
+                            .exists()):
+            raise forms.ValidationError(_('Username already in use.'))
+        return new_username

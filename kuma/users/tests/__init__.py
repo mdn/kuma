@@ -18,8 +18,7 @@ class UserTestCase(KumaTestCase):
 
 def profile(user, **kwargs):
     """Return a saved profile for a given user."""
-    p = UserProfile.objects.get(user=user)
-    return p
+    return UserProfile.objects.get(user=user)
 
 
 def user(save=False, **kwargs):
