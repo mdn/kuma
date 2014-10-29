@@ -8,15 +8,9 @@ from django.utils.encoding import iri_to_uri, smart_str, smart_unicode
 
 import tower
 
-from devmo import get_mysql_error
 from sumo.helpers import urlparams
 from sumo.urlresolvers import Prefixer, set_url_prefixer, split_path
 from sumo.views import handle403
-
-
-# Django compatibility shim. Once we're on Django 1.4, do:
-# from django.db.utils import DatabaseError
-DatabaseError = get_mysql_error()
 
 
 class LocaleURLMiddleware(object):
