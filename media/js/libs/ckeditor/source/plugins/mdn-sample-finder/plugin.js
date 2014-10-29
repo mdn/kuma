@@ -7,7 +7,7 @@
 'use strict';
 
 CKEDITOR.plugins.add('mdn-sample-finder', {
-  icons: 'mdn-sample-finder', // %REMOVE_LINE_%CORE
+  icons: 'mdn-sample-finder-moono', // %REMOVE_LINE_%CORE
 
   init: function(editor) {
     // Add the dialog command.
@@ -16,7 +16,7 @@ CKEDITOR.plugins.add('mdn-sample-finder', {
     // Register the button.
     var label = gettext('Insert Code Sample iFrame');
     editor.ui.addButton('mdn-sample-finder', {
-      icon: 'mdn-sample-finder',
+      icon: 'mdn-sample-finder-moono',
       label: label,
       toolbar: 'blocks,220',
       command: 'mdn-sample-finder'
