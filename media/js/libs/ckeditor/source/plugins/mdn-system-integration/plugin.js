@@ -1,6 +1,7 @@
 'use strict';
 
 CKEDITOR.plugins.add('mdn-system-integration', {
+  icons: 'mdn-preview,mdn-save-edit,mdn-save', // %REMOVE_LINE_%CORE
   init: function(editor) {
     var buttonsContainer = CKEDITOR.document.findOne('.page-buttons'),
       buttonSaveAndEdit = buttonsContainer.findOne('.btn-save-and-edit'),
@@ -40,6 +41,7 @@ CKEDITOR.plugins.add('mdn-system-integration', {
 
     if (buttonSaveAndEdit) {
       editor.ui.addButton('MdnSaveEdit', {
+        icon: 'mdn-save-edit',
         label: buttonSaveAndEdit.getText(),
         command: 'mdn-save-edit',
         toolbar: 'document,100'
@@ -47,12 +49,14 @@ CKEDITOR.plugins.add('mdn-system-integration', {
     }
 
     editor.ui.addButton('MdnSave', {
+      icon: 'mdn-save',
       label: buttonSave.getText(),
       command: 'mdn-save',
       toolbar: 'document,110'
     });
 
     editor.ui.addButton('MdnPreview', {
+      icon: 'mdn-preview',
       label: buttonPreview.getText(),
       command: 'mdn-preview',
       toolbar: 'document,130'

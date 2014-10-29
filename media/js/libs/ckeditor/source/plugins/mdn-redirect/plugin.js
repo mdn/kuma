@@ -5,12 +5,15 @@
 */
 
 CKEDITOR.plugins.add('mdn-redirect', {  
+  icons: 'mdn-redirect', // %REMOVE_LINE_%CORE
+
   init: function(editor) {
     // Add the dialog command.
     editor.addCommand('mdn-redirect', new CKEDITOR.dialogCommand('mdn-redirect'));
 
     // Register the command.
     editor.ui.addButton('MdnRedirect', {
+      icon: 'mdn-redirect',
       label: gettext('Create a Redirect'),
       command: 'mdn-redirect',
       toolbar: 'links,100'
