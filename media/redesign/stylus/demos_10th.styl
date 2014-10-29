@@ -73,7 +73,7 @@
     text-decoration: none;
     background-color: #0095dd;
     background-image: none;
-    vendorize(box-shadow, inset 0 -1px #00539f);
+    box-shadow: inset 0 -1px #00539f;
 }
 
 .section-demos main button:hover,
@@ -83,6 +83,10 @@
 .section-demos main .button:focus,
 .section-demos main .button:active {
     text-decoration: underline;
+}
+
+#demo-manage {
+    margin-bottom: $grid-spacing;
 }
 
 #demo-manage .remove {
@@ -154,6 +158,10 @@
 
 .demo .demo-title a img {
     border-radius: 4px;
+}
+
+.demo .demo-title a {
+    color: $link-color !important;
 }
 
 .demo .descLink,
