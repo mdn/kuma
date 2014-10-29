@@ -4,6 +4,8 @@
   This plugin inserts boilerplate live sample content
 */
 CKEDITOR.plugins.add('mdn-sampler', {
+  icons: 'mdn-sampler', // %REMOVE_LINE_%CORE
+
   init: function(editor) {
     editor.addCommand('mdn-sampler', {
       exec: function(editor) {
@@ -49,6 +51,7 @@ CKEDITOR.plugins.add('mdn-sampler', {
 
     var label = gettext('Insert Code Sample Template');
     editor.ui.addButton('mdn-sampler', {
+      icon: 'mdn-sampler',
       label: label,
       toolbar: 'blocks,210',
       command: 'mdn-sampler'

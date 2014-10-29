@@ -16,6 +16,7 @@ CKEDITOR.config.mdnSyntaxhighlighter_brushes = [
 
 CKEDITOR.plugins.add('mdn-syntaxhighlighter', {
   requires: 'menubutton,mdn-format',
+  icons: 'mdn-syntaxhighlighter', // %REMOVE_LINE_%CORE
 
   init: function(editor) {
     var plugin = this,
@@ -84,6 +85,7 @@ CKEDITOR.plugins.add('mdn-syntaxhighlighter', {
 
     // Register menu button.
     editor.ui.add( 'MdnSyntaxhighlighter', CKEDITOR.UI_MENUBUTTON, {
+      icon: 'mdn-syntaxhighlighter',
       label: label,
       toolbar: 'blocks,200',
       command: 'mdn-syntaxhighlighter',
