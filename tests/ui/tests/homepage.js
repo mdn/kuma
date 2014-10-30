@@ -3,8 +3,10 @@ define([
     'intern/chai!assert',
     'intern/dojo/node!leadfoot/keys',
     'base/lib/config',
-    'base/lib/utils'
-], function(registerSuite, assert, keys, config, utils) {
+    'base/lib/login',
+    'base/lib/assert',
+    'base/lib/poll'
+], function(registerSuite, assert, keys, config, libLogin, libAssert, poll) {
 
     registerSuite({
 
@@ -78,7 +80,7 @@ define([
                         .end()
                         .findById('nav-zones-submenu')
                         .then(function(element) {
-                            return utils.pollForRemote(element, 'isDisplayed').then(function() {
+                            return poll.until(element, 'isDisplayed').then(function() {
                                 // Polling proves it's true :)
                                 assert.isTrue(true);
                             });
@@ -121,7 +123,7 @@ define([
 
         },
 
-        'Tabzilla loads properly': utils.assertExistsAndDisplayed('#tabzilla')
+        'Tabzilla loads properly': libAssert.elementExistsAndDisplayed('#tabzilla')
 
     });
 

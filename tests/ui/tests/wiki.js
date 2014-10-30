@@ -2,16 +2,16 @@ define([
     'intern!object',
     'intern/chai!assert',
     'base/lib/config',
-    'base/lib/utils',
-    'base/lib/credentials'
-], function(registerSuite, assert, config, utils, realCredentials) {
+    'base/lib/login',
+    'base/lib/assert'
+], function(registerSuite, assert, config, libLogin, libAssert) {
 
     registerSuite({
 
         name: 'wiki',
 
         before: function() {
-            return utils.completePersonaLogin(this.remote, realCredentials.personaUsername, realCredentials.personaPassword);
+            return libLogin.completePersonaLogin(this.remote, libLogin.personaUsername, libLogin.personaPassword);
         },
 
         'The new document screen passes all the checks': function() {
@@ -21,9 +21,9 @@ define([
             return remote.get(config.url + 'docs/new')
                         .then(function() {
                             // Ensure that CKEditor loaded properly
-                            return utils.assertWindowPropertyExists(remote, 'CKEDITOR')
+                            return libAssert.windowPropertyExists(remote, 'CKEDITOR')
                                         // Ensure the tagit plugin is loaded for dynamic tag creation
-                                        .then(function() { return utils.assertWindowPropertyExists(remote, 'jQuery.fn.tagit'); })
+                                        .then(function() { return libAssert.windowPropertyExists(remote, 'jQuery.fn.tagit'); })
                                         // Ensure that populating the title populates the slug field correctly
                                         .then(function() {
                                             return remote.findById('id_title').click().type('Hello$ World').then(function() {
@@ -44,14 +44,14 @@ define([
                         .sleep(100000)
                         .then(function() {
                             // Ensure that CKEditor loaded properly
-                            return utils.assertWindowPropertyExists(remote, 'ace_editor');
+                            return libAssert.windowPropertyExists(remote, 'ace_editor');
                         });
 
         }
         */
 
         after: function() {
-            return utils.completePersonaLogout(this.remote);
+            return libLogin.completePersonaLogout(this.remote);
         }
 
     });

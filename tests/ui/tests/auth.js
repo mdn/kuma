@@ -2,19 +2,20 @@ define([
     'intern!object',
     'intern/chai!assert',
     'base/lib/config',
-    'base/lib/credentials',
-    'base/lib/utils'
-], function(registerSuite, assert, config, realCredentials, utils) {
+    'base/lib/login',
+    'base/lib/assert',
+    'base/lib/poll'
+], function(registerSuite, assert, config, libLogin, libAssert, poll) {
 
     registerSuite({
 
         name: 'auth',
 
         beforeEach: function() {
-            return utils.openLoginWidget(this.remote);
+            return libLogin.openLoginWidget(this.remote);
         },
 
-        'Hovering over the header nav widget opens submenu': utils.assertExistsAndDisplayed('.oauth-login-picker'),
+        'Hovering over the header nav widget opens submenu': libAssert.elementExistsAndDisplayed('.oauth-login-picker'),
 
         'Clicking Persona link opens new window': function() {
 
@@ -43,15 +44,15 @@ define([
             var dfd = this.async(config.testTimeout);
             var remote = this.remote;
 
-            utils.getTestPersonaLoginCredentials(function(credentials) {
-                return utils.completePersonaWindow(remote, credentials.email, credentials.password).then(function() {
+            libLogin.getTestPersonaLoginCredentials(function(credentials) {
+                return libLogin.completePersonaWindow(remote, credentials.email, credentials.password).then(function() {
                     return remote
                         .then(function() {
                                 return remote
                                     .getCurrentUrl()
                                     .then(function(url) {
                                         assert.isTrue(url.indexOf('/account/signup') != -1);
-                                        return utils.completePersonaLogout(remote).sleep(4000).then(dfd.resolve);
+                                        return libLogin.completePersonaLogout(remote).sleep(4000).then(dfd.resolve);
                                     });
                         });
                 });
@@ -66,12 +67,12 @@ define([
             var dfd = this.async(config.testTimeout);
             var remote = this.remote;
 
-            utils.completePersonaWindow(remote, realCredentials.personaUsername, realCredentials.personaPassword, function() {
+            libLogin.completePersonaWindow(remote, libLogin.personaUsername, libLogin.personaPassword, function() {
 
                 return remote
                     .findByCssSelector('.user-state-profile')
                     .then(function(element) {
-                        utils.pollForRemote(element, 'isDisplayed')
+                        poll.until(element, 'isDisplayed')
                                 .then(function() {
                                     return element
                                                 .click()
