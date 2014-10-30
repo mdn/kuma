@@ -13,7 +13,7 @@
       <ul>
         {% if document.parent %}
           <li>
-            <a href="{{ url('wiki.document_revisions', document.parent.full_path, locale=document.parent.locale) }}">{{ document.parent.language }}</a>
+            <a href="{{ url('wiki.document_revisions', document.parent.full_path, locale=document.parent.locale) }}" rel="nofollow, noindex">{{ document.parent.language }}</a>
           </li>
         {% endif %}
         <li>
@@ -47,7 +47,7 @@
               </div>
                <div class="prev">
               {% if rev.previous_revision %}
-                <a href="{{ url('wiki.compare_revisions', document.full_path) }}?to={{ rev.id }}&amp;from={{ rev.previous_revision.id }}">{{ _('Previous') }}</a>
+                <a href="{{ url('wiki.compare_revisions', document.full_path) }}?to={{ rev.id }}&amp;from={{ rev.previous_revision.id }}" rel="nofollow, noindex">{{ _('Previous') }}</a>
               {% endif %}
               </div>
               <div class="date">
@@ -61,7 +61,7 @@
               </div>
               {% if document.current_revision.id != rev.id and user_can_delete %}
               <div class="creator">
-                <a href="{{ url('wiki.revert_document', document.full_path, rev.id) }}" class="button">{{ _('Revert to this revision') }}</a>
+                <a href="{{ url('wiki.revert_document', document.full_path, rev.id) }}" class="button" rel="nofollow, noindex">{{ _('Revert to this revision') }}</a>
               </div>
               {% endif %}
             </li>
@@ -97,7 +97,7 @@
       {% set class='hidden' if not request.user.is_authenticated() %}
 
       if($next.length) {
-      $pagination.append('<li title="Sign in to view all history"><a href="?limit=all" id="pagination-all" class="{{ class }}">' + gettext('View All') + '</a></li>');
+      $pagination.append('<li title="Sign in to view all history"><a href="?limit=all" id="pagination-all" class="{{ class }}" rel="nofollow, noindex">' + gettext('View All') + '</a></li>');
       }
     });
   </script>
