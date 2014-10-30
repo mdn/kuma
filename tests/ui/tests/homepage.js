@@ -90,10 +90,11 @@ define([
 
         'Focusing on the header search box expands the input': function() {
 
+            var searchBoxId = 'main-q';
             var originalSize;
 
             return this.remote
-                            .findById('main-q')
+                            .findById(searchBoxId)
                             .getSize()
                             .then(function(size) {
                                 originalSize = size;
@@ -101,7 +102,7 @@ define([
                             .click()
                             .end()
                             .sleep(2000) // wait for animation
-                            .findById('main-q')
+                            .findById(searchBoxId)
                             .getSize()
                             .then(function(newSize) {
                                 assert.isTrue(newSize.width > originalSize.width);

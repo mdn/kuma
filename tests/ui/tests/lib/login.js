@@ -10,8 +10,8 @@ define([
     return {
 
         // Login credentials from the command line
-        personaUsername: intern.args.u || '',
-        personaPassword: intern.args.p || '',
+        personaUsername: intern.args.u,
+        personaPassword: intern.args,
 
         openLoginWidget: function(remote) {
             // Simply hovers over the top login widget so that login links can be clicked

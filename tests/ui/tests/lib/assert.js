@@ -11,7 +11,7 @@ define(['intern/chai!assert'], function(assert) {
                         .findByCssSelector(cssSelector)
                         .isDisplayed()
                         .then(function(bool) {
-                            assert.isTrue(bool);
+                            assert.isTrue(bool, 'The following element is present and displaying: ' + cssSelector);
                         });
             };
 
@@ -22,7 +22,7 @@ define(['intern/chai!assert'], function(assert) {
             // Missing global properties could be a sign of a huge problem
 
             return remote.execute('return typeof window.' + property + ' != "undefined"').then(function(result) {
-                assert.isTrue(result);
+                assert.isTrue(result, 'The following window property exists:  ' + property);
             });
         }
     };
