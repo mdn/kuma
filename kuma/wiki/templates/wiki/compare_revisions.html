@@ -11,7 +11,7 @@
     <h2><a href="{{ url('wiki.document', document.full_path, locale=document.locale) }}">{{ document.title }}</a></h2>
 
     {% include 'wiki/includes/revision_diff.html' %}
-    <p><a href="{{ url('wiki.document_revisions', document.slug) }}">{{ _('Back to History') }}</a></p>
+    <p><a href="{{ url('wiki.document_revisions', document.slug) }}" rel="nofollow, noindex">{{ _('Back to History') }}</a></p>
 
   </article>
 

@@ -66,6 +66,6 @@
       </div>
     </div></details>
 
-    <a href="{{ url('wiki.revert_document', document.full_path, revision.id) }}" class="button">{{ _('Revert to this revision') }}</a>
+    <a href="{{ url('wiki.revert_document', document.full_path, revision.id) }}" class="button" rel="nofollow, noindex">{{ _('Revert to this revision') }}</a>
   </article>
 {% endblock %}

@@ -7,7 +7,7 @@
           {% if revision_from_header %}
             {{ revision_from_header}}
           {% else %}
-            <a href="{{ url('wiki.revision', revision_from.document.slug, revision_from.id) }}">
+            <a href="{{ url('wiki.revision', revision_from.document.slug, revision_from.id) }}" rel="nofollow, noindex">
               {{ _('Revision {num}:')|f(num=revision_from.id) }}
             </a>
           {% endif %}
@@ -19,7 +19,7 @@
           {% if revision_to_header %}
             {{ revision_to_header}}
           {% else %}
-            <a href="{{ url('wiki.revision', revision_to.document.slug, revision_to.id) }}">
+            <a href="{{ url('wiki.revision', revision_to.document.slug, revision_to.id) }}" rel="nofollow, noindex">
               {{ _('Revision {num}:')|f(num=revision_to.id) }}
             </a>
           {% endif %}
