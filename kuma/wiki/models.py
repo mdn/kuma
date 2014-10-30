@@ -1305,8 +1305,15 @@ Full traceback:
                 url = anchors[0].get('href')
                 # allow explicit domain and *not* '//'
                 # i.e allow "https://developer...." and "/en-US/docs/blah"
-                if url.startswith(settings.SITE_URL) or (url[0] == '/' and url[1] != '/'):
+                if len(url) > 1:
+                    if url.startswith(settings.SITE_URL):
+                        return url
+                    elif (url[0] == '/' and url[1] != '/'):
+                        return url
+                elif (len(url) == 1 and url[0] == '/'):
                     return url
+                else:
+                    return None
 
     def redirect_document(self):
         """If I am a redirect to a Document, return that Document.
