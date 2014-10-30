@@ -11,7 +11,7 @@ define([
 
         // Login credentials from the command line
         personaUsername: intern.args.u,
-        personaPassword: intern.args,
+        personaPassword: intern.args.p,
 
         openLoginWidget: function(remote) {
             // Simply hovers over the top login widget so that login links can be clicked
@@ -91,6 +91,9 @@ define([
 
             var dfd = new Deferred();
             var self = this;
+
+            username = username || this.personaUsername;
+            password = password || this.personaPassword;
 
             self.openLoginWidget(remote).then(function() {
                 self.completePersonaWindow(remote, username, password, dfd.resolve);
