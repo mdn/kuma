@@ -67,7 +67,7 @@ define([
             var dfd = this.async(config.testTimeout);
             var remote = this.remote;
 
-            libLogin.completePersonaWindow(remote, libLogin.personaUsername, libLogin.personaPassword, function() {
+            libLogin.completePersonaWindow(remote).then(function() {
 
                 return remote
                     .findByCssSelector('.user-state-profile')

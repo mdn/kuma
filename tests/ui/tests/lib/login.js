@@ -54,6 +54,9 @@ define([
             // Provided a username and passwords, clicks the Persona link in the site
             // header, waits for the window to load, and logs the user into Persona
 
+            username = username || this.personaUsername;
+            password = password || this.personaPassword;
+
             return remote
                         .findByCssSelector('.oauth-login-picker .launch-persona-login')
                         .click()

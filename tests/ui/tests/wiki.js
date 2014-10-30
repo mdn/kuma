@@ -11,7 +11,7 @@ define([
         name: 'wiki',
 
         before: function() {
-            return libLogin.completePersonaLogin(this.remote, libLogin.personaUsername, libLogin.personaPassword);
+            return libLogin.completePersonaLogin(this.remote);
         },
 
         'The new document screen passes all the checks': function() {
@@ -41,7 +41,6 @@ define([
             var remote = this.remote;
 
             return remote.get(config.url + 'docs/new?slug=Template:')
-                        .sleep(100000)
                         .then(function() {
                             // Ensure that CKEditor loaded properly
                             return libAssert.windowPropertyExists(remote, 'ace_editor');
