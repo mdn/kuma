@@ -133,3 +133,6 @@
 [submodule "vendor/src/pystatsd"]
 	path = vendor/src/pystatsd
 	url = git@github.com:jsocol/pystatsd.git
+[submodule "vendor/src/python-magic"]
+	path = vendor/src/python-magic
+	url = git@github.com:ahupp/python-magic.git
