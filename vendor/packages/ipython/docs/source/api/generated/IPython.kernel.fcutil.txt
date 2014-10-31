@@ -1,0 +1,26 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.fcutil
+=============
+
+Module: :mod:`kernel.fcutil`
+----------------------------
+.. automodule:: IPython.kernel.fcutil
+
+.. currentmodule:: IPython.kernel.fcutil
+
+Functions
+---------
+
+
+.. autofunction:: IPython.kernel.fcutil.check_furl_file_security
+
+
+.. autofunction:: IPython.kernel.fcutil.find_furl
+
+
+.. autofunction:: IPython.kernel.fcutil.is_secure
+
+
+.. autofunction:: IPython.kernel.fcutil.is_valid
+

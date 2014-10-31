@@ -1,0 +1,815 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="descriptions_of_all_pofilter_tests" id="descriptions_of_all_pofilter_tests">Descriptions of all pofilter tests</a></h1>
+<div class="level1">
+
+<p>
+
+The following are descriptions of the tests available in <a href="toolkit-pofilter.html" class="wikilink1" title="toolkit-pofilter.html">pofilter</a> and <a href="pootle-checks.html" class="wikilink2" title="pootle-checks.html">Pootle</a> with some details about what type of errors they are useful to test for and the limitations of each test.  
+</p>
+
+<p>
+Keep in mind that the software might point to errors which are not necessarily wrong (false positives).
+</p>
+
+<p>
+Currently there are 47 tests.  You can always get a list of the currently available tests by running:
+</p>
+
+<p>
+<code>pofilter -l</code>
+</p>
+
+<p>
+To see test specific to a specific targetted application or group of applications run:
+</p>
+
+<p>
+<code>pofilter --gnome -l</code> 
+</p>
+
+</div>
+<!-- SECTION "Descriptions of all pofilter tests" [1-597] -->
+<h2><a name="adding_new_tests_and_new_language_adaptations" id="adding_new_tests_and_new_language_adaptations">Adding new tests and new language adaptations</a></h2>
+<div class="level2">
+
+<p>
+
+If you have an idea for a new test or want to add target language adaptations for your language then please help us with information about your test idea and the specifics of your language.
+</p>
+
+</div>
+<!-- SECTION "Adding new tests and new language adaptations" [598-847] -->
+<h2><a name="test_classification" id="test_classification">Test Classification</a></h2>
+<div class="level2">
+
+<p>
+
+Some tests are more important than others so we have classified them to help
+you determine which to run first.
+
+</p>
+<ul>
+<li class="level1"><div class="li"> Critical -- can break a program</div>
+<ul>
+<li class="level2"><div class="li"> <a href="toolkit-pofilter_tests.html#accelerators" class="wikilink1" title="toolkit-pofilter_tests.html">accelerators</a>, <a href="toolkit-pofilter_tests.html#escapes" class="wikilink1" title="toolkit-pofilter_tests.html">escapes</a>, <a href="toolkit-pofilter_tests.html#newlines" class="wikilink1" title="toolkit-pofilter_tests.html">newlines</a>, <a href="toolkit-pofilter_tests.html#nplurals" class="wikilink1" title="toolkit-pofilter_tests.html">nplurals</a>, <a href="toolkit-pofilter_tests.html#printf" class="wikilink1" title="toolkit-pofilter_tests.html">printf</a>, <a href="toolkit-pofilter_tests.html#tabs" class="wikilink1" title="toolkit-pofilter_tests.html">tabs</a>, <a href="toolkit-pofilter_tests.html#variables" class="wikilink1" title="toolkit-pofilter_tests.html">variables</a>, <a href="toolkit-pofilter_tests.html#xmltags" class="wikilink1" title="toolkit-pofilter_tests.html">xmltags</a></div>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Functional -- may confuse the user</div>
+<ul>
+<li class="level2"><div class="li"> <a href="toolkit-pofilter_tests.html#acronyms" class="wikilink1" title="toolkit-pofilter_tests.html">acronyms</a>, <a href="toolkit-pofilter_tests.html#blank" class="wikilink1" title="toolkit-pofilter_tests.html">blank</a>, <a href="toolkit-pofilter_tests.html#emails" class="wikilink1" title="toolkit-pofilter_tests.html">emails</a>, <a href="toolkit-pofilter_tests.html#filepaths" class="wikilink1" title="toolkit-pofilter_tests.html">filepaths</a>, <a href="toolkit-pofilter_tests.html#functions" class="wikilink1" title="toolkit-pofilter_tests.html">functions</a>, <a href="toolkit-pofilter_tests.html#gconf" class="wikilink1" title="toolkit-pofilter_tests.html">gconf</a>, <a href="toolkit-pofilter_tests.html#kdecomments" class="wikilink1" title="toolkit-pofilter_tests.html">kdecomments</a>, <a href="toolkit-pofilter_tests.html#long" class="wikilink1" title="toolkit-pofilter_tests.html">long</a>, <a href="toolkit-pofilter_tests.html#musttranslatewords" class="wikilink1" title="toolkit-pofilter_tests.html">musttranslatewords</a>, <a href="toolkit-pofilter_tests.html#notranslatewords" class="wikilink1" title="toolkit-pofilter_tests.html">notranslatewords</a>, <a href="toolkit-pofilter_tests.html#numbers" class="wikilink1" title="toolkit-pofilter_tests.html">numbers</a>, <a href="toolkit-pofilter_tests.html#options" class="wikilink1" title="toolkit-pofilter_tests.html">options</a>, <a href="toolkit-pofilter_tests.html#purepunc" class="wikilink1" title="toolkit-pofilter_tests.html">purepunc</a>, <a href="toolkit-pofilter_tests.html#sentencecount" class="wikilink1" title="toolkit-pofilter_tests.html">sentencecount</a>, <a href="toolkit-pofilter_tests.html#short" class="wikilink1" title="toolkit-pofilter_tests.html">short</a>, <a href="toolkit-pofilter_tests.html#spellcheck" class="wikilink1" title="toolkit-pofilter_tests.html">spellcheck</a>, <a href="toolkit-pofilter_tests.html#urls" class="wikilink1" title="toolkit-pofilter_tests.html">urls</a>, <a href="toolkit-pofilter_tests.html#unchanged" class="wikilink1" title="toolkit-pofilter_tests.html">unchanged</a></div>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Cosmetic -- make it look better</div>
+<ul>
+<li class="level2"><div class="li"> <a href="toolkit-pofilter_tests.html#brackets" class="wikilink1" title="toolkit-pofilter_tests.html">brackets</a>, <a href="toolkit-pofilter_tests.html#doublequoting" class="wikilink1" title="toolkit-pofilter_tests.html">doublequoting</a>, <a href="toolkit-pofilter_tests.html#doublespacing" class="wikilink1" title="toolkit-pofilter_tests.html">doublespacing</a>, <a href="toolkit-pofilter_tests.html#doublewords" class="wikilink1" title="toolkit-pofilter_tests.html">doublewords</a>, <a href="toolkit-pofilter_tests.html#endpunc" class="wikilink1" title="toolkit-pofilter_tests.html">endpunc</a>, <a href="toolkit-pofilter_tests.html#endwhitespace" class="wikilink1" title="toolkit-pofilter_tests.html">endwhitespace</a>, <a href="toolkit-pofilter_tests.html#puncspacing" class="wikilink1" title="toolkit-pofilter_tests.html">puncspacing</a>, <a href="toolkit-pofilter_tests.html#simplecaps" class="wikilink1" title="toolkit-pofilter_tests.html">simplecaps</a>, <a href="toolkit-pofilter_tests.html#simpleplurals" class="wikilink1" title="toolkit-pofilter_tests.html">simpleplurals</a>, <a href="toolkit-pofilter_tests.html#startcaps" class="wikilink1" title="toolkit-pofilter_tests.html">startcaps</a>, <a href="toolkit-pofilter_tests.html#singlequoting" class="wikilink1" title="toolkit-pofilter_tests.html">singlequoting</a>, <a href="toolkit-pofilter_tests.html#startpunc" class="wikilink1" title="toolkit-pofilter_tests.html">startpunc</a>, <a href="toolkit-pofilter_tests.html#startwhitespace" class="wikilink1" title="toolkit-pofilter_tests.html">startwhitespace</a>, <a href="toolkit-pofilter_tests.html#validchars" class="wikilink1" title="toolkit-pofilter_tests.html">validchars</a></div>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> Extraction -- useful mainly for extracting certain types of string</div>
+<ul>
+<li class="level2"><div class="li"> <a href="toolkit-pofilter_tests.html#compendiumconflicts" class="wikilink1" title="toolkit-pofilter_tests.html">compendiumconflicts</a>, <a href="toolkit-pofilter_tests.html#credits" class="wikilink1" title="toolkit-pofilter_tests.html">credits</a>, <a href="toolkit-pofilter_tests.html#hassuggestion" class="wikilink1" title="toolkit-pofilter_tests.html">hassuggestion</a>, <a href="toolkit-pofilter_tests.html#isfuzzy" class="wikilink1" title="toolkit-pofilter_tests.html">isfuzzy</a>, <a href="toolkit-pofilter_tests.html#isreview" class="wikilink1" title="toolkit-pofilter_tests.html">isreview</a>, <a href="toolkit-pofilter_tests.html#untranslated" class="wikilink1" title="toolkit-pofilter_tests.html">untranslated</a></div>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Test Classification" [848-2600] -->
+<h2><a name="test_description" id="test_description">Test Description</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Test Description" [2601-2630] -->
+<h3><a name="accelerators" id="accelerators">accelerators</a></h3>
+<div class="level3">
+
+<p>
+
+Checks whether <a href="guide-translation-accelerators.html" class="wikilink1" title="guide-translation-accelerators.html">accelerators</a> are consistent between the two strings.
+</p>
+
+<p>
+Make sure you use the --mozilla, --kde, etc options so that pofilter knows which type of accelerator it is looking for.  The test will pick up accelerators that are missing and ones that shouldn&#039;t be there.
+</p>
+
+</div>
+<!-- SECTION "accelerators" [2631-2953] -->
+<h3><a name="acronyms" id="acronyms">acronyms</a></h3>
+<div class="level3">
+
+<p>
+
+checks that acronyms that appear are unchanged
+</p>
+
+<p>
+If the acronym <acronym title="Uniform Resource Locator">URL</acronym> appears in the original this test will check that it appears in the translation.  Translating acronyms is a language decision but many languages leave them unchanged in that case this test is useful for tracking down translations of the acronym and correcting them.
+</p>
+
+</div>
+<!-- SECTION "acronyms" [2954-3307] -->
+<h3><a name="blank" id="blank">blank</a></h3>
+<div class="level3">
+
+<p>
+
+checks whether a translation is totally blank
+</p>
+
+<p>
+This will check to see if a translation has inadvertently been translated as blank ie as spaces.  This is different from untranslated which is completely empty.  This test is useful in that if something is translated as ”   ” it will appear to most tools as if it is translated.
+</p>
+
+</div>
+<!-- SECTION "blank" [3308-3651] -->
+<h3><a name="brackets" id="brackets">brackets</a></h3>
+<div class="level3">
+
+<p>
+
+checks that the number of brackets in both strings match
+</p>
+
+<p>
+If ([{ or }]) appear in the original this will check that the same number appear in the translation.
+</p>
+
+</div>
+<!-- SECTION "brackets" [3652-3831] -->
+<h3><a name="compendiumconflicts" id="compendiumconflicts">compendiumconflicts</a></h3>
+<div class="level3">
+
+<p>
+
+checks for Gettext compendium conflicts (#-#-#-#-#)
+</p>
+
+<p>
+When you use msgcat to create a <acronym title="Gettext Portable Object">PO</acronym> compendium it will insert #-#-#-#-# into entries that are not consistent.  If the compendium is used later in a
+message merge then these conflicts will appear in your translations.  This test quickly extracts those for correction.
+</p>
+
+</div>
+<!-- SECTION "compendiumconflicts" [3832-4182] -->
+<h3><a name="credits" id="credits">credits</a></h3>
+<div class="level3">
+
+<p>
+
+checks for messages containing translation credits instead of normal translations.
+</p>
+
+<p>
+Some projects have consistent ways of giving credit to translators by having a unit or two where translators can fill in their name and possibly their contact details. This test allows you to find these units easily to check that they are completed correctly and also disables other tests that might incorrectly get triggered for these units (such as urls, emails, etc.)
+</p>
+
+</div>
+<!-- SECTION "credits" [4183-4657] -->
+<h3><a name="doublequoting" id="doublequoting">doublequoting</a></h3>
+<div class="level3">
+
+<p>
+
+checks whether doublequoting is consistent between the two strings
+</p>
+
+<p>
+Checks on double quotes ” to ensure that you have the same number in both the original and the translated string. This tests takes into account that several languages use different quoting characters, and will test for them instead.
+</p>
+
+</div>
+<!-- SECTION "doublequoting" [4658-4984] -->
+<h3><a name="doublespacing" id="doublespacing">doublespacing</a></h3>
+<div class="level3">
+
+<p>
+
+checks for bad double-spaces by comparing to original
+</p>
+
+<p>
+This will identify if you have [space][space] in when you don&#039;t have it in the original or it appears in the original but not in your translation. Some of these are spurious and how you correct them depends on the conventions of your language.
+</p>
+
+</div>
+<!-- SECTION "doublespacing" [4985-5309] -->
+<h3><a name="doublewords" id="doublewords">doublewords</a></h3>
+<div class="level3">
+
+<p>
+
+checks for repeated words in the translation
+</p>
+
+<p>
+Words that have been repeated in a translation will be highlighted with this test e.g. “the the”, “a a”.  These are generally typos that need correcting.  Some languages may have valid repeated words in their structure, in that case either ignore those instances or switch this test off using the --excludefilters option.
+</p>
+
+</div>
+<!-- SECTION "doublewords" [5310-5702] -->
+<h3><a name="emails" id="emails">emails</a></h3>
+<div class="level3">
+
+<p>
+
+checks to see that emails are not translated
+</p>
+
+<p>
+Generally you should not be translating email addresses.  This check will look to see that email addresses e.g. info@example.com are not translated.  In some cases of course you should translate the address but generally you shouldn&#039;t.
+</p>
+
+</div>
+<!-- SECTION "emails" [5703-6003] -->
+<h3><a name="endpunc" id="endpunc">endpunc</a></h3>
+<div class="level3">
+
+<p>
+
+checks whether punctuation at the end of the strings match
+</p>
+
+<p>
+This will ensure that the ending of your translation has the same punctuation as the original.  E.g. if it ends in :[space] then so should yours.  It is useful for ensuring that you have ellipses […] in all your translations, not simply three separate full-stops. You may pick up some errors in the original: feel free to keep your translation and notify the programmers.  In some languages, characters such as ? ! are always preceded by a space e.g. [space]? — do what your language customs dictate. Other false positives you will notice are, for example, if through changes in word-order you add ”), etc. at the end of the sentence. Do not change these: your language word-order takes precedence.
+</p>
+
+<p>
+It must be noted that if you are tempted to leave out [full-stop] or [colon] or add [full-stop] to a sentence, that often these have been done for a reason, e.g. a list where fullstops make it look cluttered.  So, initially match them with the English, and make changes once the program is being used.
+</p>
+
+<p>
+This check is aware of several language conventions for punctuation characters, such as the custom question marks for Greek and Arabic, Devenagari Danda, full-width punctuation for CJK languages, etc.  Support for your language can be added easily if it is not there yet.
+</p>
+
+</div>
+<!-- SECTION "endpunc" [6004-7362] -->
+<h3><a name="endwhitespace" id="endwhitespace">endwhitespace</a></h3>
+<div class="level3">
+
+<p>
+
+checks whether whitespace at the end of the strings matches
+</p>
+
+<p>
+Operates the same as endpunc but is only concerned with whitespace. This filter is particularly useful for those strings which will evidently be followed by another string in the program, e.g. [Password: ] or [Enter your username: ]. The whitespace is an inherent part of the string. This filter makes sure you don&#039;t miss those important but otherwise invisible spaces!
+</p>
+
+<p>
+If your language uses full-width punctuation (like Chinese), the visual spacing in the character might be enough without an added extra space.
+</p>
+
+</div>
+<!-- SECTION "endwhitespace" [7363-7963] -->
+<h3><a name="escapes" id="escapes">escapes</a></h3>
+<div class="level3">
+
+<p>
+
+checks whether escaping is consistent between the two strings
+</p>
+
+<p>
+Checks escapes such as <code>\n</code> <code>\uNNNN</code> to ensure that if they exist in the original that you have them in the translation.
+</p>
+
+</div>
+<!-- SECTION "escapes" [7964-8171] -->
+<h3><a name="filepaths" id="filepaths">filepaths</a></h3>
+<div class="level3">
+
+<p>
+
+checks that file paths have not been translated
+</p>
+
+<p>
+Checks that paths such as <code>/home/user1</code> have not been translated.  Generally you do not translate a file-path, unless it is being used as an example, e.g. [your_user_name/path/to/filename.conf].
+</p>
+
+</div>
+<!-- SECTION "filepaths" [8172-8439] -->
+<h3><a name="functions" id="functions">functions</a></h3>
+<div class="level3">
+
+<p>
+
+checks to see that function names are not translated
+</p>
+
+<p>
+Checks that function names eg. <code>rgb()</code> or <code>getEntity.Name()</code> are not translated.
+</p>
+
+</div>
+<!-- SECTION "functions" [8440-8600] -->
+<h3><a name="gconf" id="gconf">gconf</a></h3>
+<div class="level3">
+
+<p>
+
+Checks if we have any gconf config settings translated
+</p>
+
+<p>
+Gconf settings should not be translated so this check checks that gconf settings such as “name” or “modification_date” are not translated in the translation.  It allows you to change the surrounding quotes but will ensure that the setting values remain untranslated.
+</p>
+
+</div>
+<!-- SECTION "gconf" [8601-8941] -->
+<h3><a name="hassuggestion" id="hassuggestion">hassuggestion</a></h3>
+<div class="level3">
+
+<p>
+
+Checks if there is at least one suggested translation for this unit
+</p>
+
+<p>
+If a message has a suggestion (an alternate translation stored in alt-trans units in <acronym title="XML Localization Interchange File Format">XLIFF</acronym> and .pending files in <acronym title="Gettext Portable Object">PO</acronym>) then these will be extracted.  This is used by Pootle and is probably only useful in pofilter when using <acronym title="XML Localization Interchange File Format">XLIFF</acronym> files.
+</p>
+
+</div>
+<!-- SECTION "hassuggestion" [8942-9271] -->
+<h3><a name="isfuzzy" id="isfuzzy">isfuzzy</a></h3>
+<div class="level3">
+
+<p>
+
+check if the po element has been marked fuzzy
+</p>
+
+<p>
+If a message is marked fuzzy in the <acronym title="Gettext Portable Object">PO</acronym> file then it is extracted.  Note this is different from --fuzzy and --nofuzzy options which specify whether tests should be performed against messages marked fuzzy
+</p>
+
+</div>
+<!-- SECTION "isfuzzy" [9272-9541] -->
+<h3><a name="isreview" id="isreview">isreview</a></h3>
+<div class="level3">
+
+<p>
+
+check if the po element has been marked review
+</p>
+
+<p>
+If you have made use of the &#039;review&#039; flags in your translations:
+
+</p>
+<pre class="code"># (review) reason for review
+# (pofilter) testname: explanation for translator</pre>
+
+<p>
+
+Then if a message is marked for review in the <acronym title="Gettext Portable Object">PO</acronym> file it will be extracted. Note this is different from --review and --noreview options which specify whether tests should be performed against messages already marked as under review.
+</p>
+
+</div>
+<!-- SECTION "isreview" [9542-9993] -->
+<h3><a name="kdecomments" id="kdecomments">kdecomments</a></h3>
+<div class="level3">
+
+<p>
+
+checks to ensure that no KDE style comments appear in the translation
+</p>
+
+<p>
+KDE style translator comments appear in <acronym title="Gettext Portable Object">PO</acronym> files as “_: comment\n”. New translators often translate the comment.  This test tries to identify instances where the comment has been translated.
+</p>
+
+</div>
+<!-- SECTION "kdecomments" [9994-10279] -->
+<h3><a name="long" id="long">long</a></h3>
+<div class="level3">
+
+<p>
+
+checks whether a translation is much longer than the original string
+</p>
+
+<p>
+This is most useful in the special case where the translation is multiple characters long 
+while the source text is only 1 character long.  Otherwise, we use a general ratio that
+will catch very big differences but is set conservatively to limit the number of false positives.
+</p>
+
+</div>
+<!-- SECTION "long" [10280-10643] -->
+<h3><a name="musttranslatewords" id="musttranslatewords">musttranslatewords</a></h3>
+<div class="level3">
+
+<p>
+
+checks that words configured as definitely translatable don&#039;t appear in the translation
+</p>
+
+<p>
+If for instance in your language you decide that you must translate &#039;OK&#039; then this test will flag
+any occurances of &#039;OK&#039; in the translation if it appeared in the source string.  You must specify a 
+file containing all of the <em>must translate</em> words using <em>--musttranslatefile</em>.
+</p>
+
+</div>
+<!-- SECTION "musttranslatewords" [10644-11044] -->
+<h3><a name="newlines" id="newlines">newlines</a></h3>
+<div class="level3">
+
+<p>
+
+checks whether newlines are consistent between the two strings
+</p>
+
+<p>
+Counts the number of \n newlines (and variants such as \r\n) and reports and error if they differ.
+</p>
+
+</div>
+<!-- SECTION "newlines" [11045-11228] -->
+<h3><a name="nplurals" id="nplurals">nplurals</a></h3>
+<div class="level3">
+
+<p>
+
+checks for the correct number of noun forms for plural translations.
+</p>
+
+<p>
+This uses the plural information in the language module of the toolkit.  This is the same as the Gettext nplural value.  It will check that the number of plurals required is the same as the number supplied in your translation.
+</p>
+
+</div>
+<!-- SECTION "nplurals" [11229-11546] -->
+<h3><a name="notranslatewords" id="notranslatewords">notranslatewords</a></h3>
+<div class="level3">
+
+<p>
+
+checks that words configured as untranslatable appear in the translation too
+</p>
+
+<p>
+Many brand names should not be translated, this test allows you to easily make sure that words like: Word, Excel, Impress, Calc,
+etc. are not translated.  You must specify a file containing all of the <em>no translate</em> words using <em>--notranslatefile</em>.
+</p>
+
+</div>
+<!-- SECTION "notranslatewords" [11547-11907] -->
+<h3><a name="numbers" id="numbers">numbers</a></h3>
+<div class="level3">
+
+<p>
+
+checks whether numbers of various forms are consistent between the two strings
+</p>
+
+<p>
+You will see some errors where you have either written the number in full or converted it to the digit in your translation.  Also changes in order will trigger this error.
+</p>
+
+</div>
+<!-- SECTION "numbers" [11908-12180] -->
+<h3><a name="options" id="options">options</a></h3>
+<div class="level3">
+
+<p>
+
+checks that command line options are not translated
+</p>
+
+<p>
+In messages that contain command line options, such as &#039;--help&#039;, this test will check that these remain untranslated.  These could be translated in the future if programs can create a mechanism to allow this, but currently they are not translated.  If the options has a parameter, e.g. &#039;--file=FILE&#039;, then the test will check that the parameter has been translated.
+</p>
+
+</div>
+<!-- SECTION "options" [12181-12620] -->
+<h3><a name="printf" id="printf">printf</a></h3>
+<div class="level3">
+
+<p>
+
+checks whether printf format strings match
+</p>
+
+<p>
+If the printf formatting variables are not identical, then this will indicate an error.  Prinf statements are used by programs to format output in a human readable form (they are place holders for variable data).  They allow you to specify lengths of string variables, string padding, number padding, precision, etc. (See <a href="http://en.wikipedia.org/wiki/Printf" class="interwiki iw_wp" title="http://en.wikipedia.org/wiki/Printf">Printf</a> for more details).  Generally they will look like this: %d, %5.2f, %100s, etc. The test can also manage variables-reordering using the %1$s syntax.  The variables&#039; type and details following data are tested to ensure that they are strictly identical, but they may be reordered.
+</p>
+
+</div>
+<!-- SECTION "printf" [12621-13297] -->
+<h3><a name="puncspacing" id="puncspacing">puncspacing</a></h3>
+<div class="level3">
+
+<p>
+
+checks for bad spacing after punctuation
+</p>
+
+<p>
+In the case of [full-stop][space] in the original, this test checks that your translation does not remove the space.  It checks also for [comma], [colon], etc.
+</p>
+
+<p>
+Some languages don&#039;t use spaces after common punctuation marks, especially where full-width punctuation marks are used. This check will take that into account.
+</p>
+
+</div>
+<!-- SECTION "puncspacing" [13298-13684] -->
+<h3><a name="purepunc" id="purepunc">purepunc</a></h3>
+<div class="level3">
+
+<p>
+
+checks that strings that are purely punctuation are not changed
+</p>
+
+<p>
+This extracts strings like ”+” or ”-” as these usually should not be changed.
+</p>
+
+</div>
+<!-- SECTION "purepunc" [13685-13848] -->
+<h3><a name="sentencecount" id="sentencecount">sentencecount</a></h3>
+<div class="level3">
+
+<p>
+
+checks that the number of sentences in both strings match
+</p>
+
+<p>
+Adds the number of sentences to see that the sentence count is the same between the original and translated string. You may not always want to use this test, if you find you often need to reformat your translation, because the original is badly-expressed, or because the structure of your language works better that way. Do what works best for your language: it&#039;s the meaning of the original you want to convey, not the exact way it was written in the English.
+</p>
+
+</div>
+<!-- SECTION "sentencecount" [13849-14394] -->
+<h3><a name="short" id="short">short</a></h3>
+<div class="level3">
+
+<p>
+
+checks whether a translation is much shorter than the original string
+</p>
+
+<p>
+This is most useful in the special case where the translation is 1 characters long 
+while the source text is multiple characters long.  Otherwise, we use a general ratio that
+will catch very big differences but is set conservatively to limit the number of false positives.
+</p>
+
+</div>
+<!-- SECTION "short" [14395-14756] -->
+<h3><a name="simplecaps" id="simplecaps">simplecaps</a></h3>
+<div class="level3">
+
+<p>
+
+checks the capitalisation of two strings isn&#039;t wildly different
+</p>
+
+<p>
+This will pick up many false positives, so don&#039;t be a slave to it.  It is useful for identifying translations that don&#039;t start with a capital letter (upper-case letter) when they should, or those that do when they shouldn&#039;t.  It will also highlight sentences that have extra capitals; depending on the capitalisation convention of your language, you might want to change these to Title Case, or change them all to normal sentence case.
+</p>
+
+</div>
+<!-- SECTION "simplecaps" [14757-15280] -->
+<h3><a name="simpleplurals" id="simpleplurals">simpleplurals</a></h3>
+<div class="level3">
+
+<p>
+
+checks for English style plural(s) for you to review
+</p>
+
+<p>
+This test will extract any message that contains words with a final ”(s)” in the source text.  You can then inspect the message,
+to check that the correct <a href="l10n-pluralforms.html" class="wikilink1" title="l10n-pluralforms.html">plural form</a> has been used for your language.  In some languages, plurals are made by adding
+text at the beginning of words, making the English style messy.  In this case, they often revert to the plural form.
+This test allows an editor to check that the plurals used are correct.  Be aware that this test may create a number of false positives.
+</p>
+
+<p>
+For languages with no plural forms (only one noun form) this test will simply test that nothing like ”(s)” was used in the translation.
+</p>
+
+</div>
+<!-- SECTION "simpleplurals" [15281-16019] -->
+<h3><a name="singlequoting" id="singlequoting">singlequoting</a></h3>
+<div class="level3">
+
+<p>
+
+checks whether singlequoting is consistent between the two strings
+</p>
+
+<p>
+The same as doublequoting but checks for the &#039; character.  Because this is used in contractions like it&#039;s and in possessive forms like user&#039;s, this test can output spurious errors if your language doesn&#039;t use such forms.  If a quote appears at the end of a sentence in the translation, i.e. &#039;[full-stop], this might not be detected properly by the check.
+</p>
+
+</div>
+<!-- SECTION "singlequoting" [16020-16468] -->
+<h3><a name="spellcheck" id="spellcheck">spellcheck</a></h3>
+<div class="level3">
+
+<p>
+
+checks for words that don&#039;t pass a spell-check
+</p>
+
+<p>
+This test will check for misspelled words in your translation.  The test first checks for misspelled words in the original (usually English) text, and adds those to an exclusion list. The advantage of this exclusion is that many words that are specific to the application will not raise errors e.g. program names, brand names, function names.
+</p>
+
+<p>
+The checker works with <a href="http://pyenchant.sourceforge.net/" class="urlextern" title="http://pyenchant.sourceforge.net/">PyEnchant</a>. You need to have PyEnchant installed as well as a dictionary for your language (for example, one of the <a href="http://wiki.services.openoffice.org/wiki/Dictionaries" class="urlextern" title="http://wiki.services.openoffice.org/wiki/Dictionaries">Hunspell</a> or <a href="http://ftp.gnu.org/gnu/aspell/dict/" class="urlextern" title="http://ftp.gnu.org/gnu/aspell/dict/">aspell</a> dictionaries).  This test will only work if you have specified the <em>--language</em> option.
+</p>
+
+<p>
+The pofilter error that is created, lists the misspelled word, plus  suggestions returned from the spell checker.  That makes it easy for you to identify the word and select a replacement.
+</p>
+
+</div>
+<!-- SECTION "spellcheck" [16469-17456] -->
+<h3><a name="startcaps" id="startcaps">startcaps</a></h3>
+<div class="level3">
+
+<p>
+
+checks that the message starts with the correct capitalisation
+</p>
+
+<p>
+After stripping whitespace and common punctuation characters, it then checks to see that the first remaining character is correctly capitalised.  So, if the sentence starts with an upper-case letter, and the translation does not, an error is produced.
+</p>
+
+<p>
+This check is entirely disabled for many languages that don&#039;t make a distinction between upper and lower case. Contact us if this is not yet disabled for your language.
+</p>
+
+</div>
+<!-- SECTION "startcaps" [17457-17964] -->
+<h3><a name="startpunc" id="startpunc">startpunc</a></h3>
+<div class="level3">
+
+<p>
+
+checks whether punctuation at the beginning of the strings match
+</p>
+
+<p>
+Operates as endpunc but you will probably see fewer errors.
+</p>
+
+</div>
+<!-- SECTION "startpunc" [17965-18112] -->
+<h3><a name="startwhitespace" id="startwhitespace">startwhitespace</a></h3>
+<div class="level3">
+
+<p>
+
+checks whether whitespace at the beginning of the strings matches
+</p>
+
+<p>
+As in endwhitespace but you will see fewer errors.
+</p>
+
+</div>
+<!-- SECTION "startwhitespace" [18113-18258] -->
+<h3><a name="tabs" id="tabs">tabs</a></h3>
+<div class="level3">
+
+<p>
+
+checks whether tabs are consistent between the two strings
+</p>
+
+<p>
+Counts the number of \t tab markers and reports an error if they differ.
+</p>
+
+</div>
+<!-- SECTION "tabs" [18259-18408] -->
+<h3><a name="unchanged" id="unchanged">unchanged</a></h3>
+<div class="level3">
+
+<p>
+
+checks whether a translation is basically identical to the original string
+</p>
+
+<p>
+This checks to see if the translation isn&#039;t just a copy of the English original.  Sometimes, this is what you want, but other times you will detect words that should have been translated.
+</p>
+
+</div>
+<!-- SECTION "unchanged" [18409-18694] -->
+<h3><a name="untranslated" id="untranslated">untranslated</a></h3>
+<div class="level3">
+
+<p>
+
+checks whether a string has been translated at all
+</p>
+
+<p>
+This check is really only useful if you want to extract untranslated strings so that they can be translated independently of the main work.
+</p>
+
+</div>
+<!-- SECTION "untranslated" [18695-18911] -->
+<h3><a name="urls" id="urls">urls</a></h3>
+<div class="level3">
+
+<p>
+
+checks to see that URLs are not translated
+</p>
+
+<p>
+This checks only basic URLs (http, ftp, mailto etc.) not all URIs (e.g. afp, smb, file).  Generally, you don&#039;t want to translate URLs, unless they are example URLs (<a href="http://your_server.com/filename.html" class="urlextern" title="http://your_server.com/filename.html">http://your_server.com/filename.html</a>).  If the <acronym title="Uniform Resource Locator">URL</acronym> is for configuration information, then you need to query the developers about placing configuration information in <acronym title="Gettext Portable Object">PO</acronym> files.  It shouldn&#039;t really be there, unless it is very clearly marked: such information should go into a configuration file.
+</p>
+
+</div>
+<!-- SECTION "urls" [18912-19432] -->
+<h3><a name="validchars" id="validchars">validchars</a></h3>
+<div class="level3">
+
+<p>
+
+checks that only characters specified as valid appear in the translation
+</p>
+
+<p>
+Often during character conversion to and from UTF-8 you get some strange characters appearing in your translation.  This test presents a simple
+way to try and identify such errors.
+</p>
+
+<p>
+This test will only run of you specify the <code>--validcharsfile</code> command line option.  This file contains all the characters that are valid in your language.  You must use UTF-8 encoding for the characters in the file.
+</p>
+
+<p>
+If the test finds any characters not in your valid characters file then the test will print the character together with its Unicode value (e.g. 002B).
+</p>
+
+</div>
+<!-- SECTION "validchars" [19433-20081] -->
+<h3><a name="variables" id="variables">variables</a></h3>
+<div class="level3">
+
+<p>
+
+checks whether variables of various forms are consistent between the two strings
+</p>
+
+<p>
+This checks to make sure that variables that appear in the original also appear in the translation.  Make sure you use the --kde, --openoffice, etc flags as these define what variables will be searched for.  It does not at the moment cope with variables that use the reordering syntax of Gettext <acronym title="Gettext Portable Object">PO</acronym> files.
+</p>
+
+</div>
+<!-- SECTION "variables" [20082-20492] -->
+<h3><a name="xmltags" id="xmltags">xmltags</a></h3>
+<div class="level3">
+
+<p>
+
+checks that <a href="guide-translation-html.html" class="wikilink1" title="guide-translation-html.html">XML/HTML</a> tags have not been translated
+</p>
+
+<p>
+This check finds the number of tags in the source string and checks that the same number are in the translation.  If the counts don&#039;t match then either the tag is missing or it was mistakenly translated by the translator, both of which are errors.
+</p>
+
+<p>
+The check ignores tags or things that look like tags that cover the whole string e.g. ”&lt;Error&gt;” but will produce false positives for things like “An &lt;Error&gt; occurred” as here “Error” should be translated.  It also will allow translation of the alt attribute in e.g. &lt;img src=bob.png alt=“Image description”&gt; or similar translatable attributes in OpenOffice.org help files. 
+
+</p>
+
+</div>
+<!-- SECTION "xmltags" [20493-] --></body>
+</html>

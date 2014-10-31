@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="html2po_and_po2html" id="html2po_and_po2html">html2po and po2html</a></h1>
+<div class="level1">
+
+<p>
+
+Convert translatable items in <acronym title="HyperText Markup Language">HTML</acronym> to the <acronym title="Gettext Portable Object">PO</acronym> format.
+</p>
+
+</div>
+<!-- SECTION "html2po and po2html" [1-89] -->
+<h2><a name="usage" id="usage">Usage</a></h2>
+<div class="level2">
+<pre class="code">html2po [options] &lt;html&gt; &lt;po&gt;
+po2html [options] &lt;po&gt; &lt;html&gt;</pre>
+
+<p>
+
+Where:
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> &lt;html&gt;  </td><td class="col1 leftalign"> is an <acronym title="HyperText Markup Language">HTML</acronym> file or a directory of <acronym title="HyperText Markup Language">HTML</acronym> files  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> &lt;po&gt;    </td><td class="col1 leftalign"> is a <acronym title="Gettext Portable Object">PO</acronym> file or directory of <acronym title="Gettext Portable Object">PO</acronym> files  </td>
+	</tr>
+</table>
+
+<p>
+
+Options (html2po):
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> --version            </td><td class="col1 leftalign"> show program&#039;s version number and exit  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> -h, --help           </td><td class="col1 leftalign"> show this help message and exit   </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> --manpage            </td><td class="col1 leftalign"> output a manpage based on the help   </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> <a href="toolkit-progress_progress.html" class="wikilink1" title="toolkit-progress_progress.html">--progress=PROGRESS</a>  </td><td class="col1 leftalign"> show progress as: dots, none, bar, names, verbose   </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> <a href="toolkit-errorlevel_errorlevel.html" class="wikilink1" title="toolkit-errorlevel_errorlevel.html">--errorlevel=ERRORLEVEL</a>  </td><td class="col1 leftalign"> show errorlevel as: none, message, exception, traceback   </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> -iINPUT, --input=INPUT   </td><td class="col1 leftalign"> read from INPUT in htm, html, xhtml formats   </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> -xEXCLUDE, --exclude=EXCLUDE  </td><td class="col1 leftalign"> exclude names matching EXCLUDE from input paths   </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 leftalign"> -oOUTPUT, --output=OUTPUT  </td><td class="col1 leftalign"> write to OUTPUT in po, pot formats   </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 leftalign"> <a href="toolkit-psyco_mode.html" class="wikilink1" title="toolkit-psyco_mode.html">--psyco=MODE</a>         </td><td class="col1 leftalign"> use psyco to speed up the operation, modes: none, full, profile   </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0 leftalign"> -P, --pot            </td><td class="col1 leftalign"> output <acronym title="Gettext Portable Object">PO</acronym> Templates (.pot) rather than <acronym title="Gettext Portable Object">PO</acronym> files (.po)  </td>
+	</tr>
+	<tr class="row10">
+		<td class="col0 leftalign"> -u, --untagged       </td><td class="col1 leftalign"> include untagged sections  </td>
+	</tr>
+	<tr class="row11">
+		<td class="col0 leftalign"> --duplicates=DUPLICATESTYLE   </td><td class="col1 leftalign"> what to do with duplicate strings (identical source text): merge (default), msgid_comment, keep, msgid_comment_all   </td>
+	</tr>
+</table>
+
+<p>
+
+Options (po2html):
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> --version            </td><td class="col1 leftalign"> show program&#039;s version number and exit  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> -h, --help           </td><td class="col1 leftalign"> show this help message and exit  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> --manpage            </td><td class="col1 leftalign"> output a manpage based on the help  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> <a href="toolkit-progress_progress.html" class="wikilink1" title="toolkit-progress_progress.html">--progress=PROGRESS</a>  </td><td class="col1 leftalign"> show progress as: dots, none, bar, names, verbose  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> <a href="toolkit-errorlevel_errorlevel.html" class="wikilink1" title="toolkit-errorlevel_errorlevel.html">--errorlevel=ERRORLEVEL</a>  </td><td class="col1 leftalign"> show errorlevel as: none, message, exception, traceback  </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> -iINPUT, --input=INPUT   </td><td class="col1 leftalign"> read from INPUT in po, pot formats  </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> -xEXCLUDE, --exclude=EXCLUDE   </td><td class="col1 leftalign"> exclude names matching EXCLUDE from input paths  </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 leftalign"> -oOUTPUT, --output=OUTPUT  </td><td class="col1 leftalign"> write to OUTPUT in htm, html formats  </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 leftalign"> -tTEMPLATE, --template=TEMPLATE   </td><td class="col1 leftalign"> read from TEMPLATE in htm, html formats  </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0 leftalign"> <a href="toolkit-psyco_mode.html" class="wikilink1" title="toolkit-psyco_mode.html">--psyco=MODE</a>          </td><td class="col1 leftalign"> use psyco to speed up the operation, modes: none, full, profile  </td>
+	</tr>
+	<tr class="row10">
+		<td class="col0 leftalign"> -wWRAP, --wrap=WRAP  </td><td class="col1 leftalign"> set number of columns to wrap html at  </td>
+	</tr>
+	<tr class="row11">
+		<td class="col0 leftalign"> --notidy             </td><td class="col1"> don&#039;t use tidy to clean up <acronym title="HyperText Markup Language">HTML</acronym>, even if installed (new in version 1.2.1) </td>
+	</tr>
+	<tr class="row12">
+		<td class="col0 leftalign"> --fuzzy              </td><td class="col1 leftalign"> use translations marked fuzzy   </td>
+	</tr>
+	<tr class="row13">
+		<td class="col0 leftalign"> --nofuzzy            </td><td class="col1 leftalign"> don&#039;t use translations marked fuzzy (default)   </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Usage" [90-2410] -->
+<h2><a name="examples" id="examples">Examples</a></h2>
+<div class="level2">
+<pre class="code">html2po -P site pot</pre>
+
+<p>
+
+This will find all <acronym title="HyperText Markup Language">HTML</acronym> files (.htm, .html, .xhtml) in <em>site</em> convert them to <acronym title="Gettext Portable Object Template">POT</acronym> files and place them in <em>pot</em>
+
+</p>
+<pre class="code">po2html -t site xh site-xh</pre>
+
+<p>
+
+All the <acronym title="Gettext Portable Object">PO</acronym> translations in <em>xh</em> will be converted to html using html files in <em>site</em> as templates and outputting new translated <acronym title="HyperText Markup Language">HTML</acronym> files in <em>site-xh</em>
+</p>
+
+</div>
+<!-- SECTION "Examples" [2411-2762] -->
+<h2><a name="bugs" id="bugs">Bugs</a></h2>
+<div class="level2">
+
+<p>
+
+We don&#039;t hide enough of some of the tags, e.g. &lt;a&gt; tags have too much exposed, we should expose only what needs to be translated and 
+allow the changing on position of the tag within the translation block.  Similarly there is some markup that could be excluded eg &lt;b&gt; tags that 
+appear at the start and end of a msgid, i.e. they don&#039;t need placement from the translator.
+</p>
+
+<p>
+If the <acronym title="HyperText Markup Language">HTML</acronym> is indented you get very odd msgid&#039;s
+</p>
+
+<p>
+Some items end up in the msgid&#039;s that should not be translated
+</p>
+
+<p>
+It might be worth investigating <a href="http://opensource.bureau-cornavin.com/html2pot-po2html/index.html" class="urlextern" title="http://opensource.bureau-cornavin.com/html2pot-po2html/index.html">http://opensource.bureau-cornavin.com/html2pot-po2html/index.html</a> which uses <acronym title="Extensible Stylesheet Language Transformations">XSLT</acronym> to transform <acronym title="Extensible HyperText Markup Language">XHTML</acronym> to Gettext <acronym title="Gettext Portable Object">PO</acronym>
+
+</p>
+
+</div>
+<!-- SECTION "Bugs" [2763-] --></body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="creating_a_terminology_list_from_your_existing_translations" id="creating_a_terminology_list_from_your_existing_translations">Creating a terminology list from your existing translations</a></h1>
+<div class="level1">
+
+<p>
+
+If you did not create a terminology list when you started your translation project or if you have inherited some old translations you probably now want to create a terminology list.
+</p>
+
+<p>
+A terminology list or glossary is a list of words and phrases with their expected translation.  They are useful for ensuring that your translations are consistent across your project.
+</p>
+
+<p>
+With existing translations you have embedded a list of valid translation.  This example will help you to extract the terms.  It is only the first step you will need to review the terms and must not regard this as a complete list.  And of course you would want to take your corrections and feed them back into the original translations.
+</p>
+
+</div>
+<!-- SECTION "Creating a terminology list from your existing translations" [1-780] -->
+<h2><a name="quick_overview" id="quick_overview">Quick Overview</a></h2>
+<div class="level2">
+
+<p>
+
+This describes a multi-stage process for extracting terminology from translation files.  It is provided for historical interest and completeness, but you will probably find that using <a href="toolkit-poterminology.html" class="wikilink1" title="toolkit-poterminology.html">poterminology</a> is easier and will give better results than following this process.
+
+</p>
+<ol>
+<li class="level1"><div class="li"> Filter our phrases of more than N words</div>
+</li>
+<li class="level1"><div class="li"> Remove obviously erroneous phrases such as numbers and punctuation</div>
+</li>
+<li class="level1"><div class="li"> Create a single <acronym title="Gettext Portable Object">PO</acronym> compendium</div>
+</li>
+<li class="level1"><div class="li"> Extract and review items that are fuzzy and drop untranslated items</div>
+</li>
+<li class="level1"><div class="li"> Create a new <acronym title="Gettext Portable Object">PO</acronym> files and process into <acronym title="Comma Separated Value">CSV</acronym> and <acronym title="Translation Memory eXchange">TMX</acronym> format</div>
+</li>
+</ol>
+
+</div>
+<!-- SECTION "Quick Overview" [781-1363] -->
+<h2><a name="get_short_phrases_from_the_current_translations" id="get_short_phrases_from_the_current_translations">Get short phrases from the current translations</a></h2>
+<div class="level2">
+
+<p>
+
+We will not be able to identify terminology within bodies of text, we are only going to extract short bit of text ie ones that are between 1 and 3 words long.
+
+</p>
+<pre class="code">pogrep --header --search=msgid -e &#039;^\w+(\s+\w+){0,2}$&#039; zulu zulu-short</pre>
+
+<p>
+
+We use --header to ensure that the <acronym title="Gettext Portable Object">PO</acronym> files have a header entry (which is important for encoding).  We are searching only in the msgid and the regular expression we use is looking for a string with between 1 and 3 words in it.  We are searching through the folder <em>zulu</em> and outputting the result in <em>zulu-short</em>
+</p>
+
+</div>
+<!-- SECTION "Get short phrases from the current translations" [1364-1976] -->
+<h2><a name="remove_any_translations_with_issues" id="remove_any_translations_with_issues">Remove any translations with issues</a></h2>
+<div class="level2">
+
+<p>
+
+You can for instance remove all entries with only a single letter.  Useful for eliminating all those spurious accelerator keys.
+
+</p>
+<pre class="code">pogrep --header --search=msgid -v -e &quot;^.$&quot; zulu-short zulu-short-clean</pre>
+
+<p>
+
+We use the -v option to invert the search.  Our <em>cleaner</em> potential glossary words are now in <em>zulu-short-clean</em>.  What you can eliminate is only limited by your ability to build regular expressions but yu could eliminate:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> Entries with only numbers</div>
+</li>
+<li class="level1"><div class="li"> Entries that only contain punctuation</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Remove any translations with issues" [1977-2529] -->
+<h2><a name="create_a_compendium" id="create_a_compendium">Create a compendium</a></h2>
+<div class="level2">
+
+<p>
+
+Now that we have our words we want to create a sinlge files of all terminology.  Thus we create a <acronym title="Gettext Portable Object">PO</acronym> compendium
+
+</p>
+<pre class="code">~/path/to/pocompendium -i -su zulu-gnome-glossary.po -d zulu-short-clean</pre>
+
+<p>
+
+You can use various methods but our bash script is quite good.  Here we ignore case, -i, and ignore the underscore (_) accelerator key, -su, outputting the results in.
+</p>
+
+<p>
+We now have a single file containing all glossary terms and the clean up and review can begin.
+</p>
+
+</div>
+<!-- SECTION "Create a compendium" [2530-3016] -->
+<h2><a name="split_the_file" id="split_the_file">Split the file</a></h2>
+<div class="level2">
+
+<p>
+
+We want to split the file into translated, untranslated and fuzzy entries
+
+</p>
+<pre class="code">~/path/to/posplit ./zulu-gnome-glossary.po</pre>
+
+<p>
+
+This will create three files:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> zulu-gnome-glossary-translated.po - all fully translated entries</div>
+</li>
+<li class="level1"><div class="li"> zulu-gnome-glossary-untranslated.po - messages with no translation</div>
+</li>
+<li class="level1"><div class="li"> zulu-gnome-glossary-fuzzy.po - words that need investigation</div>
+</li>
+</ul>
+<pre class="code">rm zulu-gnome-glossary-untranslated.po</pre>
+
+<p>
+
+We discard <code>zulu-gnome-glossary-untranslated.po</code> since they are of no use to us.
+</p>
+
+</div>
+<!-- SECTION "Split the file" [3017-3528] -->
+<h2><a name="dealing_with_the_fuzzies" id="dealing_with_the_fuzzies">Dealing with the fuzzies</a></h2>
+<div class="level2">
+
+<p>
+
+The fuzzies come in two kinds.  Those that are simply wrong or needed updating and those where there was more then one translation for a given term.  So if someone had translated &#039;File&#039; differently across the translations we&#039;d have an entry that was marked fuzzy with the two options displayed.
+
+</p>
+<pre class="code">pofilter -t compendiumconflicts zulu-gnome-glossary-fuzzy.po zulu-gnome-glossary-conflicts.po</pre>
+
+<p>
+
+These compedium conflicts are what we are interested in so we use pofilter to filter them from the other fuzzies.
+
+</p>
+<pre class="code">rm zulu-gnome-glossary-fuzzy.po</pre>
+
+<p>
+
+We discard the other fuzzies as they where probably wrong in the first place.  You could review these but it is not recommended.
+</p>
+
+<p>
+Now edit <code>zulu-gnome-glossary-conflicts.po</code> to resolve the conflicts.  You can edit them however you like but we usually follow the format:
+
+</p>
+<pre class="code">option1, option2, option3</pre>
+
+<p>
+
+You can get them into that layout by doing the following:
+
+</p>
+<pre class="code">sed &#039;/#, fuzzy/d; /\&quot;#-#-#-#-# /d; /# (pofilter) compendiumconflicts:/d; s/\\n&quot;$/, &quot;/&#039; zulu-gnome-glossary-conflicts.po &gt; tmp.po
+msgcat tmp.po &gt; zulu-gnome-glossary-conflicts.po</pre>
+
+<p>
+
+Of course if a word is clearly wrong, misspelled etc. then you can eliminate it.  Often you will find the “problem” relates to the part of speech of the source word and that indeed there are two options depending on the context.
+</p>
+
+<p>
+You now have a cleaned fuzzy file and we are ready to proceed.
+</p>
+
+</div>
+<!-- SECTION "Dealing with the fuzzies" [3529-4947] -->
+<h2><a name="put_it_back_together_again" id="put_it_back_together_again">Put it back together again</a></h2>
+<div class="level2">
+<pre class="code">msgcat zulu-gnome-glossary-translated.po zulu-gnome-glossary-conflicts.po &gt; zulu-gnome-glossary.po</pre>
+
+<p>
+
+We now have a single file <code>zulu-gnome-glossary.po</code> which contains our glossary texts.
+</p>
+
+</div>
+<!-- SECTION "Put it back together again" [4948-5178] -->
+<h2><a name="create_other_formats" id="create_other_formats">Create other formats</a></h2>
+<div class="level2">
+
+<p>
+
+It is probably good to make your terminology available in other formats.  You can create <acronym title="Comma Separated Value">CSV</acronym> and <acronym title="Translation Memory eXchange">TMX</acronym> files from your <acronym title="Gettext Portable Object">PO</acronym>.
+
+</p>
+<pre class="code">po2csv zulu-gnome-glossary.po zulu-gnome-glossary.csv
+po2tmx -l zu zulu-gnome-glossary.po zulu-gnome-glossary.tmx</pre>
+
+<p>
+
+For the terminology to be usable by Trados or Wordfast translators they need to be in the following formats:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> Trados - comma delimited file <code>source,target</code></div>
+</li>
+<li class="level1"><div class="li"> Wordfast - tab delimited file <code>source[tab]target</code></div>
+</li>
+</ul>
+
+<p>
+
+In that format they are now available to almost all localisers in the world.
+</p>
+
+<p>
+<img src="images/smileys/fixme.gif" align="middle" alt="FIXME" /> need scripts to generate these formats.
+</p>
+
+</div>
+<!-- SECTION "Create other formats" [5179-5797] -->
+<h1><a name="the_work_has_only_just_begun" id="the_work_has_only_just_begun">The work has only just begun</a></h1>
+<div class="level1">
+
+<p>
+
+The lists you have just created are useful in their own right.  But you most likely want to keep growing them, cleaning and improving them.
+</p>
+
+<p>
+You should as a first step review what you have created and fix spelling and other errors or disambiguate terms as needed.
+</p>
+
+<p>
+But congratulations a Terminology list or Glossary is one of your most important assets for creating good and consistent translations and it acts as a valuable resource for both new and experienced translators when they need prompting as to how to translate a term.
+
+</p>
+
+</div>
+<!-- SECTION "The work has only just begun" [5798-] --></body>
+</html>

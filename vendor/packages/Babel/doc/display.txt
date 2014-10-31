@@ -1,0 +1,83 @@
+.. -*- mode: rst; encoding: utf-8 -*-
+
+====================
+Locale Display Names
+====================
+
+.. contents:: Contents
+   :depth: 2
+.. sectnum::
+
+
+Introduction
+============
+
+While `message catalogs <messages.html>`_ allow you to localize any messages
+in your application, there are a number of strings that are used in many
+applications for which translations are readily available.
+
+Imagine for example you have a list of countries that users can choose from,
+and you'd like to display the names of those countries in the language the
+user prefers. Instead of translating all those country names yourself in your
+application, you can make use of the translations provided by the locale data
+included with Babel, which is based on the `Common Locale Data Repository 
+(CLDR) <http://unicode.org/cldr/>`_ developed and maintained by the `Unicode
+Consortium <http://unicode.org/>`_.
+
+
+The ``Locale`` Class
+====================
+
+You normally access such locale data through the `Locale`_ class provided
+by Babel:
+
+.. code-block:: pycon
+
+    >>> from babel import Locale
+    >>> locale = Locale('en', 'US')
+    >>> locale.territories['US']
+    u'United States'
+    >>> locale = Locale('es', 'MX')
+    >>> locale.territories['US']
+    u'Estados Unidos'
+
+.. _`Locale`: api/babel.core.Locale-class.html
+
+In addition to country/territory names, the locale data also provides access to
+names of languages, scripts, variants, time zones, and more. Some of the data
+is closely related to number and date formatting.
+
+Most of the corresponding ``Locale`` properties return dictionaries, where the
+key is a code such as the ISO country and language codes. Consult the API
+documentation for references to the relevant specifications.
+
+
+Calender Display Names
+======================
+
+The `Locale`_ class provides access to many locale display names related to
+calendar display, such as the names of week days or months.
+
+These display names are of course used for date formatting, but can also be
+used, for example, to show a list of months to the user in their preferred
+language:
+
+.. code-block:: pycon
+
+    >>> locale = Locale('es')
+    >>> month_names = locale.months['format']['wide'].items()
+    >>> month_names.sort()
+    >>> for idx, name in month_names:
+    ...     print name
+    enero
+    febrero
+    marzo
+    abril
+    mayo
+    junio
+    julio
+    agosto
+    septiembre
+    octubre
+    noviembre
+    diciembre

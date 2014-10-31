@@ -1,0 +1,10 @@
+ACKS
+LICENSE
+MANIFEST
+README
+RELEASE-NOTES
+lockfile.py
+setup.py
+doc/glossary.rst
+doc/index.rst
+doc/lockfile.rst

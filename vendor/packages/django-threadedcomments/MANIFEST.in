@@ -1,0 +1,8 @@
+include CONTRIBUTORS.txt
+include LICENSE.txt
+include INSTALL.txt
+include README.txt
+recursive-include docs *.txt
+include threadedcomments/templates/threadedcomments_base.html
+recursive-include threadedcomments/templates/comment_utils *.txt
+recursive-include threadedcomments/templates/threadedcomments *.html

@@ -1,0 +1,350 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="translate_toolkit_developers_guide" id="translate_toolkit_developers_guide">Translate Toolkit Developers Guide</a></h1>
+<div class="level1">
+
+<p>
+
+The goal of the translate toolkit is to simplify and unify the process of translation.
+</p>
+
+</div>
+<!-- SECTION "Translate Toolkit Developers Guide" [1-138] -->
+<h2><a name="history" id="history">History</a></h2>
+<div class="level2">
+
+<p>
+
+The initial toolkit was designed to convert Mozilla .dtd and .properties files into Gettext <acronym title="Gettext Portable Object">PO</acronym> format.  The logic was not that <acronym title="Gettext Portable Object">PO</acronym> was in any way superior but that by simplifying the translations process i.e. allowing a translator to use one format and one tool that we could get more people involved and more translators.
+</p>
+
+<p>
+The tools have now evolved to include other formats such as OpenOffice.org and the goal is still to migrate various formats to a common format, <acronym title="Gettext Portable Object">PO</acronym> and in the future <acronym title="XML Localization Interchange File Format">XLIFF</acronym> as more tools become available for that format.
+</p>
+
+<p>
+These tools we group as converters.  Along the way we developed other tools that allowed us to manipulate <acronym title="Gettext Portable Object">PO</acronym> files and check them for consistency.  As we evolved the converter tools we have also improved and abstracted the classes that read the various file types.  In the future we hope to define these better so that we have a more or less stable <acronym title="Application Programming Interface">API</acronym> for converters.
+</p>
+
+</div>
+<!-- SECTION "History" [139-1072] -->
+<h2><a name="resources" id="resources">Resources</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Resources" [1073-1095] -->
+<h3><a name="subversion_access" id="subversion_access">Subversion access</a></h3>
+<div class="level3">
+
+<p>
+We moved to the SourceForge Subversion repository in August 2006.
+
+</p>
+<pre class="code">svn co https://translate.svn.sourceforge.net/svnroot/translate/src/trunk translate</pre>
+
+</div>
+<!-- SECTION "Subversion access" [1096-1276] -->
+<h3><a name="bugzilla" id="bugzilla">Bugzilla</a></h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> <a href="http://bugs.locamotion.org/" class="urlextern" title="http://bugs.locamotion.org/">http://bugs.locamotion.org/</a></div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Bugzilla" [1277-1330] -->
+<h3><a name="communication" id="communication">Communication</a></h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> <acronym title="Internet Relay Chat">IRC</acronym> channel - <a href="irc://irc.freenode.net/#pootle" class="urlextern" title="irc://irc.freenode.net/#pootle">irc://irc.freenode.net/#pootle</a></div>
+</li>
+<li class="level1"><div class="li"> Developers mailing list - <a href="https://lists.sourceforge.net/lists/listinfo/translate-devel" class="urlextern" title="https://lists.sourceforge.net/lists/listinfo/translate-devel">https://lists.sourceforge.net/lists/listinfo/translate-devel</a></div>
+</li>
+<li class="level1"><div class="li"> Commits to version control - <a href="https://lists.sourceforge.net/lists/listinfo/translate-cvs" class="urlextern" title="https://lists.sourceforge.net/lists/listinfo/translate-cvs">https://lists.sourceforge.net/lists/listinfo/translate-cvs</a></div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Communication" [1331-1591] -->
+<h2><a name="source_code_map" id="source_code_map">Source code map</a></h2>
+<div class="level2">
+
+<p>
+
+The tools are stored in SVN <a href="https://translate.svn.sourceforge.net/viewvc/translate/src/trunk/" class="urlextern" title="https://translate.svn.sourceforge.net/viewvc/translate/src/trunk/">https://translate.svn.sourceforge.net/viewvc/translate/src/trunk/</a> (previously in <a href="http://translate.cvs.sourceforge.net/translate/src/" class="urlextern" title="http://translate.cvs.sourceforge.net/translate/src/">CVS</a>).  This rough map will allow you to navigate SVN:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> convert -- convert between different formats and <acronym title="Gettext Portable Object">PO</acronym> format</div>
+</li>
+<li class="level1"><div class="li"> filters -- <a href="toolkit-pofilter.html" class="wikilink1" title="toolkit-pofilter.html">pofilter</a> and its helper functions (badly named, it is really a checking tool)</div>
+</li>
+<li class="level1"><div class="li"> storage -- all base file formats: <acronym title="XML Localization Interchange File Format">XLIFF</acronym>, .properties, OpenOffice.org, <acronym title="Translation Memory eXchange">TMX</acronym>, etc.</div>
+</li>
+<li class="level1"><div class="li"> misc -- various helper functions</div>
+</li>
+<li class="level1"><div class="li"> tools -- all <acronym title="Gettext Portable Object">PO</acronym> manipulation programs: <a href="toolkit-pocount.html" class="wikilink1" title="toolkit-pocount.html">pocount</a>, <a href="toolkit-pogrep.html" class="wikilink1" title="toolkit-pogrep.html">pogrep</a>, etc</div>
+</li>
+<li class="level1"><div class="li"> lang -- modules with data / tweaks for various languages</div>
+</li>
+<li class="level1"><div class="li"> search -- translation memory, terminology matching, and indexing / searching</div>
+</li>
+<li class="level1"><div class="li"> share -- data files</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Source code map" [1592-2364] -->
+<h2><a name="current_source_state" id="current_source_state">Current source state</a></h2>
+<div class="level2">
+
+<p>
+
+Note that this documentation is almost always for trunk.
+
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> Development            </td><td class="col1 leftalign"> trunk                           </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> Current stable branch  </td><td class="col1 leftalign"> Pootle-toolkit-1.2     </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Current source state" [2365-2571] -->
+<h2><a name="setup" id="setup">Setup</a></h2>
+<div class="level2">
+
+<p>
+
+The toolkit is installed by running:
+
+</p>
+<pre class="code">./setup.py install</pre>
+
+<p>
+
+As root
+</p>
+
+<p>
+The various setup options are yours to explore
+</p>
+
+<p>
+To run / test things without installing, see the <a href="pootle-no_install.html" class="wikilink2" title="pootle-no_install.html">instructions for Pootle</a>. Those instructions sets your environment for both Pootle and the toolkit
+</p>
+
+</div>
+<!-- SECTION "Setup" [2572-2877] -->
+<h2><a name="general_overview_of_the_programs" id="general_overview_of_the_programs">General overview of the programs</a></h2>
+<div class="level2">
+
+<p>
+
+Each tool in the toolkit has both a core program and a command line wrapper.  For example the oo2po converter:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> oo2po -- the command line tool</div>
+</li>
+<li class="level1"><div class="li"> oo2po.py -- the core program</div>
+</li>
+</ul>
+
+<p>
+
+This is done so that the tools can be used from within the Pootle server thus reusing the toolkit easily.
+</p>
+
+</div>
+<!-- SECTION "General overview of the programs" [2878-3211] -->
+<h3><a name="command_line_options" id="command_line_options">Command line options</a></h3>
+<div class="level3">
+
+<p>
+
+Getting lost with the command line options?  Well you might want to volunteer to move some of them into configuration files.  But in terms of programming you might be confused as to where they are located.  Many of the command line options are implemented in each tool.  Things such as --progress and --errorlevel are used in each program.  Thus these are abstracted in <strong>misc/optrecurse.py</strong>.  While each tools unique command line options are implemented in <strong>xxx.py</strong>.
+</p>
+
+</div>
+<!-- SECTION "Command line options" [3212-3715] -->
+<h2><a name="converters" id="converters">Converters</a></h2>
+<div class="level2">
+
+<p>
+
+The converters each have a class that handles the conversion from one format to another.  This class has one important method <strong>convertfile</strong> which handles the actual conversion.
+</p>
+
+<p>
+A function <strong>convertXXX</strong> manages the conversion for the command line equivalent and essentially has at least 3 parameters: inputfile, outputfile and templatefile.  It itself will call the conversion class to handle conversion of individual files.  Recursing through multiple files is handled by the optrecurse.py logic.
+</p>
+
+<p>
+The converters <strong>main</strong> function handles any unique command line options.
+</p>
+
+<p>
+Where we are headed is to get to a level where the storage formats themselves are more aware of themselves and their abilities.  Thus the converter could end up as one program that accepts storage format plugins to convert from anything to almost anything else.  Although our target localisation formats are <acronym title="Gettext Portable Object">PO</acronym> and <acronym title="XML Localization Interchange File Format">XLIFF</acronym> only.
+</p>
+
+<p>
+If you want to create a new converter it is best to look at a simple instance such as <a href="toolkit-csv2tbx.html" class="wikilink1" title="toolkit-csv2tbx.html">csv2tbx</a> or <a href="toolkit-txt2po.html" class="wikilink1" title="toolkit-txt2po.html">txt2po</a> and their associated storage classes.  The <a href="http://translate.sourceforge.net/doc/api/public/translate.storage.base-module.html" class="urlextern" title="http://translate.sourceforge.net/doc/api/public/translate.storage.base-module.html">storage base class documentation</a> will give you the information you need for the storage class implementation.
+</p>
+
+</div>
+<!-- SECTION "Converters" [3716-4997] -->
+<h2><a name="tools" id="tools">Tools</a></h2>
+<div class="level2">
+
+<p>
+
+The tools in some way copy the logic of the converters.  We have a class so that we can reuse a lot of the functionality in Pootle.  We have a core function that take: input, output and templates.  And we have a <strong>main</strong> function to handle the command line version.
+</p>
+
+<p>
+<a href="toolkit-pocount.html" class="wikilink1" title="toolkit-pocount.html">pocount</a> should be converted to this but does not follow this conventions.  In fact pocount should move the counting to the storage formats to allow any format to return its own word count.
+</p>
+
+</div>
+<!-- SECTION "Tools" [4998-5477] -->
+<h2><a name="checks" id="checks">Checks</a></h2>
+<div class="level2">
+
+<p>
+
+There&#039;s really only one, <a href="toolkit-pofilter.html" class="wikilink1" title="toolkit-pofilter.html">pofilter</a>.  But there are lots of helper functions for pofilter.  pofilters main task is to check for errors in <acronym title="Gettext Portable Object">PO</acronym> or <acronym title="XML Localization Interchange File Format">XLIFF</acronym> files.  Here are the helper file and their descriptions.
+
+</p>
+<ul>
+<li class="level1"><div class="li"> autocorrect.py -- when using --autocorrect it will attempt some basic corrections found in this file</div>
+</li>
+<li class="level1"><div class="li"> checks.py -- the heart. This contains: the actual checks and their error reports, and defined variables and accelerators for eg --mozilla</div>
+</li>
+<li class="level1"><div class="li"> decorations.py -- various helper functions to identify accelerators, variables and markers</div>
+</li>
+<li class="level1"><div class="li"> helpers.py -- functions used by the tests</div>
+</li>
+<li class="level1"><div class="li"> prefilters.py -- functions to eg remove variables and accelerators before applying tests to the <acronym title="Gettext Portable Object">PO</acronym> message</div>
+</li>
+</ul>
+
+<p>
+
+pofilter is now relatively mature.  The best areas for contributions are:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> more tests</div>
+</li>
+<li class="level1"><div class="li"> language specific configuration files</div>
+</li>
+<li class="level1"><div class="li"> tests for the tests -- so we don&#039;t break our good tests</div>
+</li>
+<li class="level1"><div class="li"> defining a config files scheme to do cool stuff off of the command line.  Globally enable or disable tests based on language, etc</div>
+</li>
+<li class="level1"><div class="li"> some approach to retesting that would remove &#039;# (pofilter)&#039; failure markings if the test now passes.</div>
+</li>
+<li class="level1"><div class="li"> ability to mark false positives</div>
+</li>
+</ul>
+
+<p>
+
+The <a href="http://translate.sourceforge.net/doc/api/translate.filters-module.html" class="urlextern" title="http://translate.sourceforge.net/doc/api/translate.filters-module.html">API documentation</a> is a good start if you want to add a new tests.  To add a new language have a look at a language you understand amongst those already implemented.
+</p>
+
+</div>
+<!-- SECTION "Checks" [5478-6920] -->
+<h2><a name="storage" id="storage">Storage</a></h2>
+<div class="level2">
+
+<p>
+
+These are the heart of the converters.  Each destination storage format is implemented in its own file.  Up until toolkit version 0.8, there was no formally defined <acronym title="Application Programming Interface">API</acronym> (the tools have been evolving and only recently stabilised), but they generally followed this structure.  These classes are defined:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> XXelement -- handles the low level individual elements of the file format.  e.g. <acronym title="Gettext Portable Object">PO</acronym> message, <acronym title="Comma Separated Value">CSV</acronym> records, <acronym title="Document Type Definition">DTD</acronym> elements</div>
+</li>
+<li class="level1"><div class="li"> XXfile -- handles the document or file level of the format.  Eg a <acronym title="Gettext Portable Object">PO</acronym> file, a <acronym title="Comma Separated Value">CSV</acronym> file a <acronym title="Document Type Definition">DTD</acronym> file</div>
+<ul>
+<li class="level2"><div class="li"> fromlines -- read in a file and initialise the various elements</div>
+</li>
+<li class="level2"><div class="li"> tolines -- convert the elements stored in XXelements and portions in XXfile to a raw file in that format</div>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+
+In the <acronym title="Extensible Markup Language">XML</acronym> based formats e.g.  <acronym title="Translation Memory eXchange">TMX</acronym>, <acronym title="XML Localization Interchange File Format">XLIFF</acronym> and <acronym title="HyperText Markup Language">HTML</acronym> there is usually just an extended parser to manage the file creation.
+</p>
+
+<p>
+Within each storage format there are many helper functions for escaping and managing the unique features of the actual format.
+</p>
+
+<p>
+You can help by:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> abstracting more of the functions and documenting that so that we can get a better <acronym title="Application Programming Interface">API</acronym></div>
+</li>
+<li class="level1"><div class="li"> adding other formats and converters eg .DOC, .ODF and others</div>
+</li>
+<li class="level1"><div class="li"> helping us move to a position where any format should convert to the base format: <acronym title="Gettext Portable Object">PO</acronym> and in the future <acronym title="XML Localization Interchange File Format">XLIFF</acronym> without having to create a specific converter wrapper.</div>
+</li>
+<li class="level1"><div class="li"> Ensuring that our formats <a href="toolkit-conformance.html" class="wikilink1" title="toolkit-conformance.html">conform to the standards</a></div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Storage" [6921-8314] -->
+<h3><a name="base_classes" id="base_classes">Base Classes</a></h3>
+<div class="level3">
+
+<p>
+
+From toolkit 0.9 onwards, we are moving towards basing all storage formats on a set of <a href="toolkit-base_classes.html" class="wikilink1" title="toolkit-base_classes.html">base classes</a>, in the move to a universal <acronym title="Application Programming Interface">API</acronym>.  We&#039;re also fixing things so that escaping is much more sane and handled within the class itself not by the converters.
+</p>
+
+<p>
+In base classes we have different terminology
+
+</p>
+<ul>
+<li class="level1"><div class="li"> XXXunit = XXXelement</div>
+</li>
+<li class="level1"><div class="li"> XXXstore = XXXfile</div>
+</li>
+</ul>
+
+<p>
+
+We have also tried to unify terminology but this has been filtered into the old classes as far as possible.
+
+</p>
+
+</div>
+<!-- SECTION "Base Classes" [8315-] --></body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>testing.plugin.dtexample &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="testing.plugin.show_refs" href="IPython.testing.plugin.show_refs.html" />
+    <link rel="prev" title="testing.parametric" href="IPython.testing.parametric.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.plugin.show_refs.html" title="testing.plugin.show_refs"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.parametric.html" title="testing.parametric"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="testing-plugin-dtexample">
+<h1>testing.plugin.dtexample<a class="headerlink" href="#testing-plugin-dtexample" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.testing.plugin.dtexample">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">testing.plugin.dtexample</span></tt><a class="headerlink" href="#module-IPython.testing.plugin.dtexample" title="Permalink to this headline">¶</a></h2>
+<p>Simple example using doctests.</p>
+<p>This file just contains doctests both using plain python and IPython prompts.
+All tests should be loaded by nose.</p>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.testing.plugin.dtexample.ipfunc">
+<!--[IPython.testing.plugin.dtexample.ipfunc]--><tt class="descclassname">IPython.testing.plugin.dtexample.</tt><tt class="descname">ipfunc</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.testing.plugin.dtexample.ipfunc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Some ipython tests...</p>
+<p>In [1]: import os</p>
+<p>In [3]: 2+3
+Out[3]: 5</p>
+<dl class="docutils">
+<dt>In [26]: for i in range(3):</dt>
+<dd>....:     print i,
+....:     print i+1,
+....:</dd>
+</dl>
+<p>0 1 1 2 2 3</p>
+<p>Examples that access the operating system work:</p>
+<p>In [1]: !echo hello
+hello</p>
+<p>In [2]: !echo hello &gt; /tmp/foo</p>
+<p>In [3]: !cat /tmp/foo
+hello</p>
+<p>In [4]: rm -f /tmp/foo</p>
+<p>It&#8217;s OK to use &#8216;_&#8217; for the last result, but do NOT try to use IPython&#8217;s
+numbered history of _NN outputs, since those won&#8217;t exist under the
+doctest environment:</p>
+<p>In [7]: &#8216;hi&#8217;
+Out[7]: &#8216;hi&#8217;</p>
+<p>In [8]: print repr(_)
+&#8216;hi&#8217;</p>
+<p>In [7]: 3+4
+Out[7]: 7</p>
+<p>In [8]: _+3
+Out[8]: 10</p>
+<p>In [9]: ipfunc()
+Out[9]: &#8216;ipfunc&#8217;</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.testing.plugin.dtexample.iprand">
+<!--[IPython.testing.plugin.dtexample.iprand]--><tt class="descclassname">IPython.testing.plugin.dtexample.</tt><tt class="descname">iprand</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.testing.plugin.dtexample.iprand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Some ipython tests with random output.</p>
+<p>In [7]: 3+4
+Out[7]: 7</p>
+<p>In [8]: print &#8216;hello&#8217;
+world  # random</p>
+<p>In [9]: iprand()
+Out[9]: &#8216;iprand&#8217;</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.testing.plugin.dtexample.iprand_all">
+<!--[IPython.testing.plugin.dtexample.iprand_all]--><tt class="descclassname">IPython.testing.plugin.dtexample.</tt><tt class="descname">iprand_all</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.testing.plugin.dtexample.iprand_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Some ipython tests with fully random output.</p>
+<p># all-random</p>
+<p>In [7]: 1
+Out[7]: 99</p>
+<p>In [8]: print &#8216;hello&#8217;
+world</p>
+<p>In [9]: iprand_all()
+Out[9]: &#8216;junk&#8217;</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.testing.plugin.dtexample.pyfunc">
+<!--[IPython.testing.plugin.dtexample.pyfunc]--><tt class="descclassname">IPython.testing.plugin.dtexample.</tt><tt class="descname">pyfunc</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.testing.plugin.dtexample.pyfunc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Some pure python tests...</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pyfunc</span><span class="p">()</span>
+<span class="go">&#39;pyfunc&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">import</span> <span class="nn">os</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="mf">2</span><span class="o">+</span><span class="mf">3</span>
+<span class="go">5</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mf">3</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="n">i</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="n">i</span><span class="o">+</span><span class="mf">1</span><span class="p">,</span>
+<span class="gp">...</span>
+<span class="go">0 1 1 2 2 3</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.testing.plugin.dtexample.random_all">
+<!--[IPython.testing.plugin.dtexample.random_all]--><tt class="descclassname">IPython.testing.plugin.dtexample.</tt><tt class="descname">random_all</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.testing.plugin.dtexample.random_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function where we ignore the output of ALL examples.</p>
+<p>Examples:</p>
+<blockquote>
+<p># all-random</p>
+<p>This mark tells the testing machinery that all subsequent examples should
+be treated as random (ignoring their output).  They are still executed,
+so if a they raise an error, it will be detected as such, but their
+output is completely ignored.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="mf">1</span><span class="o">+</span><span class="mf">3</span>
+<span class="go">junk goes here...</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="mf">1</span><span class="o">+</span><span class="mf">3</span>
+<span class="go">klasdfj;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="mf">1</span><span class="o">+</span><span class="mf">2</span>
+<span class="go">again,  anything goes</span>
+<span class="go">blah...</span>
+</pre></div>
+</div>
+</blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.testing.plugin.dtexample.ranfunc">
+<!--[IPython.testing.plugin.dtexample.ranfunc]--><tt class="descclassname">IPython.testing.plugin.dtexample.</tt><tt class="descname">ranfunc</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.testing.plugin.dtexample.ranfunc" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function with some random output.</p>
+<p>Normal examples are verified as usual:
+&gt;&gt;&gt; 1+3
+4</p>
+<p>But if you put &#8216;# random&#8217; in the output, it is ignored:
+&gt;&gt;&gt; 1+3
+junk goes here...  # random</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="mf">1</span><span class="o">+</span><span class="mf">2</span>
+<span class="go">again,  anything goes #random</span>
+<span class="go">if multiline, the random mark is only needed once.</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="mf">1</span><span class="o">+</span><span class="mf">2</span>
+<span class="go">You can also put the random marker at the end:</span>
+<span class="go"># random</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="mf">1</span><span class="o">+</span><span class="mf">2</span>
+<span class="go"># random</span>
+<span class="go">.. or at the beginning.</span>
+</pre></div>
+</div>
+<p>More correct input is properly verified:
+&gt;&gt;&gt; ranfunc()
+&#8216;ranfunc&#8217;</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">testing.plugin.dtexample</a><ul>
+<li><a class="reference external" href="#module-IPython.testing.plugin.dtexample">Module: <tt class="docutils literal"><span class="pre">testing.plugin.dtexample</span></tt></a></li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.testing.parametric.html" title="previous chapter">testing.parametric</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.testing.plugin.show_refs.html" title="next chapter">testing.plugin.show_refs</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.testing.plugin.dtexample.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.plugin.show_refs.html" title="testing.plugin.show_refs"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.parametric.html" title="testing.parametric"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

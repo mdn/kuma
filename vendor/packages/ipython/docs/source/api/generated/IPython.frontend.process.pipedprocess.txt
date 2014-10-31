@@ -1,0 +1,26 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+frontend.process.pipedprocess
+=============================
+
+Module: :mod:`frontend.process.pipedprocess`
+--------------------------------------------
+Inheritance diagram for ``IPython.frontend.process.pipedprocess``:
+
+.. inheritance-diagram:: IPython.frontend.process.pipedprocess 
+   :parts: 3
+
+.. automodule:: IPython.frontend.process.pipedprocess
+
+.. currentmodule:: IPython.frontend.process.pipedprocess
+
+:class:`PipedProcess`
+---------------------
+
+
+.. autoclass:: PipedProcess
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

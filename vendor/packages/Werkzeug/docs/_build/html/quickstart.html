@@ -1,0 +1,370 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Werkzeug Documentation</title>
+    <link rel="stylesheet" href="_static/style.css" type="text/css">
+    <link rel="stylesheet" href="_static/print.css" type="text/css" media="print">
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css">
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:   '',
+        VERSION:    '0.5.1dev'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/interface.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/werkzeug.js"></script>
+    <link rel="contents" title="Global table of contents" href="contents.html">
+    <link rel="index" title="Global index" href="genindex.html">
+    <link rel="search" title="Search" href="search.html">
+    <link rel="top" title="Werkzeug v0.5.1dev documentation" href="index.html">
+    <link rel="next" title="Serving WSGI Applications" href="serving.html">
+    <link rel="prev" title="API Levels" href="levels.html">
+    
+  </head>
+  <body>
+    <div class="page">
+      <div class="header">
+        <h1 class="heading"><a href="index.html"
+          title="back to the documentation overview"><span>Werkzeug</span></a></h1>
+      </div>
+      <ul class="navigation">
+        <li class="indexlink"><a href="index.html">Overview</a></li>
+        <li><a href="levels.html">&laquo; API Levels</a></li>
+        <li class="active"><a href="">Quickstart</a></li>
+        <li><a href="serving.html">Serving WSGI Applications &raquo;</a></li>
+      </ul>
+      <div class="body">
+        <div id="toc">
+          <h3>Table Of Contents</h3>
+          <div class="inner"><ul>
+<li><a class="reference external" href="">Quickstart</a><ul>
+<li><a class="reference external" href="#wsgi-environment">WSGI Environment</a></li>
+<li><a class="reference external" href="#enter-request">Enter Request</a></li>
+<li><a class="reference external" href="#header-parsing">Header Parsing</a></li>
+<li><a class="reference external" href="#responses">Responses</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+        
+  <div class="section" id="module-werkzeug">
+<h1>Quickstart<a class="headerlink" href="#module-werkzeug" title="Permalink to this headline">¶</a></h1>
+<p>This part of the documentation shows how to use the most important parts of
+Werkzeug.  It&#8217;s intended as starting point for developers with basic
+understanding of <span class="target" id="index-16"></span><a class="reference external" href="http://www.python.org/dev/peps/pep-0333"><strong>PEP 333</strong></a> (WSGI) and <span class="target" id="index-17"></span><a class="reference external" href="http://tools.ietf.org/html/rfc2616.html"><strong>RFC 2616</strong></a> (HTTP).</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>Make sure to import all objects from the places the documentation
+suggests.  It is theoretically possible in some situations to import
+objects from different locations but this is not supported.</p>
+<p class="last">For example <a title="werkzeug.MultiDict" class="reference external" href="datastructures.html#werkzeug.MultiDict"><tt class="xref docutils literal"><span class="pre">MultiDict</span></tt></a> is a member of the <cite>werkzeug</cite> module
+but internally implemented in a different one.</p>
+</div>
+<div class="section" id="wsgi-environment">
+<h2>WSGI Environment<a class="headerlink" href="#wsgi-environment" title="Permalink to this headline">¶</a></h2>
+<p>The WSGI environment contains all the information the user request transmit
+to the application.  It is passed to the WSGI application but you can also
+create a WSGI environ dict using the <a title="werkzeug.create_environ" class="reference external" href="test.html#werkzeug.create_environ"><tt class="xref docutils literal"><span class="pre">create_environ</span></tt></a> helper:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">werkzeug</span> <span class="kn">import</span> <span class="n">create_environ</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">environ</span> <span class="o">=</span> <span class="n">create_environ</span><span class="p">(</span><span class="s">&#39;/foo&#39;</span><span class="p">,</span> <span class="s">&#39;http://localhost:8080/&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now we have an environment to play around:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;PATH_INFO&#39;</span><span class="p">]</span>
+<span class="go">&#39;/foo&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;SCRIPT_NAME&#39;</span><span class="p">]</span>
+<span class="go">&#39;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">environ</span><span class="p">[</span><span class="s">&#39;SERVER_NAME&#39;</span><span class="p">]</span>
+<span class="go">&#39;localhost&#39;</span>
+</pre></div>
+</div>
+<p>Usually nobody wants to work with the environ directly because it is limited
+to bytestrings and does not provide any way to access the form data besides
+parsing that data by hand.</p>
+</div>
+<div class="section" id="enter-request">
+<h2>Enter Request<a class="headerlink" href="#enter-request" title="Permalink to this headline">¶</a></h2>
+<p>For access to the request data the <a title="werkzeug.Request" class="reference external" href="wrappers.html#werkzeug.Request"><tt class="xref docutils literal"><span class="pre">Request</span></tt></a> object is much more fun.
+It wraps the <cite>environ</cite> and provides a read-only access to the data from
+there:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">werkzeug</span> <span class="kn">import</span> <span class="n">Request</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">environ</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now you can access the important variables and Werkzeug will parse them
+for you and decode them where it makes sense.  The default charset for
+requests is set to <cite>utf-8</cite> but you can change that by subclassing
+<a title="werkzeug.Request" class="reference external" href="wrappers.html#werkzeug.Request"><tt class="xref docutils literal"><span class="pre">Request</span></tt></a>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">request</span><span class="o">.</span><span class="n">path</span>
+<span class="go">u&#39;/foo&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">request</span><span class="o">.</span><span class="n">script_root</span>
+<span class="go">u&#39;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">request</span><span class="o">.</span><span class="n">host</span>
+<span class="go">&#39;localhost:8080&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">request</span><span class="o">.</span><span class="n">url</span>
+<span class="go">&#39;http://localhost:8080/foo&#39;</span>
+</pre></div>
+</div>
+<p>We can also find out which HTTP method was used for the request:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">request</span><span class="o">.</span><span class="n">method</span>
+<span class="go">&#39;GET&#39;</span>
+</pre></div>
+</div>
+<p>This way we can also access URL arguments (the query string) and data that
+was transmitted in a POST/PUT request.</p>
+<p>For testing purposes we can create a request object from supplied data
+using the <a title="werkzeug.BaseRequest.from_values" class="reference external" href="wrappers.html#werkzeug.BaseRequest.from_values"><tt class="xref docutils literal"><span class="pre">from_values</span></tt></a> method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">cStringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="s">&quot;name=this+is+encoded+form+data&amp;another_key=another+one&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="o">.</span><span class="n">from_values</span><span class="p">(</span><span class="n">query_string</span><span class="o">=</span><span class="s">&#39;foo=bar&amp;blah=blafasel&#39;</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">content_length</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">input_stream</span><span class="o">=</span><span class="n">StringIO</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+<span class="gp">... </span>   <span class="n">content_type</span><span class="o">=</span><span class="s">&#39;application/x-www-form-urlencoded&#39;</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">method</span><span class="o">=</span><span class="s">&#39;POST&#39;</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">request</span><span class="o">.</span><span class="n">method</span>
+<span class="go">&#39;POST&#39;</span>
+</pre></div>
+</div>
+<p>Now we can access the URL parameters easily:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="go">[&#39;blah&#39;, &#39;foo&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">request</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="s">&#39;blah&#39;</span><span class="p">]</span>
+<span class="go">u&#39;blafasel&#39;</span>
+</pre></div>
+</div>
+<p>Same for the supplied form data:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span>
+<span class="go">u&#39;this is encoded form data&#39;</span>
+</pre></div>
+</div>
+<p>Handling for uploaded files is not much harder as you can see from this
+example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">store_file</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="nb">file</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">files</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;my_file&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">file</span><span class="p">:</span>
+        <span class="nb">file</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;/where/to/store/the/file.txt&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">handle_the_error</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The files are represented as <a title="werkzeug.FileStorage" class="reference external" href="datastructures.html#werkzeug.FileStorage"><tt class="xref docutils literal"><span class="pre">FileStorage</span></tt></a> objects which provide
+some common operations to work with them.</p>
+<p>Request headers can be accessed by using the <a title="werkzeug.BaseRequest.headers" class="reference external" href="wrappers.html#werkzeug.BaseRequest.headers"><tt class="xref docutils literal"><span class="pre">headers</span></tt></a>
+attribute:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&#39;Content-Length&#39;</span><span class="p">]</span>
+<span class="go">&#39;54&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&#39;Content-Type&#39;</span><span class="p">]</span>
+<span class="go">&#39;application/x-www-form-urlencoded&#39;</span>
+</pre></div>
+</div>
+<p>The keys for the headers are of course case insensitive.</p>
+</div>
+<div class="section" id="header-parsing">
+<h2>Header Parsing<a class="headerlink" href="#header-parsing" title="Permalink to this headline">¶</a></h2>
+<p>There is more.  Werkzeug provides convenient access to often used HTTP headers
+and other request data.</p>
+<p>Let&#8217;s create a request object with all the data a typical web browser transmits
+so that we can play with it:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">environ</span> <span class="o">=</span> <span class="n">create_environ</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">environ</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">HTTP_USER_AGENT</span><span class="o">=</span><span class="s">&#39;Mozilla/5.0 (Macintosh; U; Mac OS X 10.5; en-US; ) Firefox/3.1&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">HTTP_ACCEPT</span><span class="o">=</span><span class="s">&#39;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">HTTP_ACCEPT_LANGUAGE</span><span class="o">=</span><span class="s">&#39;de-at,en-us;q=0.8,en;q=0.5&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">HTTP_ACCEPT_ENCODING</span><span class="o">=</span><span class="s">&#39;gzip,deflate&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">HTTP_ACCEPT_CHARSET</span><span class="o">=</span><span class="s">&#39;ISO-8859-1,utf-8;q=0.7,*;q=0.7&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">HTTP_IF_MODIFIED_SINCE</span><span class="o">=</span><span class="s">&#39;Fri, 20 Feb 2009 10:10:25 GMT&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">HTTP_IF_NONE_MATCH</span><span class="o">=</span><span class="s">&#39;&quot;e51c9-1e5d-46356dc86c640&quot;&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">HTTP_CACHE_CONTROL</span><span class="o">=</span><span class="s">&#39;max-age=0&#39;</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">environ</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Let&#8217;s start with the most useless header: the user agent:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">request</span><span class="o">.</span><span class="n">user_agent</span><span class="o">.</span><span class="n">browser</span>
+<span class="go">&#39;firefox&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">request</span><span class="o">.</span><span class="n">user_agent</span><span class="o">.</span><span class="n">platform</span>
+<span class="go">&#39;macos&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">request</span><span class="o">.</span><span class="n">user_agent</span><span class="o">.</span><span class="n">version</span>
+<span class="go">&#39;3.1&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">request</span><span class="o">.</span><span class="n">user_agent</span><span class="o">.</span><span class="n">language</span>
+<span class="go">&#39;en-US&#39;</span>
+</pre></div>
+</div>
+<p>A more useful header is the accept header.  With this header the browser
+informs the web application what mimetypes it can handle and how good.  All
+accept headers are sorted by the quality, the best item being the first:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">request</span><span class="o">.</span><span class="n">accept_mimetypes</span><span class="o">.</span><span class="n">best</span>
+<span class="go">&#39;text/html&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s">&#39;application/xhtml+xml&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">accept_mimetypes</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">request</span><span class="o">.</span><span class="n">accept_mimetypes</span><span class="p">[</span><span class="s">&quot;application/json&quot;</span><span class="p">]</span>
+<span class="go">0.8</span>
+</pre></div>
+</div>
+<p>The same works for languages:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">request</span><span class="o">.</span><span class="n">accept_languages</span><span class="o">.</span><span class="n">best</span>
+<span class="go">&#39;de-at&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">request</span><span class="o">.</span><span class="n">accept_languages</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+<span class="go">[&#39;de-at&#39;, &#39;en-us&#39;, &#39;en&#39;]</span>
+</pre></div>
+</div>
+<p>And of course encodings and charsets:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="s">&#39;gzip&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">accept_encodings</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">request</span><span class="o">.</span><span class="n">accept_charsets</span><span class="o">.</span><span class="n">best</span>
+<span class="go">&#39;ISO-8859-1&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s">&#39;utf-8&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">accept_charsets</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Normalization is available, so you can savely use alternative forms
+to perform containment checking:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="s">&#39;UTF8&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">accept_charsets</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s">&#39;de_AT&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">accept_languages</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>E-tags and other conditional headers are available in parsed form
+as well:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">request</span><span class="o">.</span><span class="n">if_modified_since</span>
+<span class="go">datetime.datetime(2009, 2, 20, 10, 10, 25)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">request</span><span class="o">.</span><span class="n">if_none_match</span>
+<span class="go">&lt;ETags &#39;&quot;e51c9-1e5d-46356dc86c640&quot;&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">request</span><span class="o">.</span><span class="n">cache_control</span>
+<span class="go">&lt;RequestCacheControl &#39;max-age=0&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">request</span><span class="o">.</span><span class="n">cache_control</span><span class="o">.</span><span class="n">max_age</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s">&#39;e51c9-1e5d-46356dc86c640&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">if_none_match</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="responses">
+<h2>Responses<a class="headerlink" href="#responses" title="Permalink to this headline">¶</a></h2>
+<p>Response objects are the opposite of request objects.  They are used to send
+data back to the client.  In reality response objects are nothing more than
+glorified WSGI applications.</p>
+<p>So what you are doing is not <em>returning</em> the response objects from your WSGI
+application but <em>calling</em> it as WSGI application inside your WSGI application
+and returning the return value of that call.</p>
+<p>So imagine your standard WSGI &#8220;Hello World&#8221; application:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+    <span class="n">start_response</span><span class="p">(</span><span class="s">&#39;200 OK&#39;</span><span class="p">,</span> <span class="p">[(</span><span class="s">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s">&#39;text/plain&#39;</span><span class="p">)])</span>
+    <span class="k">return</span> <span class="p">[</span><span class="s">&#39;Hello World!&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>With request objects it would look like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">werkzeug</span> <span class="kn">import</span> <span class="n">Response</span>
+
+<span class="k">def</span> <span class="nf">application</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">):</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">Response</span><span class="p">(</span><span class="s">&#39;Hello World!&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">response</span><span class="p">(</span><span class="n">environ</span><span class="p">,</span> <span class="n">start_response</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Also unlike request objects response objects are designed to be modified.
+So here is what you can do with them:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">werkzeug</span> <span class="kn">import</span> <span class="n">Response</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span> <span class="o">=</span> <span class="n">Response</span><span class="p">(</span><span class="s">&quot;Hello World!&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&#39;content-type&#39;</span><span class="p">]</span>
+<span class="go">&#39;text/plain; charset=utf-8&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">data</span>
+<span class="go">&#39;Hello World!&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&#39;content-length&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The same way you can modify the status of the response.  Either just the
+code or provide a message as well:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">status</span>
+<span class="go">&#39;200 OK&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="s">&#39;404 Not Found&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span>
+<span class="go">404</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">=</span> <span class="mf">400</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">status</span>
+<span class="go">&#39;400 BAD REQUEST&#39;</span>
+</pre></div>
+</div>
+<p>As you can see attributes work in both directions.  So you can set both
+<tt class="xref docutils literal"><span class="pre">status</span></tt> and <cite>~BaseResponse.status_code</cite> and the
+change will be reflected to the other.</p>
+<p>Also common headers are exposed as attributes or with methods to set /
+retrieve them:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">content_length</span>
+<span class="go">12</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">date</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mf">2009</span><span class="p">,</span> <span class="mf">2</span><span class="p">,</span> <span class="mf">20</span><span class="p">,</span> <span class="mf">17</span><span class="p">,</span> <span class="mf">42</span><span class="p">,</span> <span class="mf">51</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&#39;Date&#39;</span><span class="p">]</span>
+<span class="go">&#39;Fri, 20 Feb 2009 17:42:51 GMT&#39;</span>
+</pre></div>
+</div>
+<p>Because etags can be weak or strong there are methods to set them:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">set_etag</span><span class="p">(</span><span class="s">&quot;12345-abcd&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&#39;etag&#39;</span><span class="p">]</span>
+<span class="go">&#39;&quot;12345-abcd&quot;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">get_etag</span><span class="p">()</span>
+<span class="go">(&#39;12345-abcd&#39;, False)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">set_etag</span><span class="p">(</span><span class="s">&quot;12345-abcd&quot;</span><span class="p">,</span> <span class="n">weak</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">get_etag</span><span class="p">()</span>
+<span class="go">(&#39;12345-abcd&#39;, True)</span>
+</pre></div>
+</div>
+<p>Some headers are available as mutable structures.  For example most
+of the <cite>Content-</cite> headers are sets of values:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">content_language</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;en-us&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">content_language</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&#39;en&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&#39;Content-Language&#39;</span><span class="p">]</span>
+<span class="go">&#39;en-us, en&#39;</span>
+</pre></div>
+</div>
+<p>Also here this works in both directions:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&#39;Content-Language&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;de-AT, de&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">content_language</span>
+<span class="go">HeaderSet([&#39;de-AT&#39;, &#39;de&#39;])</span>
+</pre></div>
+</div>
+<p>Authentication headers can be set that way as well:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">www_authenticate</span><span class="o">.</span><span class="n">set_basic</span><span class="p">(</span><span class="s">&quot;My protected resource&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&#39;www-authenticate&#39;</span><span class="p">]</span>
+<span class="go">&#39;Basic realm=&quot;My protected resource&quot;&#39;</span>
+</pre></div>
+</div>
+<p>Cookies can be set as well:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">set_cookie</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="s">&#39;value&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&#39;Set-Cookie&#39;</span><span class="p">]</span>
+<span class="go">&#39;name=value; Path=/&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">set_cookie</span><span class="p">(</span><span class="s">&#39;name2&#39;</span><span class="p">,</span> <span class="s">&#39;value2&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If headers appear multiple times you can use the <a title="werkzeug.Headers.getlist" class="reference external" href="datastructures.html#werkzeug.Headers.getlist"><tt class="xref docutils literal"><span class="pre">getlist</span></tt></a>
+method to get all values for a header:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">getlist</span><span class="p">(</span><span class="s">&#39;Set-Cookie&#39;</span><span class="p">)</span>
+<span class="go">[&#39;name=value; Path=/&#39;, &#39;name2=value2; Path=/&#39;]</span>
+</pre></div>
+</div>
+<p>Finally if you have set all the conditional values you can make the
+response conditional against a request.  Which means that if the request
+can assure that it has the information already, no data besides the headers
+is sent over the network which saves traffic.  For that you should set at
+least an etag (which is used for comparision) and the date header and then
+call <tt class="xref docutils literal"><span class="pre">make_conditional</span></tt> with the request object.</p>
+<p>The response is modified accordingly (status code changed, response body
+removed, entitiy headers removed etc.)</p>
+</div>
+</div>
+
+
+        <div style="clear: both"></div>
+      </div>
+      <div class="footer">
+        © Copyright 2008 by the <a href="http://pocoo.org/">Pocoo Team</a>,
+        documentation generated by <a href="http://sphinx.pocoo.org/">Sphinx</a>
+      </div>
+    </div>
+  </body>
+</html>

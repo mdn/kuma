@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Documenting IPython &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../index.html" />
+    <link rel="up" title="IPython Developer&#8217;s Guide" href="index.html" />
+    <link rel="next" title="Development roadmap" href="roadmap.html" />
+    <link rel="prev" title="Coding guide" href="coding_guide.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="roadmap.html" title="Development roadmap"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="coding_guide.html" title="Coding guide"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">IPython Developer&#8217;s Guide</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="id1">
+<span id="documenting-ipython"></span><h1>Documenting IPython<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="standalone-documentation">
+<h2>Standalone documentation<a class="headerlink" href="#standalone-documentation" title="Permalink to this headline">¶</a></h2>
+<p>All standalone documentation should be written in plain text (<tt class="docutils literal"><span class="pre">.txt</span></tt>) files
+using <a class="reference external" href="http://docutils.sourceforge.net/rst.html">reStructuredText</a> for markup and formatting. All such documentation
+should be placed in the top level directory <tt class="docutils literal"><span class="pre">docs</span></tt> of the IPython source
+tree. Or, when appropriate, a suitably named subdirectory should be used. The
+documentation in this location will serve as the main source for IPython
+documentation and all existing documentation should be converted to this
+format.</p>
+<p>The actual HTML and PDF docs are built using the <a class="reference external" href="http://sphinx.pocoo.org/">Sphinx</a> documentation
+generation tool.  Sphinx has been adopted as the default documentation tool for
+Python itself as of version 2.6, as well as by a number of projects that
+IPython is related with, such as numpy, scipy, matplotlib, sage and nipy.</p>
+<p>The rest of this document is mostly taken from the <a class="reference external" href="http://matplotlib.sourceforge.net/devel/documenting_mpl.html">matploblib
+documentation</a>; we are using a number of Sphinx tools and extensions written
+by the matplotlib team and will mostly follow their conventions, which are
+nicely spelled out in their guide.  What follows is thus a lightly adapted
+version of the matplotlib documentation guide, taken with permission from the
+MPL team.</p>
+<p>A bit of Python code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mf">10</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">i</span><span class="p">,</span>
+<span class="k">print</span> <span class="s">&quot;A big number:&quot;</span><span class="p">,</span><span class="mf">2</span><span class="o">**</span><span class="mf">34</span>
+</pre></div>
+</div>
+<p>An interactive Python session:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">from</span> <span class="nn">IPython</span> <span class="k">import</span> <span class="n">genutils</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">genutils</span><span class="o">.</span><span class="n">get_ipython_dir</span><span class="p">()</span>
+<span class="go">&#39;/home/fperez/.ipython&#39;</span>
+</pre></div>
+</div>
+<p>An IPython session:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [7]: </span><span class="k">import</span> <span class="nn">IPython</span>
+
+<span class="gp">In [8]: </span><span class="k">print</span> <span class="s">&quot;This IPython is version:&quot;</span><span class="p">,</span><span class="n">IPython</span><span class="o">.</span><span class="n">__version__</span>
+<span class="go">This IPython is version: 0.9.1</span>
+
+<span class="gp">In [9]: </span><span class="mf">2</span><span class="o">+</span><span class="mf">4</span>
+<span class="go">Out[9]: </span><span class="mf">6</span>
+</pre></div>
+</div>
+<p>A bit of shell code:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nb">cd</span> /tmp
+<span class="nb">echo</span> <span class="s2">&quot;My home directory is: $HOME&quot;</span>
+ls
+</pre></div>
+</div>
+</div>
+<div class="section" id="docstring-format">
+<h2>Docstring format<a class="headerlink" href="#docstring-format" title="Permalink to this headline">¶</a></h2>
+<p>Good docstrings are very important.  Unfortunately, Python itself only provides
+a rather loose standard for docstrings (<a class="reference external" href="http://www.python.org/peps/pep-0257.html">PEP 257</a>), and there is no universally
+accepted convention for all the different parts of a complete docstring.
+However, the NumPy project has established a very reasonable standard, and has
+developed some tools to support the smooth inclusion of such docstrings in
+Sphinx-generated manuals.  Rather than inventing yet another pseudo-standard,
+IPython will be henceforth documented using the NumPy conventions; we carry
+copies of some of the NumPy support tools to remain self-contained, but share
+back upstream with NumPy any improvements or fixes we may make to the tools.</p>
+<p>The <a class="reference external" href="http://projects.scipy.org/numpy/wiki/CodingStyleGuidelines">NumPy documentation guidelines</a> contain detailed information on this
+standard, and for a quick overview, the NumPy <a class="reference external" href="http://projects.scipy.org/numpy/browser/trunk/doc/EXAMPLE_DOCSTRING.txt">example docstring</a> is a useful
+read.</p>
+<p>As in the past IPython used epydoc, currently many docstrings still use epydoc
+conventions.  We will update them as we go, but all new code should be fully
+documented using the NumPy standard.</p>
+<p>Additional PEPs of interest regarding documentation of code.  While both of
+these were rejected, the ideas therein form much of the basis of docutils (the
+machinery to process reStructuredText):</p>
+<ul class="simple">
+<li><a class="reference external" href="http://www.python.org/peps/pep-0256.html">Docstring Processing System Framework</a></li>
+<li><a class="reference external" href="http://www.python.org/peps/pep-0258.html">Docutils Design Specification</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">Documenting IPython</a><ul>
+<li><a class="reference external" href="#standalone-documentation">Standalone documentation</a></li>
+<li><a class="reference external" href="#docstring-format">Docstring format</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="coding_guide.html" title="previous chapter">Coding guide</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="roadmap.html" title="next chapter">Development roadmap</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/development/doc_guide.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="roadmap.html" title="Development roadmap"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="coding_guide.html" title="Coding guide"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">IPython Developer&#8217;s Guide</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

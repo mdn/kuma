@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>babel.numbers</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="babel-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="../index.html">Documentation Index</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="babel-module.html">Package&nbsp;babel</a> ::
+        Module&nbsp;numbers
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== MODULE DESCRIPTION ==================== -->
+<h1 class="epydoc">Module numbers</h1><p class="nomargin-top"></p>
+<p>Locale dependent formatting and parsing of numeric data.</p>
+<p>The default locale for the functions in this module is determined by the
+following environment variables, in that order:</p>
+<blockquote>
+<ul class="rst-simple">
+<li><tt class="rst-docutils literal"><span class="pre">LC_NUMERIC</span></tt>,</li>
+<li><tt class="rst-docutils literal"><span class="pre">LC_ALL</span></tt>, and</li>
+<li><tt class="rst-docutils literal"><span class="pre">LANG</span></tt></li>
+</ul>
+</blockquote>
+
+<!-- ==================== CLASSES ==================== -->
+<a name="section-Classes"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Classes</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="babel.numbers.NumberFormatError-class.html" class="summary-name">NumberFormatError</a><br />
+      Exception raised when a string cannot be parsed into a number.
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Functions</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type"><code class="link">unicode</code></span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="babel.numbers-module.html#format_number" class="summary-sig-name">format_number</a>(<span class="summary-sig-arg">number</span>,
+        <span class="summary-sig-arg">locale</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">nl_NL</code><code class="variable-quote">'</code></span>)</span><br />
+      Return the given number formatted for a specific locale.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type"><code class="link">unicode</code></span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="babel.numbers-module.html#format_decimal" class="summary-sig-name">format_decimal</a>(<span class="summary-sig-arg">number</span>,
+        <span class="summary-sig-arg">format</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">locale</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">nl_NL</code><code class="variable-quote">'</code></span>)</span><br />
+      Return the given decimal number formatted for a specific locale.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type"><code class="link">unicode</code></span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="babel.numbers-module.html#format_currency" class="summary-sig-name">format_currency</a>(<span class="summary-sig-arg">number</span>,
+        <span class="summary-sig-arg">currency</span>,
+        <span class="summary-sig-arg">format</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">locale</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">nl_NL</code><code class="variable-quote">'</code></span>)</span><br />
+      Return formatted currency value.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type"><code class="link">unicode</code></span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="babel.numbers-module.html#format_percent" class="summary-sig-name">format_percent</a>(<span class="summary-sig-arg">number</span>,
+        <span class="summary-sig-arg">format</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">locale</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">nl_NL</code><code class="variable-quote">'</code></span>)</span><br />
+      Return formatted percent value for a specific locale.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type"><code class="link">unicode</code></span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="babel.numbers-module.html#format_scientific" class="summary-sig-name">format_scientific</a>(<span class="summary-sig-arg">number</span>,
+        <span class="summary-sig-arg">format</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">locale</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">nl_NL</code><code class="variable-quote">'</code></span>)</span><br />
+      Return value formatted in scientific notation for a specific locale.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type"><code class="link">long</code></span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="babel.numbers-module.html#parse_number" class="summary-sig-name">parse_number</a>(<span class="summary-sig-arg">string</span>,
+        <span class="summary-sig-arg">locale</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">nl_NL</code><code class="variable-quote">'</code></span>)</span><br />
+      Parse localized number string into a long integer.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type"><code class="link">float</code></span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="babel.numbers-module.html#parse_decimal" class="summary-sig-name">parse_decimal</a>(<span class="summary-sig-arg">string</span>,
+        <span class="summary-sig-arg">locale</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">nl_NL</code><code class="variable-quote">'</code></span>)</span><br />
+      Parse localized decimal string into a float.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Function Details</span></td>
+</tr>
+</table>
+<a name="format_number"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">format_number</span>(<span class="sig-arg">number</span>,
+        <span class="sig-arg">locale</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">nl_NL</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Return the given number formatted for a specific locale.</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>format_number(1099, locale=<span class="py-string">'en_US'</span>)
+<span class="py-output">u'1,099'</span></pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>number</code></strong> - the number to format</li>
+        <li><strong class="pname"><code>locale</code></strong> - the <a href="babel.core.Locale-class.html" class="link">Locale</a> object or locale identifier</li>
+    </ul></dd>
+    <dt>Returns: <code class="link">unicode</code></dt>
+        <dd>the formatted number</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="format_decimal"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">format_decimal</span>(<span class="sig-arg">number</span>,
+        <span class="sig-arg">format</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">locale</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">nl_NL</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Return the given decimal number formatted for a specific locale.</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>format_decimal(1.2345, locale=<span class="py-string">'en_US'</span>)
+<span class="py-output">u'1.234'</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>format_decimal(1.2346, locale=<span class="py-string">'en_US'</span>)
+<span class="py-output">u'1.235'</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>format_decimal(-1.2346, locale=<span class="py-string">'en_US'</span>)
+<span class="py-output">u'-1.235'</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>format_decimal(1.2345, locale=<span class="py-string">'sv_SE'</span>)
+<span class="py-output">u'1,234'</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>format_decimal(12345, locale=<span class="py-string">'de'</span>)
+<span class="py-output">u'12.345'</span></pre>
+<p>The appropriate thousands grouping and the decimal separator are used for
+each locale:</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>format_decimal(12345.5, locale=<span class="py-string">'en_US'</span>)
+<span class="py-output">u'12,345.5'</span></pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>number</code></strong> - the number to format</li>
+        <li><strong class="pname"><code>format</code></strong></li>
+        <li><strong class="pname"><code>locale</code></strong> - the <a href="babel.core.Locale-class.html" class="link">Locale</a> object or locale identifier</li>
+    </ul></dd>
+    <dt>Returns: <code class="link">unicode</code></dt>
+        <dd>the formatted decimal number</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="format_currency"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">format_currency</span>(<span class="sig-arg">number</span>,
+        <span class="sig-arg">currency</span>,
+        <span class="sig-arg">format</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">locale</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">nl_NL</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Return formatted currency value.</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>format_currency(1099.98, <span class="py-string">'USD'</span>, locale=<span class="py-string">'en_US'</span>)
+<span class="py-output">u'$1,099.98'</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>format_currency(1099.98, <span class="py-string">'USD'</span>, locale=<span class="py-string">'es_CO'</span>)
+<span class="py-output">u'US$\xa01.099,98'</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>format_currency(1099.98, <span class="py-string">'EUR'</span>, locale=<span class="py-string">'de_DE'</span>)
+<span class="py-output">u'1.099,98\xa0\u20ac'</span></pre>
+<p>The pattern can also be specified explicitly:</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>format_currency(1099.98, <span class="py-string">'EUR'</span>, u<span class="py-string">'&#164;&#164; #,##0.00'</span>, locale=<span class="py-string">'en_US'</span>)
+<span class="py-output">u'EUR 1,099.98'</span></pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>number</code></strong> - the number to format</li>
+        <li><strong class="pname"><code>currency</code></strong> - the currency code</li>
+        <li><strong class="pname"><code>locale</code></strong> - the <a href="babel.core.Locale-class.html" class="link">Locale</a> object or locale identifier</li>
+    </ul></dd>
+    <dt>Returns: <code class="link">unicode</code></dt>
+        <dd>the formatted currency value</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="format_percent"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">format_percent</span>(<span class="sig-arg">number</span>,
+        <span class="sig-arg">format</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">locale</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">nl_NL</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Return formatted percent value for a specific locale.</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>format_percent(0.34, locale=<span class="py-string">'en_US'</span>)
+<span class="py-output">u'34%'</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>format_percent(25.1234, locale=<span class="py-string">'en_US'</span>)
+<span class="py-output">u'2,512%'</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>format_percent(25.1234, locale=<span class="py-string">'sv_SE'</span>)
+<span class="py-output">u'2\xa0512\xa0%'</span></pre>
+<p>The format pattern can also be specified explicitly:</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>format_percent(25.1234, u<span class="py-string">'#,##0\u2030'</span>, locale=<span class="py-string">'en_US'</span>)
+<span class="py-output">u'25,123\u2030'</span></pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>number</code></strong> - the percent number to format</li>
+        <li><strong class="pname"><code>format</code></strong></li>
+        <li><strong class="pname"><code>locale</code></strong> - the <a href="babel.core.Locale-class.html" class="link">Locale</a> object or locale identifier</li>
+    </ul></dd>
+    <dt>Returns: <code class="link">unicode</code></dt>
+        <dd>the formatted percent number</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="format_scientific"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">format_scientific</span>(<span class="sig-arg">number</span>,
+        <span class="sig-arg">format</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">locale</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">nl_NL</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Return value formatted in scientific notation for a specific locale.</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>format_scientific(10000, locale=<span class="py-string">'en_US'</span>)
+<span class="py-output">u'1E4'</span></pre>
+<p>The format pattern can also be specified explicitly:</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>format_scientific(1234567, u<span class="py-string">'##0E00'</span>, locale=<span class="py-string">'en_US'</span>)
+<span class="py-output">u'1.23E06'</span></pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>number</code></strong> - the number to format</li>
+        <li><strong class="pname"><code>format</code></strong></li>
+        <li><strong class="pname"><code>locale</code></strong> - the <a href="babel.core.Locale-class.html" class="link">Locale</a> object or locale identifier</li>
+    </ul></dd>
+    <dt>Returns: <code class="link">unicode</code></dt>
+        <dd>value formatted in scientific notation.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="parse_number"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">parse_number</span>(<span class="sig-arg">string</span>,
+        <span class="sig-arg">locale</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">nl_NL</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Parse localized number string into a long integer.</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>parse_number(<span class="py-string">'1,099'</span>, locale=<span class="py-string">'en_US'</span>)
+<span class="py-output">1099L</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>parse_number(<span class="py-string">'1.099'</span>, locale=<span class="py-string">'de_DE'</span>)
+<span class="py-output">1099L</span></pre>
+<p>When the given string cannot be parsed, an exception is raised:</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>parse_number(<span class="py-string">'1.099,98'</span>, locale=<span class="py-string">'de'</span>)
+<span class="py-except">Traceback (most recent call last):</span>
+<span class="py-except">    ...</span>
+<span class="py-except">NumberFormatError: '1.099,98' is not a valid number</span></pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>string</code></strong> - the string to parse</li>
+        <li><strong class="pname"><code>locale</code></strong> - the <a href="babel.core.Locale-class.html" class="link">Locale</a> object or locale identifier</li>
+    </ul></dd>
+    <dt>Returns: <code class="link">long</code></dt>
+        <dd>the parsed number</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="babel.numbers.NumberFormatError-class.html">NumberFormatError</a></strong></code> - if the string can not be converted to a number</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="parse_decimal"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">parse_decimal</span>(<span class="sig-arg">string</span>,
+        <span class="sig-arg">locale</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">nl_NL</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Parse localized decimal string into a float.</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>parse_decimal(<span class="py-string">'1,099.98'</span>, locale=<span class="py-string">'en_US'</span>)
+<span class="py-output">1099.98</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>parse_decimal(<span class="py-string">'1.099,98'</span>, locale=<span class="py-string">'de'</span>)
+<span class="py-output">1099.98</span></pre>
+<p>When the given string cannot be parsed, an exception is raised:</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>parse_decimal(<span class="py-string">'2,109,998'</span>, locale=<span class="py-string">'de'</span>)
+<span class="py-except">Traceback (most recent call last):</span>
+<span class="py-except">    ...</span>
+<span class="py-except">NumberFormatError: '2,109,998' is not a valid decimal number</span></pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>string</code></strong> - the string to parse</li>
+        <li><strong class="pname"><code>locale</code></strong> - the <a href="babel.core.Locale-class.html" class="link">Locale</a> object or locale identifier</li>
+    </ul></dd>
+    <dt>Returns: <code class="link">float</code></dt>
+        <dd>the parsed decimal number</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'><a href="babel.numbers.NumberFormatError-class.html">NumberFormatError</a></strong></code> - if the string can not be converted to a
+decimal number</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="babel-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="../index.html">Documentation Index</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Wed Apr  7 09:54:56 2010
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

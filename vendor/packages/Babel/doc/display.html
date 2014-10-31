@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="generator" content="Docutils 0.5: http://docutils.sourceforge.net/">
+<title>Babel: Locale Display Names</title>
+<link rel="stylesheet" href="common/style/edgewall.css" type="text/css">
+</head>
+<body>
+<div class="document" id="locale-display-names">
+    <div id="navigation">
+      <span class="projinfo">Babel 0.9.5</span>
+      <a href="index.html">Documentation Index</a>
+    </div>
+<h1 class="title">Locale Display Names</h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="auto-toc simple">
+<li><a class="reference internal" href="#introduction" id="id1">1   Introduction</a></li>
+<li><a class="reference internal" href="#the-locale-class" id="id2">2   The <tt class="docutils literal"><span class="pre">Locale</span></tt> Class</a></li>
+<li><a class="reference internal" href="#calender-display-names" id="id3">3   Calender Display Names</a></li>
+</ul>
+</div>
+<div class="section" id="introduction">
+<h1>1   Introduction</h1>
+<p>While <a class="reference external" href="messages.html">message catalogs</a> allow you to localize any messages
+in your application, there are a number of strings that are used in many
+applications for which translations are readily available.</p>
+<p>Imagine for example you have a list of countries that users can choose from,
+and you'd like to display the names of those countries in the language the
+user prefers. Instead of translating all those country names yourself in your
+application, you can make use of the translations provided by the locale data
+included with Babel, which is based on the <a class="reference external" href="http://unicode.org/cldr/">Common Locale Data Repository
+(CLDR)</a> developed and maintained by the <a class="reference external" href="http://unicode.org/">Unicode
+Consortium</a>.</p>
+</div>
+<div class="section" id="the-locale-class">
+<h1>2   The <tt class="docutils literal"><span class="pre">Locale</span></tt> Class</h1>
+<p>You normally access such locale data through the <a class="reference external" href="api/babel.core.Locale-class.html">Locale</a> class provided
+by Babel:</p>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">babel</span> <span class="kn">import</span> <span class="n">Locale</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">locale</span> <span class="o">=</span> <span class="n">Locale</span><span class="p">(</span><span class="s">'en'</span><span class="p">,</span> <span class="s">'US'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">locale</span><span class="o">.</span><span class="n">territories</span><span class="p">[</span><span class="s">'US'</span><span class="p">]</span>
+<span class="go">u'United States'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">locale</span> <span class="o">=</span> <span class="n">Locale</span><span class="p">(</span><span class="s">'es'</span><span class="p">,</span> <span class="s">'MX'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">locale</span><span class="o">.</span><span class="n">territories</span><span class="p">[</span><span class="s">'US'</span><span class="p">]</span>
+<span class="go">u'Estados Unidos'</span>
+</pre></div>
+<p>In addition to country/territory names, the locale data also provides access to
+names of languages, scripts, variants, time zones, and more. Some of the data
+is closely related to number and date formatting.</p>
+<p>Most of the corresponding <tt class="docutils literal"><span class="pre">Locale</span></tt> properties return dictionaries, where the
+key is a code such as the ISO country and language codes. Consult the API
+documentation for references to the relevant specifications.</p>
+</div>
+<div class="section" id="calender-display-names">
+<h1>3   Calender Display Names</h1>
+<p>The <a class="reference external" href="api/babel.core.Locale-class.html">Locale</a> class provides access to many locale display names related to
+calendar display, such as the names of week days or months.</p>
+<p>These display names are of course used for date formatting, but can also be
+used, for example, to show a list of months to the user in their preferred
+language:</p>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">locale</span> <span class="o">=</span> <span class="n">Locale</span><span class="p">(</span><span class="s">'es'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">month_names</span> <span class="o">=</span> <span class="n">locale</span><span class="o">.</span><span class="n">months</span><span class="p">[</span><span class="s">'format'</span><span class="p">][</span><span class="s">'wide'</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">month_names</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">month_names</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="n">name</span>
+<span class="go">enero</span>
+<span class="go">febrero</span>
+<span class="go">marzo</span>
+<span class="go">abril</span>
+<span class="go">mayo</span>
+<span class="go">junio</span>
+<span class="go">julio</span>
+<span class="go">agosto</span>
+<span class="go">septiembre</span>
+<span class="go">octubre</span>
+<span class="go">noviembre</span>
+<span class="go">diciembre</span>
+</pre></div>
+</div>
+    <div id="footer">
+      Visit the Babel open source project at
+      <a href="http://babel.edgewall.org/">http://babel.edgewall.org/</a>
+    </div>
+  </div>
+</body>
+</html>

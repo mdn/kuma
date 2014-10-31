@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>babel.messages.pofile</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="babel-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="../index.html">Documentation Index</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="babel-module.html">Package&nbsp;babel</a> ::
+        <a href="babel.messages-module.html">Package&nbsp;messages</a> ::
+        Module&nbsp;pofile
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== MODULE DESCRIPTION ==================== -->
+<h1 class="epydoc">Module pofile</h1><p class="nomargin-top"></p>
+Reading and writing of files in the <tt class="rst-rst-rst-rst-docutils literal rst-rst-rst-docutils literal rst-rst-docutils literal rst-docutils literal"><span class="pre">gettext</span></tt> PO (portable object)
+format.
+
+<hr />
+<div class="fields">      <p><strong>See Also:</strong>
+        <a class="rst-reference external" href="http://www.gnu.org/software/gettext/manual/gettext.html#PO-Files" target="_top">The Format of PO Files</a>
+      </p>
+</div><!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Functions</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type"><tt class="rst-docutils literal"><span class="pre">iterator</span></tt></span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="babel.messages.pofile-module.html#read_po" class="summary-sig-name">read_po</a>(<span class="summary-sig-arg">fileobj</span>,
+        <span class="summary-sig-arg">locale</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">domain</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">ignore_obsolete</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Read messages from a <tt class="rst-docutils literal"><span class="pre">gettext</span></tt> PO (portable object) file from the given
+file-like object and return a <a href="babel.messages.catalog.Catalog-class.html" class="link">Catalog</a>.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="babel.messages.pofile-module.html#write_po" class="summary-sig-name">write_po</a>(<span class="summary-sig-arg">fileobj</span>,
+        <span class="summary-sig-arg">catalog</span>,
+        <span class="summary-sig-arg">width</span>=<span class="summary-sig-default">76</span>,
+        <span class="summary-sig-arg">no_location</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">omit_header</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">sort_output</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">sort_by_file</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">ignore_obsolete</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">include_previous</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Write a <tt class="rst-docutils literal"><span class="pre">gettext</span></tt> PO (portable object) template file for a given
+message catalog to the provided file-like object.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Function Details</span></td>
+</tr>
+</table>
+<a name="read_po"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">read_po</span>(<span class="sig-arg">fileobj</span>,
+        <span class="sig-arg">locale</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">domain</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">ignore_obsolete</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Read messages from a <tt class="rst-rst-docutils literal rst-docutils literal"><span class="pre">gettext</span></tt> PO (portable object) file from the given
+file-like object and return a <a href="babel.messages.catalog.Catalog-class.html" class="link">Catalog</a>.</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">from</span> StringIO <span class="py-keyword">import</span> StringIO
+<span class="py-prompt">&gt;&gt;&gt; </span>buf = StringIO(<span class="py-string">'''</span>
+<span class="py-more">... </span><span class="py-string">#: main.py:1</span>
+<span class="py-more">... </span><span class="py-string">#, fuzzy, python-format</span>
+<span class="py-more">... </span><span class="py-string">msgid &quot;foo %(name)s&quot;</span>
+<span class="py-more">... </span><span class="py-string">msgstr &quot;&quot;</span>
+<span class="py-more">...</span>
+<span class="py-more">... </span><span class="py-string"># A user comment</span>
+<span class="py-more">... </span><span class="py-string">#. An auto comment</span>
+<span class="py-more">... </span><span class="py-string">#: main.py:3</span>
+<span class="py-more">... </span><span class="py-string">msgid &quot;bar&quot;</span>
+<span class="py-more">... </span><span class="py-string">msgid_plural &quot;baz&quot;</span>
+<span class="py-more">... </span><span class="py-string">msgstr[0] &quot;&quot;</span>
+<span class="py-more">... </span><span class="py-string">msgstr[1] &quot;&quot;</span>
+<span class="py-more">... </span><span class="py-string">'''</span>)
+<span class="py-prompt">&gt;&gt;&gt; </span>catalog = read_po(buf)
+<span class="py-prompt">&gt;&gt;&gt; </span>catalog.revision_date = datetime(2007, 04, 01)</pre>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">for</span> message <span class="py-keyword">in</span> catalog:
+<span class="py-more">... </span>    <span class="py-keyword">if</span> message.id:
+<span class="py-more">... </span>        <span class="py-keyword">print</span> (message.id, message.string)
+<span class="py-more">... </span>        <span class="py-keyword">print</span> <span class="py-string">' '</span>, (message.locations, message.flags)
+<span class="py-more">... </span>        <span class="py-keyword">print</span> <span class="py-string">' '</span>, (message.user_comments, message.auto_comments)
+<span class="py-output">(u'foo %(name)s', '')</span>
+<span class="py-output">  ([(u'main.py', 1)], set([u'fuzzy', u'python-format']))</span>
+<span class="py-output">  ([], [])</span>
+<span class="py-output">((u'bar', u'baz'), ('', ''))</span>
+<span class="py-output">  ([(u'main.py', 3)], set([]))</span>
+<span class="py-output">  ([u'A user comment'], [u'An auto comment'])</span></pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>fileobj</code></strong> - the file-like object to read the PO file from</li>
+        <li><strong class="pname"><code>locale</code></strong> - the locale identifier or <a href="babel.core.Locale-class.html" class="link">Locale</a> object, or <code class="link">None</code>
+if the catalog is not bound to a locale (which basically
+means it's a template)</li>
+        <li><strong class="pname"><code>domain</code></strong> - the message domain</li>
+        <li><strong class="pname"><code>ignore_obsolete</code></strong> - whether to ignore obsolete messages in the input</li>
+    </ul></dd>
+    <dt>Returns: <tt class="rst-rst-docutils literal rst-docutils literal"><span class="pre">iterator</span></tt></dt>
+        <dd>an iterator over <tt class="rst-docutils literal"><span class="pre">(message,</span> <span class="pre">translation,</span> <span class="pre">location)</span></tt> tuples</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="write_po"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">write_po</span>(<span class="sig-arg">fileobj</span>,
+        <span class="sig-arg">catalog</span>,
+        <span class="sig-arg">width</span>=<span class="sig-default">76</span>,
+        <span class="sig-arg">no_location</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">omit_header</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">sort_output</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">sort_by_file</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">ignore_obsolete</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">include_previous</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Write a <tt class="rst-rst-docutils literal rst-docutils literal"><span class="pre">gettext</span></tt> PO (portable object) template file for a given
+message catalog to the provided file-like object.</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>catalog = Catalog()
+<span class="py-prompt">&gt;&gt;&gt; </span>catalog.add(u<span class="py-string">'foo %(name)s'</span>, locations=[(<span class="py-string">'main.py'</span>, 1)],
+<span class="py-more">... </span>            flags=(<span class="py-string">'fuzzy'</span>,))
+<span class="py-prompt">&gt;&gt;&gt; </span>catalog.add((u<span class="py-string">'bar'</span>, u<span class="py-string">'baz'</span>), locations=[(<span class="py-string">'main.py'</span>, 3)])
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">from</span> StringIO <span class="py-keyword">import</span> StringIO
+<span class="py-prompt">&gt;&gt;&gt; </span>buf = StringIO()
+<span class="py-prompt">&gt;&gt;&gt; </span>write_po(buf, catalog, omit_header=True)
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">print</span> buf.getvalue()
+<span class="py-output">#: main.py:1</span>
+<span class="py-output">#, fuzzy, python-format</span>
+<span class="py-output">msgid &quot;foo %(name)s&quot;</span>
+<span class="py-output">msgstr &quot;&quot;</span>
+<span class="py-output">&lt;BLANKLINE&gt;</span>
+<span class="py-output">#: main.py:3</span>
+<span class="py-output">msgid &quot;bar&quot;</span>
+<span class="py-output">msgid_plural &quot;baz&quot;</span>
+<span class="py-output">msgstr[0] &quot;&quot;</span>
+<span class="py-output">msgstr[1] &quot;&quot;</span>
+<span class="py-output">&lt;BLANKLINE&gt;</span>
+<span class="py-output">&lt;BLANKLINE&gt;</span></pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>fileobj</code></strong> - the file-like object to write to</li>
+        <li><strong class="pname"><code>catalog</code></strong> - the <a href="babel.messages.catalog.Catalog-class.html" class="link">Catalog</a> instance</li>
+        <li><strong class="pname"><code>width</code></strong> - the maximum line width for the generated output; use <code class="link">None</code>,
+0, or a negative number to completely disable line wrapping</li>
+        <li><strong class="pname"><code>no_location</code></strong> - do not emit a location comment for every message</li>
+        <li><strong class="pname"><code>omit_header</code></strong> - do not include the <tt class="rst-docutils literal"><span class="pre">msgid</span> <span class="pre">&quot;&quot;</span></tt> entry at the top of the
+output</li>
+        <li><strong class="pname"><code>sort_output</code></strong> - whether to sort the messages in the output by msgid</li>
+        <li><strong class="pname"><code>sort_by_file</code></strong> - whether to sort the messages in the output by their
+locations</li>
+        <li><strong class="pname"><code>ignore_obsolete</code></strong> - whether to ignore obsolete messages and not include
+them in the output; by default they are included as
+comments</li>
+        <li><strong class="pname"><code>include_previous</code></strong> - include the old msgid as a comment when
+updating the catalog</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="babel-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="../index.html">Documentation Index</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Wed Apr  7 09:54:55 2010
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

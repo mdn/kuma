@@ -1,0 +1,26 @@
+include AUTHORS
+include Changelog
+include FAQ
+include INSTALL
+include README
+include README.rst
+include MANIFEST.in
+include LICENSE
+include TODO
+include THANKS
+include setup.cfg
+recursive-include celery *.py
+recursive-include funtests *.py
+recursive-include docs *
+recursive-include contrib *
+recursive-include examples *
+recursive-include requirements *.txt
+prune tests/*.pyc
+prune docs/*.pyc
+prune contrib/*.pyc
+prune celery/*.pyc
+prune examples/*.pyc
+prune bin/*.pyc
+prune docs/.build
+prune docs/graffles
+prune .tox/*

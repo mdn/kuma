@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="pretranslate" id="pretranslate">pretranslate</a></h1>
+<div class="level1">
+
+<p>
+
+Merge existing translations from an old translation file to a new one as well as fill any missing translations from translation memory via fuzzy matching.
+</p>
+
+<p>
+This functionality used to be part of pot2po and corresponds to “msgmerge” from the gettext package.
+</p>
+
+<p>
+pretranslate works on <acronym title="Gettext Portable Object">PO</acronym> and <acronym title="XML Localization Interchange File Format">XLIFF</acronym> files.
+</p>
+
+</div>
+<!-- SECTION "pretranslate" [1-329] -->
+<h2><a name="usage" id="usage">Usage</a></h2>
+<div class="level2">
+<pre class="code">pretranslate [options] &lt;input&gt; &lt;output&gt;</pre>
+
+<p>
+
+Where:
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> &lt;input&gt;  </td><td class="col1 leftalign"> is the translation file or directory to be pretranslate   </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> &lt;output&gt;   </td><td class="col1 leftalign"> is the translation file or a directory where the pretranslated version will be stored  </td>
+	</tr>
+</table>
+
+<p>
+
+Options:
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> --version            </td><td class="col1 leftalign"> show program&#039;s version number and exit  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> -h, --help           </td><td class="col1 leftalign"> show this help message and exit   </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> --manpage            </td><td class="col1 leftalign"> output a manpage based on the help  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> <a href="toolkit-progress_progress.html" class="wikilink1" title="toolkit-progress_progress.html">--progress=PROGRESS</a>  </td><td class="col1 leftalign"> show progress as: dots, none, bar, names, verbose  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> <a href="toolkit-errorlevel_errorlevel.html" class="wikilink1" title="toolkit-errorlevel_errorlevel.html">--errorlevel=ERRORLEVEL</a>  </td><td class="col1 leftalign"> show errorlevel as: none, message, exception, traceback  </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> -iINPUT, --input=INPUT   </td><td class="col1 leftalign"> read from INPUT in pot format  </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> -xEXCLUDE, --exclude=EXCLUDE  </td><td class="col1 leftalign"> exclude names matching EXCLUDE from input paths  </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 leftalign"> -oOUTPUT, --output=OUTPUT     </td><td class="col1 leftalign"> write to OUTPUT in po, pot formats  </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 leftalign"> -tTEMPLATE, --template=TEMPLATE   </td><td class="col1"> read old translations from TEMPLATE </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0 leftalign"> <a href="toolkit-psyco_mode.html" class="wikilink1" title="toolkit-psyco_mode.html">--psyco=MODE</a>         </td><td class="col1 leftalign"> use psyco to speed up the operation, modes: none, full, profile  </td>
+	</tr>
+	<tr class="row10">
+		<td class="col0 leftalign"> --tm=TM              </td><td class="col1 leftalign"> The file to use as translation memory when fuzzy matching     </td>
+	</tr>
+	<tr class="row11">
+		<td class="col0 leftalign"> -sMIN_SIMILARITY, --similarity=MIN_SIMILARITY   </td><td class="col1"> The minimum similarity for inclusion (default: 75%) </td>
+	</tr>
+	<tr class="row12">
+		<td class="col0 leftalign"> --nofuzzymatching    </td><td class="col1 leftalign"> Disable all fuzzy matching  </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Usage" [330-1603] -->
+<h2><a name="examples" id="examples">Examples</a></h2>
+<div class="level2">
+<pre class="code">pretranslate -t zu-1.0.1 -tm zu_tm.po zu-2.0.2 zu-2.0.2-translated </pre>
+
+<p>
+
+Here we are pretranslating the <acronym title="Gettext Portable Object">PO</acronym> or <acronym title="XML Localization Interchange File Format">XLIFF</acronym> files in <em>zu-2.0.2</em> using the old translations in <em>zu-1.0.1</em> and fuzzy matches from the zu_tm.po 
+compendium. the result is stored in <em>zu-2.0.2-translate</em>
+</p>
+
+<p>
+unlike pot2po pretranslate will not change anything in the input file except merge translations, no reordering or changes to headers.
+</p>
+
+</div>
+<!-- SECTION "Examples" [1604-2036] -->
+<h2><a name="merging" id="merging">Merging</a></h2>
+<div class="level2">
+
+<p>
+
+It helps to understand when and how pretranslate will merge. The default is to follow msgmerge&#039;s behaviour but we add some extra features with fuzzy matching:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> If everything matches we carry that across</div>
+</li>
+<li class="level1"><div class="li"> We can resurrect obsolete messages for reuse</div>
+</li>
+<li class="level1"><div class="li"> If we cannot find a match we will first look through the current and obsolete messages and then through any global translation memory</div>
+</li>
+<li class="level1"><div class="li"> Fuzzy matching makes use of the <a href="toolkit-levenshtein_distance.html" class="wikilink1" title="toolkit-levenshtein_distance.html">Levenshtein distance</a> algorithm to detect the best matches</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Merging" [2037-2551] -->
+<h2><a name="performance" id="performance">Performance</a></h2>
+<div class="level2">
+
+<p>
+
+Fuzzy matches are usually of good quality. Installation of the <a href="https://sourceforge.net/project/showfiles.php?group_id=91920&amp;package_id=260161" class="urlextern" title="https://sourceforge.net/project/showfiles.php?group_id=91920&amp;package_id=260161">python-Levenshtein</a> package will speed up fuzzy matching. Without this a Python based matcher is used which is considerably slower.
+</p>
+
+<p>
+Install psyco for additional speedup (it is used by most toolkit tools if it is installed.)
+</p>
+
+</div>
+<!-- SECTION "Performance" [2552-] --></body>
+</html>

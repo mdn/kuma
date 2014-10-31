@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Coding guide &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../index.html" />
+    <link rel="up" title="IPython Developer&#8217;s Guide" href="index.html" />
+    <link rel="next" title="Documenting IPython" href="doc_guide.html" />
+    <link rel="prev" title="IPython development guidelines" href="overview.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="doc_guide.html" title="Documenting IPython"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="overview.html" title="IPython development guidelines"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">IPython Developer&#8217;s Guide</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="coding-guide">
+<h1>Coding guide<a class="headerlink" href="#coding-guide" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="coding-conventions">
+<h2>Coding conventions<a class="headerlink" href="#coding-conventions" title="Permalink to this headline">¶</a></h2>
+<p>In general, we&#8217;ll try to follow the standard Python style conventions as
+described in Python&#8217;s <a class="reference external" href="http://www.python.org/peps/pep-0008.html">PEP 8</a>, the official Python Style Guide.</p>
+<p>Other comments:</p>
+<ul class="simple">
+<li>In a large file, top level classes and functions should be separated by 2-3
+lines to make it easier to separate them visually.</li>
+<li>Use 4 spaces for indentation, <em>never</em> use hard tabs.</li>
+<li>Keep the ordering of methods the same in classes that have the same methods.
+This is particularly true for classes that implement similar interfaces and
+for interfaces that are similar.</li>
+</ul>
+<div class="section" id="naming-conventions">
+<h3>Naming conventions<a class="headerlink" href="#naming-conventions" title="Permalink to this headline">¶</a></h3>
+<p>In terms of naming conventions, we&#8217;ll follow the guidelines of PEP 8.  Some of
+the existing code doesn&#8217;t honor this perfectly, but for all new IPython code
+(and much existing code is being refactored), we&#8217;ll use:</p>
+<ul class="simple">
+<li>All <tt class="docutils literal"><span class="pre">lowercase</span></tt> module names.</li>
+<li><tt class="docutils literal"><span class="pre">CamelCase</span></tt> for class names.</li>
+<li><tt class="docutils literal"><span class="pre">lowercase_with_underscores</span></tt> for methods, functions, variables and
+attributes.</li>
+</ul>
+<p>This may be confusing as some of the existing codebase uses a different
+convention (<tt class="docutils literal"><span class="pre">lowerCamelCase</span></tt> for methods and attributes).  Slowly, we will
+move IPython over to the new convention, providing shadow names for backward
+compatibility in public interfaces.</p>
+<p>There are, however, some important exceptions to these rules.  In some cases,
+IPython code will interface with packages (Twisted, Wx, Qt) that use other
+conventions.  At some level this makes it impossible to adhere to our own
+standards at all times.  In particular, when subclassing classes that use other
+naming conventions, you must follow their naming conventions.  To deal with
+cases like this, we propose the following policy:</p>
+<ul class="simple">
+<li>If you are subclassing a class that uses different conventions, use its
+naming conventions throughout your subclass.  Thus, if you are creating a
+Twisted Protocol class, used Twisted&#8217;s
+<tt class="docutils literal"><span class="pre">namingSchemeForMethodsAndAttributes.</span></tt></li>
+<li>All IPython&#8217;s official interfaces should use our conventions.  In some cases
+this will mean that you need to provide shadow names (first implement
+<tt class="docutils literal"><span class="pre">fooBar</span></tt> and then <tt class="docutils literal"><span class="pre">foo_bar</span> <span class="pre">=</span> <span class="pre">fooBar</span></tt>).  We want to avoid this at all
+costs, but it will probably be necessary at times.  But, please use this
+sparingly!</li>
+</ul>
+<p>Implementation-specific <em>private</em> methods will use
+<tt class="docutils literal"><span class="pre">_single_underscore_prefix</span></tt>.  Names with a leading double underscore will
+<em>only</em> be used in special cases, as they makes subclassing difficult (such
+names are not easily seen by child classes).</p>
+<p>Occasionally some run-in lowercase names are used, but mostly for very short
+names or where we are implementing methods very similar to existing ones in a
+base class (like <tt class="docutils literal"><span class="pre">runlines()</span></tt> where <tt class="docutils literal"><span class="pre">runsource()</span></tt> and <tt class="docutils literal"><span class="pre">runcode()</span></tt> had
+established precedent).</p>
+<p>The old IPython codebase has a big mix of classes and modules prefixed with an
+explicit <tt class="docutils literal"><span class="pre">IP</span></tt>. In Python this is mostly unnecessary, redundant and frowned
+upon, as namespaces offer cleaner prefixing. The only case where this approach
+is justified is for classes which are expected to be imported into external
+namespaces and a very generic name (like Shell) is too likely to clash with
+something else.  We&#8217;ll need to revisit this issue as we clean up and refactor
+the code, but in general we should remove as many unnecessary <tt class="docutils literal"><span class="pre">IP</span></tt>/<tt class="docutils literal"><span class="pre">ip</span></tt>
+prefixes as possible. However, if a prefix seems absolutely necessary the more
+specific <tt class="docutils literal"><span class="pre">IPY</span></tt> or <tt class="docutils literal"><span class="pre">ipy</span></tt> are preferred.</p>
+</div>
+</div>
+<div class="section" id="testing-system">
+<span id="devel-testing"></span><h2>Testing system<a class="headerlink" href="#testing-system" title="Permalink to this headline">¶</a></h2>
+<p>It is extremely important that all code contributed to IPython has tests. Tests
+should be written as unittests, doctests or as entities that the <a class="reference external" href="http://code.google.com/p/python-nose/">Nose</a>
+testing package will find. Regardless of how the tests are written, we will use
+<a class="reference external" href="http://code.google.com/p/python-nose/">Nose</a> for discovering and running the tests. <a class="reference external" href="http://code.google.com/p/python-nose/">Nose</a> will be required to run
+the IPython test suite, but will not be required to simply use IPython.</p>
+<p>Tests of <a class="reference external" href="http://www.twistedmatrix.com">Twisted</a> using code should be written by subclassing the
+<tt class="docutils literal"><span class="pre">TestCase</span></tt> class that comes with <tt class="docutils literal"><span class="pre">twisted.trial.unittest</span></tt>. When this is
+done, <a class="reference external" href="http://code.google.com/p/python-nose/">Nose</a> will be able to run the tests and the twisted reactor will be
+handled correctly.</p>
+<p>Each subpackage in IPython should have its own <tt class="docutils literal"><span class="pre">tests</span></tt> directory that
+contains all of the tests for that subpackage. This allows each subpackage to
+be self-contained. If a subpackage has any dependencies beyond the Python
+standard library, the tests for that subpackage should be skipped if the
+dependencies are not found. This is very important so users don&#8217;t get tests
+failing simply because they don&#8217;t have dependencies.</p>
+<p>We also need to look into use Noses ability to tag tests to allow a more
+modular approach of running tests.</p>
+</div>
+<div class="section" id="configuration-system">
+<span id="devel-config"></span><h2>Configuration system<a class="headerlink" href="#configuration-system" title="Permalink to this headline">¶</a></h2>
+<p>IPython uses <a class="reference external" href="http://docs.python.org/lib/module-ConfigParser.html">.ini</a> files for configuration purposes. This represents a huge
+improvement over the configuration system used in IPython. IPython works with
+these files using the <a class="reference external" href="http://www.voidspace.org.uk/python/configobj.html">ConfigObj</a> package, which IPython includes as
+<tt class="docutils literal"><span class="pre">ipython1/external/configobj.py</span></tt>.</p>
+<p>Currently, we are using raw <a class="reference external" href="http://www.voidspace.org.uk/python/configobj.html">ConfigObj</a> objects themselves. Each subpackage of
+IPython should contain a <tt class="docutils literal"><span class="pre">config</span></tt> subdirectory that contains all of the
+configuration information for the subpackage. To see how configuration
+information is defined (along with defaults) see at the examples in
+<tt class="docutils literal"><span class="pre">ipython1/kernel/config</span></tt> and <tt class="docutils literal"><span class="pre">ipython1/core/config</span></tt>. Likewise, to see how
+the configuration information is used, see examples in
+<tt class="docutils literal"><span class="pre">ipython1/kernel/scripts/ipengine.py</span></tt>.</p>
+<p>Eventually, we will add a new layer on top of the raw <a class="reference external" href="http://www.voidspace.org.uk/python/configobj.html">ConfigObj</a> objects. We
+are calling this new layer, <tt class="docutils literal"><span class="pre">tconfig</span></tt>, as it will use a <a class="reference external" href="http://code.enthought.com/traits/">Traits</a>-like
+validation model.  We won&#8217;t actually use <a class="reference external" href="http://code.enthought.com/traits/">Traits</a>, but will implement
+something similar in pure Python.  But, even in this new system, we will still
+use <a class="reference external" href="http://www.voidspace.org.uk/python/configobj.html">ConfigObj</a> and <a class="reference external" href="http://docs.python.org/lib/module-ConfigParser.html">.ini</a> files underneath the hood. Talk to Fernando if you
+are interested in working on this part of IPython. The current prototype of
+<tt class="docutils literal"><span class="pre">tconfig</span></tt> is located in the IPython sandbox.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">Coding guide</a><ul>
+<li><a class="reference external" href="#coding-conventions">Coding conventions</a><ul>
+<li><a class="reference external" href="#naming-conventions">Naming conventions</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#testing-system">Testing system</a></li>
+<li><a class="reference external" href="#configuration-system">Configuration system</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="overview.html" title="previous chapter">IPython development guidelines</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="doc_guide.html" title="next chapter">Documenting IPython</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/development/coding_guide.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="doc_guide.html" title="Documenting IPython"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="overview.html" title="IPython development guidelines"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">IPython Developer&#8217;s Guide</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.core.output_trap
+=======================
+
+Module: :mod:`kernel.core.output_trap`
+--------------------------------------
+Inheritance diagram for ``IPython.kernel.core.output_trap``:
+
+.. inheritance-diagram:: IPython.kernel.core.output_trap 
+   :parts: 3
+
+.. automodule:: IPython.kernel.core.output_trap
+
+.. currentmodule:: IPython.kernel.core.output_trap
+
+:class:`OutputTrap`
+-------------------
+
+
+.. autoclass:: OutputTrap
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

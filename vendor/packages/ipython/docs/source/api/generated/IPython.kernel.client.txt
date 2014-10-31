@@ -1,0 +1,20 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.client
+=============
+
+Module: :mod:`kernel.client`
+----------------------------
+.. automodule:: IPython.kernel.client
+
+.. currentmodule:: IPython.kernel.client
+
+Functions
+---------
+
+
+.. autofunction:: IPython.kernel.client.get_multiengine_client
+
+
+.. autofunction:: IPython.kernel.client.get_task_client
+

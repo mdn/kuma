@@ -1,0 +1,18 @@
+Metadata-Version: 1.0
+Name: Babel
+Version: 0.9.5
+Summary: Internationalization utilities
+Home-page: http://babel.edgewall.org/
+Author: Edgewall Software
+Author-email: info@edgewall.org
+License: BSD
+Download-URL: http://babel.edgewall.org/wiki/Download
+Description: A collection of tools for internationalizing Python applications.
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Web Environment
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development :: Libraries :: Python Modules

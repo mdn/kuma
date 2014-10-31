@@ -1,0 +1,26 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+macro
+=====
+
+Module: :mod:`macro`
+--------------------
+Inheritance diagram for ``IPython.macro``:
+
+.. inheritance-diagram:: IPython.macro 
+   :parts: 3
+
+.. automodule:: IPython.macro
+
+.. currentmodule:: IPython.macro
+
+:class:`Macro`
+--------------
+
+
+.. autoclass:: Macro
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

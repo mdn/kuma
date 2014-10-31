@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="qt_phrase_book_.qph" id="qt_phrase_book_.qph">Qt Phrase Book (.qph)</a></h1>
+<div class="level1">
+
+<p>
+
+<p><div class="noteclassic">New in 1.2
+</div></p>
+</p>
+
+<p>
+Qt Linguist allows a translator to collect common phrases into a phrase book.  This plays a role of glossary lookup as opposed to translation memory.
+</p>
+
+</div>
+<!-- SECTION "Qt Phrase Book (.qph)" [1-213] -->
+<h2><a name="conformance" id="conformance">Conformance</a></h2>
+<div class="level2">
+
+<p>
+
+There is no formal definition of the format, although it follows a simple structure:
+
+</p>
+<pre class="code">&lt;!DOCTYPE QPH&gt;&lt;QPH&gt;
+  &lt;phrase&gt;
+    &lt;source&gt;Source&lt;/source&gt;
+    &lt;target&gt;Target&lt;/target&gt;
+    &lt;definition&gt;Optional definition&lt;/definition&gt;
+  &lt;/phrase&gt;
+&lt;/QPH&gt;</pre>
+
+</div>
+<!-- SECTION "Conformance" [214-494] -->
+<h2><a name="missing_features" id="missing_features">Missing features</a></h2>
+<div class="level2">
+
+<p>
+
+There are no missing features in our support in the toolkit.  The only slight difference are:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> We don&#039;t focus on adding and removing items, just updating and reading</div>
+</li>
+<li class="level1"><div class="li"> Comments are not properly escaped on reading, they might be on writing</div>
+</li>
+<li class="level1"><div class="li"> An <acronym title="Extensible Markup Language">XML</acronym> header is output on writing while it seems that no files in the wild contain an <acronym title="Extensible Markup Language">XML</acronym> header.</div>
+</li>
+<li class="level1"><div class="li"> The <code>&lt;definition&gt;</code> is aimed at users, the toolkits addnote feature focuses on programmer, translators, etc comments while there is really only one source of comments in a .qph.  This causes duplication on the offline editor.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Missing features" [495-] --></body>
+</html>

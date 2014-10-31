@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="generator" content="Docutils 0.5: http://docutils.sourceforge.net/">
+<title>Babel: Working with Message Catalogs</title>
+<link rel="stylesheet" href="common/style/edgewall.css" type="text/css">
+</head>
+<body>
+<div class="document" id="working-with-message-catalogs">
+    <div id="navigation">
+      <span class="projinfo">Babel 0.9.5</span>
+      <a href="index.html">Documentation Index</a>
+    </div>
+<h1 class="title">Working with Message Catalogs</h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="auto-toc simple">
+<li><a class="reference internal" href="#introduction" id="id2">1   Introduction</a></li>
+<li><a class="reference internal" href="#message-extraction" id="id3">2   Message Extraction</a><ul class="auto-toc">
+<li><a class="reference internal" href="#front-ends" id="id4">2.1   Front-Ends</a></li>
+<li><a class="reference internal" href="#extraction-method-mapping-and-configuration" id="id5">2.2   Extraction Method Mapping and Configuration</a><ul class="auto-toc">
+<li><a class="reference internal" href="#default-extraction-methods" id="id6">2.2.1   Default Extraction Methods</a></li>
+<li><a class="reference internal" href="#id1" id="id7">2.2.2   Referencing Extraction Methods</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#writing-extraction-methods" id="id8">2.3   Writing Extraction Methods</a></li>
+<li><a class="reference internal" href="#translator-comments" id="id9">2.4   Translator Comments</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="introduction">
+<h1>1   Introduction</h1>
+<p>The <tt class="docutils literal"><span class="pre">gettext</span></tt> translation system enables you to mark any strings used in your
+application as subject to localization, by wrapping them in functions such as
+<tt class="docutils literal"><span class="pre">gettext(str)</span></tt> and <tt class="docutils literal"><span class="pre">ngettext(singular,</span> <span class="pre">plural,</span> <span class="pre">num)</span></tt>. For brevity, the
+<tt class="docutils literal"><span class="pre">gettext</span></tt> function is often aliased to <tt class="docutils literal"><span class="pre">_(str)</span></tt>, so you can write:</p>
+<div class="highlight"><pre><span class="k">print</span> <span class="n">_</span><span class="p">(</span><span class="s">"Hello"</span><span class="p">)</span>
+</pre></div>
+<p>instead of just:</p>
+<div class="highlight"><pre><span class="k">print</span> <span class="s">"Hello"</span>
+</pre></div>
+<p>to make the string "Hello" localizable.</p>
+<p>Message catalogs are collections of translations for such localizable messages
+used in an application. They are commonly stored in PO (Portable Object) and MO
+(Machine Object) files, the formats of which are defined by the GNU <a class="reference external" href="http://www.gnu.org/software/gettext/">gettext</a>
+tools and the GNU <a class="reference external" href="http://sourceforge.net/projects/translation">translation project</a>.</p>
+<blockquote>
+</blockquote>
+<p>The general procedure for building message catalogs looks something like this:</p>
+<blockquote>
+<ul class="simple">
+<li>use a tool (such as <tt class="docutils literal"><span class="pre">xgettext</span></tt>) to extract localizable strings from the
+code base and write them to a POT (PO Template) file.</li>
+<li>make a copy of the POT file for a specific locale (for example, "en_US")
+and start translating the messages</li>
+<li>use a tool such as <tt class="docutils literal"><span class="pre">msgfmt</span></tt> to compile the locale PO file into an binary
+MO file</li>
+<li>later, when code changes make it necessary to update the translations, you
+regenerate the POT file and merge the changes into the various
+locale-specific PO files, for example using <tt class="docutils literal"><span class="pre">msgmerge</span></tt></li>
+</ul>
+</blockquote>
+<p>Python provides the <a class="reference external" href="http://docs.python.org/lib/module-gettext.html">gettext module</a> as part of the standard library, which
+enables applications to work with appropriately generated MO files.</p>
+<blockquote>
+</blockquote>
+<p>As <tt class="docutils literal"><span class="pre">gettext</span></tt> provides a solid and well supported foundation for translating
+application messages, Babel does not reinvent the wheel, but rather reuses this
+infrastructure, and makes it easier to build message catalogs for Python
+applications.</p>
+</div>
+<div class="section" id="message-extraction">
+<h1>2   Message Extraction</h1>
+<p>Babel provides functionality similar to that of the <tt class="docutils literal"><span class="pre">xgettext</span></tt> program,
+except that only extraction from Python source files is built-in, while support
+for other file formats can be added using a simple extension mechanism.</p>
+<p>Unlike <tt class="docutils literal"><span class="pre">xgettext</span></tt>, which is usually invoked once for every file, the routines
+for message extraction in Babel operate on directories. While the per-file
+approach of <tt class="docutils literal"><span class="pre">xgettext</span></tt> works nicely with projects using a <tt class="docutils literal"><span class="pre">Makefile</span></tt>,
+Python projects rarely use <tt class="docutils literal"><span class="pre">make</span></tt>, and thus a different mechanism is needed
+for extracting messages from the heterogeneous collection of source files that
+many Python projects are composed of.</p>
+<p>When message extraction is based on directories instead of individual files,
+there needs to be a way to configure which files should be treated in which
+manner. For example, while many projects may contain <tt class="docutils literal"><span class="pre">.html</span></tt> files, some of
+those files may be static HTML files that don't contain localizable message,
+while others may be <a class="reference external" href="http://www.djangoproject.com/">Django</a> templates, and still others may contain <a class="reference external" href="http://genshi.edgewall.org/">Genshi</a>
+markup templates. Some projects may even mix HTML files for different templates
+languages (for whatever reason). Therefore the way in which messages are
+extracted from source files can not only depend on the file extension, but
+needs to be controllable in a precise manner.</p>
+<p>Babel accepts a configuration file to specify this mapping of files to
+extraction methods, which is described below.</p>
+<div class="section" id="front-ends">
+<span id="frontends"></span><h2>2.1   Front-Ends</h2>
+<p>Babel provides two different front-ends to access its functionality for working
+with message catalogs:</p>
+<blockquote>
+<ul class="simple">
+<li>A <a class="reference external" href="cmdline.html">Command-line interface</a>, and</li>
+<li><a class="reference external" href="setup.html">Integration with distutils/setuptools</a></li>
+</ul>
+</blockquote>
+<p>Which one you choose depends on the nature of your project. For most modern
+Python projects, the distutils/setuptools integration is probably more
+convenient.</p>
+</div>
+<div class="section" id="extraction-method-mapping-and-configuration">
+<span id="mapping"></span><h2>2.2   Extraction Method Mapping and Configuration</h2>
+<p>The mapping of extraction methods to files in Babel is done via a configuration
+file. This file maps extended glob patterns to the names of the extraction
+methods, and can also set various options for each pattern (which options are
+available depends on the specific extraction method).</p>
+<p>For example, the following configuration adds extraction of messages from both
+Genshi markup templates and text templates:</p>
+<div class="highlight"><pre><span class="c"># Extraction from Python source files</span>
+
+<span class="k">[python: **.py]</span>
+
+<span class="c"># Extraction from Genshi HTML and text templates</span>
+
+<span class="k">[genshi: **/templates/**.html]</span>
+<span class="na">ignore_tags</span> <span class="o">=</span> <span class="s">script,style</span>
+<span class="na">include_attrs</span> <span class="o">=</span> <span class="s">alt title summary</span>
+
+<span class="k">[genshi: **/templates/**.txt]</span>
+<span class="na">template_class</span> <span class="o">=</span> <span class="s">genshi.template:TextTemplate</span>
+<span class="na">encoding</span> <span class="o">=</span> <span class="s">ISO-8819-15</span>
+</pre></div>
+<p>The configuration file syntax is based on the format commonly found in <tt class="docutils literal"><span class="pre">.INI</span></tt>
+files on Windows systems, and as supported by the <tt class="docutils literal"><span class="pre">ConfigParser</span></tt> module in
+the Python standard library. Section names (the strings enclosed in square
+brackets) specify both the name of the extraction method, and the extended glob
+pattern to specify the files that this extraction method should be used for,
+separated by a colon. The options in the sections are passed to the extraction
+method. Which options are available is specific to the extraction method used.</p>
+<p>The extended glob patterns used in this configuration are similar to the glob
+patterns provided by most shells. A single asterisk (<tt class="docutils literal"><span class="pre">*</span></tt>) is a wildcard for
+any number of characters (except for the pathname component separator "/"),
+while a question mark (<tt class="docutils literal"><span class="pre">?</span></tt>) only matches a single character. In addition,
+two subsequent asterisk characters (<tt class="docutils literal"><span class="pre">**</span></tt>) can be used to make the wildcard
+match any directory level, so the pattern <tt class="docutils literal"><span class="pre">**.txt</span></tt> matches any file with the
+extension <tt class="docutils literal"><span class="pre">.txt</span></tt> in any directory.</p>
+<p>Lines that start with a <tt class="docutils literal"><span class="pre">#</span></tt> or <tt class="docutils literal"><span class="pre">;</span></tt> character are ignored and can be used
+for comments. Empty lines are ignored, too.</p>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">if you're performing message extraction using the command Babel
+provides for integration into <tt class="docutils literal"><span class="pre">setup.py</span></tt> scripts, you can also
+provide this configuration in a different way, namely as a keyword
+argument to the <tt class="docutils literal"><span class="pre">setup()</span></tt> function. See <a class="reference external" href="setup.html">Distutils/Setuptools
+Integration</a> for more information.</p>
+</div>
+<div class="section" id="default-extraction-methods">
+<h3>2.2.1   Default Extraction Methods</h3>
+<p>Babel comes with only two builtin extractors: <tt class="docutils literal"><span class="pre">python</span></tt> (which extracts
+messages from Python source files) and <tt class="docutils literal"><span class="pre">ignore</span></tt> (which extracts nothing).</p>
+<p>The <tt class="docutils literal"><span class="pre">python</span></tt> extractor is by default mapped to the glob pattern <tt class="docutils literal"><span class="pre">**.py</span></tt>,
+meaning it'll be applied to all files with the <tt class="docutils literal"><span class="pre">.py</span></tt> extension in any
+directory. If you specify your own mapping configuration, this default mapping
+is discarded, so you need to explicitly add it to your mapping (as shown in the
+example above.)</p>
+</div>
+<div class="section" id="id1">
+<span id="referencing-extraction-methods"></span><h3>2.2.2   Referencing Extraction Methods</h3>
+<p>To be able to use short extraction method names such as “genshi”, you need to
+have <a class="reference external" href="http://peak.telecommunity.com/DevCenter/PkgResources">pkg_resources</a> installed, and the package implementing that extraction
+method needs to have been installed with its meta data (the <a class="reference external" href="http://peak.telecommunity.com/DevCenter/PythonEggs">egg-info</a>).</p>
+<p>If this is not possible for some reason, you need to map the short names to
+fully qualified function names in an extract section in the mapping
+configuration. For example:</p>
+<div class="highlight"><pre><span class="c"># Some custom extraction method</span>
+
+<span class="k">[extractors]</span>
+<span class="na">custom</span> <span class="o">=</span> <span class="s">mypackage.module:extract_custom</span>
+
+<span class="k">[custom: **.ctm]</span>
+<span class="na">some_option</span> <span class="o">=</span> <span class="s">foo</span>
+</pre></div>
+<p>Note that the builtin extraction methods <tt class="docutils literal"><span class="pre">python</span></tt> and <tt class="docutils literal"><span class="pre">ignore</span></tt> are available
+by default, even if <a class="reference external" href="http://peak.telecommunity.com/DevCenter/PkgResources">pkg_resources</a> is not installed. You should never need to
+explicitly define them in the <tt class="docutils literal"><span class="pre">[extractors]</span></tt> section.</p>
+</div>
+</div>
+<div class="section" id="writing-extraction-methods">
+<h2>2.3   Writing Extraction Methods</h2>
+<p>Adding new methods for extracting localizable methods is easy. First, you'll
+need to implement a function that complies with the following interface:</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">extract_xxx</span><span class="p">(</span><span class="n">fileobj</span><span class="p">,</span> <span class="n">keywords</span><span class="p">,</span> <span class="n">comment_tags</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
+    <span class="sd">"""Extract messages from XXX files.</span>
+
+<span class="sd">    :param fileobj: the file-like object the messages should be extracted</span>
+<span class="sd">                    from</span>
+<span class="sd">    :param keywords: a list of keywords (i.e. function names) that should</span>
+<span class="sd">                     be recognized as translation functions</span>
+<span class="sd">    :param comment_tags: a list of translator tags to search for and</span>
+<span class="sd">                         include in the results</span>
+<span class="sd">    :param options: a dictionary of additional options (optional)</span>
+<span class="sd">    :return: an iterator over ``(lineno, funcname, message, comments)``</span>
+<span class="sd">             tuples</span>
+<span class="sd">    :rtype: ``iterator``</span>
+<span class="sd">    """</span>
+</pre></div>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">Any strings in the tuples produced by this function must be either
+<tt class="docutils literal"><span class="pre">unicode</span></tt> objects, or <tt class="docutils literal"><span class="pre">str</span></tt> objects using plain ASCII characters.
+That means that if sources contain strings using other encodings, it
+is the job of the extractor implementation to do the decoding to
+<tt class="docutils literal"><span class="pre">unicode</span></tt> objects.</p>
+</div>
+<p>Next, you should register that function as an entry point. This requires your
+<tt class="docutils literal"><span class="pre">setup.py</span></tt> script to use <a class="reference external" href="http://peak.telecommunity.com/DevCenter/setuptools">setuptools</a>, and your package to be installed with
+the necessary metadata. If that's taken care of, add something like the
+following to your <tt class="docutils literal"><span class="pre">setup.py</span></tt> script:</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="o">...</span>
+
+    <span class="n">entry_points</span> <span class="o">=</span> <span class="s">"""</span>
+<span class="s">    [babel.extractors]</span>
+<span class="s">    xxx = your.package:extract_xxx</span>
+<span class="s">    """</span><span class="p">,</span>
+</pre></div>
+<p>That is, add your extraction method to the entry point group
+<tt class="docutils literal"><span class="pre">babel.extractors</span></tt>, where the name of the entry point is the name that people
+will use to reference the extraction method, and the value being the module and
+the name of the function (separated by a colon) implementing the actual
+extraction.</p>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">As shown in <a class="reference internal" href="#referencing-extraction-methods">Referencing Extraction Methods</a>, declaring an entry
+point is not  strictly required, as users can still reference the
+extraction  function directly. But whenever possible, the entry point
+should be  declared to make configuration more convenient.</p>
+</div>
+</div>
+<div class="section" id="translator-comments">
+<h2>2.4   Translator Comments</h2>
+<p>First of all what are comments tags. Comments tags are excerpts of text to
+search for in comments, only comments, right before the <a class="reference external" href="http://docs.python.org/lib/module-gettext.html">python gettext</a>
+calls, as shown on the following example:</p>
+<blockquote>
+</blockquote>
+<div class="highlight"><pre><span class="c"># NOTE: This is a comment about `Foo Bar`</span>
+<span class="n">_</span><span class="p">(</span><span class="s">'Foo Bar'</span><span class="p">)</span>
+</pre></div>
+<p>The comments tag for the above example would be <tt class="docutils literal"><span class="pre">NOTE:</span></tt>, and the translator
+comment for that tag would be <tt class="docutils literal"><span class="pre">This</span> <span class="pre">is</span> <span class="pre">a</span> <span class="pre">comment</span> <span class="pre">about</span> <span class="pre">`Foo</span> <span class="pre">Bar`</span></tt>.</p>
+<p>The resulting output in the catalog template would be something like:</p>
+<pre class="literal-block">
+#. This is a comment about `Foo Bar`
+#: main.py:2
+msgid "Foo Bar"
+msgstr ""
+</pre>
+<p>Now, you might ask, why would I need that?</p>
+<p>Consider this simple case; you have a menu item called “manual”. You know what
+it means, but when the translator sees this they will wonder did you mean:</p>
+<ol class="arabic simple">
+<li>a document or help manual, or</li>
+<li>a manual process?</li>
+</ol>
+<p>This is the simplest case where a translation comment such as
+“The installation manual” helps to clarify the situation and makes a translator
+more productive.</p>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">Whether translator comments can be extracted depends on the extraction
+method in use. The Python extractor provided by Babel does implement
+this feature, but others may not.</p>
+</div>
+</div>
+</div>
+    <div id="footer">
+      Visit the Babel open source project at
+      <a href="http://babel.edgewall.org/">http://babel.edgewall.org/</a>
+    </div>
+  </div>
+</body>
+</html>

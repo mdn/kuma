@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>excolors &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="external.Itpl" href="IPython.external.Itpl.html" />
+    <link rel="prev" title="dtutils" href="IPython.dtutils.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.external.Itpl.html" title="external.Itpl"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.dtutils.html" title="dtutils"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="excolors">
+<h1>excolors<a class="headerlink" href="#excolors" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.excolors">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">excolors</span></tt><a class="headerlink" href="#module-IPython.excolors" title="Permalink to this headline">¶</a></h2>
+<p>Color schemes for exception handling code in IPython.</p>
+<dl class="function">
+<dt id="IPython.excolors.exception_colors">
+<!--[IPython.excolors.exception_colors]--><tt class="descclassname">IPython.excolors.</tt><tt class="descname">exception_colors</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.excolors.exception_colors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a color table with fields for exception reporting.</p>
+<p>The table is an instance of ColorSchemeTable with schemes added for
+&#8216;Linux&#8217;, &#8216;LightBG&#8217; and &#8216;NoColor&#8217; and fields for exception handling filled
+in.</p>
+<p>Examples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">ec</span> <span class="o">=</span> <span class="n">exception_colors</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ec</span><span class="o">.</span><span class="n">active_scheme_name</span>
+<span class="go">&#39;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">ec</span><span class="o">.</span><span class="n">active_colors</span>
+<span class="go">None</span>
+</pre></div>
+</div>
+<p>Now we activate a color scheme:    
+&gt;&gt;&gt; ec.set_active_scheme(&#8216;NoColor&#8217;)
+&gt;&gt;&gt; ec.active_scheme_name
+&#8216;NoColor&#8217;
+&gt;&gt;&gt; ec.active_colors.keys()
+[&#8216;em&#8217;, &#8216;caret&#8217;, &#8216;__allownew&#8217;, &#8216;name&#8217;, &#8216;val&#8217;, &#8216;vName&#8217;, &#8216;Normal&#8217;, &#8216;normalEm&#8217;,
+&#8216;filename&#8217;, &#8216;linenoEm&#8217;, &#8216;excName&#8217;, &#8216;lineno&#8217;, &#8216;valEm&#8217;, &#8216;filenameEm&#8217;,
+&#8216;nameEm&#8217;, &#8216;line&#8217;, &#8216;topline&#8217;]</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">excolors</a><ul>
+<li><a class="reference external" href="#module-IPython.excolors">Module: <tt class="docutils literal"><span class="pre">excolors</span></tt></a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.dtutils.html" title="previous chapter">dtutils</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.external.Itpl.html" title="next chapter">external.Itpl</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.excolors.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.external.Itpl.html" title="external.Itpl"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.dtutils.html" title="dtutils"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

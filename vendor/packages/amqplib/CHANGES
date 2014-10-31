@@ -1,0 +1,124 @@
+CHANGES
+--------
+
+Version 0.6.1
+
+    One minor change to watch out for is that low-level errors
+    such as a closed connection now appear as IOExceptions
+    instead of
+
+        TypeError: 'NoneType' object is not iterable
+
+    which never really explained anything.
+
+    Fix potential problem with library getting stuck in a loop
+    if the peer closed the socket.  Also, break a few more references
+    when closing Connections and Channels, to help garbage collection.
+    Thanks for majek04@... for pointing these out.
+
+    Add support for using Connection and Channel objects as context
+    managers for 'with' statements (available in Python >= 2.5), so you
+    can write code like:
+
+        with Connection() as conn:
+            with conn.channel() as ch:
+                # do stuff with ch and conn
+
+    and have the Channel and Connection objects closed automatically
+    when the blocks exit.
+
+
+Version 0.6
+
+    Very large rearrangement of code, breaking the large client_0_8.py
+    module into submodules based on the various layers of the AMQP protocol.
+    The public API is unchanged however, so existing code that uses amqplib
+    should be unaffected.
+
+    ----
+
+    nb_client_0_8.py and demos/nbdemo_receive.py were removed because of
+    the major changes to the main client to lay the groundwork for future
+    non-blocking behaviors (see http://hg.barryp.org/py-amqplib-devel/ )
+
+    ----
+
+    More unittests added.
+
+Version 0.5
+
+    Get rid of Python 2.5-style conditional expressions, for
+    compatibility with Python 2.4  Thanks to Alexey Timanovsky
+    for pointing this out.
+
+    Send debugging output through the standard Python 'logging' module
+    instead of directly printing to the console.
+
+    Reworked the guts of the Connection and Channel classes
+    to untangle the mess that controlled how frames were
+    waited for and queued up.  Should fix problems seen with
+    basic_deliver messages coming when the client is expecting
+    responses to other synchronous calls.
+
+    Added non-blocking client and demo, from
+    Dmitriy Samovskiy <dmitriy.samovskiy@cohesiveft.com>:
+    -----------------------
+        We put together an add-on for py-amqplib that implements AMQP client
+        with non-blocking sockets (see NonBlockingConnection class and
+        nbloop() function in nbclient_0_8.py). nbdemo_receive.py is a demo
+        script, and nbclient.zip includes both nbclient_0_8.py and
+        nbdemo_receive.py.
+
+        There are at least 2 scenarios where non-blocking sockets help, and
+        both are applicable to consumers:
+
+        1) when you want to be able to interrupt consumer's event loop
+           without waiting for a next incoming message;
+        2) when you want to consume messages from multiple brokers (or over
+           multiple connections) in a single event loop.
+
+    Did some profiling, found a big problem that caused a huge huge
+    number of unnecessary __getattr_ calls.  Ran pylint and found some
+    bad coding style problems.
+
+Version 0.3
+
+    Improved skeleton generating program to include much more
+    information in the Python docstrings that was present in the AMQP
+    spec file. Merged in the improved docstrings into the client module.
+
+    After having a better look now at the pydocs, it turns out that in
+    several methods, a default value of '' can be used for queue names
+    and exchange names, so update method signatures to take advantage of
+    that.
+
+    Channel.queue_bind() can also take '' as a queue parameter, but
+    unfortunately we can't set that as a default value because
+    the exchange parameter can't have a default value.  In hindsight
+    those args should have been swapped, but it's too late now.
+
+    Deal with no callback being specified in basic_consume(), it
+    should now quietly discard messages.
+
+Version 0.2
+
+    Changed the default value for the auto_delete parameter
+    in the Channel.exchange_declare and Channel.queue_declare
+    methods to True.
+
+    Added an 'insist' parameter to the Connection class
+    constructor, defaulting to False.  Setting it to True
+    indicates to the AMQP server that you don't want to
+    be redirected (you're insisting to connect to the
+    specified server).
+
+    Added support for being redirected to another AMQP
+    server when a Connection is opened.
+
+    Added tests/fake_redirect_0_8.py to help with testing
+    redirect support.
+
+
+Version 0.1
+
+    Initial version

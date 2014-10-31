@@ -1,0 +1,8 @@
+README.txt
+setup.cfg
+pip-egg-info/selenium.egg-info/PKG-INFO
+pip-egg-info/selenium.egg-info/SOURCES.txt
+pip-egg-info/selenium.egg-info/dependency_links.txt
+pip-egg-info/selenium.egg-info/not-zip-safe
+pip-egg-info/selenium.egg-info/top_level.txt
+src/selenium.py

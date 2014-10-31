@@ -1,0 +1,53 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.twistedutil
+==================
+
+Module: :mod:`kernel.twistedutil`
+---------------------------------
+Inheritance diagram for ``IPython.kernel.twistedutil``:
+
+.. inheritance-diagram:: IPython.kernel.twistedutil 
+   :parts: 3
+
+.. automodule:: IPython.kernel.twistedutil
+
+.. currentmodule:: IPython.kernel.twistedutil
+
+Classes
+-------
+
+:class:`DeferredList`
+~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: DeferredList
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ReactorInThread`
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ReactorInThread
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Functions
+---------
+
+
+.. autofunction:: IPython.kernel.twistedutil.gatherBoth
+
+
+.. autofunction:: IPython.kernel.twistedutil.parseResults
+
+
+.. autofunction:: IPython.kernel.twistedutil.wait_for_file
+

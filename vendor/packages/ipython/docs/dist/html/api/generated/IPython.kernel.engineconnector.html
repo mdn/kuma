@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.engineconnector &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.enginefc" href="IPython.kernel.enginefc.html" />
+    <link rel="prev" title="kernel.core.util" href="IPython.kernel.core.util.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.enginefc.html" title="kernel.enginefc"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.util.html" title="kernel.core.util"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-engineconnector">
+<h1>kernel.engineconnector<a class="headerlink" href="#kernel-engineconnector" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.engineconnector">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.engineconnector</span></tt><a class="headerlink" href="#module-IPython.kernel.engineconnector" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.kernel.engineconnector</span></tt>:</p>
+<img src="../../_images/inheritance44cfd99191.png" usemap="#inheritance44cfd99191" class="inheritance"/><map id="inheritance44cfd99191" name="inheritance44cfd99191">
+<area shape="rect" href="#IPython.kernel.engineconnector.EngineConnector" title="kernel.engineconnector.EngineConnector" alt="" coords="7,5,289,32"/>
+</map>
+<p>A class that manages the engines connection to the controller.</p>
+</div>
+<div class="section" id="engineconnector">
+<h2><a title="IPython.kernel.engineconnector.EngineConnector" class="reference internal" href="#IPython.kernel.engineconnector.EngineConnector"><tt class="xref docutils literal"><span class="pre">EngineConnector</span></tt></a><a class="headerlink" href="#engineconnector" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="IPython.kernel.engineconnector.EngineConnector">
+<!--[IPython.kernel.engineconnector.EngineConnector]-->class <tt class="descclassname">IPython.kernel.engineconnector.</tt><tt class="descname">EngineConnector</tt><big>(</big><em>tub</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineconnector.EngineConnector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>Manage an engines connection to a controller.</p>
+<p>This class takes a foolscap <cite>Tub</cite> and provides a <cite>connect_to_controller</cite> 
+method that will use the <cite>Tub</cite> to connect to a controller and register
+the engine with the controller.</p>
+<dl class="method">
+<dt id="IPython.kernel.engineconnector.EngineConnector.__init__">
+<!--[IPython.kernel.engineconnector.EngineConnector.__init__]--><tt class="descname">__init__</tt><big>(</big><em>tub</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineconnector.EngineConnector.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineconnector.EngineConnector.connect_to_controller">
+<!--[IPython.kernel.engineconnector.EngineConnector.connect_to_controller]--><tt class="descname">connect_to_controller</tt><big>(</big><em>engine_service</em>, <em>furl_or_file</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineconnector.EngineConnector.connect_to_controller" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a connection to a controller specified by a furl.</p>
+<p>This method takes an <cite>IEngineBase</cite> instance and a foolcap URL and uses
+the <cite>tub</cite> attribute to make a connection to the controller.  The 
+foolscap URL contains all the information needed to connect to the 
+controller, including the ip and port as well as any encryption and 
+authentication information needed for the connection.</p>
+<p>After getting a reference to the controller, this method calls the 
+<cite>register_engine</cite> method of the controller to actually register the 
+engine.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>engine_service <span class="classifier-delimiter">:</span> <span class="classifier">IEngineBase</span></dt>
+<dd><p class="first last">An instance of an <cite>IEngineBase</cite> implementer</p>
+</dd>
+<dt>furl_or_file <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">A furl or a filename containing a furl</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.engineconnector</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.engineconnector">Module: <tt class="docutils literal"><span class="pre">kernel.engineconnector</span></tt></a></li>
+<li><a class="reference external" href="#engineconnector"><tt class="docutils literal"><span class="pre">EngineConnector</span></tt></a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.kernel.core.util.html" title="previous chapter">kernel.core.util</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.enginefc.html" title="next chapter">kernel.enginefc</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.engineconnector.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.enginefc.html" title="kernel.enginefc"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.util.html" title="kernel.core.util"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

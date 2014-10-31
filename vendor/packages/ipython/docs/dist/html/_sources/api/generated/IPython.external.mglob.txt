@@ -1,0 +1,29 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+external.mglob
+==============
+
+Module: :mod:`external.mglob`
+-----------------------------
+.. automodule:: IPython.external.mglob
+
+.. currentmodule:: IPython.external.mglob
+
+Functions
+---------
+
+
+.. autofunction:: IPython.external.mglob.expand
+
+
+.. autofunction:: IPython.external.mglob.init_ipython
+
+
+.. autofunction:: IPython.external.mglob.main
+
+
+.. autofunction:: IPython.external.mglob.mglob_f
+
+
+.. autofunction:: IPython.external.mglob.test
+

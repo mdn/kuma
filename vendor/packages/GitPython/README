@@ -1,0 +1,42 @@
+==========
+GitPython
+==========
+
+GitPython is a python library used to interact with Git repositories.
+
+GitPython is a port of the grit_ library in Ruby created by 
+Tom Preston-Werner and Chris Wanstrath.
+
+.. _grit: http://grit.rubyforge.org
+
+REQUIREMENTS
+============
+
+* Git_ tested with 1.5.3.7
+* `Python Nose`_ - used for running the tests
+* `Mock by Michael Foord`_ used for tests. Requires 0.4
+
+.. _Git: http://git.or.cz/
+.. _Python Nose: http://code.google.com/p/python-nose/
+.. _Mock by Michael Foord: http://www.voidspace.org.uk/python/mock.html
+
+INSTALL
+=======
+
+    python setup.py install
+
+SOURCE
+======
+
+GitPython's git repo is available on Gitorious, which can be browsed at:
+
+http://gitorious.org/projects/git-python/
+
+and cloned from:
+
+git://gitorious.org/git-python/mainline.git
+
+LICENSE
+=======
+
+New BSD License.  See the LICENSE file.

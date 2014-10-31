@@ -1,0 +1,602 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.error &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.fcutil" href="IPython.kernel.fcutil.html" />
+    <link rel="prev" title="kernel.engineservice" href="IPython.kernel.engineservice.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.fcutil.html" title="kernel.fcutil"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.engineservice.html" title="kernel.engineservice"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-error">
+<h1>kernel.error<a class="headerlink" href="#kernel-error" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.error">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.error</span></tt><a class="headerlink" href="#module-IPython.kernel.error" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.kernel.error</span></tt>:</p>
+<img src="../../_images/inheritance3b94a348ff.png" usemap="#inheritance3b94a348ff" class="inheritance"/><map id="inheritance3b94a348ff" name="inheritance3b94a348ff">
+<area shape="rect" href="#IPython.kernel.error.InvalidEngineID" title="kernel.error.InvalidEngineID" alt="" coords="367,4,515,24"/>
+<area shape="rect" href="#IPython.kernel.error.KernelError" title="kernel.error.KernelError" alt="" coords="167,487,295,507"/>
+<area shape="rect" href="#IPython.kernel.error.ClientError" title="kernel.error.ClientError" alt="" coords="378,43,504,63"/>
+<area shape="rect" href="#IPython.kernel.error.SerializationError" title="kernel.error.SerializationError" alt="" coords="362,81,520,102"/>
+<area shape="rect" href="#IPython.kernel.error.TaskTimeout" title="kernel.error.TaskTimeout" alt="" coords="374,120,508,140"/>
+<area shape="rect" href="#IPython.kernel.error.TaskAborted" title="kernel.error.TaskAborted" alt="" coords="374,158,508,179"/>
+<area shape="rect" href="#IPython.kernel.error.MissingBlockArgument" title="kernel.error.MissingBlockArgument" alt="" coords="348,197,533,217"/>
+<area shape="rect" href="#IPython.kernel.error.MessageSizeError" title="kernel.error.MessageSizeError" alt="" coords="360,236,522,256"/>
+<area shape="rect" href="#IPython.kernel.error.InvalidClientID" title="kernel.error.InvalidClientID" alt="" coords="370,274,512,295"/>
+<area shape="rect" href="#IPython.kernel.error.AbortedPendingDeferredError" title="kernel.error.AbortedPendingDeferredError" alt="" coords="331,313,551,333"/>
+<area shape="rect" href="#IPython.kernel.error.TaskRejectError" title="kernel.error.TaskRejectError" alt="" coords="367,351,515,372"/>
+<area shape="rect" href="#IPython.kernel.error.NotDefined" title="kernel.error.NotDefined" alt="" coords="376,390,506,410"/>
+<area shape="rect" href="#IPython.kernel.error.StopLocalExecution" title="kernel.error.StopLocalExecution" alt="" coords="356,429,526,449"/>
+<area shape="rect" href="#IPython.kernel.error.ResultNotCompleted" title="kernel.error.ResultNotCompleted" alt="" coords="354,467,528,488"/>
+<area shape="rect" href="#IPython.kernel.error.FileTimeoutError" title="kernel.error.FileTimeoutError" alt="" coords="365,506,517,526"/>
+<area shape="rect" href="#IPython.kernel.error.InvalidProperty" title="kernel.error.InvalidProperty" alt="" coords="368,545,514,565"/>
+<area shape="rect" href="#IPython.kernel.error.UnpickleableException" title="kernel.error.UnpickleableException" alt="" coords="349,583,532,603"/>
+<area shape="rect" href="#IPython.kernel.error.NotAPendingResult" title="kernel.error.NotAPendingResult" alt="" coords="358,622,524,642"/>
+<area shape="rect" href="#IPython.kernel.error.IdInUse" title="kernel.error.IdInUse" alt="" coords="386,660,496,681"/>
+<area shape="rect" href="#IPython.kernel.error.NoEnginesRegistered" title="kernel.error.NoEnginesRegistered" alt="" coords="353,699,529,719"/>
+<area shape="rect" href="#IPython.kernel.error.SecurityError" title="kernel.error.SecurityError" alt="" coords="372,738,510,758"/>
+<area shape="rect" href="#IPython.kernel.error.ProtocolError" title="kernel.error.ProtocolError" alt="" coords="372,776,510,796"/>
+<area shape="rect" href="#IPython.kernel.error.CompositeError" title="kernel.error.CompositeError" alt="" coords="366,815,516,835"/>
+<area shape="rect" href="#IPython.kernel.error.ConnectionError" title="kernel.error.ConnectionError" alt="" coords="365,853,517,874"/>
+<area shape="rect" href="#IPython.kernel.error.ResultAlreadyRetrieved" title="kernel.error.ResultAlreadyRetrieved" alt="" coords="348,892,533,912"/>
+<area shape="rect" href="#IPython.kernel.error.InvalidDeferredID" title="kernel.error.InvalidDeferredID" alt="" coords="362,931,520,951"/>
+<area shape="rect" href="#IPython.kernel.error.QueueCleared" title="kernel.error.QueueCleared" alt="" coords="369,969,513,989"/>
+<area shape="rect" href="#IPython.kernel.error.PBMessageSizeError" title="kernel.error.PBMessageSizeError" alt="" coords="588,236,763,256"/>
+<area shape="rect" href="IPython.kernel.core.error.html#IPython.kernel.core.error.IPythonError" title="core.error.IPythonError" alt="" coords="4,487,130,507"/>
+</map>
+<p>Classes and functions for kernel related errors and exceptions.</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="abortedpendingdeferrederror">
+<h3><a title="IPython.kernel.error.AbortedPendingDeferredError" class="reference internal" href="#IPython.kernel.error.AbortedPendingDeferredError"><tt class="xref docutils literal"><span class="pre">AbortedPendingDeferredError</span></tt></a><a class="headerlink" href="#abortedpendingdeferrederror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.error.AbortedPendingDeferredError">
+<!--[IPython.kernel.error.AbortedPendingDeferredError]-->class <tt class="descclassname">IPython.kernel.error.</tt><tt class="descname">AbortedPendingDeferredError</tt><a class="headerlink" href="#IPython.kernel.error.AbortedPendingDeferredError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.error.KernelError" class="reference internal" href="#IPython.kernel.error.KernelError"><tt class="xref docutils literal"><span class="pre">IPython.kernel.error.KernelError</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.error.AbortedPendingDeferredError.__init__">
+<!--[IPython.kernel.error.AbortedPendingDeferredError.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.error.AbortedPendingDeferredError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="clienterror">
+<h3><a title="IPython.kernel.error.ClientError" class="reference internal" href="#IPython.kernel.error.ClientError"><tt class="xref docutils literal"><span class="pre">ClientError</span></tt></a><a class="headerlink" href="#clienterror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.error.ClientError">
+<!--[IPython.kernel.error.ClientError]-->class <tt class="descclassname">IPython.kernel.error.</tt><tt class="descname">ClientError</tt><a class="headerlink" href="#IPython.kernel.error.ClientError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.error.KernelError" class="reference internal" href="#IPython.kernel.error.KernelError"><tt class="xref docutils literal"><span class="pre">IPython.kernel.error.KernelError</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.error.ClientError.__init__">
+<!--[IPython.kernel.error.ClientError.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.error.ClientError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="compositeerror">
+<h3><a title="IPython.kernel.error.CompositeError" class="reference internal" href="#IPython.kernel.error.CompositeError"><tt class="xref docutils literal"><span class="pre">CompositeError</span></tt></a><a class="headerlink" href="#compositeerror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.error.CompositeError">
+<!--[IPython.kernel.error.CompositeError]-->class <tt class="descclassname">IPython.kernel.error.</tt><tt class="descname">CompositeError</tt><big>(</big><em>message</em>, <em>elist</em><big>)</big><a class="headerlink" href="#IPython.kernel.error.CompositeError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.error.KernelError" class="reference internal" href="#IPython.kernel.error.KernelError"><tt class="xref docutils literal"><span class="pre">IPython.kernel.error.KernelError</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.error.CompositeError.__init__">
+<!--[IPython.kernel.error.CompositeError.__init__]--><tt class="descname">__init__</tt><big>(</big><em>message</em>, <em>elist</em><big>)</big><a class="headerlink" href="#IPython.kernel.error.CompositeError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.error.CompositeError.print_tracebacks">
+<!--[IPython.kernel.error.CompositeError.print_tracebacks]--><tt class="descname">print_tracebacks</tt><big>(</big><em>excid=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.error.CompositeError.print_tracebacks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.error.CompositeError.raise_exception">
+<!--[IPython.kernel.error.CompositeError.raise_exception]--><tt class="descname">raise_exception</tt><big>(</big><em>excid=0</em><big>)</big><a class="headerlink" href="#IPython.kernel.error.CompositeError.raise_exception" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="connectionerror">
+<h3><a title="IPython.kernel.error.ConnectionError" class="reference internal" href="#IPython.kernel.error.ConnectionError"><tt class="xref docutils literal"><span class="pre">ConnectionError</span></tt></a><a class="headerlink" href="#connectionerror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.error.ConnectionError">
+<!--[IPython.kernel.error.ConnectionError]-->class <tt class="descclassname">IPython.kernel.error.</tt><tt class="descname">ConnectionError</tt><a class="headerlink" href="#IPython.kernel.error.ConnectionError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.error.KernelError" class="reference internal" href="#IPython.kernel.error.KernelError"><tt class="xref docutils literal"><span class="pre">IPython.kernel.error.KernelError</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.error.ConnectionError.__init__">
+<!--[IPython.kernel.error.ConnectionError.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.error.ConnectionError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="filetimeouterror">
+<h3><a title="IPython.kernel.error.FileTimeoutError" class="reference internal" href="#IPython.kernel.error.FileTimeoutError"><tt class="xref docutils literal"><span class="pre">FileTimeoutError</span></tt></a><a class="headerlink" href="#filetimeouterror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.error.FileTimeoutError">
+<!--[IPython.kernel.error.FileTimeoutError]-->class <tt class="descclassname">IPython.kernel.error.</tt><tt class="descname">FileTimeoutError</tt><a class="headerlink" href="#IPython.kernel.error.FileTimeoutError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.error.KernelError" class="reference internal" href="#IPython.kernel.error.KernelError"><tt class="xref docutils literal"><span class="pre">IPython.kernel.error.KernelError</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.error.FileTimeoutError.__init__">
+<!--[IPython.kernel.error.FileTimeoutError.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.error.FileTimeoutError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="idinuse">
+<h3><a title="IPython.kernel.error.IdInUse" class="reference internal" href="#IPython.kernel.error.IdInUse"><tt class="xref docutils literal"><span class="pre">IdInUse</span></tt></a><a class="headerlink" href="#idinuse" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.error.IdInUse">
+<!--[IPython.kernel.error.IdInUse]-->class <tt class="descclassname">IPython.kernel.error.</tt><tt class="descname">IdInUse</tt><a class="headerlink" href="#IPython.kernel.error.IdInUse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.error.KernelError" class="reference internal" href="#IPython.kernel.error.KernelError"><tt class="xref docutils literal"><span class="pre">IPython.kernel.error.KernelError</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.error.IdInUse.__init__">
+<!--[IPython.kernel.error.IdInUse.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.error.IdInUse.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="invalidclientid">
+<h3><a title="IPython.kernel.error.InvalidClientID" class="reference internal" href="#IPython.kernel.error.InvalidClientID"><tt class="xref docutils literal"><span class="pre">InvalidClientID</span></tt></a><a class="headerlink" href="#invalidclientid" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.error.InvalidClientID">
+<!--[IPython.kernel.error.InvalidClientID]-->class <tt class="descclassname">IPython.kernel.error.</tt><tt class="descname">InvalidClientID</tt><a class="headerlink" href="#IPython.kernel.error.InvalidClientID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.error.KernelError" class="reference internal" href="#IPython.kernel.error.KernelError"><tt class="xref docutils literal"><span class="pre">IPython.kernel.error.KernelError</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.error.InvalidClientID.__init__">
+<!--[IPython.kernel.error.InvalidClientID.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.error.InvalidClientID.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="invaliddeferredid">
+<h3><a title="IPython.kernel.error.InvalidDeferredID" class="reference internal" href="#IPython.kernel.error.InvalidDeferredID"><tt class="xref docutils literal"><span class="pre">InvalidDeferredID</span></tt></a><a class="headerlink" href="#invaliddeferredid" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.error.InvalidDeferredID">
+<!--[IPython.kernel.error.InvalidDeferredID]-->class <tt class="descclassname">IPython.kernel.error.</tt><tt class="descname">InvalidDeferredID</tt><a class="headerlink" href="#IPython.kernel.error.InvalidDeferredID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.error.KernelError" class="reference internal" href="#IPython.kernel.error.KernelError"><tt class="xref docutils literal"><span class="pre">IPython.kernel.error.KernelError</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.error.InvalidDeferredID.__init__">
+<!--[IPython.kernel.error.InvalidDeferredID.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.error.InvalidDeferredID.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="invalidengineid">
+<h3><a title="IPython.kernel.error.InvalidEngineID" class="reference internal" href="#IPython.kernel.error.InvalidEngineID"><tt class="xref docutils literal"><span class="pre">InvalidEngineID</span></tt></a><a class="headerlink" href="#invalidengineid" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.error.InvalidEngineID">
+<!--[IPython.kernel.error.InvalidEngineID]-->class <tt class="descclassname">IPython.kernel.error.</tt><tt class="descname">InvalidEngineID</tt><a class="headerlink" href="#IPython.kernel.error.InvalidEngineID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.error.KernelError" class="reference internal" href="#IPython.kernel.error.KernelError"><tt class="xref docutils literal"><span class="pre">IPython.kernel.error.KernelError</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.error.InvalidEngineID.__init__">
+<!--[IPython.kernel.error.InvalidEngineID.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.error.InvalidEngineID.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="invalidproperty">
+<h3><a title="IPython.kernel.error.InvalidProperty" class="reference internal" href="#IPython.kernel.error.InvalidProperty"><tt class="xref docutils literal"><span class="pre">InvalidProperty</span></tt></a><a class="headerlink" href="#invalidproperty" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.error.InvalidProperty">
+<!--[IPython.kernel.error.InvalidProperty]-->class <tt class="descclassname">IPython.kernel.error.</tt><tt class="descname">InvalidProperty</tt><a class="headerlink" href="#IPython.kernel.error.InvalidProperty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.error.KernelError" class="reference internal" href="#IPython.kernel.error.KernelError"><tt class="xref docutils literal"><span class="pre">IPython.kernel.error.KernelError</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.error.InvalidProperty.__init__">
+<!--[IPython.kernel.error.InvalidProperty.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.error.InvalidProperty.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="kernelerror">
+<h3><a title="IPython.kernel.error.KernelError" class="reference internal" href="#IPython.kernel.error.KernelError"><tt class="xref docutils literal"><span class="pre">KernelError</span></tt></a><a class="headerlink" href="#kernelerror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.error.KernelError">
+<!--[IPython.kernel.error.KernelError]-->class <tt class="descclassname">IPython.kernel.error.</tt><tt class="descname">KernelError</tt><a class="headerlink" href="#IPython.kernel.error.KernelError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.core.error.IPythonError" class="reference external" href="IPython.kernel.core.error.html#IPython.kernel.core.error.IPythonError"><tt class="xref docutils literal"><span class="pre">IPython.kernel.core.error.IPythonError</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.error.KernelError.__init__">
+<!--[IPython.kernel.error.KernelError.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.error.KernelError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="messagesizeerror">
+<h3><a title="IPython.kernel.error.MessageSizeError" class="reference internal" href="#IPython.kernel.error.MessageSizeError"><tt class="xref docutils literal"><span class="pre">MessageSizeError</span></tt></a><a class="headerlink" href="#messagesizeerror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.error.MessageSizeError">
+<!--[IPython.kernel.error.MessageSizeError]-->class <tt class="descclassname">IPython.kernel.error.</tt><tt class="descname">MessageSizeError</tt><a class="headerlink" href="#IPython.kernel.error.MessageSizeError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.error.KernelError" class="reference internal" href="#IPython.kernel.error.KernelError"><tt class="xref docutils literal"><span class="pre">IPython.kernel.error.KernelError</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.error.MessageSizeError.__init__">
+<!--[IPython.kernel.error.MessageSizeError.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.error.MessageSizeError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="missingblockargument">
+<h3><a title="IPython.kernel.error.MissingBlockArgument" class="reference internal" href="#IPython.kernel.error.MissingBlockArgument"><tt class="xref docutils literal"><span class="pre">MissingBlockArgument</span></tt></a><a class="headerlink" href="#missingblockargument" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.error.MissingBlockArgument">
+<!--[IPython.kernel.error.MissingBlockArgument]-->class <tt class="descclassname">IPython.kernel.error.</tt><tt class="descname">MissingBlockArgument</tt><a class="headerlink" href="#IPython.kernel.error.MissingBlockArgument" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.error.KernelError" class="reference internal" href="#IPython.kernel.error.KernelError"><tt class="xref docutils literal"><span class="pre">IPython.kernel.error.KernelError</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.error.MissingBlockArgument.__init__">
+<!--[IPython.kernel.error.MissingBlockArgument.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.error.MissingBlockArgument.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="noenginesregistered">
+<h3><a title="IPython.kernel.error.NoEnginesRegistered" class="reference internal" href="#IPython.kernel.error.NoEnginesRegistered"><tt class="xref docutils literal"><span class="pre">NoEnginesRegistered</span></tt></a><a class="headerlink" href="#noenginesregistered" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.error.NoEnginesRegistered">
+<!--[IPython.kernel.error.NoEnginesRegistered]-->class <tt class="descclassname">IPython.kernel.error.</tt><tt class="descname">NoEnginesRegistered</tt><a class="headerlink" href="#IPython.kernel.error.NoEnginesRegistered" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.error.KernelError" class="reference internal" href="#IPython.kernel.error.KernelError"><tt class="xref docutils literal"><span class="pre">IPython.kernel.error.KernelError</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.error.NoEnginesRegistered.__init__">
+<!--[IPython.kernel.error.NoEnginesRegistered.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.error.NoEnginesRegistered.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="notapendingresult">
+<h3><a title="IPython.kernel.error.NotAPendingResult" class="reference internal" href="#IPython.kernel.error.NotAPendingResult"><tt class="xref docutils literal"><span class="pre">NotAPendingResult</span></tt></a><a class="headerlink" href="#notapendingresult" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.error.NotAPendingResult">
+<!--[IPython.kernel.error.NotAPendingResult]-->class <tt class="descclassname">IPython.kernel.error.</tt><tt class="descname">NotAPendingResult</tt><a class="headerlink" href="#IPython.kernel.error.NotAPendingResult" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.error.KernelError" class="reference internal" href="#IPython.kernel.error.KernelError"><tt class="xref docutils literal"><span class="pre">IPython.kernel.error.KernelError</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.error.NotAPendingResult.__init__">
+<!--[IPython.kernel.error.NotAPendingResult.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.error.NotAPendingResult.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="notdefined">
+<h3><a title="IPython.kernel.error.NotDefined" class="reference internal" href="#IPython.kernel.error.NotDefined"><tt class="xref docutils literal"><span class="pre">NotDefined</span></tt></a><a class="headerlink" href="#notdefined" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.error.NotDefined">
+<!--[IPython.kernel.error.NotDefined]-->class <tt class="descclassname">IPython.kernel.error.</tt><tt class="descname">NotDefined</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#IPython.kernel.error.NotDefined" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.error.KernelError" class="reference internal" href="#IPython.kernel.error.KernelError"><tt class="xref docutils literal"><span class="pre">IPython.kernel.error.KernelError</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.error.NotDefined.__init__">
+<!--[IPython.kernel.error.NotDefined.__init__]--><tt class="descname">__init__</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#IPython.kernel.error.NotDefined.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="pbmessagesizeerror">
+<h3><a title="IPython.kernel.error.PBMessageSizeError" class="reference internal" href="#IPython.kernel.error.PBMessageSizeError"><tt class="xref docutils literal"><span class="pre">PBMessageSizeError</span></tt></a><a class="headerlink" href="#pbmessagesizeerror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.error.PBMessageSizeError">
+<!--[IPython.kernel.error.PBMessageSizeError]-->class <tt class="descclassname">IPython.kernel.error.</tt><tt class="descname">PBMessageSizeError</tt><a class="headerlink" href="#IPython.kernel.error.PBMessageSizeError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.error.MessageSizeError" class="reference internal" href="#IPython.kernel.error.MessageSizeError"><tt class="xref docutils literal"><span class="pre">IPython.kernel.error.MessageSizeError</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.error.PBMessageSizeError.__init__">
+<!--[IPython.kernel.error.PBMessageSizeError.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.error.PBMessageSizeError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="protocolerror">
+<h3><a title="IPython.kernel.error.ProtocolError" class="reference internal" href="#IPython.kernel.error.ProtocolError"><tt class="xref docutils literal"><span class="pre">ProtocolError</span></tt></a><a class="headerlink" href="#protocolerror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.error.ProtocolError">
+<!--[IPython.kernel.error.ProtocolError]-->class <tt class="descclassname">IPython.kernel.error.</tt><tt class="descname">ProtocolError</tt><a class="headerlink" href="#IPython.kernel.error.ProtocolError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.error.KernelError" class="reference internal" href="#IPython.kernel.error.KernelError"><tt class="xref docutils literal"><span class="pre">IPython.kernel.error.KernelError</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.error.ProtocolError.__init__">
+<!--[IPython.kernel.error.ProtocolError.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.error.ProtocolError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="queuecleared">
+<h3><a title="IPython.kernel.error.QueueCleared" class="reference internal" href="#IPython.kernel.error.QueueCleared"><tt class="xref docutils literal"><span class="pre">QueueCleared</span></tt></a><a class="headerlink" href="#queuecleared" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.error.QueueCleared">
+<!--[IPython.kernel.error.QueueCleared]-->class <tt class="descclassname">IPython.kernel.error.</tt><tt class="descname">QueueCleared</tt><a class="headerlink" href="#IPython.kernel.error.QueueCleared" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.error.KernelError" class="reference internal" href="#IPython.kernel.error.KernelError"><tt class="xref docutils literal"><span class="pre">IPython.kernel.error.KernelError</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.error.QueueCleared.__init__">
+<!--[IPython.kernel.error.QueueCleared.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.error.QueueCleared.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="resultalreadyretrieved">
+<h3><a title="IPython.kernel.error.ResultAlreadyRetrieved" class="reference internal" href="#IPython.kernel.error.ResultAlreadyRetrieved"><tt class="xref docutils literal"><span class="pre">ResultAlreadyRetrieved</span></tt></a><a class="headerlink" href="#resultalreadyretrieved" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.error.ResultAlreadyRetrieved">
+<!--[IPython.kernel.error.ResultAlreadyRetrieved]-->class <tt class="descclassname">IPython.kernel.error.</tt><tt class="descname">ResultAlreadyRetrieved</tt><a class="headerlink" href="#IPython.kernel.error.ResultAlreadyRetrieved" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.error.KernelError" class="reference internal" href="#IPython.kernel.error.KernelError"><tt class="xref docutils literal"><span class="pre">IPython.kernel.error.KernelError</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.error.ResultAlreadyRetrieved.__init__">
+<!--[IPython.kernel.error.ResultAlreadyRetrieved.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.error.ResultAlreadyRetrieved.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="resultnotcompleted">
+<h3><a title="IPython.kernel.error.ResultNotCompleted" class="reference internal" href="#IPython.kernel.error.ResultNotCompleted"><tt class="xref docutils literal"><span class="pre">ResultNotCompleted</span></tt></a><a class="headerlink" href="#resultnotcompleted" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.error.ResultNotCompleted">
+<!--[IPython.kernel.error.ResultNotCompleted]-->class <tt class="descclassname">IPython.kernel.error.</tt><tt class="descname">ResultNotCompleted</tt><a class="headerlink" href="#IPython.kernel.error.ResultNotCompleted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.error.KernelError" class="reference internal" href="#IPython.kernel.error.KernelError"><tt class="xref docutils literal"><span class="pre">IPython.kernel.error.KernelError</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.error.ResultNotCompleted.__init__">
+<!--[IPython.kernel.error.ResultNotCompleted.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.error.ResultNotCompleted.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="securityerror">
+<h3><a title="IPython.kernel.error.SecurityError" class="reference internal" href="#IPython.kernel.error.SecurityError"><tt class="xref docutils literal"><span class="pre">SecurityError</span></tt></a><a class="headerlink" href="#securityerror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.error.SecurityError">
+<!--[IPython.kernel.error.SecurityError]-->class <tt class="descclassname">IPython.kernel.error.</tt><tt class="descname">SecurityError</tt><a class="headerlink" href="#IPython.kernel.error.SecurityError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.error.KernelError" class="reference internal" href="#IPython.kernel.error.KernelError"><tt class="xref docutils literal"><span class="pre">IPython.kernel.error.KernelError</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.error.SecurityError.__init__">
+<!--[IPython.kernel.error.SecurityError.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.error.SecurityError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="serializationerror">
+<h3><a title="IPython.kernel.error.SerializationError" class="reference internal" href="#IPython.kernel.error.SerializationError"><tt class="xref docutils literal"><span class="pre">SerializationError</span></tt></a><a class="headerlink" href="#serializationerror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.error.SerializationError">
+<!--[IPython.kernel.error.SerializationError]-->class <tt class="descclassname">IPython.kernel.error.</tt><tt class="descname">SerializationError</tt><a class="headerlink" href="#IPython.kernel.error.SerializationError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.error.KernelError" class="reference internal" href="#IPython.kernel.error.KernelError"><tt class="xref docutils literal"><span class="pre">IPython.kernel.error.KernelError</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.error.SerializationError.__init__">
+<!--[IPython.kernel.error.SerializationError.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.error.SerializationError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="stoplocalexecution">
+<h3><a title="IPython.kernel.error.StopLocalExecution" class="reference internal" href="#IPython.kernel.error.StopLocalExecution"><tt class="xref docutils literal"><span class="pre">StopLocalExecution</span></tt></a><a class="headerlink" href="#stoplocalexecution" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.error.StopLocalExecution">
+<!--[IPython.kernel.error.StopLocalExecution]-->class <tt class="descclassname">IPython.kernel.error.</tt><tt class="descname">StopLocalExecution</tt><a class="headerlink" href="#IPython.kernel.error.StopLocalExecution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.error.KernelError" class="reference internal" href="#IPython.kernel.error.KernelError"><tt class="xref docutils literal"><span class="pre">IPython.kernel.error.KernelError</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.error.StopLocalExecution.__init__">
+<!--[IPython.kernel.error.StopLocalExecution.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.error.StopLocalExecution.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="taskaborted">
+<h3><a title="IPython.kernel.error.TaskAborted" class="reference internal" href="#IPython.kernel.error.TaskAborted"><tt class="xref docutils literal"><span class="pre">TaskAborted</span></tt></a><a class="headerlink" href="#taskaborted" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.error.TaskAborted">
+<!--[IPython.kernel.error.TaskAborted]-->class <tt class="descclassname">IPython.kernel.error.</tt><tt class="descname">TaskAborted</tt><a class="headerlink" href="#IPython.kernel.error.TaskAborted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.error.KernelError" class="reference internal" href="#IPython.kernel.error.KernelError"><tt class="xref docutils literal"><span class="pre">IPython.kernel.error.KernelError</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.error.TaskAborted.__init__">
+<!--[IPython.kernel.error.TaskAborted.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.error.TaskAborted.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="taskrejecterror">
+<h3><a title="IPython.kernel.error.TaskRejectError" class="reference internal" href="#IPython.kernel.error.TaskRejectError"><tt class="xref docutils literal"><span class="pre">TaskRejectError</span></tt></a><a class="headerlink" href="#taskrejecterror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.error.TaskRejectError">
+<!--[IPython.kernel.error.TaskRejectError]-->class <tt class="descclassname">IPython.kernel.error.</tt><tt class="descname">TaskRejectError</tt><a class="headerlink" href="#IPython.kernel.error.TaskRejectError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.error.KernelError" class="reference internal" href="#IPython.kernel.error.KernelError"><tt class="xref docutils literal"><span class="pre">IPython.kernel.error.KernelError</span></tt></a></p>
+<p>Exception to raise when a task should be rejected by an engine.</p>
+<p>This exception can be used to allow a task running on an engine to test
+if the engine (or the user&#8217;s namespace on the engine) has the needed
+task dependencies.  If not, the task should raise this exception.  For
+the task to be retried on another engine, the task should be created
+with the <cite>retries</cite> argument &gt; 1.</p>
+<p>The advantage of this approach over our older properties system is that
+tasks have full access to the user&#8217;s namespace on the engines and the
+properties don&#8217;t have to be managed or tested by the controller.</p>
+<dl class="method">
+<dt id="IPython.kernel.error.TaskRejectError.__init__">
+<!--[IPython.kernel.error.TaskRejectError.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.error.TaskRejectError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="tasktimeout">
+<h3><a title="IPython.kernel.error.TaskTimeout" class="reference internal" href="#IPython.kernel.error.TaskTimeout"><tt class="xref docutils literal"><span class="pre">TaskTimeout</span></tt></a><a class="headerlink" href="#tasktimeout" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.error.TaskTimeout">
+<!--[IPython.kernel.error.TaskTimeout]-->class <tt class="descclassname">IPython.kernel.error.</tt><tt class="descname">TaskTimeout</tt><a class="headerlink" href="#IPython.kernel.error.TaskTimeout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.error.KernelError" class="reference internal" href="#IPython.kernel.error.KernelError"><tt class="xref docutils literal"><span class="pre">IPython.kernel.error.KernelError</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.error.TaskTimeout.__init__">
+<!--[IPython.kernel.error.TaskTimeout.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.error.TaskTimeout.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="unpickleableexception">
+<h3><a title="IPython.kernel.error.UnpickleableException" class="reference internal" href="#IPython.kernel.error.UnpickleableException"><tt class="xref docutils literal"><span class="pre">UnpickleableException</span></tt></a><a class="headerlink" href="#unpickleableexception" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.error.UnpickleableException">
+<!--[IPython.kernel.error.UnpickleableException]-->class <tt class="descclassname">IPython.kernel.error.</tt><tt class="descname">UnpickleableException</tt><a class="headerlink" href="#IPython.kernel.error.UnpickleableException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.error.KernelError" class="reference internal" href="#IPython.kernel.error.KernelError"><tt class="xref docutils literal"><span class="pre">IPython.kernel.error.KernelError</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.error.UnpickleableException.__init__">
+<!--[IPython.kernel.error.UnpickleableException.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.error.UnpickleableException.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="function">
+<h2>Function<a class="headerlink" href="#function" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.kernel.error.collect_exceptions">
+<!--[IPython.kernel.error.collect_exceptions]--><tt class="descclassname">IPython.kernel.error.</tt><tt class="descname">collect_exceptions</tt><big>(</big><em>rlist</em>, <em>method</em><big>)</big><a class="headerlink" href="#IPython.kernel.error.collect_exceptions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.error</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.error">Module: <tt class="docutils literal"><span class="pre">kernel.error</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#abortedpendingdeferrederror"><tt class="docutils literal"><span class="pre">AbortedPendingDeferredError</span></tt></a></li>
+<li><a class="reference external" href="#clienterror"><tt class="docutils literal"><span class="pre">ClientError</span></tt></a></li>
+<li><a class="reference external" href="#compositeerror"><tt class="docutils literal"><span class="pre">CompositeError</span></tt></a></li>
+<li><a class="reference external" href="#connectionerror"><tt class="docutils literal"><span class="pre">ConnectionError</span></tt></a></li>
+<li><a class="reference external" href="#filetimeouterror"><tt class="docutils literal"><span class="pre">FileTimeoutError</span></tt></a></li>
+<li><a class="reference external" href="#idinuse"><tt class="docutils literal"><span class="pre">IdInUse</span></tt></a></li>
+<li><a class="reference external" href="#invalidclientid"><tt class="docutils literal"><span class="pre">InvalidClientID</span></tt></a></li>
+<li><a class="reference external" href="#invaliddeferredid"><tt class="docutils literal"><span class="pre">InvalidDeferredID</span></tt></a></li>
+<li><a class="reference external" href="#invalidengineid"><tt class="docutils literal"><span class="pre">InvalidEngineID</span></tt></a></li>
+<li><a class="reference external" href="#invalidproperty"><tt class="docutils literal"><span class="pre">InvalidProperty</span></tt></a></li>
+<li><a class="reference external" href="#kernelerror"><tt class="docutils literal"><span class="pre">KernelError</span></tt></a></li>
+<li><a class="reference external" href="#messagesizeerror"><tt class="docutils literal"><span class="pre">MessageSizeError</span></tt></a></li>
+<li><a class="reference external" href="#missingblockargument"><tt class="docutils literal"><span class="pre">MissingBlockArgument</span></tt></a></li>
+<li><a class="reference external" href="#noenginesregistered"><tt class="docutils literal"><span class="pre">NoEnginesRegistered</span></tt></a></li>
+<li><a class="reference external" href="#notapendingresult"><tt class="docutils literal"><span class="pre">NotAPendingResult</span></tt></a></li>
+<li><a class="reference external" href="#notdefined"><tt class="docutils literal"><span class="pre">NotDefined</span></tt></a></li>
+<li><a class="reference external" href="#pbmessagesizeerror"><tt class="docutils literal"><span class="pre">PBMessageSizeError</span></tt></a></li>
+<li><a class="reference external" href="#protocolerror"><tt class="docutils literal"><span class="pre">ProtocolError</span></tt></a></li>
+<li><a class="reference external" href="#queuecleared"><tt class="docutils literal"><span class="pre">QueueCleared</span></tt></a></li>
+<li><a class="reference external" href="#resultalreadyretrieved"><tt class="docutils literal"><span class="pre">ResultAlreadyRetrieved</span></tt></a></li>
+<li><a class="reference external" href="#resultnotcompleted"><tt class="docutils literal"><span class="pre">ResultNotCompleted</span></tt></a></li>
+<li><a class="reference external" href="#securityerror"><tt class="docutils literal"><span class="pre">SecurityError</span></tt></a></li>
+<li><a class="reference external" href="#serializationerror"><tt class="docutils literal"><span class="pre">SerializationError</span></tt></a></li>
+<li><a class="reference external" href="#stoplocalexecution"><tt class="docutils literal"><span class="pre">StopLocalExecution</span></tt></a></li>
+<li><a class="reference external" href="#taskaborted"><tt class="docutils literal"><span class="pre">TaskAborted</span></tt></a></li>
+<li><a class="reference external" href="#taskrejecterror"><tt class="docutils literal"><span class="pre">TaskRejectError</span></tt></a></li>
+<li><a class="reference external" href="#tasktimeout"><tt class="docutils literal"><span class="pre">TaskTimeout</span></tt></a></li>
+<li><a class="reference external" href="#unpickleableexception"><tt class="docutils literal"><span class="pre">UnpickleableException</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#function">Function</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.kernel.engineservice.html" title="previous chapter">kernel.engineservice</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.fcutil.html" title="next chapter">kernel.fcutil</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.error.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.fcutil.html" title="kernel.fcutil"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.engineservice.html" title="kernel.engineservice"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

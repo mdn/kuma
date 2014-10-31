@@ -1,0 +1,455 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.scripts.ipcluster &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.scripts.ipcontroller" href="IPython.kernel.scripts.ipcontroller.html" />
+    <link rel="prev" title="kernel.pickleutil" href="IPython.kernel.pickleutil.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.scripts.ipcontroller.html" title="kernel.scripts.ipcontroller"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.pickleutil.html" title="kernel.pickleutil"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-scripts-ipcluster">
+<h1>kernel.scripts.ipcluster<a class="headerlink" href="#kernel-scripts-ipcluster" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.scripts.ipcluster">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.scripts.ipcluster</span></tt><a class="headerlink" href="#module-IPython.kernel.scripts.ipcluster" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.kernel.scripts.ipcluster</span></tt>:</p>
+<img src="../../_images/inheritance6637152827.png" usemap="#inheritance6637152827" class="inheritance"/><map id="inheritance6637152827" name="inheritance6637152827">
+<area shape="rect" href="#IPython.kernel.scripts.ipcluster.ProcessStateError" title="scripts.ipcluster.ProcessStateError" alt="" coords="5,271,215,294"/>
+<area shape="rect" href="#IPython.kernel.scripts.ipcluster.PBSEngineSet" title="scripts.ipcluster.PBSEngineSet" alt="" coords="270,226,459,250"/>
+<area shape="rect" href="#IPython.kernel.scripts.ipcluster.BatchEngineSet" title="scripts.ipcluster.BatchEngineSet" alt="" coords="11,226,209,250"/>
+<area shape="rect" href="#IPython.kernel.scripts.ipcluster.LocalEngineSet" title="scripts.ipcluster.LocalEngineSet" alt="" coords="13,138,207,161"/>
+<area shape="rect" href="#IPython.kernel.scripts.ipcluster.LauncherProcessProtocol" title="scripts.ipcluster.LauncherProcessProtocol" alt="" coords="514,182,763,205"/>
+<area shape="rect" href="#IPython.kernel.scripts.ipcluster.ControllerLauncher" title="scripts.ipcluster.ControllerLauncher" alt="" coords="257,71,472,95"/>
+<area shape="rect" href="#IPython.kernel.scripts.ipcluster.ProcessLauncher" title="scripts.ipcluster.ProcessLauncher" alt="" coords="8,93,211,117"/>
+<area shape="rect" href="#IPython.kernel.scripts.ipcluster.EngineLauncher" title="scripts.ipcluster.EngineLauncher" alt="" coords="265,116,463,139"/>
+<area shape="rect" href="#IPython.kernel.scripts.ipcluster.SSHEngineSet" title="scripts.ipcluster.SSHEngineSet" alt="" coords="15,49,204,72"/>
+<area shape="rect" href="#IPython.kernel.scripts.ipcluster.UnknownStatus" title="scripts.ipcluster.UnknownStatus" alt="" coords="12,5,208,28"/>
+</map>
+<p>Start an IPython cluster = (controller + engines).</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="batchengineset">
+<h3><a title="IPython.kernel.scripts.ipcluster.BatchEngineSet" class="reference internal" href="#IPython.kernel.scripts.ipcluster.BatchEngineSet"><tt class="xref docutils literal"><span class="pre">BatchEngineSet</span></tt></a><a class="headerlink" href="#batchengineset" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.scripts.ipcluster.BatchEngineSet">
+<!--[IPython.kernel.scripts.ipcluster.BatchEngineSet]-->class <tt class="descclassname">IPython.kernel.scripts.ipcluster.</tt><tt class="descname">BatchEngineSet</tt><big>(</big><em>template_file</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.BatchEngineSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<dl class="method">
+<dt id="IPython.kernel.scripts.ipcluster.BatchEngineSet.__init__">
+<!--[IPython.kernel.scripts.ipcluster.BatchEngineSet.__init__]--><tt class="descname">__init__</tt><big>(</big><em>template_file</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.BatchEngineSet.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.scripts.ipcluster.BatchEngineSet.handle_error">
+<!--[IPython.kernel.scripts.ipcluster.BatchEngineSet.handle_error]--><tt class="descname">handle_error</tt><big>(</big><em>f</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.BatchEngineSet.handle_error" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.scripts.ipcluster.BatchEngineSet.kill">
+<!--[IPython.kernel.scripts.ipcluster.BatchEngineSet.kill]--><tt class="descname">kill</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.BatchEngineSet.kill" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.scripts.ipcluster.BatchEngineSet.parse_job_id">
+<!--[IPython.kernel.scripts.ipcluster.BatchEngineSet.parse_job_id]--><tt class="descname">parse_job_id</tt><big>(</big><em>output</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.BatchEngineSet.parse_job_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.scripts.ipcluster.BatchEngineSet.start">
+<!--[IPython.kernel.scripts.ipcluster.BatchEngineSet.start]--><tt class="descname">start</tt><big>(</big><em>n</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.BatchEngineSet.start" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.scripts.ipcluster.BatchEngineSet.write_batch_script">
+<!--[IPython.kernel.scripts.ipcluster.BatchEngineSet.write_batch_script]--><tt class="descname">write_batch_script</tt><big>(</big><em>n</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.BatchEngineSet.write_batch_script" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="controllerlauncher">
+<h3><a title="IPython.kernel.scripts.ipcluster.ControllerLauncher" class="reference internal" href="#IPython.kernel.scripts.ipcluster.ControllerLauncher"><tt class="xref docutils literal"><span class="pre">ControllerLauncher</span></tt></a><a class="headerlink" href="#controllerlauncher" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.scripts.ipcluster.ControllerLauncher">
+<!--[IPython.kernel.scripts.ipcluster.ControllerLauncher]-->class <tt class="descclassname">IPython.kernel.scripts.ipcluster.</tt><tt class="descname">ControllerLauncher</tt><big>(</big><em>extra_args=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.ControllerLauncher" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.scripts.ipcluster.ProcessLauncher" class="reference internal" href="#IPython.kernel.scripts.ipcluster.ProcessLauncher"><tt class="xref docutils literal"><span class="pre">IPython.kernel.scripts.ipcluster.ProcessLauncher</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.scripts.ipcluster.ControllerLauncher.__init__">
+<!--[IPython.kernel.scripts.ipcluster.ControllerLauncher.__init__]--><tt class="descname">__init__</tt><big>(</big><em>extra_args=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.ControllerLauncher.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="enginelauncher">
+<h3><a title="IPython.kernel.scripts.ipcluster.EngineLauncher" class="reference internal" href="#IPython.kernel.scripts.ipcluster.EngineLauncher"><tt class="xref docutils literal"><span class="pre">EngineLauncher</span></tt></a><a class="headerlink" href="#enginelauncher" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.scripts.ipcluster.EngineLauncher">
+<!--[IPython.kernel.scripts.ipcluster.EngineLauncher]-->class <tt class="descclassname">IPython.kernel.scripts.ipcluster.</tt><tt class="descname">EngineLauncher</tt><big>(</big><em>extra_args=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.EngineLauncher" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.scripts.ipcluster.ProcessLauncher" class="reference internal" href="#IPython.kernel.scripts.ipcluster.ProcessLauncher"><tt class="xref docutils literal"><span class="pre">IPython.kernel.scripts.ipcluster.ProcessLauncher</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.scripts.ipcluster.EngineLauncher.__init__">
+<!--[IPython.kernel.scripts.ipcluster.EngineLauncher.__init__]--><tt class="descname">__init__</tt><big>(</big><em>extra_args=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.EngineLauncher.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="launcherprocessprotocol">
+<h3><a title="IPython.kernel.scripts.ipcluster.LauncherProcessProtocol" class="reference internal" href="#IPython.kernel.scripts.ipcluster.LauncherProcessProtocol"><tt class="xref docutils literal"><span class="pre">LauncherProcessProtocol</span></tt></a><a class="headerlink" href="#launcherprocessprotocol" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.scripts.ipcluster.LauncherProcessProtocol">
+<!--[IPython.kernel.scripts.ipcluster.LauncherProcessProtocol]-->class <tt class="descclassname">IPython.kernel.scripts.ipcluster.</tt><tt class="descname">LauncherProcessProtocol</tt><big>(</big><em>process_launcher</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.LauncherProcessProtocol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">twisted.internet.protocol.ProcessProtocol</span></tt></p>
+<p>A ProcessProtocol to go with the ProcessLauncher.</p>
+<dl class="method">
+<dt id="IPython.kernel.scripts.ipcluster.LauncherProcessProtocol.__init__">
+<!--[IPython.kernel.scripts.ipcluster.LauncherProcessProtocol.__init__]--><tt class="descname">__init__</tt><big>(</big><em>process_launcher</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.LauncherProcessProtocol.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.scripts.ipcluster.LauncherProcessProtocol.connectionMade">
+<!--[IPython.kernel.scripts.ipcluster.LauncherProcessProtocol.connectionMade]--><tt class="descname">connectionMade</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.LauncherProcessProtocol.connectionMade" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.scripts.ipcluster.LauncherProcessProtocol.errReceived">
+<!--[IPython.kernel.scripts.ipcluster.LauncherProcessProtocol.errReceived]--><tt class="descname">errReceived</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.LauncherProcessProtocol.errReceived" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.scripts.ipcluster.LauncherProcessProtocol.outReceived">
+<!--[IPython.kernel.scripts.ipcluster.LauncherProcessProtocol.outReceived]--><tt class="descname">outReceived</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.LauncherProcessProtocol.outReceived" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.scripts.ipcluster.LauncherProcessProtocol.processEnded">
+<!--[IPython.kernel.scripts.ipcluster.LauncherProcessProtocol.processEnded]--><tt class="descname">processEnded</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.LauncherProcessProtocol.processEnded" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="localengineset">
+<h3><a title="IPython.kernel.scripts.ipcluster.LocalEngineSet" class="reference internal" href="#IPython.kernel.scripts.ipcluster.LocalEngineSet"><tt class="xref docutils literal"><span class="pre">LocalEngineSet</span></tt></a><a class="headerlink" href="#localengineset" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.scripts.ipcluster.LocalEngineSet">
+<!--[IPython.kernel.scripts.ipcluster.LocalEngineSet]-->class <tt class="descclassname">IPython.kernel.scripts.ipcluster.</tt><tt class="descname">LocalEngineSet</tt><big>(</big><em>extra_args=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.LocalEngineSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<dl class="method">
+<dt id="IPython.kernel.scripts.ipcluster.LocalEngineSet.__init__">
+<!--[IPython.kernel.scripts.ipcluster.LocalEngineSet.__init__]--><tt class="descname">__init__</tt><big>(</big><em>extra_args=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.LocalEngineSet.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.scripts.ipcluster.LocalEngineSet.interrupt_then_kill">
+<!--[IPython.kernel.scripts.ipcluster.LocalEngineSet.interrupt_then_kill]--><tt class="descname">interrupt_then_kill</tt><big>(</big><em>delay=1.0</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.LocalEngineSet.interrupt_then_kill" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.scripts.ipcluster.LocalEngineSet.signal">
+<!--[IPython.kernel.scripts.ipcluster.LocalEngineSet.signal]--><tt class="descname">signal</tt><big>(</big><em>sig</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.LocalEngineSet.signal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.scripts.ipcluster.LocalEngineSet.start">
+<!--[IPython.kernel.scripts.ipcluster.LocalEngineSet.start]--><tt class="descname">start</tt><big>(</big><em>n</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.LocalEngineSet.start" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="pbsengineset">
+<h3><a title="IPython.kernel.scripts.ipcluster.PBSEngineSet" class="reference internal" href="#IPython.kernel.scripts.ipcluster.PBSEngineSet"><tt class="xref docutils literal"><span class="pre">PBSEngineSet</span></tt></a><a class="headerlink" href="#pbsengineset" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.scripts.ipcluster.PBSEngineSet">
+<!--[IPython.kernel.scripts.ipcluster.PBSEngineSet]-->class <tt class="descclassname">IPython.kernel.scripts.ipcluster.</tt><tt class="descname">PBSEngineSet</tt><big>(</big><em>template_file</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.PBSEngineSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.scripts.ipcluster.BatchEngineSet" class="reference internal" href="#IPython.kernel.scripts.ipcluster.BatchEngineSet"><tt class="xref docutils literal"><span class="pre">IPython.kernel.scripts.ipcluster.BatchEngineSet</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.scripts.ipcluster.PBSEngineSet.__init__">
+<!--[IPython.kernel.scripts.ipcluster.PBSEngineSet.__init__]--><tt class="descname">__init__</tt><big>(</big><em>template_file</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.PBSEngineSet.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="processlauncher">
+<h3><a title="IPython.kernel.scripts.ipcluster.ProcessLauncher" class="reference internal" href="#IPython.kernel.scripts.ipcluster.ProcessLauncher"><tt class="xref docutils literal"><span class="pre">ProcessLauncher</span></tt></a><a class="headerlink" href="#processlauncher" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.scripts.ipcluster.ProcessLauncher">
+<!--[IPython.kernel.scripts.ipcluster.ProcessLauncher]-->class <tt class="descclassname">IPython.kernel.scripts.ipcluster.</tt><tt class="descname">ProcessLauncher</tt><big>(</big><em>cmd_and_args</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.ProcessLauncher" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>Start and stop an external process in an asynchronous manner.</p>
+<p>Currently this uses deferreds to notify other parties of process state
+changes.  This is an awkward design and should be moved to using
+a formal NotificationCenter.</p>
+<dl class="method">
+<dt id="IPython.kernel.scripts.ipcluster.ProcessLauncher.__init__">
+<!--[IPython.kernel.scripts.ipcluster.ProcessLauncher.__init__]--><tt class="descname">__init__</tt><big>(</big><em>cmd_and_args</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.ProcessLauncher.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.scripts.ipcluster.ProcessLauncher.fire_start_deferred">
+<!--[IPython.kernel.scripts.ipcluster.ProcessLauncher.fire_start_deferred]--><tt class="descname">fire_start_deferred</tt><big>(</big><em>pid</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.ProcessLauncher.fire_start_deferred" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.scripts.ipcluster.ProcessLauncher.fire_stop_deferred">
+<!--[IPython.kernel.scripts.ipcluster.ProcessLauncher.fire_stop_deferred]--><tt class="descname">fire_stop_deferred</tt><big>(</big><em>exit_code</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.ProcessLauncher.fire_stop_deferred" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.scripts.ipcluster.ProcessLauncher.get_stop_deferred">
+<!--[IPython.kernel.scripts.ipcluster.ProcessLauncher.get_stop_deferred]--><tt class="descname">get_stop_deferred</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.ProcessLauncher.get_stop_deferred" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.scripts.ipcluster.ProcessLauncher.interrupt_then_kill">
+<!--[IPython.kernel.scripts.ipcluster.ProcessLauncher.interrupt_then_kill]--><tt class="descname">interrupt_then_kill</tt><big>(</big><em>delay=1.0</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.ProcessLauncher.interrupt_then_kill" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.kernel.scripts.ipcluster.ProcessLauncher.running">
+<!--[IPython.kernel.scripts.ipcluster.ProcessLauncher.running]--><tt class="descname">running</tt><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.ProcessLauncher.running" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.scripts.ipcluster.ProcessLauncher.signal">
+<!--[IPython.kernel.scripts.ipcluster.ProcessLauncher.signal]--><tt class="descname">signal</tt><big>(</big><em>sig</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.ProcessLauncher.signal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a signal to the process.</p>
+<p>The argument sig can be (&#8216;KILL&#8217;,&#8217;INT&#8217;, etc.) or any signal number.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.scripts.ipcluster.ProcessLauncher.start">
+<!--[IPython.kernel.scripts.ipcluster.ProcessLauncher.start]--><tt class="descname">start</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.ProcessLauncher.start" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="processstateerror">
+<h3><a title="IPython.kernel.scripts.ipcluster.ProcessStateError" class="reference internal" href="#IPython.kernel.scripts.ipcluster.ProcessStateError"><tt class="xref docutils literal"><span class="pre">ProcessStateError</span></tt></a><a class="headerlink" href="#processstateerror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.scripts.ipcluster.ProcessStateError">
+<!--[IPython.kernel.scripts.ipcluster.ProcessStateError]-->class <tt class="descclassname">IPython.kernel.scripts.ipcluster.</tt><tt class="descname">ProcessStateError</tt><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.ProcessStateError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
+<dl class="method">
+<dt id="IPython.kernel.scripts.ipcluster.ProcessStateError.__init__">
+<!--[IPython.kernel.scripts.ipcluster.ProcessStateError.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.ProcessStateError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="sshengineset">
+<h3><a title="IPython.kernel.scripts.ipcluster.SSHEngineSet" class="reference internal" href="#IPython.kernel.scripts.ipcluster.SSHEngineSet"><tt class="xref docutils literal"><span class="pre">SSHEngineSet</span></tt></a><a class="headerlink" href="#sshengineset" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.scripts.ipcluster.SSHEngineSet">
+<!--[IPython.kernel.scripts.ipcluster.SSHEngineSet]-->class <tt class="descclassname">IPython.kernel.scripts.ipcluster.</tt><tt class="descname">SSHEngineSet</tt><big>(</big><em>engine_hosts</em>, <em>sshx=None</em>, <em>ipengine='ipengine'</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.SSHEngineSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<dl class="method">
+<dt id="IPython.kernel.scripts.ipcluster.SSHEngineSet.__init__">
+<!--[IPython.kernel.scripts.ipcluster.SSHEngineSet.__init__]--><tt class="descname">__init__</tt><big>(</big><em>engine_hosts</em>, <em>sshx=None</em>, <em>ipengine='ipengine'</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.SSHEngineSet.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start a controller on localhost and engines using ssh.</p>
+<p>The engine_hosts argument is a dict with hostnames as keys and
+the number of engine (int) as values.  sshx is the name of a local
+file that will be used to run remote commands.  This file is used
+to setup the environment properly.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.scripts.ipcluster.SSHEngineSet.kill">
+<!--[IPython.kernel.scripts.ipcluster.SSHEngineSet.kill]--><tt class="descname">kill</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.SSHEngineSet.kill" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.scripts.ipcluster.SSHEngineSet.start">
+<!--[IPython.kernel.scripts.ipcluster.SSHEngineSet.start]--><tt class="descname">start</tt><big>(</big><em>send_furl=False</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.SSHEngineSet.start" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="unknownstatus">
+<h3><a title="IPython.kernel.scripts.ipcluster.UnknownStatus" class="reference internal" href="#IPython.kernel.scripts.ipcluster.UnknownStatus"><tt class="xref docutils literal"><span class="pre">UnknownStatus</span></tt></a><a class="headerlink" href="#unknownstatus" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.scripts.ipcluster.UnknownStatus">
+<!--[IPython.kernel.scripts.ipcluster.UnknownStatus]-->class <tt class="descclassname">IPython.kernel.scripts.ipcluster.</tt><tt class="descname">UnknownStatus</tt><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.UnknownStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
+<dl class="method">
+<dt id="IPython.kernel.scripts.ipcluster.UnknownStatus.__init__">
+<!--[IPython.kernel.scripts.ipcluster.UnknownStatus.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.UnknownStatus.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.kernel.scripts.ipcluster.check_reuse">
+<!--[IPython.kernel.scripts.ipcluster.check_reuse]--><tt class="descclassname">IPython.kernel.scripts.ipcluster.</tt><tt class="descname">check_reuse</tt><big>(</big><em>args</em>, <em>cont_args</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.check_reuse" title="Permalink to this definition">¶</a></dt>
+<dd>Check to see if we should try to resuse FURL files.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.scripts.ipcluster.check_security">
+<!--[IPython.kernel.scripts.ipcluster.check_security]--><tt class="descclassname">IPython.kernel.scripts.ipcluster.</tt><tt class="descname">check_security</tt><big>(</big><em>args</em>, <em>cont_args</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.check_security" title="Permalink to this definition">¶</a></dt>
+<dd>Check to see if we should run with SSL support.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.scripts.ipcluster.get_args">
+<!--[IPython.kernel.scripts.ipcluster.get_args]--><tt class="descclassname">IPython.kernel.scripts.ipcluster.</tt><tt class="descname">get_args</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.get_args" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.scripts.ipcluster.main">
+<!--[IPython.kernel.scripts.ipcluster.main]--><tt class="descclassname">IPython.kernel.scripts.ipcluster.</tt><tt class="descname">main</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.scripts.ipcluster.main_local">
+<!--[IPython.kernel.scripts.ipcluster.main_local]--><tt class="descclassname">IPython.kernel.scripts.ipcluster.</tt><tt class="descname">main_local</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.main_local" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.scripts.ipcluster.main_mpi">
+<!--[IPython.kernel.scripts.ipcluster.main_mpi]--><tt class="descclassname">IPython.kernel.scripts.ipcluster.</tt><tt class="descname">main_mpi</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.main_mpi" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.scripts.ipcluster.main_pbs">
+<!--[IPython.kernel.scripts.ipcluster.main_pbs]--><tt class="descclassname">IPython.kernel.scripts.ipcluster.</tt><tt class="descname">main_pbs</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.main_pbs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.scripts.ipcluster.main_ssh">
+<!--[IPython.kernel.scripts.ipcluster.main_ssh]--><tt class="descclassname">IPython.kernel.scripts.ipcluster.</tt><tt class="descname">main_ssh</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcluster.main_ssh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start a controller on localhost and engines using ssh.</p>
+<p>Your clusterfile should look like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">send_furl</span> <span class="o">=</span> <span class="bp">False</span> <span class="c"># True, if you want </span>
+<span class="n">engines</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;engine_host1&#39;</span> <span class="p">:</span> <span class="n">engine_count</span><span class="p">,</span> 
+    <span class="s">&#39;engine_host2&#39;</span> <span class="p">:</span> <span class="n">engine_count2</span>
+<span class="p">}</span> 
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.scripts.ipcluster</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.scripts.ipcluster">Module: <tt class="docutils literal"><span class="pre">kernel.scripts.ipcluster</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#batchengineset"><tt class="docutils literal"><span class="pre">BatchEngineSet</span></tt></a></li>
+<li><a class="reference external" href="#controllerlauncher"><tt class="docutils literal"><span class="pre">ControllerLauncher</span></tt></a></li>
+<li><a class="reference external" href="#enginelauncher"><tt class="docutils literal"><span class="pre">EngineLauncher</span></tt></a></li>
+<li><a class="reference external" href="#launcherprocessprotocol"><tt class="docutils literal"><span class="pre">LauncherProcessProtocol</span></tt></a></li>
+<li><a class="reference external" href="#localengineset"><tt class="docutils literal"><span class="pre">LocalEngineSet</span></tt></a></li>
+<li><a class="reference external" href="#pbsengineset"><tt class="docutils literal"><span class="pre">PBSEngineSet</span></tt></a></li>
+<li><a class="reference external" href="#processlauncher"><tt class="docutils literal"><span class="pre">ProcessLauncher</span></tt></a></li>
+<li><a class="reference external" href="#processstateerror"><tt class="docutils literal"><span class="pre">ProcessStateError</span></tt></a></li>
+<li><a class="reference external" href="#sshengineset"><tt class="docutils literal"><span class="pre">SSHEngineSet</span></tt></a></li>
+<li><a class="reference external" href="#unknownstatus"><tt class="docutils literal"><span class="pre">UnknownStatus</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.kernel.pickleutil.html" title="previous chapter">kernel.pickleutil</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.scripts.ipcontroller.html" title="next chapter">kernel.scripts.ipcontroller</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.scripts.ipcluster.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.scripts.ipcontroller.html" title="kernel.scripts.ipcontroller"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.pickleutil.html" title="kernel.pickleutil"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

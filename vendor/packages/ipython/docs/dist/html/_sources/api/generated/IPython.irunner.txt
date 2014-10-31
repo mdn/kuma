@@ -1,0 +1,83 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+irunner
+=======
+
+Module: :mod:`irunner`
+----------------------
+Inheritance diagram for ``IPython.irunner``:
+
+.. inheritance-diagram:: IPython.irunner 
+   :parts: 3
+
+.. automodule:: IPython.irunner
+
+.. currentmodule:: IPython.irunner
+
+Classes
+-------
+
+:class:`IPythonRunner`
+~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IPythonRunner
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`InteractiveRunner`
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: InteractiveRunner
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`PythonRunner`
+~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: PythonRunner
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`RunnerFactory`
+~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: RunnerFactory
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`SAGERunner`
+~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: SAGERunner
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Functions
+---------
+
+
+.. autofunction:: IPython.irunner.main
+
+
+.. autofunction:: IPython.irunner.pexpect_monkeypatch
+

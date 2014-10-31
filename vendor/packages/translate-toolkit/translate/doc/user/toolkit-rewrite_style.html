@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="rewrite_style" id="rewrite_style">--rewrite=STYLE</a></h1>
+<div class="level1">
+
+<p>
+
+podebug allows you to rewrite the output text in a number of ways.
+</p>
+
+</div>
+<!-- SECTION "--rewrite=STYLE" [1-99] -->
+<h2><a name="xxx" id="xxx">xxx</a></h2>
+<div class="level2">
+
+<p>
+
+The source text is surrounded by xxx as follows
+
+</p>
+<pre class="code">msgid &quot;English&quot;
+msgstr &quot;xxxEnglishxxx&quot;</pre>
+
+<p>
+
+This is useful when you want to identify which text is localisable.  There might be text in your application which you cannot localise this will allow you to quickly identify that text.
+</p>
+
+</div>
+<!-- SECTION "xxx" [100-396] -->
+<h2><a name="en" id="en">en</a></h2>
+<div class="level2">
+
+<p>
+
+The source text is copied to the target
+
+</p>
+<pre class="code">msgid &quot;English&quot;
+msgstr &quot;English&quot;</pre>
+
+<p>
+
+In this way you can create translations that contain only the source text.  Useful if you are preparing a roundtrip test or want to start an English derived translation such as British English.  It produces the same results as <a href="http://man.cx/msgen" class="interwiki iw_man" title="http://man.cx/msgen">msgen</a> but with the advantage that you can add debug markers.
+</p>
+
+</div>
+<!-- SECTION "en" [397-789] -->
+<h2><a name="blank" id="blank">blank</a></h2>
+<div class="level2">
+
+<p>
+
+This simply empties your current translations
+
+</p>
+<pre class="code">msgid &quot;English&quot;
+msgstr &quot;&quot;</pre>
+
+<p>
+
+When you have a set of translation files but no template this allows you to essentially convert a <acronym title="Gettext Portable Object">PO</acronym> into a <acronym title="Gettext Portable Object Template">POT</acronym> file.  This mimics the --empty functionality of <a href="http://man.cx/msghack" class="interwiki iw_man" title="http://man.cx/msghack">msghack</a>
+</p>
+
+</div>
+<!-- SECTION "blank" [790-1063] -->
+<h2><a name="bracket" id="bracket">bracket</a></h2>
+<div class="level2">
+
+<p>
+
+New in 1.4
+</p>
+
+<p>
+Places brackets around the translated text.
+
+</p>
+<pre class="code">msgid &quot;English&quot;
+msgstr &quot;[English]&quot;</pre>
+
+<p>
+
+This can be used in the same way as <code>xxx</code> to check for translatability.  It is also useful with very long strings as it allows you to check that the full string in rendered and has not been cutoff by the application.
+</p>
+
+</div>
+<!-- SECTION "bracket" [1064-1401] -->
+<h2><a name="chef" id="chef">chef</a></h2>
+<div class="level2">
+
+<p>
+
+New in version 1.2
+</p>
+
+<p>
+Rewrites the source text using mock Swedish as popularised by the <a href="http://en.wikipedia.org/wiki/Swedish%20Chef" class="interwiki iw_wp" title="http://en.wikipedia.org/wiki/Swedish%20Chef">Swedish Chef</a>.
+
+</p>
+<pre class="code">msgid &quot;English&quot;
+msgstr &quot;Ingleesh&quot;</pre>
+
+<p>
+
+This is probably only useful for some fun.  It&#039;s not guaranteed that every string will be rewritten as the mock Swedish rules might not apply thus its not ideal for identifying untranslatable strings.
+</p>
+
+</div>
+<!-- SECTION "chef" [1402-1768] -->
+<h2><a name="flipped" id="flipped">flipped</a></h2>
+<div class="level2">
+
+<p>
+
+New in version 1.4
+</p>
+
+<p>
+Change the text into a version that uses equivalent latin characters that are upside down.
+
+</p>
+<pre class="code">msgid &quot;English&quot;
+msgstr &quot;‮Ǝuƃʅısɥ&quot;</pre>
+
+<p>
+
+<code>flipped</code> can give an output that simulates RTL languages.  It inserts RTL characters to try to achieve RTL like results.  Its not perfect but will give you some sense of whether your application can do RTL.  Or just use it for fun!
+</p>
+
+</div>
+<!-- SECTION "flipped" [1769-2183] -->
+<h2><a name="unicode" id="unicode">unicode</a></h2>
+<div class="level2">
+
+<p>
+
+New in version 1.2
+</p>
+
+<p>
+Rewrites the source text with Unicode characters that looks like the Latin characters that they are replacing.
+
+</p>
+<pre class="code">msgid &quot;English&quot;
+msgstr &quot;Ḗƞɠŀīşħ&quot;</pre>
+
+<p>
+
+This allows a translator or programmer to test a programs ability to use Unicode message strings. By using characters in the Unicode range but that are related to the plain Latin characters that they replace we ensure that the messages are still readable.
+</p>
+
+<p>
+Note:  Before version 1.4, the rewrite rule will also rewrite variables and <acronym title="Extensible Markup Language">XML</acronym> tags, which will cause problems in some situations.  Run <a href="toolkit-pofilter.html" class="wikilink1" title="toolkit-pofilter.html">pofilter</a> as a quick method to fix up incorrect changes, or upgrade to version 1.4.
+
+</p>
+
+</div>
+<!-- SECTION "unicode" [2184-] --></body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.scripts.ipcontroller &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.scripts.ipengine" href="IPython.kernel.scripts.ipengine.html" />
+    <link rel="prev" title="kernel.scripts.ipcluster" href="IPython.kernel.scripts.ipcluster.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.scripts.ipengine.html" title="kernel.scripts.ipengine"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.scripts.ipcluster.html" title="kernel.scripts.ipcluster"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-scripts-ipcontroller">
+<h1>kernel.scripts.ipcontroller<a class="headerlink" href="#kernel-scripts-ipcontroller" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.scripts.ipcontroller">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.scripts.ipcontroller</span></tt><a class="headerlink" href="#module-IPython.kernel.scripts.ipcontroller" title="Permalink to this headline">¶</a></h2>
+<p>The IPython controller.</p>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.kernel.scripts.ipcontroller.get_temp_furlfile">
+<!--[IPython.kernel.scripts.ipcontroller.get_temp_furlfile]--><tt class="descclassname">IPython.kernel.scripts.ipcontroller.</tt><tt class="descname">get_temp_furlfile</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcontroller.get_temp_furlfile" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.scripts.ipcontroller.init_config">
+<!--[IPython.kernel.scripts.ipcontroller.init_config]--><tt class="descclassname">IPython.kernel.scripts.ipcontroller.</tt><tt class="descname">init_config</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcontroller.init_config" title="Permalink to this definition">¶</a></dt>
+<dd>Initialize the configuration using default and command line options.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.scripts.ipcontroller.main">
+<!--[IPython.kernel.scripts.ipcontroller.main]--><tt class="descclassname">IPython.kernel.scripts.ipcontroller.</tt><tt class="descname">main</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcontroller.main" title="Permalink to this definition">¶</a></dt>
+<dd>After creating the configuration information, start the controller.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.scripts.ipcontroller.make_client_service">
+<!--[IPython.kernel.scripts.ipcontroller.make_client_service]--><tt class="descclassname">IPython.kernel.scripts.ipcontroller.</tt><tt class="descname">make_client_service</tt><big>(</big><em>controller_service</em>, <em>config</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcontroller.make_client_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a service that will listen for clients.</p>
+<p>This service is simply a <cite>foolscap.Tub</cite> instance that has a set of Referenceables
+registered with it.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.scripts.ipcontroller.make_engine_service">
+<!--[IPython.kernel.scripts.ipcontroller.make_engine_service]--><tt class="descclassname">IPython.kernel.scripts.ipcontroller.</tt><tt class="descname">make_engine_service</tt><big>(</big><em>controller_service</em>, <em>config</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcontroller.make_engine_service" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a service that will listen for engines.</p>
+<p>This service is simply a <cite>foolscap.Tub</cite> instance that has a set of Referenceables
+registered with it.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.scripts.ipcontroller.make_tub">
+<!--[IPython.kernel.scripts.ipcontroller.make_tub]--><tt class="descclassname">IPython.kernel.scripts.ipcontroller.</tt><tt class="descname">make_tub</tt><big>(</big><em>ip</em>, <em>port</em>, <em>secure</em>, <em>cert_file</em><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcontroller.make_tub" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a listening tub given an ip, port, and cert_file location.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>ip <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">The ip address that the tub should listen on.  Empty means all</p>
+</dd>
+<dt>port <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd><p class="first last">The port that the tub should listen on.  A value of 0 means
+pick a random port</p>
+</dd>
+<dt>secure: boolean</dt>
+<dd><p class="first last">Will the connection be secure (in the foolscap sense)</p>
+</dd>
+<dt>cert_file:</dt>
+<dd><p class="first last">A filename of a file to be used for theSSL certificate</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.scripts.ipcontroller.start_controller">
+<!--[IPython.kernel.scripts.ipcontroller.start_controller]--><tt class="descclassname">IPython.kernel.scripts.ipcontroller.</tt><tt class="descname">start_controller</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.scripts.ipcontroller.start_controller" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start the controller by creating the service hierarchy and starting the reactor.</p>
+<p>This method does the following:</p>
+<blockquote>
+<ul class="simple">
+<li>It starts the controller logging</li>
+<li>In execute an import statement for the controller</li>
+<li>It creates 2 <cite>foolscap.Tub</cite> instances for the client and the engines
+and registers <cite>foolscap.Referenceables</cite> with the tubs to expose the
+controller to engines and clients.</li>
+</ul>
+</blockquote>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.scripts.ipcontroller</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.scripts.ipcontroller">Module: <tt class="docutils literal"><span class="pre">kernel.scripts.ipcontroller</span></tt></a></li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.kernel.scripts.ipcluster.html" title="previous chapter">kernel.scripts.ipcluster</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.scripts.ipengine.html" title="next chapter">kernel.scripts.ipengine</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.scripts.ipcontroller.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.scripts.ipengine.html" title="kernel.scripts.ipengine"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.scripts.ipcluster.html" title="kernel.scripts.ipcluster"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

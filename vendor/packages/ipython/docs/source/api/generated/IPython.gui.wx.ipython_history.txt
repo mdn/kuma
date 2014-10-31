@@ -1,0 +1,40 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+gui.wx.ipython_history
+======================
+
+Module: :mod:`gui.wx.ipython_history`
+-------------------------------------
+Inheritance diagram for ``IPython.gui.wx.ipython_history``:
+
+.. inheritance-diagram:: IPython.gui.wx.ipython_history 
+   :parts: 3
+
+.. automodule:: IPython.gui.wx.ipython_history
+
+.. currentmodule:: IPython.gui.wx.ipython_history
+
+Classes
+-------
+
+:class:`IPythonHistoryPanel`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IPythonHistoryPanel
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`PythonSTC`
+~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: PythonSTC
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

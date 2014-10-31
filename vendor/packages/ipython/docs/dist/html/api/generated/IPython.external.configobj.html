@@ -1,0 +1,984 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>external.configobj &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="external.guid" href="IPython.external.guid.html" />
+    <link rel="prev" title="external.argparse" href="IPython.external.argparse.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.external.guid.html" title="external.guid"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.external.argparse.html" title="external.argparse"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="external-configobj">
+<h1>external.configobj<a class="headerlink" href="#external-configobj" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.external.configobj">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">external.configobj</span></tt><a class="headerlink" href="#module-IPython.external.configobj" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.external.configobj</span></tt>:</p>
+<img src="../../_images/inheritance843b3c3e25.png" usemap="#inheritance843b3c3e25" class="inheritance"/><map id="inheritance843b3c3e25" name="inheritance843b3c3e25">
+<area shape="rect" href="#IPython.external.configobj.SimpleVal" title="external.configobj.SimpleVal" alt="" coords="28,363,186,384"/>
+<area shape="rect" href="#IPython.external.configobj.ReloadError" title="external.configobj.ReloadError" alt="" coords="24,323,190,344"/>
+<area shape="rect" href="#IPython.external.configobj.RepeatSectionError" title="external.configobj.RepeatSectionError" alt="" coords="262,164,468,185"/>
+<area shape="rect" href="#IPython.external.configobj.ConfigObjError" title="external.configobj.ConfigObjError" alt="" coords="17,283,197,304"/>
+<area shape="rect" href="#IPython.external.configobj.InterpolationError" title="external.configobj.InterpolationError" alt="" coords="268,204,463,225"/>
+<area shape="rect" href="#IPython.external.configobj.ConfigspecError" title="external.configobj.ConfigspecError" alt="" coords="271,243,460,264"/>
+<area shape="rect" href="#IPython.external.configobj.ParseError" title="external.configobj.ParseError" alt="" coords="285,283,445,304"/>
+<area shape="rect" href="#IPython.external.configobj.NestingError" title="external.configobj.NestingError" alt="" coords="279,323,451,344"/>
+<area shape="rect" href="#IPython.external.configobj.UnreprError" title="external.configobj.UnreprError" alt="" coords="281,363,449,384"/>
+<area shape="rect" href="#IPython.external.configobj.DuplicateError" title="external.configobj.DuplicateError" alt="" coords="275,403,455,424"/>
+<area shape="rect" href="#IPython.external.configobj.InterpolationEngine" title="external.configobj.InterpolationEngine" alt="" coords="4,124,210,145"/>
+<area shape="rect" href="#IPython.external.configobj.TemplateInterpolation" title="external.configobj.TemplateInterpolation" alt="" coords="257,84,473,105"/>
+<area shape="rect" href="#IPython.external.configobj.ConfigParserInterpolation" title="external.configobj.ConfigParserInterpolation" alt="" coords="248,124,483,145"/>
+<area shape="rect" href="#IPython.external.configobj.InterpolationLoopError" title="external.configobj.InterpolationLoopError" alt="" coords="532,184,752,205"/>
+<area shape="rect" href="#IPython.external.configobj.MissingInterpolationOption" title="external.configobj.MissingInterpolationOption" alt="" coords="521,223,763,244"/>
+<area shape="rect" href="#IPython.external.configobj.Builder" title="external.configobj.Builder" alt="" coords="36,84,178,105"/>
+<area shape="rect" href="#IPython.external.configobj.Section" title="external.configobj.Section" alt="" coords="34,44,180,65"/>
+<area shape="rect" href="#IPython.external.configobj.ConfigObj" title="external.configobj.ConfigObj" alt="" coords="286,44,444,65"/>
+<area shape="rect" href="#IPython.external.configobj.UnknownType" title="external.configobj.UnknownType" alt="" coords="19,4,195,25"/>
+</map>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="builder">
+<h3><a title="IPython.external.configobj.Builder" class="reference internal" href="#IPython.external.configobj.Builder"><tt class="xref docutils literal"><span class="pre">Builder</span></tt></a><a class="headerlink" href="#builder" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.configobj.Builder">
+<!--[IPython.external.configobj.Builder]-->class <tt class="descclassname">IPython.external.configobj.</tt><tt class="descname">Builder</tt><a class="headerlink" href="#IPython.external.configobj.Builder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<dl class="method">
+<dt id="IPython.external.configobj.Builder.__init__">
+<!--[IPython.external.configobj.Builder.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.configobj.Builder.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Builder.build">
+<!--[IPython.external.configobj.Builder.build]--><tt class="descname">build</tt><big>(</big><em>o</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.Builder.build" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Builder.build_Add">
+<!--[IPython.external.configobj.Builder.build_Add]--><tt class="descname">build_Add</tt><big>(</big><em>o</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.Builder.build_Add" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Builder.build_Const">
+<!--[IPython.external.configobj.Builder.build_Const]--><tt class="descname">build_Const</tt><big>(</big><em>o</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.Builder.build_Const" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Builder.build_Dict">
+<!--[IPython.external.configobj.Builder.build_Dict]--><tt class="descname">build_Dict</tt><big>(</big><em>o</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.Builder.build_Dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Builder.build_Getattr">
+<!--[IPython.external.configobj.Builder.build_Getattr]--><tt class="descname">build_Getattr</tt><big>(</big><em>o</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.Builder.build_Getattr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Builder.build_List">
+<!--[IPython.external.configobj.Builder.build_List]--><tt class="descname">build_List</tt><big>(</big><em>o</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.Builder.build_List" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Builder.build_Name">
+<!--[IPython.external.configobj.Builder.build_Name]--><tt class="descname">build_Name</tt><big>(</big><em>o</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.Builder.build_Name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Builder.build_Tuple">
+<!--[IPython.external.configobj.Builder.build_Tuple]--><tt class="descname">build_Tuple</tt><big>(</big><em>o</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.Builder.build_Tuple" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Builder.build_UnaryAdd">
+<!--[IPython.external.configobj.Builder.build_UnaryAdd]--><tt class="descname">build_UnaryAdd</tt><big>(</big><em>o</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.Builder.build_UnaryAdd" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Builder.build_UnarySub">
+<!--[IPython.external.configobj.Builder.build_UnarySub]--><tt class="descname">build_UnarySub</tt><big>(</big><em>o</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.Builder.build_UnarySub" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="configobj">
+<h3><a title="IPython.external.configobj.ConfigObj" class="reference internal" href="#IPython.external.configobj.ConfigObj"><tt class="xref docutils literal"><span class="pre">ConfigObj</span></tt></a><a class="headerlink" href="#configobj" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.configobj.ConfigObj">
+<!--[IPython.external.configobj.ConfigObj]-->class <tt class="descclassname">IPython.external.configobj.</tt><tt class="descname">ConfigObj</tt><big>(</big><em>infile=None</em>, <em>options=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.ConfigObj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.external.configobj.Section" class="reference internal" href="#IPython.external.configobj.Section"><tt class="xref docutils literal"><span class="pre">IPython.external.configobj.Section</span></tt></a></p>
+<p>An object to read, create, and write config files.</p>
+<dl class="method">
+<dt id="IPython.external.configobj.ConfigObj.__init__">
+<!--[IPython.external.configobj.ConfigObj.__init__]--><tt class="descname">__init__</tt><big>(</big><em>infile=None</em>, <em>options=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.ConfigObj.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse a config file or create a config file object.</p>
+<p><tt class="docutils literal"><span class="pre">ConfigObj(infile=None,</span> <span class="pre">options=None,</span> <span class="pre">**kwargs)</span></tt></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.ConfigObj.reload">
+<!--[IPython.external.configobj.ConfigObj.reload]--><tt class="descname">reload</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.configobj.ConfigObj.reload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reload a ConfigObj from file.</p>
+<p>This method raises a <tt class="docutils literal"><span class="pre">ReloadError</span></tt> if the ConfigObj doesn&#8217;t have
+a filename attribute pointing to a file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.ConfigObj.reset">
+<!--[IPython.external.configobj.ConfigObj.reset]--><tt class="descname">reset</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.configobj.ConfigObj.reset" title="Permalink to this definition">¶</a></dt>
+<dd>Clear ConfigObj instance and restore to &#8216;freshly created&#8217; state.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.ConfigObj.validate">
+<!--[IPython.external.configobj.ConfigObj.validate]--><tt class="descname">validate</tt><big>(</big><em>validator</em>, <em>preserve_errors=False</em>, <em>copy=False</em>, <em>section=None</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.ConfigObj.validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test the ConfigObj against a configspec.</p>
+<p>It uses the <tt class="docutils literal"><span class="pre">validator</span></tt> object from <em>validate.py</em>.</p>
+<p>To run <tt class="docutils literal"><span class="pre">validate</span></tt> on the current ConfigObj, call:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">test</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">validator</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>(Normally having previously passed in the configspec when the ConfigObj
+was created - you can dynamically assign a dictionary of checks to the
+<tt class="docutils literal"><span class="pre">configspec</span></tt> attribute of a section though).</p>
+<p>It returns <tt class="xref docutils literal"><span class="pre">True</span></tt> if everything passes, or a dictionary of
+pass/fails (True/False). If every member of a subsection passes, it
+will just have the value <tt class="xref docutils literal"><span class="pre">True</span></tt>. (It also returns <tt class="xref docutils literal"><span class="pre">False</span></tt> if all
+members fail).</p>
+<p>In addition, it converts the values from strings to their native
+types if their checks pass (and <tt class="docutils literal"><span class="pre">stringify</span></tt> is set).</p>
+<p>If <tt class="docutils literal"><span class="pre">preserve_errors</span></tt> is <tt class="xref docutils literal"><span class="pre">True</span></tt> (<tt class="xref docutils literal"><span class="pre">False</span></tt> is default) then instead
+of a marking a fail with a <tt class="xref docutils literal"><span class="pre">False</span></tt>, it will preserve the actual
+exception object. This can contain info about the reason for failure.
+For example the <tt class="docutils literal"><span class="pre">VdtValueTooSmallError</span></tt> indicates that the value
+supplied was too small. If a value (or section) is missing it will
+still be marked as <tt class="xref docutils literal"><span class="pre">False</span></tt>.</p>
+<p>You must have the validate module to use <tt class="docutils literal"><span class="pre">preserve_errors=True</span></tt>.</p>
+<p>You can then use the <tt class="docutils literal"><span class="pre">flatten_errors</span></tt> function to turn your nested
+results dictionary into a flattened list of failures - useful for
+displaying meaningful error messages.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.ConfigObj.write">
+<!--[IPython.external.configobj.ConfigObj.write]--><tt class="descname">write</tt><big>(</big><em>outfile=None</em>, <em>section=None</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.ConfigObj.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the current ConfigObj as a file</p>
+<p>tekNico: FIXME: use StringIO instead of real files</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">filename</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">filename</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;test.ini&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">==</span> <span class="n">ConfigObj</span><span class="p">(</span><span class="s">&#39;test.ini&#39;</span><span class="p">,</span> <span class="n">raise_errors</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="configobjerror">
+<h3><a title="IPython.external.configobj.ConfigObjError" class="reference internal" href="#IPython.external.configobj.ConfigObjError"><tt class="xref docutils literal"><span class="pre">ConfigObjError</span></tt></a><a class="headerlink" href="#configobjerror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.configobj.ConfigObjError">
+<!--[IPython.external.configobj.ConfigObjError]-->class <tt class="descclassname">IPython.external.configobj.</tt><tt class="descname">ConfigObjError</tt><big>(</big><em>message=''</em>, <em>line_number=None</em>, <em>line=''</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.ConfigObjError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">exceptions.SyntaxError</span></tt></p>
+<p>This is the base class for all errors that ConfigObj raises.
+It is a subclass of SyntaxError.</p>
+<dl class="method">
+<dt id="IPython.external.configobj.ConfigObjError.__init__">
+<!--[IPython.external.configobj.ConfigObjError.__init__]--><tt class="descname">__init__</tt><big>(</big><em>message=''</em>, <em>line_number=None</em>, <em>line=''</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.ConfigObjError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="configparserinterpolation">
+<h3><a title="IPython.external.configobj.ConfigParserInterpolation" class="reference internal" href="#IPython.external.configobj.ConfigParserInterpolation"><tt class="xref docutils literal"><span class="pre">ConfigParserInterpolation</span></tt></a><a class="headerlink" href="#configparserinterpolation" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.configobj.ConfigParserInterpolation">
+<!--[IPython.external.configobj.ConfigParserInterpolation]-->class <tt class="descclassname">IPython.external.configobj.</tt><tt class="descname">ConfigParserInterpolation</tt><big>(</big><em>section</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.ConfigParserInterpolation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.external.configobj.InterpolationEngine" class="reference internal" href="#IPython.external.configobj.InterpolationEngine"><tt class="xref docutils literal"><span class="pre">IPython.external.configobj.InterpolationEngine</span></tt></a></p>
+<p>Behaves like ConfigParser.</p>
+<dl class="method">
+<dt id="IPython.external.configobj.ConfigParserInterpolation.__init__">
+<!--[IPython.external.configobj.ConfigParserInterpolation.__init__]--><tt class="descname">__init__</tt><big>(</big><em>section</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.ConfigParserInterpolation.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="configspecerror">
+<h3><a title="IPython.external.configobj.ConfigspecError" class="reference internal" href="#IPython.external.configobj.ConfigspecError"><tt class="xref docutils literal"><span class="pre">ConfigspecError</span></tt></a><a class="headerlink" href="#configspecerror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.configobj.ConfigspecError">
+<!--[IPython.external.configobj.ConfigspecError]-->class <tt class="descclassname">IPython.external.configobj.</tt><tt class="descname">ConfigspecError</tt><big>(</big><em>message=''</em>, <em>line_number=None</em>, <em>line=''</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.ConfigspecError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.external.configobj.ConfigObjError" class="reference internal" href="#IPython.external.configobj.ConfigObjError"><tt class="xref docutils literal"><span class="pre">IPython.external.configobj.ConfigObjError</span></tt></a></p>
+<p>An error occured whilst parsing a configspec.</p>
+<dl class="method">
+<dt id="IPython.external.configobj.ConfigspecError.__init__">
+<!--[IPython.external.configobj.ConfigspecError.__init__]--><tt class="descname">__init__</tt><big>(</big><em>message=''</em>, <em>line_number=None</em>, <em>line=''</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.ConfigspecError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="duplicateerror">
+<h3><a title="IPython.external.configobj.DuplicateError" class="reference internal" href="#IPython.external.configobj.DuplicateError"><tt class="xref docutils literal"><span class="pre">DuplicateError</span></tt></a><a class="headerlink" href="#duplicateerror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.configobj.DuplicateError">
+<!--[IPython.external.configobj.DuplicateError]-->class <tt class="descclassname">IPython.external.configobj.</tt><tt class="descname">DuplicateError</tt><big>(</big><em>message=''</em>, <em>line_number=None</em>, <em>line=''</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.DuplicateError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.external.configobj.ConfigObjError" class="reference internal" href="#IPython.external.configobj.ConfigObjError"><tt class="xref docutils literal"><span class="pre">IPython.external.configobj.ConfigObjError</span></tt></a></p>
+<p>The keyword or section specified already exists.</p>
+<dl class="method">
+<dt id="IPython.external.configobj.DuplicateError.__init__">
+<!--[IPython.external.configobj.DuplicateError.__init__]--><tt class="descname">__init__</tt><big>(</big><em>message=''</em>, <em>line_number=None</em>, <em>line=''</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.DuplicateError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="interpolationengine">
+<h3><a title="IPython.external.configobj.InterpolationEngine" class="reference internal" href="#IPython.external.configobj.InterpolationEngine"><tt class="xref docutils literal"><span class="pre">InterpolationEngine</span></tt></a><a class="headerlink" href="#interpolationengine" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.configobj.InterpolationEngine">
+<!--[IPython.external.configobj.InterpolationEngine]-->class <tt class="descclassname">IPython.external.configobj.</tt><tt class="descname">InterpolationEngine</tt><big>(</big><em>section</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.InterpolationEngine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>A helper class to help perform string interpolation.</p>
+<p>This class is an abstract base class; its descendants perform
+the actual work.</p>
+<dl class="method">
+<dt id="IPython.external.configobj.InterpolationEngine.__init__">
+<!--[IPython.external.configobj.InterpolationEngine.__init__]--><tt class="descname">__init__</tt><big>(</big><em>section</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.InterpolationEngine.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.InterpolationEngine.interpolate">
+<!--[IPython.external.configobj.InterpolationEngine.interpolate]--><tt class="descname">interpolate</tt><big>(</big><em>key</em>, <em>value</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.InterpolationEngine.interpolate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="interpolationerror">
+<h3><a title="IPython.external.configobj.InterpolationError" class="reference internal" href="#IPython.external.configobj.InterpolationError"><tt class="xref docutils literal"><span class="pre">InterpolationError</span></tt></a><a class="headerlink" href="#interpolationerror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.configobj.InterpolationError">
+<!--[IPython.external.configobj.InterpolationError]-->class <tt class="descclassname">IPython.external.configobj.</tt><tt class="descname">InterpolationError</tt><big>(</big><em>message=''</em>, <em>line_number=None</em>, <em>line=''</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.InterpolationError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.external.configobj.ConfigObjError" class="reference internal" href="#IPython.external.configobj.ConfigObjError"><tt class="xref docutils literal"><span class="pre">IPython.external.configobj.ConfigObjError</span></tt></a></p>
+<p>Base class for the two interpolation errors.</p>
+<dl class="method">
+<dt id="IPython.external.configobj.InterpolationError.__init__">
+<!--[IPython.external.configobj.InterpolationError.__init__]--><tt class="descname">__init__</tt><big>(</big><em>message=''</em>, <em>line_number=None</em>, <em>line=''</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.InterpolationError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="interpolationlooperror">
+<h3><a title="IPython.external.configobj.InterpolationLoopError" class="reference internal" href="#IPython.external.configobj.InterpolationLoopError"><tt class="xref docutils literal"><span class="pre">InterpolationLoopError</span></tt></a><a class="headerlink" href="#interpolationlooperror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.configobj.InterpolationLoopError">
+<!--[IPython.external.configobj.InterpolationLoopError]-->class <tt class="descclassname">IPython.external.configobj.</tt><tt class="descname">InterpolationLoopError</tt><big>(</big><em>option</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.InterpolationLoopError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.external.configobj.InterpolationError" class="reference internal" href="#IPython.external.configobj.InterpolationError"><tt class="xref docutils literal"><span class="pre">IPython.external.configobj.InterpolationError</span></tt></a></p>
+<p>Maximum interpolation depth exceeded in string interpolation.</p>
+<dl class="method">
+<dt id="IPython.external.configobj.InterpolationLoopError.__init__">
+<!--[IPython.external.configobj.InterpolationLoopError.__init__]--><tt class="descname">__init__</tt><big>(</big><em>option</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.InterpolationLoopError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="missinginterpolationoption">
+<h3><a title="IPython.external.configobj.MissingInterpolationOption" class="reference internal" href="#IPython.external.configobj.MissingInterpolationOption"><tt class="xref docutils literal"><span class="pre">MissingInterpolationOption</span></tt></a><a class="headerlink" href="#missinginterpolationoption" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.configobj.MissingInterpolationOption">
+<!--[IPython.external.configobj.MissingInterpolationOption]-->class <tt class="descclassname">IPython.external.configobj.</tt><tt class="descname">MissingInterpolationOption</tt><big>(</big><em>option</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.MissingInterpolationOption" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.external.configobj.InterpolationError" class="reference internal" href="#IPython.external.configobj.InterpolationError"><tt class="xref docutils literal"><span class="pre">IPython.external.configobj.InterpolationError</span></tt></a></p>
+<p>A value specified for interpolation was missing.</p>
+<dl class="method">
+<dt id="IPython.external.configobj.MissingInterpolationOption.__init__">
+<!--[IPython.external.configobj.MissingInterpolationOption.__init__]--><tt class="descname">__init__</tt><big>(</big><em>option</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.MissingInterpolationOption.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="nestingerror">
+<h3><a title="IPython.external.configobj.NestingError" class="reference internal" href="#IPython.external.configobj.NestingError"><tt class="xref docutils literal"><span class="pre">NestingError</span></tt></a><a class="headerlink" href="#nestingerror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.configobj.NestingError">
+<!--[IPython.external.configobj.NestingError]-->class <tt class="descclassname">IPython.external.configobj.</tt><tt class="descname">NestingError</tt><big>(</big><em>message=''</em>, <em>line_number=None</em>, <em>line=''</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.NestingError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.external.configobj.ConfigObjError" class="reference internal" href="#IPython.external.configobj.ConfigObjError"><tt class="xref docutils literal"><span class="pre">IPython.external.configobj.ConfigObjError</span></tt></a></p>
+<p>This error indicates a level of nesting that doesn&#8217;t match.</p>
+<dl class="method">
+<dt id="IPython.external.configobj.NestingError.__init__">
+<!--[IPython.external.configobj.NestingError.__init__]--><tt class="descname">__init__</tt><big>(</big><em>message=''</em>, <em>line_number=None</em>, <em>line=''</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.NestingError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="parseerror">
+<h3><a title="IPython.external.configobj.ParseError" class="reference internal" href="#IPython.external.configobj.ParseError"><tt class="xref docutils literal"><span class="pre">ParseError</span></tt></a><a class="headerlink" href="#parseerror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.configobj.ParseError">
+<!--[IPython.external.configobj.ParseError]-->class <tt class="descclassname">IPython.external.configobj.</tt><tt class="descname">ParseError</tt><big>(</big><em>message=''</em>, <em>line_number=None</em>, <em>line=''</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.ParseError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.external.configobj.ConfigObjError" class="reference internal" href="#IPython.external.configobj.ConfigObjError"><tt class="xref docutils literal"><span class="pre">IPython.external.configobj.ConfigObjError</span></tt></a></p>
+<p>This error indicates that a line is badly written.
+It is neither a valid <tt class="docutils literal"><span class="pre">key</span> <span class="pre">=</span> <span class="pre">value</span></tt> line,
+nor a valid section marker line.</p>
+<dl class="method">
+<dt id="IPython.external.configobj.ParseError.__init__">
+<!--[IPython.external.configobj.ParseError.__init__]--><tt class="descname">__init__</tt><big>(</big><em>message=''</em>, <em>line_number=None</em>, <em>line=''</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.ParseError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="reloaderror">
+<h3><a title="IPython.external.configobj.ReloadError" class="reference internal" href="#IPython.external.configobj.ReloadError"><tt class="xref docutils literal"><span class="pre">ReloadError</span></tt></a><a class="headerlink" href="#reloaderror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.configobj.ReloadError">
+<!--[IPython.external.configobj.ReloadError]-->class <tt class="descclassname">IPython.external.configobj.</tt><tt class="descname">ReloadError</tt><a class="headerlink" href="#IPython.external.configobj.ReloadError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">exceptions.IOError</span></tt></p>
+<p>A &#8216;reload&#8217; operation failed.
+This exception is a subclass of <tt class="docutils literal"><span class="pre">IOError</span></tt>.</p>
+<dl class="method">
+<dt id="IPython.external.configobj.ReloadError.__init__">
+<!--[IPython.external.configobj.ReloadError.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.configobj.ReloadError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="repeatsectionerror">
+<h3><a title="IPython.external.configobj.RepeatSectionError" class="reference internal" href="#IPython.external.configobj.RepeatSectionError"><tt class="xref docutils literal"><span class="pre">RepeatSectionError</span></tt></a><a class="headerlink" href="#repeatsectionerror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.configobj.RepeatSectionError">
+<!--[IPython.external.configobj.RepeatSectionError]-->class <tt class="descclassname">IPython.external.configobj.</tt><tt class="descname">RepeatSectionError</tt><big>(</big><em>message=''</em>, <em>line_number=None</em>, <em>line=''</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.RepeatSectionError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.external.configobj.ConfigObjError" class="reference internal" href="#IPython.external.configobj.ConfigObjError"><tt class="xref docutils literal"><span class="pre">IPython.external.configobj.ConfigObjError</span></tt></a></p>
+<p>This error indicates additional sections in a section with a
+<tt class="docutils literal"><span class="pre">__many__</span></tt> (repeated) section.</p>
+<dl class="method">
+<dt id="IPython.external.configobj.RepeatSectionError.__init__">
+<!--[IPython.external.configobj.RepeatSectionError.__init__]--><tt class="descname">__init__</tt><big>(</big><em>message=''</em>, <em>line_number=None</em>, <em>line=''</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.RepeatSectionError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="section">
+<h3><a title="IPython.external.configobj.Section" class="reference internal" href="#IPython.external.configobj.Section"><tt class="xref docutils literal"><span class="pre">Section</span></tt></a><a class="headerlink" href="#section" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.configobj.Section">
+<!--[IPython.external.configobj.Section]-->class <tt class="descclassname">IPython.external.configobj.</tt><tt class="descname">Section</tt><big>(</big><em>parent</em>, <em>depth</em>, <em>main</em>, <em>indict=None</em>, <em>name=None</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.Section" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.external.configobj.Section.dict" class="reference internal" href="#IPython.external.configobj.Section.dict"><tt class="xref docutils literal"><span class="pre">dict</span></tt></a></p>
+<p>A dictionary-like object that represents a section in a config file.</p>
+<p>It does string interpolation if the &#8216;interpolation&#8217; attribute
+of the &#8216;main&#8217; object is set to True.</p>
+<p>Interpolation is tried first from this object, then from the &#8216;DEFAULT&#8217;
+section of this object, next from the parent and its &#8216;DEFAULT&#8217; section,
+and so on until the main object is reached.</p>
+<p>A Section will behave like an ordered dictionary - following the
+order of the <tt class="docutils literal"><span class="pre">scalars</span></tt> and <tt class="docutils literal"><span class="pre">sections</span></tt> attributes.
+You can use this to change the order of members.</p>
+<p>Iteration follows the order: scalars, then sections.</p>
+<dl class="method">
+<dt id="IPython.external.configobj.Section.__init__">
+<!--[IPython.external.configobj.Section.__init__]--><tt class="descname">__init__</tt><big>(</big><em>parent</em>, <em>depth</em>, <em>main</em>, <em>indict=None</em>, <em>name=None</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.Section.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><ul class="simple">
+<li>parent is the section above</li>
+<li>depth is the depth level of this section</li>
+<li>main is the main ConfigObj</li>
+<li>indict is a dictionary to initialise the section with</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Section.as_bool">
+<!--[IPython.external.configobj.Section.as_bool]--><tt class="descname">as_bool</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.Section.as_bool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accepts a key as input. The corresponding value must be a string or
+the objects (<tt class="xref docutils literal"><span class="pre">True</span></tt> or 1) or (<tt class="xref docutils literal"><span class="pre">False</span></tt> or 0). We allow 0 and 1 to
+retain compatibility with Python 2.2.</p>
+<p>If the string is one of  <tt class="xref docutils literal"><span class="pre">True</span></tt>, <tt class="docutils literal"><span class="pre">On</span></tt>, <tt class="docutils literal"><span class="pre">Yes</span></tt>, or <tt class="docutils literal"><span class="pre">1</span></tt> it returns 
+<tt class="xref docutils literal"><span class="pre">True</span></tt>.</p>
+<p>If the string is one of  <tt class="xref docutils literal"><span class="pre">False</span></tt>, <tt class="docutils literal"><span class="pre">Off</span></tt>, <tt class="docutils literal"><span class="pre">No</span></tt>, or <tt class="docutils literal"><span class="pre">0</span></tt> it returns 
+<tt class="xref docutils literal"><span class="pre">False</span></tt>.</p>
+<p><tt class="docutils literal"><span class="pre">as_bool</span></tt> is not case sensitive.</p>
+<p>Any other input will raise a <tt class="docutils literal"><span class="pre">ValueError</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">ConfigObj</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;fish&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">as_bool</span><span class="p">(</span><span class="s">&#39;a&#39;</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="nc">ValueError</span>: <span class="n-Identifier">Value &quot;fish&quot; is neither True nor False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">[</span><span class="s">&#39;b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;True&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">as_bool</span><span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">)</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">[</span><span class="s">&#39;b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;off&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">as_bool</span><span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">)</span>
+<span class="go">0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Section.as_float">
+<!--[IPython.external.configobj.Section.as_float]--><tt class="descname">as_float</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.Section.as_float" title="Permalink to this definition">¶</a></dt>
+<dd><p>A convenience method which coerces the specified value to a float.</p>
+<p>If the value is an invalid literal for <tt class="docutils literal"><span class="pre">float</span></tt>, a <tt class="docutils literal"><span class="pre">ValueError</span></tt> will
+be raised.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">ConfigObj</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;fish&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">as_float</span><span class="p">(</span><span class="s">&#39;a&#39;</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="nc">ValueError: invalid literal for float()</span>: <span class="n-Identifier">fish</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">[</span><span class="s">&#39;b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;1&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">as_float</span><span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">)</span>
+<span class="go">1.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">[</span><span class="s">&#39;b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;3.2&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">as_float</span><span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">)</span>
+<span class="go">3.2000000000000002</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Section.as_int">
+<!--[IPython.external.configobj.Section.as_int]--><tt class="descname">as_int</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.Section.as_int" title="Permalink to this definition">¶</a></dt>
+<dd><p>A convenience method which coerces the specified value to an integer.</p>
+<p>If the value is an invalid literal for <tt class="docutils literal"><span class="pre">int</span></tt>, a <tt class="docutils literal"><span class="pre">ValueError</span></tt> will
+be raised.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">ConfigObj</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;fish&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">as_int</span><span class="p">(</span><span class="s">&#39;a&#39;</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="nc">ValueError: invalid literal for int()</span>: <span class="n-Identifier">fish</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">[</span><span class="s">&#39;b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;1&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">as_int</span><span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">)</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="p">[</span><span class="s">&#39;b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;3.2&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">as_int</span><span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="nc">ValueError: invalid literal for int()</span>: <span class="n-Identifier">3.2</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Section.clear">
+<!--[IPython.external.configobj.Section.clear]--><tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.configobj.Section.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>A version of clear that also affects scalars/sections
+Also clears comments and configspec.</p>
+<dl class="docutils">
+<dt>Leaves other attributes alone :</dt>
+<dd>depth/main/parent are not affected</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Section.decode">
+<!--[IPython.external.configobj.Section.decode]--><tt class="descname">decode</tt><big>(</big><em>encoding</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.Section.decode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decode all strings and values to unicode, using the specified encoding.</p>
+<p>Works with subsections and list values.</p>
+<p>Uses the <tt class="docutils literal"><span class="pre">walk</span></tt> method.</p>
+<p>Testing <tt class="docutils literal"><span class="pre">encode</span></tt> and <tt class="docutils literal"><span class="pre">decode</span></tt>.
+&gt;&gt;&gt; m = ConfigObj(a)
+&gt;&gt;&gt; m.decode(&#8216;ascii&#8217;)
+&gt;&gt;&gt; def testuni(val):
+...     for entry in val:
+...         if not isinstance(entry, unicode):
+...             print &gt;&gt; sys.stderr, type(entry)
+...             raise AssertionError, &#8216;decode failed.&#8217;
+...         if isinstance(val[entry], dict):
+...             testuni(val[entry])
+...         elif not isinstance(val[entry], unicode):
+...             raise AssertionError, &#8216;decode failed.&#8217;
+&gt;&gt;&gt; testuni(m)
+&gt;&gt;&gt; m.encode(&#8216;ascii&#8217;)
+&gt;&gt;&gt; a == m
+1</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Section.dict">
+<!--[IPython.external.configobj.Section.dict]--><tt class="descname">dict</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.configobj.Section.dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a deepcopy of self as a dictionary.</p>
+<p>All members that are <tt class="docutils literal"><span class="pre">Section</span></tt> instances are recursively turned to
+ordinary dictionaries - by calling their <tt class="docutils literal"><span class="pre">dict</span></tt> method.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">n</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">dict</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n</span> <span class="o">==</span> <span class="n">a</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n</span> <span class="ow">is</span> <span class="n">a</span>
+<span class="go">0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Section.encode">
+<!--[IPython.external.configobj.Section.encode]--><tt class="descname">encode</tt><big>(</big><em>encoding</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.Section.encode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encode all strings and values from unicode,
+using the specified encoding.</p>
+<p>Works with subsections and list values.
+Uses the <tt class="docutils literal"><span class="pre">walk</span></tt> method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Section.get">
+<!--[IPython.external.configobj.Section.get]--><tt class="descname">get</tt><big>(</big><em>key</em>, <em>default=None</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.Section.get" title="Permalink to this definition">¶</a></dt>
+<dd>A version of <tt class="docutils literal"><span class="pre">get</span></tt> that doesn&#8217;t bypass string interpolation.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Section.istrue">
+<!--[IPython.external.configobj.Section.istrue]--><tt class="descname">istrue</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.Section.istrue" title="Permalink to this definition">¶</a></dt>
+<dd>A deprecated version of <tt class="docutils literal"><span class="pre">as_bool</span></tt>.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Section.items">
+<!--[IPython.external.configobj.Section.items]--><tt class="descname">items</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.configobj.Section.items" title="Permalink to this definition">¶</a></dt>
+<dd>D.items() -&gt; list of D&#8217;s (key, value) pairs, as 2-tuples</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Section.iteritems">
+<!--[IPython.external.configobj.Section.iteritems]--><tt class="descname">iteritems</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.configobj.Section.iteritems" title="Permalink to this definition">¶</a></dt>
+<dd>D.iteritems() -&gt; an iterator over the (key, value) items of D</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Section.iterkeys">
+<!--[IPython.external.configobj.Section.iterkeys]--><tt class="descname">iterkeys</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.configobj.Section.iterkeys" title="Permalink to this definition">¶</a></dt>
+<dd>D.iterkeys() -&gt; an iterator over the keys of D</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Section.itervalues">
+<!--[IPython.external.configobj.Section.itervalues]--><tt class="descname">itervalues</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.configobj.Section.itervalues" title="Permalink to this definition">¶</a></dt>
+<dd>D.itervalues() -&gt; an iterator over the values of D</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Section.keys">
+<!--[IPython.external.configobj.Section.keys]--><tt class="descname">keys</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.configobj.Section.keys" title="Permalink to this definition">¶</a></dt>
+<dd>D.keys() -&gt; list of D&#8217;s keys</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Section.merge">
+<!--[IPython.external.configobj.Section.merge]--><tt class="descname">merge</tt><big>(</big><em>indict</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.Section.merge" title="Permalink to this definition">¶</a></dt>
+<dd><p>A recursive update - useful for merging config files.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;[section1]</span>
+<span class="gp">... </span><span class="s">    option1 = True</span>
+<span class="gp">... </span><span class="s">    [[subsection]]</span>
+<span class="gp">... </span><span class="s">    more_options = False</span>
+<span class="gp">... </span><span class="s">    # end of file&#39;&#39;&#39;</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;# File is user.ini</span>
+<span class="gp">... </span><span class="s">    [section1]</span>
+<span class="gp">... </span><span class="s">    option1 = False</span>
+<span class="gp">... </span><span class="s">    # end of file&#39;&#39;&#39;</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c1</span> <span class="o">=</span> <span class="n">ConfigObj</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c2</span> <span class="o">=</span> <span class="n">ConfigObj</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c2</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">c1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c2</span>
+<span class="go">{&#39;section1&#39;: {&#39;option1&#39;: &#39;False&#39;, &#39;subsection&#39;: {&#39;more_options&#39;: &#39;False&#39;}}}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Section.pop">
+<!--[IPython.external.configobj.Section.pop]--><tt class="descname">pop</tt><big>(</big><em>key</em>, <em>*args</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.Section.pop" title="Permalink to this definition">¶</a></dt>
+<dd>&#8216;D.pop(k[,d]) -&gt; v, remove specified key and return the corresponding value.
+If key is not found, d is returned if given, otherwise KeyError is raised&#8217;</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Section.popitem">
+<!--[IPython.external.configobj.Section.popitem]--><tt class="descname">popitem</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.configobj.Section.popitem" title="Permalink to this definition">¶</a></dt>
+<dd>Pops the first (key,val)</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Section.rename">
+<!--[IPython.external.configobj.Section.rename]--><tt class="descname">rename</tt><big>(</big><em>oldkey</em>, <em>newkey</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.Section.rename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change a keyname to another, without changing position in sequence.</p>
+<p>Implemented so that transformations can be made on keys,
+as well as on values. (used by encode and decode)</p>
+<p>Also renames comments.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Section.restore_default">
+<!--[IPython.external.configobj.Section.restore_default]--><tt class="descname">restore_default</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.Section.restore_default" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restore (and return) default value for the specified key.</p>
+<p>This method will only work for a ConfigObj that was created
+with a configspec and has been validated.</p>
+<p>If there is no default value for this key, <tt class="docutils literal"><span class="pre">KeyError</span></tt> is raised.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Section.restore_defaults">
+<!--[IPython.external.configobj.Section.restore_defaults]--><tt class="descname">restore_defaults</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.configobj.Section.restore_defaults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recursively restore default values to all members
+that have them.</p>
+<p>This method will only work for a ConfigObj that was created
+with a configspec and has been validated.</p>
+<p>It doesn&#8217;t delete or modify entries without default values.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Section.setdefault">
+<!--[IPython.external.configobj.Section.setdefault]--><tt class="descname">setdefault</tt><big>(</big><em>key</em>, <em>default=None</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.Section.setdefault" title="Permalink to this definition">¶</a></dt>
+<dd>A version of setdefault that sets sequence if appropriate.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Section.update">
+<!--[IPython.external.configobj.Section.update]--><tt class="descname">update</tt><big>(</big><em>indict</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.Section.update" title="Permalink to this definition">¶</a></dt>
+<dd>A version of update that uses our <tt class="docutils literal"><span class="pre">__setitem__</span></tt>.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Section.values">
+<!--[IPython.external.configobj.Section.values]--><tt class="descname">values</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.configobj.Section.values" title="Permalink to this definition">¶</a></dt>
+<dd>D.values() -&gt; list of D&#8217;s values</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.Section.walk">
+<!--[IPython.external.configobj.Section.walk]--><tt class="descname">walk</tt><big>(</big><em>function</em>, <em>raise_errors=True</em>, <em>call_on_sections=False</em>, <em>**keywargs</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.Section.walk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Walk every member and call a function on the keyword and value.</p>
+<p>Return a dictionary of the return values</p>
+<p>If the function raises an exception, raise the errror
+unless <tt class="docutils literal"><span class="pre">raise_errors=False</span></tt>, in which case set the return value to
+<tt class="xref docutils literal"><span class="pre">False</span></tt>.</p>
+<p>Any unrecognised keyword arguments you pass to walk, will be pased on
+to the function you pass in.</p>
+<p>Note: if <tt class="docutils literal"><span class="pre">call_on_sections</span></tt> is <tt class="xref docutils literal"><span class="pre">True</span></tt> then - on encountering a
+subsection, <em>first</em> the function is called for the <em>whole</em> subsection,
+and then recurses into it&#8217;s members. This means your function must be
+able to handle strings, dictionaries and lists. This allows you
+to change the key of subsections as well as for ordinary members. The
+return value when called on the whole subsection has to be discarded.</p>
+<p>See  the encode and decode methods for examples, including functions.</p>
+<div class="admonition caution">
+<p class="first admonition-title">Caution</p>
+<p class="last">You can use <tt class="docutils literal"><span class="pre">walk</span></tt> to transform the names of members of a section
+but you mustn&#8217;t add or delete members.</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">config</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;[XXXXsection]</span>
+<span class="gp">... </span><span class="s">XXXXkey = XXXXvalue&#39;&#39;&#39;</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cfg</span> <span class="o">=</span> <span class="n">ConfigObj</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cfg</span>
+<span class="go">{&#39;XXXXsection&#39;: {&#39;XXXXkey&#39;: &#39;XXXXvalue&#39;}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">val</span> <span class="o">=</span> <span class="n">section</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+<span class="gp">... </span>    <span class="n">newkey</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;XXXX&#39;</span><span class="p">,</span> <span class="s">&#39;CLIENT1&#39;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">section</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">newkey</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)):</span>
+<span class="gp">... </span>        <span class="k">pass</span>
+<span class="gp">... </span>    <span class="k">else</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">val</span> <span class="o">=</span> <span class="n">val</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;XXXX&#39;</span><span class="p">,</span> <span class="s">&#39;CLIENT1&#39;</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="n">section</span><span class="p">[</span><span class="n">newkey</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cfg</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">transform</span><span class="p">,</span> <span class="n">call_on_sections</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">{&#39;CLIENT1section&#39;: {&#39;CLIENT1key&#39;: None}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cfg</span>
+<span class="go">{&#39;CLIENT1section&#39;: {&#39;CLIENT1key&#39;: &#39;CLIENT1value&#39;}}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="simpleval">
+<h3><a title="IPython.external.configobj.SimpleVal" class="reference internal" href="#IPython.external.configobj.SimpleVal"><tt class="xref docutils literal"><span class="pre">SimpleVal</span></tt></a><a class="headerlink" href="#simpleval" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.configobj.SimpleVal">
+<!--[IPython.external.configobj.SimpleVal]-->class <tt class="descclassname">IPython.external.configobj.</tt><tt class="descname">SimpleVal</tt><a class="headerlink" href="#IPython.external.configobj.SimpleVal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>A simple validator.
+Can be used to check that all members expected are present.</p>
+<p>To use it, provide a configspec with all your members in (the value given
+will be ignored). Pass an instance of <tt class="docutils literal"><span class="pre">SimpleVal</span></tt> to the <tt class="docutils literal"><span class="pre">validate</span></tt>
+method of your <tt class="docutils literal"><span class="pre">ConfigObj</span></tt>. <tt class="docutils literal"><span class="pre">validate</span></tt> will return <tt class="xref docutils literal"><span class="pre">True</span></tt> if all
+members are present, or a dictionary with True/False meaning
+present/missing. (Whole missing sections will be replaced with <tt class="xref docutils literal"><span class="pre">False</span></tt>)</p>
+<dl class="method">
+<dt id="IPython.external.configobj.SimpleVal.__init__">
+<!--[IPython.external.configobj.SimpleVal.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.configobj.SimpleVal.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.configobj.SimpleVal.check">
+<!--[IPython.external.configobj.SimpleVal.check]--><tt class="descname">check</tt><big>(</big><em>check</em>, <em>member</em>, <em>missing=False</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.SimpleVal.check" title="Permalink to this definition">¶</a></dt>
+<dd>A dummy check method, always returns the value unchanged.</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="templateinterpolation">
+<h3><a title="IPython.external.configobj.TemplateInterpolation" class="reference internal" href="#IPython.external.configobj.TemplateInterpolation"><tt class="xref docutils literal"><span class="pre">TemplateInterpolation</span></tt></a><a class="headerlink" href="#templateinterpolation" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.configobj.TemplateInterpolation">
+<!--[IPython.external.configobj.TemplateInterpolation]-->class <tt class="descclassname">IPython.external.configobj.</tt><tt class="descname">TemplateInterpolation</tt><big>(</big><em>section</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.TemplateInterpolation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.external.configobj.InterpolationEngine" class="reference internal" href="#IPython.external.configobj.InterpolationEngine"><tt class="xref docutils literal"><span class="pre">IPython.external.configobj.InterpolationEngine</span></tt></a></p>
+<p>Behaves like string.Template.</p>
+<dl class="method">
+<dt id="IPython.external.configobj.TemplateInterpolation.__init__">
+<!--[IPython.external.configobj.TemplateInterpolation.__init__]--><tt class="descname">__init__</tt><big>(</big><em>section</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.TemplateInterpolation.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="unknowntype">
+<h3><a title="IPython.external.configobj.UnknownType" class="reference internal" href="#IPython.external.configobj.UnknownType"><tt class="xref docutils literal"><span class="pre">UnknownType</span></tt></a><a class="headerlink" href="#unknowntype" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.configobj.UnknownType">
+<!--[IPython.external.configobj.UnknownType]-->class <tt class="descclassname">IPython.external.configobj.</tt><tt class="descname">UnknownType</tt><a class="headerlink" href="#IPython.external.configobj.UnknownType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
+<dl class="method">
+<dt id="IPython.external.configobj.UnknownType.__init__">
+<!--[IPython.external.configobj.UnknownType.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.configobj.UnknownType.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="unreprerror">
+<h3><a title="IPython.external.configobj.UnreprError" class="reference internal" href="#IPython.external.configobj.UnreprError"><tt class="xref docutils literal"><span class="pre">UnreprError</span></tt></a><a class="headerlink" href="#unreprerror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.configobj.UnreprError">
+<!--[IPython.external.configobj.UnreprError]-->class <tt class="descclassname">IPython.external.configobj.</tt><tt class="descname">UnreprError</tt><big>(</big><em>message=''</em>, <em>line_number=None</em>, <em>line=''</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.UnreprError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.external.configobj.ConfigObjError" class="reference internal" href="#IPython.external.configobj.ConfigObjError"><tt class="xref docutils literal"><span class="pre">IPython.external.configobj.ConfigObjError</span></tt></a></p>
+<p>An error parsing in unrepr mode.</p>
+<dl class="method">
+<dt id="IPython.external.configobj.UnreprError.__init__">
+<!--[IPython.external.configobj.UnreprError.__init__]--><tt class="descname">__init__</tt><big>(</big><em>message=''</em>, <em>line_number=None</em>, <em>line=''</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.UnreprError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.external.configobj.flatten_errors">
+<!--[IPython.external.configobj.flatten_errors]--><tt class="descclassname">IPython.external.configobj.</tt><tt class="descname">flatten_errors</tt><big>(</big><em>cfg</em>, <em>res</em>, <em>levels=None</em>, <em>results=None</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.flatten_errors" title="Permalink to this definition">¶</a></dt>
+<dd><p>An example function that will turn a nested dictionary of results
+(as returned by <tt class="docutils literal"><span class="pre">ConfigObj.validate</span></tt>) into a flat list.</p>
+<p><tt class="docutils literal"><span class="pre">cfg</span></tt> is the ConfigObj instance being checked, <tt class="docutils literal"><span class="pre">res</span></tt> is the results
+dictionary returned by <tt class="docutils literal"><span class="pre">validate</span></tt>.</p>
+<p>(This is a recursive function, so you shouldn&#8217;t use the <tt class="docutils literal"><span class="pre">levels</span></tt> or
+<tt class="docutils literal"><span class="pre">results</span></tt> arguments - they are used by the function.</p>
+<p>Returns a list of keys that failed. Each member of the list is a tuple :</p>
+<div class="highlight-python"><pre>([list of sections...], key, result)</pre>
+</div>
+<p>If <tt class="docutils literal"><span class="pre">validate</span></tt> was called with <tt class="docutils literal"><span class="pre">preserve_errors=False</span></tt> (the default)
+then <tt class="docutils literal"><span class="pre">result</span></tt> will always be <tt class="xref docutils literal"><span class="pre">False</span></tt>.</p>
+<p><em>list of sections</em> is a flattened list of sections that the key was found
+in.</p>
+<p>If the section was missing then key will be <tt class="xref docutils literal"><span class="pre">None</span></tt>.</p>
+<p>If the value (or section) was missing then <tt class="docutils literal"><span class="pre">result</span></tt> will be <tt class="xref docutils literal"><span class="pre">False</span></tt>.</p>
+<p>If <tt class="docutils literal"><span class="pre">validate</span></tt> was called with <tt class="docutils literal"><span class="pre">preserve_errors=True</span></tt> and a value
+was present, but failed the check, then <tt class="docutils literal"><span class="pre">result</span></tt> will be the exception
+object returned. You can use this as a string that describes the failure.</p>
+<p>For example <em>The value &#8220;3&#8221; is of the wrong type</em>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">import</span> <span class="nn">validate</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vtor</span> <span class="o">=</span> <span class="n">validate</span><span class="o">.</span><span class="n">Validator</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_ini</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;</span>
+<span class="gp">... </span><span class="s">    option1 = True</span>
+<span class="gp">... </span><span class="s">    [section1]</span>
+<span class="gp">... </span><span class="s">    option1 = True</span>
+<span class="gp">... </span><span class="s">    [section2]</span>
+<span class="gp">... </span><span class="s">    another_option = Probably</span>
+<span class="gp">... </span><span class="s">    [section3]</span>
+<span class="gp">... </span><span class="s">    another_option = True</span>
+<span class="gp">... </span><span class="s">    [[section3b]]</span>
+<span class="gp">... </span><span class="s">    value = 3</span>
+<span class="gp">... </span><span class="s">    value2 = a</span>
+<span class="gp">... </span><span class="s">    value3 = 11</span>
+<span class="gp">... </span><span class="s">    &#39;&#39;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_cfg</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;</span>
+<span class="gp">... </span><span class="s">    option1 = boolean()</span>
+<span class="gp">... </span><span class="s">    option2 = boolean()</span>
+<span class="gp">... </span><span class="s">    option3 = boolean(default=Bad_value)</span>
+<span class="gp">... </span><span class="s">    [section1]</span>
+<span class="gp">... </span><span class="s">    option1 = boolean()</span>
+<span class="gp">... </span><span class="s">    option2 = boolean()</span>
+<span class="gp">... </span><span class="s">    option3 = boolean(default=Bad_value)</span>
+<span class="gp">... </span><span class="s">    [section2]</span>
+<span class="gp">... </span><span class="s">    another_option = boolean()</span>
+<span class="gp">... </span><span class="s">    [section3]</span>
+<span class="gp">... </span><span class="s">    another_option = boolean()</span>
+<span class="gp">... </span><span class="s">    [[section3b]]</span>
+<span class="gp">... </span><span class="s">    value = integer</span>
+<span class="gp">... </span><span class="s">    value2 = integer</span>
+<span class="gp">... </span><span class="s">    value3 = integer(0, 10)</span>
+<span class="gp">... </span><span class="s">        [[[section3b-sub]]]</span>
+<span class="gp">... </span><span class="s">        value = string</span>
+<span class="gp">... </span><span class="s">    [section4]</span>
+<span class="gp">... </span><span class="s">    another_option = boolean()</span>
+<span class="gp">... </span><span class="s">    &#39;&#39;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cs</span> <span class="o">=</span> <span class="n">my_cfg</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ini</span> <span class="o">=</span> <span class="n">my_ini</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cfg</span> <span class="o">=</span> <span class="n">ConfigObj</span><span class="p">(</span><span class="n">ini</span><span class="p">,</span> <span class="n">configspec</span><span class="o">=</span><span class="n">cs</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">vtor</span><span class="p">,</span> <span class="n">preserve_errors</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">flatten_errors</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="n">res</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">section_list</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="n">entry</span>
+<span class="gp">... </span>    <span class="n">section_list</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span> <span class="s">&#39;[root]&#39;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+<span class="gp">... </span>       <span class="n">section_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">else</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">section_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;[missing]&#39;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">section_string</span> <span class="o">=</span> <span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">section_list</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">section_string</span><span class="p">,</span> <span class="s">&#39; = &#39;</span><span class="p">,</span> <span class="n">error</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">errors</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">errors</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="n">entry</span><span class="p">[</span><span class="mf">0</span><span class="p">],</span> <span class="n">entry</span><span class="p">[</span><span class="mf">1</span><span class="p">],</span> <span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="mf">2</span><span class="p">]</span> <span class="ow">or</span> <span class="mf">0</span><span class="p">)</span>
+<span class="go">[root], option2  =  0</span>
+<span class="go">[root], option3  =  the value &quot;Bad_value&quot; is of the wrong type.</span>
+<span class="go">[root], section1, option2  =  0</span>
+<span class="go">[root], section1, option3  =  the value &quot;Bad_value&quot; is of the wrong type.</span>
+<span class="go">[root], section2, another_option  =  the value &quot;Probably&quot; is of the wrong type.</span>
+<span class="go">[root], section3, section3b, section3b-sub, [missing]  =  0</span>
+<span class="go">[root], section3, section3b, value2  =  the value &quot;a&quot; is of the wrong type.</span>
+<span class="go">[root], section3, section3b, value3  =  the value &quot;11&quot; is too big.</span>
+<span class="go">[root], section4, [missing]  =  0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.external.configobj.getObj">
+<!--[IPython.external.configobj.getObj]--><tt class="descclassname">IPython.external.configobj.</tt><tt class="descname">getObj</tt><big>(</big><em>s</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.getObj" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.external.configobj.match_utf8">
+<!--[IPython.external.configobj.match_utf8]--><tt class="descclassname">IPython.external.configobj.</tt><tt class="descname">match_utf8</tt><big>(</big><em>encoding</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.match_utf8" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.external.configobj.unrepr">
+<!--[IPython.external.configobj.unrepr]--><tt class="descclassname">IPython.external.configobj.</tt><tt class="descname">unrepr</tt><big>(</big><em>s</em><big>)</big><a class="headerlink" href="#IPython.external.configobj.unrepr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">external.configobj</a><ul>
+<li><a class="reference external" href="#module-IPython.external.configobj">Module: <tt class="docutils literal"><span class="pre">external.configobj</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#builder"><tt class="docutils literal"><span class="pre">Builder</span></tt></a></li>
+<li><a class="reference external" href="#configobj"><tt class="docutils literal"><span class="pre">ConfigObj</span></tt></a></li>
+<li><a class="reference external" href="#configobjerror"><tt class="docutils literal"><span class="pre">ConfigObjError</span></tt></a></li>
+<li><a class="reference external" href="#configparserinterpolation"><tt class="docutils literal"><span class="pre">ConfigParserInterpolation</span></tt></a></li>
+<li><a class="reference external" href="#configspecerror"><tt class="docutils literal"><span class="pre">ConfigspecError</span></tt></a></li>
+<li><a class="reference external" href="#duplicateerror"><tt class="docutils literal"><span class="pre">DuplicateError</span></tt></a></li>
+<li><a class="reference external" href="#interpolationengine"><tt class="docutils literal"><span class="pre">InterpolationEngine</span></tt></a></li>
+<li><a class="reference external" href="#interpolationerror"><tt class="docutils literal"><span class="pre">InterpolationError</span></tt></a></li>
+<li><a class="reference external" href="#interpolationlooperror"><tt class="docutils literal"><span class="pre">InterpolationLoopError</span></tt></a></li>
+<li><a class="reference external" href="#missinginterpolationoption"><tt class="docutils literal"><span class="pre">MissingInterpolationOption</span></tt></a></li>
+<li><a class="reference external" href="#nestingerror"><tt class="docutils literal"><span class="pre">NestingError</span></tt></a></li>
+<li><a class="reference external" href="#parseerror"><tt class="docutils literal"><span class="pre">ParseError</span></tt></a></li>
+<li><a class="reference external" href="#reloaderror"><tt class="docutils literal"><span class="pre">ReloadError</span></tt></a></li>
+<li><a class="reference external" href="#repeatsectionerror"><tt class="docutils literal"><span class="pre">RepeatSectionError</span></tt></a></li>
+<li><a class="reference external" href="#section"><tt class="docutils literal"><span class="pre">Section</span></tt></a></li>
+<li><a class="reference external" href="#simpleval"><tt class="docutils literal"><span class="pre">SimpleVal</span></tt></a></li>
+<li><a class="reference external" href="#templateinterpolation"><tt class="docutils literal"><span class="pre">TemplateInterpolation</span></tt></a></li>
+<li><a class="reference external" href="#unknowntype"><tt class="docutils literal"><span class="pre">UnknownType</span></tt></a></li>
+<li><a class="reference external" href="#unreprerror"><tt class="docutils literal"><span class="pre">UnreprError</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.external.argparse.html" title="previous chapter">external.argparse</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.external.guid.html" title="next chapter">external.guid</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.external.configobj.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.external.guid.html" title="external.guid"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.external.argparse.html" title="external.argparse"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

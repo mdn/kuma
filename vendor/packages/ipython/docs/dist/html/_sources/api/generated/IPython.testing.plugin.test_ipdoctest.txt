@@ -1,0 +1,29 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+testing.plugin.test_ipdoctest
+=============================
+
+Module: :mod:`testing.plugin.test_ipdoctest`
+--------------------------------------------
+.. automodule:: IPython.testing.plugin.test_ipdoctest
+
+.. currentmodule:: IPython.testing.plugin.test_ipdoctest
+
+Functions
+---------
+
+
+.. autofunction:: IPython.testing.plugin.test_ipdoctest.doctest_multiline1
+
+
+.. autofunction:: IPython.testing.plugin.test_ipdoctest.doctest_multiline2
+
+
+.. autofunction:: IPython.testing.plugin.test_ipdoctest.doctest_multiline3
+
+
+.. autofunction:: IPython.testing.plugin.test_ipdoctest.doctest_run_builtins
+
+
+.. autofunction:: IPython.testing.plugin.test_ipdoctest.doctest_simple
+

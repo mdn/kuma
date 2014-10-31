@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>babel.core</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="babel-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="../index.html">Documentation Index</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="babel-module.html">Package&nbsp;babel</a> ::
+        Module&nbsp;core
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== MODULE DESCRIPTION ==================== -->
+<h1 class="epydoc">Module core</h1><p class="nomargin-top"></p>
+Core locale representation and locale data access.
+
+<!-- ==================== CLASSES ==================== -->
+<a name="section-Classes"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Classes</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="babel.core.UnknownLocaleError-class.html" class="summary-name">UnknownLocaleError</a><br />
+      Exception thrown when a locale is requested for which no locale data
+is available.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="babel.core.Locale-class.html" class="summary-name">Locale</a><br />
+      Representation of a specific locale.
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Functions</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type"><code class="link">str</code></span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="babel.core-module.html#default_locale" class="summary-sig-name">default_locale</a>(<span class="summary-sig-arg">category</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">aliases</span>=<span class="summary-sig-default"><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">ar</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">ar_SY</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">bg</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">bg_BG</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">bs</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">bs_BA</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">ca</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">ca_ES</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-ellipsis">...</code></span>)</span><br />
+      Returns the system default locale for a given category, based on
+environment variables.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type"><code class="link">str</code></span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="babel.core-module.html#negotiate_locale" class="summary-sig-name">negotiate_locale</a>(<span class="summary-sig-arg">preferred</span>,
+        <span class="summary-sig-arg">available</span>,
+        <span class="summary-sig-arg">sep</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">_</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">aliases</span>=<span class="summary-sig-default"><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">ar</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">ar_SY</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">bg</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">bg_BG</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">bs</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">bs_BA</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">ca</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">ca_ES</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-ellipsis">...</code></span>)</span><br />
+      Find the best match between available and requested locale strings.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type"><code class="link">tuple</code></span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="babel.core-module.html#parse_locale" class="summary-sig-name">parse_locale</a>(<span class="summary-sig-arg">identifier</span>,
+        <span class="summary-sig-arg">sep</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">_</code><code class="variable-quote">'</code></span>)</span><br />
+      Parse a locale identifier into a tuple of the form:</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Function Details</span></td>
+</tr>
+</table>
+<a name="default_locale"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">default_locale</span>(<span class="sig-arg">category</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">aliases</span>=<span class="sig-default"><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">ar</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">ar_SY</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">bg</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">bg_BG</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">bs</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">bs_BA</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">ca</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">ca_ES</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-ellipsis">...</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the system default locale for a given category, based on
+environment variables.</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">for</span> name <span class="py-keyword">in</span> [<span class="py-string">'LANGUAGE'</span>, <span class="py-string">'LC_ALL'</span>, <span class="py-string">'LC_CTYPE'</span>]:
+<span class="py-more">... </span>    os.environ[name] = <span class="py-string">''</span>
+<span class="py-prompt">&gt;&gt;&gt; </span>os.environ[<span class="py-string">'LANG'</span>] = <span class="py-string">'fr_FR.UTF-8'</span>
+<span class="py-prompt">&gt;&gt;&gt; </span>default_locale(<span class="py-string">'LC_MESSAGES'</span>)
+<span class="py-output">'fr_FR'</span></pre>
+<p>The &quot;C&quot; or &quot;POSIX&quot; pseudo-locales are treated as aliases for the
+&quot;en_US_POSIX&quot; locale:</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>os.environ[<span class="py-string">'LC_MESSAGES'</span>] = <span class="py-string">'POSIX'</span>
+<span class="py-prompt">&gt;&gt;&gt; </span>default_locale(<span class="py-string">'LC_MESSAGES'</span>)
+<span class="py-output">'en_US_POSIX'</span></pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>category</code></strong> - one of the <tt class="rst-docutils literal"><span class="pre">LC_XXX</span></tt> environment variable names</li>
+        <li><strong class="pname"><code>aliases</code></strong> - a dictionary of aliases for locale identifiers</li>
+    </ul></dd>
+    <dt>Returns: <code class="link">str</code></dt>
+        <dd>the value of the variable, or any of the fallbacks (<tt class="rst-docutils literal"><span class="pre">LANGUAGE</span></tt>,
+<tt class="rst-docutils literal"><span class="pre">LC_ALL</span></tt>, <tt class="rst-docutils literal"><span class="pre">LC_CTYPE</span></tt>, and <tt class="rst-docutils literal"><span class="pre">LANG</span></tt>)</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="negotiate_locale"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">negotiate_locale</span>(<span class="sig-arg">preferred</span>,
+        <span class="sig-arg">available</span>,
+        <span class="sig-arg">sep</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">_</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">aliases</span>=<span class="sig-default"><code class="variable-group">{</code><code class="variable-quote">'</code><code class="variable-string">ar</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">ar_SY</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">bg</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">bg_BG</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">bs</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">bs_BA</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">ca</code><code class="variable-quote">'</code><code class="variable-op">: </code><code class="variable-quote">'</code><code class="variable-string">ca_ES</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-ellipsis">...</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Find the best match between available and requested locale strings.</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>negotiate_locale([<span class="py-string">'de_DE'</span>, <span class="py-string">'en_US'</span>], [<span class="py-string">'de_DE'</span>, <span class="py-string">'de_AT'</span>])
+<span class="py-output">'de_DE'</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>negotiate_locale([<span class="py-string">'de_DE'</span>, <span class="py-string">'en_US'</span>], [<span class="py-string">'en'</span>, <span class="py-string">'de'</span>])
+<span class="py-output">'de'</span></pre>
+<p>Case is ignored by the algorithm, the result uses the case of the preferred
+locale identifier:</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>negotiate_locale([<span class="py-string">'de_DE'</span>, <span class="py-string">'en_US'</span>], [<span class="py-string">'de_de'</span>, <span class="py-string">'de_at'</span>])
+<span class="py-output">'de_DE'</span></pre>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>negotiate_locale([<span class="py-string">'de_DE'</span>, <span class="py-string">'en_US'</span>], [<span class="py-string">'de_de'</span>, <span class="py-string">'de_at'</span>])
+<span class="py-output">'de_DE'</span></pre>
+<p>By default, some web browsers unfortunately do not include the territory
+in the locale identifier for many locales, and some don't even allow the
+user to easily add the territory. So while you may prefer using qualified
+locale identifiers in your web-application, they would not normally match
+the language-only locale sent by such browsers. To workaround that, this
+function uses a default mapping of commonly used langauge-only locale
+identifiers to identifiers including the territory:</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>negotiate_locale([<span class="py-string">'ja'</span>, <span class="py-string">'en_US'</span>], [<span class="py-string">'ja_JP'</span>, <span class="py-string">'en_US'</span>])
+<span class="py-output">'ja_JP'</span></pre>
+<p>Some browsers even use an incorrect or outdated language code, such as &quot;no&quot;
+for Norwegian, where the correct locale identifier would actually be &quot;nb_NO&quot;
+(Bokm&#229;l) or &quot;nn_NO&quot; (Nynorsk). The aliases are intended to take care of
+such cases, too:</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>negotiate_locale([<span class="py-string">'no'</span>, <span class="py-string">'sv'</span>], [<span class="py-string">'nb_NO'</span>, <span class="py-string">'sv_SE'</span>])
+<span class="py-output">'nb_NO'</span></pre>
+<p>You can override this default mapping by passing a different <code class="link">aliases</code>
+dictionary to this function, or you can bypass the behavior althogher by
+setting the <code class="link">aliases</code> parameter to <code class="link">None</code>.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>preferred</code></strong> - the list of locale strings preferred by the user</li>
+        <li><strong class="pname"><code>available</code></strong> - the list of locale strings available</li>
+        <li><strong class="pname"><code>sep</code></strong> - character that separates the different parts of the locale
+strings</li>
+        <li><strong class="pname"><code>aliases</code></strong> - a dictionary of aliases for locale identifiers</li>
+    </ul></dd>
+    <dt>Returns: <code class="link">str</code></dt>
+        <dd>the locale identifier for the best match, or <code class="link">None</code> if no match
+was found</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="parse_locale"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">parse_locale</span>(<span class="sig-arg">identifier</span>,
+        <span class="sig-arg">sep</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">_</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Parse a locale identifier into a tuple of the form:</p>
+<pre class="rst-literal-block">
+``(language, territory, script, variant)``
+</pre>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>parse_locale(<span class="py-string">'zh_CN'</span>)
+<span class="py-output">('zh', 'CN', None, None)</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>parse_locale(<span class="py-string">'zh_Hans_CN'</span>)
+<span class="py-output">('zh', 'CN', 'Hans', None)</span></pre>
+<p>The default component separator is &quot;_&quot;, but a different separator can be
+specified using the <code class="link">sep</code> parameter:</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>parse_locale(<span class="py-string">'zh-CN'</span>, sep=<span class="py-string">'-'</span>)
+<span class="py-output">('zh', 'CN', None, None)</span></pre>
+<p>If the identifier cannot be parsed into a locale, a <code class="link">ValueError</code> exception
+is raised:</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>parse_locale(<span class="py-string">'not_a_LOCALE_String'</span>)
+<span class="py-except">Traceback (most recent call last):</span>
+<span class="py-except">  ...</span>
+<span class="py-except">ValueError: 'not_a_LOCALE_String' is not a valid locale identifier</span></pre>
+<p>Encoding information and locale modifiers are removed from the identifier:</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>parse_locale(<span class="py-string">'it_IT@euro'</span>)
+<span class="py-output">('it', 'IT', None, None)</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>parse_locale(<span class="py-string">'en_US.UTF-8'</span>)
+<span class="py-output">('en', 'US', None, None)</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>parse_locale(<span class="py-string">'de_DE.iso885915@euro'</span>)
+<span class="py-output">('de', 'DE', None, None)</span></pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>identifier</code></strong> - the locale identifier string</li>
+        <li><strong class="pname"><code>sep</code></strong> - character that separates the different components of the locale
+identifier</li>
+    </ul></dd>
+    <dt>Returns: <code class="link">tuple</code></dt>
+        <dd>the <tt class="rst-docutils literal"><span class="pre">(language,</span> <span class="pre">territory,</span> <span class="pre">script,</span> <span class="pre">variant)</span></tt> tuple</dd>
+    <dt>Raises:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code><strong class='fraise'>ValueError</strong></code> - if the string does not appear to be a valid locale
+identifier</li>
+    </ul></dd>
+  </dl>
+<div class="fields">      <p><strong>See Also:</strong>
+        <a class="rst-reference external" href="http://www.ietf.org/rfc/rfc4646.txt" target="_top">IETF RFC 4646</a>
+      </p>
+</div></td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="babel-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="../index.html">Documentation Index</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Wed Apr  7 09:54:55 2010
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

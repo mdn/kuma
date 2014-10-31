@@ -1,0 +1,20 @@
+Metadata-Version: 1.0
+Name: selenium
+Version: 1.0.1
+Summary: A Python language binding for Selenium RC
+Home-page: http://www.openqa.org/
+Author: Maik Roeder
+Author-email: roeder@berg.net
+License: Apache 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
+Download-URL: http://www.openqa.org/
+Description: Selenium Python Client Driver is a Python language binding for Selenium Remote Control
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Environment :: Console
+Classifier: Intended Audience :: Developers
+Classifier: Natural Language :: English
+Classifier: Operating System :: POSIX
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Software Development :: Quality Assurance
+Classifier: Topic :: Software Development :: Testing

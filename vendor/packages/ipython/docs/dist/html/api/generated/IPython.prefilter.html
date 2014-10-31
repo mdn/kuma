@@ -1,0 +1,268 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>prefilter &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="shellglobals" href="IPython.shellglobals.html" />
+    <link rel="prev" title="platutils_win32" href="IPython.platutils_win32.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.shellglobals.html" title="shellglobals"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.platutils_win32.html" title="platutils_win32"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="prefilter">
+<h1>prefilter<a class="headerlink" href="#prefilter" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.prefilter">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">prefilter</span></tt><a class="headerlink" href="#module-IPython.prefilter" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.prefilter</span></tt>:</p>
+<img src="../../_images/inheritancedda8386c0d.png" usemap="#inheritancedda8386c0d" class="inheritance"/><map id="inheritancedda8386c0d" name="inheritancedda8386c0d">
+<area shape="rect" href="#IPython.prefilter.LineInfo" title="IPython.prefilter.LineInfo" alt="" coords="5,5,179,32"/>
+</map>
+<p>Classes and functions for prefiltering (transforming) a line of user input.
+This module is responsible, primarily, for breaking the line up into useful
+pieces and triggering the appropriate handlers in iplib to do the actual
+transforming work.</p>
+</div>
+<div class="section" id="class">
+<h2>Class<a class="headerlink" href="#class" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="lineinfo">
+<h2><a title="IPython.prefilter.LineInfo" class="reference internal" href="#IPython.prefilter.LineInfo"><tt class="xref docutils literal"><span class="pre">LineInfo</span></tt></a><a class="headerlink" href="#lineinfo" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="IPython.prefilter.LineInfo">
+<!--[IPython.prefilter.LineInfo]-->class <tt class="descclassname">IPython.prefilter.</tt><tt class="descname">LineInfo</tt><big>(</big><em>line</em>, <em>continue_prompt</em><big>)</big><a class="headerlink" href="#IPython.prefilter.LineInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>A single line of input and associated info.</p>
+<p>Includes the following as properties:</p>
+<dl class="docutils">
+<dt>line</dt>
+<dd>The original, raw line</dd>
+<dt>continue_prompt</dt>
+<dd>Is this line a continuation in a sequence of multiline input?</dd>
+<dt>pre</dt>
+<dd>The initial esc character or whitespace.</dd>
+<dt>preChar</dt>
+<dd>The escape character(s) in pre or the empty string if there isn&#8217;t one.
+Note that &#8216;!!&#8217; is a possible value for preChar.  Otherwise it will
+always be a single character.</dd>
+<dt>preWhitespace</dt>
+<dd>The leading whitespace from pre if it exists.  If there is a preChar,
+this is just &#8216;&#8217;.</dd>
+<dt>iFun</dt>
+<dd>The &#8216;function part&#8217;, which is basically the maximal initial sequence
+of valid python identifiers and the &#8216;.&#8217; character.  This is what is
+checked for alias and magic transformations, used for auto-calling,
+etc.</dd>
+<dt>theRest</dt>
+<dd>Everything else on the line.</dd>
+</dl>
+<dl class="method">
+<dt id="IPython.prefilter.LineInfo.__init__">
+<!--[IPython.prefilter.LineInfo.__init__]--><tt class="descname">__init__</tt><big>(</big><em>line</em>, <em>continue_prompt</em><big>)</big><a class="headerlink" href="#IPython.prefilter.LineInfo.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.prefilter.LineInfo.ofind">
+<!--[IPython.prefilter.LineInfo.ofind]--><tt class="descname">ofind</tt><big>(</big><em>ip</em><big>)</big><a class="headerlink" href="#IPython.prefilter.LineInfo.ofind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do a full, attribute-walking lookup of the iFun in the various
+namespaces for the given IPython InteractiveShell instance.</p>
+<p>Return a dict with keys: found,obj,ospace,ismagic</p>
+<p>Note: can cause state changes because of calling getattr, but should
+only be run if autocall is on and if the line hasn&#8217;t matched any
+other, less dangerous handlers.</p>
+<p>Does cache the results of the call, so can be called multiple times
+without worrying about <em>further</em> damaging state.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.prefilter.checkAlias">
+<!--[IPython.prefilter.checkAlias]--><tt class="descclassname">IPython.prefilter.</tt><tt class="descname">checkAlias</tt><big>(</big><em>l_info</em>, <em>ip</em><big>)</big><a class="headerlink" href="#IPython.prefilter.checkAlias" title="Permalink to this definition">¶</a></dt>
+<dd>Check if the initital identifier on the line is an alias.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.prefilter.checkAssignment">
+<!--[IPython.prefilter.checkAssignment]--><tt class="descclassname">IPython.prefilter.</tt><tt class="descname">checkAssignment</tt><big>(</big><em>l_info</em>, <em>ip</em><big>)</big><a class="headerlink" href="#IPython.prefilter.checkAssignment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check to see if user is assigning to a var for the first time, in
+which case we want to avoid any sort of automagic / autocall games.</p>
+<p>This allows users to assign to either alias or magic names true python
+variables (the magic/alias systems always take second seat to true
+python code).  E.g. ls=&#8217;hi&#8217;, or ls,that=1,2</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.prefilter.checkAutocall">
+<!--[IPython.prefilter.checkAutocall]--><tt class="descclassname">IPython.prefilter.</tt><tt class="descname">checkAutocall</tt><big>(</big><em>l_info</em>, <em>ip</em><big>)</big><a class="headerlink" href="#IPython.prefilter.checkAutocall" title="Permalink to this definition">¶</a></dt>
+<dd>Check if the initial word/function is callable and autocall is on.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.prefilter.checkAutomagic">
+<!--[IPython.prefilter.checkAutomagic]--><tt class="descclassname">IPython.prefilter.</tt><tt class="descname">checkAutomagic</tt><big>(</big><em>l_info</em>, <em>ip</em><big>)</big><a class="headerlink" href="#IPython.prefilter.checkAutomagic" title="Permalink to this definition">¶</a></dt>
+<dd>If the iFun is magic, and automagic is on, run it.  Note: normal,
+non-auto magic would already have been triggered via &#8216;%&#8217; in
+check_esc_chars. This just checks for automagic.  Also, before
+triggering the magic handler, make sure that there is nothing in the
+user namespace which could shadow it.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.prefilter.checkEmacs">
+<!--[IPython.prefilter.checkEmacs]--><tt class="descclassname">IPython.prefilter.</tt><tt class="descname">checkEmacs</tt><big>(</big><em>l_info</em>, <em>ip</em><big>)</big><a class="headerlink" href="#IPython.prefilter.checkEmacs" title="Permalink to this definition">¶</a></dt>
+<dd>Emacs ipython-mode tags certain input lines.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.prefilter.checkEscChars">
+<!--[IPython.prefilter.checkEscChars]--><tt class="descclassname">IPython.prefilter.</tt><tt class="descname">checkEscChars</tt><big>(</big><em>l_info</em>, <em>ip</em><big>)</big><a class="headerlink" href="#IPython.prefilter.checkEscChars" title="Permalink to this definition">¶</a></dt>
+<dd>Check for escape character and return either a handler to handle it,
+or None if there is no escape char.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.prefilter.checkIPyAutocall">
+<!--[IPython.prefilter.checkIPyAutocall]--><tt class="descclassname">IPython.prefilter.</tt><tt class="descname">checkIPyAutocall</tt><big>(</big><em>l_info</em>, <em>ip</em><big>)</big><a class="headerlink" href="#IPython.prefilter.checkIPyAutocall" title="Permalink to this definition">¶</a></dt>
+<dd>Instances of IPyAutocall in user_ns get autocalled immediately</dd></dl>
+
+<dl class="function">
+<dt id="IPython.prefilter.checkMultiLineMagic">
+<!--[IPython.prefilter.checkMultiLineMagic]--><tt class="descclassname">IPython.prefilter.</tt><tt class="descname">checkMultiLineMagic</tt><big>(</big><em>l_info</em>, <em>ip</em><big>)</big><a class="headerlink" href="#IPython.prefilter.checkMultiLineMagic" title="Permalink to this definition">¶</a></dt>
+<dd>Allow ! and !! in multi-line statements if multi_line_specials is on</dd></dl>
+
+<dl class="function">
+<dt id="IPython.prefilter.checkPythonOps">
+<!--[IPython.prefilter.checkPythonOps]--><tt class="descclassname">IPython.prefilter.</tt><tt class="descname">checkPythonOps</tt><big>(</big><em>l_info</em>, <em>ip</em><big>)</big><a class="headerlink" href="#IPython.prefilter.checkPythonOps" title="Permalink to this definition">¶</a></dt>
+<dd>If the &#8216;rest&#8217; of the line begins with a function call or pretty much
+any python operator, we should simply execute the line (regardless of
+whether or not there&#8217;s a possible autocall expansion).  This avoids
+spurious (and very confusing) geattr() accesses.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.prefilter.checkShellEscape">
+<!--[IPython.prefilter.checkShellEscape]--><tt class="descclassname">IPython.prefilter.</tt><tt class="descname">checkShellEscape</tt><big>(</big><em>l_info</em>, <em>ip</em><big>)</big><a class="headerlink" href="#IPython.prefilter.checkShellEscape" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.prefilter.isShadowed">
+<!--[IPython.prefilter.isShadowed]--><tt class="descclassname">IPython.prefilter.</tt><tt class="descname">isShadowed</tt><big>(</big><em>identifier</em>, <em>ip</em><big>)</big><a class="headerlink" href="#IPython.prefilter.isShadowed" title="Permalink to this definition">¶</a></dt>
+<dd>Is the given identifier defined in one of the namespaces which shadow
+the alias and magic namespaces?  Note that an identifier is different
+than iFun, because it can not contain a &#8216;.&#8217; character.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.prefilter.prefilter">
+<!--[IPython.prefilter.prefilter]--><tt class="descclassname">IPython.prefilter.</tt><tt class="descname">prefilter</tt><big>(</big><em>line_info</em>, <em>ip</em><big>)</big><a class="headerlink" href="#IPython.prefilter.prefilter" title="Permalink to this definition">¶</a></dt>
+<dd>Call one of the passed-in InteractiveShell&#8217;s handler preprocessors,
+depending on the form of the line.  Return the results, which must be a
+value, even if it&#8217;s a blank (&#8216;&#8217;).</dd></dl>
+
+<dl class="function">
+<dt id="IPython.prefilter.splitUserInput">
+<!--[IPython.prefilter.splitUserInput]--><tt class="descclassname">IPython.prefilter.</tt><tt class="descname">splitUserInput</tt><big>(</big><em>line</em>, <em>pattern=None</em><big>)</big><a class="headerlink" href="#IPython.prefilter.splitUserInput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Split user input into pre-char/whitespace, function part and rest.</p>
+<p>Mostly internal to this module, but also used by iplib.expand_aliases,
+which passes in a shell pattern.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">prefilter</a><ul>
+<li><a class="reference external" href="#module-IPython.prefilter">Module: <tt class="docutils literal"><span class="pre">prefilter</span></tt></a></li>
+<li><a class="reference external" href="#class">Class</a></li>
+<li><a class="reference external" href="#lineinfo"><tt class="docutils literal"><span class="pre">LineInfo</span></tt></a></li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.platutils_win32.html" title="previous chapter">platutils_win32</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.shellglobals.html" title="next chapter">shellglobals</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.prefilter.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.shellglobals.html" title="shellglobals"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.platutils_win32.html" title="platutils_win32"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

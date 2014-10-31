@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        
+        <title>
+    Horizontal Sharding
+ &mdash; SQLAlchemy 0.6.4 Documentation</title>
+        
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/docs.css" type="text/css" />
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../../',
+          VERSION:     '0.6.4',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/init.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+        <link rel="copyright" title="Copyright" href="../../copyright.html" />
+    <link rel="top" title="SQLAlchemy 0.6.4 Documentation" href="../../index.html" />
+        <link rel="up" title="ORM Extensions" href="index.html" />
+        <link rel="next" title="SqlSoup" href="sqlsoup.html" />
+        <link rel="prev" title="Ordering List" href="orderinglist.html" />
+    
+
+    </head>
+    <body>
+        
+
+
+
+
+        <h1>SQLAlchemy 0.6.4 Documentation</h1>
+
+        <div id="search">
+        Search:
+        <form class="search" action="../../search.html" method="get">
+          <input type="text" name="q" size="18" /> <input type="submit" value="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+        </div>
+
+        <div class="versionheader">
+            Version: <span class="versionnum">0.6.4</span> Last Updated: 09/07/2010 13:07:48
+        </div>
+        <div class="clearboth"></div>
+
+        <div class="topnav">
+            <div id="pagecontrol">
+                <a href="../../genindex.html">Index</a>
+            
+                <div class="sourcelink">(<a href="../../_sources/orm/extensions/horizontal_shard.txt">view source)</div>
+            </div>
+            
+            <div class="navbanner">
+                <a class="totoc" href="../../index.html">Table of Contents</a>
+                        » <a href="../index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a>
+                        » <a href="index.html" title="ORM Extensions">ORM Extensions</a>
+                » 
+    Horizontal Sharding
+ 
+                
+                
+<div class="prevnext">
+        Previous:
+        <a href="orderinglist.html" title="previous chapter">Ordering List</a>
+        Next:
+        <a href="sqlsoup.html" title="next chapter">SqlSoup</a>
+</div>
+
+                <h2>
+                    
+    Horizontal Sharding
+ 
+                </h2>
+            </div>
+                <ul>
+<li><a class="reference internal" href="#">Horizontal Sharding</a><ul>
+<li><a class="reference internal" href="#api-documentation">API Documentation</a></li>
+</ul>
+</li>
+</ul>
+
+            <div class="clearboth"></div>
+        </div>
+        
+        <div class="document">
+            <div class="body">
+                
+<div class="section" id="module-sqlalchemy.ext.horizontal_shard">
+<span id="horizontal-sharding"></span><h1>Horizontal Sharding<a class="headerlink" href="#module-sqlalchemy.ext.horizontal_shard" title="Permalink to this headline">¶</a></h1>
+<p>Horizontal sharding support.</p>
+<p>Defines a rudimental &#8216;horizontal sharding&#8217; system which allows a Session to
+distribute queries and persistence operations across multiple databases.</p>
+<p>For a usage example, see the <a class="reference internal" href="../examples.html#examples-sharding"><em>Horizontal Sharding</em></a> example included in 
+the source distrbution.</p>
+<div class="section" id="api-documentation">
+<h2>API Documentation<a class="headerlink" href="#api-documentation" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sqlalchemy.ext.horizontal_shard.ShardedSession">
+<em class="property">class </em><tt class="descclassname">sqlalchemy.ext.horizontal_shard.</tt><tt class="descname">ShardedSession</tt><big>(</big><em>shard_chooser</em>, <em>id_chooser</em>, <em>query_chooser</em>, <em>shards=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#sqlalchemy.ext.horizontal_shard.ShardedSession" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="sqlalchemy.ext.horizontal_shard.ShardedSession.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>shard_chooser</em>, <em>id_chooser</em>, <em>query_chooser</em>, <em>shards=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#sqlalchemy.ext.horizontal_shard.ShardedSession.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a ShardedSession.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>shard_chooser</strong> &#8211; A callable which, passed a Mapper, a mapped instance, and possibly a
+SQL clause, returns a shard ID.  This id may be based off of the
+attributes present within the object, or on some round-robin
+scheme. If the scheme is based on a selection, it should set
+whatever state on the instance to mark it in the future as
+participating in that shard.</li>
+<li><strong>id_chooser</strong> &#8211; A callable, passed a query and a tuple of identity values, which
+should return a list of shard ids where the ID might reside.  The
+databases will be queried in the order of this listing.</li>
+<li><strong>query_chooser</strong> &#8211; For a given Query, returns the list of shard_ids where the query
+should be issued.  Results from all shards returned will be combined
+together into a single listing.</li>
+<li><strong>shards</strong> &#8211; A dictionary of string shard names to <a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.base.Engine" title="sqlalchemy.engine.base.Engine"><tt class="xref py py-class docutils literal"><span class="pre">Engine</span></tt></a>
+objects.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlalchemy.ext.horizontal_shard.ShardedQuery">
+<em class="property">class </em><tt class="descclassname">sqlalchemy.ext.horizontal_shard.</tt><tt class="descname">ShardedQuery</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#sqlalchemy.ext.horizontal_shard.ShardedQuery" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="sqlalchemy.ext.horizontal_shard.ShardedQuery.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#sqlalchemy.ext.horizontal_shard.ShardedQuery.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlalchemy.ext.horizontal_shard.ShardedQuery.set_shard">
+<tt class="descname">set_shard</tt><big>(</big><em>shard_id</em><big>)</big><a class="headerlink" href="#sqlalchemy.ext.horizontal_shard.ShardedQuery.set_shard" title="Permalink to this definition">¶</a></dt>
+<dd><p>return a new query, limited to a single shard ID.</p>
+<p>all subsequent operations with the returned query will 
+be against the single shard regardless of other state.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+            </div>
+        </div>
+
+        
+        
+            <div class="bottomnav">
+                
+<div class="prevnext">
+        Previous:
+        <a href="orderinglist.html" title="previous chapter">Ordering List</a>
+        Next:
+        <a href="sqlsoup.html" title="next chapter">SqlSoup</a>
+</div>
+
+                <div class="doc_copyright">
+                    &copy; <a href="../../copyright.html">Copyright</a> 2007, 2008, 2009, 2010, the SQLAlchemy authors and contributors.
+                    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
+                </div>
+            </div>
+        
+
+
+
+
+
+
+    </body>
+</html>
+
+
+
