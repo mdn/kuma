@@ -115,3 +115,6 @@
 [submodule "vendor/src/jingo"]
 	path = vendor/src/jingo
 	url = git@github.com:jbalogh/jingo.git
+[submodule "vendor/src/jingo-minify"]
+	path = vendor/src/jingo-minify
+	url = git@github.com:jsocol/jingo-minify.git
