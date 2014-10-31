@@ -139,3 +139,6 @@
 [submodule "vendor/src/python-memcached"]
 	path = vendor/src/python-memcached
 	url = git@github.com:linsomniac/python-memcached.git
+[submodule "vendor/src/python-openid"]
+	path = vendor/src/python-openid
+	url = git@github.com:openid/python-openid.git
