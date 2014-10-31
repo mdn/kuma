@@ -160,3 +160,6 @@
 [submodule "vendor/src/simplejson"]
 	path = vendor/src/simplejson
 	url = git@github.com:simplejson/simplejson.git
+[submodule "vendor/src/sphinxapi"]
+	path = vendor/src/sphinxapi
+	url = git@github.com:jsocol/sphinxapi.git
