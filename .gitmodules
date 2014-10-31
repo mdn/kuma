@@ -130,3 +130,6 @@
 [submodule "vendor/src/py-wikimarkup"]
 	path = vendor/src/py-wikimarkup
 	url = git@github.com:pcraciunoiu/py-wikimarkup.git
+[submodule "vendor/src/pystatsd"]
+	path = vendor/src/pystatsd
+	url = git@github.com:jsocol/pystatsd.git
