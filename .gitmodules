@@ -22,3 +22,6 @@
 [submodule "vendor/src/django-appconf"]
 	path = vendor/src/django-appconf
 	url = git@github.com:jezdez/django-appconf.git
+[submodule "vendor/src/django-authority"]
+	path = vendor/src/django-authority
+	url = git@github.com:jsocol/django-authority.git
