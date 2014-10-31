@@ -151,3 +151,6 @@
 [submodule "vendor/src/requests"]
 	path = vendor/src/requests
 	url = git@github.com:kennethreitz/requests.git
+[submodule "vendor/src/requests-oauthlib"]
+	path = vendor/src/requests-oauthlib
+	url = git@github.com:requests/requests-oauthlib.git
