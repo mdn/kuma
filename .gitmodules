@@ -58,3 +58,6 @@
 [submodule "vendor/src/django-mobility"]
 	path = vendor/src/django-mobility
 	url = git@github.com:jbalogh/django-mobility.git
+[submodule "vendor/src/django-mozilla-product-details"]
+	path = vendor/src/django-mozilla-product-details
+	url = git@github.com:fwenzel/django-mozilla-product-details.git
