@@ -85,3 +85,6 @@
 [submodule "vendor/src/django-statici18n"]
 	path = vendor/src/django-statici18n
 	url = git@github.com:zyegfryed/django-statici18n.git
+[submodule "vendor/src/django-statsd"]
+	path = vendor/src/django-statsd
+	url = git@github.com:andymckay/django-statsd.git
