@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="posegment" id="posegment">posegment</a></h1>
+<div class="level1">
+
+<p>
+
+posegment takes a Gettext <acronym title="Gettext Portable Object">PO</acronym> or <acronym title="XML Localization Interchange File Format">XLIFF</acronym> file and segments the entries, generating a new file with revised and smaller translation units.
+</p>
+
+<p>
+This is useful for the creation of a file that can be used as a Translation Memory (e.g. when using <a href="pootle-updatetm.html" class="wikilink2" title="pootle-updatetm.html">updatetm</a> to create translation memory for Pootle) as you should get better matching after you have exposed translated sentences that might occur elsewhere in your work.
+</p>
+
+<p>
+Posegment won&#039;t do very advanced sentence boundary detection and alignment, but has customisations for the punctuation rules of several languages (Amharic, Afrikaans, Arabic, Armenian, Chinese, Greek, Japanese, Khmer, Oriya, Persian). For the purpose of increasing your TM (as described below), it is already very useful. Give it a try and help us to improve it even more for your language.
+</p>
+
+</div>
+<!-- SECTION "posegment" [1-834] -->
+<h2><a name="usage" id="usage">Usage</a></h2>
+<div class="level2">
+<pre class="code">posegment [options] &lt;input&gt; &lt;segmented&gt;</pre>
+
+<p>
+
+Where:
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0"> &lt;input&gt; </td><td class="col1 leftalign"> translations to be segmented   </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> &lt;segmented&gt;   </td><td class="col1 centeralign">  translations segmented at the sentence level   </td>
+	</tr>
+</table>
+
+<p>
+
+Options:
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> --version            </td><td class="col1 leftalign"> show program&#039;s version number and exit  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> -h, --help           </td><td class="col1 leftalign"> show this help message and exit   </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> --manpage            </td><td class="col1 leftalign"> output a manpage based on the help  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> <a href="toolkit-progress_progress.html" class="wikilink1" title="toolkit-progress_progress.html">--progress=PROGRESS</a>  </td><td class="col1 leftalign"> show progress as: dots, none, bar, names, verbose  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> <a href="toolkit-errorlevel_errorlevel.html" class="wikilink1" title="toolkit-errorlevel_errorlevel.html">--errorlevel=ERRORLEVEL</a>  </td><td class="col1 leftalign"> show errorlevel as: none, message, exception, traceback  </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> -iINPUT, --input=INPUT   </td><td class="col1 leftalign"> read from INPUT in pot format  </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> -xEXCLUDE, --exclude=EXCLUDE  </td><td class="col1 leftalign"> exclude names matching EXCLUDE from input paths  </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 leftalign"> -oOUTPUT, --output=OUTPUT     </td><td class="col1 leftalign"> write to OUTPUT in po, pot formats  </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 leftalign"> <a href="toolkit-psyco_mode.html" class="wikilink1" title="toolkit-psyco_mode.html">--psyco=MODE</a>         </td><td class="col1 leftalign"> use psyco to speed up the operation, modes: none, full, profile  </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0 leftalign"> -P, --pot  </td><td class="col1 leftalign"> output <acronym title="Gettext Portable Object">PO</acronym> Templates (.pot) rather than <acronym title="Gettext Portable Object">PO</acronym> files (.po)  </td>
+	</tr>
+	<tr class="row10">
+		<td class="col0"> -l, --language=LANG </td><td class="col1"> the target language code </td>
+	</tr>
+	<tr class="row11">
+		<td class="col0"> --source-language=LANG </td><td class="col1"> the source language code (default &#039;en&#039;) </td>
+	</tr>
+	<tr class="row12">
+		<td class="col0"> --keepspaces </td><td class="col1"> Disable automatic stripping of whitespace </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Usage" [835-1971] -->
+<h2><a name="examples" id="examples">Examples</a></h2>
+<div class="level2">
+
+<p>
+
+You want to reuse all of your Pidgin translations in another Instant Messenger:
+
+</p>
+<pre class="code">posegment pidgin-af.po pidgin-af-segmented.po</pre>
+
+<p>
+
+Now all of our Pidgin translation are available, segmented at a sentence level, to be used as a Translation Memory for our other translation work.
+</p>
+
+<p>
+You can do the same at a project level.  Here we want to segment all of our OpenOffice.org translation work, a few hundred files:
+
+</p>
+<pre class="code">posegment af/ af-segmented/</pre>
+
+<p>
+
+We start with all our files in <code>af</code> which are now duplicated in <code>af-segmented</code> except files are now fully segmented.
+</p>
+
+</div>
+<!-- SECTION "Examples" [1972-2555] -->
+<h2><a name="issues" id="issues">Issues</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> If the toolkit doesn&#039;t have segmentation rules for your language then it will default to English which might be incorrect.</div>
+</li>
+<li class="level1"><div class="li"> Segmentation does not guarantee reuse as your TM software needs to know how to segment when matching. If you use software that doesn&#039;t do segmentation, you can consider joining the original and the segmented files together with msgcat, to get the best of both worlds.</div>
+</li>
+<li class="level1"><div class="li"> You cannot (yet) use the tool to break a file into segments, translate, and then recreate as the segmented file does not know which parts should be joined together to recreate a file.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Issues" [2556-] --></body>
+</html>

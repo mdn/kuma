@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.core.display_trap &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.core.error" href="IPython.kernel.core.error.html" />
+    <link rel="prev" title="kernel.core.display_formatter" href="IPython.kernel.core.display_formatter.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.error.html" title="kernel.core.error"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.display_formatter.html" title="kernel.core.display_formatter"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-core-display-trap">
+<h1>kernel.core.display_trap<a class="headerlink" href="#kernel-core-display-trap" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.core.display_trap">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.core.display_trap</span></tt><a class="headerlink" href="#module-IPython.kernel.core.display_trap" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.kernel.core.display_trap</span></tt>:</p>
+<img src="../../_images/inheritancedd5d2ddcfd.png" usemap="#inheritancedd5d2ddcfd" class="inheritance"/><map id="inheritancedd5d2ddcfd" name="inheritancedd5d2ddcfd">
+<area shape="rect" href="#IPython.kernel.core.display_trap.DisplayTrap" title="core.display_trap.DisplayTrap" alt="" coords="7,5,212,32"/>
+</map>
+<p>Manager for replacing sys.displayhook().</p>
+</div>
+<div class="section" id="displaytrap">
+<h2><a title="IPython.kernel.core.display_trap.DisplayTrap" class="reference internal" href="#IPython.kernel.core.display_trap.DisplayTrap"><tt class="xref docutils literal"><span class="pre">DisplayTrap</span></tt></a><a class="headerlink" href="#displaytrap" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="IPython.kernel.core.display_trap.DisplayTrap">
+<!--[IPython.kernel.core.display_trap.DisplayTrap]-->class <tt class="descclassname">IPython.kernel.core.display_trap.</tt><tt class="descname">DisplayTrap</tt><big>(</big><em>formatters=None</em>, <em>callbacks=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.display_trap.DisplayTrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>Object to trap and format objects passing through sys.displayhook().</p>
+<p>This trap maintains two lists of callables: formatters and callbacks. The
+formatters take the <em>last</em> object that has gone through since the trap was
+set and returns a string representation. Callbacks are executed on <em>every</em>
+object that passes through the displayhook and does not return anything.</p>
+<dl class="method">
+<dt id="IPython.kernel.core.display_trap.DisplayTrap.__init__">
+<!--[IPython.kernel.core.display_trap.DisplayTrap.__init__]--><tt class="descname">__init__</tt><big>(</big><em>formatters=None</em>, <em>callbacks=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.display_trap.DisplayTrap.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.display_trap.DisplayTrap.add_to_message">
+<!--[IPython.kernel.core.display_trap.DisplayTrap.add_to_message]--><tt class="descname">add_to_message</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.display_trap.DisplayTrap.add_to_message" title="Permalink to this definition">¶</a></dt>
+<dd>Add the formatted display of the objects to the message dictionary
+being returned from the interpreter to its listeners.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.display_trap.DisplayTrap.clear">
+<!--[IPython.kernel.core.display_trap.DisplayTrap.clear]--><tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.core.display_trap.DisplayTrap.clear" title="Permalink to this definition">¶</a></dt>
+<dd>Reset the stored object.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.display_trap.DisplayTrap.hook">
+<!--[IPython.kernel.core.display_trap.DisplayTrap.hook]--><tt class="descname">hook</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.display_trap.DisplayTrap.hook" title="Permalink to this definition">¶</a></dt>
+<dd>This method actually implements the hook.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.display_trap.DisplayTrap.set">
+<!--[IPython.kernel.core.display_trap.DisplayTrap.set]--><tt class="descname">set</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.core.display_trap.DisplayTrap.set" title="Permalink to this definition">¶</a></dt>
+<dd>Set the hook.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.display_trap.DisplayTrap.unset">
+<!--[IPython.kernel.core.display_trap.DisplayTrap.unset]--><tt class="descname">unset</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.core.display_trap.DisplayTrap.unset" title="Permalink to this definition">¶</a></dt>
+<dd>Unset the hook.</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.core.display_trap</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.core.display_trap">Module: <tt class="docutils literal"><span class="pre">kernel.core.display_trap</span></tt></a></li>
+<li><a class="reference external" href="#displaytrap"><tt class="docutils literal"><span class="pre">DisplayTrap</span></tt></a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.kernel.core.display_formatter.html" title="previous chapter">kernel.core.display_formatter</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.core.error.html" title="next chapter">kernel.core.error</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.core.display_trap.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.error.html" title="kernel.core.error"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.display_formatter.html" title="kernel.core.display_formatter"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

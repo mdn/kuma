@@ -1,0 +1,58 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.multienginefc
+====================
+
+Module: :mod:`kernel.multienginefc`
+-----------------------------------
+Inheritance diagram for ``IPython.kernel.multienginefc``:
+
+.. inheritance-diagram:: IPython.kernel.multienginefc 
+   :parts: 3
+
+.. automodule:: IPython.kernel.multienginefc
+
+.. currentmodule:: IPython.kernel.multienginefc
+
+Classes
+-------
+
+:class:`FCFullSynchronousMultiEngineClient`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: FCFullSynchronousMultiEngineClient
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`FCSynchronousMultiEngineFromMultiEngine`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: FCSynchronousMultiEngineFromMultiEngine
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IFCSynchronousMultiEngine`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IFCSynchronousMultiEngine
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Function
+--------
+
+
+.. autofunction:: IPython.kernel.multienginefc.packageResult
+

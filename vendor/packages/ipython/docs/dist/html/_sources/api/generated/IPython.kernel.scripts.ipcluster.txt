@@ -1,0 +1,156 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.scripts.ipcluster
+========================
+
+Module: :mod:`kernel.scripts.ipcluster`
+---------------------------------------
+Inheritance diagram for ``IPython.kernel.scripts.ipcluster``:
+
+.. inheritance-diagram:: IPython.kernel.scripts.ipcluster 
+   :parts: 3
+
+.. automodule:: IPython.kernel.scripts.ipcluster
+
+.. currentmodule:: IPython.kernel.scripts.ipcluster
+
+Classes
+-------
+
+:class:`BatchEngineSet`
+~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: BatchEngineSet
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ControllerLauncher`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ControllerLauncher
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`EngineLauncher`
+~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: EngineLauncher
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`LauncherProcessProtocol`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: LauncherProcessProtocol
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`LocalEngineSet`
+~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: LocalEngineSet
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`PBSEngineSet`
+~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: PBSEngineSet
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ProcessLauncher`
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ProcessLauncher
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ProcessStateError`
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ProcessStateError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`SSHEngineSet`
+~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: SSHEngineSet
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`UnknownStatus`
+~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: UnknownStatus
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Functions
+---------
+
+
+.. autofunction:: IPython.kernel.scripts.ipcluster.check_reuse
+
+
+.. autofunction:: IPython.kernel.scripts.ipcluster.check_security
+
+
+.. autofunction:: IPython.kernel.scripts.ipcluster.get_args
+
+
+.. autofunction:: IPython.kernel.scripts.ipcluster.main
+
+
+.. autofunction:: IPython.kernel.scripts.ipcluster.main_local
+
+
+.. autofunction:: IPython.kernel.scripts.ipcluster.main_mpi
+
+
+.. autofunction:: IPython.kernel.scripts.ipcluster.main_pbs
+
+
+.. autofunction:: IPython.kernel.scripts.ipcluster.main_ssh
+

@@ -1,0 +1,1317 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>genutils &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="gui.wx.ipshell_nonblocking" href="IPython.gui.wx.ipshell_nonblocking.html" />
+    <link rel="prev" title="generics" href="IPython.generics.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.gui.wx.ipshell_nonblocking.html" title="gui.wx.ipshell_nonblocking"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.generics.html" title="generics"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="genutils">
+<h1>genutils<a class="headerlink" href="#genutils" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.genutils">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">genutils</span></tt><a class="headerlink" href="#module-IPython.genutils" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.genutils</span></tt>:</p>
+<img src="../../_images/inheritance8a7656f497.png" usemap="#inheritance8a7656f497" class="inheritance"/><map id="inheritance8a7656f497" name="inheritance8a7656f497">
+<area shape="rect" href="#IPython.genutils.NLprinter" title="IPython.genutils.NLprinter" alt="" coords="16,411,200,437"/>
+<area shape="rect" href="#IPython.genutils.LSString" title="IPython.genutils.LSString" alt="" coords="19,360,197,387"/>
+<area shape="rect" href="#IPython.genutils.IOStream" title="IPython.genutils.IOStream" alt="" coords="15,309,201,336"/>
+<area shape="rect" href="#IPython.genutils.EvalDict" title="IPython.genutils.EvalDict" alt="" coords="20,259,196,285"/>
+<area shape="rect" href="#IPython.genutils.SystemExec" title="IPython.genutils.SystemExec" alt="" coords="5,208,211,235"/>
+<area shape="rect" href="#IPython.genutils.NotGiven" title="IPython.genutils.NotGiven" alt="" coords="16,157,200,184"/>
+<area shape="rect" href="#IPython.genutils.Error" title="IPython.genutils.Error" alt="" coords="29,107,187,133"/>
+<area shape="rect" href="#IPython.genutils.HomeDirError" title="IPython.genutils.HomeDirError" alt="" coords="260,107,473,133"/>
+<area shape="rect" href="#IPython.genutils.SList" title="IPython.genutils.SList" alt="" coords="29,56,187,83"/>
+<area shape="rect" href="#IPython.genutils.IOTerm" title="IPython.genutils.IOTerm" alt="" coords="23,5,193,32"/>
+</map>
+<p>General purpose utilities.</p>
+<p>This is a grab-bag of stuff I find useful in most programs I write. Some of
+these things are also convenient when working at the command line.</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="error">
+<h3><a title="IPython.genutils.Error" class="reference internal" href="#IPython.genutils.Error"><tt class="xref docutils literal"><span class="pre">Error</span></tt></a><a class="headerlink" href="#error" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.genutils.Error">
+<!--[IPython.genutils.Error]-->class <tt class="descclassname">IPython.genutils.</tt><tt class="descname">Error</tt><a class="headerlink" href="#IPython.genutils.Error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
+<p>Base class for exceptions in this module.</p>
+<dl class="method">
+<dt id="IPython.genutils.Error.__init__">
+<!--[IPython.genutils.Error.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.genutils.Error.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="evaldict">
+<h3><a title="IPython.genutils.EvalDict" class="reference internal" href="#IPython.genutils.EvalDict"><tt class="xref docutils literal"><span class="pre">EvalDict</span></tt></a><a class="headerlink" href="#evaldict" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.genutils.EvalDict">
+<!--[IPython.genutils.EvalDict]-->class <tt class="descclassname">IPython.genutils.</tt><tt class="descname">EvalDict</tt><a class="headerlink" href="#IPython.genutils.EvalDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Emulate a dict which evaluates its contents in the caller&#8217;s frame.</p>
+<p>Usage:
+&gt;&gt;&gt; number = 19</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">text</span> <span class="o">=</span> <span class="s">&quot;python&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="s">&quot;%(text.capitalize())s %(number/9.0).1f rules!&quot;</span> <span class="o">%</span> <span class="n">EvalDict</span><span class="p">()</span>
+<span class="go">Python 2.1 rules!</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="homedirerror">
+<h3><a title="IPython.genutils.HomeDirError" class="reference internal" href="#IPython.genutils.HomeDirError"><tt class="xref docutils literal"><span class="pre">HomeDirError</span></tt></a><a class="headerlink" href="#homedirerror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.genutils.HomeDirError">
+<!--[IPython.genutils.HomeDirError]-->class <tt class="descclassname">IPython.genutils.</tt><tt class="descname">HomeDirError</tt><a class="headerlink" href="#IPython.genutils.HomeDirError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.genutils.Error" class="reference internal" href="#IPython.genutils.Error"><tt class="xref docutils literal"><span class="pre">IPython.genutils.Error</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.genutils.HomeDirError.__init__">
+<!--[IPython.genutils.HomeDirError.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.genutils.HomeDirError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="iostream">
+<h3><a title="IPython.genutils.IOStream" class="reference internal" href="#IPython.genutils.IOStream"><tt class="xref docutils literal"><span class="pre">IOStream</span></tt></a><a class="headerlink" href="#iostream" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.genutils.IOStream">
+<!--[IPython.genutils.IOStream]-->class <tt class="descclassname">IPython.genutils.</tt><tt class="descname">IOStream</tt><big>(</big><em>stream</em>, <em>fallback</em><big>)</big><a class="headerlink" href="#IPython.genutils.IOStream" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="IPython.genutils.IOStream.__init__">
+<!--[IPython.genutils.IOStream.__init__]--><tt class="descname">__init__</tt><big>(</big><em>stream</em>, <em>fallback</em><big>)</big><a class="headerlink" href="#IPython.genutils.IOStream.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.genutils.IOStream.close">
+<!--[IPython.genutils.IOStream.close]--><tt class="descname">close</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.genutils.IOStream.close" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.genutils.IOStream.write">
+<!--[IPython.genutils.IOStream.write]--><tt class="descname">write</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#IPython.genutils.IOStream.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ioterm">
+<h3><a title="IPython.genutils.IOTerm" class="reference internal" href="#IPython.genutils.IOTerm"><tt class="xref docutils literal"><span class="pre">IOTerm</span></tt></a><a class="headerlink" href="#ioterm" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.genutils.IOTerm">
+<!--[IPython.genutils.IOTerm]-->class <tt class="descclassname">IPython.genutils.</tt><tt class="descname">IOTerm</tt><big>(</big><em>cin=None</em>, <em>cout=None</em>, <em>cerr=None</em><big>)</big><a class="headerlink" href="#IPython.genutils.IOTerm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Term holds the file or file-like objects for handling I/O operations.</p>
+<p>These are normally just sys.stdin, sys.stdout and sys.stderr but for
+Windows they can can replaced to allow editing the strings before they are
+displayed.</p>
+<dl class="method">
+<dt id="IPython.genutils.IOTerm.__init__">
+<!--[IPython.genutils.IOTerm.__init__]--><tt class="descname">__init__</tt><big>(</big><em>cin=None</em>, <em>cout=None</em>, <em>cerr=None</em><big>)</big><a class="headerlink" href="#IPython.genutils.IOTerm.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="lsstring">
+<h3><a title="IPython.genutils.LSString" class="reference internal" href="#IPython.genutils.LSString"><tt class="xref docutils literal"><span class="pre">LSString</span></tt></a><a class="headerlink" href="#lsstring" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.genutils.LSString">
+<!--[IPython.genutils.LSString]-->class <tt class="descclassname">IPython.genutils.</tt><tt class="descname">LSString</tt><a class="headerlink" href="#IPython.genutils.LSString" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">str</span></tt></p>
+<p>String derivative with a special access attributes.</p>
+<p>These are normal strings, but with the special attributes:</p>
+<blockquote>
+.l (or .list) : value as list (split on newlines).
+.n (or .nlstr): original value (the string itself).
+.s (or .spstr): value as whitespace-separated string.
+.p (or .paths): list of path objects</blockquote>
+<p>Any values which require transformations are computed only once and
+cached.</p>
+<p>Such strings are very useful to efficiently interact with the shell, which
+typically only understands whitespace-separated options for commands.</p>
+<dl class="method">
+<dt id="IPython.genutils.LSString.__init__">
+<!--[IPython.genutils.LSString.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.genutils.LSString.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+<dl class="method">
+<dt id="IPython.genutils.LSString.get_list">
+<!--[IPython.genutils.LSString.get_list]--><tt class="descname">get_list</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.genutils.LSString.get_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.genutils.LSString.get_nlstr">
+<!--[IPython.genutils.LSString.get_nlstr]--><tt class="descname">get_nlstr</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.genutils.LSString.get_nlstr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.genutils.LSString.get_paths">
+<!--[IPython.genutils.LSString.get_paths]--><tt class="descname">get_paths</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.genutils.LSString.get_paths" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.genutils.LSString.get_spstr">
+<!--[IPython.genutils.LSString.get_spstr]--><tt class="descname">get_spstr</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.genutils.LSString.get_spstr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.genutils.LSString.l">
+<!--[IPython.genutils.LSString.l]--><tt class="descname">l</tt><a class="headerlink" href="#IPython.genutils.LSString.l" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.genutils.LSString.list">
+<!--[IPython.genutils.LSString.list]--><tt class="descname">list</tt><a class="headerlink" href="#IPython.genutils.LSString.list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.genutils.LSString.n">
+<!--[IPython.genutils.LSString.n]--><tt class="descname">n</tt><a class="headerlink" href="#IPython.genutils.LSString.n" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.genutils.LSString.nlstr">
+<!--[IPython.genutils.LSString.nlstr]--><tt class="descname">nlstr</tt><a class="headerlink" href="#IPython.genutils.LSString.nlstr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.genutils.LSString.p">
+<!--[IPython.genutils.LSString.p]--><tt class="descname">p</tt><a class="headerlink" href="#IPython.genutils.LSString.p" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.genutils.LSString.paths">
+<!--[IPython.genutils.LSString.paths]--><tt class="descname">paths</tt><a class="headerlink" href="#IPython.genutils.LSString.paths" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.genutils.LSString.s">
+<!--[IPython.genutils.LSString.s]--><tt class="descname">s</tt><a class="headerlink" href="#IPython.genutils.LSString.s" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.genutils.LSString.spstr">
+<!--[IPython.genutils.LSString.spstr]--><tt class="descname">spstr</tt><a class="headerlink" href="#IPython.genutils.LSString.spstr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="nlprinter">
+<h3><a title="IPython.genutils.NLprinter" class="reference internal" href="#IPython.genutils.NLprinter"><tt class="xref docutils literal"><span class="pre">NLprinter</span></tt></a><a class="headerlink" href="#nlprinter" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.genutils.NLprinter">
+<!--[IPython.genutils.NLprinter]-->class <tt class="descclassname">IPython.genutils.</tt><tt class="descname">NLprinter</tt><a class="headerlink" href="#IPython.genutils.NLprinter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print an arbitrarily nested list, indicating index numbers.</p>
+<p>An instance of this class called nlprint is available and callable as a
+function.</p>
+<p>nlprint(list,indent=&#8217; &#8216;,sep=&#8217;: &#8216;) -&gt; prints indenting each level by &#8216;indent&#8217;
+and using &#8216;sep&#8217; to separate the index from the value.</p>
+<dl class="method">
+<dt id="IPython.genutils.NLprinter.__init__">
+<!--[IPython.genutils.NLprinter.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.genutils.NLprinter.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="notgiven">
+<h3><a title="IPython.genutils.NotGiven" class="reference internal" href="#IPython.genutils.NotGiven"><tt class="xref docutils literal"><span class="pre">NotGiven</span></tt></a><a class="headerlink" href="#notgiven" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.genutils.NotGiven">
+<!--[IPython.genutils.NotGiven]-->class <tt class="descclassname">IPython.genutils.</tt><tt class="descname">NotGiven</tt><a class="headerlink" href="#IPython.genutils.NotGiven" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="slist">
+<h3><a title="IPython.genutils.SList" class="reference internal" href="#IPython.genutils.SList"><tt class="xref docutils literal"><span class="pre">SList</span></tt></a><a class="headerlink" href="#slist" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.genutils.SList">
+<!--[IPython.genutils.SList]-->class <tt class="descclassname">IPython.genutils.</tt><tt class="descname">SList</tt><a class="headerlink" href="#IPython.genutils.SList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.genutils.SList.list" class="reference internal" href="#IPython.genutils.SList.list"><tt class="xref docutils literal"><span class="pre">list</span></tt></a></p>
+<p>List derivative with a special access attributes.</p>
+<p>These are normal lists, but with the special attributes:</p>
+<blockquote>
+.l (or .list) : value as list (the list itself).
+.n (or .nlstr): value as a string, joined on newlines.
+.s (or .spstr): value as a string, joined on spaces.
+.p (or .paths): list of path objects</blockquote>
+<p>Any values which require transformations are computed only once and
+cached.</p>
+<dl class="method">
+<dt id="IPython.genutils.SList.__init__">
+<!--[IPython.genutils.SList.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.genutils.SList.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+<dl class="method">
+<dt id="IPython.genutils.SList.fields">
+<!--[IPython.genutils.SList.fields]--><tt class="descname">fields</tt><big>(</big><em>*fields</em><big>)</big><a class="headerlink" href="#IPython.genutils.SList.fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collect whitespace-separated fields from string list</p>
+<p>Allows quick awk-like usage of string lists.</p>
+<dl class="docutils">
+<dt>Example data (in var a, created by &#8216;a = !ls -l&#8217;)::</dt>
+<dd><table class="first docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-r<var>wxrwxrwx</var></span></kbd></td>
+<td>1 ville None      18 Dec 14  2006 ChangeLog</td></tr>
+</tbody>
+</table>
+<p class="last">drwxrwxrwx+ 6 ville None       0 Oct 24 18:05 IPython</p>
+</dd>
+</dl>
+<p>a.fields(0) is [&#8216;-rwxrwxrwx&#8217;, &#8216;drwxrwxrwx+&#8217;]
+a.fields(1,0) is [&#8216;1 -rwxrwxrwx&#8217;, &#8216;6 drwxrwxrwx+&#8217;]
+(note the joining by space).
+a.fields(-1) is [&#8216;ChangeLog&#8217;, &#8216;IPython&#8217;]</p>
+<p>IndexErrors are ignored.</p>
+<p>Without args, fields() just split()&#8217;s the strings.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.genutils.SList.get_list">
+<!--[IPython.genutils.SList.get_list]--><tt class="descname">get_list</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.genutils.SList.get_list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.genutils.SList.get_nlstr">
+<!--[IPython.genutils.SList.get_nlstr]--><tt class="descname">get_nlstr</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.genutils.SList.get_nlstr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.genutils.SList.get_paths">
+<!--[IPython.genutils.SList.get_paths]--><tt class="descname">get_paths</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.genutils.SList.get_paths" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.genutils.SList.get_spstr">
+<!--[IPython.genutils.SList.get_spstr]--><tt class="descname">get_spstr</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.genutils.SList.get_spstr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.genutils.SList.grep">
+<!--[IPython.genutils.SList.grep]--><tt class="descname">grep</tt><big>(</big><em>pattern</em>, <em>prune=False</em>, <em>field=None</em><big>)</big><a class="headerlink" href="#IPython.genutils.SList.grep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all strings matching &#8216;pattern&#8217; (a regex or callable)</p>
+<p>This is case-insensitive. If prune is true, return all items
+NOT matching the pattern.</p>
+<p>If field is specified, the match must occur in the specified
+whitespace-separated field.</p>
+<p>Examples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">a</span><span class="o">.</span><span class="n">grep</span><span class="p">(</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;C&#39;</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">a</span><span class="o">.</span><span class="n">grep</span><span class="p">(</span><span class="s">&#39;Cha.*log&#39;</span><span class="p">,</span> <span class="n">prune</span><span class="o">=</span><span class="mf">1</span><span class="p">)</span>
+<span class="n">a</span><span class="o">.</span><span class="n">grep</span><span class="p">(</span><span class="s">&#39;chm&#39;</span><span class="p">,</span> <span class="n">field</span><span class="o">=-</span><span class="mf">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.genutils.SList.l">
+<!--[IPython.genutils.SList.l]--><tt class="descname">l</tt><a class="headerlink" href="#IPython.genutils.SList.l" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.genutils.SList.list">
+<!--[IPython.genutils.SList.list]--><tt class="descname">list</tt><a class="headerlink" href="#IPython.genutils.SList.list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.genutils.SList.n">
+<!--[IPython.genutils.SList.n]--><tt class="descname">n</tt><a class="headerlink" href="#IPython.genutils.SList.n" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.genutils.SList.nlstr">
+<!--[IPython.genutils.SList.nlstr]--><tt class="descname">nlstr</tt><a class="headerlink" href="#IPython.genutils.SList.nlstr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.genutils.SList.p">
+<!--[IPython.genutils.SList.p]--><tt class="descname">p</tt><a class="headerlink" href="#IPython.genutils.SList.p" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.genutils.SList.paths">
+<!--[IPython.genutils.SList.paths]--><tt class="descname">paths</tt><a class="headerlink" href="#IPython.genutils.SList.paths" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.genutils.SList.s">
+<!--[IPython.genutils.SList.s]--><tt class="descname">s</tt><a class="headerlink" href="#IPython.genutils.SList.s" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.genutils.SList.sort">
+<!--[IPython.genutils.SList.sort]--><tt class="descname">sort</tt><big>(</big><em>field=None</em>, <em>nums=False</em><big>)</big><a class="headerlink" href="#IPython.genutils.SList.sort" title="Permalink to this definition">¶</a></dt>
+<dd><p>sort by specified fields (see fields())</p>
+<dl class="docutils">
+<dt>Example::</dt>
+<dd>a.sort(1, nums = True)</dd>
+</dl>
+<p>Sorts a by second field, in numerical order (so that 21 &gt; 3)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.genutils.SList.spstr">
+<!--[IPython.genutils.SList.spstr]--><tt class="descname">spstr</tt><a class="headerlink" href="#IPython.genutils.SList.spstr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="systemexec">
+<h3><a title="IPython.genutils.SystemExec" class="reference internal" href="#IPython.genutils.SystemExec"><tt class="xref docutils literal"><span class="pre">SystemExec</span></tt></a><a class="headerlink" href="#systemexec" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.genutils.SystemExec">
+<!--[IPython.genutils.SystemExec]-->class <tt class="descclassname">IPython.genutils.</tt><tt class="descname">SystemExec</tt><big>(</big><em>verbose=0</em>, <em>debug=0</em>, <em>header=''</em>, <em>split=0</em><big>)</big><a class="headerlink" href="#IPython.genutils.SystemExec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Access the system and getoutput functions through a stateful interface.</p>
+<p>Note: here we refer to the system and getoutput functions from this
+library, not the ones from the standard python library.</p>
+<p>This class offers the system and getoutput functions as methods, but the
+verbose, debug and header parameters can be set for the instance (at
+creation time or later) so that they don&#8217;t need to be specified on each
+call.</p>
+<p>For efficiency reasons, there&#8217;s no way to override the parameters on a
+per-call basis other than by setting instance attributes. If you need
+local overrides, it&#8217;s best to directly call system() or getoutput().</p>
+<dl class="docutils">
+<dt>The following names are provided as alternate options:</dt>
+<dd><ul class="first last simple">
+<li>xsys: alias to system</li>
+<li>bq: alias to getoutput</li>
+</ul>
+</dd>
+</dl>
+<p>An instance can then be created as:
+&gt;&gt;&gt; sysexec = SystemExec(verbose=1,debug=0,header=&#8217;Calling: &#8216;)</p>
+<dl class="method">
+<dt id="IPython.genutils.SystemExec.__init__">
+<!--[IPython.genutils.SystemExec.__init__]--><tt class="descname">__init__</tt><big>(</big><em>verbose=0</em>, <em>debug=0</em>, <em>header=''</em>, <em>split=0</em><big>)</big><a class="headerlink" href="#IPython.genutils.SystemExec.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>Specify the instance&#8217;s values for verbose, debug and header.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.genutils.SystemExec.bq">
+<!--[IPython.genutils.SystemExec.bq]--><tt class="descname">bq</tt><big>(</big><em>cmd</em><big>)</big><a class="headerlink" href="#IPython.genutils.SystemExec.bq" title="Permalink to this definition">¶</a></dt>
+<dd>Stateful interface to getoutput().</dd></dl>
+
+<dl class="method">
+<dt id="IPython.genutils.SystemExec.getoutput">
+<!--[IPython.genutils.SystemExec.getoutput]--><tt class="descname">getoutput</tt><big>(</big><em>cmd</em><big>)</big><a class="headerlink" href="#IPython.genutils.SystemExec.getoutput" title="Permalink to this definition">¶</a></dt>
+<dd>Stateful interface to getoutput().</dd></dl>
+
+<dl class="method">
+<dt id="IPython.genutils.SystemExec.getoutputerror">
+<!--[IPython.genutils.SystemExec.getoutputerror]--><tt class="descname">getoutputerror</tt><big>(</big><em>cmd</em><big>)</big><a class="headerlink" href="#IPython.genutils.SystemExec.getoutputerror" title="Permalink to this definition">¶</a></dt>
+<dd>Stateful interface to getoutputerror().</dd></dl>
+
+<dl class="method">
+<dt id="IPython.genutils.SystemExec.shell">
+<!--[IPython.genutils.SystemExec.shell]--><tt class="descname">shell</tt><big>(</big><em>cmd</em><big>)</big><a class="headerlink" href="#IPython.genutils.SystemExec.shell" title="Permalink to this definition">¶</a></dt>
+<dd>Stateful interface to shell(), with the same keyword parameters.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.genutils.SystemExec.system">
+<!--[IPython.genutils.SystemExec.system]--><tt class="descname">system</tt><big>(</big><em>cmd</em><big>)</big><a class="headerlink" href="#IPython.genutils.SystemExec.system" title="Permalink to this definition">¶</a></dt>
+<dd>Stateful interface to system(), with the same keyword parameters.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.genutils.SystemExec.xsys">
+<!--[IPython.genutils.SystemExec.xsys]--><tt class="descname">xsys</tt><big>(</big><em>cmd</em><big>)</big><a class="headerlink" href="#IPython.genutils.SystemExec.xsys" title="Permalink to this definition">¶</a></dt>
+<dd>Stateful interface to system(), with the same keyword parameters.</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.genutils.abbrev_cwd">
+<!--[IPython.genutils.abbrev_cwd]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">abbrev_cwd</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.genutils.abbrev_cwd" title="Permalink to this definition">¶</a></dt>
+<dd>Return abbreviated version of cwd, e.g. d:mydir</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.all_belong">
+<!--[IPython.genutils.all_belong]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">all_belong</tt><big>(</big><em>candidates</em>, <em>checklist</em><big>)</big><a class="headerlink" href="#IPython.genutils.all_belong" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check whether a list of items ALL appear in a given list of options.</p>
+<p>Returns a single 1 or 0 value.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.arg_split">
+<!--[IPython.genutils.arg_split]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">arg_split</tt><big>(</big><em>s</em>, <em>posix=False</em><big>)</big><a class="headerlink" href="#IPython.genutils.arg_split" title="Permalink to this definition">¶</a></dt>
+<dd><p>Split a command line&#8217;s arguments in a shell-like manner.</p>
+<p>This is a modified version of the standard library&#8217;s shlex.split()
+function, but with a default of posix=False for splitting, so that quotes
+in inputs are respected.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.ask_yes_no">
+<!--[IPython.genutils.ask_yes_no]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">ask_yes_no</tt><big>(</big><em>prompt</em>, <em>default=None</em><big>)</big><a class="headerlink" href="#IPython.genutils.ask_yes_no" title="Permalink to this definition">¶</a></dt>
+<dd><p>Asks a question and returns a boolean (y/n) answer.</p>
+<p>If default is given (one of &#8216;y&#8217;,&#8217;n&#8217;), it is used if the user input is
+empty. Otherwise the question is repeated until an answer is given.</p>
+<p>An EOF is treated as the default answer.  If there is no default, an
+exception is raised to prevent infinite loops.</p>
+<p>Valid answers are: y/yes/n/no (match is not case sensitive).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.belong">
+<!--[IPython.genutils.belong]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">belong</tt><big>(</big><em>candidates</em>, <em>checklist</em><big>)</big><a class="headerlink" href="#IPython.genutils.belong" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check whether a list of items appear in a given list of options.</p>
+<p>Returns a list of 1 and 0, one for each candidate given.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.chop">
+<!--[IPython.genutils.chop]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">chop</tt><big>(</big><em>seq</em>, <em>size</em><big>)</big><a class="headerlink" href="#IPython.genutils.chop" title="Permalink to this definition">¶</a></dt>
+<dd>Chop a sequence into chunks of the given size.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.debugx">
+<!--[IPython.genutils.debugx]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">debugx</tt><big>(</big><em>expr</em>, <em>pre_msg=''</em><big>)</big><a class="headerlink" href="#IPython.genutils.debugx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print the value of an expression from the caller&#8217;s frame.</p>
+<p>Takes an expression, evaluates it in the caller&#8217;s frame and prints both
+the given expression and the resulting value (as well as a debug mark
+indicating the name of the calling function.  The input must be of a form
+suitable for eval().</p>
+<p>An optional message can be passed, which will be prepended to the printed
+expr-&gt;value pair.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.dgrep">
+<!--[IPython.genutils.dgrep]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">dgrep</tt><big>(</big><em>pat</em>, <em>*opts</em><big>)</big><a class="headerlink" href="#IPython.genutils.dgrep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return grep() on dir()+dir(__builtins__).</p>
+<p>A very common use of grep() when working interactively.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.dhook_wrap">
+<!--[IPython.genutils.dhook_wrap]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">dhook_wrap</tt><big>(</big><em>func</em>, <em>*a</em>, <em>**k</em><big>)</big><a class="headerlink" href="#IPython.genutils.dhook_wrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrap a function call in a sys.displayhook controller.</p>
+<p>Returns a wrapper around func which calls func, with all its arguments and
+keywords unmodified, using the default sys.displayhook.  Since IPython
+modifies sys.displayhook, it breaks the behavior of certain systems that
+rely on the default behavior, notably doctest.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.dir2">
+<!--[IPython.genutils.dir2]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">dir2</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#IPython.genutils.dir2" title="Permalink to this definition">¶</a></dt>
+<dd><p>dir2(obj) -&gt; list of strings</p>
+<p>Extended version of the Python builtin dir(), which does a few extra
+checks, and supports common objects with unusual internals that confuse
+dir(), such as Traits and PyCrust.</p>
+<p>This version is guaranteed to return only a list of true strings, whereas
+dir() returns anything that objects inject into themselves, even if they
+are later not really valid for attribute access (many extension libraries
+have such bugs).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.doctest_reload">
+<!--[IPython.genutils.doctest_reload]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">doctest_reload</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.genutils.doctest_reload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Properly reload doctest to reuse it interactively.</p>
+<p>This routine:</p>
+<blockquote>
+<ul class="simple">
+<li>imports doctest but does NOT reload it (see below).</li>
+<li>resets its global &#8216;master&#8217; attribute to None, so that multiple uses of</li>
+</ul>
+<p>the module interactively don&#8217;t produce cumulative reports.</p>
+<ul class="simple">
+<li>Monkeypatches its core test runner method to protect it from IPython&#8217;s</li>
+</ul>
+<p>modified displayhook.  Doctest expects the default displayhook behavior
+deep down, so our modification breaks it completely.  For this reason, a
+hard monkeypatch seems like a reasonable solution rather than asking
+users to manually use a different doctest runner when under IPython.</p>
+</blockquote>
+<p class="rubric">Notes</p>
+<p>This function <em>used to</em> reload doctest, but this has been disabled because
+reloading doctest unconditionally can cause massive breakage of other
+doctest-dependent modules already in memory, such as those for IPython&#8217;s
+own testing system.  The name wasn&#8217;t changed to avoid breaking people&#8217;s
+code, but the reload call isn&#8217;t actually made anymore.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.error">
+<!--[IPython.genutils.error]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">error</tt><big>(</big><em>msg</em><big>)</big><a class="headerlink" href="#IPython.genutils.error" title="Permalink to this definition">¶</a></dt>
+<dd>Equivalent to warn(msg,level=3).</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.esc_quotes">
+<!--[IPython.genutils.esc_quotes]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">esc_quotes</tt><big>(</big><em>strng</em><big>)</big><a class="headerlink" href="#IPython.genutils.esc_quotes" title="Permalink to this definition">¶</a></dt>
+<dd>Return the input string with single and double quotes escaped out</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.fatal">
+<!--[IPython.genutils.fatal]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">fatal</tt><big>(</big><em>msg</em>, <em>exit_val=1</em><big>)</big><a class="headerlink" href="#IPython.genutils.fatal" title="Permalink to this definition">¶</a></dt>
+<dd>Equivalent to warn(msg,exit_val=exit_val,level=4).</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.file_read">
+<!--[IPython.genutils.file_read]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">file_read</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#IPython.genutils.file_read" title="Permalink to this definition">¶</a></dt>
+<dd>Read a file and close it.  Returns the file source.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.file_readlines">
+<!--[IPython.genutils.file_readlines]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">file_readlines</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#IPython.genutils.file_readlines" title="Permalink to this definition">¶</a></dt>
+<dd>Read a file and close it.  Returns the file source using readlines().</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.filefind">
+<!--[IPython.genutils.filefind]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">filefind</tt><big>(</big><em>fname</em>, <em>alt_dirs=None</em><big>)</big><a class="headerlink" href="#IPython.genutils.filefind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the given filename either in the current directory, if it
+exists, or in a specified list of directories.</p>
+<p>~ expansion is done on all file and directory names.</p>
+<p>Upon an unsuccessful search, raise an IOError exception.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.flag_calls">
+<!--[IPython.genutils.flag_calls]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">flag_calls</tt><big>(</big><em>func</em><big>)</big><a class="headerlink" href="#IPython.genutils.flag_calls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrap a function to detect and flag when it gets called.</p>
+<p>This is a decorator which takes a function and wraps it in a function with
+a &#8216;called&#8217; attribute. wrapper.called is initialized to False.</p>
+<p>The wrapper.called attribute is set to False right before each call to the
+wrapped function, so if the call fails it remains False.  After the call
+completes, wrapper.called is set to True and the output is returned.</p>
+<p>Testing for truth in wrapper.called allows you to determine if a call to
+func() was attempted and succeeded.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.flatten">
+<!--[IPython.genutils.flatten]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">flatten</tt><big>(</big><em>seq</em><big>)</big><a class="headerlink" href="#IPython.genutils.flatten" title="Permalink to this definition">¶</a></dt>
+<dd>Flatten a list of lists (NOT recursive, only works for 2d lists).</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.get_class_members">
+<!--[IPython.genutils.get_class_members]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">get_class_members</tt><big>(</big><em>cls</em><big>)</big><a class="headerlink" href="#IPython.genutils.get_class_members" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.get_home_dir">
+<!--[IPython.genutils.get_home_dir]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">get_home_dir</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.genutils.get_home_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the closest possible equivalent to a &#8216;home&#8217; directory.</p>
+<p>We first try $HOME.  Absent that, on NT it&#8217;s $HOMEDRIVE$HOMEPATH.</p>
+<p>Currently only Posix and NT are implemented, a HomeDirError exception is
+raised for all other OSes.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.get_ipython_dir">
+<!--[IPython.genutils.get_ipython_dir]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">get_ipython_dir</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.genutils.get_ipython_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the IPython directory for this platform and user.</p>
+<p>This uses the logic in <cite>get_home_dir</cite> to find the home directory
+and the adds either .ipython or _ipython to the end of the path.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.get_log_dir">
+<!--[IPython.genutils.get_log_dir]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">get_log_dir</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.genutils.get_log_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the IPython log directory.</p>
+<p>If the log directory does not exist, it is created.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.get_pager_cmd">
+<!--[IPython.genutils.get_pager_cmd]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">get_pager_cmd</tt><big>(</big><em>pager_cmd=None</em><big>)</big><a class="headerlink" href="#IPython.genutils.get_pager_cmd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a pager command.</p>
+<p>Makes some attempts at finding an OS-correct one.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.get_pager_start">
+<!--[IPython.genutils.get_pager_start]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">get_pager_start</tt><big>(</big><em>pager</em>, <em>start</em><big>)</big><a class="headerlink" href="#IPython.genutils.get_pager_start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the string for paging files with an offset.</p>
+<p>This is the &#8216;+N&#8217; argument which less and more (under Unix) accept.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.get_py_filename">
+<!--[IPython.genutils.get_py_filename]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">get_py_filename</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#IPython.genutils.get_py_filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a valid python filename in the current directory.</p>
+<p>If the given name is not a file, it adds &#8216;.py&#8217; and searches again.
+Raises IOError with an informative message if the file isn&#8217;t found.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.get_security_dir">
+<!--[IPython.genutils.get_security_dir]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">get_security_dir</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.genutils.get_security_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the IPython security directory.</p>
+<p>This directory is the default location for all security related files,
+including SSL/TLS certificates and FURL files.</p>
+<p>If the directory does not exist, it is created with 0700 permissions.
+If it exists, permissions are set to 0700.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.get_slice">
+<!--[IPython.genutils.get_slice]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">get_slice</tt><big>(</big><em>seq</em>, <em>start=0</em>, <em>stop=None</em>, <em>step=1</em><big>)</big><a class="headerlink" href="#IPython.genutils.get_slice" title="Permalink to this definition">¶</a></dt>
+<dd>Get a slice of a sequence with variable step. Specify start,stop,step.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.getattr_list">
+<!--[IPython.genutils.getattr_list]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">getattr_list</tt><big>(</big><em>obj</em>, <em>alist</em>, <em>*args</em><big>)</big><a class="headerlink" href="#IPython.genutils.getattr_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>getattr_list(obj,alist[, default]) -&gt; attribute list.</p>
+<p>Get a list of named attributes for an object. When a default argument is
+given, it is returned when the attribute doesn&#8217;t exist; without it, an
+exception is raised in that case.</p>
+<p>Note that alist can be given as a string, which will be automatically
+split into a list on whitespace. If given as a list, it must be a list of
+<em>strings</em> (the variable names themselves), not of variables.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.getoutput">
+<!--[IPython.genutils.getoutput]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">getoutput</tt><big>(</big><em>cmd</em>, <em>verbose=0</em>, <em>debug=0</em>, <em>header=''</em>, <em>split=0</em><big>)</big><a class="headerlink" href="#IPython.genutils.getoutput" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dummy substitute for perl&#8217;s backquotes.</p>
+<p>Executes a command and returns the output.</p>
+<p>Accepts the same arguments as system(), plus:</p>
+<ul class="simple">
+<li>split(0): if true, the output is returned as a list split on newlines.</li>
+</ul>
+<p>Note: a stateful version of this function is available through the
+SystemExec class.</p>
+<p>This is pretty much deprecated and rarely used,
+genutils.getoutputerror may be what you need.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.getoutputerror">
+<!--[IPython.genutils.getoutputerror]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">getoutputerror</tt><big>(</big><em>cmd</em>, <em>verbose=0</em>, <em>debug=0</em>, <em>header=''</em>, <em>split=0</em><big>)</big><a class="headerlink" href="#IPython.genutils.getoutputerror" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return (standard output,standard error) of executing cmd in a shell.</p>
+<p>Accepts the same arguments as system(), plus:</p>
+<ul class="simple">
+<li>split(0): if true, each of stdout/err is returned as a list split on</li>
+</ul>
+<p>newlines.</p>
+<p>Note: a stateful version of this function is available through the
+SystemExec class.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.grep">
+<!--[IPython.genutils.grep]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">grep</tt><big>(</big><em>pat</em>, <em>list</em>, <em>case=1</em><big>)</big><a class="headerlink" href="#IPython.genutils.grep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simple minded grep-like function.
+grep(pat,list) returns occurrences of pat in list, None on failure.</p>
+<p>It only does simple string matching, with no support for regexps. Use the
+option case=0 for case-insensitive matching.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.idgrep">
+<!--[IPython.genutils.idgrep]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">idgrep</tt><big>(</big><em>pat</em><big>)</big><a class="headerlink" href="#IPython.genutils.idgrep" title="Permalink to this definition">¶</a></dt>
+<dd>Case-insensitive dgrep()</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.igrep">
+<!--[IPython.genutils.igrep]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">igrep</tt><big>(</big><em>pat</em>, <em>list</em><big>)</big><a class="headerlink" href="#IPython.genutils.igrep" title="Permalink to this definition">¶</a></dt>
+<dd>Synonym for case-insensitive grep.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.import_fail_info">
+<!--[IPython.genutils.import_fail_info]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">import_fail_info</tt><big>(</big><em>mod_name</em>, <em>fns=None</em><big>)</big><a class="headerlink" href="#IPython.genutils.import_fail_info" title="Permalink to this definition">¶</a></dt>
+<dd>Inform load failure for a module.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.indent">
+<!--[IPython.genutils.indent]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">indent</tt><big>(</big><em>str</em>, <em>nspaces=4</em>, <em>ntabs=0</em><big>)</big><a class="headerlink" href="#IPython.genutils.indent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indent a string a given number of spaces or tabstops.</p>
+<p>indent(str,nspaces=4,ntabs=0) -&gt; indent str by ntabs+nspaces.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.info">
+<!--[IPython.genutils.info]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">info</tt><big>(</big><em>msg</em><big>)</big><a class="headerlink" href="#IPython.genutils.info" title="Permalink to this definition">¶</a></dt>
+<dd>Equivalent to warn(msg,level=1).</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.list2dict">
+<!--[IPython.genutils.list2dict]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">list2dict</tt><big>(</big><em>lst</em><big>)</big><a class="headerlink" href="#IPython.genutils.list2dict" title="Permalink to this definition">¶</a></dt>
+<dd>Takes a list of (key,value) pairs and turns it into a dict.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.list2dict2">
+<!--[IPython.genutils.list2dict2]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">list2dict2</tt><big>(</big><em>lst</em>, <em>default=''</em><big>)</big><a class="headerlink" href="#IPython.genutils.list2dict2" title="Permalink to this definition">¶</a></dt>
+<dd>Takes a list and turns it into a dict.
+Much slower than list2dict, but more versatile. This version can take
+lists with sublists of arbitrary length (including sclars).</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.list_strings">
+<!--[IPython.genutils.list_strings]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">list_strings</tt><big>(</big><em>arg</em><big>)</big><a class="headerlink" href="#IPython.genutils.list_strings" title="Permalink to this definition">¶</a></dt>
+<dd>Always return a list of strings, given a string or list of strings
+as input.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.make_quoted_expr">
+<!--[IPython.genutils.make_quoted_expr]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">make_quoted_expr</tt><big>(</big><em>s</em><big>)</big><a class="headerlink" href="#IPython.genutils.make_quoted_expr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return string s in appropriate quotes, using raw string if possible.</p>
+<p>XXX - example removed because it caused encoding errors in documentation
+generation.  We need a new example that doesn&#8217;t contain invalid chars.</p>
+<p>Note the use of raw string and padding at the end to allow trailing
+backslash.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.map_method">
+<!--[IPython.genutils.map_method]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">map_method</tt><big>(</big><em>method</em>, <em>object_list</em>, <em>*argseq</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#IPython.genutils.map_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>map_method(method,object_list,*args,**kw) -&gt; list</p>
+<p>Return a list of the results of applying the methods to the items of the
+argument sequence(s).  If more than one sequence is given, the method is
+called with an argument list consisting of the corresponding item of each
+sequence. All sequences must be of the same length.</p>
+<p>Keyword arguments are passed verbatim to all objects called.</p>
+<p>This is Python code, so it&#8217;s not nearly as fast as the builtin map().</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.marquee">
+<!--[IPython.genutils.marquee]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">marquee</tt><big>(</big><em>txt=''</em>, <em>width=78</em>, <em>mark='*'</em><big>)</big><a class="headerlink" href="#IPython.genutils.marquee" title="Permalink to this definition">¶</a></dt>
+<dd>Return the input string centered in a &#8216;marquee&#8217;.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.mutex_opts">
+<!--[IPython.genutils.mutex_opts]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">mutex_opts</tt><big>(</big><em>dict</em>, <em>ex_op</em><big>)</big><a class="headerlink" href="#IPython.genutils.mutex_opts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check for presence of mutually exclusive keys in a dict.</p>
+<p>Call: mutex_opts(dict,[[op1a,op1b],[op2a,op2b]...]</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.native_line_ends">
+<!--[IPython.genutils.native_line_ends]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">native_line_ends</tt><big>(</big><em>filename</em>, <em>backup=1</em><big>)</big><a class="headerlink" href="#IPython.genutils.native_line_ends" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert (in-place) a file to line-ends native to the current OS.</p>
+<p>If the optional backup argument is given as false, no backup of the
+original file is left.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.num_cpus">
+<!--[IPython.genutils.num_cpus]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">num_cpus</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.genutils.num_cpus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the effective number of CPUs in the system as an integer.</p>
+<p>This cross-platform function makes an attempt at finding the total number of
+available CPUs in the system, as returned by various underlying system and
+python calls.</p>
+<p>If it can&#8217;t find a sensible answer, it returns 1 (though an error <em>may</em> make
+it return a large positive number that&#8217;s actually incorrect).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.optstr2types">
+<!--[IPython.genutils.optstr2types]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">optstr2types</tt><big>(</big><em>ostr</em><big>)</big><a class="headerlink" href="#IPython.genutils.optstr2types" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a string of option names to a dict of type mappings.</p>
+<p>optstr2types(str) -&gt; {None:&#8217;string_opts&#8217;,int:&#8217;int_opts&#8217;,float:&#8217;float_opts&#8217;}</p>
+<p>This is used to get the types of all the options in a string formatted
+with the conventions of DPyGetOpt. The &#8216;type&#8217; None is used for options
+which are strings (they need no further conversion). This function&#8217;s main
+use is to get a typemap for use with read_dict().</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.page">
+<!--[IPython.genutils.page]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">page</tt><big>(</big><em>strng</em>, <em>start=0</em>, <em>screen_lines=0</em>, <em>pager_cmd=None</em><big>)</big><a class="headerlink" href="#IPython.genutils.page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print a string, piping through a pager after a certain length.</p>
+<p>The screen_lines parameter specifies the number of <em>usable</em> lines of your
+terminal screen (total lines minus lines you need to reserve to show other
+information).</p>
+<p>If you set screen_lines to a number &lt;=0, page() will try to auto-determine
+your screen size and will only use up to (screen_size+screen_lines) for
+printing, paging after that. That is, if you want auto-detection but need
+to reserve the bottom 3 lines of the screen, use screen_lines = -3, and for
+auto-detection without any lines reserved simply use screen_lines = 0.</p>
+<p>If a string won&#8217;t fit in the allowed lines, it is sent through the
+specified pager command. If none given, look for PAGER in the environment,
+and ultimately default to less.</p>
+<p>If no system pager works, the string is sent through a &#8216;dumb pager&#8217;
+written in python, very simplistic.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.page_dumb">
+<!--[IPython.genutils.page_dumb]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">page_dumb</tt><big>(</big><em>strng</em>, <em>start=0</em>, <em>screen_lines=25</em><big>)</big><a class="headerlink" href="#IPython.genutils.page_dumb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Very dumb &#8216;pager&#8217; in Python, for when nothing else works.</p>
+<p>Only moves forward, same interface as page(), except for pager_cmd and
+mode.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.page_file">
+<!--[IPython.genutils.page_file]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">page_file</tt><big>(</big><em>fname</em>, <em>start=0</em>, <em>pager_cmd=None</em><big>)</big><a class="headerlink" href="#IPython.genutils.page_file" title="Permalink to this definition">¶</a></dt>
+<dd>Page a file, using an optional pager command and starting line.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.popkey">
+<!--[IPython.genutils.popkey]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">popkey</tt><big>(</big><em>dct</em>, <em>key</em>, <em>default=&lt;class IPython.genutils.NotGiven at 0x97b02cc&gt;</em><big>)</big><a class="headerlink" href="#IPython.genutils.popkey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dct[key] and delete dct[key].</p>
+<p>If default is given, return it if dct[key] doesn&#8217;t exist, otherwise raise
+KeyError.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.print_lsstring">
+<!--[IPython.genutils.print_lsstring]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">print_lsstring</tt><big>(</big><em>arg</em><big>)</big><a class="headerlink" href="#IPython.genutils.print_lsstring" title="Permalink to this definition">¶</a></dt>
+<dd>Prettier (non-repr-like) and more informative printer for LSString</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.print_slist">
+<!--[IPython.genutils.print_slist]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">print_slist</tt><big>(</big><em>arg</em><big>)</big><a class="headerlink" href="#IPython.genutils.print_slist" title="Permalink to this definition">¶</a></dt>
+<dd>Prettier (non-repr-like) and more informative printer for SList</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.process_cmdline">
+<!--[IPython.genutils.process_cmdline]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">process_cmdline</tt><big>(</big><em>argv</em>, <em>names=</em><span class="optional">[</span><span class="optional">]</span>, <em>defaults={}</em>, <em>usage=''</em><big>)</big><a class="headerlink" href="#IPython.genutils.process_cmdline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Process command-line options and arguments.</p>
+<p>Arguments:</p>
+<ul class="simple">
+<li>argv: list of arguments, typically sys.argv.</li>
+<li>names: list of option names. See DPyGetOpt docs for details on options</li>
+</ul>
+<p>syntax.</p>
+<ul class="simple">
+<li>defaults: dict of default values.</li>
+<li>usage: optional usage notice to print if a wrong argument is passed.</li>
+</ul>
+<p>Return a dict of options and a list of free arguments.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.qw">
+<!--[IPython.genutils.qw]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">qw</tt><big>(</big><em>words</em>, <em>flat=0</em>, <em>sep=None</em>, <em>maxsplit=-1</em><big>)</big><a class="headerlink" href="#IPython.genutils.qw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Similar to Perl&#8217;s qw() operator, but with some more options.</p>
+<p>qw(words,flat=0,sep=&#8217; &#8216;,maxsplit=-1) -&gt; words.split(sep,maxsplit)</p>
+<p>words can also be a list itself, and with flat=1, the output will be
+recursively flattened.</p>
+<p>Examples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">qw</span><span class="p">(</span><span class="s">&#39;1 2&#39;</span><span class="p">)</span>
+<span class="go">[&#39;1&#39;, &#39;2&#39;]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">qw</span><span class="p">([</span><span class="s">&#39;a b&#39;</span><span class="p">,</span><span class="s">&#39;1 2&#39;</span><span class="p">,[</span><span class="s">&#39;m n&#39;</span><span class="p">,</span><span class="s">&#39;p q&#39;</span><span class="p">]])</span>
+<span class="go">[[&#39;a&#39;, &#39;b&#39;], [&#39;1&#39;, &#39;2&#39;], [[&#39;m&#39;, &#39;n&#39;], [&#39;p&#39;, &#39;q&#39;]]]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">qw</span><span class="p">([</span><span class="s">&#39;a b&#39;</span><span class="p">,</span><span class="s">&#39;1 2&#39;</span><span class="p">,[</span><span class="s">&#39;m n&#39;</span><span class="p">,</span><span class="s">&#39;p q&#39;</span><span class="p">]],</span><span class="n">flat</span><span class="o">=</span><span class="mf">1</span><span class="p">)</span>
+<span class="go">[&#39;a&#39;, &#39;b&#39;, &#39;1&#39;, &#39;2&#39;, &#39;m&#39;, &#39;n&#39;, &#39;p&#39;, &#39;q&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.qw_lol">
+<!--[IPython.genutils.qw_lol]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">qw_lol</tt><big>(</big><em>indata</em><big>)</big><a class="headerlink" href="#IPython.genutils.qw_lol" title="Permalink to this definition">¶</a></dt>
+<dd><p>qw_lol(&#8216;a b&#8217;) -&gt; [[&#8216;a&#8217;,&#8217;b&#8217;]],
+otherwise it&#8217;s just a call to qw().</p>
+<p>We need this to make sure the modules_some keys <em>always</em> end up as a
+list of lists.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.qwflat">
+<!--[IPython.genutils.qwflat]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">qwflat</tt><big>(</big><em>words</em>, <em>sep=None</em>, <em>maxsplit=-1</em><big>)</big><a class="headerlink" href="#IPython.genutils.qwflat" title="Permalink to this definition">¶</a></dt>
+<dd>Calls qw(words) in flat mode. It&#8217;s just a convenient shorthand.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.raw_input_ext">
+<!--[IPython.genutils.raw_input_ext]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">raw_input_ext</tt><big>(</big><em>prompt=''</em>, <em>ps2='... '</em><big>)</big><a class="headerlink" href="#IPython.genutils.raw_input_ext" title="Permalink to this definition">¶</a></dt>
+<dd>Similar to raw_input(), but accepts extended lines if input ends with .</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.raw_input_multi">
+<!--[IPython.genutils.raw_input_multi]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">raw_input_multi</tt><big>(</big><em>header=''</em>, <em>ps1='==&gt; '</em>, <em>ps2='..&gt; '</em>, <em>terminate_str='.'</em><big>)</big><a class="headerlink" href="#IPython.genutils.raw_input_multi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Take multiple lines of input.</p>
+<p>A list with each line of input as a separate element is returned when a
+termination string is entered (defaults to a single &#8216;.&#8217;). Input can also
+terminate via EOF (^D in Unix, ^Z-RET in Windows).</p>
+<p>Lines of input which end in are joined into single entries (and a
+secondary continuation prompt is issued as long as the user terminates
+lines with ). This allows entering very long strings which are still
+meant to be treated as single entities.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.read_dict">
+<!--[IPython.genutils.read_dict]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">read_dict</tt><big>(</big><em>filename</em>, <em>type_conv=None</em>, <em>**opt</em><big>)</big><a class="headerlink" href="#IPython.genutils.read_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read a dictionary of key=value pairs from an input file, optionally
+performing conversions on the resulting values.</p>
+<p>read_dict(filename,type_conv,**opt) -&gt; dict</p>
+<dl class="docutils">
+<dt>Only one value per line is accepted, the format should be</dt>
+<dd># optional comments are ignored
+key valuen</dd>
+</dl>
+<p>Args:</p>
+<blockquote>
+<ul class="simple">
+<li>type_conv: A dictionary specifying which keys need to be converted to</li>
+</ul>
+<p>which types. By default all keys are read as strings. This dictionary
+should have as its keys valid conversion functions for strings
+(int,long,float,complex, or your own).  The value for each key
+(converter) should be a whitespace separated string containing the names
+of all the entries in the file to be converted using that function. For
+keys to be left alone, use None as the conversion function (only needed
+with purge=1, see below).</p>
+<ul>
+<li><p class="first">opt: dictionary with extra options as below (default in parens)</p>
+<p>purge(0): if set to 1, all keys <em>not</em> listed in type_conv are purged out
+of the dictionary to be returned. If purge is going to be used, the
+set of keys to be left as strings also has to be explicitly specified
+using the (non-existent) conversion function None.</p>
+<p>fs(None): field separator. This is the key/value separator to be used
+when parsing the file. The None default means any whitespace [behavior
+of string.split()].</p>
+<p>strip(0): if 1, strip string values of leading/trailinig whitespace.</p>
+<dl class="docutils">
+<dt>warn(1): warning level if requested keys are not found in file.</dt>
+<dd><ul class="first last simple">
+<li>0: silently ignore.</li>
+<li>1: inform but proceed.</li>
+<li>2: raise KeyError exception.</li>
+</ul>
+</dd>
+</dl>
+<p>no_empty(0): if 1, remove keys with whitespace strings as a value.</p>
+<p>unique([]): list of keys (or space separated string) which can&#8217;t be
+repeated. If one such key is found in the file, each new instance
+overwrites the previous one. For keys not listed here, the behavior is
+to make a list of all appearances.</p>
+</li>
+</ul>
+</blockquote>
+<p>Example:</p>
+<p>If the input file test.ini contains (we put it in a string to keep the test
+self-contained):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">test_ini</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;</span><span class="se">\</span>
+<span class="gp">... </span><span class="s">i 3</span>
+<span class="gp">... </span><span class="s">x 4.5</span>
+<span class="gp">... </span><span class="s">y 5.5</span>
+<span class="gp">... </span><span class="s">s hi ho&#39;&#39;&#39;</span>
+</pre></div>
+</div>
+<p>Then we can use it as follows:
+&gt;&gt;&gt; type_conv={int:&#8217;i&#8217;,float:&#8217;x&#8217;,None:&#8217;s&#8217;}</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">read_dict</span><span class="p">(</span><span class="n">test_ini</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sorted</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+<span class="go">[(&#39;i&#39;, &#39;3&#39;), (&#39;s&#39;, &#39;hi ho&#39;), (&#39;x&#39;, &#39;4.5&#39;), (&#39;y&#39;, &#39;5.5&#39;)]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">read_dict</span><span class="p">(</span><span class="n">test_ini</span><span class="p">,</span><span class="n">type_conv</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sorted</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+<span class="go">[(&#39;i&#39;, 3), (&#39;s&#39;, &#39;hi ho&#39;), (&#39;x&#39;, 4.5), (&#39;y&#39;, &#39;5.5&#39;)]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">read_dict</span><span class="p">(</span><span class="n">test_ini</span><span class="p">,</span><span class="n">type_conv</span><span class="p">,</span><span class="n">purge</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">sorted</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+<span class="go">[(&#39;i&#39;, 3), (&#39;s&#39;, &#39;hi ho&#39;), (&#39;x&#39;, 4.5)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.setattr_list">
+<!--[IPython.genutils.setattr_list]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">setattr_list</tt><big>(</big><em>obj</em>, <em>alist</em>, <em>nspace=None</em><big>)</big><a class="headerlink" href="#IPython.genutils.setattr_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a list of attributes for an object taken from a namespace.</p>
+<p>setattr_list(obj,alist,nspace) -&gt; sets in obj all the attributes listed in
+alist with their values taken from nspace, which must be a dict (something
+like locals() will often do) If nspace isn&#8217;t given, locals() of the
+<em>caller</em> is used, so in most cases you can omit it.</p>
+<p>Note that alist can be given as a string, which will be automatically
+split into a list on whitespace. If given as a list, it must be a list of
+<em>strings</em> (the variable names themselves), not of variables.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.shell">
+<!--[IPython.genutils.shell]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">shell</tt><big>(</big><em>cmd</em>, <em>verbose=0</em>, <em>debug=0</em>, <em>header=''</em><big>)</big><a class="headerlink" href="#IPython.genutils.shell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute a command in the system shell, always return None.</p>
+<p>Options:</p>
+<ul class="simple">
+<li>verbose (0): print the command to be executed.</li>
+<li>debug (0): only print, do not actually execute.</li>
+<li>header (&#8216;&#8217;): Header to print on screen prior to the executed command (it</li>
+</ul>
+<p>is only prepended to the command, no newlines are added).</p>
+<p>Note: this is similar to genutils.system(), but it returns None so it can
+be conveniently used in interactive loops without getting the return value
+(typically 0) printed many times.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.snip_print">
+<!--[IPython.genutils.snip_print]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">snip_print</tt><big>(</big><em>str</em>, <em>width=75</em>, <em>print_full=0</em>, <em>header=''</em><big>)</big><a class="headerlink" href="#IPython.genutils.snip_print" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print a string snipping the midsection to fit in width.</p>
+<dl class="docutils">
+<dt>print_full: mode control:</dt>
+<dd><ul class="first last simple">
+<li>0: only snip long strings</li>
+<li>1: send to page() directly.</li>
+<li>2: snip long strings and ask for full length viewing with page()</li>
+</ul>
+</dd>
+</dl>
+<p>Return 1 if snipping was necessary, 0 otherwise.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.sort_compare">
+<!--[IPython.genutils.sort_compare]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">sort_compare</tt><big>(</big><em>lst1</em>, <em>lst2</em>, <em>inplace=1</em><big>)</big><a class="headerlink" href="#IPython.genutils.sort_compare" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sort and compare two lists.</p>
+<p>By default it does it in place, thus modifying the lists. Use inplace = 0
+to avoid that (at the cost of temporary copy creation).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.system">
+<!--[IPython.genutils.system]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">system</tt><big>(</big><em>cmd</em>, <em>verbose=0</em>, <em>debug=0</em>, <em>header=''</em><big>)</big><a class="headerlink" href="#IPython.genutils.system" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute a system command, return its exit status.</p>
+<p>Options:</p>
+<ul class="simple">
+<li>verbose (0): print the command to be executed.</li>
+<li>debug (0): only print, do not actually execute.</li>
+<li>header (&#8216;&#8217;): Header to print on screen prior to the executed command (it</li>
+</ul>
+<p>is only prepended to the command, no newlines are added).</p>
+<p>Note: a stateful version of this function is available through the
+SystemExec class.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.target_outdated">
+<!--[IPython.genutils.target_outdated]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">target_outdated</tt><big>(</big><em>target</em>, <em>deps</em><big>)</big><a class="headerlink" href="#IPython.genutils.target_outdated" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine whether a target is out of date.</p>
+<p>target_outdated(target,deps) -&gt; 1/0</p>
+<p>deps: list of filenames which MUST exist.
+target: single filename which may or may not exist.</p>
+<p>If target doesn&#8217;t exist or is older than any file listed in deps, return
+true, otherwise return false.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.target_update">
+<!--[IPython.genutils.target_update]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">target_update</tt><big>(</big><em>target</em>, <em>deps</em>, <em>cmd</em><big>)</big><a class="headerlink" href="#IPython.genutils.target_update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update a target with a given command given a list of dependencies.</p>
+<p>target_update(target,deps,cmd) -&gt; runs cmd if target is outdated.</p>
+<p>This is just a wrapper around target_outdated() which calls the given
+command if target is outdated.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.timing">
+<!--[IPython.genutils.timing]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">timing</tt><big>(</big><em>func</em>, <em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#IPython.genutils.timing" title="Permalink to this definition">¶</a></dt>
+<dd><p>timing(func,*args,**kw) -&gt; t_total</p>
+<p>Execute a function once, return the elapsed total CPU time in
+seconds. This is just the first value in timings_out().</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.timings">
+<!--[IPython.genutils.timings]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">timings</tt><big>(</big><em>reps</em>, <em>func</em>, <em>*args</em>, <em>**kw) -&gt; (t_total</em>, <em>t_per_call</em><big>)</big><a class="headerlink" href="#IPython.genutils.timings" title="Permalink to this definition">¶</a></dt>
+<dd>Execute a function reps times, return a tuple with the elapsed total CPU
+time in seconds and the time per call. These are just the first two values
+in timings_out().</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.timings_out">
+<!--[IPython.genutils.timings_out]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">timings_out</tt><big>(</big><em>reps</em>, <em>func</em>, <em>*args</em>, <em>**kw) -&gt; (t_total</em>, <em>t_per_call</em>, <em>output</em><big>)</big><a class="headerlink" href="#IPython.genutils.timings_out" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute a function reps times, return a tuple with the elapsed total
+CPU time in seconds, the time per call and the function&#8217;s output.</p>
+<p>Under Unix, the return value is the sum of user+system time consumed by
+the process, computed via the resource module.  This prevents problems
+related to the wraparound effect which the time.clock() function has.</p>
+<p>Under Windows the return value is in wall clock seconds. See the
+documentation for the time module for more details.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.uniq_stable">
+<!--[IPython.genutils.uniq_stable]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">uniq_stable</tt><big>(</big><em>elems</em><big>)</big><a class="headerlink" href="#IPython.genutils.uniq_stable" title="Permalink to this definition">¶</a></dt>
+<dd><p>uniq_stable(elems) -&gt; list</p>
+<p>Return from an iterable, a list of all the unique elements in the input,
+but maintaining the order in which they first appear.</p>
+<p>A naive solution to this problem which just makes a dictionary with the
+elements as keys fails to respect the stability condition, since
+dictionaries are unsorted by nature.</p>
+<p>Note: All elements in the input must be valid dictionary keys for this
+routine to work, as it internally uses a dictionary for efficiency
+reasons.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.unquote_ends">
+<!--[IPython.genutils.unquote_ends]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">unquote_ends</tt><big>(</big><em>istr</em><big>)</big><a class="headerlink" href="#IPython.genutils.unquote_ends" title="Permalink to this definition">¶</a></dt>
+<dd>Remove a single pair of quotes from the endpoints of a string.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.warn">
+<!--[IPython.genutils.warn]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">warn</tt><big>(</big><em>msg</em>, <em>level=2</em>, <em>exit_val=1</em><big>)</big><a class="headerlink" href="#IPython.genutils.warn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Standard warning printer. Gives formatting consistency.</p>
+<p>Output is sent to Term.cerr (sys.stderr by default).</p>
+<p>Options:</p>
+<dl class="docutils">
+<dt>-level(2): allows finer control:</dt>
+<dd>0 -&gt; Do nothing, dummy function.
+1 -&gt; Print message.
+2 -&gt; Print &#8216;WARNING:&#8217; + message. (Default level).
+3 -&gt; Print &#8216;ERROR:&#8217; + message.
+4 -&gt; Print &#8216;FATAL ERROR:&#8217; + message and trigger a sys.exit(exit_val).</dd>
+</dl>
+<p>-exit_val (1): exit value returned by sys.exit() for a level 4
+warning. Ignored for all other levels.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.with_obj">
+<!--[IPython.genutils.with_obj]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">with_obj</tt><big>(</big><em>object</em>, <em>**args</em><big>)</big><a class="headerlink" href="#IPython.genutils.with_obj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set multiple attributes for an object, similar to Pascal&#8217;s with.</p>
+<p>Example:
+with_obj(jim,</p>
+<blockquote>
+born = 1960,
+haircolour = &#8216;Brown&#8217;,
+eyecolour = &#8216;Green&#8217;)</blockquote>
+<p>Credit: Greg Ewing, in
+<a class="reference external" href="http://mail.python.org/pipermail/python-list/2001-May/040703.html">http://mail.python.org/pipermail/python-list/2001-May/040703.html</a>.</p>
+<p>NOTE: up until IPython 0.7.2, this was called simply &#8216;with&#8217;, but &#8216;with&#8217;
+has become a keyword for Python 2.5, so we had to rename it.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.genutils.wrap_deprecated">
+<!--[IPython.genutils.wrap_deprecated]--><tt class="descclassname">IPython.genutils.</tt><tt class="descname">wrap_deprecated</tt><big>(</big><em>func</em>, <em>suggest='&lt;nothing&gt;'</em><big>)</big><a class="headerlink" href="#IPython.genutils.wrap_deprecated" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">genutils</a><ul>
+<li><a class="reference external" href="#module-IPython.genutils">Module: <tt class="docutils literal"><span class="pre">genutils</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#error"><tt class="docutils literal"><span class="pre">Error</span></tt></a></li>
+<li><a class="reference external" href="#evaldict"><tt class="docutils literal"><span class="pre">EvalDict</span></tt></a></li>
+<li><a class="reference external" href="#homedirerror"><tt class="docutils literal"><span class="pre">HomeDirError</span></tt></a></li>
+<li><a class="reference external" href="#iostream"><tt class="docutils literal"><span class="pre">IOStream</span></tt></a></li>
+<li><a class="reference external" href="#ioterm"><tt class="docutils literal"><span class="pre">IOTerm</span></tt></a></li>
+<li><a class="reference external" href="#lsstring"><tt class="docutils literal"><span class="pre">LSString</span></tt></a></li>
+<li><a class="reference external" href="#nlprinter"><tt class="docutils literal"><span class="pre">NLprinter</span></tt></a></li>
+<li><a class="reference external" href="#notgiven"><tt class="docutils literal"><span class="pre">NotGiven</span></tt></a></li>
+<li><a class="reference external" href="#slist"><tt class="docutils literal"><span class="pre">SList</span></tt></a></li>
+<li><a class="reference external" href="#systemexec"><tt class="docutils literal"><span class="pre">SystemExec</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.generics.html" title="previous chapter">generics</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.gui.wx.ipshell_nonblocking.html" title="next chapter">gui.wx.ipshell_nonblocking</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.genutils.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.gui.wx.ipshell_nonblocking.html" title="gui.wx.ipshell_nonblocking"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.generics.html" title="generics"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

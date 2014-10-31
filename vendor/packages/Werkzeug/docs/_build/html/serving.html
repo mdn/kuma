@@ -1,0 +1,190 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Werkzeug Documentation</title>
+    <link rel="stylesheet" href="_static/style.css" type="text/css">
+    <link rel="stylesheet" href="_static/print.css" type="text/css" media="print">
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css">
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:   '',
+        VERSION:    '0.5.1dev'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/interface.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/werkzeug.js"></script>
+    <link rel="contents" title="Global table of contents" href="contents.html">
+    <link rel="index" title="Global index" href="genindex.html">
+    <link rel="search" title="Search" href="search.html">
+    <link rel="top" title="Werkzeug v0.5.1dev documentation" href="index.html">
+    <link rel="next" title="Test Utilities" href="test.html">
+    <link rel="prev" title="Quickstart" href="quickstart.html">
+    
+  </head>
+  <body>
+    <div class="page">
+      <div class="header">
+        <h1 class="heading"><a href="index.html"
+          title="back to the documentation overview"><span>Werkzeug</span></a></h1>
+      </div>
+      <ul class="navigation">
+        <li class="indexlink"><a href="index.html">Overview</a></li>
+        <li><a href="quickstart.html">&laquo; Quickstart</a></li>
+        <li class="active"><a href="">Serving WSGI Applications</a></li>
+        <li><a href="test.html">Test Utilities &raquo;</a></li>
+      </ul>
+      <div class="body">
+        <div id="toc">
+          <h3>Table Of Contents</h3>
+          <div class="inner"><ul>
+<li><a class="reference external" href="">Serving WSGI Applications</a><ul>
+<li><a class="reference external" href="#virtual-hosts">Virtual Hosts</a></li>
+<li><a class="reference external" href="#troubleshooting">Troubleshooting</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+        
+  <div class="section" id="module-werkzeug">
+<h1>Serving WSGI Applications<a class="headerlink" href="#module-werkzeug" title="Permalink to this headline">¶</a></h1>
+<p>There are many ways to serve a WSGI application.  While you&#8217;re developing it,
+you usually don&#8217;t want to have a full-blown webserver like Apache up and
+running, but instead a simple standalone one.  Because of that Werkzeug comes
+with a builtin development server.</p>
+<p>The easiest way is creating a small <tt class="docutils literal"><span class="pre">start-myproject.py</span></tt> file that runs the
+application using the builtin server:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">from</span> <span class="nn">werkzeug</span> <span class="kn">import</span> <span class="n">run_simple</span>
+<span class="kn">from</span> <span class="nn">myproject</span> <span class="kn">import</span> <span class="n">make_app</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">make_app</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">run_simple</span><span class="p">(</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mf">8080</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="n">use_reloader</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can also pass it the <cite>extra_files</cite> keyword argument with a list of
+additional files (like configuration files) you want to observe.</p>
+<dl class="function">
+<dt id="werkzeug.run_simple">
+<tt class="descclassname">werkzeug.</tt><tt class="descname">run_simple</tt><big>(</big><em>hostname</em>, <em>port</em>, <em>application</em>, <em>use_reloader=False</em>, <em>use_debugger=False</em>, <em>use_evalex=True</em>, <em>extra_files=None</em>, <em>reloader_interval=1</em>, <em>threaded=False</em>, <em>processes=1</em>, <em>request_handler=None</em>, <em>static_files=None</em>, <em>passthrough_errors=False</em><big>)</big><a class="headerlink" href="#werkzeug.run_simple" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start an application using wsgiref and with an optional reloader.  This
+wraps <cite>wsgiref</cite> to fix the wrong default reporting of the multithreaded
+WSGI variable and adds optional multithreading and fork support.</p>
+<p>
+<span class="versionmodified">New in version 0.5: </span><cite>static_files</cite> was added to simplify serving of static files as well
+as <cite>passthrough_errors</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>hostname</em> &#8211; The host for the application.  eg: <tt class="docutils literal"><span class="pre">'localhost'</span></tt></li>
+<li><em>port</em> &#8211; The port for the server.  eg: <tt class="docutils literal"><span class="pre">8080</span></tt></li>
+<li><em>application</em> &#8211; the WSGI application to execute</li>
+<li><em>use_reloader</em> &#8211; should the server automatically restart the python
+process if modules were changed?</li>
+<li><em>use_debugger</em> &#8211; should the werkzeug debugging system be used?</li>
+<li><em>use_evalex</em> &#8211; should the exception evaluation feature be enabled?</li>
+<li><em>extra_files</em> &#8211; a list of files the reloader should watch
+additionally to the modules.  For example configuration
+files.</li>
+<li><em>reloader_interval</em> &#8211; the interval for the reloader in seconds.</li>
+<li><em>threaded</em> &#8211; should the process handle each request in a separate
+thread?</li>
+<li><em>processes</em> &#8211; number of processes to spawn.</li>
+<li><em>request_handler</em> &#8211; optional parameter that can be used to replace
+the default one.  You can use this to replace it
+with a different
+<a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/basehttpserver.html#BaseHTTPServer.BaseHTTPRequestHandler"><tt class="xref docutils literal"><span class="pre">BaseHTTPRequestHandler</span></tt></a>
+subclass.</li>
+<li><em>static_files</em> &#8211; a dict of paths for static files.  This works exactly
+like <a title="werkzeug.SharedDataMiddleware" class="reference external" href="utils.html#werkzeug.SharedDataMiddleware"><tt class="xref docutils literal"><span class="pre">SharedDataMiddleware</span></tt></a>, it&#8217;s actually
+just wrapping the application in that middleware before
+serving.</li>
+<li><em>passthrough_errors</em> &#8211; set this to <cite>True</cite> to disable the error catching.
+This means that the server will die on errors but
+it can be useful to hook debuggers in (pdb etc.)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="admonition-information admonition ">
+<p class="first admonition-title">Information</p>
+<p class="last">The development server is not intended to be used on production systems.
+It was designed especially for development purposes and performs poorly
+under high load.  For deployment setups have a look at the
+<a class="reference external" href="deployment/index.html#deployment"><em>Application Deployment</em></a> pages.</p>
+</div>
+<div class="section" id="virtual-hosts">
+<h2>Virtual Hosts<a class="headerlink" href="#virtual-hosts" title="Permalink to this headline">¶</a></h2>
+<p>Many web applications utilize multiple subdomains.  This can be a bit tricky
+to simulate locally.  Fortunately there is the <a class="reference external" href="http://en.wikipedia.org/wiki/Hosts_file">hosts file</a> that can be used
+to assign the local computer multiple names.</p>
+<p>This allows you to call your local computer <cite>yourapplication.local</cite> and
+<cite>api.yourapplication.local</cite> (or anything else) in addition to <cite>localhost</cite>.</p>
+<p>You can find the hosts file on the following location:</p>
+<blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="75%" />
+</colgroup>
+<tbody valign="top">
+<tr><td>Windows</td>
+<td><tt class="docutils literal"><span class="pre">%SystemRoot%\system32\drivers\etc\hosts</span></tt></td>
+</tr>
+<tr><td>Linux / OS X</td>
+<td><tt class="docutils literal"><span class="pre">/etc/hosts</span></tt></td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+<p>You can open the file with your favorite text editor and add a new name after
+<cite>localhost</cite>:</p>
+<div class="highlight-python"><pre>127.0.0.1       localhost yourapplication.local api.yourapplication.local</pre>
+</div>
+<p>Save the changes and after a while you should be able to access the
+development server on these host names as well.  You can use the
+<a class="reference external" href="routing.html#routing"><em>URL Routing</em></a> system to dispatch between different hosts or parse
+<tt class="xref docutils literal"><span class="pre">request.host</span></tt> yourself.</p>
+</div>
+<div class="section" id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h2>
+<p>On operating systems that support ipv6 and have it configured such as modern
+Linux systems, OS X 10.4 or higher as well as Windows Vista some browsers can
+be painfully slow if accessing your local server.  The reason for this is that
+sometimes &#8220;localhost&#8221; is configured to be available on both ipv4 and ipv6 socktes
+and some browsers will try to access ipv6 first and then ivp4.</p>
+<p>At the current time the integrated webserver does not support ipv6 and ipv4 at
+the same time and for better portability ipv4 is the default.</p>
+<p>If you notice that the web browser takes ages to load the page there are two ways
+around this issue.  If you don&#8217;t need ipv6 support you can disable the ipv6 entry
+in the <a class="reference external" href="http://en.wikipedia.org/wiki/Hosts_file">hosts file</a> by removing this line:</p>
+<div class="highlight-python"><pre>::1             localhost</pre>
+</div>
+<p>Alternatively you can also disable ipv6 support in your browser.  For example
+if Firefox shows this behavior you can disable it by going to <tt class="docutils literal"><span class="pre">about:config</span></tt>
+and disabling the <cite>network.dns.disableIPv6</cite> key.</p>
+<p>Another workaround that should work is accessing <cite>127.0.0.1</cite> instead of
+<cite>localhost</cite>.</p>
+</div>
+</div>
+
+
+        <div style="clear: both"></div>
+      </div>
+      <div class="footer">
+        © Copyright 2008 by the <a href="http://pocoo.org/">Pocoo Team</a>,
+        documentation generated by <a href="http://sphinx.pocoo.org/">Sphinx</a>
+      </div>
+    </div>
+  </body>
+</html>

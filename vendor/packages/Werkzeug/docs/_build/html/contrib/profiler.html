@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Werkzeug Documentation</title>
+    <link rel="stylesheet" href="../_static/style.css" type="text/css">
+    <link rel="stylesheet" href="../_static/print.css" type="text/css" media="print">
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css">
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:   '../',
+        VERSION:    '0.5.1dev'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/interface.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/werkzeug.js"></script>
+    <link rel="contents" title="Global table of contents" href="../contents.html">
+    <link rel="index" title="Global index" href="../genindex.html">
+    <link rel="search" title="Search" href="../search.html">
+    <link rel="top" title="Werkzeug v0.5.1dev documentation" href="../index.html">
+    <link rel="up" title="Contributed Modules" href="index.html">
+    <link rel="next" title="Lint Validation Middleware" href="lint.html">
+    <link rel="prev" title="Fixers" href="fixers.html">
+    
+  </head>
+  <body>
+    <div class="page">
+      <div class="header">
+        <h1 class="heading"><a href="../index.html"
+          title="back to the documentation overview"><span>Werkzeug</span></a></h1>
+      </div>
+      <ul class="navigation">
+        <li class="indexlink"><a href="../index.html">Overview</a></li>
+        <li><a href="fixers.html">&laquo; Fixers</a></li>
+        <li class="active"><a href="">WSGI Application Profiler</a></li>
+        <li><a href="lint.html">Lint Validation Middleware &raquo;</a></li>
+      </ul>
+      <div class="body">
+        
+  <div class="section" id="module-werkzeug.contrib.profiler">
+<h1>WSGI Application Profiler<a class="headerlink" href="#module-werkzeug.contrib.profiler" title="Permalink to this headline">¶</a></h1>
+<p>This module provides a simple WSGI profiler middleware for finding
+bottlenecks in web application.  It uses the <tt class="xref docutils literal"><span class="pre">profile</span></tt> or
+<a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/profile.html#module-cProfile"><tt class="xref docutils literal"><span class="pre">cProfile</span></tt></a> module to do the profiling and writes the stats to the
+stream provided (defaults to stderr).</p>
+<p>Example usage:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">werkzeug.contrib.profiler</span> <span class="kn">import</span> <span class="n">ProfilerMiddleware</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">ProfilerMiddleware</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="class">
+<dt id="werkzeug.contrib.profiler.MergeStream">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.contrib.profiler.</tt><tt class="descname">MergeStream</tt><big>(</big><em>*streams</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.profiler.MergeStream" title="Permalink to this definition">¶</a></dt>
+<dd><p>An object that redirects <cite>write</cite> calls to multiple streams.
+Use this to log to both <cite>sys.stdout</cite> and a file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;profiler.log&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+<span class="n">stream</span> <span class="o">=</span> <span class="n">MergeStream</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+<span class="n">profiler</span> <span class="o">=</span> <span class="n">ProfilerMiddleware</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">stream</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.contrib.profiler.ProfilerMiddleware">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.contrib.profiler.</tt><tt class="descname">ProfilerMiddleware</tt><big>(</big><em>app</em>, <em>stream=None</em>, <em>sort_by=('time'</em>, <em>'calls')</em>, <em>restrictions=()</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.profiler.ProfilerMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simple profiler middleware.  Wraps a WSGI application and profiles
+a request.  This intentionally buffers the response so that timings are
+more exact.</p>
+<p>For the exact meaning of <cite>sort_by</cite> and <cite>restrictions</cite> consult the
+<tt class="xref docutils literal"><span class="pre">profile</span></tt> documentation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>app</em> &#8211; the WSGI application to profile.</li>
+<li><em>stream</em> &#8211; the stream for the profiled stats.  defaults to stderr.</li>
+<li><em>sort_by</em> &#8211; a tuple of columns to sort the result by.</li>
+<li><em>restrictions</em> &#8211; a tuple of profiling strictions.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="werkzeug.contrib.profiler.make_action">
+<tt class="descclassname">werkzeug.contrib.profiler.</tt><tt class="descname">make_action</tt><big>(</big><em>app_factory</em>, <em>hostname='localhost'</em>, <em>port=5000</em>, <em>threaded=False</em>, <em>processes=1</em>, <em>stream=None</em>, <em>sort_by=('time'</em>, <em>'calls')</em>, <em>restrictions=()</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.profiler.make_action" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new callback for <a title="" class="reference external" href="../script.html#module-werkzeug.script"><tt class="xref docutils literal"><span class="pre">werkzeug.script</span></tt></a> that starts a local
+server with the profiler enabled:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">werkzeug.contrib</span> <span class="kn">import</span> <span class="n">profiler</span>
+<span class="n">action_profile</span> <span class="o">=</span> <span class="n">profiler</span><span class="o">.</span><span class="n">make_action</span><span class="p">(</span><span class="n">make_app</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+        <div style="clear: both"></div>
+      </div>
+      <div class="footer">
+        © Copyright 2008 by the <a href="http://pocoo.org/">Pocoo Team</a>,
+        documentation generated by <a href="http://sphinx.pocoo.org/">Sphinx</a>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,338 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>IPython/Vision Beam Pattern Demo &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../index.html" />
+    <link rel="up" title="Using IPython for parallel computing" href="index.html" />
+    <link rel="next" title="Configuration and customization" href="../config/index.html" />
+    <link rel="prev" title="Security details of IPython" href="parallel_security.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="../config/index.html" title="Configuration and customization"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="parallel_security.html" title="Security details of IPython"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Using IPython for parallel computing</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="ipython-vision-beam-pattern-demo">
+<h1>IPython/Vision Beam Pattern Demo<a class="headerlink" href="#ipython-vision-beam-pattern-demo" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This page has not been updated to reflect the recent work on ipcluster.
+This work makes it much easier to use IPython on a cluster.</p>
+</div>
+<div class="section" id="installing-and-testing-ipython-at-osc-systems">
+<h2>Installing and testing IPython at OSC systems<a class="headerlink" href="#installing-and-testing-ipython-at-osc-systems" title="Permalink to this headline">¶</a></h2>
+<p>All components were installed from source and I have my environment set up to
+include ~/usr/local in my various necessary paths ($PATH, $PYTHONPATH, etc).
+Other than a slow filesystem for unpacking tarballs, the install went without a
+hitch.  For each needed component, I just downloaded the source tarball,
+unpacked it via:</p>
+<div class="highlight-python"><pre>tar xzf (or xjf if it's bz2) filename.tar.{gz,bz2}</pre>
+</div>
+<p>and then installed them (including IPython itself) with:</p>
+<div class="highlight-python"><pre>cd dirname/  # path to unpacked tarball
+python setup.py install --prefix=~/usr/local/</pre>
+</div>
+<p>The components I installed are listed below.  For each one I give the main
+project link as well as a direct one to the file I actually dowloaded and used.</p>
+<ul class="simple">
+<li>nose, used for testing:</li>
+</ul>
+<p><a class="reference external" href="http://somethingaboutorange.com/mrl/projects/nose/">http://somethingaboutorange.com/mrl/projects/nose/</a>
+<a class="reference external" href="http://somethingaboutorange.com/mrl/projects/nose/nose-0.10.3.tar.gz">http://somethingaboutorange.com/mrl/projects/nose/nose-0.10.3.tar.gz</a></p>
+<ul class="simple">
+<li>Zope interface, used to declare interfaces in twisted and ipython.  Note:</li>
+</ul>
+<p>you must get this from the page linked below and not fro the defaul
+one(<a class="reference external" href="http://www.zope.org/Products/ZopeInterface">http://www.zope.org/Products/ZopeInterface</a>) because the latter has an
+older version, it hasn&#8217;t been updated in a long time.  This pypi link has
+the current release (3.4.1 as of this writing):
+<a class="reference external" href="http://pypi.python.org/pypi/zope.interface">http://pypi.python.org/pypi/zope.interface</a>
+<a class="reference external" href="http://pypi.python.org/packages/source/z/zope.interface/zope.interface-3.4.1.tar.gz">http://pypi.python.org/packages/source/z/zope.interface/zope.interface-3.4.1.tar.gz</a></p>
+<ul class="simple">
+<li>pyopenssl, security layer used by foolscap.  Note: version 0.7 <em>must</em> be</li>
+</ul>
+<p>used:
+<a class="reference external" href="http://sourceforge.net/projects/pyopenssl/">http://sourceforge.net/projects/pyopenssl/</a>
+<a class="reference external" href="http://downloads.sourceforge.net/pyopenssl/pyOpenSSL-0.6.tar.gz?modtime=1212595285&amp;big_mirror=0">http://downloads.sourceforge.net/pyopenssl/pyOpenSSL-0.6.tar.gz?modtime=1212595285&amp;big_mirror=0</a></p>
+<ul class="simple">
+<li>Twisted, used for all networking:</li>
+</ul>
+<p><a class="reference external" href="http://twistedmatrix.com/trac/wiki/Downloads">http://twistedmatrix.com/trac/wiki/Downloads</a>
+<a class="reference external" href="http://tmrc.mit.edu/mirror/twisted/Twisted/8.1/Twisted-8.1.0.tar.bz2">http://tmrc.mit.edu/mirror/twisted/Twisted/8.1/Twisted-8.1.0.tar.bz2</a></p>
+<ul class="simple">
+<li>Foolscap, used for managing connections securely:</li>
+</ul>
+<p><a class="reference external" href="http://foolscap.lothar.com/trac">http://foolscap.lothar.com/trac</a>
+<a class="reference external" href="http://foolscap.lothar.com/releases/foolscap-0.3.1.tar.gz">http://foolscap.lothar.com/releases/foolscap-0.3.1.tar.gz</a></p>
+<ul class="simple">
+<li>IPython itself:</li>
+</ul>
+<p><a class="reference external" href="http://ipython.scipy.org/">http://ipython.scipy.org/</a>
+<a class="reference external" href="http://ipython.scipy.org/dist/ipython-0.9.1.tar.gz">http://ipython.scipy.org/dist/ipython-0.9.1.tar.gz</a></p>
+<p>I then ran the ipython test suite via:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">iptest</span> <span class="o">-</span><span class="n">vv</span>
+</pre></div>
+</div>
+<p>and it passed with only:</p>
+<div class="highlight-python"><pre>======================================================================
+ERROR: testGetResult_2
+----------------------------------------------------------------------
+DirtyReactorAggregateError: Reactor was unclean.
+Selectables:
+&lt;Negotiation #0 on 10105&gt;
+
+----------------------------------------------------------------------
+Ran 419 tests in 33.971s
+
+FAILED (SKIP=4, errors=1)</pre>
+</div>
+<p>In three more runs of the test suite I was able to reproduce this error
+sometimes but not always; for now I think we can move on but we need to
+investigate further.  Especially if we start seeing problems in real use (the
+test suite stresses the networking layer in particular ways that aren&#8217;t
+necessarily typical of normal use).</p>
+<p>Next, I started an 8-engine cluster via:</p>
+<div class="highlight-python"><pre>perez@opt-login01[~]&gt; ipcluster -n 8
+Starting controller: Controller PID: 30845
+^X      Starting engines:    Engines PIDs:   [30846, 30847, 30848, 30849,
+30850, 30851, 30852, 30853]
+Log files: /home/perez/.ipython/log/ipcluster-30845-*
+
+Your cluster is up and running.
+
+[... etc]</pre>
+</div>
+<p>and in a separate ipython session checked that the cluster is running and I can
+access all the engines:</p>
+<div class="highlight-python"><pre>In [1]: from IPython.kernel import client
+
+In [2]: mec = client.MultiEngineClient()
+
+In [3]: mec.get_ids()
+Out[3]: [0, 1, 2, 3, 4, 5, 6, 7]</pre>
+</div>
+<p>and run trivial code in them (after importing the <tt class="docutils literal"><span class="pre">random</span></tt> module in all
+engines):</p>
+<div class="highlight-python"><pre>In [11]: mec.execute("x=random.randint(0,10)")
+Out[11]:
+&lt;Results List&gt;
+[0] In [3]: x=random.randint(0,10)
+[1] In [3]: x=random.randint(0,10)
+[2] In [3]: x=random.randint(0,10)
+[3] In [3]: x=random.randint(0,10)
+[4] In [3]: x=random.randint(0,10)
+[5] In [3]: x=random.randint(0,10)
+[6] In [3]: x=random.randint(0,10)
+[7] In [3]: x=random.randint(0,10)
+
+In [12]: mec.pull('x')
+Out[12]: [10, 0, 8, 10, 2, 9, 10, 7]</pre>
+</div>
+<p>We&#8217;ll continue conducting more complex tests later, including instaling Vision
+locally and running the beam demo.</p>
+</div>
+<div class="section" id="michel-s-original-instructions">
+<h2>Michel&#8217;s original instructions<a class="headerlink" href="#michel-s-original-instructions" title="Permalink to this headline">¶</a></h2>
+<p>I got a Vision network that reproduces the beam pattern demo working:</p>
+<a class="reference external image-reference" href="vision_beam_pattern.png"><div align="center" class="align-center"><img alt="../_images/vision_beam_pattern.png" class="align-center" src="../_images/vision_beam_pattern.png" style="width: 400px;" /></div>
+</a>
+<p>I created a package called beamPattern that provides the function run() in its
+__init__.py file.</p>
+<p>A subpackage beamPattern/VisionInterface provides Vision nodes for:</p>
+<ul class="simple">
+<li>computing Elevation and Azimuth from a 3D vector</li>
+<li>Reading .mat files</li>
+<li>taking the results gathered from the engines and creating the output that a
+single engine would have had produced</li>
+</ul>
+<p>The Mec node connect to a controller. In my network it was local but an furl
+can be specified to connect to a remote controller.</p>
+<p>The PRun Func node is from the IPython library of nodes. the import statement
+is used to get the run function from the beamPattern package and bu puting
+&#8220;run&#8221; in the function entry of this node we push this function to the engines.
+In addition to the node will create input ports for all arguments of the
+function being pushed (i.e. the run function)</p>
+<p>The second input port on PRun Fun take an integer specifying the rank of the
+argument we want to scatter. All other arguments will be pushed to the engines.</p>
+<p>The ElevAzim node has a 3D vector widget and computes the El And Az values
+which are passed into the PRun Fun node through the ports created
+automatically. The Mat node allows to select the .mat file, reads it and passed
+the data to the locdata port created automatically on PRun Func</p>
+<p>The calculation is executed in parallel, and the results are gathered and
+output.  Instead of having a list of 3 vectors we nd up with a list of n*3
+vectors where n is the number of engines. unpackDectorResults will turn it into
+a list of 3. We then plot x, y, and 10*log10(z)</p>
+<div class="section" id="installation">
+<h3>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">inflate beamPattern into the site-packages directory for the MGL tools.</p>
+</li>
+<li><p class="first">place the appended IPythonNodes.py and StandardNodes.py into the Vision
+package of the MGL tools.</p>
+</li>
+<li><p class="first">place the appended items.py in the NetworkEditor package of the MGL tools</p>
+</li>
+<li><p class="first">run vision for the network beamPat5_net.py:</p>
+<div class="highlight-python"><pre>vision beamPat5_net.py</pre>
+</div>
+</li>
+</ul>
+<p>Once the network is running, you can:</p>
+<ul class="simple">
+<li>double click on the MEC node and either use an emptty string for the furl to
+connect to a local engine or cut and paste the furl to the engine you want to
+use</li>
+<li>click on the yellow lighting bold to run the network.</li>
+<li>Try modifying the MAT file or change the Vector used top compute elevation
+and Azimut.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="fernando-s-notes">
+<h2>Fernando&#8217;s notes<a class="headerlink" href="#fernando-s-notes" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">I had to install IPython and all its dependencies for the python used by the
+MGL tools.</p>
+</li>
+<li><p class="first">Then I had to install scipy 0.6.0 for it, since the nodes needed Scipy.  To
+do this I sourced the mglenv.sh script and then ran:</p>
+<div class="highlight-python"><pre>python setup.py install --prefix=~/usr/opt/mgl</pre>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="using-pbs">
+<h2>Using PBS<a class="headerlink" href="#using-pbs" title="Permalink to this headline">¶</a></h2>
+<p>The following PBS script can be used to start the engines:</p>
+<div class="highlight-python"><pre>#PBS -N bgranger-ipython
+#PBS -j oe
+#PBS -l walltime=00:10:00
+#PBS -l nodes=4:ppn=4
+
+cd $PBS_O_WORKDIR
+export PATH=$HOME/usr/local/bin
+export PYTHONPATH=$HOME/usr/local/lib/python2.4/site-packages
+/usr/local/bin/mpiexec -n 16 ipengine</pre>
+</div>
+<p>If this file is called <tt class="docutils literal"><span class="pre">ipython_pbs.sh</span></tt>, then the in one login windows
+(i.e. on the head-node &#8211; <tt class="docutils literal"><span class="pre">opt-login01.osc.edu</span></tt>), run <tt class="docutils literal"><span class="pre">ipcontroller</span></tt>. In
+another login window on the same node, run the above script:</p>
+<div class="highlight-python"><pre>qsub ipython_pbs.sh</pre>
+</div>
+<p>If you look at the first window, you will see some diagnostic output
+from ipcontroller. You can then get the furl from your own
+<tt class="docutils literal"><span class="pre">~/.ipython/security</span></tt> directory and then connect to it remotely.</p>
+<p>You might need to set up an SSH tunnel, however; if this doesn&#8217;t work as
+advertised:</p>
+<div class="highlight-python"><pre>ssh -L 10115:localhost:10105 bic</pre>
+</div>
+</div>
+<div class="section" id="links-to-other-resources">
+<h2>Links to other resources<a class="headerlink" href="#links-to-other-resources" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="http://www.osc.edu/~unpingco/glenn_NewLynx2_Demo.avi">http://www.osc.edu/~unpingco/glenn_NewLynx2_Demo.avi</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">IPython/Vision Beam Pattern Demo</a><ul>
+<li><a class="reference external" href="#installing-and-testing-ipython-at-osc-systems">Installing and testing IPython at OSC systems</a></li>
+<li><a class="reference external" href="#michel-s-original-instructions">Michel&#8217;s original instructions</a><ul>
+<li><a class="reference external" href="#installation">Installation</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#fernando-s-notes">Fernando&#8217;s notes</a></li>
+<li><a class="reference external" href="#using-pbs">Using PBS</a></li>
+<li><a class="reference external" href="#links-to-other-resources">Links to other resources</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="parallel_security.html" title="previous chapter">Security details of IPython</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="../config/index.html" title="next chapter">Configuration and customization</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/parallel/visionhpc.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="../config/index.html" title="Configuration and customization"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="parallel_security.html" title="Security details of IPython"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Using IPython for parallel computing</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

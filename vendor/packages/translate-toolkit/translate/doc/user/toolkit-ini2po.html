@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="ini2po" id="ini2po">ini2po</a></h1>
+<div class="level1">
+
+<p>
+
+Converts .ini files to Gettext <acronym title="Gettext Portable Object">PO</acronym> format.
+</p>
+
+</div>
+<!-- SECTION "ini2po" [1-65] -->
+<h2><a name="usage" id="usage">Usage</a></h2>
+<div class="level2">
+<pre class="code">ini2po [options] &lt;ini&gt; &lt;po&gt;
+po2ini [options] -t &lt;ini&gt; &lt;po&gt; &lt;ini&gt;</pre>
+
+<p>
+
+Where:
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> &lt;ini&gt;   </td><td class="col1 leftalign"> is a valid .ini file or directory of those files  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> &lt;po&gt;   </td><td class="col1 leftalign"> is a directory of <acronym title="Gettext Portable Object">PO</acronym> or <acronym title="Gettext Portable Object Template">POT</acronym> files  </td>
+	</tr>
+</table>
+
+<p>
+
+Options (ini2po):
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> --version           </td><td class="col1 leftalign"> show program&#039;s version number and exit  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> -h, --help          </td><td class="col1 leftalign"> show this help message and exit  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> --manpage           </td><td class="col1 leftalign"> output a manpage based on the help  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> <a href="toolkit-progress_progress.html" class="wikilink1" title="toolkit-progress_progress.html">--progress=PROGRESS</a>  </td><td class="col1 leftalign"> show progress as: dots, none, bar, names, verbose  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> <a href="toolkit-errorlevel_errorlevel.html" class="wikilink1" title="toolkit-errorlevel_errorlevel.html">--errorlevel=ERRORLEVEL</a>  </td><td class="col1 leftalign"> show errorlevel as: none, message, exception, traceback   </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> -i INPUT, --input=INPUT      </td><td class="col1 leftalign"> read from INPUT in php format  </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> -x EXCLUDE, --exclude=EXCLUDE  </td><td class="col1 leftalign"> exclude names matching EXCLUDE from input paths   </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 leftalign"> -o OUTPUT, --output=OUTPUT     </td><td class="col1 leftalign"> write to OUTPUT in po, pot formats  </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 leftalign"> -t TEMPLATE, --template=TEMPLATE  </td><td class="col1 leftalign"> read from TEMPLATE in php format  </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0 leftalign"> <a href="toolkit-psyco_mode.html" class="wikilink1" title="toolkit-psyco_mode.html">--psyco=MODE</a>  </td><td class="col1 leftalign"> use psyco to speed up the operation, modes: none,                        full, profile  </td>
+	</tr>
+	<tr class="row10">
+		<td class="col0 leftalign"> -P, --pot    </td><td class="col1 leftalign"> output <acronym title="Gettext Portable Object">PO</acronym> Templates (.pot) rather than <acronym title="Gettext Portable Object">PO</acronym> files (.po)  </td>
+	</tr>
+	<tr class="row11">
+		<td class="col0 leftalign"> <a href="toolkit-duplicates_duplicatestyle.html" class="wikilink1" title="toolkit-duplicates_duplicatestyle.html">--duplicates=DUPLICATESTYLE</a>  </td><td class="col1 leftalign"> what to do with duplicate strings (identical source text): merge, msgid_comment, msgctxt, keep,                        msgid_comment_all (default: &#039;msgctxt&#039;)  </td>
+	</tr>
+</table>
+
+<p>
+
+Options (po2ini):
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> --version            </td><td class="col1 leftalign"> show program&#039;s version number and exit  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> -h, --help           </td><td class="col1 leftalign"> show this help message and exit  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> --manpage            </td><td class="col1 leftalign"> output a manpage based on the help  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> <a href="toolkit-progress_progress.html" class="wikilink1" title="toolkit-progress_progress.html">--progress=PROGRESS</a>  </td><td class="col1 leftalign"> show progress as: dots, none, bar, names, verbose  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> <a href="toolkit-errorlevel_errorlevel.html" class="wikilink1" title="toolkit-errorlevel_errorlevel.html">--errorlevel=ERRORLEVEL</a>    </td><td class="col1 leftalign"> show errorlevel as: none, message, exception, traceback  </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> -i INPUT, --input=INPUT  </td><td class="col1 leftalign"> read from INPUT in po, pot formats  </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> -x EXCLUDE, --exclude=EXCLUDE   </td><td class="col1 leftalign"> exclude names matching EXCLUDE from input paths  </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 leftalign"> -o OUTPUT, --output=OUTPUT      </td><td class="col1 leftalign"> write to OUTPUT in php format  </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 leftalign"> -t TEMPLATE, --template=TEMPLATE  </td><td class="col1 leftalign"> read from TEMPLATE in php format  </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0 leftalign"> <a href="toolkit-psyco_mode.html" class="wikilink1" title="toolkit-psyco_mode.html">--psyco=MODE</a>         </td><td class="col1 leftalign"> use psyco to speed up the operation, modes: none, full, profile  </td>
+	</tr>
+	<tr class="row10">
+		<td class="col0 leftalign"> --fuzzy              </td><td class="col1 leftalign"> use translations marked fuzzy  </td>
+	</tr>
+	<tr class="row11">
+		<td class="col0 leftalign"> --nofuzzy            </td><td class="col1 leftalign"> don&#039;t use translations marked fuzzy (default)  </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Usage" [66-2249] -->
+<h2><a name="examples" id="examples">Examples</a></h2>
+<div class="level2">
+
+<p>
+
+This example looks at roundtrip of .ini translations as well as recovery of existing translations.
+</p>
+
+<p>
+First we need to create a set of <acronym title="Gettext Portable Object Template">POT</acronym> files.
+
+</p>
+<pre class="code">ini2po -P ini/ pot/</pre>
+
+<p>
+
+All .ini files found in the <code>ini/</code> directory are converted to Gettext <acronym title="Gettext Portable Object Template">POT</acronym> files and placed in the <code>pot/</code> directory.
+</p>
+
+<p>
+If you are translating for the first time then you can skip the next step.  If you need to recovery your existing translations then we do the following:
+
+</p>
+<pre class="code">ini2po -t lang/ zu/ po-zu/</pre>
+
+<p>
+
+Using the English .ini files found in <code>lang/</code> and your existing Zulu translation in <code>zu/</code> we create a set of <acronym title="Gettext Portable Object">PO</acronym> files in <code>po-zu/</code>.  These will now have your translations.  Please be aware that in order for the to work 100% you need to have both English and Zulu at the same revision, if they are not you will have to review all translations.
+</p>
+
+<p>
+You are now in a position to translate your recovered translations or your new <acronym title="Gettext Portable Object Template">POT</acronym> files.
+</p>
+
+<p>
+Once translated you can convert back as follows:
+
+</p>
+<pre class="code">po2ini -t lang/ po-zu/ zu/</pre>
+
+<p>
+
+Your translations found in the Zulu <acronym title="Gettext Portable Object">PO</acronym> directory, <code>po-zu/</code>, will be converted to .ini using the files in <code>lang/</code> as templates and placing your newly translated .ini files in <code>zu/</code>.
+</p>
+
+<p>
+To update your translations simply redo the <acronym title="Gettext Portable Object Template">POT</acronym> creation step and make use of <a href="toolkit-pot2po.html" class="wikilink1" title="toolkit-pot2po.html">pot2po</a> to bring your translation up-to-date.
+</p>
+
+</div>
+<!-- SECTION "Examples" [2250-3581] -->
+<h2><a name="issues" id="issues">Issues</a></h2>
+<div class="level2">
+
+<p>
+
+We do not extract comments from .ini files.  These are sometimes needed as developers provide guidance to translators in these comments.
+</p>
+
+</div>
+<!-- SECTION "Issues" [3582-3739] -->
+<h2><a name="bugs" id="bugs">Bugs</a></h2>
+<div class="level2">
+
+<p>
+
+None known
+
+</p>
+
+</div>
+<!-- SECTION "Bugs" [3740-] --></body>
+</html>

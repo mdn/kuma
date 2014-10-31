@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="odf2xliff_and_xliff2odf" id="odf2xliff_and_xliff2odf">odf2xliff and xliff2odf</a></h1>
+<div class="level1">
+
+<p>
+
+Convert OpenDocument (ODF) files to <acronym title="XML Localization Interchange File Format">XLIFF</acronym> localization files. Create translated ODF files by combining the original ODF files with <acronym title="XML Localization Interchange File Format">XLIFF</acronym> files containing translations of strings in the original document.
+</p>
+
+<p>
+<acronym title="XML Localization Interchange File Format">XLIFF</acronym> is the <acronym title="Extensible Markup Language">XML</acronym> Localization Interchange File Format 
+developed by <a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xliff" class="urlextern" title="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xliff">OASIS</a> (The Organization for the Advancement of Structured Information Standards) to allow translation
+work to be standardised no matter what the source format and to allow the work to be freely moved from tool to
+tool.
+</p>
+
+<p>
+If you are more used to software translation or l10n, you might want to read a bit about <a href="guide-document_translation.html" class="wikilink1" title="guide-document_translation.html">document translation</a>. This should help you to get the most out of translating ODF with <acronym title="XML Localization Interchange File Format">XLIFF</acronym>.
+</p>
+
+</div>
+<!-- SECTION "odf2xliff and xliff2odf" [1-795] -->
+<h2><a name="usage" id="usage">Usage</a></h2>
+<div class="level2">
+<pre class="code">odf2xliff [options] &lt;original_odf&gt; &lt;xliff&gt;
+xliff2odf [options] -t &lt;original_odf&gt; &lt;xliff&gt; &lt;translated_odf&gt;</pre>
+
+<p>
+
+Where:
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0"> &lt;original_odf&gt; </td><td class="col1 leftalign"> is an ODF document whose strings have to be translated  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> &lt;xliff&gt;        </td><td class="col1"> is an <acronym title="XML Localization Interchange File Format">XLIFF</acronym> file </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> &lt;translated_odf&gt; </td><td class="col1"> is an ODF file to generate by replacing the strings in &lt;original_odf&gt; with the translated strings in &lt;xliff&gt; </td>
+	</tr>
+</table>
+
+<p>
+
+Options (odf2xliff):
+
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> --version            </td><td class="col1 leftalign"> show program&#039;s version number and exit  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> -h, --help           </td><td class="col1 leftalign"> show this help message and exit  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> --manpage            </td><td class="col1 leftalign"> output a manpage based on the help  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> <a href="toolkit-progress_progress.html" class="wikilink1" title="toolkit-progress_progress.html">--progress=PROGRESS</a>  </td><td class="col1 leftalign"> show progress as: dots, none, bar, names, verbose  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> <a href="toolkit-errorlevel_errorlevel.html" class="wikilink1" title="toolkit-errorlevel_errorlevel.html">--errorlevel=ERRORLEVEL</a>  </td><td class="col1 leftalign"> show errorlevel as: none, message, exception, traceback  </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> -i INPUT, --input=INPUT   </td><td class="col1 leftalign"> read from INPUT in ODF format  </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> -o OUTPUT, --output=OUTPUT     </td><td class="col1 leftalign"> write to OUTPUT in <acronym title="XML Localization Interchange File Format">XLIFF</acronym> format  </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 leftalign"> <a href="toolkit-psyco_mode.html" class="wikilink1" title="toolkit-psyco_mode.html">--psyco=MODE</a>         </td><td class="col1 leftalign"> use psyco to speed up the operation, modes: none, full, profile  </td>
+	</tr>
+</table>
+
+<p>
+
+Options (xliff2odf):
+
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> --version            </td><td class="col1 leftalign"> show program&#039;s version number and exit    </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> -h, --help           </td><td class="col1 leftalign"> show this help message and exit    </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> --manpage            </td><td class="col1 leftalign"> output a manpage based on the help    </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> <a href="toolkit-progress_progress.html" class="wikilink1" title="toolkit-progress_progress.html">--progress=PROGRESS</a>  </td><td class="col1 leftalign"> show progress as: dots, none, bar, names, verbose    </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> <a href="toolkit-errorlevel_errorlevel.html" class="wikilink1" title="toolkit-errorlevel_errorlevel.html">--errorlevel=ERRORLEVEL</a>    </td><td class="col1 leftalign"> show errorlevel as: none, message, exception, traceback    </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> -i INPUT, --input=INPUT     </td><td class="col1 leftalign"> read from INPUT in <acronym title="XML Localization Interchange File Format">XLIFF</acronym> formats    </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> -o OUTPUT, --output=OUTPUT  </td><td class="col1 leftalign"> write to OUTPUT in ODF format    </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 leftalign"> -t TEMPLATE, --template=TEMPLATE   </td><td class="col1 leftalign"> read from TEMPLATE in ODF format    </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 leftalign"> <a href="toolkit-psyco_mode.html" class="wikilink1" title="toolkit-psyco_mode.html">--psyco=MODE</a>         </td><td class="col1 leftalign"> use psyco to speed up the operation, modes: none, full, profile    </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Usage" [796-2529] -->
+<h2><a name="examples" id="examples">Examples</a></h2>
+<div class="level2">
+<pre class="code">odf2xliff english.odt english_français.xlf</pre>
+
+<p>
+
+Create an <acronym title="XML Localization Interchange File Format">XLIFF</acronym> file from an ODT file (the source ODF file could also be any of the other ODF files, including ODS, ODG, etc.). 
+
+</p>
+<pre class="code">xliff2odf -t english.odt english_français.xlf français.odt</pre>
+
+<p>
+
+Using english.odt as the template document, and english_français.xlf as the file of translations, create a translated file français.odt.
+</p>
+
+</div>
+<!-- SECTION "Examples" [2530-2932] -->
+<h2><a name="bugs" id="bugs">Bugs</a></h2>
+<div class="level2">
+
+<p>
+
+This filter is not yet extensively used - we appreciate your feedback.  For more information on conformance to standards, see the <a href="toolkit-xliff.html" class="wikilink1" title="toolkit-xliff.html">xliff</a> or <a href="toolkit-odf.html" class="wikilink1" title="toolkit-odf.html">odf</a> pages. Possible issues were listed during <a href="odf-testing.html" class="wikilink2" title="odf-testing.html">testing</a>.
+
+</p>
+
+</div>
+<!-- SECTION "Bugs" [2933-] --></body>
+</html>

@@ -1,0 +1,161 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.task
+===========
+
+Module: :mod:`kernel.task`
+--------------------------
+Inheritance diagram for ``IPython.kernel.task``:
+
+.. inheritance-diagram:: IPython.kernel.task 
+   :parts: 3
+
+.. automodule:: IPython.kernel.task
+
+.. currentmodule:: IPython.kernel.task
+
+Classes
+-------
+
+:class:`BaseTask`
+~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: BaseTask
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`FIFOScheduler`
+~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: FIFOScheduler
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IScheduler`
+~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IScheduler
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ITask`
+~~~~~~~~~~~~~~
+
+
+.. autoclass:: ITask
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ITaskController`
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ITaskController
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IWorker`
+~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IWorker
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`LIFOScheduler`
+~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: LIFOScheduler
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`MapTask`
+~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: MapTask
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ResultNS`
+~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ResultNS
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`StringTask`
+~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: StringTask
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`TaskController`
+~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: TaskController
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`TaskResult`
+~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: TaskResult
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`WorkerFromQueuedEngine`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: WorkerFromQueuedEngine
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

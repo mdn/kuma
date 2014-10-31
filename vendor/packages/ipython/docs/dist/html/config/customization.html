@@ -1,0 +1,375 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Customization of IPython &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../index.html" />
+    <link rel="up" title="Configuration and customization" href="index.html" />
+    <link rel="next" title="New configuration system" href="new_config.html" />
+    <link rel="prev" title="Initial configuration of your environment" href="initial_config.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="new_config.html" title="New configuration system"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="initial_config.html" title="Initial configuration of your environment"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Configuration and customization</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="customization-of-ipython">
+<span id="customization"></span><h1>Customization of IPython<a class="headerlink" href="#customization-of-ipython" title="Permalink to this headline">¶</a></h1>
+<p>There are 2 ways to configure IPython - the old way of using ipythonrc
+files (an INI-file like format), and the new way that involves editing
+your ipy_user_conf.py. Both configuration systems work at the same
+time, so you can set your options in both, but if you are hesitating
+about which alternative to choose, we recommend the ipy_user_conf.py
+approach, as it will give you more power and control in the long
+run. However, there are few options such as pylab_import_all that can
+only be specified in ipythonrc file or command line - the reason for
+this is that they are needed before IPython has been started up, and
+the IPApi object used in ipy_user_conf.py is not yet available at that
+time. A hybrid approach of specifying a few options in ipythonrc and
+doing the more advanced configuration in ipy_user_conf.py is also
+possible.</p>
+<div class="section" id="the-ipythonrc-approach">
+<span id="ipythonrc"></span><h2>The ipythonrc approach<a class="headerlink" href="#the-ipythonrc-approach" title="Permalink to this headline">¶</a></h2>
+<p>As we&#8217;ve already mentioned, IPython reads a configuration file which can
+be specified at the command line (-rcfile) or which by default is
+assumed to be called ipythonrc. Such a file is looked for in the current
+directory where IPython is started and then in your IPYTHONDIR, which
+allows you to have local configuration files for specific projects. In
+this section we will call these types of configuration files simply
+rcfiles (short for resource configuration file).</p>
+<p>The syntax of an rcfile is one of key-value pairs separated by
+whitespace, one per line. Lines beginning with a # are ignored as
+comments, but comments can not be put on lines with data (the parser is
+fairly primitive). Note that these are not python files, and this is
+deliberate, because it allows us to do some things which would be quite
+tricky to implement if they were normal python files.</p>
+<p>First, an rcfile can contain permanent default values for almost all command
+line options (except things like -help or -Version). <a class="reference external" href="../interactive/reference.html#command-line-options"><em>This section</em></a> contains a description of all command-line
+options. However, values you explicitly specify at the command line override
+the values defined in the rcfile.</p>
+<p>Besides command line option values, the rcfile can specify values for
+certain extra special options which are not available at the command
+line. These options are briefly described below.</p>
+<p>Each of these options may appear as many times as you need it in the file.</p>
+<blockquote>
+<ul class="simple">
+<li>include &lt;file1&gt; &lt;file2&gt; ...: you can name other rcfiles you want
+to recursively load up to 15 levels (don&#8217;t use the &lt;&gt; brackets in
+your names!). This feature allows you to define a &#8216;base&#8217; rcfile
+with general options and special-purpose files which can be loaded
+only when needed with particular configuration options. To make
+this more convenient, IPython accepts the -profile &lt;name&gt; option
+(abbreviates to -p &lt;name&gt;) which tells it to look for an rcfile
+named ipythonrc-&lt;name&gt;.</li>
+<li>import_mod &lt;mod1&gt; &lt;mod2&gt; ...: import modules with &#8216;import
+&lt;mod1&gt;,&lt;mod2&gt;,...&#8217;</li>
+<li>import_some &lt;mod&gt; &lt;f1&gt; &lt;f2&gt; ...: import functions with &#8216;from
+&lt;mod&gt; import &lt;f1&gt;,&lt;f2&gt;,...&#8217;</li>
+<li>import_all &lt;mod1&gt; &lt;mod2&gt; ...: for each module listed import
+functions with <tt class="docutils literal"><span class="pre">from</span> <span class="pre">&lt;mod&gt;</span> <span class="pre">import</span> <span class="pre">*</span></tt>.</li>
+<li>execute &lt;python code&gt;: give any single-line python code to be
+executed.</li>
+<li>execfile &lt;filename&gt;: execute the python file given with an
+&#8216;execfile(filename)&#8217; command. Username expansion is performed on
+the given names. So if you need any amount of extra fancy
+customization that won&#8217;t fit in any of the above &#8216;canned&#8217; options,
+you can just put it in a separate python file and execute it.</li>
+<li>alias &lt;alias_def&gt;: this is equivalent to calling
+&#8216;%alias &lt;alias_def&gt;&#8217; at the IPython command line. This way, from
+within IPython you can do common system tasks without having to
+exit it or use the ! escape. IPython isn&#8217;t meant to be a shell
+replacement, but it is often very useful to be able to do things
+with files while testing code. This gives you the flexibility to
+have within IPython any aliases you may be used to under your
+normal system shell.</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="ipy-user-conf-py">
+<h2>ipy_user_conf.py<a class="headerlink" href="#ipy-user-conf-py" title="Permalink to this headline">¶</a></h2>
+<p>There should be a simple template ipy_user_conf.py file in your
+~/.ipython directory. It is a plain python module that is imported
+during IPython startup, so you can do pretty much what you want there
+- import modules, configure extensions, change options, define magic
+commands, put variables and functions in the IPython namespace,
+etc. You use the IPython extension api object, acquired by
+IPython.ipapi.get() and documented in the &#8220;IPython extension API&#8221;
+chapter, to interact with IPython. A sample ipy_user_conf.py is listed
+below for reference:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Most of your config files and extensions will probably start</span>
+<span class="c"># with this import</span>
+
+<span class="k">import</span> <span class="nn">IPython.ipapi</span>
+<span class="n">ip</span> <span class="o">=</span> <span class="n">IPython</span><span class="o">.</span><span class="n">ipapi</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+<span class="c"># You probably want to uncomment this if you did %upgrade -nolegacy</span>
+<span class="c"># import ipy_defaults</span>
+
+<span class="k">import</span> <span class="nn">os</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+
+    <span class="c">#ip.dbg.debugmode = True</span>
+    <span class="n">ip</span><span class="o">.</span><span class="n">dbg</span><span class="o">.</span><span class="n">debug_stack</span><span class="p">()</span>
+
+    <span class="c"># uncomment if you want to get ipython -p sh behaviour</span>
+    <span class="c"># without having to use command line switches</span>
+    <span class="k">import</span> <span class="nn">ipy_profile_sh</span>
+    <span class="k">import</span> <span class="nn">jobctrl</span>
+
+    <span class="c"># Configure your favourite editor?</span>
+    <span class="c"># Good idea e.g. for %edit os.path.isfile</span>
+
+    <span class="c">#import ipy_editors</span>
+
+    <span class="c"># Choose one of these:</span>
+
+    <span class="c">#ipy_editors.scite()</span>
+    <span class="c">#ipy_editors.scite(&#39;c:/opt/scite/scite.exe&#39;)</span>
+    <span class="c">#ipy_editors.komodo()</span>
+    <span class="c">#ipy_editors.idle()</span>
+    <span class="c"># ... or many others, try &#39;ipy_editors??&#39; after import to see them</span>
+
+    <span class="c"># Or roll your own:</span>
+    <span class="c">#ipy_editors.install_editor(&quot;c:/opt/jed +$line $file&quot;)</span>
+
+
+    <span class="n">o</span> <span class="o">=</span> <span class="n">ip</span><span class="o">.</span><span class="n">options</span>
+    <span class="c"># An example on how to set options</span>
+    <span class="c">#o.autocall = 1</span>
+    <span class="n">o</span><span class="o">.</span><span class="n">system_verbose</span> <span class="o">=</span> <span class="mf">0</span>
+
+    <span class="c">#import_all(&quot;os sys&quot;)</span>
+    <span class="c">#execf(&#39;~/_ipython/ns.py&#39;)</span>
+
+
+    <span class="c"># -- prompt</span>
+    <span class="c"># A different, more compact set of prompts from the default ones, that</span>
+    <span class="c"># always show your current location in the filesystem:</span>
+
+    <span class="c">#o.prompt_in1 = r&#39;\C_LightBlue[\C_LightCyan\Y2\C_LightBlue]\C_Normal\n\C_Green|\#&gt;&#39;</span>
+    <span class="c">#o.prompt_in2 = r&#39;.\D: &#39;</span>
+    <span class="c">#o.prompt_out = r&#39;[\#] &#39;</span>
+
+    <span class="c"># Try one of these color settings if you can&#39;t read the text easily</span>
+    <span class="c"># autoexec is a list of IPython commands to execute on startup</span>
+    <span class="c">#o.autoexec.append(&#39;%colors LightBG&#39;)</span>
+    <span class="c">#o.autoexec.append(&#39;%colors NoColor&#39;)</span>
+    <span class="n">o</span><span class="o">.</span><span class="n">autoexec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%c</span><span class="s">olors Linux&#39;</span><span class="p">)</span>
+
+
+<span class="c"># some config helper functions you can use</span>
+<span class="k">def</span> <span class="nf">import_all</span><span class="p">(</span><span class="n">modules</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Usage: import_all(&quot;os sys&quot;) &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">modules</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+        <span class="n">ip</span><span class="o">.</span><span class="n">ex</span><span class="p">(</span><span class="s">&quot;from </span><span class="si">%s</span><span class="s"> import *&quot;</span> <span class="o">%</span> <span class="n">m</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">execf</span><span class="p">(</span><span class="n">fname</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Execute a file in user namespace &quot;&quot;&quot;</span>
+    <span class="n">ip</span><span class="o">.</span><span class="n">ex</span><span class="p">(</span><span class="s">&#39;execfile(&quot;</span><span class="si">%s</span><span class="s">&quot;)&#39;</span> <span class="o">%</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">fname</span><span class="p">))</span>
+
+<span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="fine-tuning-your-prompt">
+<span id="prompts"></span><h2>Fine-tuning your prompt<a class="headerlink" href="#fine-tuning-your-prompt" title="Permalink to this headline">¶</a></h2>
+<p>IPython&#8217;s prompts can be customized using a syntax similar to that of
+the bash shell. Many of bash&#8217;s escapes are supported, as well as a few
+additional ones. We list them below:</p>
+<div class="highlight-python"><pre>\#
+    the prompt/history count number. This escape is automatically
+    wrapped in the coloring codes for the currently active color scheme.
+\N
+    the 'naked' prompt/history count number: this is just the number
+    itself, without any coloring applied to it. This lets you produce
+    numbered prompts with your own colors.
+\D
+    the prompt/history count, with the actual digits replaced by dots.
+    Used mainly in continuation prompts (prompt_in2)
+\w
+    the current working directory
+\W
+    the basename of current working directory
+\Xn
+    where $n=0\ldots5.$ The current working directory, with $HOME
+    replaced by ~, and filtered out to contain only $n$ path elements
+\Yn
+    Similar to \Xn, but with the $n+1$ element included if it is ~ (this
+    is similar to the behavior of the %cn escapes in tcsh)
+\u
+    the username of the current user
+\$
+    if the effective UID is 0, a #, otherwise a $
+\h
+    the hostname up to the first '.'
+\H
+    the hostname
+\n
+    a newline
+\r
+    a carriage return
+\v
+    IPython version string</pre>
+</div>
+<p>In addition to these, ANSI color escapes can be insterted into the
+prompts, as C_ColorName. The list of valid color names is: Black, Blue,
+Brown, Cyan, DarkGray, Green, LightBlue, LightCyan, LightGray,
+LightGreen, LightPurple, LightRed, NoColor, Normal, Purple, Red, White,
+Yellow.</p>
+<p>Finally, IPython supports the evaluation of arbitrary expressions in
+your prompt string. The prompt strings are evaluated through the syntax
+of PEP 215, but basically you can use $x.y to expand the value of x.y,
+and for more complicated expressions you can use braces: ${foo()+x} will
+call function foo and add to it the value of x, before putting the
+result into your prompt. For example, using
+prompt_in1 &#8216;${commands.getoutput(&#8220;uptime&#8221;)}nIn [#]: &#8216;
+will print the result of the uptime command on each prompt (assuming the
+commands module has been imported in your ipythonrc file).</p>
+<blockquote>
+Prompt examples</blockquote>
+<p>The following options in an ipythonrc file will give you IPython&#8217;s
+default prompts:</p>
+<div class="highlight-python"><pre>prompt_in1 'In [\#]:'
+prompt_in2 '   .\D.:'
+prompt_out 'Out[\#]:'</pre>
+</div>
+<p>which look like this:</p>
+<div class="highlight-python"><pre>In [1]: 1+2
+Out[1]: 3
+
+In [2]: for i in (1,2,3):
+   ...:    print i,
+   ...:
+1 2 3</pre>
+</div>
+<p>These will give you a very colorful prompt with path information:</p>
+<div class="highlight-python"><pre>#prompt_in1 '\C_Red\u\C_Blue[\C_Cyan\Y1\C_Blue]\C_LightGreen\#&gt;'
+prompt_in2 ' ..\D&gt;'
+prompt_out '&lt;\#&gt;'</pre>
+</div>
+<p>which look like this:</p>
+<div class="highlight-python"><pre>fperez[~/ipython]1&gt; 1+2
+                &lt;1&gt; 3
+fperez[~/ipython]2&gt; for i in (1,2,3):
+               ...&gt;     print i,
+               ...&gt;
+1 2 3</pre>
+</div>
+</div>
+<div class="section" id="ipython-profiles">
+<span id="profiles"></span><h2>IPython profiles<a class="headerlink" href="#ipython-profiles" title="Permalink to this headline">¶</a></h2>
+<p>As we already mentioned, IPython supports the -profile command-line option (see
+<a class="reference external" href="../interactive/reference.html#command-line-options"><em>here</em></a>).  A profile is nothing more than a
+particular configuration file like your basic ipythonrc one, but with
+particular customizations for a specific purpose. When you start IPython with
+&#8216;ipython -profile &lt;name&gt;&#8217;, it assumes that in your IPYTHONDIR there is a file
+called ipythonrc-&lt;name&gt; or ipy_profile_&lt;name&gt;.py, and loads it instead of the
+normal ipythonrc.</p>
+<p>This system allows you to maintain multiple configurations which load
+modules, set options, define functions, etc. suitable for different
+tasks and activate them in a very simple manner. In order to avoid
+having to repeat all of your basic options (common things that don&#8217;t
+change such as your color preferences, for example), any profile can
+include another configuration file. The most common way to use profiles
+is then to have each one include your basic ipythonrc file as a starting
+point, and then add further customizations.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">Customization of IPython</a><ul>
+<li><a class="reference external" href="#the-ipythonrc-approach">The ipythonrc approach</a></li>
+<li><a class="reference external" href="#ipy-user-conf-py">ipy_user_conf.py</a></li>
+<li><a class="reference external" href="#fine-tuning-your-prompt">Fine-tuning your prompt</a></li>
+<li><a class="reference external" href="#ipython-profiles">IPython profiles</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="initial_config.html" title="previous chapter">Initial configuration of your environment</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="new_config.html" title="next chapter">New configuration system</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/config/customization.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="new_config.html" title="New configuration system"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="initial_config.html" title="Initial configuration of your environment"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Configuration and customization</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

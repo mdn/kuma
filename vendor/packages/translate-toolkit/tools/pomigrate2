@@ -1,0 +1,162 @@
+#!/bin/bash
+#
+# Copyright 2004, 2005 Zuza Software Foundation
+#
+# This file is part of The Translate Toolkit.
+#
+# The Translate Toolkit is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# translate is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with translate; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+
+# pomigrate2 - migrates PO files from an old version using new POT files.
+
+
+function usage() {
+	echo "Usage `basename $0` [options] <product-old> <product-new> <product-templates>"
+        echo
+        echo "Options:"
+        echo "   -F|--use-fuzzy-matching - use fuzzy algorithms when merging to attempt to match strings"
+        echo "   -C|--use-compendium     - create and use a compendium built from the migrating files"
+        echo "   -C|--use-compendium=some-compendium.po"
+	echo "                           - use an external compendium during the migration"
+        echo "   --no-wrap               - do not wrap long lines"
+        echo "   --locale=lang           - set locale for newly born files"
+        echo "   -q|--quiet              - suppress most output"
+        echo "   -p|--pot2po             - use pot2po instead of msgmerge to migrate"
+	exit 1
+}
+
+option_no_fuzzy_matching="--no-fuzzy-matching"
+option_verbose="Y"
+
+while true
+do
+	case $1 in
+		-F|--use-fuzzy-matching)
+			option_no_fuzzy_matching=""
+			shift
+			;;
+		-C|--use-compendium)
+			option_use_compendium="--compendium"
+			shift
+			;;
+		-C=*|--use-compendium=*)
+			option_use_own_compendium="$option_use_own_compendium --compendium=`echo $1 | sed 's/\-C=\|--use-compendium=//'`"
+			option_pot2po_use_own_compendium="$option_use_own_compendium --tm=`echo $1 | sed 's/\-C=\|--tm=//'`"
+			shift
+			;;
+		--no-wrap)
+			option_no_wrap="--no-wrap"
+			shift
+			;;
+		--locale=*)
+			option_locale=`echo $1 | sed 's/--locale=//'`
+			shift
+			;;
+		--locale)
+			shift
+                        if [ $# -lt 1 ]; then
+                            usage
+                        fi
+			option_locale=$1
+                        shift
+			;;
+		-q|--quiet)
+			option_verbose=""
+			option_verbose_msgmerge="--quiet"
+			shift
+			;;
+		-p|--pot2po)
+			option_pot2po="pot2po"
+			shift
+			;;
+		-*|--*)
+			usage
+			;;
+		*)
+			break
+			;;
+	esac
+done
+
+if [ $# -ne 3 ]; then
+	usage
+fi
+
+old=$1
+new=$2
+templates=$3
+
+echo "** Migrating files... **"
+pots=`cd $templates; find . -name "*.pot"`
+if [ "$pots" == "" ]; then
+	echo "No POT templates found in: $templates"
+	exit 1
+fi
+for pot in $pots
+do
+	filename=`basename $pot .pot`.po
+	directory=`dirname $pot`
+	mkdir -p $new/$directory
+	if [ -f $old/$directory/$filename ]; then
+		cp -p $old/$directory/$filename $new/$directory/$filename && [ $option_verbose ] && echo Copied $new/$directory/$filename
+	else
+		if [ `find $old -name "$filename" | wc -l` -ge 1 ]; then
+			msgcat $option_no_wrap -o $new/$directory/$filename `find $old -name "$filename" -printf "%p "` && [ $option_verbose ] && echo Migrated $new/$directory/$filename
+		else
+			if [ ! $option_verbose ]; then
+				msginit $option_no_wrap --locale=$option_locale --no-translator -i $templates/$pot -o $new/$directory/$filename 2>&1 | egrep -v "^Created"
+			else
+				msginit $option_no_wrap --locale=$option_locale --no-translator -i $templates/$pot -o $new/$directory/$filename
+			fi
+		fi
+	fi
+done
+
+if [ "$option_use_compendium" != "" ]; then
+	echo "** Creating compendium from old files... **"
+	compendium=`mktemp tmp.compendium.XXXXXXXXXX`
+	# Move and rename to work around inability of mktemp TEMPLATE to end on anything but X's
+        mv $compendium ${compendium}.po
+        compendium=${compendium}.po
+	`dirname $0`/pocompendium --correct $compendium -d $old
+	option_use_compendium=" --compendium=$compendium "
+	option_pot2po_use_compendium=" --tm=$compendium "
+fi
+
+echo -n "** Updating files against templates"
+[ $option_use_compendium ] && echo -n " using a compendium"
+echo " **"
+if [ ! $option_pot2po ]; then
+	for po in `cd $new ; find . -name "*.po" | sort`
+	do
+		[ $option_verbose ] && echo -n $new/$po
+		msgmerge $option_verbose_msgmerge $option_no_fuzzy_matching $option_no_wrap $option_use_compendium $option_use_own_compendium --backup=off --update $new/$po $templates/${po}t
+	done
+else
+	temp_pot2po_new=`mktemp -d tmp.XXXXXXXXXX`
+	temp_msgcat_new=`mktemp -d tmp.XXXXXXXXXX`
+	cp -rp $new/* $temp_pot2po_new
+	pot2po --errorlevel=traceback $option_pot2po_use_compendium $option_pot2po_use_own_compendium -t $temp_pot2po_new $templates $temp_msgcat_new
+	for file in `cd $temp_msgcat_new; find . -name "*.po"`
+	do
+		mkdir -p $new/$(dirname $file)
+		msgcat $temp_msgcat_new/$file > $new/$file
+	done
+	rm -rf $temp_pot2po_new $temp_msgcat_new
+fi
+
+if [ "$option_use_compendium" != "" ]; then
+	rm $compendium
+fi

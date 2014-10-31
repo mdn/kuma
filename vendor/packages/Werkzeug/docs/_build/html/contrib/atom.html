@@ -1,0 +1,199 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Werkzeug Documentation</title>
+    <link rel="stylesheet" href="../_static/style.css" type="text/css">
+    <link rel="stylesheet" href="../_static/print.css" type="text/css" media="print">
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css">
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:   '../',
+        VERSION:    '0.5.1dev'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/interface.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/werkzeug.js"></script>
+    <link rel="contents" title="Global table of contents" href="../contents.html">
+    <link rel="index" title="Global index" href="../genindex.html">
+    <link rel="search" title="Search" href="../search.html">
+    <link rel="top" title="Werkzeug v0.5.1dev documentation" href="../index.html">
+    <link rel="up" title="Contributed Modules" href="index.html">
+    <link rel="next" title="Sessions" href="sessions.html">
+    <link rel="prev" title="Contributed Modules" href="index.html">
+    
+  </head>
+  <body>
+    <div class="page">
+      <div class="header">
+        <h1 class="heading"><a href="../index.html"
+          title="back to the documentation overview"><span>Werkzeug</span></a></h1>
+      </div>
+      <ul class="navigation">
+        <li class="indexlink"><a href="../index.html">Overview</a></li>
+        <li><a href="index.html">&laquo; Contributed Modules</a></li>
+        <li class="active"><a href="">Atom Syndication</a></li>
+        <li><a href="sessions.html">Sessions &raquo;</a></li>
+      </ul>
+      <div class="body">
+        
+  <div class="section" id="module-werkzeug.contrib.atom">
+<h1>Atom Syndication<a class="headerlink" href="#module-werkzeug.contrib.atom" title="Permalink to this headline">¶</a></h1>
+<p>This module provides a class called <a title="werkzeug.contrib.atom.AtomFeed" class="reference internal" href="#werkzeug.contrib.atom.AtomFeed"><tt class="xref docutils literal"><span class="pre">AtomFeed</span></tt></a> which can be
+used to generate feeds in the Atom syndication format (see <span class="target" id="index-21"></span><a class="reference external" href="http://tools.ietf.org/html/rfc4287.html"><strong>RFC 4287</strong></a>).</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">atom_feed</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="n">feed</span> <span class="o">=</span> <span class="n">AtomFeed</span><span class="p">(</span><span class="s">&quot;My Blog&quot;</span><span class="p">,</span> <span class="n">feed_url</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
+                    <span class="n">url</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">host_url</span><span class="p">,</span>
+                    <span class="n">subtitle</span><span class="o">=</span><span class="s">&quot;My example blog for a feed test.&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">post</span> <span class="ow">in</span> <span class="n">Post</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mf">10</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+        <span class="n">feed</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">post</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="n">post</span><span class="o">.</span><span class="n">body</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="s">&#39;html&#39;</span><span class="p">,</span>
+                 <span class="n">author</span><span class="o">=</span><span class="n">post</span><span class="o">.</span><span class="n">author</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">post</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">post</span><span class="o">.</span><span class="n">uid</span><span class="p">,</span>
+                 <span class="n">updated</span><span class="o">=</span><span class="n">post</span><span class="o">.</span><span class="n">last_update</span><span class="p">,</span> <span class="n">published</span><span class="o">=</span><span class="n">post</span><span class="o">.</span><span class="n">pub_date</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">feed</span><span class="o">.</span><span class="n">get_response</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="class">
+<dt id="werkzeug.contrib.atom.AtomFeed">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.contrib.atom.</tt><tt class="descname">AtomFeed</tt><big>(</big><em>title=None</em>, <em>entries=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.atom.AtomFeed" title="Permalink to this definition">¶</a></dt>
+<dd><p>A helper class that creates Atom feeds.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>title</em> &#8211; the title of the feed. Required.</li>
+<li><em>title_type</em> &#8211; the type attribute for the title element.  One of
+<tt class="docutils literal"><span class="pre">'html'</span></tt>, <tt class="docutils literal"><span class="pre">'text'</span></tt> or <tt class="docutils literal"><span class="pre">'xhtml'</span></tt>.</li>
+<li><em>url</em> &#8211; the url for the feed (not the url <em>of</em> the feed)</li>
+<li><em>id</em> &#8211; a globally unique id for the feed.  Must be an URI.  If
+not present the <cite>feed_url</cite> is used, but one of both is
+required.</li>
+<li><em>updated</em> &#8211; the time the feed was modified the last time.  Must
+be a <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/datetime.html#datetime.datetime"><tt class="xref docutils literal"><span class="pre">datetime.datetime</span></tt></a> object.  If not
+present the latest entry&#8217;s <cite>updated</cite> is used.</li>
+<li><em>feed_url</em> &#8211; the URL to the feed.  Should be the URL that was
+requested.</li>
+<li><em>author</em> &#8211; the author of the feed.  Must be either a string (the
+name) or a dict with name (required) and uri or
+email (both optional).  Can be a list of (may be
+mixed, too) strings and dicts, too, if there are
+multiple authors. Required if not every entry has an
+author element.</li>
+<li><em>icon</em> &#8211; an icon for the feed.</li>
+<li><em>logo</em> &#8211; a logo for the feed.</li>
+<li><em>rights</em> &#8211; copyright information for the feed.</li>
+<li><em>rights_type</em> &#8211; the type attribute for the rights element.  One of
+<tt class="docutils literal"><span class="pre">'html'</span></tt>, <tt class="docutils literal"><span class="pre">'text'</span></tt> or <tt class="docutils literal"><span class="pre">'xhtml'</span></tt>.  Default is
+<tt class="docutils literal"><span class="pre">'text'</span></tt>.</li>
+<li><em>subtitle</em> &#8211; a short description of the feed.</li>
+<li><em>subtitle_type</em> &#8211; the type attribute for the subtitle element.
+One of <tt class="docutils literal"><span class="pre">'text'</span></tt>, <tt class="docutils literal"><span class="pre">'html'</span></tt>, <tt class="docutils literal"><span class="pre">'text'</span></tt>
+or <tt class="docutils literal"><span class="pre">'xhtml'</span></tt>.  Default is <tt class="docutils literal"><span class="pre">'text'</span></tt>.</li>
+<li><em>links</em> &#8211; additional links.  Must be a list of dictionaries with
+href (required) and rel, type, hreflang, title, length
+(all optional)</li>
+<li><em>generator</em> &#8211; the software that generated this feed.  This must be
+a tuple in the form <tt class="docutils literal"><span class="pre">(name,</span> <span class="pre">url,</span> <span class="pre">version)</span></tt>.  If
+you don&#8217;t want to specify one of them, set the item
+to <cite>None</cite>.</li>
+<li><em>entries</em> &#8211; a list with the entries for the feed. Entries can also
+be added later with <a title="werkzeug.contrib.atom.AtomFeed.add" class="reference internal" href="#werkzeug.contrib.atom.AtomFeed.add"><tt class="xref docutils literal"><span class="pre">add</span></tt></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>For more information on the elements see
+<a class="reference external" href="http://www.atomenabled.org/developers/syndication/">http://www.atomenabled.org/developers/syndication/</a></p>
+<p>Everywhere where a list is demanded, any iterable can be used.</p>
+<dl class="method">
+<dt id="werkzeug.contrib.atom.AtomFeed.add">
+<tt class="descname">add</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.atom.AtomFeed.add" title="Permalink to this definition">¶</a></dt>
+<dd>Add a new entry to the feed.  This function can either be called
+with a <a title="werkzeug.contrib.atom.FeedEntry" class="reference internal" href="#werkzeug.contrib.atom.FeedEntry"><tt class="xref docutils literal"><span class="pre">FeedEntry</span></tt></a> or some keyword and positional arguments
+that are forwarded to the <a title="werkzeug.contrib.atom.FeedEntry" class="reference internal" href="#werkzeug.contrib.atom.FeedEntry"><tt class="xref docutils literal"><span class="pre">FeedEntry</span></tt></a> constructor.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.contrib.atom.AtomFeed.generate">
+<tt class="descname">generate</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.contrib.atom.AtomFeed.generate" title="Permalink to this definition">¶</a></dt>
+<dd>Return a generator that yields pieces of XML.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.contrib.atom.AtomFeed.get_response">
+<tt class="descname">get_response</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.contrib.atom.AtomFeed.get_response" title="Permalink to this definition">¶</a></dt>
+<dd>Return a response object for the feed.</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.contrib.atom.AtomFeed.to_string">
+<tt class="descname">to_string</tt><big>(</big><big>)</big><a class="headerlink" href="#werkzeug.contrib.atom.AtomFeed.to_string" title="Permalink to this definition">¶</a></dt>
+<dd>Convert the feed into a string.</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="werkzeug.contrib.atom.FeedEntry">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.contrib.atom.</tt><tt class="descname">FeedEntry</tt><big>(</big><em>title=None</em>, <em>content=None</em>, <em>feed_url=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.atom.FeedEntry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a single entry in a feed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><em>title</em> &#8211; the title of the entry. Required.</li>
+<li><em>title_type</em> &#8211; the type attribute for the title element.  One of
+<tt class="docutils literal"><span class="pre">'html'</span></tt>, <tt class="docutils literal"><span class="pre">'text'</span></tt> or <tt class="docutils literal"><span class="pre">'xhtml'</span></tt>.</li>
+<li><em>content</em> &#8211; the content of the entry.</li>
+<li><em>content_type</em> &#8211; the type attribute for the content element.  One
+of <tt class="docutils literal"><span class="pre">'html'</span></tt>, <tt class="docutils literal"><span class="pre">'text'</span></tt> or <tt class="docutils literal"><span class="pre">'xhtml'</span></tt>.</li>
+<li><em>summary</em> &#8211; a summary of the entry&#8217;s content.</li>
+<li><em>summary_type</em> &#8211; the type attribute for the summary element.  One
+of <tt class="docutils literal"><span class="pre">'html'</span></tt>, <tt class="docutils literal"><span class="pre">'text'</span></tt> or <tt class="docutils literal"><span class="pre">'xhtml'</span></tt>.</li>
+<li><em>url</em> &#8211; the url for the entry.</li>
+<li><em>id</em> &#8211; a globally unique id for the entry.  Must be an URI.  If
+not present the URL is used, but one of both is required.</li>
+<li><em>updated</em> &#8211; the time the entry was modified the last time.  Must
+be a <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/datetime.html#datetime.datetime"><tt class="xref docutils literal"><span class="pre">datetime.datetime</span></tt></a> object. Required.</li>
+<li><em>author</em> &#8211; the author of the feed.  Must be either a string (the
+name) or a dict with name (required) and uri or
+email (both optional).  Can be a list of (may be
+mixed, too) strings and dicts, too, if there are
+multiple authors. Required if not every entry has an
+author element.</li>
+<li><em>published</em> &#8211; the time the entry was initially published.  Must
+be a <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/datetime.html#datetime.datetime"><tt class="xref docutils literal"><span class="pre">datetime.datetime</span></tt></a> object.</li>
+<li><em>rights</em> &#8211; copyright information for the entry.</li>
+<li><em>rights_type</em> &#8211; the type attribute for the rights element.  One of
+<tt class="docutils literal"><span class="pre">'html'</span></tt>, <tt class="docutils literal"><span class="pre">'text'</span></tt> or <tt class="docutils literal"><span class="pre">'xhtml'</span></tt>.  Default is
+<tt class="docutils literal"><span class="pre">'text'</span></tt>.</li>
+<li><em>links</em> &#8211; additional links.  Must be a list of dictionaries with
+href (required) and rel, type, hreflang, title, length
+(all optional)</li>
+<li><em>xml_base</em> &#8211; The xml base (url) for this feed item.  If not provided
+it will default to the item url.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>For more information on the elements see
+<a class="reference external" href="http://www.atomenabled.org/developers/syndication/">http://www.atomenabled.org/developers/syndication/</a></p>
+<p>Everywhere where a list is demanded, any iterable can be used.</p>
+</dd></dl>
+
+</div>
+
+
+        <div style="clear: both"></div>
+      </div>
+      <div class="footer">
+        © Copyright 2008 by the <a href="http://pocoo.org/">Pocoo Team</a>,
+        documentation generated by <a href="http://sphinx.pocoo.org/">Sphinx</a>
+      </div>
+    </div>
+  </body>
+</html>

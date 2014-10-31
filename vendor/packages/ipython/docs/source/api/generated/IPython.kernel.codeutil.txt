@@ -1,0 +1,20 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.codeutil
+===============
+
+Module: :mod:`kernel.codeutil`
+------------------------------
+.. automodule:: IPython.kernel.codeutil
+
+.. currentmodule:: IPython.kernel.codeutil
+
+Functions
+---------
+
+
+.. autofunction:: IPython.kernel.codeutil.code_ctor
+
+
+.. autofunction:: IPython.kernel.codeutil.reduce_code
+

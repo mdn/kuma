@@ -1,0 +1,258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.core.util &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.engineconnector" href="IPython.kernel.engineconnector.html" />
+    <link rel="prev" title="kernel.core.traceback_trap" href="IPython.kernel.core.traceback_trap.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.engineconnector.html" title="kernel.engineconnector"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.traceback_trap.html" title="kernel.core.traceback_trap"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-core-util">
+<h1>kernel.core.util<a class="headerlink" href="#kernel-core-util" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.core.util">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.core.util</span></tt><a class="headerlink" href="#module-IPython.kernel.core.util" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.kernel.core.util</span></tt>:</p>
+<img src="../../_images/inheritancea418e28b1a.png" usemap="#inheritancea418e28b1a" class="inheritance"/><map id="inheritancea418e28b1a" name="inheritancea418e28b1a">
+<area shape="rect" href="#IPython.kernel.core.util.InputList" title="core.util.InputList" alt="" coords="5,56,136,83"/>
+<area shape="rect" href="#IPython.kernel.core.util.Bunch" title="core.util.Bunch" alt="" coords="13,5,128,32"/>
+</map>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="bunch">
+<h3><a title="IPython.kernel.core.util.Bunch" class="reference internal" href="#IPython.kernel.core.util.Bunch"><tt class="xref docutils literal"><span class="pre">Bunch</span></tt></a><a class="headerlink" href="#bunch" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.core.util.Bunch">
+<!--[IPython.kernel.core.util.Bunch]-->class <tt class="descclassname">IPython.kernel.core.util.</tt><tt class="descname">Bunch</tt><big>(</big><em>*args</em>, <em>**kwds</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.util.Bunch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">dict</span></tt></p>
+<p>A dictionary that exposes its keys as attributes.</p>
+<dl class="method">
+<dt id="IPython.kernel.core.util.Bunch.__init__">
+<!--[IPython.kernel.core.util.Bunch.__init__]--><tt class="descname">__init__</tt><big>(</big><em>*args</em>, <em>**kwds</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.util.Bunch.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="inputlist">
+<h3><a title="IPython.kernel.core.util.InputList" class="reference internal" href="#IPython.kernel.core.util.InputList"><tt class="xref docutils literal"><span class="pre">InputList</span></tt></a><a class="headerlink" href="#inputlist" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.core.util.InputList">
+<!--[IPython.kernel.core.util.InputList]-->class <tt class="descclassname">IPython.kernel.core.util.</tt><tt class="descname">InputList</tt><a class="headerlink" href="#IPython.kernel.core.util.InputList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">list</span></tt></p>
+<p>Class to store user input.</p>
+<p>It&#8217;s basically a list, but slices return a string instead of a list, thus
+allowing things like (assuming &#8216;In&#8217; is an instance):</p>
+<p>exec In[4:7]</p>
+<p>or</p>
+<p>exec In[5:9] + In[14] + In[21:25]</p>
+<dl class="method">
+<dt id="IPython.kernel.core.util.InputList.__init__">
+<!--[IPython.kernel.core.util.InputList.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.core.util.InputList.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.util.InputList.add">
+<!--[IPython.kernel.core.util.InputList.add]--><tt class="descname">add</tt><big>(</big><em>index</em>, <em>command</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.util.InputList.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a command to the list with the appropriate index.</p>
+<p>If the index is greater than the current length of the list, empty
+strings are added in between.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.kernel.core.util.esc_quotes">
+<!--[IPython.kernel.core.util.esc_quotes]--><tt class="descclassname">IPython.kernel.core.util.</tt><tt class="descname">esc_quotes</tt><big>(</big><em>strng</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.util.esc_quotes" title="Permalink to this definition">¶</a></dt>
+<dd>Return the input string with single and double quotes escaped out.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.core.util.getoutputerror">
+<!--[IPython.kernel.core.util.getoutputerror]--><tt class="descclassname">IPython.kernel.core.util.</tt><tt class="descname">getoutputerror</tt><big>(</big><em>cmd</em>, <em>verbose=False</em>, <em>debug=False</em>, <em>header=''</em>, <em>split=False</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.util.getoutputerror" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes a command and returns the output.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>cmd</strong> : str</p>
+<blockquote>
+<p>The command to execute.</p>
+</blockquote>
+<p><strong>verbose</strong> : bool</p>
+<blockquote>
+<p>If True, print the command to be executed.</p>
+</blockquote>
+<p><strong>debug</strong> : bool</p>
+<blockquote>
+<p>Only print, do not actually execute.</p>
+</blockquote>
+<p><strong>header</strong> : str</p>
+<blockquote>
+<p>Header to print to screen prior to the executed command. No extra
+newlines are added.</p>
+</blockquote>
+<p><strong>split</strong> : bool</p>
+<blockquote class="last">
+<p>If True, return the output as a list split on newlines.</p>
+</blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.core.util.make_quoted_expr">
+<!--[IPython.kernel.core.util.make_quoted_expr]--><tt class="descclassname">IPython.kernel.core.util.</tt><tt class="descname">make_quoted_expr</tt><big>(</big><em>s</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.util.make_quoted_expr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return string s in appropriate quotes, using raw string if possible.</p>
+<p>XXX - example removed because it caused encoding errors in documentation
+generation.  We need a new example that doesn&#8217;t contain invalid chars.</p>
+<p>Note the use of raw string and padding at the end to allow trailing
+backslash.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.core.util.system_shell">
+<!--[IPython.kernel.core.util.system_shell]--><tt class="descclassname">IPython.kernel.core.util.</tt><tt class="descname">system_shell</tt><big>(</big><em>cmd</em>, <em>verbose=False</em>, <em>debug=False</em>, <em>header=''</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.util.system_shell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute a command in the system shell; always return None.</p>
+<p>This returns None so it can be conveniently used in interactive loops
+without getting the return value (typically 0) printed many times.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>cmd</strong> : str</p>
+<blockquote>
+<p>The command to execute.</p>
+</blockquote>
+<p><strong>verbose</strong> : bool</p>
+<blockquote>
+<p>If True, print the command to be executed.</p>
+</blockquote>
+<p><strong>debug</strong> : bool</p>
+<blockquote>
+<p>Only print, do not actually execute.</p>
+</blockquote>
+<p><strong>header</strong> : str</p>
+<blockquote class="last">
+<p>Header to print to screen prior to the executed command. No extra
+newlines are added.</p>
+</blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.core.util</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.core.util">Module: <tt class="docutils literal"><span class="pre">kernel.core.util</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#bunch"><tt class="docutils literal"><span class="pre">Bunch</span></tt></a></li>
+<li><a class="reference external" href="#inputlist"><tt class="docutils literal"><span class="pre">InputList</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.kernel.core.traceback_trap.html" title="previous chapter">kernel.core.traceback_trap</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.engineconnector.html" title="next chapter">kernel.engineconnector</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.core.util.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.engineconnector.html" title="kernel.engineconnector"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.traceback_trap.html" title="kernel.core.traceback_trap"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

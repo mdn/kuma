@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>testing.decorators_trial &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="testing.iptest" href="IPython.testing.iptest.html" />
+    <link rel="prev" title="testing.decorators_numpy" href="IPython.testing.decorators_numpy.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.iptest.html" title="testing.iptest"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.decorators_numpy.html" title="testing.decorators_numpy"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="testing-decorators-trial">
+<h1>testing.decorators_trial<a class="headerlink" href="#testing-decorators-trial" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.testing.decorators_trial">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">testing.decorators_trial</span></tt><a class="headerlink" href="#module-IPython.testing.decorators_trial" title="Permalink to this headline">¶</a></h2>
+<p>Testing related decorators for use with twisted.trial.</p>
+<p>The decorators in this files are designed to follow the same API as those
+in the decorators module (in this same directory).  But they can be used
+with twisted.trial</p>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.testing.decorators_trial.numpy_not_available">
+<!--[IPython.testing.decorators_trial.numpy_not_available]--><tt class="descclassname">IPython.testing.decorators_trial.</tt><tt class="descname">numpy_not_available</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.testing.decorators_trial.numpy_not_available" title="Permalink to this definition">¶</a></dt>
+<dd><p>Can numpy be imported?  Returns true if numpy does NOT import.</p>
+<p>This is used to make a decorator to skip tests that require numpy to be
+available, but delay the &#8216;import numpy&#8217; to test execution time.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.testing.decorators_trial.skip">
+<!--[IPython.testing.decorators_trial.skip]--><tt class="descclassname">IPython.testing.decorators_trial.</tt><tt class="descname">skip</tt><big>(</big><em>msg=None</em><big>)</big><a class="headerlink" href="#IPython.testing.decorators_trial.skip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a decorator that marks a test function for skipping.</p>
+<p>This is a decorator factory that returns a decorator that will cause
+tests to be skipped.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>msg</strong> : str</p>
+<blockquote>
+<p>Optional message to be added.</p>
+</blockquote>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>decorator</strong> : function</p>
+<blockquote class="last">
+<p>Decorator, which, when applied to a function, sets the skip
+attribute of the function causing <cite>twisted.trial</cite> to skip it.</p>
+</blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.testing.decorators_trial.skipif">
+<!--[IPython.testing.decorators_trial.skipif]--><tt class="descclassname">IPython.testing.decorators_trial.</tt><tt class="descname">skipif</tt><big>(</big><em>skip_condition</em>, <em>msg=None</em><big>)</big><a class="headerlink" href="#IPython.testing.decorators_trial.skipif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a decorator that marks a test function for skipping.</p>
+<p>The is a decorator factory that returns a decorator that will 
+conditionally skip a test based on the value of skip_condition.  The
+skip_condition argument can either be a boolean or a callable that returns
+a boolean.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>skip_condition</strong> : boolean or callable</p>
+<blockquote>
+<p>If this evaluates to True, the test is skipped.</p>
+</blockquote>
+<p><strong>msg</strong> : str</p>
+<blockquote>
+<p>The message to print if the test is skipped.</p>
+</blockquote>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>decorator</strong> : function</p>
+<blockquote class="last">
+<p>The decorator function that can be applied to the test function.</p>
+</blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">testing.decorators_trial</a><ul>
+<li><a class="reference external" href="#module-IPython.testing.decorators_trial">Module: <tt class="docutils literal"><span class="pre">testing.decorators_trial</span></tt></a></li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.testing.decorators_numpy.html" title="previous chapter">testing.decorators_numpy</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.testing.iptest.html" title="next chapter">testing.iptest</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.testing.decorators_trial.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.iptest.html" title="testing.iptest"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.decorators_numpy.html" title="testing.decorators_numpy"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

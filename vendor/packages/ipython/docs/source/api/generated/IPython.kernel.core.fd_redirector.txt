@@ -1,0 +1,26 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.core.fd_redirector
+=========================
+
+Module: :mod:`kernel.core.fd_redirector`
+----------------------------------------
+Inheritance diagram for ``IPython.kernel.core.fd_redirector``:
+
+.. inheritance-diagram:: IPython.kernel.core.fd_redirector 
+   :parts: 3
+
+.. automodule:: IPython.kernel.core.fd_redirector
+
+.. currentmodule:: IPython.kernel.core.fd_redirector
+
+:class:`FDRedirector`
+---------------------
+
+
+.. autoclass:: FDRedirector
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

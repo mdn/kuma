@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Werkzeug Documentation</title>
+    <link rel="stylesheet" href="../_static/style.css" type="text/css">
+    <link rel="stylesheet" href="../_static/print.css" type="text/css" media="print">
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css">
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:   '../',
+        VERSION:    '0.5.1dev'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/interface.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/werkzeug.js"></script>
+    <link rel="contents" title="Global table of contents" href="../contents.html">
+    <link rel="index" title="Global index" href="../genindex.html">
+    <link rel="search" title="Search" href="../search.html">
+    <link rel="top" title="Werkzeug v0.5.1dev documentation" href="../index.html">
+    <link rel="up" title="Contributed Modules" href="index.html">
+    <link rel="next" title="Important Terms" href="../terms.html">
+    <link rel="prev" title="WSGI Application Profiler" href="profiler.html">
+    
+  </head>
+  <body>
+    <div class="page">
+      <div class="header">
+        <h1 class="heading"><a href="../index.html"
+          title="back to the documentation overview"><span>Werkzeug</span></a></h1>
+      </div>
+      <ul class="navigation">
+        <li class="indexlink"><a href="../index.html">Overview</a></li>
+        <li><a href="profiler.html">&laquo; WSGI Application Profiler</a></li>
+        <li class="active"><a href="">Lint Validation Middleware</a></li>
+        <li><a href="../terms.html">Important Terms &raquo;</a></li>
+      </ul>
+      <div class="body">
+        
+  <div class="section" id="module-werkzeug.contrib.lint">
+<h1>Lint Validation Middleware<a class="headerlink" href="#module-werkzeug.contrib.lint" title="Permalink to this headline">¶</a></h1>
+<p>
+<span class="versionmodified">New in version 0.5.</span></p>
+<p>This module provides a middleware that performs sanity checks of the WSGI
+application.  It checks that <span class="target" id="index-15"></span><a class="reference external" href="http://www.python.org/dev/peps/pep-0333"><strong>PEP 333</strong></a> is properly implemented and warns
+on some common HTTP errors such as non-empty responses for 304 status
+codes.</p>
+<p>This module provides a middleware, the <a title="werkzeug.contrib.lint.LintMiddleware" class="reference internal" href="#werkzeug.contrib.lint.LintMiddleware"><tt class="xref docutils literal"><span class="pre">LintMiddleware</span></tt></a>.  Wrap your
+application with it and it will warn about common problems with WSGI and
+HTTP while your application is running.</p>
+<p>It&#8217;s strongly recommended to use it during development.</p>
+<dl class="class">
+<dt id="werkzeug.contrib.lint.LintMiddleware">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.contrib.lint.</tt><tt class="descname">LintMiddleware</tt><big>(</big><em>app</em><big>)</big><a class="headerlink" href="#werkzeug.contrib.lint.LintMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd><p>This middleware wraps an application and warns on common errors.
+Among other thing it currently checks for the following problems:</p>
+<ul class="simple">
+<li>invalid status codes</li>
+<li>non-bytestrings sent to the WSGI server</li>
+<li>strings returned from the WSGI application</li>
+<li>non-empty conditional responses</li>
+<li>unquoted etags</li>
+<li>relative URLs in the Location header</li>
+<li>unsafe calls to wsgi.input</li>
+<li>unclosed iterators</li>
+</ul>
+<p>Detected errors are emitted using the standard Python <a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/warnings.html#module-warnings"><tt class="xref docutils literal"><span class="pre">warnings</span></tt></a>
+system and usually end up on <tt class="xref docutils literal"><span class="pre">stderr</span></tt>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">werkzeug.contrib.lint</span> <span class="kn">import</span> <span class="n">LintMiddleware</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">LintMiddleware</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>app</em> &#8211; the application to wrap</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+        <div style="clear: both"></div>
+      </div>
+      <div class="footer">
+        © Copyright 2008 by the <a href="http://pocoo.org/">Pocoo Team</a>,
+        documentation generated by <a href="http://sphinx.pocoo.org/">Sphinx</a>
+      </div>
+    </div>
+  </body>
+</html>

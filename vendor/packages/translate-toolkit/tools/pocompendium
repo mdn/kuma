@@ -1,0 +1,175 @@
+#!/bin/bash
+#
+# Copyright 2004, 2005 Zuza Software Foundation
+#
+# This file is part of The Translate Toolkit.
+#
+# The Translate Toolkit is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# translate is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with translate; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+
+# Creates a PO Compendium ie a merge of all PO files in a given directory and
+# subdirectory.  If conflicts in the merge are found then these are
+# combined and marked fuzzy.
+
+
+function print_usage() {
+	echo "Usage: `basename $0` [options] output.po <-d directory(s)|file(s)>"
+	echo "       The first parameter is the output file, standard output if the output file is '-'."
+	echo "       Any number of directories may be specified for input files."
+	echo "     Options:"
+	echo "       --invert|v  Creates an inverse compendium with msgid and msgstr swapped"
+	echo "       --errors|e  Only ouput msg bundles that have errors"
+	echo "       --correct|c Only ouput msg bundles that are correctly translated"
+	echo "       --ignore-case|i  Drops all strings to lowercase"
+	echo "       --strip-accel-tilde|-st  Strip all tilde (~) accelerator characters"
+	echo "       --strip-accel-amp|-sa  Strip all ampersand (&) accelerator characters"
+	echo "       --strip-accel-under|-su  Strip all underscore (_) accelerator characters"
+	exit 1
+}
+
+option_invert=0
+option_errors=0
+option_correct=0
+option_ignorecase=0
+option_accel_ooo=0
+option_accel_moz=0
+option_accel_gnome=0
+
+for true
+do
+	case $1 in
+		--invert|-v) option_invert=1
+				shift
+				;;
+		--errors|-e) option_errors=1
+				if [ $option_correct -eq 1 ]; then 
+					usage 
+				fi
+				shift
+				;;
+        --correct|-c) option_correct=1
+				if [ $option_errors -eq 1 ]; 
+				then 
+					usage 
+				fi
+				shift
+				;;
+	    --ignore-case|-i) option_ignorecase=1
+				shift
+				;;
+	    --strip-accel-tilde|-st) option_accel_ooo=1
+				shift
+				;;
+	    --strip-accel-amp|-sa) option_accel_moz=1
+				shift
+				;;
+	    --strip-accel-under|-su) option_accel_gnome=1
+				shift
+				;;
+		--*|-*) print_usage
+			;;
+		*) break
+			;;
+	esac
+done
+	#--strip-end-punctuation|-p)
+	#--strip-all|-A)
+	#--good|-g)
+
+if [ $# -lt 2 ]; then
+	print_usage
+fi
+
+output=$1
+shift
+
+tmp_dir=`mktemp -d tmp.XXXXXXXXXX`
+
+if [ $1 == "-d" ]; then
+	shift
+	directories=$*
+	if [ $# -eq 0 ]; then
+		print_usage
+	fi
+	for dir in $directories
+	do
+		cp -rp $dir $tmp_dir
+	done
+else
+	files=$*
+	for file in $files
+	do
+		mkdir -p $tmp_dir/`dirname $file`
+		cp -p $file $tmp_dir/`dirname $file`
+	done
+fi
+
+# Invert if requested
+if [ $option_invert -eq 1 ] ; then
+	for po_file in `find $tmp_dir -name "*.po"`
+	do
+		stripped_name=`dirname $po_file`/`basename $po_file .po`
+		po_translated=${stripped_name}.translated.po
+		po_inverted=${stripped_name}.invert.po
+		msgattrib --translated $po_file > $po_translated
+		msghack --invert $po_translated > $po_inverted
+		rm $po_file $po_translated
+	done
+fi
+
+# Drop case to lowercase and apply other filters
+UPPER=ABCDEFGHIJKLMNOPQRSTUVWXYZ
+LOWER=abcdefghijklmnopqrstuvwxyz
+
+if [ $option_ignorecase -eq 1 ]; then
+	sed_string=`echo "$sed_string y/$UPPER/$LOWER/;"`
+fi
+if [ $option_accel_ooo -eq 1 ]; then
+	sed_string=`echo "$sed_string s/~//;"`
+fi
+if [ $option_accel_moz -eq 1 ]; then
+	sed_string=`echo "$sed_string s/&//;"`
+fi
+if [ $option_accel_gnome -eq 1 ]; then
+	sed_string=`echo "$sed_string s/_//;"`
+fi
+
+if [ $option_ignorecase = 1 ]; then
+	for po_file in `find $tmp_dir -name "*.po"`
+	do
+		stripped_name=`dirname $po_file`/`basename $po_file .po`
+		po_lower=${stripped_name}.lower.po
+		msgfilter --keep-header -i $po_file sed -e "$sed_string" > $po_lower
+		rm $po_file
+	done
+fi
+
+msgcat -o $output `find $tmp_dir -name "*.po"`
+
+# Extract only errors if requested
+if [ $option_errors -eq 1 ] ; then
+	tmp=`mktemp tmp.XXXXXXXXXX`
+	msgattrib --only-fuzzy $output > $tmp
+	mv $tmp $output
+fi
+
+# Extract only correct translations if requested
+if [ $option_correct -eq 1 ] ; then
+	tmp=`mktemp tmp.XXXXXXXXXX`
+	msgattrib --translated --no-fuzzy $output > $tmp
+	mv $tmp $output
+fi
+
+rm -rf $tmp_dir

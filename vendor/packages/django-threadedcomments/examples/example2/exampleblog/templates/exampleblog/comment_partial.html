@@ -1,0 +1,30 @@
+{% load threadedcommentstags %}
+{% load voting_tags %}
+{% auto_transform_markup comment as marked_up %}
+<div class="comment depth-{{ depth }}" id="c{{ comment.id }}">
+    <p class="poster">Posted by <span class="un">{{ comment.user.username }}</span></p>
+    <p class="date">on <span class="datebld">{{ comment.date_submitted|date }}.</span></p>
+    <div class="body">{{ marked_up|linebreaks }}</div>
+    <div class="vote" {% if user.is_authenticated %}{% else %}style="display: none;"{% endif %}>
+        {% if vote.is_upvote %}
+        <a href="javascript:vote({{ comment.id }},'clear')" class="up"><img src="{{ MEDIA_URL }}img/arrow_up_gray.png"></img></a>
+        {% else %}
+        <a href="javascript:vote({{ comment.id }},'up')" class="up"><img src="{{ MEDIA_URL }}img/arrow_up.png"></img></a>
+        {% endif %}
+    </div>
+    <p class="score">{{ score.score }}</p>
+    <div class="vote" {% if user.is_authenticated %}{% else %}style="display: none;"{% endif %}>
+        {% if vote.is_downvote %}
+        <a href="javascript:vote({{ comment.id }},'clear')" class="down"><img src="{{ MEDIA_URL }}img/arrow_down_gray.png"></img></a>
+        {% else %}
+        <a href="javascript:vote({{ comment.id }},'down')" class="down"><img src="{{ MEDIA_URL }}img/arrow_down.png"></img></a>
+        {% endif %}
+    </div>
+    {% if vote.is_downvote %}
+        <a href="javascript:show_comment({{ comment.id }})" class="show_comment">Show Comment</a>
+    {% else %}
+        <a href="javascript:hide_comment({{ comment.id }})" class="show_comment">Hide Comment</a>
+    {% endif %}
+    <a href="javascript:focusOn({{ comment.id }})" class="focus">Focus</a>
+    {% if user.is_authenticated %}<a href="javascript:show_reply_form({{ comment.id }})" class="reply">Reply</a>{% endif %}
+</div>

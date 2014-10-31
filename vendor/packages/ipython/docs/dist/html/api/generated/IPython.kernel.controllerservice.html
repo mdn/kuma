@@ -1,0 +1,294 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.controllerservice &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.core.display_formatter" href="IPython.kernel.core.display_formatter.html" />
+    <link rel="prev" title="kernel.contexts" href="IPython.kernel.contexts.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.display_formatter.html" title="kernel.core.display_formatter"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.contexts.html" title="kernel.contexts"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-controllerservice">
+<h1>kernel.controllerservice<a class="headerlink" href="#kernel-controllerservice" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.controllerservice">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.controllerservice</span></tt><a class="headerlink" href="#module-IPython.kernel.controllerservice" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.kernel.controllerservice</span></tt>:</p>
+<img src="../../_images/inheritance0e68d1e987.png" usemap="#inheritance0e68d1e987" class="inheritance"/><map id="inheritance0e68d1e987" name="inheritance0e68d1e987">
+<area shape="rect" href="#IPython.kernel.controllerservice.IControllerCore" title="kernel.controllerservice.IControllerCore" alt="" coords="298,83,507,104"/>
+<area shape="rect" href="#IPython.kernel.controllerservice.IControllerBase" title="kernel.controllerservice.IControllerBase" alt="" coords="552,83,763,104"/>
+<area shape="rect" href="#IPython.kernel.controllerservice.ControllerService" title="kernel.controllerservice.ControllerService" alt="" coords="292,44,513,65"/>
+<area shape="rect" href="#IPython.kernel.controllerservice.ControllerAdapterBase" title="kernel.controllerservice.ControllerAdapterBase" alt="" coords="5,4,254,25"/>
+</map>
+<p>A Twisted Service for the IPython Controller.</p>
+<p>The IPython Controller:</p>
+<ul class="simple">
+<li>Listens for Engines to connect and then manages access to those engines.</li>
+<li>Listens for clients and passes commands from client to the Engines.</li>
+<li>Exposes an asynchronous interfaces to the Engines which themselves can block.</li>
+<li>Acts as a gateway to the Engines.</li>
+</ul>
+<p>The design of the controller is somewhat abstract to allow flexibility in how 
+the controller is presented to clients.  This idea is that there is a basic
+ControllerService class that allows engines to connect to it.  But, this 
+basic class has no client interfaces.  To expose client interfaces developers
+provide an adapter that makes the ControllerService look like something.  For 
+example, one client interface might support task farming and another might
+support interactive usage.  The important thing is that by using interfaces
+and adapters, a single controller can be accessed from multiple interfaces.
+Furthermore, by adapting various client interfaces to various network
+protocols, each client interface can be exposed to multiple network protocols.
+See multiengine.py for an example of how to adapt the ControllerService
+to a client interface.</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="controlleradapterbase">
+<h3><a title="IPython.kernel.controllerservice.ControllerAdapterBase" class="reference internal" href="#IPython.kernel.controllerservice.ControllerAdapterBase"><tt class="xref docutils literal"><span class="pre">ControllerAdapterBase</span></tt></a><a class="headerlink" href="#controlleradapterbase" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.controllerservice.ControllerAdapterBase">
+<!--[IPython.kernel.controllerservice.ControllerAdapterBase]-->class <tt class="descclassname">IPython.kernel.controllerservice.</tt><tt class="descname">ControllerAdapterBase</tt><big>(</big><em>controller</em><big>)</big><a class="headerlink" href="#IPython.kernel.controllerservice.ControllerAdapterBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>All Controller adapters should inherit from this class.</p>
+<p>This class provides a wrapped version of the IControllerBase interface that
+can be used to easily create new custom controllers.  Subclasses of this
+will provide a full implementation of IControllerBase.</p>
+<p>This class doesn&#8217;t implement any client notification mechanism.  That
+is up to subclasses.</p>
+<dl class="method">
+<dt id="IPython.kernel.controllerservice.ControllerAdapterBase.__init__">
+<!--[IPython.kernel.controllerservice.ControllerAdapterBase.__init__]--><tt class="descname">__init__</tt><big>(</big><em>controller</em><big>)</big><a class="headerlink" href="#IPython.kernel.controllerservice.ControllerAdapterBase.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.controllerservice.ControllerAdapterBase.on_n_engines_registered_do">
+<!--[IPython.kernel.controllerservice.ControllerAdapterBase.on_n_engines_registered_do]--><tt class="descname">on_n_engines_registered_do</tt><big>(</big><em>n</em>, <em>f</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.controllerservice.ControllerAdapterBase.on_n_engines_registered_do" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.controllerservice.ControllerAdapterBase.on_register_engine_do">
+<!--[IPython.kernel.controllerservice.ControllerAdapterBase.on_register_engine_do]--><tt class="descname">on_register_engine_do</tt><big>(</big><em>f</em>, <em>includeID</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.controllerservice.ControllerAdapterBase.on_register_engine_do" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.controllerservice.ControllerAdapterBase.on_register_engine_do_not">
+<!--[IPython.kernel.controllerservice.ControllerAdapterBase.on_register_engine_do_not]--><tt class="descname">on_register_engine_do_not</tt><big>(</big><em>f</em><big>)</big><a class="headerlink" href="#IPython.kernel.controllerservice.ControllerAdapterBase.on_register_engine_do_not" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.controllerservice.ControllerAdapterBase.on_unregister_engine_do">
+<!--[IPython.kernel.controllerservice.ControllerAdapterBase.on_unregister_engine_do]--><tt class="descname">on_unregister_engine_do</tt><big>(</big><em>f</em>, <em>includeID</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.controllerservice.ControllerAdapterBase.on_unregister_engine_do" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.controllerservice.ControllerAdapterBase.on_unregister_engine_do_not">
+<!--[IPython.kernel.controllerservice.ControllerAdapterBase.on_unregister_engine_do_not]--><tt class="descname">on_unregister_engine_do_not</tt><big>(</big><em>f</em><big>)</big><a class="headerlink" href="#IPython.kernel.controllerservice.ControllerAdapterBase.on_unregister_engine_do_not" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.controllerservice.ControllerAdapterBase.register_engine">
+<!--[IPython.kernel.controllerservice.ControllerAdapterBase.register_engine]--><tt class="descname">register_engine</tt><big>(</big><em>remoteEngine</em>, <em>id=None</em>, <em>ip=None</em>, <em>port=None</em>, <em>pid=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.controllerservice.ControllerAdapterBase.register_engine" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.controllerservice.ControllerAdapterBase.unregister_engine">
+<!--[IPython.kernel.controllerservice.ControllerAdapterBase.unregister_engine]--><tt class="descname">unregister_engine</tt><big>(</big><em>id</em><big>)</big><a class="headerlink" href="#IPython.kernel.controllerservice.ControllerAdapterBase.unregister_engine" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="controllerservice">
+<h3><a title="IPython.kernel.controllerservice.ControllerService" class="reference internal" href="#IPython.kernel.controllerservice.ControllerService"><tt class="xref docutils literal"><span class="pre">ControllerService</span></tt></a><a class="headerlink" href="#controllerservice" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.controllerservice.ControllerService">
+<!--[IPython.kernel.controllerservice.ControllerService]-->class <tt class="descclassname">IPython.kernel.controllerservice.</tt><tt class="descname">ControllerService</tt><big>(</big><em>maxEngines=511</em>, <em>saveIDs=False</em><big>)</big><a class="headerlink" href="#IPython.kernel.controllerservice.ControllerService" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt>, <tt class="xref docutils literal"><span class="pre">twisted.application.service.Service</span></tt></p>
+<p>A basic Controller represented as a Twisted Service.</p>
+<p>This class doesn&#8217;t implement any client notification mechanism.  That
+is up to adapted subclasses.</p>
+<dl class="method">
+<dt id="IPython.kernel.controllerservice.ControllerService.__init__">
+<!--[IPython.kernel.controllerservice.ControllerService.__init__]--><tt class="descname">__init__</tt><big>(</big><em>maxEngines=511</em>, <em>saveIDs=False</em><big>)</big><a class="headerlink" href="#IPython.kernel.controllerservice.ControllerService.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.controllerservice.ControllerService.on_n_engines_registered_do">
+<!--[IPython.kernel.controllerservice.ControllerService.on_n_engines_registered_do]--><tt class="descname">on_n_engines_registered_do</tt><big>(</big><em>n</em>, <em>f</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.controllerservice.ControllerService.on_n_engines_registered_do" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.controllerservice.ControllerService.on_register_engine_do">
+<!--[IPython.kernel.controllerservice.ControllerService.on_register_engine_do]--><tt class="descname">on_register_engine_do</tt><big>(</big><em>f</em>, <em>includeID</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.controllerservice.ControllerService.on_register_engine_do" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.controllerservice.ControllerService.on_register_engine_do_not">
+<!--[IPython.kernel.controllerservice.ControllerService.on_register_engine_do_not]--><tt class="descname">on_register_engine_do_not</tt><big>(</big><em>f</em><big>)</big><a class="headerlink" href="#IPython.kernel.controllerservice.ControllerService.on_register_engine_do_not" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.controllerservice.ControllerService.on_unregister_engine_do">
+<!--[IPython.kernel.controllerservice.ControllerService.on_unregister_engine_do]--><tt class="descname">on_unregister_engine_do</tt><big>(</big><em>f</em>, <em>includeID</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.controllerservice.ControllerService.on_unregister_engine_do" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.controllerservice.ControllerService.on_unregister_engine_do_not">
+<!--[IPython.kernel.controllerservice.ControllerService.on_unregister_engine_do_not]--><tt class="descname">on_unregister_engine_do_not</tt><big>(</big><em>f</em><big>)</big><a class="headerlink" href="#IPython.kernel.controllerservice.ControllerService.on_unregister_engine_do_not" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.controllerservice.ControllerService.register_engine">
+<!--[IPython.kernel.controllerservice.ControllerService.register_engine]--><tt class="descname">register_engine</tt><big>(</big><em>remoteEngine</em>, <em>id=None</em>, <em>ip=None</em>, <em>port=None</em>, <em>pid=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.controllerservice.ControllerService.register_engine" title="Permalink to this definition">¶</a></dt>
+<dd>Register new engine connection</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.controllerservice.ControllerService.unregister_engine">
+<!--[IPython.kernel.controllerservice.ControllerService.unregister_engine]--><tt class="descname">unregister_engine</tt><big>(</big><em>id</em><big>)</big><a class="headerlink" href="#IPython.kernel.controllerservice.ControllerService.unregister_engine" title="Permalink to this definition">¶</a></dt>
+<dd>Unregister engine by id.</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="icontrollerbase">
+<h3><a title="IPython.kernel.controllerservice.IControllerBase" class="reference internal" href="#IPython.kernel.controllerservice.IControllerBase"><tt class="xref docutils literal"><span class="pre">IControllerBase</span></tt></a><a class="headerlink" href="#icontrollerbase" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.controllerservice.IControllerBase">
+<!--[IPython.kernel.controllerservice.IControllerBase]-->class <tt class="descclassname">IPython.kernel.controllerservice.</tt><tt class="descname">IControllerBase</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.controllerservice.IControllerBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.controllerservice.IControllerCore" class="reference internal" href="#IPython.kernel.controllerservice.IControllerCore"><tt class="xref docutils literal"><span class="pre">IPython.kernel.controllerservice.IControllerCore</span></tt></a></p>
+<p>The basic controller interface.</p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.controllerservice.IControllerBase.__init__">
+<!--[IPython.kernel.controllerservice.IControllerBase.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.controllerservice.IControllerBase.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="icontrollercore">
+<h3><a title="IPython.kernel.controllerservice.IControllerCore" class="reference internal" href="#IPython.kernel.controllerservice.IControllerCore"><tt class="xref docutils literal"><span class="pre">IControllerCore</span></tt></a><a class="headerlink" href="#icontrollercore" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.controllerservice.IControllerCore">
+<!--[IPython.kernel.controllerservice.IControllerCore]-->class <tt class="descclassname">IPython.kernel.controllerservice.</tt><tt class="descname">IControllerCore</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.controllerservice.IControllerCore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">zope.interface.Interface</span></tt></p>
+<p>Basic methods any controller must have.</p>
+<p>This is basically the aspect of the controller relevant to the 
+engines and does not assume anything about how the engines will
+be presented to a client.</p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.controllerservice.IControllerCore.__init__">
+<!--[IPython.kernel.controllerservice.IControllerCore.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.controllerservice.IControllerCore.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.controllerservice</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.controllerservice">Module: <tt class="docutils literal"><span class="pre">kernel.controllerservice</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#controlleradapterbase"><tt class="docutils literal"><span class="pre">ControllerAdapterBase</span></tt></a></li>
+<li><a class="reference external" href="#controllerservice"><tt class="docutils literal"><span class="pre">ControllerService</span></tt></a></li>
+<li><a class="reference external" href="#icontrollerbase"><tt class="docutils literal"><span class="pre">IControllerBase</span></tt></a></li>
+<li><a class="reference external" href="#icontrollercore"><tt class="docutils literal"><span class="pre">IControllerCore</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.kernel.contexts.html" title="previous chapter">kernel.contexts</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.core.display_formatter.html" title="next chapter">kernel.core.display_formatter</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.controllerservice.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.display_formatter.html" title="kernel.core.display_formatter"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.contexts.html" title="kernel.contexts"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

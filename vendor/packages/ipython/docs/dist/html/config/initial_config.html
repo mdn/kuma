@@ -1,0 +1,332 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Initial configuration of your environment &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../index.html" />
+    <link rel="up" title="Configuration and customization" href="index.html" />
+    <link rel="next" title="Customization of IPython" href="customization.html" />
+    <link rel="prev" title="Configuration and customization" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="customization.html" title="Customization of IPython"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Configuration and customization"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Configuration and customization</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="initial-configuration-of-your-environment">
+<span id="initial-config"></span><h1>Initial configuration of your environment<a class="headerlink" href="#initial-configuration-of-your-environment" title="Permalink to this headline">¶</a></h1>
+<p>This section will help you set various things in your environment for
+your IPython sessions to be as efficient as possible. All of IPython&#8217;s
+configuration information, along with several example files, is stored
+in a directory named by default $HOME/.ipython. You can change this by
+defining the environment variable IPYTHONDIR, or at runtime with the
+command line option -ipythondir.</p>
+<p>If all goes well, the first time you run IPython it should automatically create
+a user copy of the config directory for you, based on its builtin defaults. You
+can look at the files it creates to learn more about configuring the
+system. The main file you will modify to configure IPython&#8217;s behavior is called
+ipythonrc (with a .ini extension under Windows), included for reference
+<a class="reference external" href="customization.html#ipythonrc"><em>here</em></a>. This file is very commented and has many variables you
+can change to suit your taste, you can find more details <a class="reference external" href="customization.html#customization"><em>here</em></a>. Here we discuss the basic things you will want to make sure
+things are working properly from the beginning.</p>
+<div class="section" id="access-to-the-python-help-system">
+<span id="accessing-help"></span><h2>Access to the Python help system<a class="headerlink" href="#access-to-the-python-help-system" title="Permalink to this headline">¶</a></h2>
+<p>This is true for Python in general (not just for IPython): you should have an
+environment variable called PYTHONDOCS pointing to the directory where your
+HTML Python documentation lives. In my system it&#8217;s
+<tt class="docutils literal"><span class="pre">/usr/share/doc/python-doc/html</span></tt>, check your local details or ask your
+systems administrator.</p>
+<p>This is the directory which holds the HTML version of the Python
+manuals. Unfortunately it seems that different Linux distributions
+package these files differently, so you may have to look around a bit.
+Below I show the contents of this directory on my system for reference:</p>
+<div class="highlight-python"><pre>[html]&gt; ls
+about.html  dist/  icons/      lib/           python2.5.devhelp.gz  whatsnew/
+acks.html   doc/   index.html  mac/           ref/
+api/        ext/   inst/       modindex.html  tut/</pre>
+</div>
+<p>You should really make sure this variable is correctly set so that
+Python&#8217;s pydoc-based help system works. It is a powerful and convenient
+system with full access to the Python manuals and all modules accessible
+to you.</p>
+<p>Under Windows it seems that pydoc finds the documentation automatically,
+so no extra setup appears necessary.</p>
+</div>
+<div class="section" id="editor">
+<h2>Editor<a class="headerlink" href="#editor" title="Permalink to this headline">¶</a></h2>
+<p>The %edit command (and its alias %ed) will invoke the editor set in your
+environment as EDITOR. If this variable is not set, it will default to
+vi under Linux/Unix and to notepad under Windows. You may want to set
+this variable properly and to a lightweight editor which doesn&#8217;t take
+too long to start (that is, something other than a new instance of
+Emacs). This way you can edit multi-line code quickly and with the power
+of a real editor right inside IPython.</p>
+<p>If you are a dedicated Emacs user, you should set up the Emacs server so
+that new requests are handled by the original process. This means that
+almost no time is spent in handling the request (assuming an Emacs
+process is already running). For this to work, you need to set your
+EDITOR environment variable to &#8216;emacsclient&#8217;. The code below, supplied
+by Francois Pinard, can then be used in your .emacs file to enable the
+server:</p>
+<div class="highlight-python"><pre>(defvar server-buffer-clients)
+(when (and (fboundp 'server-start) (string-equal (getenv "TERM") 'xterm))
+  (server-start)
+  (defun fp-kill-server-with-buffer-routine ()
+    (and server-buffer-clients (server-done)))
+  (add-hook 'kill-buffer-hook 'fp-kill-server-with-buffer-routine))</pre>
+</div>
+<p>You can also set the value of this editor via the commmand-line option
+&#8216;-editor&#8217; or in your ipythonrc file. This is useful if you wish to use
+specifically for IPython an editor different from your typical default
+(and for Windows users who tend to use fewer environment variables).</p>
+</div>
+<div class="section" id="color">
+<h2>Color<a class="headerlink" href="#color" title="Permalink to this headline">¶</a></h2>
+<p>The default IPython configuration has most bells and whistles turned on
+(they&#8217;re pretty safe). But there&#8217;s one that may cause problems on some
+systems: the use of color on screen for displaying information. This is
+very useful, since IPython can show prompts and exception tracebacks
+with various colors, display syntax-highlighted source code, and in
+general make it easier to visually parse information.</p>
+<p>The following terminals seem to handle the color sequences fine:</p>
+<blockquote>
+<ul class="simple">
+<li>Linux main text console, KDE Konsole, Gnome Terminal, E-term,
+rxvt, xterm.</li>
+<li>CDE terminal (tested under Solaris). This one boldfaces light colors.</li>
+<li>(X)Emacs buffers. See the <a class="reference internal" href="#emacs">emacs</a> section for more details on
+using IPython with (X)Emacs.</li>
+<li>A Windows (XP/2k) command prompt with <a class="reference external" href="https://code.launchpad.net/pyreadline">pyreadline</a>.</li>
+<li>A Windows (XP/2k) CygWin shell. Although some users have reported
+problems; it is not clear whether there is an issue for everyone
+or only under specific configurations. If you have full color
+support under cygwin, please post to the IPython mailing list so
+this issue can be resolved for all users.</li>
+</ul>
+</blockquote>
+<p>These have shown problems:</p>
+<blockquote>
+<ul class="simple">
+<li>Windows command prompt in WinXP/2k logged into a Linux machine via
+telnet or ssh.</li>
+<li>Windows native command prompt in WinXP/2k, without Gary Bishop&#8217;s
+extensions. Once Gary&#8217;s readline library is installed, the normal
+WinXP/2k command prompt works perfectly.</li>
+</ul>
+</blockquote>
+<p>Currently the following color schemes are available:</p>
+<blockquote>
+<ul class="simple">
+<li>NoColor: uses no color escapes at all (all escapes are empty &#8216;&#8217; &#8216;&#8217;
+strings). This &#8216;scheme&#8217; is thus fully safe to use in any terminal.</li>
+<li>Linux: works well in Linux console type environments: dark
+background with light fonts. It uses bright colors for
+information, so it is difficult to read if you have a light
+colored background.</li>
+<li>LightBG: the basic colors are similar to those in the Linux scheme
+but darker. It is easy to read in terminals with light backgrounds.</li>
+</ul>
+</blockquote>
+<p>IPython uses colors for two main groups of things: prompts and
+tracebacks which are directly printed to the terminal, and the object
+introspection system which passes large sets of data through a pager.</p>
+</div>
+<div class="section" id="input-output-prompts-and-exception-tracebacks">
+<h2>Input/Output prompts and exception tracebacks<a class="headerlink" href="#input-output-prompts-and-exception-tracebacks" title="Permalink to this headline">¶</a></h2>
+<p>You can test whether the colored prompts and tracebacks work on your
+system interactively by typing &#8216;%colors Linux&#8217; at the prompt (use
+&#8216;%colors LightBG&#8217; if your terminal has a light background). If the input
+prompt shows garbage like:</p>
+<div class="highlight-python"><pre>[0;32mIn [[1;32m1[0;32m]: [0;00m</pre>
+</div>
+<p>instead of (in color) something like:</p>
+<div class="highlight-python"><pre>In [1]:</pre>
+</div>
+<p>this means that your terminal doesn&#8217;t properly handle color escape
+sequences. You can go to a &#8216;no color&#8217; mode by typing &#8216;%colors NoColor&#8217;.</p>
+<p>You can try using a different terminal emulator program (Emacs users,
+see below). To permanently set your color preferences, edit the file
+$HOME/.ipython/ipythonrc and set the colors option to the desired value.</p>
+</div>
+<div class="section" id="object-details-types-docstrings-source-code-etc">
+<h2>Object details (types, docstrings, source code, etc.)<a class="headerlink" href="#object-details-types-docstrings-source-code-etc" title="Permalink to this headline">¶</a></h2>
+<p>IPython has a set of special functions for studying the objects you are working
+with, discussed in detail <a class="reference external" href="../interactive/reference.html#dynamic-object-info"><em>here</em></a>. But this system
+relies on passing information which is longer than your screen through a data
+pager, such as the common Unix less and more programs. In order to be able to
+see this information in color, your pager needs to be properly configured. I
+strongly recommend using less instead of more, as it seems that more simply can
+not understand colored text correctly.</p>
+<p>In order to configure less as your default pager, do the following:</p>
+<blockquote>
+<ol class="arabic simple">
+<li>Set the environment PAGER variable to less.</li>
+<li>Set the environment LESS variable to -r (plus any other options
+you always want to pass to less by default). This tells less to
+properly interpret control sequences, which is how color
+information is given to your terminal.</li>
+</ol>
+</blockquote>
+<p>For the bash shell, add to your ~/.bashrc file the lines:</p>
+<div class="highlight-python"><pre>export PAGER=less
+export LESS=-r</pre>
+</div>
+<p>For the csh or tcsh shells, add to your ~/.cshrc file the lines:</p>
+<div class="highlight-python"><pre>setenv PAGER less
+setenv LESS -r</pre>
+</div>
+<p>There is similar syntax for other Unix shells, look at your system
+documentation for details.</p>
+<p>If you are on a system which lacks proper data pagers (such as Windows),
+IPython will use a very limited builtin pager.</p>
+</div>
+<div class="section" id="x-emacs-configuration">
+<span id="emacs"></span><h2>(X)Emacs configuration<a class="headerlink" href="#x-emacs-configuration" title="Permalink to this headline">¶</a></h2>
+<p>Thanks to the work of Alexander Schmolck and Prabhu Ramachandran,
+currently (X)Emacs and IPython get along very well.</p>
+<p>Important note: You will need to use a recent enough version of
+python-mode.el, along with the file ipython.el. You can check that the
+version you have of python-mode.el is new enough by either looking at
+the revision number in the file itself, or asking for it in (X)Emacs via
+M-x py-version. Versions 4.68 and newer contain the necessary fixes for
+proper IPython support.</p>
+<p>The file ipython.el is included with the IPython distribution, in the
+documentation directory (where this manual resides in PDF and HTML
+formats).</p>
+<p>Once you put these files in your Emacs path, all you need in your .emacs
+file is:</p>
+<div class="highlight-python"><pre>(require 'ipython)</pre>
+</div>
+<p>This should give you full support for executing code snippets via
+IPython, opening IPython as your Python shell via <tt class="docutils literal"><span class="pre">C-c</span> <span class="pre">!</span></tt>, etc.</p>
+<p>You can customize the arguments passed to the IPython instance at startup by
+setting the <tt class="docutils literal"><span class="pre">py-python-command-args</span></tt> variable.  For example, to start always
+in <tt class="docutils literal"><span class="pre">pylab</span></tt> mode with hardcoded light-background colors, you can use:</p>
+<div class="highlight-python"><pre>(setq py-python-command-args '("-pylab" "-colors" "LightBG"))</pre>
+</div>
+<p>If you happen to get garbage instead of colored prompts as described in
+the previous section, you may need to set also in your .emacs file:</p>
+<div class="highlight-python"><pre>(setq ansi-color-for-comint-mode t)</pre>
+</div>
+<p>Notes:</p>
+<blockquote>
+<ul class="simple">
+<li>There is one caveat you should be aware of: you must start the
+IPython shell before attempting to execute any code regions via
+<tt class="docutils literal"><span class="pre">C-c</span> <span class="pre">|</span></tt>. Simply type C-c ! to start IPython before passing any code
+regions to the interpreter, and you shouldn&#8217;t experience any
+problems.
+This is due to a bug in Python itself, which has been fixed for
+Python 2.3, but exists as of Python 2.2.2 (reported as SF bug [
+737947 ]).</li>
+<li>The (X)Emacs support is maintained by Alexander Schmolck, so all
+comments/requests should be directed to him through the IPython
+mailing lists.</li>
+<li>This code is still somewhat experimental so it&#8217;s a bit rough
+around the edges (although in practice, it works quite well).</li>
+<li>Be aware that if you customize py-python-command previously, this
+value will override what ipython.el does (because loading the
+customization variables comes later).</li>
+</ul>
+</blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">Initial configuration of your environment</a><ul>
+<li><a class="reference external" href="#access-to-the-python-help-system">Access to the Python help system</a></li>
+<li><a class="reference external" href="#editor">Editor</a></li>
+<li><a class="reference external" href="#color">Color</a></li>
+<li><a class="reference external" href="#input-output-prompts-and-exception-tracebacks">Input/Output prompts and exception tracebacks</a></li>
+<li><a class="reference external" href="#object-details-types-docstrings-source-code-etc">Object details (types, docstrings, source code, etc.)</a></li>
+<li><a class="reference external" href="#x-emacs-configuration">(X)Emacs configuration</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="index.html" title="previous chapter">Configuration and customization</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="customization.html" title="next chapter">Customization of IPython</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/config/initial_config.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="customization.html" title="Customization of IPython"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Configuration and customization"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Configuration and customization</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

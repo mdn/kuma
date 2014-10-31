@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>IPython.kernel.core.notification blueprint &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../index.html" />
+    <link rel="up" title="IPython Developer&#8217;s Guide" href="index.html" />
+    <link rel="next" title="Notes on the IPython configuration system" href="config_blueprint.html" />
+    <link rel="prev" title="Development roadmap" href="roadmap.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="config_blueprint.html" title="Notes on the IPython configuration system"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="roadmap.html" title="Development roadmap"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">IPython Developer&#8217;s Guide</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="ipython-kernel-core-notification-blueprint">
+<span id="notification"></span><h1>IPython.kernel.core.notification blueprint<a class="headerlink" href="#ipython-kernel-core-notification-blueprint" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The <a title="" class="reference external" href="../api/generated/IPython.kernel.core.notification.html#module-IPython.kernel.core.notification"><tt class="xref docutils literal"><span class="pre">IPython.kernel.core.notification</span></tt></a> module will provide a simple
+implementation of a notification center and support for the observer pattern
+within the <tt class="xref docutils literal"><span class="pre">IPython.kernel.core</span></tt>. The main intended use case is to
+provide notification of Interpreter events to an observing frontend during the
+execution of a single block of code.</p>
+</div>
+<div class="section" id="functional-requirements">
+<h2>Functional Requirements<a class="headerlink" href="#functional-requirements" title="Permalink to this headline">¶</a></h2>
+<p>The notification center must:</p>
+<ul class="simple">
+<li>Provide synchronous notification of events to all registered observers.</li>
+<li>Provide typed or labeled notification types.</li>
+<li>Allow observers to register callbacks for individual or all notification
+types.</li>
+<li>Allow observers to register callbacks for events from individual or all
+notifying objects.</li>
+<li>Notification to the observer consists of the notification type, notifying
+object and user-supplied extra information [implementation: as keyword
+parameters to the registered callback].</li>
+<li>Perform as O(1) in the case of no registered observers.</li>
+<li>Permit out-of-process or cross-network extension.</li>
+</ul>
+</div>
+<div class="section" id="what-s-not-included">
+<h2>What&#8217;s not included<a class="headerlink" href="#what-s-not-included" title="Permalink to this headline">¶</a></h2>
+<p>As written, the <tt class="xref docutils literal"><span class="pre">IPython.kernel.core.notificaiton</span></tt> module does not:</p>
+<ul class="simple">
+<li>Provide out-of-process or network notifications (these should be handled by
+a separate, Twisted aware module in <tt class="xref docutils literal"><span class="pre">IPython.kernel</span></tt>).</li>
+<li>Provide zope.interface-style interfaces for the notification system (these
+should also be provided by the <tt class="xref docutils literal"><span class="pre">IPython.kernel</span></tt> module).</li>
+</ul>
+</div>
+<div class="section" id="use-cases">
+<h2>Use Cases<a class="headerlink" href="#use-cases" title="Permalink to this headline">¶</a></h2>
+<p>The following use cases describe the main intended uses of the notificaiton module and illustrate the main success scenario for each use case:</p>
+<blockquote>
+<ol class="arabic">
+<li><p class="first">Dwight Schroot is writing a frontend for the IPython project. His frontend is stuck in the stone age and must communicate synchronously with an IPython.kernel.core.Interpreter instance. Because code is executed in blocks by the Interpreter, Dwight&#8217;s UI freezes every time he executes a long block of code. To keep track of the progress of his long running block, Dwight adds the following code to his frontend&#8217;s set-up code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">from</span> <span class="nn">IPython.kernel.core.notification</span> <span class="k">import</span> <span class="n">NotificationCenter</span>
+<span class="n">center</span> <span class="o">=</span> <span class="n">NotificationCenter</span><span class="o">.</span><span class="n">sharedNotificationCenter</span>
+<span class="n">center</span><span class="o">.</span><span class="n">registerObserver</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">IPython</span><span class="o">.</span><span class="n">kernel</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Interpreter</span><span class="o">.</span><span class="n">STDOUT_NOTIFICATION_TYPE</span><span class="p">,</span> <span class="n">notifying_object</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">interpreter</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stdout_notification</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>and elsewhere in his front end:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">stdout_notification</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">notifying_object</span><span class="p">,</span> <span class="n">out_string</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">writeStdOut</span><span class="p">(</span><span class="n">out_string</span><span class="p">)</span>
+</pre></div>
+</div>
+</blockquote>
+<p>If everything works, the Interpreter will (according to its published API)
+fire a notification via the
+<tt class="xref docutils literal"><span class="pre">IPython.kernel.core.notification.sharedCenter</span></tt> of type
+<tt class="xref docutils literal"><span class="pre">STD_OUT_NOTIFICATION_TYPE</span></tt> before writing anything to stdout [it&#8217;s up
+to the Intereter implementation to figure out when to do this]. The
+notificaiton center will then call the registered callbacks for that event
+type (in this case, Dwight&#8217;s frontend&#8217;s stdout_notification method). Again,
+according to its API, the Interpreter provides an additional keyword argument
+when firing the notificaiton of out_string, a copy of the string it will write
+to stdout.</p>
+<p>Like magic, Dwight&#8217;s frontend is able to provide output, even during
+long-running calculations. Now if Jim could just convince Dwight to use
+Twisted...</p>
+<blockquote>
+<ol class="arabic simple" start="2">
+<li>Boss Hog is writing a frontend for the IPython project. Because Boss Hog is stuck in the stone age, his frontend will be written in a new Fortran-like dialect of python and will run only from the command line. Because he doesn&#8217;t need any fancy notification system and is used to worrying about every cycle on his rat-wheel powered mini, Boss Hog is adamant that the new notification system not produce any performance penalty. As they say in Hazard county, there&#8217;s no such thing as a free lunch. If he wanted zero overhead, he should have kept using IPython 0.8. Instead, those tricky Duke boys slide in a suped-up bridge-out jumpin&#8217; awkwardly confederate-lovin&#8217; notification module that imparts only a constant (and small) performance penalty when the Interpreter (or any other object) fires an event for which there are no registered observers. Of course, the same notificaiton-enabled Interpreter can then be used in frontends that require notifications, thus saving the IPython project from a nasty civil war.</li>
+<li>Barry is wrting a frontend for the IPython project. Because Barry&#8217;s front end is the <em>new hotness</em>, it uses an asynchronous event model to communicate with a Twisted <a title="" class="reference external" href="../api/generated/IPython.kernel.engineservice.html#module-IPython.kernel.engineservice"><tt class="xref docutils literal"><span class="pre">engineservice</span></tt></a> that communicates with the IPython <a title="IPython.kernel.core.interpreter.Interpreter" class="reference external" href="../api/generated/IPython.kernel.core.interpreter.html#IPython.kernel.core.interpreter.Interpreter"><tt class="xref docutils literal"><span class="pre">Interpreter</span></tt></a>. Using the <tt class="xref docutils literal"><span class="pre">IPython.kernel.notification</span></tt> module, an asynchronous wrapper on the <a title="" class="reference external" href="../api/generated/IPython.kernel.core.notification.html#module-IPython.kernel.core.notification"><tt class="xref docutils literal"><span class="pre">IPython.kernel.core.notification</span></tt></a> module, Barry&#8217;s frontend can register for notifications from the interpreter that are delivered asynchronously. Even if Barry&#8217;s frontend is running on a separate process or even host from the Interpreter, the notifications are delivered, as if by dark and twisted magic. Just like Dwight&#8217;s frontend, Barry&#8217;s frontend can now recieve notifications of e.g. writing to stdout/stderr, opening/closing an external file, an exception in the executing code, etc.</li>
+</ol>
+</blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">IPython.kernel.core.notification blueprint</a><ul>
+<li><a class="reference external" href="#overview">Overview</a></li>
+<li><a class="reference external" href="#functional-requirements">Functional Requirements</a></li>
+<li><a class="reference external" href="#what-s-not-included">What&#8217;s not included</a></li>
+<li><a class="reference external" href="#use-cases">Use Cases</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="roadmap.html" title="previous chapter">Development roadmap</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="config_blueprint.html" title="next chapter">Notes on the IPython configuration system</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/development/notification_blueprint.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="config_blueprint.html" title="Notes on the IPython configuration system"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="roadmap.html" title="Development roadmap"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">IPython Developer&#8217;s Guide</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

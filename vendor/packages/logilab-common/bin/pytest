@@ -1,0 +1,4 @@
+#!/usr/bin/python -u
+
+from logilab.common.pytest import run
+run()

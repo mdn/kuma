@@ -1,0 +1,53 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+OInspect
+========
+
+Module: :mod:`OInspect`
+-----------------------
+Inheritance diagram for ``IPython.OInspect``:
+
+.. inheritance-diagram:: IPython.OInspect 
+   :parts: 3
+
+.. automodule:: IPython.OInspect
+
+.. currentmodule:: IPython.OInspect
+
+Classes
+-------
+
+:class:`Inspector`
+~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: Inspector
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`myStringIO`
+~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: myStringIO
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Functions
+---------
+
+
+.. autofunction:: IPython.OInspect.getargspec
+
+
+.. autofunction:: IPython.OInspect.getdoc
+
+
+.. autofunction:: IPython.OInspect.getsource
+

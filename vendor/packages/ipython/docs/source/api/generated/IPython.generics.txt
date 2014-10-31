@@ -1,0 +1,23 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+generics
+========
+
+Module: :mod:`generics`
+-----------------------
+.. automodule:: IPython.generics
+
+.. currentmodule:: IPython.generics
+
+Functions
+---------
+
+
+.. autofunction:: IPython.generics.complete_object
+
+
+.. autofunction:: IPython.generics.inspect_object
+
+
+.. autofunction:: IPython.generics.result_display
+

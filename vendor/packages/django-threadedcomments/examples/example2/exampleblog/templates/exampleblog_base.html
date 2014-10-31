@@ -1,0 +1,14 @@
+<html>
+{% block meta %}{% endblock %}
+<head><title>{% block title %}Tutorial 2{% endblock %}</title>
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.4.1/build/reset/reset-min.css">
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/example2.css">
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-1.2.2.min.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.form.js"></script>
+{% block head %}{% endblock %}
+<script type="text/javascript" src="{{ MEDIA_URL }}js/example2.js"></script>
+</head>
+<body>
+{% block content %}{% endblock %}
+</body>
+</html>

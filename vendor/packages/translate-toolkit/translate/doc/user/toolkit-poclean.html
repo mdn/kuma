@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="poclean" id="poclean">poclean</a></h1>
+<div class="level1">
+
+<p>
+
+This is a rudimentary tool to produce a clean file from an unclean file (Trados/Wordfast) by stripping out the tw4win indicators.
+</p>
+
+</div>
+<!-- SECTION "poclean" [1-154] -->
+<h2><a name="usage" id="usage">Usage</a></h2>
+<div class="level2">
+<pre class="code">poclean &lt;input&gt; &lt;output&gt;</pre>
+
+<p>
+
+Where:
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0"> &lt;input&gt; </td><td class="col1"> is the text versions of the unclean <acronym title="Rich Text File">RTF</acronym> files </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> &lt;output&gt;  </td><td class="col1"> is the intended output file / directory </td>
+	</tr>
+</table>
+
+<p>
+
+Options:
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> --version            </td><td class="col1 leftalign"> show program&#039;s version number and exit  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> -h, --help           </td><td class="col1 leftalign"> show this help message and exit   </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> --manpage            </td><td class="col1 leftalign"> output a manpage based on the help  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> <a href="toolkit-progress_progress.html" class="wikilink1" title="toolkit-progress_progress.html">--progress=PROGRESS</a>  </td><td class="col1 leftalign"> show progress as: dots, none, bar, names, verbose  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> <a href="toolkit-errorlevel_errorlevel.html" class="wikilink1" title="toolkit-errorlevel_errorlevel.html">--errorlevel=ERRORLEVEL</a>  </td><td class="col1 leftalign"> show errorlevel as: none, message, exception, traceback  </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> -iINPUT, --input=INPUT   </td><td class="col1 leftalign"> read from INPUT in pot format  </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> -xEXCLUDE, --exclude=EXCLUDE  </td><td class="col1 leftalign"> exclude names matching EXCLUDE from input paths  </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 leftalign"> -oOUTPUT, --output=OUTPUT     </td><td class="col1 leftalign"> write to OUTPUT in po, pot formats  </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 leftalign"> -tTEMPLATE, --template=TEMPLATE   </td><td class="col1 leftalign"> read from TEMPLATE in po, pot formats  </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0 leftalign"> <a href="toolkit-psyco_mode.html" class="wikilink1" title="toolkit-psyco_mode.html">--psyco=MODE</a>         </td><td class="col1 leftalign"> use psyco to speed up the operation, modes: none, full, profile  </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Usage" [155-1105] -->
+<h2><a name="examples" id="examples">Examples</a></h2>
+<div class="level2">
+
+<p>
+
+To create a text version of the unclean <acronym title="Rich Text File">RTF</acronym> file, you need UnRTF, available here: <a href="http://www.gnu.org/software/unrtf/unrtf.html" class="urlextern" title="http://www.gnu.org/software/unrtf/unrtf.html">project site</a> or <a href="http://gnuwin32.sourceforge.net/packages/unrtf.htm" class="urlextern" title="http://gnuwin32.sourceforge.net/packages/unrtf.htm">here (windows)</a>. 
+
+</p>
+<pre class="code">unrtf translation.rtf  --text &gt; translation.po</pre>
+
+<p>
+
+You might need to convert the encoding of the file, with iconv, for example:
+</p>
+<pre class="code">iconv -f latin1 -t utf-8 translation.po &gt; new_translation.po</pre>
+
+<p>
+
+Now you can clean the file with poclean
+</p>
+<pre class="code">poclean new_translation.po clean_translation.po</pre>
+
+</div>
+<!-- SECTION "Examples" [1106-] --></body>
+</html>

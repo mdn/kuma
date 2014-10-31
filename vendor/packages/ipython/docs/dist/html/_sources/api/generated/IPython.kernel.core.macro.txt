@@ -1,0 +1,26 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.core.macro
+=================
+
+Module: :mod:`kernel.core.macro`
+--------------------------------
+Inheritance diagram for ``IPython.kernel.core.macro``:
+
+.. inheritance-diagram:: IPython.kernel.core.macro 
+   :parts: 3
+
+.. automodule:: IPython.kernel.core.macro
+
+.. currentmodule:: IPython.kernel.core.macro
+
+:class:`Macro`
+--------------
+
+
+.. autoclass:: Macro
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

@@ -1,0 +1,227 @@
+Metadata-Version: 1.0
+Name: pep8
+Version: 0.5.0
+Summary: Python style guide checker
+Home-page: http://github.com/jcrocholl/pep8
+Author: Johann C. Rocholl
+Author-email: johann@rocholl.net
+License: Expat license
+Description: pep8 - Python style guide checker
+        =================================
+        
+        pep8 is a tool to check your Python code against some of the style
+        conventions in `PEP 8`_.
+        
+        .. _PEP 8: http://www.python.org/dev/peps/pep-0008/
+        
+        
+        Mailing List
+        ------------
+        http://groups.google.com/group/pep8
+        
+        
+        Features
+        --------
+        
+        * Plugin architecture: Adding new checks is easy.
+        
+        * Parseable output: Jump to error location in your editor.
+        
+        * Small: Just one Python file, requires only stdlib. You can use just
+        the pep8.py file for this purpose.
+        
+        * Easy_installable, of course!
+        
+        
+        Installation
+        ------------
+        
+        Just an ``easy_install pep8`` ought to do the trick.
+        
+        
+        Example usage and output
+        ------------------------
+        
+        ::
+        
+        $ pep8 optparse.py
+        optparse.py:69:11: E401 multiple imports on one line
+        optparse.py:77:1: E302 expected 2 blank lines, found 1
+        optparse.py:88:5: E301 expected 1 blank line, found 0
+        optparse.py:222:34: W602 deprecated form of raising exception
+        optparse.py:347:31: E211 whitespace before '('
+        optparse.py:357:17: E201 whitespace after '{'
+        optparse.py:472:29: E221 multiple spaces before operator
+        optparse.py:544:21: W601 .has_key() is deprecated, use 'in'
+        
+        You can also make pep8.py show the source code for each error, and
+        even the relevant text from PEP 8::
+        
+        $ pep8 --show-source --show-pep8 testsuite/E111.py
+        testsuite/E111.py:2:3: E111 indentation is not a multiple of four
+        print x
+        ^
+        Use 4 spaces per indentation level.
+        
+        For really old code that you don't want to mess up, you can
+        continue to use 8-space tabs.
+        
+        Or you can display how often each error was found::
+        
+        $ pep8 --statistics -qq --filename=*.py Python-2.5/Lib
+        232     E201 whitespace after '['
+        599     E202 whitespace before ')'
+        631     E203 whitespace before ','
+        842     E211 whitespace before '('
+        2531    E221 multiple spaces before operator
+        4473    E301 expected 1 blank line, found 0
+        4006    E302 expected 2 blank lines, found 1
+        165     E303 too many blank lines (4)
+        325     E401 multiple imports on one line
+        3615    E501 line too long (82 characters)
+        612     W601 .has_key() is deprecated, use 'in'
+        1188    W602 deprecated form of raising exception
+        
+        Quick help is available on the command line::
+        
+        $ pep8 -h
+        Usage: pep8.py [options] input ...
+        
+        Options:
+        --version            show program's version number and exit
+        -h, --help           show this help message and exit
+        -v, --verbose        print status messages, or debug with -vv
+        -q, --quiet          report only file names, or nothing with -qq
+        -r, --repeat         show all occurrences of the same error
+        --exclude=patterns   exclude files or directories which match these comma
+        separated patterns (default: .svn,CVS,.bzr,.hg,.git)
+        --filename=patterns  when parsing directories, only check filenames matching
+        these comma separated patterns (default: *.py)
+        --select=errors      select errors and warnings (e.g. E,W6)
+        --ignore=errors      skip errors and warnings (e.g. E4,W)
+        --show-source        show source code for each error
+        --show-pep8          show text of PEP 8 for each error
+        --statistics         count errors and warnings
+        --count              print total number of errors and warnings to standard
+        error and set exit code to 1 if total is not null
+        --benchmark          measure processing speed
+        --testsuite=dir      run regression tests from dir
+        --doctest            run doctest on myself
+        
+        Feedback
+        --------
+        
+        Your feedback is more than welcome. Write email to
+        johann@rocholl.net or post bugs and feature requests on github:
+        
+        http://github.com/jcrocholl/pep8/issues
+        
+        Source download
+        ---------------
+        
+        The source code is currently available on github. Fork away!
+        
+        http://github.com/jcrocholl/pep8/
+        
+        
+        Changelog
+        =========
+        
+        
+        0.5.0 (2010-02-17)
+        ------------------
+        
+        * Changed the ``--count`` switch to print to sys.stderr and set
+        exit code to 1 if any error or warning is found.
+        
+        * E241 and E242 are removed from the standard checks. If you want to
+        include these checks, use switch ``--select=E,W``. (Issue #4)
+        
+        * Blank line is not mandatory before the first class method or nested
+        function definition, even if there's a docstring. (Issue #1)
+        
+        * Add the switch ``--version``.
+        
+        * Fix decoding errors with Python 3. (Issue #13 [1]_)
+        
+        * Add ``--select`` option which is mirror of ``--ignore``.
+        
+        * Add checks E261 and E262 for spaces before inline comments.
+        
+        * New check W604 warns about deprecated usage of backticks.
+        
+        * New check W603 warns about the deprecated operator ``<>``.
+        
+        * Performance improvement, due to rewriting of E225.
+        
+        * E225 now accepts:
+        
+        - no whitespace after unary operator or similar. (Issue #9 [1]_)
+        
+        - lambda function with argument unpacking or keyword defaults.
+        
+        * Reserve "2 blank lines" for module-level logical blocks. (E303)
+        
+        * Allow multi-line comments. (E302, issue #10 [1]_)
+        
+        
+        0.4.2 (2009-10-22)
+        ------------------
+        
+        * Decorators on classes and class methods are OK now.
+        
+        
+        0.4 (2009-10-20)
+        ----------------
+        
+        * Support for all versions of Python from 2.3 to 3.1.
+        
+        * New and greatly expanded self tests.
+        
+        * Added ``--count`` option to print the total number of errors and warnings.
+        
+        * Further improvements to the handling of comments and blank lines.
+        (Issue #1 [1]_ and others changes.)
+        
+        * Check all py files in directory when passed a directory (Issue
+        #2 [1]_). This also prevents an exception when traversing directories
+        with non ``*.py`` files.
+        
+        * E231 should allow commas to be followed by ``)``. (Issue #3 [1]_)
+        
+        * Spaces are not longer required around the equals sign for keyword
+        arguments or default parameter values.
+        
+        
+        .. [1] These issues refer to the `previous issue tracker`__.
+        .. __:  http://github.com/cburroughs/pep8.py/issues
+        
+        
+        0.3.1 (2009-09-14)
+        ------------------
+        
+        * Fixes for comments: do not count them when checking for blank lines between
+        items.
+        
+        * Added setup.py for pypi upload and easy_installability.
+        
+        
+        0.2 (2007-10-16)
+        ----------------
+        
+        * Loads of fixes and improvements.
+        
+        
+        0.1 (2006-10-01)
+        ----------------
+        
+        * First release.
+        
+        
+        TODO
+        ====
+        
+        - ...
+        
+Keywords: pep8
+Platform: UNKNOWN

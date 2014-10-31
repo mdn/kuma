@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="poreencode" id="poreencode">poreencode</a></h1>
+<div class="level1">
+
+<p>
+
+Takes a directory of existing <acronym title="Gettext Portable Object">PO</acronym> files and converts them to a given encoding.
+</p>
+
+</div>
+<!-- SECTION "poreencode" [1-105] -->
+<h2><a name="prerequisites" id="prerequisites">Prerequisites</a></h2>
+<div class="level2">
+
+<p>
+
+GNU Gettext
+</p>
+
+</div>
+<!-- SECTION "Prerequisites" [106-148] -->
+<h2><a name="usage" id="usage">Usage</a></h2>
+<div class="level2">
+<pre class="code">poreencode &lt;encoding&gt; &lt;PO directory&gt;</pre>
+
+<p>
+
+Where:
+
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> encoding  </td><td class="col1 leftalign"> is the encoding you would like to convert to eg. UTF-8  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> <acronym title="Gettext Portable Object">PO</acronym> directory  </td><td class="col1 leftalign"> is a directory of existing <acronym title="Gettext Portable Object">PO</acronym> files  </td>
+	</tr>
+</table>
+
+<p>
+
+Its is best to backup files before the conversion or to perform it against <acronym title="Concurrent Versions System">CVS</acronym>
+which prevents a potential loss of data.  
+</p>
+
+</div>
+<!-- SECTION "Usage" [149-469] -->
+<h2><a name="operation" id="operation">Operation</a></h2>
+<div class="level2">
+
+<p>
+
+poreencode makes use of the Gettext tool <a href="http://man.cx/msgconv" class="interwiki iw_man" title="http://man.cx/msgconv">msgconv</a> to perform its task.  It
+traverses the <acronym title="Gettext Portable Object">PO</acronym> directory and finds all <acronym title="Gettext Portable Object">PO</acronym> file.  It uses msgconv to
+convert the <acronym title="Gettext Portable Object">PO</acronym> file from its existing encoding to the new encoding.
+</p>
+
+</div>
+<!-- SECTION "Operation" [470-713] -->
+<h2><a name="bugs" id="bugs">Bugs</a></h2>
+<div class="level2">
+
+<p>
+
+Like most Gettext tools they do a little bit more than documented, msgconv will
+decide which strings are in fact fuzzy and delete fuzzy marking - not a lot but
+you do need to diff (this probably related to #, fuzzy entries that are not 
+placed in the place Gettext expects them).  
+
+</p>
+
+</div>
+<!-- SECTION "Bugs" [714-] --></body>
+</html>

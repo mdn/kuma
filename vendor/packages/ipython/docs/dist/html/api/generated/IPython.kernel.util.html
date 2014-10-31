@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.util &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="macro" href="IPython.macro.html" />
+    <link rel="prev" title="kernel.twistedutil" href="IPython.kernel.twistedutil.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.macro.html" title="macro"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.twistedutil.html" title="kernel.twistedutil"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-util">
+<h1>kernel.util<a class="headerlink" href="#kernel-util" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.util">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.util</span></tt><a class="headerlink" href="#module-IPython.kernel.util" title="Permalink to this headline">¶</a></h2>
+<p>General utilities for kernel related things.</p>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.kernel.util.catcher">
+<!--[IPython.kernel.util.catcher]--><tt class="descclassname">IPython.kernel.util.</tt><tt class="descname">catcher</tt><big>(</big><em>r</em><big>)</big><a class="headerlink" href="#IPython.kernel.util.catcher" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.util.curry">
+<!--[IPython.kernel.util.curry]--><tt class="descclassname">IPython.kernel.util.</tt><tt class="descname">curry</tt><big>(</big><em>f</em>, <em>*curryArgs</em>, <em>**curryKWargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.util.curry" title="Permalink to this definition">¶</a></dt>
+<dd>Curry the function f with curryArgs and curryKWargs.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.util.printer">
+<!--[IPython.kernel.util.printer]--><tt class="descclassname">IPython.kernel.util.</tt><tt class="descname">printer</tt><big>(</big><em>r</em>, <em>msg=''</em><big>)</big><a class="headerlink" href="#IPython.kernel.util.printer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.util.tarModule">
+<!--[IPython.kernel.util.tarModule]--><tt class="descclassname">IPython.kernel.util.</tt><tt class="descname">tarModule</tt><big>(</big><em>mod</em><big>)</big><a class="headerlink" href="#IPython.kernel.util.tarModule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a tarball (as a string) of a locally imported module.</p>
+<p>This method looks at the __file__ attribute of an imported module
+and makes a tarball of the top level of the module.  It then
+reads the tarball into a binary string.</p>
+<p>The method returns the tarball&#8217;s name and the binary string
+representing the tarball.</p>
+<p>Notes:</p>
+<ul class="simple">
+<li>It will handle both single module files, as well as packages.</li>
+<li>The byte code files (*.pyc) are not deleted.</li>
+<li>It has not been tested with modules containing extension code, but 
+it should work in most cases.</li>
+<li>There are cross platform issues.</li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.util</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.util">Module: <tt class="docutils literal"><span class="pre">kernel.util</span></tt></a></li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.kernel.twistedutil.html" title="previous chapter">kernel.twistedutil</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.macro.html" title="next chapter">macro</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.util.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.macro.html" title="macro"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.twistedutil.html" title="kernel.twistedutil"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.core.redirector_output_trap
+==================================
+
+Module: :mod:`kernel.core.redirector_output_trap`
+-------------------------------------------------
+Inheritance diagram for ``IPython.kernel.core.redirector_output_trap``:
+
+.. inheritance-diagram:: IPython.kernel.core.redirector_output_trap 
+   :parts: 3
+
+.. automodule:: IPython.kernel.core.redirector_output_trap
+
+.. currentmodule:: IPython.kernel.core.redirector_output_trap
+
+:class:`RedirectorOutputTrap`
+-----------------------------
+
+
+.. autoclass:: RedirectorOutputTrap
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.client &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.clientconnector" href="IPython.kernel.clientconnector.html" />
+    <link rel="prev" title="irunner" href="IPython.irunner.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.clientconnector.html" title="kernel.clientconnector"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.irunner.html" title="irunner"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-client">
+<h1>kernel.client<a class="headerlink" href="#kernel-client" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.client">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.client</span></tt><a class="headerlink" href="#module-IPython.kernel.client" title="Permalink to this headline">¶</a></h2>
+<p>This module contains blocking clients for the controller interfaces.</p>
+<p>Unlike the clients in <cite>asyncclient.py</cite>, the clients in this module are fully
+blocking.  This means that methods on the clients return the actual results
+rather than a deferred to the result.  Also, we manage the Twisted reactor
+for you.  This is done by running the reactor in a thread.</p>
+<p>The main classes in this module are:</p>
+<blockquote>
+<ul class="simple">
+<li>MultiEngineClient</li>
+<li>TaskClient</li>
+<li>Task</li>
+<li>CompositeError</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.kernel.client.get_multiengine_client">
+<!--[IPython.kernel.client.get_multiengine_client]--><tt class="descclassname">IPython.kernel.client.</tt><tt class="descname">get_multiengine_client</tt><big>(</big><em>furl_or_file=''</em><big>)</big><a class="headerlink" href="#IPython.kernel.client.get_multiengine_client" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the blocking MultiEngine client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt>furl_or_file <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">A furl or a filename containing a furl.  If empty, the
+default furl_file will be used</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The connected MultiEngineClient instance</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.client.get_task_client">
+<!--[IPython.kernel.client.get_task_client]--><tt class="descclassname">IPython.kernel.client.</tt><tt class="descname">get_task_client</tt><big>(</big><em>furl_or_file=''</em><big>)</big><a class="headerlink" href="#IPython.kernel.client.get_task_client" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the blocking Task client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt>furl_or_file <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">A furl or a filename containing a furl.  If empty, the
+default furl_file will be used</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The connected TaskClient instance</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.client</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.client">Module: <tt class="docutils literal"><span class="pre">kernel.client</span></tt></a></li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.irunner.html" title="previous chapter">irunner</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.clientconnector.html" title="next chapter">kernel.clientconnector</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.client.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.clientconnector.html" title="kernel.clientconnector"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.irunner.html" title="irunner"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

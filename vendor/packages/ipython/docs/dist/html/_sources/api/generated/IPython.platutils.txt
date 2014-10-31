@@ -1,0 +1,51 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+platutils
+=========
+
+Module: :mod:`platutils`
+------------------------
+Inheritance diagram for ``IPython.platutils``:
+
+.. inheritance-diagram:: IPython.platutils 
+   :parts: 3
+
+.. automodule:: IPython.platutils
+
+.. currentmodule:: IPython.platutils
+
+Class
+-----
+
+:class:`FindCmdError`
+---------------------
+
+
+.. autoclass:: FindCmdError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Functions
+---------
+
+
+.. autofunction:: IPython.platutils.find_cmd
+
+
+.. autofunction:: IPython.platutils.freeze_term_title
+
+
+.. autofunction:: IPython.platutils.get_long_path_name
+
+
+.. autofunction:: IPython.platutils.set_term_title
+
+
+.. autofunction:: IPython.platutils.term_clear
+
+
+.. autofunction:: IPython.platutils.toggle_set_term_title
+

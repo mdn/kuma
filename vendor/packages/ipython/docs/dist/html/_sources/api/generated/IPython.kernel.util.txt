@@ -1,0 +1,26 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.util
+===========
+
+Module: :mod:`kernel.util`
+--------------------------
+.. automodule:: IPython.kernel.util
+
+.. currentmodule:: IPython.kernel.util
+
+Functions
+---------
+
+
+.. autofunction:: IPython.kernel.util.catcher
+
+
+.. autofunction:: IPython.kernel.util.curry
+
+
+.. autofunction:: IPython.kernel.util.printer
+
+
+.. autofunction:: IPython.kernel.util.tarModule
+

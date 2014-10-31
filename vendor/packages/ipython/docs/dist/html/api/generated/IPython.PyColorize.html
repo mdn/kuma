@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>PyColorize &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="Shell" href="IPython.Shell.html" />
+    <link rel="prev" title="Prompts" href="IPython.Prompts.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.Shell.html" title="Shell"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.Prompts.html" title="Prompts"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="pycolorize">
+<h1>PyColorize<a class="headerlink" href="#pycolorize" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.PyColorize">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">PyColorize</span></tt><a class="headerlink" href="#module-IPython.PyColorize" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.PyColorize</span></tt>:</p>
+<img src="../../_images/inheritance3df91234cd.png" usemap="#inheritance3df91234cd" class="inheritance"/><map id="inheritance3df91234cd" name="inheritance3df91234cd">
+<area shape="rect" href="#IPython.PyColorize.Parser" title="IPython.PyColorize.Parser" alt="" coords="7,5,188,32"/>
+</map>
+<p>Class and program to colorize python source code for ANSI terminals.</p>
+<p>Based on an HTML code highlighter by Jurgen Hermann found at:
+<a class="reference external" href="http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52298">http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/52298</a></p>
+<p>Modifications by Fernando Perez (<a class="reference external" href="mailto:fperez&#37;&#52;&#48;colorado&#46;edu">fperez<span>&#64;</span>colorado<span>&#46;</span>edu</a>).</p>
+<p>Information on the original HTML highlighter follows:</p>
+<p>MoinMoin - Python Source Parser</p>
+<p>Title: Colorize Python source using the built-in tokenizer</p>
+<p>Submitter: Jurgen Hermann
+Last Updated:2001/04/06</p>
+<p>Version no:1.2</p>
+<p>Description:</p>
+<p>This code is part of MoinMoin (<a class="reference external" href="http://moin.sourceforge.net/">http://moin.sourceforge.net/</a>) and converts
+Python source code to HTML markup, rendering comments, keywords,
+operators, numeric and string literals in different colors.</p>
+<p>It shows how to use the built-in keyword, token and tokenize modules to
+scan Python source code and re-emit it with no changes to its original
+formatting (which is the hard part).</p>
+</div>
+<div class="section" id="parser">
+<h2><a title="IPython.PyColorize.Parser" class="reference internal" href="#IPython.PyColorize.Parser"><tt class="xref docutils literal"><span class="pre">Parser</span></tt></a><a class="headerlink" href="#parser" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="IPython.PyColorize.Parser">
+<!--[IPython.PyColorize.Parser]-->class <tt class="descclassname">IPython.PyColorize.</tt><tt class="descname">Parser</tt><big>(</big><em>color_table=None</em>, <em>out=&lt;open file '&lt;stdout&gt;'</em>, <em>mode 'w' at 0x4021e070&gt;</em><big>)</big><a class="headerlink" href="#IPython.PyColorize.Parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Format colored Python source.</p>
+<dl class="method">
+<dt id="IPython.PyColorize.Parser.__init__">
+<!--[IPython.PyColorize.Parser.__init__]--><tt class="descname">__init__</tt><big>(</big><em>color_table=None</em>, <em>out=&lt;open file '&lt;stdout&gt;'</em>, <em>mode 'w' at 0x4021e070&gt;</em><big>)</big><a class="headerlink" href="#IPython.PyColorize.Parser.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a parser with a specified color table and output channel.</p>
+<p>Call format() to process code.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.PyColorize.Parser.format">
+<!--[IPython.PyColorize.Parser.format]--><tt class="descname">format</tt><big>(</big><em>raw</em>, <em>out=None</em>, <em>scheme=''</em><big>)</big><a class="headerlink" href="#IPython.PyColorize.Parser.format" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.PyColorize.Parser.format2">
+<!--[IPython.PyColorize.Parser.format2]--><tt class="descname">format2</tt><big>(</big><em>raw</em>, <em>out=None</em>, <em>scheme=''</em><big>)</big><a class="headerlink" href="#IPython.PyColorize.Parser.format2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse and send the colored source.</p>
+<p>If out and scheme are not specified, the defaults (given to
+constructor) are used.</p>
+<p>out should be a file-type object. Optionally, out can be given as the
+string &#8216;str&#8217; and the parser will automatically return the output in a
+string.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.PyColorize.main">
+<!--[IPython.PyColorize.main]--><tt class="descclassname">IPython.PyColorize.</tt><tt class="descname">main</tt><big>(</big><em>argv=None</em><big>)</big><a class="headerlink" href="#IPython.PyColorize.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run as a command-line script: colorize a python file or stdin using ANSI
+color escapes and print to stdout.</p>
+<p>Inputs:</p>
+<blockquote>
+<ul class="simple">
+<li>argv(None): a list of strings like sys.argv[1:] giving the command-line
+arguments. If None, use sys.argv[1:].</li>
+</ul>
+</blockquote>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">PyColorize</a><ul>
+<li><a class="reference external" href="#module-IPython.PyColorize">Module: <tt class="docutils literal"><span class="pre">PyColorize</span></tt></a></li>
+<li><a class="reference external" href="#parser"><tt class="docutils literal"><span class="pre">Parser</span></tt></a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.Prompts.html" title="previous chapter">Prompts</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.Shell.html" title="next chapter">Shell</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.PyColorize.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.Shell.html" title="Shell"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.Prompts.html" title="Prompts"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+tools.utils
+===========
+
+Module: :mod:`tools.utils`
+--------------------------
+.. automodule:: IPython.tools.utils
+
+.. currentmodule:: IPython.tools.utils
+
+Functions
+---------
+
+
+.. autofunction:: IPython.tools.utils.extractVars
+
+
+.. autofunction:: IPython.tools.utils.extractVarsAbove
+
+
+.. autofunction:: IPython.tools.utils.list_strings
+
+
+.. autofunction:: IPython.tools.utils.marquee
+
+
+.. autofunction:: IPython.tools.utils.shexp
+

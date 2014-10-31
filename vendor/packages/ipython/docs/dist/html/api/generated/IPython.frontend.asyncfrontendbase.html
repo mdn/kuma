@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>frontend.asyncfrontendbase &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="frontend.frontendbase" href="IPython.frontend.frontendbase.html" />
+    <link rel="prev" title="external.validate" href="IPython.external.validate.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.frontend.frontendbase.html" title="frontend.frontendbase"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.external.validate.html" title="external.validate"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="frontend-asyncfrontendbase">
+<h1>frontend.asyncfrontendbase<a class="headerlink" href="#frontend-asyncfrontendbase" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.frontend.asyncfrontendbase">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">frontend.asyncfrontendbase</span></tt><a class="headerlink" href="#module-IPython.frontend.asyncfrontendbase" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.frontend.asyncfrontendbase</span></tt>:</p>
+<img src="../../_images/inheritance9cc4a3e644.png" usemap="#inheritance9cc4a3e644" class="inheritance"/><map id="inheritance9cc4a3e644" name="inheritance9cc4a3e644">
+<area shape="rect" href="IPython.frontend.frontendbase.html#IPython.frontend.frontendbase.FrontEndBase" title="frontend.frontendbase.FrontEndBase" alt="" coords="5,5,261,32"/>
+<area shape="rect" href="#IPython.frontend.asyncfrontendbase.AsyncFrontEndBase" title="frontend.asyncfrontendbase.AsyncFrontEndBase" alt="" coords="311,5,641,32"/>
+</map>
+<p>Base front end class for all async frontends.</p>
+</div>
+<div class="section" id="asyncfrontendbase">
+<h2><a title="IPython.frontend.asyncfrontendbase.AsyncFrontEndBase" class="reference internal" href="#IPython.frontend.asyncfrontendbase.AsyncFrontEndBase"><tt class="xref docutils literal"><span class="pre">AsyncFrontEndBase</span></tt></a><a class="headerlink" href="#asyncfrontendbase" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="IPython.frontend.asyncfrontendbase.AsyncFrontEndBase">
+<!--[IPython.frontend.asyncfrontendbase.AsyncFrontEndBase]-->class <tt class="descclassname">IPython.frontend.asyncfrontendbase.</tt><tt class="descname">AsyncFrontEndBase</tt><big>(</big><em>engine=None</em>, <em>history=None</em><big>)</big><a class="headerlink" href="#IPython.frontend.asyncfrontendbase.AsyncFrontEndBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.frontend.frontendbase.FrontEndBase" class="reference external" href="IPython.frontend.frontendbase.html#IPython.frontend.frontendbase.FrontEndBase"><tt class="xref docutils literal"><span class="pre">IPython.frontend.frontendbase.FrontEndBase</span></tt></a></p>
+<p>Overrides FrontEndBase to wrap execute in a deferred result.
+All callbacks are made as callbacks on the deferred result.</p>
+<dl class="method">
+<dt id="IPython.frontend.asyncfrontendbase.AsyncFrontEndBase.__init__">
+<!--[IPython.frontend.asyncfrontendbase.AsyncFrontEndBase.__init__]--><tt class="descname">__init__</tt><big>(</big><em>engine=None</em>, <em>history=None</em><big>)</big><a class="headerlink" href="#IPython.frontend.asyncfrontendbase.AsyncFrontEndBase.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.asyncfrontendbase.AsyncFrontEndBase.execute">
+<!--[IPython.frontend.asyncfrontendbase.AsyncFrontEndBase.execute]--><tt class="descname">execute</tt><big>(</big><em>block</em>, <em>blockID=None</em><big>)</big><a class="headerlink" href="#IPython.frontend.asyncfrontendbase.AsyncFrontEndBase.execute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute the block and return the deferred result.</p>
+<dl class="docutils">
+<dt>Parameters:</dt>
+<dd><p class="first">block : {str, AST}
+blockID : any</p>
+<blockquote class="last">
+Caller may provide an ID to identify this block. 
+result[&#8216;blockID&#8217;] := blockID</blockquote>
+</dd>
+<dt>Result:</dt>
+<dd>Deferred result of self.interpreter.execute</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">frontend.asyncfrontendbase</a><ul>
+<li><a class="reference external" href="#module-IPython.frontend.asyncfrontendbase">Module: <tt class="docutils literal"><span class="pre">frontend.asyncfrontendbase</span></tt></a></li>
+<li><a class="reference external" href="#asyncfrontendbase"><tt class="docutils literal"><span class="pre">AsyncFrontEndBase</span></tt></a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.external.validate.html" title="previous chapter">external.validate</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.frontend.frontendbase.html" title="next chapter">frontend.frontendbase</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.frontend.asyncfrontendbase.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.frontend.frontendbase.html" title="frontend.frontendbase"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.external.validate.html" title="external.validate"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

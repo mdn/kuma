@@ -1,0 +1,40 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.core.traceback_formatter
+===============================
+
+Module: :mod:`kernel.core.traceback_formatter`
+----------------------------------------------
+Inheritance diagram for ``IPython.kernel.core.traceback_formatter``:
+
+.. inheritance-diagram:: IPython.kernel.core.traceback_formatter 
+   :parts: 3
+
+.. automodule:: IPython.kernel.core.traceback_formatter
+
+.. currentmodule:: IPython.kernel.core.traceback_formatter
+
+Classes
+-------
+
+:class:`ITracebackFormatter`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ITracebackFormatter
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`PlainTracebackFormatter`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: PlainTracebackFormatter
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

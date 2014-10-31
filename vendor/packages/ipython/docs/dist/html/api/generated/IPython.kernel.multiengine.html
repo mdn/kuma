@@ -1,0 +1,634 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.multiengine &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.multiengineclient" href="IPython.kernel.multiengineclient.html" />
+    <link rel="prev" title="kernel.mapper" href="IPython.kernel.mapper.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.multiengineclient.html" title="kernel.multiengineclient"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.mapper.html" title="kernel.mapper"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-multiengine">
+<h1>kernel.multiengine<a class="headerlink" href="#kernel-multiengine" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.multiengine">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.multiengine</span></tt><a class="headerlink" href="#module-IPython.kernel.multiengine" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.kernel.multiengine</span></tt>:</p>
+<img src="../../_images/inheritance635b4555f8.png" usemap="#inheritance635b4555f8" class="inheritance"/><map id="inheritance635b4555f8" name="inheritance635b4555f8">
+<area shape="rect" href="#IPython.kernel.multiengine.SynchronousMultiEngine" title="kernel.multiengine.SynchronousMultiEngine" alt="" coords="206,168,355,181"/>
+<area shape="rect" href="IPython.kernel.pendingdeferred.html#IPython.kernel.pendingdeferred.PendingDeferredManager" title="kernel.pendingdeferred.PendingDeferredManager" alt="" coords="3,168,171,181"/>
+<area shape="rect" href="IPython.kernel.controllerservice.html#IPython.kernel.controllerservice.ControllerAdapterBase" title="kernel.controllerservice.ControllerAdapterBase" alt="" coords="7,142,166,156"/>
+<area shape="rect" href="#IPython.kernel.multiengine.MultiEngine" title="kernel.multiengine.MultiEngine" alt="" coords="226,142,335,156"/>
+<area shape="rect" href="#IPython.kernel.multiengine.IMultiEngineCoordinator" title="kernel.multiengine.IMultiEngineCoordinator" alt="" coords="207,79,354,92"/>
+<area shape="rect" href="#IPython.kernel.multiengine.IMultiEngineExtras" title="kernel.multiengine.IMultiEngineExtras" alt="" coords="216,53,345,67"/>
+<area shape="rect" href="#IPython.kernel.multiengine.IEngineMultiplexer" title="kernel.multiengine.IEngineMultiplexer" alt="" coords="216,15,345,29"/>
+<area shape="rect" href="#IPython.kernel.multiengine.ISynchronousEngineMultiplexer" title="kernel.multiengine.ISynchronousEngineMultiplexer" alt="" coords="195,117,366,130"/>
+<area shape="rect" href="#IPython.kernel.multiengine.IFullMultiEngine" title="kernel.multiengine.IFullMultiEngine" alt="" coords="624,28,745,41"/>
+<area shape="rect" href="#IPython.kernel.multiengine.IMultiEngine" title="kernel.multiengine.IMultiEngine" alt="" coords="430,3,540,16"/>
+<area shape="rect" href="#IPython.kernel.multiengine.ISynchronousMultiEngineCoordinator" title="kernel.multiengine.ISynchronousMultiEngineCoordinator" alt="" coords="391,104,579,118"/>
+<area shape="rect" href="#IPython.kernel.multiengine.ISynchronousMultiEngineExtras" title="kernel.multiengine.ISynchronousMultiEngineExtras" alt="" coords="399,53,570,67"/>
+<area shape="rect" href="#IPython.kernel.multiengine.IFullSynchronousMultiEngine" title="kernel.multiengine.IFullSynchronousMultiEngine" alt="" coords="604,104,765,118"/>
+<area shape="rect" href="#IPython.kernel.multiengine.ISynchronousMultiEngine" title="kernel.multiengine.ISynchronousMultiEngine" alt="" coords="409,130,560,143"/>
+</map>
+<p>Adapt the IPython ControllerServer to IMultiEngine.</p>
+<p>This module provides classes that adapt a ControllerService to the 
+IMultiEngine interface.  This interface is a basic interactive interface
+for working with a set of engines where it is desired to have explicit 
+access to each registered engine.</p>
+<p>The classes here are exposed to the network in files like:</p>
+<ul class="simple">
+<li>multienginevanilla.py</li>
+<li>multienginepb.py</li>
+</ul>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="ienginemultiplexer">
+<h3><a title="IPython.kernel.multiengine.IEngineMultiplexer" class="reference internal" href="#IPython.kernel.multiengine.IEngineMultiplexer"><tt class="xref docutils literal"><span class="pre">IEngineMultiplexer</span></tt></a><a class="headerlink" href="#ienginemultiplexer" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.multiengine.IEngineMultiplexer">
+<!--[IPython.kernel.multiengine.IEngineMultiplexer]-->class <tt class="descclassname">IPython.kernel.multiengine.</tt><tt class="descname">IEngineMultiplexer</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.IEngineMultiplexer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">zope.interface.Interface</span></tt></p>
+<p>Interface to multiple engines implementing IEngineCore/Serialized/Queued.</p>
+<p>This class simply acts as a multiplexer of methods that are in the 
+various IEngines* interfaces.  Thus the methods here are jut like those 
+in the IEngine* interfaces, but with an extra first argument, targets.  
+The targets argument can have the following forms:</p>
+<ul class="simple">
+<li>targets = 10            # Engines are indexed by ints</li>
+<li>targets = [0,1,2,3]     # A list of ints</li>
+<li>targets = &#8216;all&#8217;         # A string to indicate all targets</li>
+</ul>
+<p>If targets is bad in any way, an InvalidEngineID will be raised.  This
+includes engines not being registered.</p>
+<p>All IEngineMultiplexer multiplexer methods must return a Deferred to a list 
+with length equal to the number of targets.  The elements of the list will 
+correspond to the return of the corresponding IEngine method.</p>
+<p>Failures are aggressive, meaning that if an action fails for any target, 
+the overall action will fail immediately with that Failure.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt>targets <span class="classifier-delimiter">:</span> <span class="classifier">int, list of ints, or &#8216;all&#8217;</span></dt>
+<dd><p class="first last">Engine ids the action will apply to.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Deferred to a list of results for each engine.</p>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Exception:</th><td class="field-body"><dl class="first last docutils">
+<dt>InvalidEngineID</dt>
+<dd><p class="first last">If the targets argument is bad or engines aren&#8217;t registered.</p>
+</dd>
+<dt>NoEnginesRegistered</dt>
+<dd><p class="first last">If there are no engines registered and targets=&#8217;all&#8217;</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="staticmethod">
+<dt id="IPython.kernel.multiengine.IEngineMultiplexer.__init__">
+<!--[IPython.kernel.multiengine.IEngineMultiplexer.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.IEngineMultiplexer.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ifullmultiengine">
+<h3><a title="IPython.kernel.multiengine.IFullMultiEngine" class="reference internal" href="#IPython.kernel.multiengine.IFullMultiEngine"><tt class="xref docutils literal"><span class="pre">IFullMultiEngine</span></tt></a><a class="headerlink" href="#ifullmultiengine" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.multiengine.IFullMultiEngine">
+<!--[IPython.kernel.multiengine.IFullMultiEngine]-->class <tt class="descclassname">IPython.kernel.multiengine.</tt><tt class="descname">IFullMultiEngine</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.IFullMultiEngine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.multiengine.IMultiEngine" class="reference internal" href="#IPython.kernel.multiengine.IMultiEngine"><tt class="xref docutils literal"><span class="pre">IPython.kernel.multiengine.IMultiEngine</span></tt></a>, <a title="IPython.kernel.multiengine.IMultiEngineCoordinator" class="reference internal" href="#IPython.kernel.multiengine.IMultiEngineCoordinator"><tt class="xref docutils literal"><span class="pre">IPython.kernel.multiengine.IMultiEngineCoordinator</span></tt></a>, <a title="IPython.kernel.multiengine.IMultiEngineExtras" class="reference internal" href="#IPython.kernel.multiengine.IMultiEngineExtras"><tt class="xref docutils literal"><span class="pre">IPython.kernel.multiengine.IMultiEngineExtras</span></tt></a></p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.multiengine.IFullMultiEngine.__init__">
+<!--[IPython.kernel.multiengine.IFullMultiEngine.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.IFullMultiEngine.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ifullsynchronousmultiengine">
+<h3><a title="IPython.kernel.multiengine.IFullSynchronousMultiEngine" class="reference internal" href="#IPython.kernel.multiengine.IFullSynchronousMultiEngine"><tt class="xref docutils literal"><span class="pre">IFullSynchronousMultiEngine</span></tt></a><a class="headerlink" href="#ifullsynchronousmultiengine" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.multiengine.IFullSynchronousMultiEngine">
+<!--[IPython.kernel.multiengine.IFullSynchronousMultiEngine]-->class <tt class="descclassname">IPython.kernel.multiengine.</tt><tt class="descname">IFullSynchronousMultiEngine</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.IFullSynchronousMultiEngine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.multiengine.ISynchronousMultiEngine" class="reference internal" href="#IPython.kernel.multiengine.ISynchronousMultiEngine"><tt class="xref docutils literal"><span class="pre">IPython.kernel.multiengine.ISynchronousMultiEngine</span></tt></a>, <a title="IPython.kernel.multiengine.ISynchronousMultiEngineCoordinator" class="reference internal" href="#IPython.kernel.multiengine.ISynchronousMultiEngineCoordinator"><tt class="xref docutils literal"><span class="pre">IPython.kernel.multiengine.ISynchronousMultiEngineCoordinator</span></tt></a>, <a title="IPython.kernel.multiengine.ISynchronousMultiEngineExtras" class="reference internal" href="#IPython.kernel.multiengine.ISynchronousMultiEngineExtras"><tt class="xref docutils literal"><span class="pre">IPython.kernel.multiengine.ISynchronousMultiEngineExtras</span></tt></a></p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.multiengine.IFullSynchronousMultiEngine.__init__">
+<!--[IPython.kernel.multiengine.IFullSynchronousMultiEngine.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.IFullSynchronousMultiEngine.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="imultiengine">
+<h3><a title="IPython.kernel.multiengine.IMultiEngine" class="reference internal" href="#IPython.kernel.multiengine.IMultiEngine"><tt class="xref docutils literal"><span class="pre">IMultiEngine</span></tt></a><a class="headerlink" href="#imultiengine" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.multiengine.IMultiEngine">
+<!--[IPython.kernel.multiengine.IMultiEngine]-->class <tt class="descclassname">IPython.kernel.multiengine.</tt><tt class="descname">IMultiEngine</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.IMultiEngine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.multiengine.IEngineMultiplexer" class="reference internal" href="#IPython.kernel.multiengine.IEngineMultiplexer"><tt class="xref docutils literal"><span class="pre">IPython.kernel.multiengine.IEngineMultiplexer</span></tt></a></p>
+<p>A controller that exposes an explicit interface to all of its engines.</p>
+<p>This is the primary inteface for interactive usage.</p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.multiengine.IMultiEngine.__init__">
+<!--[IPython.kernel.multiengine.IMultiEngine.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.IMultiEngine.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="imultienginecoordinator">
+<h3><a title="IPython.kernel.multiengine.IMultiEngineCoordinator" class="reference internal" href="#IPython.kernel.multiengine.IMultiEngineCoordinator"><tt class="xref docutils literal"><span class="pre">IMultiEngineCoordinator</span></tt></a><a class="headerlink" href="#imultienginecoordinator" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.multiengine.IMultiEngineCoordinator">
+<!--[IPython.kernel.multiengine.IMultiEngineCoordinator]-->class <tt class="descclassname">IPython.kernel.multiengine.</tt><tt class="descname">IMultiEngineCoordinator</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.IMultiEngineCoordinator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">zope.interface.Interface</span></tt></p>
+<p>Methods that work on multiple engines explicitly.</p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.multiengine.IMultiEngineCoordinator.__init__">
+<!--[IPython.kernel.multiengine.IMultiEngineCoordinator.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.IMultiEngineCoordinator.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="imultiengineextras">
+<h3><a title="IPython.kernel.multiengine.IMultiEngineExtras" class="reference internal" href="#IPython.kernel.multiengine.IMultiEngineExtras"><tt class="xref docutils literal"><span class="pre">IMultiEngineExtras</span></tt></a><a class="headerlink" href="#imultiengineextras" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.multiengine.IMultiEngineExtras">
+<!--[IPython.kernel.multiengine.IMultiEngineExtras]-->class <tt class="descclassname">IPython.kernel.multiengine.</tt><tt class="descname">IMultiEngineExtras</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.IMultiEngineExtras" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">zope.interface.Interface</span></tt></p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.multiengine.IMultiEngineExtras.__init__">
+<!--[IPython.kernel.multiengine.IMultiEngineExtras.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.IMultiEngineExtras.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="isynchronousenginemultiplexer">
+<h3><a title="IPython.kernel.multiengine.ISynchronousEngineMultiplexer" class="reference internal" href="#IPython.kernel.multiengine.ISynchronousEngineMultiplexer"><tt class="xref docutils literal"><span class="pre">ISynchronousEngineMultiplexer</span></tt></a><a class="headerlink" href="#isynchronousenginemultiplexer" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.multiengine.ISynchronousEngineMultiplexer">
+<!--[IPython.kernel.multiengine.ISynchronousEngineMultiplexer]-->class <tt class="descclassname">IPython.kernel.multiengine.</tt><tt class="descname">ISynchronousEngineMultiplexer</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.ISynchronousEngineMultiplexer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">zope.interface.Interface</span></tt></p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.multiengine.ISynchronousEngineMultiplexer.__init__">
+<!--[IPython.kernel.multiengine.ISynchronousEngineMultiplexer.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.ISynchronousEngineMultiplexer.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="isynchronousmultiengine">
+<h3><a title="IPython.kernel.multiengine.ISynchronousMultiEngine" class="reference internal" href="#IPython.kernel.multiengine.ISynchronousMultiEngine"><tt class="xref docutils literal"><span class="pre">ISynchronousMultiEngine</span></tt></a><a class="headerlink" href="#isynchronousmultiengine" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.multiengine.ISynchronousMultiEngine">
+<!--[IPython.kernel.multiengine.ISynchronousMultiEngine]-->class <tt class="descclassname">IPython.kernel.multiengine.</tt><tt class="descname">ISynchronousMultiEngine</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.ISynchronousMultiEngine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.multiengine.ISynchronousEngineMultiplexer" class="reference internal" href="#IPython.kernel.multiengine.ISynchronousEngineMultiplexer"><tt class="xref docutils literal"><span class="pre">IPython.kernel.multiengine.ISynchronousEngineMultiplexer</span></tt></a></p>
+<p>Synchronous, two-phase version of IMultiEngine.</p>
+<p>Methods in this interface are identical to those of IMultiEngine, but they
+take one additional argument:</p>
+<p>execute(lines, targets=&#8217;all&#8217;) -&gt; execute(lines, targets=&#8217;all, block=True)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>block <span class="classifier-delimiter">:</span> <span class="classifier">boolean</span></dt>
+<dd><p class="first last">Should the method return a deferred to a deferredID or the 
+actual result.  If block=False a deferred to a deferredID is 
+returned and the user must call <cite>get_pending_deferred</cite> at a later
+point.  If block=True, a deferred to the actual result comes back.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="staticmethod">
+<dt id="IPython.kernel.multiengine.ISynchronousMultiEngine.__init__">
+<!--[IPython.kernel.multiengine.ISynchronousMultiEngine.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.ISynchronousMultiEngine.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="isynchronousmultienginecoordinator">
+<h3><a title="IPython.kernel.multiengine.ISynchronousMultiEngineCoordinator" class="reference internal" href="#IPython.kernel.multiengine.ISynchronousMultiEngineCoordinator"><tt class="xref docutils literal"><span class="pre">ISynchronousMultiEngineCoordinator</span></tt></a><a class="headerlink" href="#isynchronousmultienginecoordinator" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.multiengine.ISynchronousMultiEngineCoordinator">
+<!--[IPython.kernel.multiengine.ISynchronousMultiEngineCoordinator]-->class <tt class="descclassname">IPython.kernel.multiengine.</tt><tt class="descname">ISynchronousMultiEngineCoordinator</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.ISynchronousMultiEngineCoordinator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.multiengine.IMultiEngineCoordinator" class="reference internal" href="#IPython.kernel.multiengine.IMultiEngineCoordinator"><tt class="xref docutils literal"><span class="pre">IPython.kernel.multiengine.IMultiEngineCoordinator</span></tt></a></p>
+<p>Methods that work on multiple engines explicitly.</p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.multiengine.ISynchronousMultiEngineCoordinator.__init__">
+<!--[IPython.kernel.multiengine.ISynchronousMultiEngineCoordinator.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.ISynchronousMultiEngineCoordinator.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="isynchronousmultiengineextras">
+<h3><a title="IPython.kernel.multiengine.ISynchronousMultiEngineExtras" class="reference internal" href="#IPython.kernel.multiengine.ISynchronousMultiEngineExtras"><tt class="xref docutils literal"><span class="pre">ISynchronousMultiEngineExtras</span></tt></a><a class="headerlink" href="#isynchronousmultiengineextras" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.multiengine.ISynchronousMultiEngineExtras">
+<!--[IPython.kernel.multiengine.ISynchronousMultiEngineExtras]-->class <tt class="descclassname">IPython.kernel.multiengine.</tt><tt class="descname">ISynchronousMultiEngineExtras</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.ISynchronousMultiEngineExtras" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.multiengine.IMultiEngineExtras" class="reference internal" href="#IPython.kernel.multiengine.IMultiEngineExtras"><tt class="xref docutils literal"><span class="pre">IPython.kernel.multiengine.IMultiEngineExtras</span></tt></a></p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.multiengine.ISynchronousMultiEngineExtras.__init__">
+<!--[IPython.kernel.multiengine.ISynchronousMultiEngineExtras.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.ISynchronousMultiEngineExtras.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="multiengine">
+<h3><a title="IPython.kernel.multiengine.MultiEngine" class="reference internal" href="#IPython.kernel.multiengine.MultiEngine"><tt class="xref docutils literal"><span class="pre">MultiEngine</span></tt></a><a class="headerlink" href="#multiengine" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.multiengine.MultiEngine">
+<!--[IPython.kernel.multiengine.MultiEngine]-->class <tt class="descclassname">IPython.kernel.multiengine.</tt><tt class="descname">MultiEngine</tt><big>(</big><em>controller</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.MultiEngine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.controllerservice.ControllerAdapterBase" class="reference external" href="IPython.kernel.controllerservice.html#IPython.kernel.controllerservice.ControllerAdapterBase"><tt class="xref docutils literal"><span class="pre">IPython.kernel.controllerservice.ControllerAdapterBase</span></tt></a></p>
+<p>The representation of a ControllerService as a IMultiEngine.</p>
+<p>Although it is not implemented currently, this class would be where a
+client/notification API is implemented.  It could inherit from something
+like results.NotifierParent and then use the notify method to send
+notifications.</p>
+<dl class="method">
+<dt id="IPython.kernel.multiengine.MultiEngine.__init__">
+<!--[IPython.kernel.multiengine.MultiEngine.__init__]--><tt class="descname">__init__</tt><big>(</big><em>controller</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.MultiEngine.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.MultiEngine.clear_properties">
+<!--[IPython.kernel.multiengine.MultiEngine.clear_properties]--><tt class="descname">clear_properties</tt><big>(</big><em>targets='all'</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.MultiEngine.clear_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.MultiEngine.clear_queue">
+<!--[IPython.kernel.multiengine.MultiEngine.clear_queue]--><tt class="descname">clear_queue</tt><big>(</big><em>targets='all'</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.MultiEngine.clear_queue" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.MultiEngine.del_properties">
+<!--[IPython.kernel.multiengine.MultiEngine.del_properties]--><tt class="descname">del_properties</tt><big>(</big><em>keys</em>, <em>targets='all'</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.MultiEngine.del_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.MultiEngine.engineList">
+<!--[IPython.kernel.multiengine.MultiEngine.engineList]--><tt class="descname">engineList</tt><big>(</big><em>targets</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.MultiEngine.engineList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse the targets argument into a list of valid engine objects.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt>targets <span class="classifier-delimiter">:</span> <span class="classifier">int, list of ints or &#8216;all&#8217;</span></dt>
+<dd><p class="first last">The targets argument to be parsed.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">List of engine objects.</p>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Exception:</th><td class="field-body"><dl class="first last docutils">
+<dt>InvalidEngineID</dt>
+<dd><p class="first last">If targets is not valid or if an engine is not registered.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.MultiEngine.execute">
+<!--[IPython.kernel.multiengine.MultiEngine.execute]--><tt class="descname">execute</tt><big>(</big><em>lines</em>, <em>targets='all'</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.MultiEngine.execute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.MultiEngine.get_ids">
+<!--[IPython.kernel.multiengine.MultiEngine.get_ids]--><tt class="descname">get_ids</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.MultiEngine.get_ids" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.MultiEngine.get_properties">
+<!--[IPython.kernel.multiengine.MultiEngine.get_properties]--><tt class="descname">get_properties</tt><big>(</big><em>keys=None</em>, <em>targets='all'</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.MultiEngine.get_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.MultiEngine.get_result">
+<!--[IPython.kernel.multiengine.MultiEngine.get_result]--><tt class="descname">get_result</tt><big>(</big><em>i=None</em>, <em>targets='all'</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.MultiEngine.get_result" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.MultiEngine.has_properties">
+<!--[IPython.kernel.multiengine.MultiEngine.has_properties]--><tt class="descname">has_properties</tt><big>(</big><em>keys</em>, <em>targets='all'</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.MultiEngine.has_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.MultiEngine.keys">
+<!--[IPython.kernel.multiengine.MultiEngine.keys]--><tt class="descname">keys</tt><big>(</big><em>targets='all'</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.MultiEngine.keys" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.MultiEngine.kill">
+<!--[IPython.kernel.multiengine.MultiEngine.kill]--><tt class="descname">kill</tt><big>(</big><em>controller=False</em>, <em>targets='all'</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.MultiEngine.kill" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.MultiEngine.pull">
+<!--[IPython.kernel.multiengine.MultiEngine.pull]--><tt class="descname">pull</tt><big>(</big><em>keys</em>, <em>targets='all'</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.MultiEngine.pull" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.MultiEngine.pull_function">
+<!--[IPython.kernel.multiengine.MultiEngine.pull_function]--><tt class="descname">pull_function</tt><big>(</big><em>keys</em>, <em>targets='all'</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.MultiEngine.pull_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.MultiEngine.pull_serialized">
+<!--[IPython.kernel.multiengine.MultiEngine.pull_serialized]--><tt class="descname">pull_serialized</tt><big>(</big><em>keys</em>, <em>targets='all'</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.MultiEngine.pull_serialized" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.MultiEngine.push">
+<!--[IPython.kernel.multiengine.MultiEngine.push]--><tt class="descname">push</tt><big>(</big><em>ns</em>, <em>targets='all'</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.MultiEngine.push" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.MultiEngine.push_function">
+<!--[IPython.kernel.multiengine.MultiEngine.push_function]--><tt class="descname">push_function</tt><big>(</big><em>ns</em>, <em>targets='all'</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.MultiEngine.push_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.MultiEngine.push_serialized">
+<!--[IPython.kernel.multiengine.MultiEngine.push_serialized]--><tt class="descname">push_serialized</tt><big>(</big><em>namespace</em>, <em>targets='all'</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.MultiEngine.push_serialized" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.MultiEngine.queue_status">
+<!--[IPython.kernel.multiengine.MultiEngine.queue_status]--><tt class="descname">queue_status</tt><big>(</big><em>targets='all'</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.MultiEngine.queue_status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.MultiEngine.reset">
+<!--[IPython.kernel.multiengine.MultiEngine.reset]--><tt class="descname">reset</tt><big>(</big><em>targets='all'</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.MultiEngine.reset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.MultiEngine.set_properties">
+<!--[IPython.kernel.multiengine.MultiEngine.set_properties]--><tt class="descname">set_properties</tt><big>(</big><em>properties</em>, <em>targets='all'</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.MultiEngine.set_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="synchronousmultiengine">
+<h3><a title="IPython.kernel.multiengine.SynchronousMultiEngine" class="reference internal" href="#IPython.kernel.multiengine.SynchronousMultiEngine"><tt class="xref docutils literal"><span class="pre">SynchronousMultiEngine</span></tt></a><a class="headerlink" href="#synchronousmultiengine" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.multiengine.SynchronousMultiEngine">
+<!--[IPython.kernel.multiengine.SynchronousMultiEngine]-->class <tt class="descclassname">IPython.kernel.multiengine.</tt><tt class="descname">SynchronousMultiEngine</tt><big>(</big><em>multiengine</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.SynchronousMultiEngine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.pendingdeferred.PendingDeferredManager" class="reference external" href="IPython.kernel.pendingdeferred.html#IPython.kernel.pendingdeferred.PendingDeferredManager"><tt class="xref docutils literal"><span class="pre">IPython.kernel.pendingdeferred.PendingDeferredManager</span></tt></a></p>
+<p>Adapt an <cite>IMultiEngine</cite> -&gt; <cite>ISynchronousMultiEngine</cite></p>
+<p>Warning, this class uses a decorator that currently uses <a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs.  
+Because of this block must be passed as a kwarg, not positionally.</p>
+<dl class="method">
+<dt id="IPython.kernel.multiengine.SynchronousMultiEngine.__init__">
+<!--[IPython.kernel.multiengine.SynchronousMultiEngine.__init__]--><tt class="descname">__init__</tt><big>(</big><em>multiengine</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.SynchronousMultiEngine.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.SynchronousMultiEngine.clear_properties">
+<!--[IPython.kernel.multiengine.SynchronousMultiEngine.clear_properties]--><tt class="descname">clear_properties</tt><big>(</big><em>pdm</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.SynchronousMultiEngine.clear_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.SynchronousMultiEngine.clear_queue">
+<!--[IPython.kernel.multiengine.SynchronousMultiEngine.clear_queue]--><tt class="descname">clear_queue</tt><big>(</big><em>pdm</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.SynchronousMultiEngine.clear_queue" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.SynchronousMultiEngine.del_properties">
+<!--[IPython.kernel.multiengine.SynchronousMultiEngine.del_properties]--><tt class="descname">del_properties</tt><big>(</big><em>pdm</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.SynchronousMultiEngine.del_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.SynchronousMultiEngine.execute">
+<!--[IPython.kernel.multiengine.SynchronousMultiEngine.execute]--><tt class="descname">execute</tt><big>(</big><em>pdm</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.SynchronousMultiEngine.execute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.SynchronousMultiEngine.get_ids">
+<!--[IPython.kernel.multiengine.SynchronousMultiEngine.get_ids]--><tt class="descname">get_ids</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.SynchronousMultiEngine.get_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of registered engine ids.</p>
+<p>Never use the two phase block/non-block stuff for this.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.SynchronousMultiEngine.get_properties">
+<!--[IPython.kernel.multiengine.SynchronousMultiEngine.get_properties]--><tt class="descname">get_properties</tt><big>(</big><em>pdm</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.SynchronousMultiEngine.get_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.SynchronousMultiEngine.get_result">
+<!--[IPython.kernel.multiengine.SynchronousMultiEngine.get_result]--><tt class="descname">get_result</tt><big>(</big><em>pdm</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.SynchronousMultiEngine.get_result" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.SynchronousMultiEngine.has_properties">
+<!--[IPython.kernel.multiengine.SynchronousMultiEngine.has_properties]--><tt class="descname">has_properties</tt><big>(</big><em>pdm</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.SynchronousMultiEngine.has_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.SynchronousMultiEngine.keys">
+<!--[IPython.kernel.multiengine.SynchronousMultiEngine.keys]--><tt class="descname">keys</tt><big>(</big><em>pdm</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.SynchronousMultiEngine.keys" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.SynchronousMultiEngine.kill">
+<!--[IPython.kernel.multiengine.SynchronousMultiEngine.kill]--><tt class="descname">kill</tt><big>(</big><em>pdm</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.SynchronousMultiEngine.kill" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.SynchronousMultiEngine.pull">
+<!--[IPython.kernel.multiengine.SynchronousMultiEngine.pull]--><tt class="descname">pull</tt><big>(</big><em>pdm</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.SynchronousMultiEngine.pull" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.SynchronousMultiEngine.pull_function">
+<!--[IPython.kernel.multiengine.SynchronousMultiEngine.pull_function]--><tt class="descname">pull_function</tt><big>(</big><em>pdm</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.SynchronousMultiEngine.pull_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.SynchronousMultiEngine.pull_serialized">
+<!--[IPython.kernel.multiengine.SynchronousMultiEngine.pull_serialized]--><tt class="descname">pull_serialized</tt><big>(</big><em>pdm</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.SynchronousMultiEngine.pull_serialized" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.SynchronousMultiEngine.push">
+<!--[IPython.kernel.multiengine.SynchronousMultiEngine.push]--><tt class="descname">push</tt><big>(</big><em>pdm</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.SynchronousMultiEngine.push" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.SynchronousMultiEngine.push_function">
+<!--[IPython.kernel.multiengine.SynchronousMultiEngine.push_function]--><tt class="descname">push_function</tt><big>(</big><em>pdm</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.SynchronousMultiEngine.push_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.SynchronousMultiEngine.push_serialized">
+<!--[IPython.kernel.multiengine.SynchronousMultiEngine.push_serialized]--><tt class="descname">push_serialized</tt><big>(</big><em>pdm</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.SynchronousMultiEngine.push_serialized" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.SynchronousMultiEngine.queue_status">
+<!--[IPython.kernel.multiengine.SynchronousMultiEngine.queue_status]--><tt class="descname">queue_status</tt><big>(</big><em>pdm</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.SynchronousMultiEngine.queue_status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.SynchronousMultiEngine.reset">
+<!--[IPython.kernel.multiengine.SynchronousMultiEngine.reset]--><tt class="descname">reset</tt><big>(</big><em>pdm</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.SynchronousMultiEngine.reset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.multiengine.SynchronousMultiEngine.set_properties">
+<!--[IPython.kernel.multiengine.SynchronousMultiEngine.set_properties]--><tt class="descname">set_properties</tt><big>(</big><em>pdm</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.multiengine.SynchronousMultiEngine.set_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.multiengine</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.multiengine">Module: <tt class="docutils literal"><span class="pre">kernel.multiengine</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#ienginemultiplexer"><tt class="docutils literal"><span class="pre">IEngineMultiplexer</span></tt></a></li>
+<li><a class="reference external" href="#ifullmultiengine"><tt class="docutils literal"><span class="pre">IFullMultiEngine</span></tt></a></li>
+<li><a class="reference external" href="#ifullsynchronousmultiengine"><tt class="docutils literal"><span class="pre">IFullSynchronousMultiEngine</span></tt></a></li>
+<li><a class="reference external" href="#imultiengine"><tt class="docutils literal"><span class="pre">IMultiEngine</span></tt></a></li>
+<li><a class="reference external" href="#imultienginecoordinator"><tt class="docutils literal"><span class="pre">IMultiEngineCoordinator</span></tt></a></li>
+<li><a class="reference external" href="#imultiengineextras"><tt class="docutils literal"><span class="pre">IMultiEngineExtras</span></tt></a></li>
+<li><a class="reference external" href="#isynchronousenginemultiplexer"><tt class="docutils literal"><span class="pre">ISynchronousEngineMultiplexer</span></tt></a></li>
+<li><a class="reference external" href="#isynchronousmultiengine"><tt class="docutils literal"><span class="pre">ISynchronousMultiEngine</span></tt></a></li>
+<li><a class="reference external" href="#isynchronousmultienginecoordinator"><tt class="docutils literal"><span class="pre">ISynchronousMultiEngineCoordinator</span></tt></a></li>
+<li><a class="reference external" href="#isynchronousmultiengineextras"><tt class="docutils literal"><span class="pre">ISynchronousMultiEngineExtras</span></tt></a></li>
+<li><a class="reference external" href="#multiengine"><tt class="docutils literal"><span class="pre">MultiEngine</span></tt></a></li>
+<li><a class="reference external" href="#synchronousmultiengine"><tt class="docutils literal"><span class="pre">SynchronousMultiEngine</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.kernel.mapper.html" title="previous chapter">kernel.mapper</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.multiengineclient.html" title="next chapter">kernel.multiengineclient</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.multiengine.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.multiengineclient.html" title="kernel.multiengineclient"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.mapper.html" title="kernel.mapper"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

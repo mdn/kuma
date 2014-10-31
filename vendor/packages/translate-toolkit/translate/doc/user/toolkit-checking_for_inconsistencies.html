@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="checking_for_inconsistencies_in_your_translations" id="checking_for_inconsistencies_in_your_translations">Checking for inconsistencies in your translations</a></h1>
+<div class="level1">
+
+<p>
+
+Over time language changes, hopefully not very quickly.  However, if your language is new to computers the change might be rapid.  So
+now your older translations have different text to your new translations.  In this use case we look at how you can bring alignment back to your translations.
+</p>
+
+<p>
+Other cases in which you can expect inconsistencies:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> Multiple translators are involved</div>
+</li>
+<li class="level1"><div class="li"> Translations are very old</div>
+</li>
+<li class="level1"><div class="li"> You prepared this set of translations with translations from multiple sources</div>
+</li>
+<li class="level1"><div class="li"> You changed terminology at some stage in the translation</div>
+</li>
+<li class="level1"><div class="li"> You did not do a formal glossary development stage</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Checking for inconsistencies in your translations" [1-679] -->
+<h2><a name="what_we_won_t_be_able_to_achieve" id="what_we_won_t_be_able_to_achieve">What we won&#039;t be able to achieve</a></h2>
+<div class="level2">
+
+<p>
+
+We cannot find grammatical errors and we won&#039;t be able to find all cases of words, etc
+</p>
+
+</div>
+<!-- SECTION "What we won't be able to achieve" [680-813] -->
+<h2><a name="scenario" id="scenario">Scenario</a></h2>
+<div class="level2">
+
+<p>
+
+You are translating Mozilla Firefox into Afrikaans.  The files are stored in <em>af</em>.  You have the following issues:
+
+</p>
+<ol>
+<li class="level1"><div class="li"> Your current translator is good but took over from a team of three</div>
+</li>
+<li class="level1"><div class="li"> Terminology is well defined but not well used by the old translators</div>
+</li>
+</ol>
+
+<p>
+
+We&#039;ll look at the translations first from the English, or source text, point of view.  Then we will look at it from the Afrikaans point of view.  The first will pick up where we have translated the same English word differently in Afrikaans ie an inconsistency.  While the second will determine if we use the same English word for different English words, possibly this will confuse a user.
+</p>
+
+</div>
+<!-- SECTION "Scenario" [814-1490] -->
+<h3><a name="step_1extracting_conflicting_target_text_translations" id="step_1extracting_conflicting_target_text_translations">Step 1: Extracting conflicting target text translations</a></h3>
+<div class="level3">
+<pre class="code">poconflicts -I --accelerator=&quot;&amp;&quot; af af-conflicts</pre>
+
+<p>
+
+From our existing translation in <em>af</em> we extract conflicts and place them in <em>af-conflicts</em>.  We are ignoring case with <em>-I</em> so that <code>Save as</code> is considered the same as <code>Save As</code>.  The <em>--accelerator</em> options allows us to ignore accelerators so that <code>File</code> is the sane as <code>&amp;File</code> which is also the same as <code>Fi&amp;le</code>
+</p>
+
+<p>
+If we browse into <em>af-conflicts</em> we will see a flat structure of words with conflicts.
+
+</p>
+<pre class="code">cd af-conflicts
+ls
+change.po         disc.po         functionality.po  letter.po          overwrite.po       restored.po    subtitle.po
+changes.po        document.po     gb.po             library.po         page.po            restore.po     suffix.po
+character.po      dots.po         graphic.po        light.po           pager.po           retry.po       superscript.po
+chart.po          double.po       grayscale.po      limit.po           percent.po         return.po      supported.po
+check.po          down.po         grid.po           line.po            pies.po            right.po       symbols.po
+circle.po         drawing.po      group.po  
+etc...</pre>
+
+<p>
+
+These are normal <acronym title="Gettext Portable Object">PO</acronym> files which you can edit in any <acronym title="Gettext Portable Object">PO</acronym> editor or text editor.  If we look at the first file <code>change.po</code> we can see that the source text <em>Change</em> was translated as <em>Verander</em> and <em>Wysig</em>.  The translators job is noe to correct these <acronym title="Gettext Portable Object">PO</acronym> files, ignoring instances where the difference is in fact correct.
+</p>
+
+<p>
+Once all fixes have been made we can merge our changes back into the original files.
+</p>
+
+</div>
+<!-- SECTION "Step 1: Extracting conflicting target text translations" [1491-3121] -->
+<h3><a name="step_2merging_our_corrections_back_into_the_original_files" id="step_2merging_our_corrections_back_into_the_original_files">Step 2: Merging our corrections back into the original files</a></h3>
+<div class="level3">
+
+<p>
+
+Our files in <em>af-conflicts</em> are in a flat structure.  We need to structure them into the hierarchy of the existing <acronym title="Gettext Portable Object">PO</acronym> files.
+
+</p>
+<pre class="code">porestructure af-conflicts af-restructured</pre>
+
+<p>
+
+The entries that where in the files in <em>af-conflicts</em> have been placed in <em>af-restrucured</em>, they now appear in the correct place in the directory structure and also appear in the correct file.  We are now ready to merge
+
+</p>
+<pre class="code">pomerge -t af -i af-restructure -o af</pre>
+
+<p>
+
+Using the existing files in <em>af</em> we merge the corrected and restructured file from <em>af-restructure</em> and place them back into <em>af</em>.  Note: use a different output directory if you do not want to overwrite your existing files. All your conflict corrections are now in the correct <acronym title="Gettext Portable Object">PO</acronym> file in <em>af</em>.
+</p>
+
+<p>
+You might want to run <strong>Step 1</strong> again to make sure you didn&#039;t miss anything or introduce yet another problem.
+</p>
+
+<p>
+Next we look at the inverted conflict problem.
+</p>
+
+</div>
+<!-- SECTION "Step 2: Merging our corrections back into the original files" [3122-4096] -->
+<h3><a name="step_3extracting_conflicts_of_meaning" id="step_3extracting_conflicts_of_meaning">Step 3: Extracting conflicts of meaning</a></h3>
+<div class="level3">
+
+<p>
+
+If you have used the same Afrikaans word for two different English words then you could have created a conflict of meaning.  For instance in our Xhosa translations the word <code>Cima</code> was used for both <code>Delete</code> and <code>Cancel</code>.  Clearly this is a serious issue.  This step will allow us to find those errors and take action.
+
+</p>
+<pre class="code">poconflicts -v -I --accelerator=&quot;&amp;&quot; af af-conflicts-invert</pre>
+
+<p>
+
+We use the same command line as in <strong>Step 1</strong> but add <em>-v</em> to allow us to invert the match.  We are also now outputting to <em>af-conflicts-invert</em> to make things clear.
+</p>
+
+<p>
+This time the <acronym title="Gettext Portable Object">PO</acronym> files that are created have Afrikaans names
+
+</p>
+<pre class="code">cd af-conflicts-invert
+ls
+dataveld.po              grys.po             lisensieooreenkoms.po  paragraaf.po        sny.po              verslag.po
+datumgekoop.po           hallo.po            lysinhoud.po           pasmaak.po          soek.po             verstek.po
+datum.po                 hiperboliese.po     maateenheid.po         persentasie.po      sorteer.po          verteenwoordig.po
+deaktiveer.po            hoekbeheer.po       maatskappynaam.po      posadres.po         sorteervolgorde.po  vertikaal.po
+etc...</pre>
+
+<p>
+
+We edit these as usual.  You need to remember that you will see a normal <acronym title="Gettext Portable Object">PO</acronym> file but that you are looking at how the translation might be confusing to a user.  If you see the same Afrikaans translation for two different English terms but there is no conflict of meaning or no alternative then leave it as is.  You will find a lot of these instances so the results are less dramatic then the results from a normal conflict analysis.
+</p>
+
+<p>
+Lastly follow <strong>Step 2</strong> to restructure and merge these conflicts back into your translations
+</p>
+
+</div>
+<!-- SECTION "Step 3: Extracting conflicts of meaning" [4097-5829] -->
+<h2><a name="conclusion" id="conclusion">Conclusion</a></h2>
+<div class="level2">
+
+<p>
+
+You&#039;ve now gone a long way to improving the quality of your translations.  Congratulations!  You might want to take some of what you&#039;ve learnt here to start building a terminology list that can help prevent some of the issues you have seen.
+
+</p>
+
+</div>
+<!-- SECTION "Conclusion" [5830-] --></body>
+</html>

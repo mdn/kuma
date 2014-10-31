@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>upgrade_dir &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="wildcard" href="IPython.wildcard.html" />
+    <link rel="prev" title="ultraTB" href="IPython.ultraTB.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.wildcard.html" title="wildcard"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.ultraTB.html" title="ultraTB"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="upgrade-dir">
+<h1>upgrade_dir<a class="headerlink" href="#upgrade-dir" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.upgrade_dir">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">upgrade_dir</span></tt><a class="headerlink" href="#module-IPython.upgrade_dir" title="Permalink to this headline">¶</a></h2>
+<p>A script/util to upgrade all files in a directory</p>
+<p>This is rather conservative in its approach, only copying/overwriting
+new and unedited files.</p>
+<p>To be used by &#8220;upgrade&#8221; feature.</p>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.upgrade_dir.showdiff">
+<!--[IPython.upgrade_dir.showdiff]--><tt class="descclassname">IPython.upgrade_dir.</tt><tt class="descname">showdiff</tt><big>(</big><em>old</em>, <em>new</em><big>)</big><a class="headerlink" href="#IPython.upgrade_dir.showdiff" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.upgrade_dir.upgrade_dir">
+<!--[IPython.upgrade_dir.upgrade_dir]--><tt class="descclassname">IPython.upgrade_dir.</tt><tt class="descname">upgrade_dir</tt><big>(</big><em>srcdir</em>, <em>tgtdir</em><big>)</big><a class="headerlink" href="#IPython.upgrade_dir.upgrade_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy over all files in srcdir to tgtdir w/ native line endings</p>
+<p>Creates .upgrade_report in tgtdir that stores md5sums of all files
+to notice changed files b/w upgrades.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">upgrade_dir</a><ul>
+<li><a class="reference external" href="#module-IPython.upgrade_dir">Module: <tt class="docutils literal"><span class="pre">upgrade_dir</span></tt></a></li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.ultraTB.html" title="previous chapter">ultraTB</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.wildcard.html" title="next chapter">wildcard</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.upgrade_dir.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.wildcard.html" title="wildcard"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.ultraTB.html" title="ultraTB"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.pendingdeferred &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.pickleutil" href="IPython.kernel.pickleutil.html" />
+    <link rel="prev" title="kernel.pbutil" href="IPython.kernel.pbutil.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.pickleutil.html" title="kernel.pickleutil"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.pbutil.html" title="kernel.pbutil"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-pendingdeferred">
+<h1>kernel.pendingdeferred<a class="headerlink" href="#kernel-pendingdeferred" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.pendingdeferred">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.pendingdeferred</span></tt><a class="headerlink" href="#module-IPython.kernel.pendingdeferred" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.kernel.pendingdeferred</span></tt>:</p>
+<img src="../../_images/inheritance968543e0db.png" usemap="#inheritance968543e0db" class="inheritance"/><map id="inheritance968543e0db" name="inheritance968543e0db">
+<area shape="rect" href="#IPython.kernel.pendingdeferred.PendingDeferredManager" title="kernel.pendingdeferred.PendingDeferredManager" alt="" coords="5,5,341,32"/>
+</map>
+<p>Classes to manage pending Deferreds.</p>
+<p>A pending deferred is a deferred that may or may not have fired.  This module
+is useful for taking a class whose methods return deferreds and wrapping it to
+provide API that keeps track of those deferreds for later retrieval.  See the
+tests for examples of its usage.</p>
+</div>
+<div class="section" id="pendingdeferredmanager">
+<h2><a title="IPython.kernel.pendingdeferred.PendingDeferredManager" class="reference internal" href="#IPython.kernel.pendingdeferred.PendingDeferredManager"><tt class="xref docutils literal"><span class="pre">PendingDeferredManager</span></tt></a><a class="headerlink" href="#pendingdeferredmanager" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="IPython.kernel.pendingdeferred.PendingDeferredManager">
+<!--[IPython.kernel.pendingdeferred.PendingDeferredManager]-->class <tt class="descclassname">IPython.kernel.pendingdeferred.</tt><tt class="descname">PendingDeferredManager</tt><a class="headerlink" href="#IPython.kernel.pendingdeferred.PendingDeferredManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>A class to track pending deferreds.</p>
+<p>To track a pending deferred, the user of this class must first
+get a deferredID by calling <cite>get_next_deferred_id</cite>.  Then the user
+calls <cite>save_pending_deferred</cite> passing that id and the deferred to
+be tracked.  To later retrieve it, the user calls
+<cite>get_pending_deferred</cite> passing the id.</p>
+<dl class="method">
+<dt id="IPython.kernel.pendingdeferred.PendingDeferredManager.__init__">
+<!--[IPython.kernel.pendingdeferred.PendingDeferredManager.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.pendingdeferred.PendingDeferredManager.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>Manage pending deferreds.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.pendingdeferred.PendingDeferredManager.clear_pending_deferreds">
+<!--[IPython.kernel.pendingdeferred.PendingDeferredManager.clear_pending_deferreds]--><tt class="descname">clear_pending_deferreds</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.pendingdeferred.PendingDeferredManager.clear_pending_deferreds" title="Permalink to this definition">¶</a></dt>
+<dd>Remove all the deferreds I am tracking.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.pendingdeferred.PendingDeferredManager.delete_pending_deferred">
+<!--[IPython.kernel.pendingdeferred.PendingDeferredManager.delete_pending_deferred]--><tt class="descname">delete_pending_deferred</tt><big>(</big><em>deferred_id</em><big>)</big><a class="headerlink" href="#IPython.kernel.pendingdeferred.PendingDeferredManager.delete_pending_deferred" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove a deferred I am tracking and add a null Errback.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>deferredID <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">The id of a deferred that I am tracking.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.pendingdeferred.PendingDeferredManager.get_deferred_id">
+<!--[IPython.kernel.pendingdeferred.PendingDeferredManager.get_deferred_id]--><tt class="descname">get_deferred_id</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.pendingdeferred.PendingDeferredManager.get_deferred_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.pendingdeferred.PendingDeferredManager.get_pending_deferred">
+<!--[IPython.kernel.pendingdeferred.PendingDeferredManager.get_pending_deferred]--><tt class="descname">get_pending_deferred</tt><big>(</big><em>deferred_id</em>, <em>block</em><big>)</big><a class="headerlink" href="#IPython.kernel.pendingdeferred.PendingDeferredManager.get_pending_deferred" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.pendingdeferred.PendingDeferredManager.quick_has_id">
+<!--[IPython.kernel.pendingdeferred.PendingDeferredManager.quick_has_id]--><tt class="descname">quick_has_id</tt><big>(</big><em>deferred_id</em><big>)</big><a class="headerlink" href="#IPython.kernel.pendingdeferred.PendingDeferredManager.quick_has_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.pendingdeferred.PendingDeferredManager.save_pending_deferred">
+<!--[IPython.kernel.pendingdeferred.PendingDeferredManager.save_pending_deferred]--><tt class="descname">save_pending_deferred</tt><big>(</big><em>d</em>, <em>deferred_id=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.pendingdeferred.PendingDeferredManager.save_pending_deferred" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the result of a deferred for later retrieval.</p>
+<p>This works even if the deferred has not fired.</p>
+<p>Only callbacks and errbacks applied to d before this method
+is called will be called no the final result.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.pendingdeferred.two_phase">
+<!--[IPython.kernel.pendingdeferred.two_phase]--><tt class="descclassname">IPython.kernel.pendingdeferred.</tt><tt class="descname">two_phase</tt><big>(</big><em>wrapped_method</em><big>)</big><a class="headerlink" href="#IPython.kernel.pendingdeferred.two_phase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrap methods that return a deferred into a two phase process.</p>
+<p>This transforms:</p>
+<div class="highlight-python"><pre>foo(arg1, arg2, ...) -&gt; foo(arg1, arg2,...,block=True).</pre>
+</div>
+<p>The wrapped method will then return a deferred to a deferred id.  This will
+only work on method of classes that inherit from <cite>PendingDeferredManager</cite>,
+as that class provides an API for</p>
+<p>block is a boolean to determine if we should use the two phase process or
+just simply call the wrapped method.  At this point block does not have a
+default and it probably won&#8217;t.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.pendingdeferred</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.pendingdeferred">Module: <tt class="docutils literal"><span class="pre">kernel.pendingdeferred</span></tt></a></li>
+<li><a class="reference external" href="#pendingdeferredmanager"><tt class="docutils literal"><span class="pre">PendingDeferredManager</span></tt></a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.kernel.pbutil.html" title="previous chapter">kernel.pbutil</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.pickleutil.html" title="next chapter">kernel.pickleutil</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.pendingdeferred.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.pickleutil.html" title="kernel.pickleutil"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.pbutil.html" title="kernel.pbutil"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>
