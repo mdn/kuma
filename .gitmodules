@@ -43,3 +43,6 @@
 [submodule "vendor/src/django-csp"]
 	path = vendor/src/django-csp
 	url = git@github.com:mozilla/django-csp.git
+[submodule "vendor/src/django-debug-cache-panel"]
+	path = vendor/src/django-debug-cache-panel
+	url = git@github.com:jbalogh/django-debug-cache-panel.git
