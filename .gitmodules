@@ -10,3 +10,6 @@
 [submodule "vendor/src/check"]
 	path = vendor/src/check
 	url = git@github.com:jbalogh/check.git
+[submodule "vendor/src/commonware"]
+	path = vendor/src/commonware
+	url = git@github.com:jsocol/commonware.git
