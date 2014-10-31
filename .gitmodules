@@ -28,3 +28,6 @@
 [submodule "vendor/src/django-badger"]
 	path = vendor/src/django-badger
 	url = git@github.com:mozilla/django-badger.git
+[submodule "vendor/src/django-browserid"]
+	path = vendor/src/django-browserid
+	url = git@github.com:mozilla/django-browserid.git
