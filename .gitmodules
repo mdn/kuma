@@ -40,3 +40,6 @@
 [submodule "vendor/src/django-cronjobs"]
 	path = vendor/src/django-cronjobs
 	url = git@github.com:jsocol/django-cronjobs.git
+[submodule "vendor/src/django-csp"]
+	path = vendor/src/django-csp
+	url = git@github.com:mozilla/django-csp.git
