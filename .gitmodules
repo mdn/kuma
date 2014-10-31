@@ -25,3 +25,6 @@
 [submodule "vendor/src/django-authority"]
 	path = vendor/src/django-authority
 	url = git@github.com:jsocol/django-authority.git
+[submodule "vendor/src/django-badger"]
+	path = vendor/src/django-badger
+	url = git@github.com:mozilla/django-badger.git
