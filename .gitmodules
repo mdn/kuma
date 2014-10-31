@@ -76,3 +76,6 @@
 [submodule "vendor/src/django-session-csrf"]
 	path = vendor/src/django-session-csrf
 	url = git@github.com:mozilla/django-session-csrf.git
+[submodule "vendor/src/django-smuggler"]
+	path = vendor/src/django-smuggler
+	url = git@github.com:semente/django-smuggler.git
