@@ -166,3 +166,6 @@
 [submodule "vendor/src/test-utils"]
 	path = vendor/src/test-utils
 	url = git@github.com:jbalogh/test-utils.git
+[submodule "vendor/src/tower"]
+	path = vendor/src/tower
+	url = git@github.com:clouserw/tower.git
