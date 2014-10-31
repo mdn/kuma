@@ -19,3 +19,6 @@
 [submodule "vendor/src/django-allauth"]
 	path = vendor/src/django-allauth
 	url = git@github.com:pennersr/django-allauth.git
+[submodule "vendor/src/django-appconf"]
+	path = vendor/src/django-appconf
+	url = git@github.com:jezdez/django-appconf.git
