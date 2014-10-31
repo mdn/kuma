@@ -148,3 +148,6 @@
 [submodule "vendor/src/raven-python"]
 	path = vendor/src/raven-python
 	url = git@github.com:getsentry/raven-python.git
+[submodule "vendor/src/requests"]
+	path = vendor/src/requests
+	url = git@github.com:kennethreitz/requests.git
