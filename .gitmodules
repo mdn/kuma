@@ -91,3 +91,6 @@
 [submodule "vendor/src/django-teamwork"]
 	path = vendor/src/django-teamwork
 	url = git@github.com:lmorchard/django-teamwork.git
+[submodule "vendor/src/django-tidings"]
+	path = vendor/src/django-tidings
+	url = git@github.com:erikrose/django-tidings.git
