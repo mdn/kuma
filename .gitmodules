@@ -64,3 +64,6 @@
 [submodule "vendor/src/django-multidb-router"]
 	path = vendor/src/django-multidb-router
 	url = git@github.com:jbalogh/django-multidb-router.git
+[submodule "vendor/src/django-nose"]
+	path = vendor/src/django-nose
+	url = git@github.com:django-nose/django-nose.git
