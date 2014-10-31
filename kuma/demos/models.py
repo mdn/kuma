@@ -25,6 +25,7 @@ from django.db.models.fields.files import FieldFile, ImageFieldFile
 from django.template.defaultfilters import slugify, filesizeformat
 from django.utils.translation import ugettext_lazy as _
 
+import constance.config
 import south.modelsinspector
 from taggit_extras.managers import NamespacedTaggableManager
 from threadedcomments.models import ThreadedComment
@@ -43,9 +44,6 @@ SCREENSHOT_MAXH = getattr(settings, 'DEMO_SCREENSHOT_MAX_HEIGHT', 360)
 
 THUMBNAIL_MAXW = getattr(settings, 'DEMO_THUMBNAIL_MAX_WIDTH', 200)
 THUMBNAIL_MAXH = getattr(settings, 'DEMO_THUMBNAIL_MAX_HEIGHT', 150)
-
-DEMO_MAX_ZIP_FILESIZE = getattr(settings, 'DEMO_MAX_ZIP_FILESIZE', 120 * 1024 * 1024) # 120MB
-DEMO_MAX_FILESIZE_IN_ZIP = getattr(settings, 'DEMO_MAX_FILESIZE_IN_ZIP', 120 * 1024 * 1024) # 120MB
 
 # Set up a file system for demo uploads that can be kept separate from the rest
 # of /media if necessary. Lots of hackery here to ensure a set of sensible
@@ -163,7 +161,10 @@ class ReplacingZipFileField(models.FileField):
     attr_class = ReplacingFieldZipFile
 
     def __init__(self, *args, **kwargs):
-        self.max_upload_size = kwargs.pop("max_upload_size")
+        if "max_upload_size" in kwargs:
+            self.max_upload_size = kwargs.pop("max_upload_size")
+        else:
+            self.max_upload_size = constance.config.DEMO_MAX_ZIP_FILESIZE
         super(ReplacingZipFileField, self).__init__(*args, **kwargs)
 
     def clean(self, *args, **kwargs):
@@ -418,7 +419,7 @@ class Submission(models.Model):
     demo_package = ReplacingZipFileField(
             _('select a ZIP file containing your demo'),
             max_length=255,
-            max_upload_size=DEMO_MAX_ZIP_FILESIZE,
+            max_upload_size=60 * 1024 * 1024,  # overridden by constance
             storage=demo_uploads_fs,
             upload_to=mk_slug_upload_to('demo_package.zip'),
             blank=False)
@@ -660,7 +661,7 @@ class Submission(models.Model):
             if 'index.html' == name or 'demo.html' == name:
                 index_found = True
 
-            if zi.file_size > DEMO_MAX_FILESIZE_IN_ZIP:
+            if zi.file_size > constance.config.DEMO_MAX_FILESIZE_IN_ZIP:
                 raise ValidationError(
                     _('ZIP file contains a file that is too large: %(filename)s') %
                     {"filename": name}
