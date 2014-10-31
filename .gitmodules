@@ -4,3 +4,6 @@
 [submodule "vendor/src/basket-client"]
 	path = vendor/src/basket-client
 	url = git@github.com:mozilla/basket-client.git
+[submodule "vendor/src/bleach"]
+	path = vendor/src/bleach
+	url = git@github.com:lmorchard/bleach.git
