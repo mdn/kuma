@@ -7,3 +7,6 @@
 [submodule "vendor/src/bleach"]
 	path = vendor/src/bleach
 	url = git@github.com:lmorchard/bleach.git
+[submodule "vendor/src/check"]
+	path = vendor/src/check
+	url = git@github.com:jbalogh/check.git
