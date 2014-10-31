@@ -50,7 +50,7 @@ src/django-authority
 src/django-timezones
 src/commonware
 src/jingo
-src/cache-panel
+src/django-debug-cache-panel
 src/jingo-minify
 src/check
 src/django-mozilla-product-details
