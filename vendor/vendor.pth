@@ -1,4 +1,4 @@
-src/smuggler
+src/django-smuggler
 src/django-constance
 src/django-browserid
-src/soapbox
+src/django-soapbox
