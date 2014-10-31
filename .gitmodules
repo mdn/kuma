@@ -169,3 +169,6 @@
 [submodule "vendor/src/tower"]
 	path = vendor/src/tower
 	url = git@github.com:clouserw/tower.git
+[submodule "vendor/src/tweepy"]
+	path = vendor/src/tweepy
+	url = git@github.com:tweepy/tweepy.git
