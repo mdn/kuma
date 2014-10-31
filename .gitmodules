@@ -172,3 +172,6 @@
 [submodule "vendor/src/tweepy"]
 	path = vendor/src/tweepy
 	url = git@github.com:tweepy/tweepy.git
+[submodule "vendor/src/urllib3"]
+	path = vendor/src/urllib3
+	url = git@github.com:shazow/urllib3.git
