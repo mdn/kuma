@@ -55,3 +55,6 @@
 [submodule "vendor/src/django-memcached-hashring"]
 	path = vendor/src/django-memcached-hashring
 	url = git@github.com:jezdez/django-memcached-hashring.git
+[submodule "vendor/src/django-mobility"]
+	path = vendor/src/django-mobility
+	url = git@github.com:jbalogh/django-mobility.git
