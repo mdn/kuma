@@ -100,3 +100,6 @@
 [submodule "vendor/src/django-waffle"]
 	path = vendor/src/django-waffle
 	url = git@github.com:jsocol/django-waffle.git
+[submodule "vendor/src/elasticsearch-py"]
+	path = vendor/src/elasticsearch-py
+	url = git@github.com:elasticsearch/elasticsearch-py.git
