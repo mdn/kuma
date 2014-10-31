@@ -157,3 +157,6 @@
 [submodule "vendor/src/schematic"]
 	path = vendor/src/schematic
 	url = git@github.com:jbalogh/schematic.git
+[submodule "vendor/src/simplejson"]
+	path = vendor/src/simplejson
+	url = git@github.com:simplejson/simplejson.git
