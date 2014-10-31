@@ -13,3 +13,6 @@
 [submodule "vendor/src/commonware"]
 	path = vendor/src/commonware
 	url = git@github.com:jsocol/commonware.git
+[submodule "vendor/src/django"]
+	path = vendor/src/django
+	url = git@github.com:django/django.git
