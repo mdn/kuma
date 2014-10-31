@@ -82,3 +82,6 @@
 [submodule "vendor/src/django-soapbox"]
 	path = vendor/src/django-soapbox
 	url = git@github.com:ubernostrum/django-soapbox.git
+[submodule "vendor/src/django-statici18n"]
+	path = vendor/src/django-statici18n
+	url = git@github.com:zyegfryed/django-statici18n.git
