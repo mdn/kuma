@@ -142,3 +142,6 @@
 [submodule "vendor/src/python-openid"]
 	path = vendor/src/python-openid
 	url = git@github.com:openid/python-openid.git
+[submodule "vendor/src/pytidylib"]
+	path = vendor/src/pytidylib
+	url = git@github.com:countergram/pytidylib.git
