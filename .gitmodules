@@ -1,3 +1,6 @@
 [submodule "kumascript"]
 	path = kumascript
 	url = git://github.com/mozilla/kumascript.git
+[submodule "vendor/src/basket-client"]
+	path = vendor/src/basket-client
+	url = git@github.com:mozilla/basket-client.git
