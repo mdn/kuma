@@ -127,3 +127,6 @@
 [submodule "vendor/src/oauthlib"]
 	path = vendor/src/oauthlib
 	url = git@github.com:idan/oauthlib.git
+[submodule "vendor/src/py-wikimarkup"]
+	path = vendor/src/py-wikimarkup
+	url = git@github.com:pcraciunoiu/py-wikimarkup.git
