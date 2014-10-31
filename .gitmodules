@@ -112,3 +112,6 @@
 [submodule "vendor/src/hash_ring"]
 	path = vendor/src/hash_ring
 	url = git@github.com:Doist/hash_ring.git
+[submodule "vendor/src/jingo"]
+	path = vendor/src/jingo
+	url = git@github.com:jbalogh/jingo.git
