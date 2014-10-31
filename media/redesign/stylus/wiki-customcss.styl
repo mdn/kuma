@@ -394,12 +394,17 @@ div.index ol {
 }
 [dir="ltr"] .cssprop {
     clear: left;
+    margin: 0 0 $grid-spacing 0;
+    padding: 14px 0 14px 40px;
     border-left: 6px solid rgba-fallback(rgba(255,203,0,0.5));
 }
 [dir="rtl"] .cssprop {
     clear: right;
+    margin: 0 0 $grid-spacing 0;
+    padding: 14px 40px 14px 0;
     border-right: 6px solid rgba-fallback(rgba(255,203,0,0.5));
 }
+
 .cssprop li {
     display: table-row;
     padding: 3px;
