@@ -124,3 +124,6 @@
 [submodule "vendor/src/nuggets"]
 	path = vendor/src/nuggets
 	url = git@github.com:mozilla/nuggets.git
+[submodule "vendor/src/oauthlib"]
+	path = vendor/src/oauthlib
+	url = git@github.com:idan/oauthlib.git
