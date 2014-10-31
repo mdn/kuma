@@ -94,3 +94,6 @@
 [submodule "vendor/src/django-tidings"]
 	path = vendor/src/django-tidings
 	url = git@github.com:erikrose/django-tidings.git
+[submodule "vendor/src/django-timezones"]
+	path = vendor/src/django-timezones
+	url = git@github.com:brosner/django-timezones.git
