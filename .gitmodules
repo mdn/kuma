@@ -16,3 +16,6 @@
 [submodule "vendor/src/django"]
 	path = vendor/src/django
 	url = git@github.com:django/django.git
+[submodule "vendor/src/django-allauth"]
+	path = vendor/src/django-allauth
+	url = git@github.com:pennersr/django-allauth.git
