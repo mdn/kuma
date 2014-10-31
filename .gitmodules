@@ -97,3 +97,6 @@
 [submodule "vendor/src/django-timezones"]
 	path = vendor/src/django-timezones
 	url = git@github.com:brosner/django-timezones.git
+[submodule "vendor/src/django-waffle"]
+	path = vendor/src/django-waffle
+	url = git@github.com:jsocol/django-waffle.git
