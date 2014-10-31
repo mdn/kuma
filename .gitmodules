@@ -109,3 +109,6 @@
 [submodule "vendor/src/funfactory"]
 	path = vendor/src/funfactory
 	url = git@github.com:mozilla/funfactory.git
+[submodule "vendor/src/hash_ring"]
+	path = vendor/src/hash_ring
+	url = git@github.com:Doist/hash_ring.git
