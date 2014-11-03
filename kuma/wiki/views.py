@@ -27,7 +27,7 @@ from django.http import (HttpResponse, HttpResponseRedirect,
 from django.http.multipartparser import MultiPartParser
 from django.shortcuts import (get_object_or_404, render_to_response, redirect,
                               render)
-from django.template import RequestContext, loader
+from django.template import RequestContext
 from django.utils.safestring import mark_safe
 from django.views.decorators.http import (require_GET, require_POST,
                                           require_http_methods, condition)
@@ -44,6 +44,8 @@ from access.decorators import permission_required, login_required
 from authkeys.decorators import accepts_auth_key
 from contentflagging.models import ContentFlag, FLAG_NOTIFICATIONS
 from devmo.decorators import never_cache
+from devmo.utils import get_object_or_none
+
 import kuma.wiki.content
 from kuma.attachments.forms import AttachmentRevisionForm
 from kuma.attachments.models import Attachment
@@ -1433,9 +1435,10 @@ def autosuggest_documents(request):
 @prevent_indexing
 def document_revisions(request, document_slug, document_locale):
     """List all the revisions of a given document."""
+    locale = request.GET.get('locale', document_locale)
     document = get_object_or_404(Document.objects
                                          .select_related('current_revision'),
-                                 locale=document_locale,
+                                 locale=locale,
                                  slug=document_slug)
     if document.current_revision is None:
         raise Http404
@@ -1506,8 +1509,10 @@ def compare_revisions(request, document_slug, document_locale):
     The ids are passed as query string parameters (to and from).
 
     """
-    doc = get_object_or_404(
-        Document, locale=document_locale, slug=document_slug)
+    locale = request.GET.get('locale', document_locale)
+    doc = get_object_or_404(Document,
+                            locale=locale,
+                            slug=document_slug)
 
     if 'from' not in request.GET or 'to' not in request.GET:
         raise Http404
@@ -1522,15 +1527,18 @@ def compare_revisions(request, document_slug, document_locale):
     revision_from = get_object_or_404(Revision, id=from_id, document=doc)
     revision_to = get_object_or_404(Revision, id=to_id, document=doc)
 
-    context = {'document': doc, 'revision_from': revision_from,
-                         'revision_to': revision_to}
+    context = {
+        'document': doc,
+        'revision_from': revision_from,
+        'revision_to': revision_to,
+    }
 
-    if request.GET.get('raw', 0):
-        response = render(request,
-                          'wiki/includes/revision_diff_table.html', context)
+    if request.GET.get('raw', False):
+        template = 'wiki/includes/revision_diff_table.html'
     else:
-        response = render(request, 'wiki/compare_revisions.html', context)
-    return response
+        template = 'wiki/compare_revisions.html'
+
+    return render(request, template, context)
 
 
 @login_required
@@ -1550,7 +1558,8 @@ def select_locale(request, document_slug, document_locale):
 @never_cache
 @transaction.autocommit  # For rendering bookkeeping, needs immediate updates
 def translate(request, document_slug, document_locale, revision_id=None):
-    """Create a new translation of a wiki document.
+    """
+    Create a new translation of a wiki document.
 
     * document_slug is for the default locale
     * translation is to the request locale
@@ -1729,6 +1738,19 @@ def translate(request, document_slug, document_locale, revision_id=None):
                                   locale=doc.locale)
                     return HttpResponseRedirect(url)
 
+    if doc:
+        from_id = smart_int(request.GET.get('from'), None)
+        to_id = smart_int(request.GET.get('to'), None)
+
+        revision_from = get_object_or_none(Revision,
+                                           pk=from_id,
+                                           document=doc.parent)
+        revision_to = get_object_or_none(Revision,
+                                         pk=to_id,
+                                         document=doc.parent)
+    else:
+        revision_from = revision_to = None
+
     parent_split = _split_slug(parent_doc.slug)
     allow_add_attachment = (
         Attachment.objects.allow_add_attachment_by(request.user))
@@ -1752,7 +1774,9 @@ def translate(request, document_slug, document_locale, revision_id=None):
         'attachment_data_json': json.dumps(attachments),
         'WIKI_DOCUMENT_TAG_SUGGESTIONS': constance.config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
         'specific_slug': parent_split['specific'],
-        'parent_slug': parent_split['parent']
+        'parent_slug': parent_split['parent'],
+        'revision_from': revision_from,
+        'revision_to': revision_to,
     }
     return render(request, 'wiki/translate.html', context)
 
