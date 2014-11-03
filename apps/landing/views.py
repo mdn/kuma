@@ -9,25 +9,34 @@ from devmo import SECTION_USAGE
 from kuma.demos.models import Submission
 from kuma.feeder.models import Bundle
 
+memcache = get_cache('memcache')
+
 
 def home(request):
     """Home page."""
-    demos = (Submission.objects.all_sorted('upandcoming').exclude(hidden=True))[:12]
+    demos = (Submission.objects
+                       .all_sorted('upandcoming')
+                       .exclude(hidden=True))[:12]
 
     updates = []
     for s in SECTION_USAGE:
         updates += Bundle.objects.recent_entries(s.updates)[:5]
 
-    cache = get_cache('memcache')
-    community_stats = cache.get('community_stats')
+    community_stats = memcache.get('community_stats')
 
-    if community_stats is None:
+    if not community_stats:
         community_stats = {'contributors': 5453, 'locales': 36}
 
-    return render(request, 'landing/homepage.html',
-                  {'demos': demos, 'updates': updates, 'stats': community_stats,
-                    'current_challenge_tag_name':
-                    str(constance.config.DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG).strip()})
+    devderby_tag = str(constance.config
+                                .DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG).strip()
+
+    context = {
+        'demos': demos,
+        'updates': updates,
+        'stats': community_stats,
+        'current_challenge_tag_name': devderby_tag,
+    }
+    return render(request, 'landing/homepage.html', context)
 
 
 def contribute_json(request):

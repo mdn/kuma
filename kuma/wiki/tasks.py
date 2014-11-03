@@ -168,39 +168,45 @@ You can now view this document at its new location: %(full_url)s.
     send_mail(subject, message, settings.DEFAULT_FROM_EMAIL,
               [user.email])
 
+
 @task
 def update_community_stats():
-    c = connection.cursor()
+    cursor = connection.cursor()
     try:
-        c.execute("SELECT count(creator_id) \
-                        FROM \
-                          (SELECT DISTINCT creator_id \
-                           FROM wiki_revision \
-                           WHERE created >= DATE_SUB(NOW(), INTERVAL 1 YEAR)) AS contributors_last_12_month")
-        contributors = c.fetchone()
+        cursor.execute("""
+            SELECT count(creator_id)
+            FROM
+              (SELECT DISTINCT creator_id
+               FROM wiki_revision
+               WHERE created >= DATE_SUB(NOW(), INTERVAL 1 YEAR)) AS contributors
+            """)
+        contributors = cursor.fetchone()
 
-        c.execute("SELECT count(locale) \
-                        FROM \
-                          (SELECT DISTINCT wd.locale \
-                           FROM wiki_document wd, wiki_revision wr \
-                           WHERE wd.id = wr.document_id \
-                           AND wr.created >= DATE_SUB(NOW(), INTERVAL 1 YEAR)) AS locales_last_12_months")
-        locales = c.fetchone()
+        cursor.execute("""
+            SELECT count(locale)
+            FROM
+              (SELECT DISTINCT wd.locale
+               FROM wiki_document wd,
+                                  wiki_revision wr
+               WHERE wd.id = wr.document_id
+                 AND wr.created >= DATE_SUB(NOW(), INTERVAL 1 YEAR)) AS locales
+            """)
+        locales = cursor.fetchone()
     finally:
-        c.close()
+        cursor.close()
 
     community_stats = {}
 
     try:
         community_stats['contributors'] = contributors[0]
-    except IndexError:
-        community_stats['contributors'] = None
-
-    try:
         community_stats['locales'] = locales[0]
     except IndexError:
-        community_stats['locales'] = None
+        community_stats = None
+
+    # storing a None value in cache allows a better check for
+    # emptiness in the view
+    if 0 in community_stats.values():
+        community_stats = None
 
     cache = get_cache('memcache')
     cache.set('community_stats', community_stats, 86400)
-
