@@ -84,6 +84,14 @@ html {
     background-position: center 0px;
 }
 
+/* Hide tap color on mobile devices */
+#featured-demos .nav-slide .prev,
+#featured-demos .nav-slide .next {
+    &:hover, &:active, &:focus {
+        background-color: transparent;
+    }
+}
+
 
 /* Adjustments to demo home for mobile widths */
 @media $media-query-tablet {
