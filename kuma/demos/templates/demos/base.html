@@ -4,7 +4,9 @@
     {{ super() }}
     {{ css('demostudio') }}
     {{ css('jquery-ui') }}
-    
+    {% if waffle.flag('demos_10th') %}
+      {{ css('demostudio_10th') }}
+    {% endif %}
 {% endblock %}
 
 {% block site_js %}
