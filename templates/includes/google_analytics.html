@@ -80,18 +80,12 @@
         var win = window;
         var removeUtms = function(){
             var location = win.location;
-            if (location.hash.indexOf('utm') != -1) {
-                var anchor = location.hash.match(/#(?!utm)[^&]+/);
-                anchor = anchor ? anchor[0] : '';
-                if(!anchor && win.history.replaceState){
-                    history.replaceState({}, '', location.pathname + location.search);
-                } else {
-                    location.hash = anchor;
-                }
+            if (location.href.indexOf('utm') != -1 && win.history.replaceState) {
+                win.history.replaceState({}, '', location.pathname);
             }
         };
 
-        ga('send', 'pageview', removeUtms(win.location + ''));
+        ga('send', 'pageview', {'hitCallback': removeUtms});
     })();
 </script>
 {% endif %}
