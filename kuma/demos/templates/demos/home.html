@@ -39,7 +39,11 @@
   {% if featured_submission_list | length >= 3 %}
   <section id="featured-demos">
     <header>
-      <h2>{{_("Featured Demos")}}</h2>
+        {% if waffle.flag("demos_10th") %}
+            <h2>{{_("Firefox 10th Anniversary Demos")}}</h2>
+        {% else %}
+            <h2>{{_("Featured Demos")}}</h2>
+        {% endif %}
     </header>
 
     <ul class="nav-slide">
