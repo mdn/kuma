@@ -32,7 +32,7 @@ from threadedcomments.models import ThreadedComment
 
 from actioncounters.fields import ActionCounterField
 from sumo.urlresolvers import reverse
-from devmo.utils import generate_filename_and_delete_previous
+from devmo.utils import generate_filename_and_delete_previous, config_lazy
 
 from . import challenge_utils, DEMO_LICENSES, scale_image
 
@@ -161,10 +161,7 @@ class ReplacingZipFileField(models.FileField):
     attr_class = ReplacingFieldZipFile
 
     def __init__(self, *args, **kwargs):
-        if "max_upload_size" in kwargs:
-            self.max_upload_size = kwargs.pop("max_upload_size")
-        else:
-            self.max_upload_size = constance.config.DEMO_MAX_ZIP_FILESIZE
+        self.max_upload_size = kwargs.pop("max_upload_size")
         super(ReplacingZipFileField, self).__init__(*args, **kwargs)
 
     def clean(self, *args, **kwargs):
@@ -419,7 +416,8 @@ class Submission(models.Model):
     demo_package = ReplacingZipFileField(
             _('select a ZIP file containing your demo'),
             max_length=255,
-            max_upload_size=60 * 1024 * 1024,  # overridden by constance
+            max_upload_size=config_lazy('DEMO_MAX_ZIP_FILESIZE',
+                                        60 * 1024 * 1024),  # overridden by constance
             storage=demo_uploads_fs,
             upload_to=mk_slug_upload_to('demo_package.zip'),
             blank=False)
