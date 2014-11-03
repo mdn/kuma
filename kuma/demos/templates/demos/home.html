@@ -137,9 +137,6 @@
 {{ super() }}
 
 <script type="text/javascript">
-// <![CDATA[
-/* Featured demos */
-
   $(document).ready(function() {
 
     var $featuredDemos = $("#featured-demos"),
@@ -194,132 +191,125 @@
 
         // Start the current index at 1, since 0 and 2 should already be in prev
         // and next positions.
-        var curr_idx = 1;
+        var currentIndex = 1;
 
         // Store node queries that don't need to be made more than once
-        var $demoNextPreview = $("#demo-next .preview"),
-            $demoMainPreview = $("#demo-main .preview"),
-            $demoPrevPreview = $("#demo-prev .preview");
+        var $demoNextPreview = $('#demo-next .preview'),
+            $demoMainPreview = $('#demo-main .preview'),
+            $demoPrevPreview = $('#demo-prev .preview');
 
         // Create demo update function vars here
         var updatePrevFeaturedDemo, updateNextFeaturedDemo;
 
         // Create next / prev button vars here
-        var $next_btn = $(".nav-slide .next"),
-            $prev_btn = $(".nav-slide .prev");
+        var $nextBtn = $('.nav-slide .next'),
+            $prevBtn = $('.nav-slide .prev');
 
         // Update the main demo from the current index demo.
-        function updateMainFeaturedDemo () {
-            var demo = demos[curr_idx];
-            $("#demo-main")
-                .find(".preview img").attr("src", demo.screenshot).end()
-                .find(".preview a").attr("href", demo.link).end()
-                .find(".demo-title a")
-                    .attr("href", demo.link)
+        function updateMainFeaturedDemo (to) {
+            var demo = demos[to != undefined ?  to : currentIndex];
+            $('#demo-main')
+                .find('.preview img').attr('src', demo.screenshot).end()
+                .find('.preview a').attr('href', demo.link).end()
+                .find('.demo-title a')
+                    .attr('href', demo.link)
                     .text(demo.title)
                 .end()
-                .find(".byline a")
-                    .attr("href", demo.author_link)
-                    .find("span").text(demo.author_name).end()
-                    .find("img").attr("src", demo.author_avatar).end()
+                .find('.byline a')
+                    .attr('href', demo.author_link)
+                    .find('span').text(demo.author_name).end()
+                    .find('img').attr('src', demo.author_avatar).end()
                 .end()
-                .find(".descText").text(demo.summary).end()
-                .find(".descLink")
-                  .attr("href", demo.link)
+                .find('.descText').text(demo.summary).end()
+                .find('.descLink')
+                  .attr('href', demo.link)
                 .end()
-                .find(".launch a").attr("href", demo.link + "/launch").end()
-                ;
+                .find('.launch a').attr('href', demo.link + '/launch')
+                .end();
         }
 
         // Create functions for next and previous movement
         function createDemoUpdates(offset, $element) {
+
           return function() {
-            var demo = demos[curr_idx + offset];
+
+            var scrollIndex = currentIndex + offset;
+            if(!demos[scrollIndex]) {
+                if(offset < 0) { // Previous, so show the last one in the "prev" spot
+                    scrollIndex = demos.length - 1;
+                }
+                else { // Next, show the first one in the "next" spot
+                    scrollIndex = 0;
+                }
+            }
+
+            var demo = demos[scrollIndex];
             $element
-                .find(".preview img").attr("src", demo ? demo.screenshot : "").end()
-                .find(".demo-title a").attr("href", demo ? demo.link : "#").end()
-                .find(".demo-title b").text(demo ? demo.title : "").end()
-                ;
+                .find('.preview img').attr('src', demo ? demo.screenshot : '').end()
+                .find('.demo-title a').attr('href', demo ? demo.link : '#').end()
+                .find('.demo-title b').text(demo ? demo.title : '').end();
           };
         }
+
         updatePrevFeaturedDemo = createDemoUpdates(-1, $demoPrev);
         updateNextFeaturedDemo = createDemoUpdates(1, $demoNext);
 
         // Show the next button and wire up click handler.
-        $next_btn.show().click(function() {
+        $nextBtn.show().on('click', function() {
 
-            if (curr_idx == demos.length-1) {
-                // If we're already at the end of the list, do nothing.
-                return;
-            }
-            curr_idx++;
+            currentIndex = (currentIndex == demos.length - 1? 0 : currentIndex + 1);
 
             // Fade out from right-to-left, update on fade out, fade back in if
             // there's a demo to show
             $demoNextPreview.fadeOut(200, updateNextFeaturedDemo);
             $demoMainPreview.delay(100).fadeOut(200, updateMainFeaturedDemo);
-            if (curr_idx < demos.length-2) {
-                // We have a next demo, so fade both it and the control in.
-                $demoNextPreview.delay(200).fadeIn(200);
-                $next_btn.fadeIn();
-            } else {
-                // No next demo, so fade out the control.
-                $next_btn.fadeOut();
-            }
+
+            // We have a next demo, so fade both it and the control in.
+            $demoNextPreview.delay(200).fadeIn(200);
+            $nextBtn.fadeIn();
+
             $demoPrevPreview.delay(300).fadeOut(200, updatePrevFeaturedDemo);
             $demoMainPreview.delay(400).fadeIn(200);
-            if (curr_idx > 0) {
-                // We have a prev demo, so fade both it and the control in.
-                $demoPrevPreview.delay(500).fadeIn(200);
-                $prev_btn.fadeIn();
-            } else {
-                // No prev demo, so fade out the control.
-                $prev_btn.fadeOut();
-            }
+
+            // We have a prev demo, so fade both it and the control in.
+            $demoPrevPreview.delay(500).fadeIn(200);
+            $prevBtn.fadeIn();
 
             return false;
         });
 
-        // Show the previous button and wire up click handler.
-        $prev_btn.show().click(function() {
 
-            if (curr_idx == 0) {
-                // If we're already at the start of the list, do nothing.
-                return;
-            }
-            curr_idx--;
+        // Show the previous button and wire up click handler.
+        $prevBtn.show().on('click', function() {
+
+            currentIndex = (currentIndex == 0 ? demos.length - 1 : currentIndex - 1);
 
             // Fade out from left-to-right, update on fade out, fade back in if
             // there's a demo to show
             $demoPrevPreview.fadeOut(200, updatePrevFeaturedDemo);
             $demoMainPreview.delay(100).fadeOut(200, updateMainFeaturedDemo);
-            if (curr_idx > 0) {
-                // We have a prev demo, so fade both it and the control in.
-                $demoPrevPreview.delay(200).fadeIn(200);
-                $prev_btn.fadeIn();
-            } else {
-                // No prev demo, so fade out the control.
-                $prev_btn.fadeOut();
-            }
+
+            // We have a prev demo, so fade both it and the control in.
+            $demoPrevPreview.delay(200).fadeIn(200);
+            $prevBtn.fadeIn();
+
+
             $demoNextPreview.delay(300).fadeOut(200, updateNextFeaturedDemo);
             $demoMainPreview.delay(400).fadeIn(200);
-            if (curr_idx < demos.length-2) {
-                // We have a next demo, so fade both it and the control in.
-                $demoNextPreview.delay(500).fadeIn(200);
-                $next_btn.fadeIn();
-            } else {
-                // No next demo, so fade out the control.
-                $next_btn.fadeOut();
-            }
+
+            // We have a next demo, so fade both it and the control in.
+            $demoNextPreview.delay(500).fadeIn(200);
+            $nextBtn.fadeIn();
 
             return false;
         });
 
+
+
+
     });
 
   });
-
-// ]]>
 </script>
 
 {% endblock %}
