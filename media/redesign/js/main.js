@@ -72,6 +72,15 @@
             on('blur', createExpander(600));
     })();
 
+    /*
+        Mobile search to display search box in menu
+    */
+    $('.nav-search-link a').on('click', function(e) {
+        e.preventDefault();
+        $('.main-nav-search').css('display', 'block').find('#main-q').get(0).focus();
+        $(this).css('display', 'none');
+    });
+
 
     /*
         Account for the footer language change dropdown and other dropdowns marked as autosubmit
