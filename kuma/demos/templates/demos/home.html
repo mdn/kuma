@@ -206,28 +206,25 @@
         var updatePrevFeaturedDemo = createDemoUpdates(-1, $demoPrev);
         var updateNextFeaturedDemo = createDemoUpdates(1, $demoNext);
 
-        var demoFadeTime = 100;
+        var demoFadeTime = 250;
 
         // Show the next button and wire up click handler.
         $nextBtn.show().on('click', function() {
 
             currentIndex = (currentIndex == demos.length - 1? 0 : currentIndex + 1);
 
-            // Fade out from right-to-left, update on fade out, fade back in if
-            // there's a demo to show
-            $demoNextPreview.fadeOut(demoFadeTime, updateNextFeaturedDemo);
-            $demoMainPreview.delay(demoFadeTime *.5).fadeOut(demoFadeTime, updateMainFeaturedDemo);
-
-            // We have a next demo, so fade both it and the control in.
-            $demoNextPreview.delay(demoFadeTime).fadeIn(demoFadeTime);
-            $nextBtn.fadeIn();
-
-            $demoPrevPreview.delay(demoFadeTime * 1.5).fadeOut(demoFadeTime, updatePrevFeaturedDemo);
-            $demoMainPreview.delay(demoFadeTime * 2).fadeIn(demoFadeTime);
-
-            // We have a prev demo, so fade both it and the control in.
-            $demoPrevPreview.delay(demoFadeTime * 2.5).fadeIn(demoFadeTime);
-            $prevBtn.fadeIn();
+            $demoNextPreview.fadeOut(demoFadeTime, function() {
+                updateNextFeaturedDemo();
+                $(this).fadeIn(demoFadeTime);
+            });
+            $demoMainPreview.delay(demoFadeTime * .5).fadeOut(demoFadeTime, function() {
+                updateMainFeaturedDemo();
+                $(this).fadeIn(demoFadeTime);
+            });
+            $demoPrevPreview.delay(demoFadeTime * 1).fadeOut(demoFadeTime, function() {
+                updatePrevFeaturedDemo();
+                $(this).fadeIn(demoFadeTime);
+            });
 
             return false;
         });
@@ -238,22 +235,18 @@
 
             currentIndex = (currentIndex == 0 ? demos.length - 1 : currentIndex - 1);
 
-            // Fade out from left-to-right, update on fade out, fade back in if
-            // there's a demo to show
-            $demoPrevPreview.fadeOut(demoFadeTime, updatePrevFeaturedDemo);
-            $demoMainPreview.delay(demoFadeTime * .5).fadeOut(demoFadeTime, updateMainFeaturedDemo);
-
-            // We have a prev demo, so fade both it and the control in.
-            $demoPrevPreview.delay(demoFadeTime).fadeIn(demoFadeTime);
-            $prevBtn.fadeIn();
-
-
-            $demoNextPreview.delay(demoFadeTime * 1.5).fadeOut(demoFadeTime, updateNextFeaturedDemo);
-            $demoMainPreview.delay(demoFadeTime * 2).fadeIn(demoFadeTime);
-
-            // We have a next demo, so fade both it and the control in.
-            $demoNextPreview.delay(demoFadeTime * 2.5).fadeIn(demoFadeTime);
-            $nextBtn.fadeIn();
+            $demoPrevPreview.fadeOut(demoFadeTime, function() {
+                updatePrevFeaturedDemo();
+                $(this).fadeIn(demoFadeTime);
+            });
+            $demoMainPreview.delay(demoFadeTime * .5).fadeOut(demoFadeTime, function() {
+                updateMainFeaturedDemo();
+                $(this).fadeIn(demoFadeTime);
+            });
+            $demoNextPreview.delay(demoFadeTime * 1).fadeOut(demoFadeTime, function() {
+                updateNextFeaturedDemo();
+                $(this).fadeIn(demoFadeTime);
+            });
 
             return false;
         });
