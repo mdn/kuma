@@ -20,7 +20,7 @@
     */
     (function() {
         var $nav = $('#main-nav');
-        var $navItems = $nav.find('ul > li:not(:last-child)');
+        var $navItems = $nav.find('ul > li:not(.nav-search-link, .main-nav-search)');
         var $mainNavSearch = $nav.find('.main-nav-search');
         var $searchWrap = $nav.find('.search-wrap');
         var $input = $searchWrap.find('input');
