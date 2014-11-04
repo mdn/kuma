@@ -267,6 +267,9 @@
                 {% trans link=license_link(submission.license_name)|e, title=license_title(submission.license_name)|e %}
                     This demo is released under the <a href="{{link}}">{{title}}</a> license.
                 {% endtrans %}
+                {% if submission.license_name == 'author' %}
+                {% trans %}It includes proprietary software.{% endtrans %}
+                {% endif %}
             </p>
           </div>
 
