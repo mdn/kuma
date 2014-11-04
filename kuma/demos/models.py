@@ -267,6 +267,19 @@ south.modelsinspector.add_introspection_rules([
 ], ["^kuma.demos.models.ReplacingImageWithThumbField"])
 
 
+class DynamicChoicesCharField(models.CharField):
+    """CharField that accepts new choices during validate"""
+    def __init__(self, *args, **kwargs):
+        super(DynamicChoicesCharField, self).__init__(*args, **kwargs)
+
+    def validate(self, value, model_instance, choices=None):
+        if choices:
+            self._choices = self.choices
+        else:
+            return super(DynamicChoicesCharField, self).validate(value,
+                                                                model_instance)
+
+
 class SubmissionManager(models.Manager):
     """Manager for Submission objects"""
 
@@ -425,7 +438,7 @@ class Submission(models.Model):
     source_code_url = models.URLField(
             _("Is your source code also available somewhere else on the web (e.g., github)? Please share the link."),
             blank=True, null=True)
-    license_name = models.CharField(
+    license_name = DynamicChoicesCharField(
             _("Select the license that applies to your source code."),
             max_length=64, blank=False,
             choices=( (x['name'], x['title']) for x in DEMO_LICENSES.values()))
