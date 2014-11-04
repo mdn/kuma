@@ -184,8 +184,6 @@
     // Load the feed, wire everything up once the data's been received.
     $.getJSON(featured_demos_feed_url, function (demos) {
 
-        console.log('demos are: ', demos);
-
         // Refrain from wiring up nav, if no items fetched from feed.
         if (!demos || demos.length == 0) {
             return;
