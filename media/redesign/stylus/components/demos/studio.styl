@@ -84,6 +84,68 @@ html {
     background-position: center 0px;
 }
 
+
+/* Setup the first, previous, next, and last pagination */
+.gallery-foot .paging li {
+    &.next a, &.prev a, &.first a, &.last a {
+        width: auto;
+        background-image: none;
+        position: relative;
+
+        &:hover, &:active, &:focus {
+            color: #fff;
+        }
+
+        &:after {
+            font-family: 'FontAwesome';
+            position: absolute;
+        }
+    }
+
+    &.first a, &.last a {
+        text-indent: 0;
+    }
+
+    &.next a, &.last a {
+        bidi-style(padding-right, $icon-margin, padding-left, 0);
+    }
+
+    &.prev a, &.first a {
+        bidi-style(padding-left, $icon-margin, padding-right, 0);
+    }
+
+    &.next a:after {
+        bidi-value(content, "\f105", "\f104");
+    }
+
+    &.prev a:after {
+        bidi-value(content, "\f104", "\f105");
+    }
+
+    &.last a:after {
+        bidi-value(content, "\f101", "\f101");
+    }
+
+    &.first a:after {
+        bidi-value(content, "\f100", "\f101");
+    }
+
+    &.prev a, &.first a {
+        bidi-style(padding-left, 22px, padding-right, 11px);
+        &:after {
+            bidi-style(left, $icon-margin, right, auto);
+        }
+    }
+
+    &.next a, &.last a {
+        bidi-style(padding-right, 22px, padding-left, 11px);
+        &:after {
+            bidi-style(right, $icon-margin, left, auto);
+        }
+    }
+}
+
+
 /* Hide tap color on mobile devices */
 #featured-demos .nav-slide .prev,
 #featured-demos .nav-slide .next {
@@ -92,6 +154,12 @@ html {
         -webkit-tap-highlight-color: rgba(0,0,0,0);
     }
 }
+
+/* Hide the demos categories button list until the screen gets small */
+.demo-mobile-list {
+    display: none;
+}
+
 
 
 /* Adjustments to demo home for mobile widths */
@@ -182,5 +250,23 @@ html {
     .landing #featured-demos {
         height: auto;
         margin-bottom: 20px;
+    }
+
+    .section-demos-home .demo-mobile-list {
+        display: block;
+    }
+
+    #demo-tags .button, .demo-mobile-list .button {
+        margin-top: 12px;
+        font-size: 1.2em !important;
+    }
+
+    .section-demos-home {
+        .demo-mobile-list {
+            display: block;
+        }
+        .demo-landing-gallery {
+            display: none;
+        }
     }
 }

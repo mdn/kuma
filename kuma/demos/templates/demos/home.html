@@ -2,7 +2,7 @@
 
 {% block body_attributes %}id="demostudio"{% endblock %}
 
-{% block bodyclass %}section-demos landing{% endblock %}
+{% block bodyclass %}section-demos landing {% if is_demo_home %}section-demos-home{% endif %}{% endblock %}
 
 {% block extrahead %}
     <link rel="alternate" type="application/atom+xml" title="{{_('Recent demos')}}"
@@ -120,13 +120,23 @@
             {% endfor %}
         </ul>
       </div>
+
+      <div class="demo-mobile-list">
+      <ul>
+      <li><a href="all?sort=upandcoming#gallery-list" class="button neutral">{{ ("Browse by up & coming") }}</a></li>
+      <li><a href="all?sort=launches#gallery-list" class="button neutral">{{ ("Browse by most viewed") }}</a></li>
+      <li><a href="all?sort=likes#gallery-list" class="button neutral">{{ ("Browse by most liked") }}</a></li>
+      <li><a href="all?sort=created#gallery-list" class="button neutral">{{ ("Browse by most recent") }}</a></li>
+      </ul>
+      </div>
     </div>
 
+    <div class="demo-landing-gallery">
     {{ submission_listing(request, submission_list,  is_paginated, paginator, page_obj,
         _('Subscribe to a feed of {tag_title} demos') | f(tag_title=_('recent')),
         url('demos_feed_recent', format='rss'), cols_per_row=4,
         pagination_base_url=url('demos_all') ) }}
-
+    </div>
   </section><!-- /#content-main -->
 
 </div>

@@ -70,6 +70,7 @@ class HomeView(ListView):
                                .exclude(hidden=True)\
                                .order_by('-modified').all()[:3]
         base_context['featured_submission_list'] = featured_submissions
+        base_context['is_demo_home'] = True
         return base_context
 
 
