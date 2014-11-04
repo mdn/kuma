@@ -33,11 +33,7 @@
 
 {% block site_js %}
 
-  {% if waffle.flag('jquery_upgrade') %}
-    {{ js('jquery2') }}
-  {% else %}
-    {{ js('jquery1') }}
-  {% endif %}
+  {{ js('main') }}
 
   {{ js('popup') }}
 

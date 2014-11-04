@@ -2,7 +2,7 @@
 
 {% block body_attributes %}id="demostudio"{% endblock %}
 
-{% block bodyclass %}section-demos landing{% endblock %}
+{% block bodyclass %}section-demos landing {% if is_demo_home %}section-demos-home{% endif %}{% endblock %}
 
 {% block extrahead %}
     <link rel="alternate" type="application/atom+xml" title="{{_('Recent demos')}}"
@@ -107,8 +107,8 @@
     <div id="search-browse">
       <form class="demo-search" method="GET" action="{{ url('demos_search') }}">
         <p>
-          <input type="search" id="search-demos" name="q" placeholder="{{_("Search")}}" />
-          <noscript><button type="submit">{{_("Search")}}</button></noscript>
+          <input type="search" id="search-demos" name="q" placeholder="{{_("Search demos")}}" />
+          <noscript><button type="submit">{{_("Search demos")}}</button></noscript>
         </p>
       </form>
 
@@ -124,13 +124,23 @@
             {% endfor %}
         </ul>
       </div>
+
+      <div class="demo-mobile-list">
+      <ul>
+      <li><a href="all?sort=upandcoming#gallery-list" class="button neutral">{{ ("Browse by up & coming") }}</a></li>
+      <li><a href="all?sort=launches#gallery-list" class="button neutral">{{ ("Browse by most viewed") }}</a></li>
+      <li><a href="all?sort=likes#gallery-list" class="button neutral">{{ ("Browse by most liked") }}</a></li>
+      <li><a href="all?sort=created#gallery-list" class="button neutral">{{ ("Browse by most recent") }}</a></li>
+      </ul>
+      </div>
     </div>
 
+    <div class="demo-landing-gallery">
     {{ submission_listing(request, submission_list,  is_paginated, paginator, page_obj,
         _('Subscribe to a feed of {tag_title} demos') | f(tag_title=_('recent')),
         url('demos_feed_recent', format='rss'), cols_per_row=4,
         pagination_base_url=url('demos_all') ) }}
-
+    </div>
   </section><!-- /#content-main -->
 
 </div>
@@ -202,12 +212,59 @@
             $demoMainPreview = $('#demo-main .preview'),
             $demoPrevPreview = $('#demo-prev .preview');
 
-        // Create demo update function vars here
-        var updatePrevFeaturedDemo, updateNextFeaturedDemo;
-
         // Create next / prev button vars here
         var $nextBtn = $('.nav-slide .next'),
             $prevBtn = $('.nav-slide .prev');
+
+
+        var updatePrevFeaturedDemo = createDemoUpdates(-1, $demoPrev);
+        var updateNextFeaturedDemo = createDemoUpdates(1, $demoNext);
+
+        var demoFadeTime = 250;
+
+        // Show the next button and wire up click handler.
+        $nextBtn.show().on('click', function() {
+
+            currentIndex = (currentIndex == demos.length - 1? 0 : currentIndex + 1);
+
+            $demoNextPreview.fadeOut(demoFadeTime, function() {
+                updateNextFeaturedDemo();
+                $(this).fadeIn(demoFadeTime);
+            });
+            $demoMainPreview.delay(demoFadeTime * .5).fadeOut(demoFadeTime, function() {
+                updateMainFeaturedDemo();
+                $(this).fadeIn(demoFadeTime);
+            });
+            $demoPrevPreview.delay(demoFadeTime * 1).fadeOut(demoFadeTime, function() {
+                updatePrevFeaturedDemo();
+                $(this).fadeIn(demoFadeTime);
+            });
+
+            return false;
+        });
+
+
+        // Show the previous button and wire up click handler.
+        $prevBtn.show().on('click', function() {
+
+            currentIndex = (currentIndex == 0 ? demos.length - 1 : currentIndex - 1);
+
+            $demoPrevPreview.fadeOut(demoFadeTime, function() {
+                updatePrevFeaturedDemo();
+                $(this).fadeIn(demoFadeTime);
+            });
+            $demoMainPreview.delay(demoFadeTime * .5).fadeOut(demoFadeTime, function() {
+                updateMainFeaturedDemo();
+                $(this).fadeIn(demoFadeTime);
+            });
+            $demoNextPreview.delay(demoFadeTime * 1).fadeOut(demoFadeTime, function() {
+                updateNextFeaturedDemo();
+                $(this).fadeIn(demoFadeTime);
+            });
+
+            return false;
+        });
+
 
         // Update the main demo from the current index demo.
         function updateMainFeaturedDemo (to) {
@@ -254,60 +311,6 @@
                 .find('.demo-title b').text(demo ? demo.title : '').end();
           };
         }
-
-        updatePrevFeaturedDemo = createDemoUpdates(-1, $demoPrev);
-        updateNextFeaturedDemo = createDemoUpdates(1, $demoNext);
-
-        // Show the next button and wire up click handler.
-        $nextBtn.show().on('click', function() {
-
-            currentIndex = (currentIndex == demos.length - 1? 0 : currentIndex + 1);
-
-            // Fade out from right-to-left, update on fade out, fade back in if
-            // there's a demo to show
-            $demoNextPreview.fadeOut(200, updateNextFeaturedDemo);
-            $demoMainPreview.delay(100).fadeOut(200, updateMainFeaturedDemo);
-
-            // We have a next demo, so fade both it and the control in.
-            $demoNextPreview.delay(200).fadeIn(200);
-            $nextBtn.fadeIn();
-
-            $demoPrevPreview.delay(300).fadeOut(200, updatePrevFeaturedDemo);
-            $demoMainPreview.delay(400).fadeIn(200);
-
-            // We have a prev demo, so fade both it and the control in.
-            $demoPrevPreview.delay(500).fadeIn(200);
-            $prevBtn.fadeIn();
-
-            return false;
-        });
-
-
-        // Show the previous button and wire up click handler.
-        $prevBtn.show().on('click', function() {
-
-            currentIndex = (currentIndex == 0 ? demos.length - 1 : currentIndex - 1);
-
-            // Fade out from left-to-right, update on fade out, fade back in if
-            // there's a demo to show
-            $demoPrevPreview.fadeOut(200, updatePrevFeaturedDemo);
-            $demoMainPreview.delay(100).fadeOut(200, updateMainFeaturedDemo);
-
-            // We have a prev demo, so fade both it and the control in.
-            $demoPrevPreview.delay(200).fadeIn(200);
-            $prevBtn.fadeIn();
-
-
-            $demoNextPreview.delay(300).fadeOut(200, updateNextFeaturedDemo);
-            $demoMainPreview.delay(400).fadeIn(200);
-
-            // We have a next demo, so fade both it and the control in.
-            $demoNextPreview.delay(500).fadeIn(200);
-            $nextBtn.fadeIn();
-
-            return false;
-        });
-
 
 
 

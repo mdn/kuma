@@ -121,6 +121,10 @@ draw-grid();
             > a, .search-wrap {
                 padding: 4px 8px;
             }
+
+            &.nav-search-link {
+                display: none;
+            }
         }
     }
 
@@ -544,7 +548,7 @@ a.github-button {
             text-align: left;
 
             > li {
-                margin: 10px 10px 10px 0;
+                margin: 6px 6px 6px 0;
             }
         }
     }
@@ -594,7 +598,7 @@ a.github-button {
     /* move the search box under the nav */
     #main-header {
         .main-nav-search {
-            display: block;
+            display: none;
             padding: 0px;
             margin-top: 10px;
             width: auto;
@@ -613,6 +617,14 @@ a.github-button {
                     overflow: visible;
                 }
             }
+        }
+    }
+
+    #main-nav > ul > li {
+        margin-bottom: 4px;
+
+        &.nav-search-link {
+            display: inline-block;
         }
     }
 

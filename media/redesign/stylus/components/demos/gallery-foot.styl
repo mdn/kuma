@@ -37,67 +37,7 @@
 }
 .gallery-foot .paging li {
   display: inline;
-  padding-left: 12px;
-  margin-left: 8px;
   background: none;
-  border-left: 1px solid #666;
-}
-.gallery-foot .paging li:first-child {
-  border: 0;
-}
-.gallery-foot .paging a {
-  background: url("/media/img/paging-arrows.png") no-repeat;
-}
-.gallery-foot .paging li.prev {
-  border-right: 1px solid #666;
-  padding-right: 13px;
-  margin-right: 10px;
-}
-.gallery-foot .paging li.prev a {
-  padding-left: 13px;
-  background-position: 0 -97px;
-}
-.gallery-foot .paging li.prev a:hover,
-#gallery-foot .paging li.prev a:focus,
-#gallery-foot .paging li.prev a:active {
-  background-position: 0 -147px;
-}
-.gallery-foot .paging li.next a {
-  padding-right: 13px;
-  background-position: 100% 4px;
-}
-.gallery-foot .paging li.next a:hover,
-#gallery-foot .paging li.next a:focus,
-#gallery-foot .paging li.next a:active {
-  background-position: 100% -46px;
-}
-.gallery-foot .paging li.first a {
-  display: inline-block;
-  width: 20px;
-  margin-right: -8px;
-  text-indent: -999em;
-  background-position: 100% -297px;
-}
-.gallery-foot .paging li.first a:hover,
-.paging li.first a:focus,
-.paging li.first a:active {
-  background-position: 100% -347px;
-}
-.gallery-foot .paging li.last {
-    padding-right: 12px;
-    margin-right: 8px;
-}
-.gallery-foot .paging li.last a {
-  display: inline-block;
-  width: 20px;
-  margin-left: -8px;
-  text-indent: -999em;
-  background-position: 0 -197px;
-}
-.gallery-foot .paging li.last a:hover,
-.paging li.last a:focus,
-.paging li.last a:active {
-  background-position: 0 -247px;
 }
 .section-demos .gallery-foot {
   padding: 10px 15px;
@@ -112,17 +52,7 @@
   -webkit-border-radius: 6px;
   border-radius: 6px;
 }
-.section-demos .gallery-foot .paging a {
-  color: #fff;
-  text-transform: uppercase;
-  background-image: url("/media/img/demos/paging-arrows.png");
-  background-repeat: no-repeat;
-}
-.section-demos .gallery-foot .paging a:hover,
-.section-demos .gallery-foot .paging a:focus,
-.section-demos .gallery-foot .paging a:active {
-  color: #f1ed0f;
-}
+
 .section-demos .gallery-foot .feed a {
   color: #fff;
   background: url("/media/img/icons-welcome.png") 0 -499px no-repeat;
@@ -145,57 +75,4 @@
     .gallery-foot .showing {
         margin-top: 0;
     }
-
-    /* jog left to center between prev and next */
-    .gallery-foot li.prev ~ li.last {
-        padding-right: 50px;
-    }
-
-    /* jog right if there is no prev */
-    .gallery-foot li.next {
-        padding-left: 90px;
-    }
-
-    .gallery-foot li.prev + li.next {
-        padding-left: 12px;
-    }
-
-    /* jog left if there is no next */
-    .gallery-foot .paging li.prev:last-child {
-        margin-right: 170px;
-    }
-}
-
-@media $media-query-small-mobile {
-    /* jog left to center between prev and next */
-    .gallery-foot li.prev ~ li.last {
-        padding-right: 12px;
-    }
-
-    /* jog right if there is no prev */
-    .gallery-foot li.next {
-        padding-left: 60px;
-    }
-
-    .gallery-foot li.prev + li.next {
-        padding-left: 12px;
-    }
-
-    /* jog left if there is no next */
-    .gallery-foot .paging li.prev:last-child {
-        margin-right: 60px;
-    }
-
-    /* just arrows */
-
-    .gallery-foot .paging li.prev a,
-    .gallery-foot .paging li.next a {
-        display: inline-block;
-        overflow: hidden;
-        vertical-align: bottom;
-        width: 0px;
-        padding-left: 13px;
-        padding-right: 0;
-    }
-
 }
