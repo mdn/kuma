@@ -625,6 +625,12 @@ DEMO_LICENSES = dict((x['name'], x) for x in getattr(settings, 'DEMO_LICENSES', 
         'link': _('http://creativecommons.org/publicdomain/zero/1.0/'),
         'icon': '',
     },
+    {
+        'name': "author",
+        'title': _("Author's"),
+        'link': '',
+        'icon': '',
+    },
 )))
 
 

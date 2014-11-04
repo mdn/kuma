@@ -262,17 +262,7 @@
                 {# TODO: Show "hosted by {{domain}}?" #}
                 {% if false %}<span class="note">Hosted on GitHub</span>{% endif %}</a></p>
             {% endif %}
-            {% if submission.license_name == 'mpl' %}
-                {% set license_class = 'mpl' %}
-            {% elif submission.license_name == 'gpl' %}
-                {% set license_class = 'gpl' %}
-            {% elif submission.license_name == 'bsd' %}
-                {% set license_class = 'bsd' %}
-            {% elif submission.license_name == 'apache' %}
-                {% set license_class = 'apache' %}
-            {% else %}
-                {% set license_class = 'publicdomain' %}
-            {% endif %}
+            {% set license_class = submission.license_name %}
             <p class="license {{ license_class }}">
                 {% trans link=license_link(submission.license_name)|e, title=license_title(submission.license_name)|e %}
                     This demo is released under the <a href="{{link}}">{{title}}</a> license.
