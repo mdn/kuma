@@ -1,16 +1,20 @@
 define([
+    'intern',
     'intern/dojo/node!http',
     'intern/dojo/Deferred',
-    'base/_config',
+    'base/lib/config',
+    'base/lib/poll',
     'intern/chai!assert'
-], function(http, Deferred, config, assert) {
+], function(intern, http, Deferred, config, poll, assert) {
 
     return {
 
+        // Login credentials from the command line
+        personaUsername: intern.args.u,
+        personaPassword: intern.args.p,
+
         openLoginWidget: function(remote) {
             // Simply hovers over the top login widget so that login links can be clicked
-
-            var pollForRemote = this.pollForRemote;
 
             return remote
                         .get(config.homepageUrl)
@@ -19,7 +23,7 @@ define([
                         .end()
                         .findByCssSelector('.oauth-login-picker')
                         .then(function(element) {
-                            return pollForRemote(element, 'isDisplayed');
+                            return poll.until(element, 'isDisplayed');
                         });
         },
 
@@ -46,11 +50,12 @@ define([
 
         },
 
-        completePersonaLogin: function(username, password, remote, callback) {
+        completePersonaWindow: function(remote, username, password, callback) {
             // Provided a username and passwords, clicks the Persona link in the site
             // header, waits for the window to load, and logs the user into Persona
 
-            var pollForRemote = this.pollForRemote;
+            username = username || this.personaUsername;
+            password = password || this.personaPassword;
 
             return remote
                         .findByCssSelector('.oauth-login-picker .launch-persona-login')
@@ -81,6 +86,22 @@ define([
                     });
         },
 
+        completePersonaLogin: function(remote, username, password) {
+            // Opens the login widget, completes the personal login, done
+
+            var dfd = new Deferred();
+            var self = this;
+
+            username = username || this.personaUsername;
+            password = password || this.personaPassword;
+
+            self.openLoginWidget(remote).then(function() {
+                self.completePersonaWindow(remote, username, password, dfd.resolve);
+            });
+
+            return dfd.promise;
+        },
+
         completePersonaLogout: function(remote) {
             // Completes a "hard" logout of Persona via persona.org
 
@@ -95,60 +116,6 @@ define([
                         .sleep(2000)
                         click();
                         */
-        },
-
-        pollForRemote: function(item, remoteFunction, callback, timeout) {
-            // Allows us to poll for a remote.{whatever}() method async result
-            // Useful when waiting for an element to fade in, a URL to change, etc.
-
-            // Defaults for arguments not passed
-            timeout = timeout || config.testTimeout;
-            callback = callback || function(result) {
-                return result === true;
-            };
-
-            var dfd = new Deferred();
-            var endTime = Number(new Date()) + timeout;
-
-            (function poll() {
-                item[remoteFunction]().then(function() {
-
-                    if(callback.apply(this, arguments)) {
-                        dfd.resolve();
-                    }
-                    else if (Number(new Date()) < endTime) {
-                        setTimeout(poll, 100);
-                    }
-                    else {
-                        dfd.reject(new Error('timed out for ' + remoteFunction + ': ' + arguments));
-                    }
-                });
-            })();
-
-            return dfd.promise;
-        },
-
-        checkExistsAndDisplayed: function(cssSelector) {
-            // Shortcut method for ensuring a single element exists and is displaying
-
-            return function() {
-                return this.remote
-                        .findByCssSelector(cssSelector)
-                        .isDisplayed()
-                        .then(function(bool) {
-                            assert.isTrue(bool);
-                        });
-            };
-
-        },
-
-        checkWindowPropertyExists: function(remote, property) {
-            // Ensures a window[key] property exists in the page
-            // Missing global properties could be a sign of a huge problem
-
-            remote.execute('return typeof window.' + property + ' != "undefined"').then(function(result) {
-                assert.isTrue(result);
-            });
         }
     };
 

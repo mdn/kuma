@@ -2,9 +2,11 @@ define([
     'intern!object',
     'intern/chai!assert',
     'intern/dojo/node!leadfoot/keys',
-    'base/_config',
-    'base/_utils'
-], function(registerSuite, assert, keys, config, utils) {
+    'base/lib/config',
+    'base/lib/login',
+    'base/lib/assert',
+    'base/lib/poll'
+], function(registerSuite, assert, keys, config, libLogin, libAssert, poll) {
 
     registerSuite({
 
@@ -78,7 +80,7 @@ define([
                         .end()
                         .findById('nav-zones-submenu')
                         .then(function(element) {
-                            return utils.pollForRemote(element, 'isDisplayed').then(function() {
+                            return poll.until(element, 'isDisplayed').then(function() {
                                 // Polling proves it's true :)
                                 assert.isTrue(true);
                             });
@@ -88,10 +90,11 @@ define([
 
         'Focusing on the header search box expands the input': function() {
 
+            var searchBoxId = 'main-q';
             var originalSize;
 
             return this.remote
-                            .findById('main-q')
+                            .findById(searchBoxId)
                             .getSize()
                             .then(function(size) {
                                 originalSize = size;
@@ -99,7 +102,7 @@ define([
                             .click()
                             .end()
                             .sleep(2000) // wait for animation
-                            .findById('main-q')
+                            .findById(searchBoxId)
                             .getSize()
                             .then(function(newSize) {
                                 assert.isTrue(newSize.width > originalSize.width);
@@ -121,7 +124,7 @@ define([
 
         },
 
-        'Tabzilla loads properly': utils.checkExistsAndDisplayed('#tabzilla')
+        'Tabzilla loads properly': libAssert.elementExistsAndDisplayed('#tabzilla')
 
     });
 
