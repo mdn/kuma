@@ -221,6 +221,10 @@
         var updateNextFeaturedDemo = createDemoUpdates(1, $demoNext);
 
         var demoFadeTime = 250;
+        var demoDelayFactor = .5;
+        if($('#demo-prev').css('display') == 'none') { // Small screen, "previous" and "next" aren't shown
+            demoDelayFactor = 0;
+        }
 
         // Show the next button and wire up click handler.
         $nextBtn.show().on('click', function() {
@@ -231,11 +235,11 @@
                 updateNextFeaturedDemo();
                 $(this).fadeIn(demoFadeTime);
             });
-            $demoMainPreview.delay(demoFadeTime * .5).fadeOut(demoFadeTime, function() {
+            $demoMainPreview.delay(parseInt(demoFadeTime * demoDelayFactor)).fadeOut(demoFadeTime, function() {
                 updateMainFeaturedDemo();
                 $(this).fadeIn(demoFadeTime);
             });
-            $demoPrevPreview.delay(demoFadeTime * 1).fadeOut(demoFadeTime, function() {
+            $demoPrevPreview.delay(parseInt(demoFadeTime * demoDelayFactor * 2)).fadeOut(demoFadeTime, function() {
                 updatePrevFeaturedDemo();
                 $(this).fadeIn(demoFadeTime);
             });
@@ -253,11 +257,11 @@
                 updatePrevFeaturedDemo();
                 $(this).fadeIn(demoFadeTime);
             });
-            $demoMainPreview.delay(demoFadeTime * .5).fadeOut(demoFadeTime, function() {
+            $demoMainPreview.delay(parseInt(demoFadeTime * demoDelayFactor)).fadeOut(demoFadeTime, function() {
                 updateMainFeaturedDemo();
                 $(this).fadeIn(demoFadeTime);
             });
-            $demoNextPreview.delay(demoFadeTime * 1).fadeOut(demoFadeTime, function() {
+            $demoNextPreview.delay(parseInt(demoFadeTime * demoDelayFactor * 2)).fadeOut(demoFadeTime, function() {
                 updateNextFeaturedDemo();
                 $(this).fadeIn(demoFadeTime);
             });
