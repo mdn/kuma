@@ -183,6 +183,13 @@ html {
         bottom: auto;
     }
 
+    #featured-demos .nav-slide .prev,
+    #featured-demos .nav-slide .next {
+        &:hover, &:active, &:focus {
+            outline: 0;
+        }
+    }
+
 }
 
 @media $media-query-mobile {
@@ -205,13 +212,6 @@ html {
 
     #featured-demos .nav-slide .next {
         right: 20px;
-    }
-
-    #featured-demos .nav-slide .prev,
-    #featured-demos .nav-slide .next {
-        &:hover, &:active, &:focus {
-            outline: 0;
-        }
     }
 
     .landing #demo-main {
