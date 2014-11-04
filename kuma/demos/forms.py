@@ -30,8 +30,9 @@ from django.utils.translation import ugettext_lazy as _
 from captcha.fields import ReCaptchaField
 import constance.config
 from taggit_extras.utils import parse_tags, split_strip
+import waffle
 
-from . import (scale_image, TAG_DESCRIPTIONS)
+from . import TAG_DESCRIPTIONS, DEMO_LICENSES
 from .models import Submission
 
 
@@ -72,8 +73,8 @@ class SubmissionEditForm(MyModelForm):
         fields = (
             'title', 'summary', 'description', 'hidden',
             'tech_tags', 'challenge_tags',
-            'screenshot_1', 'screenshot_2', 'screenshot_3', 
-            'screenshot_4', 'screenshot_5', 
+            'screenshot_1', 'screenshot_2', 'screenshot_3',
+            'screenshot_4', 'screenshot_5',
             'video_url', 'navbar_optout',
             'demo_package', 'source_code_url', 'license_name',
         )
@@ -83,9 +84,9 @@ class SubmissionEditForm(MyModelForm):
         label = "Tech tags",
         widget = CheckboxSelectMultiple,
         required = False,
-        choices = ( 
-            (x['tag_name'], x['title']) 
-            for x in TAG_DESCRIPTIONS.values() 
+        choices = (
+            (x['tag_name'], x['title'])
+            for x in TAG_DESCRIPTIONS.values()
             if x['tag_name'].startswith('tech:')
         )
     )
@@ -98,8 +99,10 @@ class SubmissionEditForm(MyModelForm):
 
     def __init__(self, *args, **kwargs):
 
-        # Set the request user, for tag namespace permissions
-        self.request_user = kwargs.pop('request_user', AnonymousUser)
+        # Set the request and user, for tag namespace permissions and license
+        # options
+        self.request = kwargs.pop('request')
+        self.request_user = getattr(self.request, 'user', AnonymousUser)
 
         # Hit up the super class for init
         super(SubmissionEditForm, self).__init__(*args, **kwargs)
@@ -108,10 +111,17 @@ class SubmissionEditForm(MyModelForm):
             (TAG_DESCRIPTIONS[x]['tag_name'], TAG_DESCRIPTIONS[x]['title'])
             for x in parse_tags(
                 'challenge:none %s' %
-                constance.config.DEMOS_DEVDERBY_CHALLENGE_CHOICE_TAGS, 
+                constance.config.DEMOS_DEVDERBY_CHALLENGE_CHOICE_TAGS,
                 sorted=False)
             if x in TAG_DESCRIPTIONS
         )
+
+        if waffle.flag_is_active(self.request, 'demos_10th'):
+            choices = []
+            for x in DEMO_LICENSES.values():
+                choices.append((x['name'], x['title']))
+            choices.append(('author', _("Author's EULA")))
+            self.fields['license_name'].choices = choices
 
         # If this is being used to edit a submission, we need to do
         # the following:
@@ -137,7 +147,7 @@ class SubmissionEditForm(MyModelForm):
                     self._old_challenge_tags = [unicode(tag) for tag in instance.taggit_tags.all_ns('challenge:')]
             for ns in ('tech', 'challenge'):
                 if '%s_tags' % ns in self.fields:
-                    self.initial['%s_tags' % ns] = [t.name 
+                    self.initial['%s_tags' % ns] = [t.name
                         for t in instance.taggit_tags.all_ns('%s:' % ns)]
 
     def clean(self):
@@ -155,7 +165,7 @@ class SubmissionEditForm(MyModelForm):
 
     def save(self, commit=True):
         rv = super(SubmissionEditForm,self).save(commit)
-        
+
         # HACK: Since django.forms.models does this in a hack, we have to mimic
         # the hack to override it.
         super_save_m2m = hasattr(self, 'save_m2m') and self.save_m2m or None
@@ -189,7 +199,7 @@ class SubmissionNewForm(SubmissionEditForm):
     class Meta(SubmissionEditForm.Meta):
         fields = SubmissionEditForm.Meta.fields + ( 'captcha', 'accept_terms', )
 
-    captcha = ReCaptchaField(label=_("Show us you're human")) 
+    captcha = ReCaptchaField(label=_("Show us you're human"))
     accept_terms = forms.BooleanField(initial=False, required=True)
 
     def __init__(self, *args, **kwargs):

@@ -10,6 +10,7 @@ from pyquery import PyQuery as pq
 
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.test import RequestFactory
 
 import constance.config
 from taggit_extras.utils import parse_tags
@@ -314,7 +315,8 @@ class DemoViewsTest(UserTestCase):
     def test_derby_before_deadline(self):
         s = save_valid_submission('hello world')
         s.taggit_tags.set_ns('challenge:', make_challenge_tag())
-        form = SubmissionEditForm(instance=s)
+        form = SubmissionEditForm(instance=s,
+                                  request=RequestFactory().get('/'))
         assert 'demo_package' in form.fields
         assert 'challenge_tags' in form.fields
 
@@ -322,7 +324,8 @@ class DemoViewsTest(UserTestCase):
         s = save_valid_submission('hello world')
         closed_dt = datetime.date.today() - datetime.timedelta(days=32)
         s.taggit_tags.set_ns('challenge:', closed_dt.strftime('%Y:%B').lower())
-        form = SubmissionEditForm(instance=s)
+        form = SubmissionEditForm(instance=s,
+                                  request=RequestFactory().get('/'))
         assert 'demo_package' not in form.fields
         assert 'challenge_tags' not in form.fields
 
