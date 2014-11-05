@@ -294,10 +294,10 @@ def submit(request):
         initial = {}
         if 'tags' in request.GET:
             initial['challenge_tags'] = parse_tags(request.GET['tags'])
-        form = SubmissionNewForm(initial=initial, request_user=request.user)
+        form = SubmissionNewForm(initial=initial, request=request)
     else:
         form = SubmissionNewForm(
-            request.POST, request.FILES, request_user=request.user)
+            request.POST, request.FILES, request=request)
         if form.is_valid():
             new_sub = form.save(commit=False)
             new_sub.creator = request.user
@@ -322,10 +322,10 @@ def edit(request, slug):
 
     if request.method != "POST":
         form = SubmissionEditForm(
-            instance=submission, request_user=request.user)
+            instance=submission, request=request)
     else:
         form = SubmissionEditForm(request.POST, request.FILES,
-                instance=submission, request_user=request.user)
+                instance=submission, request=request)
         if form.is_valid():
 
             sub = form.save()
