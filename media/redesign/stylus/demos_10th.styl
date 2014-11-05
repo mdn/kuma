@@ -173,6 +173,27 @@
     }
 }
 
+@media $media-query-tablet {
+    #demobox .screenshots.multi-images .nav-slide {
+        .next, .prev {
+            transform: scale(0.5);
+            -webkit-transform: scale(0.5);
+            display: block !important;
+            outline: 0;
+            background-color: transparent;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+        }
+
+        .prev {
+            left: -10px !important; /* overriding the JS widget :/ */
+        }
+
+        .next {
+            right: -10px !important; /* overriding the JS widget :/ */
+        }
+    }
+}
+
 @media $media-query-mobile {
     #featured-demos header h2 {
         font-size: 24px;
