@@ -246,13 +246,24 @@ html {
         height: 98%;
     }
 
-    .landing #search-browse #demo-tags {
-        float: none;
-        width: auto;
-    }
+    .landing #search-browse {
+        #demo-tags, .demo-search, b {
+            display: block;
+            float: none;
+            text-align: center;
+        }
 
-    .landing #search-browse .demo-search {
-        width: auto;
+        #demo-tags, .demo-search {
+            width: auto;
+        }
+
+        p {
+            margin-bottom: 12px;
+        }
+
+        b {
+            transform: none;
+        }
     }
 
     .landing #featured-demos {
@@ -267,7 +278,6 @@ html {
     #demo-tags .button, .demo-mobile-list .button {
         margin-top: 12px;
         font-size: 1.2em !important;
-        width: 70%;
     }
 
     .section-demos-home {
@@ -277,5 +287,9 @@ html {
         .demo-landing-gallery {
             display: none;
         }
+    }
+
+    #search-browse #demo-tags {
+        text-align: center;
     }
 }
