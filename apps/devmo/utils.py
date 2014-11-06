@@ -14,6 +14,7 @@ from polib import pofile
 
 from django.conf import settings
 from django.core.cache import get_cache
+from django.shortcuts import _get_queryset
 from django.utils.functional import lazy
 
 
@@ -152,3 +153,15 @@ E.g. something that is a pretty stupid idea but should show the risk as well::
 
 """
 config_lazy = lazy(config, *LAZY_CONSTANCE_TYPES)
+
+
+def get_object_or_none(klass, *args, **kwargs):
+    """
+    A tool like Django's get_object_or_404 but returns None in case
+    of a DoesNotExist exception.
+    """
+    queryset = _get_queryset(klass)
+    try:
+        return queryset.get(*args, **kwargs)
+    except queryset.model.DoesNotExist:
+        return None

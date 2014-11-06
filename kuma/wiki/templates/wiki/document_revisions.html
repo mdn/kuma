@@ -25,7 +25,13 @@
       {% set revision_count=revisions|length %}
       {% set user_can_delete=user.has_perm('wiki.delete_revision') %}
       {% if revision_count > 0 %}
-        <form action="{{ url('wiki.compare_revisions', document.full_path) }}" method="get" class="nodisable">
+        {% if request.GET.origin == 'translate' %}
+          {% set destination_url = url('wiki.translate', document.full_path) %}
+        {% else %}
+          {% set destination_url = url('wiki.compare_revisions', document.full_path) %}
+        {% endif %}
+        <form action="{{ destination_url }}" method="get" class="nodisable">
+          <input type="hidden" name="locale" value="{{ document.locale }}">
           {% if revision_count > 1 %}
             <div class="compare top">
               <input type="submit" class="link-btn" value="{% if document.parent %}{{ _('Compare Selected Translations') }}{% else %}{{ _('Compare Selected Revisions') }}{% endif %}" />
