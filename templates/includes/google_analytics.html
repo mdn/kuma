@@ -37,7 +37,7 @@
         // http://www.tomanthony.co.uk/blog/detect-visitor-social-networks/
         (function() {
             var twitterImage = document.createElement('img');
-            twitterImage.src = 'https://twitter.com/login?redirect_after_login=%2Fimages%2Fspinner.gif';
+            twitterImage.src = 'https://twitter.com/login?redirect_after_login=/favicon.ico';
             twitterImage.addEventListener('load', function() {
                 ga('set', 'dimension5', 'Yes');
             });
