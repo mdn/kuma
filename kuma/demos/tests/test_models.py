@@ -402,6 +402,30 @@ class DemoPackageTest(TestCase):
                                      'ZIP file contains an unacceptable file: badfile',
                                      s.clean)
 
+    @override_constance_settings(DEMO_BLACKLIST_OVERRIDE_EXTENSIONS="yada")
+    def test_demo_blacklist_override(self):
+        """bug 1095649"""
+        sub_fout = StringIO()
+        sub_zf = zipfile.ZipFile(sub_fout, 'w')
+        sub_zf.writestr('hello.txt', 'I am some hidden text')
+        sub_zf.close()
+
+        models.DEMO_MIMETYPE_BLACKLIST = ['application/zip', 'application/x-zip']
+
+        fout = StringIO()
+        zf = zipfile.ZipFile(fout, 'w')
+        zf.writestr('index.html', """<html> </html>""")
+        zf.writestr('yada.yada', sub_fout.getvalue())
+        zf.close()
+
+        self.submission.demo_package.save('play_demo.zip', ContentFile(fout.getvalue()))
+
+        try:
+            self.submission.clean
+        except ValidationError:
+            self.fail("Shouldn't have failed on cleaning "
+                      "a overridded blacklist mimetype")
+
     def test_hidden_demo_next_prev(self):
         """Ensure hidden demos do not display when next() or previous() are called"""
         s = self.submission

@@ -920,6 +920,12 @@ CONSTANCE_DATABASE_CACHE_BACKEND = 'memcache'
 # Settings and defaults controllable by Constance in admin
 CONSTANCE_CONFIG = dict(
 
+    DEMO_BLACKLIST_OVERRIDE_EXTENSIONS = (
+        'jsgz datagz memgz',
+        'File extensions that override the mimetype blacklist in case of '
+        'an ambigous mimetype such as application/gzip',
+    ),
+
     DEMO_MAX_ZIP_FILESIZE = (
         60 * 1024 * 1024,
         "Max file size for zips uploaded to demo studio."
