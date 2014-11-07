@@ -12,7 +12,7 @@
 
             // Create the iframe if not yet created
             if(!$content) {
-                $content = $('<div id="' + id + '" title="' + gettext('Demo Studio') + '"><iframe style="border:0;" scrolling="no" height="400" width="600"></iframe></div>').appendTo(doc.body);
+                $content = $('<div id="' + id + '" title="' + gettext('Demo Studio') + '"><iframe style="border:0;" scrolling="no" height="450" width="600"></iframe></div>').appendTo(doc.body);
             }
 
             // Set the address
