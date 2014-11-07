@@ -421,7 +421,7 @@ class DemoPackageTest(TestCase):
         self.submission.demo_package.save('play_demo.zip', ContentFile(fout.getvalue()))
 
         try:
-            self.submission.clean
+            self.submission.clean()
         except ValidationError:
             self.fail("Shouldn't have failed on cleaning "
                       "a overridded blacklist mimetype")
