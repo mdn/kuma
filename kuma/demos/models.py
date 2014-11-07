@@ -669,11 +669,15 @@ class Submission(models.Model):
             # HACK: Sometimes we get "type; charset", even if charset wasn't asked for
             file_mime_type = m_mime.from_buffer(file_data).split(';')[0]
 
-            if file_mime_type in DEMO_MIMETYPE_BLACKLIST:
+            extensions = constance.config.DEMO_BLACKLIST_OVERRIDE_EXTENSIONS.split()
+            override_file_extensions = ['.%s' % extension
+                                       for extension in extensions]
+
+            if (file_mime_type in DEMO_MIMETYPE_BLACKLIST and
+                    not name.endswith(tuple(override_file_extensions))):
                 raise ValidationError(
                     _('ZIP file contains an unacceptable file: %(filename)s') %
-                    {"filename": name}
-                )
+                    {'filename': name})
 
         if not index_found:
             raise ValidationError(_('HTML index not found in ZIP'))
