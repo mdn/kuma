@@ -6,6 +6,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.files.base import ContentFile
 from django.core.files import temp as tempfile
+from django.utils.http import parse_http_date_safe
 
 import constance.config
 
@@ -162,6 +163,10 @@ class AttachmentTests(UserTestCase, WikiTestCase):
         resp = self.client.get(url, HTTP_HOST=settings.ATTACHMENT_HOST)
         eq_('ALLOW-FROM: %s' % settings.DOMAIN, resp['x-frame-options'])
         eq_(200, resp.status_code)
+        ok_('Last-Modified' in resp)
+        ok_('1970' not in resp['Last-Modified'])
+        ok_('GMT' in resp['Last-Modified'])
+        ok_(parse_http_date_safe(resp['Last-Modified']) is not None)
 
     def test_attachment_detail(self):
         file_for_upload = make_test_file(

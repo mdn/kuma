@@ -23,7 +23,7 @@ from sumo.utils import paginate
 
 from .forms import AttachmentRevisionForm
 from .models import Attachment
-from .utils import attachments_json
+from .utils import attachments_json, convert_to_http_date
 
 
 @require_GET
@@ -46,8 +46,8 @@ def raw_file(request, attachment_id, filename):
     if request.get_host() == settings.ATTACHMENT_HOST:
         rev = attachment.current_revision
         resp = HttpResponse(rev.file.read(), mimetype=rev.mime_type)
-        resp["Last-Modified"] = rev.created
-        resp["Content-Length"] = rev.file.size
+        resp['Last-Modified'] = convert_to_http_date(rev.created)
+        resp['Content-Length'] = rev.file.size
         resp['X-Frame-Options'] = 'ALLOW-FROM: %s' % settings.DOMAIN
         return resp
     else:
