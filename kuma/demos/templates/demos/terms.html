@@ -6,33 +6,18 @@
 {% endif %}
 
 {% block body_attributes %}{% endblock %}
-{% block bodyclass %}section-demos{% endblock %}
+{% block bodyclass %}{% if waffle.flag('demos_10th') %}section-demos{% endif %}{% endblock %}
 {% block title %}{{ page_title(_('{subtitle} | Demo Studio') | f(subtitle=_('Terms for Contributors'))) }}{% endblock %}
 
 {% block content %}
 
-<section id="nav-toolbar"><div>
-<div class="wrap">
-
-  <nav class="crumbs">
-    <ol role="navigation">
-      <li><a href="{{ url('home') }}">MDN</a></li>
-      <li><a href="{{ url('demos') }}">Demo Studio</a></li>
-      <li><a href="">{{_('Terms of Use')}}</a></li>
-    </ol>
-  </nav>
-  
-  <p class="demo-submit"><a href="{{ url('demos_submit') }}" class="button">Submit a Demo</a></p>
+<div class="demos-terms-buttons">
+    <a href="{{ url('demos') }}" class="button">Back to Demo Studio</a>
+    <a href="{{ url('demos_submit') }}" class="button">Submit a Demo</a>
 </div>
-</div></section>
 
-<section id="content">
-<div class="wrap">
-
-  <section id="content-main" role="main" class="full">
-  
-    <section id="tos">
-    <h2>{{_('Terms for Contributors')}}</h2>
+<div class="demo-terms text-content">
+<h2>{{_('Demo Studio: Terms for Contributors')}}</h2>
 
 <P>If you choose
 to contribute a demo ("Demo") to this project you need to abide
@@ -52,7 +37,7 @@ Demo for promotional purposes. If you do not have sufficient rights
 to license certain elements of the Demo under the above CC license,
 you agree to clearly identify those elements and to provide contact
 information for the copyright owners so others may seek to obtain
-usage rights. 
+usage rights.
 </P>
 <P><A NAME="_GoBack"></A>2.	You
 represent and warrant that you have
@@ -78,8 +63,8 @@ represent and warrant that your Demo does not include:</P>
 	<LI>violence
 	or Nazi imagery
 	<LI>discriminatory
-	or hateful words or images 
-	
+	or hateful words or images
+
 	<LI>promotion
 	of online gambling
 	<LI>anything
@@ -141,7 +126,7 @@ you mean that:</P>
 		or any elements of your Demo
 		you don't own or have a license to, and
 		to authorize others to do the same, under a legal doctrine such as
-		fair use; and 
+		fair use; and
 		</P>
 		<LI><P>To the
 		extent your Demo
@@ -163,12 +148,11 @@ you mean that:</P>
 		rights of any third party.</P>
 	</OL>
 </OL>
-
-    </section>
-
-  </section>
-
 </div>
-</section>
+
+<div class="demos-terms-buttons">
+    <a href="{{ url('demos') }}" class="button">Back to Demo Studio</a>
+    <a href="{{ url('demos_submit') }}" class="button">Submit a Demo</a>
+</div>
 
 {% endblock %}
