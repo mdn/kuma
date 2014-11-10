@@ -1,9 +1,30 @@
+import calendar
 from datetime import datetime
 import hashlib
 
 from django.core.files import temp as tempfile
 from django.template import loader
+from django.utils import timezone
+from django.utils.http import http_date
 from django.utils.safestring import mark_safe
+
+
+def convert_to_http_date(dt):
+    """
+    Given a timezone naive or aware datetime return the HTTP date
+    formatted string to be used in HTTP response headers.
+    """
+    # first check if the given dt is timezone aware and if not make it aware
+    if timezone.is_naive(dt):
+        default_timezone = timezone.get_default_timezone()
+        dt = timezone.make_aware(dt, default_timezone)
+
+    # then convert the datetime to UTC (which epoch time is based on)
+    utc_dt = dt.astimezone(timezone.utc)
+    # convert the UTC time to the seconds since the epch
+    epoch_dt = calendar.timegm(utc_dt.utctimetuple())
+    # format the thing as a RFC1123 datetime
+    return http_date(epoch_dt)
 
 
 def attachment_upload_to(instance, filename):
@@ -31,7 +52,7 @@ def attachments_json(attachments):
     """
     Given a list of Attachments (e.g., from a Document), make some
     nice JSON out of them for easy display.
-    
+
     """
     attachments_list = []
     for attachment in attachments:
