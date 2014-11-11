@@ -48,6 +48,7 @@ draw-grid();
         background-repeat: no-repeat;
         background-size:100% auto;
         display: block;
+        direction: ltr; // ltr should be set with negative text indent
         text-indent: -9999px;
         overflow: hidden;
     }
@@ -64,7 +65,7 @@ draw-grid();
     z-index: 1001;
 
     a {
-        background: rgba(255, 255, 255, 0.9);
+        background: rgba-fallback(rgba(255, 255, 255, 0.9));
         padding: 12px 10px;
         position: absolute;
         left: 0;
@@ -119,6 +120,10 @@ draw-grid();
 
             > a, .search-wrap {
                 padding: 4px 8px;
+            }
+
+            &.nav-search-link {
+                display: none;
             }
         }
     }
@@ -186,7 +191,6 @@ a.persona-button, a.github-button {
 
     span {
         text-decoration: none;
-        outline: none;
         display: block;
         float: left;
         set-font-size($base-font-size);
@@ -297,12 +301,9 @@ a.github-button {
         bidi-value(text-align, right, left);
 
         & + li {
-            border-left: 1px solid #bbb;
-            margin-left: 8px;
-            padding-left: @margin-left + 2;
             bidi-style(border-left, 1px solid #bbb, border-right, 0);
-            bidi-style(padding-right, 10px, padding-left, 10px);
-            bidi-style(margin-right, 8px, margin-left, 6px);
+            bidi-style(padding-left, 10px, padding-right, 0);
+            bidi-style(margin-left, 8px, margin-right, 0);
         }
     }
 
@@ -328,13 +329,13 @@ a.github-button {
 
 .oauth-login-options {
     padding: 4px 8px;
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba-fallback(rgba(0, 0, 0, 0.1));
     border-radius: 8px;
     cursor: default;
     position: relative;
 
     &.active {
-        border-color: rgba(255, 255, 255, 0.3);
+        border-color: rgba-fallback(rgba(255, 255, 255, 0.3));
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
 
@@ -391,7 +392,7 @@ a.github-button {
         position: relative;
 
         &:hover, &:active, &:focus {
-            background: rgba($link-color, 0.1);
+            background: rgba-fallback(rgba($link-color, 0.1));
         }
     }
 
@@ -414,7 +415,7 @@ a.github-button {
     vendorize(transition-property, width);
     vendorize(transition-duration, $default-animation-duration);
     width: 60px;
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba-fallback(rgba(255, 255, 255, 0.9));
 
     &.expanded {
         background: #fff;
@@ -425,7 +426,6 @@ a.github-button {
         border: 0;
         color: $menu-link-color;
         font-weight: bold;
-        width: 20px;
         overflow: hidden;
         padding: 0;
         vendorize(transition-property, width);
@@ -548,7 +548,7 @@ a.github-button {
             text-align: left;
 
             > li {
-                margin: 10px 10px 10px 0;
+                margin: 6px 6px 6px 0;
             }
         }
     }
@@ -598,7 +598,7 @@ a.github-button {
     /* move the search box under the nav */
     #main-header {
         .main-nav-search {
-            display: block;
+            display: none;
             padding: 0px;
             margin-top: 10px;
             width: auto;
@@ -617,6 +617,14 @@ a.github-button {
                     overflow: visible;
                 }
             }
+        }
+    }
+
+    #main-nav > ul > li {
+        margin-bottom: 4px;
+
+        &.nav-search-link {
+            display: inline-block;
         }
     }
 

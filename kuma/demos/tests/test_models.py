@@ -14,22 +14,18 @@ except ImportError:
 
 from nose.tools import assert_false, eq_, ok_
 
-from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
 from django.template.defaultfilters import slugify
 from django.test import TestCase
 
-settings.DEMO_MAX_FILESIZE_IN_ZIP = 1 * 1024 * 1024
-settings.DEMO_MAX_ZIP_FILESIZE = 1 * 1024 * 1024
+import constance.config
 
+from devmo.tests import override_constance_settings
 from ..models import Submission
 from .. import models
-
 from . import make_users, build_submission, build_hidden_submission
-
-models.DEMO_MAX_FILESIZE_IN_ZIP = 1 * 1024 * 1024
 
 
 def save_valid_submission(title='hello world',
@@ -344,6 +340,7 @@ class DemoPackageTest(TestCase):
         ok_(not isfile('%s/js/main.js' % path))
         ok_(not isdir(path))
 
+    @override_constance_settings(DEMO_MAX_FILESIZE_IN_ZIP=1024*1024)
     def test_demo_file_size_limit(self):
         """Demo package with any individual file >1MB in size is invalid"""
         s = self.submission
@@ -352,15 +349,14 @@ class DemoPackageTest(TestCase):
         # settings change,
         # so force it directly in the field
         s.demo_package.field.max_upload_size = (
-            settings.DEMO_MAX_FILESIZE_IN_ZIP
+            constance.config.DEMO_MAX_FILESIZE_IN_ZIP
         )
 
         fout = StringIO()
         zf = zipfile.ZipFile(fout, 'w')
         zf.writestr('index.html', """<html> </html>""")
-        zf.writestr('bigfile.txt', ''.join(
-            'x' for x in range(0, settings.DEMO_MAX_FILESIZE_IN_ZIP + 1)
-        ))
+        zf.writestr('bigfile.txt',
+                    'x' * (constance.config.DEMO_MAX_FILESIZE_IN_ZIP + 1))
         zf.close()
         s.demo_package.save('play_demo.zip', ContentFile(fout.getvalue()))
 
@@ -405,6 +401,30 @@ class DemoPackageTest(TestCase):
             self.assertRaisesMessage(ValidationError,
                                      'ZIP file contains an unacceptable file: badfile',
                                      s.clean)
+
+    @override_constance_settings(DEMO_BLACKLIST_OVERRIDE_EXTENSIONS="yada")
+    def test_demo_blacklist_override(self):
+        """bug 1095649"""
+        sub_fout = StringIO()
+        sub_zf = zipfile.ZipFile(sub_fout, 'w')
+        sub_zf.writestr('hello.txt', 'I am some hidden text')
+        sub_zf.close()
+
+        models.DEMO_MIMETYPE_BLACKLIST = ['application/zip', 'application/x-zip']
+
+        fout = StringIO()
+        zf = zipfile.ZipFile(fout, 'w')
+        zf.writestr('index.html', """<html> </html>""")
+        zf.writestr('yada.yada', sub_fout.getvalue())
+        zf.close()
+
+        self.submission.demo_package.save('play_demo.zip', ContentFile(fout.getvalue()))
+
+        try:
+            self.submission.clean()
+        except ValidationError:
+            self.fail("Shouldn't have failed on cleaning "
+                      "a overridded blacklist mimetype")
 
     def test_hidden_demo_next_prev(self):
         """Ensure hidden demos do not display when next() or previous() are called"""

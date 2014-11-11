@@ -1,22 +1,15 @@
 import contextlib
-import re
 import urllib
 
 from django.core import urlresolvers
 from django.http import HttpResponsePermanentRedirect, HttpResponseForbidden
-from django.utils.encoding import iri_to_uri, smart_str, smart_unicode
+from django.utils.encoding import iri_to_uri, smart_str
 
 import tower
 
-from devmo import get_mysql_error
 from sumo.helpers import urlparams
 from sumo.urlresolvers import Prefixer, set_url_prefixer, split_path
 from sumo.views import handle403
-
-
-# Django compatibility shim. Once we're on Django 1.4, do:
-# from django.db.utils import DatabaseError
-DatabaseError = get_mysql_error()
 
 
 class LocaleURLMiddleware(object):
@@ -99,20 +92,6 @@ class NoCacheHttpsMiddleware(object):
             response['Cache-Control'] = 'no-cache, must-revalidate'
             response['Pragma'] = 'no-cache'
         return response
-
-
-class PlusToSpaceMiddleware(object):
-    """Replace old-style + with %20 in URLs."""
-    def process_request(self, request):
-        p = re.compile(r'\+')
-        if p.search(request.path_info):
-            new = p.sub(' ', request.path_info)
-            if request.META['QUERY_STRING']:
-                new = u'%s?%s' % (new,
-                                  smart_unicode(request.META['QUERY_STRING']))
-            if hasattr(request, 'locale'):
-                new = u'/%s%s' % (request.locale, new)
-            return HttpResponsePermanentRedirect(new)
 
 
 def is_valid_path(request, path):

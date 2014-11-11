@@ -37,68 +37,7 @@
 }
 .gallery-foot .paging li {
   display: inline;
-  padding-left: 12px;
-  margin-left: 8px;
   background: none;
-  border-left: 1px solid #666;
-}
-.gallery-foot .paging li:first-child {
-  border: 0;
-}
-.gallery-foot li.prev {
-  padding-right: 0;
-  border-right: 0;
-  margin-right: 0;
-}
-.gallery-foot .paging a {
-  background: url("/media/img/paging-arrows.png") no-repeat;
-}
-.gallery-foot .paging li.prev {
-  border-right: 1px solid #666;
-  padding-right: 13px;
-  margin-right: 10px;
-}
-.gallery-foot .paging li.prev a {
-  padding-left: 13px;
-  background-position: 0 -97px;
-}
-.gallery-foot .paging li.prev a:hover,
-#gallery-foot .paging li.prev a:focus,
-#gallery-foot .paging li.prev a:active {
-  background-position: 0 -147px;
-}
-.gallery-foot .paging li.next a {
-  padding-right: 13px;
-  background-position: 100% 4px;
-}
-.gallery-foot .paging li.next a:hover,
-#gallery-foot .paging li.next a:focus,
-#gallery-foot .paging li.next a:active {
-  background-position: 100% -46px;
-}
-.gallery-foot .paging li.first a {
-  display: inline-block;
-  width: 20px;
-  margin-right: -8px;
-  text-indent: -999em;
-  background-position: 100% -297px;
-}
-.gallery-foot .paging li.first a:hover,
-.paging li.first a:focus,
-.paging li.first a:active {
-  background-position: 100% -347px;
-}
-.gallery-foot .paging li.last a {
-  display: inline-block;
-  width: 20px;
-  margin-left: -8px;
-  text-indent: -999em;
-  background-position: 0 -197px;
-}
-.gallery-foot .paging li.last a:hover,
-.paging li.last a:focus,
-.paging li.last a:active {
-  background-position: 0 -247px;
 }
 .section-demos .gallery-foot {
   padding: 10px 15px;
@@ -113,18 +52,27 @@
   -webkit-border-radius: 6px;
   border-radius: 6px;
 }
-.section-demos .gallery-foot .paging a {
-  color: #fff;
-  text-transform: uppercase;
-  background-image: url("/media/img/demos/paging-arrows.png");
-  background-repeat: no-repeat;
-}
-.section-demos .gallery-foot .paging a:hover,
-.section-demos .gallery-foot .paging a:focus,
-.section-demos .gallery-foot .paging a:active {
-  color: #f1ed0f;
-}
+
 .section-demos .gallery-foot .feed a {
   color: #fff;
   background: url("/media/img/icons-welcome.png") 0 -499px no-repeat;
+}
+
+@media $media-query-mobile {
+    .gallery-foot {
+        font-size: 1em;
+    }
+
+    .gallery-foot .showing,
+    .gallery-foot .paging,
+    .gallery-foot .feed {
+        width: auto;
+        float: none;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .gallery-foot .showing {
+        margin-top: 0;
+    }
 }

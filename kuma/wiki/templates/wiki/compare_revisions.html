@@ -1,4 +1,6 @@
 {% extends "wiki/base.html" %}
+{% from "wiki/includes/document_macros.html" import revision_diff with context %}
+
 {% set title = _('Compare Revisions | {document}')|f(document=document.title) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
 {% set classes = 'compare' %}
@@ -10,8 +12,9 @@
     <h1>{{ _('Compare Revisions') }}</h1>
     <h2><a href="{{ url('wiki.document', document.full_path, locale=document.locale) }}">{{ document.title }}</a></h2>
 
-    {% include 'wiki/includes/revision_diff.html' %}
-    <p><a href="{{ url('wiki.document_revisions', document.slug) }}">{{ _('Back to History') }}</a></p>
+    {{ revision_diff(revision_from, revision_to) }}
+
+    <p><a href="{{ url('wiki.document_revisions', document.slug) }}" rel="nofollow, noindex">{{ _('Back to History') }}</a></p>
 
   </article>
 

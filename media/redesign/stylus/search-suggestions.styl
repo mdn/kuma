@@ -13,7 +13,7 @@
     position: relative;
 
     .show-topics {
-      background-color: rgba(255, 255, 255, 0) !important;
+      background-color: rgba-fallback(rgba(255, 255, 255, 0)) !important;
       box-shadow: none;
       color: #fff !important;
       font-size: 1.2em !important;
@@ -26,10 +26,9 @@
       border: none;
       color: #fff;
       display: inline;
-      outline: none;
+      outline: none; /* csslint - cursor provides hint, this needs js to highlight the parent when #search-q-s has focus */
       padding: 0 8px 2px;
       vertical-align: middle;
-      width: auto;
       &::-webkit-input-placeholder { /* WebKit browsers */
           color: #DDD;
       }
@@ -53,7 +52,6 @@
     border-radius: 0px;
     box-shadow: inset 0px 0px 2px #333;
     color: #fff;
-    margin: 0 auto;
     padding: 14px 6px;
     position: relative;
     vendorize(animation, openNotification 1s);
@@ -71,7 +69,7 @@
       }
     }
     .close {
-      background-color: rgba(255, 255, 255, 0) !important;
+      background-color: rgba-fallback(rgba(255, 255, 255, 0)) !important;
       box-shadow: none;
       color: #fff!important;
       position: absolute;

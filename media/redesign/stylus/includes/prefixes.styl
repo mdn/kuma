@@ -1,0 +1,64 @@
+$webkit = '-webkit-';
+$moz = '-moz-';
+$ie = '-ms-';
+$unprefixed = '';
+
+$prefix-properties = {
+// - Animations
+'animation': $webkit $unprefixed,
+'animation-name': $webkit $unprefixed,
+'animation-duration': $webkit $unprefixed,
+'animation-timing-function': $webkit $unprefixed,
+'animation-delay': $webkit $unprefixed,
+'animation-iteration-count': $webkit $unprefixed,
+'animation-direction': $webkit $unprefixed,
+'animation-fill-mode': $webkit $unprefixed,
+'animation-play-state': $webkit $unprefixed,
+// - Appearance
+'appearance': $moz $webkit $unprefixed,
+// - Backface visibility
+'backface-visibility': $webkit $unprefixed,
+// - Box
+'border-radius': $unprefixed,
+'box-shadow': $unprefixed,
+'box-sizing': $moz $unprefixed,
+// - Content columns
+'columns': $moz $webkit $unprefixed,
+'column-count': $moz $webkit $unprefixed,
+'column-gap': $moz $webkit $unprefixed,
+'column-width': $moz $webkit $ie $unprefixed,
+'column-rule': $moz $webkit $unprefixed,
+'break-before': $unprefixed, // webkit uses different syntax, can't prefix this way
+'break-inside': $unprefixed, // webkit uses different syntax, can't prefix this way
+'break-after': $unprefixed, // webkit uses different syntax, can't prefix this way
+// - Flex Box
+'flex': $webkit $unprefixed,
+'flex-flow': $webkit $unprefixed,
+'flex-direction': $webkit $unprefixed,
+'flex-wrap': $webkit $unprefixed,
+'align-content': $webkit $unprefixed,
+'align-items': $webkit $unprefixed,
+'align-self': $webkit $unprefixed,
+'justify-content': $webkit $unprefixed,
+'order': $webkit $unprefixed,
+// - Hyphens
+'hyphens': $moz $webkit $ie $unprefixed,
+'tab-size': $moz $unprefixed,
+// - Transformations
+'perspective': $moz $webkit $unprefixed,
+'perspective-origin': $moz $webkit $unprefixed,
+'transform': $webkit $ie $unprefixed,
+'transform-origin': $webkit $ie $unprefixed,
+// - Transitions
+'transition': $moz $webkit $unprefixed,
+'transition-property': $moz $webkit $unprefixed,
+'transition-delay': $moz $webkit $unprefixed,
+'transition-duration': $moz $webkit $unprefixed,
+'transition-transform': $moz $webkit $unprefixed,
+'transition-timing-function': $moz $webkit $unprefixed,
+}
+
+
+//TODO: lookup tables for vendorizing attributes and pseudo elements
+//$prefix-attributes = {}
+//$prefix-pseudo = {}

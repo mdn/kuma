@@ -116,6 +116,7 @@ MDN_LANGUAGES = (
                  'en-US',
                  'ar',
                  'bn-BD',
+                 'bn-IN',
                  'de',
                  'el',
                  'es',
@@ -417,7 +418,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'sumo.anonymous.AnonymousIdentityMiddleware',
-    'sumo.middleware.PlusToSpaceMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'kuma.users.middleware.BanMiddleware',
 
@@ -625,6 +625,9 @@ MINIFY_BUNDLES = {
         ),
         'demostudio': (
             'redesign/css/demos.css',
+        ),
+        'demostudio_10th': (
+            'redesign/css/demos_10th.css',
         ),
         'devderby': (
             'css/devderby.css',
@@ -916,6 +919,22 @@ CONSTANCE_DATABASE_CACHE_BACKEND = 'memcache'
 
 # Settings and defaults controllable by Constance in admin
 CONSTANCE_CONFIG = dict(
+
+    DEMO_BLACKLIST_OVERRIDE_EXTENSIONS = (
+        'jsgz datagz memgz',
+        'File extensions that override the mimetype blacklist in case of '
+        'an ambigous mimetype such as application/gzip',
+    ),
+
+    DEMO_MAX_ZIP_FILESIZE = (
+        60 * 1024 * 1024,
+        "Max file size for zips uploaded to demo studio."
+    ),
+
+    DEMO_MAX_FILESIZE_IN_ZIP = (
+        60 * 1024 * 1024,
+        "Max file size for files inside zip uploaded to demo studio."
+    ),
 
     DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG = (
         "challenge:2011:september",

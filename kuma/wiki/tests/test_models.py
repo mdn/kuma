@@ -19,6 +19,7 @@ from waffle.models import Switch
 
 from devmo.utils import MemcacheLock
 from devmo.tests import override_constance_settings
+from kuma.wiki.constants import REDIRECT_CONTENT
 from kuma.wiki.cron import calculate_related_documents
 from kuma.wiki.exceptions import (PageMoveError,
                                   DocumentRenderedContentNotAvailable,
@@ -304,6 +305,38 @@ class DocumentTests(UserTestCase):
         d3.save()
         ok_(d3.parents == [d1, d2])
 
+    @attr('redirect')
+    def test_redirect_url_allows_site_url(self):
+        href = "%s/en-US/Mozilla" % settings.SITE_URL
+        title = "Mozilla"
+        html = REDIRECT_CONTENT % {'href': href, 'title': title}
+        d = document(is_redirect=True, html=html)
+        eq_(href, d.redirect_url())
+
+    @attr('redirect')
+    def test_redirect_url_allows_domain_relative_url(self):
+        href = "/en-US/Mozilla"
+        title = "Mozilla"
+        html = REDIRECT_CONTENT % {'href': href, 'title': title}
+        d = document(is_redirect=True, html=html)
+        eq_(href, d.redirect_url())
+
+    @attr('redirect')
+    def test_redirect_url_rejects_protocol_relative_url(self):
+        href = "//evilsite.com"
+        title = "Mozilla"
+        html = REDIRECT_CONTENT % {'href': href, 'title': title}
+        d = document(is_redirect=True, html=html)
+        eq_(None, d.redirect_url())
+
+    @attr('bug1082034')
+    @attr('redirect')
+    def test_redirect_url_works_for_home_path(self):
+        href = "/"
+        title = "Mozilla"
+        html = REDIRECT_CONTENT % {'href': href, 'title': title}
+        d = document(is_redirect=True, html=html)
+        eq_(href, d.redirect_url())
 
 class PermissionTests(test_utils.TestCase):
 

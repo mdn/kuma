@@ -49,6 +49,12 @@
         </div>
       </div>
 
+      {% if request.user != profile.user %}
+      <div class="notification warning">
+      {% trans %}You're editing a different profile than your own. Please take care!{% endtrans %}
+      </div>
+      {% endif %}
+
       <div id="profile-edit" class="column-half">
         <h1 class="page-title">{% include 'socialaccount/snippets/login_service_icon.html' %}{{ profile.user.username }}</h1>
 
@@ -62,6 +68,7 @@
                     <label>{{ _('Primary Email') }}</label>
                     {{ profile.user.email }} <a href="{{ url('account_email') }}">{{ _('Edit email') }}</a>
                   </li>
+                  {{ li_field(profile_form, 'username') }}
                   {{ li_field(profile_form, 'fullname') }}
                   {{ li_field(profile_form, 'title') }}
                   {{ li_field(profile_form, 'organization') }}

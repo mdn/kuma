@@ -36,7 +36,7 @@
               {% endif %}
 
               {% if document.is_localizable %}
-                <li><a href="{{ translate_url }}">{{ _('Add a translation') }}</a></li>
+                <li><a href="{{ translate_url }}" rel="nofollow, noindex">{{ _('Add a translation') }}</a></li>
               {% endif %}
             </ul>
           </div>
@@ -47,7 +47,7 @@
           <div class="submenu-column">
             <div class="title">{{ _('Advanced') }}</div>
             <ul>
-                <li><a href="{{ url('wiki.document_revisions', document.full_path) }}">{{_('History')}}</a></li>
+                <li><a href="{{ url('wiki.document_revisions', document.full_path) }}" rel="nofollow, noindex">{{_('History')}}</a></li>
                 {% if user.is_authenticated() and document %}
                   <li class="page-watch">
                     {% set subscribe_status = _('Updating subscription status') %}
@@ -70,14 +70,14 @@
 
                 </li>{% endif %}
                 {% if user.is_authenticated() and not document.is_template %}
-                  <li><a href="{{ url('wiki.new_document') }}?parent={{ document.id }}">{{ _('New sub-page') }}</a></li>
-                  <li><a href="{{ url('wiki.new_document') }}?clone={{ document.id }}{% if document.parent_topic %}&parent={{ document.parent_topic.id }}{% endif %}">{{ _('Clone this page') }}</a></li>
+                  <li><a href="{{ url('wiki.new_document') }}?parent={{ document.id }}" rel="nofollow, noindex">{{ _('New sub-page') }}</a></li>
+                  <li><a href="{{ url('wiki.new_document') }}?clone={{ document.id }}{% if document.parent_topic %}&parent={{ document.parent_topic.id }}{% endif %}" rel="nofollow, noindex">{{ _('Clone this page') }}</a></li>
                 {% endif %}
                 {% if user.is_authenticated() and user.has_perm('wiki.move_tree') %}
-                  <li><a href="{{ url('wiki.move', document.slug, locale=document.locale) }}">{{ _('Move this page') }}</a></li>
+                  <li><a href="{{ url('wiki.move', document.slug, locale=document.locale) }}" rel="nofollow, noindex">{{ _('Move this page') }}</a></li>
                 {% endif %}
                 {% if user.is_superuser %}
-                  <li><a href="{{ url('admin:wiki_document_change', document.id) }}">{{ _('View in admin') }}</a></li>
+                  <li><a href="{{ url('admin:wiki_document_change', document.id) }}" rel="nofollow, noindex">{{ _('View in admin') }}</a></li>
                 {% endif %}
 
 {#
@@ -85,24 +85,24 @@
     # TODO: https://bugzil.la/972541 -  Deleting a page that has subpages
 #}
                 {% if user.has_perm('wiki.delete_document') and not document.has_children() %}
-                  <li><a href="{{ url('wiki.delete_document', document.slug) }}">{{ _('Delete this page') }}</a></li>
+                  <li><a href="{{ url('wiki.delete_document', document.slug) }}" rel="nofollow, noindex">{{ _('Delete this page') }}</a></li>
                 {% endif %}
 
                 {% set policy_links = build_policy_admin_links(request.user, document) %}
                 {% if policy_links['change_one'] %}
-                  <li><a target="_blank" href="{{ policy_links['change_one'] }}">{{ _('Manage access policy') }}</a></li>
+                  <li><a target="_blank" href="{{ policy_links['change_one'] }}" rel="nofollow, noindex">{{ _('Manage access policy') }}</a></li>
                 {% elif policy_links['change_list'] %}
-                  <li><a target="_blank" href="{{ policy_links['change_list'] }}">{{ _('Manage access policies') }}</a></li>
+                  <li><a target="_blank" href="{{ policy_links['change_list'] }}" rel="nofollow, noindex">{{ _('Manage access policies') }}</a></li>
                 {% elif policy_links['add'] %}
-                  <li><a target="_blank" href="{{ policy_links['add'] }}">{{ _('Add access policy') }}</a></li>
+                  <li><a target="_blank" href="{{ policy_links['add'] }}" rel="nofollow, noindex">{{ _('Add access policy') }}</a></li>
                 {% endif %}
 
                 {% set zone_links = document_zone_management_links(request.user, document) %}
                 {% if zone_links['change'] %}
-                  <li><a target="_blank" href="{{ zone_links['change'] }}">{{ _('Manage content zone') }}</a></li>
+                  <li><a target="_blank" href="{{ zone_links['change'] }}" rel="nofollow, noindex">{{ _('Manage content zone') }}</a></li>
                 {% endif %}
                 {% if zone_links['add'] and not document.is_template %}
-                  <li><a target="_blank" href="{{ zone_links['add'] }}">{{ _('Convert to content zone') }}</a></li>
+                  <li><a target="_blank" href="{{ zone_links['add'] }}" rel="nofollow, noindex">{{ _('Convert to content zone') }}</a></li>
                 {% endif %}
                 <li class="page-print"><a href="#" onclick="return window.print();">{{ _('Print this page') }}</a></li>
             </ul>
@@ -154,4 +154,59 @@
     </section>
     {% endif %}
   {% endif %}
+{%- endmacro %}
+
+{% macro revision_diff(revision_from, revision_to, revision_from_header=None, revision_to_header=None, show_picker=False) -%}
+  {% if revision_from and revision_to %}
+    <section class="revision-diff">
+      <a href="{{ url('wiki.document_revisions', revision_from.document.slug)|urlparams(locale=revision_from.document.locale, origin='translate') }}">{{ _('Change Revisions') }}</a>
+      <header>
+        <div class="rev-from">
+            <h3>
+            {% if revision_from_header %}
+              {{ revision_from_header }}
+            {% else %}
+              <a href="{{ url('wiki.revision', revision_from.document.slug, revision_from.id) }}" rel="nofollow, noindex">
+                {{ _('Revision {num}:')|f(num=revision_from.id) }}
+              </a>
+            {% endif %}
+          </h3>
+          <p>{{ _('Revision {id} by {user} on {date}')|fe(id=revision_from.id, user=revision_from.creator, date=datetimeformat(revision_from.created, format='longdatetime')) }}</p>
+        </div>
+        <div class="rev-to">
+          <h3>
+            {% if revision_to_header %}
+              {{ revision_to_header }}
+            {% else %}
+              <a href="{{ url('wiki.revision', revision_to.document.slug, revision_to.id) }}" rel="nofollow, noindex">
+                {{ _('Revision {num}:')|f(num=revision_to.id) }}
+              </a>
+            {% endif %}
+          </h3>
+          <p>{{ _('Revision {id} by {user} on {date}')|fe(id=revision_to.id, user=revision_to.creator, date=datetimeformat(revision_to.created, format='longdatetime')) }}</p>
+        </div>
+      </header>
+
+      <dl>
+        <dt>{{ _('Title:') }}</dt>
+        <dd class="rev-from">{{ revision_from.title }}</dd>
+        <dd class="rev-to">{{ revision_to.title }}</dd>
+
+        <dt>{{ _('Slug:') }}</dt>
+        <dd class="rev-from">{{ revision_from.slug }}</dd>
+        <dd class="rev-to">{{ revision_to.slug }}</dd>
+
+        {% if revision_from.tags or revision_to.tags %}
+        <dt>{{ _('Tags:') }}</dt>
+        <dd class="rev-from"> {{ ', '.join(revision_from.tags.split(',')) }}</dd>
+        <dd class="rev-to"> {{ ', '.join(revision_to.tags.split(',')) }}</dd>
+        {% endif %}
+
+        <dt>{{ _('Content:') }}</dt>
+        <dd>{{ diff_table(revision_from.content, revision_to.content, revision_from.id, revision_to.id) }}</dd>
+      </dl>
+    </section>
+  {% endif %}
+
+
 {%- endmacro %}

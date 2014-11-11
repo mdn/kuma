@@ -1,16 +1,32 @@
 @require 'vars';
+@require 'prefixes';
 
 /*
     Provides man mixins for use within the MDN theme.
 */
 
-VENDOR-PREFIXES = '-webkit-' '-moz-' '-ms-';
+/* searches expression for the provided string and replaces with provided value */
+replace($expr, $str, $val) {
+  $expr = clone($expr);
+  for $e, $i in $expr {
+    if ($e == $str) {
+      $expr[$i] = $val;
+    }
+  }
+  return $expr;
+}
+
 
 set-font-size(value) {
     font-size: value;
 
     if (value is not inherit) {
-        font-size: remify(value);
+
+        // make sure we're working with px otherwise remify will just spit out what we spat out before */
+        u = unit(value);
+        if (u is 'px') {
+            font-size: remify(value);
+        }
     }
 }
 
@@ -31,15 +47,34 @@ set-larger-font-size() {
     set-font-size($base-bump-font-size);
 }
 
+/* vendor prefixes */
 
-/* vendorizes a propery */
-vendorize(property, value) {
-    for prefix in VENDOR-PREFIXES {
-        {prefix + property}: value;
+
+/* vendorizes a propery based on it's value in the prefixes.styl lookup table */vendorize($property, $value) {
+    $prefixes = $prefix-properties[''+$property];
+
+    // might be a quoted because it has commas in it, example: transition-property
+    if($value == 'string') {
+        $value = unquote($value);
     }
-    {property}: value;
+
+    if($prefixes == null) {
+        // warn if we're prefixing something unrecognized.
+        warn('Warning in vendorize(): ' + $property + ' not listed in prefixes.styl')
+        // provide unprefixed value as fallback
+        $property: $value;
+    } else {
+        for $prefix in $prefixes {
+          {$prefix + $property}: $value;
+        }
+        // warn if we're vendorizing something unneccisarily
+        if($prefixes == '') {
+            warn('Warning in vendorize() ' + $property + ' does not need to be vendorized anymore. ')
+        }
+    }
 }
 
+/* vendorizes a value indescriminately by adding the prefixes defined by VENDOR-PREFIXES  */
 vendorize-value(property, value, more = '') {
     for prefix in VENDOR-PREFIXES {
         {property}: unquote(prefix + value + more);
@@ -70,6 +105,51 @@ reverse-link-decoration() {
         &:hover, &:active, &:focus {
             text-decoration: underline;
         }
+    }
+}
+
+/* converts an rgba value to hex, blending on white or the provided background hex/rgb (must provide flat colour for background) */
+rgba-to-hex($color, $bg = #fff) {
+
+  if(typeof($color) == 'rgba') {
+        $a = alpha($color);
+        $fallback = $color * $a + $bg * (1 - $a);
+
+        return $fallback;
+  } else {
+        error('rgba-to-hex() must be used passed an rgba value');
+  }
+
+
+}
+
+/* creates a hex fallback of a property using an rgba value
+   will use white as the background matte if no colour is provided
+   example input: .test { border: 20px solid rgba-fallback(rgba(255,0,0,0.5), #000);}
+   example output: .test { border: 20px solid #800000; border: 20px solid rgba(255,0,0,0.5); }
+*/
+rgba-fallback($color, $bg = #fff) {
+    // check mixin was called inside a property
+    if (current-property) {
+        // check mixin was passed an rgba
+        if(typeof($color) == 'rgba') {
+            // get value of property
+            $val = current-property[1];
+            // create our fallback hex
+            $fallback-hex = rgba-to-hex($color, $bg);
+            // replace the rgba with the hex  in the value of the property
+            $hex-val = replace($val, '__CALL__', $fallback-hex);
+            // add a duplicate property with the fallback value
+            add-property(current-property[0], $hex-val);
+        } else {
+            error('rgba-fallback() must be given an rgba value');
+        }
+
+        // return the rgba for use in the original property
+        $color
+
+    } else {
+        error('rgba-fallback() must be used within a property');
     }
 }
 
@@ -113,11 +193,6 @@ generate-arrow(arrow-width = 10px) {
         width: 0;
         border: arrow-width solid transparent;
     }
-}
-
-/* used to denote an old IE style */
-old-ie(prop, value, important = false) {
-    {prop}: value (important ? unquote('!important') : '');
 }
 
 /* used to create sliding animations */
@@ -177,7 +252,7 @@ override-main-nav-color(hex) {
 
     #main-nav > ul > li {
         .search-wrap {
-            background-color: rgba(255, 255, 255, 0.4);
+            background-color: rgba-fallback(rgba(255, 255, 255, 0.4));
 
             input, i, .search-trigger {
                 color: hex !important;
@@ -247,7 +322,6 @@ bidi-value-vendorize(prop, ltr, rtl, make-important = false) {
     html[dir='rtl'] & {
         vendorize(prop, rtl make-important);
     }
-
 }
 
 /*
@@ -266,10 +340,10 @@ heading-2() {
 }
 
 big-search() {
+    background: rgba-fallback(rgba(255, 255, 255, 0.2));
     set-larger-font-size();
     display: block;
     margin: 0 auto;
-    background: rgba(255, 255, 255, 0.2);
     border: 0;
     border-radius: 3px;
     font-family: $heading-font-family;

@@ -75,8 +75,9 @@
           {% endif %}
           {{ ban_link(profile.user, request.user) }}
           <!-- Only shown for the user and admins -->
-          {% if profile.allows_editing_by(request.user) and request.user == profile.user %}
+          {% if profile.allows_editing_by(request.user) %}
               <a id="edit-profile" href="{{ url('users.profile_edit', username=profile.user.username) }}" class="button neutral">{{ _("Edit") }}<i aria-hidden="true" class="icon-pencil"></i></a>
+              {% if request.user == profile.user %}
               <button id="advanced-menu" class="neutral only-icon" {{ disabled_attr }} aria-haspopup="true" aria-owns="advanced-menu-submenu" aria-expanded="false"><span>{{ _('Advanced') }}</span><i aria-hidden="true" class="icon-cog"></i></button>
               <div class="submenu" id="advanced-menu-submenu">
                 <!-- this page -->
@@ -89,6 +90,7 @@
                   </ul>
                 </div>
               </div>
+              {% endif %}
           {% endif %}
       </div>
 

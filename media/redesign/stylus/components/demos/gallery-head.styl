@@ -11,26 +11,7 @@
   height: 0;
   visibility: hidden;
 }
-.gallery-head .count {
-  float: left;
-}
-.gallery-head .count .button {
-  font-size: 0.636em;
-  margin-left: 15px;
-  position: relative;
-  top: -2px;
-}
-.gallery-head .sort {
-  float: right;
-  font-size: 0.786em;
-  margin: 0.5em 0 0;
-}
-.gallery-head .sort li {
-  display: inline;
-  padding: 0;
-  margin: 0 0 0 20px;
-  background: none;
-}
+
 .section-demos .gallery-head {
   margin: 0 0 20px;
   border: 0;
@@ -44,12 +25,33 @@
   -webkit-border-radius: 6px;
   border-radius: 6px;
 }
+
+.gallery-head .count {
+  float: left;
+}
+.gallery-head .count .button {
+  font-size: 0.636em;
+  margin-left: 15px;
+  position: relative;
+  top: -2px;
+}
 .section-demos .gallery-head .count {
   padding-left: 40px;
   margin: 0 20px -3px 0;
   background: url("/media/img/demos/icn-demoreel.png") 0 0 no-repeat;
   font: normal 22px/1.2 "Bebas Neue", "League Gothic", "Arial Narrow", sans-serif;
   letter-spacing: 2px;
+}
+.gallery-head .sort {
+  float: right;
+  font-size: 0.786em;
+  margin: 0.5em 0 0;
+}
+.gallery-head .sort li {
+  display: inline;
+  padding: 0;
+  margin: 0 0 0 20px;
+  background: none;
 }
 .section-demos .gallery-head .sort {
   margin: 0.35em 0 0;
@@ -64,11 +66,23 @@
 .section-demos .gallery-head .sort a:focus,
 .section-demos .gallery-head .sort a:active {
   color: #f1ed0f;
-  background: url("/media/img/demos/sort-arrow.png") center bottom no-repeat;
 }
 .section-demos .gallery-head .sort strong {
   font-weight: normal;
   color: #f1ed0f;
   padding-bottom: 6px;
   background: url("/media/img/demos/sort-arrow.png") center bottom no-repeat;
+}
+
+@media $media-query-mobile {
+    .section-demos .gallery-head .sort {
+        margin: 10px 0 -10px 0;
+        font-size: 1em;
+        text-align:right;
+    }
+
+    .section-demos .gallery-head .sort li {
+        display: inline-block;
+        margin-bottom: 10px;
+    }
 }

@@ -1,3 +1,4 @@
+@require '../includes/mixins'
 /*
     Additional formatting for the real page content; i.e. text in the <main> element
     We cannot put these styles in the tags.styl file because they don't apply to the entire layout
@@ -32,15 +33,15 @@ $table-blue = #d4dde4;
             border: 2px solid #fff;
 
             td {
-                background-color: rgba($table-blue, 0.15);
+                background-color: rgba-fallback(rgba($table-blue, 0.15));
                 border: @border;
-                box-shadow: inset 0 -1px 0 0 rgba($table-blue, 0.5);
+                box-shadow: inset 0 -1px 0 0 rgba-fallback(rgba($table-blue, 0.5));
             }
 
             td.header, th {
                 border: @border;
-                border-bottom: 2px solid rgba($table-blue, 1);
-                background: rgba($table-blue, 0.5);
+                border-bottom: 2px solid rgba-fallback(rgba($table-blue, 1));
+                background: rgba-fallback(rgba($table-blue, 0.5));
                 font-family: 'Open Sans Light', sans-serif;
                 font-size: 14px;
                 padding: 2px 8px 4px;
@@ -50,7 +51,7 @@ $table-blue = #d4dde4;
 
         &.fullwidth-table {
             background: #fff;
-            border: 1px solid rgba($table-blue, 0.5);
+            border: 1px solid rgba-fallback(rgba($table-blue, 0.5));
             margin-bottom: $grid-spacing;
             width: 100%;
 
@@ -62,8 +63,8 @@ $table-blue = #d4dde4;
             }
 
             td.header, th {
-                background: rgba($table-blue, 0.5);
-                border: 1px solid rgba($table-blue, 1);
+                background: rgba-fallback(rgba($table-blue, 0.5));
+                border: 1px solid rgba-fallback(rgba($table-blue, 1));
                 font-weight: bold;
                 padding: 0 5px;
             }
@@ -74,11 +75,11 @@ $table-blue = #d4dde4;
         border: solid #e0e0dc;
         border-width: 0 1px 1px 0;
         padding: 6px;
-        text-align: start;
+        bidi-value('text-align', left, right);
     }
 
     thead th {
-        background: rgba($table-blue, 0.5);
+        background: rgba-fallback(rgba($table-blue, 0.5));
     }
 
     /* lists and definitions */
@@ -195,7 +196,7 @@ ul.directory-tree {
     top: -($grid-spacing / 2);
     background: #fcf6d4;
     border: 1px solid #e5d5c1;
-    box-shadow: 1px 1px 0 rgba(0,0,0,.1);
+    box-shadow: 1px 1px 0 rgba-fallback(rgba(0,0,0,.1));
     clear: both;
     margin: ($grid-spacing / 2) 0 ($grid-spacing / 4);
     padding: ($grid-spacing / 2) ($grid-spacing * .75) 0;
@@ -225,7 +226,7 @@ ul.directory-tree {
     cursor: default;
     padding-top: 2px;
     position: absolute;
-    vendorize(box-shadow, 1px 1px 1px rgba(0,0,0,.08));
+    box-shadow: 1px 1px 1px rgba(0,0,0,.08);
 }
 
 .ui-menu {
@@ -252,7 +253,7 @@ ul.directory-tree {
 
     .ui-state-hover, .ui-state-focus, .ui-state-highlight, .ui-state-active {
         background: #e4e4d9;
-        background: rgba(198,198,175,.2);
+        background: rgba-fallback(rgba(198,198,175,.2));
     }
 }
 

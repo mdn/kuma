@@ -18,6 +18,7 @@
   <meta name="description" content="{{ submission.summary }}" />
 
   <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/demowrap.css">
+  <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}redesign/css/demos_wrap.css">
   {{ css('jquery-ui') }}
   <script src="{{ url('jsi18n') }}build:{{ BUILD_ID_JS }}"></script>
 
@@ -75,24 +76,21 @@
 
     <nav class="paging">
       <ul role="navigation">
+        <li><a href="{{ submission.get_absolute_url() }}">{{ _('Back') }}</a></li>
         {% set prev = submission.previous() %}
         {% if prev %}
-            <li class="prev"><a href="{{ prev.get_absolute_url() }}/launch" title="{{_('Go to the previous demo, {demo_title}') | f(demo_title=prev.title)}}">{{_('Prev')}}</a></li>
+            <li class="prev"><a href="{{ prev.get_absolute_url() }}/launch" title="{{_('Go to the previous demo, {demo_title}') | f(demo_title=prev.title)}}">{{_('Previous')}}</a></li>
         {% endif %}
         {% set next = submission.next() %}
         {% if next %}
             <li class="next"><a href="{{ next.get_absolute_url() }}/launch" title="{{_('Go to the next demo, {demo_title}') | f(demo_title=next.title)}}">{{_('Next')}}</a></li>
         {% endif %}
+            <li><a href="{{ submission.demo_package.url.replace('.zip', '/index.html') }}" title="{{_('Remove this toolbar')}}"><span class="remove-long-label">{{_('Remove toolbar')}}</span><span class="remove-short-label">X</span></a></li>
       </ul>
     </nav>
 
-      <p id="close"><a href="{{ submission.demo_package.url.replace('.zip', '/index.html') }}" title="{{_('Remove this toolbar')}}">{{_('Remove toolbar')}}</a></p>
 
-  {% if waffle.flag('jquery_upgrade') %}
-    {{ js('jquery2') }}
-  {% else %}
-    {{ js('jquery1') }}
-  {% endif %}
+    {{ js('main') }}
     {{ js('popup') }}
 
     <script type="text/javascript">

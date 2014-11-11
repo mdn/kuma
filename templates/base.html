@@ -94,7 +94,7 @@
   <!-- Header -->
   <header id="main-header"><div class="center">
 
-    <a href="//www.mozilla.org/" id="tabzilla" class="no-track">mozilla</a>
+    <a href="//www.mozilla.org/" id="tabzilla" class="no-track" data-infobar="update">mozilla</a>
 
     <div class="clear header-clear"></div>
 
@@ -146,7 +146,7 @@
             </ul>
           </div>
         </div>
-      </li><li><a href="{{ devmo_url('Tools') }}">{{ _('Tools') }}</a></li><li><a href="{{ url('demos') }}">{{ _('Demos') }}</a></li><li><a href="{{ devmo_url('Mozilla/Connect') }}">{{ _('Connect') }}</a></li>{% if not is_sphinx %}<li class="main-nav-search"><form action="{{ url('search') }}" method="get" role="search">
+      </li><li><a href="{{ devmo_url('Tools') }}">{{ _('Tools') }}</a></li><li><a href="{{ url('demos') }}">{{ _('Demos') }}</a></li><li><a href="{{ devmo_url('Mozilla/Connect') }}">{{ _('Connect') }}</a></li><li class="nav-search-link"><a href="{{ url('search') }}" title="Search"><i aria-hidden="true" class="icon-search"></i></a></li>{% if not is_sphinx %}<li class="main-nav-search"><form action="{{ url('search') }}" method="get" role="search">
         <div class="search-wrap">
           <label for="main-q" class="offscreen">{{ _('Search') }}</label>
           <input type="search" id="main-q" name="q" data-placeholder="{{ _('Search') }}" data-value="{{ query }}" value="" />

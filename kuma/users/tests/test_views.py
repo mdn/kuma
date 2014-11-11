@@ -10,7 +10,6 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core.paginator import PageNotAnInteger
-from django.utils.importlib import import_module
 
 from allauth.socialaccount.models import SocialAccount, SocialApp
 from allauth.socialaccount.providers import registry
@@ -126,8 +125,8 @@ class ProfileViewsTest(UserTestCase):
     def _get_current_form_field_values(self, doc):
         # Scrape out the existing significant form field values.
         form = dict()
-        for fn in ('email', 'fullname', 'title', 'organization', 'location',
-                   'irc_nickname', 'bio', 'interests'):
+        for fn in ('username', 'email', 'fullname', 'title', 'organization',
+                   'location', 'irc_nickname', 'bio', 'interests'):
             form[fn] = doc.find('#profile-edit *[name="profile-%s"]' %
                                 fn).val()
         form['country'] = 'us'
@@ -584,13 +583,6 @@ class AllauthPersonaTestCase(UserTestCase):
         """
         Signing up with Persona creates a new Django User instance.
         """
-        # This setup is necessary any time we do the full sign-up
-        # workflow, because otherwise the session doesn't save/persist
-        # properly. See Django ticket 10899.
-        engine = import_module(settings.SESSION_ENGINE)
-        store = engine.SessionStore()
-        store.save()
-        self.client.cookies[settings.SESSION_COOKIE_NAME] = store.session_key
         persona_signup_email = 'views_persona_django_user@example.com'
         persona_signup_username = 'views_persona_django_user'
 
@@ -602,14 +594,26 @@ class AllauthPersonaTestCase(UserTestCase):
             }
             self.client.post(reverse('persona_login'), follow=True)
             data = {'username': persona_signup_username,
-                    'email': persona_signup_email}
-            self.client.post(reverse('socialaccount_signup',
-                                     locale=settings.WIKI_DEFAULT_LANGUAGE),
-                             data=data,
-                             follow=True)
-            new_count = User.objects.count()
+                    'email': persona_signup_email,
+                    'newsletter': True}
+            signup_url = reverse('socialaccount_signup',
+                                 locale=settings.WIKI_DEFAULT_LANGUAGE)
+            response = self.client.post(signup_url, data=data, follow=True)
+            eq_(response.status_code, 200)
+            eq_(response.context['form'].errors,
+                {'__all__': ['You must agree to the privacy policy.']})
+
+            # We didn't create a new user.
+            eq_(old_count, User.objects.count())
+
+            data.update({'agree': True})
+            response = self.client.post(signup_url, data=data, follow=True)
+            eq_(response.status_code, 200)
+            # not on the signup page anymore
+            ok_('form' not in response.context)
+
             # Did we get a new user?
-            eq_(old_count + 1, new_count)
+            eq_(old_count + 1, User.objects.count())
 
             # Does it have the right attributes?
             testuser = None
@@ -627,10 +631,6 @@ class AllauthPersonaTestCase(UserTestCase):
         """
         Signing up with Persona creates a new SocialAccount instance.
         """
-        engine = import_module(settings.SESSION_ENGINE)
-        store = engine.SessionStore()
-        store.save()
-        self.client.cookies[settings.SESSION_COOKIE_NAME] = store.session_key
         persona_signup_email = 'views_persona_socialaccount@example.com'
         persona_signup_username = 'views_persona_socialaccount'
 

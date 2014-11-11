@@ -1,15 +1,14 @@
 /* Browse by Technology */
-.hasJS #tags-list {
-  display: none;
+.no-js #tags-list {
+  display: block;
 }
 #tags-list {
-  width: 210px;
-  margin: -5px auto 1em -112px;
+  display: none;
   padding: 20px 5px 10px;
   overflow: hidden;
   font-size: 11px;
   position: absolute;
-  left: 50%;
+  left: 0;
   z-index: 30;
   -moz-border-radius: 6px;
   -webkit-border-radius: 6px;
@@ -46,7 +45,6 @@
   color: #eee;
 }
 #search-demos {
-  width: 70%;
   border-radius: 0.99em;
   padding: 5px 10px 5px 30px;
   border: 0;

@@ -1,0 +1,37 @@
+@require 'includes/mixins';
+@require 'includes/vars';
+
+.remove-short-label {
+    display: none;
+}
+
+@media $media-query-tablet {
+
+    .remove-short-label {
+        display: inline;
+    }
+
+    .remove-long-label {
+        display: none;
+    }
+
+    #demobar {
+        font-size: 30px;
+
+        .title {
+            height: auto;
+        }
+
+        #logo, ul.tools, .byline {
+            display: none;
+        }
+
+        .paging {
+            padding-right: 0;
+
+            a {
+                background-image: none;
+            }
+        }
+    }
+}
