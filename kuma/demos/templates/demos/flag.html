@@ -8,6 +8,11 @@
 {% block body_attributes %}{% endblock %}
 {% block bodyclass %}section-demos{% endblock %}
 {% block title %}{{ page_title(_('{subtitle} | Demo Studio') | f(subtitle=submission.title)) }}{% endblock %}
+{% block extrahead %}
+    <style type="text/css">
+        body { background-color: #fff; background-image: none; }
+    </style>
+{% endblock %}
 
 {% block content %}
 <section id="content">

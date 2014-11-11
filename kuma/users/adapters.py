@@ -13,15 +13,14 @@ from tower import ugettext_lazy as _
 
 from sumo.urlresolvers import reverse
 
+from .constants import USERNAME_CHARACTERS, USERNAME_REGEX
+
 REMOVE_BUG_URL = "https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bug_file_loc=http%3A%2F%2F&bug_ignored=0&bug_severity=normal&bug_status=NEW&cf_fx_iteration=---&cf_fx_points=---&comment=Please%20delete%20my%20MDN%20account.%20My%20username%20is%3A%0D%0A%0D%0A[username]&component=User%20management&contenttypemethod=autodetect&contenttypeselection=text%2Fplain&defined_groups=1&flag_type-4=X&flag_type-607=X&flag_type-791=X&flag_type-800=X&flag_type-803=X&form_name=enter_bug&maketemplate=Remember%20values%20as%20bookmarkable%20template&op_sys=All&priority=--&product=Mozilla%20Developer%20Network&rep_platform=All&short_desc=Account%20deletion%20request%20for%20[username]&status_whiteboard=[account-mod]&target_milestone=---&version=unspecified&format=__standard__"
 REMOVE_MESSAGE = _(u"Sorry, you must have at least one connected account so "
                    u"you can sign in. To disconnect this account connect a "
                    u"different one first. To delete your MDN profile please "
                    u'<a href="%(bug_form_url)s" rel="nofollow">file a bug</a>.')
-USERNAME_CHARACTERS = _(u'Username may contain only letters, numbers, and these '
-                        u'characters: . - _ +')
 USERNAME_EMAIL = _(u'An email address cannot be used as a username.')
-USERNAME_REGEX = re.compile(r'^[\w.+-]+$')
 
 
 class KumaAccountAdapter(DefaultAccountAdapter):

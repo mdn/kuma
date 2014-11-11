@@ -1,10 +1,31 @@
 define([
+    'intern',
     'intern/dojo/node!http',
     'intern/dojo/Deferred',
-    'base/_config'
-], function(http, Deferred, config) {
+    'base/lib/config',
+    'base/lib/poll',
+    'intern/chai!assert'
+], function(intern, http, Deferred, config, poll, assert) {
 
     return {
+
+        // Login credentials from the command line
+        personaUsername: intern.args.u,
+        personaPassword: intern.args.p,
+
+        openLoginWidget: function(remote) {
+            // Simply hovers over the top login widget so that login links can be clicked
+
+            return remote
+                        .get(config.homepageUrl)
+                        .findByCssSelector('.oauth-login-options')
+                        .moveMouseTo(5, 5)
+                        .end()
+                        .findByCssSelector('.oauth-login-picker')
+                        .then(function(element) {
+                            return poll.until(element, 'isDisplayed');
+                        });
+        },
 
         getTestPersonaLoginCredentials: function(callback) {
             // Makes a GET request to get a test email address
@@ -29,11 +50,12 @@ define([
 
         },
 
-        completePersonaLogin: function(username, password, remote, callback) {
+        completePersonaWindow: function(remote, username, password, callback) {
             // Provided a username and passwords, clicks the Persona link in the site
             // header, waits for the window to load, and logs the user into Persona
 
-            var pollForRemote = this.pollForRemote;
+            username = username || this.personaUsername;
+            password = password || this.personaPassword;
 
             return remote
                         .findByCssSelector('.oauth-login-picker .launch-persona-login')
@@ -59,41 +81,41 @@ define([
                                 .click()
                                 .switchToWindow(handles[0])
                                 .sleep(6000) // TODO:  Make this programmatic; i.e. an API call to poll when first window has loaded new page
+                                .end()
                                 .then(callback);
-
                     });
         },
 
-        pollForRemote: function(item, remoteFunction, callback, timeout) {
-            // Allows us to poll for a remote.{whatever}() method async result
-            // Useful when waiting for an element to fade in, a URL to change, etc.
-
-            // Defaults for arguments not passed
-            timeout = timeout || config.testTimeout;
-            callback = callback || function(result) {
-                return result === true;
-            };
+        completePersonaLogin: function(remote, username, password) {
+            // Opens the login widget, completes the personal login, done
 
             var dfd = new Deferred();
-            var endTime = Number(new Date()) + timeout;
+            var self = this;
 
-            (function poll() {
-                item[remoteFunction]().then(function() {
+            username = username || this.personaUsername;
+            password = password || this.personaPassword;
 
-                    console.log('ping ', arguments[0]);
-                    if(callback.apply(this, arguments)) {
-                        dfd.resolve();
-                    }
-                    else if (Number(new Date()) < endTime) {
-                        setTimeout(poll, 100);
-                    }
-                    else {
-                        dfd.reject(new Error('timed out for ' + remoteFunction + ': ' + arguments));
-                    }
-                });
-            })();
+            self.openLoginWidget(remote).then(function() {
+                self.completePersonaWindow(remote, username, password, dfd.resolve);
+            });
 
             return dfd.promise;
+        },
+
+        completePersonaLogout: function(remote) {
+            // Completes a "hard" logout of Persona via persona.org
+
+            return remote
+                        .get('https://login.persona.org/')
+                        .execute('return jQuery("a.signOut").click();');
+
+                        // Using jQuery's click() method because WebDriver not registering the click on an inline link
+                        /*
+                        .findByCssSelector('a.signOut')
+                        .moveMouseTo(12, 12)
+                        .sleep(2000)
+                        click();
+                        */
         }
     };
 

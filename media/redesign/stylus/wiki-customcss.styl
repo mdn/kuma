@@ -90,10 +90,10 @@ table#fullwidth-table td.thirdColumn {
     }
     .topicpage-table .section:first-of-type {
         margin-right: 20px;
-        border-right: solid 6px rgba(212,221,228,0.5);
+        border-right: solid 6px rgba-fallback(rgba(212,221,228,0.5));
     }
     html[dir="rtl"] .topicpage-table .section:first-of-type {
-        border-left: solid 6px rgba(212,221,228,0.5);
+        border-left: solid 6px rgba-fallback(rgba(212,221,228,0.5));
         border-right: none;
     }
     .landing {
@@ -117,11 +117,7 @@ table#fullwidth-table td.thirdColumn {
 }
 /* Wide column box */
 .wideColumnBox {
-    column-width: 375px;
-    -moz-column-width: 375px;
-    -webkit-column-width: 375px;
-    -o-column-width: 375px;
-    -ms-column-width: 375px;
+    vendorize(column-width, 375px);
 }
 .wideColumnBoxList li {
     line-height: 1.5;
@@ -131,11 +127,7 @@ table#fullwidth-table td.thirdColumn {
 }
 /* Multi-column boxes for lists of longer links; this will adapt based on screen width */
 .multiColumnList {
-    column-width: 250px;
-    -moz-column-width: 250px;
-    -webkit-column-width: 250px;
-    -o-column-width: 250px;
-    -ms-column-width: 250px;
+    vendorize(column-width, 250px);
 }
 .multiColumnList li {
     line-height: 1.5;
@@ -145,11 +137,7 @@ table#fullwidth-table td.thirdColumn {
 }
 /* Multi-column boxes for smaller links, such as API terms */
 .smallMultiColumnList {
-    column-width: 120px;
-    -moz-column-width: 120px;
-    -webkit-column-width: 120px;
-    -o-column-width: 120px;
-    -ms-column-width: 120px;
+    vendorize(column-width, 120px);
 }
 .smallMultiColumnList li {
     list-style-type: none;
@@ -160,27 +148,20 @@ table#fullwidth-table td.thirdColumn {
 .horizFlexboxContainer {
     display: flex;
     display: -webkit-flex;
-    flex-flow: column nowrap;
-    -webkit-flex-flow: column nowrap;
-    justify-content: center;
-    -webkit-justify-content: center;
-    align-content: center;
-    -webkit-align-content: center;
-    align-items: center;
-    -webkit-align-items: center;
-    flex-direction: column;
-    -webkit-flex-direction: column;
+    vendorize(flex-flow, column nowrap);
+    vendorize(justify-content, center);
+    vendorize(align-content, center);
+    vendorize(align-items, center);
+    vendorize(flex-direction, column);
 }
 div.smallTextMultiColumnBoxHeading {
     background-color: #aac;
     border-radius: 10px 10px 0 0;
     border: 2px solid #ccc;
-    order: 1;
-    -webkit-order: 1;
+    vendorize(order, 1);
     width: 75%;
     padding: 10px;
-    flex: 0 1 auto;
-    -webkit-flex: 0 1 auto;
+    vendorize(flex, 0 1 auto);
     font-weight: bold;
 }
 div.smallTextMultiColumnBoxList {
@@ -190,17 +171,11 @@ div.smallTextMultiColumnBoxList {
     border-radius: 0 0 10px 10px;
     width: 75%;
     padding: 10px;
-    order: 2;
-    -webkit-order: 2;
-    flex: 0 1 auto;
-    -webkit-flex: 0 1 auto;
+    vendorize(order, 2);
+    vendorize(flex, 0 1 auto);
 }
 div.smallTextMultiColumnBoxList ul {
-    column-width: 100px;
-    -moz-column-width: 100px;
-    -webkit-column-width: 100px;
-    -o-column-width: 100px;
-    -ms-column-width: 100px;
+    vendorize(column-width, 100px);
 }
 div.smallTextMultiColumnBoxList li {
     list-style-type: none;
@@ -214,8 +189,7 @@ div.smallTextMultiColumnBoxList li {
 /* Fancy Table of content for main pages of tutorial*/
 .fancyTOC {
     counter-reset: fancyTOC;
-    -moz-columns: 18em;
-    columns: 18em;
+    vendorize(columns, 18em);
     margin-bottom: 1em;
 }
 .fancyTOC .button {
@@ -248,9 +222,7 @@ s.nonStdElement {
 }
 /* Add widgeted index, here adding an HTML5 badge as the bullet of the li element if class="html5" */
 div.index.widgeted {
-    -webkit-column-width: 10em;
-    -moz-column-width: 10em;
-    columns: 10em;
+    vendorize(columns, 10em);
 }
 div.index.widgeted li {
     padding-left: 18px;
@@ -295,11 +267,7 @@ div.index.widgeted li.webcomp::after {
     padding: 10px 0;
     border: 1px solid transparent;
     border-left: none;
-    -webkit-transition: border 0.5s ease 0.1s, max-width 0.5s ease 0.1s, padding 0.5s linear 0.1s;
-    -moz-transition: border 0.5s ease 0.1s, max-width 0.5s ease 0.1s, padding 0.5s linear 0.1s;
-    -ms-transition: border 0.5s ease 0.1s, max-width 0.5s ease 0.1s, padding 0.5s linear 0.1s;
-    -o-transition: border 0.5s ease 0.1s, max-width 0.5s ease 0.1s, padding 0.5s linear 0.1s;
-    transition: border 0.5s ease 0.1s, max-width 0.5s ease 0.1s, padding 0.5s linear 0.1s;
+    vendorize(transition, 'border 0.5s ease 0.1s, max-width 0.5s ease 0.1s, padding 0.5s linear 0.1s');
 }
 .quicknav dt,
 .quicknav dd {
@@ -391,10 +359,7 @@ td.bottomPart {
 /* Use the verticalText class on a table cell to rotate its contents 90° */
 td.verticalText {
     width: 3em;
-    -webkit-transform: rotate(-90deg);
-    -moz-transform: rotate(-90deg);
-    -o-transform: rotate(-90deg);
-    transform: rotate(-90deg);
+    vendorize(transform, rotate(-90deg));
 }
 table.blockTable {
     border-collapse: collapse;
@@ -410,9 +375,7 @@ table.blockTable .verticalColumn {
 }
 /* The index page for HTML / CSS */
 div.index {
-    -webkit-columns: 18em;
-    -moz-column-width: 18em;
-    columns: 18em;
+    vendorize(columns, 18em);
 }
 div.index > span {
     font-family: Georgia, Times, 'Times New Roman', serif;
@@ -427,16 +390,21 @@ div.index ol {
 /* Stuff used for the syntax information about CSS, HTML, and so forth */
 /* ul.cssprop    box used by each CSS Property reference page*/
 .cssprop {
-    background-color: rgba(255,203,0,0.1);
+    background-color: rgba-fallback(rgba(255,203,0,0.1));
 }
 [dir="ltr"] .cssprop {
     clear: left;
-    border-left: 6px solid rgba(255,203,0,0.5);
+    margin: 0 0 $grid-spacing 0;
+    padding: 14px 0 14px 40px;
+    border-left: 6px solid rgba-fallback(rgba(255,203,0,0.5));
 }
 [dir="rtl"] .cssprop {
     clear: right;
-    border-right: 6px solid rgba(255,203,0,0.5);
+    margin: 0 0 $grid-spacing 0;
+    padding: 14px 40px 14px 0;
+    border-right: 6px solid rgba-fallback(rgba(255,203,0,0.5));
 }
+
 .cssprop li {
     display: table-row;
     padding: 3px;
@@ -461,15 +429,15 @@ div.index ol {
 .htmlelt {
     display: table;
     padding: 11px 22px;
-    background-color: rgba(255,149,0,0.1);
+    background-color: rgba-fallback(rgba(255,149,0,0.1));
 }
 [dir="ltr"] .htmlelt {
     clear: left;
-    border-left: 6px solid rgba(255,149,0,0.5);
+    border-left: 6px solid rgba-fallback(rgba(255,149,0,0.5));
 }
 [dir="rtl"] .htmlelt {
     clear: right;
-    border-right: 6px solid rgba(255,149,0,0.5);
+    border-right: 6px solid rgba-fallback(rgba(255,149,0,0.5));
 }
 .htmlelt li {
     display: table-row;
@@ -496,15 +464,15 @@ div.index ol {
 .audionodebox {
     display: table;
     padding: 11px 22px;
-    background-color: rgba(117,195,165,0.1);
+    background-color: rgba-fallback(rgba(117,195,165,0.1));
 }
 [dir="ltr"] .audionodebox {
     clear: left;
-    border-left: 6px solid rgba(117,195,165,0.5);
+    border-left: 6px solid rgba-fallback(rgba(117,195,165,0.5));
 }
 [dir="rtl"] .audionodebox {
     clear: right;
-    border-right: 6px solid rgba(117,195,165,0.5);
+    border-right: 6px solid rgba-fallback(rgba(117,195,165,0.5));
 }
 .audionodebox li,
 .summary-box-js li,
@@ -634,7 +602,7 @@ table.HTMLElmNav td {
 /* version compatibility banners and notes */
 .geckoVersionNote {
     background-color: #e0e0ff;
-    background-image: -moz-radial-gradient(0px 0 45deg, circle farthest-corner, #e0e0ff 0%, #f8f8ff 80%);
+    background-image: -moz-radial-gradient(0px 0 45deg, circle farthest-corner, #e0e0ff 0, #f8f8ff 80%);
     border-left: 5px solid #008;
 }
 .geckoVersionNote p {
@@ -695,47 +663,22 @@ table.HTMLElmNav td {
 }
 /* Used to to create icon-badged APIs inline */
 .indexListRow {
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -webkit-flex-wrap: wrap;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    -webkit-justify-content: flex-start;
-    -ms-flex-pack: start;
-    justify-content: flex-start;
-    -webkit-align-content: stretch;
-    -ms-flex-line-pack: stretch;
-    align-content: stretch;
-    -webkit-align-items: flex-start;
-    -ms-flex-align: start;
-    align-items: flex-start;
-/*width:100%;*/
+    vendorize-value(display, flex);
+    vendorize(flex-direction, row);
+    vendorize(flex-wrap, wrap);
+    vendorize(justify-content, flex-start);
+    vendorize(align-content, stretch);
+    vendorize(align-items, flex-start);
 }
 .indexListTerm {
-    -webkit-order: 0;
-    -ms-flex-order: 0;
-    order: 0;
-    -webkit-flex: 0 1 auto;
-    -ms-flex: 0 1 auto;
-    flex: 0 1 auto;
-    -webkit-align-self: flex-start;
-    -ms-flex-item-align: start;
-    align-self: flex-start;
+    vendorize(order, 0);
+    vendorize(flex, 0 1 auto);
+    vendorize(align-self, flex-start);
 }
 .indexListBadges {
-    -webkit-order: 0;
-    -ms-flex-order: 0;
-    order: 0;
-    -webkit-flex: 0 1 auto;
-    -ms-flex: 0 1 auto;
-    flex: 0 1 auto;
-    -webkit-align-self: auto;
-    -ms-flex-item-align: auto;
-    align-self: flex-end;
+    vendorize(order, 0);
+    vendorize(flex, 0 1 auto);
+    vendorize(align-self, flex-end);
     padding-left: 6px;
     margin-right: 6px;
 }
@@ -754,10 +697,7 @@ table.HTMLElmNav td {
     line-height: 1.3;
 }
 .badgeText {
-    -webkit-hyphens: none;
-    -moz-hyphens: none;
-    -ms-hyphens: none;
-    hyphens: none;
+    vendorize(hyphens, none);
 }
 .banner {
     display: block;
@@ -796,8 +736,7 @@ table.HTMLElmNav td {
     border-radius: 100%;
     border: 1px solid #aaa;
     border-right: none;
-    box-sizing: border-box;
-    -moz-boxsizing: border-box;
+    vendorize(box-sizing, border-box);
 }
 [dir=rtl] .icon:before {
     left: auto;
@@ -813,10 +752,10 @@ table.HTMLElmNav td {
 }
 /* Used for badging Gecko minimum version requirements */
 .geckoVersionBadge {
-    background: rgba(117,195,165,0.44);
+    background: rgba-fallback(rgba(117,195,165,0.44));
     color: #000;
     text-shadow: 1px 1px 0 #ddd;
-    border: 5px solid rgba(0,0,0,0.05);
+    border: 5px solid rgba-fallback(rgba(0,0,0,0.05));
 }
 /* Used for badging Firefox minimum version requirements */
 .firefoxVersionBadge {
@@ -949,21 +888,16 @@ table.HTMLElmNav td {
     display: inline-block;
 }
 .htab > ul > li {
-    width: 150px;
-    height: 28px;
     list-style-type: none;
     display: inline;
-    padding-bottom: 3px;
     border: 1px solid #ddd;
     border-radius: 3px 3px 0 0;
-    padding-top: 5px;
     text-align: left;
     font-size: 13px;
     font-weight: normal;
     margin: auto;
     position: relative;
-    padding-left: 6px;
-    padding-right: 6px;
+    padding: 5px 6px 3px 6px;
     border-bottom: none;
     opacity: 0.5;
     -ms-filter: unqoute("progid:DXImageTransform.Microsoft.Alpha(Opacity=50)");
@@ -1010,12 +944,12 @@ table.compat-table {
     border-collapse: collapse;
 }
 table.compat-table {
-    border-color: rgba(0,0,0,0);
+    border-color: rgba-fallback(rgba(0,0,0,0));
     margin: 0;
 }
 table.compat-table td {
     padding: 5px;
-    border: 1px solid rgba(212,221,228,0.25);
+    border: 1px solid rgba-fallback(rgba(212,221,228,0.25));
     font-size: 12px;
     background: #fff;
     vertical-align: top;
@@ -1023,7 +957,7 @@ table.compat-table td {
 }
 table.compat-table th,
 table.compat-table td.header {
-    border: 1px solid rgba(212,221,228,0);
+    border: 1px solid rgba-fallback(rgba(212,221,228,0));
     background: none;
     font-weight: 200;
     font-family: 'Open Sans Light', sans-serif;
@@ -1031,7 +965,7 @@ table.compat-table td.header {
     line-height: 100%;
     padding: 2px 4px 8px;
 /* From content.styl
-        background: rgba(212, 221, 228, 0.5);
+        background: rgba-fallback(rgba(212, 221, 228, 0.5));
         font-weight: 700;
         */
 }
@@ -1049,9 +983,8 @@ div.action-driven > div {
 }
 /* standard coloring */
 .notice.experimental {
-    color: 0;
-    background-color: rgba(255,203,0,0.5);
-    border-color: rgba(0,0,0,0.05);
+    background-color: rgba-fallback(rgba(255,203,0,0.5));
+    border-color: rgba-fallback(rgba(0,0,0,0.05));
     border-style: solid !important;
     border-width: 5px !important;
 }
@@ -1128,7 +1061,7 @@ ul.card-grid li {
     }
 }
 .card-grid > li {
-    background-color: rgba(234,239,242,0.5);
+    background-color: rgba-fallback(rgba(234,239,242,0.5));
     border-radius: 0;
     box-shadow: 3px 3px 0 3px rgba(212,221,228,0.5);
     background-image: none;
@@ -1230,15 +1163,15 @@ dl {
     margin: 0px 0px 1.5em;
     border: 5px solid;
     padding: 10px 10px 0px 10px;
-    background: none repeat scroll 0% 0%;
+    background: none repeat scroll 0 0;
     font-size: 12px;
 }
 .redesign .inlineIndicator,
 .redesign .indicatorInHeadline,
 .redesign .blockIndicator,
 .redesign .overheadIndicator {
-/* background-color:rgba(255,203,0,0.75); */
-    border-color: rgba(0,0,0,0.05);
+/* background-color:rgba-fallback(rgba(255,203,0,0.75); *)/
+    border-color: rgba-fallback(rgba(0,0,0,0.05));
     border-style: solid !important;
 /* font-size: 11px; */
     padding: 10px;
@@ -1363,20 +1296,20 @@ html[dir="rtl"] .warningHeader {
     border-color: #990;
 }
 .redesign .draft {
-    background: rgba(255,203,0,0.5);
-    border-color: rgba(0,0,0,0.05);
+    background: rgba-fallback(rgba(255,203,0,0.5));
+    border-color: rgba-fallback(rgba(0,0,0,0.05));
 }
 .htmlVer {
     background: #cee;
     border-color: #267373;
 }
 .redesign .htmlVer {
-    border-color: rgba(0,0,0,0.05);
+    border-color: rgba-fallback(rgba(0,0,0,0.05));
 }
 .nonStandard {
-    background: rgba(193,56,50,0.85);
+    background: rgba-fallback(rgba(193,56,50,0.85));
     color: #fff;
-    border-color: rgba(0,0,0,0.05);
+    border-color: rgba-fallback(rgba(0,0,0,0.05));
 }
 .nonStandard a,
 .nonStandard a:hover,
@@ -1389,28 +1322,28 @@ html[dir="rtl"] .warningHeader {
     text-decoration: none;
 }
 .unimplemented {
-    background: rgba(193,56,50,0.35);
-    border-color: rgba(0,0,0,0.05);
+    background: rgba-fallback(rgba(193,56,50,0.35));
+    border-color: rgba-fallback(rgba(0,0,0,0.05));
 }
 .deprecated {
-    background: rgba(0,0,0,0.1);
-    border-color: rgba(0,0,0,0.05);
+    background: rgba-fallback(rgba(0,0,0,0.1));
+    border-color: rgba-fallback(rgba(0,0,0,0.05));
 }
 .domLevel {
-    border-color: rgba(0,0,0,0.05);
+    border-color: rgba-fallback(rgba(0,0,0,0.05));
 }
 .todo {
-    border-color: rgba(0,0,0,0.05);
+    border-color: rgba-fallback(rgba(0,0,0,0.05));
 }
 .minVer,
 .jsMinVer,
 .mbMinVer {
     background: #ffffe1;
-    border-color: rgba(0,0,0,0.05);
+    border-color: rgba-fallback(rgba(0,0,0,0.05), @background);
 }
 .mobileOnly {
-    border-color: rgba(0,0,0,0.05);
     background: #ffe1be;
+    border-color: rgba-fallback(rgba(0,0,0,0.05), @background);
 }
 .renamed {
     background: #d4f3ff;
@@ -1418,24 +1351,24 @@ html[dir="rtl"] .warningHeader {
 }
 .projectSpecific {
     background: #ffe1be;
-    border-color: rgba(0,0,0,0.05);
+    border-color: rgba-fallback(rgba(0,0,0,0.05), @background);
 }
 .prefixBox {
     background: #e4edf7;
-    border-color: rgba(0,0,0,0.05);
+    border-color: rgba-fallback(rgba(0,0,0,0.05), @background);
 }
 .experimental {
     background: #ffefd9;
-    border-color: rgba(0,0,0,0.05);
+    border-color: rgba-fallback(rgba(0,0,0,0.05), @background);
 }
 .readOnly {
-    background: rgba(0,0,0,0.65);
-    border-color: rgba(0,0,0,0.15);
+    background: rgba-fallback(rgba(0,0,0,0.65));
+    border-color: rgba-fallback(rgba(0,0,0,0.15), #000);
     color: #fff;
 }
 .noscript {
     background: #f00;
-    border-color: rgba(0,0,0,0.05);
+    border-color: rgba-fallback(rgba(0,0,0,0.05), @background);
     color: #fff;
 }
 .projectSpecific {
@@ -1445,7 +1378,7 @@ html[dir="rtl"] .warningHeader {
 /* Banner used to indicate support only in specific Gecko projects */
 .translationInProgress {
     background: #a3f5a3;
-    border-color: rgba(0,0,0,0.05);
+    border-color: rgba-fallback(rgba(0,0,0,0.05), @background);
 }
 /* style for next and previous pages in tutorial */
 
@@ -1636,16 +1569,13 @@ div.fxosLiveSampleWrapper {
 /* ----------------------------------
 * Buttons
 * ---------------------------------- */
-.b2g-button::-moz-focus-inner {
-    border: none;
-    outline: none;
-}
+
 .b2g-button {
     width: 100%;
     height: 3.8rem;
     margin: 0 0 1rem;
     padding: 0 1.5rem;
-    -moz-box-sizing: border-box;
+    vendorize(box-sizing, border-box);
     display: inline-block;
     vertical-align: middle;
     text-overflow: ellipsis;
@@ -1659,17 +1589,19 @@ div.fxosLiveSampleWrapper {
     text-align: center;
     text-shadow: 0.1rem 0.1rem 0 rgba(255,255,255,0.3);
     text-decoration: none;
-    outline: none;
 }
 /* Press (default & recommend) */
 .b2g-button:active,
 .b2g-button.recommend:active,
 .b2g-button:hover,
-.b2g-button.recommend:hover {
+.b2g-button.recommend:hover
+.b2g-button:focus,
+.b2g-button.recommend:focus  {
     border-color: #008aaa;
     background: #008aaa;
     text-decoration: none;
     color: #333;
+    outline: none;
 }
 /* For styling bug links */
 .bug-resolved {
@@ -1725,7 +1657,7 @@ div.fxosLiveSampleWrapper {
     background-color: #e61919;
 }
 .redesign .spec-ED:before {
-    background-color: rgba(230,25,25,0.25);
+    background-color: rgba-fallback(rgba(230,25,25,0.25));
     border-left: 4px solid #e61919;
     color: #e61919;
 }
@@ -1734,7 +1666,7 @@ div.fxosLiveSampleWrapper {
     background-color: #e66e33;
 }
 .redesign .spec-WD:before {
-    background-color: rgba(230,110,51,0.25);
+    background-color: rgba-fallback(rgba(230,110,51,0.25));
     border-left: 4px solid #e66e33;
     color: #e66e33;
 }
@@ -1743,7 +1675,7 @@ div.fxosLiveSampleWrapper {
     background-color: #cfd510;
 }
 .redesign .spec-CR:before {
-    background-color: rgba(0,151,142,0.25);
+    background-color: rgba-fallback(rgba(0,151,142,0.25));
     border-left: 4px solid #00978e;
     color: #00978e;
 }
@@ -1752,7 +1684,7 @@ div.fxosLiveSampleWrapper {
     background-color: #72ac35;
 }
 .redesign .spec-PR:before {
-    background-color: rgba(114,172,53,0.25);
+    background-color: rgba-fallback(rgba(114,172,53,0.25));
     border-left: 4px solid #72ac35;
     color: #72ac35;
 }
@@ -1761,7 +1693,7 @@ div.fxosLiveSampleWrapper {
     background-color: #309c40;
 }
 .redesign .spec-REC:before {
-    background-color: rgba(48,156,64,0.25);
+    background-color: rgba-fallback(rgba(48,156,64,0.25));
     border-left: 4px solid #309c40;
     color: #309c40;
 }
@@ -1770,7 +1702,7 @@ div.fxosLiveSampleWrapper {
     background-color: #000;
 }
 .redesign .spec-Living:before {
-    background-color: rgba(0,83,159,0.25);
+    background-color: rgba-fallback(rgba(0,83,159,0.25));
     border-left: 4px solid #00539f;
     color: #00539f;
 }
@@ -1779,7 +1711,7 @@ div.fxosLiveSampleWrapper {
     background-color: #000;
 }
 .redesign .spec-RFC:before {
-    background-color: rgba(0,83,159,0.25);
+    background-color: rgba-fallback(rgba(0,83,159,0.25));
     border-left: 4px solid #00539f;
     color: #00539f;
 }
@@ -1788,7 +1720,7 @@ div.fxosLiveSampleWrapper {
     background-color: #000;
 }
 .redesign .spec-Standard:before {
-    background-color: rgba(0,83,159,0.25);
+    background-color: rgba-fallback(rgba(0,83,159,0.25));
     border-left: 4px solid #00539f;
     color: #00539f;
 }
@@ -1797,7 +1729,7 @@ div.fxosLiveSampleWrapper {
     background-color: #e66e33;
 }
 .redesign .spec-Draft:before {
-    background-color: rgba(230,110,51,0.25);
+    background-color: rgba-fallback(rgba(230,110,51,0.25));
     border-left: 4px solid #e66e33;
     color: #e66e33;
 }
@@ -1879,7 +1811,7 @@ dd.landingPageList {
 }
 .mozOnlyBanner {
     background-color: #c33b1d;
-    background-image: url("https://developer.mozilla.org/files/5429/firefox.png"), radial-gradient(circle 16px at 18px 18px, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 11px, rgba(0,0,0,0) 18px), linear-gradient(to right, #c33b1d 40%, #dda820);
+    background-image: url("https://developer.mozilla.org/files/5429/firefox.png"), radial-gradient(circle 16px at 18px 18px, rgba(0,0,0,0.7) 0, rgba(0,0,0,0.5) 11px, rgba(0,0,0,0) 18px), linear-gradient(to right, #c33b1d 40%, #dda820);
     background-repeat: no-repeat;
     background-size: contain;
     border-top-left-radius: 18px;
@@ -1917,26 +1849,27 @@ dd.landingPageList {
 /* redesign htabs */
 .redesign .htab>ul>li {
     height: 32px;
-    border: 1px solid rgba(212,221,228,0);
-    border-radius: 0;
+
     font-size: 14px;
     font-weight: 200;
     font-family: 'Open Sans Light', sans-serif;
     background-color: #f1f6f8 !important;
+    border: 1px solid rgba-fallback(rgba(212,221,228,0), #f1f6f8);
+    border-radius: 0;
     color: #4d4e53;
     opacity: 0.75;
     -ms-filter: unqoute("progid:DXImageTransform.Microsoft.Alpha(Opacity=75)");
     filter: unqoute("progid:DXImageTransform.Microsoft.Alpha(Opacity=75)");
 }
 .redesign .htab>ul>li.selected {
-    border: 0 solid rgba(212,221,228,0.25);
+    border: 0 solid rgba-fallback(rgba(212,221,228,0.25));
     border-top: 2px solid #d4dde4;
     padding-top: 4px;
     background-color: #eaeff2 !important;
 }
 .redesign .htab>div {
     background-color: #eaeff2;
-    border: 0 solid rgba(212,221,228,0.25);
+    border: 0 solid rgba-fallback(rgba(212,221,228,0.25), @background-color);
 }
 .redesign .htab > ul > li > a {
     text-decoration: none;
@@ -1949,40 +1882,40 @@ dd.landingPageList {
 /* new modules */
 .summary-box-events {
     display: table;
-    background-color: rgba(0,150,221,0.1);
+    background-color: rgba-fallback(rgba(0,150,221,0.1));
     padding: 11px 22px;
 }
 .redesign[dir="ltr"] .summary-box-events {
     clear: left;
-    border-left: 6px solid rgba(0,150,221,0.5);
+    border-left: 6px solid rgba-fallback(rgba(0,150,221,0.5));
 }
 .redesign[dir="rtl"] .summary-box-events {
     clear: right;
-    border-right: 6px solid rgba(0,150,221,0.5);
+    border-right: 6px solid rgba-fallback(rgba(0,150,221,0.5));
 }
 .summary-box-js {
     display: table;
-    background-color: rgba(230,96,0,0.1);
+    background-color: rgba-fallback(rgba(230,96,0,0.1));
     padding: 11px 22px;
 }
 .redesign[dir="ltr"] .summary-box-js {
     clear: left;
-    border-left: 6px solid rgba(230,96,0,0.5);
+    border-left: 6px solid rgba-fallback(rgba(230,96,0,0.5));
 }
 .redesign[dir="rtl"] .summary-box-js {
     clear: right;
-    border-right: 6px solid rgba(230,96,0,0.5);
+    border-right: 6px solid rgba-fallback(rgba(230,96,0,0.5));
 }
 .redesign .standardNote,
 .redesign .optional,
 .renamed {
-    background: rgba(0,83,159,0.2);
-    border-color: rgba(0,0,0,0.05);
+    background: rgba-fallback(rgba(0,83,159,0.2));
+    border-color: rgba-fallback(rgba(0,0,0,0.05));
 }
 .redesign .obsolete,
 .redesign .notXPCOM {
-    background: rgba(230,96,0,0.45);
-    border-color: rgba(0,0,0,0.05);
+    background: rgba-fallback(rgba(230,96,0,0.45));
+    border-color: rgba-fallback(rgba(0,0,0,0.05));
 }
 /* sidebar quick links stuff */
 .quick-links .sidebar-icon {$selector-icon} {
@@ -2021,7 +1954,7 @@ dd.landingPageList {
     margin-top: 6px;
 }
 .communitybox ul.communitymailinglist a {
-    background: rgba(255,255,255,0.3);
+    background: rgba-fallback(rgba(255,255,255,0.3));
     display: inline-block;
     color: #fff;
     padding: 3px 6px;
@@ -2032,12 +1965,12 @@ dd.landingPageList {
     margin-top: 13px;
 }
 .communitybox .communitycontact a {
-    border-bottom: 1px solid rgba(255,255,255,0.6);
+    border-bottom: 1px solid rgba-fallback(rgba(255,255,255,0.6));
 }
 .communitybox .communitycontact a:hover,
 .communitybox .communitycontact a:focus {
     text-decoration: none;
-    border-bottom: 1px solid rgba(255,255,255,0.9);
+    border-bottom: 1px solid rgba-fallback(rgba(255,255,255,0.9));
 }
 .communitybox strong {
     font-size: 15px;
@@ -2111,8 +2044,7 @@ li.download-box {
     position: absolute;
     bottom: 0;
     left: 50%;
-    -webkit-transform: translate(-50%, 0);
-            transform: translate(-50%, 0);
+   vendorize(transform, translate(-50%, 0));
 }
 
 @media $media-query-mobile {
@@ -2225,6 +2157,7 @@ $flame-large-desktop-mq = 'all and (min-width : ' + ($flame-desktop-max + 1px) +
 
 .flame-logo {
     background: url('/media/redesign/img/fxos_logo.png') no-repeat 20px center;
+    color: #016DB8;
     color: rgba(0,0,0,0);
     display: table-cell;
     font-size: 0;

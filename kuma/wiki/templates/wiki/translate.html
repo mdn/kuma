@@ -2,6 +2,8 @@
 {% from "includes/error_list.html" import errorlist %}
 {% from 'wiki/includes/page_buttons.html' import page_buttons %}
 {% from "includes/common_macros.html" import content_editor %}
+{% from "wiki/includes/document_macros.html" import revision_diff with context %}
+
 {% set title = _('Translate Article | {document}')|f(document=parent.title) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
 {% block bodyclass%}translate{% endblock %}
@@ -66,13 +68,14 @@
               </li>
             </ul>
             #}
-            {% if document.current_revision and document.current_revision.based_on %}
+            {% if revision_from and revision_to %}
+                {{ revision_diff(revision_from, revision_to) }}
+            {% elif document.current_revision and document.current_revision.based_on %}
               {% if parent.current_revision != document.current_revision.based_on %}
                 {# Diff between the English version the current translation is based on and the current English version. #}
                 {% set revision_from = document.current_revision.based_on %}
                 {% set revision_to = parent.current_revision %}
-                {% include 'wiki/includes/revision_diff.html' %}
-                {# TODO: 'change revisions' link and modal selector #}
+                {{ revision_diff(revision_from, revision_to) }}
               {% endif %}
             {% endif %}
 

@@ -255,28 +255,25 @@
         <section id="demo-sub" class="column-4">
 
           <div class="module" id="source">
-            <h3 class="mod-title">{{_('Get the Source Code')}}</h3>
-            <p class="download"><a href="{{ url('demos_download', slug=submission.slug) }}">{% trans file_ksize=(submission.demo_package.size/1024)|round(2,'ceil')|e %}Download the Source <span class="note">{{file_ksize}} KB &middot; ZIP File</span>{% endtrans %}</a></p>
-            {% if submission.source_code_url %}
-            <p class="browse"><a href="{{ submission.source_code_url }}">Browse the Source
-                {# TODO: Show "hosted by {{domain}}?" #}
-                {% if false %}<span class="note">Hosted on GitHub</span>{% endif %}</a></p>
+
+            <h3 class="mod-title">{{_('About this Demo')}}</h3>
+
+            {% if submission.license_name != 'author' %}
+                <p class="download"><a href="{{ url('demos_download', slug=submission.slug) }}">{% trans file_ksize=(submission.demo_package.size/1024)|round(2,'ceil')|e %}Download the Source <span class="note">{{file_ksize}} KB &middot; ZIP File</span>{% endtrans %}</a></p>
+                {% if submission.source_code_url %}
+                <p class="browse"><a href="{{ submission.source_code_url }}">Browse the Source
+                    {# TODO: Show "hosted by {{domain}}?" #}
+                    {% if false %}<span class="note">Hosted on GitHub</span>{% endif %}</a></p>
+                {% endif %}
             {% endif %}
-            {% if submission.license_name == 'mpl' %}
-                {% set license_class = 'mpl' %}
-            {% elif submission.license_name == 'gpl' %}
-                {% set license_class = 'gpl' %}
-            {% elif submission.license_name == 'bsd' %}
-                {% set license_class = 'bsd' %}
-            {% elif submission.license_name == 'apache' %}
-                {% set license_class = 'apache' %}
-            {% else %}
-                {% set license_class = 'publicdomain' %}
-            {% endif %}
+            {% set license_class = submission.license_name %}
             <p class="license {{ license_class }}">
                 {% trans link=license_link(submission.license_name)|e, title=license_title(submission.license_name)|e %}
                     This demo is released under the <a href="{{link}}">{{title}}</a> license.
                 {% endtrans %}
+                {% if submission.license_name == 'author' %}
+                {% trans %}It includes proprietary software.{% endtrans %}
+                {% endif %}
             </p>
           </div>
 
@@ -383,8 +380,9 @@
         <script type="text/javascript">
         $(".screenshots").ready(function(){
             if ($('.screenshots .panel').length > 1) {
+
                   // Set up the carousel
-                  $(".screenshots").show().addClass("js").jCarouselLite({
+                  $(".screenshots").show().addClass("js multi-images").jCarouselLite({
                       btnNext: ".nav-next a",
                       btnPrev: ".nav-prev a",
                       visible: 1
@@ -392,16 +390,18 @@
 
                   $(".nav-next a, .nav-prev a").show();
 
-                  $(".screenshots, .flag").hover(
-                    function() {
-                      $(".nav-next a").animate({ right: "6px" },{ queue:false });
-                      $(".nav-prev a").animate({ left: "6px" },{ queue:false });
-                    },
-                    function() {
-                      $(".nav-next a").animate({ right: "-65px" },{ queue:false });
-                      $(".nav-prev a").animate({ left: "-65px" },{ queue:false });
-                    }
-                  );
+                  $(".screenshots, .flag")
+                    .on('touchstart mouseenter', function() {
+                        showElement('6px');
+                    })
+                    .on('mouseleave', function() {
+                        showElement('-65px');
+                    });
+
+                function showElement(position) {
+                    $(".nav-next a").animate({ right: position },{ queue: false });
+                    $(".nav-prev a").animate({ left: position },{ queue: false });
+                }
             }
         });
         </script>

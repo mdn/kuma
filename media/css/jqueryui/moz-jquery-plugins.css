@@ -20,3 +20,7 @@
 	background-position: 97% 5px !important;
 	background-repeat: no-repeat !important;
 }
+
+.ui-dialog .ui-dialog-title {
+    color: #4d4e53;
+}

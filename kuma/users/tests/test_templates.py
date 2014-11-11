@@ -4,7 +4,6 @@ from pyquery import PyQuery as pq
 
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.utils.importlib import import_module
 
 from sumo.helpers import urlparams
 from sumo.urlresolvers import reverse
@@ -266,11 +265,6 @@ class AllauthPersonaTestCase(UserTestCase):
         """
         persona_signup_email = 'templates_persona_signup_copy@example.com'
         persona_signup_username = 'templates_persona_signup_copy'
-
-        engine = import_module(settings.SESSION_ENGINE)
-        store = engine.SessionStore()
-        store.save()
-        self.client.cookies[settings.SESSION_COOKIE_NAME] = store.session_key
 
         with mock.patch('requests.post') as requests_mock:
             requests_mock.return_value.json.return_value = {

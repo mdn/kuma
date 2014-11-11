@@ -25,9 +25,7 @@ from tower import ugettext_lazy as _
 from kuma.demos.models import Submission
 from kuma.demos.views import DEMOS_PAGE_SIZE
 
-from .forms import (UserBanForm, UserProfileEditForm, NewsletterForm,
-                    get_subscription_details, subscribed_to_newsletter,
-                    newsletter_subscribe)
+from .forms import UserBanForm, UserProfileEditForm, NewsletterForm
 from .models import UserProfile, UserBan
 # we have to import the signup form here due to allauth's odd form subclassing
 # that requires providing a base form class (see ACCOUNT_SIGNUP_FORM_CLASS)
@@ -150,9 +148,12 @@ def profile_edit(request, username):
         ('expertise', 'profile:expertise:')
     )
 
+    already_subscribed = NewsletterForm.is_subscribed(profile.user.email)
+
     if request.method != 'POST':
         initial = {
             'beta': profile.beta_tester,
+            'username': profile.user.username,
         }
         # Load up initial websites with either user data or required base URL
         for name, meta in UserProfile.website_choices:
@@ -163,9 +164,8 @@ def profile_edit(request, username):
             initial[field] = ', '.join(t.name.replace(ns, '')
                                        for t in profile.tags.all_ns(ns))
 
-        subscription_details = get_subscription_details(profile.user.email)
         subscription_initial = {}
-        if subscribed_to_newsletter(subscription_details):
+        if already_subscribed:
             subscription_initial['newsletter'] = True
             subscription_initial['agree'] = True
 
@@ -173,7 +173,8 @@ def profile_edit(request, username):
         profile_form = UserProfileEditForm(instance=profile,
                                            initial=initial,
                                            prefix='profile')
-        newsletter_form = NewsletterForm(request.locale,
+        newsletter_form = NewsletterForm(locale=request.locale,
+                                         already_subscribed=already_subscribed,
                                          prefix='newsletter',
                                          initial=subscription_initial)
     else:
@@ -181,11 +182,24 @@ def profile_edit(request, username):
                                            files=request.FILES,
                                            instance=profile,
                                            prefix='profile')
-        newsletter_form = NewsletterForm(request.locale,
+        newsletter_form = NewsletterForm(locale=request.locale,
+                                         already_subscribed=already_subscribed,
                                          data=request.POST,
                                          prefix='newsletter')
 
+        # Don't validate if the username hasn't changed so people
+        # can keep already existing invalid usernames.
+        posted_username = request.POST.get('profile-username', None)
+        if posted_username is not None:
+            username_changed = request.user.username != posted_username
+        else:
+            username_changed = False
+
         if profile_form.is_valid() and newsletter_form.is_valid():
+            if username_changed:
+                profile.user.username = profile_form.cleaned_data['username']
+                profile.user.save()
+
             profile_new = profile_form.save(commit=False)
 
             # Gather up all websites defined by the model, save them.
@@ -218,8 +232,7 @@ def profile_edit(request, username):
                         for t in parse_tags(profile_form.cleaned_data.get(field, ''))]
                 profile_new.tags.set_ns(tag_ns, *tags)
 
-            newsletter_subscribe(request, profile_new.user.email,
-                                 newsletter_form.cleaned_data)
+            newsletter_form.subscribe(request, profile_new.user.email)
             return redirect(profile.user)
 
     context = {
@@ -334,7 +347,10 @@ class SignupView(BaseSignupView):
 
     def get_form_kwargs(self):
         kwargs = super(SignupView, self).get_form_kwargs()
-        kwargs['locale'] = self.request.locale
+        kwargs.update({
+            'locale': self.request.locale,
+            'already_subscribed': False,
+        })
         return kwargs
 
     def form_valid(self, form):

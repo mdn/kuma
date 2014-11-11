@@ -3,12 +3,27 @@ from django import forms
 from nose.tools import eq_
 import test_utils
 
+from . import user, profile
 from ..adapters import (KumaAccountAdapter, USERNAME_CHARACTERS,
                         USERNAME_EMAIL)
 from ..forms import UserProfileEditForm
 
 
 class TestUserProfileEditForm(test_utils.TestCase):
+
+    def test_username(self):
+        """bug 753563: Support username changes"""
+        test_user = user(save=True)
+        data = {
+            'username': test_user.username,
+        }
+        form = UserProfileEditForm(data, instance=profile(test_user))
+        eq_(True, form.is_valid())
+
+        # let's try this with the username above
+        test_user2 = user(save=True)
+        form = UserProfileEditForm(data, instance=profile(test_user2))
+        eq_(False, form.is_valid())
 
     def test_https_profile_urls(self):
         """bug 733610: Profile URLs should allow https"""
@@ -44,13 +59,16 @@ class TestUserProfileEditForm(test_utils.TestCase):
         self._assert_protos_and_sites(protos, sites)
 
     def _assert_protos_and_sites(self, protos, sites):
+        profile_edit_user = user(save=True)
+        profile_edit_profile = profile(profile_edit_user)
         for proto, expected_valid in protos:
             for name, site in sites:
                 url = '%s%s' % (proto, site)
-                form = UserProfileEditForm({
+                data = {
                     "email": "lorchard@mozilla.com",
                     "websites_%s" % name: url
-                })
+                }
+                form = UserProfileEditForm(data, instance=profile_edit_profile)
                 result_valid = form.is_valid()
                 eq_(expected_valid, result_valid)
 

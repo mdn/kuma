@@ -4,6 +4,7 @@ import time
 from django import forms
 from django.conf import settings
 from django.http import HttpResponseServerError
+from django.contrib.auth.models import User
 
 import basket
 from basket.base import BasketException
@@ -13,15 +14,9 @@ from product_details import product_details
 from taggit.utils import parse_tags
 from tower import ugettext_lazy as _
 
-
+from .constants import USERNAME_CHARACTERS, USERNAME_REGEX
 from .models import UserProfile
 
-
-EMAIL_REQUIRED = _(u'Email address is required.')
-EMAIL_SHORT = _(u'Email address is too short (%(show_value)s characters). '
-                u'It must be at least %(limit_value)s characters.')
-EMAIL_LONG = _(u'Email address is too long (%(show_value)s characters). '
-               u'It must be %(limit_value)s characters or less.')
 PRIVACY_REQUIRED = _(u'You must agree to the privacy policy.')
 
 
@@ -53,8 +48,9 @@ class NewsletterForm(forms.Form):
                                 choices=[],
                                 required=False)
 
-    def __init__(self, locale, *args, **kwargs):
+    def __init__(self, locale, already_subscribed, *args, **kwargs):
         super(NewsletterForm, self).__init__(*args, **kwargs)
+        self.already_subscribed = already_subscribed
 
         regions = product_details.get_regions(locale)
         regions = sorted(regions.iteritems(), key=operator.itemgetter(1))
@@ -66,12 +62,71 @@ class NewsletterForm(forms.Form):
         self.fields['country'].choices = regions
         self.fields['country'].initial = country
 
+    def clean(self):
+        cleaned_data = super(NewsletterForm, self).clean()
+        if cleaned_data['newsletter'] and not self.already_subscribed:
+            if cleaned_data['agree']:
+                cleaned_data['subscribe_needed'] = True
+            else:
+                raise forms.ValidationError(PRIVACY_REQUIRED)
+        return cleaned_data
+
     def signup(self, request, user):
         """
         Used by allauth when successfully signing up a user. This will
         be ignored if this form is used standalone.
         """
-        newsletter_subscribe(request, user.email, self.cleaned_data)
+        self.subscribe(request, user.email)
+
+    @classmethod
+    def is_subscribed(cls, email):
+        subscription_details = cls.get_subscription_details(email)
+        return (settings.BASKET_APPS_NEWSLETTER in
+                subscription_details['newsletters']
+                if subscription_details
+                else False)
+
+    @classmethod
+    def get_subscription_details(cls, email):
+        subscription_details = None
+        try:
+            api_key = constance.config.BASKET_API_KEY
+            subscription_details = basket.lookup_user(email=email,
+                                                      api_key=api_key)
+        except BasketException, e:
+            if e.code == BASKET_UNKNOWN_EMAIL:
+                # pass - unknown email is just a new subscriber
+                pass
+        return subscription_details
+
+    def subscribe(self, request, email):
+        subscription_details = self.get_subscription_details(email)
+        if 'subscribe_needed' in self.cleaned_data:
+            optin = 'N'
+            if request.locale == 'en-US':
+                optin = 'Y'
+            basket_data = {
+                'email': email,
+                'newsletters': settings.BASKET_APPS_NEWSLETTER,
+                'country': self.cleaned_data['country'],
+                'format': self.cleaned_data['format'],
+                'lang': request.locale,
+                'optin': optin,
+                'source_url': request.build_absolute_uri()
+            }
+            for retry in range(constance.config.BASKET_RETRIES):
+                try:
+                    result = basket.subscribe(**basket_data)
+                    if result.get('status') != 'error':
+                        break
+                except BasketException:
+                    if retry == constance.config.BASKET_RETRIES:
+                        return HttpResponseServerError()
+                    else:
+                        time.sleep(constance.config.BASKET_RETRY_WAIT * retry)
+        elif subscription_details:
+            basket.unsubscribe(subscription_details['token'], email,
+                               newsletters=settings.BASKET_APPS_NEWSLETTER)
 
 
 class UserBanForm(forms.Form):
@@ -92,10 +147,13 @@ class UserProfileEditForm(forms.ModelForm):
     beta = forms.BooleanField(label=_(u'Beta tester'), required=False)
     interests = forms.CharField(label=_(u'Interests'),
                                 max_length=255, required=False,
-                                widget=forms.TextInput(attrs={'class':'tags'}))
+                                widget=forms.TextInput(attrs={'class': 'tags'}))
     expertise = forms.CharField(label=_(u'Expertise'),
                                 max_length=255, required=False,
-                                widget=forms.TextInput(attrs={'class':'tags'}))
+                                widget=forms.TextInput(attrs={'class': 'tags'}))
+    username = forms.RegexField(label=_(u'Username'), regex=USERNAME_REGEX,
+                                max_length=30, required=False,
+                                error_message=USERNAME_CHARACTERS)
 
     class Meta:
         model = UserProfile
@@ -122,53 +180,12 @@ class UserProfileEditForm(forms.ModelForm):
 
         return self.cleaned_data['expertise']
 
+    def clean_username(self):
+        new_username = self.cleaned_data['username']
 
-def newsletter_subscribe(request, email, cleaned_data):
-    subscription_details = get_subscription_details(email)
-    subscribed = subscribed_to_newsletter(subscription_details)
-
-    if cleaned_data['newsletter'] and not subscribed:
-        if not cleaned_data['agree']:
-            raise forms.ValidationError(PRIVACY_REQUIRED)
-        optin = 'N'
-        if request.locale == 'en-US':
-            optin = 'Y'
-        for i in range(constance.config.BASKET_RETRIES):
-            try:
-                result = basket.subscribe(
-                        email=email,
-                        newsletters=settings.BASKET_APPS_NEWSLETTER,
-                        country=cleaned_data['country'],
-                        format=cleaned_data['format'],
-                        lang=request.locale,
-                        optin=optin,
-                        source_url=request.build_absolute_uri())
-                if result.get('status') != 'error':
-                    break
-            except BasketException:
-                if i == constance.config.BASKET_RETRIES:
-                    return HttpResponseServerError()
-                else:
-                    time.sleep(constance.config.BASKET_RETRY_WAIT * i)
-    elif subscription_details:
-        basket.unsubscribe(subscription_details['token'], email,
-                           newsletters=settings.BASKET_APPS_NEWSLETTER)
-
-
-def get_subscription_details(email):
-    subscription_details = None
-    try:
-        subscription_details = basket.lookup_user(email=email,
-                                        api_key=constance.config.BASKET_API_KEY)
-    except BasketException, e:
-        if e.code == BASKET_UNKNOWN_EMAIL:
-            # pass - unknown email is just a new subscriber
-            pass
-    return subscription_details
-
-
-def subscribed_to_newsletter(subscription_details):
-    subscribed = (settings.BASKET_APPS_NEWSLETTER in
-                  subscription_details['newsletters'] if
-                  subscription_details else False)
-    return subscribed
+        if (self.instance is not None and
+                User.objects.exclude(pk=self.instance.user.pk)
+                            .filter(username=new_username)
+                            .exists()):
+            raise forms.ValidationError(_('Username already in use.'))
+        return new_username

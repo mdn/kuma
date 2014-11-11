@@ -2,8 +2,8 @@
     <div class="user-state">
         {% include 'socialaccount/snippets/login_service_icon.html' %}
         <ul>
-            <li><a href="{{ request.user.get_absolute_url() }}">{{ user_display(request.user) }}</a></li>
-            <li><a href="{{ url('account_logout') }}?next={{ next_url }}">{{ _('Sign out') }}</a></li>
+            <li><a href="{{ request.user.get_absolute_url() }}" class="user-state-profile">{{ user_display(request.user) }}</a></li>
+            <li><a href="{{ url('account_logout') }}?next={{ next_url }}" class="user-state-signout">{{ _('Sign out') }}</a></li>
         </ul>
     </div>
 {% else %}

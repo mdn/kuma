@@ -5,8 +5,6 @@
 @require 'includes/vars';
 @require 'includes/mixins';
 
-$blue-background-text-color = #fff;
-
 /* Settings which apply to _all_ zone pages */
 .zone {
     create-gradient-background(#00539f, true);
@@ -15,7 +13,7 @@ $blue-background-text-color = #fff;
     override-main-nav-color($blue-background-text-color);
 
     #main-header {
-        border-bottom-color: rgba(255, 255, 255, 0.2);
+        border-bottom-color: rgba-fallback(rgba(255, 255, 255, 0.2));
     }
 
     .user-state {
@@ -75,8 +73,8 @@ $blue-background-text-color = #fff;
         color: $blue-background-text-color;
 
         a {
-            old-ie(color, $blue-background-text-color);
-            color: rgba(255, 255, 255, 0.7);
+            color: $blue-background-text-color;
+            color: rgba-fallback(rgba(255, 255, 255, 0.7));
         }
     }
 
@@ -119,9 +117,9 @@ $blue-background-text-color = #fff;
     a.button, button {
         color: $blue-background-text-color;
         &:not(.transparent) {
-            old-ie(background-color, #0095dd); /* old ie */
-            background-color: rgba(0, 0, 0, 0.1);
-            vendorize(box-shadow, inset 0 -1px rgba(0, 0, 0, .1));
+            background-color: #0095dd;
+            background-color: rgba-fallback(rgba(0, 0, 0, 0.1));
+            box-shadow: inset 0 -1px rgba(0, 0, 0, .1);
         }
     }
 }
@@ -278,7 +276,6 @@ $dev-program-pad {
         }
 
         .zone-landing-header-preview .column-strip, .zone-landing-header-preview .masthead-text {
-            width: get-grid-dimension($media-query-tablet, 6);
 
             .zone-landing-header-preview-base {
                 position: static;

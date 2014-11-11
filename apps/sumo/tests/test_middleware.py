@@ -1,11 +1,7 @@
-from django.http import HttpResponsePermanentRedirect
-
-from django.test import RequestFactory
 from nose.plugins.skip import SkipTest
 from nose.tools import eq_
 import test_utils
 
-from sumo.middleware import PlusToSpaceMiddleware
 from sumo.urlresolvers import get_best_language
 
 
@@ -22,50 +18,6 @@ class TrailingSlashMiddlewareTestCase(test_utils.TestCase):
         response = self.client.get(u'/en-US/docs/files/?xxx=\xc3')
         eq_(response.status_code, 301)
         assert response['Location'].endswith('/en-US/docs/files?xxx=%C3%83')
-
-
-class PlusToSpaceTestCase(test_utils.TestCase):
-    rf = RequestFactory()
-    ptsm = PlusToSpaceMiddleware()
-
-    def test_plus_to_space(self):
-        """Pluses should be converted to %20."""
-        request = self.rf.get('/url+with+plus')
-        response = self.ptsm.process_request(request)
-        assert isinstance(response, HttpResponsePermanentRedirect)
-        eq_('/url%20with%20plus', response['location'])
-
-    def test_query_string(self):
-        """Query strings should be maintained."""
-        request = self.rf.get('/pa+th', {'a': 'b'})
-        response = self.ptsm.process_request(request)
-        eq_('/pa%20th?a=b', response['location'])
-
-    def test_query_string_unaffected(self):
-        """Pluses in query strings are not affected."""
-        request = self.rf.get('/pa+th?var=a+b')
-        response = self.ptsm.process_request(request)
-        eq_('/pa%20th?var=a+b', response['location'])
-
-    def test_pass_through(self):
-        """URLs without a + should be left alone."""
-        request = self.rf.get('/path')
-        assert not self.ptsm.process_request(request)
-
-    def test_with_locale(self):
-        """URLs with a locale should keep it."""
-        request = self.rf.get('/pa+th', {'a': 'b'})
-        request.locale = 'ru'
-        response = self.ptsm.process_request(request)
-        eq_('/ru/pa%20th?a=b', response['location'])
-
-    def test_smart_query_string(self):
-        """The request QUERY_STRING might not be unicode."""
-        request = self.rf.get(u'/pa+th')
-        request.locale = 'ja'
-        request.META['QUERY_STRING'] = 's=\xe3\x82\xa2'
-        response = self.ptsm.process_request(request)
-        eq_('/ja/pa%20th?s=%E3%82%A2', response['location'])
 
 
 class BestLanguageTests(test_utils.TestCase):

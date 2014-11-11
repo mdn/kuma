@@ -1,36 +1,21 @@
 define([
     'intern!object',
     'intern/chai!assert',
-    'base/_config',
-    'base/_utils'
-], function(registerSuite, assert, config, utils) {
+    'base/lib/config',
+    'base/lib/login',
+    'base/lib/assert',
+    'base/lib/poll'
+], function(registerSuite, assert, config, libLogin, libAssert, poll) {
 
     registerSuite({
 
         name: 'auth',
 
         beforeEach: function() {
-
-            return this.remote
-                        .get(config.homepageUrl)
-                        .findByCssSelector('.oauth-login-options')
-                        .moveMouseTo(5, 5)
-                        .end()
-                        .findByCssSelector('.oauth-login-picker')
-                        .then(function(element) {
-                            return utils.pollForRemote(element, 'isDisplayed');
-                        });
+            return libLogin.openLoginWidget(this.remote);
         },
 
-        'Hovering over the header nav widget opens submenu': function() {
-            return this.remote
-                        .findByCssSelector('.oauth-login-picker')
-                        .isDisplayed()
-                        .then(function(bool) {
-                            assert.isTrue(bool);
-                        });
-
-        },
+        'Hovering over the header nav widget opens submenu': libAssert.elementExistsAndDisplayed('.oauth-login-picker'),
 
         'Clicking Persona link opens new window': function() {
 
@@ -59,17 +44,59 @@ define([
             var dfd = this.async(config.testTimeout);
             var remote = this.remote;
 
-            utils.getTestPersonaLoginCredentials(function(credentials) {
-                return utils.completePersonaLogin(credentials.email, credentials.password, remote, function() {
+            libLogin.getTestPersonaLoginCredentials(function(credentials) {
+                return libLogin.completePersonaWindow(remote, credentials.email, credentials.password).then(function() {
                     return remote
                         .then(function() {
-                                remote
+                                return remote
                                     .getCurrentUrl()
-                                    .then(dfd.callback(function(url) {
+                                    .then(function(url) {
                                         assert.isTrue(url.indexOf('/account/signup') != -1);
-                                    }));
+                                        return libLogin.completePersonaLogout(remote).sleep(4000).then(dfd.resolve);
+                                    });
                         });
                 });
+
+            });
+
+            return dfd;
+        },
+
+        'Logging in with Persona with real credentials works': function() {
+
+            var dfd = this.async(config.testTimeout);
+            var remote = this.remote;
+
+            libLogin.completePersonaWindow(remote).then(function() {
+
+                return remote
+                    .findByCssSelector('.user-state-profile')
+                    .then(function(element) {
+                        poll.until(element, 'isDisplayed')
+                                .then(function() {
+                                    return element
+                                                .click()
+                                                .then(function() {
+                                                    return remote
+                                                                .findById('edit-profile')
+                                                                .click()
+                                                                .end()
+                                                                .findByCssSelector('.fm-submit button[type=submit]')
+                                                                .click()
+                                                                .end()
+                                                                .findByCssSelector('.memberSince')
+                                                                .click() // Just ensuring the element is there
+                                                                .end()
+                                                                .findByCssSelector('.user-state-signout')
+                                                                .click()
+                                                                .end()
+                                                                .findByCssSelector('.oauth-login-container')
+                                                                .then(dfd.callback(function() {
+                                                                    assert.isTrue(true, 'User can sign out without problems');
+                                                                }));
+                                                });
+                                });
+                    });
 
             });
 
@@ -101,7 +128,6 @@ define([
                         });
 
         }
-
     });
 
 });

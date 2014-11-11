@@ -25,13 +25,14 @@ from django.db.models.fields.files import FieldFile, ImageFieldFile
 from django.template.defaultfilters import slugify, filesizeformat
 from django.utils.translation import ugettext_lazy as _
 
+import constance.config
 import south.modelsinspector
 from taggit_extras.managers import NamespacedTaggableManager
 from threadedcomments.models import ThreadedComment
 
 from actioncounters.fields import ActionCounterField
 from sumo.urlresolvers import reverse
-from devmo.utils import generate_filename_and_delete_previous
+from devmo.utils import generate_filename_and_delete_previous, config_lazy
 
 from . import challenge_utils, DEMO_LICENSES, scale_image
 
@@ -43,9 +44,6 @@ SCREENSHOT_MAXH = getattr(settings, 'DEMO_SCREENSHOT_MAX_HEIGHT', 360)
 
 THUMBNAIL_MAXW = getattr(settings, 'DEMO_THUMBNAIL_MAX_WIDTH', 200)
 THUMBNAIL_MAXH = getattr(settings, 'DEMO_THUMBNAIL_MAX_HEIGHT', 150)
-
-DEMO_MAX_ZIP_FILESIZE = getattr(settings, 'DEMO_MAX_ZIP_FILESIZE', 60 * 1024 * 1024) # 60MB
-DEMO_MAX_FILESIZE_IN_ZIP = getattr(settings, 'DEMO_MAX_FILESIZE_IN_ZIP', 60 * 1024 * 1024) # 60MB
 
 # Set up a file system for demo uploads that can be kept separate from the rest
 # of /media if necessary. Lots of hackery here to ensure a set of sensible
@@ -418,7 +416,8 @@ class Submission(models.Model):
     demo_package = ReplacingZipFileField(
             _('select a ZIP file containing your demo'),
             max_length=255,
-            max_upload_size=DEMO_MAX_ZIP_FILESIZE,
+            max_upload_size=config_lazy('DEMO_MAX_ZIP_FILESIZE',
+                                        60 * 1024 * 1024),  # overridden by constance
             storage=demo_uploads_fs,
             upload_to=mk_slug_upload_to('demo_package.zip'),
             blank=False)
@@ -660,7 +659,7 @@ class Submission(models.Model):
             if 'index.html' == name or 'demo.html' == name:
                 index_found = True
 
-            if zi.file_size > DEMO_MAX_FILESIZE_IN_ZIP:
+            if zi.file_size > constance.config.DEMO_MAX_FILESIZE_IN_ZIP:
                 raise ValidationError(
                     _('ZIP file contains a file that is too large: %(filename)s') %
                     {"filename": name}
@@ -670,11 +669,15 @@ class Submission(models.Model):
             # HACK: Sometimes we get "type; charset", even if charset wasn't asked for
             file_mime_type = m_mime.from_buffer(file_data).split(';')[0]
 
-            if file_mime_type in DEMO_MIMETYPE_BLACKLIST:
+            extensions = constance.config.DEMO_BLACKLIST_OVERRIDE_EXTENSIONS.split()
+            override_file_extensions = ['.%s' % extension
+                                       for extension in extensions]
+
+            if (file_mime_type in DEMO_MIMETYPE_BLACKLIST and
+                    not name.endswith(tuple(override_file_extensions))):
                 raise ValidationError(
                     _('ZIP file contains an unacceptable file: %(filename)s') %
-                    {"filename": name}
-                )
+                    {'filename': name})
 
         if not index_found:
             raise ValidationError(_('HTML index not found in ZIP'))

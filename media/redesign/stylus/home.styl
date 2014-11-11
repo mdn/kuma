@@ -2,7 +2,6 @@
 @require 'includes/mixins';
 
 $home-involved-background-y = 50px;
-$blue-background-text-color = #fff;
 
 #home {
     create-home-gradient-background(#00539f);
@@ -12,7 +11,7 @@ $blue-background-text-color = #fff;
     /* general structure adjustments */
     #main-header {
         background: none;
-        border-bottom-color: rgba(255, 255, 255, 0.2);
+        border-bottom-color: rgba-fallback(rgba(255, 255, 255, 0.2));
     }
 
     /* update main nav menu color */
@@ -339,7 +338,7 @@ $blue-background-text-color = #fff;
         img {
             border: 6px solid #fff;
             display: block;
-            vendorize(box-shadow, 2px 2px 1px rgba(0 , 0, 0, .1));
+            box-shadow: 2px 2px 1px rgba(0 , 0, 0, .1);
             margin-bottom: 6px;
             width: 180px;
             height: 133px;

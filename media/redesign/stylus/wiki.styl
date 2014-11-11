@@ -242,7 +242,7 @@ article {
     padding: 10px 10px 6px;
     border-bottom: 1px solid rgb(241, 241, 241);
     border-top: 1px solid rgb(241, 241, 241);
-    background: none repeat scroll 0% 0% rgba(234, 239, 243, 0.4);
+    background: none repeat scroll 0 0 rgba-fallback(rgba(234, 239, 243, 0.4));
     margin-top: -20px;
     margin-bottom: 20px;
 
@@ -270,12 +270,13 @@ article {
         }
 
         a {
+            display: inline-block;
+            vendorize(transition, all .2s);
+
+            &:hover,
             &:focus {
                 outline: none;
-
-                img {
-                    vendorize(transform, scale(1.7));
-                }
+                vendorize(transform, scale(1.7));
             }
         }
     }
@@ -285,15 +286,9 @@ article {
         border-radius: 2px;
         max-width: 20px;
         opacity: 0;
-        vendorize(transition, all .2s);
 
         &.loaded {
             opacity: 1;
-        }
-
-        &:hover,
-        &:focus{
-            vendorize(transform, scale(1.7));
         }
     }
 
@@ -447,7 +442,7 @@ article {
 
             &.disabled, &[disabled] {
                 opacity: 0.4;
-                vendorize(box-shadow, none);
+                box-shadow: none;
                 cursor: not-allowed;
             }
         }
@@ -499,9 +494,9 @@ article {
 /* warning elements */
 .warning {
     set-message-base();
-    background: rgba(193, 56, 50, 0.85);
+    background: rgba-fallback(rgba(193, 56, 50, 0.85));
     color: #c13832;
-    border-color: rgba(0, 0, 0, 0.1);
+    border-color: rgba-fallback(rgba(0, 0, 0, 0.1));
     color: #fff;
     font-style: italic;
     margin: 0 0 $grid-spacing 0;
@@ -509,7 +504,7 @@ article {
 
     pre {
         padding: ($grid-spacing / 2) !important;
-        background: none repeat scroll 0 0 rgba(255, 255, 255, 0.7) !important;
+        background: none repeat scroll 0 0 rgba-fallback(rgba(255, 255, 255, 0.7)) !important;
     }
 
     &.warning-review {
@@ -586,9 +581,7 @@ div.bug, div.warning, div.overheadIndicator {
         &:before {
             bidi-value(text-align, left, right);
             bidi-style(left, -($grid-spacing * 1.5), right, auto);
-
             position: absolute;
-            left: -($grid-spacing + ($grid-spacing/2));
             color: #484848;
         }
     }
@@ -860,11 +853,11 @@ div.revision-info li {
         padding: 4px 0;
 
         &:nth-child(odd) {
-            background: rgba(170, 160, 130, .1);
+            background: rgba-fallback(rgba(170, 160, 130, .1));
         }
 
         &.current {
-            background: rgba(198, 198, 175, .25);
+            background: rgba-fallback(rgba(198, 198, 175, .25));
             border-bottom: solid 2px #b8b5a3;
             border-top: solid 2px #b8b5a3;
 
@@ -941,11 +934,11 @@ div.revision-info li {
 }
 
 div.note {
-    background: rgba(231, 228, 157, 0.25);
-    border-color: rgba(231,228,157,0.15);
+    background: rgba-fallback(rgba(231, 228, 157, 0.25));
+    border-color: rgba-fallback(rgba(231,228,157,0.15));
     border-style: solid;
     border-width: 5px;
-    color: rgba(0, 0, 0, 0.65);
+    color: rgba-fallback(rgba(0, 0, 0, 0.65));
     font-style: italic;
     margin-bottom: $grid-spacing;
     padding: 10px 15px;
@@ -1015,10 +1008,6 @@ div.note {
 }
 
 /* page attachments */
-@-moz-keyframes newAttachment {
-    0% { background-color: #90ee90; }
-    100% { background-color: transparent; }
-}
 @-webkit-keyframes newAttachment {
     0% { background-color: #90ee90; }
     100% { background-color: transparent; }
@@ -1115,7 +1104,7 @@ details {
    accessibility) */
 .no-details {
     summary:hover, summary:focus {
-        outline: 0;
+        outline: 0; /* csslint - see bug #1083481 */
     }
 
     summary:before {

@@ -20,7 +20,7 @@
     */
     (function() {
         var $nav = $('#main-nav');
-        var $navItems = $nav.find('ul > li:not(:last-child)');
+        var $navItems = $nav.find('ul > li:not(.nav-search-link, .main-nav-search)');
         var $mainNavSearch = $nav.find('.main-nav-search');
         var $searchWrap = $nav.find('.search-wrap');
         var $input = $searchWrap.find('input');
@@ -71,6 +71,15 @@
             on('focus', createExpander(200, true)).
             on('blur', createExpander(600));
     })();
+
+    /*
+        Mobile search to display search box in menu
+    */
+    $('.nav-search-link a').on('click', function(e) {
+        e.preventDefault();
+        $('.main-nav-search').css('display', 'block').find('#main-q').get(0).focus();
+        $(this).css('display', 'none');
+    });
 
 
     /*

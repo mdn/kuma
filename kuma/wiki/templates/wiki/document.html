@@ -319,7 +319,7 @@
                     <pre class="brush: js">{{ document_html }}</pre>
                     {% trans search_link=template_search_link, title=document.title %}
                       Search for
-                      <a href="{{ search_link }}">pages that use {{ title }}</a>
+                      <a href="{{ search_link }}" rel="nofollow, noindex">pages that use {{ title }}</a>
                       to see example use cases and how many pages use this macro.
                     {% endtrans %}
                   {% else %}
