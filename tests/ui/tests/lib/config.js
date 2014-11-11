@@ -15,6 +15,10 @@ define(['intern'], function(intern) {
         // Locales
         defaultLocale: defaultLocale,
 
+        // Set the default browser dimentions
+        defaultWidth: 1240,
+        defaultHeight: 500,
+
         // Important media queries
         mediaQueries: {
             smallDesktop: 1200,

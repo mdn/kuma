@@ -3,15 +3,29 @@ define([
     'intern/chai!assert',
     'base/lib/config',
     'base/lib/assert',
-    'base/lib/poll'
-], function(registerSuite, assert, config, libAssert, poll) {
+    'base/lib/poll',
+    'base/lib/POM'
+], function(registerSuite, assert, config, libAssert, poll, POM) {
+
+    // Create this page's specific POM
+    var Page = new POM({
+        // Any functions used multiple times or important properties of the page
+    });
 
     registerSuite({
 
         name: 'header',
 
+        before: function() {
+            return Page.init(this.remote, config.homepageUrl);
+        },
+
         beforeEach: function() {
-            return this.remote.get(config.homepageUrl);
+            return Page.setup();
+        },
+
+        after: function() {
+            return Page.teardown();
         },
 
         'Hovering over Zones menu displays submenu': function() {

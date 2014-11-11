@@ -4,15 +4,31 @@ define([
     'base/lib/config',
     'base/lib/login',
     'base/lib/assert',
-    'base/lib/poll'
-], function(registerSuite, assert, config, libLogin, libAssert, poll) {
+    'base/lib/poll',
+    'base/lib/POM'
+], function(registerSuite, assert, config, libLogin, libAssert, poll, POM) {
+
+    // Create this page's specific POM
+    var Page = new POM({
+        // Any functions used multiple times or important properties of the page
+    });
 
     registerSuite({
 
         name: 'auth',
 
+        before: function() {
+            Page.init(this.remote, config.homepageUrl);
+        },
+
         beforeEach: function() {
-            return libLogin.openLoginWidget(this.remote);
+            return Page.setup().then(function() {
+                return libLogin.openLoginWidget(Page.remote);
+            });
+        },
+
+        after: function() {
+            return Page.teardown();
         },
 
         'Hovering over the header nav widget opens submenu': libAssert.elementExistsAndDisplayed('.oauth-login-picker'),
