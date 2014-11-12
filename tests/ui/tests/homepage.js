@@ -16,7 +16,7 @@ define([
             return this.remote.get(config.homepageUrl);
         },
 
-        'Ensure homepage is displaying search form and accepts text': function() {
+        'Homepage search form displays and accepts text': function() {
 
             var term = 'Hello';
 
