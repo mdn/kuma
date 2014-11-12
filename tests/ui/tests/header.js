@@ -30,9 +30,10 @@ define([
 
         },
 
-        'Focusing on the header search box expands the input': function() {
+        'The header search box expands and contracts correctly': function() {
 
             var searchBoxId = 'main-q';
+            var homeSearchBoxId = 'home-q';
             var originalSize;
 
             return this.remote
@@ -48,6 +49,16 @@ define([
                             .getSize()
                             .then(function(newSize) {
                                 assert.isTrue(newSize.width > originalSize.width);
+                            })
+                            .end()
+                            .findById(homeSearchBoxId)
+                            .click()
+                            .end()
+                            .sleep(2000) // wait for animation
+                            .findById(searchBoxId)
+                            .getSize()
+                            .then(function(newSize) {
+                                assert.equal(newSize.width, originalSize.width);
                             });
         },
 
