@@ -26,13 +26,16 @@ from django.template.defaultfilters import slugify, filesizeformat
 from django.utils.translation import ugettext_lazy as _
 
 import constance.config
+from constance.admin import FIELDS
+from django.utils.functional import lazy
+
 import south.modelsinspector
 from taggit_extras.managers import NamespacedTaggableManager
 from threadedcomments.models import ThreadedComment
 
 from actioncounters.fields import ActionCounterField
 from sumo.urlresolvers import reverse
-from devmo.utils import generate_filename_and_delete_previous, config_lazy
+from devmo.utils import generate_filename_and_delete_previous
 
 from . import challenge_utils, DEMO_LICENSES, scale_image
 
@@ -103,6 +106,30 @@ DEMO_MIMETYPE_BLACKLIST = getattr(settings, 'DEMO_FILETYPE_BLACKLIST', [
     'text/x-perl',
     'text/x-php',
 ])
+
+LAZY_CONSTANCE_TYPES = list(FIELDS.keys())
+LAZY_CONSTANCE_TYPES.remove(unicode)  # because we already have str in the list
+
+
+def config(name, default=None):
+    """
+    Just a silly wrapper arround the constance's config object.
+    """
+    return getattr(constance.config, name, default)
+
+"""
+A function to use constance's config object in an environment in which
+one requires lazy values such a model field parameters.
+
+E.g. something that is a pretty stupid idea but should show the risk as well::
+
+    class Entry(models.Model):
+        title = models.CharField(max_length=config_lazy('ENTRY_MAX_LENGTH'))
+
+.. where ``ENTRY_MAX_LENGTH`` is the name of the constance config value.
+
+"""
+config_lazy = lazy(config, *LAZY_CONSTANCE_TYPES)
 
 
 def get_root_for_submission(instance):
