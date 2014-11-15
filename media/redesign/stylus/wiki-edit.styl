@@ -4,6 +4,10 @@
 @require 'includes/vars.styl';
 @require 'includes/mixins.styl';
 @require 'components/tagit';
+@require 'components/wiki/edit/cke';
+@require 'components/wiki/edit/page-attachments';
+
+@require 'components/wiki/edit/translate/structure';
 
 /* Space needed to account for the absolutely-positioned #page-buttons element. */
 $space-for-buttons = 40px;
@@ -12,7 +16,10 @@ $space-for-buttons = 40px;
 $summary-margin = 0 ($grid-spacing / 2) ($grid-spacing / 2);
 $summary-padding = 5px;
 
-#new-document, #edit-document, #translate-document, .move-page {
+#new-document,
+#edit-document,
+#translate-document,
+.move-page {
     .page-buttons {
         bidi-value(text-align, right, left);
         float: none;
@@ -34,7 +41,9 @@ $summary-padding = 5px;
     }
 }
 
-#new-document, #edit-document, #translate-document {
+#new-document,
+#edit-document,
+#translate-document {
     .editing {
         position: relative;
     }
@@ -98,7 +107,16 @@ $summary-padding = 5px;
     }
 }
 
-#new-document, #edit-document {
+/* link to editor and style guide editor that appear above text editor */
+.guide-links{
+    float: right;
+    margin-top: $grid-spacing;
+    padding: 0 4px 2px 0;
+    color: #999;
+}
+
+#new-document,
+#edit-document {
     ul.metadata {
         display: none;
         float: none;
@@ -183,32 +201,41 @@ $summary-padding = 5px;
         position: relative;
     }
 
-
     h1{
         margin-top: 0;
     }
+}
 
-    .first-contrib-welcome {
-        background: $light-background-color;
-        border: 5px solid $header-background-color;
-        padding: 15px 15px 10px;
-        margin-bottom: 20px;
+.save-state {
+    set-smaller-font-size();
+    clear: both;
+    color: #888;
+    margin: 0;
+}
 
-        h2 {
-            margin: 0 0 10px;
-            font: bold 18px/1.5 'Open Sans', sans-serif;
-        }
 
-        p {
-            margin-bottom: 8px;
-        }
+.first-contrib-welcome {
+    background: $light-background-color;
+    border: 5px solid $header-background-color;
+    padding: 15px 15px 10px;
+    margin: 20px 0;
+
+    h2 {
+        margin: 0 0 10px;
+        font: bold 18px/1.5 'Open Sans', sans-serif;
     }
 
-    .save-state {
-        set-smaller-font-size();
-        clear: both;
-        color: #888;
-        margin: 0;
+    p {
+        margin-bottom: 8px;
+    }
+}
+
+
+#page-comment {
+    input {
+        padding-top: 10px;
+        padding-bottom: @padding-top;
+        width: 98%;
     }
 }
 
@@ -312,6 +339,36 @@ $summary-padding = 5px;
 
 }
 
+/* content-fields is the block which contains the english and translated article on translation edit pages */
+#content-fields {
+    clearfix();
+
+    .approved, .localized {
+        width: 49%;
+    }
+
+    .approved {
+        bidi-value(float, left, right);
+
+        .boxed {
+            padding-right: 25px;
+        }
+    }
+
+    .localized {
+        bidi-value(float, right, left);
+    }
+
+    header {
+        clearfix();
+        display: block;
+        height: 16px;
+        margin-bottom: ($grid-spacing / 2);
+        padding: 7px 0 14px;
+        position: relative;
+        z-index: 10;
+    }
+}
 
 .move-page {
     dl {
@@ -360,26 +417,4 @@ $summary-padding = 5px;
         margin-bottom: 10px; /* Margin when buttons are stacked */
     }
 }
-/* CKEditor adjustments, many marked as !important to override CKEditor's issues */
-.ui-autocomplete {
-    z-index: 100001 !important; /* Ugly, but have to do this for the autocomplete component to display on top of the CKEditor dialog */
-    max-height: 200px;
-    overflow: auto;
-}
-.cke_skin_kuma .cke_rcombo .cke_text {
-    width: 130px !important;
-}
-.cke_skin_kuma .cke_rcombopanel {
-    height: 280px !important;
-}
 
-/* Fixes CKEditor autogrow + maximize issues */
-.cke_maximized_editor #content-fields header {
-    position: fixed !important;
-    top: -200px !important;
-}
-.cke_maximized_editor div.cke_toolbox {
-    position: relative !important;
-    top: auto !important;
-    width: auto !important;
-}

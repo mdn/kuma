@@ -1956,15 +1956,15 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         # Ensure the page appears on the listing pages
         response = self.client.get(reverse('wiki.list_review'))
-        eq_(1, pq(response.content).find("ul.documents li a:contains('%s')" %
+        eq_(1, pq(response.content).find("ul.document-list li a:contains('%s')" %
                                          doc.title).length)
         response = self.client.get(reverse('wiki.list_review_tag',
                                       args=('technical',)))
-        eq_(1, pq(response.content).find("ul.documents li a:contains('%s')" %
+        eq_(1, pq(response.content).find("ul.document-list li a:contains('%s')" %
                                          doc.title).length)
         response = self.client.get(reverse('wiki.list_review_tag',
                                       args=('editorial',)))
-        eq_(1, pq(response.content).find("ul.documents li a:contains('%s')" %
+        eq_(1, pq(response.content).find("ul.document-list li a:contains('%s')" %
                                          doc.title).length)
 
         # Also, ensure that the page appears in the proper feeds
@@ -1995,15 +1995,15 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         # Ensure the page appears on the listing pages
         response = self.client.get(reverse('wiki.list_review'))
-        eq_(1, pq(response.content).find("ul.documents li a:contains('%s')" %
+        eq_(1, pq(response.content).find("ul.document-list li a:contains('%s')" %
                                          doc.title).length)
         response = self.client.get(reverse('wiki.list_review_tag',
                                       args=('technical',)))
-        eq_(0, pq(response.content).find("ul.documents li a:contains('%s')" %
+        eq_(0, pq(response.content).find("ul.document-list li a:contains('%s')" %
                                          doc.title).length)
         response = self.client.get(reverse('wiki.list_review_tag',
                                       args=('editorial',)))
-        eq_(1, pq(response.content).find("ul.documents li a:contains('%s')" %
+        eq_(1, pq(response.content).find("ul.document-list li a:contains('%s')" %
                                          doc.title).length)
 
         # Also, ensure that the page appears in the proper feeds
@@ -3003,7 +3003,7 @@ class AutosuggestDocumentsTests(WikiTestCase):
 
         resp = self.client.get(reverse('wiki.all_documents',
                                        locale=settings.WIKI_DEFAULT_LANGUAGE))
-        eq_(len(valid_documents), len(pq(resp.content).find('.documents li')))
+        eq_(len(valid_documents), len(pq(resp.content).find('.document-list li')))
 
 
 class CodeSampleViewTests(UserTestCase, WikiTestCase):

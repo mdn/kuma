@@ -655,6 +655,9 @@ MINIFY_BUNDLES = {
             'js/prism-mdn/components/prism-json.css',
             'redesign/css/wiki-syntax.css',
         ),
+        'wiki-revisions': (
+            'redesign/css/wiki-revisions.css',
+        ),
         'wiki-edit': (
             'redesign/css/wiki-edit.css',
         ),

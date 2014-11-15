@@ -670,14 +670,14 @@ class DocumentListTests(UserTestCase, WikiTestCase):
         doc = pq(response.content)
         cat = self.doc.category
         eq_(Document.objects.filter(category=cat, locale=self.locale).count(),
-            len(doc('#document-list ul.documents li')))
+            len(doc('#document-list ul.document-list li')))
 
     def test_all_list(self):
         """Verify the all documents list view."""
         response = self.client.get(reverse('wiki.all_documents'))
         doc = pq(response.content)
         eq_(Document.objects.filter(locale=self.locale).count(),
-            len(doc('#document-list ul.documents li')))
+            len(doc('#document-list ul.document-list li')))
 
     @attr('tags')
     def test_tag_list(self):
@@ -689,7 +689,7 @@ class DocumentListTests(UserTestCase, WikiTestCase):
                                    args=[tag.name]))
         eq_(200, response.status_code)
         doc = pq(response.content)
-        eq_(1, len(doc('#document-list ul.documents li')))
+        eq_(1, len(doc('#document-list ul.document-list li')))
 
     # http://bugzil.la/871638
     @attr('tags')
@@ -707,7 +707,7 @@ class DocumentListTests(UserTestCase, WikiTestCase):
                                    args=[en_tag.name]))
         eq_(200, response.status_code)
         doc = pq(response.content)
-        eq_(1, len(doc('#document-list ul.documents li')))
+        eq_(1, len(doc('#document-list ul.document-list li')))
 
 
 class CompareRevisionTests(UserTestCase, WikiTestCase):

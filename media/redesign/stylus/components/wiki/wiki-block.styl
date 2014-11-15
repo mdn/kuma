@@ -1,0 +1,29 @@
+.wiki-block {
+    clearfix();
+    padding-top: ($grid-spacing * 2);
+    margin-top: ($grid-spacing * 2);
+    border-top: 1px solid $button-background;
+    padding-left: 0;
+    padding-right: 0;
+
+    /* translation page is special */
+
+    details summary + & {
+        padding-top: $grid-spacing;
+        margin-top: 0;
+    }
+
+    #trans-version & {
+        border: 0;
+        padding-top: 0;
+    }
+
+    #trans-meta & {
+        border: 0;
+        padding-top: 0;
+
+        &:last-child {
+            margin-bottom: ($grid-spacing * 2);
+        }
+    }
+}

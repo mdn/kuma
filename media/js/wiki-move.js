@@ -5,7 +5,7 @@
      var $moveSlug = $('#move-slug');
      var $suggestionInput = $('#parent-suggestion');
      var $suggestionContainer= $('.parent-suggest-container');
-     var $lookupLink = $('.move-lookup-link');
+     var $lookupLink = $('.parent-suggest-link');
      var $previewUrl = $('#preview-url');
      var specific_slug = $('#current-slug').val();
      var moveLocale = $('#locale').val();

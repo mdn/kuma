@@ -1,4 +1,3 @@
-@require '../includes/mixins'
 /*
     Additional formatting for the real page content; i.e. text in the <main> element
     We cannot put these styles in the tags.styl file because they don't apply to the entire layout
@@ -13,21 +12,6 @@ $table-blue = #d4dde4;
         border-collapse: collapse;
         border: solid #e0e0dc;
         border-width: 1px 0 0 1px;
-
-        &.topicpage-table {
-            clear: both;
-            width: auto;
-
-            td {
-                padding: 10px;
-                vertical-align: top;
-                width: 50%;
-            }
-
-            small {
-                font-size: $smaller-font-size;
-            }
-        }
 
         &.standard-table {
             border: 2px solid #fff;
@@ -213,6 +197,10 @@ ul.directory-tree {
     &.error {
         border-color: #e1a696;
     }
+
+    .ckeditor-container & {
+        margin-bottom: 0;
+    }
 }
 
 .ui-helper-hidden-accessible {
@@ -259,6 +247,11 @@ ul.directory-tree {
 
 div.bug {
     font-style: italic;
+    prevent-last-child-bottom-spacing();
+
+    pre {
+        color: $text-color;
+    }
 }
 
 div.callout-box {

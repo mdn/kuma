@@ -19,7 +19,7 @@
       <div class="warning">
         <p>{{ _('Your requested move cannot be completed due to slug conflicts:') }}</p>
 
-        <ul class="move-descendants-list">
+        <ul class="document-list">
         {% for doc in descendants %}
           <li>{{ doc }}</li>
         {% endfor %}
@@ -67,7 +67,7 @@
                 <input type="hidden" value="{{ document.locale }}" id="locale" name="locale"/>
               </dd>
               <dd class="parent-suggest-container">
-                <button class="transparent move-lookup-link" type="button">{{ _('Lookup by Document Title') }}</button>
+                <button class="transparent parent-suggest-link" type="button">{{ _('Lookup by Document Title') }}</button>
 
                 <div id="parent-suggest-input-container">
                     <input type="text" placeholder="{{ _('Parent Title') }}" id="parent-suggestion" disabled />
@@ -84,7 +84,7 @@
 
         {% if descendants_count: %}
           <p><strong>{{ _('The following {d} subpages will be affected by this move:')|f(d=descendants_count) }}</strong></p>
-          <div class="move-descendants"><ul class="move-descendants-list">
+          <div class="move-descendants"><ul class="document-list">
             {% for doc in descendants %}
               <li>{{ doc }}</li>
             {% endfor %}

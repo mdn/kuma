@@ -1,0 +1,65 @@
+/* on the move page these styles govern the UI widget "Lookup by Document Title" next to "new slug" */
+
+.parent-suggest-container {
+    position: relative;
+
+    &.show {
+        .parent-suggest-link {
+            display: none;
+        }
+
+        #parent-suggest-input-container {
+            display: block;
+            opacity: 1;
+            top: -22px;
+            left: 0;
+
+            vendorize(transition, unquote('opacity, top .4s'));
+        }
+    }
+}
+
+#parent-suggest-input-container {
+    background: #eaeff2;
+    create-gradient(#eaeff2, #d4dde4, top);
+    padding: 10px;
+    border: 1px solid #d4dde4;
+    box-shadow: 0 5px 10px #ccc;
+    position: absolute;
+    margin-left: $grid-spacing;
+    opacity: 0;
+    top: -10px;
+    left: -90000px;
+
+    generate-arrow(7px);
+
+    &:before {
+        border-right: 7px solid #dfe6eb;
+        border-left: 0;
+        left: -7px;
+        top: 20px;
+    }
+    &:after {
+        border-right: 6px solid #dfe6eb;
+        border-left: 0;
+        left: -6px;
+        top: 21px;
+    }
+}
+
+/* link to trigger UI widget */
+.parent-suggest-link {
+    display: inline-block;
+    margin-left: ($grid-spacing * 2);
+    color: $link-color;
+    text-transform: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+/* this is the input itself */
+#parent-suggestion  {
+    width: 300px;
+}
