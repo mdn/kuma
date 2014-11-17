@@ -14,7 +14,7 @@ from commander.deploy import task, hostgroups
 
 import commander_settings as settings
 
-ATTACHMENTS_CLEANUP_TAG = 'attachments-split'
+ATTACHMENTS_CLEANUP_TAG = 'attachments-split-cleanup'
 
 
 @task
@@ -109,8 +109,8 @@ def pre_update(ctx, ref=settings.UPDATE_REF):
     update_info()
     if ref == ATTACHMENTS_CLEANUP_TAG:
         with ctx.lcd(settings.SRC_DIR):
-            ctx.local("python2.6 manage.py migrate wiki --delete-ghost-migrations --fake --noinput")
-            ctx.local("python2.6 manage.py migrate attachments 0003 --fake --noinput")
+            ctx.local("python2.6 manage.py migrate feeder --delete-ghost-migrations --fake --noinput")
+            ctx.local("python2.6 manage.py migrate wiki --noinput")
             ctx.local("python2.6 manage.py migrate --noinput")
 
 

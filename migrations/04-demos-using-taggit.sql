@@ -1,3 +1,0 @@
---
--- Tables for taggit app
---
