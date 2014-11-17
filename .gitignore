@@ -24,7 +24,6 @@ locale
 xfers/*
 puppet/cache/*
 humans.txt
-apps/humans/tmp
 tmp
 webroot/.htaccess
 kumascript.log
