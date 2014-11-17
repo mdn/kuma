@@ -5,7 +5,7 @@ class python_prereqs {
         [ "python-setuptools", "python-virtualenv", "python-pip",
           "python-imaging", "python-mysqldb", "python-pylibmc",
           "python-jinja2", "python-coverage", "ipython", "python-sqlparse",
-          "python-pyquery", "python-pygments", "pylint", "pyflakes"]:
+          "python-pyquery", "python-pygments", "pyflakes"]:
           ensure => purged;
     }
     file {
