@@ -1,11 +1,6 @@
 language: python
 cache: apt
 
-python:
-    - "2.6"
-
-env: FORCE_DB=1 PYTHONPATH=. DJANGO_SETTINGS_MODULE=settings_travis DEBIAN_FRONTEND=noninteractive
-
 services:
     - memcached
 
@@ -27,17 +22,16 @@ before_install:
     - sudo service elasticsearch start
 
 install:
-    # we install 1.4.x here separately because 1.4.x can't be packaged as a wheel file
-    - pip install -U pip wheel Django==1.4.13
-    - pip install --no-index --find-links=travis_wheels -r requirements/compiled.txt
-    - pip install --find-links=base_wheels -r requirements/prod.txt -r requirements/dev.txt
-    - pip install coveralls
+    - pip install coveralls tox
 
 before_script:
     - mysql -e 'create database kuma;'
 
+env:
+  - DJANGO_SETTINGS_MODULE=settings_travis DEBIAN_FRONTEND=noninteractive TOXENV=py26
+
 script:
-    - coverage run --include=`pwd`/kuma/*,`pwd`/apps/* manage.py test --noinput -v2 access actioncounters authkeys contentflagging devmo kpi kuma landing sumo
+    - tox
 
 after_success:
     - coveralls
