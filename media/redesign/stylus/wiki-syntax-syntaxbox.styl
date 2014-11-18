@@ -21,3 +21,24 @@ pre.twopartsyntaxbox code[class*="language-"] {
     white-space: pre-line;
 }
 
+.syntaxbox-help {
+    height: 1.2em;
+    float: left;
+    font-size: $larger-font-size;
+    margin-left: -1.1em; /* width of icon */
+    margin-top: -4px;
+    opacity: 0;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    width: 1.1em;
+
+    &.isOpaque,
+    &:hover,
+    &:focus {
+        opacity: 1;
+    }
+}
+
+/* show on hover */
+/* show when tabbed to, make focusable */
