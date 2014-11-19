@@ -1095,7 +1095,7 @@ CONSTANCE_CONFIG = dict(
 
     BLEACH_ALLOWED_ATTRIBUTES = (
         json.dumps({
-            '*': ['id', 'class', 'style'],
+            '*': ['id', 'class', 'style', 'lang'],
         }),
         "JSON object associating tags with lists of allowed attributes",
     ),
