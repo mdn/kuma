@@ -62,7 +62,7 @@ define([
             return dfd;
         },
 
-        'Logging in with Persona with real credentials works': function() {
+        '[requires-login] Logging in with Persona with real credentials works': function() {
 
             var dfd = this.async(config.testTimeout);
             var remote = this.remote;

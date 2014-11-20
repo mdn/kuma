@@ -3,12 +3,15 @@
 define({
     mixinArgs: function(args, config) {
 
+        args.grep = args.grep || '';
+
         // Take an argument with comma-separated value and apply it
         function checkAndParse(property, arg, callback) {
             if(arg) arg = arg.trim();
             if(!arg) return;
 
             config[property].length = 0;
+
             arg.trim().split(',').forEach(callback);
         }
 
@@ -22,6 +25,12 @@ define({
         checkAndParse('functionalSuites', args.t, function(item) {
             config.functionalSuites.push('tests/' + item.trim());
         });
+
+        // Set a username and password if present
+        // If we weren't provided username and password, let's set a grep to avoid login tests
+        if(args.u == undefined && args.p == undefined) {
+            args.grep+= '^(?!.*?\\[requires-login\\])';
+        }
 
         return config;
     }

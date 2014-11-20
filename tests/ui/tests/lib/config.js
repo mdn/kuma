@@ -23,6 +23,10 @@ define(['intern'], function(intern) {
             smallMobile: 480
         },
 
+        // Credentials
+        personaUsername: intern.args.u || '',
+        personaPassword: intern.args.p || '',
+
         // Async testing in milliseconds
         testTimeout: 22000
 
