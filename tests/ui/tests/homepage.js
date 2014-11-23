@@ -16,7 +16,7 @@ define([
             return this.remote.get(config.homepageUrl);
         },
 
-        'Ensure homepage is displaying search form and accepts text': function() {
+        'Homepage search form displays and accepts text': function() {
 
             var term = 'Hello';
 
@@ -71,60 +71,6 @@ define([
                         });
 
         },
-
-        'Hovering over Zones menu displays submenu': function() {
-
-            return this.remote
-                        .findByCssSelector('#main-nav a')
-                        .moveMouseTo(5, 5)
-                        .end()
-                        .findById('nav-zones-submenu')
-                        .then(function(element) {
-                            return poll.until(element, 'isDisplayed').then(function() {
-                                // Polling proves it's true :)
-                                assert.isTrue(true);
-                            });
-                        });
-
-        },
-
-        'Focusing on the header search box expands the input': function() {
-
-            var searchBoxId = 'main-q';
-            var originalSize;
-
-            return this.remote
-                            .findById(searchBoxId)
-                            .getSize()
-                            .then(function(size) {
-                                originalSize = size;
-                            })
-                            .click()
-                            .end()
-                            .sleep(2000) // wait for animation
-                            .findById(searchBoxId)
-                            .getSize()
-                            .then(function(newSize) {
-                                assert.isTrue(newSize.width > originalSize.width);
-                            });
-        },
-
-        'Changing the footer\'s language selector changes locale via URL': function() {
-
-            return this.remote
-                        .findById('language')
-                        .moveMouseTo(5, 5)
-                        .click()
-                        .type(['e', keys.RETURN])
-                        .getCurrentUrl()
-                        .then(function(url) {
-                            assert.isTrue(url.indexOf('/es/') != -1);
-                        })
-                        .goBack(); // Cleanup to go back to default locale
-
-        },
-
-        'Tabzilla loads properly': libAssert.elementExistsAndDisplayed('#tabzilla')
 
     });
 

@@ -24,9 +24,6 @@ class DocumentAttachment(models.Model):
     attached_by = models.ForeignKey(User, null=True)
     name = models.TextField()
 
-    class Meta(object):
-        db_table = 'wiki_documentattachment'
-
 
 class Attachment(models.Model):
     """
@@ -37,7 +34,6 @@ class Attachment(models.Model):
     markup in the document.
     """
     class Meta(object):
-        db_table = 'wiki_attachment'
         permissions = (
             ("disallow_add_attachment", "Cannot upload attachment"),
         )
@@ -142,9 +138,6 @@ class AttachmentRevision(models.Model):
     is_mindtouch_migration = models.BooleanField(
         default=False, db_index=True,
         help_text="Did this revision come from MindTouch?")
-
-    class Meta(object):
-        db_table = 'wiki_attachmentrevision'
 
     def filename(self):
         return self.file.path.split('/')[-1]
