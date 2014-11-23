@@ -114,6 +114,7 @@ SUMO_LANGUAGES = (
 # Accepted locales
 MDN_LANGUAGES = (
                  'en-US',
+                 'af',
                  'ar',
                  'bn-BD',
                  'bn-IN',
@@ -149,8 +150,10 @@ MDN_LANGUAGES = (
                  'th',
                  'tr',
                  'vi',
+                 'xh',
                  'zh-CN',
-                 'zh-TW'
+                 'zh-TW',
+                 'zu',
 )
 
 RTL_LANGUAGES = (
@@ -1092,7 +1095,7 @@ CONSTANCE_CONFIG = dict(
 
     BLEACH_ALLOWED_ATTRIBUTES = (
         json.dumps({
-            '*': ['id', 'class', 'style'],
+            '*': ['id', 'class', 'style', 'lang'],
         }),
         "JSON object associating tags with lists of allowed attributes",
     ),

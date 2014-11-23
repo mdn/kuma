@@ -3,20 +3,24 @@ import datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
+from django.db.utils import DatabaseError
 
 
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Deleting model 'Profile'
-        db.delete_table('users_profile')
+        try:
+            # Deleting model 'Profile'
+            db.delete_table('users_profile')
 
-        # Deleting model 'RegistrationProfile'
-        db.delete_table('users_registrationprofile')
+            # Deleting model 'RegistrationProfile'
+            db.delete_table('users_registrationprofile')
 
-        # Deleting model 'EmailChange'
-        db.delete_table('users_emailchange')
-
+            # Deleting model 'EmailChange'
+            db.delete_table('users_emailchange')
+        except DatabaseError:
+            # the tables may not exists after all
+            pass
 
     def backwards(self, orm):
         # Adding model 'Profile'

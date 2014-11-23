@@ -1,3 +1,0 @@
---
--- actioncounters app converted to use South, simulate --fake to skip first migration
---

@@ -173,6 +173,15 @@
     }
 }
 
+.demo-terms {
+    color: #fff;
+
+    @media print {
+        color: $text-color;
+    }
+}
+
+
 @media $media-query-tablet {
     #demobox .screenshots.multi-images .nav-slide {
         .next, .prev {
@@ -181,7 +190,7 @@
             display: block !important;
             outline: 0;
             background-color: transparent;
-            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
         }
 
         .prev {
@@ -193,6 +202,7 @@
         }
     }
 }
+
 
 @media $media-query-mobile {
 

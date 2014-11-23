@@ -5,7 +5,6 @@ from tower import ugettext_lazy as _lazy
 
 from django.conf import settings
 
-
 ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'div', 'span', 'p', 'br', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
     'pre', 'code', 'cite',
@@ -33,6 +32,8 @@ ALLOWED_TAGS = bleach.ALLOWED_TAGS + [
     'annotation-xml',
 ]
 ALLOWED_ATTRIBUTES = bleach.ALLOWED_ATTRIBUTES
+
+ALLOWED_ATTRIBUTES['*'] = ['lang']
 # Note: <iframe> is allowed, but src="" is pre-filtered before bleach
 ALLOWED_ATTRIBUTES['iframe'] = ['id', 'src', 'sandbox', 'seamless',
                                 'frameborder', 'width', 'height', 'class']

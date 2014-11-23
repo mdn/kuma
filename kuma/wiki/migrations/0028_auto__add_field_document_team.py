@@ -7,13 +7,13 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding field 'Document.team'
         db.add_column('wiki_document', 'team', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['teamwork.Team'], null=True, blank=True), keep_default=False)
 
 
     def backwards(self, orm):
-        
+
         # Deleting field 'Document.team'
         db.delete_column('wiki_document', 'team_id')
 
@@ -75,18 +75,18 @@ class Migration(SchemaMigration):
             'secret': ('django.db.models.fields.CharField', [], {'max_length': '10', 'null': 'True', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True', 'blank': 'True'})
         },
-        'wiki.attachment': {
+        'attachments.attachment': {
             'Meta': {'object_name': 'Attachment'},
-            'current_revision': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'current_rev'", 'null': 'True', 'to': "orm['wiki.AttachmentRevision']"}),
+            'current_revision': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'current_rev'", 'null': 'True', 'to': "orm['attachments.AttachmentRevision']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'mindtouch_attachment_id': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'db_index': 'True'}),
             'modified': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'null': 'True', 'db_index': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'})
         },
-        'wiki.attachmentrevision': {
+        'attachments.attachmentrevision': {
             'Meta': {'object_name': 'AttachmentRevision'},
-            'attachment': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'revisions'", 'to': "orm['wiki.Attachment']"}),
+            'attachment': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'revisions'", 'to': "orm['attachments.Attachment']"}),
             'comment': ('django.db.models.fields.CharField', [], {'max_length': '255', 'blank': 'True'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             'creator': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'created_attachment_revisions'", 'to': "orm['auth.User']"}),
@@ -105,7 +105,7 @@ class Migration(SchemaMigration):
             'category': ('django.db.models.fields.IntegerField', [], {'db_index': 'True'}),
             'current_revision': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'current_for+'", 'null': 'True', 'to': "orm['wiki.Revision']"}),
             'defer_rendering': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'db_index': 'True'}),
-            'files': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['wiki.Attachment']", 'through': "orm['wiki.DocumentAttachment']", 'symmetrical': 'False'}),
+            'files': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['attachments.Attachment']", 'through': "orm['wiki.DocumentAttachment']", 'symmetrical': 'False'}),
             'html': ('django.db.models.fields.TextField', [], {}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_localizable': ('django.db.models.fields.BooleanField', [], {'default': 'True', 'db_index': 'True'}),
@@ -131,7 +131,7 @@ class Migration(SchemaMigration):
             'Meta': {'object_name': 'DocumentAttachment'},
             'attached_by': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'}),
             'document': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['wiki.Document']"}),
-            'file': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['wiki.Attachment']"}),
+            'file': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['attachments.Attachment']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.TextField', [], {})
         },
