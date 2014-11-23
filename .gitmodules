@@ -15,4 +15,4 @@
 	url = git://github.com/WebSpellChecker/ckeditor-plugin-wsc.git
 [submodule "media/js/libs/ckeditor/source/plugins/descriptionlist"]
 	path = media/js/libs/ckeditor/source/plugins/descriptionlist
-	url = git://github.com/Reinmar/ckeditor-descriptionlist
+	url = git://github.com/Reinmar/ckeditor-plugin-descriptionlist
