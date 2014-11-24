@@ -149,7 +149,7 @@
       </li><li><a href="{{ devmo_url('Tools') }}">{{ _('Tools') }}</a></li><li><a href="{{ url('demos') }}">{{ _('Demos') }}</a></li><li><a href="{{ devmo_url('Mozilla/Connect') }}">{{ _('Connect') }}</a></li><li class="nav-search-link"><a href="{{ url('search') }}" title="Search"><i aria-hidden="true" class="icon-search"></i></a></li>{% if not is_sphinx %}<li class="main-nav-search"><form action="{{ url('search') }}" method="get" role="search">
         <div class="search-wrap">
           <label for="main-q" class="offscreen">{{ _('Search') }}</label>
-          <input type="search" id="main-q" name="q" data-placeholder="{{ _('Search') }}" data-value="{{ query }}" value="" />
+          <input type="search" id="main-q" name="q" placeholder="{{ _('Search') }}" data-value="{{ query }}" value="" />
           <span class="search-trigger"><i aria-hidden="true" class="icon-search"></i></span>&nbsp;
           <button type="submit" class="offscreen">{{ _('Search') }}</button>
         </div>

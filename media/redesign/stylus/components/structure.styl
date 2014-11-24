@@ -121,9 +121,13 @@ draw-grid();
             > a, .search-wrap {
                 padding: 4px 8px;
             }
+        }
 
-            &.nav-search-link {
+        .nav-search-link {
                 display: none;
+
+            {$selector-icon} {
+                margin: 0;
             }
         }
     }
@@ -162,10 +166,6 @@ draw-grid();
     }
 
     &.expand {
-        .search-wrap {
-            width: 500px;
-        }
-
         > ul > li:not(:last-child) {
             opacity: 0;
             width: 0;
@@ -175,6 +175,12 @@ draw-grid();
             vendorize(transition-delay, 0);
         }
     }
+}
+
+.main-nav-search {
+    position: relative;
+    width: 73px;
+    height: 21px;
 }
 
 a.persona-button, a.github-button {
@@ -406,16 +412,16 @@ a.github-button {
     }
 }
 
-
 .search-wrap {
-    background: transparent;
-    padding: 4px 8px;
+    background-color: rgba-fallback(rgba(255, 255, 255, 0.9));
     border-radius: 3px;
-    position: relative;
+    height: 21px;
+    position: absolute;
+    padding: 4px 8px;
+    top: 0;
+    bidi-style(right, 0, left, auto);
     vendorize(transition-property, width);
     vendorize(transition-duration, $default-animation-duration);
-    width: 60px;
-    background-color: rgba-fallback(rgba(255, 255, 255, 0.9));
 
     &.expanded {
         background: #fff;
@@ -423,32 +429,40 @@ a.github-button {
 
     input {
         background: transparent;
-        border: 0;
+        border: solid transparent;
+        bidi-value(border-width, 0 22px 0 0, 0 0 0 22px);
+        box-sizing: border-box;
         color: $menu-link-color;
         font-weight: bold;
         overflow: hidden;
         padding: 0;
-        vendorize(transition-property, width);
+        position: relative;
+        vendorize(transition-property, 'width, opacity');
         vendorize(transition-duration, $default-animation-duration);
-        position: absolute;
-        left: 8px;
-        width: 90%;
+        width: 48px;
+        max-width: 100%;
         z-index: 2;
-        cursor: pointer;
+        cursor: text;
+        opacity: 0.01;
 
         set-placeholder-style(color, $text-color);
         set-placeholder-style(text-transform, uppercase);
-    }
 
-    .search-trigger {
-        position: absolute;
-        bidi-style(right, 12px, left, auto);
-        z-index: 1;
-        cursor: pointer;
+        &:focus {
+            width: 500px;
+            opacity: 1;
+        }
     }
 }
 
+.search-trigger {
+    cursor: text;
+    position: absolute;
+    top: 3px;
+    bidi-style(right, 12px, left, auto);
+    z-index: 1;
 
+}
 
 /* feature testing */
 #feature-test-element {
@@ -524,7 +538,7 @@ a.github-button {
 
     #main-nav {
         > ul {
-            text-align: right;
+            bidi-value(text-align, right, left);
             width: 100%;
             clear: both;
 
@@ -545,10 +559,10 @@ a.github-button {
     #main-nav {
         > ul {
             float: none;
-            text-align: left;
+            bidi-value(text-align, left, right);
 
             > li {
-                margin: 6px 6px 6px 0;
+                bidi-value(margin, 6px 6px 6px 0, 6px 0 6px 6px);
             }
         }
     }
@@ -604,7 +618,13 @@ a.github-button {
             width: auto;
 
             .search-wrap {
-                width: auto;
+                width: 90%;
+                bidi-value(left, auto, 0);
+                bidi-value(right, 0, auto);
+
+                input {
+                    width: 100%;
+                }
             }
         }
 
