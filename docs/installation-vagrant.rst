@@ -75,13 +75,9 @@ Install and run everything
        20:32:59 stylus.1     | started with pid 2247
        ...
 
-#. Visit the following address in your browser and add an exception for the security certificate if prompted::
+#. Visit `https://mdn-local.mozillademos.org <https://mdn-local.mozillademos.org>`_ and add an exception for the security certificate if prompted
 
-       https://mdn-local.mozillademos.org
-
-#. Go to the homepage::
-
-       https://developer-local.allizom.org/
+#. Visit `the homepage <https://developer-local.allizom.org/>`_
 
 #. You've installed Kuma! If you want `the badge`_, send a screenshot of your
    browser to luke dot crouch at gmail dot com.
