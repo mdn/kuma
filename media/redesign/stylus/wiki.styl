@@ -1103,8 +1103,9 @@ details {
    <details> is not natively supported. Add focus styles (for keyboard
    accessibility) */
 .no-details {
-    summary:hover, summary:focus {
-        outline: 0; /* csslint - see bug #1083481 */
+
+    summary {
+        display: block;
     }
 
     summary:before {
