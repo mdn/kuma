@@ -28,7 +28,7 @@ define([
             return Page.teardown();
         },
 
-        'The new document screen passes all the checks': function() {
+        '[requires-login] The new document screen passes all the checks': function() {
 
             var remote = this.remote;
 

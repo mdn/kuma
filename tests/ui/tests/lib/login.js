@@ -1,17 +1,16 @@
 define([
-    'intern',
     'intern/dojo/node!http',
     'intern/dojo/Deferred',
     'base/lib/config',
     'base/lib/poll',
     'intern/chai!assert'
-], function(intern, http, Deferred, config, poll, assert) {
+], function(http, Deferred, config, poll, assert) {
 
     return {
 
         // Login credentials from the command line
-        personaUsername: intern.args.u,
-        personaPassword: intern.args.p,
+        personaUsername: config.personaUsername,
+        personaPassword: config.personaPassword,
 
         openLoginWidget: function(remote) {
             // Simply hovers over the top login widget so that login links can be clicked
