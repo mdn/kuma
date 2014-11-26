@@ -2,16 +2,30 @@ define([
     'intern!object',
     'intern/chai!assert',
     'base/lib/config',
-    'base/lib/login',
-    'base/lib/assert'
-], function(registerSuite, assert, config, libLogin, libAssert) {
+    'base/lib/assert',
+    'base/lib/POM'
+], function(registerSuite, assert, config, libAssert, POM) {
+
+    // Create this page's specific POM
+    var Page = new POM({
+        // Any functions used multiple times or important properties of the page
+    });
 
     registerSuite({
 
         name: 'wiki',
 
         before: function() {
-            return libLogin.completePersonaLogin(this.remote);
+            Page.init(this.remote, config.homepageUrl);
+            return Page.login();
+        },
+
+        beforeEach: function() {
+            return Page.setup();
+        },
+
+        after: function() {
+            return Page.teardown();
         },
 
         'The new document screen passes all the checks': function() {
@@ -42,17 +56,12 @@ define([
 
             return remote.get(config.url + 'docs/new?slug=Template:')
                         .then(function() {
-                            // Ensure that CKEditor loaded properly
+                            // Ensure that Ace loaded properly
                             return libAssert.windowPropertyExists(remote, 'ace_editor');
                         });
 
         }
         */
-
-        after: function() {
-            return libLogin.completePersonaLogout(this.remote);
-        }
-
     });
 
 });

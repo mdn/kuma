@@ -1,19 +1,33 @@
 define([
     'intern!object',
     'intern/chai!assert',
-    'intern/dojo/node!leadfoot/keys',
     'base/lib/config',
-    'base/lib/login',
-    'base/lib/assert',
-    'base/lib/poll'
-], function(registerSuite, assert, keys, config, libLogin, libAssert, poll) {
+    'base/lib/poll',
+    'base/lib/POM'
+], function(registerSuite, assert, config, poll, POM) {
 
+    // Create this page's specific POM
+    var Page = new POM({
+        // Any functions used multiple times or important properties of the page
+        searchBoxId: 'home-q'
+    });
+
+
+    // Register the tests to be run
     registerSuite({
 
         name: 'home',
 
+        before: function() {
+            return Page.init(this.remote, config.homepageUrl);
+        },
+
         beforeEach: function() {
-            return this.remote.get(config.homepageUrl);
+            return Page.setup();
+        },
+
+        after: function() {
+            return Page.teardown();
         },
 
         'Homepage search form displays and accepts text': function() {
@@ -21,7 +35,7 @@ define([
             var term = 'Hello';
 
             return this.remote
-                        .findById('home-q')
+                        .findById(Page.searchBoxId)
                         .click()
                         .type(term)
                         .getProperty('value')
@@ -62,7 +76,7 @@ define([
                             windowSize = size;
                         })
                         .setWindowSize(config.mediaQueries.mobile, 400)
-                        .findById('home-q')
+                        .findById(Page.searchBoxId)
                         .isDisplayed()
                         .then(function(bool) {
                             assert.isFalse(bool);

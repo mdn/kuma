@@ -3,15 +3,29 @@ define([
     'intern/chai!assert',
     'intern/dojo/node!leadfoot/keys',
     'base/lib/config',
-    'base/lib/assert'
-], function(registerSuite, assert, keys, config, libAssert) {
+    'base/lib/assert',
+    'base/lib/POM'
+], function(registerSuite, assert, keys, config, libAssert, POM) {
+
+    // Create this page's specific POM
+    var Page = new POM({
+        // Any functions used multiple times or important properties of the page
+    });
 
     registerSuite({
 
         name: 'footer',
 
+        before: function() {
+            return Page.init(this.remote, config.homepageUrl);
+        },
+
         beforeEach: function() {
-            return this.remote.get(config.homepageUrl);
+            return Page.setup();
+        },
+
+        after: function() {
+            return Page.teardown();
         },
 
         'Changing the footer\'s language selector changes locale via URL': function() {
