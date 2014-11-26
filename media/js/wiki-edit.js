@@ -288,11 +288,11 @@
         $('details').addClass('no-details').each(function() {
             // Store a reference to the current `details` element in a variable
             var $details = $(this);
-                // Store a reference to the `summary` element of the current `details` element (if any) in a variable
+            // Store a reference to the `summary` element of the current `details` element (if any) in a variable
             var $detailsSummary = $('summary', $details);
-                // Do the same for the info within the `details` element
+            // Do the same for the info within the `details` element
             var $detailsNotSummary = $details.children(':not(summary)');
-                // This will be used later to look for direct child text nodes
+            // This will be used later to look for direct child text nodes
             var $detailsNotSummaryContents = $details.contents(':not(summary)');
 
             // If there is no `summary` in the current `details` element...
