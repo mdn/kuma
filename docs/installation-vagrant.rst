@@ -77,7 +77,7 @@ Install and run everything
 
 #. Visit `https://mdn-local.mozillademos.org <https://mdn-local.mozillademos.org>`_ and add an exception for the security certificate if prompted
 
-#. Visit `the homepage <https://developer-local.allizom.org/>`_
+#. Visit the homepage at `https://developer-local.allizom.org <https://developer-local.allizom.org/>`_
 
 #. You've installed Kuma! If you want `the badge`_, send a screenshot of your
    browser to luke dot crouch at gmail dot com.
