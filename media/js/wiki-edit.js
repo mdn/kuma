@@ -212,7 +212,10 @@
         if ($body.is('.new')) {
             initPrepopulatedSlugs();
         }
-        initDetailsTags();
+
+        if($('details').length){
+            initDetailsTags();
+        }
 
         if ($body.is('.edit, .new, .translate')) {
             initMetadataEditButton();
@@ -251,75 +254,95 @@
     // Make <summary> and <details> tags work even if the browser doesn't support them.
     // From http://mathiasbynens.be/notes/html5-details-jquery
     function initDetailsTags() {
-        var supportsDetails = ('open' in doc.createElement('details'));
+        // test for browser support of details from http://mathiasbynens.be/notes/html5-details-jquery
+        var supportsDetails = (function(doc) {
+            var el = doc.createElement('details')
+            var isFake;
+            var root;
+            var diff;
+            if (!('open' in el)) {
+                return false;
+            }
+            root = doc.body || (function() {
+                var de = doc.documentElement;
+                isFake = true;
+                return de.insertBefore(doc.createElement('body'), de.firstElementChild || de.firstChild);
+            }());
+            el.innerHTML = '<summary>a</summary>b';
+            el.style.display = 'block';
+            root.appendChild(el);
+            diff = el.offsetHeight;
+            el.open = true;
+            diff = diff != el.offsetHeight;
+            root.removeChild(el);
+            if (isFake) {
+                root.parentNode.removeChild(root);
+            }
+            return diff;
+        }(document));
 
-        // Execute the fallback only if there's no native `details` support
-        if (!supportsDetails) {
-            // Note <details> tag support. Modernizr doesn't do this properly as of 1.5; it thinks Firefox 4 can do it, even though the tag has no "open" attr.
-            $('details').addClass('no-details');
+        // No reason to move further if details are supported!
+        if(supportsDetails) return;
 
-            // Loop through all `details` elements
-            $('details').each(function() {
-                // Store a reference to the current `details` element in a variable
-                var $details = $(this),
-                    // Store a reference to the `summary` element of the current `details` element (if any) in a variable
-                    $detailsSummary = $('summary', $details),
-                    // Do the same for the info within the `details` element
-                    $detailsNotSummary = $details.children(':not(summary)'),
-                    // This will be used later to look for direct child text nodes
-                    $detailsNotSummaryContents = $details.contents(':not(summary)');
+        // Note <details> tag support. Modernizr doesn't do this properly as of 1.5; it thinks Firefox 4 can do it, even though the tag has no "open" attr.
+        $('details').addClass('no-details').each(function() {
+            // Store a reference to the current `details` element in a variable
+            var $details = $(this);
+            // Store a reference to the `summary` element of the current `details` element (if any) in a variable
+            var $detailsSummary = $('summary', $details);
+            // Do the same for the info within the `details` element
+            var $detailsNotSummary = $details.children(':not(summary)');
+            // This will be used later to look for direct child text nodes
+            var $detailsNotSummaryContents = $details.contents(':not(summary)');
 
-                // If there is no `summary` in the current `details` element...
-                if (!$detailsSummary.length) {
-                    // ...create one with default text
-                    $detailsSummary = $(doc.createElement('summary')).text('Details').prependTo($details);
-                }
+            // If there is no `summary` in the current `details` element...
+            if (!$detailsSummary.length) {
+                // ...create one with default text
+                $detailsSummary = $(doc.createElement('summary')).text(gettext('Details')).prependTo($details);
+            }
 
-                // Look for direct child text nodes
-                if ($detailsNotSummary.length !== $detailsNotSummaryContents.length) {
-                    // Wrap child text nodes in a `span` element
-                    $detailsNotSummaryContents.filter(function() {
-                        // Only keep the node in the collection if it's a text node containing more than only whitespace
-                        return (this.nodeType === 3) && (/[^\t\n\r ]/.test(this.data));
-                    }).wrap('<span>');
-                    // There are now no direct child text nodes anymore -- they're wrapped in `span` elements
-                    $detailsNotSummary = $details.children(':not(summary)');
-                }
+            // Look for direct child text nodes
+            if ($detailsNotSummary.length !== $detailsNotSummaryContents.length) {
+                // Wrap child text nodes in a `span` element
+                $detailsNotSummaryContents.filter(function() {
+                    // Only keep the node in the collection if it's a text node containing more than only whitespace
+                    return (this.nodeType === 3) && (/[^\t\n\r ]/.test(this.data));
+                }).wrap('<span>');
+                // There are now no direct child text nodes anymore -- they're wrapped in `span` elements
+                $detailsNotSummary = $details.children(':not(summary)');
+            }
 
-                // Hide content unless there's an `open` attribute
+            // Hide content unless there's an `open` attribute
+            if (typeof $details.attr('open') !== 'undefined') {
+                $details.addClass('open');
+                $detailsNotSummary.show();
+            } else {
+                $detailsNotSummary.hide();
+            }
+
+            // add ARIA, tabindex, listeners and events
+            $detailsSummary.attr('tabindex', 0).attr('role', 'button').on('click', function() {
+                // Focus on the `summary` element
+                $detailsSummary.focus();
+                // Toggle the `open` attribute of the `details` element
                 if (typeof $details.attr('open') !== 'undefined') {
-                    $details.addClass('open');
-                    $detailsNotSummary.show();
+                    $details.removeAttr('open');
+                    $detailsSummary.attr('aria-expanded', 'false');
                 } else {
-                    $detailsNotSummary.hide();
+                    $details.attr('open', 'open');
+                    $detailsSummary.attr('aria-expanded', 'true');
                 }
-
-                // Set the `tabindex` attribute of the `summary` element to 0 to make it keyboard accessible
-                $detailsSummary.attr('tabindex', 0).on('click', function() {
-                    // Focus on the `summary` element
-                    $detailsSummary.focus();
-                    // Toggle the `open` attribute of the `details` element
-                    if (typeof $details.attr('open') !== 'undefined') {
-                        $details.removeAttr('open');
-                    }
-                    else {
-                        $details.attr('open', 'open');
-                    }
-                    // Toggle the additional information in the `details` element
-                    $detailsNotSummary.slideToggle();
-                    $details.toggleClass('open');
-                }).on('keyup', function(event) {
-                    if (13 === event.keyCode || 32 === event.keyCode) {
-                        // Enter or Space is pressed -- trigger the `click` event on the `summary` element
-                        // Opera already seems to trigger the `click` event when Enter is pressed
-                        if (!($.browser.opera && 13 === event.keyCode)) {
-                            event.preventDefault();
-                            $detailsSummary.click();
-                        }
-                    }
-                });
+                // Toggle the additional information in the `details` element
+                $detailsNotSummary.slideToggle();
+                $details.toggleClass('open');
+            }).on('keyup', function(ev) {
+                if (32 == ev.keyCode || 13 == ev.keyCode) {
+                    // Opera already seems to trigger the `click` event when Enter is pressed
+                    ev.preventDefault();
+                    $detailsSummary.click();
+                }
             });
-        }
+        });
     }
 
     function initPrepopulatedSlugs() {
