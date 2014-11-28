@@ -1225,19 +1225,24 @@ a.liveSample:focus {
 }
 /* callout boxes etc */
 .standardSidebar {
-    border: 1px solid #777;
-    margin: 0 0 15px 15px;
-    padding: 0 15px 5px;
-    float: right;
+    background: $light-background-color;
+    padding: $grid-spacing 15px;
+    bidi-value(margin, 0 0 15px 15px, 0 15px 15px 0);
+    padding: 5px 15px;
+    bidi-value(float, right, left);
     background: #eee;
     font-size: 0.85em;
     position: relative;
     z-index: 2;
 }
-[dir="rtl"] .standardSidebar {
-    margin: 0 15px 15px 0;
-    float: left;
+
+@media $media-query-small-mobile {
+    html .standardSidebar {
+        float:none;
+        margin: 0 0 15px 0;
+    }
 }
+
 /* Colored text for INCORRECT/BAD and CORRECT/GOOD values (and BEST)*/
 .correct {
     color: #008000;
