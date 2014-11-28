@@ -130,42 +130,46 @@ table#fullwidth-table td.thirdColumn {
 }
 /* Multi-column box for smaller text */
 .horizFlexboxContainer {
-    display: flex;
     display: -webkit-flex;
+    display: flex;
     vendorize(flex-flow, column nowrap);
     vendorize(justify-content, center);
     vendorize(align-content, center);
     vendorize(align-items, center);
     vendorize(flex-direction, column);
 }
-div.smallTextMultiColumnBoxHeading {
-    background-color: #aac;
-    border-radius: 10px 10px 0 0;
-    border: 2px solid #ccc;
-    vendorize(order, 1);
+.smallTextMultiColumnBoxHeading {
     width: 75%;
     padding: 10px;
     vendorize(flex, 0 1 auto);
     font-weight: bold;
+    background-color: #e0e2e4;
 }
-div.smallTextMultiColumnBoxList {
-    border: 2px solid #ccc;
-    background-color: #ddf;
-    border-top: 0;
-    border-radius: 0 0 10px 10px;
+.smallTextMultiColumnBoxList {
     width: 75%;
     padding: 10px;
     vendorize(order, 2);
     vendorize(flex, 0 1 auto);
+    background-color: $light-background-color;
 }
-div.smallTextMultiColumnBoxList ul {
+.smallTextMultiColumnBoxList ul {
     vendorize(column-width, 100px);
+    margin-bottom: 0;
+    padding-left: 0;
 }
-div.smallTextMultiColumnBoxList li {
+.smallTextMultiColumnBoxList li {
     list-style-type: none;
     padding-left: 0;
     font-size: 80%;
 }
+
+@media $media-query-mobile {
+    .smallTextMultiColumnBoxHeading,
+    .smallTextMultiColumnBoxList {
+        width: 90%;
+    }
+}
+
 /* For ending "text alongside images" blocks; add this class to the first block that shouldn't be next to the image */
 .endImageWrapping {
     clear: both;
