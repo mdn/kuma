@@ -191,6 +191,7 @@ div.smallTextMultiColumnBoxList li {
     counter-reset: fancyTOC;
     vendorize(columns, 18em);
     margin-bottom: 1em;
+    column-gap: $grid-spacing;
 }
 .fancyTOC .button {
     display: block;
@@ -200,6 +201,13 @@ div.smallTextMultiColumnBoxList li {
     color: #fff;
     font-size: 1.5em;
     line-height: 1.5;
+    overflow: hidden; /* Fix for firefox and IE 10-11  */
+    -webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
+    page-break-inside: avoid; /* Deprecated Firefox */
+    -moz-column-break-inside:avoid; /* Current Firefox */
+    column-break-inside:avoid;
+    break-inside: avoid; /* IE 10+ */
+    break-inside: avoid-column;
 }
 .fancyTOC a::before {
     counter-increment: fancyTOC;
@@ -207,6 +215,7 @@ div.smallTextMultiColumnBoxList li {
 }
 .fancyTOC a::after {
     content: ' »';
+    speak: none;
 }
 .fancyTOC .button:hover,
 .fancyTOC .button:focus,
@@ -303,6 +312,7 @@ div.index.widgeted li.webcomp::after {
 .quicknav:hover .showme {
     color: #333;
 }
+
 .cleared {
     clear: both;
 }
