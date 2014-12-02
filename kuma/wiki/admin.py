@@ -292,6 +292,14 @@ class DocumentAdmin(admin.ModelAdmin):
             del actions['delete_selected']
         return actions
 
+    def has_delete_permission(self, request, obj=None):
+        """
+        Disable deletion of individual Documents, by always returning
+        False for the permission check.
+        
+        """
+        return False
+
     def queryset(self, request):
         """
         The Document class has multiple managers which perform
