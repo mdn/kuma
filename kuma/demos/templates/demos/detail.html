@@ -258,22 +258,17 @@
 
             <h3 class="mod-title">{{_('About this Demo')}}</h3>
 
-            {% if submission.license_name != 'author' %}
-                <p class="download"><a href="{{ url('demos_download', slug=submission.slug) }}">{% trans file_ksize=(submission.demo_package.size/1024)|round(2,'ceil')|e %}Download the Source <span class="note">{{file_ksize}} KB &middot; ZIP File</span>{% endtrans %}</a></p>
-                {% if submission.source_code_url %}
-                <p class="browse"><a href="{{ submission.source_code_url }}">Browse the Source
-                    {# TODO: Show "hosted by {{domain}}?" #}
-                    {% if false %}<span class="note">Hosted on GitHub</span>{% endif %}</a></p>
-                {% endif %}
+            <p class="download"><a href="{{ url('demos_download', slug=submission.slug) }}">{% trans file_ksize=(submission.demo_package.size/1024)|round(2,'ceil')|e %}Download the Source <span class="note">{{file_ksize}} KB &middot; ZIP File</span>{% endtrans %}</a></p>
+            {% if submission.source_code_url %}
+            <p class="browse"><a href="{{ submission.source_code_url }}">Browse the Source
+                {# TODO: Show "hosted by {{domain}}?" #}
+                {% if false %}<span class="note">Hosted on GitHub</span>{% endif %}</a></p>
             {% endif %}
             {% set license_class = submission.license_name %}
             <p class="license {{ license_class }}">
                 {% trans link=license_link(submission.license_name)|e, title=license_title(submission.license_name)|e %}
                     This demo is released under the <a href="{{link}}">{{title}}</a> license.
                 {% endtrans %}
-                {% if submission.license_name == 'author' %}
-                {% trans %}It includes proprietary software.{% endtrans %}
-                {% endif %}
             </p>
           </div>
 
