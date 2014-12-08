@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("removeformat","uk",{toolbar:"Очистити форматування"});

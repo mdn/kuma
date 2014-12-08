@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("scayt","nl",{btn_about:"Over SCAYT",btn_dictionaries:"Woordenboeken",btn_disable:"SCAYT uitschakelen",btn_enable:"SCAYT inschakelen",btn_langs:"Talen",btn_options:"Opties",text_title:""});

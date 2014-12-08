@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("removeformat","hi",{toolbar:"फ़ॉर्मैट हटायें"});

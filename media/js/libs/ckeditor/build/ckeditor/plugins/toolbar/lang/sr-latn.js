@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("toolbar","sr-latn",{toolbarCollapse:"Suzi alatnu traku",toolbarExpand:"Proširi alatnu traku",toolbarGroups:{document:"Document",clipboard:"Clipboard/Undo",editing:"Editing",forms:"Forms",basicstyles:"Basic Styles",paragraph:"Paragraph",links:"Links",insert:"Insert",styles:"Styles",colors:"Colors",tools:"Tools"},toolbars:"Alatne trake"});

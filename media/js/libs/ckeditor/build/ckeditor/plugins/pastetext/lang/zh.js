@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("pastetext","zh",{button:"貼成純文字",title:"貼成純文字"});

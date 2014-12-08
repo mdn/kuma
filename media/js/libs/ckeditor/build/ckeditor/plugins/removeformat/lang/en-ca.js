@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("removeformat","en-ca",{toolbar:"Remove Format"});

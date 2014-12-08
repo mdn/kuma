@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("scayt","ka",{btn_about:"SCAYT-ის შესახებ",btn_dictionaries:"ლექსიკონები",btn_disable:"SCAYT-ის გამორთვა",btn_enable:"SCAYT-ის ჩართვა",btn_langs:"ენები",btn_options:"პარამეტრები",text_title:""});

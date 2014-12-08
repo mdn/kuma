@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("maximize","km",{maximize:"ពង្រីក​អតិបរមា",minimize:"បង្រួម​អប្បបរមា"});

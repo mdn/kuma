@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("removeformat","he",{toolbar:"הסרת העיצוב"});

@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("contextmenu","da",{options:"Muligheder for hjælpemenu"});

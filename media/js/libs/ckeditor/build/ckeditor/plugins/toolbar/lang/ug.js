@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("toolbar","ug",{toolbarCollapse:"قورال بالداقنى قاتلا",toolbarExpand:"قورال بالداقنى ياي",toolbarGroups:{document:"پۈتۈك",clipboard:"چاپلاش تاختىسى/يېنىۋال",editing:"تەھرىر",forms:"جەدۋەل",basicstyles:"ئاساسىي ئۇسلۇب",paragraph:"ئابزاس",links:"ئۇلانما",insert:"قىستۇر",styles:"ئۇسلۇب",colors:"رەڭ",tools:"قورال"},toolbars:"قورال بالداق"});

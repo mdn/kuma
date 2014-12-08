@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("contextmenu","si",{options:"අනතර්ග ලේඛණ  විකල්ප"});

@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("toolbar","sr",{toolbarCollapse:"Склопи алатну траку",toolbarExpand:"Прошири алатну траку",toolbarGroups:{document:"Document",clipboard:"Clipboard/Undo",editing:"Editing",forms:"Forms",basicstyles:"Basic Styles",paragraph:"Paragraph",links:"Links",insert:"Insert",styles:"Styles",colors:"Colors",tools:"Tools"},toolbars:"Едитор алатне траке"});

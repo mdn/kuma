@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("pastetext","bn",{button:"সাদা টেক্সট হিসেবে পেস্ট কর",title:"সাদা টেক্সট হিসেবে পেস্ট কর"});

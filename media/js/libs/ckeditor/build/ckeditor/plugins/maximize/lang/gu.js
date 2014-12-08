@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("maximize","gu",{maximize:"મોટું કરવું",minimize:"નાનું કરવું"});

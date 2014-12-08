@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("removeformat","ug",{toolbar:"پىچىمنى چىقىرىۋەت"});

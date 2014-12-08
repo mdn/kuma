@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("elementspath","lv",{eleLabel:"Elementa ceļš",eleTitle:"%1 elements"});

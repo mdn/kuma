@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("removeformat","gl",{toolbar:"Retirar o formato"});

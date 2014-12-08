@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("removeformat","km",{toolbar:"ជម្រះ​ទ្រង់​ទ្រាយ"});
