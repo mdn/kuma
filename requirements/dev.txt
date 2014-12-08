@@ -6,7 +6,6 @@ ipython==0.10
 sqlparse==0.1.1
 selenium==1.0.1
 translate-toolkit==1.6.0
-pylint==0.20.0
 pygments==1.4
 pep8==0.5.0
 mock==0.6.0
