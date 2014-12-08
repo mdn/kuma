@@ -768,6 +768,7 @@ MINIFY_BUNDLES = {
         ),
         'wiki': (
             'redesign/js/search-navigator.js',
+            'js/libs/scrollspy.js',
             'redesign/js/wiki.js',
         ),
         'wiki-edit': (

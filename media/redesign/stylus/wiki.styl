@@ -586,6 +586,18 @@ div.bug, div.warning, div.overheadIndicator {
         }
     }
 
+    .current:after {
+        content: '';
+        position: absolute;
+        top: 15px;
+        left: -15px;
+        display: block;
+        border-top: 4px solid transparent;
+        border-right: 0;
+        border-bottom: 4px solid transparent;
+        border-left: 5px solid #4d4e53;
+    }
+
     .toggler {
         pointer-events: none;
         color: inherit;
