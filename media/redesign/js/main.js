@@ -18,6 +18,7 @@
     /*
         Search animation
     */
+
     (function() {
         var $nav = $('#main-nav');
         var $navItems = $nav.find('ul > li:not(.nav-search-link, .main-nav-search)');
@@ -32,8 +33,13 @@
         });
 
         var timeout;
-        var createExpander = function(delay, isAdd) {
+        var createExpander = function(isAdd) {
             return function(e) {
+
+                if(isAdd) {
+                    $input.select();
+                }
+
                 // If we're on mobile, just let everything be
                 if($mainNavSearch.css('display') === 'block') {
                     return;
@@ -47,29 +53,22 @@
                             $navItems.css('display', 'none');
                             $searchWrap.addClass('expanded');
                             $nav.addClass('expand');
-                            setTimeout(function() {
-                                $input.attr('placeholder', $input.attr('data-placeholder'));
-                                $input.val($input.attr('data-value'));
-                            }, 100);
                         });
                     }
                     else {
                         $nav.removeClass('expand');
-                        $input.attr('placeholder', '');
-                        $input.attr('data-value', $input.val());
-                        $input.val('');
                         timeout = setTimeout(function() {
                             $searchWrap.removeClass('expanded');
                             $navItems.fadeIn(400);
-                        } , 500);
+                        }, 250); // corresponds to length of CSS animation
                     }
-                }, delay);
+                });
             };
         };
 
         $input.
-            on('focus', createExpander(200, true)).
-            on('blur', createExpander(600));
+            on('focus', createExpander(true)).
+            on('blur', createExpander());
     })();
 
     /*
@@ -78,7 +77,7 @@
     $('.nav-search-link a').on('click', function(e) {
         e.preventDefault();
         $('.main-nav-search').css('display', 'block').find('#main-q').get(0).focus();
-        $(this).css('display', 'none');
+        $('.nav-search-link').css('display', 'none');
     });
 
 

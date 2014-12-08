@@ -50,11 +50,12 @@ set-larger-font-size() {
 /* vendor prefixes */
 
 
-/* vendorizes a propery based on it's value in the prefixes.styl lookup table */vendorize($property, $value) {
+/* vendorizes a propery based on it's value in the prefixes.styl lookup table */
+vendorize($property, $value) {
     $prefixes = $prefix-properties[''+$property];
 
     // might be a quoted because it has commas in it, example: transition-property
-    if($value == 'string') {
+    if($value is a 'string' or $value is a 'ident') {
         $value = unquote($value);
     }
 
@@ -267,9 +268,21 @@ override-main-nav-color(hex) {
 }
 
 /* overrides the size of the navigation search box on certain pages */
-minimize-header-search(size = 20px) {
-    .search-wrap {
-        width: size;
+minimize-header-search() {
+
+    .main-nav-search {
+        width: 36px;
+        @media $media-query-mobile {
+            width: auto;
+        }
+    }
+
+    .search-wrap input {
+        width: 22px;
+
+        &:focus {
+            width: 500px;
+        }
     }
 }
 
