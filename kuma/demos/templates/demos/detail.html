@@ -258,7 +258,10 @@
 
             <h3 class="mod-title">{{_('About this Demo')}}</h3>
 
+            {# http://bugzil.la/1104115 reverting http://bugzil.la/1095004 #}
+            {% if submission.license_name != 'author' %}
             <p class="download"><a href="{{ url('demos_download', slug=submission.slug) }}">{% trans file_ksize=(submission.demo_package.size/1024)|round(2,'ceil')|e %}Download the Source <span class="note">{{file_ksize}} KB &middot; ZIP File</span>{% endtrans %}</a></p>
+            {% endif %}
             {% if submission.source_code_url %}
             <p class="browse"><a href="{{ submission.source_code_url }}">Browse the Source
                 {# TODO: Show "hosted by {{domain}}?" #}
