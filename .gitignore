@@ -38,3 +38,4 @@ maintenance/media
 wheelhouse
 .awsconfig
 james.ini
+media/js/libs/ckeditor/source/ckbuilder
