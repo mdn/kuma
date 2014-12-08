@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("pastefromword","gl",{confirmCleanup:"O texto que quere pegar semella ser copiado desde o Word. Quere depuralo antes de pegalo?",error:"Non foi posíbel depurar os datos pegados por mor dun erro interno",title:"Pegar desde Word",toolbar:"Pegar desde Word"});

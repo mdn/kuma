@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("stylescombo","uk",{label:"Стиль",panelTitle:"Стилі форматування",panelTitle1:"Блочні стилі",panelTitle2:"Рядкові стилі",panelTitle3:"Об'єктні стилі"});

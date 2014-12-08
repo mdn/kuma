@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("elementspath","ro",{eleLabel:"Calea elementelor",eleTitle:"%1 element"});

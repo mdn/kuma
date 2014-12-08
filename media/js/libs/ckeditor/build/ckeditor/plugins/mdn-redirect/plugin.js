@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.add("mdn-redirect",{icons:"mdn-redirect",init:function(a){a.addCommand("mdn-redirect",new CKEDITOR.dialogCommand("mdn-redirect"));a.ui.addButton("MdnRedirect",{icon:"mdn-redirect",label:gettext("Create a Redirect"),command:"mdn-redirect",toolbar:"links,100"});CKEDITOR.dialog.add("mdn-redirect",this.path+"dialogs/mdn-redirect.js")}});

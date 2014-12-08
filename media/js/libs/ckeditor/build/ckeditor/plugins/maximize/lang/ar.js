@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("maximize","ar",{maximize:"تكبير",minimize:"تصغير"});

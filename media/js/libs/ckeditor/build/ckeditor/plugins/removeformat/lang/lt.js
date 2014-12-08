@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("removeformat","lt",{toolbar:"Panaikinti formatą"});

@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("stylescombo","bn",{label:"স্টাইল",panelTitle:"Formatting Styles",panelTitle1:"Block Styles",panelTitle2:"Inline Styles",panelTitle3:"Object Styles"});

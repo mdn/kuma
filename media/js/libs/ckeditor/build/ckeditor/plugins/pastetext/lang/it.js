@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("pastetext","it",{button:"Incolla come testo semplice",title:"Incolla come testo semplice"});

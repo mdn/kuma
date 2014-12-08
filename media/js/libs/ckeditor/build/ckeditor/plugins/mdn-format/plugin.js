@@ -1,0 +1,3 @@
+﻿CKEDITOR.config.mdnFormat_tags="pre code h2 h3 h4 h5".split(" ");
+CKEDITOR.plugins.add("mdn-format",{icons:"mdn-format-pre,mdn-format-code,mdn-format-h2,mdn-format-h3,mdn-format-h4,mdn-format-h5",init:function(a){var e=a.config.mdnFormat_tags,f=100,g=100;e&&e.forEach(function(b){var c="mdn-format-"+b,d=new CKEDITOR.style({element:b});d._.enterMode=a.enterMode;a.addCommand(c,new CKEDITOR.styleCommand(d));a.attachStyleStateChange(d,function(b){!a.readOnly&&a.getCommand(c).setState(b)});a.ui.addButton&&a.ui.addButton("MdnFormat"+CKEDITOR.tools.capitalize(b),{icon:"mdn-format-"+
+b,label:CKEDITOR.tools.capitalize(b),command:c,toolbar:CKEDITOR.dtd.$inline[b]?"basicstyles,"+(f+=10):"blocks,"+(g+=10)})})}});

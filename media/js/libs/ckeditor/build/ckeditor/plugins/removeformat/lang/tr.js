@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("removeformat","tr",{toolbar:"Biçimi Kaldır"});

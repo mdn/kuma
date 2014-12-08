@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("maximize","ru",{maximize:"Развернуть",minimize:"Свернуть"});

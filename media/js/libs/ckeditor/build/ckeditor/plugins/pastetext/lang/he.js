@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("pastetext","he",{button:"הדבקה כטקסט פשוט",title:"הדבקה כטקסט פשוט"});

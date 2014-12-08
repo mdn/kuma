@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("pastetext","sr",{button:"Залепи као чист текст",title:"Залепи као чист текст"});

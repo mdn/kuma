@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("elementspath","fi",{eleLabel:"Elementin polku",eleTitle:"%1 elementti"});
