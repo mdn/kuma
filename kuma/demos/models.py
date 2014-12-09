@@ -1,7 +1,7 @@
 from hashlib import md5
 import operator
 from os import makedirs
-from os.path import basename, dirname, isdir
+from os.path import basename, dirname, isdir, join
 from shutil import rmtree, copyfileobj
 import re
 from time import time
@@ -498,7 +498,7 @@ class Submission(models.Model):
         self.censored_url = url
         self.save()
 
-        root = '%s/%s' % (DEMO_UPLOADS_ROOT, get_root_for_submission(self))
+        root = join(DEMO_UPLOADS_ROOT, get_root_for_submission(self))
         if isdir(root):
             rmtree(root)
 
@@ -543,7 +543,7 @@ class Submission(models.Model):
         super(Submission, self).save(**kwargs)
 
     def delete(self, using=None):
-        root = '%s/%s' % (DEMO_UPLOADS_ROOT, get_root_for_submission(self))
+        root = join(DEMO_UPLOADS_ROOT, get_root_for_submission(self))
         if isdir(root):
             rmtree(root)
         super(Submission, self).delete(using)
@@ -737,7 +737,7 @@ class Submission(models.Model):
 
             # Relocate all files from detected root dir to a directory named
             # for the zip file in storage
-            out_fn = u'%s/%s' % (new_root_dir, zi_filename)
+            out_fn = join(new_root_dir, zi_filename)
             out_dir = dirname(out_fn)
 
             # Create parent directories where necessary.
