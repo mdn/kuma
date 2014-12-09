@@ -20,7 +20,7 @@
     <form action="" method="post">{% csrf_token %}
     <div>
         <p>
-            <label for="censored_url">Explanation URL (optional):</label>
+            <label for="censored_url">{% trans "Explanation URL (optional):" %}</label>
             <input type="text" id="censored_url" name="censored_url" size="70">
         </p>
         {% for obj in queryset %}
