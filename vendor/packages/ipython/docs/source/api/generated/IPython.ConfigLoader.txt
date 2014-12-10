@@ -1,0 +1,40 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+ConfigLoader
+============
+
+Module: :mod:`ConfigLoader`
+---------------------------
+Inheritance diagram for ``IPython.ConfigLoader``:
+
+.. inheritance-diagram:: IPython.ConfigLoader 
+   :parts: 3
+
+.. automodule:: IPython.ConfigLoader
+
+.. currentmodule:: IPython.ConfigLoader
+
+Classes
+-------
+
+:class:`ConfigLoader`
+~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ConfigLoader
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ConfigLoaderError`
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ConfigLoaderError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

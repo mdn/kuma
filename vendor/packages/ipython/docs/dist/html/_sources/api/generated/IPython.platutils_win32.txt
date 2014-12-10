@@ -1,0 +1,23 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+platutils_win32
+===============
+
+Module: :mod:`platutils_win32`
+------------------------------
+.. automodule:: IPython.platutils_win32
+
+.. currentmodule:: IPython.platutils_win32
+
+Functions
+---------
+
+
+.. autofunction:: IPython.platutils_win32.find_cmd
+
+
+.. autofunction:: IPython.platutils_win32.get_long_path_name
+
+
+.. autofunction:: IPython.platutils_win32.term_clear
+

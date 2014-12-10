@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ColorANSI &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="ConfigLoader" href="IPython.ConfigLoader.html" />
+    <link rel="prev" title="The IPython API" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.ConfigLoader.html" title="ConfigLoader"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="The IPython API"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="coloransi">
+<h1>ColorANSI<a class="headerlink" href="#coloransi" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.ColorANSI">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">ColorANSI</span></tt><a class="headerlink" href="#module-IPython.ColorANSI" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.ColorANSI</span></tt>:</p>
+<img src="../../_images/inheritance8c75f5ebbf.png" usemap="#inheritance8c75f5ebbf" class="inheritance"/><map id="inheritance8c75f5ebbf" name="inheritance8c75f5ebbf">
+<area shape="rect" href="#IPython.ColorANSI.ColorSchemeTable" title="IPython.ColorANSI.ColorSchemeTable" alt="" coords="5,157,264,184"/>
+<area shape="rect" href="#IPython.ColorANSI.InputTermColors" title="IPython.ColorANSI.InputTermColors" alt="" coords="13,107,256,133"/>
+<area shape="rect" href="#IPython.ColorANSI.ColorScheme" title="IPython.ColorANSI.ColorScheme" alt="" coords="21,56,248,83"/>
+<area shape="rect" href="#IPython.ColorANSI.TermColors" title="IPython.ColorANSI.TermColors" alt="" coords="29,5,240,32"/>
+</map>
+<p>Tools for coloring text in ANSI terminals.</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="colorscheme">
+<h3><a title="IPython.ColorANSI.ColorScheme" class="reference internal" href="#IPython.ColorANSI.ColorScheme"><tt class="xref docutils literal"><span class="pre">ColorScheme</span></tt></a><a class="headerlink" href="#colorscheme" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.ColorANSI.ColorScheme">
+<!--[IPython.ColorANSI.ColorScheme]-->class <tt class="descclassname">IPython.ColorANSI.</tt><tt class="descname">ColorScheme</tt><big>(</big><em>_ColorScheme__scheme_name_</em>, <em>colordict=None</em>, <em>**colormap</em><big>)</big><a class="headerlink" href="#IPython.ColorANSI.ColorScheme" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generic color scheme class. Just a name and a Struct.</p>
+<dl class="method">
+<dt id="IPython.ColorANSI.ColorScheme.__init__">
+<!--[IPython.ColorANSI.ColorScheme.__init__]--><tt class="descname">__init__</tt><big>(</big><em>_ColorScheme__scheme_name_</em>, <em>colordict=None</em>, <em>**colormap</em><big>)</big><a class="headerlink" href="#IPython.ColorANSI.ColorScheme.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.ColorANSI.ColorScheme.copy">
+<!--[IPython.ColorANSI.ColorScheme.copy]--><tt class="descname">copy</tt><big>(</big><em>name=None</em><big>)</big><a class="headerlink" href="#IPython.ColorANSI.ColorScheme.copy" title="Permalink to this definition">¶</a></dt>
+<dd>Return a full copy of the object, optionally renaming it.</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="colorschemetable">
+<h3><a title="IPython.ColorANSI.ColorSchemeTable" class="reference internal" href="#IPython.ColorANSI.ColorSchemeTable"><tt class="xref docutils literal"><span class="pre">ColorSchemeTable</span></tt></a><a class="headerlink" href="#colorschemetable" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.ColorANSI.ColorSchemeTable">
+<!--[IPython.ColorANSI.ColorSchemeTable]-->class <tt class="descclassname">IPython.ColorANSI.</tt><tt class="descname">ColorSchemeTable</tt><big>(</big><em>scheme_list=None</em>, <em>default_scheme=''</em><big>)</big><a class="headerlink" href="#IPython.ColorANSI.ColorSchemeTable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">dict</span></tt></p>
+<p>General class to handle tables of color schemes.</p>
+<p>It&#8217;s basically a dict of color schemes with a couple of shorthand
+attributes and some convenient methods.</p>
+<p>active_scheme_name -&gt; obvious
+active_colors -&gt; actual color table of the active scheme</p>
+<dl class="method">
+<dt id="IPython.ColorANSI.ColorSchemeTable.__init__">
+<!--[IPython.ColorANSI.ColorSchemeTable.__init__]--><tt class="descname">__init__</tt><big>(</big><em>scheme_list=None</em>, <em>default_scheme=''</em><big>)</big><a class="headerlink" href="#IPython.ColorANSI.ColorSchemeTable.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a table of color schemes.</p>
+<p>The table can be created empty and manually filled or it can be
+created with a list of valid color schemes AND the specification for
+the default active scheme.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ColorANSI.ColorSchemeTable.add_scheme">
+<!--[IPython.ColorANSI.ColorSchemeTable.add_scheme]--><tt class="descname">add_scheme</tt><big>(</big><em>new_scheme</em><big>)</big><a class="headerlink" href="#IPython.ColorANSI.ColorSchemeTable.add_scheme" title="Permalink to this definition">¶</a></dt>
+<dd>Add a new color scheme to the table.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ColorANSI.ColorSchemeTable.copy">
+<!--[IPython.ColorANSI.ColorSchemeTable.copy]--><tt class="descname">copy</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.ColorANSI.ColorSchemeTable.copy" title="Permalink to this definition">¶</a></dt>
+<dd>Return full copy of object</dd></dl>
+
+<dl class="method">
+<dt id="IPython.ColorANSI.ColorSchemeTable.set_active_scheme">
+<!--[IPython.ColorANSI.ColorSchemeTable.set_active_scheme]--><tt class="descname">set_active_scheme</tt><big>(</big><em>scheme</em>, <em>case_sensitive=0</em><big>)</big><a class="headerlink" href="#IPython.ColorANSI.ColorSchemeTable.set_active_scheme" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the currently active scheme.</p>
+<p>Names are by default compared in a case-insensitive way, but this can
+be changed by setting the parameter case_sensitive to true.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="inputtermcolors">
+<h3><a title="IPython.ColorANSI.InputTermColors" class="reference internal" href="#IPython.ColorANSI.InputTermColors"><tt class="xref docutils literal"><span class="pre">InputTermColors</span></tt></a><a class="headerlink" href="#inputtermcolors" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.ColorANSI.InputTermColors">
+<!--[IPython.ColorANSI.InputTermColors]-->class <tt class="descclassname">IPython.ColorANSI.</tt><tt class="descname">InputTermColors</tt><a class="headerlink" href="#IPython.ColorANSI.InputTermColors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Color escape sequences for input prompts.</p>
+<p>This class is similar to TermColors, but the escapes are wrapped in 
+and  so that readline can properly know the length of each line and
+can wrap lines accordingly.  Use this class for any colored text which
+needs to be used in input prompts, such as in calls to raw_input().</p>
+<p>This class defines the escape sequences for all the standard (ANSI?) 
+colors in terminals. Also defines a NoColor escape which is just the null
+string, suitable for defining &#8216;dummy&#8217; color schemes in terminals which get
+confused by color escapes.</p>
+<p>This class should be used as a mixin for building color schemes.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="termcolors">
+<h3><a title="IPython.ColorANSI.TermColors" class="reference internal" href="#IPython.ColorANSI.TermColors"><tt class="xref docutils literal"><span class="pre">TermColors</span></tt></a><a class="headerlink" href="#termcolors" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.ColorANSI.TermColors">
+<!--[IPython.ColorANSI.TermColors]-->class <tt class="descclassname">IPython.ColorANSI.</tt><tt class="descname">TermColors</tt><a class="headerlink" href="#IPython.ColorANSI.TermColors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Color escape sequences.</p>
+<p>This class defines the escape sequences for all the standard (ANSI?) 
+colors in terminals. Also defines a NoColor escape which is just the null
+string, suitable for defining &#8216;dummy&#8217; color schemes in terminals which get
+confused by color escapes.</p>
+<p>This class should be used as a mixin for building color schemes.</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="function">
+<h2>Function<a class="headerlink" href="#function" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.ColorANSI.make_color_table">
+<!--[IPython.ColorANSI.make_color_table]--><tt class="descclassname">IPython.ColorANSI.</tt><tt class="descname">make_color_table</tt><big>(</big><em>in_class</em><big>)</big><a class="headerlink" href="#IPython.ColorANSI.make_color_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build a set of color attributes in a class.</p>
+<p>Helper function for building the <a href="#id1"><span class="problematic" id="id2">*</span></a>TermColors classes.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">ColorANSI</a><ul>
+<li><a class="reference external" href="#module-IPython.ColorANSI">Module: <tt class="docutils literal"><span class="pre">ColorANSI</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#colorscheme"><tt class="docutils literal"><span class="pre">ColorScheme</span></tt></a></li>
+<li><a class="reference external" href="#colorschemetable"><tt class="docutils literal"><span class="pre">ColorSchemeTable</span></tt></a></li>
+<li><a class="reference external" href="#inputtermcolors"><tt class="docutils literal"><span class="pre">InputTermColors</span></tt></a></li>
+<li><a class="reference external" href="#termcolors"><tt class="docutils literal"><span class="pre">TermColors</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#function">Function</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="../index.html" title="previous chapter">The IPython API</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.ConfigLoader.html" title="next chapter">ConfigLoader</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.ColorANSI.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.ConfigLoader.html" title="ConfigLoader"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="The IPython API"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

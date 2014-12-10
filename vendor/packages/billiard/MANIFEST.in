@@ -1,0 +1,10 @@
+include AUTHORS
+include Changelog
+include INSTALL
+include LICENSE
+include MANIFEST.in
+include README
+include TODO
+recursive-include docs *
+recursive-include billiard *
+recursive-include tests *

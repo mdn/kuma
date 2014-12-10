@@ -1,0 +1,40 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+CrashHandler
+============
+
+Module: :mod:`CrashHandler`
+---------------------------
+Inheritance diagram for ``IPython.CrashHandler``:
+
+.. inheritance-diagram:: IPython.CrashHandler 
+   :parts: 3
+
+.. automodule:: IPython.CrashHandler
+
+.. currentmodule:: IPython.CrashHandler
+
+Classes
+-------
+
+:class:`CrashHandler`
+~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: CrashHandler
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IPythonCrashHandler`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IPythonCrashHandler
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

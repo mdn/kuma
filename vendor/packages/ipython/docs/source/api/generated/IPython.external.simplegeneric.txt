@@ -1,0 +1,20 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+external.simplegeneric
+======================
+
+Module: :mod:`external.simplegeneric`
+-------------------------------------
+.. automodule:: IPython.external.simplegeneric
+
+.. currentmodule:: IPython.external.simplegeneric
+
+Functions
+---------
+
+
+.. autofunction:: IPython.external.simplegeneric.generic
+
+
+.. autofunction:: IPython.external.simplegeneric.test_suite
+

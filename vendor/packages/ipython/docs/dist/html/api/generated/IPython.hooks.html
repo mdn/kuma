@@ -1,0 +1,271 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>hooks &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="ipapi" href="IPython.ipapi.html" />
+    <link rel="prev" title="history" href="IPython.history.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.ipapi.html" title="ipapi"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.history.html" title="history"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="hooks">
+<h1>hooks<a class="headerlink" href="#hooks" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.hooks">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">hooks</span></tt><a class="headerlink" href="#module-IPython.hooks" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.hooks</span></tt>:</p>
+<img src="../../_images/inheritance473830e069.png" usemap="#inheritance473830e069" class="inheritance"/><map id="inheritance473830e069" name="inheritance473830e069">
+<area shape="rect" href="#IPython.hooks.CommandChainDispatcher" title="IPython.hooks.CommandChainDispatcher" alt="" coords="7,5,292,32"/>
+</map>
+<p>hooks for IPython.</p>
+<p>In Python, it is possible to overwrite any method of any object if you really
+want to.  But IPython exposes a few &#8216;hooks&#8217;, methods which are _designed_ to
+be overwritten by users for customization purposes.  This module defines the
+default versions of all such hooks, which get used by IPython if not
+overridden by the user.</p>
+<p>hooks are simple functions, but they should be declared with &#8216;self&#8217; as their
+first argument, because when activated they are registered into IPython as
+instance methods.  The self argument will be the IPython running instance
+itself, so hooks have full access to the entire IPython object.</p>
+<p>If you wish to define a new hook and activate it, you need to put the
+necessary code into a python file which can be either imported or execfile()&#8217;d
+from within your ipythonrc configuration.</p>
+<p>For example, suppose that you have a module called &#8216;myiphooks&#8217; in your
+PYTHONPATH, which contains the following definition:</p>
+<p>import os
+import IPython.ipapi
+ip = IPython.ipapi.get()</p>
+<dl class="docutils">
+<dt>def calljed(self,filename, linenum):</dt>
+<dd><p class="first">&#8220;My editor hook calls the jed editor directly.&#8221;
+print &#8220;Calling my own editor, jed ...&#8221;
+if os.system(&#8216;jed +%d %s&#8217; % (linenum,filename)) != 0:</p>
+<blockquote class="last">
+raise ipapi.TryNext()</blockquote>
+</dd>
+</dl>
+<p>ip.set_hook(&#8216;editor&#8217;, calljed)</p>
+<p>You can then enable the functionality by doing &#8216;import myiphooks&#8217;
+somewhere in your configuration files or ipython command line.</p>
+</div>
+<div class="section" id="class">
+<h2>Class<a class="headerlink" href="#class" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="commandchaindispatcher">
+<h2><a title="IPython.hooks.CommandChainDispatcher" class="reference internal" href="#IPython.hooks.CommandChainDispatcher"><tt class="xref docutils literal"><span class="pre">CommandChainDispatcher</span></tt></a><a class="headerlink" href="#commandchaindispatcher" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="IPython.hooks.CommandChainDispatcher">
+<!--[IPython.hooks.CommandChainDispatcher]-->class <tt class="descclassname">IPython.hooks.</tt><tt class="descname">CommandChainDispatcher</tt><big>(</big><em>commands=None</em><big>)</big><a class="headerlink" href="#IPython.hooks.CommandChainDispatcher" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dispatch calls to a chain of commands until some func can handle it</p>
+<p>Usage: instantiate, execute &#8220;add&#8221; to add commands (with optional
+priority), execute normally via f() calling mechanism.</p>
+<dl class="method">
+<dt id="IPython.hooks.CommandChainDispatcher.__init__">
+<!--[IPython.hooks.CommandChainDispatcher.__init__]--><tt class="descname">__init__</tt><big>(</big><em>commands=None</em><big>)</big><a class="headerlink" href="#IPython.hooks.CommandChainDispatcher.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.hooks.CommandChainDispatcher.add">
+<!--[IPython.hooks.CommandChainDispatcher.add]--><tt class="descname">add</tt><big>(</big><em>func</em>, <em>priority=0</em><big>)</big><a class="headerlink" href="#IPython.hooks.CommandChainDispatcher.add" title="Permalink to this definition">¶</a></dt>
+<dd>Add a func to the cmd chain with given priority</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.hooks.clipboard_get">
+<!--[IPython.hooks.clipboard_get]--><tt class="descclassname">IPython.hooks.</tt><tt class="descname">clipboard_get</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#IPython.hooks.clipboard_get" title="Permalink to this definition">¶</a></dt>
+<dd>Get text from the clipboard.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.hooks.editor">
+<!--[IPython.hooks.editor]--><tt class="descclassname">IPython.hooks.</tt><tt class="descname">editor</tt><big>(</big><em>self</em>, <em>filename</em>, <em>linenum=None</em><big>)</big><a class="headerlink" href="#IPython.hooks.editor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open the default editor at the given filename and linenumber.</p>
+<p>This is IPython&#8217;s default editor hook, you can use it as an example to
+write your own modified one.  To set your own editor function as the
+new editor hook, call ip.set_hook(&#8216;editor&#8217;,yourfunc).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.hooks.fix_error_editor">
+<!--[IPython.hooks.fix_error_editor]--><tt class="descclassname">IPython.hooks.</tt><tt class="descname">fix_error_editor</tt><big>(</big><em>self</em>, <em>filename</em>, <em>linenum</em>, <em>column</em>, <em>msg</em><big>)</big><a class="headerlink" href="#IPython.hooks.fix_error_editor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open the editor at the given filename, linenumber, column and 
+show an error message. This is used for correcting syntax errors.
+The current implementation only has special support for the VIM editor,
+and falls back on the &#8216;editor&#8217; hook if VIM is not used.</p>
+<p>Call ip.set_hook(&#8216;fix_error_editor&#8217;,youfunc) to use your own function,</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.hooks.generate_output_prompt">
+<!--[IPython.hooks.generate_output_prompt]--><tt class="descclassname">IPython.hooks.</tt><tt class="descname">generate_output_prompt</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#IPython.hooks.generate_output_prompt" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.hooks.generate_prompt">
+<!--[IPython.hooks.generate_prompt]--><tt class="descclassname">IPython.hooks.</tt><tt class="descname">generate_prompt</tt><big>(</big><em>self</em>, <em>is_continuation</em><big>)</big><a class="headerlink" href="#IPython.hooks.generate_prompt" title="Permalink to this definition">¶</a></dt>
+<dd>calculate and return a string with the prompt to display</dd></dl>
+
+<dl class="function">
+<dt id="IPython.hooks.input_prefilter">
+<!--[IPython.hooks.input_prefilter]--><tt class="descclassname">IPython.hooks.</tt><tt class="descname">input_prefilter</tt><big>(</big><em>self</em>, <em>line</em><big>)</big><a class="headerlink" href="#IPython.hooks.input_prefilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default input prefilter</p>
+<p>This returns the line as unchanged, so that the interpreter
+knows that nothing was done and proceeds with &#8220;classic&#8221; prefiltering
+(%magics, !shell commands etc.).</p>
+<p>Note that leading whitespace is not passed to this hook. Prefilter
+can&#8217;t alter indentation.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.hooks.late_startup_hook">
+<!--[IPython.hooks.late_startup_hook]--><tt class="descclassname">IPython.hooks.</tt><tt class="descname">late_startup_hook</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#IPython.hooks.late_startup_hook" title="Permalink to this definition">¶</a></dt>
+<dd>Executed after ipython has been constructed and configured</dd></dl>
+
+<dl class="function">
+<dt id="IPython.hooks.pre_prompt_hook">
+<!--[IPython.hooks.pre_prompt_hook]--><tt class="descclassname">IPython.hooks.</tt><tt class="descname">pre_prompt_hook</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#IPython.hooks.pre_prompt_hook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run before displaying the next prompt</p>
+<p>Use this e.g. to display output from asynchronous operations (in order 
+to not mess up text entry)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.hooks.pre_runcode_hook">
+<!--[IPython.hooks.pre_runcode_hook]--><tt class="descclassname">IPython.hooks.</tt><tt class="descname">pre_runcode_hook</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#IPython.hooks.pre_runcode_hook" title="Permalink to this definition">¶</a></dt>
+<dd>Executed before running the (prefiltered) code in IPython</dd></dl>
+
+<dl class="function">
+<dt id="IPython.hooks.result_display">
+<!--[IPython.hooks.result_display]--><tt class="descclassname">IPython.hooks.</tt><tt class="descname">result_display</tt><big>(</big><em>self</em>, <em>arg</em><big>)</big><a class="headerlink" href="#IPython.hooks.result_display" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default display hook.</p>
+<p>Called for displaying the result to the user.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.hooks.shell_hook">
+<!--[IPython.hooks.shell_hook]--><tt class="descclassname">IPython.hooks.</tt><tt class="descname">shell_hook</tt><big>(</big><em>self</em>, <em>cmd</em><big>)</big><a class="headerlink" href="#IPython.hooks.shell_hook" title="Permalink to this definition">¶</a></dt>
+<dd>Run system/shell command a&#8217;la os.system()</dd></dl>
+
+<dl class="function">
+<dt id="IPython.hooks.show_in_pager">
+<!--[IPython.hooks.show_in_pager]--><tt class="descclassname">IPython.hooks.</tt><tt class="descname">show_in_pager</tt><big>(</big><em>self</em>, <em>s</em><big>)</big><a class="headerlink" href="#IPython.hooks.show_in_pager" title="Permalink to this definition">¶</a></dt>
+<dd>Run a string through pager</dd></dl>
+
+<dl class="function">
+<dt id="IPython.hooks.shutdown_hook">
+<!--[IPython.hooks.shutdown_hook]--><tt class="descclassname">IPython.hooks.</tt><tt class="descname">shutdown_hook</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#IPython.hooks.shutdown_hook" title="Permalink to this definition">¶</a></dt>
+<dd><p>default shutdown hook</p>
+<p>Typically, shotdown hooks should raise TryNext so all shutdown ops are done</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.hooks.synchronize_with_editor">
+<!--[IPython.hooks.synchronize_with_editor]--><tt class="descclassname">IPython.hooks.</tt><tt class="descname">synchronize_with_editor</tt><big>(</big><em>self</em>, <em>filename</em>, <em>linenum</em>, <em>column</em><big>)</big><a class="headerlink" href="#IPython.hooks.synchronize_with_editor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">hooks</a><ul>
+<li><a class="reference external" href="#module-IPython.hooks">Module: <tt class="docutils literal"><span class="pre">hooks</span></tt></a></li>
+<li><a class="reference external" href="#class">Class</a></li>
+<li><a class="reference external" href="#commandchaindispatcher"><tt class="docutils literal"><span class="pre">CommandChainDispatcher</span></tt></a></li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.history.html" title="previous chapter">history</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.ipapi.html" title="next chapter">ipapi</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.hooks.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.ipapi.html" title="ipapi"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.history.html" title="history"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

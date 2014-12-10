@@ -1,0 +1,23 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+UserConfig.ipy_user_conf
+========================
+
+Module: :mod:`UserConfig.ipy_user_conf`
+---------------------------------------
+.. automodule:: IPython.UserConfig.ipy_user_conf
+
+.. currentmodule:: IPython.UserConfig.ipy_user_conf
+
+Functions
+---------
+
+
+.. autofunction:: IPython.UserConfig.ipy_user_conf.execf
+
+
+.. autofunction:: IPython.UserConfig.ipy_user_conf.import_all
+
+
+.. autofunction:: IPython.UserConfig.ipy_user_conf.main
+

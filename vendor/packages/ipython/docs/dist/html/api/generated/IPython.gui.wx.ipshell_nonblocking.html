@@ -1,0 +1,289 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gui.wx.ipshell_nonblocking &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="gui.wx.ipython_history" href="IPython.gui.wx.ipython_history.html" />
+    <link rel="prev" title="genutils" href="IPython.genutils.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.gui.wx.ipython_history.html" title="gui.wx.ipython_history"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.genutils.html" title="genutils"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="gui-wx-ipshell-nonblocking">
+<h1>gui.wx.ipshell_nonblocking<a class="headerlink" href="#gui-wx-ipshell-nonblocking" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.gui.wx.ipshell_nonblocking">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">gui.wx.ipshell_nonblocking</span></tt><a class="headerlink" href="#module-IPython.gui.wx.ipshell_nonblocking" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.gui.wx.ipshell_nonblocking</span></tt>:</p>
+<img src="../../_images/inheritanceab5a152275.png" usemap="#inheritanceab5a152275" class="inheritance"/><map id="inheritanceab5a152275" name="inheritanceab5a152275">
+<area shape="rect" href="IPython.gui.wx.thread_ex.html#IPython.gui.wx.thread_ex.ThreadEx" title="wx.thread_ex.ThreadEx" alt="" coords="398,81,526,102"/>
+<area shape="rect" href="#IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell" title="wx.ipshell_nonblocking.NonBlockingIPShell" alt="" coords="5,43,225,63"/>
+</map>
+<p>Provides IPython remote instance.</p>
+<p>&#64;author: Laurent Dufrechou
+laurent.dufrechou _at_ gmail.com
+&#64;license: BSD</p>
+<p>All rights reserved. This program and the accompanying materials are made
+available under the terms of the BSD which accompanies this distribution, and
+is available at U{<a class="reference external" href="http://www.opensource.org/licenses/bsd-license.php">http://www.opensource.org/licenses/bsd-license.php</a>}</p>
+</div>
+<div class="section" id="nonblockingipshell">
+<h2><a title="IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell" class="reference internal" href="#IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell"><tt class="xref docutils literal"><span class="pre">NonBlockingIPShell</span></tt></a><a class="headerlink" href="#nonblockingipshell" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell">
+<!--[IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell]-->class <tt class="descclassname">IPython.gui.wx.ipshell_nonblocking.</tt><tt class="descname">NonBlockingIPShell</tt><big>(</big><em>argv=</em><span class="optional">[</span><span class="optional">]</span>, <em>user_ns={}</em>, <em>user_global_ns=None</em>, <em>cin=None</em>, <em>cout=None</em>, <em>cerr=None</em>, <em>ask_exit_handler=None</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>Create an IPython instance, running the commands in a separate,
+non-blocking thread. 
+This allows embedding in any GUI without blockage.</p>
+<dl class="docutils">
+<dt>Note: The ThreadEx class supports asynchroneous function call</dt>
+<dd>via raise_exc()</dd>
+</dl>
+<dl class="method">
+<dt id="IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.__init__">
+<!--[IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.__init__]--><tt class="descname">__init__</tt><big>(</big><em>argv=</em><span class="optional">[</span><span class="optional">]</span>, <em>user_ns={}</em>, <em>user_global_ns=None</em>, <em>cin=None</em>, <em>cout=None</em>, <em>cerr=None</em>, <em>ask_exit_handler=None</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>&#64;param argv: Command line options for IPython
+&#64;type argv: list
+&#64;param user_ns: User namespace.
+&#64;type user_ns: dictionary
+&#64;param user_global_ns: User global namespace.
+&#64;type user_global_ns: dictionary.
+&#64;param cin: Console standard input.
+&#64;type cin: IO stream
+&#64;param cout: Console standard output.
+&#64;type cout: IO stream
+&#64;param cerr: Console standard error.
+&#64;type cerr: IO stream
+&#64;param exit_handler: Replacement for builtin exit() function
+&#64;type exit_handler: function
+&#64;param time_loop: Define the sleep time between two thread&#8217;s loop
+&#64;type int</dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.complete">
+<!--[IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.complete]--><tt class="descname">complete</tt><big>(</big><em>line</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.complete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an auto completed line and/or posibilities for completion.</p>
+<p>&#64;param line: Given line so far.
+&#64;type line: string</p>
+<p>&#64;return: Line completed as for as possible,
+and possible further completions.
+&#64;rtype: tuple</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.do_execute">
+<!--[IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.do_execute]--><tt class="descname">do_execute</tt><big>(</big><em>line</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.do_execute" title="Permalink to this definition">¶</a></dt>
+<dd>Tell the thread to process the &#8216;line&#8217; command</dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.get_banner">
+<!--[IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.get_banner]--><tt class="descname">get_banner</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.get_banner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the IPython banner for useful info on IPython instance</p>
+<p>&#64;return: The banner string.
+&#64;rtype: string</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.get_doc_text">
+<!--[IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.get_doc_text]--><tt class="descname">get_doc_text</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.get_doc_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the output of the processing that need to be paged (if any)</p>
+<p>&#64;return: The std output string.
+&#64;rtype: string</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.get_help_text">
+<!--[IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.get_help_text]--><tt class="descname">get_help_text</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.get_help_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the output of the processing that need to be paged via help pager(if any)</p>
+<p>&#64;return: The std output string.
+&#64;rtype: string</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.get_indentation">
+<!--[IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.get_indentation]--><tt class="descname">get_indentation</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.get_indentation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current indentation level
+Usefull to put the caret at the good start position if we want to do autoindentation.</p>
+<p>&#64;return: The indentation level.
+&#64;rtype: int</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.get_prompt">
+<!--[IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.get_prompt]--><tt class="descname">get_prompt</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.get_prompt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns current prompt inside IPython instance
+(Can be In [...]: ot ...:)</p>
+<p>&#64;return: The current prompt.
+&#64;rtype: string</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.get_prompt_count">
+<!--[IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.get_prompt_count]--><tt class="descname">get_prompt_count</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.get_prompt_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the prompt number.
+Each time a user execute a line in the IPython shell the prompt count is increased</p>
+<p>&#64;return: The prompt number
+&#64;rtype: int</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.get_threading">
+<!--[IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.get_threading]--><tt class="descname">get_threading</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.get_threading" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns threading status, is set to True, then each command sent to
+the interpreter will be executed in a separated thread allowing,
+for example, breaking a long running commands.
+Disallowing it, permits better compatibilty with instance that is embedding
+IPython instance.</p>
+<p>&#64;return: Execution method
+&#64;rtype: bool</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.history_back">
+<!--[IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.history_back]--><tt class="descname">history_back</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.history_back" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides one history command back.</p>
+<p>&#64;return: The command string.
+&#64;rtype: string</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.history_forward">
+<!--[IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.history_forward]--><tt class="descname">history_forward</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.history_forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides one history command forward.</p>
+<p>&#64;return: The command string.
+&#64;rtype: string</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.init_history_index">
+<!--[IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.init_history_index]--><tt class="descname">init_history_index</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.init_history_index" title="Permalink to this definition">¶</a></dt>
+<dd>set history to last command entered</dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.init_ipython0">
+<!--[IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.init_ipython0]--><tt class="descname">init_ipython0</tt><big>(</big><em>argv=</em><span class="optional">[</span><span class="optional">]</span>, <em>user_ns={}</em>, <em>user_global_ns=None</em>, <em>cin=None</em>, <em>cout=None</em>, <em>cerr=None</em>, <em>ask_exit_handler=None</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.init_ipython0" title="Permalink to this definition">¶</a></dt>
+<dd>Initialize an ipython0 instance</dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.set_threading">
+<!--[IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.set_threading]--><tt class="descname">set_threading</tt><big>(</big><em>state</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.set_threading" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets threading state, if set to True, then each command sent to
+the interpreter will be executed in a separated thread allowing,
+for example, breaking a long running commands.
+Disallowing it, permits better compatibilty with instance that is embedding
+IPython instance.</p>
+<p>&#64;param state: Sets threading state
+&#64;type bool</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.update_namespace">
+<!--[IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.update_namespace]--><tt class="descname">update_namespace</tt><big>(</big><em>ns_dict</em><big>)</big><a class="headerlink" href="#IPython.gui.wx.ipshell_nonblocking.NonBlockingIPShell.update_namespace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add the current dictionary to the shell namespace.</p>
+<p>&#64;param ns_dict: A dictionary of symbol-values.
+&#64;type ns_dict: dictionary</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">gui.wx.ipshell_nonblocking</a><ul>
+<li><a class="reference external" href="#module-IPython.gui.wx.ipshell_nonblocking">Module: <tt class="docutils literal"><span class="pre">gui.wx.ipshell_nonblocking</span></tt></a></li>
+<li><a class="reference external" href="#nonblockingipshell"><tt class="docutils literal"><span class="pre">NonBlockingIPShell</span></tt></a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.genutils.html" title="previous chapter">genutils</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.gui.wx.ipython_history.html" title="next chapter">gui.wx.ipython_history</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.gui.wx.ipshell_nonblocking.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.gui.wx.ipython_history.html" title="gui.wx.ipython_history"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.genutils.html" title="genutils"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

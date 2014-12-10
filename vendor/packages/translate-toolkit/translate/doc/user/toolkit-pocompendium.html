@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="pocompendium" id="pocompendium">pocompendium</a></h1>
+<div class="level1">
+
+<p>
+
+Takes a directory of translated <acronym title="Gettext Portable Object">PO</acronym> files and creates a single <acronym title="Gettext Portable Object">PO</acronym> files called a
+<acronym title="Gettext Portable Object">PO</acronym> compendium.  This compendium can be used to review word choice conflicts or
+as input during a merge using <a href="toolkit-pomigrate2.html" class="wikilink1" title="toolkit-pomigrate2.html">pomigrate2</a>.
+</p>
+
+</div>
+<!-- SECTION "pocompendium" [1-235] -->
+<h2><a name="prerequisites" id="prerequisites">Prerequisites</a></h2>
+<div class="level2">
+
+<p>
+
+GNU Gettext:
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://man.cx/msgsttrib" class="interwiki iw_man" title="http://man.cx/msgsttrib">msgsttrib</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://man.cx/msgcat" class="interwiki iw_man" title="http://man.cx/msgcat">msgcat</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://man.cx/msghack" class="interwiki iw_man" title="http://man.cx/msghack">msghack</a> (may not be present on your installation of Gettext, but is only required for the invert command)</div>
+</li>
+<li class="level1"><div class="li"> <a href="http://man.cx/msgfilter" class="interwiki iw_man" title="http://man.cx/msgfilter">msgfilter</a></div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Prerequisites" [236-461] -->
+<h2><a name="usage" id="usage">Usage</a></h2>
+<div class="level2">
+<pre class="code">pocompendium [options] output.po &lt;-d po-directory(ies)|po-file(s)&gt;</pre>
+
+<p>
+
+Where:
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> output.po            </td><td class="col1 leftalign"> the name of the output <acronym title="Gettext Portable Object">PO</acronym> compendium    </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> po-directory(ies)    </td><td class="col1 leftalign"> one or more directories to use as input for the compendium    </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> po-file(s)           </td><td class="col1 leftalign"> one or more <acronym title="Gettext Portable Object">PO</acronym> files to use as input for the compendium  </td>
+	</tr>
+</table>
+
+<p>
+
+Options:
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> -v, --invert    </td><td class="col1 leftalign"> swap the msgid and msgstr in the input <acronym title="Gettext Portable Object">PO</acronym> files   </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> -e, --errors    </td><td class="col1 leftalign"> only return those msg blocks that have conflicts    </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> -i, --ignore-case    </td><td class="col1 leftalign"> drops all msgstr&#039;s to lowercase    </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> -st, -tilde, --strip-accel-amp   </td><td class="col1 leftalign"> remove all &amp; style accelerator markers    </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> -sa, -amp, --strip-accel-tilde   </td><td class="col1 leftalign"> remove all ~ style accelerator markers    </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> -su, --strip-accel-under         </td><td class="col1 leftalign"> remove all _ style accelerator markers    </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Usage" [462-1260] -->
+<h2><a name="examples" id="examples">Examples</a></h2>
+<div class="level2">
+<ol>
+<li class="level1"><div class="li"> <em>Compendium creation</em> --- create a compendium with all your translations to use as input during a message merge either when migrating an existing project or starting a new one.</div>
+</li>
+<li class="level1"><div class="li"> <em>Conflicting translations</em> --- use <em>- -errors</em> to find where you have translated an English string differently.  Many times this is OK but often it will pick up subtle spelling mistakes or help you to migrate older translations to a newer choice of words</div>
+</li>
+<li class="level1"><div class="li"> <em>Conflicting word choice</em> --- use <em>- -invert</em> and <em>- -errors</em> to get a compendium file that show how you have used a translated word for different English words. You might have chosen a word that is valid for both of the English expressions but that in the context of computers would cause confusion for the user.  You can now easily identify these words and make changes in the underlying translations.</div>
+</li>
+</ol>
+
+</div>
+<!-- SECTION "Examples" [1261-2144] -->
+<h2><a name="narrowing_results" id="narrowing_results">Narrowing Results</a></h2>
+<div class="level2">
+
+<p>
+
+<acronym title="Gettext Portable Object">PO</acronym> files treat slight changes in capitalisation, accelerator, punctuation and
+whitespace as different translations.  In cases 2) and 3) above it is sometimes
+useful to remove the inconsistencies so that you can focus on the errors in
+translation not on shifts in capitals.  To this end you can use the following:
+ <em>--ignore-case</em>, <em>--strip-accel-amp</em>, <em>--strip-accel-tilde</em>, <em>--strip-accel-under</em>
+</p>
+
+</div>
+<!-- SECTION "Narrowing Results" [2145-2581] -->
+<h2><a name="operation" id="operation">Operation</a></h2>
+<div class="level2">
+
+<p>
+
+pocompendium makes use of the Gettext tool msgcat to perform its task.  It
+traverses the <acronym title="Gettext Portable Object">PO</acronym> directories and cat&#039;s all found <acronym title="Gettext Portable Object">PO</acronym> files into the single
+compendium output file.  It then uses msgattrib to extract only certain messages, msghack to 
+invert messages and msgfilter to convert messages to lowercase.
+</p>
+
+</div>
+<!-- SECTION "Operation" [2582-2912] -->
+<h2><a name="bugs" id="bugs">Bugs</a></h2>
+<div class="level2">
+
+<p>
+
+There are some absolute/relative path name issues
+
+</p>
+
+</div>
+<!-- SECTION "Bugs" [2913-] --></body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        
+        <title>
+    Expression Serializer Extension
+ &mdash; SQLAlchemy 0.6.4 Documentation</title>
+        
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '0.6.4',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 0.6.4 Documentation" href="../index.html" />
+        <link rel="up" title="SQLAlchemy Core" href="index.html" />
+        <link rel="next" title="Dialects" href="../dialects/index.html" />
+        <link rel="prev" title="Custom SQL Constructs and Compilation Extension" href="compiler.html" />
+    
+
+    </head>
+    <body>
+        
+
+
+
+
+        <h1>SQLAlchemy 0.6.4 Documentation</h1>
+
+        <div id="search">
+        Search:
+        <form class="search" action="../search.html" method="get">
+          <input type="text" name="q" size="18" /> <input type="submit" value="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+        </div>
+
+        <div class="versionheader">
+            Version: <span class="versionnum">0.6.4</span> Last Updated: 09/07/2010 13:07:48
+        </div>
+        <div class="clearboth"></div>
+
+        <div class="topnav">
+            <div id="pagecontrol">
+                <a href="../genindex.html">Index</a>
+            
+                <div class="sourcelink">(<a href="../_sources/core/serializer.txt">view source)</div>
+            </div>
+            
+            <div class="navbanner">
+                <a class="totoc" href="../index.html">Table of Contents</a>
+                        » <a href="index.html" title="SQLAlchemy Core">SQLAlchemy Core</a>
+                » 
+    Expression Serializer Extension
+ 
+                
+                
+<div class="prevnext">
+        Previous:
+        <a href="compiler.html" title="previous chapter">Custom SQL Constructs and Compilation Extension</a>
+        Next:
+        <a href="../dialects/index.html" title="next chapter">Dialects</a>
+</div>
+
+                <h2>
+                    
+    Expression Serializer Extension
+ 
+                </h2>
+            </div>
+            <div class="clearboth"></div>
+        </div>
+        
+        <div class="document">
+            <div class="body">
+                
+<div class="section" id="module-sqlalchemy.ext.serializer">
+<span id="expression-serializer-extension"></span><h1>Expression Serializer Extension<a class="headerlink" href="#module-sqlalchemy.ext.serializer" title="Permalink to this headline">¶</a></h1>
+<p>Serializer/Deserializer objects for usage with SQLAlchemy query structures, 
+allowing &#8220;contextual&#8221; deserialization.</p>
+<p>Any SQLAlchemy query structure, either based on sqlalchemy.sql.*
+or sqlalchemy.orm.* can be used.  The mappers, Tables, Columns, Session
+etc. which are referenced by the structure are not persisted in serialized
+form, but are instead re-associated with the query structure
+when it is deserialized.</p>
+<p>Usage is nearly the same as that of the standard Python pickle module:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">sqlalchemy.ext.serializer</span> <span class="kn">import</span> <span class="n">loads</span><span class="p">,</span> <span class="n">dumps</span>
+<span class="n">metadata</span> <span class="o">=</span> <span class="n">MetaData</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">some_engine</span><span class="p">)</span>
+<span class="n">Session</span> <span class="o">=</span> <span class="n">scoped_session</span><span class="p">(</span><span class="n">sessionmaker</span><span class="p">())</span>
+
+<span class="c"># ... define mappers</span>
+
+<span class="n">query</span> <span class="o">=</span> <span class="n">Session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">MyClass</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">MyClass</span><span class="o">.</span><span class="n">somedata</span><span class="o">==</span><span class="s">&#39;foo&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">MyClass</span><span class="o">.</span><span class="n">sortkey</span><span class="p">)</span>
+
+<span class="c"># pickle the query</span>
+<span class="n">serialized</span> <span class="o">=</span> <span class="n">dumps</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+
+<span class="c"># unpickle.  Pass in metadata + scoped_session</span>
+<span class="n">query2</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="n">serialized</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span> <span class="n">Session</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="n">query2</span><span class="o">.</span><span class="n">all</span><span class="p">()</span></pre></div>
+</div>
+<p>Similar restrictions as when using raw pickle apply; mapped classes must be 
+themselves be pickleable, meaning they are importable from a module-level
+namespace.</p>
+<p>The serializer module is only appropriate for query structures.  It is not
+needed for:</p>
+<ul class="simple">
+<li>instances of user-defined classes.   These contain no references to engines, 
+sessions or expression constructs in the typical case and can be serialized directly.</li>
+<li>Table metadata that is to be loaded entirely from the serialized structure (i.e. is
+not already declared in the application).   Regular pickle.loads()/dumps() can 
+be used to fully dump any <tt class="docutils literal"><span class="pre">MetaData</span></tt> object, typically one which was reflected 
+from an existing database at some previous point in time.  The serializer module
+is specifically for the opposite case, where the Table metadata is already present
+in memory.</li>
+</ul>
+<dl class="function">
+<dt id="sqlalchemy.ext.serializer.Serializer">
+<tt class="descclassname">sqlalchemy.ext.serializer.</tt><tt class="descname">Serializer</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#sqlalchemy.ext.serializer.Serializer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlalchemy.ext.serializer.Deserializer">
+<tt class="descclassname">sqlalchemy.ext.serializer.</tt><tt class="descname">Deserializer</tt><big>(</big><em>file</em>, <em>metadata=None</em>, <em>scoped_session=None</em>, <em>engine=None</em><big>)</big><a class="headerlink" href="#sqlalchemy.ext.serializer.Deserializer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlalchemy.ext.serializer.dumps">
+<tt class="descclassname">sqlalchemy.ext.serializer.</tt><tt class="descname">dumps</tt><big>(</big><em>obj</em>, <em>protocol=0</em><big>)</big><a class="headerlink" href="#sqlalchemy.ext.serializer.dumps" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="sqlalchemy.ext.serializer.loads">
+<tt class="descclassname">sqlalchemy.ext.serializer.</tt><tt class="descname">loads</tt><big>(</big><em>data</em>, <em>metadata=None</em>, <em>scoped_session=None</em>, <em>engine=None</em><big>)</big><a class="headerlink" href="#sqlalchemy.ext.serializer.loads" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+            </div>
+        </div>
+
+        
+        
+            <div class="bottomnav">
+                
+<div class="prevnext">
+        Previous:
+        <a href="compiler.html" title="previous chapter">Custom SQL Constructs and Compilation Extension</a>
+        Next:
+        <a href="../dialects/index.html" title="next chapter">Dialects</a>
+</div>
+
+                <div class="doc_copyright">
+                    &copy; <a href="../copyright.html">Copyright</a> 2007, 2008, 2009, 2010, the SQLAlchemy authors and contributors.
+                    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
+                </div>
+            </div>
+        
+
+
+
+
+
+
+    </body>
+</html>
+
+
+

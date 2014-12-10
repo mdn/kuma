@@ -1,0 +1,62 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.controllerservice
+========================
+
+Module: :mod:`kernel.controllerservice`
+---------------------------------------
+Inheritance diagram for ``IPython.kernel.controllerservice``:
+
+.. inheritance-diagram:: IPython.kernel.controllerservice 
+   :parts: 3
+
+.. automodule:: IPython.kernel.controllerservice
+
+.. currentmodule:: IPython.kernel.controllerservice
+
+Classes
+-------
+
+:class:`ControllerAdapterBase`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ControllerAdapterBase
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ControllerService`
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ControllerService
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IControllerBase`
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IControllerBase
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IControllerCore`
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IControllerCore
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

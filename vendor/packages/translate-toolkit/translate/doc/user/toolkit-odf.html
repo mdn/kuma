@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="opendocument_format" id="opendocument_format">OpenDocument Format</a></h1>
+<div class="level1">
+
+<p>
+This page summarises the support for the <a href="http://en.wikipedia.org/wiki/OpenDocument" class="urlextern" title="http://en.wikipedia.org/wiki/OpenDocument">OpenDocument format</a> (ODF) in the Translate Toolkit. This currently involves only the <a href="toolkit-odf2xliff.html" class="wikilink1" title="toolkit-odf2xliff.html">odf2xliff</a> and xliff2odf converters.
+</p>
+
+<p>
+The Translate Toolkit aims to support version 1.1 of the ODF standard, although it should work reasonably well with older or newer files to the extent that they are similar.
+</p>
+
+<p>
+Our support is implemented to classify tags as not containing translatable text, or as being inline tags inside translatable tags. This approach means that new fields added in future versions will automatically be seen as translatable and should still be extracted successfully, even if the currently released versions of the Translate Toolkit are not aware of their existence.
+</p>
+
+<p>
+The current list of classified tags used, can be viewed here: 
+</p>
+
+<p>
+<a href="http://translate.svn.sourceforge.net/viewvc/translate/src/trunk/translate/storage/odf_shared.py?view=log" class="urlextern" title="http://translate.svn.sourceforge.net/viewvc/translate/src/trunk/translate/storage/odf_shared.py?view=log">http://translate.svn.sourceforge.net/viewvc/translate/src/trunk/translate/storage/odf_shared.py?view=log</a>
+</p>
+
+<p>
+More complex tag uses are still needed to extract 100% correctly in some complex cases. For more information, see the list of <a href="odf-testing.html" class="wikilink2" title="odf-testing.html">issues from testing</a>. 
+
+</p>
+
+</div>
+</body>
+</html>

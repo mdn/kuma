@@ -1,0 +1,4 @@
+<p>Blog <% if mode == 'index' %>Index<% else %>Post $post_id<% endif %></p>
+<p>
+  How about going to <a href="$escape(req.url_for('index'))">the index</a>.
+</p>

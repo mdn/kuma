@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        
+        <title>
+    MaxDB
+ &mdash; SQLAlchemy 0.6.4 Documentation</title>
+        
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '0.6.4',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 0.6.4 Documentation" href="../index.html" />
+        <link rel="up" title="Dialects" href="index.html" />
+        <link rel="prev" title="Informix" href="informix.html" />
+    
+
+    </head>
+    <body>
+        
+
+
+
+
+        <h1>SQLAlchemy 0.6.4 Documentation</h1>
+
+        <div id="search">
+        Search:
+        <form class="search" action="../search.html" method="get">
+          <input type="text" name="q" size="18" /> <input type="submit" value="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+        </div>
+
+        <div class="versionheader">
+            Version: <span class="versionnum">0.6.4</span> Last Updated: 09/07/2010 13:07:48
+        </div>
+        <div class="clearboth"></div>
+
+        <div class="topnav">
+            <div id="pagecontrol">
+                <a href="../genindex.html">Index</a>
+            
+                <div class="sourcelink">(<a href="../_sources/dialects/maxdb.txt">view source)</div>
+            </div>
+            
+            <div class="navbanner">
+                <a class="totoc" href="../index.html">Table of Contents</a>
+                        » <a href="index.html" title="Dialects">Dialects</a>
+                » 
+    MaxDB
+ 
+                
+                
+<div class="prevnext">
+        Previous:
+        <a href="informix.html" title="previous chapter">Informix</a>
+</div>
+
+                <h2>
+                    
+    MaxDB
+ 
+                </h2>
+            </div>
+                <ul>
+<li><a class="reference internal" href="#">MaxDB</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#connecting">Connecting</a></li>
+<li><a class="reference internal" href="#implementation-notes">Implementation Notes</a></li>
+</ul>
+</li>
+</ul>
+
+            <div class="clearboth"></div>
+        </div>
+        
+        <div class="document">
+            <div class="body">
+                
+<div class="section" id="module-sqlalchemy.dialects.maxdb.base">
+<span id="maxdb"></span><h1>MaxDB<a class="headerlink" href="#module-sqlalchemy.dialects.maxdb.base" title="Permalink to this headline">¶</a></h1>
+<p>Support for the MaxDB database.</p>
+<p>This dialect is <em>not</em> ported to SQLAlchemy 0.6.</p>
+<p>This dialect is <em>not</em> tested on SQLAlchemy 0.6.</p>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">maxdb</span></tt> dialect is <strong>experimental</strong> and has only been tested on 7.6.03.007
+and 7.6.00.037.  Of these, <strong>only 7.6.03.007 will work</strong> with SQLAlchemy&#8217;s ORM.
+The earlier version has severe <tt class="docutils literal"><span class="pre">LEFT</span> <span class="pre">JOIN</span></tt> limitations and will return
+incorrect results from even very simple ORM queries.</p>
+<p>Only the native Python DB-API is currently supported.  ODBC driver support
+is a future enhancement.</p>
+</div>
+<div class="section" id="connecting">
+<h2>Connecting<a class="headerlink" href="#connecting" title="Permalink to this headline">¶</a></h2>
+<p>The username is case-sensitive.  If you usually connect to the
+database with sqlcli and other tools in lower case, you likely need to
+use upper case for DB-API.</p>
+</div>
+<div class="section" id="implementation-notes">
+<h2>Implementation Notes<a class="headerlink" href="#implementation-notes" title="Permalink to this headline">¶</a></h2>
+<p>Also check the DatabaseNotes page on the wiki for detailed information.</p>
+<p>With the 7.6.00.37 driver and Python 2.5, it seems that all DB-API
+generated exceptions are broken and can cause Python to crash.</p>
+<p>For &#8216;somecol.in_([])&#8217; to work, the IN operator&#8217;s generation must be changed
+to cast &#8216;NULL&#8217; to a numeric, i.e. NUM(NULL).  The DB-API doesn&#8217;t accept a
+bind parameter there, so that particular generation must inline the NULL value,
+which depends on [ticket:807].</p>
+<p>The DB-API is very picky about where bind params may be used in queries.</p>
+<p>Bind params for some functions (e.g. MOD) need type information supplied.
+The dialect does not yet do this automatically.</p>
+<p>Max will occasionally throw up &#8216;bad sql, compile again&#8217; exceptions for
+perfectly valid SQL.  The dialect does not currently handle these, more
+research is needed.</p>
+<p>MaxDB 7.5 and Sap DB &lt;= 7.4 reportedly do not support schemas.  A very
+slightly different version of this dialect would be required to support
+those versions, and can easily be added if there is demand.  Some other
+required components such as an Max-aware &#8216;old oracle style&#8217; join compiler
+(thetas with (+) outer indicators) are already done and available for
+integration- email the devel list if you&#8217;re interested in working on
+this.</p>
+</div>
+</div>
+
+            </div>
+        </div>
+
+        
+        
+            <div class="bottomnav">
+                
+<div class="prevnext">
+        Previous:
+        <a href="informix.html" title="previous chapter">Informix</a>
+</div>
+
+                <div class="doc_copyright">
+                    &copy; <a href="../copyright.html">Copyright</a> 2007, 2008, 2009, 2010, the SQLAlchemy authors and contributors.
+                    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
+                </div>
+            </div>
+        
+
+
+
+
+
+
+    </body>
+</html>
+
+
+

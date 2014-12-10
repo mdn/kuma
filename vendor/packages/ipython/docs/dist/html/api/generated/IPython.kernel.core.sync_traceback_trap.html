@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.core.sync_traceback_trap &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.core.traceback_formatter" href="IPython.kernel.core.traceback_formatter.html" />
+    <link rel="prev" title="kernel.core.redirector_output_trap" href="IPython.kernel.core.redirector_output_trap.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.traceback_formatter.html" title="kernel.core.traceback_formatter"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.redirector_output_trap.html" title="kernel.core.redirector_output_trap"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-core-sync-traceback-trap">
+<h1>kernel.core.sync_traceback_trap<a class="headerlink" href="#kernel-core-sync-traceback-trap" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.core.sync_traceback_trap">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.core.sync_traceback_trap</span></tt><a class="headerlink" href="#module-IPython.kernel.core.sync_traceback_trap" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.kernel.core.sync_traceback_trap</span></tt>:</p>
+<img src="../../_images/inheritanceb70d8c7897.png" usemap="#inheritanceb70d8c7897" class="inheritance"/><map id="inheritanceb70d8c7897" name="inheritanceb70d8c7897">
+<area shape="rect" href="IPython.kernel.core.traceback_trap.html#IPython.kernel.core.traceback_trap.TracebackTrap" title="core.traceback_trap.TracebackTrap" alt="" coords="5,5,248,32"/>
+<area shape="rect" href="#IPython.kernel.core.sync_traceback_trap.SyncTracebackTrap" title="core.sync_traceback_trap.SyncTracebackTrap" alt="" coords="296,5,605,32"/>
+</map>
+<p>Object to manage sys.excepthook().</p>
+<p>Synchronous version: prints errors when called.</p>
+</div>
+<div class="section" id="synctracebacktrap">
+<h2><a title="IPython.kernel.core.sync_traceback_trap.SyncTracebackTrap" class="reference internal" href="#IPython.kernel.core.sync_traceback_trap.SyncTracebackTrap"><tt class="xref docutils literal"><span class="pre">SyncTracebackTrap</span></tt></a><a class="headerlink" href="#synctracebacktrap" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="IPython.kernel.core.sync_traceback_trap.SyncTracebackTrap">
+<!--[IPython.kernel.core.sync_traceback_trap.SyncTracebackTrap]-->class <tt class="descclassname">IPython.kernel.core.sync_traceback_trap.</tt><tt class="descname">SyncTracebackTrap</tt><big>(</big><em>sync_formatter=None</em>, <em>formatters=None</em>, <em>raiseException=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.sync_traceback_trap.SyncTracebackTrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.core.traceback_trap.TracebackTrap" class="reference external" href="IPython.kernel.core.traceback_trap.html#IPython.kernel.core.traceback_trap.TracebackTrap"><tt class="xref docutils literal"><span class="pre">IPython.kernel.core.traceback_trap.TracebackTrap</span></tt></a></p>
+<p>TracebackTrap that displays immediatly the traceback in addition
+to capturing it. Useful in frontends, as without this traceback trap, 
+some tracebacks never get displayed.</p>
+<dl class="method">
+<dt id="IPython.kernel.core.sync_traceback_trap.SyncTracebackTrap.__init__">
+<!--[IPython.kernel.core.sync_traceback_trap.SyncTracebackTrap.__init__]--><tt class="descname">__init__</tt><big>(</big><em>sync_formatter=None</em>, <em>formatters=None</em>, <em>raiseException=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.sync_traceback_trap.SyncTracebackTrap.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>sync_formatter: Callable to display the traceback.
+formatters: A list of formatters to apply.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.sync_traceback_trap.SyncTracebackTrap.hook">
+<!--[IPython.kernel.core.sync_traceback_trap.SyncTracebackTrap.hook]--><tt class="descname">hook</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.sync_traceback_trap.SyncTracebackTrap.hook" title="Permalink to this definition">¶</a></dt>
+<dd>This method actually implements the hook.</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.core.sync_traceback_trap</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.core.sync_traceback_trap">Module: <tt class="docutils literal"><span class="pre">kernel.core.sync_traceback_trap</span></tt></a></li>
+<li><a class="reference external" href="#synctracebacktrap"><tt class="docutils literal"><span class="pre">SyncTracebackTrap</span></tt></a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.kernel.core.redirector_output_trap.html" title="previous chapter">kernel.core.redirector_output_trap</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.core.traceback_formatter.html" title="next chapter">kernel.core.traceback_formatter</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.core.sync_traceback_trap.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.traceback_formatter.html" title="kernel.core.traceback_formatter"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.redirector_output_trap.html" title="kernel.core.redirector_output_trap"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

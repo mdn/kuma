@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>testing.plugin.simple &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="testing.plugin.test_ipdoctest" href="IPython.testing.plugin.test_ipdoctest.html" />
+    <link rel="prev" title="testing.plugin.show_refs" href="IPython.testing.plugin.show_refs.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.plugin.test_ipdoctest.html" title="testing.plugin.test_ipdoctest"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.plugin.show_refs.html" title="testing.plugin.show_refs"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="testing-plugin-simple">
+<h1>testing.plugin.simple<a class="headerlink" href="#testing-plugin-simple" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.testing.plugin.simple">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">testing.plugin.simple</span></tt><a class="headerlink" href="#module-IPython.testing.plugin.simple" title="Permalink to this headline">¶</a></h2>
+<p>Simple example using doctests.</p>
+<p>This file just contains doctests both using plain python and IPython prompts.
+All tests should be loaded by nose.</p>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.testing.plugin.simple.ipyfunc2">
+<!--[IPython.testing.plugin.simple.ipyfunc2]--><tt class="descclassname">IPython.testing.plugin.simple.</tt><tt class="descname">ipyfunc2</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.testing.plugin.simple.ipyfunc2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Some pure python tests...</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="mf">1</span><span class="o">+</span><span class="mf">1</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.testing.plugin.simple.pyfunc">
+<!--[IPython.testing.plugin.simple.pyfunc]--><tt class="descclassname">IPython.testing.plugin.simple.</tt><tt class="descname">pyfunc</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.testing.plugin.simple.pyfunc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Some pure python tests...</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">pyfunc</span><span class="p">()</span>
+<span class="go">&#39;pyfunc&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">import</span> <span class="nn">os</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="mf">2</span><span class="o">+</span><span class="mf">3</span>
+<span class="go">5</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mf">3</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="n">i</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="n">i</span><span class="o">+</span><span class="mf">1</span><span class="p">,</span>
+<span class="gp">...</span>
+<span class="go">0 1 1 2 2 3</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">testing.plugin.simple</a><ul>
+<li><a class="reference external" href="#module-IPython.testing.plugin.simple">Module: <tt class="docutils literal"><span class="pre">testing.plugin.simple</span></tt></a></li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.testing.plugin.show_refs.html" title="previous chapter">testing.plugin.show_refs</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.testing.plugin.test_ipdoctest.html" title="next chapter">testing.plugin.test_ipdoctest</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.testing.plugin.simple.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.plugin.test_ipdoctest.html" title="testing.plugin.test_ipdoctest"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.plugin.show_refs.html" title="testing.plugin.show_refs"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

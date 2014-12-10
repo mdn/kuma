@@ -1,0 +1,239 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="the_translate_toolkit" id="the_translate_toolkit">The Translate Toolkit</a></h1>
+<div class="level1">
+
+<p>
+
+The Translate Toolkit is a collection of useful tools for localisation, and a powerful <acronym title="Application Programming Interface">API</acronym> for programmers of localisation tools. It is designed by localisers for localisers.  Its aim is to make your localisation easier and of higher quality.
+</p>
+
+<p>
+The Toolkit can convert between various different <a href="toolkit-formats.html" class="wikilink1" title="toolkit-formats.html">translation formats</a> (such as Gettext <acronym title="Gettext Portable Object">PO</acronym> formats, <acronym title="XML Localization Interchange File Format">XLIFF</acronym>, OpenOffice.org, and Mozilla formats). This makes it possible to stay in one format across all your localisation, thus allowing you
+to master one translation editor instead of one per project.  Of course an added benefit is that now you cannot create broken OpenOffice.org or Mozilla translation files.
+</p>
+
+<p>
+To help improve the quality of your localisation, the Toolkit includes tools to help check, validate, merge and extract messages from your localizations.  And of course there are many other <a href="toolkit-features.html" class="wikilink1" title="toolkit-features.html">benefits</a>.
+</p>
+
+<p>
+The Toolkit has a long <a href="toolkit-history.html" class="wikilink1" title="toolkit-history.html">history</a> and is part of our project to build standards based localisation tools for Free and Open Source Software. At this stage the Translate Toolkit <acronym title="Application Programming Interface">API</acronym> already forms the technological basis of the translation tools built by ourselves and several other projects. If you want to use the Toolkit to build translation tools, you might be interested in the <a href="http://translate.sourceforge.net/doc/api" class="urlextern" title="http://translate.sourceforge.net/doc/api">API documentation for the Translate Toolkit</a>.
+</p>
+
+<p>
+This documentation is maintained in the wiki at <a href="http://translate.sourceforge.net/wiki/toolkit/index" class="urlextern" title="http://translate.sourceforge.net/wiki/toolkit/index">http://translate.sourceforge.net/wiki/toolkit/index</a> .
+If you want the latest version or want to make changes, please consult the wiki.
+</p>
+
+</div>
+<!-- SECTION "The Translate Toolkit" [1-1572] -->
+<h1><a name="quick_start" id="quick_start">Quick Start</a></h1>
+<div class="level1">
+<ul>
+<li class="level1"><div class="li"> <a href="toolkit-installation.html" class="wikilink1" title="toolkit-installation.html">Installation</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-features.html" class="wikilink1" title="toolkit-features.html">Features</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-important_changes.html" class="wikilink1" title="toolkit-important_changes.html">Important changes</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-general_usage.html" class="wikilink1" title="toolkit-general_usage.html">General usage</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-history.html" class="wikilink1" title="toolkit-history.html">History</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-contributing.html" class="wikilink1" title="toolkit-contributing.html">Contributing</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="developers-reporting_bugs.html" class="wikilink1" title="developers-reporting_bugs.html">Reporting bugs</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-copyright.html" class="wikilink1" title="toolkit-copyright.html">Copyright</a></div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Quick Start" [1573-1776] -->
+<h1><a name="use_cases" id="use_cases">Use Cases</a></h1>
+<div class="level1">
+<ul>
+<li class="level1"><div class="li"> <a href="toolkit-migrating_translations.html" class="wikilink1" title="toolkit-migrating_translations.html">Migrating an older version of your translations to the latest templates</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-using_pofilter.html" class="wikilink1" title="toolkit-using_pofilter.html">Checking for technical errors in your translations</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-using_csv2po.html" class="wikilink1" title="toolkit-using_csv2po.html">Translating using only a spreadsheet</a> (a look at the whole roundtrip from <acronym title="Gettext Portable Object">PO</acronym> to <acronym title="Comma Separated Value">CSV</acronym> and back)</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-using_oo2po.html" class="wikilink1" title="toolkit-using_oo2po.html">Creating OpenOffice.org POT files</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="guide-mozilla.html" class="wikilink1" title="guide-mozilla.html">Translating Mozilla products</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-checking_for_inconsistencies.html" class="wikilink1" title="toolkit-checking_for_inconsistencies.html">Checking for inconsistencies in your translations</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-creating_a_terminology_list_from_your_existing_translations.html" class="wikilink1" title="toolkit-creating_a_terminology_list_from_your_existing_translations.html">Creating a terminology list from your existing translations</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-running_the_tools_on_microsoft_windows.html" class="wikilink1" title="toolkit-running_the_tools_on_microsoft_windows.html">Running the tools on Microsoft Windows</a></div>
+</li>
+<li class="level1"><div class="li"> Using <code>phase</code> for the complete translation roundtrip</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-cleanup_translator_comments.html" class="wikilink1" title="toolkit-cleanup_translator_comments.html">Cleanup translator comments</a></div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Use Cases" [1777-2545] -->
+<h1><a name="converters" id="converters">Converters</a></h1>
+<div class="level1">
+
+<p>
+
+Converters change many different formats to <acronym title="Gettext Portable Object">PO</acronym> and back again. (Sometimes only one direction is supported, or conversion is done without <acronym title="Gettext Portable Object">PO</acronym> files.)
+
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="toolkit-moz2po.html" class="wikilink1" title="toolkit-moz2po.html">moz2po</a> - Mozilla .properties and .dtd converter.  Works with Firefox and Thunderbird</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-oo2po.html" class="wikilink1" title="toolkit-oo2po.html">oo2po</a> - OpenOffice.org SDF converter (See also <a href="toolkit-oo2xliff.html" class="wikilink1" title="toolkit-oo2xliff.html">oo2xliff</a>).</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-csv2po.html" class="wikilink1" title="toolkit-csv2po.html">csv2po</a> - Comma Separated Value (<acronym title="Comma Separated Value">CSV</acronym>) converter. Useful for doing translations using a spreadsheet.</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-csv2tbx.html" class="wikilink1" title="toolkit-csv2tbx.html">csv2tbx</a> - Create <acronym title="TermBase eXchange">TBX</acronym> (TermBase eXchange) files from Comma Separated Value (<acronym title="Comma Separated Value">CSV</acronym>) files</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-html2po.html" class="wikilink1" title="toolkit-html2po.html">html2po</a> - <acronym title="HyperText Markup Language">HTML</acronym> converter</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-ical2po.html" class="wikilink1" title="toolkit-ical2po.html">ical2po</a> - iCalendar file converter</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-ini2po.html" class="wikilink1" title="toolkit-ini2po.html">ini2po</a> - Windows INI file converter</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-odf2xliff.html" class="wikilink1" title="toolkit-odf2xliff.html">odf2xliff</a> - Convert OpenDocument (ODF) documents to <acronym title="XML Localization Interchange File Format">XLIFF</acronym> and vice-versa.</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-php2po.html" class="wikilink1" title="toolkit-php2po.html">php2po</a> - <acronym title="Hypertext Preprocessor">PHP</acronym> localisable string arrays converter.</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-po2wordfast.html" class="wikilink1" title="toolkit-po2wordfast.html">po2wordfast</a> - Wordfast Translation Memory converter</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-po2tmx.html" class="wikilink1" title="toolkit-po2tmx.html">po2tmx</a> - <acronym title="Translation Memory eXchange">TMX</acronym> (Translation Memory Exchange) converter</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-pot2po.html" class="wikilink1" title="toolkit-pot2po.html">pot2po</a> - initialise <acronym title="Gettext Portable Object">PO</acronym> Template files for translation</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-prop2po.html" class="wikilink1" title="toolkit-prop2po.html">prop2po</a> - Java property file (.properties) converter</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-py2web2po.html" class="wikilink1" title="toolkit-py2web2po.html">web2py2po</a> - web2py translation to <acronym title="Gettext Portable Object">PO</acronym> converter</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-rc2po.html" class="wikilink1" title="toolkit-rc2po.html">rc2po</a> - Windows Resource .rc (C++ Resource Compiler) converter</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-sub2po.html" class="wikilink1" title="toolkit-sub2po.html">sub2po</a> - Converter for various subtitle files</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-symb2po.html" class="wikilink1" title="toolkit-symb2po.html">symb2po</a> - Symbian-style translation to <acronym title="Gettext Portable Object">PO</acronym> converter</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-tiki2po.html" class="wikilink1" title="toolkit-tiki2po.html">tiki2po</a> - <a href="http://tikiwiki.org/" class="urlextern" title="http://tikiwiki.org/">TikiWiki</a> language.php converter</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-ts2po.html" class="wikilink1" title="toolkit-ts2po.html">ts2po</a> - Qt Linguist .ts converter</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-txt2po.html" class="wikilink1" title="toolkit-txt2po.html">txt2po</a> - Plain text to <acronym title="Gettext Portable Object">PO</acronym> converter</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-xliff2po.html" class="wikilink1" title="toolkit-xliff2po.html">xliff2po</a> - <acronym title="XML Localization Interchange File Format">XLIFF</acronym> (<acronym title="Extensible Markup Language">XML</acronym> Localisation Interchange File Format) converter</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Converters" [2546-4078] -->
+<h1><a name="tools" id="tools">Tools</a></h1>
+<div class="level1">
+
+<p>
+
+The <acronym title="Gettext Portable Object">PO</acronym> tools allow you to manipulate and work with <acronym title="Gettext Portable Object">PO</acronym> files
+</p>
+
+</div>
+<!-- SECTION "Tools" [4079-4161] -->
+<h3><a name="quality_assurance" id="quality_assurance">Quality Assurance</a></h3>
+<div class="level3">
+
+<p>
+These tools are especially useful for measuring and improving translation quality.
+
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="toolkit-poconflicts.html" class="wikilink1" title="toolkit-poconflicts.html">poconflicts</a> - extract messages that have conflicting translation</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-pofilter.html" class="wikilink1" title="toolkit-pofilter.html">pofilter</a> - filter <acronym title="Gettext Portable Object">PO</acronym> files to find common errors using a <a href="toolkit-pofilter_tests.html" class="wikilink1" title="toolkit-pofilter_tests.html">number of tests</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-pogrep.html" class="wikilink1" title="toolkit-pogrep.html">pogrep</a> - find strings in your <acronym title="Gettext Portable Object">PO</acronym> files</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-pomerge.html" class="wikilink1" title="toolkit-pomerge.html">pomerge</a> - merge file extracted using pofilter back into the original files</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-porestructure.html" class="wikilink1" title="toolkit-porestructure.html">porestructure</a> - restructures po files according to poconflict directives</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Quality Assurance" [4162-4663] -->
+<h3><a name="other_tools" id="other_tools">Other tools</a></h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> <a href="toolkit-tmserver.html" class="wikilink1" title="toolkit-tmserver.html">tmserver</a> - a Translation Memory server, can be queried over <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> using JSON</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-poterminology.html" class="wikilink1" title="toolkit-poterminology.html">poterminology</a> - extracts potential terminology from your translation files</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-pocount.html" class="wikilink1" title="toolkit-pocount.html">pocount</a> - Count words and strings in <acronym title="Gettext Portable Object">PO</acronym>, <acronym title="XML Localization Interchange File Format">XLIFF</acronym> and other types of translatable files</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-podebug.html" class="wikilink1" title="toolkit-podebug.html">podebug</a> - Add debug strings to messages</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-posegment.html" class="wikilink1" title="toolkit-posegment.html">posegment</a> - Break a <acronym title="Gettext Portable Object">PO</acronym> or <acronym title="XML Localization Interchange File Format">XLIFF</acronym> files into sentence segments, useful for creating a segmented translation memory</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-pocompile.html" class="wikilink1" title="toolkit-pocompile.html">pocompile</a> - create an <acronym title="Gettext Machine Object">MO</acronym> (Machine Object) file from a <acronym title="Gettext Portable Object">PO</acronym> or <acronym title="XML Localization Interchange File Format">XLIFF</acronym> file</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-poswap.html" class="wikilink1" title="toolkit-poswap.html">poswap</a> - uses a translation of another language that you would rather use than English as source language</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-poclean.html" class="wikilink1" title="toolkit-poclean.html">poclean</a> - produces a clean file from an unclean file (Trados/Wordfast) by stripping out the tw4win indicators</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Other tools" [4664-5471] -->
+<h1><a name="scripts" id="scripts">Scripts</a></h1>
+<div class="level1">
+
+<p>
+
+The scripts are for working with and manipulating <acronym title="Gettext Portable Object">PO</acronym> files.  Unlike the <code>tools</code> which are written in Python, the 
+scripts are written in <code>bash</code>.  Some of them are packaged since version 1.0 of the toolkit, but you might need to download them from version control and do a manual installation .
+
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="toolkit-moz-l10n-builder.html" class="wikilink1" title="toolkit-moz-l10n-builder.html">moz-l10n-builder</a> - Create Mozilla XPIs and rebuild Windows installers from existing translations</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-phase.html" class="wikilink1" title="toolkit-phase.html">phase</a> - Helps manage a project divided into phases of work, including sending, checking, etc</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-pocompendium.html" class="wikilink1" title="toolkit-pocompendium.html">pocompendium</a> - Creates various types of <acronym title="Gettext Portable Object">PO</acronym> compendium (i.e. combines many <acronym title="Gettext Portable Object">PO</acronym> files into a single <acronym title="Gettext Portable Object">PO</acronym> file)</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-pocommentclean.html" class="wikilink1" title="toolkit-pocommentclean.html">pocommentclean</a> - Remove all translator comments from a <acronym title="Gettext Portable Object">PO</acronym> file</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-poen.html" class="wikilink1" title="toolkit-poen.html">poen</a> - Initialises <acronym title="Gettext Portable Object Template">POT</acronym> files to English translations</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-poglossary.html" class="wikilink1" title="toolkit-poglossary.html">poglossary</a> - (obsolete; use <a href="toolkit-poterminology.html" class="wikilink1" title="toolkit-poterminology.html">poterminology</a> instead) Create a glossary of terms from existing po translations</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-pomigrate2.html" class="wikilink1" title="toolkit-pomigrate2.html">pomigrate2</a> - Migrate older <acronym title="Gettext Portable Object">PO</acronym> files to new <acronym title="Gettext Portable Object Template">POT</acronym> files</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-popuretext.html" class="wikilink1" title="toolkit-popuretext.html">popuretext</a> - Extracts all the source text from a directory of <acronym title="Gettext Portable Object Template">POT</acronym> files</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-poreencode.html" class="wikilink1" title="toolkit-poreencode.html">poreencode</a> - Converts <acronym title="Gettext Portable Object">PO</acronym> files to a new character encoding</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-posplit.html" class="wikilink1" title="toolkit-posplit.html">posplit</a> - Split a <acronym title="Gettext Portable Object">PO</acronym> file into translate, untranslated and fuzzy files</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Scripts" [5472-] --></body>
+</html>

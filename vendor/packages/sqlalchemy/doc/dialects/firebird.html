@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        
+        <title>
+    Firebird
+ &mdash; SQLAlchemy 0.6.4 Documentation</title>
+        
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '0.6.4',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 0.6.4 Documentation" href="../index.html" />
+        <link rel="up" title="Dialects" href="index.html" />
+        <link rel="next" title="Microsoft SQL Server" href="mssql.html" />
+        <link rel="prev" title="Dialects" href="index.html" />
+    
+
+    </head>
+    <body>
+        
+
+
+
+
+        <h1>SQLAlchemy 0.6.4 Documentation</h1>
+
+        <div id="search">
+        Search:
+        <form class="search" action="../search.html" method="get">
+          <input type="text" name="q" size="18" /> <input type="submit" value="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+        </div>
+
+        <div class="versionheader">
+            Version: <span class="versionnum">0.6.4</span> Last Updated: 09/07/2010 13:07:48
+        </div>
+        <div class="clearboth"></div>
+
+        <div class="topnav">
+            <div id="pagecontrol">
+                <a href="../genindex.html">Index</a>
+            
+                <div class="sourcelink">(<a href="../_sources/dialects/firebird.txt">view source)</div>
+            </div>
+            
+            <div class="navbanner">
+                <a class="totoc" href="../index.html">Table of Contents</a>
+                        » <a href="index.html" title="Dialects">Dialects</a>
+                » 
+    Firebird
+ 
+                
+                
+<div class="prevnext">
+        Previous:
+        <a href="index.html" title="previous chapter">Dialects</a>
+        Next:
+        <a href="mssql.html" title="next chapter">Microsoft SQL Server</a>
+</div>
+
+                <h2>
+                    
+    Firebird
+ 
+                </h2>
+            </div>
+                <ul>
+<li><a class="reference internal" href="#">Firebird</a><ul>
+<li><a class="reference internal" href="#dialects">Dialects</a></li>
+<li><a class="reference internal" href="#locking-behavior">Locking Behavior</a></li>
+<li><a class="reference internal" href="#returning-support">RETURNING support</a></li>
+<li><a class="reference internal" href="#kinterbasdb">kinterbasdb</a></li>
+</ul>
+</li>
+</ul>
+
+            <div class="clearboth"></div>
+        </div>
+        
+        <div class="document">
+            <div class="body">
+                
+<div class="section" id="module-sqlalchemy.dialects.firebird.base">
+<span id="firebird"></span><h1>Firebird<a class="headerlink" href="#module-sqlalchemy.dialects.firebird.base" title="Permalink to this headline">¶</a></h1>
+<p>Support for the Firebird database.</p>
+<p>Connectivity is usually supplied via the <a class="reference external" href="#kinterbasdb">kinterbasdb</a> DBAPI module.</p>
+<div class="section" id="dialects">
+<h2>Dialects<a class="headerlink" href="#dialects" title="Permalink to this headline">¶</a></h2>
+<p>Firebird offers two distinct <a class="reference external" href="http://mc-computing.com/Databases/Firebird/SQL_Dialect.html">dialects</a> (not to be confused with a
+SQLAlchemy <tt class="docutils literal"><span class="pre">Dialect</span></tt>):</p>
+<dl class="docutils">
+<dt>dialect 1</dt>
+<dd>This is the old syntax and behaviour, inherited from Interbase pre-6.0.</dd>
+<dt>dialect 3</dt>
+<dd>This is the newer and supported syntax, introduced in Interbase 6.0.</dd>
+</dl>
+<p>The SQLAlchemy Firebird dialect detects these versions and
+adjusts its representation of SQL accordingly.  However,
+support for dialect 1 is not well tested and probably has
+incompatibilities.</p>
+</div>
+<div class="section" id="locking-behavior">
+<h2>Locking Behavior<a class="headerlink" href="#locking-behavior" title="Permalink to this headline">¶</a></h2>
+<p>Firebird locks tables aggressively.  For this reason, a DROP TABLE may
+hang until other transactions are released.  SQLAlchemy does its best
+to release transactions as quickly as possible.  The most common cause
+of hanging transactions is a non-fully consumed result set, i.e.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">result</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&quot;select * from table&quot;</span><span class="p">)</span>
+<span class="n">row</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+<span class="k">return</span></pre></div>
+</div>
+<p>Where above, the <tt class="docutils literal"><span class="pre">ResultProxy</span></tt> has not been fully consumed.  The
+connection will be returned to the pool and the transactional state
+rolled back once the Python garbage collector reclaims the objects
+which hold onto the connection, which often occurs asynchronously.
+The above use case can be alleviated by calling <tt class="docutils literal"><span class="pre">first()</span></tt> on the
+<tt class="docutils literal"><span class="pre">ResultProxy</span></tt> which will fetch the first row and immediately close
+all remaining cursor/connection resources.</p>
+</div>
+<div class="section" id="returning-support">
+<h2>RETURNING support<a class="headerlink" href="#returning-support" title="Permalink to this headline">¶</a></h2>
+<p>Firebird 2.0 supports returning a result set from inserts, and 2.1
+extends that to deletes and updates. This is generically exposed by
+the SQLAlchemy <tt class="docutils literal"><span class="pre">returning()</span></tt> method, such as:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># INSERT..RETURNING</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">insert</span><span class="p">()</span><span class="o">.</span><span class="n">returning</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">col1</span><span class="p">,</span> <span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">col2</span><span class="p">)</span><span class="o">.</span>\
+               <span class="n">values</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;foo&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+<span class="c"># UPDATE..RETURNING</span>
+<span class="n">raises</span> <span class="o">=</span> <span class="n">empl</span><span class="o">.</span><span class="n">update</span><span class="p">()</span><span class="o">.</span><span class="n">returning</span><span class="p">(</span><span class="n">empl</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">empl</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">salary</span><span class="p">)</span><span class="o">.</span>\
+              <span class="n">where</span><span class="p">(</span><span class="n">empl</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">sales</span><span class="o">&gt;</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span>\
+              <span class="n">values</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">salary</span><span class="o">=</span><span class="n">empl</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">salary</span> <span class="o">*</span> <span class="mf">1.1</span><span class="p">))</span>
+<span class="k">print</span> <span class="n">raises</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span></pre></div>
+</div>
+</div>
+<div class="section" id="kinterbasdb">
+<span id="id2"></span><h2>kinterbasdb<a class="headerlink" href="#kinterbasdb" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-sqlalchemy.dialects.firebird.kinterbasdb"></span><p>The most common way to connect to a Firebird engine is implemented by
+<a class="reference external" href="http://sourceforge.net/projects/kinterbasdb">kinterbasdb</a>, currently <a class="reference external" href="http://firebirdsql.org/index.php?op=devel&amp;sub=python">maintained</a> directly by the Firebird people.</p>
+<p>The connection URL is of the form
+<tt class="docutils literal"><span class="pre">firebird[+kinterbasdb]://user:password&#64;host:port/path/to/db[?key=value&amp;key=value...]</span></tt>.</p>
+<p>Kinterbasedb backend specific keyword arguments are:</p>
+<ul>
+<li><p class="first">type_conv - select the kind of mapping done on the types: by default  
+SQLAlchemy uses 200 with Unicode, datetime and decimal support (see
+<a class="reference external" href="http://kinterbasdb.sourceforge.net/dist_docs/usage.html#adv_param_conv_dynamic_type_translation">details</a>).</p>
+</li>
+<li><p class="first">concurrency_level - set the backend policy with regards to threading 
+issues: by default SQLAlchemy uses policy 1 (see <a class="reference external" href="http://kinterbasdb.sourceforge.net/dist_docs/usage.html#special_issue_concurrency">details</a>).</p>
+</li>
+<li><p class="first">enable_rowcount - True by default, setting this to False disables 
+the usage of &#8220;cursor.rowcount&#8221; with the 
+Kinterbasdb dialect, which SQLAlchemy ordinarily calls upon automatically
+after any UPDATE or DELETE statement.   When disabled, SQLAlchemy&#8217;s 
+ResultProxy will return -1 for result.rowcount.   The rationale here is 
+that Kinterbasdb requires a second round trip to the database when 
+.rowcount is called -  since SQLA&#8217;s resultproxy automatically closes 
+the cursor after a non-result-returning statement, rowcount must be 
+called, if at all, before the result object is returned.   Additionally,
+cursor.rowcount may not return correct results with older versions
+of Firebird, and setting this flag to False will also cause the 
+SQLAlchemy ORM to ignore its usage. The behavior can also be controlled on a
+per-execution basis using the <cite>enable_rowcount</cite> option with
+<tt class="xref py py-meth docutils literal"><span class="pre">execution_options()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">conn</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span><span class="o">.</span><span class="n">execution_options</span><span class="p">(</span><span class="n">enable_rowcount</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">r</span><span class="o">.</span><span class="n">rowcount</span></pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+
+            </div>
+        </div>
+
+        
+        
+            <div class="bottomnav">
+                
+<div class="prevnext">
+        Previous:
+        <a href="index.html" title="previous chapter">Dialects</a>
+        Next:
+        <a href="mssql.html" title="next chapter">Microsoft SQL Server</a>
+</div>
+
+                <div class="doc_copyright">
+                    &copy; <a href="../copyright.html">Copyright</a> 2007, 2008, 2009, 2010, the SQLAlchemy authors and contributors.
+                    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
+                </div>
+            </div>
+        
+
+
+
+
+
+
+    </body>
+</html>
+
+
+

@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="moz2po_and_po2moz" id="moz2po_and_po2moz">moz2po and po2moz</a></h1>
+<div class="level1">
+
+<p>
+
+moz2po converts Mozilla files to <acronym title="Gettext Portable Object">PO</acronym> files.  It wraps converters that handle .properties, .dtd, .xhtml and some strange Mozilla files.
+The tool can extract from an <acronym title="Cross Platform Installer">XPI</acronym> file and build your complete <acronym title="Cross Platform Installer">XPI</acronym> file from your <acronym title="Gettext Portable Object">PO</acronym> files or work with files from Mozilla <acronym title="Concurrent Versions System">CVS</acronym>.  Thus providing 
+a complete roundtrip for Mozilla localisation using <acronym title="Gettext Portable Object">PO</acronym> files and <acronym title="Gettext Portable Object">PO</acronym> editors.
+</p>
+
+<p>
+<p><div class="noteclassic">This page should only be used as a reference to the command-line options for moz2po and po2moz. For more about using the Translate Toolkit and <acronym title="Gettext Portable Object">PO</acronym> files for translating Mozilla products, please see the page on <a href="toolkit-mozilla_l10n_scripts.html" class="wikilink1" title="toolkit-mozilla_l10n_scripts.html">Mozilla l10n scripts</a>.
+</div></p>
+</p>
+
+<p>
+<strong>Caution</strong>: The conversion to and from <acronym title="Cross Platform Installer">XPI</acronym> files is no longer actively supported, please work directly against Mozilla <acronym title="Concurrent Versions System">CVS</acronym> files.
+</p>
+
+</div>
+<!-- SECTION "moz2po and po2moz" [1-770] -->
+<h2><a name="usage" id="usage">Usage</a></h2>
+<div class="level2">
+<pre class="code">moz2po [options] &lt;xpi|dir&gt; &lt;po&gt;
+po2moz [options] &lt;po&gt; &lt;xpi|dir&gt;</pre>
+
+<p>
+
+Options (moz2po):
+
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> --version            </td><td class="col1 leftalign"> show program&#039;s version number and exit  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> -h, --help           </td><td class="col1 leftalign"> show this help message and exit  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> --manpage            </td><td class="col1 leftalign"> output a manpage based on the help       </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> --<a href="toolkit-progress_progress.html" class="wikilink1" title="toolkit-progress_progress.html">progress=PROGRESS</a>  </td><td class="col1 leftalign"> show progress as: dots, none, bar, names, verbose   </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> --<a href="toolkit-errorlevel_errorlevel.html" class="wikilink1" title="toolkit-errorlevel_errorlevel.html">errorlevel=ERRORLEVEL</a>   </td><td class="col1 leftalign"> show errorlevel as: none, message, exception, traceback  </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> -iINPUT, --input=INPUT    </td><td class="col1 leftalign"> read from INPUT in inc, it, *, dtd, properties formats   </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> -xEXCLUDE, --exclude=EXCLUDE   </td><td class="col1 leftalign"> exclude names matching EXCLUDE from input paths     </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 leftalign"> -oOUTPUT, --output=OUTPUT   </td><td class="col1 leftalign"> write to OUTPUT in it.po, it.pot, manifest, xhtml.po, xhtml.pot, ini.po, ini.pot, rdf, js, *, html.po, html.pot, inc.po, inc.pot, dtd.po, dtd.pot, properties.po, properties.pot formats  </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 leftalign"> -tTEMPLATE, --template=TEMPLATE   </td><td class="col1 leftalign"> read from TEMPLATE in it, *, properties, dtd, inc formats   </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0 leftalign"> --<a href="toolkit-psyco_mode.html" class="wikilink1" title="toolkit-psyco_mode.html">psyco=MODE</a>         </td><td class="col1 leftalign"> use psyco to speed up the operation, modes: none, full, profile          </td>
+	</tr>
+	<tr class="row10">
+		<td class="col0 leftalign"> -P, --pot            </td><td class="col1 leftalign"> output <acronym title="Gettext Portable Object">PO</acronym> Templates (.pot) rather than <acronym title="Gettext Portable Object">PO</acronym> files (.po)                    </td>
+	</tr>
+	<tr class="row11">
+		<td class="col0 leftalign"> --<a href="toolkit-duplicates_duplicatestyle.html" class="wikilink1" title="toolkit-duplicates_duplicatestyle.html">duplicates=DUPLICATESTYLE</a>   </td><td class="col1 leftalign"> what to do with duplicate strings (identical source text): merge (default), msgid_comment, keep, msgid_comment_all  </td>
+	</tr>
+</table>
+
+<p>
+
+Options (po2moz):
+
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> --version            </td><td class="col1 leftalign"> show program&#039;s version number and exit  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> -h, --help           </td><td class="col1 leftalign"> show this help message and exit         </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> --manpage            </td><td class="col1 leftalign"> output a manpage based on the help      </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> --<a href="toolkit-progress_progress.html" class="wikilink1" title="toolkit-progress_progress.html">progress=PROGRESS</a>  </td><td class="col1 leftalign"> show progress as: dots, none, bar, names, verbose  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> --<a href="toolkit-errorlevel_errorlevel.html" class="wikilink1" title="toolkit-errorlevel_errorlevel.html">errorlevel=ERRORLEVEL</a>  </td><td class="col1 leftalign"> show errorlevel as: none, message, exception, traceback   </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> -iINPUT, --input=INPUT   </td><td class="col1 leftalign"> read from INPUT in dtd.po, dtd.pot, ini.po, ini.pot, inc.po, inc.pot, manifest, it.po, it.pot, *, html.po, html.pot, js, rdf, properties.po, properties.pot, xhtml.po, xhtml.pot formats  </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> -xEXCLUDE, --exclude=EXCLUDE  </td><td class="col1 leftalign"> exclude names matching EXCLUDE from input paths  </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 leftalign"> -oOUTPUT, --output=OUTPUT     </td><td class="col1 leftalign"> write to OUTPUT in dtd, *, inc, it, properties formats  </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 leftalign"> -tTEMPLATE, --template=TEMPLATE  </td><td class="col1 leftalign"> read from TEMPLATE in dtd, *, inc, it, properties formats   </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0 leftalign"> --<a href="toolkit-psyco_mode.html" class="wikilink1" title="toolkit-psyco_mode.html">psyco=MODE</a>         </td><td class="col1 leftalign"> use psyco to speed up the operation, modes: none, full, profile   </td>
+	</tr>
+	<tr class="row10">
+		<td class="col0 leftalign"> -lLOCALE, --locale=LOCALE  </td><td class="col1 leftalign"> set output locale (required as this sets the directory names)   </td>
+	</tr>
+	<tr class="row11">
+		<td class="col0 leftalign"> --clonexpi=CLONEXPI  </td><td class="col1 leftalign"> clone xpi structure from the given xpi file   </td>
+	</tr>
+	<tr class="row12">
+		<td class="col0 leftalign"> --fuzzy              </td><td class="col1 leftalign"> use translations marked fuzzy   </td>
+	</tr>
+	<tr class="row13">
+		<td class="col0 leftalign"> --nofuzzy            </td><td class="col1 leftalign"> don&#039;t use translations marked fuzzy (default)   </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Usage" [771-3419] -->
+<h2><a name="examples" id="examples">Examples</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Examples" [3420-3441] -->
+<h3><a name="creating_pot_files" id="creating_pot_files">Creating POT files</a></h3>
+<div class="level3">
+
+<p>
+
+See <a href="toolkit-creating_mozilla_pot_files.html" class="wikilink1" title="toolkit-creating_mozilla_pot_files.html">this page</a> for more information on creating Mozilla <acronym title="Gettext Portable Object Template">POT</acronym> files.
+</p>
+
+<p>
+After extracting the en-US l10n files, you can run the following command:
+
+</p>
+<pre class="code">moz2po -P l10n/en-US pot</pre>
+
+<p>
+
+This creates a set of <acronym title="Gettext Portable Object Template">POT</acronym> (<code>-P</code>) files in the <code>pot</code> directory from the Mozilla files in <code>l10n/en-US</code>.
+
+</p>
+<pre class="code">moz2po -P en-US.xpi pot</pre>
+
+<p>
+
+Creating set of <acronym title="Gettext Portable Object Template">POT</acronym> (<code>-P</code>) files from the American English <acronym title="Cross Platform Installer">XPI</acronym> (<code>en-US.xpi</code>) and placing them in <code>pot</code> for use as <acronym title="Gettext Portable Object">PO</acronym> Templates.
+</p>
+
+<p>
+If you want to create a set of <acronym title="Gettext Portable Object Template">POT</acronym> files with another base language try the following:
+
+</p>
+<pre class="code">moz2po -P fr-FR.xpi fr-pot</pre>
+
+<p>
+
+This will create a set of <acronym title="Gettext Portable Object Template">POT</acronym> files in <code>fr-pot</code> that have French as your source language.
+</p>
+
+</div>
+<!-- SECTION "Creating POT files" [3442-4156] -->
+<h3><a name="creating_po_files_from_existing_non-po_translations" id="creating_po_files_from_existing_non-po_translations">Creating PO files from existing non-PO translations</a></h3>
+<div class="level3">
+
+<p>
+
+If you have existing translations (Mozilla related or other Babelzilla files) and you wish to convert them to <acronym title="Gettext Portable Object">PO</acronym> for future translation then the following generic instructions will work:
+
+</p>
+<pre class="code">moz2po -t en-US af-ZA af-ZA_pofiles</pre>
+
+<p>
+
+This will combine the untranslated template en-US files from <code>en-US</code> combine them with your existing translations in <code>af-ZA</code> and output <acronym title="Gettext Portable Object">PO</acronym> files to <code>af-ZA_pofiles</code>.
+
+</p>
+<pre class="code">moz2po -t l10n/fr l10n/xh po/xh</pre>
+
+<p>
+
+For those who are not English fluent you can do the same with another languages.  In this case <code>msgid</code> will contain the French text from <code>l10n/fr</code>.  This is useful for translating where the translators other languages is not English but French, Spanish or Portuguese.  Please make sure that the source languages i.e. the <code>msgid</code> language is fully translated as against en-US.
+</p>
+
+</div>
+<!-- SECTION "Creating PO files from existing non-PO translations" [4157-5036] -->
+<h3><a name="creating_an_xpi_or_cvs_ready_translations" id="creating_an_xpi_or_cvs_ready_translations">Creating an XPI or CVS ready translations</a></h3>
+<div class="level3">
+<pre class="code">po2moz -lzu-ZA -t en-US.xpi zu zu-ZA.xpi</pre>
+
+<p>
+
+Create a Zulu language (<code>-lzu-ZA</code>) <acronym title="Cross Platform Installer">XPI</acronym> called <code>zu-ZA.xpi</code> from translations found in <code>zu</code> using <code>en-US.xpi</code> as a template.  We use a template to ensure that our <acronym title="Document Type Definition">DTD</acronym> and .properties files appear exactly as those in en-US
+
+</p>
+<pre class="code">po2moz -t l10n/en-US po/xh l10n/xh</pre>
+
+<p>
+
+Create Mozilla files using the templates files in <code>l10n/en-US</code> (see above for how to create them) with <acronym title="Gettext Portable Object">PO</acronym> translations in <code>po/xh</code> and ouput them to <code>l10n/xh</code>.  The files now in <code>l10n/xh</code> are ready for submission to Mozilla and can be used to build a language pack or translated version of Mozilla.
+</p>
+
+</div>
+<!-- SECTION "Creating an XPI or CVS ready translations" [5037-5709] -->
+<h2><a name="issues" id="issues">Issues</a></h2>
+<div class="level2">
+
+<p>
+
+You can perform the bulk of your work (99%) with moz2po.  
+</p>
+
+<p>
+Localisation of <acronym title="Extensible HyperText Markup Language">XHTML</acronym> is not yet perfect, you might want to work with the files directly.
+</p>
+
+<p>
+Bug <a href="http://bugs.locamotion.org/show_bug.cgi?id=129" class="interwiki iw_bug" title="http://bugs.locamotion.org/show_bug.cgi?id=129">129</a> tracks the outstanding features which would allow complete localisation of Mozilla including; all help, start pages, rdf files, etc. It also tracks some bugs.
+</p>
+
+<p>
+Accesskeys don&#039;t yet work in .properties files and in several cases where the Mozilla .dtd files don&#039;t follow the normal conventions, for example in <code>security/manager/chrome/pippki/pref-ssl.dtd.po</code>. You might also want to check the files mentioned in this bug <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=329444" class="interwiki iw_mozbug" title="https://bugzilla.mozilla.org/show_bug.cgi?id=329444">329444</a> where mistakes in the <acronym title="Document Type Definition">DTD</acronym>-definitions cause problems in the matching of accelerators with the text.
+</p>
+
+<p>
+You might want to give special attention to the following files since it contains customisations that are not really translations.
+</p>
+<ul>
+<li class="level1"><div class="li"> mail/chrome/messenger/downloadheaders.dtd.po</div>
+</li>
+<li class="level1"><div class="li"> toolkit/chrome/global/intl.properties.po</div>
+</li>
+</ul>
+
+<p>
+
+Also, all width, height and size specifications need to be edited with feedback from testing the translated interfaces.
+</p>
+
+<p>
+There are some constructed strings in the Mozilla code which we can&#039;t do much about. Take good care to read the localisation notes. For an example, see <code>mail/chrome/messenger/downloadheaders.dtd.po</code>. In that specific file, the localisation note from the <acronym title="Document Type Definition">DTD</acronym> file is lost, so take good care of those.
+</p>
+
+<p>
+The file extension of the original Mozilla file is required to tell the Toolkit how to do the conversion.  Therefore, a file like foo.dtd must be named foo.dtd.po in order to <code>po2moz</code> to recognise it as a <acronym title="Document Type Definition">DTD</acronym> file.
+</p>
+
+</div>
+<!-- SECTION "Issues" [5710-] --></body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.twistedutil &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.util" href="IPython.kernel.util.html" />
+    <link rel="prev" title="kernel.taskfc" href="IPython.kernel.taskfc.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.util.html" title="kernel.util"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.taskfc.html" title="kernel.taskfc"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-twistedutil">
+<h1>kernel.twistedutil<a class="headerlink" href="#kernel-twistedutil" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.twistedutil">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.twistedutil</span></tt><a class="headerlink" href="#module-IPython.kernel.twistedutil" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.kernel.twistedutil</span></tt>:</p>
+<img src="../../_images/inheritancec871829103.png" usemap="#inheritancec871829103" class="inheritance"/><map id="inheritancec871829103" name="inheritancec871829103">
+<area shape="rect" href="#IPython.kernel.twistedutil.ReactorInThread" title="kernel.twistedutil.ReactorInThread" alt="" coords="481,56,716,83"/>
+<area shape="rect" href="#IPython.kernel.twistedutil.DeferredList" title="kernel.twistedutil.DeferredList" alt="" coords="221,5,432,32"/>
+</map>
+<p>Things directly related to all of twisted.</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="deferredlist">
+<h3><a title="IPython.kernel.twistedutil.DeferredList" class="reference internal" href="#IPython.kernel.twistedutil.DeferredList"><tt class="xref docutils literal"><span class="pre">DeferredList</span></tt></a><a class="headerlink" href="#deferredlist" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.twistedutil.DeferredList">
+<!--[IPython.kernel.twistedutil.DeferredList]-->class <tt class="descclassname">IPython.kernel.twistedutil.</tt><tt class="descname">DeferredList</tt><big>(</big><em>deferredList</em>, <em>fireOnOneCallback=0</em>, <em>fireOnOneErrback=0</em>, <em>consumeErrors=0</em>, <em>logErrors=0</em><big>)</big><a class="headerlink" href="#IPython.kernel.twistedutil.DeferredList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">twisted.internet.defer.Deferred</span></tt></p>
+<p>I combine a group of deferreds into one callback.</p>
+<p>I track a list of L{Deferred}s for their callbacks, and make a single
+callback when they have all completed, a list of (success, result)
+tuples, &#8216;success&#8217; being a boolean.</p>
+<p>Note that you can still use a L{Deferred} after putting it in a
+DeferredList.  For example, you can suppress &#8216;Unhandled error in Deferred&#8217;
+messages by adding errbacks to the Deferreds <em>after</em> putting them in the
+DeferredList, as a DeferredList won&#8217;t swallow the errors.  (Although a more
+convenient way to do this is simply to set the consumeErrors flag)</p>
+<p>Note: This is a modified version of the twisted.internet.defer.DeferredList</p>
+<dl class="method">
+<dt id="IPython.kernel.twistedutil.DeferredList.__init__">
+<!--[IPython.kernel.twistedutil.DeferredList.__init__]--><tt class="descname">__init__</tt><big>(</big><em>deferredList</em>, <em>fireOnOneCallback=0</em>, <em>fireOnOneErrback=0</em>, <em>consumeErrors=0</em>, <em>logErrors=0</em><big>)</big><a class="headerlink" href="#IPython.kernel.twistedutil.DeferredList.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize a DeferredList.</p>
+<p>&#64;type deferredList:  C{list} of L{Deferred}s
+&#64;param deferredList: The list of deferreds to track.
+&#64;param fireOnOneCallback: (keyword param) a flag indicating that</p>
+<blockquote>
+only one callback needs to be fired for me to call
+my callback</blockquote>
+<dl class="docutils">
+<dt>&#64;param fireOnOneErrback: (keyword param) a flag indicating that</dt>
+<dd>only one errback needs to be fired for me to call
+my errback</dd>
+<dt>&#64;param consumeErrors: (keyword param) a flag indicating that any errors</dt>
+<dd>raised in the original deferreds should be
+consumed by this DeferredList.  This is useful to
+prevent spurious warnings being logged.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="reactorinthread">
+<h3><a title="IPython.kernel.twistedutil.ReactorInThread" class="reference internal" href="#IPython.kernel.twistedutil.ReactorInThread"><tt class="xref docutils literal"><span class="pre">ReactorInThread</span></tt></a><a class="headerlink" href="#reactorinthread" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.twistedutil.ReactorInThread">
+<!--[IPython.kernel.twistedutil.ReactorInThread]-->class <tt class="descclassname">IPython.kernel.twistedutil.</tt><tt class="descname">ReactorInThread</tt><big>(</big><em>group=None</em>, <em>target=None</em>, <em>name=None</em>, <em>args=()</em>, <em>kwargs=None</em>, <em>verbose=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.twistedutil.ReactorInThread" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">threading.Thread</span></tt></p>
+<p>Run the twisted reactor in a different thread.</p>
+<p>For the process to be able to exit cleanly, do the following:</p>
+<p>rit = ReactorInThread()
+rit.setDaemon(True)
+rit.start()</p>
+<dl class="method">
+<dt id="IPython.kernel.twistedutil.ReactorInThread.__init__">
+<!--[IPython.kernel.twistedutil.ReactorInThread.__init__]--><tt class="descname">__init__</tt><big>(</big><em>group=None</em>, <em>target=None</em>, <em>name=None</em>, <em>args=()</em>, <em>kwargs=None</em>, <em>verbose=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.twistedutil.ReactorInThread.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.twistedutil.ReactorInThread.run">
+<!--[IPython.kernel.twistedutil.ReactorInThread.run]--><tt class="descname">run</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.twistedutil.ReactorInThread.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.twistedutil.ReactorInThread.stop">
+<!--[IPython.kernel.twistedutil.ReactorInThread.stop]--><tt class="descname">stop</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.twistedutil.ReactorInThread.stop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.kernel.twistedutil.gatherBoth">
+<!--[IPython.kernel.twistedutil.gatherBoth]--><tt class="descclassname">IPython.kernel.twistedutil.</tt><tt class="descname">gatherBoth</tt><big>(</big><em>dlist</em>, <em>fireOnOneCallback=0</em>, <em>fireOnOneErrback=0</em>, <em>consumeErrors=0</em>, <em>logErrors=0</em><big>)</big><a class="headerlink" href="#IPython.kernel.twistedutil.gatherBoth" title="Permalink to this definition">¶</a></dt>
+<dd>This is like gatherBoth, but sets consumeErrors=1.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.twistedutil.parseResults">
+<!--[IPython.kernel.twistedutil.parseResults]--><tt class="descclassname">IPython.kernel.twistedutil.</tt><tt class="descname">parseResults</tt><big>(</big><em>results</em><big>)</big><a class="headerlink" href="#IPython.kernel.twistedutil.parseResults" title="Permalink to this definition">¶</a></dt>
+<dd>Pull out results/Failures from a DeferredList.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.twistedutil.wait_for_file">
+<!--[IPython.kernel.twistedutil.wait_for_file]--><tt class="descclassname">IPython.kernel.twistedutil.</tt><tt class="descname">wait_for_file</tt><big>(</big><em>filename</em>, <em>delay=0.10000000000000001</em>, <em>max_tries=10</em><big>)</big><a class="headerlink" href="#IPython.kernel.twistedutil.wait_for_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait (poll) for a file to be created.</p>
+<p>This method returns a Deferred that will fire when a file exists. It
+works by polling os.path.isfile in time intervals specified by the
+delay argument.  If <cite>max_tries</cite> is reached, it will errback with a 
+<cite>FileTimeoutError</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>filename</strong> : str</p>
+<blockquote>
+<p>The name of the file to wait for.</p>
+</blockquote>
+<p><strong>delay</strong> : float</p>
+<blockquote>
+<p>The time to wait between polls.</p>
+</blockquote>
+<p><strong>max_tries</strong> : int</p>
+<blockquote>
+<p>The max number of attempts before raising <cite>FileTimeoutError</cite></p>
+</blockquote>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>d</strong> : Deferred</p>
+<blockquote class="last">
+<p>A Deferred instance that will fire when the file exists.</p>
+</blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.twistedutil</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.twistedutil">Module: <tt class="docutils literal"><span class="pre">kernel.twistedutil</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#deferredlist"><tt class="docutils literal"><span class="pre">DeferredList</span></tt></a></li>
+<li><a class="reference external" href="#reactorinthread"><tt class="docutils literal"><span class="pre">ReactorInThread</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.kernel.taskfc.html" title="previous chapter">kernel.taskfc</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.util.html" title="next chapter">kernel.util</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.twistedutil.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.util.html" title="kernel.util"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.taskfc.html" title="kernel.taskfc"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Werkzeug Documentation</title>
+    <link rel="stylesheet" href="_static/style.css" type="text/css">
+    <link rel="stylesheet" href="_static/print.css" type="text/css" media="print">
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css">
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:   '',
+        VERSION:    '0.5.1dev'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/interface.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/werkzeug.js"></script>
+    <link rel="contents" title="Global table of contents" href="contents.html">
+    <link rel="index" title="Global index" href="genindex.html">
+    <link rel="search" title="Search" href="search.html">
+    <link rel="top" title="Werkzeug v0.5.1dev documentation" href="index.html">
+    <link rel="next" title="HTTP Exceptions" href="exceptions.html">
+    <link rel="prev" title="Data Structures" href="datastructures.html">
+    
+  </head>
+  <body>
+    <div class="page">
+      <div class="header">
+        <h1 class="heading"><a href="index.html"
+          title="back to the documentation overview"><span>Werkzeug</span></a></h1>
+      </div>
+      <ul class="navigation">
+        <li class="indexlink"><a href="index.html">Overview</a></li>
+        <li><a href="datastructures.html">&laquo; Data Structures</a></li>
+        <li class="active"><a href="">Mini Templates</a></li>
+        <li><a href="exceptions.html">HTTP Exceptions &raquo;</a></li>
+      </ul>
+      <div class="body">
+        <div id="toc">
+          <h3>Table Of Contents</h3>
+          <div class="inner"><ul>
+<li><a class="reference external" href="">Mini Templates</a><ul>
+<li><a class="reference external" href="#syntax-elements">Syntax Elements</a></li>
+<li><a class="reference external" href="#missing-variables">Missing Variables</a></li>
+<li><a class="reference external" href="#the-template-class">The Template Class</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+        
+  <div class="section" id="module-werkzeug">
+<h1>Mini Templates<a class="headerlink" href="#module-werkzeug" title="Permalink to this headline">¶</a></h1>
+<p>Werkzeug ships a <strong>minimal</strong> templating system which is useful for small
+scripts where you just want to generate some HTML and don&#8217;t want another
+dependency or full blown template engine system.</p>
+<p>It it however not recommended to use this template system for anything else
+than simple content generation.  The <a title="werkzeug.Template" class="reference internal" href="#werkzeug.Template"><tt class="xref docutils literal"><span class="pre">Template</span></tt></a> class can be directly
+imported from the <a title="" class="reference external" href="wrappers.html#module-werkzeug"><tt class="xref docutils literal"><span class="pre">werkzeug</span></tt></a> module.</p>
+<p>The template engine recognizes ASP/PHP like blocks and executes the code
+in them:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">t</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span><span class="s">&#39;&lt;</span><span class="si">% f</span><span class="s">or u in users %&gt;${u[&quot;username&quot;]}</span><span class="se">\n</span><span class="s">&lt;</span><span class="si">% e</span><span class="s">ndfor %&gt;&#39;</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">users</span><span class="o">=</span><span class="p">[{</span><span class="s">&#39;username&#39;</span><span class="p">:</span> <span class="s">&#39;John&#39;</span><span class="p">},</span>
+                <span class="p">{</span><span class="s">&#39;username&#39;</span><span class="p">:</span> <span class="s">&#39;Jane&#39;</span><span class="p">}])</span>
+</pre></div>
+</div>
+<p>would result in:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">John</span>
+<span class="n">Jane</span>
+</pre></div>
+</div>
+<p>You can also create templates from files:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">t</span> <span class="o">=</span> <span class="n">Template</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s">&#39;test.html&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The syntax elements are a mixture of django, genshi text and mod_python
+templates and used internally in werkzeug components.</p>
+<p>We do not recommend using this template engine in a real environment
+because is quite slow and does not provide any advanced features.  For
+simple applications (cgi script like) this can however be sufficient.</p>
+<div class="section" id="syntax-elements">
+<h2>Syntax Elements<a class="headerlink" href="#syntax-elements" title="Permalink to this headline">¶</a></h2>
+<p>Printing Variables:</p>
+<div class="highlight-text"><div class="highlight"><pre>$variable
+$variable.attribute[item](some, function)(calls)
+${expression} or &lt;%py print expression %&gt;
+</pre></div>
+</div>
+<p>Keep in mind that the print statement adds a newline after the call or
+a whitespace if it ends with a comma.</p>
+<p>For Loops:</p>
+<div class="highlight-text"><div class="highlight"><pre>&lt;% for item in seq %&gt;
+    ...
+&lt;% endfor %&gt;
+</pre></div>
+</div>
+<p>While Loops:</p>
+<div class="highlight-text"><div class="highlight"><pre>&lt;% while expression %&gt;
+    &lt;%py break / continue %&gt;
+&lt;% endwhile %&gt;
+</pre></div>
+</div>
+<p>If Conditions:</p>
+<div class="highlight-text"><div class="highlight"><pre>&lt;% if expression %&gt;
+    ...
+&lt;% elif expression %&gt;
+    ...
+&lt;% else %&gt;
+    ...
+&lt;% endif %&gt;
+</pre></div>
+</div>
+<p>Python Expressions:</p>
+<div class="highlight-text"><div class="highlight"><pre>&lt;%py
+    ...
+%&gt;
+
+&lt;%python
+    ...
+%&gt;
+</pre></div>
+</div>
+<p>Note on python expressions:  You cannot start a loop in a python block
+and continue it in another one.  This example does <em>not</em> work:</p>
+<div class="highlight-text"><div class="highlight"><pre>&lt;%python
+    for item in seq:
+%&gt;
+    ...
+</pre></div>
+</div>
+<p>Comments:</p>
+<div class="highlight-text"><div class="highlight"><pre>&lt;%#
+    This is a comment
+%&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="missing-variables">
+<h2>Missing Variables<a class="headerlink" href="#missing-variables" title="Permalink to this headline">¶</a></h2>
+<p>If you try to access a missing variable you will get back an <cite>Undefined</cite>
+object.  You can iterate over such an object or print it and it won&#8217;t
+fail.  However every other operation will raise an error.  To test if a
+variable is undefined you can use this expression:</p>
+<div class="highlight-text"><div class="highlight"><pre>&lt;% if variable is Undefined %&gt;
+    ...
+&lt;% endif %&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-template-class">
+<h2>The Template Class<a class="headerlink" href="#the-template-class" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="werkzeug.Template">
+<em class="property">
+class </em><tt class="descclassname">werkzeug.</tt><tt class="descname">Template</tt><big>(</big><em>source</em>, <em>filename='&lt;template&gt;'</em>, <em>charset='utf-8'</em>, <em>errors='strict'</em>, <em>unicode_mode=True</em><big>)</big><a class="headerlink" href="#werkzeug.Template" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a simple text based template.  It&#8217;s a good idea to load such
+templates from files on the file system to get better debug output.</p>
+<p>Besides the normal global functions and objects, the following functions
+are added to every namespace: <cite>escape</cite>, <cite>url_encode</cite>, <cite>url_quote</cite>, and
+<cite>url_quote_plus</cite>.  You can change those by subclassing <cite>Template</cite> and
+overriding the <cite>default_context</cite> dict:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">MyTemplate</span><span class="p">(</span><span class="n">Template</span><span class="p">):</span>
+    <span class="n">default_namespace</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">&#39;ueber_func&#39;</span><span class="p">:</span>       <span class="n">ueber_func</span>
+    <span class="p">}</span>
+    <span class="c"># Now add the old functions, too, because they are useful.</span>
+    <span class="n">default_namespace</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">Template</span><span class="o">.</span><span class="n">default_namespace</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="classmethod">
+<dt id="werkzeug.Template.from_file">
+<em class="property">
+classmethod </em><tt class="descname">from_file</tt><big>(</big><em>file</em>, <em>charset='utf-8'</em>, <em>errors='strict'</em>, <em>unicode_mode=True</em>, <em>encoding=None</em><big>)</big><a class="headerlink" href="#werkzeug.Template.from_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a template from a file.</p>
+<p>
+<span class="versionmodified">Changed in version 0.5: </span>The encoding parameter was renamed to charset.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><em>file</em> &#8211; a filename or file object to load the template from.</li>
+<li><em>charset</em> &#8211; the charset of the template to load.</li>
+<li><em>errors</em> &#8211; the error behavior of the charset decoding.</li>
+<li><em>unicode_mode</em> &#8211; set to <cite>False</cite> to disable unicode mode.</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a template</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="werkzeug.Template.render">
+<tt class="descname">render</tt><big>(</big><span class="optional">[</span><em>context</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#werkzeug.Template.render" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function accepts either a dict or some keyword arguments which
+will then be the context the template is evaluated in.  The return
+value will be the rendered template.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameter:</th><td class="field-body"><em>context</em> &#8211; the function accepts the same arguments as the
+<a title="(in Python v2.7)" class="reference external" href="http://docs.python.org/dev/library/stdtypes.html#dict"><tt class="xref docutils literal"><span class="pre">dict</span></tt></a> constructor.</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body">the rendered template as string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+        <div style="clear: both"></div>
+      </div>
+      <div class="footer">
+        © Copyright 2008 by the <a href="http://pocoo.org/">Pocoo Team</a>,
+        documentation generated by <a href="http://sphinx.pocoo.org/">Sphinx</a>
+      </div>
+    </div>
+  </body>
+</html>

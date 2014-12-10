@@ -1,0 +1,111 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+external.pretty
+===============
+
+Module: :mod:`external.pretty`
+------------------------------
+Inheritance diagram for ``IPython.external.pretty``:
+
+.. inheritance-diagram:: IPython.external.pretty 
+   :parts: 3
+
+.. automodule:: IPython.external.pretty
+
+.. currentmodule:: IPython.external.pretty
+
+Classes
+-------
+
+:class:`Breakable`
+~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: Breakable
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`Group`
+~~~~~~~~~~~~~~
+
+
+.. autoclass:: Group
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`GroupQueue`
+~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: GroupQueue
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`PrettyPrinter`
+~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: PrettyPrinter
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`Printable`
+~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: Printable
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`RepresentationPrinter`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: RepresentationPrinter
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`Text`
+~~~~~~~~~~~~~
+
+
+.. autoclass:: Text
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Functions
+---------
+
+
+.. autofunction:: IPython.external.pretty.for_type
+
+
+.. autofunction:: IPython.external.pretty.for_type_by_name
+
+
+.. autofunction:: IPython.external.pretty.pprint
+
+
+.. autofunction:: IPython.external.pretty.pretty
+

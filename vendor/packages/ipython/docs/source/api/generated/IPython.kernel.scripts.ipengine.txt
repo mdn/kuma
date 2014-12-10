@@ -1,0 +1,23 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.scripts.ipengine
+=======================
+
+Module: :mod:`kernel.scripts.ipengine`
+--------------------------------------
+.. automodule:: IPython.kernel.scripts.ipengine
+
+.. currentmodule:: IPython.kernel.scripts.ipengine
+
+Functions
+---------
+
+
+.. autofunction:: IPython.kernel.scripts.ipengine.init_config
+
+
+.. autofunction:: IPython.kernel.scripts.ipengine.main
+
+
+.. autofunction:: IPython.kernel.scripts.ipengine.start_engine
+

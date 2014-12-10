@@ -1,0 +1,25 @@
+This directory contains miscellaneous code for translate
+It includes code written specifically for translate
+and also other modules that are included with Python 2.3
+but have been included here for backwards compatibility with
+earlier versions of Python.
+
+translate is distributed under the GPL; some of the code in this
+directory is distributed under other open source licenses.
+Please see each relevant file for details...
+
+quote.py is a standard translate module that is used for quoting/unquoting
+and escaping/unescaping strings. It is released under the GPL
+
+The csv module is defined in csv.py and _csv.c
+Since some of this code is in C, it needs to be compiled and installed
+on your Python distribution if you are using a version of Python before 
+Python 2.3. To do this, run:
+  setup.py install
+(This will require the standard C compiler for your operating system)
+
+optparse.py is the standard Python command line options parser, previously
+known as Optik. It also requires textwrap.py which is a standard Python 2.3
+module, and which is also included here.
+
+

@@ -1,0 +1,24 @@
+Metadata-Version: 1.0
+Name: html5lib
+Version: 0.90
+Summary: HTML parser based on the HTML5 specifcation
+Home-page: http://code.google.com/p/html5lib/
+Author: James Graham
+Author-email: james@hoppipolla.co.uk
+License: MIT License
+Description: HTML parser designed to follow the HTML5
+        specification. The parser is designed to handle all flavours of HTML and
+        parses invalid documents using well-defined error handling rules compatible
+        with the behaviour of major desktop web browsers.
+        
+        Output is to a tree structure; the current release supports output to
+        DOM, ElementTree and lxml tree formats as well as a
+        simple custom format
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Text Processing :: Markup :: HTML

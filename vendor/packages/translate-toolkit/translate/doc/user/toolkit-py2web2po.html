@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="web2py2po" id="web2py2po">web2py2po</a></h1>
+<div class="level1">
+
+<p>
+
+Converts web2py translation files to <acronym title="Gettext Portable Object">PO</acronym> files and vice versa.
+</p>
+
+<p>
+Web2py (<a href="http://mdp.cti.depaul.edu" class="urlextern" title="http://mdp.cti.depaul.edu">http://mdp.cti.depaul.edu</a>, formerly known as Gluon) is an open-source, Python-based web application framework by Massimo Di Pierro (inspired by Django and Rails).
+</p>
+
+<p>
+Web2py uses an internal localization engine based on Python dictionaries, which is applied with the T() lookup function. Web2py provides a built-in translation interface for the T()-engine, which is excellent for rapid application development.
+</p>
+
+<p>
+On the other hand, for collaboration and workflow control in a wider community you might probably rather want to use Pootle, Launchpad or similar facilities for translation, thus need to transform the web2py dictionaries into <acronym title="Gettext Portable Object">PO</acronym> files and vice versa. And exactly that is what the web2py2po converters are good for.
+</p>
+
+<p>
+<p><div class="noteclassic">Current this is only available in the SVN trunk version of the toolkit.
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "web2py2po" [1-911] -->
+<h2><a name="usage" id="usage">Usage</a></h2>
+<div class="level2">
+<pre class="code">web2py2po [options] &lt;web2py&gt; &lt;po&gt;
+po2web2py [options] &lt;po&gt; &lt;web2py&gt;</pre>
+
+<p>
+
+Where:
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0"> &lt;web2py&gt; </td><td class="col1"> is a valid web2py translation file </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> &lt;po&gt;   </td><td class="col1 leftalign"> is a <acronym title="Gettext Portable Object">PO</acronym> or <acronym title="Gettext Portable Object Template">POT</acronym> file or a directory of <acronym title="Gettext Portable Object">PO</acronym> or <acronym title="Gettext Portable Object Template">POT</acronym> files  </td>
+	</tr>
+</table>
+
+<p>
+
+Options (web2py2po):
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> --version           </td><td class="col1 leftalign"> show program&#039;s version number and exit  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> -h, --help          </td><td class="col1 leftalign"> show this help message and exit  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> --manpage           </td><td class="col1 leftalign"> output a manpage based on the help  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> <a href="toolkit-progress_progress.html" class="wikilink1" title="toolkit-progress_progress.html">--progress=PROGRESS</a>  </td><td class="col1 leftalign"> show progress as: dots, none, bar, names, verbose  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> <a href="toolkit-errorlevel_errorlevel.html" class="wikilink1" title="toolkit-errorlevel_errorlevel.html">--errorlevel=ERRORLEVEL</a>  </td><td class="col1 leftalign"> show errorlevel as: none, message, exception, traceback   </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> -i INPUT, --input=INPUT      </td><td class="col1 leftalign"> read from INPUT in php format  </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> -x EXCLUDE, --exclude=EXCLUDE  </td><td class="col1 leftalign"> exclude names matching EXCLUDE from input paths   </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 leftalign"> -o OUTPUT, --output=OUTPUT     </td><td class="col1 leftalign"> write to OUTPUT in po, pot formats  </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 leftalign"> <a href="toolkit-psyco_mode.html" class="wikilink1" title="toolkit-psyco_mode.html">--psyco=MODE</a>  </td><td class="col1 leftalign"> use psyco to speed up the operation, modes: none,                        full, profile  </td>
+	</tr>
+</table>
+
+<p>
+
+Options (po2web2py):
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> --version            </td><td class="col1 leftalign"> show program&#039;s version number and exit  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> -h, --help           </td><td class="col1 leftalign"> show this help message and exit  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> --manpage            </td><td class="col1 leftalign"> output a manpage based on the help  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> <a href="toolkit-progress_progress.html" class="wikilink1" title="toolkit-progress_progress.html">--progress=PROGRESS</a>  </td><td class="col1 leftalign"> show progress as: dots, none, bar, names, verbose  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> <a href="toolkit-errorlevel_errorlevel.html" class="wikilink1" title="toolkit-errorlevel_errorlevel.html">--errorlevel=ERRORLEVEL</a>    </td><td class="col1 leftalign"> show errorlevel as: none, message, exception, traceback  </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> -i INPUT, --input=INPUT  </td><td class="col1 leftalign"> read from INPUT in po, pot formats  </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> -x EXCLUDE, --exclude=EXCLUDE   </td><td class="col1 leftalign"> exclude names matching EXCLUDE from input paths  </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 leftalign"> -o OUTPUT, --output=OUTPUT      </td><td class="col1 leftalign"> write to OUTPUT in php format  </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 leftalign"> <a href="toolkit-psyco_mode.html" class="wikilink1" title="toolkit-psyco_mode.html">--psyco=MODE</a>         </td><td class="col1 leftalign"> use psyco to speed up the operation, modes: none, full, profile  </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0 leftalign"> --fuzzy | --nofuzzy     </td><td class="col1 leftalign"> include|exclude fuzzy translations  </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Usage" [912-2632] -->
+<h2><a name="examples" id="examples">Examples</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Examples" [2633-2654] -->
+<h2><a name="notes" id="notes">Notes</a></h2>
+<div class="level2">
+
+<p>
+
+<strong>Handling of blanks/untranslated messages:</strong>
+</p>
+
+<p>
+Untranslated messages in the web2py translation files are usually marked with a leading &quot;*** &quot;, so:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> all target strings from the web2py sources with a leading &quot;*** &quot; are inserted as blank msgstr&#039;s into the <acronym title="Gettext Portable Object">PO</acronym> result (web2py2po)</div>
+</li>
+</ul>
+<ul>
+<li class="level1"><div class="li"> blank msgstr&#039;s from the <acronym title="Gettext Portable Object">PO</acronym> file will get the msgid string with a leading &quot;*** &quot; as target string in the web2py result (po2web2py)</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Notes" [2655-3100] -->
+<h2><a name="issues" id="issues">Issues</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Issues" [3101-3120] -->
+<h2><a name="bugs" id="bugs">Bugs</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Bugs" [3121-] --></body>
+</html>

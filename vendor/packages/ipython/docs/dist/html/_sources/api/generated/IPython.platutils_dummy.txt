@@ -1,0 +1,23 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+platutils_dummy
+===============
+
+Module: :mod:`platutils_dummy`
+------------------------------
+.. automodule:: IPython.platutils_dummy
+
+.. currentmodule:: IPython.platutils_dummy
+
+Functions
+---------
+
+
+.. autofunction:: IPython.platutils_dummy.find_cmd
+
+
+.. autofunction:: IPython.platutils_dummy.get_long_path_name
+
+
+.. autofunction:: IPython.platutils_dummy.set_term_title
+

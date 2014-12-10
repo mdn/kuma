@@ -1,0 +1,23 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.pbutil
+=============
+
+Module: :mod:`kernel.pbutil`
+----------------------------
+.. automodule:: IPython.kernel.pbutil
+
+.. currentmodule:: IPython.kernel.pbutil
+
+Functions
+---------
+
+
+.. autofunction:: IPython.kernel.pbutil.checkMessageSize
+
+
+.. autofunction:: IPython.kernel.pbutil.packageFailure
+
+
+.. autofunction:: IPython.kernel.pbutil.unpackageFailure
+

@@ -1,0 +1,456 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Security details of IPython &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../index.html" />
+    <link rel="up" title="Using IPython for parallel computing" href="index.html" />
+    <link rel="next" title="IPython/Vision Beam Pattern Demo" href="visionhpc.html" />
+    <link rel="prev" title="Using MPI with IPython" href="parallel_mpi.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="visionhpc.html" title="IPython/Vision Beam Pattern Demo"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="parallel_mpi.html" title="Using MPI with IPython"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Using IPython for parallel computing</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="security-details-of-ipython">
+<span id="parallelsecurity"></span><h1>Security details of IPython<a class="headerlink" href="#security-details-of-ipython" title="Permalink to this headline">¶</a></h1>
+<p>IPython&#8217;s <tt class="xref docutils literal"><span class="pre">IPython.kernel</span></tt> package exposes the full power of the Python
+interpreter over a TCP/IP network for the purposes of parallel computing. This
+feature brings up the important question of IPython&#8217;s security model. This
+document gives details about this model and how it is implemented in IPython&#8217;s
+architecture.</p>
+<div class="section" id="processs-and-network-topology">
+<h2>Processs and network topology<a class="headerlink" href="#processs-and-network-topology" title="Permalink to this headline">¶</a></h2>
+<p>To enable parallel computing, IPython has a number of different processes that
+run. These processes are discussed at length in the IPython documentation and
+are summarized here:</p>
+<ul class="simple">
+<li>The IPython <em>engine</em>.  This process is a full blown Python
+interpreter in which user code is executed.  Multiple
+engines are started to make parallel computing possible.</li>
+<li>The IPython <em>controller</em>.  This process manages a set of
+engines, maintaining a queue for each and presenting
+an asynchronous interface to the set of engines.</li>
+<li>The IPython <em>client</em>.  This process is typically an
+interactive Python process that is used to coordinate the
+engines to get a parallel computation done.</li>
+</ul>
+<p>Collectively, these three processes are called the IPython <em>kernel</em>.</p>
+<p>These three processes communicate over TCP/IP connections with a well defined
+topology. The IPython controller is the only process that listens on TCP/IP
+sockets. Upon starting, an engine connects to a controller and registers
+itself with the controller. These engine/controller TCP/IP connections persist
+for the lifetime of each engine.</p>
+<p>The IPython client also connects to the controller using one or more TCP/IP
+connections. These connections persist for the lifetime of the client only.</p>
+<p>A given IPython controller and set of engines typically has a relatively short
+lifetime. Typically this lifetime corresponds to the duration of a single
+parallel simulation performed by a single user. Finally, the controller,
+engines and client processes typically execute with the permissions of that
+same user. More specifically, the controller and engines are <em>not</em> executed as
+root or with any other superuser permissions.</p>
+</div>
+<div class="section" id="application-logic">
+<h2>Application logic<a class="headerlink" href="#application-logic" title="Permalink to this headline">¶</a></h2>
+<p>When running the IPython kernel to perform a parallel computation, a user
+utilizes the IPython client to send Python commands and data through the
+IPython controller to the IPython engines, where those commands are executed
+and the data processed. The design of IPython ensures that the client is the
+only access point for the capabilities of the engines.  That is, the only way of addressing the engines is through a client.</p>
+<p>A user can utilize the client to instruct the IPython engines to execute
+arbitrary Python commands. These Python commands can include calls to the
+system shell, access the filesystem, etc., as required by the user&#8217;s
+application code. From this perspective, when a user runs an IPython engine on
+a host, that engine has the same capabilities and permissions as the user
+themselves (as if they were logged onto the engine&#8217;s host with a terminal).</p>
+</div>
+<div class="section" id="secure-network-connections">
+<h2>Secure network connections<a class="headerlink" href="#secure-network-connections" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="overview">
+<h3>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h3>
+<p>All TCP/IP connections between the client and controller as well as the
+engines and controller are fully encrypted and authenticated. This section
+describes the details of the encryption and authentication approached used
+within IPython.</p>
+<p>IPython uses the Foolscap network protocol <a class="reference external" href="../install/install.html#id8">[Foolscap]</a> for all communications
+between processes. Thus, the details of IPython&#8217;s security model are directly
+related to those of Foolscap. Thus, much of the following discussion is
+actually just a discussion of the security that is built in to Foolscap.</p>
+</div>
+<div class="section" id="encryption">
+<h3>Encryption<a class="headerlink" href="#encryption" title="Permalink to this headline">¶</a></h3>
+<p>For encryption purposes, IPython and Foolscap use the well known Secure Socket
+Layer (SSL) protocol <a class="reference internal" href="#rfc5246">[RFC5246]</a>. We use the implementation of this protocol
+provided by the OpenSSL project through the pyOpenSSL <a class="reference external" href="../install/install.html#id9">[pyOpenSSL]</a> Python
+bindings to OpenSSL.</p>
+</div>
+<div class="section" id="authentication">
+<h3>Authentication<a class="headerlink" href="#authentication" title="Permalink to this headline">¶</a></h3>
+<p>IPython clients and engines must also authenticate themselves with the
+controller. This is handled in a capabilities based security model
+<a class="reference external" href="parallel_intro.html#capability">[Capability]</a>. In this model, the controller creates a strong cryptographic
+key or token that represents each set of capability that the controller
+offers. Any party who has this key and presents it to the controller has full
+access to the corresponding capabilities of the controller. This model is
+analogous to using a physical key to gain access to physical items
+(capabilities) behind a locked door.</p>
+<p>For a capabilities based authentication system to prevent unauthorized access,
+two things must be ensured:</p>
+<ul class="simple">
+<li>The keys must be cryptographically strong.  Otherwise attackers could gain
+access by a simple brute force key guessing attack.</li>
+<li>The actual keys must be distributed only to authorized parties.</li>
+</ul>
+<p>The keys in Foolscap are called Foolscap URL&#8217;s or FURLs. The following section
+gives details about how these FURLs are created in Foolscap. The IPython
+controller creates a number of FURLs for different purposes:</p>
+<ul class="simple">
+<li>One FURL that grants IPython engines access to the controller.  Also
+implicit in this access is permission to execute code sent by an
+authenticated IPython client.</li>
+<li>Two or more FURLs that grant IPython clients access to the controller.
+Implicit in this access is permission to give the controller&#8217;s engine code
+to execute.</li>
+</ul>
+<p>Upon starting, the controller creates these different FURLS and writes them
+files in the user-read-only directory <tt class="docutils literal"><span class="pre">$HOME/.ipython/security</span></tt>. Thus, only the
+user who starts the controller has access to the FURLs.</p>
+<p>For an IPython client or engine to authenticate with a controller, it must
+present the appropriate FURL to the controller upon connecting. If the
+FURL matches what the controller expects for a given capability, access is
+granted. If not, access is denied. The exchange of FURLs is done after
+encrypted communications channels have been established to prevent attackers
+from capturing them.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The FURL is similar to an unsigned private key in SSH.</p>
+</div>
+</div>
+<div class="section" id="details-of-the-foolscap-handshake">
+<h3>Details of the Foolscap handshake<a class="headerlink" href="#details-of-the-foolscap-handshake" title="Permalink to this headline">¶</a></h3>
+<p>In this section we detail the precise security handshake that takes place at
+the beginning of any network connection in IPython. For the purposes of this
+discussion, the SERVER is the IPython controller process and the CLIENT is the
+IPython engine or client process.</p>
+<p>Upon starting, all IPython processes do the following:</p>
+<ol class="arabic simple">
+<li>Create a public key x509 certificate (ISO/IEC 9594).</li>
+<li>Create a hash of the contents of the certificate using the SHA-1 algorithm.
+The base-32 encoded version of this hash is saved by the process as its
+process id (actually in Foolscap, this is the Tub id, but here refer to
+it as the process id).</li>
+</ol>
+<p>Upon starting, the IPython controller also does the following:</p>
+<ol class="arabic simple">
+<li>Save the x509 certificate to disk in a secure location. The CLIENT
+certificate is never saved to disk.</li>
+<li>Create a FURL for each capability that the controller has.  There are
+separate capabilities the controller offers for clients and engines.  The
+FURL is created using:  a) the process id of the SERVER, b) the IP
+address and port the SERVER is listening on and c) a 160 bit,
+cryptographically secure string that represents the capability (the
+&#8220;capability id&#8221;).</li>
+<li>The FURLs are saved to disk in a secure location on the SERVER&#8217;s host.</li>
+</ol>
+<p>For a CLIENT to be able to connect to the SERVER and access a capability of
+that SERVER, the CLIENT must have knowledge of the FURL for that SERVER&#8217;s
+capability. This typically requires that the file containing the FURL be
+moved from the SERVER&#8217;s host to the CLIENT&#8217;s host. This is done by the end
+user who started the SERVER and wishes to have a CLIENT connect to the SERVER.</p>
+<p>When a CLIENT connects to the SERVER, the following handshake protocol takes
+place:</p>
+<ol class="arabic simple">
+<li>The CLIENT tells the SERVER what process (or Tub) id it expects the SERVER
+to have.</li>
+<li>If the SERVER has that process id, it notifies the CLIENT that it will now
+enter encrypted mode.  If the SERVER has a different id, the SERVER aborts.</li>
+<li>Both CLIENT and SERVER initiate the SSL handshake protocol.</li>
+<li>Both CLIENT and SERVER request the certificate of their peer and verify
+that certificate.  If this succeeds, all further communications are
+encrypted.</li>
+<li>Both CLIENT and SERVER send a hello block containing connection parameters
+and their process id.</li>
+<li>The CLIENT and SERVER check that their peer&#8217;s stated process id matches the
+hash of the x509 certificate the peer presented.  If not, the connection is
+aborted.</li>
+<li>The CLIENT verifies that the SERVER&#8217;s stated id matches the id of the
+SERVER the CLIENT is intending to connect to.  If not, the connection is
+aborted.</li>
+<li>The CLIENT and SERVER elect a master who decides on the final connection
+parameters.</li>
+</ol>
+<p>The public/private key pair associated with each process&#8217;s x509 certificate
+are completely hidden from this handshake protocol. There are however, used
+internally by OpenSSL as part of the SSL handshake protocol. Each process
+keeps their own private key hidden and sends its peer only the public key
+(embedded in the certificate).</p>
+<p>Finally, when the CLIENT requests access to a particular SERVER capability,
+the following happens:</p>
+<ol class="arabic simple">
+<li>The CLIENT asks the SERVER for access to a capability by presenting that
+capabilities id.</li>
+<li>If the SERVER has a capability with that id, access is granted. If not,
+access is not granted.</li>
+<li>Once access has been gained, the CLIENT can use the capability.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="specific-security-vulnerabilities">
+<h2>Specific security vulnerabilities<a class="headerlink" href="#specific-security-vulnerabilities" title="Permalink to this headline">¶</a></h2>
+<p>There are a number of potential security vulnerabilities present in IPython&#8217;s
+architecture. In this section we discuss those vulnerabilities and detail how
+the security architecture described above prevents them from being exploited.</p>
+<div class="section" id="unauthorized-clients">
+<h3>Unauthorized clients<a class="headerlink" href="#unauthorized-clients" title="Permalink to this headline">¶</a></h3>
+<p>The IPython client can instruct the IPython engines to execute arbitrary
+Python code with the permissions of the user who started the engines. If an
+attacker were able to connect their own hostile IPython client to the IPython
+controller, they could instruct the engines to execute code.</p>
+<p>This attack is prevented by the capabilities based client authentication
+performed after the encrypted channel has been established. The relevant
+authentication information is encoded into the FURL that clients must
+present to gain access to the IPython controller. By limiting the distribution
+of those FURLs, a user can grant access to only authorized persons.</p>
+<p>It is highly unlikely that a client FURL could be guessed by an attacker
+in a brute force guessing attack. A given instance of the IPython controller
+only runs for a relatively short amount of time (on the order of hours). Thus
+an attacker would have only a limited amount of time to test a search space of
+size 2**320. Furthermore, even if a controller were to run for a longer amount
+of time, this search space is quite large (larger for instance than that of
+typical username/password pair).</p>
+</div>
+<div class="section" id="unauthorized-engines">
+<h3>Unauthorized engines<a class="headerlink" href="#unauthorized-engines" title="Permalink to this headline">¶</a></h3>
+<p>If an attacker were able to connect a hostile engine to a user&#8217;s controller,
+the user might unknowingly send sensitive code or data to the hostile engine.
+This attacker&#8217;s engine would then have full access to that code and data.</p>
+<p>This type of attack is prevented in the same way as the unauthorized client
+attack, through the usage of the capabilities based authentication scheme.</p>
+</div>
+<div class="section" id="unauthorized-controllers">
+<h3>Unauthorized controllers<a class="headerlink" href="#unauthorized-controllers" title="Permalink to this headline">¶</a></h3>
+<p>It is also possible that an attacker could try to convince a user&#8217;s IPython
+client or engine to connect to a hostile IPython controller. That controller
+would then have full access to the code and data sent between the IPython
+client and the IPython engines.</p>
+<p>Again, this attack is prevented through the FURLs, which ensure that a
+client or engine connects to the correct controller. It is also important to
+note that the FURLs also encode the IP address and port that the
+controller is listening on, so there is little chance of mistakenly connecting
+to a controller running on a different IP address and port.</p>
+<p>When starting an engine or client, a user must specify which FURL to use
+for that connection. Thus, in order to introduce a hostile controller, the
+attacker must convince the user to use the FURLs associated with the
+hostile controller. As long as a user is diligent in only using FURLs from
+trusted sources, this attack is not possible.</p>
+</div>
+</div>
+<div class="section" id="other-security-measures">
+<h2>Other security measures<a class="headerlink" href="#other-security-measures" title="Permalink to this headline">¶</a></h2>
+<p>A number of other measures are taken to further limit the security risks
+involved in running the IPython kernel.</p>
+<p>First, by default, the IPython controller listens on random port numbers.
+While this can be overridden by the user, in the default configuration, an
+attacker would have to do a port scan to even find a controller to attack.
+When coupled with the relatively short running time of a typical controller
+(on the order of hours), an attacker would have to work extremely hard and
+extremely <em>fast</em> to even find a running controller to attack.</p>
+<p>Second, much of the time, especially when run on supercomputers or clusters,
+the controller is running behind a firewall. Thus, for engines or client to
+connect to the controller:</p>
+<ul class="simple">
+<li>The different processes have to all be behind the firewall.</li>
+</ul>
+<p>or:</p>
+<ul class="simple">
+<li>The user has to use SSH port forwarding to tunnel the
+connections through the firewall.</li>
+</ul>
+<p>In either case, an attacker is presented with addition barriers that prevent
+attacking or even probing the system.</p>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>IPython&#8217;s architecture has been carefully designed with security in mind. The
+capabilities based authentication model, in conjunction with the encrypted
+TCP/IP channels, address the core potential vulnerabilities in the system,
+while still enabling user&#8217;s to use the system in open networks.</p>
+</div>
+<div class="section" id="other-questions">
+<h2>Other questions<a class="headerlink" href="#other-questions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="about-keys">
+<h3>About keys<a class="headerlink" href="#about-keys" title="Permalink to this headline">¶</a></h3>
+<p>Can you clarify the roles of the certificate and its keys versus the FURL,
+which is also called a key?</p>
+<p>The certificate created by IPython processes is a standard public key x509
+certificate, that is used by the SSL handshake protocol to setup encrypted
+channel between the controller and the IPython engine or client. This public
+and private key associated with this certificate are used only by the SSL
+handshake protocol in setting up this encrypted channel.</p>
+<p>The FURL serves a completely different and independent purpose from the
+key pair associated with the certificate. When we refer to a FURL as a
+key, we are using the word &#8220;key&#8221; in the capabilities based security model
+sense. This has nothing to do with &#8220;key&#8221; in the public/private key sense used
+in the SSL protocol.</p>
+<p>With that said the FURL is used as an cryptographic key, to grant
+IPython engines and clients access to particular capabilities that the
+controller offers.</p>
+</div>
+<div class="section" id="self-signed-certificates">
+<h3>Self signed certificates<a class="headerlink" href="#self-signed-certificates" title="Permalink to this headline">¶</a></h3>
+<p>Is the controller creating a self-signed certificate? Is this created for per
+instance/session, one-time-setup or each-time the controller is started?</p>
+<p>The Foolscap network protocol, which handles the SSL protocol details, creates
+a self-signed x509 certificate using OpenSSL for each IPython process. The
+lifetime of the certificate is handled differently for the IPython controller
+and the engines/client.</p>
+<p>For the IPython engines and client, the certificate is only held in memory for
+the lifetime of its process. It is never written to disk.</p>
+<p>For the controller, the certificate can be created anew each time the
+controller starts or it can be created once and reused each time the
+controller starts. If at any point, the certificate is deleted, a new one is
+created the next time the controller starts.</p>
+</div>
+<div class="section" id="ssl-private-key">
+<h3>SSL private key<a class="headerlink" href="#ssl-private-key" title="Permalink to this headline">¶</a></h3>
+<p>How the private key (associated with the certificate) is distributed?</p>
+<p>In the usual implementation of the SSL protocol, the private key is never
+distributed. We follow this standard always.</p>
+</div>
+<div class="section" id="ssl-versus-foolscap-authentication">
+<h3>SSL versus Foolscap authentication<a class="headerlink" href="#ssl-versus-foolscap-authentication" title="Permalink to this headline">¶</a></h3>
+<p>Many SSL connections only perform one sided authentication (the server to the
+client). How is the client authentication in IPython&#8217;s system related to SSL
+authentication?</p>
+<p>We perform a two way SSL handshake in which both parties request and verify
+the certificate of their peer. This mutual authentication is handled by the
+SSL handshake and is separate and independent from the additional
+authentication steps that the CLIENT and SERVER perform after an encrypted
+channel is established.</p>
+<table class="docutils citation" frame="void" id="rfc5246" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[RFC5246]</a></td><td>&lt;<a class="reference external" href="http://tools.ietf.org/html/rfc5246">http://tools.ietf.org/html/rfc5246</a>&gt;</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">Security details of IPython</a><ul>
+<li><a class="reference external" href="#processs-and-network-topology">Processs and network topology</a></li>
+<li><a class="reference external" href="#application-logic">Application logic</a></li>
+<li><a class="reference external" href="#secure-network-connections">Secure network connections</a><ul>
+<li><a class="reference external" href="#overview">Overview</a></li>
+<li><a class="reference external" href="#encryption">Encryption</a></li>
+<li><a class="reference external" href="#authentication">Authentication</a></li>
+<li><a class="reference external" href="#details-of-the-foolscap-handshake">Details of the Foolscap handshake</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#specific-security-vulnerabilities">Specific security vulnerabilities</a><ul>
+<li><a class="reference external" href="#unauthorized-clients">Unauthorized clients</a></li>
+<li><a class="reference external" href="#unauthorized-engines">Unauthorized engines</a></li>
+<li><a class="reference external" href="#unauthorized-controllers">Unauthorized controllers</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#other-security-measures">Other security measures</a></li>
+<li><a class="reference external" href="#summary">Summary</a></li>
+<li><a class="reference external" href="#other-questions">Other questions</a><ul>
+<li><a class="reference external" href="#about-keys">About keys</a></li>
+<li><a class="reference external" href="#self-signed-certificates">Self signed certificates</a></li>
+<li><a class="reference external" href="#ssl-private-key">SSL private key</a></li>
+<li><a class="reference external" href="#ssl-versus-foolscap-authentication">SSL versus Foolscap authentication</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="parallel_mpi.html" title="previous chapter">Using MPI with IPython</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="visionhpc.html" title="next chapter">IPython/Vision Beam Pattern Demo</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/parallel/parallel_security.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="visionhpc.html" title="IPython/Vision Beam Pattern Demo"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="parallel_mpi.html" title="Using MPI with IPython"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Using IPython for parallel computing</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+frontend.frontendbase
+=====================
+
+Module: :mod:`frontend.frontendbase`
+------------------------------------
+Inheritance diagram for ``IPython.frontend.frontendbase``:
+
+.. inheritance-diagram:: IPython.frontend.frontendbase 
+   :parts: 3
+
+.. automodule:: IPython.frontend.frontendbase
+
+.. currentmodule:: IPython.frontend.frontendbase
+
+Classes
+-------
+
+:class:`FrontEndBase`
+~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: FrontEndBase
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IFrontEnd`
+~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IFrontEnd
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IFrontEndFactory`
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IFrontEndFactory
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

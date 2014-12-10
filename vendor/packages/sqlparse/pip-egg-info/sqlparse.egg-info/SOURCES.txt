@@ -1,0 +1,16 @@
+README
+bin/sqlformat
+pip-egg-info/sqlparse.egg-info/PKG-INFO
+pip-egg-info/sqlparse.egg-info/SOURCES.txt
+pip-egg-info/sqlparse.egg-info/dependency_links.txt
+pip-egg-info/sqlparse.egg-info/top_level.txt
+sqlparse/__init__.py
+sqlparse/filters.py
+sqlparse/formatter.py
+sqlparse/keywords.py
+sqlparse/lexer.py
+sqlparse/sql.py
+sqlparse/tokens.py
+sqlparse/engine/__init__.py
+sqlparse/engine/filter.py
+sqlparse/engine/grouping.py

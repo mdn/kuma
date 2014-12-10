@@ -1,0 +1,585 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        
+        <title>
+    Relationship Loading Techniques
+ &mdash; SQLAlchemy 0.6.4 Documentation</title>
+        
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '0.6.4',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 0.6.4 Documentation" href="../index.html" />
+        <link rel="up" title="SQLAlchemy ORM" href="index.html" />
+        <link rel="next" title="ORM Event Interfaces" href="interfaces.html" />
+        <link rel="prev" title="Querying" href="query.html" />
+    
+
+    </head>
+    <body>
+        
+
+
+
+
+        <h1>SQLAlchemy 0.6.4 Documentation</h1>
+
+        <div id="search">
+        Search:
+        <form class="search" action="../search.html" method="get">
+          <input type="text" name="q" size="18" /> <input type="submit" value="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+        </div>
+
+        <div class="versionheader">
+            Version: <span class="versionnum">0.6.4</span> Last Updated: 09/07/2010 13:07:48
+        </div>
+        <div class="clearboth"></div>
+
+        <div class="topnav">
+            <div id="pagecontrol">
+                <a href="../genindex.html">Index</a>
+            
+                <div class="sourcelink">(<a href="../_sources/orm/loading.txt">view source)</div>
+            </div>
+            
+            <div class="navbanner">
+                <a class="totoc" href="../index.html">Table of Contents</a>
+                        » <a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a>
+                » 
+    Relationship Loading Techniques
+ 
+                
+                
+<div class="prevnext">
+        Previous:
+        <a href="query.html" title="previous chapter">Querying</a>
+        Next:
+        <a href="interfaces.html" title="next chapter">ORM Event Interfaces</a>
+</div>
+
+                <h2>
+                    
+    Relationship Loading Techniques
+ 
+                </h2>
+            </div>
+                <ul>
+<li><a class="reference internal" href="#">Relationship Loading Techniques</a><ul>
+<li><a class="reference internal" href="#using-loader-strategies-lazy-loading-eager-loading">Using Loader Strategies: Lazy Loading, Eager Loading</a></li>
+<li><a class="reference internal" href="#the-zen-of-eager-loading">The Zen of Eager Loading</a></li>
+<li><a class="reference internal" href="#what-kind-of-loading-to-use">What Kind of Loading to Use ?</a></li>
+<li><a class="reference internal" href="#routing-explicit-joins-statements-into-eagerly-loaded-collections">Routing Explicit Joins/Statements into Eagerly Loaded Collections</a></li>
+<li><a class="reference internal" href="#relation-loader-api">Relation Loader API</a></li>
+</ul>
+</li>
+</ul>
+
+            <div class="clearboth"></div>
+        </div>
+        
+        <div class="document">
+            <div class="body">
+                
+<div class="section" id="relationship-loading-techniques">
+<span id="loading-toplevel"></span><h1>Relationship Loading Techniques<a class="headerlink" href="#relationship-loading-techniques" title="Permalink to this headline">¶</a></h1>
+<p>A big part of SQLAlchemy is providing a wide range of control over how related objects get loaded when querying.   This behavior
+can be configured at mapper construction time using the <tt class="docutils literal"><span class="pre">lazy</span></tt> parameter to the <a class="reference internal" href="relationships.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><tt class="xref py py-func docutils literal"><span class="pre">relationship()</span></tt></a> function,
+as well as by using options with the <a class="reference internal" href="query.html#sqlalchemy.orm.query.Query" title="sqlalchemy.orm.query.Query"><tt class="xref py py-class docutils literal"><span class="pre">Query</span></tt></a> object.</p>
+<div class="section" id="using-loader-strategies-lazy-loading-eager-loading">
+<h2>Using Loader Strategies: Lazy Loading, Eager Loading<a class="headerlink" href="#using-loader-strategies-lazy-loading-eager-loading" title="Permalink to this headline">¶</a></h2>
+<p>By default, all inter-object relationships are <strong>lazy loading</strong>. The scalar or
+collection attribute associated with a <a class="reference internal" href="relationships.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><tt class="xref py py-func docutils literal"><span class="pre">relationship()</span></tt></a>
+contains a trigger which fires the first time the attribute is accessed.  This
+trigger, in all but one case, issues a SQL call at the point of access
+in order to load the related object or objects:</p>
+<div class="highlight-python+sql"><div class="highlight"><pre><a href='#' class='sql_link'>sql</a><span class="o">&gt;&gt;&gt;</span> <span class="n">jack</span><span class="o">.</span><span class="n">addresses</span>
+<div class='popup_sql'>SELECT addresses.id AS addresses_id, addresses.email_address AS addresses_email_address,
+addresses.user_id AS addresses_user_id
+FROM addresses
+WHERE ? = addresses.user_id
+[5]</div><span class="p">[</span><span class="o">&lt;</span><span class="n">Address</span><span class="p">(</span><span class="s">u&#39;jack@google.com&#39;</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">Address</span><span class="p">(</span><span class="s">u&#39;j25@yahoo.com&#39;</span><span class="p">)</span><span class="o">&gt;</span><span class="p">]</span></pre></div>
+</div>
+<p>The one case where SQL is not emitted is for a simple many-to-one relationship, when
+the related object can be identified by its primary key alone and that object is already
+present in the current <a class="reference internal" href="session.html#sqlalchemy.orm.session.Session" title="sqlalchemy.orm.session.Session"><tt class="xref py py-class docutils literal"><span class="pre">Session</span></tt></a>.</p>
+<p>This default behavior of &#8220;load upon attribute access&#8221; is known as &#8220;lazy&#8221; or
+&#8220;select&#8221; loading - the name &#8220;select&#8221; because a &#8220;SELECT&#8221; statement is typically emitted
+when the attribute is first accessed.</p>
+<p>In the <a class="reference internal" href="tutorial.html"><em>Object Relational Tutorial</em></a>, we introduced the concept of <strong>Eager
+Loading</strong>. We used an <tt class="docutils literal"><span class="pre">option</span></tt> in conjunction with the
+<a class="reference internal" href="query.html#sqlalchemy.orm.query.Query" title="sqlalchemy.orm.query.Query"><tt class="xref py py-class docutils literal"><span class="pre">Query</span></tt></a> object in order to indicate that a
+relationship should be loaded at the same time as the parent, within a single
+SQL query.   This option, known as <a class="reference internal" href="#sqlalchemy.orm.joinedload" title="sqlalchemy.orm.joinedload"><tt class="xref py py-func docutils literal"><span class="pre">joinedload()</span></tt></a></p>
+<div class="highlight-python+sql"><div class="highlight"><pre><a href='#' class='sql_link'>sql</a><span class="o">&gt;&gt;&gt;</span> <span class="n">jack</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">joinedload</span><span class="p">(</span><span class="s">&#39;addresses&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;jack&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span> 
+<div class='popup_sql'>SELECT addresses_1.id AS addresses_1_id, addresses_1.email_address AS addresses_1_email_address,
+addresses_1.user_id AS addresses_1_user_id, users.id AS users_id, users.name AS users_name,
+users.fullname AS users_fullname, users.password AS users_password
+FROM users LEFT OUTER JOIN addresses AS addresses_1 ON users.id = addresses_1.user_id
+WHERE users.name = ?
+['jack']</div></pre></div>
+</div>
+<p>In addition to &#8220;joined eager loading&#8221;, a second option for eager loading
+exists, called &#8220;subquery eager loading&#8221;. This kind of eager loading emits an
+additional SQL statement for each collection requested, aggregated across all
+parent objects:</p>
+<div class="highlight-python+sql"><div class="highlight"><pre><a href='#' class='sql_link'>sql</a><span class="o">&gt;&gt;&gt;</span><span class="n">jack</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">subqueryload</span><span class="p">(</span><span class="s">&#39;addresses&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;jack&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<div class='popup_sql'>SELECT users.id AS users_id, users.name AS users_name, users.fullname AS users_fullname,
+users.password AS users_password
+FROM users
+WHERE users.name = ?
+('jack',)
+SELECT addresses.id AS addresses_id, addresses.email_address AS addresses_email_address,
+addresses.user_id AS addresses_user_id, anon_1.users_id AS anon_1_users_id
+FROM (SELECT users.id AS users_id
+FROM users
+WHERE users.name = ?) AS anon_1 JOIN addresses ON anon_1.users_id = addresses.user_id
+ORDER BY anon_1.users_id, addresses.id
+('jack',)</div></pre></div>
+</div>
+<p>The default <strong>loader strategy</strong> for any <a class="reference internal" href="relationships.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><tt class="xref py py-func docutils literal"><span class="pre">relationship()</span></tt></a>
+is configured by the <tt class="docutils literal"><span class="pre">lazy</span></tt> keyword argument, which defaults to <tt class="docutils literal"><span class="pre">select</span></tt> - this indicates
+a &#8220;select&#8221; statement .
+Below we set it as <tt class="docutils literal"><span class="pre">joined</span></tt> so that the <tt class="docutils literal"><span class="pre">children</span></tt> relationship is eager
+loading, using a join:</p>
+<div class="highlight-python+sql"><div class="highlight"><pre><span class="c"># load the &#39;children&#39; collection using LEFT OUTER JOIN</span>
+<span class="n">mapper</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">parent_table</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="p">{</span>
+    <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="n">relationship</span><span class="p">(</span><span class="n">Child</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="s">&#39;joined&#39;</span><span class="p">)</span>
+<span class="p">})</span></pre></div>
+</div>
+<p>We can also set it to eagerly load using a second query for all collections,
+using <tt class="docutils literal"><span class="pre">subquery</span></tt>:</p>
+<div class="highlight-python+sql"><div class="highlight"><pre><span class="c"># load the &#39;children&#39; attribute using a join to a subquery</span>
+<span class="n">mapper</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">parent_table</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="p">{</span>
+    <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="n">relationship</span><span class="p">(</span><span class="n">Child</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="s">&#39;subquery&#39;</span><span class="p">)</span>
+<span class="p">})</span></pre></div>
+</div>
+<p>When querying, all three choices of loader strategy are available on a
+per-query basis, using the <a class="reference internal" href="#sqlalchemy.orm.joinedload" title="sqlalchemy.orm.joinedload"><tt class="xref py py-func docutils literal"><span class="pre">joinedload()</span></tt></a>,
+<a class="reference internal" href="#sqlalchemy.orm.subqueryload" title="sqlalchemy.orm.subqueryload"><tt class="xref py py-func docutils literal"><span class="pre">subqueryload()</span></tt></a> and <a class="reference internal" href="#sqlalchemy.orm.lazyload" title="sqlalchemy.orm.lazyload"><tt class="xref py py-func docutils literal"><span class="pre">lazyload()</span></tt></a>
+query options:</p>
+<div class="highlight-python+sql"><div class="highlight"><pre><span class="c"># set children to load lazily</span>
+<span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Parent</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">lazyload</span><span class="p">(</span><span class="s">&#39;children&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+<span class="c"># set children to load eagerly with a join</span>
+<span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Parent</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">joinedload</span><span class="p">(</span><span class="s">&#39;children&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+<span class="c"># set children to load eagerly with a second statement</span>
+<span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Parent</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">subqueryload</span><span class="p">(</span><span class="s">&#39;children&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">all</span><span class="p">()</span></pre></div>
+</div>
+<p>To reference a relationship that is deeper than one level, separate the names by periods:</p>
+<div class="highlight-python+sql"><div class="highlight"><pre><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Parent</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">joinedload</span><span class="p">(</span><span class="s">&#39;foo.bar.bat&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">all</span><span class="p">()</span></pre></div>
+</div>
+<p>When using dot-separated names with <a class="reference internal" href="#sqlalchemy.orm.joinedload" title="sqlalchemy.orm.joinedload"><tt class="xref py py-func docutils literal"><span class="pre">joinedload()</span></tt></a> or
+<a class="reference internal" href="#sqlalchemy.orm.subqueryload" title="sqlalchemy.orm.subqueryload"><tt class="xref py py-func docutils literal"><span class="pre">subqueryload()</span></tt></a>, option applies <strong>only</strong> to the actual
+attribute named, and <strong>not</strong> its ancestors. For example, suppose a mapping
+from <tt class="docutils literal"><span class="pre">A</span></tt> to <tt class="docutils literal"><span class="pre">B</span></tt> to <tt class="docutils literal"><span class="pre">C</span></tt>, where the relationships, named <tt class="docutils literal"><span class="pre">atob</span></tt> and
+<tt class="docutils literal"><span class="pre">btoc</span></tt>, are both lazy-loading. A statement like the following:</p>
+<div class="highlight-python+sql"><div class="highlight"><pre><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">joinedload</span><span class="p">(</span><span class="s">&#39;atob.btoc&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">all</span><span class="p">()</span></pre></div>
+</div>
+<p>will load only <tt class="docutils literal"><span class="pre">A</span></tt> objects to start.  When the <tt class="docutils literal"><span class="pre">atob</span></tt> attribute on each <tt class="docutils literal"><span class="pre">A</span></tt> is accessed, the returned <tt class="docutils literal"><span class="pre">B</span></tt> objects will <em>eagerly</em> load their <tt class="docutils literal"><span class="pre">C</span></tt> objects.</p>
+<p>Therefore, to modify the eager load to load both <tt class="docutils literal"><span class="pre">atob</span></tt> as well as <tt class="docutils literal"><span class="pre">btoc</span></tt>, place joinedloads for both:</p>
+<div class="highlight-python+sql"><div class="highlight"><pre><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">joinedload</span><span class="p">(</span><span class="s">&#39;atob&#39;</span><span class="p">),</span> <span class="n">joinedload</span><span class="p">(</span><span class="s">&#39;atob.btoc&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">all</span><span class="p">()</span></pre></div>
+</div>
+<p>or more simply just use <a class="reference internal" href="#sqlalchemy.orm.joinedload_all" title="sqlalchemy.orm.joinedload_all"><tt class="xref py py-func docutils literal"><span class="pre">joinedload_all()</span></tt></a> or <a class="reference internal" href="#sqlalchemy.orm.subqueryload_all" title="sqlalchemy.orm.subqueryload_all"><tt class="xref py py-func docutils literal"><span class="pre">subqueryload_all()</span></tt></a>:</p>
+<div class="highlight-python+sql"><div class="highlight"><pre><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">joinedload_all</span><span class="p">(</span><span class="s">&#39;atob.btoc&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">all</span><span class="p">()</span></pre></div>
+</div>
+<p>There are two other loader strategies available, <strong>dynamic loading</strong> and <strong>no loading</strong>; these are described in <a class="reference internal" href="collections.html#largecollections"><em>Working with Large Collections</em></a>.</p>
+</div>
+<div class="section" id="the-zen-of-eager-loading">
+<h2>The Zen of Eager Loading<a class="headerlink" href="#the-zen-of-eager-loading" title="Permalink to this headline">¶</a></h2>
+<p>The philosophy behind loader strategies is that any set of loading schemes can be
+applied to a particular query, and <em>the results don&#8217;t change</em> - only the number
+of SQL statements required to fully load related objects and collections changes. A particular
+query might start out using all lazy loads.   After using it in context, it might be revealed
+that particular attributes or collections are always accessed, and that it would be more
+efficient to change the loader strategy for these.   The strategy can be changed with no other
+modifications to the query, the results will remain identical, but fewer SQL statements would be emitted.
+In theory (and pretty much in practice), nothing you can do to the <a class="reference internal" href="query.html#sqlalchemy.orm.query.Query" title="sqlalchemy.orm.query.Query"><tt class="xref py py-class docutils literal"><span class="pre">Query</span></tt></a> would make it load
+a different set of primary or related objects based on a change in loader strategy.</p>
+<p>The way eagerloading does this, and in particular how <a class="reference internal" href="#sqlalchemy.orm.joinedload" title="sqlalchemy.orm.joinedload"><tt class="xref py py-func docutils literal"><span class="pre">joinedload()</span></tt></a>
+works, is that it creates an anonymous alias of all the joins it adds to your
+query, so that they can&#8217;t be referenced by other parts of the query. If the
+query contains a DISTINCT, or a limit or offset, the statement is first
+wrapped inside a subquery, and joins are applied to that. As the user, you
+don&#8217;t have access to these aliases or subqueries, and you cannot affect what
+data they will load at query time - a typical beginner misunderstanding is
+that adding a <a class="reference internal" href="query.html#sqlalchemy.orm.query.Query.order_by" title="sqlalchemy.orm.query.Query.order_by"><tt class="xref py py-meth docutils literal"><span class="pre">Query.order_by()</span></tt></a>, naming the joined relationship, would
+change the order of the collection, or that the entries in the collection as
+it is loaded could be affected by <a class="reference internal" href="query.html#sqlalchemy.orm.query.Query.filter" title="sqlalchemy.orm.query.Query.filter"><tt class="xref py py-meth docutils literal"><span class="pre">Query.filter()</span></tt></a>. Not the case ! If
+you&#8217;d like to join from one table to another, filtering or ordering on the
+joined result, you&#8217;d use <a class="reference internal" href="query.html#sqlalchemy.orm.query.Query.join" title="sqlalchemy.orm.query.Query.join"><tt class="xref py py-meth docutils literal"><span class="pre">Query.join()</span></tt></a>. If you then wanted that joined
+result to populate itself into a related collection, this is also available,
+via <a class="reference internal" href="#sqlalchemy.orm.contains_eager" title="sqlalchemy.orm.contains_eager"><tt class="xref py py-func docutils literal"><span class="pre">contains_eager()</span></tt></a> option - see <a class="reference internal" href="#contains-eager"><em>Routing Explicit Joins/Statements into Eagerly Loaded Collections</em></a>.</p>
+</div>
+<div class="section" id="what-kind-of-loading-to-use">
+<h2>What Kind of Loading to Use ?<a class="headerlink" href="#what-kind-of-loading-to-use" title="Permalink to this headline">¶</a></h2>
+<p>Which type of loading to use typically comes down to optimizing the tradeoff
+between number of SQL executions, complexity of SQL emitted, and amount of
+data fetched. Lets take two examples, a <a class="reference internal" href="relationships.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><tt class="xref py py-func docutils literal"><span class="pre">relationship()</span></tt></a>
+which references a collection, and a <a class="reference internal" href="relationships.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><tt class="xref py py-func docutils literal"><span class="pre">relationship()</span></tt></a> that
+references a scalar many-to-one reference.</p>
+<ul class="simple">
+<li>One to Many Collection</li>
+</ul>
+<blockquote>
+<ul class="simple">
+<li>When using the default lazy loading, if you load 100 objects, and then access a collection on each of
+them, a total of 101 SQL statements will be emitted, although each statement will typically be a
+simple SELECT without any joins.</li>
+<li>When using joined loading, the load of 100 objects and their collections will emit only one SQL
+statement.  However, the
+total number of rows fetched will be equal to the sum of the size of all the collections, plus one
+extra row for each parent object that has an empty collection.  Each row will also contain the full
+set of columns represented by the parents, repeated for each collection item - SQLAlchemy does not
+re-fetch these columns other than those of the primary key, however most DBAPIs (with some
+exceptions) will transmit the full data of each parent over the wire to the client connection in
+any case.  Therefore joined eager loading only makes sense when the size of the collections are
+relatively small.  The LEFT OUTER JOIN can also be performance intensive compared to an INNER join.</li>
+<li>When using subquery loading, the load of 100 objects will emit two SQL statements.  The second
+statement will fetch a total number of rows equal to the sum of the size of all collections.  An
+INNER JOIN is used, and a minimum of parent columns are requested, only the primary keys.  So a
+subquery load makes sense when the collections are larger.</li>
+<li>When multiple levels of depth are used with joined or subquery loading, loading collections-within-
+collections will multiply the total number of rows fetched in a cartesian fashion.  Both forms
+of eager loading always join from the original parent class.</li>
+</ul>
+</blockquote>
+<ul class="simple">
+<li>Many to One Reference</li>
+</ul>
+<blockquote>
+<ul class="simple">
+<li>When using the default lazy loading, a load of 100 objects will like in the case of the collection
+emit as many as 101 SQL statements.  However - there is a significant exception to this, in that
+if the many-to-one reference is a simple foreign key reference to the target&#8217;s primary key, each
+reference will be checked first in the current identity map using <tt class="docutils literal"><span class="pre">query.get()</span></tt>.  So here,
+if the collection of objects references a relatively small set of target objects, or the full set
+of possible target objects have already been loaded into the session and are strongly referenced,
+using the default of <cite>lazy=&#8217;select&#8217;</cite> is by far the most efficient way to go.</li>
+<li>When using joined loading, the load of 100 objects will emit only one SQL statement.   The join
+will be a LEFT OUTER JOIN, and the total number of rows will be equal to 100 in all cases.
+If you know that each parent definitely has a child (i.e. the foreign
+key reference is NOT NULL), the joined load can be configured with <tt class="docutils literal"><span class="pre">innerjoin=True</span></tt>, which is
+usually specified within the <a class="reference internal" href="relationships.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><tt class="xref py py-func docutils literal"><span class="pre">relationship()</span></tt></a>.   For a load of objects where
+there are many possible target references which may have not been loaded already, joined loading
+with an INNER JOIN is extremely efficient.</li>
+<li>Subquery loading will issue a second load for all the child objects, so for a load of 100 objects
+there would be two SQL statements emitted.  There&#8217;s probably not much advantage here over
+joined loading, however, except perhaps that subquery loading can use an INNER JOIN in all cases
+whereas joined loading requires that the foreign key is NOT NULL.</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="routing-explicit-joins-statements-into-eagerly-loaded-collections">
+<span id="contains-eager"></span><h2>Routing Explicit Joins/Statements into Eagerly Loaded Collections<a class="headerlink" href="#routing-explicit-joins-statements-into-eagerly-loaded-collections" title="Permalink to this headline">¶</a></h2>
+<p>The behavior of <a class="reference internal" href="#sqlalchemy.orm.joinedload" title="sqlalchemy.orm.joinedload"><tt class="xref py py-func docutils literal"><span class="pre">joinedload()</span></tt></a> is such that joins are
+created automatically, the results of which are routed into collections and
+scalar references on loaded objects. It is often the case that a query already
+includes the necessary joins which represent a particular collection or scalar
+reference, and the joins added by the joinedload feature are redundant - yet
+you&#8217;d still like the collections/references to be populated.</p>
+<p>For this SQLAlchemy supplies the <a class="reference internal" href="#sqlalchemy.orm.contains_eager" title="sqlalchemy.orm.contains_eager"><tt class="xref py py-func docutils literal"><span class="pre">contains_eager()</span></tt></a>
+option. This option is used in the same manner as the
+<a class="reference internal" href="#sqlalchemy.orm.joinedload" title="sqlalchemy.orm.joinedload"><tt class="xref py py-func docutils literal"><span class="pre">joinedload()</span></tt></a> option except it is assumed that the
+<a class="reference internal" href="query.html#sqlalchemy.orm.query.Query" title="sqlalchemy.orm.query.Query"><tt class="xref py py-class docutils literal"><span class="pre">Query</span></tt></a> will specify the appropriate joins
+explicitly. Below it&#8217;s used with a <tt class="docutils literal"><span class="pre">from_statement</span></tt> load:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># mapping is the users-&gt;addresses mapping</span>
+<span class="n">mapper</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">users_table</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="p">{</span>
+    <span class="s">&#39;addresses&#39;</span><span class="p">:</span> <span class="n">relationship</span><span class="p">(</span><span class="n">Address</span><span class="p">,</span> <span class="n">addresses_table</span><span class="p">)</span>
+<span class="p">})</span>
+
+<span class="c"># define a query on USERS with an outer join to ADDRESSES</span>
+<span class="n">statement</span> <span class="o">=</span> <span class="n">users_table</span><span class="o">.</span><span class="n">outerjoin</span><span class="p">(</span><span class="n">addresses_table</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">apply_labels</span><span class="p">()</span>
+
+<span class="c"># construct a Query object which expects the &quot;addresses&quot; results</span>
+<span class="n">query</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">contains_eager</span><span class="p">(</span><span class="s">&#39;addresses&#39;</span><span class="p">))</span>
+
+<span class="c"># get results normally</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">from_statement</span><span class="p">(</span><span class="n">statement</span><span class="p">)</span></pre></div>
+</div>
+<p>It works just as well with an inline <tt class="docutils literal"><span class="pre">Query.join()</span></tt> or
+<tt class="docutils literal"><span class="pre">Query.outerjoin()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">outerjoin</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">addresses</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">contains_eager</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">addresses</span><span class="p">))</span><span class="o">.</span><span class="n">all</span><span class="p">()</span></pre></div>
+</div>
+<p>If the &#8220;eager&#8221; portion of the statement is &#8220;aliased&#8221;, the <tt class="docutils literal"><span class="pre">alias</span></tt> keyword
+argument to <a class="reference internal" href="#sqlalchemy.orm.contains_eager" title="sqlalchemy.orm.contains_eager"><tt class="xref py py-func docutils literal"><span class="pre">contains_eager()</span></tt></a> may be used to indicate it.
+This is a string alias name or reference to an actual
+<a class="reference internal" href="../core/expression_api.html#sqlalchemy.sql.expression.Alias" title="sqlalchemy.sql.expression.Alias"><tt class="xref py py-class docutils literal"><span class="pre">Alias</span></tt></a> (or other selectable) object:</p>
+<div class="highlight-python+sql"><div class="highlight"><pre><span class="c"># use an alias of the Address entity</span>
+<span class="n">adalias</span> <span class="o">=</span> <span class="n">aliased</span><span class="p">(</span><span class="n">Address</span><span class="p">)</span>
+
+<span class="c"># construct a Query object which expects the &quot;addresses&quot; results</span>
+<span class="n">query</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span>\
+    <span class="n">outerjoin</span><span class="p">((</span><span class="n">adalias</span><span class="p">,</span> <span class="n">User</span><span class="o">.</span><span class="n">addresses</span><span class="p">))</span><span class="o">.</span>\
+    <span class="n">options</span><span class="p">(</span><span class="n">contains_eager</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">addresses</span><span class="p">,</span> <span class="n">alias</span><span class="o">=</span><span class="n">adalias</span><span class="p">))</span>
+
+<span class="c"># get results normally</span>
+<a href='#' class='sql_link'>sql</a><span class="n">r</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<div class='popup_sql'>SELECT users.user_id AS users_user_id, users.user_name AS users_user_name, adalias.address_id AS adalias_address_id,
+adalias.user_id AS adalias_user_id, adalias.email_address AS adalias_email_address, (...other columns...)
+FROM users LEFT OUTER JOIN email_addresses AS email_addresses_1 ON users.user_id = email_addresses_1.user_id</div></pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">alias</span></tt> argument is used only as a source of columns to match up to the
+result set. You can use it even to match up the result to arbitrary label
+names in a string SQL statement, by passing a selectable() which links those
+labels to the mapped <a class="reference internal" href="../core/schema.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><tt class="xref py py-class docutils literal"><span class="pre">Table</span></tt></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># label the columns of the addresses table</span>
+<span class="n">eager_columns</span> <span class="o">=</span> <span class="n">select</span><span class="p">([</span>
+                    <span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">address_id</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="s">&#39;a1&#39;</span><span class="p">),</span>
+                    <span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="s">&#39;a2&#39;</span><span class="p">),</span>
+                    <span class="n">addresses</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">user_id</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="s">&#39;a3&#39;</span><span class="p">)])</span>
+
+<span class="c"># select from a raw SQL statement which uses those label names for the</span>
+<span class="c"># addresses table.  contains_eager() matches them up.</span>
+<span class="n">query</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span>\
+    <span class="n">from_statement</span><span class="p">(</span><span class="s">&quot;select users.*, addresses.address_id as a1, &quot;</span>
+            <span class="s">&quot;addresses.email_address as a2, addresses.user_id as a3 &quot;</span>
+            <span class="s">&quot;from users left outer join addresses on users.user_id=addresses.user_id&quot;</span><span class="p">)</span><span class="o">.</span>\
+    <span class="n">options</span><span class="p">(</span><span class="n">contains_eager</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">addresses</span><span class="p">,</span> <span class="n">alias</span><span class="o">=</span><span class="n">eager_columns</span><span class="p">))</span></pre></div>
+</div>
+<p>The path given as the argument to <a class="reference internal" href="#sqlalchemy.orm.contains_eager" title="sqlalchemy.orm.contains_eager"><tt class="xref py py-func docutils literal"><span class="pre">contains_eager()</span></tt></a> needs
+to be a full path from the starting entity. For example if we were loading
+<tt class="docutils literal"><span class="pre">Users-&gt;orders-&gt;Order-&gt;items-&gt;Item</span></tt>, the string version would look like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">contains_eager</span><span class="p">(</span><span class="s">&#39;orders&#39;</span><span class="p">,</span> <span class="s">&#39;items&#39;</span><span class="p">))</span></pre></div>
+</div>
+<p>Or using the class-bound descriptor:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">contains_eager</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">orders</span><span class="p">,</span> <span class="n">Order</span><span class="o">.</span><span class="n">items</span><span class="p">))</span></pre></div>
+</div>
+<p>A variant on <a class="reference internal" href="#sqlalchemy.orm.contains_eager" title="sqlalchemy.orm.contains_eager"><tt class="xref py py-func docutils literal"><span class="pre">contains_eager()</span></tt></a> is the
+<tt class="docutils literal"><span class="pre">contains_alias()</span></tt> option, which is used in the rare case that the parent
+object is loaded from an alias within a user-defined SELECT statement:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># define an aliased UNION called &#39;ulist&#39;</span>
+<span class="n">statement</span> <span class="o">=</span> <span class="n">users</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">user_id</span><span class="o">==</span><span class="mi">7</span><span class="p">)</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">users</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">user_id</span><span class="o">&gt;</span><span class="mi">7</span><span class="p">))</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s">&#39;ulist&#39;</span><span class="p">)</span>
+
+<span class="c"># add on an eager load of &quot;addresses&quot;</span>
+<span class="n">statement</span> <span class="o">=</span> <span class="n">statement</span><span class="o">.</span><span class="n">outerjoin</span><span class="p">(</span><span class="n">addresses</span><span class="p">)</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">apply_labels</span><span class="p">()</span>
+
+<span class="c"># create query, indicating &quot;ulist&quot; is an alias for the main table, &quot;addresses&quot; property should</span>
+<span class="c"># be eager loaded</span>
+<span class="n">query</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">contains_alias</span><span class="p">(</span><span class="s">&#39;ulist&#39;</span><span class="p">),</span> <span class="n">contains_eager</span><span class="p">(</span><span class="s">&#39;addresses&#39;</span><span class="p">))</span>
+
+<span class="c"># results</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">from_statement</span><span class="p">(</span><span class="n">statement</span><span class="p">)</span></pre></div>
+</div>
+</div>
+<div class="section" id="relation-loader-api">
+<h2>Relation Loader API<a class="headerlink" href="#relation-loader-api" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="sqlalchemy.orm.contains_alias">
+<tt class="descclassname">sqlalchemy.orm.</tt><tt class="descname">contains_alias</tt><big>(</big><em>alias</em><big>)</big><a class="headerlink" href="#sqlalchemy.orm.contains_alias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a <tt class="docutils literal"><span class="pre">MapperOption</span></tt> that will indicate to the query that
+the main table has been aliased.</p>
+<p><cite>alias</cite> is the string name or <tt class="docutils literal"><span class="pre">Alias</span></tt> object representing the
+alias.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlalchemy.orm.contains_eager">
+<tt class="descclassname">sqlalchemy.orm.</tt><tt class="descname">contains_eager</tt><big>(</big><em>*keys</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#sqlalchemy.orm.contains_eager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a <tt class="docutils literal"><span class="pre">MapperOption</span></tt> that will indicate to the query that
+the given attribute should be eagerly loaded from columns currently
+in the query.</p>
+<p>Used with <a class="reference internal" href="query.html#sqlalchemy.orm.query.Query.options" title="sqlalchemy.orm.query.Query.options"><tt class="xref py py-meth docutils literal"><span class="pre">options()</span></tt></a>.</p>
+<p>The option is used in conjunction with an explicit join that loads 
+the desired rows, i.e.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">sess</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Order</span><span class="p">)</span><span class="o">.</span>\
+        <span class="n">join</span><span class="p">(</span><span class="n">Order</span><span class="o">.</span><span class="n">user</span><span class="p">)</span><span class="o">.</span>\
+        <span class="n">options</span><span class="p">(</span><span class="n">contains_eager</span><span class="p">(</span><span class="n">Order</span><span class="o">.</span><span class="n">user</span><span class="p">))</span></pre></div>
+</div>
+<p>The above query would join from the <tt class="docutils literal"><span class="pre">Order</span></tt> entity to its related
+<tt class="docutils literal"><span class="pre">User</span></tt> entity, and the returned <tt class="docutils literal"><span class="pre">Order</span></tt> objects would have the
+<tt class="docutils literal"><span class="pre">Order.user</span></tt> attribute pre-populated.</p>
+<p><a class="reference internal" href="#sqlalchemy.orm.contains_eager" title="sqlalchemy.orm.contains_eager"><tt class="xref py py-func docutils literal"><span class="pre">contains_eager()</span></tt></a> also accepts an <cite>alias</cite> argument, which is the
+string name of an alias, an <a class="reference internal" href="../core/expression_api.html#sqlalchemy.sql.expression.alias" title="sqlalchemy.sql.expression.alias"><tt class="xref py py-func docutils literal"><span class="pre">alias()</span></tt></a>
+construct, or an <a class="reference internal" href="query.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><tt class="xref py py-func docutils literal"><span class="pre">aliased()</span></tt></a> construct. Use this when
+the eagerly-loaded rows are to come from an aliased table:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">user_alias</span> <span class="o">=</span> <span class="n">aliased</span><span class="p">(</span><span class="n">User</span><span class="p">)</span>
+<span class="n">sess</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Order</span><span class="p">)</span><span class="o">.</span>\
+        <span class="n">join</span><span class="p">((</span><span class="n">user_alias</span><span class="p">,</span> <span class="n">Order</span><span class="o">.</span><span class="n">user</span><span class="p">))</span><span class="o">.</span>\
+        <span class="n">options</span><span class="p">(</span><span class="n">contains_eager</span><span class="p">(</span><span class="n">Order</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="n">alias</span><span class="o">=</span><span class="n">user_alias</span><span class="p">))</span></pre></div>
+</div>
+<p>See also <a class="reference internal" href="#sqlalchemy.orm.eagerload" title="sqlalchemy.orm.eagerload"><tt class="xref py py-func docutils literal"><span class="pre">eagerload()</span></tt></a> for the &#8220;automatic&#8221; version of this 
+functionality.</p>
+<p>For additional examples of <a class="reference internal" href="#sqlalchemy.orm.contains_eager" title="sqlalchemy.orm.contains_eager"><tt class="xref py py-func docutils literal"><span class="pre">contains_eager()</span></tt></a> see
+<a class="reference internal" href="#contains-eager"><em>Routing Explicit Joins/Statements into Eagerly Loaded Collections</em></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlalchemy.orm.eagerload">
+<tt class="descclassname">sqlalchemy.orm.</tt><tt class="descname">eagerload</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#sqlalchemy.orm.eagerload" title="Permalink to this definition">¶</a></dt>
+<dd><p>A synonym for <a class="reference internal" href="#sqlalchemy.orm.joinedload" title="sqlalchemy.orm.joinedload"><tt class="xref py py-func docutils literal"><span class="pre">joinedload()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlalchemy.orm.eagerload_all">
+<tt class="descclassname">sqlalchemy.orm.</tt><tt class="descname">eagerload_all</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#sqlalchemy.orm.eagerload_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>A synonym for <a class="reference internal" href="#sqlalchemy.orm.joinedload_all" title="sqlalchemy.orm.joinedload_all"><tt class="xref py py-func docutils literal"><span class="pre">joinedload_all()</span></tt></a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlalchemy.orm.joinedload">
+<tt class="descclassname">sqlalchemy.orm.</tt><tt class="descname">joinedload</tt><big>(</big><em>*keys</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#sqlalchemy.orm.joinedload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a <tt class="docutils literal"><span class="pre">MapperOption</span></tt> that will convert the property of the given
+name into an joined eager load.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This function is known as <a class="reference internal" href="#sqlalchemy.orm.eagerload" title="sqlalchemy.orm.eagerload"><tt class="xref py py-func docutils literal"><span class="pre">eagerload()</span></tt></a> in all versions
+of SQLAlchemy prior to version 0.6beta3, including the 0.5 and 0.4
+series. <a class="reference internal" href="#sqlalchemy.orm.eagerload" title="sqlalchemy.orm.eagerload"><tt class="xref py py-func docutils literal"><span class="pre">eagerload()</span></tt></a> will remain available for the foreseeable
+future in order to enable cross-compatibility.</p>
+</div>
+<p>Used with <a class="reference internal" href="query.html#sqlalchemy.orm.query.Query.options" title="sqlalchemy.orm.query.Query.options"><tt class="xref py py-meth docutils literal"><span class="pre">options()</span></tt></a>.</p>
+<p>examples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># joined-load the &quot;orders&quot; colleciton on &quot;User&quot;</span>
+<span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">joinedload</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">orders</span><span class="p">))</span>
+
+<span class="c"># joined-load the &quot;keywords&quot; collection on each &quot;Item&quot;,</span>
+<span class="c"># but not the &quot;items&quot; collection on &quot;Order&quot; - those </span>
+<span class="c"># remain lazily loaded.</span>
+<span class="n">query</span><span class="p">(</span><span class="n">Order</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">joinedload</span><span class="p">(</span><span class="n">Order</span><span class="o">.</span><span class="n">items</span><span class="p">,</span> <span class="n">Item</span><span class="o">.</span><span class="n">keywords</span><span class="p">))</span>
+
+<span class="c"># to joined-load across both, use joinedload_all()</span>
+<span class="n">query</span><span class="p">(</span><span class="n">Order</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">joinedload_all</span><span class="p">(</span><span class="n">Order</span><span class="o">.</span><span class="n">items</span><span class="p">,</span> <span class="n">Item</span><span class="o">.</span><span class="n">keywords</span><span class="p">))</span></pre></div>
+</div>
+<p><a class="reference internal" href="#sqlalchemy.orm.joinedload" title="sqlalchemy.orm.joinedload"><tt class="xref py py-func docutils literal"><span class="pre">joinedload()</span></tt></a> also accepts a keyword argument <cite>innerjoin=True</cite> which
+indicates using an inner join instead of an outer:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">query</span><span class="p">(</span><span class="n">Order</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">joinedload</span><span class="p">(</span><span class="n">Order</span><span class="o">.</span><span class="n">user</span><span class="p">,</span> <span class="n">innerjoin</span><span class="o">=</span><span class="bp">True</span><span class="p">))</span></pre></div>
+</div>
+<p>Note that the join created by <a class="reference internal" href="#sqlalchemy.orm.joinedload" title="sqlalchemy.orm.joinedload"><tt class="xref py py-func docutils literal"><span class="pre">joinedload()</span></tt></a> is aliased such that no
+other aspects of the query will affect what it loads. To use joined eager
+loading with a join that is constructed manually using
+<a class="reference internal" href="query.html#sqlalchemy.orm.query.Query.join" title="sqlalchemy.orm.query.Query.join"><tt class="xref py py-meth docutils literal"><span class="pre">join()</span></tt></a> or <a class="reference internal" href="query.html#sqlalchemy.orm.join" title="sqlalchemy.orm.join"><tt class="xref py py-func docutils literal"><span class="pre">join()</span></tt></a>,
+see <a class="reference internal" href="#sqlalchemy.orm.contains_eager" title="sqlalchemy.orm.contains_eager"><tt class="xref py py-func docutils literal"><span class="pre">contains_eager()</span></tt></a>.</p>
+<p>See also:  <a class="reference internal" href="#sqlalchemy.orm.subqueryload" title="sqlalchemy.orm.subqueryload"><tt class="xref py py-func docutils literal"><span class="pre">subqueryload()</span></tt></a>, <a class="reference internal" href="#sqlalchemy.orm.lazyload" title="sqlalchemy.orm.lazyload"><tt class="xref py py-func docutils literal"><span class="pre">lazyload()</span></tt></a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlalchemy.orm.joinedload_all">
+<tt class="descclassname">sqlalchemy.orm.</tt><tt class="descname">joinedload_all</tt><big>(</big><em>*keys</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#sqlalchemy.orm.joinedload_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a <tt class="docutils literal"><span class="pre">MapperOption</span></tt> that will convert all properties along the
+given dot-separated path into an joined eager load.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This function is known as <a class="reference internal" href="#sqlalchemy.orm.eagerload_all" title="sqlalchemy.orm.eagerload_all"><tt class="xref py py-func docutils literal"><span class="pre">eagerload_all()</span></tt></a> in all versions
+of SQLAlchemy prior to version 0.6beta3, including the 0.5 and 0.4
+series. <a class="reference internal" href="#sqlalchemy.orm.eagerload_all" title="sqlalchemy.orm.eagerload_all"><tt class="xref py py-func docutils literal"><span class="pre">eagerload_all()</span></tt></a> will remain available for the
+foreseeable future in order to enable cross-compatibility.</p>
+</div>
+<p>Used with <a class="reference internal" href="query.html#sqlalchemy.orm.query.Query.options" title="sqlalchemy.orm.query.Query.options"><tt class="xref py py-meth docutils literal"><span class="pre">options()</span></tt></a>.</p>
+<p>For example:</p>
+<div class="highlight-python"><pre>query.options(joinedload_all('orders.items.keywords'))...</pre>
+</div>
+<p>will set all of &#8216;orders&#8217;, &#8216;orders.items&#8217;, and &#8216;orders.items.keywords&#8217; to
+load in one joined eager load.</p>
+<p>Individual descriptors are accepted as arguments as well:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">query</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">joinedload_all</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">orders</span><span class="p">,</span> <span class="n">Order</span><span class="o">.</span><span class="n">items</span><span class="p">,</span> <span class="n">Item</span><span class="o">.</span><span class="n">keywords</span><span class="p">))</span></pre></div>
+</div>
+<p>The keyword arguments accept a flag <cite>innerjoin=True|False</cite> which will
+override the value of the <cite>innerjoin</cite> flag specified on the
+relationship().</p>
+<p>See also:  <a class="reference internal" href="#sqlalchemy.orm.subqueryload_all" title="sqlalchemy.orm.subqueryload_all"><tt class="xref py py-func docutils literal"><span class="pre">subqueryload_all()</span></tt></a>, <a class="reference internal" href="#sqlalchemy.orm.lazyload" title="sqlalchemy.orm.lazyload"><tt class="xref py py-func docutils literal"><span class="pre">lazyload()</span></tt></a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlalchemy.orm.lazyload">
+<tt class="descclassname">sqlalchemy.orm.</tt><tt class="descname">lazyload</tt><big>(</big><em>*keys</em><big>)</big><a class="headerlink" href="#sqlalchemy.orm.lazyload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a <tt class="docutils literal"><span class="pre">MapperOption</span></tt> that will convert the property of the given
+name into a lazy load.</p>
+<p>Used with <a class="reference internal" href="query.html#sqlalchemy.orm.query.Query.options" title="sqlalchemy.orm.query.Query.options"><tt class="xref py py-meth docutils literal"><span class="pre">options()</span></tt></a>.</p>
+<p>See also:  <a class="reference internal" href="#sqlalchemy.orm.eagerload" title="sqlalchemy.orm.eagerload"><tt class="xref py py-func docutils literal"><span class="pre">eagerload()</span></tt></a>, <a class="reference internal" href="#sqlalchemy.orm.subqueryload" title="sqlalchemy.orm.subqueryload"><tt class="xref py py-func docutils literal"><span class="pre">subqueryload()</span></tt></a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlalchemy.orm.subqueryload">
+<tt class="descclassname">sqlalchemy.orm.</tt><tt class="descname">subqueryload</tt><big>(</big><em>*keys</em><big>)</big><a class="headerlink" href="#sqlalchemy.orm.subqueryload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a <tt class="docutils literal"><span class="pre">MapperOption</span></tt> that will convert the property 
+of the given name into an subquery eager load.</p>
+<p>Used with <a class="reference internal" href="query.html#sqlalchemy.orm.query.Query.options" title="sqlalchemy.orm.query.Query.options"><tt class="xref py py-meth docutils literal"><span class="pre">options()</span></tt></a>.</p>
+<p>examples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># subquery-load the &quot;orders&quot; colleciton on &quot;User&quot;</span>
+<span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">subqueryload</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">orders</span><span class="p">))</span>
+
+<span class="c"># subquery-load the &quot;keywords&quot; collection on each &quot;Item&quot;,</span>
+<span class="c"># but not the &quot;items&quot; collection on &quot;Order&quot; - those </span>
+<span class="c"># remain lazily loaded.</span>
+<span class="n">query</span><span class="p">(</span><span class="n">Order</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">subqueryload</span><span class="p">(</span><span class="n">Order</span><span class="o">.</span><span class="n">items</span><span class="p">,</span> <span class="n">Item</span><span class="o">.</span><span class="n">keywords</span><span class="p">))</span>
+
+<span class="c"># to subquery-load across both, use subqueryload_all()</span>
+<span class="n">query</span><span class="p">(</span><span class="n">Order</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">subqueryload_all</span><span class="p">(</span><span class="n">Order</span><span class="o">.</span><span class="n">items</span><span class="p">,</span> <span class="n">Item</span><span class="o">.</span><span class="n">keywords</span><span class="p">))</span></pre></div>
+</div>
+<p>See also:  <a class="reference internal" href="#sqlalchemy.orm.joinedload" title="sqlalchemy.orm.joinedload"><tt class="xref py py-func docutils literal"><span class="pre">joinedload()</span></tt></a>, <a class="reference internal" href="#sqlalchemy.orm.lazyload" title="sqlalchemy.orm.lazyload"><tt class="xref py py-func docutils literal"><span class="pre">lazyload()</span></tt></a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlalchemy.orm.subqueryload_all">
+<tt class="descclassname">sqlalchemy.orm.</tt><tt class="descname">subqueryload_all</tt><big>(</big><em>*keys</em><big>)</big><a class="headerlink" href="#sqlalchemy.orm.subqueryload_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a <tt class="docutils literal"><span class="pre">MapperOption</span></tt> that will convert all properties along the
+given dot-separated path into a subquery eager load.</p>
+<p>Used with <a class="reference internal" href="query.html#sqlalchemy.orm.query.Query.options" title="sqlalchemy.orm.query.Query.options"><tt class="xref py py-meth docutils literal"><span class="pre">options()</span></tt></a>.</p>
+<p>For example:</p>
+<div class="highlight-python"><pre>query.options(subqueryload_all('orders.items.keywords'))...</pre>
+</div>
+<p>will set all of &#8216;orders&#8217;, &#8216;orders.items&#8217;, and &#8216;orders.items.keywords&#8217; to
+load in one subquery eager load.</p>
+<p>Individual descriptors are accepted as arguments as well:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">query</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">subqueryload_all</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">orders</span><span class="p">,</span> <span class="n">Order</span><span class="o">.</span><span class="n">items</span><span class="p">,</span>
+<span class="n">Item</span><span class="o">.</span><span class="n">keywords</span><span class="p">))</span></pre></div>
+</div>
+<p>See also:  <a class="reference internal" href="#sqlalchemy.orm.joinedload_all" title="sqlalchemy.orm.joinedload_all"><tt class="xref py py-func docutils literal"><span class="pre">joinedload_all()</span></tt></a>, <a class="reference internal" href="#sqlalchemy.orm.lazyload" title="sqlalchemy.orm.lazyload"><tt class="xref py py-func docutils literal"><span class="pre">lazyload()</span></tt></a></p>
+</dd></dl>
+
+</div>
+</div>
+
+            </div>
+        </div>
+
+        
+        
+            <div class="bottomnav">
+                
+<div class="prevnext">
+        Previous:
+        <a href="query.html" title="previous chapter">Querying</a>
+        Next:
+        <a href="interfaces.html" title="next chapter">ORM Event Interfaces</a>
+</div>
+
+                <div class="doc_copyright">
+                    &copy; <a href="../copyright.html">Copyright</a> 2007, 2008, 2009, 2010, the SQLAlchemy authors and contributors.
+                    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
+                </div>
+            </div>
+        
+
+
+
+
+
+
+    </body>
+</html>
+
+
+

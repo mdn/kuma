@@ -1,0 +1,26 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.clientconnector
+======================
+
+Module: :mod:`kernel.clientconnector`
+-------------------------------------
+Inheritance diagram for ``IPython.kernel.clientconnector``:
+
+.. inheritance-diagram:: IPython.kernel.clientconnector 
+   :parts: 3
+
+.. automodule:: IPython.kernel.clientconnector
+
+.. currentmodule:: IPython.kernel.clientconnector
+
+:class:`ClientConnector`
+------------------------
+
+
+.. autoclass:: ClientConnector
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

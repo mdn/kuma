@@ -1,0 +1,87 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+external.Itpl
+=============
+
+Module: :mod:`external.Itpl`
+----------------------------
+Inheritance diagram for ``IPython.external.Itpl``:
+
+.. inheritance-diagram:: IPython.external.Itpl 
+   :parts: 3
+
+.. automodule:: IPython.external.Itpl
+
+.. currentmodule:: IPython.external.Itpl
+
+Classes
+-------
+
+:class:`Itpl`
+~~~~~~~~~~~~~
+
+
+.. autoclass:: Itpl
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ItplError`
+~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ItplError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ItplFile`
+~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ItplFile
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ItplNS`
+~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ItplNS
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Functions
+---------
+
+
+.. autofunction:: IPython.external.Itpl.filter
+
+
+.. autofunction:: IPython.external.Itpl.itpl
+
+
+.. autofunction:: IPython.external.Itpl.itplns
+
+
+.. autofunction:: IPython.external.Itpl.matchorfail
+
+
+.. autofunction:: IPython.external.Itpl.printpl
+
+
+.. autofunction:: IPython.external.Itpl.printplns
+
+
+.. autofunction:: IPython.external.Itpl.unfilter
+

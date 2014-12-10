@@ -1,0 +1,290 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="using_csv2po" id="using_csv2po">Using csv2po</a></h1>
+<div class="level1">
+
+<p>
+
+<a href="toolkit-csv2po.html" class="wikilink1" title="toolkit-csv2po.html">csv2po</a> allows you to create <acronym title="Comma Separated Value">CSV</acronym> files from <acronym title="Gettext Portable Object">PO</acronym> files.  This allows you to
+send translation work to translators who do not or cannot use <acronym title="Gettext Portable Object">PO</acronym> Editors but who
+can use a Spreadsheet.
+</p>
+
+</div>
+<!-- SECTION "Using csv2po" [1-210] -->
+<h2><a name="quickstart" id="quickstart">Quickstart</a></h2>
+<div class="level2">
+<ol>
+<li class="level1"><div class="li"> <a href="toolkit-pofilter.html" class="wikilink1" title="toolkit-pofilter.html">pofilter</a> --fuzzy --review -t untranslated &lt;po-dir&gt; &lt;po-filtered-dir&gt; (this step is optional)</div>
+</li>
+<li class="level1"><div class="li"> divide into sections</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-csv2po.html" class="wikilink1" title="toolkit-csv2po.html">po2csv</a> &lt;po-dir|po-filtered-dir&gt; &lt;csv-out&gt;</div>
+</li>
+<li class="level1"><div class="li"> edit in Excel or OpenOffice.org Calc</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-csv2po.html" class="wikilink1" title="toolkit-csv2po.html">csv2po</a> --charset=windows-1250 -t templates &lt;csv-in&gt; &lt;po-in&gt; (you must work against a template directory, the charset option corrects problems with characters sets)</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-phase.html" class="wikilink1" title="toolkit-phase.html">phase</a> - to do basic checks sort out encoding issues</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-pomerge.html" class="wikilink1" title="toolkit-pomerge.html">pomerge</a> --mergeblank=no -t &lt;po-dir&gt; &lt;po-in&gt; &lt;po-dir&gt;</div>
+</li>
+<li class="level1"><div class="li"> cvs diff -u &gt; x.diff --- check the changes</div>
+</li>
+<li class="level1"><div class="li"> cvs ci --- commit changes</div>
+</li>
+</ol>
+
+</div>
+<!-- SECTION "Quickstart" [211-829] -->
+<h2><a name="detailed_description" id="detailed_description">Detailed Description</a></h2>
+<div class="level2">
+
+<p>
+
+po2csv allows you to send <acronym title="Comma Separated Value">CSV</acronym> files, which can be edited in any spreadsheet, to
+a translator.  This document outlines the process to follow from the raw po
+files → <acronym title="Comma Separated Value">CSV</acronym> files → back to <acronym title="Gettext Portable Object">PO</acronym>.  We also look at a case where you may have
+submitted a subset of the <acronym title="Gettext Portable Object">PO</acronym> files for translation and you need to integrate
+these.
+</p>
+
+</div>
+<!-- SECTION "Detailed Description" [830-1181] -->
+<h3><a name="creating_a_subset" id="creating_a_subset">Creating a subset</a></h3>
+<div class="level3">
+
+<p>
+
+This step is optional.
+</p>
+
+<p>
+To send a translator only those messages that are untranslated, fuzzy or need
+review run:
+
+</p>
+<pre class="code">pofilter --isfuzzy --isreview -t untranslated &lt;po-dir&gt; &lt;po-filtered-dir&gt;</pre>
+
+</div>
+<!-- SECTION "Creating a subset" [1182-1401] -->
+<h3><a name="divide_into_sections" id="divide_into_sections">Divide into sections</a></h3>
+<div class="level3">
+
+<p>
+
+You might want to divide the work into sections if you are apportioning it to
+different translators.  In that case create new directories:
+
+</p>
+<pre class="code">eg. po-filtered-dir-1 po-filtered-dir-2
+or  po-filtered-dir-bob po-filtered-dir-mary</pre>
+
+<p>
+
+Copy files from <em>po-filtered-dir</em> to <em>po-filtered-dir-N</em> in a way that balance the
+work or apportions the amounts you want for each translator.  Try to keep
+sections together and not break them up to much eg.  Give one translator all
+the OpenOffice.org Calc work don&#039;t split it between two people - this is just a
+simple measure to ensure constancy.
+</p>
+
+<p>
+Now continue as normal and convert to <acronym title="Comma Separated Value">CSV</acronym> and perform word counts for each
+separate directory.
+</p>
+
+</div>
+<!-- SECTION "Divide into sections" [1402-2114] -->
+<h3><a name="creating_the_csv_files" id="creating_the_csv_files">Creating the CSV files</a></h3>
+<div class="level3">
+<pre class="code">po2csv &lt;po-dir|po-filtered-dir&gt; &lt;csv-out&gt;</pre>
+
+<p>
+
+This will create a set of <acronym title="Comma Separated Value">CSV</acronym> files in <em>csv-out</em> which you can compress using zip
+(we use zip because most people are Windows users)
+</p>
+
+</div>
+<!-- SECTION "Creating the CSV files" [2115-2329] -->
+<h3><a name="creating_a_word_count" id="creating_a_word_count">Creating a word count</a></h3>
+<div class="level3">
+
+<p>
+
+Professional translators work on source word counts.  So we create a word count
+to go with the file
+
+</p>
+<pre class="code">pocount ` find po-dir|po-filtered-dir -name &quot;*.po&quot;`</pre>
+
+<p>
+
+We work on source words regardless of whether the string is fuzzy or not.  You
+might want to get a lower rate for work on fuzzy strings.
+</p>
+
+<p>
+Place the word count file in both the <acronym title="Gettext Portable Object">PO</acronym> and <acronym title="Comma Separated Value">CSV</acronym> directory to avoid the problem
+of finding it later.  Check the number to make sure you haven&#039;t inadvertently
+including something that you didn&#039;t want in.
+</p>
+
+</div>
+<!-- SECTION "Creating a word count" [2330-2860] -->
+<h3><a name="package_the_csv_files" id="package_the_csv_files">Package the CSV files</a></h3>
+<div class="level3">
+<pre class="code">zip -r9 work.zip &lt;csv-out&gt;</pre>
+
+</div>
+<!-- SECTION "Package the CSV files" [2861-2923] -->
+<h3><a name="translating" id="translating">Translating</a></h3>
+<div class="level3">
+
+<p>
+
+Translators can use most Spreadsheets. Excel works well.  However there are a
+few problems with spreadsheets:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> Encoding - you can sort that out later</div>
+</li>
+<li class="level1"><div class="li"> Strings that start with &#039; - most spreadsheets treat cells starting with &#039; as text and gobble up the &#039;.  A work around is to escape those like this \&#039;. po2csv should do this for you.</div>
+</li>
+<li class="level1"><div class="li"> Autocorrect - Excel changes … to a single character and does other odd things.  pofilter will help catch these later.</div>
+</li>
+<li class="level1"><div class="li"> Sentences with + - or +- will create errors and the translators will have to escape them as \+ \- \+-</div>
+</li>
+<li class="level1"><div class="li"> Sentences that only contain numbers can get broken: “1.” will be converted to “1”</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Translating" [2924-3603] -->
+<h3><a name="converting_excel_spreadsheets_to_csv_file" id="converting_excel_spreadsheets_to_csv_file">Converting Excel spreadsheets to CSV file</a></h3>
+<div class="level3">
+
+<p>
+
+You can, and should, keep your files as <acronym title="Comma Separated Value">CSV</acronym> files.  However, many translators are not the best wizzes at using their spreadsheet.  In this case
+many files will have been changed to XLS files.  To convert them by hand is tedious and error prone.  Rather make use of <a href="http://freshmeat.net/projects/xlhtml/" class="urlextern" title="http://freshmeat.net/projects/xlhtml/">xlHtml</a> which can do all the work for you.
+
+</p>
+<pre class="code">xlhtml -xp:0 -csv file.xls &gt; file.csv</pre>
+
+</div>
+<!-- SECTION "Converting Excel spreadsheets to CSV file" [3604-4047] -->
+<h3><a name="converting_csv_back_to_po" id="converting_csv_back_to_po">Converting CSV back to PO</a></h3>
+<div class="level3">
+
+<p>
+
+Extract the <acronym title="Comma Separated Value">CSV</acronym> files here we assume they are in <em>csv-in</em>.
+
+</p>
+<pre class="code">csv2po --charset=windows-1250 -t &lt;templates&gt; &lt;csv-in&gt; &lt;po-in&gt;</pre>
+
+<p>
+
+This will create new <acronym title="Gettext Portable Object">PO</acronym> files in <em>po-in</em> based on the <acronym title="Comma Separated Value">CSV</acronym> files in the
+<em>csv-in</em> and the template <acronym title="Gettext Portable Object">PO</acronym> files in <em>templates</em>.  You shouldn&#039;t run
+the csv2po command without templates as this allows you to preserve the original file layout.
+Only run it without -t if you are dealing with a partial part of the <acronym title="Gettext Portable Object">PO</acronym> that you will 
+merge back using a <a href="toolkit-pomerge.html" class="wikilink1" title="toolkit-pomerge.html">pomerge</a>.
+</p>
+
+<p>
+Note (1): running csv2po using the input <acronym title="Gettext Portable Object">PO</acronym> files as templates give spurious
+results.  It should probably be made to work but doesn&#039;t
+</p>
+
+<p>
+Note (2): you might have encoding problems with the returned files. Use the 
+--charset option to convert the file from another encoding (all <acronym title="Gettext Portable Object">PO</acronym> files are created using UTF-8).  
+Usually Windows user will be using something like WINDOWS-1250. Check the file after conversion to 
+see that characters are in fact correct if not try another encoding.
+</p>
+
+</div>
+<!-- SECTION "Converting CSV back to PO" [4048-5055] -->
+<h3><a name="checking_the_new_po_files" id="checking_the_new_po_files">Checking the new PO files</a></h3>
+<div class="level3">
+
+<p>
+
+Use <a href="toolkit-pofilter.html" class="wikilink1" title="toolkit-pofilter.html">pofilter</a> to run checks against your new files. Read <a href="toolkit-using_pofilter.html" class="wikilink1" title="toolkit-using_pofilter.html">using pofilter</a> to get a good idea of how to use the tool.
+</p>
+
+</div>
+<!-- SECTION "Checking the new PO files" [5056-5215] -->
+<h3><a name="removing_fuzzies" id="removing_fuzzies">Removing fuzzies</a></h3>
+<div class="level3">
+
+<p>
+
+When you merge work back that you know is good you want to make sure that it
+overrides the fuzzy status of the existing translations, in order to do that
+you need to remove the ”#, fuzzy” markers.
+</p>
+
+<p>
+This is best performed against <acronym title="Concurrent Versions System">CVS</acronym> otherwise who knows what changed.
+</p>
+<pre class="code bash">po-in-<span class="re2">dir=</span>your-incomming-po-files
+po-<span class="re2">dir=</span>your-existing-po-files
+&nbsp;
+<span class="kw1">for</span> pofile <span class="kw1">in</span> `<span class="kw3">cd</span> <span class="re1">$po</span>-in-<span class="kw2">dir</span>; <span class="kw2">find</span> . -name <span class="st0">&quot;*.po&quot;</span>`
+<span class="kw1">do</span>
+       <span class="kw2">egrep</span> -v <span class="st0">&quot;^#, fuzzy&quot;</span> <span class="sy0">&lt;</span> <span class="re1">$po</span>-<span class="kw2">dir</span><span class="sy0">/</span><span class="re1">$pofile</span> <span class="sy0">&gt;</span> <span class="re1">$po</span>-<span class="kw2">dir</span><span class="sy0">/</span><span class="re0">$<span class="br0">&#123;</span>pofile<span class="br0">&#125;</span><span class="sy0">|</span>>.unfuzzy <span class="sy0">&amp;&amp;</span> \
+       <span class="kw2">mv</span> <span class="re1">$po</span>-<span class="kw2">dir</span><span class="sy0">/</span><span class="re0">$<span class="br0">&#123;</span>pofile<span class="br0">&#125;</span><span class="sy0">|</span>>.unfuzzy <span class="re1">$po</span>-<span class="kw2">dir</span><span class="sy0">/</span><span class="re1">$pofile</span>
+<span class="kw1">done</span></pre>
+</div>
+<!-- SECTION "Removing fuzzies" [5216-5787] -->
+<h3><a name="merging_po_files_into_the_main_po_files" id="merging_po_files_into_the_main_po_files">Merging PO files into the main PO files</a></h3>
+<div class="level3">
+
+<p>
+
+This step would not be necessary if the <acronym title="Comma Separated Value">CSV</acronym> contained the complete <acronym title="Gettext Portable Object">PO</acronym> file.  It
+is only needed when the translator has been editing a subset of the whole <acronym title="Gettext Portable Object">PO</acronym>
+file.
+
+</p>
+<pre class="code">pomerge --mergeblank=no -t po-dir -i po-in -o po-dir </pre>
+
+<p>
+
+This will take <acronym title="Gettext Portable Object">PO</acronym> files from <em>po-in</em> merge them with those in <em>po-dir</em> using <em>po-dir</em>
+as the template -- ie overwriting files in <em>po-dir</em>. It will also ignore entries 
+that have blank msgstr&#039;s ie it will not merge untranslated items. The default
+behaviour of pomerge is to take all changes from <em>po-in</em> and apply them to
+<em>po-dir</em> by overriding this we can ignore all untranslated items.
+</p>
+
+<p>
+There is no option to override the status of the destination <acronym title="Gettext Portable Object">PO</acronym> files
+with that of the input <acronym title="Gettext Portable Object">PO</acronym>.  Therefore all your entries that were fuzzy in the 
+destination will still be fuzzy even thought the input was corrected.  If you 
+are confident that all your input is correct then relook at the previous section on removing fuzzies.
+
+</p>
+
+</div>
+<!-- SECTION "Merging PO files into the main PO files" [5788-] --></body>
+</html>

@@ -1,0 +1,50 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+Magic
+=====
+
+Module: :mod:`Magic`
+--------------------
+Inheritance diagram for ``IPython.Magic``:
+
+.. inheritance-diagram:: IPython.Magic 
+   :parts: 3
+
+.. automodule:: IPython.Magic
+
+.. currentmodule:: IPython.Magic
+
+Classes
+-------
+
+:class:`Bunch`
+~~~~~~~~~~~~~~
+
+
+.. autoclass:: Bunch
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`Magic`
+~~~~~~~~~~~~~~
+
+
+.. autoclass:: Magic
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Functions
+---------
+
+
+.. autofunction:: IPython.Magic.compress_dhist
+
+
+.. autofunction:: IPython.Magic.on_off
+

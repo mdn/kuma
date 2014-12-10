@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>wildcard &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="winconsole" href="IPython.winconsole.html" />
+    <link rel="prev" title="upgrade_dir" href="IPython.upgrade_dir.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.winconsole.html" title="winconsole"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.upgrade_dir.html" title="upgrade_dir"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="wildcard">
+<h1>wildcard<a class="headerlink" href="#wildcard" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.wildcard">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">wildcard</span></tt><a class="headerlink" href="#module-IPython.wildcard" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.wildcard</span></tt>:</p>
+<img src="../../_images/inheritance159f5785c5.png" usemap="#inheritance159f5785c5" class="inheritance"/><map id="inheritance159f5785c5" name="inheritance159f5785c5">
+<area shape="rect" href="#IPython.wildcard.NameSpace" title="IPython.wildcard.NameSpace" alt="" coords="7,5,212,32"/>
+</map>
+<p>Support for wildcard pattern matching in object inspection.</p>
+<div class="section" id="authors">
+<h3>Authors<a class="headerlink" href="#authors" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Jörgen Stenarson &lt;<a class="reference external" href="mailto:jorgen&#46;stenarson&#37;&#52;&#48;bostream&#46;nu">jorgen<span>&#46;</span>stenarson<span>&#64;</span>bostream<span>&#46;</span>nu</a>&gt;</li>
+</ul>
+</div>
+</div>
+<div class="section" id="class">
+<h2>Class<a class="headerlink" href="#class" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="namespace">
+<h2><a title="IPython.wildcard.NameSpace" class="reference internal" href="#IPython.wildcard.NameSpace"><tt class="xref docutils literal"><span class="pre">NameSpace</span></tt></a><a class="headerlink" href="#namespace" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="IPython.wildcard.NameSpace">
+<!--[IPython.wildcard.NameSpace]-->class <tt class="descclassname">IPython.wildcard.</tt><tt class="descname">NameSpace</tt><big>(</big><em>obj</em>, <em>name_pattern='*'</em>, <em>type_pattern='all'</em>, <em>ignore_case=True</em>, <em>show_all=True</em><big>)</big><a class="headerlink" href="#IPython.wildcard.NameSpace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>NameSpace holds the dictionary for a namespace and implements filtering
+on name and types</p>
+<dl class="method">
+<dt id="IPython.wildcard.NameSpace.__init__">
+<!--[IPython.wildcard.NameSpace.__init__]--><tt class="descname">__init__</tt><big>(</big><em>obj</em>, <em>name_pattern='*'</em>, <em>type_pattern='all'</em>, <em>ignore_case=True</em>, <em>show_all=True</em><big>)</big><a class="headerlink" href="#IPython.wildcard.NameSpace.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.wildcard.NameSpace.filter">
+<!--[IPython.wildcard.NameSpace.filter]--><tt class="descname">filter</tt><big>(</big><em>name_pattern</em>, <em>type_pattern</em><big>)</big><a class="headerlink" href="#IPython.wildcard.NameSpace.filter" title="Permalink to this definition">¶</a></dt>
+<dd>Return dictionary of filtered namespace.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.wildcard.NameSpace.get_ns">
+<!--[IPython.wildcard.NameSpace.get_ns]--><tt class="descname">get_ns</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.wildcard.NameSpace.get_ns" title="Permalink to this definition">¶</a></dt>
+<dd>Return name space dictionary with objects matching type and name patterns.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.wildcard.NameSpace.get_ns_names">
+<!--[IPython.wildcard.NameSpace.get_ns_names]--><tt class="descname">get_ns_names</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.wildcard.NameSpace.get_ns_names" title="Permalink to this definition">¶</a></dt>
+<dd>Return list of object names in namespace that match the patterns.</dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.wildcard.NameSpace.ns">
+<!--[IPython.wildcard.NameSpace.ns]--><tt class="descname">ns</tt><a class="headerlink" href="#IPython.wildcard.NameSpace.ns" title="Permalink to this definition">¶</a></dt>
+<dd>Return name space dictionary with objects matching type and name patterns.</dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.wildcard.NameSpace.ns_names">
+<!--[IPython.wildcard.NameSpace.ns_names]--><tt class="descname">ns_names</tt><a class="headerlink" href="#IPython.wildcard.NameSpace.ns_names" title="Permalink to this definition">¶</a></dt>
+<dd>List of objects in name space that match the type and name patterns.</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.wildcard.create_typestr2type_dicts">
+<!--[IPython.wildcard.create_typestr2type_dicts]--><tt class="descclassname">IPython.wildcard.</tt><tt class="descname">create_typestr2type_dicts</tt><big>(</big><em>dont_include_in_type2type2str=</em><span class="optional">[</span>, <em>'lambda'</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#IPython.wildcard.create_typestr2type_dicts" title="Permalink to this definition">¶</a></dt>
+<dd>Return dictionaries mapping lower case typename to type objects, from
+the types package, and vice versa.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.wildcard.is_type">
+<!--[IPython.wildcard.is_type]--><tt class="descclassname">IPython.wildcard.</tt><tt class="descname">is_type</tt><big>(</big><em>obj</em>, <em>typestr_or_type</em><big>)</big><a class="headerlink" href="#IPython.wildcard.is_type" title="Permalink to this definition">¶</a></dt>
+<dd>is_type(obj,typestr_or_type) verifies if obj is of a certain type or
+group of types takes strings as parameters of the for &#8216;tuple&#8217;&lt;-&gt;TupleType
+&#8216;all&#8217; matches all types.  TODO: Should be extended for choosing more than
+one type</dd></dl>
+
+<dl class="function">
+<dt id="IPython.wildcard.list_namespace">
+<!--[IPython.wildcard.list_namespace]--><tt class="descclassname">IPython.wildcard.</tt><tt class="descname">list_namespace</tt><big>(</big><em>namespace</em>, <em>type_pattern</em>, <em>filter</em>, <em>ignore_case=False</em>, <em>show_all=False</em><big>)</big><a class="headerlink" href="#IPython.wildcard.list_namespace" title="Permalink to this definition">¶</a></dt>
+<dd>Return dictionary of all objects in namespace that matches type_pattern
+and filter.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.wildcard.show_hidden">
+<!--[IPython.wildcard.show_hidden]--><tt class="descclassname">IPython.wildcard.</tt><tt class="descname">show_hidden</tt><big>(</big><em>str</em>, <em>show_all=False</em><big>)</big><a class="headerlink" href="#IPython.wildcard.show_hidden" title="Permalink to this definition">¶</a></dt>
+<dd>Return true for strings starting with single _ if show_all is true.</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">wildcard</a><ul>
+<li><a class="reference external" href="#module-IPython.wildcard">Module: <tt class="docutils literal"><span class="pre">wildcard</span></tt></a><ul>
+<li><a class="reference external" href="#authors">Authors</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#class">Class</a></li>
+<li><a class="reference external" href="#namespace"><tt class="docutils literal"><span class="pre">NameSpace</span></tt></a></li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.upgrade_dir.html" title="previous chapter">upgrade_dir</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.winconsole.html" title="next chapter">winconsole</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.wildcard.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.winconsole.html" title="winconsole"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.upgrade_dir.html" title="upgrade_dir"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

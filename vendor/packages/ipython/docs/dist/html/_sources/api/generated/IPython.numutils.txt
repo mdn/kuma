@@ -1,0 +1,74 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+numutils
+========
+
+Module: :mod:`numutils`
+-----------------------
+.. automodule:: IPython.numutils
+
+.. currentmodule:: IPython.numutils
+
+Functions
+---------
+
+
+.. autofunction:: IPython.numutils.amap
+
+
+.. autofunction:: IPython.numutils.amax
+
+
+.. autofunction:: IPython.numutils.amin
+
+
+.. autofunction:: IPython.numutils.base_repr
+
+
+.. autofunction:: IPython.numutils.binary_repr
+
+
+.. autofunction:: IPython.numutils.diagonal_matrix
+
+
+.. autofunction:: IPython.numutils.empty_like
+
+
+.. autofunction:: IPython.numutils.exp_safe
+
+
+.. autofunction:: IPython.numutils.frange
+
+
+.. autofunction:: IPython.numutils.fromfunction_kw
+
+
+.. autofunction:: IPython.numutils.identity
+
+
+.. autofunction:: IPython.numutils.ispower2
+
+
+.. autofunction:: IPython.numutils.l1norm
+
+
+.. autofunction:: IPython.numutils.l2norm
+
+
+.. autofunction:: IPython.numutils.log2
+
+
+.. autofunction:: IPython.numutils.mean_flat
+
+
+.. autofunction:: IPython.numutils.norm
+
+
+.. autofunction:: IPython.numutils.rms_flat
+
+
+.. autofunction:: IPython.numutils.sum_flat
+
+
+.. autofunction:: IPython.numutils.zeros_like
+
