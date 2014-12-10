@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="migrating_mozilla_translations_to_firefox" id="migrating_mozilla_translations_to_firefox">Migrating Mozilla Translations to Firefox</a></h1>
+<div class="level1">
+
+<p>
+
+This quickstart shows you how to migrate your existing translations
+of the <a href="guide-mozilla.html" class="wikilink1" title="guide-mozilla.html">Mozilla</a> suite to the <a href="guide-firefox.html" class="wikilink1" title="guide-firefox.html">Firefox</a> web-browser.  The same
+instructions can be used to migrate <a href="guide-thunderbird.html" class="wikilink1" title="guide-thunderbird.html">Thunderbird</a>.
+</p>
+
+<p>
+Note: This guide assumes that you are or will be using <acronym title="Gettext Portable Object">PO</acronym> files.
+</p>
+
+<p>
+<img src="images/smileys/fixme.gif" align="middle" alt="FIXME" /> this page needs to be rewriten now that Mozilla is using <acronym title="Comma Separated Value">CSV</acronym>.  The steps are more or less the same.  Look at <a href="toolkit-creating_mozilla_pot_files.html" class="wikilink1" title="toolkit-creating_mozilla_pot_files.html">creating mozilla POT files</a> which talks about creating <acronym title="Gettext Portable Object Template">POT</acronym> file from <acronym title="Concurrent Versions System">CVS</acronym>. Then the process is mostly the same except swap any reference to <acronym title="Cross Platform Installer">XPI</acronym> to be the translations in Mozilla <acronym title="Concurrent Versions System">CVS</acronym>.
+</p>
+
+</div>
+<!-- SECTION "Migrating Mozilla Translations to Firefox" [1-631] -->
+<h2><a name="quick_start" id="quick_start">Quick Start</a></h2>
+<div class="level2">
+<ol>
+<li class="level1"><div class="li"> <a href="toolkit-moz2po.html" class="wikilink1" title="toolkit-moz2po.html">moz2po</a> -t mozilla-1.7.3-langenus.xpi langXXYY.xpi xxYY-1.7.3</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-moz2po.html" class="wikilink1" title="toolkit-moz2po.html">moz2po</a> -P firefox-1.0-en-US.xpi templates-ff-1.0 </div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-pomigrate2.html" class="wikilink1" title="toolkit-pomigrate2.html">pomigrate2</a> xxYY-1.7.3 xxYY-ff-1.0 templates-ff-1.0</div>
+</li>
+</ol>
+
+</div>
+<!-- SECTION "Quick Start" [632-867] -->
+<h2><a name="detailed_description" id="detailed_description">Detailed Description</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Detailed Description" [868-901] -->
+<h3><a name="make_sure_your_mozilla_is_in_po_format" id="make_sure_your_mozilla_is_in_po_format">Make sure your Mozilla is in PO format</a></h3>
+<div class="level3">
+
+<p>
+
+If you are not currently using <acronym title="Gettext Portable Object">PO</acronym> files to do your translations then you can
+migrate an existing <acronym title="Cross Platform Installer">XPI</acronym> to <acronym title="Gettext Portable Object">PO</acronym> format.
+</p>
+
+</div>
+
+<h4><a name="get_the_correct_en-us_xpi" id="get_the_correct_en-us_xpi">Get the correct en-US xpi</a></h4>
+<div class="level4">
+
+<p>
+
+Firstly make sure you have an <acronym title="Cross Platform Installer">XPI</acronym> for your language then download a Mozilla English (US) <acronym title="Cross Platform Installer">XPI</acronym> 
+for the same release:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="ftp://ftp.mozilla.org/pub/mozilla.org/mozilla/releases/mozilla1.7.3/linux-xpi/langenus.xpi" class="urlextern" title="ftp://ftp.mozilla.org/pub/mozilla.org/mozilla/releases/mozilla1.7.3/linux-xpi/langenus.xpi">ftp://ftp.mozilla.org/pub/mozilla.org/mozilla/releases/mozilla1.7.3/linux-xpi/langenus.xpi</a></div>
+</li>
+</ul>
+
+<p>
+
+Change 1.7.3 to the release that you need.  Note: Linux and Windows
+langenus.xpi are the same so no need to worry about that.
+</p>
+
+</div>
+
+<h4><a name="create_mozilla_po_files_for_your_language" id="create_mozilla_po_files_for_your_language">Create Mozilla PO files for your language</a></h4>
+<div class="level4">
+
+<p>
+
+Now create the Mozilla <acronym title="Gettext Portable Object">PO</acronym> files for your language using your existing <acronym title="Cross Platform Installer">XPI</acronym> and
+the en-US <acronym title="Cross Platform Installer">XPI</acronym>.
+</p>
+<pre class="code bash">moz2po -t mozilla<span class="nu0">-1.7</span><span class="nu0">.3</span>-langenus.xpi langXXYY.xpi xxYY<span class="nu0">-1.7</span><span class="nu0">.3</span></pre>
+<p>
+Where:
+</p>
+<ul>
+<li class="level1"><div class="li"> mozilla-1.7.3-langenus.xpi is the langenus.xpi downloaded above</div>
+</li>
+<li class="level1"><div class="li"> langXXYY.xpi is your existing translated <acronym title="Cross Platform Installer">XPI</acronym> with the same version and the en-US one downloaded.</div>
+</li>
+<li class="level1"><div class="li"> xxYY-1.7.3 is an output directory for the <acronym title="Gettext Portable Object">PO</acronym> files</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Make sure your Mozilla is in PO format" [902-1901] -->
+<h3><a name="create_firefox_pot_files" id="create_firefox_pot_files">Create Firefox POT files</a></h3>
+<div class="level3">
+
+<p>
+
+You need to create a set of Firefox <acronym title="Gettext Portable Object">PO</acronym> Template files that you will use as templates
+when you migrate your Mozilla translations.  Template files are simply blank <acronym title="Gettext Portable Object">PO</acronym> files.
+</p>
+
+</div>
+
+<h4><a name="getting_the_en-us.xpi" id="getting_the_en-us.xpi">Getting the en-US.xpi</a></h4>
+<div class="level4">
+
+<p>
+
+Rumour has it that the en-US <acronym title="Cross Platform Installer">XPI</acronym> files for Firefox are different for Windows and Linux.
+
+</p>
+<ul>
+<li class="level1"><div class="li"> Linux -- Firefox 1.0: <a href="ftp://ftp.mozilla.org/pub/mozilla.org/firefox/releases/1.0/linux-i686/xpi/en-US.xpi" class="urlextern" title="ftp://ftp.mozilla.org/pub/mozilla.org/firefox/releases/1.0/linux-i686/xpi/en-US.xpi">ftp://ftp.mozilla.org/pub/mozilla.org/firefox/releases/1.0/linux-i686/xpi/en-US.xpi</a></div>
+</li>
+<li class="level1"><div class="li"> Windows -- Firefox 1.0: <a href="ftp://ftp.mozilla.org/pub/mozilla.org/firefox/releases/1.0/win32/xpi/en-US.xpi" class="urlextern" title="ftp://ftp.mozilla.org/pub/mozilla.org/firefox/releases/1.0/win32/xpi/en-US.xpi">ftp://ftp.mozilla.org/pub/mozilla.org/firefox/releases/1.0/win32/xpi/en-US.xpi</a></div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="create_the_pot_files" id="create_the_pot_files">Create the POT files</a></h4>
+<div class="level4">
+<pre class="code bash">moz2po -P firefox<span class="nu0">-1.0</span>-en-US.xpi templates-ff<span class="nu0">-1.0</span></pre>
+<p>
+Where:
+</p>
+<ul>
+<li class="level1"><div class="li"> <em>-P</em> specifies that you want to create <acronym title="Gettext Portable Object Template">POT</acronym> files instead of <acronym title="Gettext Portable Object">PO</acronym> files</div>
+</li>
+<li class="level1"><div class="li"> <em>firefox-1.0-en-US.xpi</em> is an en-US.xpi for Firefox downloaded earlier</div>
+</li>
+<li class="level1"><div class="li"> <em>templates-ff-1.0</em> is the new directory that will contain the <acronym title="Gettext Portable Object Template">POT</acronym> files</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Create Firefox POT files" [1902-2786] -->
+<h3><a name="migrate_the_mozilla_po_files_to_firefox" id="migrate_the_mozilla_po_files_to_firefox">Migrate the Mozilla PO files to Firefox</a></h3>
+<div class="level3">
+
+<p>
+
+We will now take the existing Mozilla <acronym title="Gettext Portable Object">PO</acronym> files and migrate them to Firefox.
+Note that this tool only works on Linux (or an operating environment with bash
+and the gettext tools).  If you need help ask at <a href="mailto:&#x74;&#x72;&#x61;&#x6e;&#x73;&#x6c;&#x61;&#x74;&#x65;&#x2d;&#x64;&#x65;&#x76;&#x65;&#x6c;&#x40;&#x6c;&#x69;&#x73;&#x74;&#x73;&#x2e;&#x73;&#x6f;&#x75;&#x72;&#x63;&#x65;&#x66;&#x6f;&#x72;&#x67;&#x65;&#x2e;&#x6e;&#x65;&#x74;" class="mail JSnocheck" title="&#x74;&#x72;&#x61;&#x6e;&#x73;&#x6c;&#x61;&#x74;&#x65;&#x2d;&#x64;&#x65;&#x76;&#x65;&#x6c;&#x40;&#x6c;&#x69;&#x73;&#x74;&#x73;&#x2e;&#x73;&#x6f;&#x75;&#x72;&#x63;&#x65;&#x66;&#x6f;&#x72;&#x67;&#x65;&#x2e;&#x6e;&#x65;&#x74;">&#x74;&#x72;&#x61;&#x6e;&#x73;&#x6c;&#x61;&#x74;&#x65;&#x2d;&#x64;&#x65;&#x76;&#x65;&#x6c;&#x40;&#x6c;&#x69;&#x73;&#x74;&#x73;&#x2e;&#x73;&#x6f;&#x75;&#x72;&#x63;&#x65;&#x66;&#x6f;&#x72;&#x67;&#x65;&#x2e;&#x6e;&#x65;&#x74;</a>.
+
+</p>
+<pre class="code">pomigrate2 xxYY-1.7.3 xxYY-ff-1.0 templates-ff-1.0</pre>
+
+<p>
+
+Where:
+</p>
+<ul>
+<li class="level1"><div class="li"> <em>xxYY-1.7.3</em> contains your Mozilla <acronym title="Gettext Portable Object">PO</acronym> files</div>
+</li>
+<li class="level1"><div class="li"> <em>xxYY-ff-1.0</em> will contain your new Firefox files</div>
+</li>
+<li class="level1"><div class="li"> <em>templates-ff-1.0</em> contains the Firefox template files</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="how_does_it_do_the_migration" id="how_does_it_do_the_migration">How does it do the migration?</a></h4>
+<div class="level4">
+
+<p>
+
+Things that are fully automated scare most people and justifiably so!  The
+migration will do the following:
+
+</p>
+<ol>
+<li class="level1"><div class="li"> For each Firefox <acronym title="Gettext Portable Object">PO</acronym> Template file</div>
+<ul>
+<li class="level2"><div class="li"> If there is one in your Mozilla folder</div>
+<ul>
+<li class="level3"><div class="li"> If there is only one file with that name</div>
+<ul>
+<li class="level4"><div class="li"> copy it to the correct Firefox <acronym title="Gettext Portable Object">PO</acronym> location</div>
+</li>
+</ul>
+</li>
+<li class="level3"><div class="li"> Else </div>
+<ul>
+<li class="level4"><div class="li"> combine all the copies you find and then copy them to the Firefox <acronym title="Gettext Portable Object">PO</acronym> location</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level2"><div class="li"> Else</div>
+<ul>
+<li class="level3"><div class="li"> Initialise a blank <acronym title="Gettext Portable Object">PO</acronym> file</div>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> Create a compendium file of all Mozilla <acronym title="Gettext Portable Object">PO</acronym> files</div>
+</li>
+<li class="level1"><div class="li"> Update all Firefox <acronym title="Gettext Portable Object">PO</acronym> files optionally using the compendium</div>
+</li>
+</ol>
+
+<p>
+
+The result is that all Firefox files are at least initialised.  Many of them
+are populated with conflicting entries clearly highlighted and ready for you to
+fix.
+</p>
+
+</div>
+<!-- SECTION "Migrate the Mozilla PO files to Firefox" [2787-4076] -->
+<h3><a name="begin_translating" id="begin_translating">Begin translating</a></h3>
+<div class="level3">
+
+<p>
+
+Your <acronym title="Gettext Portable Object">PO</acronym> files are ready.  Begin translating with any of your usual <acronym title="Gettext Portable Object">PO</acronym> editing
+tools.
+
+</p>
+
+</div>
+<!-- SECTION "Begin translating" [4077-] --></body>
+</html>

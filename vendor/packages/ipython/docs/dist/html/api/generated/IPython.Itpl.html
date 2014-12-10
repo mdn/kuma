@@ -1,0 +1,327 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Itpl &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="Logger" href="IPython.Logger.html" />
+    <link rel="prev" title="Debugger" href="IPython.Debugger.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.Logger.html" title="Logger"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.Debugger.html" title="Debugger"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="itpl">
+<h1>Itpl<a class="headerlink" href="#itpl" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.Itpl">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">Itpl</span></tt><a class="headerlink" href="#module-IPython.Itpl" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.Itpl</span></tt>:</p>
+<img src="../../_images/inheritanceefdad02d24.png" usemap="#inheritanceefdad02d24" class="inheritance"/><map id="inheritanceefdad02d24" name="inheritanceefdad02d24">
+<area shape="rect" href="#IPython.Itpl.ItplFile" title="IPython.Itpl.ItplFile" alt="" coords="12,107,145,133"/>
+<area shape="rect" href="#IPython.Itpl.ItplNS" title="IPython.Itpl.ItplNS" alt="" coords="200,56,333,83"/>
+<area shape="rect" href="#IPython.Itpl.Itpl" title="IPython.Itpl.Itpl" alt="" coords="21,56,136,83"/>
+<area shape="rect" href="#IPython.Itpl.ItplError" title="IPython.Itpl.ItplError" alt="" coords="7,5,151,32"/>
+</map>
+<p>String interpolation for Python (by Ka-Ping Yee, 14 Feb 2000).</p>
+<p>This module lets you quickly and conveniently interpolate values into
+strings (in the flavour of Perl or Tcl, but with less extraneous
+punctuation).  You get a bit more power than in the other languages,
+because this module allows subscripting, slicing, function calls,
+attribute lookup, or arbitrary expressions.  Variables and expressions
+are evaluated in the namespace of the caller.</p>
+<p>The itpl() function returns the result of interpolating a string, and
+printpl() prints out an interpolated string.  Here are some examples:</p>
+<blockquote>
+from Itpl import printpl
+printpl(&#8220;Here is a $string.&#8221;)
+printpl(&#8220;Here is a $module.member.&#8221;)
+printpl(&#8220;Here is an $object.member.&#8221;)
+printpl(&#8220;Here is a $functioncall(with, arguments).&#8221;)
+printpl(&#8220;Here is an ${arbitrary + expression}.&#8221;)
+printpl(&#8220;Here is an $array[3] member.&#8221;)
+printpl(&#8220;Here is a $dictionary[&#8216;member&#8217;].&#8221;)</blockquote>
+<p>The filter() function filters a file object so that output through it
+is interpolated.  This lets you produce the illusion that Python knows
+how to do interpolation:</p>
+<blockquote>
+import Itpl
+sys.stdout = Itpl.filter()
+f = &#8220;fancy&#8221;
+print &#8220;Is this not $f?&#8221;
+print &#8220;Standard output has been replaced with a $sys.stdout object.&#8221;
+sys.stdout = Itpl.unfilter()
+print &#8220;Okay, back $to $normal.&#8221;</blockquote>
+<p>Under the hood, the Itpl class represents a string that knows how to
+interpolate values.  An instance of the class parses the string once
+upon initialization; the evaluation and substitution can then be done
+each time the instance is evaluated with str(instance).  For example:</p>
+<blockquote>
+from Itpl import Itpl
+s = Itpl(&#8220;Here is $foo.&#8221;)
+foo = 5
+print str(s)
+foo = &#8220;bar&#8221;
+print str(s)</blockquote>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3><a title="IPython.Itpl.Itpl" class="reference internal" href="#IPython.Itpl.Itpl"><tt class="xref docutils literal"><span class="pre">Itpl</span></tt></a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.Itpl.Itpl">
+<!--[IPython.Itpl.Itpl]-->class <tt class="descclassname">IPython.Itpl.</tt><tt class="descname">Itpl</tt><big>(</big><em>format</em>, <em>codec='UTF-8'</em>, <em>encoding_errors='backslashreplace'</em><big>)</big><a class="headerlink" href="#IPython.Itpl.Itpl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class representing a string with interpolation abilities.</p>
+<p>Upon creation, an instance works out what parts of the format
+string are literal and what parts need to be evaluated.  The
+evaluation and substitution happens in the namespace of the
+caller when str(instance) is called.</p>
+<dl class="method">
+<dt id="IPython.Itpl.Itpl.__init__">
+<!--[IPython.Itpl.Itpl.__init__]--><tt class="descname">__init__</tt><big>(</big><em>format</em>, <em>codec='UTF-8'</em>, <em>encoding_errors='backslashreplace'</em><big>)</big><a class="headerlink" href="#IPython.Itpl.Itpl.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>The single mandatory argument to this constructor is a format
+string.</p>
+<p>The format string is parsed according to the following rules:</p>
+<ol class="arabic">
+<li><dl class="first docutils">
+<dt>A dollar sign and a name, possibly followed by any of: </dt>
+<dd><ul class="first last simple">
+<li>an open-paren, and anything up to the matching paren</li>
+<li>an open-bracket, and anything up to the matching bracket</li>
+<li>a period and a name</li>
+</ul>
+</dd>
+</dl>
+<p>any number of times, is evaluated as a Python expression.</p>
+</li>
+<li><p class="first">A dollar sign immediately followed by an open-brace, and
+anything up to the matching close-brace, is evaluated as
+a Python expression.</p>
+</li>
+<li><p class="first">Outside of the expressions described in the above two rules,
+two dollar signs in a row give you one literal dollar sign.</p>
+</li>
+</ol>
+<p>Optional arguments:</p>
+<ul class="simple">
+<li>codec(&#8216;utf_8&#8217;): a string containing the name of a valid Python</li>
+</ul>
+<p>codec.</p>
+<ul class="simple">
+<li>encoding_errors(&#8216;backslashreplace&#8217;): a string with a valid error handling</li>
+</ul>
+<p>policy.  See the codecs module documentation for details.</p>
+<p>These are used to encode the format string if a call to str() fails on
+the expanded result.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="itplerror">
+<h3><a title="IPython.Itpl.ItplError" class="reference internal" href="#IPython.Itpl.ItplError"><tt class="xref docutils literal"><span class="pre">ItplError</span></tt></a><a class="headerlink" href="#itplerror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.Itpl.ItplError">
+<!--[IPython.Itpl.ItplError]-->class <tt class="descclassname">IPython.Itpl.</tt><tt class="descname">ItplError</tt><big>(</big><em>text</em>, <em>pos</em><big>)</big><a class="headerlink" href="#IPython.Itpl.ItplError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">exceptions.ValueError</span></tt></p>
+<dl class="method">
+<dt id="IPython.Itpl.ItplError.__init__">
+<!--[IPython.Itpl.ItplError.__init__]--><tt class="descname">__init__</tt><big>(</big><em>text</em>, <em>pos</em><big>)</big><a class="headerlink" href="#IPython.Itpl.ItplError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="itplfile">
+<h3><a title="IPython.Itpl.ItplFile" class="reference internal" href="#IPython.Itpl.ItplFile"><tt class="xref docutils literal"><span class="pre">ItplFile</span></tt></a><a class="headerlink" href="#itplfile" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.Itpl.ItplFile">
+<!--[IPython.Itpl.ItplFile]-->class <tt class="descclassname">IPython.Itpl.</tt><tt class="descname">ItplFile</tt><big>(</big><em>file</em><big>)</big><a class="headerlink" href="#IPython.Itpl.ItplFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>A file object that filters each write() through an interpolator.</p>
+<dl class="method">
+<dt id="IPython.Itpl.ItplFile.__init__">
+<!--[IPython.Itpl.ItplFile.__init__]--><tt class="descname">__init__</tt><big>(</big><em>file</em><big>)</big><a class="headerlink" href="#IPython.Itpl.ItplFile.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.Itpl.ItplFile.write">
+<!--[IPython.Itpl.ItplFile.write]--><tt class="descname">write</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#IPython.Itpl.ItplFile.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="itplns">
+<h3><a title="IPython.Itpl.ItplNS" class="reference internal" href="#IPython.Itpl.ItplNS"><tt class="xref docutils literal"><span class="pre">ItplNS</span></tt></a><a class="headerlink" href="#itplns" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.Itpl.ItplNS">
+<!--[IPython.Itpl.ItplNS]-->class <tt class="descclassname">IPython.Itpl.</tt><tt class="descname">ItplNS</tt><big>(</big><em>format</em>, <em>globals</em>, <em>locals=None</em>, <em>codec='utf_8'</em>, <em>encoding_errors='backslashreplace'</em><big>)</big><a class="headerlink" href="#IPython.Itpl.ItplNS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.Itpl.Itpl" class="reference internal" href="#IPython.Itpl.Itpl"><tt class="xref docutils literal"><span class="pre">IPython.Itpl.Itpl</span></tt></a></p>
+<p>Class representing a string with interpolation abilities.</p>
+<p>This inherits from Itpl, but at creation time a namespace is provided
+where the evaluation will occur.  The interpolation becomes a bit more
+efficient, as no traceback needs to be extracte.  It also allows the
+caller to supply a different namespace for the interpolation to occur than
+its own.</p>
+<dl class="method">
+<dt id="IPython.Itpl.ItplNS.__init__">
+<!--[IPython.Itpl.ItplNS.__init__]--><tt class="descname">__init__</tt><big>(</big><em>format</em>, <em>globals</em>, <em>locals=None</em>, <em>codec='utf_8'</em>, <em>encoding_errors='backslashreplace'</em><big>)</big><a class="headerlink" href="#IPython.Itpl.ItplNS.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>ItplNS(format,globals[,locals]) -&gt; interpolating string instance.</p>
+<p>This constructor, besides a format string, takes a globals dictionary
+and optionally a locals (which defaults to globals if not provided).</p>
+<p>For further details, see the Itpl constructor.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.Itpl.filter">
+<!--[IPython.Itpl.filter]--><tt class="descclassname">IPython.Itpl.</tt><tt class="descname">filter</tt><big>(</big><em>file=&lt;open file '&lt;stdout&gt;'</em>, <em>mode 'w' at 0x4021e070&gt;</em><big>)</big><a class="headerlink" href="#IPython.Itpl.filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an ItplFile that filters writes to the given file object.</p>
+<p>&#8216;file = filter(file)&#8217; replaces &#8216;file&#8217; with a filtered object that
+has a write() method.  When called with no argument, this creates
+a filter to sys.stdout.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.Itpl.itpl">
+<!--[IPython.Itpl.itpl]--><tt class="descclassname">IPython.Itpl.</tt><tt class="descname">itpl</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#IPython.Itpl.itpl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.Itpl.itplns">
+<!--[IPython.Itpl.itplns]--><tt class="descclassname">IPython.Itpl.</tt><tt class="descname">itplns</tt><big>(</big><em>text</em>, <em>globals</em>, <em>locals=None</em><big>)</big><a class="headerlink" href="#IPython.Itpl.itplns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.Itpl.matchorfail">
+<!--[IPython.Itpl.matchorfail]--><tt class="descclassname">IPython.Itpl.</tt><tt class="descname">matchorfail</tt><big>(</big><em>text</em>, <em>pos</em><big>)</big><a class="headerlink" href="#IPython.Itpl.matchorfail" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.Itpl.printpl">
+<!--[IPython.Itpl.printpl]--><tt class="descclassname">IPython.Itpl.</tt><tt class="descname">printpl</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#IPython.Itpl.printpl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.Itpl.printplns">
+<!--[IPython.Itpl.printplns]--><tt class="descclassname">IPython.Itpl.</tt><tt class="descname">printplns</tt><big>(</big><em>text</em>, <em>globals</em>, <em>locals=None</em><big>)</big><a class="headerlink" href="#IPython.Itpl.printplns" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.Itpl.unfilter">
+<!--[IPython.Itpl.unfilter]--><tt class="descclassname">IPython.Itpl.</tt><tt class="descname">unfilter</tt><big>(</big><em>ifile=None</em><big>)</big><a class="headerlink" href="#IPython.Itpl.unfilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the original file that corresponds to the given ItplFile.</p>
+<p>&#8216;file = unfilter(file)&#8217; undoes the effect of &#8216;file = filter(file)&#8217;.
+&#8216;sys.stdout = unfilter()&#8217; undoes the effect of &#8216;sys.stdout = filter()&#8217;.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">Itpl</a><ul>
+<li><a class="reference external" href="#module-IPython.Itpl">Module: <tt class="docutils literal"><span class="pre">Itpl</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#id1"><tt class="docutils literal"><span class="pre">Itpl</span></tt></a></li>
+<li><a class="reference external" href="#itplerror"><tt class="docutils literal"><span class="pre">ItplError</span></tt></a></li>
+<li><a class="reference external" href="#itplfile"><tt class="docutils literal"><span class="pre">ItplFile</span></tt></a></li>
+<li><a class="reference external" href="#itplns"><tt class="docutils literal"><span class="pre">ItplNS</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.Debugger.html" title="previous chapter">Debugger</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.Logger.html" title="next chapter">Logger</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.Itpl.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.Logger.html" title="Logger"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.Debugger.html" title="Debugger"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

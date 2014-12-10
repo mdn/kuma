@@ -1,0 +1,23 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+testing.parametric
+==================
+
+Module: :mod:`testing.parametric`
+---------------------------------
+.. automodule:: IPython.testing.parametric
+
+.. currentmodule:: IPython.testing.parametric
+
+Functions
+---------
+
+
+.. autofunction:: IPython.testing.parametric.Parametric
+
+
+.. autofunction:: IPython.testing.parametric.parametric
+
+
+.. autofunction:: IPython.testing.parametric.partial
+

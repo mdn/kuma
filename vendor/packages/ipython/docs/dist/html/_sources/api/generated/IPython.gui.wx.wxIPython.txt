@@ -1,0 +1,47 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+gui.wx.wxIPython
+================
+
+Module: :mod:`gui.wx.wxIPython`
+-------------------------------
+Inheritance diagram for ``IPython.gui.wx.wxIPython``:
+
+.. inheritance-diagram:: IPython.gui.wx.wxIPython 
+   :parts: 3
+
+.. automodule:: IPython.gui.wx.wxIPython
+
+.. currentmodule:: IPython.gui.wx.wxIPython
+
+Classes
+-------
+
+:class:`MyApp`
+~~~~~~~~~~~~~~
+
+
+.. autoclass:: MyApp
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`MyFrame`
+~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: MyFrame
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Function
+--------
+
+
+.. autofunction:: IPython.gui.wx.wxIPython.main
+

@@ -1,0 +1,55 @@
+General layout of the Python code for those interested in hacking on it.
+------------------------------------------------------------------------
+
+The Connection class in connection.py is the heart of the library, it
+wires together the various other classes.
+
+The items in method_framing.py and transport.py should not be visible
+to the amqplib user.
+
+This is the general arrangement of how the classes communicate with
+each other:
+
+                           +-----------+        +-----------+
+channel.py                 |  Channel  |   ...  |  Channel  |
+                           +-----------+        +-----------+
+                                 ^                    ^
+                                 |      methods       |
+                                 V                    V
+                        +--------------------------------------+
+connection.py           |               Connection             |
+                        +-------+------------------------------+
+                                |                      ^
+                                |       methods        |
+                                V                      |
+                        +----------------+    +--------+-------+
+method_framing.py       |  MethodWriter  |    |  MethodReader  |
+                        +-------+--------+    +----------------+
+                                |                      ^
+                                |        frames        |
+                                V                      |
+                        +------------------------------+-------+
+transport.py            |     TCPTransport or SSLTransport     |
+                        +-------+------------------------------+
+                                |                      ^
+                                |        bytes         |
+                                V                      |
+                            +--------------------------+--+
+                            |         TCP Socket          |
+                            +-----------------------------+
+
+
+Other notable bits of code are:
+
+    abstract_channel.py - Contains a common superclass for Connection
+                          and Channel classes.
+
+    basic_message.py    - Location of the Message class - which is what
+                          is mostly being sent/received over the Channels.
+
+    exceptions.py       - For indicating when things go wrong.
+
+    serialization.py    - Home of AMQPReader and AMQPWriter which are
+                          used in many places within the Channel
+                          and Connection classes.
+

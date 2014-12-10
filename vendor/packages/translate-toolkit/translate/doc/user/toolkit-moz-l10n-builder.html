@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="moz-l10n-builder" id="moz-l10n-builder">moz-l10n-builder</a></h1>
+<div class="level1">
+
+<p>
+
+Take a set of Mozilla (Firefox, Thunderbird, SeaMonkey, etc.) localisation and migrate them to the latest Mozilla source, building XPIs and repackaging hte Windows .exe file as needed.
+</p>
+
+<p>
+Please also check the page on <a href="http://developer.mozilla.org/en/docs/Creating_a_Language_Pack" class="urlextern" title="http://developer.mozilla.org/en/docs/Creating_a_Language_Pack">creating a language pack</a> on the Mozilla wiki, to stay abreast of the latest Mozilla way of doing things.
+</p>
+
+<p>
+<p><div class="noteclassic">This page is only applicable to Mozilla products with its source hosted in <acronym title="Concurrent Versions System">CVS</acronym>. This includes Firefox versions before 3.1 and Thunderbird versions before 3.0.
+</p>
+
+<p>
+For information about working with the new source trees in Mercurial, see the <a href="toolkit-mozilla_l10n_scripts.html" class="wikilink1" title="toolkit-mozilla_l10n_scripts.html">Mozilla l10n scripts</a> page.
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "moz-l10n-builder" [1-703] -->
+<h2><a name="prerequisites" id="prerequisites">Prerequisites</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> Translation update component and building XPIs</div>
+<ul>
+<li class="level2"><div class="li"> <a href="toolkit-installation.html" class="wikilink1" title="toolkit-installation.html">Translate Toolkit</a></div>
+</li>
+<li class="level2"><div class="li"> Existing Mozilla translations in <acronym title="Gettext Portable Object">PO</acronym> format</div>
+</li>
+<li class="level2"><div class="li"> A checkout of <a href="http://developer.mozilla.org/en/docs/Mozilla_Source_Code_Via_CVS" class="urlextern" title="http://developer.mozilla.org/en/docs/Mozilla_Source_Code_Via_CVS">Mozilla sources</a> updated to the correct <a href="http://developer.mozilla.org/en/docs/CVS_Tags" class="urlextern" title="http://developer.mozilla.org/en/docs/CVS_Tags">BRANCH or RELEASE</a></div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> Building Windows executables</div>
+<ul>
+<li class="level2"><div class="li"> Firefox or Thunderbird <a href="http://releases.mozilla.org/pub/mozilla.org/firefox/releases/" class="urlextern" title="http://releases.mozilla.org/pub/mozilla.org/firefox/releases/">en-US .exe</a> file eg. <a href="http://releases.mozilla.org/pub/mozilla.org/firefox/releases/2.0/win32/en-US/Firefox%20Setup%202.0.exe" class="urlextern" title="http://releases.mozilla.org/pub/mozilla.org/firefox/releases/2.0/win32/en-US/Firefox%20Setup%202.0.exe">Firefox 2.0 en-US</a></div>
+</li>
+<li class="level2"><div class="li"> <a href="http://upx.sourceforge.net/" class="urlextern" title="http://upx.sourceforge.net/">upx</a> for executable compression</div>
+</li>
+<li class="level2"><div class="li"> <a href="http://nsis.sourceforge.net/Main_Page" class="urlextern" title="http://nsis.sourceforge.net/Main_Page">Nullsoft installer</a> to package the installer.</div>
+</li>
+<li class="level2"><div class="li"> <a href="http://www.7-zip.org/" class="urlextern" title="http://www.7-zip.org/">7zip</a> for various compression</div>
+</li>
+<li class="level2"><div class="li"> Linux: <a href="http://winehq.com/" class="urlextern" title="http://winehq.com/">WINE</a> to run the Nullsoft installer</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> Directory structure under the directory you want to run moz-l10n-builder in:</div>
+</li>
+</ul>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0"> l10n/ </td><td class="col1"> Contains Mozilla l10n files for available/needed language(s) </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0"> mozilla/ </td><td class="col1"> The Mozilla source tree </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0"> po/ </td><td class="col1"> Contains your <acronym title="Gettext Portable Object">PO</acronym> files (output from moz2po) </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0"> potpacks/ </td><td class="col1"> Where <acronym title="Gettext Portable Object Template">POT</acronym>-archives go </td>
+	</tr>
+</table>
+
+<p>
+
+Note these instructions are for building on Linux, they may work on Windows.  All software should be available through your distribution.  You will need to use Wine to install the Nullsoft installer and may need to sort out some path issues to get it to run correctly.
+</p>
+
+</div>
+<!-- SECTION "Prerequisites" [704-2191] -->
+<h2><a name="latest_version" id="latest_version">Latest Version</a></h2>
+<div class="level2">
+
+<p>
+
+moz-l10n-builer is not currently distributed as part of the toolkit.  You can get the <a href="https://translate.svn.sourceforge.net/svnroot/translate/src/trunk/tools/mozilla/moz-l10n-builder" class="urlextern" title="https://translate.svn.sourceforge.net/svnroot/translate/src/trunk/tools/mozilla/moz-l10n-builder">latest version from Subversion</a>
+ and you will also need this <a href="http://translate.svn.sourceforge.net/viewvc/*checkout*/translate/src/trunk/tools/mozilla/mozilla-l10n.patch" class="urlextern" title="http://translate.svn.sourceforge.net/viewvc/*checkout*/translate/src/trunk/tools/mozilla/mozilla-l10n.patch">minor patch</a> to the mozilla source code.
+</p>
+
+</div>
+<!-- SECTION "Latest Version" [2192-2619] -->
+<h2><a name="usage" id="usage">Usage</a></h2>
+<div class="level2">
+<pre class="code">moz-l10n-builder [language-code|ALL]</pre>
+
+<p>
+
+Where:
+
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> language-code  </td><td class="col1 leftalign"> build only the supplied languages, or build ALL if specified or if no option is supplied  </td>
+	</tr>
+</table>
+
+<p>
+
+Your translations will not be modified.
+</p>
+
+</div>
+<!-- SECTION "Usage" [2620-2839] -->
+<h2><a name="operation" id="operation">Operation</a></h2>
+<div class="level2">
+
+<p>
+
+moz-l10n-builder does the following:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> Updates the mozilla/ directory</div>
+</li>
+<li class="level1"><div class="li"> Creates <acronym title="Gettext Portable Object Template">POT</acronym> files</div>
+</li>
+<li class="level1"><div class="li"> Migrates your translations to this new <acronym title="Gettext Portable Object Template">POT</acronym> file</div>
+</li>
+<li class="level1"><div class="li"> Converts the migrated <acronym title="Gettext Portable Object Template">POT</acronym> files to .dtd and .properties files</div>
+</li>
+<li class="level1"><div class="li"> Builds <acronym title="Cross Platform Installer">XPI</acronym> and .exe files</div>
+</li>
+<li class="level1"><div class="li"> Performs various hacks to cater for the anomalies of file formats</div>
+</li>
+<li class="level1"><div class="li"> Outputs a diff of you migrated <acronym title="Gettext Portable Object">PO</acronym> files and your newly generated Mozilla l10n/ files</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Operation" [2840-3265] -->
+<h2><a name="bugs" id="bugs">Bugs</a></h2>
+<div class="level2">
+
+<p>
+
+Currently it is too Translate.org.za specific and not easily configurable without editing.  It is also not intelligent enough to work our that you want Firefox vs Thunderbird generation.  A lot of this functionality should be in the Mozilla source code itself.  We hope over time that this might happen.
+
+</p>
+
+</div>
+<!-- SECTION "Bugs" [3266-] --></body>
+</html>

@@ -1,0 +1,582 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        
+        <title>
+    Collection Configuration and Techniques
+ &mdash; SQLAlchemy 0.6.4 Documentation</title>
+        
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '0.6.4',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 0.6.4 Documentation" href="../index.html" />
+        <link rel="up" title="SQLAlchemy ORM" href="index.html" />
+        <link rel="next" title="Mapping Class Inheritance Hierarchies" href="inheritance.html" />
+        <link rel="prev" title="Relationship Configuration" href="relationships.html" />
+    
+
+    </head>
+    <body>
+        
+
+
+
+
+        <h1>SQLAlchemy 0.6.4 Documentation</h1>
+
+        <div id="search">
+        Search:
+        <form class="search" action="../search.html" method="get">
+          <input type="text" name="q" size="18" /> <input type="submit" value="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+        </div>
+
+        <div class="versionheader">
+            Version: <span class="versionnum">0.6.4</span> Last Updated: 09/07/2010 13:07:48
+        </div>
+        <div class="clearboth"></div>
+
+        <div class="topnav">
+            <div id="pagecontrol">
+                <a href="../genindex.html">Index</a>
+            
+                <div class="sourcelink">(<a href="../_sources/orm/collections.txt">view source)</div>
+            </div>
+            
+            <div class="navbanner">
+                <a class="totoc" href="../index.html">Table of Contents</a>
+                        » <a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a>
+                » 
+    Collection Configuration and Techniques
+ 
+                
+                
+<div class="prevnext">
+        Previous:
+        <a href="relationships.html" title="previous chapter">Relationship Configuration</a>
+        Next:
+        <a href="inheritance.html" title="next chapter">Mapping Class Inheritance Hierarchies</a>
+</div>
+
+                <h2>
+                    
+    Collection Configuration and Techniques
+ 
+                </h2>
+            </div>
+                <ul>
+<li><a class="reference internal" href="#">Collection Configuration and Techniques</a><ul>
+<li><a class="reference internal" href="#working-with-large-collections">Working with Large Collections</a><ul>
+<li><a class="reference internal" href="#dynamic-relationship-loaders">Dynamic Relationship Loaders</a></li>
+<li><a class="reference internal" href="#setting-noload">Setting Noload</a></li>
+<li><a class="reference internal" href="#using-passive-deletes">Using Passive Deletes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#customizing-collection-access">Customizing Collection Access</a><ul>
+<li><a class="reference internal" href="#custom-collection-implementations">Custom Collection Implementations</a></li>
+<li><a class="reference internal" href="#annotating-custom-collections-via-decorators">Annotating Custom Collections via Decorators</a></li>
+<li><a class="reference internal" href="#dictionary-based-collections">Dictionary-Based Collections</a></li>
+<li><a class="reference internal" href="#instrumentation-and-custom-types">Instrumentation and Custom Types</a></li>
+<li><a class="reference internal" href="#collections-api">Collections API</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <div class="clearboth"></div>
+        </div>
+        
+        <div class="document">
+            <div class="body">
+                
+<div class="section" id="collection-configuration-and-techniques">
+<span id="collections-toplevel"></span><h1>Collection Configuration and Techniques<a class="headerlink" href="#collection-configuration-and-techniques" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="relationships.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><tt class="xref py py-func docutils literal"><span class="pre">relationship()</span></tt></a> function defines a linkage between two classes.
+When the linkage defines a one-to-many or many-to-many relationship, it&#8217;s
+represented as a Python collection when objects are loaded and manipulated.
+This section presents additional information about collection configuration
+and techniques.</p>
+<div class="section" id="working-with-large-collections">
+<span id="largecollections"></span><h2>Working with Large Collections<a class="headerlink" href="#working-with-large-collections" title="Permalink to this headline">¶</a></h2>
+<p>The default behavior of <a class="reference internal" href="relationships.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><tt class="xref py py-func docutils literal"><span class="pre">relationship()</span></tt></a> is to fully load
+the collection of items in, as according to the loading strategy of the
+relationship. Additionally, the Session by default only knows how to delete
+objects which are actually present within the session. When a parent instance
+is marked for deletion and flushed, the Session loads its full list of child
+items in so that they may either be deleted as well, or have their foreign key
+value set to null; this is to avoid constraint violations. For large
+collections of child items, there are several strategies to bypass full
+loading of child items both at load time as well as deletion time.</p>
+<div class="section" id="dynamic-relationship-loaders">
+<h3>Dynamic Relationship Loaders<a class="headerlink" href="#dynamic-relationship-loaders" title="Permalink to this headline">¶</a></h3>
+<p>The most useful by far is the <a class="reference internal" href="#sqlalchemy.orm.dynamic_loader" title="sqlalchemy.orm.dynamic_loader"><tt class="xref py py-func docutils literal"><span class="pre">dynamic_loader()</span></tt></a>
+relationship. This is a variant of <a class="reference internal" href="relationships.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><tt class="xref py py-func docutils literal"><span class="pre">relationship()</span></tt></a> which
+returns a <a class="reference internal" href="query.html#sqlalchemy.orm.query.Query" title="sqlalchemy.orm.query.Query"><tt class="xref py py-class docutils literal"><span class="pre">Query</span></tt></a> object in place of a collection
+when accessed. <a class="reference internal" href="query.html#sqlalchemy.orm.query.Query.filter" title="sqlalchemy.orm.query.Query.filter"><tt class="xref py py-func docutils literal"><span class="pre">filter()</span></tt></a> criterion may be
+applied as well as limits and offsets, either explicitly or via array slices:</p>
+<div class="highlight-python+sql"><div class="highlight"><pre><span class="n">mapper</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">users_table</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="p">{</span>
+    <span class="s">&#39;posts&#39;</span><span class="p">:</span> <span class="n">dynamic_loader</span><span class="p">(</span><span class="n">Post</span><span class="p">)</span>
+<span class="p">})</span>
+
+<span class="n">jack</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+
+<span class="c"># filter Jack&#39;s blog posts</span>
+<span class="n">posts</span> <span class="o">=</span> <span class="n">jack</span><span class="o">.</span><span class="n">posts</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Post</span><span class="o">.</span><span class="n">headline</span><span class="o">==</span><span class="s">&#39;this is a post&#39;</span><span class="p">)</span>
+
+<span class="c"># apply array slices</span>
+<span class="n">posts</span> <span class="o">=</span> <span class="n">jack</span><span class="o">.</span><span class="n">posts</span><span class="p">[</span><span class="mi">5</span><span class="p">:</span><span class="mi">20</span><span class="p">]</span></pre></div>
+</div>
+<p>The dynamic relationship supports limited write operations, via the
+<tt class="docutils literal"><span class="pre">append()</span></tt> and <tt class="docutils literal"><span class="pre">remove()</span></tt> methods:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">oldpost</span> <span class="o">=</span> <span class="n">jack</span><span class="o">.</span><span class="n">posts</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Post</span><span class="o">.</span><span class="n">headline</span><span class="o">==</span><span class="s">&#39;old post&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">one</span><span class="p">()</span>
+<span class="n">jack</span><span class="o">.</span><span class="n">posts</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">oldpost</span><span class="p">)</span>
+
+<span class="n">jack</span><span class="o">.</span><span class="n">posts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Post</span><span class="p">(</span><span class="s">&#39;new post&#39;</span><span class="p">))</span></pre></div>
+</div>
+<p>Since the read side of the dynamic relationship always queries the
+database, changes to the underlying collection will not be visible
+until the data has been flushed.  However, as long as &#8220;autoflush&#8221; is
+enabled on the <a class="reference internal" href="session.html#sqlalchemy.orm.session.Session" title="sqlalchemy.orm.session.Session"><tt class="xref py py-class docutils literal"><span class="pre">Session</span></tt></a> in use, this will occur
+automatically each time the collection is about to emit a
+query.</p>
+<p>To place a dynamic relationship on a backref, use <tt class="docutils literal"><span class="pre">lazy='dynamic'</span></tt>:</p>
+<div class="highlight-python+sql"><div class="highlight"><pre><span class="n">mapper</span><span class="p">(</span><span class="n">Post</span><span class="p">,</span> <span class="n">posts_table</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="p">{</span>
+    <span class="s">&#39;user&#39;</span><span class="p">:</span> <span class="n">relationship</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">backref</span><span class="o">=</span><span class="n">backref</span><span class="p">(</span><span class="s">&#39;posts&#39;</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="s">&#39;dynamic&#39;</span><span class="p">))</span>
+<span class="p">})</span></pre></div>
+</div>
+<p>Note that eager/lazy loading options cannot be used in conjunction dynamic relationships at this time.</p>
+<dl class="function">
+<dt id="sqlalchemy.orm.dynamic_loader">
+<tt class="descclassname">sqlalchemy.orm.</tt><tt class="descname">dynamic_loader</tt><big>(</big><em>argument</em>, <em>secondary=None</em>, <em>primaryjoin=None</em>, <em>secondaryjoin=None</em>, <em>foreign_keys=None</em>, <em>backref=None</em>, <em>post_update=False</em>, <em>cascade=False</em>, <em>remote_side=None</em>, <em>enable_typechecks=True</em>, <em>passive_deletes=False</em>, <em>doc=None</em>, <em>order_by=None</em>, <em>comparator_factory=None</em>, <em>query_class=None</em><big>)</big><a class="headerlink" href="#sqlalchemy.orm.dynamic_loader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a dynamically-loading mapper property.</p>
+<p>This property is similar to <a class="reference internal" href="relationships.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><tt class="xref py py-func docutils literal"><span class="pre">relationship()</span></tt></a>, except read
+operations return an active <tt class="xref py py-class docutils literal"><span class="pre">Query</span></tt> object which reads from
+the database when accessed.  Items may be appended to the
+attribute via <tt class="docutils literal"><span class="pre">append()</span></tt>, or removed via <tt class="docutils literal"><span class="pre">remove()</span></tt>; changes
+will be persisted to the database during a <tt class="xref py py-meth docutils literal"><span class="pre">Sesion.flush()</span></tt>.
+However, no other Python list or collection mutation operations
+are available.</p>
+<p>A subset of arguments available to <a class="reference internal" href="relationships.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><tt class="xref py py-func docutils literal"><span class="pre">relationship()</span></tt></a> are available
+here.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>argument</strong> &#8211; a class or <tt class="xref py py-class docutils literal"><span class="pre">Mapper</span></tt> instance, representing the target of
+the relationship.</li>
+<li><strong>secondary</strong> &#8211; for a many-to-many relationship, specifies the intermediary
+table. The <em>secondary</em> keyword argument should generally only
+be used for a table that is not otherwise expressed in any class
+mapping. In particular, using the Association Object Pattern is
+generally mutually exclusive with the use of the <em>secondary</em>
+keyword argument.</li>
+<li><strong>query_class</strong> &#8211; Optional, a custom Query subclass to be used as the basis for
+dynamic collection.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="setting-noload">
+<h3>Setting Noload<a class="headerlink" href="#setting-noload" title="Permalink to this headline">¶</a></h3>
+<p>The opposite of the dynamic relationship is simply &#8220;noload&#8221;, specified using <tt class="docutils literal"><span class="pre">lazy='noload'</span></tt>:</p>
+<div class="highlight-python+sql"><div class="highlight"><pre><span class="n">mapper</span><span class="p">(</span><span class="n">MyClass</span><span class="p">,</span> <span class="n">table</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="p">{</span>
+    <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="n">relationship</span><span class="p">(</span><span class="n">MyOtherClass</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="s">&#39;noload&#39;</span><span class="p">)</span>
+<span class="p">})</span></pre></div>
+</div>
+<p>Above, the <tt class="docutils literal"><span class="pre">children</span></tt> collection is fully writeable, and changes to it will
+be persisted to the database as well as locally available for reading at the
+time they are added. However when instances of <tt class="docutils literal"><span class="pre">MyClass</span></tt> are freshly loaded
+from the database, the <tt class="docutils literal"><span class="pre">children</span></tt> collection stays empty.</p>
+</div>
+<div class="section" id="using-passive-deletes">
+<h3>Using Passive Deletes<a class="headerlink" href="#using-passive-deletes" title="Permalink to this headline">¶</a></h3>
+<p>Use <tt class="docutils literal"><span class="pre">passive_deletes=True</span></tt> to disable child object loading on a DELETE
+operation, in conjunction with &#8220;ON DELETE (CASCADE|SET NULL)&#8221; on your database
+to automatically cascade deletes to child objects. Note that &#8220;ON DELETE&#8221; is
+not supported on SQLite, and requires <tt class="docutils literal"><span class="pre">InnoDB</span></tt> tables when using MySQL:</p>
+<div class="highlight-python+sql"><div class="highlight"><pre><span class="n">mytable</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="s">&#39;mytable&#39;</span><span class="p">,</span> <span class="n">meta</span><span class="p">,</span>
+    <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+    <span class="p">)</span>
+
+<span class="n">myothertable</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="s">&#39;myothertable&#39;</span><span class="p">,</span> <span class="n">meta</span><span class="p">,</span>
+    <span class="n">Column</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+    <span class="n">Column</span><span class="p">(</span><span class="s">&#39;parent_id&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">),</span>
+    <span class="n">ForeignKeyConstraint</span><span class="p">([</span><span class="s">&#39;parent_id&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;mytable.id&#39;</span><span class="p">],</span> <span class="n">ondelete</span><span class="o">=</span><span class="s">&quot;CASCADE&quot;</span><span class="p">),</span>
+    <span class="p">)</span>
+
+<span class="n">mapper</span><span class="p">(</span><span class="n">MyOtherClass</span><span class="p">,</span> <span class="n">myothertable</span><span class="p">)</span>
+
+<span class="n">mapper</span><span class="p">(</span><span class="n">MyClass</span><span class="p">,</span> <span class="n">mytable</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="p">{</span>
+    <span class="s">&#39;children&#39;</span><span class="p">:</span> <span class="n">relationship</span><span class="p">(</span><span class="n">MyOtherClass</span><span class="p">,</span> <span class="n">cascade</span><span class="o">=</span><span class="s">&quot;all, delete-orphan&quot;</span><span class="p">,</span> <span class="n">passive_deletes</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="p">})</span></pre></div>
+</div>
+<p>When <tt class="docutils literal"><span class="pre">passive_deletes</span></tt> is applied, the <tt class="docutils literal"><span class="pre">children</span></tt> relationship will not be
+loaded into memory when an instance of <tt class="docutils literal"><span class="pre">MyClass</span></tt> is marked for deletion. The
+<tt class="docutils literal"><span class="pre">cascade=&quot;all,</span> <span class="pre">delete-orphan&quot;</span></tt> <em>will</em> take effect for instances of
+<tt class="docutils literal"><span class="pre">MyOtherClass</span></tt> which are currently present in the session; however for
+instances of <tt class="docutils literal"><span class="pre">MyOtherClass</span></tt> which are not loaded, SQLAlchemy assumes that
+&#8220;ON DELETE CASCADE&#8221; rules will ensure that those rows are deleted by the
+database and that no foreign key violation will occur.</p>
+</div>
+</div>
+<div class="section" id="customizing-collection-access">
+<span id="custom-collections"></span><h2>Customizing Collection Access<a class="headerlink" href="#customizing-collection-access" title="Permalink to this headline">¶</a></h2>
+<p>Mapping a one-to-many or many-to-many relationship results in a collection of
+values accessible through an attribute on the parent instance. By default,
+this collection is a <tt class="docutils literal"><span class="pre">list</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">mapper</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="p">{</span>
+    <span class="s">&#39;children&#39;</span> <span class="p">:</span> <span class="n">relationship</span><span class="p">(</span><span class="n">Child</span><span class="p">)</span>
+<span class="p">})</span>
+
+<span class="n">parent</span> <span class="o">=</span> <span class="n">Parent</span><span class="p">()</span>
+<span class="n">parent</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Child</span><span class="p">())</span>
+<span class="k">print</span> <span class="n">parent</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></pre></div>
+</div>
+<p>Collections are not limited to lists. Sets, mutable sequences and almost any
+other Python object that can act as a container can be used in place of the
+default list, by specifying the <tt class="docutils literal"><span class="pre">collection_class</span></tt> option on
+<a class="reference internal" href="relationships.html#sqlalchemy.orm.relationship" title="sqlalchemy.orm.relationship"><tt class="xref py py-func docutils literal"><span class="pre">relationship()</span></tt></a>.</p>
+<div class="highlight-python+sql"><div class="highlight"><pre><span class="c"># use a set</span>
+<span class="n">mapper</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="p">{</span>
+    <span class="s">&#39;children&#39;</span> <span class="p">:</span> <span class="n">relationship</span><span class="p">(</span><span class="n">Child</span><span class="p">,</span> <span class="n">collection_class</span><span class="o">=</span><span class="nb">set</span><span class="p">)</span>
+<span class="p">})</span>
+
+<span class="n">parent</span> <span class="o">=</span> <span class="n">Parent</span><span class="p">()</span>
+<span class="n">child</span> <span class="o">=</span> <span class="n">Child</span><span class="p">()</span>
+<span class="n">parent</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">parent</span><span class="o">.</span><span class="n">children</span></pre></div>
+</div>
+<div class="section" id="custom-collection-implementations">
+<h3>Custom Collection Implementations<a class="headerlink" href="#custom-collection-implementations" title="Permalink to this headline">¶</a></h3>
+<p>You can use your own types for collections as well. For most cases, simply
+inherit from <tt class="docutils literal"><span class="pre">list</span></tt> or <tt class="docutils literal"><span class="pre">set</span></tt> and add the custom behavior.</p>
+<p>Collections in SQLAlchemy are transparently <em>instrumented</em>. Instrumentation
+means that normal operations on the collection are tracked and result in
+changes being written to the database at flush time. Additionally, collection
+operations can fire <em>events</em> which indicate some secondary operation must take
+place. Examples of a secondary operation include saving the child item in the
+parent&#8217;s <a class="reference internal" href="session.html#sqlalchemy.orm.session.Session" title="sqlalchemy.orm.session.Session"><tt class="xref py py-class docutils literal"><span class="pre">Session</span></tt></a> (i.e. the <tt class="docutils literal"><span class="pre">save-update</span></tt>
+cascade), as well as synchronizing the state of a bi-directional relationship
+(i.e. a <tt class="docutils literal"><span class="pre">backref</span></tt>).</p>
+<p>The collections package understands the basic interface of lists, sets and
+dicts and will automatically apply instrumentation to those built-in types and
+their subclasses. Object-derived types that implement a basic collection
+interface are detected and instrumented via duck-typing:</p>
+<div class="highlight-python+sql"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ListLike</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">extend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&#39;foo&#39;</span></pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">append</span></tt>, <tt class="docutils literal"><span class="pre">remove</span></tt>, and <tt class="docutils literal"><span class="pre">extend</span></tt> are known list-like methods, and will be instrumented automatically.  <tt class="docutils literal"><span class="pre">__iter__</span></tt> is not a mutator method and won&#8217;t be instrumented, and <tt class="docutils literal"><span class="pre">foo</span></tt> won&#8217;t be either.</p>
+<p>Duck-typing (i.e. guesswork) isn&#8217;t rock-solid, of course, so you can be
+explicit about the interface you are implementing by providing an
+<tt class="docutils literal"><span class="pre">__emulates__</span></tt> class attribute:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">SetLike</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">__emulates__</span> <span class="o">=</span> <span class="nb">set</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span></pre></div>
+</div>
+<p>This class looks list-like because of <tt class="docutils literal"><span class="pre">append</span></tt>, but <tt class="docutils literal"><span class="pre">__emulates__</span></tt> forces
+it to set-like. <tt class="docutils literal"><span class="pre">remove</span></tt> is known to be part of the set interface and will
+be instrumented.</p>
+<p>But this class won&#8217;t work quite yet: a little glue is needed to adapt it for
+use by SQLAlchemy. The ORM needs to know which methods to use to append,
+remove and iterate over members of the collection. When using a type like
+<tt class="docutils literal"><span class="pre">list</span></tt> or <tt class="docutils literal"><span class="pre">set</span></tt>, the appropriate methods are well-known and used
+automatically when present. This set-like class does not provide the expected
+<tt class="docutils literal"><span class="pre">add</span></tt> method, so we must supply an explicit mapping for the ORM via a
+decorator.</p>
+</div>
+<div class="section" id="annotating-custom-collections-via-decorators">
+<h3>Annotating Custom Collections via Decorators<a class="headerlink" href="#annotating-custom-collections-via-decorators" title="Permalink to this headline">¶</a></h3>
+<p>Decorators can be used to tag the individual methods the ORM needs to manage
+collections. Use them when your class doesn&#8217;t quite meet the regular interface
+for its container type, or you simply would like to use a different method to
+get the job done.</p>
+<div class="highlight-python+sql"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">sqlalchemy.orm.collections</span> <span class="kn">import</span> <span class="n">collection</span>
+
+<span class="k">class</span> <span class="nc">SetLike</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">__emulates__</span> <span class="o">=</span> <span class="nb">set</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+    <span class="nd">@collection.appender</span>
+    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span></pre></div>
+</div>
+<p>And that&#8217;s all that&#8217;s needed to complete the example. SQLAlchemy will add
+instances via the <tt class="docutils literal"><span class="pre">append</span></tt> method. <tt class="docutils literal"><span class="pre">remove</span></tt> and <tt class="docutils literal"><span class="pre">__iter__</span></tt> are the
+default methods for sets and will be used for removing and iteration. Default
+methods can be changed as well:</p>
+<div class="highlight-python+sql"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">sqlalchemy.orm.collections</span> <span class="kn">import</span> <span class="n">collection</span>
+
+<span class="k">class</span> <span class="nc">MyList</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
+    <span class="nd">@collection.remover</span>
+    <span class="k">def</span> <span class="nf">zark</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="c"># do something special...</span>
+
+    <span class="nd">@collection.iterator</span>
+    <span class="k">def</span> <span class="nf">hey_use_this_instead_for_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># ...</span></pre></div>
+</div>
+<p>There is no requirement to be list-, or set-like at all. Collection classes
+can be any shape, so long as they have the append, remove and iterate
+interface marked for SQLAlchemy&#8217;s use. Append and remove methods will be
+called with a mapped entity as the single argument, and iterator methods are
+called with no arguments and must return an iterator.</p>
+</div>
+<div class="section" id="dictionary-based-collections">
+<h3>Dictionary-Based Collections<a class="headerlink" href="#dictionary-based-collections" title="Permalink to this headline">¶</a></h3>
+<p>A <tt class="docutils literal"><span class="pre">dict</span></tt> can be used as a collection, but a keying strategy is needed to map
+entities loaded by the ORM to key, value pairs. The
+<tt class="xref py py-mod docutils literal"><span class="pre">sqlalchemy.orm.collections</span></tt> package provides several built-in types for
+dictionary-based collections:</p>
+<div class="highlight-python+sql"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">sqlalchemy.orm.collections</span> <span class="kn">import</span> <span class="n">column_mapped_collection</span><span class="p">,</span> <span class="n">attribute_mapped_collection</span><span class="p">,</span> <span class="n">mapped_collection</span>
+
+<span class="n">mapper</span><span class="p">(</span><span class="n">Item</span><span class="p">,</span> <span class="n">items_table</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="p">{</span>
+    <span class="c"># key by column</span>
+    <span class="s">&#39;notes&#39;</span><span class="p">:</span> <span class="n">relationship</span><span class="p">(</span><span class="n">Note</span><span class="p">,</span> <span class="n">collection_class</span><span class="o">=</span><span class="n">column_mapped_collection</span><span class="p">(</span><span class="n">notes_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">keyword</span><span class="p">)),</span>
+    <span class="c"># or named attribute</span>
+    <span class="s">&#39;notes2&#39;</span><span class="p">:</span> <span class="n">relationship</span><span class="p">(</span><span class="n">Note</span><span class="p">,</span> <span class="n">collection_class</span><span class="o">=</span><span class="n">attribute_mapped_collection</span><span class="p">(</span><span class="s">&#39;keyword&#39;</span><span class="p">)),</span>
+    <span class="c"># or any callable</span>
+    <span class="s">&#39;notes3&#39;</span><span class="p">:</span> <span class="n">relationship</span><span class="p">(</span><span class="n">Note</span><span class="p">,</span> <span class="n">collection_class</span><span class="o">=</span><span class="n">mapped_collection</span><span class="p">(</span><span class="k">lambda</span> <span class="n">entity</span><span class="p">:</span> <span class="n">entity</span><span class="o">.</span><span class="n">a</span> <span class="o">+</span> <span class="n">entity</span><span class="o">.</span><span class="n">b</span><span class="p">))</span>
+<span class="p">})</span>
+
+<span class="c"># ...</span>
+<span class="n">item</span> <span class="o">=</span> <span class="n">Item</span><span class="p">()</span>
+<span class="n">item</span><span class="o">.</span><span class="n">notes</span><span class="p">[</span><span class="s">&#39;color&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Note</span><span class="p">(</span><span class="s">&#39;color&#39;</span><span class="p">,</span> <span class="s">&#39;blue&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">item</span><span class="o">.</span><span class="n">notes</span><span class="p">[</span><span class="s">&#39;color&#39;</span><span class="p">]</span></pre></div>
+</div>
+<p>These functions each provide a <tt class="docutils literal"><span class="pre">dict</span></tt> subclass with decorated <tt class="docutils literal"><span class="pre">set</span></tt> and
+<tt class="docutils literal"><span class="pre">remove</span></tt> methods and the keying strategy of your choice.</p>
+<p>The <a class="reference internal" href="#sqlalchemy.orm.collections.MappedCollection" title="sqlalchemy.orm.collections.MappedCollection"><tt class="xref py py-class docutils literal"><span class="pre">sqlalchemy.orm.collections.MappedCollection</span></tt></a> class can be used as
+a base class for your custom types or as a mix-in to quickly add <tt class="docutils literal"><span class="pre">dict</span></tt>
+collection support to other classes. It uses a keying function to delegate to
+<tt class="docutils literal"><span class="pre">__setitem__</span></tt> and <tt class="docutils literal"><span class="pre">__delitem__</span></tt>:</p>
+<div class="highlight-python+sql"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">sqlalchemy.util</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm.collections</span> <span class="kn">import</span> <span class="n">MappedCollection</span>
+
+<span class="k">class</span> <span class="nc">NodeMap</span><span class="p">(</span><span class="n">OrderedDict</span><span class="p">,</span> <span class="n">MappedCollection</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Holds &#39;Node&#39; objects, keyed by the &#39;name&#39; attribute with insert order maintained.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="n">MappedCollection</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keyfunc</span><span class="o">=</span><span class="k">lambda</span> <span class="n">node</span><span class="p">:</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">OrderedDict</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span></pre></div>
+</div>
+<p>The ORM understands the <tt class="docutils literal"><span class="pre">dict</span></tt> interface just like lists and sets, and will
+automatically instrument all dict-like methods if you choose to subclass
+<tt class="docutils literal"><span class="pre">dict</span></tt> or provide dict-like collection behavior in a duck-typed class. You
+must decorate appender and remover methods, however- there are no compatible
+methods in the basic dictionary interface for SQLAlchemy to use by default.
+Iteration will go through <tt class="docutils literal"><span class="pre">itervalues()</span></tt> unless otherwise decorated.</p>
+</div>
+<div class="section" id="instrumentation-and-custom-types">
+<h3>Instrumentation and Custom Types<a class="headerlink" href="#instrumentation-and-custom-types" title="Permalink to this headline">¶</a></h3>
+<p>Many custom types and existing library classes can be used as a entity
+collection type as-is without further ado. However, it is important to note
+that the instrumentation process _will_ modify the type, adding decorators
+around methods automatically.</p>
+<p>The decorations are lightweight and no-op outside of relationships, but they
+do add unneeded overhead when triggered elsewhere. When using a library class
+as a collection, it can be good practice to use the &#8220;trivial subclass&#8221; trick
+to restrict the decorations to just your usage in relationships. For example:</p>
+<div class="highlight-python+sql"><div class="highlight"><pre><span class="k">class</span> <span class="nc">MyAwesomeList</span><span class="p">(</span><span class="n">some</span><span class="o">.</span><span class="n">great</span><span class="o">.</span><span class="n">library</span><span class="o">.</span><span class="n">AwesomeList</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+<span class="c"># ... relationship(..., collection_class=MyAwesomeList)</span></pre></div>
+</div>
+<p>The ORM uses this approach for built-ins, quietly substituting a trivial
+subclass when a <tt class="docutils literal"><span class="pre">list</span></tt>, <tt class="docutils literal"><span class="pre">set</span></tt> or <tt class="docutils literal"><span class="pre">dict</span></tt> is used directly.</p>
+<p>The collections package provides additional decorators and support for
+authoring custom types. See the <tt class="xref py py-mod docutils literal"><span class="pre">sqlalchemy.orm.collections</span></tt> package for
+more information and discussion of advanced usage and Python 2.3-compatible
+decoration options.</p>
+</div>
+<div class="section" id="collections-api">
+<h3>Collections API<a class="headerlink" href="#collections-api" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="sqlalchemy.orm.collections.attribute_mapped_collection">
+<tt class="descclassname">sqlalchemy.orm.collections.</tt><tt class="descname">attribute_mapped_collection</tt><big>(</big><em>attr_name</em><big>)</big><a class="headerlink" href="#sqlalchemy.orm.collections.attribute_mapped_collection" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary-based collection type with attribute-based keying.</p>
+<p>Returns a MappedCollection factory with a keying based on the
+&#8216;attr_name&#8217; attribute of entities in the collection.</p>
+<p>The key value must be immutable for the lifetime of the object.  You
+can not, for example, map on foreign key values if those key values will
+change during the session, i.e. from None to a database-assigned integer
+after a session flush.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlalchemy.orm.collections.collection">
+<em class="property">class </em><tt class="descclassname">sqlalchemy.orm.collections.</tt><tt class="descname">collection</tt><a class="headerlink" href="#sqlalchemy.orm.collections.collection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorators for entity collection classes.</p>
+<p>The decorators fall into two groups: annotations and interception recipes.</p>
+<p>The annotating decorators (appender, remover, iterator,
+internally_instrumented, on_link) indicate the method&#8217;s purpose and take no
+arguments.  They are not written with parens:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@collection.appender</span>
+<span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">append</span><span class="p">):</span> <span class="o">...</span></pre></div>
+</div>
+<p>The recipe decorators all require parens, even those that take no
+arguments:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@collection.adds</span><span class="p">(</span><span class="s">&#39;entity&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">entity</span><span class="p">):</span> <span class="o">...</span>
+
+<span class="nd">@collection.removes_return</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">popitem</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="o">...</span></pre></div>
+</div>
+<p>Decorators can be specified in long-hand for Python 2.3, or with
+the class-level dict attribute &#8216;__instrumentation__&#8217;- see the source
+for details.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlalchemy.orm.collections.collection_adapter">
+<tt class="descclassname">sqlalchemy.orm.collections.</tt><tt class="descname">collection_adapter</tt><big>(</big><em>collection</em><big>)</big><a class="headerlink" href="#sqlalchemy.orm.collections.collection_adapter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch the CollectionAdapter for a collection.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlalchemy.orm.collections.column_mapped_collection">
+<tt class="descclassname">sqlalchemy.orm.collections.</tt><tt class="descname">column_mapped_collection</tt><big>(</big><em>mapping_spec</em><big>)</big><a class="headerlink" href="#sqlalchemy.orm.collections.column_mapped_collection" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary-based collection type with column-based keying.</p>
+<p>Returns a MappedCollection factory with a keying function generated
+from mapping_spec, which may be a Column or a sequence of Columns.</p>
+<p>The key value must be immutable for the lifetime of the object.  You
+can not, for example, map on foreign key values if those key values will
+change during the session, i.e. from None to a database-assigned integer
+after a session flush.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlalchemy.orm.collections.mapped_collection">
+<tt class="descclassname">sqlalchemy.orm.collections.</tt><tt class="descname">mapped_collection</tt><big>(</big><em>keyfunc</em><big>)</big><a class="headerlink" href="#sqlalchemy.orm.collections.mapped_collection" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary-based collection type with arbitrary keying.</p>
+<p>Returns a MappedCollection factory with a keying function generated
+from keyfunc, a callable that takes an entity and returns a key value.</p>
+<p>The key value must be immutable for the lifetime of the object.  You
+can not, for example, map on foreign key values if those key values will
+change during the session, i.e. from None to a database-assigned integer
+after a session flush.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="sqlalchemy.orm.collections.MappedCollection">
+<em class="property">class </em><tt class="descclassname">sqlalchemy.orm.collections.</tt><tt class="descname">MappedCollection</tt><big>(</big><em>keyfunc</em><big>)</big><a class="headerlink" href="#sqlalchemy.orm.collections.MappedCollection" title="Permalink to this definition">¶</a></dt>
+<dd><p>A basic dictionary-based collection class.</p>
+<p>Extends dict with the minimal bag semantics that collection classes require.
+<tt class="docutils literal"><span class="pre">set</span></tt> and <tt class="docutils literal"><span class="pre">remove</span></tt> are implemented in terms of a keying function: any
+callable that takes an object and returns an object for use as a dictionary
+key.</p>
+<dl class="method">
+<dt id="sqlalchemy.orm.collections.MappedCollection.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>keyfunc</em><big>)</big><a class="headerlink" href="#sqlalchemy.orm.collections.MappedCollection.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new collection with keying provided by keyfunc.</p>
+<p>keyfunc may be any callable any callable that takes an object and
+returns an object for use as a dictionary key.</p>
+<p>The keyfunc will be called every time the ORM needs to add a member by
+value-only (such as when loading instances from the database) or
+remove a member.  The usual cautions about dictionary keying apply-
+<tt class="docutils literal"><span class="pre">keyfunc(object)</span></tt> should return the same output for the life of the
+collection.  Keying based on mutable properties can result in
+unreachable instances &#8220;lost&#8221; in the collection.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sqlalchemy.orm.collections.MappedCollection.remove">
+<tt class="descname">remove</tt><big>(</big><em>value</em>, <em>_sa_initiator=None</em><big>)</big><a class="headerlink" href="#sqlalchemy.orm.collections.MappedCollection.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove an item by value, consulting the keyfunc for the key.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sqlalchemy.orm.collections.MappedCollection.set">
+<tt class="descname">set</tt><big>(</big><em>value</em>, <em>_sa_initiator=None</em><big>)</big><a class="headerlink" href="#sqlalchemy.orm.collections.MappedCollection.set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an item by value, consulting the keyfunc for the key.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+            </div>
+        </div>
+
+        
+        
+            <div class="bottomnav">
+                
+<div class="prevnext">
+        Previous:
+        <a href="relationships.html" title="previous chapter">Relationship Configuration</a>
+        Next:
+        <a href="inheritance.html" title="next chapter">Mapping Class Inheritance Hierarchies</a>
+</div>
+
+                <div class="doc_copyright">
+                    &copy; <a href="../copyright.html">Copyright</a> 2007, 2008, 2009, 2010, the SQLAlchemy authors and contributors.
+                    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
+                </div>
+            </div>
+        
+
+
+
+
+
+
+    </body>
+</html>
+
+
+

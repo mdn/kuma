@@ -1,0 +1,402 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="contributing" id="contributing">Contributing</a></h1>
+<div class="level1">
+
+<p>
+
+We could use your help.  If you are interesting in contributing then please join us on <acronym title="Internet Relay Chat">IRC</acronym> on <a href="irc://irc.freenode.net/#pootle" class="urlextern" title="irc://irc.freenode.net/#pootle">#pootle</a>
+and on the <a href="mailto:&#x74;&#x72;&#x61;&#x6e;&#x73;&#x6c;&#x61;&#x74;&#x65;&#x2d;&#x64;&#x65;&#x76;&#x65;&#x6c;&#x40;&#x6c;&#x69;&#x73;&#x74;&#x73;&#x2e;&#x73;&#x6f;&#x75;&#x72;&#x63;&#x65;&#x66;&#x6f;&#x72;&#x67;&#x65;&#x2e;&#x6e;&#x65;&#x74;" class="mail JSnocheck" title="&#x74;&#x72;&#x61;&#x6e;&#x73;&#x6c;&#x61;&#x74;&#x65;&#x2d;&#x64;&#x65;&#x76;&#x65;&#x6c;&#x40;&#x6c;&#x69;&#x73;&#x74;&#x73;&#x2e;&#x73;&#x6f;&#x75;&#x72;&#x63;&#x65;&#x66;&#x6f;&#x72;&#x67;&#x65;&#x2e;&#x6e;&#x65;&#x74;">translate-devel</a> mailing list.
+</p>
+
+<p>
+Here are some idea of how you can contribute
+
+</p>
+<ol>
+<li class="level1"><div class="li"> <a href="toolkit-contributing.html#testing" class="wikilink1" title="toolkit-contributing.html">Test</a> - help us test new candidate releases before they are released</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-contributing.html#debugging" class="wikilink1" title="toolkit-contributing.html">Debug</a> - check bug reports, create tests to highlight problems</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-contributing.html#developing" class="wikilink1" title="toolkit-contributing.html">Develop</a> - add your Python developer skills to the mix</div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-contributing.html#documenting" class="wikilink1" title="toolkit-contributing.html">Document</a> - help make our docs readable, useful and complete</div>
+</li>
+</ol>
+
+<p>
+
+Below we give you more detail on these:
+</p>
+
+</div>
+<!-- SECTION "Contributing" [1-709] -->
+<h2><a name="testing" id="testing">Testing</a></h2>
+<div class="level2">
+
+<p>
+
+Before we release new versions of the Toolkit we need people to check that they still work correctly.  If you are a frequent user
+you might want to start using the release candidate on your current work and report any errors before we release them.
+</p>
+
+<p>
+Compile and install the software to see if we have any platform issues
+
+</p>
+<pre class="code">./setup.py install</pre>
+
+<p>
+
+Check for any files that are missing, tools that were not installed, etc.
+</p>
+
+<p>
+Run unit tests to see if there are any issues.  You&#039;ll need the <a href="http://codespeak.net/py/dist/test.html" class="urlextern" title="http://codespeak.net/py/dist/test.html">py.test</a> unit test software 
+which you can <a href="http://codespeak.net/py/dist/download.html" class="urlextern" title="http://codespeak.net/py/dist/download.html">download</a> and install or install this <a href="http://translate.sourceforge.net/releases/testing/fedora/pylib-0.9.1-1.fc9.noarch.rpm" class="urlextern" title="http://translate.sourceforge.net/releases/testing/fedora/pylib-0.9.1-1.fc9.noarch.rpm">Fedora RPM</a>
+</p>
+
+<p>
+To run the tests you do
+
+</p>
+<pre class="code">py.test</pre>
+
+<p>
+
+from the translate src directory, or
+
+</p>
+<pre class="code">py.test storage/test_dtd.py</pre>
+
+<p>
+
+to run a specific set of tests.
+</p>
+
+<p>
+Report any failures.
+</p>
+
+<p>
+Note: If your Pootle tests fail with an error along the lines of:
+</p>
+<pre class="code">URLError: &lt;urlopen error (-2, &#039;Name or service not known&#039;)&gt;</pre>
+
+<p>
+
+Check your http_proxy environment variable. Usually it helps just to unset it:
+</p>
+<pre class="code">unset http_proxy</pre>
+
+<p>
+
+Finally, simply work with the software.  Checking all your current usage patterns and report problems.
+</p>
+
+</div>
+<!-- SECTION "Testing" [710-1978] -->
+<h2><a name="debugging" id="debugging">Debugging</a></h2>
+<div class="level2">
+<ol>
+<li class="level1"><div class="li"> Make sure your familiar with the <a href="developers-reporting_bugs.html" class="wikilink1" title="developers-reporting_bugs.html">bug reporting guidelines</a>.</div>
+</li>
+<li class="level1"><div class="li"> Create a login for yourself at <a href="http://bugs.locamotion.org" class="urlextern" title="http://bugs.locamotion.org">http://bugs.locamotion.org</a></div>
+</li>
+<li class="level1"><div class="li"> Then choose a bug</div>
+</li>
+</ol>
+
+<p>
+
+Now you need to try and validate the bug.  Your aim is to confirm that the bug is
+either fixed, is invalid or still exists.
+</p>
+
+<p>
+If its fixed please close the bug and give details of 
+how when it was fixed or what version you used to validate it as corrected.
+</p>
+
+<p>
+If you find that the bug reporter has made the incorrect assumptions or their suggestion
+cannot work.  Then mark the bug as invalid and give reasons why.
+</p>
+
+<p>
+The last case, an existing bug is the most interesting.  Check through the bug and do the following:
+
+</p>
+<ol>
+<li class="level1"><div class="li"> Fix up the summary to make it clear what the bug is</div>
+</li>
+<li class="level1"><div class="li"> Create new bugs for separate issues</div>
+</li>
+<li class="level1"><div class="li"> Set severity level and classifications correctly</div>
+</li>
+<li class="level1"><div class="li"> Add examples to reproduce the bug, or make the supplied files simpler</div>
+</li>
+<li class="level1"><div class="li"> If you can identify the bug but not fix it then explain what needs fixing</div>
+</li>
+<li class="level1"><div class="li"> Move on to the next bug</div>
+</li>
+</ol>
+
+</div>
+<!-- SECTION "Debugging" [1979-3027] -->
+<h2><a name="developing" id="developing">Developing</a></h2>
+<div class="level2">
+
+<p>
+
+Don&#039;t ignore this area if you feel like your not a hotshot coder!
+</p>
+
+<p>
+You will need some Python skills, this is a great way to learn.
+</p>
+
+<p>
+Here are some ideas to get you going:
+</p>
+<ul>
+<li class="level1"><div class="li"> Write a test to expose some bug</div>
+</li>
+<li class="level1"><div class="li"> Try to fix the actual code to fix your bug</div>
+</li>
+<li class="level1"><div class="li"> Add a small piece of functionality that helps you</div>
+</li>
+<li class="level1"><div class="li"> Document the methods in especially the base class and derived classes</div>
+</li>
+<li class="level1"><div class="li"> Add a format type and converters: e.g. <acronym title="Portable Document Format">PDF</acronym>, ODF, .doc</div>
+</li>
+<li class="level1"><div class="li"> Add more features to help our formats <a href="toolkit-conformance.html" class="wikilink1" title="toolkit-conformance.html">conform to the standards</a></div>
+</li>
+</ul>
+
+<p>
+
+You will definitely need to be on the <a href="http://lists.sourceforge.net/lists/listinfo/translate-devel" class="urlextern" title="http://lists.sourceforge.net/lists/listinfo/translate-devel">Development</a> and probably on the <a href="http://lists.sourceforge.net/lists/listinfo/translate-cvs" class="urlextern" title="http://lists.sourceforge.net/lists/listinfo/translate-cvs">Subversion checkin</a> lists.
+</p>
+
+<p>
+Now is the time to familiarise yourself with the <a href="toolkit-developers.html" class="wikilink1" title="toolkit-developers.html">developers guide</a>.
+</p>
+
+</div>
+<!-- SECTION "Developing" [3028-3880] -->
+<h2><a name="documenting" id="documenting">Documenting</a></h2>
+<div class="level2">
+
+<p>
+
+This is the easy one.  Login to the wiki and start!
+</p>
+
+<p>
+The key areas that need to be looked at are:
+
+</p>
+<ol>
+<li class="level1"><div class="li"> Do the guides to each tool cover all command line options</div>
+</li>
+<li class="level1"><div class="li"> Are the examples clear for the general cases</div>
+</li>
+<li class="level1"><div class="li"> Is the tools use clear</div>
+</li>
+<li class="level1"><div class="li"> In the Use cases, can we add more, do they need updating. Has upstream changed its approach</div>
+</li>
+</ol>
+
+<p>
+
+After that and always:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> Grammar</div>
+</li>
+<li class="level1"><div class="li"> Spelling</div>
+</li>
+<li class="level1"><div class="li"> Layout</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Documenting" [3881-4307] -->
+<h2><a name="feature_requests" id="feature_requests">Feature Requests</a></h2>
+<div class="level2">
+
+<p>
+
+This section is for any kind of feature request or wish list items.  If you have any idea for something (anything) to implement, you may list it here.
+</p>
+
+</div>
+
+<h4><a name="abbreviation_finder" id="abbreviation_finder">Abbreviation finder</a></h4>
+<div class="level4">
+
+<p>
+
+I often get abbreviations in the text that I know might be written in full form elsewhere in the text, but I can&#039;t guess what it might be.  So how about a tool that will search for possible full forms of abbreviations.  Input VFS, and search for stuff like Virtual File Server, virtual file server, etc.  Also add stopword list so that short words inside full forms can be ignored.
+
+</p>
+<pre class="code">pogrep -I --accelerator=&quot;~&quot; --search=source -e &quot;\bv.+\bm.+\bl&quot; source.po vml.po</pre>
+
+<p>
+
+This is a hack that will work for you now.  It searches in the source (msgid or source tu), ignores case and searches for a structure of words that start with V them M then L.  It wouldn&#039;t find <acronym title="Extensible Markup Language">XML</acronym> - eXtensible Markup Language.
+</p>
+
+</div>
+
+<h4><a name="aligner_for_tmx" id="aligner_for_tmx">Aligner for TMX</a></h4>
+<div class="level4">
+
+<p>
+
+An aligner would be nice.  At the moment, po2tmx can create a <acronym title="Translation Memory eXchange">TMX</acronym> file, but the TUs in the <acronym title="Translation Memory eXchange">TMX</acronym> often contain more than one sentence.  A TM is more useful to translators if it contains sentences, not paragraphs.  So, how about a tool that takes such a <acronym title="Translation Memory eXchange">TMX</acronym> and attempts to converts each one into sentences (source and target).  The output can be <acronym title="Comma Separated Value">CSV</acronym>, so that a translator can open it in a graphical <acronym title="Comma Separated Value">CSV</acronym> editor and correct misalignments.  The output can even be a plaintext tab delimited file so that one can open it as a table in OpenOffice and use shortcuts to correct the alignment.
+</p>
+
+<p>
+The idea would be to keep the first sentence of each TU aligned.  This means that if a previous TU had dissimilar number of sentences in the source and target, there would be empty cells above the current TU (either in the source or in the target).
+</p>
+
+</div>
+
+<h4><a name="pomerge_to_accept_.po.txt" id="pomerge_to_accept_.po.txt">pomerge to accept .po.txt</a></h4>
+<div class="level4">
+
+<p>
+
+As ek pomerge probeer doen met n lêer wat op .po.txt eindig, dan wil hy nie. kan dalk nuttig vir windows gebruikers wees, omdat baie windows programme outomaties .txt agteraan las en dan moet die arme gebruiker dit eers weer gaan uitvee voor pomerge tevrede is.
+</p>
+
+</div>
+
+<h4><a name="po2table" id="po2table">po2table</a></h4>
+<div class="level4">
+
+<p>
+
+I wish the Toolkit could export to table in a wordprocessing document and reimport from a table in a wordprocessing document.  This would make it possible for almost anyone to help translate in a Toolkit based project.  The best table format is probably an OpenDocument table, so that <acronym title="Microsoft">MS</acronym> Word users can use it without screwing it up too much.  The table can have three columns (or more, but additional columns are ignored -- possibly to be used by the proofreader for notes to the translator, etc).
+</p>
+
+<p>
+If ODT is too difficult, how about exporting to a three column in <acronym title="HyperText Markup Language">HTML</acronym>?  An <acronym title="HyperText Markup Language">HTML</acronym> file can be opened in WYSIWIG in <acronym title="Microsoft">MS</acronym> Word and OpenOffice.org, and although the saved <acronym title="HyperText Markup Language">HTML</acronym> file will have horrible machine generated code to give anyone in alt.html.critique a heart attack, it will still be a valid table which can simply be converted back to <acronym title="Gettext Portable Object">PO</acronym>.
+</p>
+
+<p>
+po2csv isn&#039;t really feasible because different programs have different <acronym title="Comma Separated Value">CSV</acronym> definitions.  Excel and Calc interpret a <acronym title="Comma Separated Value">CSV</acronym> file in two different ways.  So exporting the <acronym title="Gettext Portable Object">PO</acronym> to <acronym title="Comma Separated Value">CSV</acronym> only works for tools that can correctly interpret the Toolkit&#039;s chosen dialect of <acronym title="Comma Separated Value">CSV</acronym>.
+
+</p>
+<blockquote><div class="no">
+ The underlying toolkit <acronym title="Comma Separated Value">CSV</acronym> module supports various flavours of <acronym title="Comma Separated Value">CSV</acronym>.  It currently uses the Excel flavour.  So it is possible to output for different spreadsheets if needed.  It might be better to understand what exactly fails, I know we had to hack things to prevent the loss of leading single quotes which in most word processors are interpreted as meaning &#039;treat this as text&#039;  --- <em><a href="mailto:&#x64;&#x77;&#x61;&#x79;&#x6e;&#x65;&#x40;&#x74;&#x72;&#x61;&#x6e;&#x73;&#x6c;&#x61;&#x74;&#x65;&#x2e;&#x6f;&#x72;&#x67;&#x2e;&#x7a;&#x61;" class="mail JSnocheck" title="&#x64;&#x77;&#x61;&#x79;&#x6e;&#x65;&#x40;&#x74;&#x72;&#x61;&#x6e;&#x73;&#x6c;&#x61;&#x74;&#x65;&#x2e;&#x6f;&#x72;&#x67;&#x2e;&#x7a;&#x61;">Dwayne Bailey</a> 2007/10/18 03:13</em></div></blockquote>
+<blockquote><div class="no">
+<blockquote><div class="no">
+ Well, Excel doesn&#039;t convert cleanly to a word processing format and back.  Excel wasn&#039;t designed as a text editing tool anyway.  The “normal” program to edit text in, surely, is a word processor. -- Samuel</div></blockquote>
+</div></blockquote>
+
+</div>
+
+<h4><a name="blacklist_in_pofilter" id="blacklist_in_pofilter">Blacklist in pofilter</a></h4>
+<div class="level4">
+
+<p>
+
+It would be nice if one could do a pofilter check that takes a list of words from an input file and checks to see if they occur in the target text.  This list of words would be a blacklist of terms that should not be used in the translation, no matter what.  Useful for when a client decides to change his prescribed terminology and you want to do a bulk pogrep on your files while keeping the blacklist of words all in one place.
+</p>
+
+<p>
+The blacklist should respect word boundaries.  So if “klik” is on the blacklist, then “toeganklik” should not trigger it.
+</p>
+
+</div>
+
+<h4><a name="glossary_check_in_pofilter" id="glossary_check_in_pofilter">Glossary check in pofilter</a></h4>
+<div class="level4">
+
+<p>
+
+What I mean is that a pofilter check should take a bilingual list of words as input file, and check to see if a term in the source text was translated using using the right word in the target text.  In other words, if the bilingual list contains:
+</p>
+
+<p>
+computer = rekenaar
+</p>
+
+<p>
+then pofilter will check which source texts contain &#039;computer&#039; and the check if all of their corresponding target texts contain &#039;rekenaar&#039;.  Those that don&#039;t, fail the check.
+</p>
+
+<p>
+The bilingual list check should not respect word boundaries (or: should do a fuzzy check), so that “rekenaar” would also match “rekenaars” and “berekenaar”.
+</p>
+
+</div>
+
+<h4><a name="one-pager_search_pogrep_in_pootle" id="one-pager_search_pogrep_in_pootle">One-pager search pogrep in Pootle</a></h4>
+<div class="level4">
+
+<p>
+
+Okay, this is a Pootle wish list item… perhaps it belongs elsewhere.  Currently, you can do a search for a word in Pootle, and Pootle jumps to the next instance of that word.  The advantage of this, is context.  The disadvantage is not seeing all the instances in one page.  I suggest the following:
+</p>
+
+<p>
+Let there be a tickbox option next to the search box in Pootle whereby a search result opens in a new browser window.  The result can be a normal plaintext <acronym title="Gettext Portable Object">PO</acronym> file that would be the normal result of a pogrep action (but a single page, not multiple pages), or… it can be a simple <acronym title="HyperText Markup Language">HTML</acronym> file in which the search term is highlighted in each string.
+</p>
+
+<p>
+The current search system assumes that the user might want to edit the strings that form the search result.  The purpose of the proposed system would be to do quick searches on term usage, but not enable users to edit the strings there and then.
+</p>
+
+<p>
+(Actually… well… it&#039;s a pity that the files in Pootle are nested in a directory tree, otherwise this search method could open multiple pages that advanced users can download, edit, and upload if they wanted.)
+</p>
+
+</div>
+
+<h4><a name="compare_expression_with_another_languages" id="compare_expression_with_another_languages">Compare expression with another languages</a></h4>
+<div class="level4">
+
+<p>
+
+When translating some expression on pootle, for many times I use to check how an expression have been translated on other languages (by accessing the same link on other languages, just changing the suffix of the lang - i.e.: &#039;es&#039;, &#039;fr&#039;, &#039;pt_BR&#039;).
+</p>
+
+<p>
+On this idea, i can imagine that a user would be allowed to define “alternate languages” in it&#039;s preferences. On translation interface, small links would appear, just like: 
+</p>
+
+<p>
+<a href="toolkit.html" class="wikilink2" title="toolkit.html">pt_BR</a>, <a href="toolkit.html" class="wikilink2" title="toolkit.html">es</a>, <a href="toolkit.html" class="wikilink2" title="toolkit.html">fr</a>
+</p>
+
+<p>
+… pointing to a link of the translation of that string on the language. This could raise an popup, a simple link or something else that I&#039;m not sure about the better layout.
+</p>
+
+<p>
+I think that anything that helps the translation, as this feature, would be nice for increasing the quality and speed of the work.
+
+</p>
+
+</div>
+<!-- SECTION "Feature Requests" [4308-] --></body>
+</html>

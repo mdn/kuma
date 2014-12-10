@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The IPython task interface &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../index.html" />
+    <link rel="up" title="Using IPython for parallel computing" href="index.html" />
+    <link rel="next" title="Using MPI with IPython" href="parallel_mpi.html" />
+    <link rel="prev" title="IPython&#8217;s multiengine interface" href="parallel_multiengine.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="parallel_mpi.html" title="Using MPI with IPython"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="parallel_multiengine.html" title="IPython&#8217;s multiengine interface"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Using IPython for parallel computing</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="the-ipython-task-interface">
+<span id="paralleltask"></span><h1>The IPython task interface<a class="headerlink" href="#the-ipython-task-interface" title="Permalink to this headline">¶</a></h1>
+<p>The task interface to the controller presents the engines as a fault tolerant, dynamic load-balanced system or workers. Unlike the multiengine interface, in the task interface, the user have no direct access to individual engines. In some ways, this interface is simpler, but in other ways it is more powerful.</p>
+<p>Best of all the user can use both of these interfaces running at the same time to take advantage or both of their strengths.  When the user can break up the user&#8217;s work into segments that do not depend on previous execution, the task interface is ideal.  But it also has more power and flexibility, allowing the user to guide the distribution of jobs, without having to assign tasks to engines explicitly.</p>
+<div class="section" id="starting-the-ipython-controller-and-engines">
+<h2>Starting the IPython controller and engines<a class="headerlink" href="#starting-the-ipython-controller-and-engines" title="Permalink to this headline">¶</a></h2>
+<p>To follow along with this tutorial, you will need to start the IPython
+controller and four IPython engines. The simplest way of doing this is to use
+the <strong>ipcluster</strong> command:</p>
+<div class="highlight-python"><pre>$ ipcluster local -n 4</pre>
+</div>
+<p>For more detailed information about starting the controller and engines, see
+our <a class="reference external" href="parallel_intro.html#ip1par"><em>introduction</em></a> to using IPython for parallel computing.</p>
+</div>
+<div class="section" id="creating-a-taskclient-instance">
+<h2>Creating a <tt class="docutils literal"><span class="pre">TaskClient</span></tt> instance<a class="headerlink" href="#creating-a-taskclient-instance" title="Permalink to this headline">¶</a></h2>
+<p>The first step is to import the IPython <a title="" class="reference external" href="../api/generated/IPython.kernel.client.html#module-IPython.kernel.client"><tt class="xref docutils literal"><span class="pre">IPython.kernel.client</span></tt></a> module
+and then create a <tt class="xref docutils literal"><span class="pre">TaskClient</span></tt> instance:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="k">from</span> <span class="nn">IPython.kernel</span> <span class="k">import</span> <span class="n">client</span>
+
+<span class="gp">In [2]: </span><span class="n">tc</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">TaskClient</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This form assumes that the <tt class="docutils literal"><span class="pre">ipcontroller-tc.furl</span></tt> is in the
+<tt class="docutils literal"><span class="pre">~./ipython/security</span></tt> directory on the client&#8217;s host. If not, the
+location of the FURL file must be given as an argument to the
+constructor:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [2]: </span><span class="n">mec</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">TaskClient</span><span class="p">(</span><span class="s">&#39;/path/to/my/ipcontroller-tc.furl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="quick-and-easy-parallelism">
+<h2>Quick and easy parallelism<a class="headerlink" href="#quick-and-easy-parallelism" title="Permalink to this headline">¶</a></h2>
+<p>In many cases, you simply want to apply a Python function to a sequence of objects, but <em>in parallel</em>.  Like the multiengine interface, the task interface provides two simple ways of accomplishing this:  a parallel version of <tt class="xref docutils literal"><span class="pre">map()</span></tt> and <tt class="docutils literal"><span class="pre">&#64;parallel</span></tt> function decorator.  However, the verions in the task interface have one important difference:  they are dynamically load balanced.  Thus, if the execution time per item varies significantly, you should use the versions in the task interface.</p>
+<div class="section" id="parallel-map">
+<h3>Parallel map<a class="headerlink" href="#parallel-map" title="Permalink to this headline">¶</a></h3>
+<p>The parallel <tt class="xref docutils literal"><span class="pre">map()</span></tt> in the task interface is similar to that in the multiengine interface:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [63]: </span><span class="n">serial_result</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="o">**</span><span class="mf">10</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mf">32</span><span class="p">))</span>
+
+<span class="gp">In [64]: </span><span class="n">parallel_result</span> <span class="o">=</span> <span class="n">tc</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="o">**</span><span class="mf">10</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mf">32</span><span class="p">))</span>
+
+<span class="gp">In [65]: </span><span class="n">serial_result</span><span class="o">==</span><span class="n">parallel_result</span>
+<span class="go">Out[65]: </span><span class="bp">True</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="parallel-function-decorator">
+<h3>Parallel function decorator<a class="headerlink" href="#parallel-function-decorator" title="Permalink to this headline">¶</a></h3>
+<p>Parallel functions are just like normal function, but they can be called on sequences and <em>in parallel</em>.  The multiengine interface provides a decorator that turns any Python function into a parallel function:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [10]: </span><span class="nd">@tc</span><span class="o">.</span><span class="n">parallel</span><span class="p">()</span>
+<span class="gp">   ....:</span> <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="gp">   ....:</span>     <span class="k">return</span> <span class="mf">10.0</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mf">4</span>
+<span class="gp">   ....:</span>
+
+<span class="gp">In [11]: </span><span class="n">f</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mf">32</span><span class="p">))</span>    <span class="c"># this is done in parallel</span>
+<span class="go">Out[11]:</span>
+<span class="go">[0.0,10.0,160.0,...]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="more-details">
+<h2>More details<a class="headerlink" href="#more-details" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="xref docutils literal"><span class="pre">TaskClient</span></tt> has many more powerful features that allow quite a bit of flexibility in how tasks are defined and run.  The next places to look are in the following classes:</p>
+<ul class="simple">
+<li><tt class="xref docutils literal"><span class="pre">IPython.kernel.client.TaskClient</span></tt></li>
+<li><tt class="xref docutils literal"><span class="pre">IPython.kernel.client.StringTask</span></tt></li>
+<li><tt class="xref docutils literal"><span class="pre">IPython.kernel.client.MapTask</span></tt></li>
+</ul>
+<p>The following is an overview of how to use these classes together:</p>
+<ol class="arabic simple">
+<li>Create a <tt class="xref docutils literal"><span class="pre">TaskClient</span></tt>.</li>
+<li>Create one or more instances of <tt class="xref docutils literal"><span class="pre">StringTask</span></tt> or <tt class="xref docutils literal"><span class="pre">MapTask</span></tt>
+to define your tasks.</li>
+<li>Submit your tasks to using the <tt class="xref docutils literal"><span class="pre">run()</span></tt> method of your
+<tt class="xref docutils literal"><span class="pre">TaskClient</span></tt> instance.</li>
+<li>Use <tt class="xref docutils literal"><span class="pre">TaskClient.get_task_result()</span></tt> to get the results of the
+tasks.</li>
+</ol>
+<p>We are in the process of developing more detailed information about the task interface.  For now, the docstrings of the <tt class="xref docutils literal"><span class="pre">TaskClient</span></tt>, <tt class="xref docutils literal"><span class="pre">StringTask</span></tt> and <tt class="xref docutils literal"><span class="pre">MapTask</span></tt> classes should be consulted.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">The IPython task interface</a><ul>
+<li><a class="reference external" href="#starting-the-ipython-controller-and-engines">Starting the IPython controller and engines</a></li>
+<li><a class="reference external" href="#creating-a-taskclient-instance">Creating a <tt class="docutils literal"><span class="pre">TaskClient</span></tt> instance</a></li>
+<li><a class="reference external" href="#quick-and-easy-parallelism">Quick and easy parallelism</a><ul>
+<li><a class="reference external" href="#parallel-map">Parallel map</a></li>
+<li><a class="reference external" href="#parallel-function-decorator">Parallel function decorator</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#more-details">More details</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="parallel_multiengine.html" title="previous chapter">IPython&#8217;s multiengine interface</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="parallel_mpi.html" title="next chapter">Using MPI with IPython</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/parallel/parallel_task.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="parallel_mpi.html" title="Using MPI with IPython"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="parallel_multiengine.html" title="IPython&#8217;s multiengine interface"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Using IPython for parallel computing</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

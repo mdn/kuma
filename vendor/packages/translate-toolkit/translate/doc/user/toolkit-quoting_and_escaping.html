@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="quoting_and_escaping" id="quoting_and_escaping">Quoting and Escaping</a></h1>
+<div class="level1">
+
+<p>
+
+Different translation <a href="toolkit-formats.html" class="wikilink1" title="toolkit-formats.html">formats</a> handle quoting and escaping strings differently. This is meant to be a common page which outlines the differences
+</p>
+
+</div>
+<!-- SECTION "Quoting and Escaping" [1-185] -->
+<h2><a name="po_format" id="po_format">PO format</a></h2>
+<div class="level2">
+
+<p>
+
+Strings are quoted using double quotes. For long strings multiline quotes are done by opening and closing the quotes on each line. Usually in this case the first line is left blank. The splitting of strings over lines is transparent i.e. it does not imply line breaks in the translated strings.
+</p>
+
+<p>
+Escaping is done with a backslash. An escaped double quote (\”) corresponds to a double quote in the original string. \n for newline, \t for tabs etc are used. Backslashes can be escaped to to give a native backslash.
+</p>
+
+<p>
+See also <a href="guide-translation-escaping.html" class="wikilink1" title="guide-translation-escaping.html">escaping</a> in the translation guide.
+</p>
+
+<p>
+Example
+
+</p>
+<pre class="code">msgid &quot;&quot;
+&quot;This is a long string with a \n newline, a \&quot; double quote, and a \\ backslash.&quot;
+&quot;There is no space between the . at the end of the last sentence &quot;
+&quot;and the T at the beginning of this one.&quot;</pre>
+
+</div>
+<!-- SECTION "PO format" [186-1009] -->
+<h2><a name="dtd_format" id="dtd_format">DTD format</a></h2>
+<div class="level2">
+
+<p>
+
+Strings are quoted using either double or single quotes. The quoting character may not occur within the string. There is no provision for escaping. <acronym title="Extensible Markup Language">XML</acronym> entities can be used e.g. <code>&amp;apos;</code> can be used to denote a single quote within the single-quoted string.
+</p>
+
+<p>
+Some <acronym title="Document Type Definition">DTD</acronym> files seem to have backslash-escapes, but these are anomalies: see <a href="http://groups.google.com/group/mozilla.dev.l10n/browse_thread/thread/58256c1f59c22798/b4bac2de4182f3e0" class="urlextern" title="http://groups.google.com/group/mozilla.dev.l10n/browse_thread/thread/58256c1f59c22798/b4bac2de4182f3e0">discussion thread on Mozilla l10n-dev</a>
+</p>
+
+</div>
+<!-- SECTION "DTD format" [1010-1515] -->
+<h2><a name="mozilla_properties_format" id="mozilla_properties_format">Mozilla properties format</a></h2>
+<div class="level2">
+
+<p>
+
+Note that this section does not describe the Java properties files, even though they are quite similar.
+</p>
+
+<p>
+See <a href="http://www.xulplanet.com/tutorials/xultu/locprops.html" class="urlextern" title="http://www.xulplanet.com/tutorials/xultu/locprops.html">http://www.xulplanet.com/tutorials/xultu/locprops.html</a>
+</p>
+
+<p>
+It seems that the literal string “\n” (a backslash followed by the character &#039;n&#039;) and “\t” and “\r” can not be encoded in properties files. This is the assumption of the toolkit. 
+
+</p>
+
+</div>
+<!-- SECTION "Mozilla properties format" [1516-] --></body>
+</html>

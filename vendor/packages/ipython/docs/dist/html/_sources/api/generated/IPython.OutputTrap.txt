@@ -1,0 +1,40 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+OutputTrap
+==========
+
+Module: :mod:`OutputTrap`
+-------------------------
+Inheritance diagram for ``IPython.OutputTrap``:
+
+.. inheritance-diagram:: IPython.OutputTrap 
+   :parts: 3
+
+.. automodule:: IPython.OutputTrap
+
+.. currentmodule:: IPython.OutputTrap
+
+Classes
+-------
+
+:class:`OutputTrap`
+~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: OutputTrap
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`OutputTrapError`
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: OutputTrapError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

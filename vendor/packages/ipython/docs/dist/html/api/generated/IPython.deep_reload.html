@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>deep_reload &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="demo" href="IPython.demo.html" />
+    <link rel="prev" title="config.cutils" href="IPython.config.cutils.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.demo.html" title="demo"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.config.cutils.html" title="config.cutils"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="deep-reload">
+<h1>deep_reload<a class="headerlink" href="#deep-reload" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.deep_reload">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">deep_reload</span></tt><a class="headerlink" href="#module-IPython.deep_reload" title="Permalink to this headline">¶</a></h2>
+<p>A module to change reload() so that it acts recursively.
+To enable it type:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">import</span> <span class="nn">__builtin__</span><span class="o">,</span> <span class="nn">deep_reload</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">__builtin__</span><span class="o">.</span><span class="n">reload</span> <span class="o">=</span> <span class="n">deep_reload</span><span class="o">.</span><span class="n">reload</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>You can then disable it with:</dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__builtin__</span><span class="o">.</span><span class="n">reload</span> <span class="o">=</span> <span class="n">deep_reload</span><span class="o">.</span><span class="n">original_reload</span>
+</pre></div>
+</div>
+</dd>
+<dt>Alternatively, you can add a dreload builtin alongside normal reload with:</dt>
+<dd><div class="first last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">__builtin__</span><span class="o">.</span><span class="n">dreload</span> <span class="o">=</span> <span class="n">deep_reload</span><span class="o">.</span><span class="n">reload</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<p>This code is almost entirely based on knee.py from the standard library.</p>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.deep_reload.deep_import_hook">
+<!--[IPython.deep_reload.deep_import_hook]--><tt class="descclassname">IPython.deep_reload.</tt><tt class="descname">deep_import_hook</tt><big>(</big><em>name</em>, <em>globals=None</em>, <em>locals=None</em>, <em>fromlist=None</em>, <em>level=-1</em><big>)</big><a class="headerlink" href="#IPython.deep_reload.deep_import_hook" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.deep_reload.deep_reload_hook">
+<!--[IPython.deep_reload.deep_reload_hook]--><tt class="descclassname">IPython.deep_reload.</tt><tt class="descname">deep_reload_hook</tt><big>(</big><em>module</em><big>)</big><a class="headerlink" href="#IPython.deep_reload.deep_reload_hook" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.deep_reload.determine_parent">
+<!--[IPython.deep_reload.determine_parent]--><tt class="descclassname">IPython.deep_reload.</tt><tt class="descname">determine_parent</tt><big>(</big><em>globals</em><big>)</big><a class="headerlink" href="#IPython.deep_reload.determine_parent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.deep_reload.ensure_fromlist">
+<!--[IPython.deep_reload.ensure_fromlist]--><tt class="descclassname">IPython.deep_reload.</tt><tt class="descname">ensure_fromlist</tt><big>(</big><em>m</em>, <em>fromlist</em>, <em>recursive=0</em><big>)</big><a class="headerlink" href="#IPython.deep_reload.ensure_fromlist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.deep_reload.find_head_package">
+<!--[IPython.deep_reload.find_head_package]--><tt class="descclassname">IPython.deep_reload.</tt><tt class="descname">find_head_package</tt><big>(</big><em>parent</em>, <em>name</em><big>)</big><a class="headerlink" href="#IPython.deep_reload.find_head_package" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.deep_reload.import_module">
+<!--[IPython.deep_reload.import_module]--><tt class="descclassname">IPython.deep_reload.</tt><tt class="descname">import_module</tt><big>(</big><em>partname</em>, <em>fqname</em>, <em>parent</em><big>)</big><a class="headerlink" href="#IPython.deep_reload.import_module" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.deep_reload.load_tail">
+<!--[IPython.deep_reload.load_tail]--><tt class="descclassname">IPython.deep_reload.</tt><tt class="descname">load_tail</tt><big>(</big><em>q</em>, <em>tail</em><big>)</big><a class="headerlink" href="#IPython.deep_reload.load_tail" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.deep_reload.reload">
+<!--[IPython.deep_reload.reload]--><tt class="descclassname">IPython.deep_reload.</tt><tt class="descname">reload</tt><big>(</big><em>module</em>, <em>exclude=</em><span class="optional">[</span>, <em>'sys'</em>, <em>'__builtin__'</em>, <em>'__main__'</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#IPython.deep_reload.reload" title="Permalink to this definition">¶</a></dt>
+<dd>Recursively reload all modules used in the given module.  Optionally
+takes a list of modules to exclude from reloading.  The default exclude
+list contains sys, __main__, and __builtin__, to prevent, e.g., resetting 
+display, exception, and io hooks.</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">deep_reload</a><ul>
+<li><a class="reference external" href="#module-IPython.deep_reload">Module: <tt class="docutils literal"><span class="pre">deep_reload</span></tt></a></li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.config.cutils.html" title="previous chapter">config.cutils</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.demo.html" title="next chapter">demo</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.deep_reload.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.demo.html" title="demo"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.config.cutils.html" title="config.cutils"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="duplicates_duplicatestyle" id="duplicates_duplicatestyle">--duplicates=DUPLICATESTYLE</a></h1>
+<div class="level1">
+
+<p>
+
+Gettext <acronym title="Gettext Portable Object">PO</acronym> files only allow one message with a common msgid (source string).  Many other formats allow duplicate entries.  To create a valid <acronym title="Gettext Portable Object">PO</acronym> file you need to merge these duplicate entries into one <acronym title="Gettext Portable Object">PO</acronym> message.  However, this often negatively affects the roundrip or is not what is expected by the user.  Thus we have a number of methods of handling duplicates which we call <em>duplicate styles</em>.
+</p>
+
+<p>
+Also affected are conversions in which the source format is empty (allowing possible translation). As the header in a <acronym title="Gettext Portable Object">PO</acronym> file is identified by an empty source string, your message will appear to be a duplicate of the header.  In this case duplicate removal is critical.
+</p>
+
+<p>
+Previously the tools used msgid_comment (KDE style comments) to disambiguate text.  However, with the release of Gettext 0.15, the new msgctxt disambiguation is now recommended, especially if you wish to use your files with other Gettext the tools. Many other pieces of software now also support this feature, and will probably become the best choice for almost all circumstances.
+</p>
+
+</div>
+<!-- SECTION "--duplicates=DUPLICATESTYLE" [1-1095] -->
+<h2><a name="merge" id="merge">merge</a></h2>
+<div class="level2">
+
+<p>
+
+This is the traditional Gettext approach.  All messages with the same source string or English string are merged into one <acronym title="Gettext Portable Object">PO</acronym> message.
+</p>
+<pre class="code po">#: file1.dtd:instruction_manual
+#: file1.dtd:manual_process
+msgid &quot;Manual&quot;
+msgstr &quot;&quot;</pre>
+<p>
+If however the source text is blank (these are often configuration options in Mozilla) then the <em>merge</em> style will use KDE comments as used in the <em>msgid_comment</em> style in order to create unambiquous entries that can still be used for configuration.
+</p>
+<pre class="code po">#: file1.dtd:translators_name
+msgid &quot;_: file1.dtd:translators_name\n&quot;
+msgstr &quot;&quot;
+&nbsp;
+#: file1.dtd:translators_email
+msgid &quot;_: file1.dtd:translators_email\n&quot;
+msgstr &quot;&quot;</pre>
+</div>
+<!-- SECTION "merge" [1096-1790] -->
+<h2><a name="keep" id="keep">keep</a></h2>
+<div class="level2">
+
+<p>
+
+Duplictes are not merged and each appear in their own message.  This type of <acronym title="Gettext Portable Object">PO</acronym> file will not work with the Gettext tools.
+</p>
+<pre class="code po">#: file1.dtd:instruction_manual
+msgid &quot;Manual&quot;
+msgstr &quot;&quot;
+&nbsp;
+#: file1.dtd:manual_process
+msgid &quot;Manual&quot;
+msgstr &quot;&quot;</pre>
+</div>
+<!-- SECTION "keep" [1791-2062] -->
+<h2><a name="msgid_comment" id="msgid_comment">msgid_comment</a></h2>
+<div class="level2">
+
+<p>
+
+If a duplicates is discovered then we make use of the KDE style comments to make them unique.
+</p>
+<pre class="code po">#: file1.dtd:instruction_manual
+msgid &quot;_: instruction_manual\n&quot;
+&quot;Manual&quot;
+msgstr &quot;&quot;
+&nbsp;
+#: file1.dtd:manual_process
+msgid &quot;_: manual_process\n&quot;
+&quot;Manual&quot;
+msgstr &quot;&quot;</pre>
+<p>
+You can see that both the entries <em>instruction_manual</em> and <em>manual_process</em> have source strings of <em>“Manual”</em>.  By adding 
+the KDE style comment we make the messages unique.  This is helful for many people but isn&#039;t quite perfect in that in many cases 
+your language will use the same word and you don&#039;t want it split - you now simply have more work.
+</p>
+
+</div>
+<!-- SECTION "msgid_comment" [2063-2720] -->
+<h2><a name="msgid_comment_all" id="msgid_comment_all">msgid_comment_all</a></h2>
+<div class="level2">
+
+<p>
+
+This operates the same as <em>msgid_comment</em> except now <strong>every</strong> message has a KDE style comment added regardless if it is a duplicate or not.
+</p>
+
+</div>
+<!-- SECTION "msgid_comment_all" [2721-2895] -->
+<h2><a name="msgctxt" id="msgctxt">msgctxt</a></h2>
+<div class="level2">
+
+<p>
+
+This uses the new feature of gettext that was introduced with gettext 0.15. Several tools might not support it 100%. This option for duplicatestyle was added in version 1.0 of the translate toolkit.
+</p>
+<pre class="code po">#: file1.dtd:instruction_manual
+msgctxt &quot;instruction_manual&quot;
+msgid &quot;Manual&quot;
+msgstr &quot;&quot;
+&nbsp;
+#: file1.dtd:manual_process
+msgctxt &quot;manual_process&quot;
+msgid &quot;Manual&quot;
+msgstr &quot;&quot;</pre>
+</div>
+<!-- SECTION "msgctxt" [2896-] --></body>
+</html>

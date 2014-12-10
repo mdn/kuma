@@ -1,0 +1,23 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+testing.decorators_trial
+========================
+
+Module: :mod:`testing.decorators_trial`
+---------------------------------------
+.. automodule:: IPython.testing.decorators_trial
+
+.. currentmodule:: IPython.testing.decorators_trial
+
+Functions
+---------
+
+
+.. autofunction:: IPython.testing.decorators_trial.numpy_not_available
+
+
+.. autofunction:: IPython.testing.decorators_trial.skip
+
+
+.. autofunction:: IPython.testing.decorators_trial.skipif
+

@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="qt_.qm" id="qt_.qm">Qt .qm</a></h1>
+<div class="level1">
+
+<p>
+
+A .qm file is a compiled Qt <a href="toolkit-ts.html" class="wikilink1" title="toolkit-ts.html">.ts</a> file.  In many ways it is similar to Gettext, in that it uses a hashing table to lookup the translated text.  In older version they store only the hash and the translation which doesn&#039;t make the format useful for recovering translated text.
+</p>
+
+</div>
+<!-- SECTION "Qt .qm" [1-301] -->
+<h2><a name="conformance" id="conformance">Conformance</a></h2>
+<div class="level2">
+
+<p>
+
+The toolkit can read .qm files correctly.  There are some unimplemented aspects of the message block, but these seem to be legacy features and require examples to be able to implement the feature.  
+</p>
+
+<p>
+The .qm implementation cannot write a .qm file, thus you are only able to use this format in a read-only context: counting messages (<a href="toolkit-pocount.html" class="wikilink1" title="toolkit-pocount.html">pocount</a>), reading in messages for a TM or using it as a source format for a converter e.g. a possible qm2xliff converter.
+</p>
+
+</div>
+<!-- SECTION "Conformance" [302-787] -->
+<h2><a name="todo" id="todo">TODO</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> Writing</div>
+<ul>
+<li class="level2"><div class="li"> Hash algorithm </div>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "TODO" [788-] --></body>
+</html>

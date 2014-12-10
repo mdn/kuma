@@ -1,0 +1,243 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="pocount" id="pocount">pocount</a></h1>
+<div class="level1">
+
+<p>
+
+pocount will count the number of strings and words in translatable files.
+</p>
+
+<p>
+Supported formates include: <acronym title="Gettext Portable Object">PO</acronym> and <acronym title="XML Localization Interchange File Format">XLIFF</acronym>.   Almost all bilingual file formats supported by the Translate Toolkit will work with pocount, including: <a href="toolkit-tmx.html" class="wikilink1" title="toolkit-tmx.html">TMX</a>, <a href="toolkit-tbx.html" class="wikilink1" title="toolkit-tbx.html">TBX</a>, <a href="toolkit-mo.html" class="wikilink1" title="toolkit-mo.html">.mo</a>, <a href="toolkit-qm.html" class="wikilink1" title="toolkit-qm.html">.qm</a>, <a href="toolkit-wordfast.html" class="wikilink1" title="toolkit-wordfast.html">Wordfast</a> .txt.
+</p>
+
+<p>
+A number of other <a href="toolkit-formats.html" class="wikilink1" title="toolkit-formats.html">formats</a> should be countable as the toolkit develops.  Note that only multilingual formats based the storage <a href="toolkit-base_classes.html" class="wikilink1" title="toolkit-base_classes.html">base class</a> are supported, but that includes almost all storage formats.
+</p>
+
+</div>
+<!-- SECTION "pocount" [1-522] -->
+<h2><a name="usage" id="usage">Usage</a></h2>
+<div class="level2">
+<pre class="code">pocount [options] &lt;directory|file(s)&gt;</pre>
+
+<p>
+
+Where:
+
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> directory  </td><td class="col1 leftalign"> will recurse and count all files in the specified directory  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> file(s)    </td><td class="col1 leftalign"> will count all files specified  </td>
+	</tr>
+</table>
+
+<p>
+
+Options:
+
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> -h, --help      </td><td class="col1 leftalign"> show this help message and exit  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> --incomplete    </td><td class="col1 leftalign"> skip 100% translated files  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> --full          </td><td class="col1 leftalign"> (default) statistics in full, verbose format  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> --csv           </td><td class="col1 leftalign"> statistics in <acronym title="Comma Separated Value">CSV</acronym> format  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> --short         </td><td class="col1 leftalign"> same as --short-strings  </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0"> --short-strings </td><td class="col1 leftalign"> statistics of strings in short format - one line per file  </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> --short-words   </td><td class="col1 leftalign"> statistics of words in short format - one line per file  </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Usage" [523-1158] -->
+<h2><a name="examples" id="examples">Examples</a></h2>
+<div class="level2">
+
+<p>
+
+pocount makes it easy to count the current state of a body of translations. The most interesting options are those that adjust the output style and decide what to count.
+</p>
+
+</div>
+<!-- SECTION "Examples" [1159-1351] -->
+<h3><a name="easy_counting" id="easy_counting">Easy counting</a></h3>
+<div class="level3">
+
+<p>
+
+To count how much work is to be done in you project:
+
+</p>
+<pre class="code">pocount project/</pre>
+
+<p>
+
+This will count all translatable files found in the directory <em>project</em>/ and output the results in <code>--full</code> format.
+</p>
+
+<p>
+You might want to be more specific and only count certain files
+
+</p>
+<pre class="code">pocount *.po</pre>
+
+<p>
+
+This will count all <acronym title="Gettext Portable Object">PO</acronym> files in the current directory but will ignore any other files that &#039;pocount&#039; can count.
+</p>
+
+<p>
+You can have full control of the files to count by using some of the abilities of the Unix commandline, these may work on Mac <acronym title="Operating System">OS</acronym> X but are unlikely to work on Windows.
+
+</p>
+<pre class="code">pocount $(find . -name &quot;*.properties.po&quot;)</pre>
+
+<p>
+
+This will first find all files that match <code>*.properties.po</code> and then count them.  That would make it easy to count the state of your Mozilla translations of .properties files.
+</p>
+
+</div>
+<!-- SECTION "Easy counting" [1352-2158] -->
+<h3><a name="incomplete_work" id="incomplete_work">Incomplete work</a></h3>
+<div class="level3">
+
+<p>
+
+To count what still needs to be done, ignoring what is 100% complete you can use the <code>--incomplete</code> option.
+
+</p>
+<pre class="code">pocount --incomplete --short *.xlf</pre>
+
+<p>
+
+We are now counting all <acronym title="XML Localization Interchange File Format">XLIFF</acronym> files by using the <code>*.xlf</code> expansion.  We are only counting files that are not 100% complete and we&#039;re outputing string counts using the <code>--short</code> option.
+</p>
+
+</div>
+<!-- SECTION "Incomplete work" [2159-2524] -->
+<h2><a name="output_formats" id="output_formats">Output formats</a></h2>
+<div class="level2">
+
+<p>
+
+The output options provide the following types of output
+</p>
+
+</div>
+<!-- SECTION "Output formats" [2525-2610] -->
+<h3><a name="full" id="full">--full</a></h3>
+<div class="level3">
+
+<p>
+
+This is the normal, or default, mode.  It produces the most comprehensive and easy to read data, although the amount of data may overwhelm the user. It produces the following output:
+</p>
+<pre class="code">avmedia/source/viewer.po 
+type              strings      words (source)    words (translation)
+translated:   73465 ( 99%)     538598 ( 99%)          513296
+fuzzy:           13 (  0%)        141 (  0%)             n/a
+untranslated:    53 (  0%)        602 (  0%)             n/a
+Total:        73531            539341                 513296</pre>
+
+<p>
+
+A grand total and file count is provided if the number of files is greater than one.
+</p>
+
+</div>
+<!-- SECTION "--full" [2611-3249] -->
+<h3><a name="csv" id="csv">--csv</a></h3>
+<div class="level3">
+
+<p>
+
+This format is useful if you want to reuse the data in a spreadsheet.  In <acronym title="Comma Separated Value">CSV</acronym> mode the following output is shown:
+</p>
+<pre class="code">Filename, Translated Messages, Translated Source Words, Translated Target Words, Fuzzy Messages, Fuzzy Source Words, Untranslated Messages, Untranslated Source Words, Review Messages, Review Source Words
+avmedia/source/viewer.po,  1, 3, 3, 0, 0, 4, 22, 1, 3</pre>
+
+<p>
+
+Totals are not provided in <acronym title="Comma Separated Value">CSV</acronym> mode.  
+</p>
+
+</div>
+<!-- SECTION "--csv" [3250-3684] -->
+<h3><a name="short-strings_alias_--short" id="short-strings_alias_--short">--short-strings (alias --short)</a></h3>
+<div class="level3">
+
+<p>
+
+The focus is on easily accessible data in a compact form.  This will only count strings and uses a short syntax to make it easy for an experienced localiser to read.
+
+</p>
+<pre class="code">test-po/fuzzy.po strings: total: 1	| 0t	1f	0u	| 0%t	100%f	0%u</pre>
+
+<p>
+
+The filename is followed by a word indicating the type of count, here we are counting strings.  The total give the total string count.  While the letters t, f and u represent &#039;translated&#039;, &#039;fuzzy&#039; and &#039;untranslated&#039; and here indicate the string counts for each of those categories.  The counts are followed by a percentage representation of the same categories.
+</p>
+
+</div>
+<!-- SECTION "--short-strings (alias --short)" [3685-4322] -->
+<h3><a name="short-words" id="short-words">--short-words</a></h3>
+<div class="level3">
+
+<p>
+
+The output is very similar to --short-strings above:
+
+</p>
+<pre class="code">test-po/fuzzy.po source words: total: 3	| 0t	3f	0u	| 0%t	100%f	0%u</pre>
+
+<p>
+
+But instead of counting string we are now counting words as indicated by the term &#039;source words&#039;
+</p>
+
+</div>
+<!-- SECTION "--short-words" [4323-4569] -->
+<h2><a name="bugs" id="bugs">Bugs</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> There are some miscounts related to word breaks.</div>
+</li>
+<li class="level1"><div class="li"> When using the short output formats the columns may not be exactly aligned. This is because the number of digits in different columns is unknown before all input files are processed. The chosen tradeoff here was instanteous output (after each processed file) instead of waiting for the last file to be processed.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Bugs" [4570-] --></body>
+</html>

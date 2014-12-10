@@ -1,0 +1,26 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+frontend.wx.console_widget
+==========================
+
+Module: :mod:`frontend.wx.console_widget`
+-----------------------------------------
+Inheritance diagram for ``IPython.frontend.wx.console_widget``:
+
+.. inheritance-diagram:: IPython.frontend.wx.console_widget 
+   :parts: 3
+
+.. automodule:: IPython.frontend.wx.console_widget
+
+.. currentmodule:: IPython.frontend.wx.console_widget
+
+:class:`ConsoleWidget`
+----------------------
+
+
+.. autoclass:: ConsoleWidget
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

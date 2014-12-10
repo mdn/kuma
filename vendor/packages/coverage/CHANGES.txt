@@ -1,0 +1,379 @@
+------------------------------
+Change history for Coverage.py
+------------------------------
+
+Version 3.2b4, 1 December 2009
+------------------------------
+
+- Branch coverage improvements:
+
+  - The XML report now includes branch information.
+
+- Click-to-sort HTML report columns are now persisted in a cookie.  Viewing
+  a report will sort it first the way you last had a coverage report sorted.
+  Thanks, `Chris Adams`_.
+
+- On Python 3.x, setuptools has been replaced by `Distribute`_.
+
+.. _Distribute: http://packages.python.org/distribute/
+
+
+Version 3.2b3, 23 November 2009
+-------------------------------
+
+- Fixed a memory leak in the C tracer that was introduced in 3.2b1.
+
+- Branch coverage improvements:
+
+  - Branches to excluded code are ignored.
+
+- The table of contents in the HTML report is now sortable: click the headers
+  on any column.  Thanks, `Chris Adams`_.
+
+.. _Chris Adams: http://improbable.org/chris/
+
+
+Version 3.2b2, 19 November 2009
+-------------------------------
+
+- Branch coverage improvements:
+
+  - Classes are no longer incorrectly marked as branches: `issue 32`_.
+
+  - "except" clauses with types are no longer incorrectly marked as branches:
+    `issue 35`_.
+
+- Fixed some problems syntax coloring sources with line continuations and
+  source with tabs: `issue 30`_ and `issue 31`_.
+
+- The --omit option now works much better than before, fixing `issue 14` and
+  `issue 33`_.  Thanks, Danek Duvall.
+
+.. _issue 14: http://bitbucket.org/ned/coveragepy/issue/14
+.. _issue 30: http://bitbucket.org/ned/coveragepy/issue/30
+.. _issue 31: http://bitbucket.org/ned/coveragepy/issue/31
+.. _issue 32: http://bitbucket.org/ned/coveragepy/issue/32
+.. _issue 33: http://bitbucket.org/ned/coveragepy/issue/33
+.. _issue 35: http://bitbucket.org/ned/coveragepy/issue/35
+
+
+Version 3.2b1, 10 November 2009
+-------------------------------
+
+- Branch coverage!
+
+- XML reporting has file paths that let Cobertura find the source code.
+
+- The tracer code has changed, it's a few percent faster.
+
+- Some exceptions reported by the command line interface have been cleaned up
+  so that tracebacks inside coverage.py aren't shown.  Fixes `issue 23`_.
+  
+.. _issue 23: http://bitbucket.org/ned/coveragepy/issue/23
+  
+
+Version 3.1, 4 October 2009
+---------------------------
+
+- Source code can now be read from eggs.  Thanks, Ross Lawley.  Fixes
+  `issue 25`_.
+
+.. _issue 25: http://bitbucket.org/ned/coveragepy/issue/25
+
+
+Version 3.1b1, 27 September 2009
+--------------------------------
+
+- Python 3.1 is now supported.
+
+- Coverage.py has a new command line syntax with sub-commands.  This expands
+  the possibilities for adding features and options in the future.  The old
+  syntax is still supported.  Try "coverage help" to see the new commands.
+  Thanks to Ben Finney for early help.
+
+- Added an experimental "coverage xml" command for producing coverage reports
+  in a Cobertura-compatible XML format.  Thanks, Bill Hart.
+
+- Added the --timid option to enable a simpler slower trace function that works
+  for DecoratorTools projects, including TurboGears.  Fixed `issue 12`_ and
+  `issue 13`_.
+
+- HTML reports show modules from other directories.  Fixed `issue 11`_.
+
+- HTML reports now display syntax-colored Python source.
+
+- Programs that change directory will still write .coverage files in the
+  directory where execution started.  Fixed `issue 24`_.
+
+- Added a "coverage debug" command for getting diagnostic information about the
+  coverage.py installation.
+
+.. _issue 11: http://bitbucket.org/ned/coveragepy/issue/11
+.. _issue 12: http://bitbucket.org/ned/coveragepy/issue/12
+.. _issue 13: http://bitbucket.org/ned/coveragepy/issue/13
+.. _issue 24: http://bitbucket.org/ned/coveragepy/issue/24
+
+
+Version 3.0.1, 7 July 2009
+--------------------------
+
+- Removed the recursion limit in the tracer function.  Previously, code that
+  ran more than 500 frames deep would crash. Fixed `issue 9`.
+
+- Fixed a bizarre problem involving pyexpat, whereby lines following XML parser
+  invocations could be overlooked.  Fixed `issue 10`.
+
+- On Python 2.3, coverage.py could mis-measure code with exceptions being
+  raised.  This is now fixed.
+
+- The coverage.py code itself will now not be measured by coverage.py, and no
+  coverage modules will be mentioned in the nose --with-cover plug-in.  Fixed
+  `issue 8`.
+
+- When running source files, coverage.py now opens them in universal newline
+  mode just like Python does.  This lets it run Windows files on Mac, for
+  example.
+
+.. _issue 9: http://bitbucket.org/ned/coveragepy/issue/9
+.. _issue 10: http://bitbucket.org/ned/coveragepy/issue/10
+.. _issue 8: http://bitbucket.org/ned/coveragepy/issue/8
+
+
+Version 3.0, 13 June 2009
+-------------------------
+
+- Fixed the way the Python library was ignored.  Too much code was being
+  excluded the old way.
+  
+- Tabs are now properly converted in HTML reports.  Previously indentation was
+  lost.  Fixed `issue 6`.
+  
+- Nested modules now get a proper flat_rootname.  Thanks, Christian Heimes.
+
+.. _issue 6: http://bitbucket.org/ned/coveragepy/issue/6
+
+
+Version 3.0b3, 16 May 2009
+--------------------------
+
+- Added parameters to coverage.__init__ for options that had been set on the
+  coverage object itself.
+  
+- Added clear_exclude() and get_exclude_list() methods for programmatic
+  manipulation of the exclude regexes.
+
+- Added coverage.load() to read previously-saved data from the data file.
+
+- Improved the finding of code files.  For example, .pyc files that have been
+  installed after compiling are now located correctly.  Thanks, Detlev
+  Offenbach.
+
+- When using the object API (that is, constructing a coverage() object), data
+  is no longer saved automatically on process exit.  You can re-enable it with
+  the auto_data=True parameter on the coverage() constructor. The module-level
+  interface still uses automatic saving.
+
+
+Version 3.0b2, 30 April 2009
+----------------------------
+
+HTML reporting, and continued refactoring.
+
+- HTML reports and annotation of source files: use the new -b (browser) switch.
+  Thanks to George Song for code, inspiration and guidance.
+
+- Code in the Python standard library is not measured by default.  If you need
+  to measure standard library code, use the -L command-line switch during
+  execution, or the cover_pylib=True argument to the coverage() constructor.
+
+- Source annotation into a directory (-a -d) behaves differently.  The
+  annotated files are named with their hierarchy flattened so that same-named
+  files from different directories no longer collide.  Also, only files in the
+  current tree are included.
+
+- coverage.annotate_file is no longer available.
+
+- Programs executed with -x now behave more as they should, for example,
+  __file__ has the correct value.
+
+- .coverage data files have a new pickle-based format designed for better
+  extensibility.
+
+- Removed the undocumented cache_file argument to coverage.usecache().
+
+
+Version 3.0b1, 7 March 2009
+---------------------------
+
+Major overhaul.
+
+- Coverage is now a package rather than a module.  Functionality has been split
+  into classes.
+
+- The trace function is implemented in C for speed.  Coverage runs are now
+  much faster.  Thanks to David Christian for productive micro-sprints and
+  other encouragement.
+
+- Executable lines are identified by reading the line number tables in the
+  compiled code, removing a great deal of complicated analysis code.
+  
+- Precisely which lines are considered executable has changed in some cases.
+  Therefore, your coverage stats may also change slightly.
+
+- The singleton coverage object is only created if the module-level functions
+  are used.  This maintains the old interface while allowing better
+  programmatic use of Coverage.
+  
+- The minimum supported Python version is 2.3.
+ 
+
+Version 2.85, 14 September 2008
+-------------------------------
+
+- Add support for finding source files in eggs. Don't check for
+  morf's being instances of ModuleType, instead use duck typing so that
+  pseudo-modules can participate. Thanks, Imri Goldberg.
+  
+- Use os.realpath as part of the fixing of file names so that symlinks won't
+  confuse things. Thanks, Patrick Mezard.
+
+
+Version 2.80, 25 May 2008
+-------------------------
+
+- Open files in rU mode to avoid line ending craziness. Thanks, Edward Loper.
+
+
+Version 2.78, 30 September 2007
+-------------------------------
+
+- Don't try to predict whether a file is Python source based on the extension.
+  Extension-less files are often Pythons scripts. Instead, simply parse the file
+  and catch the syntax errors. Hat tip to Ben Finney.
+
+
+Version 2.77, 29 July 2007
+--------------------------
+
+- Better packaging.
+
+
+Version 2.76, 23 July 2007
+--------------------------
+
+- Now Python 2.5 is *really* fully supported: the body of the new with
+  statement is counted as executable.
+
+
+Version 2.75, 22 July 2007
+--------------------------
+
+- Python 2.5 now fully supported. The method of dealing with multi-line
+  statements is now less sensitive to the exact line that Python reports during
+  execution. Pass statements are handled specially so that their disappearance
+  during execution won't throw off the measurement.
+
+
+Version 2.7, 21 July 2007
+-------------------------
+
+- "#pragma: nocover" is excluded by default.
+
+- Properly ignore docstrings and other constant expressions that appear in the
+  middle of a function, a problem reported by Tim Leslie.
+
+- coverage.erase() shouldn't clobber the exclude regex. Change how parallel
+  mode is invoked, and fix erase() so that it erases the cache when called
+  programmatically.
+
+- In reports, ignore code executed from strings, since we can't do anything
+  useful with it anyway.
+  
+- Better file handling on Linux, thanks Guillaume Chazarain.
+
+- Better shell support on Windows, thanks Noel O'Boyle.
+
+- Python 2.2 support maintained, thanks Catherine Proulx.
+
+- Minor changes to avoid lint warnings.
+
+
+Version 2.6, 23 August 2006
+---------------------------
+
+- Applied Joseph Tate's patch for function decorators.
+
+- Applied Sigve Tjora and Mark van der Wal's fixes for argument handling.
+
+- Applied Geoff Bache's parallel mode patch.
+
+- Refactorings to improve testability. Fixes to command-line logic for parallel
+  mode and collect.
+
+
+Version 2.5, 4 December 2005
+----------------------------
+
+- Call threading.settrace so that all threads are measured. Thanks Martin
+  Fuzzey.
+  
+- Add a file argument to report so that reports can be captured to a different
+  destination.
+
+- coverage.py can now measure itself.
+
+- Adapted Greg Rogers' patch for using relative file names, and sorting and
+  omitting files to report on.
+
+
+Version 2.2, 31 December 2004
+-----------------------------
+
+- Allow for keyword arguments in the module global functions. Thanks, Allen.
+
+
+Version 2.1, 14 December 2004
+-----------------------------
+
+- Return 'analysis' to its original behavior and add 'analysis2'. Add a global
+  for 'annotate', and factor it, adding 'annotate_file'.
+
+
+Version 2.0, 12 December 2004
+-----------------------------
+
+Significant code changes.
+
+- Finding executable statements has been rewritten so that docstrings and
+  other quirks of Python execution aren't mistakenly identified as missing
+  lines.
+
+- Lines can be excluded from consideration, even entire suites of lines.
+
+- The file system cache of covered lines can be disabled programmatically.
+
+- Modernized the code.
+
+
+Earlier History
+---------------
+
+2001-12-04 GDR Created.
+
+2001-12-06 GDR Added command-line interface and source code annotation.
+
+2001-12-09 GDR Moved design and interface to separate documents.
+
+2001-12-10 GDR Open cache file as binary on Windows. Allow simultaneous -e and
+-x, or -a and -r.
+
+2001-12-12 GDR Added command-line help. Cache analysis so that it only needs to
+be done once when you specify -a and -r.
+
+2001-12-13 GDR Improved speed while recording. Portable between Python 1.5.2
+and 2.1.1.
+
+2002-01-03 GDR Module-level functions work correctly.
+
+2002-01-07 GDR Update sys.path when running a file with the -x option, so that
+it matches the value the program would get if it were run on its own.

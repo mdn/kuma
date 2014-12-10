@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>generics &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="genutils" href="IPython.genutils.html" />
+    <link rel="prev" title="frontend.wx.wx_frontend" href="IPython.frontend.wx.wx_frontend.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.genutils.html" title="genutils"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.frontend.wx.wx_frontend.html" title="frontend.wx.wx_frontend"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="generics">
+<h1>generics<a class="headerlink" href="#generics" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.generics">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">generics</span></tt><a class="headerlink" href="#module-IPython.generics" title="Permalink to this headline">¶</a></h2>
+<p>&#8216;Generic&#8217; functions for extending IPython.</p>
+<p>See <a class="reference external" href="http://cheeseshop.python.org/pypi/simplegeneric">http://cheeseshop.python.org/pypi/simplegeneric</a>.</p>
+<p>Here is an example from genutils.py:</p>
+<blockquote>
+<dl class="docutils">
+<dt>def print_lsstring(arg):</dt>
+<dd>&#8220;Prettier (non-repr-like) and more informative printer for LSString&#8221;
+print &#8220;LSString (.p, .n, .l, .s available). Value:&#8221;
+print arg</dd>
+</dl>
+<p>print_lsstring = result_display.when_type(LSString)(print_lsstring)</p>
+</blockquote>
+<p>(Yes, the nasty syntax is for python 2.3 compatibility. Your own extensions
+can use the niftier decorator syntax introduced in Python 2.4).</p>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.generics.complete_object">
+<!--[IPython.generics.complete_object]--><tt class="descclassname">IPython.generics.</tt><tt class="descname">complete_object</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#IPython.generics.complete_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Custom completer dispatching for python objects</p>
+<p>obj is the object itself.
+prev_completions is the list of attributes discovered so far.</p>
+<p>This should return the list of attributes in obj. If you only wish to
+add to the attributes already discovered normally, return
+own_attrs + prev_completions.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.generics.inspect_object">
+<!--[IPython.generics.inspect_object]--><tt class="descclassname">IPython.generics.</tt><tt class="descname">inspect_object</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#IPython.generics.inspect_object" title="Permalink to this definition">¶</a></dt>
+<dd>Called when you do obj?</dd></dl>
+
+<dl class="function">
+<dt id="IPython.generics.result_display">
+<!--[IPython.generics.result_display]--><tt class="descclassname">IPython.generics.</tt><tt class="descname">result_display</tt><big>(</big><em>*args</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#IPython.generics.result_display" title="Permalink to this definition">¶</a></dt>
+<dd>print the result of computation</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">generics</a><ul>
+<li><a class="reference external" href="#module-IPython.generics">Module: <tt class="docutils literal"><span class="pre">generics</span></tt></a></li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.frontend.wx.wx_frontend.html" title="previous chapter">frontend.wx.wx_frontend</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.genutils.html" title="next chapter">genutils</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.generics.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.genutils.html" title="genutils"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.frontend.wx.wx_frontend.html" title="frontend.wx.wx_frontend"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>external.mglob &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="external.path" href="IPython.external.path.html" />
+    <link rel="prev" title="external.guid" href="IPython.external.guid.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.external.path.html" title="external.path"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.external.guid.html" title="external.guid"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="external-mglob">
+<h1>external.mglob<a class="headerlink" href="#external-mglob" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.external.mglob">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">external.mglob</span></tt><a class="headerlink" href="#module-IPython.external.mglob" title="Permalink to this headline">¶</a></h2>
+<p>mglob - enhanced file list expansion module</p>
+<p>Use as stand-alone utility (for xargs, <cite>backticks</cite> etc.), 
+or a globbing library for own python programs. Globbing the sys.argv is something 
+that almost every Windows script has to perform manually, and this module is here
+to help with that task. Also Unix users will benefit from enhanced modes 
+such as recursion, exclusion, directory omission...</p>
+<p>Unlike glob.glob, directories are not included in the glob unless specified 
+with &#8216;dir:&#8217;</p>
+<p>&#8216;expand&#8217; is the function to use in python programs. Typical use
+to expand argv (esp. in windows):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">try</span><span class="p">:</span>
+    <span class="k">import</span> <span class="nn">mglob</span> 
+    <span class="n">files</span> <span class="o">=</span> <span class="n">mglob</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mf">1</span><span class="p">:])</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;mglob not found; try &#39;easy_install mglob&#39; for extra features&quot;</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mf">1</span><span class="p">:]</span> 
+</pre></div>
+</div>
+<p>Note that for unix, shell expands <em>normal</em> wildcards (<a href="#id1"><span class="problematic" id="id2">*</span></a>.cpp, etc.) in argv.
+Therefore, you might want to use quotes with normal wildcards to prevent this 
+expansion, in order for mglob to see the wildcards and get the wanted behaviour.
+Not quoting the wildcards is harmless and typically has equivalent results, though.</p>
+<p>Author: Ville Vainio &lt;<a class="reference external" href="mailto:vivainio&#37;&#52;&#48;gmail&#46;com">vivainio<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;
+License: MIT Open Source license</p>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.external.mglob.expand">
+<!--[IPython.external.mglob.expand]--><tt class="descclassname">IPython.external.mglob.</tt><tt class="descname">expand</tt><big>(</big><em>flist</em>, <em>exp_dirs=False</em><big>)</big><a class="headerlink" href="#IPython.external.mglob.expand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Expand the glob(s) in flist.</p>
+<p>flist may be either a whitespace-separated list of globs/files
+or an array of globs/files.</p>
+<p>if exp_dirs is true, directory names in glob are expanded to the files
+contained in them - otherwise, directory names are returned as is.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.external.mglob.init_ipython">
+<!--[IPython.external.mglob.init_ipython]--><tt class="descclassname">IPython.external.mglob.</tt><tt class="descname">init_ipython</tt><big>(</big><em>ip</em><big>)</big><a class="headerlink" href="#IPython.external.mglob.init_ipython" title="Permalink to this definition">¶</a></dt>
+<dd>register %mglob for IPython</dd></dl>
+
+<dl class="function">
+<dt id="IPython.external.mglob.main">
+<!--[IPython.external.mglob.main]--><tt class="descclassname">IPython.external.mglob.</tt><tt class="descname">main</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.mglob.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.external.mglob.mglob_f">
+<!--[IPython.external.mglob.mglob_f]--><tt class="descclassname">IPython.external.mglob.</tt><tt class="descname">mglob_f</tt><big>(</big><em>self</em>, <em>arg</em><big>)</big><a class="headerlink" href="#IPython.external.mglob.mglob_f" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.external.mglob.test">
+<!--[IPython.external.mglob.test]--><tt class="descclassname">IPython.external.mglob.</tt><tt class="descname">test</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.mglob.test" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">external.mglob</a><ul>
+<li><a class="reference external" href="#module-IPython.external.mglob">Module: <tt class="docutils literal"><span class="pre">external.mglob</span></tt></a></li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.external.guid.html" title="previous chapter">external.guid</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.external.path.html" title="next chapter">external.path</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.external.mglob.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.external.path.html" title="external.path"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.external.guid.html" title="external.guid"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

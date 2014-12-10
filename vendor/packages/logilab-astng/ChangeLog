@@ -1,0 +1,333 @@
+Change log for the astng package
+================================
+
+2010-05-11  --  0.20.1
+    * fix licensing to LGPL
+
+    * add ALL_NODES_CLASSES constant to nodes module
+
+    * nodes redirection cleanup (possible since refactoring)
+
+    * bug fix for python < 2.5: add Delete node on Subscript nodes if we are in a
+   del context
+
+
+
+2010-03-22  --  0.20.0
+    * fix #20464: raises “TypeError: '_Yes' object is not iterable” on list inference
+
+    * fix #19882: pylint hangs
+
+    * fix #20759: crash on pyreverse UNARY_OP_METHOD KeyError '~'
+
+    * fix #20760: crash on pyreverse : AttributeError: 'Subscript'
+      object has no attribute 'infer_lhs'
+
+    * fix #21980: [Python-modules-team] Bug#573229 : Pylint hangs;
+      improving the cache yields a speed improvement on big projects
+
+    * major refactoring: rebuild the tree instead of modify / monkey patching
+
+    * fix #19641: "maximum recursion depth exceeded" messages w/ python 2.6
+      this was introduced by a refactoring
+
+    * Ned Batchelder patch to properly import eggs with Windows line
+      endings.  This fixes a problem with pylint not being able to
+      import setuptools.
+
+    * Winfried Plapper patches fixing .op attribute value for AugAssign nodes,
+      visit_ifexp in nodes_as_string
+
+    * Edward K. Ream / Tom Fleck patch closes #19641 (maximum recursion depth
+      exceeded" messages w/ python 2.6), see https://bugs.launchpad.net/pylint/+bug/456870
+
+
+
+2009-12-18  --  0.19.3
+    * fix name error making 0.19.2 almost useless
+
+
+
+2009-12-18  --  0.19.2
+    * fix #18773: inference bug on class member (due to bad handling of instance
+      / class nodes "bounded" to method calls)
+
+    * fix #9515: strange message for non-class "Class baz has no egg member" (due to
+      bad inference of function call)
+
+    * fix #18953: inference fails with augmented assignment (special case for augmented
+      assignement in infer_ass method)
+
+    * fix #13944: false positive for class/instance attributes (Instance.getattr
+      should return assign nodes on instance classes as well as instance.
+
+    * include spelling fixes provided by Dotan Barak
+
+
+
+2009-08-27  --  0.19.1
+    * fix #8771: crash on yield expression
+
+    * fix #10024: line numbering bug with try/except/finally
+
+    * fix #10020: when building from living object, __name__ may be None
+
+    * fix #9891: help(logilab.astng) throws TypeError
+
+    * fix #9588: false positive E1101 for augmented assignment
+
+
+
+2009-03-25  --  0.19.0
+    * fixed python 2.6 issue (tests ok w/ 2.4, 2.5, 2.6. Anyone using 2.2 / 2.3
+      to tell us if it works?)
+
+    * some understanding of the __builtin__.property decorator
+
+    * inference: introduce UnboundMethod / rename InstanceMethod to BoundMethod
+
+
+
+2009-03-19  --  0.18.0
+    * major api / tree structure changes to make it works with compiler *and*
+      python >= 2.5 _ast module
+
+    * cleanup and refactoring on the way
+
+
+
+2008-11-19  --  0.17.4
+    * fix #6015: filter statements bug triggering W0631 false positive in pylint
+
+    * fix #5571: Function.is_method() should return False on module level
+      functions decorated by staticmethod/classmethod (avoid some crash in pylint)
+
+    * fix #5010: understand python 2.5 explicit relative imports
+
+
+
+2008-09-10  --  0.17.3
+    * fix #5889: astng crash on certain pyreverse projects
+
+    * fix bug w/ loop assignment in .lookup
+
+    * apply Maarten patch fixing a crash on TryFinalaly.block_range and fixing
+      'else'/'final' block line detection
+
+
+
+2008-01-14  --  0.17.2
+    * "with" statement support, patch provided by Brian Hawthorne
+
+    * fixed recursion arguments in nodes_of_class method as notified by
+      Dave Borowitz
+
+    * new InstanceMethod node introduced to wrap bound method (e.g. Function
+      node), patch provided by Dave Borowitz
+
+
+
+2007-06-07  --  0.17.1
+    * fix #3651: crash when callable as default arg
+
+    * fix #3670: subscription inference crash in some cases
+
+    * fix #3673: Lambda instance has no attribute 'pytype'
+
+    * fix crash with chained "import as"
+
+    * fix crash on numpy
+
+    * fix potential InfiniteRecursion error with builtin objects
+
+    * include patch from Marien Zwart fixing some test / py 2.5
+
+    * be more error resilient when accessing living objects from external
+      code in the manager
+
+
+
+2007-02-22  --  0.17.0
+    * api change to be able to infer using a context (used to infer function call
+      result only for now)
+
+    * slightly better inference on astng built from living object by trying to infer
+      dummy nodes (able to infer 'help' builtin for instance)
+
+    * external attribute definition support
+
+    * basic math operation inference
+
+    * new pytype method on possibly inferred node (e.g. module, classes, const...)
+
+    * fix a living object astng building bug, which was making "open" uninferable
+
+    * fix lookup of name in method bug (#3289)
+
+    * fix decorator lookup bug (#3261)
+
+
+
+2006-11-23  --  0.16.3
+    * enhance inference for the subscription notation (motivated by a patch from Amaury)
+      and for unary sub/add
+
+
+
+2006-11-15  --  0.16.2
+    * grrr, fixed python 2.3 incompatibility introduced by generator expression
+      scope handling
+
+    * upgrade to avoid warnings with logilab-common 0.21.0 (on which now
+      depends so)
+
+    * backported astutils module from logilab-common
+
+
+
+2006-09-25  --  0.16.1
+    * python 2.5 support, patch provided by Marien Zwart
+
+    * fix [Class|Module].block_range method (this fixes pylint's inline
+      disabling of messages on classes/modules)
+
+    * handle class.__bases__ and class.__mro__ (proper metaclass handling
+      still needed though)
+
+    * drop python2.2 support: remove code that was working around python2.2
+
+    * fixed generator expression scope bug
+
+    * patch transformer to extract correct line information
+
+
+
+2006-04-19  --  0.16.0
+    * fix living object building to consider classes such as property as
+      a class instead of a data descriptor
+
+    * fix multiple assignment inference which was discarding some solutions
+
+    * added some line manipulation methods to handle pylint's block messages
+      control feature (Node.last_source_line(), None.block_range(lineno)
+
+
+
+2006-03-10  --  0.15.1
+    * fix avoiding to load everything from living objects... Thanks Amaury!
+
+    * fix a possible NameError in Instance.infer_call_result
+
+
+
+2006-03-06  --  0.15.0
+    * fix possible infinite recursion on global statements (close #10342)
+      and in various other cases...
+
+    * fix locals/globals interactions when the global statement is used
+      (close #10434)
+
+    * multiple inference related bug fixes
+
+    * associate List, Tuple and Dict and Const nodes to their respective
+      classes
+
+    * new .ass_type method on assignment related node, returning the
+      assignment type node (Assign, For, ListCompFor, GenExprFor,
+      TryExcept)
+
+    * more API refactoring... .resolve method has disappeared, now you
+      have .ilookup on every nodes and .getattr/.igetattr on node
+      supporting the attribute protocol
+
+    * introduced a YES object that may be returned when there is ambiguity
+      on an inference path (typically function call when we don't know
+      arguments value)
+
+    * builder try to instantiate builtin exceptions subclasses to get their
+      instance attribute
+
+
+
+2006-01-10  --  0.14.0
+    * some major inference improvements and refactoring ! The drawback is
+      the introduction of some non backward compatible change in the API
+      but it's imho much cleaner and powerful now :)
+
+    * new boolean property .newstyle on Class nodes (implements #10073)
+
+    * new .import_module method on Module node to help in .resolve
+      refactoring
+
+    * .instance_attrs has list of assignments to instance attribute
+      dictionary as value instead of one
+
+    * added missing GenExprIf and GenExprInner nodes, and implements
+      as_string for each generator expression related nodes
+
+    * specifically catch KeyboardInterrupt to reraise it in some places
+
+    * fix so that module names are always absolute
+
+    * fix .resolve on package where a subpackage is imported in the
+      __init__ file
+
+    * fix a bug regarding construction of Function node from living object
+      with earlier version of python 2.4
+
+    * fix a NameError on Import and From self_resolve method
+
+    * fix a bug occurring when building an astng from a living object with
+      a property
+
+    * lint fixes
+
+
+
+2005-11-07  --  0.13.1
+    * fix bug on building from living module the same object in
+      encountered more than once time (e.g. builtins.object) (close #10069)
+
+    * fix bug in Class.ancestors() regarding inner classes (close #10072)
+
+    * fix .self_resolve() on From and Module nodes to handle package
+      precedence over module (close #10066)
+
+    * locals dict for package contains __path__ definition (close #10065)
+
+    * astng provide GenExpr and GenExprFor nodes with python >= 2.4
+      (close #10063)
+
+    * fix python2.2 compatibility (close #9922)
+
+    * link .__contains__ to .has_key on scoped node to speed up execution
+
+    * remove no more necessary .module_object() method on From and Module
+      nodes
+
+    * normalize parser.ParserError to SyntaxError with python 2.2
+
+
+
+2005-10-21  --  0.13.0
+    * .locals  and .globals on scoped node handle now a list of references
+       to each assignment statements instead of a single reference to the
+       first assignment statement.
+
+    * fix bug with manager.astng_from_module_name when a context file is
+      given (notably fix ZODB 3.4 crash with pylint/pyreverse)
+
+    * fix Compare.as_string method
+
+    * fix bug with lambda object missing the "type" attribute
+
+    * some minor refactoring
+
+    * This package has been extracted from the logilab-common package, which
+      will be kept for some time for backward compatibility but will no
+      longer be maintained (this explains that this package is starting with
+      the 0.13 version number, since the fork occurs with the version
+      released in logilab-common 0.12).
+
+
+

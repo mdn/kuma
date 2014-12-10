@@ -1,0 +1,23 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+platutils_posix
+===============
+
+Module: :mod:`platutils_posix`
+------------------------------
+.. automodule:: IPython.platutils_posix
+
+.. currentmodule:: IPython.platutils_posix
+
+Functions
+---------
+
+
+.. autofunction:: IPython.platutils_posix.find_cmd
+
+
+.. autofunction:: IPython.platutils_posix.get_long_path_name
+
+
+.. autofunction:: IPython.platutils_posix.term_clear
+

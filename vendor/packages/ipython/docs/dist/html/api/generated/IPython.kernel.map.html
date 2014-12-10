@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.map &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.mapper" href="IPython.kernel.mapper.html" />
+    <link rel="prev" title="kernel.magic" href="IPython.kernel.magic.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.mapper.html" title="kernel.mapper"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.magic.html" title="kernel.magic"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-map">
+<h1>kernel.map<a class="headerlink" href="#kernel-map" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.map">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.map</span></tt><a class="headerlink" href="#module-IPython.kernel.map" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.kernel.map</span></tt>:</p>
+<img src="../../_images/inheritance93d59ca023.png" usemap="#inheritance93d59ca023" class="inheritance"/><map id="inheritance93d59ca023" name="inheritance93d59ca023">
+<area shape="rect" href="#IPython.kernel.map.RoundRobinMap" title="kernel.map.RoundRobinMap" alt="" coords="179,5,376,32"/>
+<area shape="rect" href="#IPython.kernel.map.Map" title="kernel.map.Map" alt="" coords="7,5,129,32"/>
+</map>
+<p>Classes used in scattering and gathering sequences.</p>
+<p>Scattering consists of partitioning a sequence and sending the various
+pieces to individual nodes in a cluster.</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="map">
+<h3><a title="IPython.kernel.map.Map" class="reference internal" href="#IPython.kernel.map.Map"><tt class="xref docutils literal"><span class="pre">Map</span></tt></a><a class="headerlink" href="#map" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.map.Map">
+<!--[IPython.kernel.map.Map]-->class <tt class="descclassname">IPython.kernel.map.</tt><tt class="descname">Map</tt><a class="headerlink" href="#IPython.kernel.map.Map" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class for partitioning a sequence using a map.</p>
+<dl class="method">
+<dt id="IPython.kernel.map.Map.concatenate">
+<!--[IPython.kernel.map.Map.concatenate]--><tt class="descname">concatenate</tt><big>(</big><em>listOfPartitions</em><big>)</big><a class="headerlink" href="#IPython.kernel.map.Map.concatenate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.map.Map.getPartition">
+<!--[IPython.kernel.map.Map.getPartition]--><tt class="descname">getPartition</tt><big>(</big><em>seq</em>, <em>p</em>, <em>q</em><big>)</big><a class="headerlink" href="#IPython.kernel.map.Map.getPartition" title="Permalink to this definition">¶</a></dt>
+<dd>Returns the pth partition of q partitions of seq.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.map.Map.joinPartitions">
+<!--[IPython.kernel.map.Map.joinPartitions]--><tt class="descname">joinPartitions</tt><big>(</big><em>listOfPartitions</em><big>)</big><a class="headerlink" href="#IPython.kernel.map.Map.joinPartitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="roundrobinmap">
+<h3><a title="IPython.kernel.map.RoundRobinMap" class="reference internal" href="#IPython.kernel.map.RoundRobinMap"><tt class="xref docutils literal"><span class="pre">RoundRobinMap</span></tt></a><a class="headerlink" href="#roundrobinmap" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.map.RoundRobinMap">
+<!--[IPython.kernel.map.RoundRobinMap]-->class <tt class="descclassname">IPython.kernel.map.</tt><tt class="descname">RoundRobinMap</tt><a class="headerlink" href="#IPython.kernel.map.RoundRobinMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.map.Map" class="reference internal" href="#IPython.kernel.map.Map"><tt class="xref docutils literal"><span class="pre">IPython.kernel.map.Map</span></tt></a></p>
+<p>Partitions a sequence in a roun robin fashion.</p>
+<p>This currently does not work!</p>
+<dl class="method">
+<dt id="IPython.kernel.map.RoundRobinMap.getPartition">
+<!--[IPython.kernel.map.RoundRobinMap.getPartition]--><tt class="descname">getPartition</tt><big>(</big><em>seq</em>, <em>p</em>, <em>q</em><big>)</big><a class="headerlink" href="#IPython.kernel.map.RoundRobinMap.getPartition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.map.RoundRobinMap.joinPartitions">
+<!--[IPython.kernel.map.RoundRobinMap.joinPartitions]--><tt class="descname">joinPartitions</tt><big>(</big><em>listOfPartitions</em><big>)</big><a class="headerlink" href="#IPython.kernel.map.RoundRobinMap.joinPartitions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.map</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.map">Module: <tt class="docutils literal"><span class="pre">kernel.map</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#map"><tt class="docutils literal"><span class="pre">Map</span></tt></a></li>
+<li><a class="reference external" href="#roundrobinmap"><tt class="docutils literal"><span class="pre">RoundRobinMap</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.kernel.magic.html" title="previous chapter">kernel.magic</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.mapper.html" title="next chapter">kernel.mapper</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.map.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.mapper.html" title="kernel.mapper"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.magic.html" title="kernel.magic"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

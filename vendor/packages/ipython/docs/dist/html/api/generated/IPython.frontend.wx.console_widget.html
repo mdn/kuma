@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>frontend.wx.console_widget &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="frontend.wx.ipythonx" href="IPython.frontend.wx.ipythonx.html" />
+    <link rel="prev" title="frontend.process.pipedprocess" href="IPython.frontend.process.pipedprocess.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.frontend.wx.ipythonx.html" title="frontend.wx.ipythonx"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.frontend.process.pipedprocess.html" title="frontend.process.pipedprocess"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="frontend-wx-console-widget">
+<h1>frontend.wx.console_widget<a class="headerlink" href="#frontend-wx-console-widget" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.frontend.wx.console_widget">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">frontend.wx.console_widget</span></tt><a class="headerlink" href="#module-IPython.frontend.wx.console_widget" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.frontend.wx.console_widget</span></tt>:</p>
+<img src="../../_images/inheritancef8408a73de.png" usemap="#inheritancef8408a73de" class="inheritance"/><map id="inheritancef8408a73de" name="inheritancef8408a73de">
+<area shape="rect" href="#IPython.frontend.wx.console_widget.ConsoleWidget" title="wx.console_widget.ConsoleWidget" alt="" coords="636,3,764,18"/>
+</map>
+<p>A Wx widget to act as a console and input commands.</p>
+<p>This widget deals with prompts and provides an edit buffer
+restricted to after the last prompt.</p>
+</div>
+<div class="section" id="consolewidget">
+<h2><a title="IPython.frontend.wx.console_widget.ConsoleWidget" class="reference internal" href="#IPython.frontend.wx.console_widget.ConsoleWidget"><tt class="xref docutils literal"><span class="pre">ConsoleWidget</span></tt></a><a class="headerlink" href="#consolewidget" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="IPython.frontend.wx.console_widget.ConsoleWidget">
+<!--[IPython.frontend.wx.console_widget.ConsoleWidget]-->class <tt class="descclassname">IPython.frontend.wx.console_widget.</tt><tt class="descname">ConsoleWidget</tt><big>(</big><em>parent</em>, <em>id=-1</em>, <em>pos=wx.Point(-1</em>, <em>-1)</em>, <em>size=wx.Size(-1</em>, <em>-1)</em>, <em>style=262144</em><big>)</big><a class="headerlink" href="#IPython.frontend.wx.console_widget.ConsoleWidget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">wx.py.editwindow.EditWindow</span></tt></p>
+<p>Specialized styled text control view for console-like workflow.</p>
+<p>This widget is mainly interested in dealing with the prompt and
+keeping the cursor inside the editing line.</p>
+<dl class="method">
+<dt id="IPython.frontend.wx.console_widget.ConsoleWidget.__init__">
+<!--[IPython.frontend.wx.console_widget.ConsoleWidget.__init__]--><tt class="descname">__init__</tt><big>(</big><em>parent</em>, <em>id=-1</em>, <em>pos=wx.Point(-1</em>, <em>-1)</em>, <em>size=wx.Size(-1</em>, <em>-1)</em>, <em>style=262144</em><big>)</big><a class="headerlink" href="#IPython.frontend.wx.console_widget.ConsoleWidget.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.wx.console_widget.ConsoleWidget.OnUpdateUI">
+<!--[IPython.frontend.wx.console_widget.ConsoleWidget.OnUpdateUI]--><tt class="descname">OnUpdateUI</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#IPython.frontend.wx.console_widget.ConsoleWidget.OnUpdateUI" title="Permalink to this definition">¶</a></dt>
+<dd>Override the OnUpdateUI of the EditWindow class, to prevent 
+syntax highlighting both for faster redraw, and for more
+consistent look and feel.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.wx.console_widget.ConsoleWidget.configure_scintilla">
+<!--[IPython.frontend.wx.console_widget.ConsoleWidget.configure_scintilla]--><tt class="descname">configure_scintilla</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.frontend.wx.console_widget.ConsoleWidget.configure_scintilla" title="Permalink to this definition">¶</a></dt>
+<dd>Set up all the styling option of the embedded scintilla
+widget.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.wx.console_widget.ConsoleWidget.continuation_prompt">
+<!--[IPython.frontend.wx.console_widget.ConsoleWidget.continuation_prompt]--><tt class="descname">continuation_prompt</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.frontend.wx.console_widget.ConsoleWidget.continuation_prompt" title="Permalink to this definition">¶</a></dt>
+<dd>Returns the current continuation prompt.
+We need to implement this method here to deal with the
+ascii escape sequences cleaning up.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.wx.console_widget.ConsoleWidget.get_line_width">
+<!--[IPython.frontend.wx.console_widget.ConsoleWidget.get_line_width]--><tt class="descname">get_line_width</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.frontend.wx.console_widget.ConsoleWidget.get_line_width" title="Permalink to this definition">¶</a></dt>
+<dd>Return the width of the line in characters.</dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.frontend.wx.console_widget.ConsoleWidget.input_buffer">
+<!--[IPython.frontend.wx.console_widget.ConsoleWidget.input_buffer]--><tt class="descname">input_buffer</tt><a class="headerlink" href="#IPython.frontend.wx.console_widget.ConsoleWidget.input_buffer" title="Permalink to this definition">¶</a></dt>
+<dd>Returns the text in current edit buffer.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.wx.console_widget.ConsoleWidget.new_prompt">
+<!--[IPython.frontend.wx.console_widget.ConsoleWidget.new_prompt]--><tt class="descname">new_prompt</tt><big>(</big><em>prompt</em><big>)</big><a class="headerlink" href="#IPython.frontend.wx.console_widget.ConsoleWidget.new_prompt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints a prompt at start of line, and move the start of the
+current block there.</p>
+<p>The prompt can be given with ascii escape sequences.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.wx.console_widget.ConsoleWidget.pop_completion">
+<!--[IPython.frontend.wx.console_widget.ConsoleWidget.pop_completion]--><tt class="descname">pop_completion</tt><big>(</big><em>possibilities</em>, <em>offset=0</em><big>)</big><a class="headerlink" href="#IPython.frontend.wx.console_widget.ConsoleWidget.pop_completion" title="Permalink to this definition">¶</a></dt>
+<dd>Pops up an autocompletion menu. Offset is the offset
+in characters of the position at which the menu should
+appear, relativ to the cursor.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.wx.console_widget.ConsoleWidget.scroll_to_bottom">
+<!--[IPython.frontend.wx.console_widget.ConsoleWidget.scroll_to_bottom]--><tt class="descname">scroll_to_bottom</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.frontend.wx.console_widget.ConsoleWidget.scroll_to_bottom" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.frontend.wx.console_widget.ConsoleWidget.write">
+<!--[IPython.frontend.wx.console_widget.ConsoleWidget.write]--><tt class="descname">write</tt><big>(</big><em>text</em>, <em>refresh=True</em><big>)</big><a class="headerlink" href="#IPython.frontend.wx.console_widget.ConsoleWidget.write" title="Permalink to this definition">¶</a></dt>
+<dd>Write given text to buffer, while translating the ansi escape
+sequences.</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">frontend.wx.console_widget</a><ul>
+<li><a class="reference external" href="#module-IPython.frontend.wx.console_widget">Module: <tt class="docutils literal"><span class="pre">frontend.wx.console_widget</span></tt></a></li>
+<li><a class="reference external" href="#consolewidget"><tt class="docutils literal"><span class="pre">ConsoleWidget</span></tt></a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.frontend.process.pipedprocess.html" title="previous chapter">frontend.process.pipedprocess</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.frontend.wx.ipythonx.html" title="next chapter">frontend.wx.ipythonx</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.frontend.wx.console_widget.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.frontend.wx.ipythonx.html" title="frontend.wx.ipythonx"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.frontend.process.pipedprocess.html" title="frontend.process.pipedprocess"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

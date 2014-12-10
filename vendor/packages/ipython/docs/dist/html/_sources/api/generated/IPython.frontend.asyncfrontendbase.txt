@@ -1,0 +1,26 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+frontend.asyncfrontendbase
+==========================
+
+Module: :mod:`frontend.asyncfrontendbase`
+-----------------------------------------
+Inheritance diagram for ``IPython.frontend.asyncfrontendbase``:
+
+.. inheritance-diagram:: IPython.frontend.asyncfrontendbase 
+   :parts: 3
+
+.. automodule:: IPython.frontend.asyncfrontendbase
+
+.. currentmodule:: IPython.frontend.asyncfrontendbase
+
+:class:`AsyncFrontEndBase`
+--------------------------
+
+
+.. autoclass:: AsyncFrontEndBase
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

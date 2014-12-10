@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="cleanup_translator_comments" id="cleanup_translator_comments">Cleanup translator comments</a></h1>
+<div class="level1">
+
+<p>
+
+Translate Toolkit 1.1 saw source comments being converted to developer comments instead of translator comments.
+</p>
+
+<p>
+This use case shows you how to get rid of the old translator comments.
+</p>
+
+</div>
+<!-- SECTION "Cleanup translator comments" [1-228] -->
+<h2><a name="the_change" id="the_change">The Change</a></h2>
+<div class="level2">
+
+<p>
+
+We used to put all source comments into translator comments. 
+
+</p>
+<pre class="code"># Some Comment</pre>
+
+<p>
+
+But now place them in developer comments.
+
+</p>
+<pre class="code">#. Some Comment</pre>
+
+<p>
+
+This ensures that these source comments are updated to the newest versions from the source files, which is a good thing.  Translator comments survive these updates, just like you want, while developer comments are discarded.
+</p>
+
+<p>
+If you don&#039;t clean up your <acronym title="Gettext Portable Object">PO</acronym> files you will now end up with:
+
+</p>
+<pre class="code"># Some Comment
+#. Some Comment</pre>
+
+<p>
+
+Thus a duplicated comment.  Fortunately you only need to clean your <acronym title="Gettext Portable Object">PO</acronym> files once.
+</p>
+
+</div>
+<!-- SECTION "The Change" [229-805] -->
+<h2><a name="removing_old_translator_comments" id="removing_old_translator_comments">Removing old translator comments</a></h2>
+<div class="level2">
+
+<p>
+
+<p><div class="notewarning">This will remove all your translator comments.  So if you have some that you actually want to keep then you will need to manual editing
+</div></p>
+</p>
+
+<p>
+Removal is simple using <a href="toolkit-pocommentclean.html" class="wikilink1" title="toolkit-pocommentclean.html">pocommentclean</a>:
+
+</p>
+<pre class="code">pocommentclean my-po-dir</pre>
+
+<p>
+
+Which will clean all your <acronym title="Gettext Portable Object">PO</acronym> files in <code>my-po-dir</code>
+</p>
+
+<p>
+<code>pocommentclean</code> is simply a nice wrapper for this sed command:
+
+</p>
+<pre class="code">sed -i &quot;/^#$/d;/^#[^\:\~,\.]/d&quot; $(find po -name &quot;*.po&quot;)</pre>
+
+<p>
+
+This will delete all lines starting with # that are not used by <acronym title="Gettext Portable Object">PO</acronym> for locations (#:), automatic/developer comments (#.), state (#,) and obsolete (#~).
+</p>
+
+<p>
+You can now safely commit your changes and begin your migrations using <a href="toolkit-pot2po.html" class="wikilink1" title="toolkit-pot2po.html">pot2po</a> of <a href="toolkit-pomigrate2.html" class="wikilink1" title="toolkit-pomigrate2.html">pomigrate2</a>
+</p>
+
+</div>
+<!-- SECTION "Removing old translator comments" [806-] --></body>
+</html>

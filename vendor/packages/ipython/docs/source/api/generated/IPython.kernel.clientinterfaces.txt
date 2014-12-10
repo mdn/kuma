@@ -1,0 +1,40 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.clientinterfaces
+=======================
+
+Module: :mod:`kernel.clientinterfaces`
+--------------------------------------
+Inheritance diagram for ``IPython.kernel.clientinterfaces``:
+
+.. inheritance-diagram:: IPython.kernel.clientinterfaces 
+   :parts: 3
+
+.. automodule:: IPython.kernel.clientinterfaces
+
+.. currentmodule:: IPython.kernel.clientinterfaces
+
+Classes
+-------
+
+:class:`IBlockingClientAdaptor`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IBlockingClientAdaptor
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IFCClientInterfaceProvider`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IFCClientInterfaceProvider
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

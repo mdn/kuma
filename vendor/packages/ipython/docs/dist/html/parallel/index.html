@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Using IPython for parallel computing &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../index.html" />
+    <link rel="next" title="Overview and getting started" href="parallel_intro.html" />
+    <link rel="prev" title="IPython extension API" href="../interactive/extension_api.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="parallel_intro.html" title="Overview and getting started"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../interactive/extension_api.html" title="IPython extension API"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="using-ipython-for-parallel-computing">
+<span id="parallel-index"></span><h1>Using IPython for parallel computing<a class="headerlink" href="#using-ipython-for-parallel-computing" title="Permalink to this headline">¶</a></h1>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="parallel_intro.html">Overview and getting started</a><ul>
+<li class="toctree-l2"><a class="reference external" href="parallel_intro.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference external" href="parallel_intro.html#architecture-overview">Architecture overview</a></li>
+<li class="toctree-l2"><a class="reference external" href="parallel_intro.html#getting-started">Getting Started</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="parallel_process.html">Starting the IPython controller and engines</a><ul>
+<li class="toctree-l2"><a class="reference external" href="parallel_process.html#general-considerations">General considerations</a></li>
+<li class="toctree-l2"><a class="reference external" href="parallel_process.html#using-ipcluster">Using <strong>ipcluster</strong></a></li>
+<li class="toctree-l2"><a class="reference external" href="parallel_process.html#using-the-ipcontroller-and-ipengine-commands">Using the <strong>ipcontroller</strong> and <strong>ipengine</strong> commands</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="parallel_multiengine.html">IPython&#8217;s multiengine interface</a><ul>
+<li class="toctree-l2"><a class="reference external" href="parallel_multiengine.html#starting-the-ipython-controller-and-engines">Starting the IPython controller and engines</a></li>
+<li class="toctree-l2"><a class="reference external" href="parallel_multiengine.html#creating-a-multiengineclient-instance">Creating a <tt class="docutils literal"><span class="pre">MultiEngineClient</span></tt> instance</a></li>
+<li class="toctree-l2"><a class="reference external" href="parallel_multiengine.html#quick-and-easy-parallelism">Quick and easy parallelism</a></li>
+<li class="toctree-l2"><a class="reference external" href="parallel_multiengine.html#running-python-commands">Running Python commands</a></li>
+<li class="toctree-l2"><a class="reference external" href="parallel_multiengine.html#moving-python-objects-around">Moving Python objects around</a></li>
+<li class="toctree-l2"><a class="reference external" href="parallel_multiengine.html#other-things-to-look-at">Other things to look at</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="parallel_task.html">The IPython task interface</a><ul>
+<li class="toctree-l2"><a class="reference external" href="parallel_task.html#starting-the-ipython-controller-and-engines">Starting the IPython controller and engines</a></li>
+<li class="toctree-l2"><a class="reference external" href="parallel_task.html#creating-a-taskclient-instance">Creating a <tt class="docutils literal"><span class="pre">TaskClient</span></tt> instance</a></li>
+<li class="toctree-l2"><a class="reference external" href="parallel_task.html#quick-and-easy-parallelism">Quick and easy parallelism</a></li>
+<li class="toctree-l2"><a class="reference external" href="parallel_task.html#more-details">More details</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="parallel_mpi.html">Using MPI with IPython</a><ul>
+<li class="toctree-l2"><a class="reference external" href="parallel_mpi.html#additional-installation-requirements">Additional installation requirements</a></li>
+<li class="toctree-l2"><a class="reference external" href="parallel_mpi.html#starting-the-engines-with-mpi-enabled">Starting the engines with MPI enabled</a></li>
+<li class="toctree-l2"><a class="reference external" href="parallel_mpi.html#actually-using-mpi">Actually using MPI</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="parallel_security.html">Security details of IPython</a><ul>
+<li class="toctree-l2"><a class="reference external" href="parallel_security.html#processs-and-network-topology">Processs and network topology</a></li>
+<li class="toctree-l2"><a class="reference external" href="parallel_security.html#application-logic">Application logic</a></li>
+<li class="toctree-l2"><a class="reference external" href="parallel_security.html#secure-network-connections">Secure network connections</a></li>
+<li class="toctree-l2"><a class="reference external" href="parallel_security.html#specific-security-vulnerabilities">Specific security vulnerabilities</a></li>
+<li class="toctree-l2"><a class="reference external" href="parallel_security.html#other-security-measures">Other security measures</a></li>
+<li class="toctree-l2"><a class="reference external" href="parallel_security.html#summary">Summary</a></li>
+<li class="toctree-l2"><a class="reference external" href="parallel_security.html#other-questions">Other questions</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="visionhpc.html">IPython/Vision Beam Pattern Demo</a><ul>
+<li class="toctree-l2"><a class="reference external" href="visionhpc.html#installing-and-testing-ipython-at-osc-systems">Installing and testing IPython at OSC systems</a></li>
+<li class="toctree-l2"><a class="reference external" href="visionhpc.html#michel-s-original-instructions">Michel&#8217;s original instructions</a></li>
+<li class="toctree-l2"><a class="reference external" href="visionhpc.html#fernando-s-notes">Fernando&#8217;s notes</a></li>
+<li class="toctree-l2"><a class="reference external" href="visionhpc.html#using-pbs">Using PBS</a></li>
+<li class="toctree-l2"><a class="reference external" href="visionhpc.html#links-to-other-resources">Links to other resources</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="../interactive/extension_api.html" title="previous chapter">IPython extension API</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="parallel_intro.html" title="next chapter">Overview and getting started</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/parallel/index.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="parallel_intro.html" title="Overview and getting started"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../interactive/extension_api.html" title="IPython extension API"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

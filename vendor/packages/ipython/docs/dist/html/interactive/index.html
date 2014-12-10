@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Using IPython for interactive work &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../index.html" />
+    <link rel="next" title="Quick IPython tutorial" href="tutorial.html" />
+    <link rel="prev" title="Overview" href="../install/install.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="tutorial.html" title="Quick IPython tutorial"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../install/install.html" title="Overview"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="using-ipython-for-interactive-work">
+<h1>Using IPython for interactive work<a class="headerlink" href="#using-ipython-for-interactive-work" title="Permalink to this headline">¶</a></h1>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="tutorial.html">Quick IPython tutorial</a><ul>
+<li class="toctree-l2"><a class="reference external" href="tutorial.html#highlights">Highlights</a></li>
+<li class="toctree-l2"><a class="reference external" href="tutorial.html#source-code-handling-tips">Source code handling tips</a></li>
+<li class="toctree-l2"><a class="reference external" href="tutorial.html#lightweight-version-control">Lightweight &#8216;version control&#8217;</a></li>
+<li class="toctree-l2"><a class="reference external" href="tutorial.html#effective-logging">Effective logging</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="reference.html">IPython reference</a><ul>
+<li class="toctree-l2"><a class="reference external" href="reference.html#command-line-usage">Command-line usage</a></li>
+<li class="toctree-l2"><a class="reference external" href="reference.html#interactive-use">Interactive use</a></li>
+<li class="toctree-l2"><a class="reference external" href="reference.html#ipython-as-your-default-python-environment">IPython as your default Python environment</a></li>
+<li class="toctree-l2"><a class="reference external" href="reference.html#embedding-ipython">Embedding IPython</a></li>
+<li class="toctree-l2"><a class="reference external" href="reference.html#using-the-python-debugger-pdb">Using the Python debugger (pdb)</a></li>
+<li class="toctree-l2"><a class="reference external" href="reference.html#extensions-for-syntax-processing">Extensions for syntax processing</a></li>
+<li class="toctree-l2"><a class="reference external" href="reference.html#threading-support">Threading support</a></li>
+<li class="toctree-l2"><a class="reference external" href="reference.html#interactive-demos-with-ipython">Interactive demos with IPython</a></li>
+<li class="toctree-l2"><a class="reference external" href="reference.html#plotting-with-matplotlib">Plotting with matplotlib</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="shell.html">IPython as a system shell</a><ul>
+<li class="toctree-l2"><a class="reference external" href="shell.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference external" href="shell.html#aliases">Aliases</a></li>
+<li class="toctree-l2"><a class="reference external" href="shell.html#directory-management">Directory management</a></li>
+<li class="toctree-l2"><a class="reference external" href="shell.html#enabled-extensions">Enabled extensions</a></li>
+<li class="toctree-l2"><a class="reference external" href="shell.html#prompt-customization">Prompt customization</a></li>
+<li class="toctree-l2"><a class="reference external" href="shell.html#string-lists">String lists</a></li>
+<li class="toctree-l2"><a class="reference external" href="shell.html#real-world-example-remove-all-files-outside-version-control">Real world example: remove all files outside version control</a></li>
+<li class="toctree-l2"><a class="reference external" href="shell.html#the-s-n-p-properties">The .s, .n, .p properties</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="extension_api.html">IPython extension API</a><ul>
+<li class="toctree-l2"><a class="reference external" href="extension_api.html#getting-started">Getting started</a></li>
+<li class="toctree-l2"><a class="reference external" href="extension_api.html#getting-a-handle-to-the-api">Getting a handle to the api</a></li>
+<li class="toctree-l2"><a class="reference external" href="extension_api.html#changing-options">Changing options</a></li>
+<li class="toctree-l2"><a class="reference external" href="extension_api.html#executing-statements-in-ipython-namespace-with-ex-and-ev">Executing statements in IPython namespace with &#8216;ex&#8217; and &#8216;ev&#8217;</a></li>
+<li class="toctree-l2"><a class="reference external" href="extension_api.html#accessing-the-ipython-namespace">Accessing the IPython namespace</a></li>
+<li class="toctree-l2"><a class="reference external" href="extension_api.html#defining-new-magic-commands">Defining new magic commands</a></li>
+<li class="toctree-l2"><a class="reference external" href="extension_api.html#calling-magic-functions-and-system-commands">Calling magic functions and system commands</a></li>
+<li class="toctree-l2"><a class="reference external" href="extension_api.html#launching-ipython-instance-from-normal-python-code">Launching IPython instance from normal python code</a></li>
+<li class="toctree-l2"><a class="reference external" href="extension_api.html#accessing-unexposed-functionality">Accessing unexposed functionality</a></li>
+<li class="toctree-l2"><a class="reference external" href="extension_api.html#provided-extensions">Provided extensions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="../install/install.html" title="previous chapter">Overview</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="tutorial.html" title="next chapter">Quick IPython tutorial</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/interactive/index.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="tutorial.html" title="Quick IPython tutorial"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../install/install.html" title="Overview"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

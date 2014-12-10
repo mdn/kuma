@@ -2,42 +2,35 @@
 Vendor Library
 ==============
 
-The vendor library is the easiest way to manage pure-Python dependencies. It
-contains the source code for all the library Kuma depends on.
+The ``vendor`` directory contains the source code for Kuma libraries.
 
 
-Getting the Vendor Library
-==========================
+Getting the Vendor Libraries
+============================
 
-Getting the vendor library is easy. In your Kuma clone, just type::
+To get the ``vendor`` libraries in your Kuma clone, ::
 
-    $ git clone --recursive git://github.com/mozilla/kuma-lib.git vendor
+    $ git submodule update --init
 
-Git will clone the repository and all its submodules.
+Git will fetch all the ``vendor`` submodules.
 
 
 Updating the Vendor Library
 ===========================
 
+.. DANGER::
+   We are moving all libraries from vendor to pip. Any pull requests with
+   vendor updates will be rejected unless it is an emergency situation.
+
 From time to time we need to update libraries, either for new versions of
-libraries or to add a new library. There are two ways to do that. The easiest
-and prefered way is pure git.
-
-
-Using Git Submodules
---------------------
-
-Using git submodules is prefered because it is much easier to maintain, and it
-keeps the repository size small. Upgrading is as simple as updating a
-submodule.
+libraries or to add a new library. There are two ways to do that.
 
 
 Updating a Library with Git Submodules
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If the library is in ``vendor/src``, it was pulled directly from version
-control, and if that version control was git, updating the submodule is as easy
-as::
+control, and if that version control was git, update the submodule like so::
 
     $ cd vendor/src/$LIBRARY
     $ git fetch origin
@@ -46,14 +39,13 @@ as::
     $ git add src/$LIBRARY
     $ git ci -m "Updating $LIBRARY"
 
-Easy! Just like updating any other git submodule.
+Just like updating any other git submodule.
 
 
 Adding a New Library with Git Submodules
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Technically this can be done with ``pip install --no-install`` but there's an
-even easier method when installing a new library from a git repo::
+Technically this can be done with ``pip install --no-install`` but we do this::
 
     $ cd vendor/src
     $ git clone git://<repo>
@@ -74,6 +66,8 @@ Follow `the playdoh instructions for non-git based repos
 
 Requirements Files
 ==================
+
+We are in the process of moving all our libraries to pip requirements.
 
 We still maintain requirements files in ``requirements/``. Sometimes people
 will use these to install the requirements in a virtual environment. When you

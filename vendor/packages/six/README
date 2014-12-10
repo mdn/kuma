@@ -1,0 +1,14 @@
+Six is a Python 2 and 3 compatibility library.  It provides utility functions
+for smoothing over the differences between the Python versions with the goal of
+writing Python code that is compatible on both Python versions.  See the
+documentation for more information on what is provided.
+
+Six supports Python 2.4+.
+
+Online documentation is at http://packages.python.org/six/.
+
+Bugs can be reported to http://bitbucket.org/gutworth/six.  The code can also be
+found there.
+
+For questions about six or porting in general, email the python-porting mailing
+list: http://mail.python.org/mailman/listinfo/python-porting

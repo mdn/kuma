@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="pomigrate2" id="pomigrate2">pomigrate2</a></h1>
+<div class="level1">
+
+<p>
+
+pomigrate2 aims to move an existing translation to a new
+version based on updated <acronym title="Gettext Portable Object">PO</acronym> Template files automatically without user intervention.  
+Therefore it is ideal for when you are
+migrating many languages or migrating from related but divergent products e.g.
+Mozilla to Firefox.
+</p>
+
+</div>
+<!-- SECTION "pomigrate2" [1-309] -->
+<h2><a name="prerequisites" id="prerequisites">Prerequisites</a></h2>
+<div class="level2">
+
+<p>
+
+GNU Gettext:
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://man.cx/msginit" class="interwiki iw_man" title="http://man.cx/msginit">msginit</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://man.cx/msgcat" class="interwiki iw_man" title="http://man.cx/msgcat">msgcat</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="http://man.cx/msgmerge" class="interwiki iw_man" title="http://man.cx/msgmerge">msgmerge</a></div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Prerequisites" [310-412] -->
+<h2><a name="usage" id="usage">Usage</a></h2>
+<div class="level2">
+
+<p>
+
+pomigrate [options] &lt;from&gt; &lt;to&gt; &lt;new templates&gt;
+</p>
+
+<p>
+Where:
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> from           </td><td class="col1 leftalign"> is a directory of existing <acronym title="Gettext Portable Object">PO</acronym> files  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> to             </td><td class="col1 leftalign"> is the directory where the migrated <acronym title="Gettext Portable Object">PO</acronym> files will be stored  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> new templates  </td><td class="col1 leftalign"> this is the directory that contains the <acronym title="Gettext Portable Object">PO</acronym> Template files    </td>
+	</tr>
+</table>
+
+<p>
+
+Options:
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0"> -F, --use-fuzzy-matching </td><td class="col1 leftalign"> use fuzzy algorithms when merging to attempt to match strings  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> -C, --use-compendium     </td><td class="col1"> create and use a compendium built from the migrating files </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> -C, --use-compendium=some-compendium.po  </td><td class="col1 leftalign"> use an external compendium during the migration  </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> --no-wrap                </td><td class="col1"> do not wrap long lines </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> --locale                 </td><td class="col1 leftalign"> set locale for newly born files  </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> -q, --quiet              </td><td class="col1 leftalign"> suppress most output   </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> -p, --pot2po             </td><td class="col1 leftalign"> use pot2po instead of msgmerge to migrate   </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Usage" [413-1247] -->
+<h2><a name="operation" id="operation">Operation</a></h2>
+<div class="level2">
+
+<p>
+
+pomigrate2 makes use of the Gettext tools msgmerge or Translate Toolkit&#039;s <a href="toolkit-pot2po.html" class="wikilink1" title="toolkit-pot2po.html">pot2po</a> 
+to perform its merging tasks.  
+</p>
+
+<p>
+It firstly finds all files with the same name and location in the &lt;from&gt; directory
+as in the &lt;template&gt; directory and copies these to the &lt;to&gt; directory.  If there is no 
+file in the &lt;from&gt; directory to match one needed by the &lt;template&gt; directory then
+it will msgcat all files in the &lt;from&gt; directory with the same name and copy them to
+the correct destination in the &lt;to&gt; directory.  If all of that fails then 
+msginit is used to initialise any missing <acronym title="Gettext Portable Object">PO</acronym> files.
+</p>
+
+<p>
+Lastly all the files in &lt;to&gt; are merged using msgmerge or pot2po.  This process updates the files
+to match the layout and messages in &lt;templates&gt;.  Optionally, by using --use-compendium, 
+a compendium of all the translations in &lt;from&gt; can be created to be used in the final merge process.
+</p>
+
+</div>
+<!-- SECTION "Operation" [1248-2145] -->
+<h2><a name="bugs" id="bugs">Bugs</a></h2>
+<div class="level2">
+
+<p>
+
+None known
+
+</p>
+
+</div>
+<!-- SECTION "Bugs" [2146-] --></body>
+</html>

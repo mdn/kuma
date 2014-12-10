@@ -1,0 +1,147 @@
+Version 0.9.5
+http://svn.edgewall.org/repos/babel/tags/0.9.5/
+(Apr 6 2010, from branches/stable/0.9.x)
+
+ * Fixed the case where messages containing square brackets would break with
+   an unpack error.
+ * Backport of r467: Fuzzy matching regarding plurals should *NOT* be checked
+   against len(message.id)  because this is always 2, instead, it's should be
+   checked against catalog.num_plurals (ticket #212).
+
+
+Version 0.9.4
+http://svn.edgewall.org/repos/babel/tags/0.9.4/
+(Aug 25 2008, from branches/stable/0.9.x)
+
+ * Currency symbol definitions that is defined with choice patterns in the
+   CLDR data are no longer imported, so the symbol code will be used instead.
+ * Fixed quarter support in date formatting.
+ * Fixed a serious memory leak that was introduces by the support for CLDR
+   aliases in 0.9.3 (ticket #128).
+ * Locale modifiers such as "@euro" are now stripped from locale identifiers
+   when parsing (ticket #136).
+ * The system locales "C" and "POSIX" are now treated as aliases for
+   "en_US_POSIX", for which the CLDR provides the appropriate data. Thanks to
+   Manlio Perillo for the suggestion.
+ * Fixed JavaScript extraction for regular expression literals (ticket #138)
+   and concatenated strings.
+ * The `Translation` class in `babel.support` can now manage catalogs with
+   different message domains, and exposes the family of `d*gettext` functions
+   (ticket #137).
+
+
+Version 0.9.3
+http://svn.edgewall.org/repos/babel/tags/0.9.3/
+(Jul 9 2008, from branches/stable/0.9.x)
+
+ * Fixed invalid message extraction methods causing an UnboundLocalError.
+ * Extraction method specification can now use a dot instead of the colon to
+   separate module and function name (ticket #105).
+ * Fixed message catalog compilation for locales with more than two plural
+   forms (ticket #95).
+ * Fixed compilation of message catalogs for locales with more than two plural
+   forms where the translations were empty (ticket #97).
+ * The stripping of the comment tags in comments is optional now and
+   is done for each line in a comment.
+ * Added a JavaScript message extractor.
+ * Updated to CLDR 1.6.
+ * Fixed timezone calculations when formatting datetime and time values.
+ * Added a `get_plural` function into the plurals module that returns the
+   correct plural forms for a locale as tuple.
+ * Added support for alias definitions in the CLDR data files, meaning that
+   the chance for items missing in certain locales should be greatly reduced
+   (ticket #68).
+
+
+Version 0.9.2
+http://svn.edgewall.org/repos/babel/tags/0.9.2/
+(Feb 4 2008, from branches/stable/0.9.x)
+
+ * Fixed catalogs' charset values not being recognized (ticket #66).
+ * Numerous improvements to the default plural forms.
+ * Fixed fuzzy matching when updating message catalogs (ticket #82).
+ * Fixed bug in catalog updating, that in some cases pulled in translations
+   from different catalogs based on the same template.
+ * Location lines in PO files do no longer get wrapped at hyphens in file
+   names (ticket #79).
+ * Fixed division by zero error in catalog compilation on empty catalogs
+   (ticket #60).
+
+
+Version 0.9.1
+http://svn.edgewall.org/repos/babel/tags/0.9.1/
+(Sep 7 2007, from branches/stable/0.9.x)
+
+ * Fixed catalog updating when a message is merged that was previously simple
+   but now has a plural form, for example by moving from `gettext` to
+   `ngettext`, or vice versa.
+ * Fixed time formatting for 12 am and 12 pm.
+ * Fixed output encoding of the `pybabel --list-locales` command.
+ * MO files are now written in binary mode on windows (ticket #61).
+
+
+Version 0.9
+http://svn.edgewall.org/repos/babel/tags/0.9.0/
+(Aug 20 2007, from branches/stable/0.9.x)
+
+ * The `new_catalog` distutils command has been renamed to `init_catalog` for
+   consistency with the command-line frontend.
+ * Added compilation of message catalogs to MO files (ticket #21).
+ * Added updating of message catalogs from POT files (ticket #22).
+ * Support for significant digits in number formatting.
+ * Apply proper "banker's rounding" in number formatting in a cross-platform
+   manner.
+ * The number formatting functions now also work with numbers represented by
+   Python `Decimal` objects (ticket #53).
+ * Added extensible infrastructure for validating translation catalogs.
+ * Fixed the extractor not filtering out messages that didn't validate against
+   the keyword's specification (ticket #39).
+ * Fixed the extractor raising an exception when encountering an empty string
+   msgid. It now emits a warning to stderr.
+ * Numerous Python message extractor fixes: it now handles nested function
+   calls within a gettext function call correctly, uses the correct line number
+   for multi-line function calls, and other small fixes (tickets #38 and #39).
+ * Improved support for detecting Python string formatting fields in message
+   strings (ticket #57).
+ * CLDR upgraded to the 1.5 release.
+ * Improved timezone formatting.
+ * Implemented scientific number formatting.
+ * Added mechanism to lookup locales by alias, for cases where browsers insist
+   on including only the language code in the `Accept-Language` header, and
+   sometimes even the incorrect language code.
+
+
+Version 0.8.1
+http://svn.edgewall.org/repos/babel/tags/0.8.1/
+(Jul 2 2007, from branches/stable/0.8.x)
+
+ * `default_locale()` would fail when the value of the `LANGUAGE` environment
+   variable contained multiple language codes separated by colon, as is
+   explicitly allowed by the GNU gettext tools. As the `default_locale()`
+   function is called at the module level in some modules, this bug would
+   completely break importing these modules on systems where `LANGUAGE` is set
+   that way.
+ * The character set specified in PO template files is now respected when
+   creating new catalog files based on that template. This allows the use of
+   characters outside the ASCII range in POT files (ticket #17).
+ * The default ordering of messages in generated POT files, which is based on
+   the order those messages are found when walking the source tree, is no
+   longer subject to differences between platforms; directory and file names
+   are now always sorted alphabetically.
+ * The Python message extractor now respects the special encoding comment to be
+   able to handle files containing non-ASCII characters (ticket #23).
+ * Added 'N_' (gettext noop) to the extractor's default keywords.
+ * Made locale string parsing more robust, and also take the script part into
+   account (ticket #27).
+ * Added a function to list all locales for which locale data is available.
+ * Added a command-line option to the `pybabel` command which prints out all
+   available locales (ticket #24).
+ * The name of the command-line script has been changed from just `babel` to
+   `pybabel` to avoid a conflict with the OpenBabel project (ticket #34).
+
+
+Version 0.8
+http://svn.edgewall.org/repos/babel/tags/0.8.0/
+(Jun 20 2007, from branches/stable/0.8.x)
+
+ * First public release

@@ -1,0 +1,26 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+ipstruct
+========
+
+Module: :mod:`ipstruct`
+-----------------------
+Inheritance diagram for ``IPython.ipstruct``:
+
+.. inheritance-diagram:: IPython.ipstruct 
+   :parts: 3
+
+.. automodule:: IPython.ipstruct
+
+.. currentmodule:: IPython.ipstruct
+
+:class:`Struct`
+---------------
+
+
+.. autoclass:: Struct
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

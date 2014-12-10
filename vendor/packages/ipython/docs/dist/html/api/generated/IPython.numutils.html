@@ -1,0 +1,307 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>numutils &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="platutils" href="IPython.platutils.html" />
+    <link rel="prev" title="macro" href="IPython.macro.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.platutils.html" title="platutils"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.macro.html" title="macro"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="numutils">
+<h1>numutils<a class="headerlink" href="#numutils" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.numutils">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">numutils</span></tt><a class="headerlink" href="#module-IPython.numutils" title="Permalink to this headline">¶</a></h2>
+<p>A set of convenient utilities for numerical work.</p>
+<p>Most of this module requires Numerical Python or is meant to be used with it.
+See <a class="reference external" href="http://www.pfdubois.com/numpy">http://www.pfdubois.com/numpy</a> for details.</p>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.numutils.amap">
+<!--[IPython.numutils.amap]--><tt class="descclassname">IPython.numutils.</tt><tt class="descname">amap</tt><big>(</big><em>fn</em>, <em>*args</em><big>)</big><a class="headerlink" href="#IPython.numutils.amap" title="Permalink to this definition">¶</a></dt>
+<dd><p>amap(function, sequence[, sequence, ...]) -&gt; array.</p>
+<p>Works like map(), but it returns an array.  This is just a convenient
+shorthand for Numeric.array(map(...))</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.numutils.amax">
+<!--[IPython.numutils.amax]--><tt class="descclassname">IPython.numutils.</tt><tt class="descname">amax</tt><big>(</big><em>m</em>, <em>axis=0</em><big>)</big><a class="headerlink" href="#IPython.numutils.amax" title="Permalink to this definition">¶</a></dt>
+<dd>amax(m,axis=0) returns the maximum of m along dimension axis.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.numutils.amin">
+<!--[IPython.numutils.amin]--><tt class="descclassname">IPython.numutils.</tt><tt class="descname">amin</tt><big>(</big><em>m</em>, <em>axis=0</em><big>)</big><a class="headerlink" href="#IPython.numutils.amin" title="Permalink to this definition">¶</a></dt>
+<dd>amin(m,axis=0) returns the minimum of m along dimension axis.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.numutils.base_repr">
+<!--[IPython.numutils.base_repr]--><tt class="descclassname">IPython.numutils.</tt><tt class="descname">base_repr</tt><big>(</big><em>number</em>, <em>base=2</em>, <em>padding=0</em><big>)</big><a class="headerlink" href="#IPython.numutils.base_repr" title="Permalink to this definition">¶</a></dt>
+<dd>Return the representation of a number in any given base.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.numutils.binary_repr">
+<!--[IPython.numutils.binary_repr]--><tt class="descclassname">IPython.numutils.</tt><tt class="descname">binary_repr</tt><big>(</big><em>number</em>, <em>max_length=1025</em><big>)</big><a class="headerlink" href="#IPython.numutils.binary_repr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the binary representation of the input number as a string.</p>
+<p>This is more efficient than using base_repr with base 2.</p>
+<p>Increase the value of max_length for very large numbers. Note that on
+32-bit machines, 2**1023 is the largest integer power of 2 which can be
+converted to a Python float.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.numutils.diagonal_matrix">
+<!--[IPython.numutils.diagonal_matrix]--><tt class="descclassname">IPython.numutils.</tt><tt class="descname">diagonal_matrix</tt><big>(</big><em>diag</em><big>)</big><a class="headerlink" href="#IPython.numutils.diagonal_matrix" title="Permalink to this definition">¶</a></dt>
+<dd>Return square diagonal matrix whose non-zero elements are given by the
+input array.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.numutils.empty_like">
+<!--[IPython.numutils.empty_like]--><tt class="descclassname">IPython.numutils.</tt><tt class="descname">empty_like</tt><big>(</big><em>a</em><big>)</big><a class="headerlink" href="#IPython.numutils.empty_like" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an empty (uninitialized) array of the shape and typecode of a.</p>
+<p>Note that this does NOT initialize the returned array.  If you require
+your array to be initialized, you should use zeros_like().</p>
+<p>This requires Numeric.empty(), which appeared in Numeric 23.7.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.numutils.exp_safe">
+<!--[IPython.numutils.exp_safe]--><tt class="descclassname">IPython.numutils.</tt><tt class="descname">exp_safe</tt><big>(</big><em>x</em><big>)</big><a class="headerlink" href="#IPython.numutils.exp_safe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute exponentials which safely underflow to zero.</p>
+<p>Slow but convenient to use. Note that NumArray will introduce proper
+floating point exception handling with access to the underlying
+hardware.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.numutils.frange">
+<!--[IPython.numutils.frange]--><tt class="descclassname">IPython.numutils.</tt><tt class="descname">frange</tt><big>(</big><em>xini</em>, <em>xfin=None</em>, <em>delta=None</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#IPython.numutils.frange" title="Permalink to this definition">¶</a></dt>
+<dd><p>frange([start,] stop[, step, keywords]) -&gt; array of floats</p>
+<p>Return a Numeric array() containing a progression of floats. Similar to
+arange(), but defaults to a closed interval.</p>
+<p>frange(x0, x1) returns [x0, x0+1, x0+2, ..., x1]; start defaults to 0, and
+the endpoint <em>is included</em>. This behavior is different from that of
+range() and arange(). This is deliberate, since frange will probably be
+more useful for generating lists of points for function evaluation, and
+endpoints are often desired in this use. The usual behavior of range() can
+be obtained by setting the keyword &#8216;closed=0&#8217;, in this case frange()
+basically becomes arange().</p>
+<p>When step is given, it specifies the increment (or decrement). All
+arguments can be floating point numbers.</p>
+<p>frange(x0,x1,d) returns [x0,x0+d,x0+2d,...,xfin] where xfin&lt;=x1.</p>
+<p>frange can also be called with the keyword &#8216;npts&#8217;. This sets the number of
+points the list should contain (and overrides the value &#8216;step&#8217; might have
+been given). arange() doesn&#8217;t offer this option.</p>
+<p>Examples:
+&gt;&gt;&gt; frange(3)
+array([ 0.,  1.,  2.,  3.])
+&gt;&gt;&gt; frange(3,closed=0)
+array([ 0.,  1.,  2.])
+&gt;&gt;&gt; frange(1,6,2)
+array([1, 3, 5])
+&gt;&gt;&gt; frange(1,6.5,npts=5)
+array([ 1.   ,  2.375,  3.75 ,  5.125,  6.5  ])</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.numutils.fromfunction_kw">
+<!--[IPython.numutils.fromfunction_kw]--><tt class="descclassname">IPython.numutils.</tt><tt class="descname">fromfunction_kw</tt><big>(</big><em>function</em>, <em>dimensions</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.numutils.fromfunction_kw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Drop-in replacement for fromfunction() from Numerical Python.</p>
+<p>Allows passing keyword arguments to the desired function.</p>
+<p>Call it as (keywords are optional):
+fromfunction_kw(MyFunction, dimensions, keywords)</p>
+<p>The function MyFunction() is responsible for handling the dictionary of
+keywords it will recieve.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.numutils.identity">
+<!--[IPython.numutils.identity]--><tt class="descclassname">IPython.numutils.</tt><tt class="descname">identity</tt><big>(</big><em>n</em>, <em>rank=2</em>, <em>typecode='l'</em><big>)</big><a class="headerlink" href="#IPython.numutils.identity" title="Permalink to this definition">¶</a></dt>
+<dd><p>identity(n,r) returns the identity matrix of shape (n,n,...,n) (rank r).</p>
+<p>For ranks higher than 2, this object is simply a multi-index Kronecker
+delta:</p>
+<blockquote>
+/  1  if i0=i1=...=iR,</blockquote>
+<dl class="docutils">
+<dt>id[i0,i1,...,iR] = -|</dt>
+<dd> 0  otherwise.</dd>
+</dl>
+<p>Optionally a typecode may be given (it defaults to &#8216;l&#8217;).</p>
+<p>Since rank defaults to 2, this function behaves in the default case (when
+only n is given) like the Numeric identity function.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.numutils.ispower2">
+<!--[IPython.numutils.ispower2]--><tt class="descclassname">IPython.numutils.</tt><tt class="descname">ispower2</tt><big>(</big><em>n</em><big>)</big><a class="headerlink" href="#IPython.numutils.ispower2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the log base 2 of n if n is a power of 2, zero otherwise.</p>
+<p>Note the potential ambiguity if n==1: 2**0==1, interpret accordingly.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.numutils.l1norm">
+<!--[IPython.numutils.l1norm]--><tt class="descclassname">IPython.numutils.</tt><tt class="descname">l1norm</tt><big>(</big><em>a</em><big>)</big><a class="headerlink" href="#IPython.numutils.l1norm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the l1 norm of a, flattened out.</p>
+<p>Implemented as a separate function (not a call to norm() for speed).</p>
+<p>Ref: <a class="reference external" href="http://mathworld.wolfram.com/L1-Norm.html">http://mathworld.wolfram.com/L1-Norm.html</a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.numutils.l2norm">
+<!--[IPython.numutils.l2norm]--><tt class="descclassname">IPython.numutils.</tt><tt class="descname">l2norm</tt><big>(</big><em>a</em><big>)</big><a class="headerlink" href="#IPython.numutils.l2norm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the l2 norm of a, flattened out.</p>
+<p>Implemented as a separate function (not a call to norm() for speed).</p>
+<p>Ref: <a class="reference external" href="http://mathworld.wolfram.com/L2-Norm.html">http://mathworld.wolfram.com/L2-Norm.html</a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.numutils.log2">
+<!--[IPython.numutils.log2]--><tt class="descclassname">IPython.numutils.</tt><tt class="descname">log2</tt><big>(</big><em>x</em>, <em>ln2=0.69314718055994529</em><big>)</big><a class="headerlink" href="#IPython.numutils.log2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the log(x) in base 2.</p>
+<p>This is a _slow_ function but which is guaranteed to return the correct
+integer value if the input is an ineger exact power of 2.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.numutils.mean_flat">
+<!--[IPython.numutils.mean_flat]--><tt class="descclassname">IPython.numutils.</tt><tt class="descname">mean_flat</tt><big>(</big><em>a</em><big>)</big><a class="headerlink" href="#IPython.numutils.mean_flat" title="Permalink to this definition">¶</a></dt>
+<dd>Return the mean of all the elements of a, flattened out.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.numutils.norm">
+<!--[IPython.numutils.norm]--><tt class="descclassname">IPython.numutils.</tt><tt class="descname">norm</tt><big>(</big><em>a</em>, <em>p=2</em><big>)</big><a class="headerlink" href="#IPython.numutils.norm" title="Permalink to this definition">¶</a></dt>
+<dd><p>norm(a,p=2) -&gt; l-p norm of a.flat</p>
+<p>Return the l-p norm of a, considered as a flat array.  This is NOT a true
+matrix norm, since arrays of arbitrary rank are always flattened.</p>
+<p>p can be a number or one of the strings (&#8216;inf&#8217;,&#8217;Infinity&#8217;) to get the
+L-infinity norm.</p>
+<dl class="docutils">
+<dt>Ref: <a class="reference external" href="http://mathworld.wolfram.com/VectorNorm.html">http://mathworld.wolfram.com/VectorNorm.html</a></dt>
+<dd><a class="reference external" href="http://mathworld.wolfram.com/L-Infinity-Norm.html">http://mathworld.wolfram.com/L-Infinity-Norm.html</a></dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.numutils.rms_flat">
+<!--[IPython.numutils.rms_flat]--><tt class="descclassname">IPython.numutils.</tt><tt class="descname">rms_flat</tt><big>(</big><em>a</em><big>)</big><a class="headerlink" href="#IPython.numutils.rms_flat" title="Permalink to this definition">¶</a></dt>
+<dd>Return the root mean square of all the elements of a, flattened out.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.numutils.sum_flat">
+<!--[IPython.numutils.sum_flat]--><tt class="descclassname">IPython.numutils.</tt><tt class="descname">sum_flat</tt><big>(</big><em>a</em><big>)</big><a class="headerlink" href="#IPython.numutils.sum_flat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the sum of all the elements of a, flattened out.</p>
+<p>It uses a.flat, and if a is not contiguous, a call to ravel(a) is made.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.numutils.zeros_like">
+<!--[IPython.numutils.zeros_like]--><tt class="descclassname">IPython.numutils.</tt><tt class="descname">zeros_like</tt><big>(</big><em>a</em><big>)</big><a class="headerlink" href="#IPython.numutils.zeros_like" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an array of zeros of the shape and typecode of a.</p>
+<p>If you don&#8217;t explicitly need the array to be zeroed, you should instead
+use empty_like(), which is faster as it only allocates memory.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">numutils</a><ul>
+<li><a class="reference external" href="#module-IPython.numutils">Module: <tt class="docutils literal"><span class="pre">numutils</span></tt></a></li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.macro.html" title="previous chapter">macro</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.platutils.html" title="next chapter">platutils</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.numutils.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.platutils.html" title="platutils"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.macro.html" title="macro"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,448 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.enginefc &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.engineservice" href="IPython.kernel.engineservice.html" />
+    <link rel="prev" title="kernel.engineconnector" href="IPython.kernel.engineconnector.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.engineservice.html" title="kernel.engineservice"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.engineconnector.html" title="kernel.engineconnector"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-enginefc">
+<h1>kernel.enginefc<a class="headerlink" href="#kernel-enginefc" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.enginefc">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.enginefc</span></tt><a class="headerlink" href="#module-IPython.kernel.enginefc" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.kernel.enginefc</span></tt>:</p>
+<img src="../../_images/inheritance0cb2ae6397.png" usemap="#inheritance0cb2ae6397" class="inheritance"/><map id="inheritance0cb2ae6397" name="inheritance0cb2ae6397">
+<area shape="rect" href="#IPython.kernel.enginefc.FCRemoteEngineRefFromService" title="kernel.enginefc.FCRemoteEngineRefFromService" alt="" coords="508,83,764,104"/>
+<area shape="rect" href="#IPython.kernel.enginefc.FCEngineReferenceFromService" title="kernel.enginefc.FCEngineReferenceFromService" alt="" coords="510,123,762,144"/>
+<area shape="rect" href="#IPython.kernel.enginefc.IFCEngine" title="kernel.enginefc.IFCEngine" alt="" coords="297,24,440,45"/>
+<area shape="rect" href="#IPython.kernel.enginefc.IFCControllerBase" title="kernel.enginefc.IFCControllerBase" alt="" coords="277,63,460,84"/>
+<area shape="rect" href="#IPython.kernel.enginefc.EngineFromReference" title="kernel.enginefc.EngineFromReference" alt="" coords="16,4,217,25"/>
+</map>
+<p>Expose the IPython EngineService using the Foolscap network protocol.</p>
+<p>Foolscap is a high-performance and secure network protocol.</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="enginefromreference">
+<h3><a title="IPython.kernel.enginefc.EngineFromReference" class="reference internal" href="#IPython.kernel.enginefc.EngineFromReference"><tt class="xref docutils literal"><span class="pre">EngineFromReference</span></tt></a><a class="headerlink" href="#enginefromreference" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.enginefc.EngineFromReference">
+<!--[IPython.kernel.enginefc.EngineFromReference]-->class <tt class="descclassname">IPython.kernel.enginefc.</tt><tt class="descname">EngineFromReference</tt><big>(</big><em>reference</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.EngineFromReference" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>Adapt a <cite>RemoteReference</cite> to an <cite>IEngineBase</cite> implementing object.</p>
+<p>When an engine connects to a controller, it calls the <cite>register_engine</cite>
+method of the controller and passes the controller a <cite>RemoteReference</cite> to
+itself.  This class is used to adapt this <cite>RemoteReference</cite> to an object
+that implements the full <cite>IEngineBase</cite> interface.</p>
+<p>See the documentation of <cite>IEngineBase</cite> for details on the methods.</p>
+<dl class="method">
+<dt id="IPython.kernel.enginefc.EngineFromReference.__init__">
+<!--[IPython.kernel.enginefc.EngineFromReference.__init__]--><tt class="descname">__init__</tt><big>(</big><em>reference</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.EngineFromReference.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.EngineFromReference.callRemote">
+<!--[IPython.kernel.enginefc.EngineFromReference.callRemote]--><tt class="descname">callRemote</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.EngineFromReference.callRemote" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.EngineFromReference.checkReturnForFailure">
+<!--[IPython.kernel.enginefc.EngineFromReference.checkReturnForFailure]--><tt class="descname">checkReturnForFailure</tt><big>(</big><em>r</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.EngineFromReference.checkReturnForFailure" title="Permalink to this definition">¶</a></dt>
+<dd><p>See if a returned value is a pickled Failure object.</p>
+<p>To distinguish between general pickled objects and pickled Failures, the
+other side should prepend the string FAILURE: to any pickled Failure.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.EngineFromReference.clear_properties">
+<!--[IPython.kernel.enginefc.EngineFromReference.clear_properties]--><tt class="descname">clear_properties</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.EngineFromReference.clear_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.EngineFromReference.del_properties">
+<!--[IPython.kernel.enginefc.EngineFromReference.del_properties]--><tt class="descname">del_properties</tt><big>(</big><em>keys</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.EngineFromReference.del_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.EngineFromReference.execute">
+<!--[IPython.kernel.enginefc.EngineFromReference.execute]--><tt class="descname">execute</tt><big>(</big><em>lines</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.EngineFromReference.execute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.EngineFromReference.get_id">
+<!--[IPython.kernel.enginefc.EngineFromReference.get_id]--><tt class="descname">get_id</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.EngineFromReference.get_id" title="Permalink to this definition">¶</a></dt>
+<dd>Return the Engines id.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.EngineFromReference.get_properties">
+<!--[IPython.kernel.enginefc.EngineFromReference.get_properties]--><tt class="descname">get_properties</tt><big>(</big><em>keys=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.EngineFromReference.get_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.EngineFromReference.get_result">
+<!--[IPython.kernel.enginefc.EngineFromReference.get_result]--><tt class="descname">get_result</tt><big>(</big><em>i=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.EngineFromReference.get_result" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.EngineFromReference.has_properties">
+<!--[IPython.kernel.enginefc.EngineFromReference.has_properties]--><tt class="descname">has_properties</tt><big>(</big><em>keys</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.EngineFromReference.has_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.kernel.enginefc.EngineFromReference.id">
+<!--[IPython.kernel.enginefc.EngineFromReference.id]--><tt class="descname">id</tt><a class="headerlink" href="#IPython.kernel.enginefc.EngineFromReference.id" title="Permalink to this definition">¶</a></dt>
+<dd>Return the Engines id.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.EngineFromReference.keys">
+<!--[IPython.kernel.enginefc.EngineFromReference.keys]--><tt class="descname">keys</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.EngineFromReference.keys" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.EngineFromReference.kill">
+<!--[IPython.kernel.enginefc.EngineFromReference.kill]--><tt class="descname">kill</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.EngineFromReference.kill" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.EngineFromReference.killBack">
+<!--[IPython.kernel.enginefc.EngineFromReference.killBack]--><tt class="descname">killBack</tt><big>(</big><em>f</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.EngineFromReference.killBack" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.kernel.enginefc.EngineFromReference.properties">
+<!--[IPython.kernel.enginefc.EngineFromReference.properties]--><tt class="descname">properties</tt><a class="headerlink" href="#IPython.kernel.enginefc.EngineFromReference.properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.EngineFromReference.pull">
+<!--[IPython.kernel.enginefc.EngineFromReference.pull]--><tt class="descname">pull</tt><big>(</big><em>keys</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.EngineFromReference.pull" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.EngineFromReference.pull_function">
+<!--[IPython.kernel.enginefc.EngineFromReference.pull_function]--><tt class="descname">pull_function</tt><big>(</big><em>keys</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.EngineFromReference.pull_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.EngineFromReference.pull_serialized">
+<!--[IPython.kernel.enginefc.EngineFromReference.pull_serialized]--><tt class="descname">pull_serialized</tt><big>(</big><em>keys</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.EngineFromReference.pull_serialized" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.EngineFromReference.push">
+<!--[IPython.kernel.enginefc.EngineFromReference.push]--><tt class="descname">push</tt><big>(</big><em>namespace</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.EngineFromReference.push" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.EngineFromReference.push_function">
+<!--[IPython.kernel.enginefc.EngineFromReference.push_function]--><tt class="descname">push_function</tt><big>(</big><em>namespace</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.EngineFromReference.push_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.EngineFromReference.push_serialized">
+<!--[IPython.kernel.enginefc.EngineFromReference.push_serialized]--><tt class="descname">push_serialized</tt><big>(</big><em>namespace</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.EngineFromReference.push_serialized" title="Permalink to this definition">¶</a></dt>
+<dd>Older version of pushSerialize.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.EngineFromReference.reset">
+<!--[IPython.kernel.enginefc.EngineFromReference.reset]--><tt class="descname">reset</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.EngineFromReference.reset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.EngineFromReference.set_id">
+<!--[IPython.kernel.enginefc.EngineFromReference.set_id]--><tt class="descname">set_id</tt><big>(</big><em>id</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.EngineFromReference.set_id" title="Permalink to this definition">¶</a></dt>
+<dd>Set the Engines id.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.EngineFromReference.set_properties">
+<!--[IPython.kernel.enginefc.EngineFromReference.set_properties]--><tt class="descname">set_properties</tt><big>(</big><em>properties</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.EngineFromReference.set_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.EngineFromReference.syncProperties">
+<!--[IPython.kernel.enginefc.EngineFromReference.syncProperties]--><tt class="descname">syncProperties</tt><big>(</big><em>r</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.EngineFromReference.syncProperties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="fcenginereferencefromservice">
+<h3><a title="IPython.kernel.enginefc.FCEngineReferenceFromService" class="reference internal" href="#IPython.kernel.enginefc.FCEngineReferenceFromService"><tt class="xref docutils literal"><span class="pre">FCEngineReferenceFromService</span></tt></a><a class="headerlink" href="#fcenginereferencefromservice" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.enginefc.FCEngineReferenceFromService">
+<!--[IPython.kernel.enginefc.FCEngineReferenceFromService]-->class <tt class="descclassname">IPython.kernel.enginefc.</tt><tt class="descname">FCEngineReferenceFromService</tt><big>(</big><em>service</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.FCEngineReferenceFromService" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">foolscap.referenceable.Referenceable</span></tt>, <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>Adapt an <cite>IEngineBase</cite> to an <cite>IFCEngine</cite> implementer.</p>
+<p>This exposes an <cite>IEngineBase</cite> to foolscap by adapting it to a
+<cite>foolscap.Referenceable</cite>.</p>
+<p>See the documentation of the <cite>IEngineBase</cite> methods for more details.</p>
+<dl class="method">
+<dt id="IPython.kernel.enginefc.FCEngineReferenceFromService.__init__">
+<!--[IPython.kernel.enginefc.FCEngineReferenceFromService.__init__]--><tt class="descname">__init__</tt><big>(</big><em>service</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.FCEngineReferenceFromService.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.FCEngineReferenceFromService.remote_clear_properties">
+<!--[IPython.kernel.enginefc.FCEngineReferenceFromService.remote_clear_properties]--><tt class="descname">remote_clear_properties</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.FCEngineReferenceFromService.remote_clear_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.FCEngineReferenceFromService.remote_del_properties">
+<!--[IPython.kernel.enginefc.FCEngineReferenceFromService.remote_del_properties]--><tt class="descname">remote_del_properties</tt><big>(</big><em>keys</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.FCEngineReferenceFromService.remote_del_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.FCEngineReferenceFromService.remote_execute">
+<!--[IPython.kernel.enginefc.FCEngineReferenceFromService.remote_execute]--><tt class="descname">remote_execute</tt><big>(</big><em>lines</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.FCEngineReferenceFromService.remote_execute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.FCEngineReferenceFromService.remote_get_id">
+<!--[IPython.kernel.enginefc.FCEngineReferenceFromService.remote_get_id]--><tt class="descname">remote_get_id</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.FCEngineReferenceFromService.remote_get_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.FCEngineReferenceFromService.remote_get_properties">
+<!--[IPython.kernel.enginefc.FCEngineReferenceFromService.remote_get_properties]--><tt class="descname">remote_get_properties</tt><big>(</big><em>keys=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.FCEngineReferenceFromService.remote_get_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.FCEngineReferenceFromService.remote_get_result">
+<!--[IPython.kernel.enginefc.FCEngineReferenceFromService.remote_get_result]--><tt class="descname">remote_get_result</tt><big>(</big><em>i=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.FCEngineReferenceFromService.remote_get_result" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.FCEngineReferenceFromService.remote_has_properties">
+<!--[IPython.kernel.enginefc.FCEngineReferenceFromService.remote_has_properties]--><tt class="descname">remote_has_properties</tt><big>(</big><em>keys</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.FCEngineReferenceFromService.remote_has_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.FCEngineReferenceFromService.remote_keys">
+<!--[IPython.kernel.enginefc.FCEngineReferenceFromService.remote_keys]--><tt class="descname">remote_keys</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.FCEngineReferenceFromService.remote_keys" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.FCEngineReferenceFromService.remote_kill">
+<!--[IPython.kernel.enginefc.FCEngineReferenceFromService.remote_kill]--><tt class="descname">remote_kill</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.FCEngineReferenceFromService.remote_kill" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.FCEngineReferenceFromService.remote_pull">
+<!--[IPython.kernel.enginefc.FCEngineReferenceFromService.remote_pull]--><tt class="descname">remote_pull</tt><big>(</big><em>keys</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.FCEngineReferenceFromService.remote_pull" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.FCEngineReferenceFromService.remote_pull_function">
+<!--[IPython.kernel.enginefc.FCEngineReferenceFromService.remote_pull_function]--><tt class="descname">remote_pull_function</tt><big>(</big><em>keys</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.FCEngineReferenceFromService.remote_pull_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.FCEngineReferenceFromService.remote_pull_serialized">
+<!--[IPython.kernel.enginefc.FCEngineReferenceFromService.remote_pull_serialized]--><tt class="descname">remote_pull_serialized</tt><big>(</big><em>keys</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.FCEngineReferenceFromService.remote_pull_serialized" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.FCEngineReferenceFromService.remote_push">
+<!--[IPython.kernel.enginefc.FCEngineReferenceFromService.remote_push]--><tt class="descname">remote_push</tt><big>(</big><em>pNamespace</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.FCEngineReferenceFromService.remote_push" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.FCEngineReferenceFromService.remote_push_function">
+<!--[IPython.kernel.enginefc.FCEngineReferenceFromService.remote_push_function]--><tt class="descname">remote_push_function</tt><big>(</big><em>pNamespace</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.FCEngineReferenceFromService.remote_push_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.FCEngineReferenceFromService.remote_push_serialized">
+<!--[IPython.kernel.enginefc.FCEngineReferenceFromService.remote_push_serialized]--><tt class="descname">remote_push_serialized</tt><big>(</big><em>pNamespace</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.FCEngineReferenceFromService.remote_push_serialized" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.FCEngineReferenceFromService.remote_reset">
+<!--[IPython.kernel.enginefc.FCEngineReferenceFromService.remote_reset]--><tt class="descname">remote_reset</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.FCEngineReferenceFromService.remote_reset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.FCEngineReferenceFromService.remote_set_id">
+<!--[IPython.kernel.enginefc.FCEngineReferenceFromService.remote_set_id]--><tt class="descname">remote_set_id</tt><big>(</big><em>id</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.FCEngineReferenceFromService.remote_set_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.FCEngineReferenceFromService.remote_set_properties">
+<!--[IPython.kernel.enginefc.FCEngineReferenceFromService.remote_set_properties]--><tt class="descname">remote_set_properties</tt><big>(</big><em>pNamespace</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.FCEngineReferenceFromService.remote_set_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="fcremoteenginereffromservice">
+<h3><a title="IPython.kernel.enginefc.FCRemoteEngineRefFromService" class="reference internal" href="#IPython.kernel.enginefc.FCRemoteEngineRefFromService"><tt class="xref docutils literal"><span class="pre">FCRemoteEngineRefFromService</span></tt></a><a class="headerlink" href="#fcremoteenginereffromservice" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.enginefc.FCRemoteEngineRefFromService">
+<!--[IPython.kernel.enginefc.FCRemoteEngineRefFromService]-->class <tt class="descclassname">IPython.kernel.enginefc.</tt><tt class="descname">FCRemoteEngineRefFromService</tt><big>(</big><em>service</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.FCRemoteEngineRefFromService" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">foolscap.referenceable.Referenceable</span></tt></p>
+<p>Adapt an <cite>IControllerBase</cite> to an <cite>IFCControllerBase</cite>.</p>
+<dl class="method">
+<dt id="IPython.kernel.enginefc.FCRemoteEngineRefFromService.__init__">
+<!--[IPython.kernel.enginefc.FCRemoteEngineRefFromService.__init__]--><tt class="descname">__init__</tt><big>(</big><em>service</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.FCRemoteEngineRefFromService.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.enginefc.FCRemoteEngineRefFromService.remote_register_engine">
+<!--[IPython.kernel.enginefc.FCRemoteEngineRefFromService.remote_register_engine]--><tt class="descname">remote_register_engine</tt><big>(</big><em>engine_reference</em>, <em>id=None</em>, <em>pid=None</em>, <em>pproperties=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.FCRemoteEngineRefFromService.remote_register_engine" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ifccontrollerbase">
+<h3><a title="IPython.kernel.enginefc.IFCControllerBase" class="reference internal" href="#IPython.kernel.enginefc.IFCControllerBase"><tt class="xref docutils literal"><span class="pre">IFCControllerBase</span></tt></a><a class="headerlink" href="#ifccontrollerbase" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.enginefc.IFCControllerBase">
+<!--[IPython.kernel.enginefc.IFCControllerBase]-->class <tt class="descclassname">IPython.kernel.enginefc.</tt><tt class="descname">IFCControllerBase</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.IFCControllerBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">zope.interface.Interface</span></tt></p>
+<p>Interface that tells how an Engine sees a Controller.</p>
+<p>In our architecture, the Controller listens for Engines to connect
+and register.  This interface defines that registration method as it is 
+exposed over the Foolscap network protocol</p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.enginefc.IFCControllerBase.__init__">
+<!--[IPython.kernel.enginefc.IFCControllerBase.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.IFCControllerBase.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ifcengine">
+<h3><a title="IPython.kernel.enginefc.IFCEngine" class="reference internal" href="#IPython.kernel.enginefc.IFCEngine"><tt class="xref docutils literal"><span class="pre">IFCEngine</span></tt></a><a class="headerlink" href="#ifcengine" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.enginefc.IFCEngine">
+<!--[IPython.kernel.enginefc.IFCEngine]-->class <tt class="descclassname">IPython.kernel.enginefc.</tt><tt class="descname">IFCEngine</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.IFCEngine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">zope.interface.Interface</span></tt></p>
+<p>An interface that exposes an EngineService over Foolscap.</p>
+<p>The methods in this interface are similar to those from IEngine, 
+but their arguments and return values slightly different to reflect
+that FC cannot send arbitrary objects.  We handle this by pickling/
+unpickling that the two endpoints.</p>
+<p>If a remote or local exception is raised, the appropriate Failure
+will be returned instead.</p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.enginefc.IFCEngine.__init__">
+<!--[IPython.kernel.enginefc.IFCEngine.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.enginefc.IFCEngine.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.enginefc</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.enginefc">Module: <tt class="docutils literal"><span class="pre">kernel.enginefc</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#enginefromreference"><tt class="docutils literal"><span class="pre">EngineFromReference</span></tt></a></li>
+<li><a class="reference external" href="#fcenginereferencefromservice"><tt class="docutils literal"><span class="pre">FCEngineReferenceFromService</span></tt></a></li>
+<li><a class="reference external" href="#fcremoteenginereffromservice"><tt class="docutils literal"><span class="pre">FCRemoteEngineRefFromService</span></tt></a></li>
+<li><a class="reference external" href="#ifccontrollerbase"><tt class="docutils literal"><span class="pre">IFCControllerBase</span></tt></a></li>
+<li><a class="reference external" href="#ifcengine"><tt class="docutils literal"><span class="pre">IFCEngine</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.kernel.engineconnector.html" title="previous chapter">kernel.engineconnector</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.engineservice.html" title="next chapter">kernel.engineservice</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.enginefc.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.engineservice.html" title="kernel.engineservice"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.engineconnector.html" title="kernel.engineconnector"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

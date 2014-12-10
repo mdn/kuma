@@ -1,0 +1,736 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Shell &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="UserConfig.ipy_user_conf" href="IPython.UserConfig.ipy_user_conf.html" />
+    <link rel="prev" title="PyColorize" href="IPython.PyColorize.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.UserConfig.ipy_user_conf.html" title="UserConfig.ipy_user_conf"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.PyColorize.html" title="PyColorize"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="shell">
+<h1>Shell<a class="headerlink" href="#shell" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.Shell">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">Shell</span></tt><a class="headerlink" href="#module-IPython.Shell" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.Shell</span></tt>:</p>
+<img src="../../_images/inheritance87c89d1076.png" usemap="#inheritance87c89d1076" class="inheritance"/><map id="inheritance87c89d1076" name="inheritance87c89d1076">
+<area shape="rect" href="#IPython.Shell.MatplotlibMTShell" title="IPython.Shell.MatplotlibMTShell" alt="" coords="469,129,598,145"/>
+<area shape="rect" href="#IPython.Shell.MatplotlibShellBase" title="IPython.Shell.MatplotlibShellBase" alt="" coords="145,107,282,123"/>
+<area shape="rect" href="#IPython.Shell.MatplotlibShell" title="IPython.Shell.MatplotlibShell" alt="" coords="317,122,434,138"/>
+<area shape="rect" href="#IPython.Shell.MTInteractiveShell" title="IPython.Shell.MTInteractiveShell" alt="" coords="310,152,441,167"/>
+<area shape="rect" href="#IPython.Shell.IPShellMatplotlib" title="IPython.Shell.IPShellMatplotlib" alt="" coords="152,77,275,93"/>
+<area shape="rect" href="#IPython.Shell.IPShell" title="IPython.Shell.IPShell" alt="" coords="16,77,104,93"/>
+<area shape="rect" href="#IPython.Shell.IPShellMatplotlibWX" title="IPython.Shell.IPShellMatplotlibWX" alt="" coords="628,3,763,19"/>
+<area shape="rect" href="#IPython.Shell.IPShellWX" title="IPython.Shell.IPShellWX" alt="" coords="484,3,583,19"/>
+<area shape="rect" href="IPython.Magic.html#IPython.Magic.Magic" title="IPython.Magic.Magic" alt="" coords="16,137,104,153"/>
+<area shape="rect" href="IPython.iplib.html#IPython.iplib.InteractiveShell" title="IPython.iplib.InteractiveShell" alt="" coords="155,137,272,153"/>
+<area shape="rect" href="#IPython.Shell.IPShellMatplotlibGTK" title="IPython.Shell.IPShellMatplotlibGTK" alt="" coords="626,33,764,48"/>
+<area shape="rect" href="#IPython.Shell.IPShellGTK" title="IPython.Shell.IPShellGTK" alt="" coords="483,33,584,48"/>
+<area shape="rect" href="#IPython.Shell.IPShellQt4" title="IPython.Shell.IPShellQt4" alt="" coords="483,63,583,78"/>
+<area shape="rect" href="#IPython.Shell.IPShellMatplotlibQt4" title="IPython.Shell.IPShellMatplotlibQt4" alt="" coords="626,63,764,78"/>
+<area shape="rect" href="#IPython.Shell.IPThread" title="IPython.Shell.IPThread" alt="" coords="328,48,423,63"/>
+<area shape="rect" href="#IPython.Shell.IPShellQt" title="IPython.Shell.IPShellQt" alt="" coords="486,92,581,108"/>
+<area shape="rect" href="#IPython.Shell.IPShellMatplotlibQt" title="IPython.Shell.IPShellMatplotlibQt" alt="" coords="629,92,762,108"/>
+<area shape="rect" href="#IPython.Shell.IPShellEmbed" title="IPython.Shell.IPShellEmbed" alt="" coords="3,18,117,34"/>
+</map>
+<p>IPython Shell classes.</p>
+<p>All the matplotlib support code was co-developed with John Hunter,
+matplotlib&#8217;s author.</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="ipshell">
+<h3><a title="IPython.Shell.IPShell" class="reference internal" href="#IPython.Shell.IPShell"><tt class="xref docutils literal"><span class="pre">IPShell</span></tt></a><a class="headerlink" href="#ipshell" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.Shell.IPShell">
+<!--[IPython.Shell.IPShell]-->class <tt class="descclassname">IPython.Shell.</tt><tt class="descname">IPShell</tt><big>(</big><em>argv=None</em>, <em>user_ns=None</em>, <em>user_global_ns=None</em>, <em>debug=1</em>, <em>shell_class=&lt;class 'IPython.iplib.InteractiveShell'&gt;</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPShell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an IPython instance.</p>
+<dl class="method">
+<dt id="IPython.Shell.IPShell.__init__">
+<!--[IPython.Shell.IPShell.__init__]--><tt class="descname">__init__</tt><big>(</big><em>argv=None</em>, <em>user_ns=None</em>, <em>user_global_ns=None</em>, <em>debug=1</em>, <em>shell_class=&lt;class 'IPython.iplib.InteractiveShell'&gt;</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPShell.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.Shell.IPShell.mainloop">
+<!--[IPython.Shell.IPShell.mainloop]--><tt class="descname">mainloop</tt><big>(</big><em>sys_exit=0</em>, <em>banner=None</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPShell.mainloop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ipshellembed">
+<h3><a title="IPython.Shell.IPShellEmbed" class="reference internal" href="#IPython.Shell.IPShellEmbed"><tt class="xref docutils literal"><span class="pre">IPShellEmbed</span></tt></a><a class="headerlink" href="#ipshellembed" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.Shell.IPShellEmbed">
+<!--[IPython.Shell.IPShellEmbed]-->class <tt class="descclassname">IPython.Shell.</tt><tt class="descname">IPShellEmbed</tt><big>(</big><em>argv=None</em>, <em>banner=''</em>, <em>exit_msg=None</em>, <em>rc_override=None</em>, <em>user_ns=None</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellEmbed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow embedding an IPython shell into a running program.</p>
+<p>Instances of this class are callable, with the __call__ method being an
+alias to the embed() method of an InteractiveShell instance.</p>
+<p>Usage (see also the example-embed.py file for a running example):</p>
+<p>ipshell = IPShellEmbed([argv,banner,exit_msg,rc_override])</p>
+<ul class="simple">
+<li>argv: list containing valid command-line options for IPython, as they</li>
+</ul>
+<p>would appear in sys.argv[1:].</p>
+<p>For example, the following command-line options:</p>
+<blockquote>
+$ ipython -prompt_in1 &#8216;Input &lt;#&gt;&#8217; -colors LightBG</blockquote>
+<p>would be passed in the argv list as:</p>
+<blockquote>
+[&#8216;-prompt_in1&#8217;,&#8217;Input &lt;#&gt;&#8217;,&#8217;-colors&#8217;,&#8217;LightBG&#8217;]</blockquote>
+<ul class="simple">
+<li>banner: string which gets printed every time the interpreter starts.</li>
+<li>exit_msg: string which gets printed every time the interpreter exits.</li>
+<li>rc_override: a dict or Struct of configuration options such as those</li>
+</ul>
+<p>used by IPython. These options are read from your ~/.ipython/ipythonrc
+file when the Shell object is created. Passing an explicit rc_override
+dict with any options you want allows you to override those values at
+creation time without having to modify the file. This way you can create
+embeddable instances configured in any way you want without editing any
+global files (thus keeping your interactive IPython configuration
+unchanged).</p>
+<p>Then the ipshell instance can be called anywhere inside your code:</p>
+<p>ipshell(header=&#8217;&#8216;) -&gt; Opens up an IPython shell.</p>
+<ul class="simple">
+<li>header: string printed by the IPython shell upon startup. This can let</li>
+</ul>
+<p>you know where in your code you are when dropping into the shell. Note
+that &#8216;banner&#8217; gets prepended to all calls, so header is used for
+location-specific information.</p>
+<p>For more details, see the __call__ method below.</p>
+<p>When the IPython shell is exited with Ctrl-D, normal program execution
+resumes.</p>
+<p>This functionality was inspired by a posting on comp.lang.python by cmkl
+&lt;<a class="reference external" href="mailto:cmkleffner&#37;&#52;&#48;gmx&#46;de">cmkleffner<span>&#64;</span>gmx<span>&#46;</span>de</a>&gt; on Dec. 06/01 concerning similar uses of pyrepl, and
+by the IDL stop/continue commands.</p>
+<dl class="method">
+<dt id="IPython.Shell.IPShellEmbed.__init__">
+<!--[IPython.Shell.IPShellEmbed.__init__]--><tt class="descname">__init__</tt><big>(</big><em>argv=None</em>, <em>banner=''</em>, <em>exit_msg=None</em>, <em>rc_override=None</em>, <em>user_ns=None</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellEmbed.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>Note that argv here is a string, NOT a list.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.Shell.IPShellEmbed.get_dummy_mode">
+<!--[IPython.Shell.IPShellEmbed.get_dummy_mode]--><tt class="descname">get_dummy_mode</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellEmbed.get_dummy_mode" title="Permalink to this definition">¶</a></dt>
+<dd>Return the current value of the dummy mode parameter.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.Shell.IPShellEmbed.restore_system_completer">
+<!--[IPython.Shell.IPShellEmbed.restore_system_completer]--><tt class="descname">restore_system_completer</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellEmbed.restore_system_completer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restores the readline completer which was in place.</p>
+<p>This allows embedded IPython within IPython not to disrupt the
+parent&#8217;s completion.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.Shell.IPShellEmbed.set_banner">
+<!--[IPython.Shell.IPShellEmbed.set_banner]--><tt class="descname">set_banner</tt><big>(</big><em>banner</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellEmbed.set_banner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the global banner.</p>
+<p>This banner gets prepended to every header printed when the shell
+instance is called.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.Shell.IPShellEmbed.set_dummy_mode">
+<!--[IPython.Shell.IPShellEmbed.set_dummy_mode]--><tt class="descname">set_dummy_mode</tt><big>(</big><em>dummy</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellEmbed.set_dummy_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the embeddable shell&#8217;s dummy mode parameter.</p>
+<p>set_dummy_mode(dummy): dummy = 0 or 1.</p>
+<p>This parameter is persistent and makes calls to the embeddable shell
+silently return without performing any action. This allows you to
+globally activate or deactivate a shell you&#8217;re using with a single call.</p>
+<p>If you need to manually</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.Shell.IPShellEmbed.set_exit_msg">
+<!--[IPython.Shell.IPShellEmbed.set_exit_msg]--><tt class="descname">set_exit_msg</tt><big>(</big><em>exit_msg</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellEmbed.set_exit_msg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the global exit_msg.</p>
+<p>This exit message gets printed upon exiting every time the embedded
+shell is called. It is None by default.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ipshellgtk">
+<h3><a title="IPython.Shell.IPShellGTK" class="reference internal" href="#IPython.Shell.IPShellGTK"><tt class="xref docutils literal"><span class="pre">IPShellGTK</span></tt></a><a class="headerlink" href="#ipshellgtk" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.Shell.IPShellGTK">
+<!--[IPython.Shell.IPShellGTK]-->class <tt class="descclassname">IPython.Shell.</tt><tt class="descname">IPShellGTK</tt><big>(</big><em>argv=None</em>, <em>user_ns=None</em>, <em>user_global_ns=None</em>, <em>debug=1</em>, <em>shell_class=&lt;class 'IPython.Shell.MTInteractiveShell'&gt;</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellGTK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.Shell.IPThread" class="reference internal" href="#IPython.Shell.IPThread"><tt class="xref docutils literal"><span class="pre">IPython.Shell.IPThread</span></tt></a></p>
+<p>Run a gtk mainloop() in a separate thread.</p>
+<p>Python commands can be passed to the thread where they will be executed.
+This is implemented by periodically checking for passed code using a
+GTK timeout callback.</p>
+<dl class="method">
+<dt id="IPython.Shell.IPShellGTK.__init__">
+<!--[IPython.Shell.IPShellGTK.__init__]--><tt class="descname">__init__</tt><big>(</big><em>argv=None</em>, <em>user_ns=None</em>, <em>user_global_ns=None</em>, <em>debug=1</em>, <em>shell_class=&lt;class 'IPython.Shell.MTInteractiveShell'&gt;</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellGTK.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.Shell.IPShellGTK.mainloop">
+<!--[IPython.Shell.IPShellGTK.mainloop]--><tt class="descname">mainloop</tt><big>(</big><em>sys_exit=0</em>, <em>banner=None</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellGTK.mainloop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.Shell.IPShellGTK.on_timer">
+<!--[IPython.Shell.IPShellGTK.on_timer]--><tt class="descname">on_timer</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellGTK.on_timer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when GTK is idle.</p>
+<p>Must return True always, otherwise GTK stops calling it</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ipshellmatplotlib">
+<h3><a title="IPython.Shell.IPShellMatplotlib" class="reference internal" href="#IPython.Shell.IPShellMatplotlib"><tt class="xref docutils literal"><span class="pre">IPShellMatplotlib</span></tt></a><a class="headerlink" href="#ipshellmatplotlib" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.Shell.IPShellMatplotlib">
+<!--[IPython.Shell.IPShellMatplotlib]-->class <tt class="descclassname">IPython.Shell.</tt><tt class="descname">IPShellMatplotlib</tt><big>(</big><em>argv=None</em>, <em>user_ns=None</em>, <em>user_global_ns=None</em>, <em>debug=1</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellMatplotlib" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.Shell.IPShell" class="reference internal" href="#IPython.Shell.IPShell"><tt class="xref docutils literal"><span class="pre">IPython.Shell.IPShell</span></tt></a></p>
+<p>Subclass IPShell with MatplotlibShell as the internal shell.</p>
+<p>Single-threaded class, meant for the Tk* and FLTK* backends.</p>
+<p>Having this on a separate class simplifies the external driver code.</p>
+<dl class="method">
+<dt id="IPython.Shell.IPShellMatplotlib.__init__">
+<!--[IPython.Shell.IPShellMatplotlib.__init__]--><tt class="descname">__init__</tt><big>(</big><em>argv=None</em>, <em>user_ns=None</em>, <em>user_global_ns=None</em>, <em>debug=1</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellMatplotlib.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ipshellmatplotlibgtk">
+<h3><a title="IPython.Shell.IPShellMatplotlibGTK" class="reference internal" href="#IPython.Shell.IPShellMatplotlibGTK"><tt class="xref docutils literal"><span class="pre">IPShellMatplotlibGTK</span></tt></a><a class="headerlink" href="#ipshellmatplotlibgtk" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.Shell.IPShellMatplotlibGTK">
+<!--[IPython.Shell.IPShellMatplotlibGTK]-->class <tt class="descclassname">IPython.Shell.</tt><tt class="descname">IPShellMatplotlibGTK</tt><big>(</big><em>argv=None</em>, <em>user_ns=None</em>, <em>user_global_ns=None</em>, <em>debug=1</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellMatplotlibGTK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.Shell.IPShellGTK" class="reference internal" href="#IPython.Shell.IPShellGTK"><tt class="xref docutils literal"><span class="pre">IPython.Shell.IPShellGTK</span></tt></a></p>
+<p>Subclass IPShellGTK with MatplotlibMTShell as the internal shell.</p>
+<p>Multi-threaded class, meant for the GTK* backends.</p>
+<dl class="method">
+<dt id="IPython.Shell.IPShellMatplotlibGTK.__init__">
+<!--[IPython.Shell.IPShellMatplotlibGTK.__init__]--><tt class="descname">__init__</tt><big>(</big><em>argv=None</em>, <em>user_ns=None</em>, <em>user_global_ns=None</em>, <em>debug=1</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellMatplotlibGTK.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ipshellmatplotlibqt">
+<h3><a title="IPython.Shell.IPShellMatplotlibQt" class="reference internal" href="#IPython.Shell.IPShellMatplotlibQt"><tt class="xref docutils literal"><span class="pre">IPShellMatplotlibQt</span></tt></a><a class="headerlink" href="#ipshellmatplotlibqt" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.Shell.IPShellMatplotlibQt">
+<!--[IPython.Shell.IPShellMatplotlibQt]-->class <tt class="descclassname">IPython.Shell.</tt><tt class="descname">IPShellMatplotlibQt</tt><big>(</big><em>argv=None</em>, <em>user_ns=None</em>, <em>user_global_ns=None</em>, <em>debug=1</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellMatplotlibQt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.Shell.IPShellQt" class="reference internal" href="#IPython.Shell.IPShellQt"><tt class="xref docutils literal"><span class="pre">IPython.Shell.IPShellQt</span></tt></a></p>
+<p>Subclass IPShellQt with MatplotlibMTShell as the internal shell.</p>
+<p>Multi-threaded class, meant for the Qt* backends.</p>
+<dl class="method">
+<dt id="IPython.Shell.IPShellMatplotlibQt.__init__">
+<!--[IPython.Shell.IPShellMatplotlibQt.__init__]--><tt class="descname">__init__</tt><big>(</big><em>argv=None</em>, <em>user_ns=None</em>, <em>user_global_ns=None</em>, <em>debug=1</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellMatplotlibQt.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ipshellmatplotlibqt4">
+<h3><a title="IPython.Shell.IPShellMatplotlibQt4" class="reference internal" href="#IPython.Shell.IPShellMatplotlibQt4"><tt class="xref docutils literal"><span class="pre">IPShellMatplotlibQt4</span></tt></a><a class="headerlink" href="#ipshellmatplotlibqt4" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.Shell.IPShellMatplotlibQt4">
+<!--[IPython.Shell.IPShellMatplotlibQt4]-->class <tt class="descclassname">IPython.Shell.</tt><tt class="descname">IPShellMatplotlibQt4</tt><big>(</big><em>argv=None</em>, <em>user_ns=None</em>, <em>user_global_ns=None</em>, <em>debug=1</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellMatplotlibQt4" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.Shell.IPShellQt4" class="reference internal" href="#IPython.Shell.IPShellQt4"><tt class="xref docutils literal"><span class="pre">IPython.Shell.IPShellQt4</span></tt></a></p>
+<p>Subclass IPShellQt4 with MatplotlibMTShell as the internal shell.</p>
+<p>Multi-threaded class, meant for the Qt4* backends.</p>
+<dl class="method">
+<dt id="IPython.Shell.IPShellMatplotlibQt4.__init__">
+<!--[IPython.Shell.IPShellMatplotlibQt4.__init__]--><tt class="descname">__init__</tt><big>(</big><em>argv=None</em>, <em>user_ns=None</em>, <em>user_global_ns=None</em>, <em>debug=1</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellMatplotlibQt4.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ipshellmatplotlibwx">
+<h3><a title="IPython.Shell.IPShellMatplotlibWX" class="reference internal" href="#IPython.Shell.IPShellMatplotlibWX"><tt class="xref docutils literal"><span class="pre">IPShellMatplotlibWX</span></tt></a><a class="headerlink" href="#ipshellmatplotlibwx" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.Shell.IPShellMatplotlibWX">
+<!--[IPython.Shell.IPShellMatplotlibWX]-->class <tt class="descclassname">IPython.Shell.</tt><tt class="descname">IPShellMatplotlibWX</tt><big>(</big><em>argv=None</em>, <em>user_ns=None</em>, <em>user_global_ns=None</em>, <em>debug=1</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellMatplotlibWX" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.Shell.IPShellWX" class="reference internal" href="#IPython.Shell.IPShellWX"><tt class="xref docutils literal"><span class="pre">IPython.Shell.IPShellWX</span></tt></a></p>
+<p>Subclass IPShellWX with MatplotlibMTShell as the internal shell.</p>
+<p>Multi-threaded class, meant for the WX* backends.</p>
+<dl class="method">
+<dt id="IPython.Shell.IPShellMatplotlibWX.__init__">
+<!--[IPython.Shell.IPShellMatplotlibWX.__init__]--><tt class="descname">__init__</tt><big>(</big><em>argv=None</em>, <em>user_ns=None</em>, <em>user_global_ns=None</em>, <em>debug=1</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellMatplotlibWX.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ipshellqt">
+<h3><a title="IPython.Shell.IPShellQt" class="reference internal" href="#IPython.Shell.IPShellQt"><tt class="xref docutils literal"><span class="pre">IPShellQt</span></tt></a><a class="headerlink" href="#ipshellqt" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.Shell.IPShellQt">
+<!--[IPython.Shell.IPShellQt]-->class <tt class="descclassname">IPython.Shell.</tt><tt class="descname">IPShellQt</tt><big>(</big><em>argv=None</em>, <em>user_ns=None</em>, <em>user_global_ns=None</em>, <em>debug=0</em>, <em>shell_class=&lt;class 'IPython.Shell.MTInteractiveShell'&gt;</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellQt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.Shell.IPThread" class="reference internal" href="#IPython.Shell.IPThread"><tt class="xref docutils literal"><span class="pre">IPython.Shell.IPThread</span></tt></a></p>
+<p>Run a Qt event loop in a separate thread.</p>
+<p>Python commands can be passed to the thread where they will be executed.
+This is implemented by periodically checking for passed code using a
+Qt timer / slot.</p>
+<dl class="method">
+<dt id="IPython.Shell.IPShellQt.__init__">
+<!--[IPython.Shell.IPShellQt.__init__]--><tt class="descname">__init__</tt><big>(</big><em>argv=None</em>, <em>user_ns=None</em>, <em>user_global_ns=None</em>, <em>debug=0</em>, <em>shell_class=&lt;class 'IPython.Shell.MTInteractiveShell'&gt;</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellQt.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.Shell.IPShellQt.mainloop">
+<!--[IPython.Shell.IPShellQt.mainloop]--><tt class="descname">mainloop</tt><big>(</big><em>sys_exit=0</em>, <em>banner=None</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellQt.mainloop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.Shell.IPShellQt.on_timer">
+<!--[IPython.Shell.IPShellQt.on_timer]--><tt class="descname">on_timer</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellQt.on_timer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ipshellqt4">
+<h3><a title="IPython.Shell.IPShellQt4" class="reference internal" href="#IPython.Shell.IPShellQt4"><tt class="xref docutils literal"><span class="pre">IPShellQt4</span></tt></a><a class="headerlink" href="#ipshellqt4" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.Shell.IPShellQt4">
+<!--[IPython.Shell.IPShellQt4]-->class <tt class="descclassname">IPython.Shell.</tt><tt class="descname">IPShellQt4</tt><big>(</big><em>argv=None</em>, <em>user_ns=None</em>, <em>user_global_ns=None</em>, <em>debug=0</em>, <em>shell_class=&lt;class 'IPython.Shell.MTInteractiveShell'&gt;</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellQt4" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.Shell.IPThread" class="reference internal" href="#IPython.Shell.IPThread"><tt class="xref docutils literal"><span class="pre">IPython.Shell.IPThread</span></tt></a></p>
+<p>Run a Qt event loop in a separate thread.</p>
+<p>Python commands can be passed to the thread where they will be executed.
+This is implemented by periodically checking for passed code using a
+Qt timer / slot.</p>
+<dl class="method">
+<dt id="IPython.Shell.IPShellQt4.__init__">
+<!--[IPython.Shell.IPShellQt4.__init__]--><tt class="descname">__init__</tt><big>(</big><em>argv=None</em>, <em>user_ns=None</em>, <em>user_global_ns=None</em>, <em>debug=0</em>, <em>shell_class=&lt;class 'IPython.Shell.MTInteractiveShell'&gt;</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellQt4.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.Shell.IPShellQt4.mainloop">
+<!--[IPython.Shell.IPShellQt4.mainloop]--><tt class="descname">mainloop</tt><big>(</big><em>sys_exit=0</em>, <em>banner=None</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellQt4.mainloop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.Shell.IPShellQt4.on_timer">
+<!--[IPython.Shell.IPShellQt4.on_timer]--><tt class="descname">on_timer</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellQt4.on_timer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ipshellwx">
+<h3><a title="IPython.Shell.IPShellWX" class="reference internal" href="#IPython.Shell.IPShellWX"><tt class="xref docutils literal"><span class="pre">IPShellWX</span></tt></a><a class="headerlink" href="#ipshellwx" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.Shell.IPShellWX">
+<!--[IPython.Shell.IPShellWX]-->class <tt class="descclassname">IPython.Shell.</tt><tt class="descname">IPShellWX</tt><big>(</big><em>argv=None</em>, <em>user_ns=None</em>, <em>user_global_ns=None</em>, <em>debug=1</em>, <em>shell_class=&lt;class 'IPython.Shell.MTInteractiveShell'&gt;</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellWX" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.Shell.IPThread" class="reference internal" href="#IPython.Shell.IPThread"><tt class="xref docutils literal"><span class="pre">IPython.Shell.IPThread</span></tt></a></p>
+<p>Run a wx mainloop() in a separate thread.</p>
+<p>Python commands can be passed to the thread where they will be executed.
+This is implemented by periodically checking for passed code using a
+GTK timeout callback.</p>
+<dl class="method">
+<dt id="IPython.Shell.IPShellWX.__init__">
+<!--[IPython.Shell.IPShellWX.__init__]--><tt class="descname">__init__</tt><big>(</big><em>argv=None</em>, <em>user_ns=None</em>, <em>user_global_ns=None</em>, <em>debug=1</em>, <em>shell_class=&lt;class 'IPython.Shell.MTInteractiveShell'&gt;</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellWX.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.Shell.IPShellWX.mainloop">
+<!--[IPython.Shell.IPShellWX.mainloop]--><tt class="descname">mainloop</tt><big>(</big><em>sys_exit=0</em>, <em>banner=None</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellWX.mainloop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.Shell.IPShellWX.wxexit">
+<!--[IPython.Shell.IPShellWX.wxexit]--><tt class="descname">wxexit</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPShellWX.wxexit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ipthread">
+<h3><a title="IPython.Shell.IPThread" class="reference internal" href="#IPython.Shell.IPThread"><tt class="xref docutils literal"><span class="pre">IPThread</span></tt></a><a class="headerlink" href="#ipthread" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.Shell.IPThread">
+<!--[IPython.Shell.IPThread]-->class <tt class="descclassname">IPython.Shell.</tt><tt class="descname">IPThread</tt><big>(</big><em>group=None</em>, <em>target=None</em>, <em>name=None</em>, <em>args=()</em>, <em>kwargs=None</em>, <em>verbose=None</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPThread" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">threading.Thread</span></tt></p>
+<dl class="method">
+<dt id="IPython.Shell.IPThread.__init__">
+<!--[IPython.Shell.IPThread.__init__]--><tt class="descname">__init__</tt><big>(</big><em>group=None</em>, <em>target=None</em>, <em>name=None</em>, <em>args=()</em>, <em>kwargs=None</em>, <em>verbose=None</em><big>)</big><a class="headerlink" href="#IPython.Shell.IPThread.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.Shell.IPThread.run">
+<!--[IPython.Shell.IPThread.run]--><tt class="descname">run</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.Shell.IPThread.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="mtinteractiveshell">
+<h3><a title="IPython.Shell.MTInteractiveShell" class="reference internal" href="#IPython.Shell.MTInteractiveShell"><tt class="xref docutils literal"><span class="pre">MTInteractiveShell</span></tt></a><a class="headerlink" href="#mtinteractiveshell" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.Shell.MTInteractiveShell">
+<!--[IPython.Shell.MTInteractiveShell]-->class <tt class="descclassname">IPython.Shell.</tt><tt class="descname">MTInteractiveShell</tt><big>(</big><em>name</em>, <em>usage=None</em>, <em>rc=Struct({'__allownew': True</em>, <em>'args': None</em>, <em>'opts': None})</em>, <em>user_ns=None</em>, <em>user_global_ns=None</em>, <em>banner2=''</em>, <em>gui_timeout=10</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#IPython.Shell.MTInteractiveShell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.iplib.InteractiveShell" class="reference external" href="IPython.iplib.html#IPython.iplib.InteractiveShell"><tt class="xref docutils literal"><span class="pre">IPython.iplib.InteractiveShell</span></tt></a></p>
+<p>Simple multi-threaded shell.</p>
+<dl class="method">
+<dt id="IPython.Shell.MTInteractiveShell.__init__">
+<!--[IPython.Shell.MTInteractiveShell.__init__]--><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>usage=None</em>, <em>rc=Struct({'__allownew': True</em>, <em>'args': None</em>, <em>'opts': None})</em>, <em>user_ns=None</em>, <em>user_global_ns=None</em>, <em>banner2=''</em>, <em>gui_timeout=10</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#IPython.Shell.MTInteractiveShell.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>Similar to the normal InteractiveShell, but with threading control</dd></dl>
+
+<dl class="method">
+<dt id="IPython.Shell.MTInteractiveShell.kill">
+<!--[IPython.Shell.MTInteractiveShell.kill]--><tt class="descname">kill</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.Shell.MTInteractiveShell.kill" title="Permalink to this definition">¶</a></dt>
+<dd>Kill the thread, returning when it has been shut down.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.Shell.MTInteractiveShell.runcode">
+<!--[IPython.Shell.MTInteractiveShell.runcode]--><tt class="descname">runcode</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.Shell.MTInteractiveShell.runcode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute a code object.</p>
+<p>Multithreaded wrapper around IPython&#8217;s runcode().</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.Shell.MTInteractiveShell.runsource">
+<!--[IPython.Shell.MTInteractiveShell.runsource]--><tt class="descname">runsource</tt><big>(</big><em>source</em>, <em>filename='&lt;input&gt;'</em>, <em>symbol='single'</em><big>)</big><a class="headerlink" href="#IPython.Shell.MTInteractiveShell.runsource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compile and run some source in the interpreter.</p>
+<p>Modified version of code.py&#8217;s runsource(), to handle threading issues.
+See the original for full docstring details.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="matplotlibmtshell">
+<h3><a title="IPython.Shell.MatplotlibMTShell" class="reference internal" href="#IPython.Shell.MatplotlibMTShell"><tt class="xref docutils literal"><span class="pre">MatplotlibMTShell</span></tt></a><a class="headerlink" href="#matplotlibmtshell" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.Shell.MatplotlibMTShell">
+<!--[IPython.Shell.MatplotlibMTShell]-->class <tt class="descclassname">IPython.Shell.</tt><tt class="descname">MatplotlibMTShell</tt><big>(</big><em>name</em>, <em>usage=None</em>, <em>rc=Struct({'__allownew': True</em>, <em>'args': None</em>, <em>'opts': None})</em>, <em>user_ns=None</em>, <em>user_global_ns=None</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#IPython.Shell.MatplotlibMTShell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.Shell.MatplotlibShellBase" class="reference internal" href="#IPython.Shell.MatplotlibShellBase"><tt class="xref docutils literal"><span class="pre">IPython.Shell.MatplotlibShellBase</span></tt></a>, <a title="IPython.Shell.MTInteractiveShell" class="reference internal" href="#IPython.Shell.MTInteractiveShell"><tt class="xref docutils literal"><span class="pre">IPython.Shell.MTInteractiveShell</span></tt></a></p>
+<p>Multi-threaded shell with matplotlib support.</p>
+<dl class="method">
+<dt id="IPython.Shell.MatplotlibMTShell.__init__">
+<!--[IPython.Shell.MatplotlibMTShell.__init__]--><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>usage=None</em>, <em>rc=Struct({'__allownew': True</em>, <em>'args': None</em>, <em>'opts': None})</em>, <em>user_ns=None</em>, <em>user_global_ns=None</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#IPython.Shell.MatplotlibMTShell.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="matplotlibshell">
+<h3><a title="IPython.Shell.MatplotlibShell" class="reference internal" href="#IPython.Shell.MatplotlibShell"><tt class="xref docutils literal"><span class="pre">MatplotlibShell</span></tt></a><a class="headerlink" href="#matplotlibshell" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.Shell.MatplotlibShell">
+<!--[IPython.Shell.MatplotlibShell]-->class <tt class="descclassname">IPython.Shell.</tt><tt class="descname">MatplotlibShell</tt><big>(</big><em>name</em>, <em>usage=None</em>, <em>rc=Struct({'__allownew': True</em>, <em>'args': None</em>, <em>'opts': None})</em>, <em>user_ns=None</em>, <em>user_global_ns=None</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#IPython.Shell.MatplotlibShell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.Shell.MatplotlibShellBase" class="reference internal" href="#IPython.Shell.MatplotlibShellBase"><tt class="xref docutils literal"><span class="pre">IPython.Shell.MatplotlibShellBase</span></tt></a>, <a title="IPython.iplib.InteractiveShell" class="reference external" href="IPython.iplib.html#IPython.iplib.InteractiveShell"><tt class="xref docutils literal"><span class="pre">IPython.iplib.InteractiveShell</span></tt></a></p>
+<p>Single-threaded shell with matplotlib support.</p>
+<dl class="method">
+<dt id="IPython.Shell.MatplotlibShell.__init__">
+<!--[IPython.Shell.MatplotlibShell.__init__]--><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>usage=None</em>, <em>rc=Struct({'__allownew': True</em>, <em>'args': None</em>, <em>'opts': None})</em>, <em>user_ns=None</em>, <em>user_global_ns=None</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#IPython.Shell.MatplotlibShell.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="matplotlibshellbase">
+<h3><a title="IPython.Shell.MatplotlibShellBase" class="reference internal" href="#IPython.Shell.MatplotlibShellBase"><tt class="xref docutils literal"><span class="pre">MatplotlibShellBase</span></tt></a><a class="headerlink" href="#matplotlibshellbase" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.Shell.MatplotlibShellBase">
+<!--[IPython.Shell.MatplotlibShellBase]-->class <tt class="descclassname">IPython.Shell.</tt><tt class="descname">MatplotlibShellBase</tt><a class="headerlink" href="#IPython.Shell.MatplotlibShellBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mixin class to provide the necessary modifications to regular IPython
+shell classes for matplotlib support.</p>
+<p>Given Python&#8217;s MRO, this should be used as the FIRST class in the
+inheritance hierarchy, so that it overrides the relevant methods.</p>
+<dl class="method">
+<dt id="IPython.Shell.MatplotlibShellBase.magic_run">
+<!--[IPython.Shell.MatplotlibShellBase.magic_run]--><tt class="descname">magic_run</tt><big>(</big><em>parameter_s=''</em><big>)</big><a class="headerlink" href="#IPython.Shell.MatplotlibShellBase.magic_run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the named file inside IPython as a program.</p>
+<dl class="docutils">
+<dt>Usage:</dt>
+<dd>%run [-n -i -t [-N&lt;N&gt;] -d [-b&lt;N&gt;] -p [profile options]] file [args]</dd>
+</dl>
+<p>Parameters after the filename are passed as command-line arguments to
+the program (put in sys.argv). Then, control returns to IPython&#8217;s
+prompt.</p>
+<dl class="docutils">
+<dt>This is similar to running at a system prompt:</dt>
+<dd>$ python file args</dd>
+</dl>
+<p>but with the advantage of giving you IPython&#8217;s tracebacks, and of
+loading all variables into your interactive namespace for further use
+(unless -p is used, see below).</p>
+<p>The file is executed in a namespace initially consisting only of
+__name__==&#8217;__main__&#8217; and sys.argv constructed as indicated. It thus
+sees its environment as if it were being run as a stand-alone program
+(except for sharing global objects such as previously imported
+modules). But after execution, the IPython interactive namespace gets
+updated with all variables defined in the program (except for __name__
+and sys.argv). This allows for very convenient loading of code for
+interactive work, while giving each program a &#8216;clean sheet&#8217; to run in.</p>
+<p>Options:</p>
+<p>-n: __name__ is NOT set to &#8216;__main__&#8217;, but to the running file&#8217;s name
+without extension (as python does under import).  This allows running
+scripts and reloading the definitions in them without calling code
+protected by an &#8216; if __name__ == &#8220;__main__&#8221; &#8216; clause.</p>
+<p>-i: run the file in IPython&#8217;s namespace instead of an empty one. This
+is useful if you are experimenting with code written in a text editor
+which depends on variables defined interactively.</p>
+<p>-e: ignore sys.exit() calls or SystemExit exceptions in the script
+being run.  This is particularly useful if IPython is being used to
+run unittests, which always exit with a sys.exit() call.  In such
+cases you are interested in the output of the test results, not in
+seeing a traceback of the unittest module.</p>
+<p>-t: print timing information at the end of the run.  IPython will give
+you an estimated CPU time consumption for your script, which under
+Unix uses the resource module to avoid the wraparound problems of
+time.clock().  Under Unix, an estimate of time spent on system tasks
+is also given (for Windows platforms this is reported as 0.0).</p>
+<p>If -t is given, an additional -N&lt;N&gt; option can be given, where &lt;N&gt;
+must be an integer indicating how many times you want the script to
+run.  The final timing report will include total and per run results.</p>
+<p>For example (testing the script uniq_stable.py):</p>
+<blockquote>
+<p>In [1]: run -t uniq_stable</p>
+<dl class="docutils">
+<dt>IPython CPU timings (estimated):</dt>
+<dd>User  :    0.19597 s.System:        0.0 s.</dd>
+</dl>
+<p>In [2]: run -t -N5 uniq_stable</p>
+<p>IPython CPU timings (estimated):Total runs performed: 5</p>
+<blockquote>
+Times :      Total       Per runUser  :   0.910862 s,  0.1821724 s.System:        0.0 s,        0.0 s.</blockquote>
+</blockquote>
+<p>-d: run your program under the control of pdb, the Python debugger.
+This allows you to execute your program step by step, watch variables,
+etc.  Internally, what IPython does is similar to calling:</p>
+<blockquote>
+pdb.run(&#8216;execfile(&#8220;YOURFILENAME&#8221;)&#8217;)</blockquote>
+<p>with a breakpoint set on line 1 of your file.  You can change the line
+number for this automatic breakpoint to be &lt;N&gt; by using the -bN option
+(where N must be an integer).  For example:</p>
+<blockquote>
+%run -d -b40 myscript</blockquote>
+<p>will set the first breakpoint at line 40 in myscript.py.  Note that
+the first breakpoint must be set on a line which actually does
+something (not a comment or docstring) for it to stop execution.</p>
+<p>When the pdb debugger starts, you will see a (Pdb) prompt.  You must
+first enter &#8216;c&#8217; (without qoutes) to start execution up to the first
+breakpoint.</p>
+<p>Entering &#8216;help&#8217; gives information about the use of the debugger.  You
+can easily see pdb&#8217;s full documentation with &#8220;import pdb;pdb.help()&#8221;
+at a prompt.</p>
+<p>-p: run program under the control of the Python profiler module (which
+prints a detailed report of execution times, function calls, etc).</p>
+<p>You can pass other options after -p which affect the behavior of the
+profiler itself. See the docs for %prun for details.</p>
+<p>In this mode, the program&#8217;s variables do NOT propagate back to the
+IPython interactive namespace (because they remain in the namespace
+where the profiler executes them).</p>
+<p>Internally this triggers a call to %prun, see its documentation for
+details on the options available specifically for profiling.</p>
+<p>There is one special usage for which the text above doesn&#8217;t apply:
+if the filename ends with .ipy, the file is run as ipython script,
+just as if the commands were written on IPython prompt.</p>
+<p><strong>* Modified %run for Matplotlib, with proper interactive handling *</strong></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.Shell.MatplotlibShellBase.mplot_exec">
+<!--[IPython.Shell.MatplotlibShellBase.mplot_exec]--><tt class="descname">mplot_exec</tt><big>(</big><em>fname</em>, <em>*where</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#IPython.Shell.MatplotlibShellBase.mplot_exec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute a matplotlib script.</p>
+<p>This is a call to execfile(), but wrapped in safeties to properly
+handle interactive rendering and backend switching.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.Shell.get_tk">
+<!--[IPython.Shell.get_tk]--><tt class="descclassname">IPython.Shell.</tt><tt class="descname">get_tk</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.Shell.get_tk" title="Permalink to this definition">¶</a></dt>
+<dd>Tries to import Tkinter and returns a withdrawn Tkinter root
+window.  If Tkinter is already imported or not available, this
+returns None.  This function calls <cite>hijack_tk</cite> underneath.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.Shell.hijack_gtk">
+<!--[IPython.Shell.hijack_gtk]--><tt class="descclassname">IPython.Shell.</tt><tt class="descname">hijack_gtk</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.Shell.hijack_gtk" title="Permalink to this definition">¶</a></dt>
+<dd>Modifies pyGTK&#8217;s mainloop with a dummy so user code does not
+block IPython.  This function returns the original <cite>gtk.mainloop</cite>
+function that has been hijacked.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.Shell.hijack_qt">
+<!--[IPython.Shell.hijack_qt]--><tt class="descclassname">IPython.Shell.</tt><tt class="descname">hijack_qt</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.Shell.hijack_qt" title="Permalink to this definition">¶</a></dt>
+<dd>Modifies PyQt&#8217;s mainloop with a dummy so user code does not 
+block IPython.  This function returns the original 
+<cite>qt.qApp.exec_loop</cite> function that has been hijacked.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.Shell.hijack_qt4">
+<!--[IPython.Shell.hijack_qt4]--><tt class="descclassname">IPython.Shell.</tt><tt class="descname">hijack_qt4</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.Shell.hijack_qt4" title="Permalink to this definition">¶</a></dt>
+<dd>Modifies PyQt4&#8217;s mainloop with a dummy so user code does not
+block IPython.  This function returns the original 
+<cite>QtGui.qApp.exec_</cite> function that has been hijacked.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.Shell.hijack_tk">
+<!--[IPython.Shell.hijack_tk]--><tt class="descclassname">IPython.Shell.</tt><tt class="descname">hijack_tk</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.Shell.hijack_tk" title="Permalink to this definition">¶</a></dt>
+<dd>Modifies Tkinter&#8217;s mainloop with a dummy so when a module calls
+mainloop, it does not block.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.Shell.hijack_wx">
+<!--[IPython.Shell.hijack_wx]--><tt class="descclassname">IPython.Shell.</tt><tt class="descname">hijack_wx</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.Shell.hijack_wx" title="Permalink to this definition">¶</a></dt>
+<dd>Modifies wxPython&#8217;s MainLoop with a dummy so user code does not
+block IPython.  The hijacked mainloop function is returned.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.Shell.kill_embedded">
+<!--[IPython.Shell.kill_embedded]--><tt class="descclassname">IPython.Shell.</tt><tt class="descname">kill_embedded</tt><big>(</big><em>self</em>, <em>parameter_s=''</em><big>)</big><a class="headerlink" href="#IPython.Shell.kill_embedded" title="Permalink to this definition">¶</a></dt>
+<dd><p>%kill_embedded : deactivate for good the current embedded IPython.</p>
+<p>This function (after asking for confirmation) sets an internal flag so that
+an embedded IPython will never activate again.  This is useful to
+permanently disable a shell that is being called inside a loop: once you&#8217;ve
+figured out what you needed from it, you may then kill it and the program
+will then continue to run without the interactive shell interfering again.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.Shell.start">
+<!--[IPython.Shell.start]--><tt class="descclassname">IPython.Shell.</tt><tt class="descname">start</tt><big>(</big><em>user_ns=None</em><big>)</big><a class="headerlink" href="#IPython.Shell.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a running shell instance, dealing with threading options.</p>
+<p>This is a factory function which will instantiate the proper IPython shell
+based on the user&#8217;s threading choice.  Such a selector is needed because
+different GUI toolkits require different thread handling details.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.Shell.update_tk">
+<!--[IPython.Shell.update_tk]--><tt class="descclassname">IPython.Shell.</tt><tt class="descname">update_tk</tt><big>(</big><em>tk</em><big>)</big><a class="headerlink" href="#IPython.Shell.update_tk" title="Permalink to this definition">¶</a></dt>
+<dd>Updates the Tkinter event loop.  This is typically called from
+the respective WX or GTK mainloops.</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">Shell</a><ul>
+<li><a class="reference external" href="#module-IPython.Shell">Module: <tt class="docutils literal"><span class="pre">Shell</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#ipshell"><tt class="docutils literal"><span class="pre">IPShell</span></tt></a></li>
+<li><a class="reference external" href="#ipshellembed"><tt class="docutils literal"><span class="pre">IPShellEmbed</span></tt></a></li>
+<li><a class="reference external" href="#ipshellgtk"><tt class="docutils literal"><span class="pre">IPShellGTK</span></tt></a></li>
+<li><a class="reference external" href="#ipshellmatplotlib"><tt class="docutils literal"><span class="pre">IPShellMatplotlib</span></tt></a></li>
+<li><a class="reference external" href="#ipshellmatplotlibgtk"><tt class="docutils literal"><span class="pre">IPShellMatplotlibGTK</span></tt></a></li>
+<li><a class="reference external" href="#ipshellmatplotlibqt"><tt class="docutils literal"><span class="pre">IPShellMatplotlibQt</span></tt></a></li>
+<li><a class="reference external" href="#ipshellmatplotlibqt4"><tt class="docutils literal"><span class="pre">IPShellMatplotlibQt4</span></tt></a></li>
+<li><a class="reference external" href="#ipshellmatplotlibwx"><tt class="docutils literal"><span class="pre">IPShellMatplotlibWX</span></tt></a></li>
+<li><a class="reference external" href="#ipshellqt"><tt class="docutils literal"><span class="pre">IPShellQt</span></tt></a></li>
+<li><a class="reference external" href="#ipshellqt4"><tt class="docutils literal"><span class="pre">IPShellQt4</span></tt></a></li>
+<li><a class="reference external" href="#ipshellwx"><tt class="docutils literal"><span class="pre">IPShellWX</span></tt></a></li>
+<li><a class="reference external" href="#ipthread"><tt class="docutils literal"><span class="pre">IPThread</span></tt></a></li>
+<li><a class="reference external" href="#mtinteractiveshell"><tt class="docutils literal"><span class="pre">MTInteractiveShell</span></tt></a></li>
+<li><a class="reference external" href="#matplotlibmtshell"><tt class="docutils literal"><span class="pre">MatplotlibMTShell</span></tt></a></li>
+<li><a class="reference external" href="#matplotlibshell"><tt class="docutils literal"><span class="pre">MatplotlibShell</span></tt></a></li>
+<li><a class="reference external" href="#matplotlibshellbase"><tt class="docutils literal"><span class="pre">MatplotlibShellBase</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.PyColorize.html" title="previous chapter">PyColorize</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.UserConfig.ipy_user_conf.html" title="next chapter">UserConfig.ipy_user_conf</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.Shell.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.UserConfig.ipy_user_conf.html" title="UserConfig.ipy_user_conf"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.PyColorize.html" title="PyColorize"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

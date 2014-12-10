@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="poen" id="poen">poen</a></h1>
+<div class="level1">
+
+<p>
+
+<p><div class="notewarning">
+poen has been removed from Translate Toolkit &gt; 1.2.  Rather use <a href="toolkit-podebug.html" class="wikilink1" title="toolkit-podebug.html">podebug</a> as follows:
+
+</p>
+<pre class="code">
+podebug --rewrite=en -f &quot;&quot; pot/ po/
+</pre>
+
+<p>
+
+
+</div></p>
+</p>
+
+<p>
+Initialises a directory English <acronym title="Gettext Portable Object">PO</acronym> files by taking <acronym title="Gettext Portable Object Template">POT</acronym> files and copying the msgid to the msgstr.  
+</p>
+
+<p>
+This is useful for translators who use CAT tools that overwrite/overtype existing text.  They can setup their tool to overwrite msgstr entries which will now be in English.
+</p>
+
+</div>
+<!-- SECTION "poen" [1-458] -->
+<h2><a name="prerequisites" id="prerequisites">Prerequisites</a></h2>
+<div class="level2">
+
+<p>
+
+GNU Gettext
+</p>
+
+</div>
+<!-- SECTION "Prerequisites" [459-501] -->
+<h2><a name="usage" id="usage">Usage</a></h2>
+<div class="level2">
+<pre class="code">poen [options] &lt;pot&gt; &lt;en&gt;</pre>
+
+<p>
+
+Where:
+
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> &lt;pot&gt;   </td><td class="col1 leftalign"> a directory of <acronym title="Gettext Portable Object Template">POT</acronym> files   </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> &lt;en&gt;    </td><td class="col1 leftalign"> a new directory that contains <acronym title="Gettext Portable Object">PO</acronym> files with English translations  </td>
+	</tr>
+</table>
+
+<p>
+
+Options:
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> --no-wrap   </td><td class="col1 leftalign"> do not break long message lines, longer than the output page width, into several lines  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> --po   </td><td class="col1 leftalign"> process .po files instead of the default .pot files  </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Usage" [502-861] -->
+<h2><a name="bugs" id="bugs">Bugs</a></h2>
+<div class="level2">
+
+<p>
+
+None known
+
+</p>
+
+</div>
+<!-- SECTION "Bugs" [862-] --></body>
+</html>

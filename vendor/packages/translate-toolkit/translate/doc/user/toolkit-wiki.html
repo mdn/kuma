@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="wiki_syntax" id="wiki_syntax">Wiki Syntax</a></h1>
+<div class="level1">
+
+<p>
+
+The Translate Toolkit can manage Wiki syntax pages.  This is implemented as part of the <a href="toolkit-text.html" class="wikilink1" title="toolkit-text.html">text</a> format and the conversion is supported in <a href="toolkit-txt2po.html" class="wikilink1" title="toolkit-txt2po.html">txt2po</a>.
+</p>
+
+<p>
+Those who edit wikis will appreciate that wiki text is simply a normal text document edited using a form of wiki syntax.  Whether the final storage is a database or a flat file the part that a user edits is a simple text file.
+</p>
+
+<p>
+The format does not support all features of the wiki syntax and will simply dump the full form if it doesn&#039;t understand the text.  But structures such as headers and lists are understood and the filter can remove these are correctly add them.
+</p>
+
+</div>
+<!-- SECTION "Wiki Syntax" [1-651] -->
+<h2><a name="supported_wiki_formats" id="supported_wiki_formats">Supported Wiki Formats</a></h2>
+<div class="level2">
+
+<p>
+
+The following is a list of the wikis supported together with a list of the items that we can process:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="http://wiki.splitbrain.org/wiki:dokuwiki" class="urlextern" title="http://wiki.splitbrain.org/wiki:dokuwiki">docuwiki</a> - heading, bullet, numbered list</div>
+</li>
+<li class="level1"><div class="li"> <a href="http://www.mediawiki.org/wiki/MediaWiki" class="urlextern" title="http://www.mediawiki.org/wiki/MediaWiki">MediaWiki</a> - heading, bullet, numbered list</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Supported Wiki Formats" [652-974] -->
+<h2><a name="possible_uses" id="possible_uses">Possible uses</a></h2>
+<div class="level2">
+
+<p>
+
+As part of a localisation process for a wiki this format and the filters could be used to provide a good localisation of existing wiki content.
+</p>
+
+<p>
+With further enhancement the tool could probably be capable of converting from one wiki syntax to another, but that is of course not its main aim
+</p>
+
+</div>
+<!-- SECTION "Possible uses" [975-1293] -->
+<h2><a name="additional_notes_on_mediawiki" id="additional_notes_on_mediawiki">Additional notes on MediaWiki</a></h2>
+<div class="level2">
+
+<p>
+
+Media wiki can also export in <acronym title="Extensible Markup Language">XML</acronym> format, see <a href="http://en.wikipedia.org/wiki/Special:Export" class="urlextern" title="http://en.wikipedia.org/wiki/Special:Export">http://en.wikipedia.org/wiki/Special:Export</a> and <a href="http://www.mediawiki.org/wiki/Manual:Parameters_to_Special:Export" class="urlextern" title="http://www.mediawiki.org/wiki/Manual:Parameters_to_Special:Export">http://www.mediawiki.org/wiki/Manual:Parameters_to_Special:Export</a> this however exports in <acronym title="Extensible Markup Language">XML</acronym> so not directly usable by txt2po.
+</p>
+
+<p>
+For importing please see <a href="http://en.wikipedia.org/wiki/Help:Import" class="urlextern" title="http://en.wikipedia.org/wiki/Help:Import">http://en.wikipedia.org/wiki/Help:Import</a> this is disabled on most wikis so not directly usable currently.
+</p>
+
+</div>
+<!-- SECTION "Additional notes on MediaWiki" [1294-] --></body>
+</html>

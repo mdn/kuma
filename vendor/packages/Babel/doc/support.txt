@@ -1,0 +1,48 @@
+.. -*- mode: rst; encoding: utf-8 -*-
+
+=============================
+Support Classes and Functions
+=============================
+
+.. contents:: Contents
+   :depth: 2
+.. sectnum::
+
+
+The ``babel.support`` modules contains a number of classes and functions that
+can help with integrating Babel, and internationalization in general, into your
+application or framework. The code in this module is not used by Babel itself,
+but instead is provided to address common requirements of applications that
+should handle internationalization. 
+
+
+---------------
+Lazy Evaluation
+---------------
+
+One such requirement is lazy evaluation of translations. Many web-based
+applications define some localizable message at the module level, or in general
+at some level where the locale of the remote user is not yet known. For such
+cases, web frameworks generally provide a "lazy" variant of the ``gettext``
+functions, which basically translates the message not when the ``gettext``
+function is invoked, but when the string is accessed in some manner.
+
+
+---------------------------
+Extended Translations Class
+---------------------------
+
+Many web-based applications are composed of a variety of different components
+(possibly using some kind of plugin system), and some of those components may
+provide their own message catalogs that need to be integrated into the larger
+system.
+
+To support this usage pattern, Babel provides a ``Translations`` class that is
+derived from the ``GNUTranslations`` class in the ``gettext`` module. This
+class adds a ``merge()`` method that takes another ``Translations`` instance,
+and merges the content of the latter into the main catalog:
+
+.. code-block:: python
+
+    translations = Translations.load('main')
+    translations.merge(Translations.load('plugin1'))

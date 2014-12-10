@@ -1,0 +1,894 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>IPython&#8217;s multiengine interface &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../index.html" />
+    <link rel="up" title="Using IPython for parallel computing" href="index.html" />
+    <link rel="next" title="The IPython task interface" href="parallel_task.html" />
+    <link rel="prev" title="Starting the IPython controller and engines" href="parallel_process.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="parallel_task.html" title="The IPython task interface"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="parallel_process.html" title="Starting the IPython controller and engines"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Using IPython for parallel computing</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="ipython-s-multiengine-interface">
+<span id="parallelmultiengine"></span><h1>IPython&#8217;s multiengine interface<a class="headerlink" href="#ipython-s-multiengine-interface" title="Permalink to this headline">¶</a></h1>
+<p>The multiengine interface represents one possible way of working with a set of
+IPython engines. The basic idea behind the multiengine interface is that the
+capabilities of each engine are directly and explicitly exposed to the user.
+Thus, in the multiengine interface, each engine is given an id that is used to
+identify the engine and give it work to do. This interface is very intuitive
+and is designed with interactive usage in mind, and is thus the best place for
+new users of IPython to begin.</p>
+<div class="section" id="starting-the-ipython-controller-and-engines">
+<h2>Starting the IPython controller and engines<a class="headerlink" href="#starting-the-ipython-controller-and-engines" title="Permalink to this headline">¶</a></h2>
+<p>To follow along with this tutorial, you will need to start the IPython
+controller and four IPython engines. The simplest way of doing this is to use
+the <strong>ipcluster</strong> command:</p>
+<div class="highlight-python"><pre>$ ipcluster local -n 4</pre>
+</div>
+<p>For more detailed information about starting the controller and engines, see
+our <a class="reference external" href="parallel_intro.html#ip1par"><em>introduction</em></a> to using IPython for parallel computing.</p>
+</div>
+<div class="section" id="creating-a-multiengineclient-instance">
+<h2>Creating a <tt class="docutils literal"><span class="pre">MultiEngineClient</span></tt> instance<a class="headerlink" href="#creating-a-multiengineclient-instance" title="Permalink to this headline">¶</a></h2>
+<p>The first step is to import the IPython <a title="" class="reference external" href="../api/generated/IPython.kernel.client.html#module-IPython.kernel.client"><tt class="xref docutils literal"><span class="pre">IPython.kernel.client</span></tt></a> module
+and then create a <tt class="xref docutils literal"><span class="pre">MultiEngineClient</span></tt> instance:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [1]: </span><span class="k">from</span> <span class="nn">IPython.kernel</span> <span class="k">import</span> <span class="n">client</span>
+
+<span class="gp">In [2]: </span><span class="n">mec</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">MultiEngineClient</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This form assumes that the <tt class="docutils literal"><span class="pre">ipcontroller-mec.furl</span></tt> is in the
+<tt class="docutils literal"><span class="pre">~./ipython/security</span></tt> directory on the client&#8217;s host. If not, the
+location of the FURL file must be given as an argument to the
+constructor:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [2]: </span><span class="n">mec</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">MultiEngineClient</span><span class="p">(</span><span class="s">&#39;/path/to/my/ipcontroller-mec.furl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To make sure there are engines connected to the controller, use can get a list
+of engine ids:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [3]: </span><span class="n">mec</span><span class="o">.</span><span class="n">get_ids</span><span class="p">()</span>
+<span class="go">Out[3]: </span><span class="p">[</span><span class="mf">0</span><span class="p">,</span> <span class="mf">1</span><span class="p">,</span> <span class="mf">2</span><span class="p">,</span> <span class="mf">3</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Here we see that there are four engines ready to do work for us.</p>
+</div>
+<div class="section" id="quick-and-easy-parallelism">
+<h2>Quick and easy parallelism<a class="headerlink" href="#quick-and-easy-parallelism" title="Permalink to this headline">¶</a></h2>
+<p>In many cases, you simply want to apply a Python function to a sequence of objects, but <em>in parallel</em>.  The multiengine interface provides two simple ways of accomplishing this:  a parallel version of <tt class="xref docutils literal"><span class="pre">map()</span></tt> and <tt class="docutils literal"><span class="pre">&#64;parallel</span></tt> function decorator.</p>
+<div class="section" id="parallel-map">
+<h3>Parallel map<a class="headerlink" href="#parallel-map" title="Permalink to this headline">¶</a></h3>
+<p>Python&#8217;s builtin <tt class="xref docutils literal"><span class="pre">map()</span></tt> functions allows a function to be applied to a
+sequence element-by-element. This type of code is typically trivial to
+parallelize. In fact, the multiengine interface in IPython already has a
+parallel version of <tt class="xref docutils literal"><span class="pre">map()</span></tt> that works just like its serial counterpart:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [63]: </span><span class="n">serial_result</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="o">**</span><span class="mf">10</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mf">32</span><span class="p">))</span>
+
+<span class="gp">In [64]: </span><span class="n">parallel_result</span> <span class="o">=</span> <span class="n">mec</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="o">**</span><span class="mf">10</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mf">32</span><span class="p">))</span>
+
+<span class="gp">In [65]: </span><span class="n">serial_result</span><span class="o">==</span><span class="n">parallel_result</span>
+<span class="go">Out[65]: </span><span class="bp">True</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The multiengine interface version of <tt class="xref docutils literal"><span class="pre">map()</span></tt> does not do any load
+balancing.  For a load balanced version, see the task interface.</p>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">The <tt class="xref docutils literal"><span class="pre">map()</span></tt> method has a number of options that can be controlled by
+the <tt class="xref docutils literal"><span class="pre">mapper()</span></tt> method.  See its docstring for more information.</p>
+</div>
+</div>
+<div class="section" id="parallel-function-decorator">
+<h3>Parallel function decorator<a class="headerlink" href="#parallel-function-decorator" title="Permalink to this headline">¶</a></h3>
+<p>Parallel functions are just like normal function, but they can be called on sequences and <em>in parallel</em>.  The multiengine interface provides a decorator that turns any Python function into a parallel function:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [10]: </span><span class="nd">@mec</span><span class="o">.</span><span class="n">parallel</span><span class="p">()</span>
+<span class="gp">   ....:</span> <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="gp">   ....:</span>     <span class="k">return</span> <span class="mf">10.0</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mf">4</span>
+<span class="gp">   ....:</span>
+
+<span class="gp">In [11]: </span><span class="n">f</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mf">32</span><span class="p">))</span>    <span class="c"># this is done in parallel</span>
+<span class="go">Out[11]:</span>
+<span class="go">[0.0,10.0,160.0,...]</span>
+</pre></div>
+</div>
+<p>See the docstring for the <tt class="xref docutils literal"><span class="pre">parallel()</span></tt> decorator for options.</p>
+</div>
+</div>
+<div class="section" id="running-python-commands">
+<h2>Running Python commands<a class="headerlink" href="#running-python-commands" title="Permalink to this headline">¶</a></h2>
+<p>The most basic type of operation that can be performed on the engines is to
+execute Python code. Executing Python code can be done in blocking or
+non-blocking mode (blocking is default) using the <tt class="xref docutils literal"><span class="pre">execute()</span></tt> method.</p>
+<div class="section" id="blocking-execution">
+<h3>Blocking execution<a class="headerlink" href="#blocking-execution" title="Permalink to this headline">¶</a></h3>
+<p>In blocking mode, the <tt class="xref docutils literal"><span class="pre">MultiEngineClient</span></tt> object (called <tt class="docutils literal"><span class="pre">mec</span></tt> in
+these examples) submits the command to the controller, which places the
+command in the engines&#8217; queues for execution. The <tt class="xref docutils literal"><span class="pre">execute()</span></tt> call then
+blocks until the engines are done executing the command:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="c"># The default is to run on all engines</span>
+<span class="gp">In [4]: </span><span class="n">mec</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;a=5&#39;</span><span class="p">)</span>
+<span class="go">Out[4]:</span>
+<span class="go">&lt;Results List&gt;</span>
+<span class="go">[0] In [1]: a=5</span>
+<span class="go">[1] In [1]: a=5</span>
+<span class="go">[2] In [1]: a=5</span>
+<span class="go">[3] In [1]: a=5</span>
+
+<span class="gp">In [5]: </span><span class="n">mec</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;b=10&#39;</span><span class="p">)</span>
+<span class="go">Out[5]:</span>
+<span class="go">&lt;Results List&gt;</span>
+<span class="go">[0] In [2]: b=10</span>
+<span class="go">[1] In [2]: b=10</span>
+<span class="go">[2] In [2]: b=10</span>
+<span class="go">[3] In [2]: b=10</span>
+</pre></div>
+</div>
+<p>Python commands can be executed on specific engines by calling execute using
+the <tt class="docutils literal"><span class="pre">targets</span></tt> keyword argument:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [6]: </span><span class="n">mec</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;c=a+b&#39;</span><span class="p">,</span><span class="n">targets</span><span class="o">=</span><span class="p">[</span><span class="mf">0</span><span class="p">,</span><span class="mf">2</span><span class="p">])</span>
+<span class="go">Out[6]:</span>
+<span class="go">&lt;Results List&gt;</span>
+<span class="go">[0] In [3]: c=a+b</span>
+<span class="go">[2] In [3]: c=a+b</span>
+
+
+<span class="gp">In [7]: </span><span class="n">mec</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;c=a-b&#39;</span><span class="p">,</span><span class="n">targets</span><span class="o">=</span><span class="p">[</span><span class="mf">1</span><span class="p">,</span><span class="mf">3</span><span class="p">])</span>
+<span class="go">Out[7]:</span>
+<span class="go">&lt;Results List&gt;</span>
+<span class="go">[1] In [3]: c=a-b</span>
+<span class="go">[3] In [3]: c=a-b</span>
+
+
+<span class="gp">In [8]: </span><span class="n">mec</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;print c&#39;</span><span class="p">)</span>
+<span class="go">Out[8]:</span>
+<span class="go">&lt;Results List&gt;</span>
+<span class="go">[0] In [4]: print c</span>
+<span class="go">[0] Out[4]: 15</span>
+
+<span class="go">[1] In [4]: print c</span>
+<span class="go">[1] Out[4]: -5</span>
+
+<span class="go">[2] In [4]: print c</span>
+<span class="go">[2] Out[4]: 15</span>
+
+<span class="go">[3] In [4]: print c</span>
+<span class="go">[3] Out[4]: -5</span>
+</pre></div>
+</div>
+<p>This example also shows one of the most important things about the IPython
+engines: they have a persistent user namespaces. The <tt class="xref docutils literal"><span class="pre">execute()</span></tt> method
+returns a Python <tt class="docutils literal"><span class="pre">dict</span></tt> that contains useful information:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [9]: </span><span class="n">result_dict</span> <span class="o">=</span> <span class="n">mec</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;d=10; print d&#39;</span><span class="p">)</span>
+
+<span class="gp">In [10]: </span><span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">result_dict</span><span class="p">:</span>
+<span class="gp">   ....:</span>     <span class="k">print</span> <span class="n">r</span>
+<span class="gp">   ....:</span>
+<span class="gp">   ....:</span>
+<span class="go">{&#39;input&#39;: {&#39;translated&#39;: &#39;d=10; print d&#39;, &#39;raw&#39;: &#39;d=10; print d&#39;}, &#39;number&#39;: 5, &#39;id&#39;: 0, &#39;stdout&#39;: &#39;10\n&#39;}</span>
+<span class="go">{&#39;input&#39;: {&#39;translated&#39;: &#39;d=10; print d&#39;, &#39;raw&#39;: &#39;d=10; print d&#39;}, &#39;number&#39;: 5, &#39;id&#39;: 1, &#39;stdout&#39;: &#39;10\n&#39;}</span>
+<span class="go">{&#39;input&#39;: {&#39;translated&#39;: &#39;d=10; print d&#39;, &#39;raw&#39;: &#39;d=10; print d&#39;}, &#39;number&#39;: 5, &#39;id&#39;: 2, &#39;stdout&#39;: &#39;10\n&#39;}</span>
+<span class="go">{&#39;input&#39;: {&#39;translated&#39;: &#39;d=10; print d&#39;, &#39;raw&#39;: &#39;d=10; print d&#39;}, &#39;number&#39;: 5, &#39;id&#39;: 3, &#39;stdout&#39;: &#39;10\n&#39;}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="non-blocking-execution">
+<h3>Non-blocking execution<a class="headerlink" href="#non-blocking-execution" title="Permalink to this headline">¶</a></h3>
+<p>In non-blocking mode, <tt class="xref docutils literal"><span class="pre">execute()</span></tt> submits the command to be executed and
+then returns a <tt class="xref docutils literal"><span class="pre">PendingResult</span></tt> object immediately. The
+<tt class="xref docutils literal"><span class="pre">PendingResult</span></tt> object gives you a way of getting a result at a later
+time through its <tt class="xref docutils literal"><span class="pre">get_result()</span></tt> method or <tt class="xref docutils literal"><span class="pre">r</span></tt> attribute. This allows
+you to quickly submit long running commands without blocking your local
+Python/IPython session:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="c"># In blocking mode</span>
+<span class="gp">In [6]: </span><span class="n">mec</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;import time&#39;</span><span class="p">)</span>
+<span class="go">Out[6]:</span>
+<span class="go">&lt;Results List&gt;</span>
+<span class="go">[0] In [1]: import time</span>
+<span class="go">[1] In [1]: import time</span>
+<span class="go">[2] In [1]: import time</span>
+<span class="go">[3] In [1]: import time</span>
+
+<span class="c"># In non-blocking mode</span>
+<span class="gp">In [7]: </span><span class="n">pr</span> <span class="o">=</span> <span class="n">mec</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;time.sleep(10)&#39;</span><span class="p">,</span><span class="n">block</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="c"># Now block for the result</span>
+<span class="gp">In [8]: </span><span class="n">pr</span><span class="o">.</span><span class="n">get_result</span><span class="p">()</span>
+<span class="go">Out[8]:</span>
+<span class="go">&lt;Results List&gt;</span>
+<span class="go">[0] In [2]: time.sleep(10)</span>
+<span class="go">[1] In [2]: time.sleep(10)</span>
+<span class="go">[2] In [2]: time.sleep(10)</span>
+<span class="go">[3] In [2]: time.sleep(10)</span>
+
+<span class="c"># Again in non-blocking mode</span>
+<span class="gp">In [9]: </span><span class="n">pr</span> <span class="o">=</span> <span class="n">mec</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;time.sleep(10)&#39;</span><span class="p">,</span><span class="n">block</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="c"># Poll to see if the result is ready</span>
+<span class="gp">In [10]: </span><span class="n">pr</span><span class="o">.</span><span class="n">get_result</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="c"># A shorthand for get_result(block=True)</span>
+<span class="gp">In [11]: </span><span class="n">pr</span><span class="o">.</span><span class="n">r</span>
+<span class="go">Out[11]:</span>
+<span class="go">&lt;Results List&gt;</span>
+<span class="go">[0] In [3]: time.sleep(10)</span>
+<span class="go">[1] In [3]: time.sleep(10)</span>
+<span class="go">[2] In [3]: time.sleep(10)</span>
+<span class="go">[3] In [3]: time.sleep(10)</span>
+</pre></div>
+</div>
+<p>Often, it is desirable to wait until a set of <tt class="xref docutils literal"><span class="pre">PendingResult</span></tt> objects
+are done. For this, there is a the method <tt class="xref docutils literal"><span class="pre">barrier()</span></tt>. This method takes a
+tuple of <tt class="xref docutils literal"><span class="pre">PendingResult</span></tt> objects and blocks until all of the associated
+results are ready:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [72]: </span><span class="n">mec</span><span class="o">.</span><span class="n">block</span><span class="o">=</span><span class="bp">False</span>
+
+<span class="c"># A trivial list of PendingResults objects</span>
+<span class="gp">In [73]: </span><span class="n">pr_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">mec</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;time.sleep(3)&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mf">10</span><span class="p">)]</span>
+
+<span class="c"># Wait until all of them are done</span>
+<span class="gp">In [74]: </span><span class="n">mec</span><span class="o">.</span><span class="n">barrier</span><span class="p">(</span><span class="n">pr_list</span><span class="p">)</span>
+
+<span class="c"># Then, their results are ready using get_result or the r attribute</span>
+<span class="gp">In [75]: </span><span class="n">pr_list</span><span class="p">[</span><span class="mf">0</span><span class="p">]</span><span class="o">.</span><span class="n">r</span>
+<span class="go">Out[75]:</span>
+<span class="go">&lt;Results List&gt;</span>
+<span class="go">[0] In [20]: time.sleep(3)</span>
+<span class="go">[1] In [19]: time.sleep(3)</span>
+<span class="go">[2] In [20]: time.sleep(3)</span>
+<span class="go">[3] In [19]: time.sleep(3)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-block-and-targets-keyword-arguments-and-attributes">
+<h3>The <tt class="docutils literal"><span class="pre">block</span></tt> and <tt class="docutils literal"><span class="pre">targets</span></tt> keyword arguments and attributes<a class="headerlink" href="#the-block-and-targets-keyword-arguments-and-attributes" title="Permalink to this headline">¶</a></h3>
+<p>Most methods in the multiengine interface (like <tt class="xref docutils literal"><span class="pre">execute()</span></tt>) accept
+<tt class="docutils literal"><span class="pre">block</span></tt> and <tt class="docutils literal"><span class="pre">targets</span></tt> as keyword arguments. As we have seen above, these
+keyword arguments control the blocking mode and which engines the command is
+applied to. The <tt class="xref docutils literal"><span class="pre">MultiEngineClient</span></tt> class also has <tt class="xref docutils literal"><span class="pre">block</span></tt> and
+<tt class="xref docutils literal"><span class="pre">targets</span></tt> attributes that control the default behavior when the keyword
+arguments are not provided. Thus the following logic is used for <tt class="xref docutils literal"><span class="pre">block</span></tt>
+and <tt class="xref docutils literal"><span class="pre">targets</span></tt>:</p>
+<ul class="simple">
+<li>If no keyword argument is provided, the instance attributes are used.</li>
+<li>Keyword argument, if provided override the instance attributes.</li>
+</ul>
+<p>The following examples demonstrate how to use the instance attributes:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [16]: </span><span class="n">mec</span><span class="o">.</span><span class="n">targets</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0</span><span class="p">,</span><span class="mf">2</span><span class="p">]</span>
+
+<span class="gp">In [17]: </span><span class="n">mec</span><span class="o">.</span><span class="n">block</span> <span class="o">=</span> <span class="bp">False</span>
+
+<span class="gp">In [18]: </span><span class="n">pr</span> <span class="o">=</span> <span class="n">mec</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;a=5&#39;</span><span class="p">)</span>
+
+<span class="gp">In [19]: </span><span class="n">pr</span><span class="o">.</span><span class="n">r</span>
+<span class="go">Out[19]:</span>
+<span class="go">&lt;Results List&gt;</span>
+<span class="go">[0] In [6]: a=5</span>
+<span class="go">[2] In [6]: a=5</span>
+
+<span class="c"># Note targets=&#39;all&#39; means all engines</span>
+<span class="gp">In [20]: </span><span class="n">mec</span><span class="o">.</span><span class="n">targets</span> <span class="o">=</span> <span class="s">&#39;all&#39;</span>
+
+<span class="gp">In [21]: </span><span class="n">mec</span><span class="o">.</span><span class="n">block</span> <span class="o">=</span> <span class="bp">True</span>
+
+<span class="gp">In [22]: </span><span class="n">mec</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;b=10; print b&#39;</span><span class="p">)</span>
+<span class="go">Out[22]:</span>
+<span class="go">&lt;Results List&gt;</span>
+<span class="go">[0] In [7]: b=10; print b</span>
+<span class="go">[0] Out[7]: 10</span>
+
+<span class="go">[1] In [6]: b=10; print b</span>
+<span class="go">[1] Out[6]: 10</span>
+
+<span class="go">[2] In [7]: b=10; print b</span>
+<span class="go">[2] Out[7]: 10</span>
+
+<span class="go">[3] In [6]: b=10; print b</span>
+<span class="go">[3] Out[6]: 10</span>
+</pre></div>
+</div>
+<p>The <tt class="xref docutils literal"><span class="pre">block</span></tt> and <tt class="xref docutils literal"><span class="pre">targets</span></tt> instance attributes also determine the
+behavior of the parallel magic commands.</p>
+</div>
+<div class="section" id="parallel-magic-commands">
+<h3>Parallel magic commands<a class="headerlink" href="#parallel-magic-commands" title="Permalink to this headline">¶</a></h3>
+<p>We provide a few IPython magic commands (<tt class="docutils literal"><span class="pre">%px</span></tt>, <tt class="docutils literal"><span class="pre">%autopx</span></tt> and <tt class="docutils literal"><span class="pre">%result</span></tt>)
+that make it more pleasant to execute Python commands on the engines
+interactively. These are simply shortcuts to <tt class="xref docutils literal"><span class="pre">execute()</span></tt> and
+<tt class="xref docutils literal"><span class="pre">get_result()</span></tt>. The <tt class="docutils literal"><span class="pre">%px</span></tt> magic executes a single Python command on the
+engines specified by the <tt class="xref docutils literal"><span class="pre">targets</span></tt> attribute of the
+<tt class="xref docutils literal"><span class="pre">MultiEngineClient</span></tt> instance (by default this is <tt class="docutils literal"><span class="pre">'all'</span></tt>):</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="c"># Make this MultiEngineClient active for parallel magic commands</span>
+<span class="gp">In [23]: </span><span class="n">mec</span><span class="o">.</span><span class="n">activate</span><span class="p">()</span>
+
+<span class="gp">In [24]: </span><span class="n">mec</span><span class="o">.</span><span class="n">block</span><span class="o">=</span><span class="bp">True</span>
+
+<span class="gp">In [25]: </span><span class="k">import</span> <span class="nn">numpy</span>
+
+<span class="gp">In [26]: </span><span class="o">%</span><span class="n">px</span> <span class="k">import</span> <span class="nn">numpy</span>
+<span class="go">Executing command on Controller</span>
+<span class="go">Out[26]:</span>
+<span class="go">&lt;Results List&gt;</span>
+<span class="go">[0] In [8]: import numpy</span>
+<span class="go">[1] In [7]: import numpy</span>
+<span class="go">[2] In [8]: import numpy</span>
+<span class="go">[3] In [7]: import numpy</span>
+
+
+<span class="gp">In [27]: </span><span class="o">%</span><span class="n">px</span> <span class="n">a</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mf">2</span><span class="p">,</span><span class="mf">2</span><span class="p">)</span>
+<span class="go">Executing command on Controller</span>
+<span class="go">Out[27]:</span>
+<span class="go">&lt;Results List&gt;</span>
+<span class="go">[0] In [9]: a = numpy.random.rand(2,2)</span>
+<span class="go">[1] In [8]: a = numpy.random.rand(2,2)</span>
+<span class="go">[2] In [9]: a = numpy.random.rand(2,2)</span>
+<span class="go">[3] In [8]: a = numpy.random.rand(2,2)</span>
+
+
+<span class="gp">In [28]: </span><span class="o">%</span><span class="n">px</span> <span class="k">print</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvals</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">Executing command on Controller</span>
+<span class="go">Out[28]:</span>
+<span class="go">&lt;Results List&gt;</span>
+<span class="go">[0] In [10]: print numpy.linalg.eigvals(a)</span>
+<span class="go">[0] Out[10]: [ 1.28167017  0.14197338]</span>
+
+<span class="go">[1] In [9]: print numpy.linalg.eigvals(a)</span>
+<span class="go">[1] Out[9]: [-0.14093616  1.27877273]</span>
+
+<span class="go">[2] In [10]: print numpy.linalg.eigvals(a)</span>
+<span class="go">[2] Out[10]: [-0.37023573  1.06779409]</span>
+
+<span class="go">[3] In [9]: print numpy.linalg.eigvals(a)</span>
+<span class="go">[3] Out[9]: [ 0.83664764 -0.25602658]</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">%result</span></tt> magic gets and prints the stdin/stdout/stderr of the last
+command executed on each engine. It is simply a shortcut to the
+<tt class="xref docutils literal"><span class="pre">get_result()</span></tt> method:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [29]: </span><span class="o">%</span><span class="n">result</span>
+<span class="go">Out[29]:</span>
+<span class="go">&lt;Results List&gt;</span>
+<span class="go">[0] In [10]: print numpy.linalg.eigvals(a)</span>
+<span class="go">[0] Out[10]: [ 1.28167017  0.14197338]</span>
+
+<span class="go">[1] In [9]: print numpy.linalg.eigvals(a)</span>
+<span class="go">[1] Out[9]: [-0.14093616  1.27877273]</span>
+
+<span class="go">[2] In [10]: print numpy.linalg.eigvals(a)</span>
+<span class="go">[2] Out[10]: [-0.37023573  1.06779409]</span>
+
+<span class="go">[3] In [9]: print numpy.linalg.eigvals(a)</span>
+<span class="go">[3] Out[9]: [ 0.83664764 -0.25602658]</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">%autopx</span></tt> magic switches to a mode where everything you type is executed
+on the engines given by the <tt class="xref docutils literal"><span class="pre">targets</span></tt> attribute:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [30]: </span><span class="n">mec</span><span class="o">.</span><span class="n">block</span><span class="o">=</span><span class="bp">False</span>
+
+<span class="gp">In [31]: </span><span class="o">%</span><span class="n">autopx</span>
+<span class="go">Auto Parallel Enabled</span>
+<span class="go">Type %autopx to disable</span>
+
+<span class="gp">In [32]: </span><span class="n">max_evals</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="go">&lt;IPython.kernel.multiengineclient.PendingResult object at 0x17b8a70&gt;</span>
+
+<span class="gp">In [33]: </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mf">100</span><span class="p">):</span>
+<span class="gp">   ....:</span>     <span class="n">a</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mf">10</span><span class="p">,</span><span class="mf">10</span><span class="p">)</span>
+<span class="gp">   ....:</span>     <span class="n">a</span> <span class="o">=</span> <span class="n">a</span><span class="o">+</span><span class="n">a</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+<span class="gp">   ....:</span>     <span class="n">evals</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvals</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="gp">   ....:</span>     <span class="n">max_evals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">evals</span><span class="p">[</span><span class="mf">0</span><span class="p">]</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>
+<span class="gp">   ....:</span>
+<span class="gp">   ....:</span>
+<span class="go">&lt;IPython.kernel.multiengineclient.PendingResult object at 0x17af8f0&gt;</span>
+
+<span class="gp">In [34]: </span><span class="o">%</span><span class="n">autopx</span>
+<span class="go">Auto Parallel Disabled</span>
+
+<span class="gp">In [35]: </span><span class="n">mec</span><span class="o">.</span><span class="n">block</span><span class="o">=</span><span class="bp">True</span>
+
+<span class="gp">In [36]: </span><span class="n">px</span> <span class="k">print</span> <span class="s">&quot;Average max eigenvalue is: &quot;</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="n">max_evals</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">max_evals</span><span class="p">)</span>
+<span class="go">Executing command on Controller</span>
+<span class="go">Out[36]:</span>
+<span class="go">&lt;Results List&gt;</span>
+<span class="go">[0] In [13]: print &quot;Average max eigenvalue is: &quot;, sum(max_evals)/len(max_evals)</span>
+<span class="go">[0] Out[13]: Average max eigenvalue is:  10.1387247332</span>
+
+<span class="go">[1] In [12]: print &quot;Average max eigenvalue is: &quot;, sum(max_evals)/len(max_evals)</span>
+<span class="go">[1] Out[12]: Average max eigenvalue is:  10.2076902286</span>
+
+<span class="go">[2] In [13]: print &quot;Average max eigenvalue is: &quot;, sum(max_evals)/len(max_evals)</span>
+<span class="go">[2] Out[13]: Average max eigenvalue is:  10.1891484655</span>
+
+<span class="go">[3] In [12]: print &quot;Average max eigenvalue is: &quot;, sum(max_evals)/len(max_evals)</span>
+<span class="go">[3] Out[12]: Average max eigenvalue is:  10.1158837784</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="moving-python-objects-around">
+<h2>Moving Python objects around<a class="headerlink" href="#moving-python-objects-around" title="Permalink to this headline">¶</a></h2>
+<p>In addition to executing code on engines, you can transfer Python objects to
+and from your IPython session and the engines. In IPython, these operations
+are called <tt class="xref docutils literal"><span class="pre">push()</span></tt> (sending an object to the engines) and <tt class="xref docutils literal"><span class="pre">pull()</span></tt>
+(getting an object from the engines).</p>
+<div class="section" id="basic-push-and-pull">
+<h3>Basic push and pull<a class="headerlink" href="#basic-push-and-pull" title="Permalink to this headline">¶</a></h3>
+<p>Here are some examples of how you use <tt class="xref docutils literal"><span class="pre">push()</span></tt> and <tt class="xref docutils literal"><span class="pre">pull()</span></tt>:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [38]: </span><span class="n">mec</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mf">1.03234</span><span class="p">,</span><span class="n">b</span><span class="o">=</span><span class="mf">3453</span><span class="p">))</span>
+<span class="go">Out[38]: </span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">]</span>
+
+<span class="gp">In [39]: </span><span class="n">mec</span><span class="o">.</span><span class="n">pull</span><span class="p">(</span><span class="s">&#39;a&#39;</span><span class="p">)</span>
+<span class="go">Out[39]: </span><span class="p">[</span><span class="mf">1.03234</span><span class="p">,</span> <span class="mf">1.03234</span><span class="p">,</span> <span class="mf">1.03234</span><span class="p">,</span> <span class="mf">1.03234</span><span class="p">]</span>
+
+<span class="gp">In [40]: </span><span class="n">mec</span><span class="o">.</span><span class="n">pull</span><span class="p">(</span><span class="s">&#39;b&#39;</span><span class="p">,</span><span class="n">targets</span><span class="o">=</span><span class="mf">0</span><span class="p">)</span>
+<span class="go">Out[40]: </span><span class="p">[</span><span class="mf">3453</span><span class="p">]</span>
+
+<span class="gp">In [41]: </span><span class="n">mec</span><span class="o">.</span><span class="n">pull</span><span class="p">((</span><span class="s">&#39;a&#39;</span><span class="p">,</span><span class="s">&#39;b&#39;</span><span class="p">))</span>
+<span class="go">Out[41]: </span><span class="p">[[</span><span class="mf">1.03234</span><span class="p">,</span> <span class="mf">3453</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.03234</span><span class="p">,</span> <span class="mf">3453</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.03234</span><span class="p">,</span> <span class="mf">3453</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.03234</span><span class="p">,</span> <span class="mf">3453</span><span class="p">]]</span>
+
+<span class="gp">In [42]: </span><span class="n">mec</span><span class="o">.</span><span class="n">zip_pull</span><span class="p">((</span><span class="s">&#39;a&#39;</span><span class="p">,</span><span class="s">&#39;b&#39;</span><span class="p">))</span>
+<span class="go">Out[42]: </span><span class="p">[(</span><span class="mf">1.03234</span><span class="p">,</span> <span class="mf">1.03234</span><span class="p">,</span> <span class="mf">1.03234</span><span class="p">,</span> <span class="mf">1.03234</span><span class="p">),</span> <span class="p">(</span><span class="mf">3453</span><span class="p">,</span> <span class="mf">3453</span><span class="p">,</span> <span class="mf">3453</span><span class="p">,</span> <span class="mf">3453</span><span class="p">)]</span>
+
+<span class="gp">In [43]: </span><span class="n">mec</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">c</span><span class="o">=</span><span class="s">&#39;speed&#39;</span><span class="p">))</span>
+<span class="go">Out[43]: </span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">]</span>
+
+<span class="gp">In [44]: </span><span class="o">%</span><span class="n">px</span> <span class="k">print</span> <span class="n">c</span>
+<span class="go">Executing command on Controller</span>
+<span class="go">Out[44]:</span>
+<span class="go">&lt;Results List&gt;</span>
+<span class="go">[0] In [14]: print c</span>
+<span class="go">[0] Out[14]: speed</span>
+
+<span class="go">[1] In [13]: print c</span>
+<span class="go">[1] Out[13]: speed</span>
+
+<span class="go">[2] In [14]: print c</span>
+<span class="go">[2] Out[14]: speed</span>
+
+<span class="go">[3] In [13]: print c</span>
+<span class="go">[3] Out[13]: speed</span>
+</pre></div>
+</div>
+<p>In non-blocking mode <tt class="xref docutils literal"><span class="pre">push()</span></tt> and <tt class="xref docutils literal"><span class="pre">pull()</span></tt> also return
+<tt class="xref docutils literal"><span class="pre">PendingResult</span></tt> objects:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [47]: </span><span class="n">mec</span><span class="o">.</span><span class="n">block</span><span class="o">=</span><span class="bp">False</span>
+
+<span class="gp">In [48]: </span><span class="n">pr</span> <span class="o">=</span> <span class="n">mec</span><span class="o">.</span><span class="n">pull</span><span class="p">(</span><span class="s">&#39;a&#39;</span><span class="p">)</span>
+
+<span class="gp">In [49]: </span><span class="n">pr</span><span class="o">.</span><span class="n">r</span>
+<span class="go">Out[49]: </span><span class="p">[</span><span class="mf">1.03234</span><span class="p">,</span> <span class="mf">1.03234</span><span class="p">,</span> <span class="mf">1.03234</span><span class="p">,</span> <span class="mf">1.03234</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="push-and-pull-for-functions">
+<h3>Push and pull for functions<a class="headerlink" href="#push-and-pull-for-functions" title="Permalink to this headline">¶</a></h3>
+<p>Functions can also be pushed and pulled using <tt class="xref docutils literal"><span class="pre">push_function()</span></tt> and
+<tt class="xref docutils literal"><span class="pre">pull_function()</span></tt>:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [52]: </span><span class="n">mec</span><span class="o">.</span><span class="n">block</span><span class="o">=</span><span class="bp">True</span>
+
+<span class="go">    In [53]: def f(x):</span>
+<span class="go">       ....:     return 2.0*x**4</span>
+<span class="go">       ....:</span>
+
+<span class="go">    In [54]: mec.push_function(dict(f=f))</span>
+<span class="go">    Out[54]: [None, None, None, None]</span>
+
+<span class="go">    In [55]: mec.execute(&#39;y = f(4.0)&#39;)</span>
+<span class="go">    Out[55]:</span>
+<span class="go">    &lt;Results List&gt;</span>
+<span class="go">    [0] In [15]: y = f(4.0)</span>
+<span class="go">    [1] In [14]: y = f(4.0)</span>
+<span class="go">    [2] In [15]: y = f(4.0)</span>
+<span class="go">    [3] In [14]: y = f(4.0)</span>
+
+
+<span class="go">    In [56]: px print y</span>
+<span class="go">    Executing command on Controller</span>
+<span class="go">    Out[56]:</span>
+<span class="go">    &lt;Results List&gt;</span>
+<span class="go">    [0] In [16]: print y</span>
+<span class="go">    [0] Out[16]: 512.0</span>
+
+<span class="go">    [1] In [15]: print y</span>
+<span class="go">    [1] Out[15]: 512.0</span>
+
+<span class="go">    [2] In [16]: print y</span>
+<span class="go">    [2] Out[16]: 512.0</span>
+
+<span class="go">    [3] In [15]: print y</span>
+<span class="go">    [3] Out[15]: 512.0</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="dictionary-interface">
+<h3>Dictionary interface<a class="headerlink" href="#dictionary-interface" title="Permalink to this headline">¶</a></h3>
+<p>As a shorthand to <tt class="xref docutils literal"><span class="pre">push()</span></tt> and <tt class="xref docutils literal"><span class="pre">pull()</span></tt>, the
+<tt class="xref docutils literal"><span class="pre">MultiEngineClient</span></tt> class implements some of the Python dictionary
+interface. This make the remote namespaces of the engines appear as a local
+dictionary. Underneath, this uses <tt class="xref docutils literal"><span class="pre">push()</span></tt> and <tt class="xref docutils literal"><span class="pre">pull()</span></tt>:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [50]: </span><span class="n">mec</span><span class="o">.</span><span class="n">block</span><span class="o">=</span><span class="bp">True</span>
+
+<span class="gp">In [51]: </span><span class="n">mec</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;foo&#39;</span><span class="p">,</span><span class="s">&#39;bar&#39;</span><span class="p">]</span>
+
+<span class="gp">In [52]: </span><span class="n">mec</span><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">]</span>
+<span class="go">Out[52]: </span><span class="p">[[</span><span class="s">&#39;foo&#39;</span><span class="p">,</span> <span class="s">&#39;bar&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;foo&#39;</span><span class="p">,</span> <span class="s">&#39;bar&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;foo&#39;</span><span class="p">,</span> <span class="s">&#39;bar&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;foo&#39;</span><span class="p">,</span> <span class="s">&#39;bar&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="scatter-and-gather">
+<h3>Scatter and gather<a class="headerlink" href="#scatter-and-gather" title="Permalink to this headline">¶</a></h3>
+<p>Sometimes it is useful to partition a sequence and push the partitions to
+different engines. In MPI language, this is know as scatter/gather and we
+follow that terminology. However, it is important to remember that in
+IPython&#8217;s <tt class="xref docutils literal"><span class="pre">MultiEngineClient</span></tt> class, <tt class="xref docutils literal"><span class="pre">scatter()</span></tt> is from the
+interactive IPython session to the engines and <tt class="xref docutils literal"><span class="pre">gather()</span></tt> is from the
+engines back to the interactive IPython session. For scatter/gather operations
+between engines, MPI should be used:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [58]: </span><span class="n">mec</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="s">&#39;a&#39;</span><span class="p">,</span><span class="nb">range</span><span class="p">(</span><span class="mf">16</span><span class="p">))</span>
+<span class="go">Out[58]: </span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">]</span>
+
+<span class="gp">In [59]: </span><span class="n">px</span> <span class="k">print</span> <span class="n">a</span>
+<span class="go">Executing command on Controller</span>
+<span class="go">Out[59]:</span>
+<span class="go">&lt;Results List&gt;</span>
+<span class="go">[0] In [17]: print a</span>
+<span class="go">[0] Out[17]: [0, 1, 2, 3]</span>
+
+<span class="go">[1] In [16]: print a</span>
+<span class="go">[1] Out[16]: [4, 5, 6, 7]</span>
+
+<span class="go">[2] In [17]: print a</span>
+<span class="go">[2] Out[17]: [8, 9, 10, 11]</span>
+
+<span class="go">[3] In [16]: print a</span>
+<span class="go">[3] Out[16]: [12, 13, 14, 15]</span>
+
+
+<span class="gp">In [60]: </span><span class="n">mec</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="s">&#39;a&#39;</span><span class="p">)</span>
+<span class="go">Out[60]: </span><span class="p">[</span><span class="mf">0</span><span class="p">,</span> <span class="mf">1</span><span class="p">,</span> <span class="mf">2</span><span class="p">,</span> <span class="mf">3</span><span class="p">,</span> <span class="mf">4</span><span class="p">,</span> <span class="mf">5</span><span class="p">,</span> <span class="mf">6</span><span class="p">,</span> <span class="mf">7</span><span class="p">,</span> <span class="mf">8</span><span class="p">,</span> <span class="mf">9</span><span class="p">,</span> <span class="mf">10</span><span class="p">,</span> <span class="mf">11</span><span class="p">,</span> <span class="mf">12</span><span class="p">,</span> <span class="mf">13</span><span class="p">,</span> <span class="mf">14</span><span class="p">,</span> <span class="mf">15</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="other-things-to-look-at">
+<h2>Other things to look at<a class="headerlink" href="#other-things-to-look-at" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="how-to-do-parallel-list-comprehensions">
+<h3>How to do parallel list comprehensions<a class="headerlink" href="#how-to-do-parallel-list-comprehensions" title="Permalink to this headline">¶</a></h3>
+<p>In many cases list comprehensions are nicer than using the map function. While
+we don&#8217;t have fully parallel list comprehensions, it is simple to get the
+basic effect using <tt class="xref docutils literal"><span class="pre">scatter()</span></tt> and <tt class="xref docutils literal"><span class="pre">gather()</span></tt>:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [66]: </span><span class="n">mec</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">,</span><span class="nb">range</span><span class="p">(</span><span class="mf">64</span><span class="p">))</span>
+<span class="go">Out[66]: </span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">]</span>
+
+<span class="gp">In [67]: </span><span class="n">px</span> <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">**</span><span class="mf">10</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+<span class="go">Executing command on Controller</span>
+<span class="go">Out[67]:</span>
+<span class="go">&lt;Results List&gt;</span>
+<span class="go">[0] In [19]: y = [i**10 for i in x]</span>
+<span class="go">[1] In [18]: y = [i**10 for i in x]</span>
+<span class="go">[2] In [19]: y = [i**10 for i in x]</span>
+<span class="go">[3] In [18]: y = [i**10 for i in x]</span>
+
+
+<span class="gp">In [68]: </span><span class="n">y</span> <span class="o">=</span> <span class="n">mec</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span><span class="s">&#39;y&#39;</span><span class="p">)</span>
+
+<span class="gp">In [69]: </span><span class="k">print</span> <span class="n">y</span>
+<span class="go">[0, 1, 1024, 59049, 1048576, 9765625, 60466176, 282475249, 1073741824,...]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="parallel-exceptions">
+<h3>Parallel exceptions<a class="headerlink" href="#parallel-exceptions" title="Permalink to this headline">¶</a></h3>
+<p>In the multiengine interface, parallel commands can raise Python exceptions,
+just like serial commands. But, it is a little subtle, because a single
+parallel command can actually raise multiple exceptions (one for each engine
+the command was run on). To express this idea, the MultiEngine interface has a
+<tt class="xref docutils literal"><span class="pre">CompositeError</span></tt> exception class that will be raised in most cases. The
+<tt class="xref docutils literal"><span class="pre">CompositeError</span></tt> class is a special type of exception that wraps one or
+more other types of exceptions. Here is how it works:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [76]: </span><span class="n">mec</span><span class="o">.</span><span class="n">block</span><span class="o">=</span><span class="bp">True</span>
+
+<span class="gp">In [77]: </span><span class="n">mec</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;1/0&#39;</span><span class="p">)</span>
+<span class="go">---------------------------------------------------------------------------</span>
+<span class="go">CompositeError                            Traceback (most recent call last)</span>
+
+<span class="go">/ipython1-client-r3021/docs/examples/&lt;ipython console&gt; in &lt;module&gt;()</span>
+
+<span class="go">/ipython1-client-r3021/ipython1/kernel/multiengineclient.pyc in execute(self, lines, targets, block)</span>
+<span class="go">    432         targets, block = self._findTargetsAndBlock(targets, block)</span>
+<span class="go">    433         result = blockingCallFromThread(self.smultiengine.execute, lines,</span>
+<span class="go">--&gt; 434             targets=targets, block=block)</span>
+<span class="go">    435         if block:</span>
+<span class="go">    436             result = ResultList(result)</span>
+
+<span class="go">/ipython1-client-r3021/ipython1/kernel/twistedutil.pyc in blockingCallFromThread(f, *a, **kw)</span>
+<span class="go">     72             result.raiseException()</span>
+<span class="go">     73         except Exception, e:</span>
+<span class="go">---&gt; 74             raise e</span>
+<span class="go">     75     return result</span>
+<span class="go">     76</span>
+
+<span class="go">CompositeError: one or more exceptions from call to method: execute</span>
+<span class="go">[0:execute]: ZeroDivisionError: integer division or modulo by zero</span>
+<span class="go">[1:execute]: ZeroDivisionError: integer division or modulo by zero</span>
+<span class="go">[2:execute]: ZeroDivisionError: integer division or modulo by zero</span>
+<span class="go">[3:execute]: ZeroDivisionError: integer division or modulo by zero</span>
+</pre></div>
+</div>
+<p>Notice how the error message printed when <tt class="xref docutils literal"><span class="pre">CompositeError</span></tt> is raised has information about the individual exceptions that were raised on each engine.  If you want, you can even raise one of these original exceptions:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [80]: </span><span class="k">try</span><span class="p">:</span>
+<span class="gp">   ....:</span>     <span class="n">mec</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;1/0&#39;</span><span class="p">)</span>
+<span class="gp">   ....:</span> <span class="k">except</span> <span class="n">client</span><span class="o">.</span><span class="n">CompositeError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+<span class="gp">   ....:</span>     <span class="n">e</span><span class="o">.</span><span class="n">raise_exception</span><span class="p">()</span>
+<span class="gp">   ....:</span>
+<span class="gp">   ....:</span>
+<span class="go">---------------------------------------------------------------------------</span>
+<span class="go">ZeroDivisionError                         Traceback (most recent call last)</span>
+
+<span class="go">/ipython1-client-r3021/docs/examples/&lt;ipython console&gt; in &lt;module&gt;()</span>
+
+<span class="go">/ipython1-client-r3021/ipython1/kernel/error.pyc in raise_exception(self, excid)</span>
+<span class="go">    156             raise IndexError(&quot;an exception with index %i does not exist&quot;%excid)</span>
+<span class="go">    157         else:</span>
+<span class="go">--&gt; 158             raise et, ev, etb</span>
+<span class="go">    159</span>
+<span class="go">    160 def collect_exceptions(rlist, method):</span>
+
+<span class="go">ZeroDivisionError: integer division or modulo by zero</span>
+</pre></div>
+</div>
+<p>If you are working in IPython, you can simple type <tt class="docutils literal"><span class="pre">%debug</span></tt> after one of
+these <tt class="xref docutils literal"><span class="pre">CompositeError</span></tt> exceptions is raised, and inspect the exception
+instance:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [81]: </span><span class="n">mec</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;1/0&#39;</span><span class="p">)</span>
+<span class="go">---------------------------------------------------------------------------</span>
+<span class="go">CompositeError                            Traceback (most recent call last)</span>
+
+<span class="go">/ipython1-client-r3021/docs/examples/&lt;ipython console&gt; in &lt;module&gt;()</span>
+
+<span class="go">/ipython1-client-r3021/ipython1/kernel/multiengineclient.pyc in execute(self, lines, targets, block)</span>
+<span class="go">    432         targets, block = self._findTargetsAndBlock(targets, block)</span>
+<span class="go">    433         result = blockingCallFromThread(self.smultiengine.execute, lines,</span>
+<span class="go">--&gt; 434             targets=targets, block=block)</span>
+<span class="go">    435         if block:</span>
+<span class="go">    436             result = ResultList(result)</span>
+
+<span class="go">/ipython1-client-r3021/ipython1/kernel/twistedutil.pyc in blockingCallFromThread(f, *a, **kw)</span>
+<span class="go">     72             result.raiseException()</span>
+<span class="go">     73         except Exception, e:</span>
+<span class="go">---&gt; 74             raise e</span>
+<span class="go">     75     return result</span>
+<span class="go">     76</span>
+
+<span class="go">CompositeError: one or more exceptions from call to method: execute</span>
+<span class="go">[0:execute]: ZeroDivisionError: integer division or modulo by zero</span>
+<span class="go">[1:execute]: ZeroDivisionError: integer division or modulo by zero</span>
+<span class="go">[2:execute]: ZeroDivisionError: integer division or modulo by zero</span>
+<span class="go">[3:execute]: ZeroDivisionError: integer division or modulo by zero</span>
+
+<span class="gp">In [82]: </span><span class="o">%</span><span class="n">debug</span>
+<span class="go">&gt;</span>
+
+<span class="go">/ipython1-client-r3021/ipython1/kernel/twistedutil.py(74)blockingCallFromThread()</span>
+<span class="go">     73         except Exception, e:</span>
+<span class="go">---&gt; 74             raise e</span>
+<span class="go">     75     return result</span>
+
+<span class="go">ipdb&gt; e.</span>
+<span class="go">e.__class__         e.__getitem__       e.__new__           e.__setstate__      e.args</span>
+<span class="go">e.__delattr__       e.__getslice__      e.__reduce__        e.__str__           e.elist</span>
+<span class="go">e.__dict__          e.__hash__          e.__reduce_ex__     e.__weakref__       e.message</span>
+<span class="go">e.__doc__           e.__init__          e.__repr__          e._get_engine_str   e.print_tracebacks</span>
+<span class="go">e.__getattribute__  e.__module__        e.__setattr__       e._get_traceback    e.raise_exception</span>
+<span class="go">ipdb&gt; e.print_tracebacks()</span>
+<span class="go">[0:execute]:</span>
+<span class="go">---------------------------------------------------------------------------</span>
+<span class="go">ZeroDivisionError                         Traceback (most recent call last)</span>
+
+<span class="go">/ipython1-client-r3021/docs/examples/&lt;string&gt; in &lt;module&gt;()</span>
+
+<span class="go">ZeroDivisionError: integer division or modulo by zero</span>
+
+<span class="go">[1:execute]:</span>
+<span class="go">---------------------------------------------------------------------------</span>
+<span class="go">ZeroDivisionError                         Traceback (most recent call last)</span>
+
+<span class="go">/ipython1-client-r3021/docs/examples/&lt;string&gt; in &lt;module&gt;()</span>
+
+<span class="go">ZeroDivisionError: integer division or modulo by zero</span>
+
+<span class="go">[2:execute]:</span>
+<span class="go">---------------------------------------------------------------------------</span>
+<span class="go">ZeroDivisionError                         Traceback (most recent call last)</span>
+
+<span class="go">/ipython1-client-r3021/docs/examples/&lt;string&gt; in &lt;module&gt;()</span>
+
+<span class="go">ZeroDivisionError: integer division or modulo by zero</span>
+
+<span class="go">[3:execute]:</span>
+<span class="go">---------------------------------------------------------------------------</span>
+<span class="go">ZeroDivisionError                         Traceback (most recent call last)</span>
+
+<span class="go">/ipython1-client-r3021/docs/examples/&lt;string&gt; in &lt;module&gt;()</span>
+
+<span class="go">ZeroDivisionError: integer division or modulo by zero</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The above example appears to be broken right now because of a change in
+how we are using Twisted.</p>
+</div>
+<p>All of this same error handling magic even works in non-blocking mode:</p>
+<div class="highlight-ipython"><div class="highlight"><pre><span class="gp">In [83]: </span><span class="n">mec</span><span class="o">.</span><span class="n">block</span><span class="o">=</span><span class="bp">False</span>
+
+<span class="gp">In [84]: </span><span class="n">pr</span> <span class="o">=</span> <span class="n">mec</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;1/0&#39;</span><span class="p">)</span>
+
+<span class="gp">In [85]: </span><span class="n">pr</span><span class="o">.</span><span class="n">r</span>
+<span class="go">---------------------------------------------------------------------------</span>
+<span class="go">CompositeError                            Traceback (most recent call last)</span>
+
+<span class="go">/ipython1-client-r3021/docs/examples/&lt;ipython console&gt; in &lt;module&gt;()</span>
+
+<span class="go">/ipython1-client-r3021/ipython1/kernel/multiengineclient.pyc in _get_r(self)</span>
+<span class="go">    170</span>
+<span class="go">    171     def _get_r(self):</span>
+<span class="go">--&gt; 172         return self.get_result(block=True)</span>
+<span class="go">    173</span>
+<span class="go">    174     r = property(_get_r)</span>
+
+<span class="go">/ipython1-client-r3021/ipython1/kernel/multiengineclient.pyc in get_result(self, default, block)</span>
+<span class="go">    131                 return self.result</span>
+<span class="go">    132         try:</span>
+<span class="go">--&gt; 133             result = self.client.get_pending_deferred(self.result_id, block)</span>
+<span class="go">    134         except error.ResultNotCompleted:</span>
+<span class="go">    135             return default</span>
+
+<span class="go">/ipython1-client-r3021/ipython1/kernel/multiengineclient.pyc in get_pending_deferred(self, deferredID, block)</span>
+<span class="go">    385</span>
+<span class="go">    386     def get_pending_deferred(self, deferredID, block):</span>
+<span class="go">--&gt; 387         return blockingCallFromThread(self.smultiengine.get_pending_deferred, deferredID, block)</span>
+<span class="go">    388</span>
+<span class="go">    389     def barrier(self, pendingResults):</span>
+
+<span class="go">/ipython1-client-r3021/ipython1/kernel/twistedutil.pyc in blockingCallFromThread(f, *a, **kw)</span>
+<span class="go">     72             result.raiseException()</span>
+<span class="go">     73         except Exception, e:</span>
+<span class="go">---&gt; 74             raise e</span>
+<span class="go">     75     return result</span>
+<span class="go">     76</span>
+
+<span class="go">CompositeError: one or more exceptions from call to method: execute</span>
+<span class="go">[0:execute]: ZeroDivisionError: integer division or modulo by zero</span>
+<span class="go">[1:execute]: ZeroDivisionError: integer division or modulo by zero</span>
+<span class="go">[2:execute]: ZeroDivisionError: integer division or modulo by zero</span>
+<span class="go">[3:execute]: ZeroDivisionError: integer division or modulo by zero</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">IPython&#8217;s multiengine interface</a><ul>
+<li><a class="reference external" href="#starting-the-ipython-controller-and-engines">Starting the IPython controller and engines</a></li>
+<li><a class="reference external" href="#creating-a-multiengineclient-instance">Creating a <tt class="docutils literal"><span class="pre">MultiEngineClient</span></tt> instance</a></li>
+<li><a class="reference external" href="#quick-and-easy-parallelism">Quick and easy parallelism</a><ul>
+<li><a class="reference external" href="#parallel-map">Parallel map</a></li>
+<li><a class="reference external" href="#parallel-function-decorator">Parallel function decorator</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#running-python-commands">Running Python commands</a><ul>
+<li><a class="reference external" href="#blocking-execution">Blocking execution</a></li>
+<li><a class="reference external" href="#non-blocking-execution">Non-blocking execution</a></li>
+<li><a class="reference external" href="#the-block-and-targets-keyword-arguments-and-attributes">The <tt class="docutils literal"><span class="pre">block</span></tt> and <tt class="docutils literal"><span class="pre">targets</span></tt> keyword arguments and attributes</a></li>
+<li><a class="reference external" href="#parallel-magic-commands">Parallel magic commands</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#moving-python-objects-around">Moving Python objects around</a><ul>
+<li><a class="reference external" href="#basic-push-and-pull">Basic push and pull</a></li>
+<li><a class="reference external" href="#push-and-pull-for-functions">Push and pull for functions</a></li>
+<li><a class="reference external" href="#dictionary-interface">Dictionary interface</a></li>
+<li><a class="reference external" href="#scatter-and-gather">Scatter and gather</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#other-things-to-look-at">Other things to look at</a><ul>
+<li><a class="reference external" href="#how-to-do-parallel-list-comprehensions">How to do parallel list comprehensions</a></li>
+<li><a class="reference external" href="#parallel-exceptions">Parallel exceptions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="parallel_process.html" title="previous chapter">Starting the IPython controller and engines</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="parallel_task.html" title="next chapter">The IPython task interface</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/parallel/parallel_multiengine.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="parallel_task.html" title="The IPython task interface"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="parallel_process.html" title="Starting the IPython controller and engines"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Using IPython for parallel computing</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

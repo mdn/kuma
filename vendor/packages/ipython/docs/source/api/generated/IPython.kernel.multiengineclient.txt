@@ -1,0 +1,108 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.multiengineclient
+========================
+
+Module: :mod:`kernel.multiengineclient`
+---------------------------------------
+Inheritance diagram for ``IPython.kernel.multiengineclient``:
+
+.. inheritance-diagram:: IPython.kernel.multiengineclient 
+   :parts: 3
+
+.. automodule:: IPython.kernel.multiengineclient
+
+.. currentmodule:: IPython.kernel.multiengineclient
+
+Classes
+-------
+
+:class:`FullBlockingMultiEngineClient`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: FullBlockingMultiEngineClient
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IFullBlockingMultiEngineClient`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IFullBlockingMultiEngineClient
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IPendingResult`
+~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IPendingResult
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`InteractiveMultiEngineClient`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: InteractiveMultiEngineClient
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`PendingResult`
+~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: PendingResult
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`QueueStatusList`
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: QueueStatusList
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`ResultList`
+~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: ResultList
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Functions
+---------
+
+
+.. autofunction:: IPython.kernel.multiengineclient.remote
+
+
+.. autofunction:: IPython.kernel.multiengineclient.strip_whitespace
+
+
+.. autofunction:: IPython.kernel.multiengineclient.wrapResultList
+

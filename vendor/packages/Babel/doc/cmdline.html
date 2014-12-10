@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="generator" content="Docutils 0.5: http://docutils.sourceforge.net/">
+<title>Babel: Command-Line Interface</title>
+<link rel="stylesheet" href="common/style/edgewall.css" type="text/css">
+</head>
+<body>
+<div class="document" id="command-line-interface">
+    <div id="navigation">
+      <span class="projinfo">Babel 0.9.5</span>
+      <a href="index.html">Documentation Index</a>
+    </div>
+<h1 class="title">Command-Line Interface</h1>
+<p>Babel includes a command-line interface for working with message catalogs,
+similar to the various GNU <tt class="docutils literal"><span class="pre">gettext</span></tt> tools commonly available on Linux/Unix
+systems.</p>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="auto-toc simple">
+<li><a class="reference internal" href="#compile" id="id1">1   compile</a></li>
+<li><a class="reference internal" href="#extract" id="id2">2   extract</a></li>
+<li><a class="reference internal" href="#init" id="id3">3   init</a></li>
+<li><a class="reference internal" href="#update" id="id4">4   update</a></li>
+</ul>
+</div>
+<p>When properly installed, Babel provides a script called <tt class="docutils literal"><span class="pre">pybabel</span></tt>:</p>
+<pre class="literal-block">
+$ pybabel --help
+usage: pybabel command [options] [args]
+
+options:
+  --version       show program's version number and exit
+  -h, --help      show this help message and exit
+  --list-locales  print all known locales and exit
+  -v, --verbose   print as much as possible
+  -q, --quiet     print as little as possible
+
+commands:
+  compile  compile message catalogs to MO files
+  extract  extract messages from source files and generate a POT file
+  init     create new message catalogs from a POT file
+  update   update existing message catalogs from a POT file
+</pre>
+<p>The <tt class="docutils literal"><span class="pre">pybabel</span></tt> script provides a number of sub-commands that do the actual
+work. Those sub-commands are described below.</p>
+<div class="section" id="compile">
+<h1>1   compile</h1>
+<p>The <tt class="docutils literal"><span class="pre">compile</span></tt> sub-command can be used to compile translation catalogs into
+binary MO files:</p>
+<pre class="literal-block">
+$ pybabel compile --help
+usage: pybabel compile [options]
+
+compile message catalogs to MO files
+
+options:
+  -h, --help            show this help message and exit
+  -D DOMAIN, --domain=DOMAIN
+                        domain of MO and PO files (default 'messages')
+  -d DIR, --directory=DIR
+                        base directory of catalog files
+  -l LOCALE, --locale=LOCALE
+                        locale of the catalog
+  -i FILE, --input-file=FILE
+                        name of the input file
+  -o FILE, --output-file=FILE
+                        name of the output file (default
+                        '&lt;output_dir&gt;/&lt;locale&gt;/LC_MESSAGES/&lt;domain&gt;.mo')
+  -f, --use-fuzzy       also include fuzzy translations (default False)
+  --statistics          print statistics about translations
+</pre>
+<p>If <tt class="docutils literal"><span class="pre">directory</span></tt> is specified, but <tt class="docutils literal"><span class="pre">output-file</span></tt> is not, the default filename
+of the output file will be:</p>
+<pre class="literal-block">
+&lt;directory&gt;/&lt;locale&gt;/LC_MESSAGES/&lt;domain&gt;.mo
+</pre>
+<p>If neither the <tt class="docutils literal"><span class="pre">input_file</span></tt> nor the <tt class="docutils literal"><span class="pre">locale</span></tt> option is set, this command
+looks for all catalog files in the base directory that match the given domain,
+and compiles each of them to MO files in the same directory.</p>
+</div>
+<div class="section" id="extract">
+<h1>2   extract</h1>
+<p>The <tt class="docutils literal"><span class="pre">extract</span></tt> sub-command can be used to extract localizable messages from
+a collection of source files:</p>
+<pre class="literal-block">
+$ pybabel extract --help
+usage: pybabel extract [options] dir1 &lt;dir2&gt; ...
+
+extract messages from source files and generate a POT file
+
+options:
+  -h, --help            show this help message and exit
+  --charset=CHARSET     charset to use in the output (default "utf-8")
+  -k KEYWORDS, --keyword=KEYWORDS
+                        keywords to look for in addition to the defaults. You
+                        can specify multiple -k flags on the command line.
+  --no-default-keywords
+                        do not include the default keywords
+  -F MAPPING_FILE, --mapping=MAPPING_FILE
+                        path to the extraction mapping file
+  --no-location         do not include location comments with filename and
+                        line number
+  --omit-header         do not include msgid "" entry in header
+  -o OUTPUT, --output=OUTPUT
+                        path to the output POT file
+  -w WIDTH, --width=WIDTH
+                        set output line width (default 76)
+  --no-wrap             do not break long message lines, longer than the
+                        output line width, into several lines
+  --sort-output         generate sorted output (default False)
+  --sort-by-file        sort output by file location (default False)
+  --msgid-bugs-address=EMAIL@ADDRESS
+                        set report address for msgid
+  --copyright-holder=COPYRIGHT_HOLDER
+                        set copyright holder in output
+  -c TAG, --add-comments=TAG
+                        place comment block with TAG (or those preceding
+                        keyword lines) in output file. One TAG per argument
+                        call
+</pre>
+</div>
+<div class="section" id="init">
+<h1>3   init</h1>
+<p>The <cite>init</cite> sub-command creates a new translations catalog based on a PO
+template file:</p>
+<pre class="literal-block">
+$ pybabel init --help
+usage: pybabel init [options]
+
+create new message catalogs from a POT file
+
+options:
+  -h, --help            show this help message and exit
+  -D DOMAIN, --domain=DOMAIN
+                        domain of PO file (default 'messages')
+  -i FILE, --input-file=FILE
+                        name of the input file
+  -d DIR, --output-dir=DIR
+                        path to output directory
+  -o FILE, --output-file=FILE
+                        name of the output file (default
+                        '&lt;output_dir&gt;/&lt;locale&gt;/LC_MESSAGES/&lt;domain&gt;.po')
+  -l LOCALE, --locale=LOCALE
+                        locale for the new localized catalog
+</pre>
+</div>
+<div class="section" id="update">
+<h1>4   update</h1>
+<p>The <cite>update</cite> sub-command updates an existing new translations catalog based on
+a PO template file:</p>
+<pre class="literal-block">
+$ pybabel update --help
+usage: pybabel update [options]
+
+update existing message catalogs from a POT file
+
+options:
+  -h, --help            show this help message and exit
+  -D DOMAIN, --domain=DOMAIN
+                        domain of PO file (default 'messages')
+  -i FILE, --input-file=FILE
+                        name of the input file
+  -d DIR, --output-dir=DIR
+                        path to output directory
+  -o FILE, --output-file=FILE
+                        name of the output file (default
+                        '&lt;output_dir&gt;/&lt;locale&gt;/LC_MESSAGES/&lt;domain&gt;.po')
+  -l LOCALE, --locale=LOCALE
+                        locale of the translations catalog
+  --ignore-obsolete     do not include obsolete messages in the output
+                        (default False)
+  -N, --no-fuzzy-matching
+                        do not use fuzzy matching (default False)
+  --previous            keep previous msgids of translated messages (default
+                        False)
+</pre>
+<p>If <tt class="docutils literal"><span class="pre">output_dir</span></tt> is specified, but <tt class="docutils literal"><span class="pre">output-file</span></tt> is not, the default
+filename of the output file will be:</p>
+<pre class="literal-block">
+&lt;directory&gt;/&lt;locale&gt;/LC_MESSAGES/&lt;domain&gt;.mo
+</pre>
+<p>If neither the <tt class="docutils literal"><span class="pre">output_file</span></tt> nor the <tt class="docutils literal"><span class="pre">locale</span></tt> option is set, this command
+looks for all catalog files in the base directory that match the given domain,
+and updates each of them.</p>
+</div>
+    <div id="footer">
+      Visit the Babel open source project at
+      <a href="http://babel.edgewall.org/">http://babel.edgewall.org/</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="progress_progress" id="progress_progress">--progress=PROGRESS</a></h1>
+<div class="level1">
+
+<p>
+
+All of the programs can give visual feedback.  This options allows you to select the style of that feedback.
+</p>
+
+<p>
+In the examples we are converting and OpenOffice.org 2.0 sdf/gsi file into <acronym title="Gettext Portable Object Template">POT</acronym> files using <a href="toolkit-oo2po.html" class="wikilink1" title="toolkit-oo2po.html">oo2po</a>.
+</p>
+
+</div>
+<!-- SECTION "--progress=PROGRESS" [1-248] -->
+<h2><a name="none" id="none">none</a></h2>
+<div class="level2">
+
+<p>
+
+No visual feedback, this is useful if you want to use any of the scripts as part of another script and don&#039;t
+want feedback to interfere with the operation.
+</p>
+<pre class="code bash"><span class="br0">&#91;</span>dwayne<span class="sy0">@</span>laptop OOo20<span class="br0">&#93;</span>$ oo2po -P --<span class="re2">progress=</span>none en-US.sdf pot
+<span class="br0">&#91;</span>dwayne<span class="sy0">@</span>laptop OOo20<span class="br0">&#93;</span>$</pre>
+</div>
+<!-- SECTION "none" [249-529] -->
+<h2><a name="dots" id="dots">dots</a></h2>
+<div class="level2">
+
+<p>
+
+Use visual dots to represent progress.  Each dot represent a file that has been processed.
+</p>
+<pre class="code bash"><span class="br0">&#91;</span>dwayne<span class="sy0">@</span>laptop OOo20<span class="br0">&#93;</span>$ oo2po -P --<span class="re2">progress=</span>dots en-US.sdf pot
+.............................................................................................
+.............................................................................................
+.........................................
+<span class="br0">&#91;</span>dwayne<span class="sy0">@</span>laptop OOo20<span class="br0">&#93;</span>$</pre>
+</div>
+<!-- SECTION "dots" [530-975] -->
+<h2><a name="bar_default" id="bar_default">bar (default)</a></h2>
+<div class="level2">
+
+<p>
+
+Use a progress bar consisting of hashes (#) to show progress.  
+</p>
+<pre class="code bash"><span class="br0">&#91;</span>dwayne<span class="sy0">@</span>laptop OOo20<span class="br0">&#93;</span>$ oo2po -P --<span class="re2">progress=</span>bar en-US.sdf pot
+processing <span class="nu0">227</span> files...
+<span class="br0">&#91;</span><span class="co0">##############################             ]  69%</span></pre>
+<p>
+This is the default mode of operation, therefore this command would create the same output.
+</p>
+<pre class="code bash"><span class="br0">&#91;</span>dwayne<span class="sy0">@</span>laptop OOo20<span class="br0">&#93;</span>$ oo2po -P en-US.sdf pot</pre>
+</div>
+<!-- SECTION "bar (default)" [976-1385] -->
+<h2><a name="verbose" id="verbose">verbose</a></h2>
+<div class="level2">
+
+<p>
+
+Combine the hash (#) progress bar form the <em>bar</em> option with the actual names of files that have been processed.
+</p>
+<pre class="code bash"><span class="br0">&#91;</span>dwayne<span class="sy0">@</span>laptop OOo20<span class="br0">&#93;</span>$ oo2po -P --<span class="re2">progress=</span>verbose en-US.sdf pot
+processing <span class="nu0">227</span> files...
+so3<span class="sy0">/</span>src.oo
+dbaccess<span class="sy0">/</span><span class="kw3">source</span><span class="sy0">/</span>ui<span class="sy0">/</span>uno.oo
+helpcontent2<span class="sy0">/</span><span class="kw3">source</span><span class="sy0">/</span>text<span class="sy0">/</span>shared.oo
+wizards<span class="sy0">/</span><span class="kw3">source</span><span class="sy0">/</span>formwizard.oo
+sch<span class="sy0">/</span><span class="kw3">source</span><span class="sy0">/</span>ui<span class="sy0">/</span>dlg.oo
+helpcontent2<span class="sy0">/</span><span class="kw3">source</span><span class="sy0">/</span>text<span class="sy0">/</span>sbasic<span class="sy0">/</span>shared<span class="sy0">/</span><span class="nu0">01</span>.oo
+dbaccess<span class="sy0">/</span><span class="kw3">source</span><span class="sy0">/</span>core<span class="sy0">/</span>resource.oo
+svtools<span class="sy0">/</span><span class="kw3">source</span><span class="sy0">/</span>sbx.oo
+dbaccess<span class="sy0">/</span><span class="kw3">source</span><span class="sy0">/</span>ui<span class="sy0">/</span>relationdesign.oo
+scp2<span class="sy0">/</span><span class="kw3">source</span><span class="sy0">/</span>writer.oo
+filter<span class="sy0">/</span><span class="kw3">source</span><span class="sy0">/</span>xsltdialog.oo
+<span class="br0">&#91;</span><span class="co0">##                                         ]   5%</span></pre>
+</div>
+<!-- SECTION "verbose" [1386-1992] -->
+<h2><a name="names" id="names">names</a></h2>
+<div class="level2">
+
+<p>
+
+Prints out only the filenames without any other progress indicator.  This is
+a good option when outputting to a log file rather than a terminal.
+</p>
+<pre class="code bash"><span class="br0">&#91;</span>dwayne<span class="sy0">@</span>laptop OOo20<span class="br0">&#93;</span>$ oo2po -P --<span class="re2">progress=</span>names en-US.sdf pot
+so3<span class="sy0">/</span>src.oo
+dbaccess<span class="sy0">/</span><span class="kw3">source</span><span class="sy0">/</span>ui<span class="sy0">/</span>uno.oo
+helpcontent2<span class="sy0">/</span><span class="kw3">source</span><span class="sy0">/</span>text<span class="sy0">/</span>shared.oo
+wizards<span class="sy0">/</span><span class="kw3">source</span><span class="sy0">/</span>formwizard.oo
+sch<span class="sy0">/</span><span class="kw3">source</span><span class="sy0">/</span>ui<span class="sy0">/</span>dlg.oo
+helpcontent2<span class="sy0">/</span><span class="kw3">source</span><span class="sy0">/</span>text<span class="sy0">/</span>sbasic<span class="sy0">/</span>shared<span class="sy0">/</span><span class="nu0">01</span>.oo
+dbaccess<span class="sy0">/</span><span class="kw3">source</span><span class="sy0">/</span>core<span class="sy0">/</span>resource.oo
+svtools<span class="sy0">/</span><span class="kw3">source</span><span class="sy0">/</span>sbx.oo
+dbaccess<span class="sy0">/</span><span class="kw3">source</span><span class="sy0">/</span>ui<span class="sy0">/</span>relationdesign.oo
+scp2<span class="sy0">/</span><span class="kw3">source</span><span class="sy0">/</span>writer.oo
+filter<span class="sy0">/</span><span class="kw3">source</span><span class="sy0">/</span>xsltdialog.oo</pre>
+</div>
+<!-- SECTION "names" [1993-] --></body>
+</html>

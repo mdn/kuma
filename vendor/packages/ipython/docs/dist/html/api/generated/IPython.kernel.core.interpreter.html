@@ -1,0 +1,535 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.core.interpreter &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.core.macro" href="IPython.kernel.core.macro.html" />
+    <link rel="prev" title="kernel.core.history" href="IPython.kernel.core.history.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.macro.html" title="kernel.core.macro"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.history.html" title="kernel.core.history"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-core-interpreter">
+<h1>kernel.core.interpreter<a class="headerlink" href="#kernel-core-interpreter" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.core.interpreter">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.core.interpreter</span></tt><a class="headerlink" href="#module-IPython.kernel.core.interpreter" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.kernel.core.interpreter</span></tt>:</p>
+<img src="../../_images/inheritancec5ebb3f584.png" usemap="#inheritancec5ebb3f584" class="inheritance"/><map id="inheritancec5ebb3f584" name="inheritancec5ebb3f584">
+<area shape="rect" href="#IPython.kernel.core.interpreter.Interpreter" title="core.interpreter.Interpreter" alt="" coords="8,56,200,83"/>
+<area shape="rect" href="#IPython.kernel.core.interpreter.NotDefined" title="core.interpreter.NotDefined" alt="" coords="7,5,201,32"/>
+</map>
+<p>Central interpreter object for an IPython engine.</p>
+<p>The interpreter is the object whose job is to process lines of user input and
+actually execute them in the user&#8217;s namespace.</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="interpreter">
+<h3><a title="IPython.kernel.core.interpreter.Interpreter" class="reference internal" href="#IPython.kernel.core.interpreter.Interpreter"><tt class="xref docutils literal"><span class="pre">Interpreter</span></tt></a><a class="headerlink" href="#interpreter" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.core.interpreter.Interpreter">
+<!--[IPython.kernel.core.interpreter.Interpreter]-->class <tt class="descclassname">IPython.kernel.core.interpreter.</tt><tt class="descname">Interpreter</tt><big>(</big><em>user_ns=None</em>, <em>global_ns=None</em>, <em>translator=None</em>, <em>magic=None</em>, <em>display_formatters=None</em>, <em>traceback_formatters=None</em>, <em>output_trap=None</em>, <em>history=None</em>, <em>message_cache=None</em>, <em>filename='&lt;string&gt;'</em>, <em>config=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.interpreter.Interpreter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>An interpreter object.</p>
+<p>fixme: needs to negotiate available formatters with frontends.</p>
+<p>Important: the interpeter should be built so that it exposes a method
+for each attribute/method of its sub-object. This way it can be
+replaced by a network adapter.</p>
+<dl class="method">
+<dt id="IPython.kernel.core.interpreter.Interpreter.__init__">
+<!--[IPython.kernel.core.interpreter.Interpreter.__init__]--><tt class="descname">__init__</tt><big>(</big><em>user_ns=None</em>, <em>global_ns=None</em>, <em>translator=None</em>, <em>magic=None</em>, <em>display_formatters=None</em>, <em>traceback_formatters=None</em>, <em>output_trap=None</em>, <em>history=None</em>, <em>message_cache=None</em>, <em>filename='&lt;string&gt;'</em>, <em>config=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.interpreter.Interpreter.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.interpreter.Interpreter.complete">
+<!--[IPython.kernel.core.interpreter.Interpreter.complete]--><tt class="descname">complete</tt><big>(</big><em>line</em>, <em>text=None</em>, <em>pos=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.interpreter.Interpreter.complete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Complete the given text.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>text <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">Text fragment to be completed on.  Typically this is</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.interpreter.Interpreter.error">
+<!--[IPython.kernel.core.interpreter.Interpreter.error]--><tt class="descname">error</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.interpreter.Interpreter.error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pass an error message back to the shell.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> : str</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>This should only be called when self.message is set. In other words,
+when code is being executed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.interpreter.Interpreter.execute">
+<!--[IPython.kernel.core.interpreter.Interpreter.execute]--><tt class="descname">execute</tt><big>(</big><em>commands</em>, <em>raiseException=True</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.interpreter.Interpreter.execute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute some IPython commands.</p>
+<ol class="arabic simple">
+<li>Translate them into Python.</li>
+<li>Run them.</li>
+<li>Trap stdout/stderr.</li>
+<li>Trap sys.displayhook().</li>
+<li>Trap exceptions.</li>
+<li>Return a message object.</li>
+</ol>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>commands</strong> : str</p>
+<blockquote>
+<p>The raw commands that the user typed into the prompt.</p>
+</blockquote>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>message</strong> : dict</p>
+<blockquote class="last">
+<p>The dictionary of responses. See the README.txt in this directory
+for an explanation of the format.</p>
+</blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.interpreter.Interpreter.execute_block">
+<!--[IPython.kernel.core.interpreter.Interpreter.execute_block]--><tt class="descname">execute_block</tt><big>(</big><em>code</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.interpreter.Interpreter.execute_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute a single block of code in the user namespace.</p>
+<p>Return value: a flag indicating whether the code to be run completed
+successfully:</p>
+<blockquote>
+<ul class="simple">
+<li>0: successful execution.</li>
+<li>1: an error occurred.</li>
+</ul>
+</blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.interpreter.Interpreter.execute_macro">
+<!--[IPython.kernel.core.interpreter.Interpreter.execute_macro]--><tt class="descname">execute_macro</tt><big>(</big><em>macro</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.interpreter.Interpreter.execute_macro" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute the value of a macro.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><strong>macro</strong> : Macro</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.interpreter.Interpreter.execute_python">
+<!--[IPython.kernel.core.interpreter.Interpreter.execute_python]--><tt class="descname">execute_python</tt><big>(</big><em>python</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.interpreter.Interpreter.execute_python" title="Permalink to this definition">¶</a></dt>
+<dd><p>Actually run the Python code in the namespace.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>python <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd>Pure, exec&#8217;able Python code. Special IPython commands should have
+already been translated into pure Python.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.interpreter.Interpreter.feed_block">
+<!--[IPython.kernel.core.interpreter.Interpreter.feed_block]--><tt class="descname">feed_block</tt><big>(</big><em>source</em>, <em>filename='&lt;input&gt;'</em>, <em>symbol='single'</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.interpreter.Interpreter.feed_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compile some source in the interpreter.</p>
+<p>One several things can happen:</p>
+<p>1) The input is incorrect; compile_command() raised an
+exception (SyntaxError or OverflowError).</p>
+<p>2) The input is incomplete, and more input is required;
+compile_command() returned None.  Nothing happens.</p>
+<p>3) The input is complete; compile_command() returned a code
+object.  The code is executed by calling self.runcode() (which
+also handles run-time exceptions, except for SystemExit).</p>
+<p>The return value is:</p>
+<blockquote>
+<ul class="simple">
+<li>True in case 2</li>
+<li>False in the other cases, unless an exception is raised, where</li>
+</ul>
+<p>None is returned instead.  This can be used by external callers to
+know whether to continue feeding input or not.</p>
+</blockquote>
+<p>The return value can be used to decide whether to use sys.ps1 or
+sys.ps2 to prompt the next line.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.interpreter.Interpreter.formatTraceback">
+<!--[IPython.kernel.core.interpreter.Interpreter.formatTraceback]--><tt class="descname">formatTraceback</tt><big>(</big><em>et</em>, <em>ev</em>, <em>tb</em>, <em>message=''</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.interpreter.Interpreter.formatTraceback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Put a formatted version of the traceback into value and reraise.</p>
+<p>When exceptions have to be sent over the network, the traceback 
+needs to be put into the value of the exception in a nicely
+formatted way.  The method takes the type, value and tb of an 
+exception and puts a string representation of the tb into the 
+value of the exception and reraises it.</p>
+<p>Currently this method uses the ultraTb formatter from IPython trunk.
+Eventually it should simply use the traceback formatters in core
+that are loaded into self.tracback_trap.formatters.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.interpreter.Interpreter.generate_prompt">
+<!--[IPython.kernel.core.interpreter.Interpreter.generate_prompt]--><tt class="descname">generate_prompt</tt><big>(</big><em>is_continuation</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.interpreter.Interpreter.generate_prompt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate and return a string with the prompt to display.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt>is_continuation <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">Whether the input line is continuing multiline input or not, so</p>
+</dd>
+</dl>
+<p class="last">that a proper continuation prompt can be computed.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.interpreter.Interpreter.getCommand">
+<!--[IPython.kernel.core.interpreter.Interpreter.getCommand]--><tt class="descname">getCommand</tt><big>(</big><em>i=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.interpreter.Interpreter.getCommand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the ith message in the message_cache.</p>
+<p>This is implemented here for compatibility with the old ipython1 shell
+I am not sure we need this though.  I even seem to remember that we
+were going to get rid of it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.interpreter.Interpreter.ipmagic">
+<!--[IPython.kernel.core.interpreter.Interpreter.ipmagic]--><tt class="descname">ipmagic</tt><big>(</big><em>arg_string</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.interpreter.Interpreter.ipmagic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call a magic function by name.</p>
+<p>ipmagic(&#8216;name -opt foo bar&#8217;) is equivalent to typing at the ipython
+prompt:</p>
+<p>In[1]: %name -opt foo bar</p>
+<p>To call a magic without arguments, simply use ipmagic(&#8216;name&#8217;).</p>
+<p>This provides a proper Python function to call IPython&#8217;s magics in any
+valid Python code you can type at the interpreter, including loops and
+compound statements.  It is added by IPython to the Python builtin
+namespace upon initialization.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>arg_string</strong> : str</p>
+<blockquote>
+<p>A string containing the name of the magic function to call and any
+additional arguments to be passed to the magic.</p>
+</blockquote>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>something</strong> : object</p>
+<blockquote class="last">
+<p>The return value of the actual object.</p>
+</blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.interpreter.Interpreter.ipsystem">
+<!--[IPython.kernel.core.interpreter.Interpreter.ipsystem]--><tt class="descname">ipsystem</tt><big>(</big><em>command</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.interpreter.Interpreter.ipsystem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute a command in a system shell while expanding variables in the
+current namespace.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><strong>command</strong> : str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.interpreter.Interpreter.pack_exception">
+<!--[IPython.kernel.core.interpreter.Interpreter.pack_exception]--><tt class="descname">pack_exception</tt><big>(</big><em>message</em>, <em>exc</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.interpreter.Interpreter.pack_exception" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.interpreter.Interpreter.pull">
+<!--[IPython.kernel.core.interpreter.Interpreter.pull]--><tt class="descname">pull</tt><big>(</big><em>keys</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.interpreter.Interpreter.pull" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get an item out of the namespace by key.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>key</strong> : str</p>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>value</strong> : object</p>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Raises:</th><td class="field-body"><p class="first"><strong>TypeError if the key is not a string.</strong> :</p>
+<p class="last"><strong>NameError if the object doesn&#8217;t exist.</strong> :</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.interpreter.Interpreter.pull_function">
+<!--[IPython.kernel.core.interpreter.Interpreter.pull_function]--><tt class="descname">pull_function</tt><big>(</big><em>keys</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.interpreter.Interpreter.pull_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.interpreter.Interpreter.push">
+<!--[IPython.kernel.core.interpreter.Interpreter.push]--><tt class="descname">push</tt><big>(</big><em>ns</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.interpreter.Interpreter.push" title="Permalink to this definition">¶</a></dt>
+<dd><p>Put value into the namespace with name key.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><strong>**kwds</strong> :</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.interpreter.Interpreter.push_function">
+<!--[IPython.kernel.core.interpreter.Interpreter.push_function]--><tt class="descname">push_function</tt><big>(</big><em>ns</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.interpreter.Interpreter.push_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.interpreter.Interpreter.reset">
+<!--[IPython.kernel.core.interpreter.Interpreter.reset]--><tt class="descname">reset</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.core.interpreter.Interpreter.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset the interpreter.</p>
+<p>Currently this only resets the users variables in the namespace.
+In the future we might want to also reset the other stateful
+things like that the Interpreter has, like In, Out, etc.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.interpreter.Interpreter.set_traps">
+<!--[IPython.kernel.core.interpreter.Interpreter.set_traps]--><tt class="descname">set_traps</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.core.interpreter.Interpreter.set_traps" title="Permalink to this definition">¶</a></dt>
+<dd>Set all of the output, display, and traceback traps.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.interpreter.Interpreter.setup_message">
+<!--[IPython.kernel.core.interpreter.Interpreter.setup_message]--><tt class="descname">setup_message</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.core.interpreter.Interpreter.setup_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a message object.</p>
+<p>This method prepares and returns a message dictionary.  This dict
+contains the various fields that are used to transfer information about
+execution, results, tracebacks, etc, to clients (either in or out of
+process ones).  Because of the need to work with possibly out of
+process clients, this dict MUST contain strictly pickle-safe values.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.interpreter.Interpreter.setup_namespace">
+<!--[IPython.kernel.core.interpreter.Interpreter.setup_namespace]--><tt class="descname">setup_namespace</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.core.interpreter.Interpreter.setup_namespace" title="Permalink to this definition">¶</a></dt>
+<dd>Add things to the namespace.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.interpreter.Interpreter.split_commands">
+<!--[IPython.kernel.core.interpreter.Interpreter.split_commands]--><tt class="descname">split_commands</tt><big>(</big><em>python</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.interpreter.Interpreter.split_commands" title="Permalink to this definition">¶</a></dt>
+<dd><p>Split multiple lines of code into discrete commands that can be
+executed singly.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>python</strong> : str</p>
+<blockquote>
+<p>Pure, exec&#8217;able Python code.</p>
+</blockquote>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>commands</strong> : list of str</p>
+<blockquote class="last">
+<p>Separate commands that can be exec&#8217;ed independently.</p>
+</blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.interpreter.Interpreter.unset_traps">
+<!--[IPython.kernel.core.interpreter.Interpreter.unset_traps]--><tt class="descname">unset_traps</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.core.interpreter.Interpreter.unset_traps" title="Permalink to this definition">¶</a></dt>
+<dd>Unset all of the output, display, and traceback traps.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.interpreter.Interpreter.var_expand">
+<!--[IPython.kernel.core.interpreter.Interpreter.var_expand]--><tt class="descname">var_expand</tt><big>(</big><em>template</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.interpreter.Interpreter.var_expand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Expand $variables in the current namespace using Itpl.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><strong>template</strong> : str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="notdefined">
+<h3><a title="IPython.kernel.core.interpreter.NotDefined" class="reference internal" href="#IPython.kernel.core.interpreter.NotDefined"><tt class="xref docutils literal"><span class="pre">NotDefined</span></tt></a><a class="headerlink" href="#notdefined" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.core.interpreter.NotDefined">
+<!--[IPython.kernel.core.interpreter.NotDefined]-->class <tt class="descclassname">IPython.kernel.core.interpreter.</tt><tt class="descname">NotDefined</tt><a class="headerlink" href="#IPython.kernel.core.interpreter.NotDefined" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<dl class="method">
+<dt id="IPython.kernel.core.interpreter.NotDefined.__init__">
+<!--[IPython.kernel.core.interpreter.NotDefined.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.core.interpreter.NotDefined.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.kernel.core.interpreter.default_display_formatters">
+<!--[IPython.kernel.core.interpreter.default_display_formatters]--><tt class="descclassname">IPython.kernel.core.interpreter.</tt><tt class="descname">default_display_formatters</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.core.interpreter.default_display_formatters" title="Permalink to this definition">¶</a></dt>
+<dd>Return a list of default display formatters.</dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.core.interpreter.default_traceback_formatters">
+<!--[IPython.kernel.core.interpreter.default_traceback_formatters]--><tt class="descclassname">IPython.kernel.core.interpreter.</tt><tt class="descname">default_traceback_formatters</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.core.interpreter.default_traceback_formatters" title="Permalink to this definition">¶</a></dt>
+<dd>Return a list of default traceback formatters.</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.core.interpreter</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.core.interpreter">Module: <tt class="docutils literal"><span class="pre">kernel.core.interpreter</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#interpreter"><tt class="docutils literal"><span class="pre">Interpreter</span></tt></a></li>
+<li><a class="reference external" href="#notdefined"><tt class="docutils literal"><span class="pre">NotDefined</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.kernel.core.history.html" title="previous chapter">kernel.core.history</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.core.macro.html" title="next chapter">kernel.core.macro</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.core.interpreter.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.macro.html" title="kernel.core.macro"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.history.html" title="kernel.core.history"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

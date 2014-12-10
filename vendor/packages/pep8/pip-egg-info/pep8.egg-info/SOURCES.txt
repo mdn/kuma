@@ -1,0 +1,14 @@
+CHANGES.txt
+MANIFEST.in
+README.rst
+TODO.txt
+pep8.py
+setup.cfg
+pip-egg-info/pep8.egg-info/PKG-INFO
+pip-egg-info/pep8.egg-info/SOURCES.txt
+pip-egg-info/pep8.egg-info/dependency_links.txt
+pip-egg-info/pep8.egg-info/entry_points.txt
+pip-egg-info/pep8.egg-info/namespace_packages.txt
+pip-egg-info/pep8.egg-info/not-zip-safe
+pip-egg-info/pep8.egg-info/requires.txt
+pip-egg-info/pep8.egg-info/top_level.txt
