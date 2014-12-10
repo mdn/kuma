@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="migrating_your_translations" id="migrating_your_translations">Migrating your translations</a></h1>
+<div class="level1">
+
+<p>
+
+You very often need to migrate older translations to newer template or <acronym title="Gettext Portable Object Template">POT</acronym> files.  There are a number of Gettext tools
+that can manage this but they do not handle the situation where files have been renamed and moved.  The <a href="toolkit-pomigrate2.html" class="wikilink1" title="toolkit-pomigrate2.html">pomigrate2</a>
+script allows us to migrate between versions where there has been considerable change.  
+</p>
+
+<p>
+This migration HOWTO takes you through the steps in a generic fashion so that you can apply it to any of your projects.  We use
+OpenOffice.org as an example for clarity.  Our task in the examples is to migrate old translation for OpenOffice.org 1.1.3 to
+OpenOffice.org 2.0.
+</p>
+
+</div>
+<!-- SECTION "Migrating your translations" [1-646] -->
+<h2><a name="requirements" id="requirements">Requirements</a></h2>
+<div class="level2">
+
+<p>
+
+You will need:
+
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="toolkit-pomigrate2.html" class="wikilink1" title="toolkit-pomigrate2.html">pomigrate2</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="toolkit-pocompendium.html" class="wikilink1" title="toolkit-pocompendium.html">pocompendium</a></div>
+</li>
+<li class="level1"><div class="li"> A text editor</div>
+</li>
+<li class="level1"><div class="li"> A <acronym title="Gettext Portable Object">PO</acronym> editing tool</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Requirements" [647-769] -->
+<h2><a name="preparing_the_new_pot_files" id="preparing_the_new_pot_files">Preparing the new POT files</a></h2>
+<div class="level2">
+
+<p>
+
+We need the new pot files.  Either download these from the project or generate them using <a href="toolkit-moz2po.html" class="wikilink1" title="toolkit-moz2po.html">moz2po</a>, <a href="toolkit-oo2po.html" class="wikilink1" title="toolkit-oo2po.html">oo2po</a> or the other tools of the Translate Toolkit.  The <acronym title="Gettext Portable Object Template">POT</acronym> files are templates for the destination files that we will be creating.
+
+</p>
+<pre class="code">oo2po -P en-US.sdf ooo-20-pot</pre>
+
+<p>
+
+This will create new <acronym title="Gettext Portable Object Template">POT</acronym> files in <em>ooo-20-pot</em>.
+</p>
+
+</div>
+<!-- SECTION "Preparing the new POT files" [770-1133] -->
+<h2><a name="checking_your_old_po_files_for_errors" id="checking_your_old_po_files_for_errors">Checking your old PO files for errors</a></h2>
+<div class="level2">
+
+<p>
+
+We will be migrating your old <acronym title="Gettext Portable Object">PO</acronym> files into the new <acronym title="Gettext Portable Object Template">POT</acronym> files.  This is a good opportunity to check for encoding errors and inconsistencies.
+</p>
+
+<p>
+We use <a href="toolkit-pocompendium.html" class="wikilink1" title="toolkit-pocompendium.html">pocompendium</a> to check for encoding errors:
+
+</p>
+<pre class="code">pocompendium check.po -d ooo-113-old</pre>
+
+<p>
+
+This will create a compendium <acronym title="Gettext Portable Object">PO</acronym> files, <em>check.po</em>, from all the <acronym title="Gettext Portable Object">PO</acronym> files in the directory <em>ooo-113-old</em>.  Where <em>ooo-113-old</em> contains 
+all your old translations.  pocompendium is a wrapper around various Gettext tools, encoding errors will appear as errors from those tools.
+</p>
+
+<p>
+Use your text editor to find and correct these errors.  If you do not correct these now they will migrate to your new version.  Once encoding errors are fixed they&#039;re usually gone for good, so it is time well spent.
+</p>
+
+</div>
+<!-- SECTION "Checking your old PO files for errors" [1134-1922] -->
+<h2><a name="optionalchecking_your_old_po_files_for_consistency" id="optionalchecking_your_old_po_files_for_consistency">Optional: Checking your old PO files for consistency</a></h2>
+<div class="level2">
+
+<p>
+
+Note this step is optional, a more detailed explanation is given in <a href="toolkit-checking_for_inconsistencies.html" class="wikilink1" title="toolkit-checking_for_inconsistencies.html">checking for inconsistencies</a>.  We now look at consistency within the translations.  The first check extracts situations were the same English string was translated in two different ways:
+
+</p>
+<pre class="code">pocompendium --ignore-case --accel-amp --errors check.po -d ooo-113-old</pre>
+
+<p>
+
+In <em>check.po</em> you will find all situations where the same English text was translated differently.  We use <em>--accel-amp</em> to remove accelerator markers (you&#039;ll change this depending on the one used by the project - we can do &amp; _ or ~).   Now view <em>check.po</em> in a <acronym title="Gettext Portable Object">PO</acronym> editor or text editor.  You will need to correct each inconsistency in the source <acronym title="Gettext Portable Object">PO</acronym> files, using <em>check.po</em> as the guide.  Many of the errors are usually spelling mistakes.  You can regenerate <em>check.po</em> from time to time until all inconsistencies are justified or removed.
+</p>
+
+<p>
+Then we check for words in your language that are used for more than one English concept.  You don&#039;t for instance want the same word for <em>Cancel</em> and <em>Delete</em>.  For this we invert the compendium.
+
+</p>
+<pre class="code">pocompendium --invert --ignore-case --accel-amp --errors check.po -d ooo-113-old</pre>
+
+<p>
+
+We now have a file similar to the previous one except your language appears in the msgid and the English appears in the msgstr.  Look for inconsistencies that would cause problems for the user and correct them in the source files.
+</p>
+
+</div>
+<!-- SECTION "Optional: Checking your old PO files for consistency" [1923-3391] -->
+<h2><a name="migrate" id="migrate">Migrate</a></h2>
+<div class="level2">
+
+<p>
+
+You are now ready to migrate using <a href="toolkit-pomigrate2.html" class="wikilink1" title="toolkit-pomigrate2.html">pomigrate2</a>.  You have created your destination <acronym title="Gettext Portable Object Template">POT</acronym> files and all your <acronym title="Gettext Portable Object">PO</acronym> files are clean and ready to migrate.
+
+</p>
+<pre class="code">pomigrate2 ooo-113-old ooo-20-new ooo-20-pot</pre>
+
+<p>
+
+This will take all translations from <em>ooo-113-old</em> and migrate them to <em>ooo-20-new</em> using <em>ooo-20-pot</em> as templates.  By default pomigrate2 migrates without any fancy text matching, there are options to allow for fuzzy matching and the use of a compendium.  Read the <a href="toolkit-pomigrate2.html" class="wikilink1" title="toolkit-pomigrate2.html">pomigrate2</a> help page to find out more about these options.
+</p>
+
+</div>
+<!-- SECTION "Migrate" [3392-3948] -->
+<h3><a name="techiewhat_does_pomigrate2_do_to_your_file" id="techiewhat_does_pomigrate2_do_to_your_file">Techie: what does pomigrate2 do to your file?</a></h3>
+<div class="level3">
+
+<p>
+
+This section is for those insanely curious about what pomigrate will do to their files. You don&#039;t need to understand this section <img src="images/smileys/icon_smile.gif" align="middle" alt=":-)" />
+
+</p>
+<ul>
+<li class="level1"><div class="li"> Init stage</div>
+<ul>
+<li class="level2"><div class="li"> If a file has not changed location between old and new then it is simply copied across</div>
+</li>
+<li class="level2"><div class="li"> If it has moved then we try to find a file by the same name and move ours there.  If there are multiple files by the same name, then we join them together and copy them</div>
+</li>
+<li class="level2"><div class="li"> If a file does not exist then we initialise it</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> Update stage</div>
+<ul>
+<li class="level2"><div class="li"> We now update our translations using msgmerge or pot2po</div>
+</li>
+<li class="level2"><div class="li"> If you asked for a compendium, we will build one from the existing files and update using it and optionally other external compendiums</div>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+
+That&#039;s it. At the end you should have every file that needs translation updated to the latest template files.  Files that moved should still be preserved and not lost.  Files that where renamed will still be translated if you used a compendium otherwise they will be untranslated.
+</p>
+
+</div>
+<!-- SECTION "Techie: what does pomigrate2 do to your file?" [3949-4979] -->
+<h2><a name="how_well_did_you_do" id="how_well_did_you_do">How well did you do</a></h2>
+<div class="level2">
+
+<p>
+
+Congratulations! Your files are now migrated.  
+</p>
+
+<p>
+You might want to see how much of your old work was reusable in the new version:
+
+</p>
+<pre class="code">pocount ooo-20-new</pre>
+
+<p>
+
+This will use <a href="toolkit-pocount.html" class="wikilink1" title="toolkit-pocount.html">pocount</a> to count the words in your new files and you can compare the number of translate and untranslated messages from your old version.
+</p>
+
+</div>
+<!-- SECTION "How well did you do" [4980-5322] -->
+<h2><a name="conclusion" id="conclusion">Conclusion</a></h2>
+<div class="level2">
+
+<p>
+
+Your files have now been migrated and are ready for updating.  If files moved they have been moved, if they changed names and you used a compendium then most likely you have most of that work translated.
+
+</p>
+
+</div>
+<!-- SECTION "Conclusion" [5323-] --></body>
+</html>

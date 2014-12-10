@@ -1,0 +1,67 @@
+#!/bin/bash
+#
+# Copyright 2005 Zuza Software Foundation
+#
+# This file is part of The Translate Toolkit.
+#
+# The Translate Toolkit is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# translate is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with translate; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+
+# popuretext - extracts all the source text from a directory of PO or POT files, removes
+# po headers and optionally the accelerator keys.
+
+if [ $# -lt 2 ]; then
+	echo "Usage: popuretext ( -P pot-dir | po-dir ) file.txt [accelerator]"
+	exit 1
+fi
+
+do_pot=0
+if [ "$1" == "-P" ]; then
+	do_pot=1
+	shift
+	potdir=$1
+else
+	podir=$1
+fi
+textfile=$2
+accelerator=$3
+
+
+if [ $do_pot -eq 1 ]; then
+	tempdir=`mktemp -d tmp.XXXXXXXXXX`
+	for pot in `cd $potdir; find . -name "*.pot"`
+	do
+		mkdir -p $tempdir/$(dirname $pot)
+		msgen --no-wrap $potdir/$pot -o $tempdir/$(dirname $pot)/$(basename $pot .pot).po
+	done
+	podir=$tempdir
+fi
+
+cat /dev/null > $textfile
+
+for po in `find $podir -name "*.po"`
+do
+	msgexec -i $po sed "s/$/\\n/g" |
+	sed "/^_:/d" |
+	sed "/^$/d"  |
+	if [ "$accelerator" != "" ]; then
+		sed "s/$accelerator//g"
+	else
+		cat
+	fi |
+	sed "/^\(Project-Id-Version:\|Report-Msgid-Bugs-To:\|POT-Creation-Date:\|PO-Revision-Date:\|Last-Translator:\|Language-Team:\|MIME-Version:\|Content-Type:\|Content-Transfer-Encoding:\|Plural-Forms:\|X-Generator:\|X-Accelerator-Marker:\)/d" >> $textfile
+done
+
+rm -rf $tempdir

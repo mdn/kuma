@@ -1,0 +1,330 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>DPyGetOpt &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="Debugger" href="IPython.Debugger.html" />
+    <link rel="prev" title="CrashHandler" href="IPython.CrashHandler.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.Debugger.html" title="Debugger"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.CrashHandler.html" title="CrashHandler"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="dpygetopt">
+<h1>DPyGetOpt<a class="headerlink" href="#dpygetopt" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.DPyGetOpt">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">DPyGetOpt</span></tt><a class="headerlink" href="#module-IPython.DPyGetOpt" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.DPyGetOpt</span></tt>:</p>
+<img src="../../_images/inheritanceeb128d1208.png" usemap="#inheritanceeb128d1208" class="inheritance"/><map id="inheritanceeb128d1208" name="inheritanceeb128d1208">
+<area shape="rect" href="#IPython.DPyGetOpt.Error" title="IPython.DPyGetOpt.Error" alt="" coords="25,56,204,83"/>
+<area shape="rect" href="#IPython.DPyGetOpt.SpecificationError" title="IPython.DPyGetOpt.SpecificationError" alt="" coords="273,5,532,32"/>
+<area shape="rect" href="#IPython.DPyGetOpt.TerminationError" title="IPython.DPyGetOpt.TerminationError" alt="" coords="277,56,528,83"/>
+<area shape="rect" href="#IPython.DPyGetOpt.ArgumentError" title="IPython.DPyGetOpt.ArgumentError" alt="" coords="281,107,524,133"/>
+<area shape="rect" href="#IPython.DPyGetOpt.DPyGetOpt" title="IPython.DPyGetOpt.DPyGetOpt" alt="" coords="5,5,224,32"/>
+</map>
+<p>DPyGetOpt &#8211; Demiurge Python GetOptions Module</p>
+<p>This module is modeled after perl&#8217;s Getopt::Long module&#8211; which
+is, in turn, modeled after GNU&#8217;s extended getopt() function.</p>
+<p>Upon instantiation, the option specification should be a sequence
+(list) of option definitions.</p>
+<p>Options that take no arguments should simply contain the name of
+the option.  If a ! is post-pended, the option can be negated by
+prepending &#8216;no&#8217;;  ie &#8216;debug!&#8217; specifies that -debug and -nodebug
+should be accepted.</p>
+<p>Mandatory arguments to options are specified using a postpended
+&#8216;=&#8217; + a type specifier.  &#8216;=s&#8217; specifies a mandatory string
+argument, &#8216;=i&#8217; specifies a mandatory integer argument, and &#8216;=f&#8217;
+specifies a mandatory real number.  In all cases, the &#8216;=&#8217; can be
+substituted with &#8216;:&#8217; to specify that the argument is optional.</p>
+<p>Dashes &#8216;-&#8216; in option names are allowed.</p>
+<p>If an option has the character &#8216;&#64;&#8217; postpended (after the
+argumentation specification), it can appear multiple times within
+each argument list that is processed. The results will be stored
+in a list.</p>
+<p>The option name can actually be a list of names separated by &#8216;|&#8217;
+characters;  ie&#8211; &#8216;foo|bar|baz=f&#64;&#8217; specifies that all -foo, -bar,
+and -baz options that appear on within the parsed argument list
+must have a real number argument and that the accumulated list
+of values will be available under the name &#8216;foo&#8217;</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="argumenterror">
+<h3><a title="IPython.DPyGetOpt.ArgumentError" class="reference internal" href="#IPython.DPyGetOpt.ArgumentError"><tt class="xref docutils literal"><span class="pre">ArgumentError</span></tt></a><a class="headerlink" href="#argumenterror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.DPyGetOpt.ArgumentError">
+<!--[IPython.DPyGetOpt.ArgumentError]-->class <tt class="descclassname">IPython.DPyGetOpt.</tt><tt class="descname">ArgumentError</tt><a class="headerlink" href="#IPython.DPyGetOpt.ArgumentError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.DPyGetOpt.Error" class="reference internal" href="#IPython.DPyGetOpt.Error"><tt class="xref docutils literal"><span class="pre">IPython.DPyGetOpt.Error</span></tt></a></p>
+<p>Exception indicating an error in the arguments passed to
+DPyGetOpt.processArguments.</p>
+<dl class="method">
+<dt id="IPython.DPyGetOpt.ArgumentError.__init__">
+<!--[IPython.DPyGetOpt.ArgumentError.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.DPyGetOpt.ArgumentError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="id1">
+<h3><a title="IPython.DPyGetOpt.DPyGetOpt" class="reference internal" href="#IPython.DPyGetOpt.DPyGetOpt"><tt class="xref docutils literal"><span class="pre">DPyGetOpt</span></tt></a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.DPyGetOpt.DPyGetOpt">
+<!--[IPython.DPyGetOpt.DPyGetOpt]-->class <tt class="descclassname">IPython.DPyGetOpt.</tt><tt class="descname">DPyGetOpt</tt><big>(</big><em>spec=None</em>, <em>terminators=</em><span class="optional">[</span>, <em>'--'</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#IPython.DPyGetOpt.DPyGetOpt" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="IPython.DPyGetOpt.DPyGetOpt.__init__">
+<!--[IPython.DPyGetOpt.DPyGetOpt.__init__]--><tt class="descname">__init__</tt><big>(</big><em>spec=None</em>, <em>terminators=</em><span class="optional">[</span>, <em>'--'</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#IPython.DPyGetOpt.DPyGetOpt.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Declare and intialize instance variables</p>
+<p>Yes, declaration is not necessary... but one of the things
+I sorely miss from C/Obj-C is the concept of having an
+interface definition that clearly declares all instance
+variables and methods without providing any implementation</p>
+<blockquote>
+details.   it is a useful reference!</blockquote>
+<p>all instance variables are initialized to 0/Null/None of
+the appropriate type&#8211; not even the default value...</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.DPyGetOpt.DPyGetOpt.addOptionConfigurationTuple">
+<!--[IPython.DPyGetOpt.DPyGetOpt.addOptionConfigurationTuple]--><tt class="descname">addOptionConfigurationTuple</tt><big>(</big><em>oTuple</em><big>)</big><a class="headerlink" href="#IPython.DPyGetOpt.DPyGetOpt.addOptionConfigurationTuple" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.DPyGetOpt.DPyGetOpt.addOptionConfigurationTuples">
+<!--[IPython.DPyGetOpt.DPyGetOpt.addOptionConfigurationTuples]--><tt class="descname">addOptionConfigurationTuples</tt><big>(</big><em>oTuple</em><big>)</big><a class="headerlink" href="#IPython.DPyGetOpt.DPyGetOpt.addOptionConfigurationTuples" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.DPyGetOpt.DPyGetOpt.addTerminator">
+<!--[IPython.DPyGetOpt.DPyGetOpt.addTerminator]--><tt class="descname">addTerminator</tt><big>(</big><em>newTerm</em><big>)</big><a class="headerlink" href="#IPython.DPyGetOpt.DPyGetOpt.addTerminator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds newTerm as terminator of option processing.</p>
+<p>Whenever the option processor encounters one of the terminators
+during option processing, the processing of options terminates
+immediately, all remaining options are stored in the termValues
+instance variable and the full name of the terminator is stored
+in the terminator instance variable.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.DPyGetOpt.DPyGetOpt.ignoreCase">
+<!--[IPython.DPyGetOpt.DPyGetOpt.ignoreCase]--><tt class="descname">ignoreCase</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.DPyGetOpt.DPyGetOpt.ignoreCase" title="Permalink to this definition">¶</a></dt>
+<dd>Returns 1 if the option processor will ignore case when
+processing options.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.DPyGetOpt.DPyGetOpt.isPosixCompliant">
+<!--[IPython.DPyGetOpt.DPyGetOpt.isPosixCompliant]--><tt class="descname">isPosixCompliant</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.DPyGetOpt.DPyGetOpt.isPosixCompliant" title="Permalink to this definition">¶</a></dt>
+<dd>Returns the value of the posix compliance flag.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.DPyGetOpt.DPyGetOpt.parseConfiguration">
+<!--[IPython.DPyGetOpt.DPyGetOpt.parseConfiguration]--><tt class="descname">parseConfiguration</tt><big>(</big><em>spec</em><big>)</big><a class="headerlink" href="#IPython.DPyGetOpt.DPyGetOpt.parseConfiguration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.DPyGetOpt.DPyGetOpt.processArguments">
+<!--[IPython.DPyGetOpt.DPyGetOpt.processArguments]--><tt class="descname">processArguments</tt><big>(</big><em>args=None</em><big>)</big><a class="headerlink" href="#IPython.DPyGetOpt.DPyGetOpt.processArguments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Processes args, a list of arguments (including options).</p>
+<p>If args is the same as sys.argv, automatically trims the first
+argument (the executable name/path).</p>
+<p>If an exception is not raised, the argument list was parsed
+correctly.</p>
+<p>Upon successful completion, the freeValues instance variable
+will contain all the arguments that were not associated with an
+option in the order they were encountered.  optionValues is a
+dictionary containing the value of each option&#8211; the method
+valueForOption() can be used to query this dictionary.
+terminator will contain the argument encountered that terminated
+option processing (or None, if a terminator was never
+encountered) and termValues will contain all of the options that
+appeared after the Terminator (or an empty list).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.DPyGetOpt.DPyGetOpt.setAllowAbbreviations">
+<!--[IPython.DPyGetOpt.DPyGetOpt.setAllowAbbreviations]--><tt class="descname">setAllowAbbreviations</tt><big>(</big><em>aFlag=1</em><big>)</big><a class="headerlink" href="#IPython.DPyGetOpt.DPyGetOpt.setAllowAbbreviations" title="Permalink to this definition">¶</a></dt>
+<dd>Enables and disables the expansion of abbreviations during
+option processing.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.DPyGetOpt.DPyGetOpt.setIgnoreCase">
+<!--[IPython.DPyGetOpt.DPyGetOpt.setIgnoreCase]--><tt class="descname">setIgnoreCase</tt><big>(</big><em>aFlag=1</em><big>)</big><a class="headerlink" href="#IPython.DPyGetOpt.DPyGetOpt.setIgnoreCase" title="Permalink to this definition">¶</a></dt>
+<dd>Enables and disables ignoring case during option processing.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.DPyGetOpt.DPyGetOpt.setPosixCompliance">
+<!--[IPython.DPyGetOpt.DPyGetOpt.setPosixCompliance]--><tt class="descname">setPosixCompliance</tt><big>(</big><em>aFlag=0</em><big>)</big><a class="headerlink" href="#IPython.DPyGetOpt.DPyGetOpt.setPosixCompliance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enables and disables posix compliance.</p>
+<p>When enabled, &#8216;+&#8217; can be used as an option prefix and free
+values can be mixed with options.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.DPyGetOpt.DPyGetOpt.valueForOption">
+<!--[IPython.DPyGetOpt.DPyGetOpt.valueForOption]--><tt class="descname">valueForOption</tt><big>(</big><em>optionName</em>, <em>defaultValue=None</em><big>)</big><a class="headerlink" href="#IPython.DPyGetOpt.DPyGetOpt.valueForOption" title="Permalink to this definition">¶</a></dt>
+<dd>Return the value associated with optionName.  If optionName was
+not encountered during parsing of the arguments, returns the
+defaultValue (which defaults to None).</dd></dl>
+
+<dl class="method">
+<dt id="IPython.DPyGetOpt.DPyGetOpt.willAllowAbbreviations">
+<!--[IPython.DPyGetOpt.DPyGetOpt.willAllowAbbreviations]--><tt class="descname">willAllowAbbreviations</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.DPyGetOpt.DPyGetOpt.willAllowAbbreviations" title="Permalink to this definition">¶</a></dt>
+<dd>Returns 1 if abbreviated options will be automatically
+expanded to the non-abbreviated form (instead of causing an
+unrecognized option error).</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="error">
+<h3><a title="IPython.DPyGetOpt.Error" class="reference internal" href="#IPython.DPyGetOpt.Error"><tt class="xref docutils literal"><span class="pre">Error</span></tt></a><a class="headerlink" href="#error" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.DPyGetOpt.Error">
+<!--[IPython.DPyGetOpt.Error]-->class <tt class="descclassname">IPython.DPyGetOpt.</tt><tt class="descname">Error</tt><a class="headerlink" href="#IPython.DPyGetOpt.Error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
+<p>Base class for exceptions in the DPyGetOpt module.</p>
+<dl class="method">
+<dt id="IPython.DPyGetOpt.Error.__init__">
+<!--[IPython.DPyGetOpt.Error.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.DPyGetOpt.Error.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="specificationerror">
+<h3><a title="IPython.DPyGetOpt.SpecificationError" class="reference internal" href="#IPython.DPyGetOpt.SpecificationError"><tt class="xref docutils literal"><span class="pre">SpecificationError</span></tt></a><a class="headerlink" href="#specificationerror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.DPyGetOpt.SpecificationError">
+<!--[IPython.DPyGetOpt.SpecificationError]-->class <tt class="descclassname">IPython.DPyGetOpt.</tt><tt class="descname">SpecificationError</tt><a class="headerlink" href="#IPython.DPyGetOpt.SpecificationError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.DPyGetOpt.Error" class="reference internal" href="#IPython.DPyGetOpt.Error"><tt class="xref docutils literal"><span class="pre">IPython.DPyGetOpt.Error</span></tt></a></p>
+<p>Exception indicating an error with an option specification.</p>
+<dl class="method">
+<dt id="IPython.DPyGetOpt.SpecificationError.__init__">
+<!--[IPython.DPyGetOpt.SpecificationError.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.DPyGetOpt.SpecificationError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="terminationerror">
+<h3><a title="IPython.DPyGetOpt.TerminationError" class="reference internal" href="#IPython.DPyGetOpt.TerminationError"><tt class="xref docutils literal"><span class="pre">TerminationError</span></tt></a><a class="headerlink" href="#terminationerror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.DPyGetOpt.TerminationError">
+<!--[IPython.DPyGetOpt.TerminationError]-->class <tt class="descclassname">IPython.DPyGetOpt.</tt><tt class="descname">TerminationError</tt><a class="headerlink" href="#IPython.DPyGetOpt.TerminationError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.DPyGetOpt.Error" class="reference internal" href="#IPython.DPyGetOpt.Error"><tt class="xref docutils literal"><span class="pre">IPython.DPyGetOpt.Error</span></tt></a></p>
+<p>Exception indicating an error with an option processing terminator.</p>
+<dl class="method">
+<dt id="IPython.DPyGetOpt.TerminationError.__init__">
+<!--[IPython.DPyGetOpt.TerminationError.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.DPyGetOpt.TerminationError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">DPyGetOpt</a><ul>
+<li><a class="reference external" href="#module-IPython.DPyGetOpt">Module: <tt class="docutils literal"><span class="pre">DPyGetOpt</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#argumenterror"><tt class="docutils literal"><span class="pre">ArgumentError</span></tt></a></li>
+<li><a class="reference external" href="#id1"><tt class="docutils literal"><span class="pre">DPyGetOpt</span></tt></a></li>
+<li><a class="reference external" href="#error"><tt class="docutils literal"><span class="pre">Error</span></tt></a></li>
+<li><a class="reference external" href="#specificationerror"><tt class="docutils literal"><span class="pre">SpecificationError</span></tt></a></li>
+<li><a class="reference external" href="#terminationerror"><tt class="docutils literal"><span class="pre">TerminationError</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.CrashHandler.html" title="previous chapter">CrashHandler</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.Debugger.html" title="next chapter">Debugger</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.DPyGetOpt.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.Debugger.html" title="Debugger"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.CrashHandler.html" title="CrashHandler"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

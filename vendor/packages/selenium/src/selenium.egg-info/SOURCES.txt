@@ -1,0 +1,11 @@
+README.txt
+setup.cfg
+setup.py
+ez_setup/README.txt
+ez_setup/__init__.py
+src/selenium.py
+src/selenium.egg-info/PKG-INFO
+src/selenium.egg-info/SOURCES.txt
+src/selenium.egg-info/dependency_links.txt
+src/selenium.egg-info/not-zip-safe
+src/selenium.egg-info/top_level.txt

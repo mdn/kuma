@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.core.redirector_output_trap &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.core.sync_traceback_trap" href="IPython.kernel.core.sync_traceback_trap.html" />
+    <link rel="prev" title="kernel.core.prompts" href="IPython.kernel.core.prompts.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.sync_traceback_trap.html" title="kernel.core.sync_traceback_trap"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.prompts.html" title="kernel.core.prompts"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-core-redirector-output-trap">
+<h1>kernel.core.redirector_output_trap<a class="headerlink" href="#kernel-core-redirector-output-trap" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.core.redirector_output_trap">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.core.redirector_output_trap</span></tt><a class="headerlink" href="#module-IPython.kernel.core.redirector_output_trap" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.kernel.core.redirector_output_trap</span></tt>:</p>
+<img src="../../_images/inheritance71481bf26b.png" usemap="#inheritance71481bf26b" class="inheritance"/><map id="inheritance71481bf26b" name="inheritance71481bf26b">
+<area shape="rect" href="IPython.kernel.core.output_trap.html#IPython.kernel.core.output_trap.OutputTrap" title="core.output_trap.OutputTrap" alt="" coords="5,5,208,32"/>
+<area shape="rect" href="#IPython.kernel.core.redirector_output_trap.RedirectorOutputTrap" title="core.redirector_output_trap.RedirectorOutputTrap" alt="" coords="256,5,592,32"/>
+</map>
+<p>Trap stdout/stderr, including at the OS level. Calls a callback with
+the output each time Python tries to write to the stdout or stderr.</p>
+</div>
+<div class="section" id="redirectoroutputtrap">
+<h2><a title="IPython.kernel.core.redirector_output_trap.RedirectorOutputTrap" class="reference internal" href="#IPython.kernel.core.redirector_output_trap.RedirectorOutputTrap"><tt class="xref docutils literal"><span class="pre">RedirectorOutputTrap</span></tt></a><a class="headerlink" href="#redirectoroutputtrap" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="IPython.kernel.core.redirector_output_trap.RedirectorOutputTrap">
+<!--[IPython.kernel.core.redirector_output_trap.RedirectorOutputTrap]-->class <tt class="descclassname">IPython.kernel.core.redirector_output_trap.</tt><tt class="descname">RedirectorOutputTrap</tt><big>(</big><em>out_callback</em>, <em>err_callback</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.redirector_output_trap.RedirectorOutputTrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.core.output_trap.OutputTrap" class="reference external" href="IPython.kernel.core.output_trap.html#IPython.kernel.core.output_trap.OutputTrap"><tt class="xref docutils literal"><span class="pre">IPython.kernel.core.output_trap.OutputTrap</span></tt></a></p>
+<p>Object which can trap text sent to stdout and stderr.</p>
+<dl class="method">
+<dt id="IPython.kernel.core.redirector_output_trap.RedirectorOutputTrap.__init__">
+<!--[IPython.kernel.core.redirector_output_trap.RedirectorOutputTrap.__init__]--><tt class="descname">__init__</tt><big>(</big><em>out_callback</em>, <em>err_callback</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.redirector_output_trap.RedirectorOutputTrap.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>out_callback : callable called when there is output in the stdout
+err_callback : callable called when there is output in the stderr</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.redirector_output_trap.RedirectorOutputTrap.on_err_write">
+<!--[IPython.kernel.core.redirector_output_trap.RedirectorOutputTrap.on_err_write]--><tt class="descname">on_err_write</tt><big>(</big><em>string</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.redirector_output_trap.RedirectorOutputTrap.on_err_write" title="Permalink to this definition">¶</a></dt>
+<dd>Callback called when there is some Python output on stderr.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.redirector_output_trap.RedirectorOutputTrap.on_out_write">
+<!--[IPython.kernel.core.redirector_output_trap.RedirectorOutputTrap.on_out_write]--><tt class="descname">on_out_write</tt><big>(</big><em>string</em><big>)</big><a class="headerlink" href="#IPython.kernel.core.redirector_output_trap.RedirectorOutputTrap.on_out_write" title="Permalink to this definition">¶</a></dt>
+<dd>Callback called when there is some Python output on stdout.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.redirector_output_trap.RedirectorOutputTrap.set">
+<!--[IPython.kernel.core.redirector_output_trap.RedirectorOutputTrap.set]--><tt class="descname">set</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.core.redirector_output_trap.RedirectorOutputTrap.set" title="Permalink to this definition">¶</a></dt>
+<dd>Set the hooks: set the redirectors and call the base class.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.core.redirector_output_trap.RedirectorOutputTrap.unset">
+<!--[IPython.kernel.core.redirector_output_trap.RedirectorOutputTrap.unset]--><tt class="descname">unset</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.core.redirector_output_trap.RedirectorOutputTrap.unset" title="Permalink to this definition">¶</a></dt>
+<dd>Remove the hooks: call the base class and stop the
+redirectors.</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.core.redirector_output_trap</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.core.redirector_output_trap">Module: <tt class="docutils literal"><span class="pre">kernel.core.redirector_output_trap</span></tt></a></li>
+<li><a class="reference external" href="#redirectoroutputtrap"><tt class="docutils literal"><span class="pre">RedirectorOutputTrap</span></tt></a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.kernel.core.prompts.html" title="previous chapter">kernel.core.prompts</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.core.sync_traceback_trap.html" title="next chapter">kernel.core.sync_traceback_trap</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.core.redirector_output_trap.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.sync_traceback_trap.html" title="kernel.core.sync_traceback_trap"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.prompts.html" title="kernel.core.prompts"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

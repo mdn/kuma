@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="running_the_tools_on_microsoft_windows" id="running_the_tools_on_microsoft_windows">Running the tools on Microsoft Windows</a></h1>
+<div class="level1">
+
+<p>
+
+Since the toolkit is written in Python, it should work perfectly on Windows.
+</p>
+
+</div>
+<!-- SECTION "Running the tools on Microsoft Windows" [1-132] -->
+<h2><a name="add_the_toolkit_to_your_path" id="add_the_toolkit_to_your_path">Add the toolkit to your path</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Add the toolkit to your path" [133-175] -->
+<h3><a name="windows_9598" id="windows_9598">Windows 95/98</a></h3>
+<div class="level3">
+
+<p>
+
+You might need to add the installation directory of the translate toolkit to your path
+
+</p>
+<pre class="code">path &quot;C:\Program Files\translate-toolkit\&quot;</pre>
+
+<p>
+
+This will work for one session, but will be lost when you reboot again. Therefore you might want to add it to the autoexec.bat file.
+</p>
+
+</div>
+<!-- SECTION "Windows 95/98" [176-468] -->
+<h3><a name="windows_2000xp" id="windows_2000xp">Windows 2000/XP</a></h3>
+<div class="level3">
+
+<p>
+
+You can add to the path permanently.  Check <a href="http://www.computerhope.com/issues/ch000549.htm" class="urlextern" title="http://www.computerhope.com/issues/ch000549.htm">this</a> useful guide.  You should add the following to your path:
+
+</p>
+<pre class="code">C:\Programs Files\translate-toolkit\</pre>
+
+<p>
+
+If you have the <a href="http://gnuwin32.sourceforge.net/packages/gettext.htm" class="urlextern" title="http://gnuwin32.sourceforge.net/packages/gettext.htm">Gettext tools</a> installed, add it to your path as well:
+
+</p>
+<pre class="code">C:\Program Files\GnuWin32\bin\</pre>
+
+</div>
+<!-- SECTION "Windows 2000/XP" [469-857] -->
+<h2><a name="change_windows_file_to_unix_file" id="change_windows_file_to_unix_file">Change Windows file to Unix file</a></h2>
+<div class="level2">
+
+<p>
+
+Some programs in Windows will add CRLFs to the file which is considered rather poor practice for l10ns that require Unix files.  To fix a text file, drag and drop it to the dos2unix.exe utility at Bastet.com:
+</p>
+
+<p>
+<a href="http://www.bastet.com/" class="urlextern" title="http://www.bastet.com/">http://www.bastet.com/</a>
+</p>
+
+</div>
+<!-- SECTION "Change Windows file to Unix file" [858-] --></body>
+</html>

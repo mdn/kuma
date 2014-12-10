@@ -1,0 +1,26 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.engineconnector
+======================
+
+Module: :mod:`kernel.engineconnector`
+-------------------------------------
+Inheritance diagram for ``IPython.kernel.engineconnector``:
+
+.. inheritance-diagram:: IPython.kernel.engineconnector 
+   :parts: 3
+
+.. automodule:: IPython.kernel.engineconnector
+
+.. currentmodule:: IPython.kernel.engineconnector
+
+:class:`EngineConnector`
+------------------------
+
+
+.. autoclass:: EngineConnector
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

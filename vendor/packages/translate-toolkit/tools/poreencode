@@ -1,0 +1,39 @@
+#!/bin/bash
+#
+# Copyright 2004 Zuza Software Foundation
+#
+# This file is part of The Translate Toolkit.
+#
+# The Translate Toolkit is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# translate is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with translate; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+
+# poreencode - will traverse a PO directory and reencode all files to the
+# specified encoding
+
+
+if [ $# -ne 2 ]; then
+	echo "Usage: `basename $0` <encoding> <PO directory>"
+	echo "   eg: `basename $0` UTF-8 af/"
+	exit 1
+fi
+
+encoding=$1
+po_dir=$2
+
+for po_file in `find $po_dir -name "*.po"`
+do
+	tmp=`mktemp tmp.XXXXXXXXXX`
+	msgconv -o $tmp $po_file && mv $tmp $po_file
+done

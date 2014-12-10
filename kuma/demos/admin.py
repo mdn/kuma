@@ -1,31 +1,29 @@
-from django import template
 from django.contrib import admin
 from django.contrib.admin import helpers
-from django.contrib.admin.util import get_deleted_objects
-from django.contrib.admin.util import model_ngettext
+from django.contrib.admin.util import model_ngettext, get_deleted_objects
+from django.db import router
 from django.core.exceptions import PermissionDenied
-from django.shortcuts import render_to_response
+from django.template.response import TemplateResponse
 from django.utils.encoding import force_unicode
 from django.utils.translation import ugettext_lazy, ugettext as _
 
 from taggit_extras.managers import NamespacedTaggableManager
-from taggit.forms import TagWidget, TagField
+from taggit.forms import TagWidget
 
 from .models import Submission
 
 
-
-def censor_selected(self, request, queryset):
+def censor_selected(modeladmin, request, queryset):
     """
     Censor the selected submissions, with confirmation interstitial.
 
     Largely stolen from django.contrib.admin.actions.delete_selected
     """
-    opts = self.model._meta
+    opts = modeladmin.model._meta
     app_label = opts.app_label
 
     # Check that the user has delete permission for the actual model
-    if not self.has_delete_permission(request):
+    if not modeladmin.has_delete_permission(request):
         raise PermissionDenied
 
     # The user has already confirmed the deletion.
@@ -37,32 +35,35 @@ def censor_selected(self, request, queryset):
             for obj in queryset:
                 obj.censor(url=censored_url)
                 obj_display = force_unicode(obj)
-                self.message_user(request, _("Censored %(item)s") % {
+                modeladmin.message_user(request, _("Censored %(item)s") % {
                     "item": obj_display
                 })
-            self.message_user(request,
+            modeladmin.message_user(request,
                 _("Successfully censored %(count)d %(items)s.") % {
-                    "count": n, "items": model_ngettext(self.opts, n)
+                    "count": n, "items": model_ngettext(modeladmin.opts, n)
                 })
         # Return None to display the change list page again.
         return None
 
+    if len(queryset) == 1:
+        objects_name = force_unicode(opts.verbose_name)
+    else:
+        objects_name = force_unicode(opts.verbose_name_plural)
+
     context = {
         "title": _("Are you sure?"),
-        "object_name": force_unicode(opts.verbose_name),
-        'queryset': queryset,
+        "object_name": objects_name,
+        "queryset": queryset,
         "opts": opts,
-        "root_path": self.admin_site.root_path,
         "app_label": app_label,
-        'action_checkbox_name': helpers.ACTION_CHECKBOX_NAME,
+        "action_checkbox_name": helpers.ACTION_CHECKBOX_NAME,
     }
 
     # Display the confirmation page
-    tmpl_name = 'admin/demos/submission/censor_selected_confirmation.html'
-    return render_to_response(tmpl_name, context,
-            context_instance=template.RequestContext(request))
-
-censor_selected.short_description = "Censor selected submissions"
+    return TemplateResponse(request,
+        'admin/demos/submission/censor_selected_confirmation.html',
+        context, current_app=modeladmin.admin_site.name)
+censor_selected.short_description = ugettext_lazy("Censor selected %(verbose_name_plural)s")
 
 
 def delete_selected(modeladmin, request, queryset):
@@ -80,10 +81,12 @@ def delete_selected(modeladmin, request, queryset):
     if not modeladmin.has_delete_permission(request):
         raise PermissionDenied
 
+    using = router.db_for_write(modeladmin.model)
+
     # Populate deletable_objects, a data structure of all related objects that
     # will also be deleted.
-    deletable_objects, perms_needed = get_deleted_objects(queryset, opts,
-            request.user, modeladmin.admin_site, levels_to_root=2)
+    deletable_objects, perms_needed, protected = get_deleted_objects(
+        queryset, opts, request.user, modeladmin.admin_site, using)
 
     # The user has already confirmed the deletion.
     # Do the deletion and return a None to display the change list view again.
@@ -107,29 +110,36 @@ def delete_selected(modeladmin, request, queryset):
         # Return None to display the change list page again.
         return None
 
+    if len(queryset) == 1:
+        objects_name = force_unicode(opts.verbose_name)
+    else:
+        objects_name = force_unicode(opts.verbose_name_plural)
+
+    if perms_needed or protected:
+        title = _("Cannot delete %(name)s") % {"name": objects_name}
+    else:
+        title = _("Are you sure?")
+
     context = {
-        "title": _("Are you sure?"),
-        "object_name": force_unicode(opts.verbose_name),
+        "title": title,
+        "object_name": objects_name,
         "deletable_objects": [deletable_objects],
-        'queryset': queryset,
+        "queryset": queryset,
         "perms_lacking": perms_needed,
+        "protected": protected,
         "opts": opts,
-        "root_path": modeladmin.admin_site.root_path,
         "app_label": app_label,
-        'action_checkbox_name': helpers.ACTION_CHECKBOX_NAME,
+        "action_checkbox_name": helpers.ACTION_CHECKBOX_NAME,
     }
 
     # Display the confirmation page
-    return render_to_response(
-        modeladmin.delete_selected_confirmation_template or [
-            "admin/%s/%s/delete_selected_confirmation.html" %
-                (app_label, opts.object_name.lower()),
-            "admin/%s/delete_selected_confirmation.html" % app_label,
-            "admin/delete_selected_confirmation.html"
-        ], context, context_instance=template.RequestContext(request))
+    return TemplateResponse(request, modeladmin.delete_selected_confirmation_template or [
+        "admin/%s/%s/delete_selected_confirmation.html" % (app_label, opts.object_name.lower()),
+        "admin/%s/delete_selected_confirmation.html" % app_label,
+        "admin/delete_selected_confirmation.html"
+    ], context, current_app=modeladmin.admin_site.name)
 
-delete_selected.short_description = ugettext_lazy(
-    "Delete selected %(verbose_name_plural)s")
+delete_selected.short_description = ugettext_lazy("Delete selected %(verbose_name_plural)s")
 
 
 class SubmissionAdmin(admin.ModelAdmin):

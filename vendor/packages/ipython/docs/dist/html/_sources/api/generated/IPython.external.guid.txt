@@ -1,0 +1,26 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+external.guid
+=============
+
+Module: :mod:`external.guid`
+----------------------------
+.. automodule:: IPython.external.guid
+
+.. currentmodule:: IPython.external.guid
+
+Functions
+---------
+
+
+.. autofunction:: IPython.external.guid.extract_counter
+
+
+.. autofunction:: IPython.external.guid.extract_ip
+
+
+.. autofunction:: IPython.external.guid.extract_time
+
+
+.. autofunction:: IPython.external.guid.generate
+

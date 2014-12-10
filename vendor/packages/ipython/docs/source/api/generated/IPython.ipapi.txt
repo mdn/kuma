@@ -1,0 +1,115 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+ipapi
+=====
+
+Module: :mod:`ipapi`
+--------------------
+Inheritance diagram for ``IPython.ipapi``:
+
+.. inheritance-diagram:: IPython.ipapi 
+   :parts: 3
+
+.. automodule:: IPython.ipapi
+
+.. currentmodule:: IPython.ipapi
+
+Classes
+-------
+
+:class:`DebugTools`
+~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: DebugTools
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IPApi`
+~~~~~~~~~~~~~~
+
+
+.. autoclass:: IPApi
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IPyAutocall`
+~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IPyAutocall
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`IPythonNotRunning`
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: IPythonNotRunning
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`TryNext`
+~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: TryNext
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`UsageError`
+~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: UsageError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Functions
+---------
+
+
+.. autofunction:: IPython.ipapi.ankka_f
+
+
+.. autofunction:: IPython.ipapi.funcci
+
+
+.. autofunction:: IPython.ipapi.get
+
+
+.. autofunction:: IPython.ipapi.jed_editor
+
+
+.. autofunction:: IPython.ipapi.launch_new_instance
+
+
+.. autofunction:: IPython.ipapi.make_session
+
+
+.. autofunction:: IPython.ipapi.make_user_global_ns
+
+
+.. autofunction:: IPython.ipapi.make_user_namespaces
+
+
+.. autofunction:: IPython.ipapi.make_user_ns
+

@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Development roadmap &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../index.html" />
+    <link rel="up" title="IPython Developer&#8217;s Guide" href="index.html" />
+    <link rel="next" title="IPython.kernel.core.notification blueprint" href="notification_blueprint.html" />
+    <link rel="prev" title="Documenting IPython" href="doc_guide.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="notification_blueprint.html" title="IPython.kernel.core.notification blueprint"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="doc_guide.html" title="Documenting IPython"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">IPython Developer&#8217;s Guide</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="development-roadmap">
+<span id="roadmap"></span><h1>Development roadmap<a class="headerlink" href="#development-roadmap" title="Permalink to this headline">¶</a></h1>
+<p>IPython is an ambitious project that is still under heavy development.  However, we want IPython to become useful to as many people as possible, as quickly as possible.  To help us accomplish this, we are laying out a roadmap of where we are headed and what needs to happen to get there.  Hopefully, this will help the IPython developers figure out the best things to work on for each upcoming release.</p>
+<div class="section" id="work-targeted-to-particular-releases">
+<h2>Work targeted to particular releases<a class="headerlink" href="#work-targeted-to-particular-releases" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="release-0-10">
+<h3>Release 0.10<a class="headerlink" href="#release-0-10" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Initial refactor of <strong>ipcluster</strong>.</li>
+<li>Better TextMate integration.</li>
+<li>Merge in the daemon branch.</li>
+</ul>
+</div>
+<div class="section" id="release-0-11">
+<h3>Release 0.11<a class="headerlink" href="#release-0-11" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Refactor the configuration system and command line options for
+<strong>ipengine</strong> and <strong>ipcontroller</strong>. This will include the
+creation of cluster directories that encapsulate all the configuration
+files, log files and security related files for a particular cluster.</li>
+<li>Refactor <strong>ipcluster</strong> to support the new configuration system.</li>
+<li>Refactor the daemon stuff to support the new configuration system.</li>
+<li>Merge back in the core of the notebook.</li>
+</ul>
+</div>
+<div class="section" id="release-0-12">
+<h3>Release 0.12<a class="headerlink" href="#release-0-12" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Fully integrate process startup with the daemons for full process
+management.</li>
+<li>Make the capabilites of <strong>ipcluster</strong> available from simple Python
+classes.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="major-areas-of-work">
+<h2>Major areas of work<a class="headerlink" href="#major-areas-of-work" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="refactoring-the-main-ipython-core">
+<h3>Refactoring the main IPython core<a class="headerlink" href="#refactoring-the-main-ipython-core" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="process-management-for-ipython-kernel">
+<h3>Process management for <tt class="xref docutils literal"><span class="pre">IPython.kernel</span></tt><a class="headerlink" href="#process-management-for-ipython-kernel" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="configuration-system">
+<h3>Configuration system<a class="headerlink" href="#configuration-system" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="performance-problems">
+<h3>Performance problems<a class="headerlink" href="#performance-problems" title="Permalink to this headline">¶</a></h3>
+<p>Currently, we have a number of performance issues that are waiting to bite users:</p>
+<ul class="simple">
+<li>The controller stores a large amount of state in Python dictionaries. Under
+heavy usage, these dicts with get very large, causing memory usage problems.
+We need to develop more scalable solutions to this problem, such as using a
+sqlite database to store this state. This will also help the controller to
+be more fault tolerant.</li>
+<li>We currently don&#8217;t have a good way of handling large objects in the
+controller. The biggest problem is that because we don&#8217;t have any way of
+streaming objects, we get lots of temporary copies in the low-level buffers.
+We need to implement a better serialization approach and true streaming
+support.</li>
+<li>The controller currently unpickles and repickles objects. We need to use the
+[push|pull]_serialized methods instead.</li>
+<li>Currently the controller is a bottleneck. The best approach for this is to
+separate the controller itself into multiple processes, one for the core
+controller and one each for the controller interfaces.</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">Development roadmap</a><ul>
+<li><a class="reference external" href="#work-targeted-to-particular-releases">Work targeted to particular releases</a><ul>
+<li><a class="reference external" href="#release-0-10">Release 0.10</a></li>
+<li><a class="reference external" href="#release-0-11">Release 0.11</a></li>
+<li><a class="reference external" href="#release-0-12">Release 0.12</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#major-areas-of-work">Major areas of work</a><ul>
+<li><a class="reference external" href="#refactoring-the-main-ipython-core">Refactoring the main IPython core</a></li>
+<li><a class="reference external" href="#process-management-for-ipython-kernel">Process management for <tt class="docutils literal"><span class="pre">IPython.kernel</span></tt></a></li>
+<li><a class="reference external" href="#configuration-system">Configuration system</a></li>
+<li><a class="reference external" href="#performance-problems">Performance problems</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="doc_guide.html" title="previous chapter">Documenting IPython</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="notification_blueprint.html" title="next chapter">IPython.kernel.core.notification blueprint</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../_sources/development/roadmap.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="notification_blueprint.html" title="IPython.kernel.core.notification blueprint"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="doc_guide.html" title="Documenting IPython"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">IPython Developer&#8217;s Guide</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+dtutils
+=======
+
+Module: :mod:`dtutils`
+----------------------
+.. automodule:: IPython.dtutils
+
+.. currentmodule:: IPython.dtutils
+
+Functions
+---------
+
+
+.. autofunction:: IPython.dtutils.idoctest
+
+
+.. autofunction:: IPython.dtutils.rundoctest
+

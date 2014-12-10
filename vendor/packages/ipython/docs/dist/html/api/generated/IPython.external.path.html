@@ -1,0 +1,849 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>external.path &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="external.pretty" href="IPython.external.pretty.html" />
+    <link rel="prev" title="external.mglob" href="IPython.external.mglob.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.external.pretty.html" title="external.pretty"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.external.mglob.html" title="external.mglob"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="external-path">
+<h1>external.path<a class="headerlink" href="#external-path" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.external.path">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">external.path</span></tt><a class="headerlink" href="#module-IPython.external.path" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.external.path</span></tt>:</p>
+<img src="../../_images/inheritance392ae1cfdc.png" usemap="#inheritance392ae1cfdc" class="inheritance"/><map id="inheritance392ae1cfdc" name="inheritance392ae1cfdc">
+<area shape="rect" href="#IPython.external.path.path" title="external.path.path" alt="" coords="44,56,183,83"/>
+<area shape="rect" href="#IPython.external.path.TreeWalkWarning" title="external.path.TreeWalkWarning" alt="" coords="7,5,220,32"/>
+</map>
+<p>path.py - An object representing a path to a file or directory.</p>
+<p>Example:</p>
+<p>from IPython.external.path import path
+d = path(&#8216;/home/guido/bin&#8217;)
+for f in d.files(&#8216;<a href="#id1"><span class="problematic" id="id2">*</span></a>.py&#8217;):</p>
+<blockquote>
+f.chmod(0755)</blockquote>
+<p>This module requires Python 2.2 or later.</p>
+<p>URL:     <a class="reference external" href="http://www.jorendorff.com/articles/python/path">http://www.jorendorff.com/articles/python/path</a>
+Author:  Jason Orendorff &lt;<a class="reference external" href="mailto:jason&#46;orendorff&#37;&#52;&#48;gmail&#46;com">jason<span>&#46;</span>orendorff<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt; (and others - see the url!)
+Date:    9 Mar 2007</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="treewalkwarning">
+<h3><a title="IPython.external.path.TreeWalkWarning" class="reference internal" href="#IPython.external.path.TreeWalkWarning"><tt class="xref docutils literal"><span class="pre">TreeWalkWarning</span></tt></a><a class="headerlink" href="#treewalkwarning" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.path.TreeWalkWarning">
+<!--[IPython.external.path.TreeWalkWarning]-->class <tt class="descclassname">IPython.external.path.</tt><tt class="descname">TreeWalkWarning</tt><a class="headerlink" href="#IPython.external.path.TreeWalkWarning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">exceptions.Warning</span></tt></p>
+<dl class="method">
+<dt id="IPython.external.path.TreeWalkWarning.__init__">
+<!--[IPython.external.path.TreeWalkWarning.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.path.TreeWalkWarning.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="path">
+<h3><a title="IPython.external.path.path" class="reference internal" href="#IPython.external.path.path"><tt class="xref docutils literal"><span class="pre">path</span></tt></a><a class="headerlink" href="#path" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.external.path.path">
+<!--[IPython.external.path.path]-->class <tt class="descclassname">IPython.external.path.</tt><tt class="descname">path</tt><a class="headerlink" href="#IPython.external.path.path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">str</span></tt></p>
+<p>Represents a filesystem path.</p>
+<p>For documentation on individual methods, consult their
+counterparts in os.path.</p>
+<dl class="method">
+<dt id="IPython.external.path.path.__init__">
+<!--[IPython.external.path.path.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.path.path.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.abspath">
+<!--[IPython.external.path.path.abspath]--><tt class="descname">abspath</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.path.path.abspath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.access">
+<!--[IPython.external.path.path.access]--><tt class="descname">access</tt><big>(</big><em>mode</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.access" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return true if current user has access to this path.</p>
+<p>mode - One of the constants os.F_OK, os.R_OK, os.W_OK, os.X_OK</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.external.path.path.atime">
+<!--[IPython.external.path.path.atime]--><tt class="descname">atime</tt><a class="headerlink" href="#IPython.external.path.path.atime" title="Permalink to this definition">¶</a></dt>
+<dd>Last access time of the file.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.basename">
+<!--[IPython.external.path.path.basename]--><tt class="descname">basename</tt><big>(</big><em>p</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.basename" title="Permalink to this definition">¶</a></dt>
+<dd>Returns the final component of a pathname</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.bytes">
+<!--[IPython.external.path.path.bytes]--><tt class="descname">bytes</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.path.path.bytes" title="Permalink to this definition">¶</a></dt>
+<dd>Open this file, read all bytes, return them as a string.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.chmod">
+<!--[IPython.external.path.path.chmod]--><tt class="descname">chmod</tt><big>(</big><em>mode</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.chmod" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.chown">
+<!--[IPython.external.path.path.chown]--><tt class="descname">chown</tt><big>(</big><em>uid</em>, <em>gid</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.chown" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.chroot">
+<!--[IPython.external.path.path.chroot]--><tt class="descname">chroot</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.path.path.chroot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.copy">
+<!--[IPython.external.path.path.copy]--><tt class="descname">copy</tt><big>(</big><em>src</em>, <em>dst</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy data and mode bits (&#8220;cp src dst&#8221;).</p>
+<p>The destination may be a directory.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.copy2">
+<!--[IPython.external.path.path.copy2]--><tt class="descname">copy2</tt><big>(</big><em>src</em>, <em>dst</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.copy2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy data and all stat info (&#8220;cp -p src dst&#8221;).</p>
+<p>The destination may be a directory.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.copyfile">
+<!--[IPython.external.path.path.copyfile]--><tt class="descname">copyfile</tt><big>(</big><em>src</em>, <em>dst</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.copyfile" title="Permalink to this definition">¶</a></dt>
+<dd>Copy data from src to dst</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.copymode">
+<!--[IPython.external.path.path.copymode]--><tt class="descname">copymode</tt><big>(</big><em>src</em>, <em>dst</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.copymode" title="Permalink to this definition">¶</a></dt>
+<dd>Copy mode bits from src to dst</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.copystat">
+<!--[IPython.external.path.path.copystat]--><tt class="descname">copystat</tt><big>(</big><em>src</em>, <em>dst</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.copystat" title="Permalink to this definition">¶</a></dt>
+<dd>Copy all stat info (mode bits, atime, mtime, flags) from src to dst</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.copytree">
+<!--[IPython.external.path.path.copytree]--><tt class="descname">copytree</tt><big>(</big><em>src</em>, <em>dst</em>, <em>symlinks=False</em>, <em>ignore=None</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.copytree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recursively copy a directory tree using copy2().</p>
+<p>The destination directory must not already exist.
+If exception(s) occur, an Error is raised with a list of reasons.</p>
+<p>If the optional symlinks flag is true, symbolic links in the
+source tree result in symbolic links in the destination tree; if
+it is false, the contents of the files pointed to by symbolic
+links are copied.</p>
+<p>The optional ignore argument is a callable. If given, it
+is called with the <cite>src</cite> parameter, which is the directory
+being visited by copytree(), and <cite>names</cite> which is the list of
+<cite>src</cite> contents, as returned by os.listdir():</p>
+<blockquote>
+callable(src, names) -&gt; ignored_names</blockquote>
+<p>Since copytree() is called recursively, the callable will be
+called once for each directory that is copied. It returns a
+list of names relative to the <cite>src</cite> directory that should
+not be copied.</p>
+<p>XXX Consider this example code rather than the ultimate tool.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.external.path.path.ctime">
+<!--[IPython.external.path.path.ctime]--><tt class="descname">ctime</tt><a class="headerlink" href="#IPython.external.path.path.ctime" title="Permalink to this definition">¶</a></dt>
+<dd>Creation time of the file.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.dirname">
+<!--[IPython.external.path.path.dirname]--><tt class="descname">dirname</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.path.path.dirname" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.dirs">
+<!--[IPython.external.path.path.dirs]--><tt class="descname">dirs</tt><big>(</big><em>pattern=None</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.dirs" title="Permalink to this definition">¶</a></dt>
+<dd><p>D.dirs() -&gt; List of this directory&#8217;s subdirectories.</p>
+<p>The elements of the list are path objects.
+This does not walk recursively into subdirectories
+(but see path.walkdirs).</p>
+<p>With the optional &#8216;pattern&#8217; argument, this only lists
+directories whose names match the given pattern.  For
+example, d.dirs(&#8216;build-<a href="#id3"><span class="problematic" id="id4">*</span></a>&#8216;).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.external.path.path.drive">
+<!--[IPython.external.path.path.drive]--><tt class="descname">drive</tt><a class="headerlink" href="#IPython.external.path.path.drive" title="Permalink to this definition">¶</a></dt>
+<dd>The drive specifier, for example &#8216;C:&#8217;.
+This is always empty on systems that don&#8217;t use drive specifiers.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.exists">
+<!--[IPython.external.path.path.exists]--><tt class="descname">exists</tt><big>(</big><em>path</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.exists" title="Permalink to this definition">¶</a></dt>
+<dd>Test whether a path exists.  Returns False for broken symbolic links</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.expand">
+<!--[IPython.external.path.path.expand]--><tt class="descname">expand</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.path.path.expand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clean up a filename by calling expandvars(),
+expanduser(), and normpath() on it.</p>
+<p>This is commonly everything needed to clean up a filename
+read from a configuration file, for example.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.expanduser">
+<!--[IPython.external.path.path.expanduser]--><tt class="descname">expanduser</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.path.path.expanduser" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.expandvars">
+<!--[IPython.external.path.path.expandvars]--><tt class="descname">expandvars</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.path.path.expandvars" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.external.path.path.ext">
+<!--[IPython.external.path.path.ext]--><tt class="descname">ext</tt><a class="headerlink" href="#IPython.external.path.path.ext" title="Permalink to this definition">¶</a></dt>
+<dd>The file extension, for example &#8216;.py&#8217;.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.files">
+<!--[IPython.external.path.path.files]--><tt class="descname">files</tt><big>(</big><em>pattern=None</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.files" title="Permalink to this definition">¶</a></dt>
+<dd><p>D.files() -&gt; List of the files in this directory.</p>
+<p>The elements of the list are path objects.
+This does not walk into subdirectories (see path.walkfiles).</p>
+<p>With the optional &#8216;pattern&#8217; argument, this only lists files
+whose names match the given pattern.  For example,
+d.files(&#8216;<a href="#id5"><span class="problematic" id="id6">*</span></a>.pyc&#8217;).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.fnmatch">
+<!--[IPython.external.path.path.fnmatch]--><tt class="descname">fnmatch</tt><big>(</big><em>pattern</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.fnmatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if self.name matches the given pattern.</p>
+<dl class="docutils">
+<dt>pattern - A filename pattern with wildcards,</dt>
+<dd>for example &#8216;<a href="#id7"><span class="problematic" id="id8">*</span></a>.py&#8217;.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.get_owner">
+<!--[IPython.external.path.path.get_owner]--><tt class="descname">get_owner</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.path.path.get_owner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the name of the owner of this file or directory.</p>
+<p>This follows symbolic links.</p>
+<p>On Windows, this returns a name of the form ur&#8217;DOMAINUser Name&#8217;.
+On Windows, a group can own a file or directory.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.getatime">
+<!--[IPython.external.path.path.getatime]--><tt class="descname">getatime</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.getatime" title="Permalink to this definition">¶</a></dt>
+<dd>Return the last access time of a file, reported by os.stat().</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.getctime">
+<!--[IPython.external.path.path.getctime]--><tt class="descname">getctime</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.getctime" title="Permalink to this definition">¶</a></dt>
+<dd>Return the metadata change time of a file, reported by os.stat().</dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.external.path.path.getcwd">
+<!--[IPython.external.path.path.getcwd]--><tt class="descname">getcwd</tt><a class="headerlink" href="#IPython.external.path.path.getcwd" title="Permalink to this definition">¶</a></dt>
+<dd>Return the current working directory as a path object.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.getmtime">
+<!--[IPython.external.path.path.getmtime]--><tt class="descname">getmtime</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.getmtime" title="Permalink to this definition">¶</a></dt>
+<dd>Return the last modification time of a file, reported by os.stat().</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.getsize">
+<!--[IPython.external.path.path.getsize]--><tt class="descname">getsize</tt><big>(</big><em>filename</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.getsize" title="Permalink to this definition">¶</a></dt>
+<dd>Return the size of a file, reported by os.stat().</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.glob">
+<!--[IPython.external.path.path.glob]--><tt class="descname">glob</tt><big>(</big><em>pattern</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.glob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of path objects that match the pattern.</p>
+<p>pattern - a path relative to this directory, with wildcards.</p>
+<p>For example, path(&#8216;/users&#8217;).glob(&#8216;<em>/bin/</em>&#8216;) returns a list
+of all the files users have in their bin directories.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.isabs">
+<!--[IPython.external.path.path.isabs]--><tt class="descname">isabs</tt><big>(</big><em>s</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.isabs" title="Permalink to this definition">¶</a></dt>
+<dd>Test whether a path is absolute</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.isdir">
+<!--[IPython.external.path.path.isdir]--><tt class="descname">isdir</tt><big>(</big><em>s</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.isdir" title="Permalink to this definition">¶</a></dt>
+<dd>Return true if the pathname refers to an existing directory.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.isfile">
+<!--[IPython.external.path.path.isfile]--><tt class="descname">isfile</tt><big>(</big><em>path</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.isfile" title="Permalink to this definition">¶</a></dt>
+<dd>Test whether a path is a regular file</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.islink">
+<!--[IPython.external.path.path.islink]--><tt class="descname">islink</tt><big>(</big><em>path</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.islink" title="Permalink to this definition">¶</a></dt>
+<dd>Test whether a path is a symbolic link</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.ismount">
+<!--[IPython.external.path.path.ismount]--><tt class="descname">ismount</tt><big>(</big><em>path</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.ismount" title="Permalink to this definition">¶</a></dt>
+<dd>Test whether a path is a mount point</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.joinpath">
+<!--[IPython.external.path.path.joinpath]--><tt class="descname">joinpath</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.joinpath" title="Permalink to this definition">¶</a></dt>
+<dd>Join two or more path components, adding a separator
+character (os.sep) if needed.  Returns a new path
+object.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.lines">
+<!--[IPython.external.path.path.lines]--><tt class="descname">lines</tt><big>(</big><em>encoding=None</em>, <em>errors='strict'</em>, <em>retain=True</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open this file, read all lines, return them in a list.</p>
+<dl class="docutils">
+<dt>Optional arguments:</dt>
+<dd><dl class="first last docutils">
+<dt>encoding - The Unicode encoding (or character set) of</dt>
+<dd>the file.  The default is None, meaning the content
+of the file is read as 8-bit characters and returned
+as a list of (non-Unicode) str objects.</dd>
+<dt>errors - How to handle Unicode errors; see help(str.decode)</dt>
+<dd>for the options.  Default is &#8216;strict&#8217;</dd>
+<dt>retain - If true, retain newline characters; but all newline</dt>
+<dd>character combinations (&#8216;r&#8217;, &#8216;n&#8217;, &#8216;rn&#8217;) are
+translated to &#8216;n&#8217;.  If false, newline characters are
+stripped off.  Default is True.</dd>
+</dl>
+</dd>
+</dl>
+<p>This uses &#8216;U&#8217; mode in Python 2.3 and later.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.link">
+<!--[IPython.external.path.path.link]--><tt class="descname">link</tt><big>(</big><em>newpath</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.link" title="Permalink to this definition">¶</a></dt>
+<dd>Create a hard link at &#8216;newpath&#8217;, pointing to this file.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.listdir">
+<!--[IPython.external.path.path.listdir]--><tt class="descname">listdir</tt><big>(</big><em>pattern=None</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.listdir" title="Permalink to this definition">¶</a></dt>
+<dd><p>D.listdir() -&gt; List of items in this directory.</p>
+<p>Use D.files() or D.dirs() instead if you want a listing
+of just files or just subdirectories.</p>
+<p>The elements of the list are path objects.</p>
+<p>With the optional &#8216;pattern&#8217; argument, this only lists
+items whose names match the given pattern.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.lstat">
+<!--[IPython.external.path.path.lstat]--><tt class="descname">lstat</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.path.path.lstat" title="Permalink to this definition">¶</a></dt>
+<dd>Like path.stat(), but do not follow symbolic links.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.makedirs">
+<!--[IPython.external.path.path.makedirs]--><tt class="descname">makedirs</tt><big>(</big><em>mode=511</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.makedirs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.mkdir">
+<!--[IPython.external.path.path.mkdir]--><tt class="descname">mkdir</tt><big>(</big><em>mode=511</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.mkdir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.move">
+<!--[IPython.external.path.path.move]--><tt class="descname">move</tt><big>(</big><em>src</em>, <em>dst</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recursively move a file or directory to another location. This is
+similar to the Unix &#8220;mv&#8221; command.</p>
+<p>If the destination is a directory or a symlink to a directory, the source
+is moved inside the directory. The destination path must not already
+exist.</p>
+<p>If the destination already exists but is not a directory, it may be
+overwritten depending on os.rename() semantics.</p>
+<p>If the destination is on our current filesystem, then rename() is used.
+Otherwise, src is copied to the destination and then removed.
+A lot more could be done here...  A look at a mv.c shows a lot of
+the issues this implementation glosses over.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.external.path.path.mtime">
+<!--[IPython.external.path.path.mtime]--><tt class="descname">mtime</tt><a class="headerlink" href="#IPython.external.path.path.mtime" title="Permalink to this definition">¶</a></dt>
+<dd>Last-modified time of the file.</dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.external.path.path.name">
+<!--[IPython.external.path.path.name]--><tt class="descname">name</tt><a class="headerlink" href="#IPython.external.path.path.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of this file or directory without the full path.</p>
+<p>For example, path(&#8216;/usr/local/lib/libpython.so&#8217;).name == &#8216;libpython.so&#8217;</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.external.path.path.namebase">
+<!--[IPython.external.path.path.namebase]--><tt class="descname">namebase</tt><a class="headerlink" href="#IPython.external.path.path.namebase" title="Permalink to this definition">¶</a></dt>
+<dd><p>The same as path.name, but with one file extension stripped off.</p>
+<p>For example, path(&#8216;/home/guido/python.tar.gz&#8217;).name     == &#8216;python.tar.gz&#8217;,
+but          path(&#8216;/home/guido/python.tar.gz&#8217;).namebase == &#8216;python.tar&#8217;</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.normcase">
+<!--[IPython.external.path.path.normcase]--><tt class="descname">normcase</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.path.path.normcase" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.normpath">
+<!--[IPython.external.path.path.normpath]--><tt class="descname">normpath</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.path.path.normpath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.open">
+<!--[IPython.external.path.path.open]--><tt class="descname">open</tt><big>(</big><em>mode='r'</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.open" title="Permalink to this definition">¶</a></dt>
+<dd>Open this file.  Return a file object.</dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.external.path.path.owner">
+<!--[IPython.external.path.path.owner]--><tt class="descname">owner</tt><a class="headerlink" href="#IPython.external.path.path.owner" title="Permalink to this definition">¶</a></dt>
+<dd>Name of the owner of this file or directory.</dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.external.path.path.parent">
+<!--[IPython.external.path.path.parent]--><tt class="descname">parent</tt><a class="headerlink" href="#IPython.external.path.path.parent" title="Permalink to this definition">¶</a></dt>
+<dd><p>This path&#8217;s parent directory, as a new path object.</p>
+<p>For example, path(&#8216;/usr/local/lib/libpython.so&#8217;).parent == path(&#8216;/usr/local/lib&#8217;)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.pathconf">
+<!--[IPython.external.path.path.pathconf]--><tt class="descname">pathconf</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.pathconf" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.read_md5">
+<!--[IPython.external.path.path.read_md5]--><tt class="descname">read_md5</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.path.path.read_md5" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the md5 hash for this file.</p>
+<p>This reads through the entire file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.readlink">
+<!--[IPython.external.path.path.readlink]--><tt class="descname">readlink</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.path.path.readlink" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the path to which this symbolic link points.</p>
+<p>The result may be an absolute or a relative path.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.readlinkabs">
+<!--[IPython.external.path.path.readlinkabs]--><tt class="descname">readlinkabs</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.path.path.readlinkabs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the path to which this symbolic link points.</p>
+<p>The result is always an absolute path.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.realpath">
+<!--[IPython.external.path.path.realpath]--><tt class="descname">realpath</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.path.path.realpath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.relpath">
+<!--[IPython.external.path.path.relpath]--><tt class="descname">relpath</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.path.path.relpath" title="Permalink to this definition">¶</a></dt>
+<dd>Return this path as a relative path,
+based from the current working directory.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.relpathto">
+<!--[IPython.external.path.path.relpathto]--><tt class="descname">relpathto</tt><big>(</big><em>dest</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.relpathto" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a relative path from self to dest.</p>
+<p>If there is no relative path from self to dest, for example if
+they reside on different drives in Windows, then this returns
+dest.abspath().</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.remove">
+<!--[IPython.external.path.path.remove]--><tt class="descname">remove</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.path.path.remove" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.removedirs">
+<!--[IPython.external.path.path.removedirs]--><tt class="descname">removedirs</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.path.path.removedirs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.rename">
+<!--[IPython.external.path.path.rename]--><tt class="descname">rename</tt><big>(</big><em>new</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.rename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.renames">
+<!--[IPython.external.path.path.renames]--><tt class="descname">renames</tt><big>(</big><em>new</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.renames" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.rmdir">
+<!--[IPython.external.path.path.rmdir]--><tt class="descname">rmdir</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.path.path.rmdir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.rmtree">
+<!--[IPython.external.path.path.rmtree]--><tt class="descname">rmtree</tt><big>(</big><em>path</em>, <em>ignore_errors=False</em>, <em>onerror=None</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.rmtree" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recursively delete a directory tree.</p>
+<p>If ignore_errors is set, errors are ignored; otherwise, if onerror
+is set, it is called to handle the error with arguments (func,
+path, exc_info) where func is os.listdir, os.remove, or os.rmdir;
+path is the argument to that function that caused it to fail; and
+exc_info is a tuple returned by sys.exc_info().  If ignore_errors
+is false and onerror is None, an exception is raised.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.samefile">
+<!--[IPython.external.path.path.samefile]--><tt class="descname">samefile</tt><big>(</big><em>f1</em>, <em>f2</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.samefile" title="Permalink to this definition">¶</a></dt>
+<dd>Test whether two pathnames reference the same actual file</dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.external.path.path.size">
+<!--[IPython.external.path.path.size]--><tt class="descname">size</tt><a class="headerlink" href="#IPython.external.path.path.size" title="Permalink to this definition">¶</a></dt>
+<dd>Size of the file, in bytes.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.splitall">
+<!--[IPython.external.path.path.splitall]--><tt class="descname">splitall</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.path.path.splitall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of the path components in this path.</p>
+<p>The first item in the list will be a path.  Its value will be
+either os.curdir, os.pardir, empty, or the root directory of
+this path (for example, &#8216;/&#8217; or &#8216;C:\&#8217;).  The other items in
+the list will be strings.</p>
+<p>path.path.joinpath(<a href="#id9"><span class="problematic" id="id10">*</span></a>result) will yield the original path.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.splitdrive">
+<!--[IPython.external.path.path.splitdrive]--><tt class="descname">splitdrive</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.path.path.splitdrive" title="Permalink to this definition">¶</a></dt>
+<dd><p>p.splitdrive() -&gt; Return (p.drive, &lt;the rest of p&gt;).</p>
+<p>Split the drive specifier from this path.  If there is
+no drive specifier, p.drive is empty, so the return value
+is simply (path(&#8216;&#8217;), p).  This is always the case on Unix.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.splitext">
+<!--[IPython.external.path.path.splitext]--><tt class="descname">splitext</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.path.path.splitext" title="Permalink to this definition">¶</a></dt>
+<dd><p>p.splitext() -&gt; Return (p.stripext(), p.ext).</p>
+<p>Split the filename extension from this path and return
+the two parts.  Either part may be empty.</p>
+<p>The extension is everything from &#8216;.&#8217; to the end of the
+last path segment.  This has the property that if
+(a, b) == p.splitext(), then a + b == p.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.splitpath">
+<!--[IPython.external.path.path.splitpath]--><tt class="descname">splitpath</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.path.path.splitpath" title="Permalink to this definition">¶</a></dt>
+<dd>p.splitpath() -&gt; Return (p.parent, p.name).</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.stat">
+<!--[IPython.external.path.path.stat]--><tt class="descname">stat</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.path.path.stat" title="Permalink to this definition">¶</a></dt>
+<dd>Perform a stat() system call on this path.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.statvfs">
+<!--[IPython.external.path.path.statvfs]--><tt class="descname">statvfs</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.path.path.statvfs" title="Permalink to this definition">¶</a></dt>
+<dd>Perform a statvfs() system call on this path.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.stripext">
+<!--[IPython.external.path.path.stripext]--><tt class="descname">stripext</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.path.path.stripext" title="Permalink to this definition">¶</a></dt>
+<dd><p>p.stripext() -&gt; Remove one file extension from the path.</p>
+<p>For example, path(&#8216;/home/guido/python.tar.gz&#8217;).stripext()
+returns path(&#8216;/home/guido/python.tar&#8217;).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.symlink">
+<!--[IPython.external.path.path.symlink]--><tt class="descname">symlink</tt><big>(</big><em>newlink</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.symlink" title="Permalink to this definition">¶</a></dt>
+<dd>Create a symbolic link at &#8216;newlink&#8217;, pointing here.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.text">
+<!--[IPython.external.path.path.text]--><tt class="descname">text</tt><big>(</big><em>encoding=None</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open this file, read it in, return the content as a string.</p>
+<p>This uses &#8216;U&#8217; mode in Python 2.3 and later, so &#8216;rn&#8217; and &#8216;r&#8217;
+are automatically translated to &#8216;n&#8217;.</p>
+<p>Optional arguments:</p>
+<dl class="docutils">
+<dt>encoding - The Unicode encoding (or character set) of</dt>
+<dd>the file.  If present, the content of the file is
+decoded and returned as a unicode object; otherwise
+it is returned as an 8-bit str.</dd>
+<dt>errors - How to handle Unicode errors; see help(str.decode)</dt>
+<dd>for the options.  Default is &#8216;strict&#8217;.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.touch">
+<!--[IPython.external.path.path.touch]--><tt class="descname">touch</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.path.path.touch" title="Permalink to this definition">¶</a></dt>
+<dd>Set the access/modified times of this file to the current time.
+Create the file if it does not exist.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.unlink">
+<!--[IPython.external.path.path.unlink]--><tt class="descname">unlink</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.external.path.path.unlink" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.utime">
+<!--[IPython.external.path.path.utime]--><tt class="descname">utime</tt><big>(</big><em>times</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.utime" title="Permalink to this definition">¶</a></dt>
+<dd>Set the access and modified times of this file.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.walk">
+<!--[IPython.external.path.path.walk]--><tt class="descname">walk</tt><big>(</big><em>pattern=None</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.walk" title="Permalink to this definition">¶</a></dt>
+<dd><p>D.walk() -&gt; iterator over files and subdirs, recursively.</p>
+<p>The iterator yields path objects naming each child item of
+this directory and its descendants.  This requires that
+D.isdir().</p>
+<p>This performs a depth-first traversal of the directory tree.
+Each directory is returned just before all its children.</p>
+<p>The errors= keyword argument controls behavior when an
+error occurs.  The default is &#8216;strict&#8217;, which causes an
+exception.  The other allowed values are &#8216;warn&#8217;, which
+reports the error via warnings.warn(), and &#8216;ignore&#8217;.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.walkdirs">
+<!--[IPython.external.path.path.walkdirs]--><tt class="descname">walkdirs</tt><big>(</big><em>pattern=None</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.walkdirs" title="Permalink to this definition">¶</a></dt>
+<dd><p>D.walkdirs() -&gt; iterator over subdirs, recursively.</p>
+<p>With the optional &#8216;pattern&#8217; argument, this yields only
+directories whose names match the given pattern.  For
+example, mydir.walkdirs(&#8216;<a href="#id11"><span class="problematic" id="id12">*</span></a>test&#8217;) yields only directories
+with names ending in &#8216;test&#8217;.</p>
+<p>The errors= keyword argument controls behavior when an
+error occurs.  The default is &#8216;strict&#8217;, which causes an
+exception.  The other allowed values are &#8216;warn&#8217;, which
+reports the error via warnings.warn(), and &#8216;ignore&#8217;.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.walkfiles">
+<!--[IPython.external.path.path.walkfiles]--><tt class="descname">walkfiles</tt><big>(</big><em>pattern=None</em>, <em>errors='strict'</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.walkfiles" title="Permalink to this definition">¶</a></dt>
+<dd><p>D.walkfiles() -&gt; iterator over files in D, recursively.</p>
+<p>The optional argument, pattern, limits the results to files
+with names that match the pattern.  For example,
+mydir.walkfiles(&#8216;<a href="#id13"><span class="problematic" id="id14">*</span></a>.tmp&#8217;) yields only files with the .tmp
+extension.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.write_bytes">
+<!--[IPython.external.path.path.write_bytes]--><tt class="descname">write_bytes</tt><big>(</big><em>bytes</em>, <em>append=False</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.write_bytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open this file and write the given bytes to it.</p>
+<p>Default behavior is to overwrite any existing file.
+Call p.write_bytes(bytes, append=True) to append instead.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.write_lines">
+<!--[IPython.external.path.path.write_lines]--><tt class="descname">write_lines</tt><big>(</big><em>lines</em>, <em>encoding=None</em>, <em>errors='strict'</em>, <em>linesep='n'</em>, <em>append=False</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.write_lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the given lines of text to this file.</p>
+<p>By default this overwrites any existing file at this path.</p>
+<p>This puts a platform-specific newline sequence on every line.
+See &#8216;linesep&#8217; below.</p>
+<p>lines - A list of strings.</p>
+<dl class="docutils">
+<dt>encoding - A Unicode encoding to use.  This applies only if</dt>
+<dd>&#8216;lines&#8217; contains any Unicode strings.</dd>
+<dt>errors - How to handle errors in Unicode encoding.  This</dt>
+<dd>also applies only to Unicode strings.</dd>
+<dt>linesep - The desired line-ending.  This line-ending is</dt>
+<dd>applied to every line.  If a line already has any
+standard line ending (&#8216;r&#8217;, &#8216;n&#8217;, &#8216;rn&#8217;, u&#8217;x85&#8217;,
+u&#8217;rx85&#8217;, u&#8217;u2028&#8217;), that will be stripped off and
+this will be used instead.  The default is os.linesep,
+which is platform-dependent (&#8216;rn&#8217; on Windows, &#8216;n&#8217; on
+Unix, etc.)  Specify None to write the lines as-is,
+like file.writelines().</dd>
+</dl>
+<p>Use the keyword argument append=True to append lines to the
+file.  The default is to overwrite the file.  Warning:
+When you use this with Unicode data, if the encoding of the
+existing data in the file is different from the encoding
+you specify with the encoding= parameter, the result is
+mixed-encoding data, which can really confuse someone trying
+to read the file later.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.external.path.path.write_text">
+<!--[IPython.external.path.path.write_text]--><tt class="descname">write_text</tt><big>(</big><em>text</em>, <em>encoding=None</em>, <em>errors='strict'</em>, <em>linesep='n'</em>, <em>append=False</em><big>)</big><a class="headerlink" href="#IPython.external.path.path.write_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the given text to this file.</p>
+<p>The default behavior is to overwrite any existing file;
+to append instead, use the &#8216;append=True&#8217; keyword argument.</p>
+<p>There are two differences between path.write_text() and
+path.write_bytes(): newline handling and Unicode handling.
+See below.</p>
+<p>Parameters:</p>
+<blockquote>
+<ul class="simple">
+<li>text - str/unicode - The text to be written.</li>
+<li>encoding - str - The Unicode encoding that will be used.
+This is ignored if &#8216;text&#8217; isn&#8217;t a Unicode string.</li>
+<li>errors - str - How to handle Unicode encoding errors.
+Default is &#8216;strict&#8217;.  See help(unicode.encode) for the
+options.  This is ignored if &#8216;text&#8217; isn&#8217;t a Unicode
+string.</li>
+<li>linesep - keyword argument - str/unicode - The sequence of
+characters to be used to mark end-of-line.  The default is
+os.linesep.  You can also specify None; this means to
+leave all newlines as they are in &#8216;text&#8217;.</li>
+<li>append - keyword argument - bool - Specifies what to do if
+the file already exists (True: append to the end of it;
+False: overwrite it.)  The default is False.</li>
+</ul>
+</blockquote>
+<p>&#8212; Newline handling.</p>
+<p>write_text() converts all standard end-of-line sequences
+(&#8216;n&#8217;, &#8216;r&#8217;, and &#8216;rn&#8217;) to your platform&#8217;s default end-of-line
+sequence (see os.linesep; on Windows, for example, the
+end-of-line marker is &#8216;rn&#8217;).</p>
+<p>If you don&#8217;t like your platform&#8217;s default, you can override it
+using the &#8216;linesep=&#8217; keyword argument.  If you specifically want
+write_text() to preserve the newlines as-is, use &#8216;linesep=None&#8217;.</p>
+<p>This applies to Unicode text the same as to 8-bit text, except
+there are three additional standard Unicode end-of-line sequences:
+u&#8217;x85&#8217;, u&#8217;rx85&#8217;, and u&#8217;u2028&#8217;.</p>
+<p>(This is slightly different from when you open a file for
+writing with fopen(filename, &#8220;w&#8221;) in C or file(filename, &#8216;w&#8217;)
+in Python.)</p>
+<p>&#8212; Unicode</p>
+<p>If &#8216;text&#8217; isn&#8217;t Unicode, then apart from newline handling, the
+bytes are written verbatim to the file.  The &#8216;encoding&#8217; and
+&#8216;errors&#8217; arguments are not used and must be omitted.</p>
+<p>If &#8216;text&#8217; is Unicode, it is first converted to bytes using the
+specified &#8216;encoding&#8217; (or the default encoding if &#8216;encoding&#8217;
+isn&#8217;t specified).  The &#8216;errors&#8217; argument applies only to this
+conversion.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">external.path</a><ul>
+<li><a class="reference external" href="#module-IPython.external.path">Module: <tt class="docutils literal"><span class="pre">external.path</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#treewalkwarning"><tt class="docutils literal"><span class="pre">TreeWalkWarning</span></tt></a></li>
+<li><a class="reference external" href="#path"><tt class="docutils literal"><span class="pre">path</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.external.mglob.html" title="previous chapter">external.mglob</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.external.pretty.html" title="next chapter">external.pretty</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.external.path.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.external.pretty.html" title="external.pretty"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.external.mglob.html" title="external.mglob"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

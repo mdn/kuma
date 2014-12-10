@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="csv" id="csv">CSV</a></h1>
+<div class="level1">
+
+<p>
+<acronym title="Comma Separated Value">CSV</acronym> (Comma Separated Values) is a simple file format for general data interchange. It can be used in the toolkit for simple data interchange, and can be edited with most spreadsheet programs. There is no formal specification for the <acronym title="Comma Separated Value">CSV</acronym> file format, but more information can be acquired from <a href="http://en.wikipedia.org/wiki/Comma-separated%20values" class="interwiki iw_wp" title="http://en.wikipedia.org/wiki/Comma-separated%20values">Comma-separated values</a>
+</p>
+
+<p>
+For information on more file formats, see <a href="toolkit-conformance.html" class="wikilink1" title="toolkit-conformance.html">conformance</a>.
+</p>
+
+</div>
+<!-- SECTION "CSV" [1-401] -->
+<h2><a name="conformance" id="conformance">Conformance</a></h2>
+<div class="level2">
+
+<p>
+<acronym title="Comma Separated Value">CSV</acronym> files were initially used to convert from and to <a href="toolkit-po.html" class="wikilink1" title="toolkit-po.html">PO</a> files, and therefore contained three columns as follows:
+</p>
+<ul>
+<li class="level1"><div class="li"> A column with the location of the original msgid (in other words, a line in a programming source file, as indicated in the #: comments of <acronym title="Gettext Portable Object">PO</acronym> files).</div>
+</li>
+<li class="level1"><div class="li"> The source text (or msgid)</div>
+</li>
+<li class="level1"><div class="li"> The target text (or msgstr)</div>
+</li>
+</ul>
+
+<p>
+
+Tabs and newlines are maintained, although it is not clear how easy it is to edit these things in a spreadsheet.
+</p>
+
+<p>
+Quoting is a problem, because the different spreadsheet programs handle these things differently. Notably, Microsoft&#039;s excel handles single quotes slightly differently. In future, it might be worthwhile to handle excel <acronym title="Comma Separated Value">CSV</acronym> as a different format from other <acronym title="Comma Separated Value">CSV</acronym> files. An entry like &#039;mono&#039; is ambiguous as it is not sure whether this refers simply to the word <em>mono</em> or to the entry <em>&#039;mono&#039;</em> quoted with single quotes. (Example from Audacity pot file)
+</p>
+
+</div>
+<!-- SECTION "Conformance" [402-] --></body>
+</html>

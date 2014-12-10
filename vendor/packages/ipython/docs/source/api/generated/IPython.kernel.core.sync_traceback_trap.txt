@@ -1,0 +1,26 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.core.sync_traceback_trap
+===============================
+
+Module: :mod:`kernel.core.sync_traceback_trap`
+----------------------------------------------
+Inheritance diagram for ``IPython.kernel.core.sync_traceback_trap``:
+
+.. inheritance-diagram:: IPython.kernel.core.sync_traceback_trap 
+   :parts: 3
+
+.. automodule:: IPython.kernel.core.sync_traceback_trap
+
+.. currentmodule:: IPython.kernel.core.sync_traceback_trap
+
+:class:`SyncTracebackTrap`
+--------------------------
+
+
+.. autoclass:: SyncTracebackTrap
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>testing.decorator_msim &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="testing.decorators" href="IPython.testing.decorators.html" />
+    <link rel="prev" title="strdispatch" href="IPython.strdispatch.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.decorators.html" title="testing.decorators"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.strdispatch.html" title="strdispatch"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="testing-decorator-msim">
+<h1>testing.decorator_msim<a class="headerlink" href="#testing-decorator-msim" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.testing.decorator_msim">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">testing.decorator_msim</span></tt><a class="headerlink" href="#module-IPython.testing.decorator_msim" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.testing.decorator_msim.decorator">
+<!--[IPython.testing.decorator_msim.decorator]--><tt class="descclassname">IPython.testing.decorator_msim.</tt><tt class="descname">decorator</tt><big>(</big><em>caller</em>, <em>func=None</em><big>)</big><a class="headerlink" href="#IPython.testing.decorator_msim.decorator" title="Permalink to this definition">¶</a></dt>
+<dd><p>General purpose decorator factory: takes a caller function as
+input and returns a decorator with the same attributes.
+A caller function is any function like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">caller</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+    <span class="c"># do something</span>
+    <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here is an example of usage:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nd">@decorator</span>
+<span class="gp">... </span><span class="k">def</span> <span class="nf">chatty</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="s">&quot;Calling </span><span class="si">%r</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">f</span><span class="o">.</span><span class="n">__name__</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">chatty</span><span class="o">.</span><span class="n">__name__</span>
+<span class="go">&#39;chatty&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nd">@chatty</span>
+<span class="gp">... </span><span class="k">def</span> <span class="nf">f</span><span class="p">():</span> <span class="k">pass</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">()</span>
+<span class="go">Calling &#39;f&#39;</span>
+</pre></div>
+</div>
+<p>For sake of convenience, the decorator factory can also be called with
+two arguments. In this casem <tt class="docutils literal"><span class="pre">decorator(caller,</span> <span class="pre">func)</span></tt> is just a
+shortcut for <tt class="docutils literal"><span class="pre">decorator(caller)(func)</span></tt>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.testing.decorator_msim.getinfo">
+<!--[IPython.testing.decorator_msim.getinfo]--><tt class="descclassname">IPython.testing.decorator_msim.</tt><tt class="descname">getinfo</tt><big>(</big><em>func</em><big>)</big><a class="headerlink" href="#IPython.testing.decorator_msim.getinfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an info dictionary containing:
+- name (the name of the function : str)
+- argnames (the names of the arguments : list)
+- defaults (the values of the default arguments : tuple)
+- signature (the signature : str)
+- doc (the docstring : str)
+- module (the module name : str)
+- dict (the function __dict__ : str)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mf">1</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">2</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span> <span class="k">pass</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">info</span> <span class="o">=</span> <span class="n">getinfo</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">info</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">]</span>
+<span class="go">&#39;f&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">info</span><span class="p">[</span><span class="s">&quot;argnames&quot;</span><span class="p">]</span>
+<span class="go">[&#39;self&#39;, &#39;x&#39;, &#39;y&#39;, &#39;args&#39;, &#39;kw&#39;]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">info</span><span class="p">[</span><span class="s">&quot;defaults&quot;</span><span class="p">]</span>
+<span class="go">(1, 2)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">info</span><span class="p">[</span><span class="s">&quot;signature&quot;</span><span class="p">]</span>
+<span class="go">&#39;self, x, y, *args, **kw&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="IPython.testing.decorator_msim.update_wrapper">
+<!--[IPython.testing.decorator_msim.update_wrapper]--><tt class="descclassname">IPython.testing.decorator_msim.</tt><tt class="descname">update_wrapper</tt><big>(</big><em>wrapper</em>, <em>wrapped</em>, <em>create=False</em><big>)</big><a class="headerlink" href="#IPython.testing.decorator_msim.update_wrapper" title="Permalink to this definition">¶</a></dt>
+<dd>An improvement over functools.update_wrapper. By default it works the
+same, but if the &#8216;create&#8217; flag is set, generates a copy of the wrapper
+with the right signature and update the copy, not the original.
+Moreovoer, &#8216;wrapped&#8217; can be a dictionary with keys &#8216;name&#8217;, &#8216;doc&#8217;, &#8216;module&#8217;,
+&#8216;dict&#8217;, &#8216;defaults&#8217;.</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">testing.decorator_msim</a><ul>
+<li><a class="reference external" href="#module-IPython.testing.decorator_msim">Module: <tt class="docutils literal"><span class="pre">testing.decorator_msim</span></tt></a></li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.strdispatch.html" title="previous chapter">strdispatch</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.testing.decorators.html" title="next chapter">testing.decorators</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.testing.decorator_msim.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.decorators.html" title="testing.decorators"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.strdispatch.html" title="strdispatch"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

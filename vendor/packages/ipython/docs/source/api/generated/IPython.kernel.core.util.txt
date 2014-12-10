@@ -1,0 +1,56 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.core.util
+================
+
+Module: :mod:`kernel.core.util`
+-------------------------------
+Inheritance diagram for ``IPython.kernel.core.util``:
+
+.. inheritance-diagram:: IPython.kernel.core.util 
+   :parts: 3
+
+.. automodule:: IPython.kernel.core.util
+
+.. currentmodule:: IPython.kernel.core.util
+
+Classes
+-------
+
+:class:`Bunch`
+~~~~~~~~~~~~~~
+
+
+.. autoclass:: Bunch
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+:class:`InputList`
+~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: InputList
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Functions
+---------
+
+
+.. autofunction:: IPython.kernel.core.util.esc_quotes
+
+
+.. autofunction:: IPython.kernel.core.util.getoutputerror
+
+
+.. autofunction:: IPython.kernel.core.util.make_quoted_expr
+
+
+.. autofunction:: IPython.kernel.core.util.system_shell
+

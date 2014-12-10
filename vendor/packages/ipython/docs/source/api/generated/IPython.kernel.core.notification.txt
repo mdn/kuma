@@ -1,0 +1,26 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+kernel.core.notification
+========================
+
+Module: :mod:`kernel.core.notification`
+---------------------------------------
+Inheritance diagram for ``IPython.kernel.core.notification``:
+
+.. inheritance-diagram:: IPython.kernel.core.notification 
+   :parts: 3
+
+.. automodule:: IPython.kernel.core.notification
+
+.. currentmodule:: IPython.kernel.core.notification
+
+:class:`NotificationCenter`
+---------------------------
+
+
+.. autoclass:: NotificationCenter
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__

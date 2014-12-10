@@ -1,0 +1,865 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        
+        <title>
+    Engine Configuration
+ &mdash; SQLAlchemy 0.6.4 Documentation</title>
+        
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '0.6.4',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/init.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 0.6.4 Documentation" href="../index.html" />
+        <link rel="up" title="SQLAlchemy Core" href="index.html" />
+        <link rel="next" title="Working with Engines and Connections" href="connections.html" />
+        <link rel="prev" title="SQL Statements and Expressions" href="expression_api.html" />
+    
+
+    </head>
+    <body>
+        
+
+
+
+
+        <h1>SQLAlchemy 0.6.4 Documentation</h1>
+
+        <div id="search">
+        Search:
+        <form class="search" action="../search.html" method="get">
+          <input type="text" name="q" size="18" /> <input type="submit" value="Search" />
+          <input type="hidden" name="check_keywords" value="yes" />
+          <input type="hidden" name="area" value="default" />
+        </form>
+        </div>
+
+        <div class="versionheader">
+            Version: <span class="versionnum">0.6.4</span> Last Updated: 09/07/2010 13:07:48
+        </div>
+        <div class="clearboth"></div>
+
+        <div class="topnav">
+            <div id="pagecontrol">
+                <a href="../genindex.html">Index</a>
+            
+                <div class="sourcelink">(<a href="../_sources/core/engines.txt">view source)</div>
+            </div>
+            
+            <div class="navbanner">
+                <a class="totoc" href="../index.html">Table of Contents</a>
+                        » <a href="index.html" title="SQLAlchemy Core">SQLAlchemy Core</a>
+                » 
+    Engine Configuration
+ 
+                
+                
+<div class="prevnext">
+        Previous:
+        <a href="expression_api.html" title="previous chapter">SQL Statements and Expressions</a>
+        Next:
+        <a href="connections.html" title="next chapter">Working with Engines and Connections</a>
+</div>
+
+                <h2>
+                    
+    Engine Configuration
+ 
+                </h2>
+            </div>
+                <ul>
+<li><a class="reference internal" href="#">Engine Configuration</a><ul>
+<li><a class="reference internal" href="#supported-databases">Supported Databases</a></li>
+<li><a class="reference internal" href="#database-engine-options">Database Engine Options</a></li>
+<li><a class="reference internal" href="#database-urls">Database Urls</a></li>
+<li><a class="reference internal" href="#custom-dbapi-connect-arguments">Custom DBAPI connect() arguments</a></li>
+<li><a class="reference internal" href="#configuring-logging">Configuring Logging</a></li>
+</ul>
+</li>
+</ul>
+
+            <div class="clearboth"></div>
+        </div>
+        
+        <div class="document">
+            <div class="body">
+                
+<div class="section" id="engine-configuration">
+<span id="engines-toplevel"></span><h1>Engine Configuration<a class="headerlink" href="#engine-configuration" title="Permalink to this headline">¶</a></h1>
+<p>The <strong>Engine</strong> is the starting point for any SQLAlchemy application. It&#8217;s
+&#8220;home base&#8221; for the actual database and its DBAPI, delivered to the SQLAlchemy
+application through a connection pool and a <strong>Dialect</strong>, which describes how
+to talk to a specific kind of database/DBAPI combination.</p>
+<p>The general structure is this:</p>
+<div class="highlight-python"><pre>                                     +-----------+                        __________
+                                 /---|   Pool    |---\                   (__________)
+             +-------------+    /    +-----------+    \     +--------+   |          |
+connect() &lt;--|   Engine    |---x                       x----| DBAPI  |---| database |
+             +-------------+    \    +-----------+    /     +--------+   |          |
+                                 \---|  Dialect  |---/                   |__________|
+                                     +-----------+                       (__________)</pre>
+</div>
+<p>Where above, a <a class="reference internal" href="connections.html#sqlalchemy.engine.base.Engine" title="sqlalchemy.engine.base.Engine"><tt class="xref py py-class docutils literal"><span class="pre">Engine</span></tt></a> references both a
+<tt class="xref py py-class docutils literal"><span class="pre">Dialect</span></tt> and <a class="reference internal" href="pooling.html#sqlalchemy.pool.Pool" title="sqlalchemy.pool.Pool"><tt class="xref py py-class docutils literal"><span class="pre">Pool</span></tt></a>,
+which together interpret the DBAPI&#8217;s module functions as well as the behavior
+of the database.</p>
+<p>Creating an engine is just a matter of issuing a single call,
+<tt class="xref py py-func docutils literal"><span class="pre">create_engine()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;postgresql://scott:tiger@localhost:5432/mydatabase&#39;</span><span class="p">)</span></pre></div>
+</div>
+<p>The above engine invokes the <tt class="docutils literal"><span class="pre">postgresql</span></tt> dialect and a connection pool
+which references <tt class="docutils literal"><span class="pre">localhost:5432</span></tt>.</p>
+<p>The <a class="reference internal" href="connections.html#sqlalchemy.engine.base.Engine" title="sqlalchemy.engine.base.Engine"><tt class="xref py py-class docutils literal"><span class="pre">Engine</span></tt></a>, once created, can either be used directly to interact with the database,
+or can be passed to a <a class="reference internal" href="../orm/session.html#sqlalchemy.orm.session.Session" title="sqlalchemy.orm.session.Session"><tt class="xref py py-class docutils literal"><span class="pre">Session</span></tt></a> object to work with the ORM.   This section
+covers the details of configuring an <a class="reference internal" href="connections.html#sqlalchemy.engine.base.Engine" title="sqlalchemy.engine.base.Engine"><tt class="xref py py-class docutils literal"><span class="pre">Engine</span></tt></a>.   The next section, <a class="reference internal" href="connections.html"><em>Working with Engines and Connections</em></a>,
+will detail the usage API of the <a class="reference internal" href="connections.html#sqlalchemy.engine.base.Engine" title="sqlalchemy.engine.base.Engine"><tt class="xref py py-class docutils literal"><span class="pre">Engine</span></tt></a> and similar, typically for non-ORM
+applications.</p>
+<div class="section" id="supported-databases">
+<span id="supported-dbapis"></span><h2>Supported Databases<a class="headerlink" href="#supported-databases" title="Permalink to this headline">¶</a></h2>
+<p>SQLAlchemy includes many <tt class="xref py py-class docutils literal"><span class="pre">Dialect</span></tt> implementations for various
+backends; each is described as its own package in the <em class="xref std std-ref">sqlalchemy.dialects_toplevel</em> package.  A
+SQLAlchemy dialect always requires that an appropriate DBAPI driver is installed.</p>
+<p>The table below summarizes the state of DBAPI support in SQLAlchemy 0.6.  The values
+translate as:</p>
+<ul class="simple">
+<li>yes / Python platform - The SQLAlchemy dialect is mostly or fully operational on the target platform.</li>
+<li>yes / OS platform - The DBAPI supports that platform.</li>
+<li>no / Python platform - The DBAPI does not support that platform, or there is no SQLAlchemy dialect support.</li>
+<li>no / OS platform - The DBAPI does not support that platform.</li>
+<li>partial - the DBAPI is partially usable on the target platform but has major unresolved issues.</li>
+<li>development - a development version of the dialect exists, but is not yet usable.</li>
+<li>thirdparty - the dialect itself is maintained by a third party, who should be consulted for
+information on current support.</li>
+<li>* - indicates the given DBAPI is the &#8220;default&#8221; for SQLAlchemy, i.e. when just the database name is specified</li>
+</ul>
+<table border="1" class="docutils">
+<colgroup>
+<col width="22%" />
+<col width="24%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="15%" />
+<col width="11%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Driver</th>
+<th class="head">Connect string</th>
+<th class="head">Py2K</th>
+<th class="head">Py3K</th>
+<th class="head">Jython</th>
+<th class="head">Unix</th>
+<th class="head">Windows</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><strong>DB2/Informix IDS</strong></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td><a class="reference external" href="http://code.google.com/p/ibm-db/">ibm-db</a></td>
+<td>thirdparty</td>
+<td>thirdparty</td>
+<td>thirdparty</td>
+<td>thirdparty</td>
+<td>thirdparty</td>
+<td>thirdparty</td>
+</tr>
+<tr><td><strong>Firebird</strong></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td><a class="reference external" href="http://firebirdsql.org/index.php?op=devel&amp;sub=python">kinterbasdb</a></td>
+<td><tt class="docutils literal"><span class="pre">firebird+kinterbasdb</span></tt>*</td>
+<td>yes</td>
+<td>development</td>
+<td>no</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr><td><strong>Informix</strong></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td><a class="reference external" href="http://informixdb.sourceforge.net/">informixdb</a></td>
+<td><tt class="docutils literal"><span class="pre">informix+informixdb</span></tt>*</td>
+<td>development</td>
+<td>development</td>
+<td>no</td>
+<td>unknown</td>
+<td>unknown</td>
+</tr>
+<tr><td><strong>MaxDB</strong></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td><a class="reference external" href="http://www.sapdb.org/sapdbapi.html">sapdb</a></td>
+<td><tt class="docutils literal"><span class="pre">maxdb+sapdb</span></tt>*</td>
+<td>development</td>
+<td>development</td>
+<td>no</td>
+<td>yes</td>
+<td>unknown</td>
+</tr>
+<tr><td><strong>Microsoft Access</strong></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td><a class="reference external" href="http://code.google.com/p/pyodbc/">pyodbc</a></td>
+<td><tt class="docutils literal"><span class="pre">access+pyodbc</span></tt>*</td>
+<td>development</td>
+<td>development</td>
+<td>no</td>
+<td>unknown</td>
+<td>yes</td>
+</tr>
+<tr><td><strong>Microsoft SQL Server</strong></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td><a class="reference external" href="http://adodbapi.sourceforge.net/">adodbapi</a></td>
+<td><tt class="docutils literal"><span class="pre">mssql+adodbapi</span></tt></td>
+<td>development</td>
+<td>development</td>
+<td>no</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr><td><a class="reference external" href="http://jtds.sourceforge.net/">jTDS JDBC Driver</a></td>
+<td><tt class="docutils literal"><span class="pre">mssql+zxjdbc</span></tt></td>
+<td>no</td>
+<td>no</td>
+<td>development</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr><td><a class="reference external" href="http://www.egenix.com/products/python/mxODBC/">mxodbc</a></td>
+<td><tt class="docutils literal"><span class="pre">mssql+mxodbc</span></tt></td>
+<td>yes</td>
+<td>development</td>
+<td>no</td>
+<td>yes with <a class="reference external" href="http://www.freetds.org/">FreeTDS</a></td>
+<td>yes</td>
+</tr>
+<tr><td><a class="reference external" href="http://code.google.com/p/pyodbc/">pyodbc</a></td>
+<td><tt class="docutils literal"><span class="pre">mssql+pyodbc</span></tt>*</td>
+<td>yes</td>
+<td>development</td>
+<td>no</td>
+<td>yes with <a class="reference external" href="http://www.freetds.org/">FreeTDS</a></td>
+<td>yes</td>
+</tr>
+<tr><td><a class="reference external" href="http://code.google.com/p/pymssql/">pymssql</a></td>
+<td><tt class="docutils literal"><span class="pre">mssql+pymssql</span></tt></td>
+<td>yes</td>
+<td>development</td>
+<td>no</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr><td><strong>MySQL</strong></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td><a class="reference external" href="http://dev.mysql.com/downloads/connector/j/">MySQL Connector/J</a></td>
+<td><tt class="docutils literal"><span class="pre">mysql+zxjdbc</span></tt></td>
+<td>no</td>
+<td>no</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr><td><a class="reference external" href="https://launchpad.net/myconnpy">MySQL Connector/Python</a></td>
+<td><tt class="docutils literal"><span class="pre">mysql+mysqlconnector</span></tt></td>
+<td>yes</td>
+<td>partial</td>
+<td>no</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr><td><a class="reference external" href="http://sourceforge.net/projects/mysql-python">mysql-python</a></td>
+<td><tt class="docutils literal"><span class="pre">mysql+mysqldb</span></tt>*</td>
+<td>yes</td>
+<td>development</td>
+<td>no</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr><td><a class="reference external" href="http://packages.python.org/oursql/">OurSQL</a></td>
+<td><tt class="docutils literal"><span class="pre">mysql+oursql</span></tt></td>
+<td>yes</td>
+<td>partial</td>
+<td>no</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr><td><strong>Oracle</strong></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td><a class="reference external" href="http://cx-oracle.sourceforge.net/">cx_oracle</a></td>
+<td><tt class="docutils literal"><span class="pre">oracle+cx_oracle</span></tt>*</td>
+<td>yes</td>
+<td>development</td>
+<td>no</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr><td><a class="reference external" href="http://www.oracle.com/technology/software/tech/java/sqlj_jdbc/index.html">Oracle JDBC Driver</a></td>
+<td><tt class="docutils literal"><span class="pre">oracle+zxjdbc</span></tt></td>
+<td>no</td>
+<td>no</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr><td><strong>Postgresql</strong></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td><a class="reference external" href="http://pybrary.net/pg8000/">pg8000</a></td>
+<td><tt class="docutils literal"><span class="pre">postgresql+pg8000</span></tt></td>
+<td>yes</td>
+<td>yes</td>
+<td>no</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr><td><a class="reference external" href="http://jdbc.postgresql.org/">PostgreSQL JDBC Driver</a></td>
+<td><tt class="docutils literal"><span class="pre">postgresql+zxjdbc</span></tt></td>
+<td>no</td>
+<td>no</td>
+<td>yes</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr><td><a class="reference external" href="http://www.initd.org/">psycopg2</a></td>
+<td><tt class="docutils literal"><span class="pre">postgresql+psycopg2</span></tt>*</td>
+<td>yes</td>
+<td>development</td>
+<td>no</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr><td><a class="reference external" href="http://python.projects.postgresql.org/">pypostgresql</a></td>
+<td><tt class="docutils literal"><span class="pre">postgresql+pypostgresql</span></tt></td>
+<td>no</td>
+<td>yes</td>
+<td>no</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr><td><strong>SQLite</strong></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td><a class="reference external" href="http://pypi.python.org/pypi/pysqlite/">pysqlite</a></td>
+<td><tt class="docutils literal"><span class="pre">sqlite+pysqlite</span></tt>*</td>
+<td>yes</td>
+<td>yes</td>
+<td>no</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr><td><a class="reference external" href="http://docs.python.org/library/sqlite3.html">sqlite3</a></td>
+<td><tt class="docutils literal"><span class="pre">sqlite+pysqlite</span></tt>*</td>
+<td>yes</td>
+<td>yes</td>
+<td>no</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr><td><strong>Sybase ASE</strong></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td><a class="reference external" href="http://www.egenix.com/products/python/mxODBC/">mxodbc</a></td>
+<td><tt class="docutils literal"><span class="pre">sybase+mxodbc</span></tt></td>
+<td>development</td>
+<td>development</td>
+<td>no</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+<tr><td><a class="reference external" href="http://code.google.com/p/pyodbc/">pyodbc</a></td>
+<td><tt class="docutils literal"><span class="pre">sybase+pyodbc</span></tt>*</td>
+<td>partial</td>
+<td>development</td>
+<td>no</td>
+<td>unknown</td>
+<td>unknown</td>
+</tr>
+<tr><td><a class="reference external" href="http://python-sybase.sourceforge.net/">python-sybase</a></td>
+<td><tt class="docutils literal"><span class="pre">sybase+pysybase</span></tt></td>
+<td>partial</td>
+<td>development</td>
+<td>no</td>
+<td>yes</td>
+<td>yes</td>
+</tr>
+</tbody>
+</table>
+<p>Further detail on dialects is available at <em class="xref std std-ref">sqlalchemy.dialects_toplevel</em>
+as well as additional notes on the wiki at <a class="reference external" href="http://www.sqlalchemy.org/trac/wiki/DatabaseNotes">Database Notes</a></p>
+</div>
+<div class="section" id="database-engine-options">
+<span id="create-engine-args"></span><h2>Database Engine Options<a class="headerlink" href="#database-engine-options" title="Permalink to this headline">¶</a></h2>
+<p>Keyword options can also be specified to <a class="reference internal" href="#sqlalchemy.create_engine" title="sqlalchemy.create_engine"><tt class="xref py py-func docutils literal"><span class="pre">create_engine()</span></tt></a>,
+following the string URL as follows:</p>
+<div class="highlight-python+sql"><div class="highlight"><pre><span class="n">db</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;postgresql://...&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">&#39;latin1&#39;</span><span class="p">,</span> <span class="n">echo</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span></pre></div>
+</div>
+<dl class="function">
+<dt id="sqlalchemy.create_engine">
+<tt class="descclassname">sqlalchemy.</tt><tt class="descname">create_engine</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#sqlalchemy.create_engine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new Engine instance.</p>
+<p>The standard method of specifying the engine is via URL as the
+first positional argument, to indicate the appropriate database
+dialect and connection arguments, with additional keyword
+arguments sent as options to the dialect and resulting Engine.</p>
+<p>The URL is a string in the form
+<tt class="docutils literal"><span class="pre">dialect+driver://user:password&#64;host/dbname[?key=value..]</span></tt>, where
+<tt class="docutils literal"><span class="pre">dialect</span></tt> is a database name such as <tt class="docutils literal"><span class="pre">mysql</span></tt>, <tt class="docutils literal"><span class="pre">oracle</span></tt>, 
+<tt class="docutils literal"><span class="pre">postgresql</span></tt>, etc., and <tt class="docutils literal"><span class="pre">driver</span></tt> the name of a DBAPI, such as 
+<tt class="docutils literal"><span class="pre">psycopg2</span></tt>, <tt class="docutils literal"><span class="pre">pyodbc</span></tt>, <tt class="docutils literal"><span class="pre">cx_oracle</span></tt>, etc.  Alternatively, 
+the URL can be an instance of <a class="reference internal" href="#sqlalchemy.engine.url.URL" title="sqlalchemy.engine.url.URL"><tt class="xref py py-class docutils literal"><span class="pre">URL</span></tt></a>.</p>
+<p><cite>**kwargs</cite> takes a wide variety of options which are routed 
+towards their appropriate components.  Arguments may be 
+specific to the Engine, the underlying Dialect, as well as the 
+Pool.  Specific dialects also accept keyword arguments that
+are unique to that dialect.   Here, we describe the parameters
+that are common to most <tt class="docutils literal"><span class="pre">create_engine()</span></tt> usage.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>assert_unicode</strong> &#8211; Deprecated.  A warning is raised in all cases when a non-Unicode
+object is passed when SQLAlchemy would coerce into an encoding
+(note: but <strong>not</strong> when the DBAPI handles unicode objects natively).
+To suppress or raise this warning to an 
+error, use the Python warnings filter documented at:
+<a class="reference external" href="http://docs.python.org/library/warnings.html">http://docs.python.org/library/warnings.html</a></li>
+<li><strong>connect_args</strong> &#8211; a dictionary of options which will be
+passed directly to the DBAPI&#8217;s <tt class="docutils literal"><span class="pre">connect()</span></tt> method as
+additional keyword arguments.</li>
+<li><strong>convert_unicode=False</strong> &#8211; if set to True, all
+String/character based types will convert Unicode values to raw
+byte values going into the database, and all raw byte values to
+Python Unicode coming out in result sets. This is an
+engine-wide method to provide unicode conversion across the
+board. For unicode conversion on a column-by-column level, use
+the <tt class="docutils literal"><span class="pre">Unicode</span></tt> column type instead, described in <cite>types</cite>.</li>
+<li><strong>creator</strong> &#8211; a callable which returns a DBAPI connection.
+This creation function will be passed to the underlying
+connection pool and will be used to create all new database
+connections. Usage of this function causes connection
+parameters specified in the URL argument to be bypassed.</li>
+<li><strong>echo=False</strong> &#8211; if True, the Engine will log all statements
+as well as a repr() of their parameter lists to the engines
+logger, which defaults to sys.stdout. The <tt class="docutils literal"><span class="pre">echo</span></tt> attribute of
+<tt class="docutils literal"><span class="pre">Engine</span></tt> can be modified at any time to turn logging on and
+off. If set to the string <tt class="docutils literal"><span class="pre">&quot;debug&quot;</span></tt>, result rows will be
+printed to the standard output as well. This flag ultimately
+controls a Python logger; see <a class="reference internal" href="#dbengine-logging"><em>Configuring Logging</em></a> for
+information on how to configure logging directly.</li>
+<li><strong>echo_pool=False</strong> &#8211; if True, the connection pool will log
+all checkouts/checkins to the logging stream, which defaults to
+sys.stdout. This flag ultimately controls a Python logger; see
+<a class="reference internal" href="#dbengine-logging"><em>Configuring Logging</em></a> for information on how to configure logging
+directly.</li>
+<li><strong>encoding=&#8217;utf-8&#8217;</strong> &#8211; the encoding to use for all Unicode
+translations, both by engine-wide unicode conversion as well as
+the <tt class="docutils literal"><span class="pre">Unicode</span></tt> type object.</li>
+<li><strong>execution_options</strong> &#8211; Dictionary execution options which will
+be applied to all connections.  See
+<a class="reference internal" href="connections.html#sqlalchemy.engine.base.Connection.execution_options" title="sqlalchemy.engine.base.Connection.execution_options"><tt class="xref py py-meth docutils literal"><span class="pre">execution_options()</span></tt></a></li>
+<li><strong>label_length=None</strong> &#8211; optional integer value which limits
+the size of dynamically generated column labels to that many
+characters. If less than 6, labels are generated as
+&#8220;_(counter)&#8221;. If <tt class="xref docutils literal"><span class="pre">None</span></tt>, the value of
+<tt class="docutils literal"><span class="pre">dialect.max_identifier_length</span></tt> is used instead.</li>
+<li><strong>listeners</strong> &#8211; A list of one or more 
+<a class="reference internal" href="interfaces.html#sqlalchemy.interfaces.PoolListener" title="sqlalchemy.interfaces.PoolListener"><tt class="xref py py-class docutils literal"><span class="pre">PoolListener</span></tt></a> objects which will 
+receive connection pool events.</li>
+<li><strong>logging_name</strong> &#8211; String identifier which will be used within
+the &#8220;name&#8221; field of logging records generated within the
+&#8220;sqlalchemy.engine&#8221; logger. Defaults to a hexstring of the 
+object&#8217;s id.</li>
+<li><strong>max_overflow=10</strong> &#8211; the number of connections to allow in
+connection pool &#8220;overflow&#8221;, that is connections that can be
+opened above and beyond the pool_size setting, which defaults
+to five. this is only used with <a class="reference internal" href="pooling.html#sqlalchemy.pool.QueuePool" title="sqlalchemy.pool.QueuePool"><tt class="xref py py-class docutils literal"><span class="pre">QueuePool</span></tt></a>.</li>
+<li><strong>module=None</strong> &#8211; used by database implementations which
+support multiple DBAPI modules, this is a reference to a DBAPI2
+module to be used instead of the engine&#8217;s default module. For
+PostgreSQL, the default is psycopg2. For Oracle, it&#8217;s cx_Oracle.</li>
+<li><strong>pool=None</strong> &#8211; an already-constructed instance of
+<a class="reference internal" href="pooling.html#sqlalchemy.pool.Pool" title="sqlalchemy.pool.Pool"><tt class="xref py py-class docutils literal"><span class="pre">Pool</span></tt></a>, such as a
+<a class="reference internal" href="pooling.html#sqlalchemy.pool.QueuePool" title="sqlalchemy.pool.QueuePool"><tt class="xref py py-class docutils literal"><span class="pre">QueuePool</span></tt></a> instance. If non-None, this
+pool will be used directly as the underlying connection pool
+for the engine, bypassing whatever connection parameters are
+present in the URL argument. For information on constructing
+connection pools manually, see <cite>pooling</cite>.</li>
+<li><strong>poolclass=None</strong> &#8211; a <a class="reference internal" href="pooling.html#sqlalchemy.pool.Pool" title="sqlalchemy.pool.Pool"><tt class="xref py py-class docutils literal"><span class="pre">Pool</span></tt></a>
+subclass, which will be used to create a connection pool
+instance using the connection parameters given in the URL. Note
+this differs from <tt class="docutils literal"><span class="pre">pool</span></tt> in that you don&#8217;t actually
+instantiate the pool in this case, you just indicate what type
+of pool to be used.</li>
+<li><strong>pool_logging_name</strong> &#8211; String identifier which will be used within
+the &#8220;name&#8221; field of logging records generated within the 
+&#8220;sqlalchemy.pool&#8221; logger. Defaults to a hexstring of the object&#8217;s 
+id.</li>
+<li><strong>pool_size=5</strong> &#8211; the number of connections to keep open
+inside the connection pool. This used with <a class="reference internal" href="pooling.html#sqlalchemy.pool.QueuePool" title="sqlalchemy.pool.QueuePool"><tt class="xref py py-class docutils literal"><span class="pre">QueuePool</span></tt></a> as
+well as <a class="reference internal" href="pooling.html#sqlalchemy.pool.SingletonThreadPool" title="sqlalchemy.pool.SingletonThreadPool"><tt class="xref py py-class docutils literal"><span class="pre">SingletonThreadPool</span></tt></a>.  With
+<a class="reference internal" href="pooling.html#sqlalchemy.pool.QueuePool" title="sqlalchemy.pool.QueuePool"><tt class="xref py py-class docutils literal"><span class="pre">QueuePool</span></tt></a>, a <tt class="docutils literal"><span class="pre">pool_size</span></tt> setting
+of 0 indicates no limit; to disable pooling, set <tt class="docutils literal"><span class="pre">poolclass</span></tt> to
+<a class="reference internal" href="pooling.html#sqlalchemy.pool.NullPool" title="sqlalchemy.pool.NullPool"><tt class="xref py py-class docutils literal"><span class="pre">NullPool</span></tt></a> instead.</li>
+<li><strong>pool_recycle=-1</strong> &#8211; this setting causes the pool to recycle
+connections after the given number of seconds has passed. It
+defaults to -1, or no timeout. For example, setting to 3600
+means connections will be recycled after one hour. Note that
+MySQL in particular will <tt class="docutils literal"><span class="pre">disconnect</span> <span class="pre">automatically</span></tt> if no
+activity is detected on a connection for eight hours (although
+this is configurable with the MySQLDB connection itself and the
+server configuration as well).</li>
+<li><strong>pool_timeout=30</strong> &#8211; number of seconds to wait before giving
+up on getting a connection from the pool. This is only used
+with <a class="reference internal" href="pooling.html#sqlalchemy.pool.QueuePool" title="sqlalchemy.pool.QueuePool"><tt class="xref py py-class docutils literal"><span class="pre">QueuePool</span></tt></a>.</li>
+<li><strong>strategy=&#8217;plain&#8217;</strong> &#8211; used to invoke alternate <tt class="xref py py-class docutils literal"></tt>
+implementations. Currently available is the <tt class="docutils literal"><span class="pre">threadlocal</span></tt>
+strategy, which is described in <a class="reference internal" href="connections.html#threadlocal-strategy"><em>Using the Threadlocal Execution Strategy</em></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="sqlalchemy.engine_from_config">
+<tt class="descclassname">sqlalchemy.</tt><tt class="descname">engine_from_config</tt><big>(</big><em>configuration</em>, <em>prefix='sqlalchemy.'</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#sqlalchemy.engine_from_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new Engine instance using a configuration dictionary.</p>
+<p>The dictionary is typically produced from a config file where keys
+are prefixed, such as sqlalchemy.url, sqlalchemy.echo, etc.  The
+&#8216;prefix&#8217; argument indicates the prefix to be searched for.</p>
+<p>A select set of keyword arguments will be &#8220;coerced&#8221; to their
+expected type based on string values.  In a future release, this
+functionality will be expanded and include dialect-specific
+arguments.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="database-urls">
+<h2>Database Urls<a class="headerlink" href="#database-urls" title="Permalink to this headline">¶</a></h2>
+<p>SQLAlchemy indicates the source of an Engine strictly via <a class="reference external" href="http://rfc.net/rfc1738.html">RFC-1738</a> style URLs, combined with optional keyword
+arguments to specify options for the Engine. The form of the URL is:</p>
+<blockquote>
+dialect+driver://username:password&#64;host:port/database</blockquote>
+<p>Dialect names include the identifying name of the SQLAlchemy dialect which
+include <tt class="docutils literal"><span class="pre">sqlite</span></tt>, <tt class="docutils literal"><span class="pre">mysql</span></tt>, <tt class="docutils literal"><span class="pre">postgresql</span></tt>, <tt class="docutils literal"><span class="pre">oracle</span></tt>, <tt class="docutils literal"><span class="pre">mssql</span></tt>, and
+<tt class="docutils literal"><span class="pre">firebird</span></tt>. The drivername is the name of the DBAPI to be used to connect to
+the database using all lowercase letters. If not specified, a &#8220;default&#8221; DBAPI
+will be imported if available - this default is typically the most widely
+known driver available for that backend (i.e. cx_oracle, pysqlite/sqlite3,
+psycopg2, mysqldb). For Jython connections, specify the <cite>zxjdbc</cite> driver, which
+is the JDBC-DBAPI bridge included with Jython.</p>
+<div class="highlight-python+sql"><div class="highlight"><pre><span class="c"># postgresql - psycopg2 is the default driver.</span>
+<span class="n">pg_db</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;postgresql://scott:tiger@localhost/mydatabase&#39;</span><span class="p">)</span>
+<span class="n">pg_db</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;postgresql+psycopg2://scott:tiger@localhost/mydatabase&#39;</span><span class="p">)</span>
+<span class="n">pg_db</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;postgresql+pg8000://scott:tiger@localhost/mydatabase&#39;</span><span class="p">)</span>
+<span class="n">pg_db</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;postgresql+pypostgresql://scott:tiger@localhost/mydatabase&#39;</span><span class="p">)</span>
+
+<span class="c"># postgresql on Jython</span>
+<span class="n">pg_db</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;postgresql+zxjdbc://scott:tiger@localhost/mydatabase&#39;</span><span class="p">)</span>
+
+<span class="c"># mysql - MySQLdb (mysql-python) is the default driver</span>
+<span class="n">mysql_db</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;mysql://scott:tiger@localhost/foo&#39;</span><span class="p">)</span>
+<span class="n">mysql_db</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;mysql+mysqldb://scott:tiger@localhost/foo&#39;</span><span class="p">)</span>
+
+<span class="c"># mysql on Jython</span>
+<span class="n">mysql_db</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;mysql+zxjdbc://localhost/foo&#39;</span><span class="p">)</span>
+
+<span class="c"># mysql with pyodbc (buggy)</span>
+<span class="n">mysql_db</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;mysql+pyodbc://scott:tiger@some_dsn&#39;</span><span class="p">)</span>
+
+<span class="c"># oracle - cx_oracle is the default driver</span>
+<span class="n">oracle_db</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;oracle://scott:tiger@127.0.0.1:1521/sidname&#39;</span><span class="p">)</span>
+
+<span class="c"># oracle via TNS name</span>
+<span class="n">oracle_db</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;oracle+cx_oracle://scott:tiger@tnsname&#39;</span><span class="p">)</span>
+
+<span class="c"># mssql using ODBC datasource names.  PyODBC is the default driver.</span>
+<span class="n">mssql_db</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;mssql://mydsn&#39;</span><span class="p">)</span>
+<span class="n">mssql_db</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;mssql+pyodbc://mydsn&#39;</span><span class="p">)</span>
+<span class="n">mssql_db</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;mssql+adodbapi://mydsn&#39;</span><span class="p">)</span>
+<span class="n">mssql_db</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;mssql+pyodbc://username:password@mydsn&#39;</span><span class="p">)</span></pre></div>
+</div>
+<p>SQLite connects to file based databases. The same URL format is used, omitting
+the hostname, and using the &#8220;file&#8221; portion as the filename of the database.
+This has the effect of four slashes being present for an absolute file path:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># sqlite://&lt;nohostname&gt;/&lt;path&gt;</span>
+<span class="c"># where &lt;path&gt; is relative:</span>
+<span class="n">sqlite_db</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;sqlite:///foo.db&#39;</span><span class="p">)</span>
+
+<span class="c"># or absolute, starting with a slash:</span>
+<span class="n">sqlite_db</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;sqlite:////absolute/path/to/foo.db&#39;</span><span class="p">)</span></pre></div>
+</div>
+<p>To use a SQLite <tt class="docutils literal"><span class="pre">:memory:</span></tt> database, specify an empty URL:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">sqlite_memory_db</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;sqlite://&#39;</span><span class="p">)</span></pre></div>
+</div>
+<p>The <a class="reference internal" href="connections.html#sqlalchemy.engine.base.Engine" title="sqlalchemy.engine.base.Engine"><tt class="xref py py-class docutils literal"><span class="pre">Engine</span></tt></a> will ask the connection pool for a
+connection when the <tt class="docutils literal"><span class="pre">connect()</span></tt> or <tt class="docutils literal"><span class="pre">execute()</span></tt> methods are called. The
+default connection pool, <a class="reference internal" href="pooling.html#sqlalchemy.pool.QueuePool" title="sqlalchemy.pool.QueuePool"><tt class="xref py py-class docutils literal"><span class="pre">QueuePool</span></tt></a>, as well as the
+default connection pool used with SQLite,
+<a class="reference internal" href="pooling.html#sqlalchemy.pool.SingletonThreadPool" title="sqlalchemy.pool.SingletonThreadPool"><tt class="xref py py-class docutils literal"><span class="pre">SingletonThreadPool</span></tt></a>, will open connections to the
+database on an as-needed basis. As concurrent statements are executed,
+<a class="reference internal" href="pooling.html#sqlalchemy.pool.QueuePool" title="sqlalchemy.pool.QueuePool"><tt class="xref py py-class docutils literal"><span class="pre">QueuePool</span></tt></a> will grow its pool of connections to a
+default size of five, and will allow a default &#8220;overflow&#8221; of ten. Since the
+<a class="reference internal" href="connections.html#sqlalchemy.engine.base.Engine" title="sqlalchemy.engine.base.Engine"><tt class="xref py py-class docutils literal"><span class="pre">Engine</span></tt></a> is essentially &#8220;home base&#8221; for the
+connection pool, it follows that you should keep a single
+<a class="reference internal" href="connections.html#sqlalchemy.engine.base.Engine" title="sqlalchemy.engine.base.Engine"><tt class="xref py py-class docutils literal"><span class="pre">Engine</span></tt></a> per database established within an
+application, rather than creating a new one for each connection.</p>
+<dl class="class">
+<dt id="sqlalchemy.engine.url.URL">
+<em class="property">class </em><tt class="descclassname">sqlalchemy.engine.url.</tt><tt class="descname">URL</tt><big>(</big><em>drivername</em>, <em>username=None</em>, <em>password=None</em>, <em>host=None</em>, <em>port=None</em>, <em>database=None</em>, <em>query=None</em><big>)</big><a class="headerlink" href="#sqlalchemy.engine.url.URL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represent the components of a URL used to connect to a database.</p>
+<p>This object is suitable to be passed directly to a
+<tt class="docutils literal"><span class="pre">create_engine()</span></tt> call.  The fields of the URL are parsed from a
+string by the <tt class="docutils literal"><span class="pre">module-level</span> <span class="pre">make_url()</span></tt> function.  the string
+format of the URL is an RFC-1738-style string.</p>
+<p>All initialization parameters are available as public attributes.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>drivername</strong> &#8211; the name of the database backend.
+This name will correspond to a module in sqlalchemy/databases
+or a third party plug-in.</li>
+<li><strong>username</strong> &#8211; The user name.</li>
+<li><strong>password</strong> &#8211; database password.</li>
+<li><strong>host</strong> &#8211; The name of the host.</li>
+<li><strong>port</strong> &#8211; The port number.</li>
+<li><strong>database</strong> &#8211; The database name.</li>
+<li><strong>query</strong> &#8211; A dictionary of options to be passed to the
+dialect and/or the DBAPI upon connect.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="sqlalchemy.engine.url.URL.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>drivername</em>, <em>username=None</em>, <em>password=None</em>, <em>host=None</em>, <em>port=None</em>, <em>database=None</em>, <em>query=None</em><big>)</big><a class="headerlink" href="#sqlalchemy.engine.url.URL.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="sqlalchemy.engine.url.URL.get_dialect">
+<tt class="descname">get_dialect</tt><big>(</big><big>)</big><a class="headerlink" href="#sqlalchemy.engine.url.URL.get_dialect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the SQLAlchemy database dialect class corresponding
+to this URL&#8217;s driver name.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="sqlalchemy.engine.url.URL.translate_connect_args">
+<tt class="descname">translate_connect_args</tt><big>(</big><em>names=</em><span class="optional">[</span><span class="optional">]</span>, <em>**kw</em><big>)</big><a class="headerlink" href="#sqlalchemy.engine.url.URL.translate_connect_args" title="Permalink to this definition">¶</a></dt>
+<dd><p>Translate url attributes into a dictionary of connection arguments.</p>
+<p>Returns attributes of this url (<cite>host</cite>, <cite>database</cite>, <cite>username</cite>,
+<cite>password</cite>, <cite>port</cite>) as a plain dictionary.  The attribute names are
+used as the keys by default.  Unset or false attributes are omitted
+from the final dictionary.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>**kw</strong> &#8211; Optional, alternate key names for url attributes.</li>
+<li><strong>names</strong> &#8211; Deprecated.  Same purpose as the keyword-based alternate names,
+but correlates the name to the original positionally.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="custom-dbapi-connect-arguments">
+<h2>Custom DBAPI connect() arguments<a class="headerlink" href="#custom-dbapi-connect-arguments" title="Permalink to this headline">¶</a></h2>
+<p>Custom arguments used when issuing the <tt class="docutils literal"><span class="pre">connect()</span></tt> call to the underlying
+DBAPI may be issued in three distinct ways. String-based arguments can be
+passed directly from the URL string as query arguments:</p>
+<div class="highlight-python+sql"><div class="highlight"><pre><span class="n">db</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;postgresql://scott:tiger@localhost/test?argument1=foo&amp;argument2=bar&#39;</span><span class="p">)</span></pre></div>
+</div>
+<p>If SQLAlchemy&#8217;s database connector is aware of a particular query argument, it
+may convert its type from string to its proper type.</p>
+<p><a class="reference internal" href="#sqlalchemy.create_engine" title="sqlalchemy.create_engine"><tt class="xref py py-func docutils literal"><span class="pre">create_engine()</span></tt></a> also takes an argument <tt class="docutils literal"><span class="pre">connect_args</span></tt> which is an additional dictionary that will be passed to <tt class="docutils literal"><span class="pre">connect()</span></tt>.  This can be used when arguments of a type other than string are required, and SQLAlchemy&#8217;s database connector has no type conversion logic present for that parameter:</p>
+<div class="highlight-python+sql"><div class="highlight"><pre><span class="n">db</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;postgresql://scott:tiger@localhost/test&#39;</span><span class="p">,</span> <span class="n">connect_args</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;argument1&#39;</span><span class="p">:</span><span class="mi">17</span><span class="p">,</span> <span class="s">&#39;argument2&#39;</span><span class="p">:</span><span class="s">&#39;bar&#39;</span><span class="p">})</span></pre></div>
+</div>
+<p>The most customizable connection method of all is to pass a <tt class="docutils literal"><span class="pre">creator</span></tt>
+argument, which specifies a callable that returns a DBAPI connection:</p>
+<div class="highlight-python+sql"><div class="highlight"><pre><span class="k">def</span> <span class="nf">connect</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">psycopg</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="s">&#39;scott&#39;</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s">&#39;localhost&#39;</span><span class="p">)</span>
+
+<span class="n">db</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s">&#39;postgresql://&#39;</span><span class="p">,</span> <span class="n">creator</span><span class="o">=</span><span class="n">connect</span><span class="p">)</span></pre></div>
+</div>
+</div>
+<div class="section" id="configuring-logging">
+<span id="dbengine-logging"></span><h2>Configuring Logging<a class="headerlink" href="#configuring-logging" title="Permalink to this headline">¶</a></h2>
+<p>Python&#8217;s standard <a class="reference external" href="http://www.python.org/doc/lib/module-logging.html">logging</a> module is used to
+implement informational and debug log output with SQLAlchemy. This allows
+SQLAlchemy&#8217;s logging to integrate in a standard way with other applications
+and libraries. The <tt class="docutils literal"><span class="pre">echo</span></tt> and <tt class="docutils literal"><span class="pre">echo_pool</span></tt> flags that are present on
+<a class="reference internal" href="#sqlalchemy.create_engine" title="sqlalchemy.create_engine"><tt class="xref py py-func docutils literal"><span class="pre">create_engine()</span></tt></a>, as well as the <tt class="docutils literal"><span class="pre">echo_uow</span></tt> flag used on
+<a class="reference internal" href="../orm/session.html#sqlalchemy.orm.session.Session" title="sqlalchemy.orm.session.Session"><tt class="xref py py-class docutils literal"><span class="pre">Session</span></tt></a>, all interact with regular loggers.</p>
+<p>This section assumes familiarity with the above linked logging module. All
+logging performed by SQLAlchemy exists underneath the <tt class="docutils literal"><span class="pre">sqlalchemy</span></tt>
+namespace, as used by <tt class="docutils literal"><span class="pre">logging.getLogger('sqlalchemy')</span></tt>. When logging has
+been configured (i.e. such as via <tt class="docutils literal"><span class="pre">logging.basicConfig()</span></tt>), the general
+namespace of SA loggers that can be turned on is as follows:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">sqlalchemy.engine</span></tt> - controls SQL echoing.  set to <tt class="docutils literal"><span class="pre">logging.INFO</span></tt> for SQL query output, <tt class="docutils literal"><span class="pre">logging.DEBUG</span></tt> for query + result set output.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">sqlalchemy.dialects</span></tt> - controls custom logging for SQL dialects.  See the documentation of individual dialects for details.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">sqlalchemy.pool</span></tt> - controls connection pool logging.  set to <tt class="docutils literal"><span class="pre">logging.INFO</span></tt> or lower to log connection pool checkouts/checkins.</p>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">sqlalchemy.orm</span></tt> - controls logging of various ORM functions.  set to <tt class="docutils literal"><span class="pre">logging.INFO</span></tt> for configurational logging as well as unit of work dumps, <tt class="docutils literal"><span class="pre">logging.DEBUG</span></tt> for extensive logging during query and flush() operations.  Subcategories of <tt class="docutils literal"><span class="pre">sqlalchemy.orm</span></tt> include:</dt>
+<dd><ul class="first last simple">
+<li><tt class="docutils literal"><span class="pre">sqlalchemy.orm.attributes</span></tt> - logs certain instrumented attribute operations, such as triggered callables</li>
+<li><tt class="docutils literal"><span class="pre">sqlalchemy.orm.mapper</span></tt> - logs Mapper configuration and operations</li>
+<li><tt class="docutils literal"><span class="pre">sqlalchemy.orm.unitofwork</span></tt> - logs flush() operations, including dependency sort graphs and other operations</li>
+<li><tt class="docutils literal"><span class="pre">sqlalchemy.orm.strategies</span></tt> - logs relationship loader operations (i.e. lazy and eager loads)</li>
+<li><tt class="docutils literal"><span class="pre">sqlalchemy.orm.sync</span></tt> - logs synchronization of attributes from parent to child instances during a flush()</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>For example, to log SQL queries as well as unit of work debugging:</p>
+<div class="highlight-python+sql"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">()</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;sqlalchemy.engine&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s">&#39;sqlalchemy.orm.unitofwork&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span></pre></div>
+</div>
+<p>By default, the log level is set to <tt class="docutils literal"><span class="pre">logging.ERROR</span></tt> within the entire
+<tt class="docutils literal"><span class="pre">sqlalchemy</span></tt> namespace so that no log operations occur, even within an
+application that has logging enabled otherwise.</p>
+<p>The <tt class="docutils literal"><span class="pre">echo</span></tt> flags present as keyword arguments to
+<a class="reference internal" href="#sqlalchemy.create_engine" title="sqlalchemy.create_engine"><tt class="xref py py-func docutils literal"><span class="pre">create_engine()</span></tt></a> and others as well as the <tt class="docutils literal"><span class="pre">echo</span></tt> property
+on <a class="reference internal" href="connections.html#sqlalchemy.engine.base.Engine" title="sqlalchemy.engine.base.Engine"><tt class="xref py py-class docutils literal"><span class="pre">Engine</span></tt></a>, when set to <tt class="xref docutils literal"><span class="pre">True</span></tt>, will first
+attempt to ensure that logging is enabled. Unfortunately, the <tt class="docutils literal"><span class="pre">logging</span></tt>
+module provides no way of determining if output has already been configured
+(note we are referring to if a logging configuration has been set up, not just
+that the logging level is set). For this reason, any <tt class="docutils literal"><span class="pre">echo=True</span></tt> flags will
+result in a call to <tt class="docutils literal"><span class="pre">logging.basicConfig()</span></tt> using sys.stdout as the
+destination. It also sets up a default format using the level name, timestamp,
+and logger name. Note that this configuration has the affect of being
+configured <strong>in addition</strong> to any existing logger configurations. Therefore,
+<strong>when using Python logging, ensure all echo flags are set to False at all
+times</strong>, to avoid getting duplicate log lines.</p>
+<p>The logger name of instance such as an <a class="reference internal" href="connections.html#sqlalchemy.engine.base.Engine" title="sqlalchemy.engine.base.Engine"><tt class="xref py py-class docutils literal"><span class="pre">Engine</span></tt></a>
+or <a class="reference internal" href="pooling.html#sqlalchemy.pool.Pool" title="sqlalchemy.pool.Pool"><tt class="xref py py-class docutils literal"><span class="pre">Pool</span></tt></a> defaults to using a truncated hex identifier
+string. To set this to a specific name, use the &#8220;logging_name&#8221; and
+&#8220;pool_logging_name&#8221; keyword arguments with <a class="reference internal" href="#sqlalchemy.create_engine" title="sqlalchemy.create_engine"><tt class="xref py py-func docutils literal"><span class="pre">sqlalchemy.create_engine()</span></tt></a>.</p>
+</div>
+</div>
+
+            </div>
+        </div>
+
+        
+        
+            <div class="bottomnav">
+                
+<div class="prevnext">
+        Previous:
+        <a href="expression_api.html" title="previous chapter">SQL Statements and Expressions</a>
+        Next:
+        <a href="connections.html" title="next chapter">Working with Engines and Connections</a>
+</div>
+
+                <div class="doc_copyright">
+                    &copy; <a href="../copyright.html">Copyright</a> 2007, 2008, 2009, 2010, the SQLAlchemy authors and contributors.
+                    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
+                </div>
+            </div>
+        
+
+
+
+
+
+
+    </body>
+</html>
+
+
+

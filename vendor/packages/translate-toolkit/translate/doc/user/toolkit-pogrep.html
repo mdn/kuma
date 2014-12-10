@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="pogrep" id="pogrep">pogrep</a></h1>
+<div class="level1">
+
+<p>
+
+The pogrep tool extracts messages that match a regular expression into a new set
+of <acronym title="Gettext Portable Object">PO</acronym> files that can be examined, edited and corrected.  These corrections can
+then be merged using <a href="toolkit-pomerge.html" class="wikilink1" title="toolkit-pomerge.html">pomerge</a>.
+</p>
+
+</div>
+<!-- SECTION "pogrep" [1-217] -->
+<h2><a name="usage" id="usage">Usage</a></h2>
+<div class="level2">
+<pre class="code">pogrep [options] &lt;in&gt; &lt;out&gt;</pre>
+
+<p>
+
+Where:
+</p>
+
+<p>
+<em>In</em> and <em>out</em> are either directories or files.  <em>Out</em> will contain <acronym title="Gettext Portable Object">PO</acronym>/<acronym title="XML Localization Interchange File Format">XLIFF</acronym> files
+with only those messages that match the regular expression that was you searched for.
+</p>
+
+<p>
+Options:
+
+</p>
+<table class="inline">
+	<tr class="row0">
+		<td class="col0 leftalign"> --version             </td><td class="col1 leftalign"> show program&#039;s version number and exit  </td>
+	</tr>
+	<tr class="row1">
+		<td class="col0 leftalign"> -h, --help           </td><td class="col1 leftalign"> show this help message and exit  </td>
+	</tr>
+	<tr class="row2">
+		<td class="col0 leftalign"> --manpage            </td><td class="col1 leftalign"> output a manpage based on the help   </td>
+	</tr>
+	<tr class="row3">
+		<td class="col0 leftalign"> <a href="toolkit-progress_progress.html" class="wikilink1" title="toolkit-progress_progress.html">--progress=PROGRESS</a>  </td><td class="col1 leftalign"> show progress as: dots, none, bar, names, verbose  </td>
+	</tr>
+	<tr class="row4">
+		<td class="col0 leftalign"> <a href="toolkit-errorlevel_errorlevel.html" class="wikilink1" title="toolkit-errorlevel_errorlevel.html">--errorlevel=ERRORLEVEL</a>  </td><td class="col1 leftalign"> show errorlevel as: none, message, exception, traceback  </td>
+	</tr>
+	<tr class="row5">
+		<td class="col0 leftalign"> -iINPUT, --input=INPUT   </td><td class="col1"> read from INPUT in po, pot, xlf formats (<acronym title="XML Localization Interchange File Format">XLIFF</acronym> since version 1.0) </td>
+	</tr>
+	<tr class="row6">
+		<td class="col0 leftalign"> -xEXCLUDE, --exclude=EXCLUDE  </td><td class="col1 leftalign"> exclude names matching EXCLUDE from input paths  </td>
+	</tr>
+	<tr class="row7">
+		<td class="col0 leftalign"> -oOUTPUT, --output=OUTPUT     </td><td class="col1"> write to OUTPUT in po, pot, xlf formats (<acronym title="XML Localization Interchange File Format">XLIFF</acronym> since version 1.0) </td>
+	</tr>
+	<tr class="row8">
+		<td class="col0 leftalign"> <a href="toolkit-psyco_mode.html" class="wikilink1" title="toolkit-psyco_mode.html">--psyco=MODE</a>        </td><td class="col1 leftalign"> use psyco to speed up the operation (set mode)  </td>
+	</tr>
+	<tr class="row9">
+		<td class="col0"> --search=SEARCHPARTS </td><td class="col1 leftalign"> searches the given parts (source, target, notes, locations)  </td>
+	</tr>
+	<tr class="row10">
+		<td class="col0 leftalign"> -I, --ignore-case    </td><td class="col1 leftalign"> ignore case distinctions  </td>
+	</tr>
+	<tr class="row11">
+		<td class="col0 leftalign"> -e, --regexp         </td><td class="col1 leftalign"> use regular expression matching  </td>
+	</tr>
+	<tr class="row12">
+		<td class="col0 leftalign"> -v, --invert-match   </td><td class="col1 leftalign"> select non-matching lines  </td>
+	</tr>
+	<tr class="row13">
+		<td class="col0 leftalign"> <a href="toolkit-accelerator_accelerator.html" class="wikilink1" title="toolkit-accelerator_accelerator.html">--accelerator=ACCELERATOR</a>     </td><td class="col1 leftalign"> ignores the given accelerator when matching  </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Usage" [218-1541] -->
+<h2><a name="example" id="example">Example</a></h2>
+<div class="level2">
+<pre class="code">pogrep --accelerator=&quot;_&quot; --search msgid -I -e &quot;software|hardware&quot; only-zu only-zu-check</pre>
+
+<p>
+
+Search for the words “software” or “hardware” in the msgid field.  Ignore case
+(-I) and treat the underscore (_) character as an accelerator key.  Search
+through all <acronym title="Gettext Portable Object">PO</acronym> files in the directory “only-zu” and place any matches in <acronym title="Gettext Portable Object">PO</acronym>
+files in the directory “only-zu-check”.  This would be useful to run if you know that 
+the word for software and hardware has been changed during the course of translation and 
+you want to check and correct all these instances.
+
+</p>
+<pre class="code">pogrep --search=msgid -e &#039;^\w+(\s+\w+){0,3}$&#039; -i templates -o short-words</pre>
+
+<p>
+
+Find all messages in the <em>templates</em> directory that have between 1 and 4 words and place them
+in <em>short-words</em>.  Use this if you want to see quick results by translating messages that
+are most likely menu entries or dialogue labels.
+
+</p>
+<pre class="code">pogrep --search=msgstr -I -e &quot;Ifayile&quot; zu zu-check</pre>
+
+<p>
+
+Search all translations for the occurrence of <em>Ifayile</em>.  You would use this to check if words have
+been used correctly.  Useful if you find problematic use of the same word for different concepts.
+You can use <a href="toolkit-pocompendium.html" class="wikilink1" title="toolkit-pocompendium.html">pocompendium</a> to find these conflicts.
+</p>
+
+</div>
+<!-- SECTION "Example" [1542-2737] -->
+<h2><a name="notes" id="notes">Notes</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Notes" [2738-2756] -->
+<h3><a name="unicode_normalization" id="unicode_normalization">Unicode normalization</a></h3>
+<div class="level3">
+
+<p>
+
+pogrep will normalize Unicode strings.  This allows you to search for strings that contain the same character but that are using precomposed Unicode characters or which are composed using another composition recipe.  While an individual user will in all likelihood only compose characters in one way, normalization ensures that data created in a team setting can be shared.
+</p>
+
+</div>
+<!-- SECTION "Unicode normalization" [2757-3164] -->
+<h2><a name="bugs" id="bugs">Bugs</a></h2>
+<div class="level2">
+
+<p>
+
+None known
+
+</p>
+
+</div>
+<!-- SECTION "Bugs" [3165-] --></body>
+</html>

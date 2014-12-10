@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" media="screen" type="text/css" href="./style.css" />
+  <link rel="stylesheet" media="screen" type="text/css" href="./design.css" />
+  <link rel="stylesheet" media="print" type="text/css" href="./print.css" />
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<a href=.>start</a></br>
+
+
+
+<h1><a name="history_of_the_translate_toolkit" id="history_of_the_translate_toolkit">History of the Translate Toolkit</a></h1>
+<div class="level1">
+
+<p>
+
+This is a short history of the Translate Toolkit. In many ways written so that people who see problems in the toolkit can understand how it evolved and where it is going.
+</p>
+
+</div>
+<!-- SECTION "History of the Translate Toolkit" [1-221] -->
+<h2><a name="conception" id="conception">Conception</a></h2>
+<div class="level2">
+
+<p>
+
+The toolkit was developed by David Fraser while working for <a href="http://translate.org.za" class="urlextern" title="http://translate.org.za">Translate.org.za</a>.  Initially Translate.org.za had focussed on translating KDE into South Africa languages, this work was <acronym title="Gettext Portable Object">PO</acronym> based.  The next project was to translate Mozilla which used a combination of <acronym title="Document Type Definition">DTD</acronym> and .properties files.  The Mozilla project used a tool called Mozilla Translator, which mostly worked although it was not as feature rich as KBabel that was being used to manage <acronym title="Gettext Portable Object">PO</acronym> translations.  A decision was made to create a set of tools that could convert the <acronym title="Document Type Definition">DTD</acronym> and .properties files into <acronym title="Gettext Portable Object">PO</acronym> files.  The advantage being that translators would not need to learn new tools, that existing translations could be leveraged and that the resultant files, being bilingual, would make it easier to upgrade and manage translations.
+</p>
+
+<p>
+Thus was born what initially was called the mozpotools.
+</p>
+
+</div>
+<!-- SECTION "Conception" [222-1126] -->
+<h2><a name="growth" id="growth">Growth</a></h2>
+<div class="level2">
+
+<p>
+
+The first problem with the tools was that it was possible to break Mozilla translations.  This was a combination of the fact that translators would often translate variables such as &amp;browserName; and that the toolkit had developed a method of folding labels and accelerators into one <acronym title="Gettext Portable Object">PO</acronym> field.  These breakages where presented as broken <acronym title="Extensible Markup Language">XML</acronym>.  Thus was born pofilter which allowed us to check the translations for problems in variables and accelerators.  pomerge its sister allowed us to merge the corrections back into the main.  We also developed pocount which allowed us to for the first time get a real feel of the volume of work required in translating a <acronym title="Gettext Portable Object">PO</acronym> file.
+</p>
+
+</div>
+<!-- SECTION "Growth" [1127-1815] -->
+<h2><a name="expansion" id="expansion">Expansion</a></h2>
+<div class="level2">
+
+<p>
+
+Of course once you can convert the convoluted Mozilla translations then you realise you can do anything.  A key addition was the converter for OpenOffice.org but also added where <acronym title="Translation Memory eXchange">TMX</acronym>, Qt .ts, txt and OpenOffice.org SXW files.
+</p>
+
+<p>
+The key being that files are converted to <acronym title="Gettext Portable Object">PO</acronym> to allow translations and use of the Gettext tools and existing <acronym title="Gettext Portable Object">PO</acronym> files.
+</p>
+
+</div>
+<!-- SECTION "Expansion" [1816-2185] -->
+<h2><a name="pootle" id="pootle">Pootle</a></h2>
+<div class="level2">
+
+<p>
+
+Initially started as a separate project to allow online translation it was soon realised that the toolkit being file based gave all the infrastructure to allow Pootle to be a wrapper around the toolkit.  So a file based, web translation tool was created.
+</p>
+
+</div>
+<!-- SECTION "Pootle" [2186-2462] -->
+<h2><a name="wordforge_project" id="wordforge_project">WordForge project</a></h2>
+<div class="level2">
+
+<p>
+
+In 2006 with funding from the <a href="http://www.soros.org/" class="urlextern" title="http://www.soros.org/">Open Society Institute</a> (OSI) and <a href="http://www.idrc.ca/" class="urlextern" title="http://www.idrc.ca/">IDRC</a> the toolkit was adapted to allow many core changes.  The first being to introduce the concept of a base class from which <acronym title="Gettext Portable Object">PO</acronym> and <acronym title="XML Localization Interchange File Format">XLIFF</acronym> storage formats are derived.  This allowed tools to be adapted to allow output to <acronym title="XML Localization Interchange File Format">XLIFF</acronym> or <acronym title="Gettext Portable Object">PO</acronym> files.  The tools themselves where adapted to allow them to work with the core formats <acronym title="XML Localization Interchange File Format">XLIFF</acronym> and <acronym title="Gettext Portable Object">PO</acronym> as well as all base class derived formats.  Thus we can count, <acronym title="XML Localization Interchange File Format">XLIFF</acronym>, <acronym title="Gettext Portable Object">PO</acronym>, <acronym title="Gettext Machine Object">MO</acronym> and other formats.
+</p>
+
+<p>
+Additional contributions during this phase where the adaptation of Pootle to use <acronym title="XML Localization Interchange File Format">XLIFF</acronym> as well as <acronym title="Gettext Portable Object">PO</acronym>.  The creation of tools to manage translation memory files and glossary files.
+</p>
+
+<p>
+The toolkit was also adapted to make dealing with encodings, plural forms, and escaping easier and more consistent throughout the code.  Many but not all of the formats where converted to the base class.
+</p>
+
+<p>
+As part of the WordForge project Pootling was created which in the same way that Pootle is a web-based wrapper around the toolkit so Pootling is a <acronym title="Graphical User Interface">GUI</acronym> wrapper around the toolkit.
+</p>
+
+</div>
+<!-- SECTION "WordForge project" [2463-3603] -->
+<h2><a name="the_future" id="the_future">The Future</a></h2>
+<div class="level2">
+
+<p>
+
+The toolkit continues to evolve with clean-up focused in various areas:
+</p>
+<ul>
+<li class="level1"><div class="li"> Pulling features out of Pootle that should be in the Toolkit</div>
+</li>
+<li class="level1"><div class="li"> Cleaning up storage classes and converters to be <acronym title="XML Localization Interchange File Format">XLIFF</acronym>/<acronym title="Gettext Portable Object">PO</acronym> interchangeable</div>
+</li>
+<li class="level1"><div class="li"> Cleaning up the converters to use only base class features and migrating code from the converters to the storage class</div>
+</li>
+<li class="level1"><div class="li"> Adding storage classes as needed</div>
+</li>
+<li class="level1"><div class="li"> Optimisation where needed</div>
+</li>
+</ul>
+
+<p>
+
+The toolkit continues to serve as the core for the command line tools and for Pootle.  Key new features:
+</p>
+<ul>
+<li class="level1"><div class="li"> Process Management</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "The Future" [3604-] --></body>
+</html>

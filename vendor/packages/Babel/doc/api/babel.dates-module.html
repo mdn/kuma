@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>babel.dates</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="babel-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="../index.html">Documentation Index</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="babel-module.html">Package&nbsp;babel</a> ::
+        Module&nbsp;dates
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== MODULE DESCRIPTION ==================== -->
+<h1 class="epydoc">Module dates</h1><p class="nomargin-top"></p>
+<p>Locale dependent formatting and parsing of dates and times.</p>
+<p>The default locale for the functions in this module is determined by the
+following environment variables, in that order:</p>
+<blockquote>
+<ul class="rst-simple">
+<li><tt class="rst-docutils literal"><span class="pre">LC_TIME</span></tt>,</li>
+<li><tt class="rst-docutils literal"><span class="pre">LC_ALL</span></tt>, and</li>
+<li><tt class="rst-docutils literal"><span class="pre">LANG</span></tt></li>
+</ul>
+</blockquote>
+
+<!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Functions</span></td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type"><code class="link">unicode</code></span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="babel.dates-module.html#get_timezone_name" class="summary-sig-name">get_timezone_name</a>(<span class="summary-sig-arg">dt_or_tzinfo</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">width</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">long</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">uncommon</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">locale</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">nl_NL</code><code class="variable-quote">'</code></span>)</span><br />
+      Return the localized display name for the given timezone.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type"><code class="link">unicode</code></span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="babel.dates-module.html#format_date" class="summary-sig-name">format_date</a>(<span class="summary-sig-arg">date</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">format</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">medium</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">locale</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">nl_NL</code><code class="variable-quote">'</code></span>)</span><br />
+      Return a date formatted according to the given pattern.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type"><code class="link">unicode</code></span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="babel.dates-module.html#format_datetime" class="summary-sig-name">format_datetime</a>(<span class="summary-sig-arg">datetime</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">format</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">medium</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">tzinfo</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">locale</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">nl_NL</code><code class="variable-quote">'</code></span>)</span><br />
+      Return a date formatted according to the given pattern.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type"><code class="link">unicode</code></span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="babel.dates-module.html#format_time" class="summary-sig-name">format_time</a>(<span class="summary-sig-arg">time</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">format</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">medium</code><code class="variable-quote">'</code></span>,
+        <span class="summary-sig-arg">tzinfo</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">locale</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">nl_NL</code><code class="variable-quote">'</code></span>)</span><br />
+      Return a time formatted according to the given pattern.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">date</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="babel.dates-module.html#parse_date" class="summary-sig-name">parse_date</a>(<span class="summary-sig-arg">string</span>,
+        <span class="summary-sig-arg">locale</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">nl_NL</code><code class="variable-quote">'</code></span>)</span><br />
+      Parse a date from a string.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">datetime</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="babel.dates-module.html#parse_datetime" class="summary-sig-name">parse_datetime</a>(<span class="summary-sig-arg">string</span>,
+        <span class="summary-sig-arg">locale</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">nl_NL</code><code class="variable-quote">'</code></span>)</span><br />
+      Parse a date and time from a string.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">time</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="babel.dates-module.html#parse_time" class="summary-sig-name">parse_time</a>(<span class="summary-sig-arg">string</span>,
+        <span class="summary-sig-arg">locale</span>=<span class="summary-sig-default"><code class="variable-quote">'</code><code class="variable-string">nl_NL</code><code class="variable-quote">'</code></span>)</span><br />
+      Parse a time from a string.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td align="left" colspan="2" class="table-header">
+    <span class="table-header">Function Details</span></td>
+</tr>
+</table>
+<a name="get_timezone_name"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">get_timezone_name</span>(<span class="sig-arg">dt_or_tzinfo</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">width</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">long</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">uncommon</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">locale</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">nl_NL</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Return the localized display name for the given timezone. The timezone
+may be specified using a <tt class="rst-docutils literal"><span class="pre">datetime</span></tt> or tzinfo object.</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">from</span> pytz <span class="py-keyword">import</span> timezone
+<span class="py-prompt">&gt;&gt;&gt; </span>dt = time(15, 30, tzinfo=timezone(<span class="py-string">'America/Los_Angeles'</span>))
+<span class="py-prompt">&gt;&gt;&gt; </span>get_timezone_name(dt, locale=<span class="py-string">'en_US'</span>)
+<span class="py-output">u'Pacific Standard Time'</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>get_timezone_name(dt, width=<span class="py-string">'short'</span>, locale=<span class="py-string">'en_US'</span>)
+<span class="py-output">u'PST'</span></pre>
+<p>If this function gets passed only a tzinfo object and no concrete
+datetime,  the returned display name is indenpendent of daylight savings
+time. This can be used for example for selecting timezones, or to set the
+time of events that recur across DST changes:</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>tz = timezone(<span class="py-string">'America/Los_Angeles'</span>)
+<span class="py-prompt">&gt;&gt;&gt; </span>get_timezone_name(tz, locale=<span class="py-string">'en_US'</span>)
+<span class="py-output">u'Pacific Time'</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>get_timezone_name(tz, <span class="py-string">'short'</span>, locale=<span class="py-string">'en_US'</span>)
+<span class="py-output">u'PT'</span></pre>
+<p>If no localized display name for the timezone is available, and the timezone
+is associated with a country that uses only a single timezone, the name of
+that country is returned, formatted according to the locale:</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>tz = timezone(<span class="py-string">'Europe/Berlin'</span>)
+<span class="py-prompt">&gt;&gt;&gt; </span>get_timezone_name(tz, locale=<span class="py-string">'de_DE'</span>)
+<span class="py-output">u'Deutschland'</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>get_timezone_name(tz, locale=<span class="py-string">'pt_BR'</span>)
+<span class="py-output">u'Hor\xe1rio Alemanha'</span></pre>
+<p>On the other hand, if the country uses multiple timezones, the city is also
+included in the representation:</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>tz = timezone(<span class="py-string">'America/St_Johns'</span>)
+<span class="py-prompt">&gt;&gt;&gt; </span>get_timezone_name(tz, locale=<span class="py-string">'de_DE'</span>)
+<span class="py-output">u&quot;Kanada (St. John's)&quot;</span></pre>
+<p>The <code class="link">uncommon</code> parameter can be set to <code class="link">True</code> to enable the use of timezone
+representations that are not commonly used by the requested locale. For
+example, while in frensh the central europian timezone is usually
+abbreviated as &quot;HEC&quot;, in Canadian French, this abbreviation is not in
+common use, so a generic name would be chosen by default:</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>tz = timezone(<span class="py-string">'Europe/Paris'</span>)
+<span class="py-prompt">&gt;&gt;&gt; </span>get_timezone_name(tz, <span class="py-string">'short'</span>, locale=<span class="py-string">'fr_CA'</span>)
+<span class="py-output">u'France'</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>get_timezone_name(tz, <span class="py-string">'short'</span>, uncommon=True, locale=<span class="py-string">'fr_CA'</span>)
+<span class="py-output">u'HEC'</span></pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>dt_or_tzinfo</code></strong> - the <tt class="rst-docutils literal"><span class="pre">datetime</span></tt> or <tt class="rst-docutils literal"><span class="pre">tzinfo</span></tt> object that determines
+the timezone; if a <tt class="rst-docutils literal"><span class="pre">tzinfo</span></tt> object is used, the
+resulting display name will be generic, i.e.
+independent of daylight savings time; if <code class="link">None</code>, the
+current date in UTC is assumed</li>
+        <li><strong class="pname"><code>width</code></strong> - either &quot;long&quot; or &quot;short&quot;</li>
+        <li><strong class="pname"><code>uncommon</code></strong> - whether even uncommon timezone abbreviations should be used</li>
+        <li><strong class="pname"><code>locale</code></strong> - the <a href="babel.core.Locale-class.html" class="link">Locale</a> object, or a locale string</li>
+    </ul></dd>
+    <dt>Returns: <code class="link">unicode</code></dt>
+        <dd>the timezone display name</dd>
+  </dl>
+<div class="fields">      <p><strong>Since:</strong>
+        version 0.9
+      </p>
+      <p><strong>See Also:</strong>
+        <a class="rst-reference external" href="http://www.unicode.org/reports/tr35/#Time_Zone_Fallback" target="_top">LDML Appendix J: Time Zone Display Names</a>
+      </p>
+</div></td></tr></table>
+</div>
+<a name="format_date"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">format_date</span>(<span class="sig-arg">date</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">format</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">medium</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">locale</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">nl_NL</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Return a date formatted according to the given pattern.</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>d = date(2007, 04, 01)
+<span class="py-prompt">&gt;&gt;&gt; </span>format_date(d, locale=<span class="py-string">'en_US'</span>)
+<span class="py-output">u'Apr 1, 2007'</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>format_date(d, format=<span class="py-string">'full'</span>, locale=<span class="py-string">'de_DE'</span>)
+<span class="py-output">u'Sonntag, 1. April 2007'</span></pre>
+<p>If you don't want to use the locale default formats, you can specify a
+custom date pattern:</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>format_date(d, <span class="py-string">&quot;EEE, MMM d, ''yy&quot;</span>, locale=<span class="py-string">'en'</span>)
+<span class="py-output">u&quot;Sun, Apr 1, '07&quot;</span></pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>date</code></strong> - the <tt class="rst-docutils literal"><span class="pre">date</span></tt> or <tt class="rst-docutils literal"><span class="pre">datetime</span></tt> object; if <code class="link">None</code>, the current
+date is used</li>
+        <li><strong class="pname"><code>format</code></strong> - one of &quot;full&quot;, &quot;long&quot;, &quot;medium&quot;, or &quot;short&quot;, or a custom
+date/time pattern</li>
+        <li><strong class="pname"><code>locale</code></strong> - a <a href="babel.core.Locale-class.html" class="link">Locale</a> object or a locale identifier</li>
+    </ul></dd>
+    <dt>Returns: <code class="link">unicode</code></dt>
+  </dl>
+<div class="fields">      <p><strong>Note:</strong>
+        If the pattern contains time fields, an <code class="link">AttributeError</code> will be
+raised when trying to apply the formatting. This is also true if
+the value of <tt class="rst-docutils literal"><span class="pre">date</span></tt> parameter is actually a <tt class="rst-docutils literal"><span class="pre">datetime</span></tt> object,
+as this function automatically converts that to a <tt class="rst-docutils literal"><span class="pre">date</span></tt>.
+      </p>
+</div></td></tr></table>
+</div>
+<a name="format_datetime"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">format_datetime</span>(<span class="sig-arg">datetime</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">format</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">medium</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">tzinfo</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">locale</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">nl_NL</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Return a date formatted according to the given pattern.</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>dt = datetime(2007, 04, 01, 15, 30)
+<span class="py-prompt">&gt;&gt;&gt; </span>format_datetime(dt, locale=<span class="py-string">'en_US'</span>)
+<span class="py-output">u'Apr 1, 2007 3:30:00 PM'</span></pre>
+<p>For any pattern requiring the display of the time-zone, the third-party
+<tt class="rst-docutils literal"><span class="pre">pytz</span></tt> package is needed to explicitly specify the time-zone:</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">from</span> pytz <span class="py-keyword">import</span> timezone
+<span class="py-prompt">&gt;&gt;&gt; </span>format_datetime(dt, <span class="py-string">'full'</span>, tzinfo=timezone(<span class="py-string">'Europe/Paris'</span>),
+<span class="py-more">... </span>                locale=<span class="py-string">'fr_FR'</span>)
+<span class="py-output">u'dimanche 1 avril 2007 17:30:00 HEC'</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>format_datetime(dt, <span class="py-string">&quot;yyyy.MM.dd G 'at' HH:mm:ss zzz&quot;</span>,
+<span class="py-more">... </span>                tzinfo=timezone(<span class="py-string">'US/Eastern'</span>), locale=<span class="py-string">'en'</span>)
+<span class="py-output">u'2007.04.01 AD at 11:30:00 EDT'</span></pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>datetime</code></strong> - the datetime object; if <code class="link">None</code>, the current date and
+time is used</li>
+        <li><strong class="pname"><code>format</code></strong> - one of &quot;full&quot;, &quot;long&quot;, &quot;medium&quot;, or &quot;short&quot;, or a custom
+date/time pattern</li>
+        <li><strong class="pname"><code>tzinfo</code></strong> - the timezone to apply to the time for display</li>
+        <li><strong class="pname"><code>locale</code></strong> - a <a href="babel.core.Locale-class.html" class="link">Locale</a> object or a locale identifier</li>
+    </ul></dd>
+    <dt>Returns: <code class="link">unicode</code></dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="format_time"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">format_time</span>(<span class="sig-arg">time</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">format</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">medium</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">tzinfo</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">locale</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">nl_NL</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Return a time formatted according to the given pattern.</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>t = time(15, 30)
+<span class="py-prompt">&gt;&gt;&gt; </span>format_time(t, locale=<span class="py-string">'en_US'</span>)
+<span class="py-output">u'3:30:00 PM'</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>format_time(t, format=<span class="py-string">'short'</span>, locale=<span class="py-string">'de_DE'</span>)
+<span class="py-output">u'15:30'</span></pre>
+<p>If you don't want to use the locale default formats, you can specify a
+custom time pattern:</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>format_time(t, <span class="py-string">&quot;hh 'o''clock' a&quot;</span>, locale=<span class="py-string">'en'</span>)
+<span class="py-output">u&quot;03 o'clock PM&quot;</span></pre>
+<p>For any pattern requiring the display of the time-zone, the third-party
+<tt class="rst-docutils literal"><span class="pre">pytz</span></tt> package is needed to explicitly specify the time-zone:</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span><span class="py-keyword">from</span> pytz <span class="py-keyword">import</span> timezone
+<span class="py-prompt">&gt;&gt;&gt; </span>t = datetime(2007, 4, 1, 15, 30)
+<span class="py-prompt">&gt;&gt;&gt; </span>tzinfo = timezone(<span class="py-string">'Europe/Paris'</span>)
+<span class="py-prompt">&gt;&gt;&gt; </span>t = tzinfo.localize(t)
+<span class="py-prompt">&gt;&gt;&gt; </span>format_time(t, format=<span class="py-string">'full'</span>, tzinfo=tzinfo, locale=<span class="py-string">'fr_FR'</span>)
+<span class="py-output">u'15:30:00 HEC'</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>format_time(t, <span class="py-string">&quot;hh 'o''clock' a, zzzz&quot;</span>, tzinfo=timezone(<span class="py-string">'US/Eastern'</span>),
+<span class="py-more">... </span>            locale=<span class="py-string">'en'</span>)
+<span class="py-output">u&quot;09 o'clock AM, Eastern Daylight Time&quot;</span></pre>
+<p>As that example shows, when this function gets passed a
+<tt class="rst-docutils literal"><span class="pre">datetime.datetime</span></tt> value, the actual time in the formatted string is
+adjusted to the timezone specified by the tzinfo parameter. If the
+<tt class="rst-docutils literal"><span class="pre">datetime</span></tt> is &quot;naive&quot; (i.e. it has no associated timezone information),
+it is assumed to be in UTC.</p>
+<p>These timezone calculations are <strong>not</strong> performed if the value is of type
+<tt class="rst-docutils literal"><span class="pre">datetime.time</span></tt>, as without date information there's no way to determine
+what a given time would translate to in a different timezone without
+information about whether daylight savings time is in effect or not. This
+means that time values are left as-is, and the value of the tzinfo
+parameter is only used to display the timezone name if needed:</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>t = time(15, 30)
+<span class="py-prompt">&gt;&gt;&gt; </span>format_time(t, format=<span class="py-string">'full'</span>, tzinfo=timezone(<span class="py-string">'Europe/Paris'</span>),
+<span class="py-more">... </span>            locale=<span class="py-string">'fr_FR'</span>)
+<span class="py-output">u'15:30:00 HEC'</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>format_time(t, format=<span class="py-string">'full'</span>, tzinfo=timezone(<span class="py-string">'US/Eastern'</span>),
+<span class="py-more">... </span>            locale=<span class="py-string">'en_US'</span>)
+<span class="py-output">u'3:30:00 PM ET'</span></pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>time</code></strong> - the <tt class="rst-docutils literal"><span class="pre">time</span></tt> or <tt class="rst-docutils literal"><span class="pre">datetime</span></tt> object; if <code class="link">None</code>, the current
+time in UTC is used</li>
+        <li><strong class="pname"><code>format</code></strong> - one of &quot;full&quot;, &quot;long&quot;, &quot;medium&quot;, or &quot;short&quot;, or a custom
+date/time pattern</li>
+        <li><strong class="pname"><code>tzinfo</code></strong> - the time-zone to apply to the time for display</li>
+        <li><strong class="pname"><code>locale</code></strong> - a <a href="babel.core.Locale-class.html" class="link">Locale</a> object or a locale identifier</li>
+    </ul></dd>
+    <dt>Returns: <code class="link">unicode</code></dt>
+  </dl>
+<div class="fields">      <p><strong>Note:</strong>
+        If the pattern contains date fields, an <code class="link">AttributeError</code> will be
+raised when trying to apply the formatting. This is also true if
+the value of <tt class="rst-docutils literal"><span class="pre">time</span></tt> parameter is actually a <tt class="rst-docutils literal"><span class="pre">datetime</span></tt> object,
+as this function automatically converts that to a <tt class="rst-docutils literal"><span class="pre">time</span></tt>.
+      </p>
+</div></td></tr></table>
+</div>
+<a name="parse_date"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">parse_date</span>(<span class="sig-arg">string</span>,
+        <span class="sig-arg">locale</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">nl_NL</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Parse a date from a string.</p>
+<p>This function uses the date format for the locale as a hint to determine
+the order in which the date fields appear in the string.</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>parse_date(<span class="py-string">'4/1/04'</span>, locale=<span class="py-string">'en_US'</span>)
+<span class="py-output">datetime.date(2004, 4, 1)</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>parse_date(<span class="py-string">'01.04.2004'</span>, locale=<span class="py-string">'de_DE'</span>)
+<span class="py-output">datetime.date(2004, 4, 1)</span></pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>string</code></strong> - the string containing the date</li>
+        <li><strong class="pname"><code>locale</code></strong> - a <a href="babel.core.Locale-class.html" class="link">Locale</a> object or a locale identifier</li>
+    </ul></dd>
+    <dt>Returns: date</dt>
+        <dd>the parsed date</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="parse_datetime"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">parse_datetime</span>(<span class="sig-arg">string</span>,
+        <span class="sig-arg">locale</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">nl_NL</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Parse a date and time from a string.</p>
+<p>This function uses the date and time formats for the locale as a hint to
+determine the order in which the time fields appear in the string.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>string</code></strong> - the string containing the date and time</li>
+        <li><strong class="pname"><code>locale</code></strong> - a <a href="babel.core.Locale-class.html" class="link">Locale</a> object or a locale identifier</li>
+    </ul></dd>
+    <dt>Returns: datetime</dt>
+        <dd>the parsed date/time</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="parse_time"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">parse_time</span>(<span class="sig-arg">string</span>,
+        <span class="sig-arg">locale</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">nl_NL</code><code class="variable-quote">'</code></span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Parse a time from a string.</p>
+<p>This function uses the time format for the locale as a hint to determine
+the order in which the time fields appear in the string.</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>parse_time(<span class="py-string">'15:30:00'</span>, locale=<span class="py-string">'en_US'</span>)
+<span class="py-output">datetime.time(15, 30)</span></pre>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>string</code></strong> - the string containing the time</li>
+        <li><strong class="pname"><code>locale</code></strong> - a <a href="babel.core.Locale-class.html" class="link">Locale</a> object or a locale identifier</li>
+    </ul></dd>
+    <dt>Returns: time</dt>
+        <dd>the parsed time</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="babel-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="../index.html">Documentation Index</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Wed Apr  7 09:54:55 2010
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

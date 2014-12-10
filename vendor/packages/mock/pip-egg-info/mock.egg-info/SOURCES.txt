@@ -1,0 +1,5 @@
+mock.py
+pip-egg-info/mock.egg-info/PKG-INFO
+pip-egg-info/mock.egg-info/SOURCES.txt
+pip-egg-info/mock.egg-info/dependency_links.txt
+pip-egg-info/mock.egg-info/top_level.txt

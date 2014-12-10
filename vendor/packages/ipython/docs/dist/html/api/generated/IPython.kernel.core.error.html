@@ -1,0 +1,210 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.core.error &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.core.fd_redirector" href="IPython.kernel.core.fd_redirector.html" />
+    <link rel="prev" title="kernel.core.display_trap" href="IPython.kernel.core.display_trap.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.fd_redirector.html" title="kernel.core.fd_redirector"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.display_trap.html" title="kernel.core.display_trap"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-core-error">
+<h1>kernel.core.error<a class="headerlink" href="#kernel-core-error" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.core.error">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.core.error</span></tt><a class="headerlink" href="#module-IPython.kernel.core.error" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.kernel.core.error</span></tt>:</p>
+<img src="../../_images/inheritance965bd54b23.png" usemap="#inheritance965bd54b23" class="inheritance"/><map id="inheritance965bd54b23" name="inheritance965bd54b23">
+<area shape="rect" href="#IPython.kernel.core.error.ControllerError" title="core.error.ControllerError" alt="" coords="220,5,399,32"/>
+<area shape="rect" href="#IPython.kernel.core.error.ControllerCreationError" title="core.error.ControllerCreationError" alt="" coords="448,5,683,32"/>
+<area shape="rect" href="#IPython.kernel.core.error.IPythonError" title="core.error.IPythonError" alt="" coords="5,31,171,57"/>
+<area shape="rect" href="#IPython.kernel.core.error.EngineError" title="core.error.EngineError" alt="" coords="229,56,389,83"/>
+<area shape="rect" href="#IPython.kernel.core.error.EngineCreationError" title="core.error.EngineCreationError" alt="" coords="457,56,673,83"/>
+</map>
+<p>error.py</p>
+<p>We declare here a class hierarchy for all exceptions produced by IPython, in
+cases where we don&#8217;t just raise one from the standard library.</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="controllercreationerror">
+<h3><a title="IPython.kernel.core.error.ControllerCreationError" class="reference internal" href="#IPython.kernel.core.error.ControllerCreationError"><tt class="xref docutils literal"><span class="pre">ControllerCreationError</span></tt></a><a class="headerlink" href="#controllercreationerror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.core.error.ControllerCreationError">
+<!--[IPython.kernel.core.error.ControllerCreationError]-->class <tt class="descclassname">IPython.kernel.core.error.</tt><tt class="descname">ControllerCreationError</tt><a class="headerlink" href="#IPython.kernel.core.error.ControllerCreationError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.core.error.ControllerError" class="reference internal" href="#IPython.kernel.core.error.ControllerError"><tt class="xref docutils literal"><span class="pre">IPython.kernel.core.error.ControllerError</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.core.error.ControllerCreationError.__init__">
+<!--[IPython.kernel.core.error.ControllerCreationError.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.core.error.ControllerCreationError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="controllererror">
+<h3><a title="IPython.kernel.core.error.ControllerError" class="reference internal" href="#IPython.kernel.core.error.ControllerError"><tt class="xref docutils literal"><span class="pre">ControllerError</span></tt></a><a class="headerlink" href="#controllererror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.core.error.ControllerError">
+<!--[IPython.kernel.core.error.ControllerError]-->class <tt class="descclassname">IPython.kernel.core.error.</tt><tt class="descname">ControllerError</tt><a class="headerlink" href="#IPython.kernel.core.error.ControllerError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.core.error.IPythonError" class="reference internal" href="#IPython.kernel.core.error.IPythonError"><tt class="xref docutils literal"><span class="pre">IPython.kernel.core.error.IPythonError</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.core.error.ControllerError.__init__">
+<!--[IPython.kernel.core.error.ControllerError.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.core.error.ControllerError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="enginecreationerror">
+<h3><a title="IPython.kernel.core.error.EngineCreationError" class="reference internal" href="#IPython.kernel.core.error.EngineCreationError"><tt class="xref docutils literal"><span class="pre">EngineCreationError</span></tt></a><a class="headerlink" href="#enginecreationerror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.core.error.EngineCreationError">
+<!--[IPython.kernel.core.error.EngineCreationError]-->class <tt class="descclassname">IPython.kernel.core.error.</tt><tt class="descname">EngineCreationError</tt><a class="headerlink" href="#IPython.kernel.core.error.EngineCreationError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.core.error.EngineError" class="reference internal" href="#IPython.kernel.core.error.EngineError"><tt class="xref docutils literal"><span class="pre">IPython.kernel.core.error.EngineError</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.core.error.EngineCreationError.__init__">
+<!--[IPython.kernel.core.error.EngineCreationError.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.core.error.EngineCreationError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="engineerror">
+<h3><a title="IPython.kernel.core.error.EngineError" class="reference internal" href="#IPython.kernel.core.error.EngineError"><tt class="xref docutils literal"><span class="pre">EngineError</span></tt></a><a class="headerlink" href="#engineerror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.core.error.EngineError">
+<!--[IPython.kernel.core.error.EngineError]-->class <tt class="descclassname">IPython.kernel.core.error.</tt><tt class="descname">EngineError</tt><a class="headerlink" href="#IPython.kernel.core.error.EngineError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.core.error.IPythonError" class="reference internal" href="#IPython.kernel.core.error.IPythonError"><tt class="xref docutils literal"><span class="pre">IPython.kernel.core.error.IPythonError</span></tt></a></p>
+<dl class="method">
+<dt id="IPython.kernel.core.error.EngineError.__init__">
+<!--[IPython.kernel.core.error.EngineError.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.core.error.EngineError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ipythonerror">
+<h3><a title="IPython.kernel.core.error.IPythonError" class="reference internal" href="#IPython.kernel.core.error.IPythonError"><tt class="xref docutils literal"><span class="pre">IPythonError</span></tt></a><a class="headerlink" href="#ipythonerror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.core.error.IPythonError">
+<!--[IPython.kernel.core.error.IPythonError]-->class <tt class="descclassname">IPython.kernel.core.error.</tt><tt class="descname">IPythonError</tt><a class="headerlink" href="#IPython.kernel.core.error.IPythonError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
+<p>Base exception that all of our exceptions inherit from.</p>
+<p>This can be raised by code that doesn&#8217;t have any more specific
+information.</p>
+<dl class="method">
+<dt id="IPython.kernel.core.error.IPythonError.__init__">
+<!--[IPython.kernel.core.error.IPythonError.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.core.error.IPythonError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>x.__init__(...) initializes x; see x.__class__.__doc__ for signature</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.core.error</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.core.error">Module: <tt class="docutils literal"><span class="pre">kernel.core.error</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#controllercreationerror"><tt class="docutils literal"><span class="pre">ControllerCreationError</span></tt></a></li>
+<li><a class="reference external" href="#controllererror"><tt class="docutils literal"><span class="pre">ControllerError</span></tt></a></li>
+<li><a class="reference external" href="#enginecreationerror"><tt class="docutils literal"><span class="pre">EngineCreationError</span></tt></a></li>
+<li><a class="reference external" href="#engineerror"><tt class="docutils literal"><span class="pre">EngineError</span></tt></a></li>
+<li><a class="reference external" href="#ipythonerror"><tt class="docutils literal"><span class="pre">IPythonError</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.kernel.core.display_trap.html" title="previous chapter">kernel.core.display_trap</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.core.fd_redirector.html" title="next chapter">kernel.core.fd_redirector</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.core.error.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.fd_redirector.html" title="kernel.core.fd_redirector"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.core.display_trap.html" title="kernel.core.display_trap"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+Metadata-Version: 1.0
+Name: django-threadedcomments
+Version: 0.5.2
+Summary: A simple yet flexible threaded commenting system.
+Home-page: http://code.google.com/p/django-threadedcomments/
+Author: Eric Florenzano
+Author-email: floguy@gmail.com
+License: BSD
+Description: UNKNOWN
+Keywords: django,pinax,comments
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Web Environment
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Topic :: Utilities

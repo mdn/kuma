@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>strdispatch &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="testing.decorator_msim" href="IPython.testing.decorator_msim.html" />
+    <link rel="prev" title="shellglobals" href="IPython.shellglobals.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.decorator_msim.html" title="testing.decorator_msim"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.shellglobals.html" title="shellglobals"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="strdispatch">
+<h1>strdispatch<a class="headerlink" href="#strdispatch" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.strdispatch">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">strdispatch</span></tt><a class="headerlink" href="#module-IPython.strdispatch" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.strdispatch</span></tt>:</p>
+<img src="../../_images/inheritance671e29ab8d.png" usemap="#inheritance671e29ab8d" class="inheritance"/><map id="inheritance671e29ab8d" name="inheritance671e29ab8d">
+<area shape="rect" href="#IPython.strdispatch.StrDispatch" title="IPython.strdispatch.StrDispatch" alt="" coords="7,5,228,32"/>
+</map>
+<p>String dispatch class to match regexps and dispatch commands.</p>
+</div>
+<div class="section" id="id1">
+<h2><a title="IPython.strdispatch.StrDispatch" class="reference internal" href="#IPython.strdispatch.StrDispatch"><tt class="xref docutils literal"><span class="pre">StrDispatch</span></tt></a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="IPython.strdispatch.StrDispatch">
+<!--[IPython.strdispatch.StrDispatch]-->class <tt class="descclassname">IPython.strdispatch.</tt><tt class="descname">StrDispatch</tt><a class="headerlink" href="#IPython.strdispatch.StrDispatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>Dispatch (lookup) a set of strings / regexps for match.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">dis</span> <span class="o">=</span> <span class="n">StrDispatch</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dis</span><span class="o">.</span><span class="n">add_s</span><span class="p">(</span><span class="s">&#39;hei&#39;</span><span class="p">,</span><span class="mf">34</span><span class="p">,</span> <span class="n">priority</span> <span class="o">=</span> <span class="mf">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dis</span><span class="o">.</span><span class="n">add_s</span><span class="p">(</span><span class="s">&#39;hei&#39;</span><span class="p">,</span><span class="mf">123</span><span class="p">,</span> <span class="n">priority</span> <span class="o">=</span> <span class="mf">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dis</span><span class="o">.</span><span class="n">add_re</span><span class="p">(</span><span class="s">&#39;h.i&#39;</span><span class="p">,</span> <span class="mf">686</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="nb">list</span><span class="p">(</span><span class="n">dis</span><span class="o">.</span><span class="n">flat_matches</span><span class="p">(</span><span class="s">&#39;hei&#39;</span><span class="p">))</span>
+<span class="go">[123, 34, 686]</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="IPython.strdispatch.StrDispatch.__init__">
+<!--[IPython.strdispatch.StrDispatch.__init__]--><tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.strdispatch.StrDispatch.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.strdispatch.StrDispatch.add_re">
+<!--[IPython.strdispatch.StrDispatch.add_re]--><tt class="descname">add_re</tt><big>(</big><em>regex</em>, <em>obj</em>, <em>priority=0</em><big>)</big><a class="headerlink" href="#IPython.strdispatch.StrDispatch.add_re" title="Permalink to this definition">¶</a></dt>
+<dd>Adds a target regexp for dispatching</dd></dl>
+
+<dl class="method">
+<dt id="IPython.strdispatch.StrDispatch.add_s">
+<!--[IPython.strdispatch.StrDispatch.add_s]--><tt class="descname">add_s</tt><big>(</big><em>s</em>, <em>obj</em>, <em>priority=0</em><big>)</big><a class="headerlink" href="#IPython.strdispatch.StrDispatch.add_s" title="Permalink to this definition">¶</a></dt>
+<dd>Adds a target &#8216;string&#8217; for dispatching</dd></dl>
+
+<dl class="method">
+<dt id="IPython.strdispatch.StrDispatch.dispatch">
+<!--[IPython.strdispatch.StrDispatch.dispatch]--><tt class="descname">dispatch</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#IPython.strdispatch.StrDispatch.dispatch" title="Permalink to this definition">¶</a></dt>
+<dd>Get a seq of Commandchain objects that match key</dd></dl>
+
+<dl class="method">
+<dt id="IPython.strdispatch.StrDispatch.flat_matches">
+<!--[IPython.strdispatch.StrDispatch.flat_matches]--><tt class="descname">flat_matches</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#IPython.strdispatch.StrDispatch.flat_matches" title="Permalink to this definition">¶</a></dt>
+<dd>Yield all &#8216;value&#8217; targets, without priority</dd></dl>
+
+<dl class="method">
+<dt id="IPython.strdispatch.StrDispatch.s_matches">
+<!--[IPython.strdispatch.StrDispatch.s_matches]--><tt class="descname">s_matches</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#IPython.strdispatch.StrDispatch.s_matches" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">strdispatch</a><ul>
+<li><a class="reference external" href="#module-IPython.strdispatch">Module: <tt class="docutils literal"><span class="pre">strdispatch</span></tt></a></li>
+<li><a class="reference external" href="#id1"><tt class="docutils literal"><span class="pre">StrDispatch</span></tt></a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.shellglobals.html" title="previous chapter">shellglobals</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.testing.decorator_msim.html" title="next chapter">testing.decorator_msim</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.strdispatch.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.testing.decorator_msim.html" title="testing.decorator_msim"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.shellglobals.html" title="shellglobals"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+history
+=======
+
+Module: :mod:`history`
+----------------------
+Inheritance diagram for ``IPython.history``:
+
+.. inheritance-diagram:: IPython.history 
+   :parts: 3
+
+.. automodule:: IPython.history
+
+.. currentmodule:: IPython.history
+
+Class
+-----
+
+:class:`ShadowHist`
+-------------------
+
+
+.. autoclass:: ShadowHist
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+Functions
+---------
+
+
+.. autofunction:: IPython.history.init_ipython
+
+
+.. autofunction:: IPython.history.magic_hist
+
+
+.. autofunction:: IPython.history.magic_history
+
+
+.. autofunction:: IPython.history.rep_f
+

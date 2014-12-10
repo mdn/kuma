@@ -1,0 +1,11 @@
+include ChangeLog
+include COPYING
+include DEPENDS
+include bin/*
+include examples/*
+include elisp/*
+include man/*
+recursive-include doc *.txt *.html
+recursive-include test *.py *.txt *.txt2 *.dot *.sh
+include test/input/similar* noext
+include test/input/noext

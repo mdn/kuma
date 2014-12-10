@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="generator" content="Docutils 0.5: http://docutils.sourceforge.net/">
+<title>Babel: Date Formatting</title>
+<link rel="stylesheet" href="common/style/edgewall.css" type="text/css">
+</head>
+<body>
+<div class="document" id="date-formatting">
+    <div id="navigation">
+      <span class="projinfo">Babel 0.9.5</span>
+      <a href="index.html">Documentation Index</a>
+    </div>
+<h1 class="title">Date Formatting</h1>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="auto-toc simple">
+<li><a class="reference internal" href="#pattern-syntax" id="id1">1   Pattern Syntax</a><ul class="auto-toc">
+<li><a class="reference internal" href="#date-fields" id="id2">1.1   Date Fields</a></li>
+<li><a class="reference internal" href="#time-fields" id="id3">1.2   Time Fields</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#time-zone-support" id="id4">2   Time-zone Support</a><ul class="auto-toc">
+<li><a class="reference internal" href="#localized-time-zone-names" id="id5">2.1   Localized Time-zone Names</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#parsing-dates" id="id6">3   Parsing Dates</a></li>
+</ul>
+</div>
+<p>When working with date and time information in Python, you commonly use the
+classes <tt class="docutils literal"><span class="pre">date</span></tt>, <tt class="docutils literal"><span class="pre">datetime</span></tt> and/or <tt class="docutils literal"><span class="pre">time</span></tt> from the <a class="reference external" href="http://docs.python.org/lib/module-datetime.html">datetime</a> package.
+Babel provides functions for locale-specific formatting of those objects in its
+<tt class="docutils literal"><span class="pre">dates</span></tt> module:</p>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span><span class="p">,</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">time</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">babel.dates</span> <span class="kn">import</span> <span class="n">format_date</span><span class="p">,</span> <span class="n">format_datetime</span><span class="p">,</span> <span class="n">format_time</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">date</span><span class="p">(</span><span class="mi">2007</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">format_date</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">'en'</span><span class="p">)</span>
+<span class="go">u'Apr 1, 2007'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">format_date</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">'de_DE'</span><span class="p">)</span>
+<span class="go">u'01.04.2007'</span>
+</pre></div>
+<p>As this example demonstrates, Babel will automatically choose a date format
+that is appropriate for the requested locale.</p>
+<p>The <tt class="docutils literal"><span class="pre">format_*()</span></tt> functions also accept an optional <tt class="docutils literal"><span class="pre">format</span></tt> argument, which
+allows you to choose between one of four format variations:</p>
+<blockquote>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">short</span></tt>,</li>
+<li><tt class="docutils literal"><span class="pre">medium</span></tt> (the default),</li>
+<li><tt class="docutils literal"><span class="pre">long</span></tt>, and</li>
+<li><tt class="docutils literal"><span class="pre">full</span></tt>.</li>
+</ul>
+</blockquote>
+<p>For example:</p>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">format_date</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">'short'</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">'en'</span><span class="p">)</span>
+<span class="go">u'4/1/07'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">format_date</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">'long'</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">'en'</span><span class="p">)</span>
+<span class="go">u'April 1, 2007'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">format_date</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">'full'</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">'en'</span><span class="p">)</span>
+<span class="go">u'Sunday, April 1, 2007'</span>
+</pre></div>
+<div class="section" id="pattern-syntax">
+<h1>1   Pattern Syntax</h1>
+<p>While Babel makes it simple to use the appropriate date/time format for a given
+locale, you can also force it to use custom patterns. Note that Babel uses
+different patterns for specifying number and date formats compared to the
+Python equivalents (such as <tt class="docutils literal"><span class="pre">time.strftime()</span></tt>), which have mostly been
+inherited from C and POSIX. The patterns used in Babel are based on the
+<a class="reference external" href="http://unicode.org/reports/tr35/#Date_Format_Patterns">Locale Data Markup Language specification</a> (LDML), which defines them as
+follows:</p>
+<blockquote>
+<p>A date/time pattern is a string of characters, where specific strings of
+characters are replaced with date and time data from a calendar when formatting
+or used to generate data for a calendar when parsing. […]</p>
+<p>Characters may be used multiple times. For example, if <tt class="docutils literal"><span class="pre">y</span></tt> is used for the
+year, <tt class="docutils literal"><span class="pre">yy</span></tt> might produce "99", whereas <tt class="docutils literal"><span class="pre">yyyy</span></tt> produces "1999". For most
+numerical fields, the number of characters specifies the field width. For
+example, if <tt class="docutils literal"><span class="pre">h</span></tt> is the hour, <tt class="docutils literal"><span class="pre">h</span></tt> might produce "5", but <tt class="docutils literal"><span class="pre">hh</span></tt> produces
+"05". For some characters, the count specifies whether an abbreviated or full
+form should be used […]</p>
+<p>Two single quotes represent a literal single quote, either inside or outside
+single quotes. Text within single quotes is not interpreted in any way (except
+for two adjacent single quotes).</p>
+</blockquote>
+<p>For example:</p>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">date</span><span class="p">(</span><span class="mi">2007</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">format_date</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s">"EEE, MMM d, ''yy"</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">'en'</span><span class="p">)</span>
+<span class="go">u"Sun, Apr 1, '07"</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">format_date</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s">"EEEE, d.M.yyyy"</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">'de'</span><span class="p">)</span>
+<span class="go">u'Sonntag, 1.4.2007'</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">format_time</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="s">"hh 'o''clock' a"</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">'en'</span><span class="p">)</span>
+<span class="go">u"03 o'clock PM"</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">format_time</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="s">'H:mm a'</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">'de'</span><span class="p">)</span>
+<span class="go">u'15:30 nachm.'</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2007</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">format_datetime</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="s">"yyyyy.MMMM.dd GGG hh:mm a"</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">'en'</span><span class="p">)</span>
+<span class="go">u'02007.April.01 AD 03:30 PM'</span>
+</pre></div>
+<p>The syntax for custom datetime format patterns is described in detail in the
+the <a class="reference external" href="http://unicode.org/reports/tr35/#Date_Format_Patterns">Locale Data Markup Language specification</a>. The following table is just a
+relatively brief overview.</p>
+<blockquote>
+</blockquote>
+<div class="section" id="date-fields">
+<h2>1.1   Date Fields</h2>
+<blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="14%">
+<col width="11%">
+<col width="76%">
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Field</th>
+<th class="head">Symbol</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Era</td>
+<td><tt class="docutils literal"><span class="pre">G</span></tt></td>
+<td>Replaced with the era string for the current date. One
+to three letters for the abbreviated form, four
+lettersfor the long form, five for the narrow form</td>
+</tr>
+<tr><td rowspan="3">Year</td>
+<td><tt class="docutils literal"><span class="pre">y</span></tt></td>
+<td>Replaced by the year. Normally the length specifies
+the padding, but for two letters it also specifies the
+maximum length.</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">Y</span></tt></td>
+<td>Same as <tt class="docutils literal"><span class="pre">y</span></tt> but uses the ISO year-week calendar.</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">u</span></tt></td>
+<td>??</td>
+</tr>
+<tr><td rowspan="2">Quarter</td>
+<td><tt class="docutils literal"><span class="pre">Q</span></tt></td>
+<td>Use one or two for the numerical quarter, three for
+the abbreviation, or four for the full name.</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">q</span></tt></td>
+<td>Use one or two for the numerical quarter, three for
+the abbreviation, or four for the full name.</td>
+</tr>
+<tr><td rowspan="2">Month</td>
+<td><tt class="docutils literal"><span class="pre">M</span></tt></td>
+<td>Use one or two for the numerical month, three for the
+abbreviation, or four for the full name, or five for
+the narrow name.</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">L</span></tt></td>
+<td>Use one or two for the numerical month, three for the
+abbreviation, or four for the full name, or 5 for the
+narrow name.</td>
+</tr>
+<tr><td rowspan="2">Week</td>
+<td><tt class="docutils literal"><span class="pre">w</span></tt></td>
+<td>Week of year.</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">W</span></tt></td>
+<td>Week of month.</td>
+</tr>
+<tr><td rowspan="4">Day</td>
+<td><tt class="docutils literal"><span class="pre">d</span></tt></td>
+<td>Day of month.</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">D</span></tt></td>
+<td>Day of year.</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">F</span></tt></td>
+<td>Day of week in month.</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">g</span></tt></td>
+<td>??</td>
+</tr>
+<tr><td rowspan="3">Week day</td>
+<td><tt class="docutils literal"><span class="pre">E</span></tt></td>
+<td>Day of week. Use one through three letters for the
+short day, or four for the full name, or five for the
+narrow name.</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">e</span></tt></td>
+<td>Local day of week. Same as E except adds a numeric
+value that will depend on the local starting day of
+the week, using one or two letters.</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">c</span></tt></td>
+<td>??</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+</div>
+<div class="section" id="time-fields">
+<h2>1.2   Time Fields</h2>
+<blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="14%">
+<col width="11%">
+<col width="76%">
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Field</th>
+<th class="head">Symbol</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Period</td>
+<td><tt class="docutils literal"><span class="pre">a</span></tt></td>
+<td>AM or PM</td>
+</tr>
+<tr><td rowspan="4">Hour</td>
+<td><tt class="docutils literal"><span class="pre">h</span></tt></td>
+<td>Hour [1-12].</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">H</span></tt></td>
+<td>Hour [0-23].</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">K</span></tt></td>
+<td>Hour [0-11].</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">k</span></tt></td>
+<td>Hour [1-24].</td>
+</tr>
+<tr><td>Minute</td>
+<td><tt class="docutils literal"><span class="pre">m</span></tt></td>
+<td>Use one or two for zero places padding.</td>
+</tr>
+<tr><td rowspan="3">Second</td>
+<td><tt class="docutils literal"><span class="pre">s</span></tt></td>
+<td>Use one or two for zero places padding.</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">S</span></tt></td>
+<td>Fractional second, rounds to the count of letters.</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">A</span></tt></td>
+<td>Milliseconds in day.</td>
+</tr>
+<tr><td rowspan="4">Timezone</td>
+<td><tt class="docutils literal"><span class="pre">z</span></tt></td>
+<td>Use one to three letters for the short timezone or
+four for the full name.</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">Z</span></tt></td>
+<td>Use one to three letters for RFC 822, four letters for
+GMT format.</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">v</span></tt></td>
+<td>Use one letter for short wall (generic) time, four for
+long wall time.</td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">V</span></tt></td>
+<td>Same as <tt class="docutils literal"><span class="pre">z</span></tt>, except that timezone abbreviations
+should be used regardless of whether they are in
+common use by the locale.</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+</div>
+</div>
+<div class="section" id="time-zone-support">
+<h1>2   Time-zone Support</h1>
+<p>Many of the verbose time formats include the time-zone, but time-zone
+information is not by default available for the Python <tt class="docutils literal"><span class="pre">datetime</span></tt> and
+<tt class="docutils literal"><span class="pre">time</span></tt> objects. The standard library includes only the abstract <tt class="docutils literal"><span class="pre">tzinfo</span></tt>
+class, which you need appropriate implementations for to actually use in your
+application. Babel includes a <tt class="docutils literal"><span class="pre">tzinfo</span></tt> implementation for UTC (Universal
+Time).</p>
+<p>For real time-zone support, it is strongly recommended that you use the
+third-party package <a class="reference external" href="http://pytz.sourceforge.net/">pytz</a>, which includes the definitions of practically all
+of the time-zones used on the world, as well as important functions for
+reliably converting from UTC to local time, and vice versa:</p>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">time</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pytz</span> <span class="kn">import</span> <span class="n">timezone</span><span class="p">,</span> <span class="n">utc</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="mi">2007</span><span class="p">,</span> <span class="mo">04</span><span class="p">,</span> <span class="mo">01</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">utc</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">eastern</span> <span class="o">=</span> <span class="n">timezone</span><span class="p">(</span><span class="s">'US/Eastern'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">format_datetime</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="s">'H:mm Z'</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">eastern</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">'en_US'</span><span class="p">)</span>
+<span class="go">u'11:30 -0400'</span>
+</pre></div>
+<p>The recommended approach to deal with different time-zones in a Python
+application is to always use UTC internally, and only convert from/to the users
+time-zone when accepting user input and displaying date/time data, respectively.
+You can use Babel together with <tt class="docutils literal"><span class="pre">pytz</span></tt> to apply a time-zone to any
+<tt class="docutils literal"><span class="pre">datetime</span></tt> or <tt class="docutils literal"><span class="pre">time</span></tt> object for display, leaving the original information
+unchanged:</p>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">british</span> <span class="o">=</span> <span class="n">timezone</span><span class="p">(</span><span class="s">'Europe/London'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">format_datetime</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="s">'H:mm zzzz'</span><span class="p">,</span> <span class="n">tzinfo</span><span class="o">=</span><span class="n">british</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="s">'en_US'</span><span class="p">)</span>
+<span class="go">u'16:30 British Summer Time'</span>
+</pre></div>
+<p>Here, the given UTC time is adjusted to the "Europe/London" time-zone, and
+daylight savings time is taken into account. Daylight savings time is also
+applied to <tt class="docutils literal"><span class="pre">format_time</span></tt>, but because the actual date is unknown in that
+case, the current day is assumed to determine whether DST or standard time
+should be used.</p>
+<blockquote>
+</blockquote>
+<div class="section" id="localized-time-zone-names">
+<h2>2.1   Localized Time-zone Names</h2>
+<p>While the <tt class="docutils literal"><span class="pre">Locale</span></tt> class provides access to various locale display names
+related to time-zones, the process of building a localized name of a time-zone
+is actually quite complicated. Babel implements it in separately usable
+functions in the <tt class="docutils literal"><span class="pre">babel.dates</span></tt> module, most importantly the
+<tt class="docutils literal"><span class="pre">get_timezone_name</span></tt> function:</p>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pytz</span> <span class="kn">import</span> <span class="n">timezone</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">babel</span> <span class="kn">import</span> <span class="n">Locale</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">babel.dates</span> <span class="kn">import</span> <span class="n">get_timezone_name</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tz</span> <span class="o">=</span> <span class="n">timezone</span><span class="p">(</span><span class="s">'Europe/Berlin'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get_timezone_name</span><span class="p">(</span><span class="n">tz</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="n">Locale</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s">'pt_PT'</span><span class="p">))</span>
+<span class="go">u'Hor\xe1rio Alemanha'</span>
+</pre></div>
+<p>You can pass the function either a <tt class="docutils literal"><span class="pre">datetime.tzinfo</span></tt> object, or a
+<tt class="docutils literal"><span class="pre">datetime.date</span></tt> or <tt class="docutils literal"><span class="pre">datetime.datetime</span></tt> object. If you pass an actual date,
+the function will be able to take daylight savings time into account. If you
+pass just the time-zone, Babel does not know whether daylight savings time is
+in effect, so it uses a generic representation, which is useful for example to
+display a list of time-zones to the user.</p>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dt</span> <span class="o">=</span> <span class="n">tz</span><span class="o">.</span><span class="n">localize</span><span class="p">(</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2007</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get_timezone_name</span><span class="p">(</span><span class="n">dt</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="n">Locale</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s">'de_DE'</span><span class="p">))</span>
+<span class="go">u'Mitteleurop\xe4ische Sommerzeit'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get_timezone_name</span><span class="p">(</span><span class="n">tz</span><span class="p">,</span> <span class="n">locale</span><span class="o">=</span><span class="n">Locale</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s">'de_DE'</span><span class="p">))</span>
+<span class="go">u'Deutschland'</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="parsing-dates">
+<h1>3   Parsing Dates</h1>
+<p>Babel can also parse date and time information in a locale-sensitive manner:</p>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">babel.dates</span> <span class="kn">import</span> <span class="n">parse_date</span><span class="p">,</span> <span class="n">parse_datetime</span><span class="p">,</span> <span class="n">parse_time</span>
+</pre></div>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p class="last">Date/time parsing is not properly implemented yet</p>
+</div>
+</div>
+    <div id="footer">
+      Visit the Babel open source project at
+      <a href="http://babel.edgewall.org/">http://babel.edgewall.org/</a>
+    </div>
+  </div>
+</body>
+</html>

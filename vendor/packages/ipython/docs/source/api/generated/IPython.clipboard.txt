@@ -1,0 +1,23 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+clipboard
+=========
+
+Module: :mod:`clipboard`
+------------------------
+.. automodule:: IPython.clipboard
+
+.. currentmodule:: IPython.clipboard
+
+Functions
+---------
+
+
+.. autofunction:: IPython.clipboard.osx_clipboard_get
+
+
+.. autofunction:: IPython.clipboard.tkinter_clipboard_get
+
+
+.. autofunction:: IPython.clipboard.win32_clipboard_get
+

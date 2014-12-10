@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ipmaker &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="ipstruct" href="IPython.ipstruct.html" />
+    <link rel="prev" title="iplib" href="IPython.iplib.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.ipstruct.html" title="ipstruct"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.iplib.html" title="iplib"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="ipmaker">
+<h1>ipmaker<a class="headerlink" href="#ipmaker" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.ipmaker">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">ipmaker</span></tt><a class="headerlink" href="#module-IPython.ipmaker" title="Permalink to this headline">¶</a></h2>
+<p>IPython &#8211; An enhanced Interactive Python</p>
+<p>Requires Python 2.1 or better.</p>
+<p>This file contains the main make_IPython() starter function.</p>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.ipmaker.force_import">
+<!--[IPython.ipmaker.force_import]--><tt class="descclassname">IPython.ipmaker.</tt><tt class="descname">force_import</tt><big>(</big><em>modname</em>, <em>force_reload=False</em><big>)</big><a class="headerlink" href="#IPython.ipmaker.force_import" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPython.ipmaker.make_IPython">
+<!--[IPython.ipmaker.make_IPython]--><tt class="descclassname">IPython.ipmaker.</tt><tt class="descname">make_IPython</tt><big>(</big><em>argv=None</em>, <em>user_ns=None</em>, <em>user_global_ns=None</em>, <em>debug=1</em>, <em>rc_override=None</em>, <em>shell_class=&lt;class 'IPython.iplib.InteractiveShell'&gt;</em>, <em>embedded=False</em>, <em>**kw</em><big>)</big><a class="headerlink" href="#IPython.ipmaker.make_IPython" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a dump of IPython into a single function.</p>
+<p>Later it will have to be broken up in a sensible manner.</p>
+<p>Arguments:</p>
+<ul class="simple">
+<li>argv: a list similar to sys.argv[1:].  It should NOT contain the desired</li>
+</ul>
+<p>script name, b/c DPyGetOpt strips the first argument only for the real
+sys.argv.</p>
+<ul class="simple">
+<li>user_ns: a dict to be used as the user&#8217;s namespace.</li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">ipmaker</a><ul>
+<li><a class="reference external" href="#module-IPython.ipmaker">Module: <tt class="docutils literal"><span class="pre">ipmaker</span></tt></a></li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.iplib.html" title="previous chapter">iplib</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.ipstruct.html" title="next chapter">ipstruct</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.ipmaker.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.ipstruct.html" title="ipstruct"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.iplib.html" title="iplib"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

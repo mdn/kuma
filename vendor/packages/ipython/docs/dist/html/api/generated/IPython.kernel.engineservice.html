@@ -1,0 +1,732 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.engineservice &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.error" href="IPython.kernel.error.html" />
+    <link rel="prev" title="kernel.enginefc" href="IPython.kernel.enginefc.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.error.html" title="kernel.error"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.enginefc.html" title="kernel.enginefc"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-engineservice">
+<h1>kernel.engineservice<a class="headerlink" href="#kernel-engineservice" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.engineservice">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.engineservice</span></tt><a class="headerlink" href="#module-IPython.kernel.engineservice" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.kernel.engineservice</span></tt>:</p>
+<img src="../../_images/inheritanceb05be293e1.png" usemap="#inheritanceb05be293e1" class="inheritance"/><map id="inheritanceb05be293e1" name="inheritanceb05be293e1">
+<area shape="rect" href="#IPython.kernel.engineservice.Command" title="kernel.engineservice.Command" alt="" coords="12,208,151,225"/>
+<area shape="rect" href="#IPython.kernel.engineservice.EngineService" title="kernel.engineservice.EngineService" alt="" coords="197,177,349,193"/>
+<area shape="rect" href="#IPython.kernel.engineservice.IEngineProperties" title="kernel.engineservice.IEngineProperties" alt="" coords="190,51,356,67"/>
+<area shape="rect" href="#IPython.kernel.engineservice.IEngineBase" title="kernel.engineservice.IEngineBase" alt="" coords="409,82,555,99"/>
+<area shape="rect" href="#IPython.kernel.engineservice.IEngineCore" title="kernel.engineservice.IEngineCore" alt="" coords="201,82,345,99"/>
+<area shape="rect" href="#IPython.kernel.engineservice.IEngineSerialized" title="kernel.engineservice.IEngineSerialized" alt="" coords="191,114,355,130"/>
+<area shape="rect" href="#IPython.kernel.engineservice.IEngineThreaded" title="kernel.engineservice.IEngineThreaded" alt="" coords="192,145,354,162"/>
+<area shape="rect" href="#IPython.kernel.engineservice.EngineAPI" title="kernel.engineservice.EngineAPI" alt="" coords="13,66,149,83"/>
+<area shape="rect" href="#IPython.kernel.engineservice.IEngineQueued" title="kernel.engineservice.IEngineQueued" alt="" coords="608,82,764,99"/>
+<area shape="rect" href="#IPython.kernel.engineservice.ThreadedEngineService" title="kernel.engineservice.ThreadedEngineService" alt="" coords="386,177,577,193"/>
+<area shape="rect" href="#IPython.kernel.engineservice.StrictDict" title="kernel.engineservice.StrictDict" alt="" coords="14,35,148,51"/>
+<area shape="rect" href="#IPython.kernel.engineservice.QueuedEngine" title="kernel.engineservice.QueuedEngine" alt="" coords="4,3,158,20"/>
+</map>
+<p>A Twisted Service Representation of the IPython core.</p>
+<p>The IPython Core exposed to the network is called the Engine.  Its
+representation in Twisted in the EngineService.  Interfaces and adapters
+are used to abstract out the details of the actual network protocol used.
+The EngineService is an Engine that knows nothing about the actual protocol
+used.</p>
+<p>The EngineService is exposed with various network protocols in modules like:</p>
+<p>enginepb.py
+enginevanilla.py</p>
+<p>As of 12/12/06 the classes in this module have been simplified greatly.  It was 
+felt that we had over-engineered things.  To improve the maintainability of the
+code we have taken out the ICompleteEngine interface and the completeEngine
+method that automatically added methods to engines.</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="command">
+<h3><a title="IPython.kernel.engineservice.Command" class="reference internal" href="#IPython.kernel.engineservice.Command"><tt class="xref docutils literal"><span class="pre">Command</span></tt></a><a class="headerlink" href="#command" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.engineservice.Command">
+<!--[IPython.kernel.engineservice.Command]-->class <tt class="descclassname">IPython.kernel.engineservice.</tt><tt class="descname">Command</tt><big>(</big><em>remoteMethod</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.Command" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>A command object that encapslates queued commands.</p>
+<p>This class basically keeps track of a command that has been queued
+in a QueuedEngine.  It manages the deferreds and hold the method to be called
+and the arguments to that method.</p>
+<dl class="method">
+<dt id="IPython.kernel.engineservice.Command.__init__">
+<!--[IPython.kernel.engineservice.Command.__init__]--><tt class="descname">__init__</tt><big>(</big><em>remoteMethod</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.Command.__init__" title="Permalink to this definition">¶</a></dt>
+<dd>Build a new Command object.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.Command.handleError">
+<!--[IPython.kernel.engineservice.Command.handleError]--><tt class="descname">handleError</tt><big>(</big><em>reason</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.Command.handleError" title="Permalink to this definition">¶</a></dt>
+<dd>When an error has occured, relay it to self.deferred.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.Command.handleResult">
+<!--[IPython.kernel.engineservice.Command.handleResult]--><tt class="descname">handleResult</tt><big>(</big><em>result</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.Command.handleResult" title="Permalink to this definition">¶</a></dt>
+<dd>When the result is ready, relay it to self.deferred.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.Command.setDeferred">
+<!--[IPython.kernel.engineservice.Command.setDeferred]--><tt class="descname">setDeferred</tt><big>(</big><em>d</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.Command.setDeferred" title="Permalink to this definition">¶</a></dt>
+<dd>Sets the deferred attribute of the Command.</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="engineapi">
+<h3><a title="IPython.kernel.engineservice.EngineAPI" class="reference internal" href="#IPython.kernel.engineservice.EngineAPI"><tt class="xref docutils literal"><span class="pre">EngineAPI</span></tt></a><a class="headerlink" href="#engineapi" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.engineservice.EngineAPI">
+<!--[IPython.kernel.engineservice.EngineAPI]-->class <tt class="descclassname">IPython.kernel.engineservice.</tt><tt class="descname">EngineAPI</tt><big>(</big><em>id</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.EngineAPI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>This is the object through which the user can edit the <cite>properties</cite>
+attribute of an Engine.
+The Engine Properties object copies all object in and out of itself.
+See the EngineProperties object for details.</p>
+<dl class="method">
+<dt id="IPython.kernel.engineservice.EngineAPI.__init__">
+<!--[IPython.kernel.engineservice.EngineAPI.__init__]--><tt class="descname">__init__</tt><big>(</big><em>id</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.EngineAPI.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="engineservice">
+<h3><a title="IPython.kernel.engineservice.EngineService" class="reference internal" href="#IPython.kernel.engineservice.EngineService"><tt class="xref docutils literal"><span class="pre">EngineService</span></tt></a><a class="headerlink" href="#engineservice" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.engineservice.EngineService">
+<!--[IPython.kernel.engineservice.EngineService]-->class <tt class="descclassname">IPython.kernel.engineservice.</tt><tt class="descname">EngineService</tt><big>(</big><em>shellClass=&lt;class 'IPython.kernel.core.interpreter.Interpreter'&gt;</em>, <em>mpi=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.EngineService" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt>, <tt class="xref docutils literal"><span class="pre">twisted.application.service.Service</span></tt></p>
+<p>Adapt a IPython shell into a IEngine implementing Twisted Service.</p>
+<dl class="method">
+<dt id="IPython.kernel.engineservice.EngineService.__init__">
+<!--[IPython.kernel.engineservice.EngineService.__init__]--><tt class="descname">__init__</tt><big>(</big><em>shellClass=&lt;class 'IPython.kernel.core.interpreter.Interpreter'&gt;</em>, <em>mpi=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.EngineService.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an EngineService.</p>
+<p>shellClass: something that implements IInterpreter or core1
+mpi:        an mpi module that has rank and size attributes</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.EngineService.addIDToResult">
+<!--[IPython.kernel.engineservice.EngineService.addIDToResult]--><tt class="descname">addIDToResult</tt><big>(</big><em>result</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.EngineService.addIDToResult" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.EngineService.clear_properties">
+<!--[IPython.kernel.engineservice.EngineService.clear_properties]--><tt class="descname">clear_properties</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.EngineService.clear_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.EngineService.del_properties">
+<!--[IPython.kernel.engineservice.EngineService.del_properties]--><tt class="descname">del_properties</tt><big>(</big><em>keys</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.EngineService.del_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.EngineService.execute">
+<!--[IPython.kernel.engineservice.EngineService.execute]--><tt class="descname">execute</tt><big>(</big><em>lines</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.EngineService.execute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.EngineService.executeAndRaise">
+<!--[IPython.kernel.engineservice.EngineService.executeAndRaise]--><tt class="descname">executeAndRaise</tt><big>(</big><em>msg</em>, <em>callable</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.EngineService.executeAndRaise" title="Permalink to this definition">¶</a></dt>
+<dd>Call a method of self.shell and wrap any exception.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.EngineService.get_properties">
+<!--[IPython.kernel.engineservice.EngineService.get_properties]--><tt class="descname">get_properties</tt><big>(</big><em>keys=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.EngineService.get_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.EngineService.get_result">
+<!--[IPython.kernel.engineservice.EngineService.get_result]--><tt class="descname">get_result</tt><big>(</big><em>i=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.EngineService.get_result" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.EngineService.has_properties">
+<!--[IPython.kernel.engineservice.EngineService.has_properties]--><tt class="descname">has_properties</tt><big>(</big><em>keys</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.EngineService.has_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.kernel.engineservice.EngineService.id">
+<!--[IPython.kernel.engineservice.EngineService.id]--><tt class="descname">id</tt><a class="headerlink" href="#IPython.kernel.engineservice.EngineService.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.EngineService.keys">
+<!--[IPython.kernel.engineservice.EngineService.keys]--><tt class="descname">keys</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.EngineService.keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of variables names in the users top level namespace.</p>
+<p>This used to return a dict of all the keys/repr(values) in the 
+user&#8217;s namespace.  This was too much info for the ControllerService
+to handle so it is now just a list of keys.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.EngineService.kill">
+<!--[IPython.kernel.engineservice.EngineService.kill]--><tt class="descname">kill</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.EngineService.kill" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.EngineService.pull">
+<!--[IPython.kernel.engineservice.EngineService.pull]--><tt class="descname">pull</tt><big>(</big><em>keys</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.EngineService.pull" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.EngineService.pull_function">
+<!--[IPython.kernel.engineservice.EngineService.pull_function]--><tt class="descname">pull_function</tt><big>(</big><em>keys</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.EngineService.pull_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.EngineService.pull_serialized">
+<!--[IPython.kernel.engineservice.EngineService.pull_serialized]--><tt class="descname">pull_serialized</tt><big>(</big><em>keys</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.EngineService.pull_serialized" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.EngineService.push">
+<!--[IPython.kernel.engineservice.EngineService.push]--><tt class="descname">push</tt><big>(</big><em>namespace</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.EngineService.push" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.EngineService.push_function">
+<!--[IPython.kernel.engineservice.EngineService.push_function]--><tt class="descname">push_function</tt><big>(</big><em>namespace</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.EngineService.push_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.EngineService.push_serialized">
+<!--[IPython.kernel.engineservice.EngineService.push_serialized]--><tt class="descname">push_serialized</tt><big>(</big><em>sNamespace</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.EngineService.push_serialized" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.EngineService.reset">
+<!--[IPython.kernel.engineservice.EngineService.reset]--><tt class="descname">reset</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.EngineService.reset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.EngineService.set_properties">
+<!--[IPython.kernel.engineservice.EngineService.set_properties]--><tt class="descname">set_properties</tt><big>(</big><em>properties</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.EngineService.set_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ienginebase">
+<h3><a title="IPython.kernel.engineservice.IEngineBase" class="reference internal" href="#IPython.kernel.engineservice.IEngineBase"><tt class="xref docutils literal"><span class="pre">IEngineBase</span></tt></a><a class="headerlink" href="#ienginebase" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.engineservice.IEngineBase">
+<!--[IPython.kernel.engineservice.IEngineBase]-->class <tt class="descclassname">IPython.kernel.engineservice.</tt><tt class="descname">IEngineBase</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.IEngineBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.engineservice.IEngineCore" class="reference internal" href="#IPython.kernel.engineservice.IEngineCore"><tt class="xref docutils literal"><span class="pre">IPython.kernel.engineservice.IEngineCore</span></tt></a>, <a title="IPython.kernel.engineservice.IEngineSerialized" class="reference internal" href="#IPython.kernel.engineservice.IEngineSerialized"><tt class="xref docutils literal"><span class="pre">IPython.kernel.engineservice.IEngineSerialized</span></tt></a>, <a title="IPython.kernel.engineservice.IEngineProperties" class="reference internal" href="#IPython.kernel.engineservice.IEngineProperties"><tt class="xref docutils literal"><span class="pre">IPython.kernel.engineservice.IEngineProperties</span></tt></a></p>
+<p>The basic engine interface that EngineService will implement.</p>
+<p>This exists so it is easy to specify adapters that adapt to and from the
+API that the basic EngineService implements.</p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.engineservice.IEngineBase.__init__">
+<!--[IPython.kernel.engineservice.IEngineBase.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.IEngineBase.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ienginecore">
+<h3><a title="IPython.kernel.engineservice.IEngineCore" class="reference internal" href="#IPython.kernel.engineservice.IEngineCore"><tt class="xref docutils literal"><span class="pre">IEngineCore</span></tt></a><a class="headerlink" href="#ienginecore" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.engineservice.IEngineCore">
+<!--[IPython.kernel.engineservice.IEngineCore]-->class <tt class="descclassname">IPython.kernel.engineservice.</tt><tt class="descname">IEngineCore</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.IEngineCore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">zope.interface.Interface</span></tt></p>
+<p>The minimal required interface for the IPython Engine.</p>
+<p>This interface provides a formal specification of the IPython core.
+All these methods should return deferreds regardless of what side of a
+network connection they are on.</p>
+<p>In general, this class simply wraps a shell class and wraps its return
+values as Deferred objects.  If the underlying shell class method raises
+an exception, this class should convert it to a twisted.failure.Failure
+that will be propagated along the Deferred&#8217;s errback chain.</p>
+<p>In addition, Failures are aggressive.  By this, we mean that if a method
+is performing multiple actions (like pulling multiple object) if any
+single one fails, the entire method will fail with that Failure.  It is
+all or nothing.</p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.engineservice.IEngineCore.__init__">
+<!--[IPython.kernel.engineservice.IEngineCore.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.IEngineCore.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="iengineproperties">
+<h3><a title="IPython.kernel.engineservice.IEngineProperties" class="reference internal" href="#IPython.kernel.engineservice.IEngineProperties"><tt class="xref docutils literal"><span class="pre">IEngineProperties</span></tt></a><a class="headerlink" href="#iengineproperties" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.engineservice.IEngineProperties">
+<!--[IPython.kernel.engineservice.IEngineProperties]-->class <tt class="descclassname">IPython.kernel.engineservice.</tt><tt class="descname">IEngineProperties</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.IEngineProperties" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">zope.interface.Interface</span></tt></p>
+<p>Methods for access to the properties object of an Engine</p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.engineservice.IEngineProperties.__init__">
+<!--[IPython.kernel.engineservice.IEngineProperties.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.IEngineProperties.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ienginequeued">
+<h3><a title="IPython.kernel.engineservice.IEngineQueued" class="reference internal" href="#IPython.kernel.engineservice.IEngineQueued"><tt class="xref docutils literal"><span class="pre">IEngineQueued</span></tt></a><a class="headerlink" href="#ienginequeued" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.engineservice.IEngineQueued">
+<!--[IPython.kernel.engineservice.IEngineQueued]-->class <tt class="descclassname">IPython.kernel.engineservice.</tt><tt class="descname">IEngineQueued</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.IEngineQueued" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.engineservice.IEngineBase" class="reference internal" href="#IPython.kernel.engineservice.IEngineBase"><tt class="xref docutils literal"><span class="pre">IPython.kernel.engineservice.IEngineBase</span></tt></a></p>
+<p>Interface for adding a queue to an IEngineBase.</p>
+<p>This interface extends the IEngineBase interface to add methods for managing
+the engine&#8217;s queue.  The implicit details of this interface are that the 
+execution of all methods declared in IEngineBase should appropriately be
+put through a queue before execution.</p>
+<p>All methods should return deferreds.</p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.engineservice.IEngineQueued.__init__">
+<!--[IPython.kernel.engineservice.IEngineQueued.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.IEngineQueued.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="iengineserialized">
+<h3><a title="IPython.kernel.engineservice.IEngineSerialized" class="reference internal" href="#IPython.kernel.engineservice.IEngineSerialized"><tt class="xref docutils literal"><span class="pre">IEngineSerialized</span></tt></a><a class="headerlink" href="#iengineserialized" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.engineservice.IEngineSerialized">
+<!--[IPython.kernel.engineservice.IEngineSerialized]-->class <tt class="descclassname">IPython.kernel.engineservice.</tt><tt class="descname">IEngineSerialized</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.IEngineSerialized" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">zope.interface.Interface</span></tt></p>
+<p>Push/Pull methods that take Serialized objects.</p>
+<p>All methods should return deferreds.</p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.engineservice.IEngineSerialized.__init__">
+<!--[IPython.kernel.engineservice.IEngineSerialized.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.IEngineSerialized.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ienginethreaded">
+<h3><a title="IPython.kernel.engineservice.IEngineThreaded" class="reference internal" href="#IPython.kernel.engineservice.IEngineThreaded"><tt class="xref docutils literal"><span class="pre">IEngineThreaded</span></tt></a><a class="headerlink" href="#ienginethreaded" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.engineservice.IEngineThreaded">
+<!--[IPython.kernel.engineservice.IEngineThreaded]-->class <tt class="descclassname">IPython.kernel.engineservice.</tt><tt class="descname">IEngineThreaded</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.IEngineThreaded" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">zope.interface.Interface</span></tt></p>
+<p>A place holder for threaded commands.</p>
+<p>All methods should return deferreds.</p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.engineservice.IEngineThreaded.__init__">
+<!--[IPython.kernel.engineservice.IEngineThreaded.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.IEngineThreaded.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="queuedengine">
+<h3><a title="IPython.kernel.engineservice.QueuedEngine" class="reference internal" href="#IPython.kernel.engineservice.QueuedEngine"><tt class="xref docutils literal"><span class="pre">QueuedEngine</span></tt></a><a class="headerlink" href="#queuedengine" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.engineservice.QueuedEngine">
+<!--[IPython.kernel.engineservice.QueuedEngine]-->class <tt class="descclassname">IPython.kernel.engineservice.</tt><tt class="descname">QueuedEngine</tt><big>(</big><em>engine</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.QueuedEngine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>Adapt an IEngineBase to an IEngineQueued by wrapping it.</p>
+<p>The resulting object will implement IEngineQueued which extends
+IEngineCore which extends (IEngineBase, IEngineSerialized).</p>
+<p>This seems like the best way of handling it, but I am not sure.  The
+other option is to have the various base interfaces be used like
+mix-in intefaces.  The problem I have with this is adpatation is
+more difficult and complicated because there can be can multiple
+original and final Interfaces.</p>
+<dl class="method">
+<dt id="IPython.kernel.engineservice.QueuedEngine.__init__">
+<!--[IPython.kernel.engineservice.QueuedEngine.__init__]--><tt class="descname">__init__</tt><big>(</big><em>engine</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.QueuedEngine.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a QueuedEngine object from an engine</p>
+<p>engine:       An implementor of IEngineCore and IEngineSerialized
+keepUpToDate: whether to update the remote status when the</p>
+<blockquote>
+queue is empty.  Defaults to False.</blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.QueuedEngine.abortCommand">
+<!--[IPython.kernel.engineservice.QueuedEngine.abortCommand]--><tt class="descname">abortCommand</tt><big>(</big><em>reason</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.QueuedEngine.abortCommand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Abort current command.</p>
+<p>This eats the Failure but first passes it onto the Deferred that the 
+user has.</p>
+<p>It also clear out the queue so subsequence commands don&#8217;t run.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.QueuedEngine.clear_properties">
+<!--[IPython.kernel.engineservice.QueuedEngine.clear_properties]--><tt class="descname">clear_properties</tt><big>(</big><em>this</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.QueuedEngine.clear_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.QueuedEngine.clear_queue">
+<!--[IPython.kernel.engineservice.QueuedEngine.clear_queue]--><tt class="descname">clear_queue</tt><big>(</big><em>msg=''</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.QueuedEngine.clear_queue" title="Permalink to this definition">¶</a></dt>
+<dd>Clear the queue, but doesn&#8217;t cancel the currently running commmand.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.QueuedEngine.del_properties">
+<!--[IPython.kernel.engineservice.QueuedEngine.del_properties]--><tt class="descname">del_properties</tt><big>(</big><em>this</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.QueuedEngine.del_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.QueuedEngine.execute">
+<!--[IPython.kernel.engineservice.QueuedEngine.execute]--><tt class="descname">execute</tt><big>(</big><em>this</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.QueuedEngine.execute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.QueuedEngine.finishCommand">
+<!--[IPython.kernel.engineservice.QueuedEngine.finishCommand]--><tt class="descname">finishCommand</tt><big>(</big><em>result</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.QueuedEngine.finishCommand" title="Permalink to this definition">¶</a></dt>
+<dd>Finish currrent command.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.QueuedEngine.get_properties">
+<!--[IPython.kernel.engineservice.QueuedEngine.get_properties]--><tt class="descname">get_properties</tt><big>(</big><em>this</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.QueuedEngine.get_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.QueuedEngine.get_result">
+<!--[IPython.kernel.engineservice.QueuedEngine.get_result]--><tt class="descname">get_result</tt><big>(</big><em>i=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.QueuedEngine.get_result" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.QueuedEngine.has_properties">
+<!--[IPython.kernel.engineservice.QueuedEngine.has_properties]--><tt class="descname">has_properties</tt><big>(</big><em>this</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.QueuedEngine.has_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.QueuedEngine.keys">
+<!--[IPython.kernel.engineservice.QueuedEngine.keys]--><tt class="descname">keys</tt><big>(</big><em>this</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.QueuedEngine.keys" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.QueuedEngine.kill">
+<!--[IPython.kernel.engineservice.QueuedEngine.kill]--><tt class="descname">kill</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.QueuedEngine.kill" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPython.kernel.engineservice.QueuedEngine.properties">
+<!--[IPython.kernel.engineservice.QueuedEngine.properties]--><tt class="descname">properties</tt><a class="headerlink" href="#IPython.kernel.engineservice.QueuedEngine.properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.QueuedEngine.pull">
+<!--[IPython.kernel.engineservice.QueuedEngine.pull]--><tt class="descname">pull</tt><big>(</big><em>this</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.QueuedEngine.pull" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.QueuedEngine.pull_function">
+<!--[IPython.kernel.engineservice.QueuedEngine.pull_function]--><tt class="descname">pull_function</tt><big>(</big><em>this</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.QueuedEngine.pull_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.QueuedEngine.pull_serialized">
+<!--[IPython.kernel.engineservice.QueuedEngine.pull_serialized]--><tt class="descname">pull_serialized</tt><big>(</big><em>this</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.QueuedEngine.pull_serialized" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.QueuedEngine.push">
+<!--[IPython.kernel.engineservice.QueuedEngine.push]--><tt class="descname">push</tt><big>(</big><em>this</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.QueuedEngine.push" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.QueuedEngine.push_function">
+<!--[IPython.kernel.engineservice.QueuedEngine.push_function]--><tt class="descname">push_function</tt><big>(</big><em>this</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.QueuedEngine.push_function" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.QueuedEngine.push_serialized">
+<!--[IPython.kernel.engineservice.QueuedEngine.push_serialized]--><tt class="descname">push_serialized</tt><big>(</big><em>this</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.QueuedEngine.push_serialized" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.QueuedEngine.queue_status">
+<!--[IPython.kernel.engineservice.QueuedEngine.queue_status]--><tt class="descname">queue_status</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.QueuedEngine.queue_status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.QueuedEngine.register_failure_observer">
+<!--[IPython.kernel.engineservice.QueuedEngine.register_failure_observer]--><tt class="descname">register_failure_observer</tt><big>(</big><em>obs</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.QueuedEngine.register_failure_observer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.QueuedEngine.reset">
+<!--[IPython.kernel.engineservice.QueuedEngine.reset]--><tt class="descname">reset</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.QueuedEngine.reset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.QueuedEngine.runCurrentCommand">
+<!--[IPython.kernel.engineservice.QueuedEngine.runCurrentCommand]--><tt class="descname">runCurrentCommand</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.QueuedEngine.runCurrentCommand" title="Permalink to this definition">¶</a></dt>
+<dd>Run current command.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.QueuedEngine.saveResult">
+<!--[IPython.kernel.engineservice.QueuedEngine.saveResult]--><tt class="descname">saveResult</tt><big>(</big><em>result</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.QueuedEngine.saveResult" title="Permalink to this definition">¶</a></dt>
+<dd>Put the result in the history.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.QueuedEngine.set_properties">
+<!--[IPython.kernel.engineservice.QueuedEngine.set_properties]--><tt class="descname">set_properties</tt><big>(</big><em>this</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.QueuedEngine.set_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.QueuedEngine.submitCommand">
+<!--[IPython.kernel.engineservice.QueuedEngine.submitCommand]--><tt class="descname">submitCommand</tt><big>(</big><em>cmd</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.QueuedEngine.submitCommand" title="Permalink to this definition">¶</a></dt>
+<dd>Submit command to queue.</dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.QueuedEngine.unregister_failure_observer">
+<!--[IPython.kernel.engineservice.QueuedEngine.unregister_failure_observer]--><tt class="descname">unregister_failure_observer</tt><big>(</big><em>obs</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.QueuedEngine.unregister_failure_observer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="strictdict">
+<h3><a title="IPython.kernel.engineservice.StrictDict" class="reference internal" href="#IPython.kernel.engineservice.StrictDict"><tt class="xref docutils literal"><span class="pre">StrictDict</span></tt></a><a class="headerlink" href="#strictdict" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.engineservice.StrictDict">
+<!--[IPython.kernel.engineservice.StrictDict]-->class <tt class="descclassname">IPython.kernel.engineservice.</tt><tt class="descname">StrictDict</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.StrictDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">dict</span></tt></p>
+<p>This is a strict copying dictionary for use as the interface to the 
+properties of an Engine.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Important:</th><td class="field-body">This object copies the values you set to it, and returns copies to you
+when you request them.  The only way to change properties os explicitly
+through the setitem and getitem of the dictionary interface.</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Example:</dt>
+<dd><div class="first highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">e</span> <span class="o">=</span> <span class="n">get_engine</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1</span><span class="p">,</span><span class="mf">2</span><span class="p">,</span><span class="mf">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">e</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s">&#39;L&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">L</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">L</span> <span class="o">==</span> <span class="n">e</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s">&#39;L&#39;</span><span class="p">]</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">L</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">99</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">L</span> <span class="o">==</span> <span class="n">e</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s">&#39;L&#39;</span><span class="p">]</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>Note that getitem copies, so calls to methods of objects do not affect
+the properties, as seen here:</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">e</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="mf">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mf">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">e</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="mf">1</span><span class="p">]</span>
+<span class="go">[0, 1]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">e</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="mf">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">e</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="mf">1</span><span class="p">]</span>
+<span class="go">[0, 1]</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl class="method">
+<dt id="IPython.kernel.engineservice.StrictDict.__init__">
+<!--[IPython.kernel.engineservice.StrictDict.__init__]--><tt class="descname">__init__</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.StrictDict.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.StrictDict.clear">
+<!--[IPython.kernel.engineservice.StrictDict.clear]--><tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.StrictDict.clear" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.StrictDict.pop">
+<!--[IPython.kernel.engineservice.StrictDict.pop]--><tt class="descname">pop</tt><big>(</big><em>key</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.StrictDict.pop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.StrictDict.popitem">
+<!--[IPython.kernel.engineservice.StrictDict.popitem]--><tt class="descname">popitem</tt><big>(</big><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.StrictDict.popitem" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.StrictDict.subDict">
+<!--[IPython.kernel.engineservice.StrictDict.subDict]--><tt class="descname">subDict</tt><big>(</big><em>*keys</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.StrictDict.subDict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.StrictDict.update">
+<!--[IPython.kernel.engineservice.StrictDict.update]--><tt class="descname">update</tt><big>(</big><em>dikt</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.StrictDict.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="threadedengineservice">
+<h3><a title="IPython.kernel.engineservice.ThreadedEngineService" class="reference internal" href="#IPython.kernel.engineservice.ThreadedEngineService"><tt class="xref docutils literal"><span class="pre">ThreadedEngineService</span></tt></a><a class="headerlink" href="#threadedengineservice" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.engineservice.ThreadedEngineService">
+<!--[IPython.kernel.engineservice.ThreadedEngineService]-->class <tt class="descclassname">IPython.kernel.engineservice.</tt><tt class="descname">ThreadedEngineService</tt><big>(</big><em>shellClass=&lt;class 'IPython.kernel.core.interpreter.Interpreter'&gt;</em>, <em>mpi=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.ThreadedEngineService" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a title="IPython.kernel.engineservice.EngineService" class="reference internal" href="#IPython.kernel.engineservice.EngineService"><tt class="xref docutils literal"><span class="pre">IPython.kernel.engineservice.EngineService</span></tt></a></p>
+<p>An EngineService subclass that defers execute commands to a separate 
+thread.</p>
+<p>ThreadedEngineService uses twisted.internet.threads.deferToThread to 
+defer execute requests to a separate thread. GUI frontends may want to 
+use ThreadedEngineService as the engine in an 
+IPython.frontend.frontendbase.FrontEndBase subclass to prevent
+block execution from blocking the GUI thread.</p>
+<dl class="method">
+<dt id="IPython.kernel.engineservice.ThreadedEngineService.__init__">
+<!--[IPython.kernel.engineservice.ThreadedEngineService.__init__]--><tt class="descname">__init__</tt><big>(</big><em>shellClass=&lt;class 'IPython.kernel.core.interpreter.Interpreter'&gt;</em>, <em>mpi=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.ThreadedEngineService.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.ThreadedEngineService.execute">
+<!--[IPython.kernel.engineservice.ThreadedEngineService.execute]--><tt class="descname">execute</tt><big>(</big><em>lines</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.ThreadedEngineService.execute" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPython.kernel.engineservice.ThreadedEngineService.wrapped_execute">
+<!--[IPython.kernel.engineservice.ThreadedEngineService.wrapped_execute]--><tt class="descname">wrapped_execute</tt><big>(</big><em>msg</em>, <em>lines</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.ThreadedEngineService.wrapped_execute" title="Permalink to this definition">¶</a></dt>
+<dd>Wrap self.shell.execute to add extra information to tracebacks</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPython.kernel.engineservice.drop_engine">
+<!--[IPython.kernel.engineservice.drop_engine]--><tt class="descclassname">IPython.kernel.engineservice.</tt><tt class="descname">drop_engine</tt><big>(</big><em>id</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.drop_engine" title="Permalink to this definition">¶</a></dt>
+<dd>remove an engine</dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.engineservice.get_engine">
+<!--[IPython.kernel.engineservice.get_engine]--><tt class="descclassname">IPython.kernel.engineservice.</tt><tt class="descname">get_engine</tt><big>(</big><em>id</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.get_engine" title="Permalink to this definition">¶</a></dt>
+<dd>Get the Engine API object, whcih currently just provides the properties 
+object, by ID</dd></dl>
+
+<dl class="function">
+<dt id="IPython.kernel.engineservice.queue">
+<!--[IPython.kernel.engineservice.queue]--><tt class="descclassname">IPython.kernel.engineservice.</tt><tt class="descname">queue</tt><big>(</big><em>methodToQueue</em><big>)</big><a class="headerlink" href="#IPython.kernel.engineservice.queue" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.engineservice</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.engineservice">Module: <tt class="docutils literal"><span class="pre">kernel.engineservice</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#command"><tt class="docutils literal"><span class="pre">Command</span></tt></a></li>
+<li><a class="reference external" href="#engineapi"><tt class="docutils literal"><span class="pre">EngineAPI</span></tt></a></li>
+<li><a class="reference external" href="#engineservice"><tt class="docutils literal"><span class="pre">EngineService</span></tt></a></li>
+<li><a class="reference external" href="#ienginebase"><tt class="docutils literal"><span class="pre">IEngineBase</span></tt></a></li>
+<li><a class="reference external" href="#ienginecore"><tt class="docutils literal"><span class="pre">IEngineCore</span></tt></a></li>
+<li><a class="reference external" href="#iengineproperties"><tt class="docutils literal"><span class="pre">IEngineProperties</span></tt></a></li>
+<li><a class="reference external" href="#ienginequeued"><tt class="docutils literal"><span class="pre">IEngineQueued</span></tt></a></li>
+<li><a class="reference external" href="#iengineserialized"><tt class="docutils literal"><span class="pre">IEngineSerialized</span></tt></a></li>
+<li><a class="reference external" href="#ienginethreaded"><tt class="docutils literal"><span class="pre">IEngineThreaded</span></tt></a></li>
+<li><a class="reference external" href="#queuedengine"><tt class="docutils literal"><span class="pre">QueuedEngine</span></tt></a></li>
+<li><a class="reference external" href="#strictdict"><tt class="docutils literal"><span class="pre">StrictDict</span></tt></a></li>
+<li><a class="reference external" href="#threadedengineservice"><tt class="docutils literal"><span class="pre">ThreadedEngineService</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.kernel.enginefc.html" title="previous chapter">kernel.enginefc</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.error.html" title="next chapter">kernel.error</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.engineservice.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.error.html" title="kernel.error"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.enginefc.html" title="kernel.enginefc"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+include AUTHORS
+include Changelog
+include FAQ
+include INSTALL
+include LICENSE
+include MANIFEST.in
+include README
+include README.rst
+include THANKS
+include TODO
+include setup.cfg
+recursive-include bin *
+recursive-include contrib *
+recursive-include locale *
+recursive-include djcelery *.py
+recursive-include djcelery/templates *
+recursive-include docs *
+recursive-include examples *
+recursive-include tests *
+recursive-include requirements *.txt
+prune bin/*.pyc
+prune tests/*.pyc
+prune docs/*.pyc
+prune contrib/*.pyc
+prune djcelery/*.pyc
+prune docs/.build
+prune examples/*.pyc

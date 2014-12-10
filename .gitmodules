@@ -1,9 +1,183 @@
-[submodule "vendor"]
-	path = vendor
-	url = git://github.com/mozilla/kuma-lib.git
 [submodule "kumascript"]
 	path = kumascript
 	url = git://github.com/mozilla/kumascript.git
+[submodule "vendor/src/basket-client"]
+	path = vendor/src/basket-client
+	url = git://github.com/mozilla/basket-client.git
+[submodule "vendor/src/bleach"]
+	path = vendor/src/bleach
+	url = git://github.com/lmorchard/bleach.git
+[submodule "vendor/src/check"]
+	path = vendor/src/check
+	url = git://github.com/jbalogh/check.git
+[submodule "vendor/src/commonware"]
+	path = vendor/src/commonware
+	url = git://github.com/jsocol/commonware.git
+[submodule "vendor/src/django"]
+	path = vendor/src/django
+	url = git://github.com/django/django.git
+[submodule "vendor/src/django-allauth"]
+	path = vendor/src/django-allauth
+	url = git://github.com/pennersr/django-allauth.git
+[submodule "vendor/src/django-appconf"]
+	path = vendor/src/django-appconf
+	url = git://github.com/jezdez/django-appconf.git
+[submodule "vendor/src/django-authority"]
+	path = vendor/src/django-authority
+	url = git://github.com/jsocol/django-authority.git
+[submodule "vendor/src/django-badger"]
+	path = vendor/src/django-badger
+	url = git://github.com/mozilla/django-badger.git
+[submodule "vendor/src/django-browserid"]
+	path = vendor/src/django-browserid
+	url = git://github.com/mozilla/django-browserid.git
+[submodule "vendor/src/django-cache-machine"]
+	path = vendor/src/django-cache-machine
+	url = git://github.com/jbalogh/django-cache-machine.git
+[submodule "vendor/src/django-constance"]
+	path = vendor/src/django-constance
+	url = git://github.com/comoga/django-constance.git
+[submodule "vendor/src/django-cronjobs"]
+	path = vendor/src/django-cronjobs
+	url = git://github.com/jsocol/django-cronjobs.git
+[submodule "vendor/src/django-csp"]
+	path = vendor/src/django-csp
+	url = git://github.com/mozilla/django-csp.git
+[submodule "vendor/src/django-debug-cache-panel"]
+	path = vendor/src/django-debug-cache-panel
+	url = git://github.com/jbalogh/django-debug-cache-panel.git
+[submodule "vendor/src/django-extensions"]
+	path = vendor/src/django-extensions
+	url = git://github.com/django-extensions/django-extensions.git
+[submodule "vendor/src/django-grappelli"]
+	path = vendor/src/django-grappelli
+	url = git://github.com/sehmaschine/django-grappelli.git
+[submodule "vendor/src/django-memcached-hashring"]
+	path = vendor/src/django-memcached-hashring
+	url = git://github.com/jezdez/django-memcached-hashring.git
+[submodule "vendor/src/django-mobility"]
+	path = vendor/src/django-mobility
+	url = git://github.com/jbalogh/django-mobility.git
+[submodule "vendor/src/django-mozilla-product-details"]
+	path = vendor/src/django-mozilla-product-details
+	url = git://github.com/fwenzel/django-mozilla-product-details.git
+[submodule "vendor/src/django-multidb-router"]
+	path = vendor/src/django-multidb-router
+	url = git://github.com/jbalogh/django-multidb-router.git
+[submodule "vendor/src/django-nose"]
+	path = vendor/src/django-nose
+	url = git://github.com/django-nose/django-nose.git
+[submodule "vendor/src/django-recaptcha"]
+	path = vendor/src/django-recaptcha
+	url = git://github.com/praekelt/django-recaptcha.git
+[submodule "vendor/src/django-rest-framework"]
+	path = vendor/src/django-rest-framework
+	url = git://github.com/tomchristie/django-rest-framework.git
+[submodule "vendor/src/django-session-csrf"]
+	path = vendor/src/django-session-csrf
+	url = git://github.com/mozilla/django-session-csrf.git
+[submodule "vendor/src/django-smuggler"]
+	path = vendor/src/django-smuggler
+	url = git://github.com/semente/django-smuggler.git
+[submodule "vendor/src/django-soapbox"]
+	path = vendor/src/django-soapbox
+	url = git://github.com/ubernostrum/django-soapbox.git
+[submodule "vendor/src/django-statici18n"]
+	path = vendor/src/django-statici18n
+	url = git://github.com/zyegfryed/django-statici18n.git
+[submodule "vendor/src/django-statsd"]
+	path = vendor/src/django-statsd
+	url = git://github.com/andymckay/django-statsd.git
+[submodule "vendor/src/django-teamwork"]
+	path = vendor/src/django-teamwork
+	url = git://github.com/lmorchard/django-teamwork.git
+[submodule "vendor/src/django-tidings"]
+	path = vendor/src/django-tidings
+	url = git://github.com/erikrose/django-tidings.git
+[submodule "vendor/src/django-timezones"]
+	path = vendor/src/django-timezones
+	url = git://github.com/brosner/django-timezones.git
+[submodule "vendor/src/django-waffle"]
+	path = vendor/src/django-waffle
+	url = git://github.com/jsocol/django-waffle.git
+[submodule "vendor/src/elasticsearch-py"]
+	path = vendor/src/elasticsearch-py
+	url = git://github.com/elasticsearch/elasticsearch-py.git
+[submodule "vendor/src/elasticutils"]
+	path = vendor/src/elasticutils
+	url = git://github.com/mozilla/elasticutils.git
+[submodule "vendor/src/funfactory"]
+	path = vendor/src/funfactory
+	url = git://github.com/mozilla/funfactory.git
+[submodule "vendor/src/hash_ring"]
+	path = vendor/src/hash_ring
+	url = git://github.com/Doist/hash_ring.git
+[submodule "vendor/src/jingo"]
+	path = vendor/src/jingo
+	url = git://github.com/jbalogh/jingo.git
+[submodule "vendor/src/jingo-minify"]
+	path = vendor/src/jingo-minify
+	url = git://github.com/jsocol/jingo-minify.git
+[submodule "vendor/src/librabbitmq"]
+	path = vendor/src/librabbitmq
+	url = git://github.com/celery/librabbitmq.git
+[submodule "vendor/src/nuggets"]
+	path = vendor/src/nuggets
+	url = git://github.com/mozilla/nuggets.git
+[submodule "vendor/src/oauthlib"]
+	path = vendor/src/oauthlib
+	url = git://github.com/idan/oauthlib.git
+[submodule "vendor/src/py-wikimarkup"]
+	path = vendor/src/py-wikimarkup
+	url = git://github.com/pcraciunoiu/py-wikimarkup.git
+[submodule "vendor/src/pystatsd"]
+	path = vendor/src/pystatsd
+	url = git://github.com/jsocol/pystatsd.git
+[submodule "vendor/src/python-magic"]
+	path = vendor/src/python-magic
+	url = git://github.com/ahupp/python-magic.git
+[submodule "vendor/src/python-memcached"]
+	path = vendor/src/python-memcached
+	url = git://github.com/linsomniac/python-memcached.git
+[submodule "vendor/src/python-openid"]
+	path = vendor/src/python-openid
+	url = git://github.com/openid/python-openid.git
+[submodule "vendor/src/pytidylib"]
+	path = vendor/src/pytidylib
+	url = git://github.com/countergram/pytidylib.git
+[submodule "vendor/src/raven-python"]
+	path = vendor/src/raven-python
+	url = git://github.com/getsentry/raven-python.git
+[submodule "vendor/src/requests"]
+	path = vendor/src/requests
+	url = git://github.com/kennethreitz/requests.git
+[submodule "vendor/src/requests-oauthlib"]
+	path = vendor/src/requests-oauthlib
+	url = git://github.com/requests/requests-oauthlib.git
+[submodule "vendor/src/schematic"]
+	path = vendor/src/schematic
+	url = git://github.com/jbalogh/schematic.git
+[submodule "vendor/src/simplejson"]
+	path = vendor/src/simplejson
+	url = git://github.com/simplejson/simplejson.git
+[submodule "vendor/src/sphinxapi"]
+	path = vendor/src/sphinxapi
+	url = git://github.com/jsocol/sphinxapi.git
+[submodule "vendor/src/test-utils"]
+	path = vendor/src/test-utils
+	url = git://github.com/jbalogh/test-utils.git
+[submodule "vendor/src/tower"]
+	path = vendor/src/tower
+	url = git://github.com/clouserw/tower.git
+[submodule "vendor/src/tweepy"]
+	path = vendor/src/tweepy
+	url = git://github.com/tweepy/tweepy.git
+[submodule "vendor/src/urllib3"]
+	path = vendor/src/urllib3
+	url = git://github.com/shazow/urllib3.git
+[submodule "vendor/src/urlobject"]
+	path = vendor/src/urlobject
+	url = git://github.com/zacharyvoase/urlobject.git
 [submodule "media/js/libs/ckeditor/source/ckeditor"]
 	path = media/js/libs/ckeditor/source/ckeditor
 	url = git://github.com/ckeditor/ckeditor-dev.git

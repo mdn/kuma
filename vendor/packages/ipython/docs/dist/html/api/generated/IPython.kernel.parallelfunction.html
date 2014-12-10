@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>kernel.parallelfunction &mdash; IPython v0.10 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.10',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="IPython v0.10 documentation" href="../../index.html" />
+    <link rel="up" title="The IPython API" href="../index.html" />
+    <link rel="next" title="kernel.pbutil" href="IPython.kernel.pbutil.html" />
+    <link rel="prev" title="kernel.newserialized" href="IPython.kernel.newserialized.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.pbutil.html" title="kernel.pbutil"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.newserialized.html" title="kernel.newserialized"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="kernel-parallelfunction">
+<h1>kernel.parallelfunction<a class="headerlink" href="#kernel-parallelfunction" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-IPython.kernel.parallelfunction">
+<h2>Module: <tt class="xref docutils literal"><span class="pre">kernel.parallelfunction</span></tt><a class="headerlink" href="#module-IPython.kernel.parallelfunction" title="Permalink to this headline">¶</a></h2>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">IPython.kernel.parallelfunction</span></tt>:</p>
+<img src="../../_images/inheritance56ccf738fe.png" usemap="#inheritance56ccf738fe" class="inheritance"/><map id="inheritance56ccf738fe" name="inheritance56ccf738fe">
+<area shape="rect" href="#IPython.kernel.parallelfunction.IParallelFunction" title="kernel.parallelfunction.IParallelFunction" alt="" coords="360,5,627,32"/>
+<area shape="rect" href="#IPython.kernel.parallelfunction.ITaskParallelDecorator" title="kernel.parallelfunction.ITaskParallelDecorator" alt="" coords="341,56,645,83"/>
+<area shape="rect" href="#IPython.kernel.parallelfunction.IMultiEngineParallelDecorator" title="kernel.parallelfunction.IMultiEngineParallelDecorator" alt="" coords="319,107,668,133"/>
+<area shape="rect" href="#IPython.kernel.parallelfunction.ParallelFunction" title="kernel.parallelfunction.ParallelFunction" alt="" coords="5,5,269,32"/>
+</map>
+<p>A parallelized function that does scatter/execute/gather.</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="imultiengineparalleldecorator">
+<h3><a title="IPython.kernel.parallelfunction.IMultiEngineParallelDecorator" class="reference internal" href="#IPython.kernel.parallelfunction.IMultiEngineParallelDecorator"><tt class="xref docutils literal"><span class="pre">IMultiEngineParallelDecorator</span></tt></a><a class="headerlink" href="#imultiengineparalleldecorator" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.parallelfunction.IMultiEngineParallelDecorator">
+<!--[IPython.kernel.parallelfunction.IMultiEngineParallelDecorator]-->class <tt class="descclassname">IPython.kernel.parallelfunction.</tt><tt class="descname">IMultiEngineParallelDecorator</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.parallelfunction.IMultiEngineParallelDecorator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">zope.interface.Interface</span></tt></p>
+<p>A decorator that creates a parallel function.</p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.parallelfunction.IMultiEngineParallelDecorator.__init__">
+<!--[IPython.kernel.parallelfunction.IMultiEngineParallelDecorator.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.parallelfunction.IMultiEngineParallelDecorator.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="iparallelfunction">
+<h3><a title="IPython.kernel.parallelfunction.IParallelFunction" class="reference internal" href="#IPython.kernel.parallelfunction.IParallelFunction"><tt class="xref docutils literal"><span class="pre">IParallelFunction</span></tt></a><a class="headerlink" href="#iparallelfunction" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.parallelfunction.IParallelFunction">
+<!--[IPython.kernel.parallelfunction.IParallelFunction]-->class <tt class="descclassname">IPython.kernel.parallelfunction.</tt><tt class="descname">IParallelFunction</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.parallelfunction.IParallelFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">zope.interface.Interface</span></tt></p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.parallelfunction.IParallelFunction.__init__">
+<!--[IPython.kernel.parallelfunction.IParallelFunction.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.parallelfunction.IParallelFunction.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="itaskparalleldecorator">
+<h3><a title="IPython.kernel.parallelfunction.ITaskParallelDecorator" class="reference internal" href="#IPython.kernel.parallelfunction.ITaskParallelDecorator"><tt class="xref docutils literal"><span class="pre">ITaskParallelDecorator</span></tt></a><a class="headerlink" href="#itaskparalleldecorator" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.parallelfunction.ITaskParallelDecorator">
+<!--[IPython.kernel.parallelfunction.ITaskParallelDecorator]-->class <tt class="descclassname">IPython.kernel.parallelfunction.</tt><tt class="descname">ITaskParallelDecorator</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.parallelfunction.ITaskParallelDecorator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">zope.interface.Interface</span></tt></p>
+<p>A decorator that creates a parallel function.</p>
+<dl class="staticmethod">
+<dt id="IPython.kernel.parallelfunction.ITaskParallelDecorator.__init__">
+<!--[IPython.kernel.parallelfunction.ITaskParallelDecorator.__init__]--><em class="property">
+static </em><tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>bases=()</em>, <em>attrs=None</em>, <em>__doc__=None</em>, <em>__module__=None</em><big>)</big><a class="headerlink" href="#IPython.kernel.parallelfunction.ITaskParallelDecorator.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="parallelfunction">
+<h3><a title="IPython.kernel.parallelfunction.ParallelFunction" class="reference internal" href="#IPython.kernel.parallelfunction.ParallelFunction"><tt class="xref docutils literal"><span class="pre">ParallelFunction</span></tt></a><a class="headerlink" href="#parallelfunction" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="IPython.kernel.parallelfunction.ParallelFunction">
+<!--[IPython.kernel.parallelfunction.ParallelFunction]-->class <tt class="descclassname">IPython.kernel.parallelfunction.</tt><tt class="descname">ParallelFunction</tt><big>(</big><em>mapper</em><big>)</big><a class="headerlink" href="#IPython.kernel.parallelfunction.ParallelFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref docutils literal"><span class="pre">object</span></tt></p>
+<p>The implementation of a parallel function.</p>
+<p>A parallel function is similar to Python&#8217;s map function:</p>
+<p>map(func, <a href="#id1"><span class="problematic" id="id2">*</span></a>sequences) -&gt; pfunc(<a href="#id3"><span class="problematic" id="id4">*</span></a>sequences)</p>
+<p>Parallel functions should be created by using the &#64;parallel decorator.</p>
+<dl class="method">
+<dt id="IPython.kernel.parallelfunction.ParallelFunction.__init__">
+<!--[IPython.kernel.parallelfunction.ParallelFunction.__init__]--><tt class="descname">__init__</tt><big>(</big><em>mapper</em><big>)</big><a class="headerlink" href="#IPython.kernel.parallelfunction.ParallelFunction.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a parallel function from an <cite>IMapper</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt>mapper <span class="classifier-delimiter">:</span> <span class="classifier">an <cite>IMapper</cite> implementer.</span></dt>
+<dd><p class="first last">The mapper to use for the parallel function</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="">kernel.parallelfunction</a><ul>
+<li><a class="reference external" href="#module-IPython.kernel.parallelfunction">Module: <tt class="docutils literal"><span class="pre">kernel.parallelfunction</span></tt></a></li>
+<li><a class="reference external" href="#classes">Classes</a><ul>
+<li><a class="reference external" href="#imultiengineparalleldecorator"><tt class="docutils literal"><span class="pre">IMultiEngineParallelDecorator</span></tt></a></li>
+<li><a class="reference external" href="#iparallelfunction"><tt class="docutils literal"><span class="pre">IParallelFunction</span></tt></a></li>
+<li><a class="reference external" href="#itaskparalleldecorator"><tt class="docutils literal"><span class="pre">ITaskParallelDecorator</span></tt></a></li>
+<li><a class="reference external" href="#parallelfunction"><tt class="docutils literal"><span class="pre">ParallelFunction</span></tt></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="IPython.kernel.newserialized.html" title="previous chapter">kernel.newserialized</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="IPython.kernel.pbutil.html" title="next chapter">kernel.pbutil</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/api/generated/IPython.kernel.parallelfunction.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.pbutil.html" title="kernel.pbutil"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IPython.kernel.newserialized.html" title="kernel.newserialized"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">IPython v0.10 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">The IPython API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, The IPython Development Team.
+      Last updated on Aug 04, 2009.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.2.
+    </div>
+  </body>
+</html>

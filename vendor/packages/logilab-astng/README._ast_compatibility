@@ -1,0 +1,42 @@
+XXX deprecated, update by describing the unified tree structure, how we achieve this and remaining differences...
+
+this branch aims to provide compatibility between the `compiler` module and the
+new `_ast` module provided by python >= 2.5.
+
+The problem is that there are several differences between both representations:
+* class names
+* attributes of those classes
+* structure of the tree
+
+So whatever the backend used, astng will return a somewhat compatible tree
+which is a mix of compiler and _ast tree. Hopefully it will
+evolve to stick to the _ast representation, though at this time I want to
+minimize backward incompatibilities, so pylint for instance can work with this
+new representation without too much modifications.
+
+Nodes' class names will still differ, though the provided visitor will map _ast
+class names to compiler class names (e.g. for instance when a `_ast.ClassDef` node
+is visited, the `visit_class` method will be called). This is done to ease
+compatibility with code using earlier astng version.
+
+Attribute names are made compatible, and I've chosen _ast or compiler's name
+by using the most relevant, imo. Those can be found using the `_astng_fields`
+attribute on each node class.
+
+In the same way tree structure is made compatible, using the simplest or the
+more expressive alternative.
+
+The work is not yet finished: XXX insert what's missing here.
+The primary goal is to have test working with python >= 2.5, and then to have
+pylint tests green as well when using the _ast backend.
+
+
+
+Of course all of this is discussable, and I've made choices to have something
+working with the minimal amount of work, both in astng or in client code, even
+if as I said above I would like at some point to be as close as possible to
+the _ast representation.
+
+
+Note: this may be interesting at some point:
+http://lucumr.pocoo.org/cogitations/2008/03/30/high-level-ast-module-for-python

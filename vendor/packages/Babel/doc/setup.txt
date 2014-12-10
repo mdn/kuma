@@ -1,0 +1,342 @@
+.. -*- mode: rst; encoding: utf-8 -*-
+
+================================
+Distutils/Setuptools Integration
+================================
+
+Babel provides commands for integration into ``setup.py`` scripts, based on
+either the ``distutils`` package that is part of the Python standard library,
+or the third-party ``setuptools`` package.
+
+These commands are available by default when Babel has been properly installed,
+and ``setup.py`` is using ``setuptools``. For projects that use plain old
+``distutils``, the commands need to be registered explicitly, for example:
+
+.. code-block:: python
+
+    from distutils.core import setup
+    from babel.messages import frontend as babel
+    
+    setup(
+        ...
+        cmdclass = {'compile_catalog': babel.compile_catalog,
+                    'extract_messages': babel.extract_messages,
+                    'init_catalog': babel.init_catalog,
+                    'update_catalog': babel.update_catalog}
+    )
+
+
+.. contents:: Contents
+   :depth: 2
+.. sectnum::
+
+
+compile_catalog
+===============
+
+The ``compile_catalog`` command is similar to the GNU ``msgfmt`` tool, in that
+it takes a message catalog from a PO file and compiles it to a binary MO file.
+
+If the command has been correctly installed or registered, a project's
+``setup.py`` script should allow you to use the command::
+
+    $ ./setup.py compile_catalog --help
+    Global options:
+      --verbose (-v)  run verbosely (default)
+      --quiet (-q)    run quietly (turns verbosity off)
+      --dry-run (-n)  don't actually do anything
+      --help (-h)     show detailed help message
+    
+    Options for 'compile_catalog' command:
+       ...
+
+Running the command will produce a PO template file::
+
+    $ ./setup.py compile_catalog --directory foobar/locale --locale pt_BR
+    running compile_catalog
+    compiling catalog to to foobar/locale/pt_BR/LC_MESSAGES/messages.mo
+
+
+Options
+-------
+
+The ``compile_catalog`` command accepts the following options:
+
+  +-----------------------------+---------------------------------------------+
+  | Option                      | Description                                 |
+  +=============================+=============================================+
+  | ``--domain``                | domain of the PO file (defaults to          |
+  |                             | lower-cased project name)                   |
+  +-----------------------------+---------------------------------------------+
+  | ``--directory`` (``-d``)    | name of the base directory                  |
+  +-----------------------------+---------------------------------------------+
+  | ``--input-file`` (``-i``)   | name of the input file                      |
+  +-----------------------------+---------------------------------------------+
+  | ``--output-file`` (``-o``)  | name of the output file                     |
+  +-----------------------------+---------------------------------------------+
+  | ``--locale`` (``-l``)       | locale for the new localized string         |
+  +-----------------------------+---------------------------------------------+
+  | ``--use-fuzzy`` (``-f``)    | also include "fuzzy" translations           |
+  +-----------------------------+---------------------------------------------+
+  | ``--statistics``            | print statistics about translations         |
+  +-----------------------------+---------------------------------------------+
+
+If ``directory`` is specified, but ``output-file`` is not, the default filename
+of the output file will be::
+
+    <directory>/<locale>/LC_MESSAGES/<domain>.mo
+
+If neither the ``input_file`` nor the ``locale`` option is set, this command
+looks for all catalog files in the base directory that match the given domain,
+and compiles each of them to MO files in the same directory.
+
+These options can either be specified on the command-line, or in the
+``setup.cfg`` file.
+
+
+extract_messages
+================
+
+The ``extract_messages`` command is comparable to the GNU ``xgettext`` program:
+it can extract localizable messages from a variety of difference source files,
+and generate a PO (portable object) template file from the collected messages.
+
+If the command has been correctly installed or registered, a project's
+``setup.py`` script should allow you to use the command::
+
+    $ ./setup.py extract_messages --help
+    Global options:
+      --verbose (-v)  run verbosely (default)
+      --quiet (-q)    run quietly (turns verbosity off)
+      --dry-run (-n)  don't actually do anything
+      --help (-h)     show detailed help message
+    
+    Options for 'extract_messages' command:
+       ...
+
+Running the command will produce a PO template file::
+
+    $ ./setup.py extract_messages --output-file foobar/locale/messages.pot
+    running extract_messages
+    extracting messages from foobar/__init__.py
+    extracting messages from foobar/core.py
+    ...
+    writing PO template file to foobar/locale/messages.pot
+
+
+Method Mapping
+--------------
+
+The mapping of file patterns to extraction methods (and options) can be
+specified using a configuration file that is pointed to using the
+``--mapping-file`` option shown above. Alternatively, you can configure the
+mapping directly in ``setup.py`` using a keyword argument to the ``setup()``
+function:
+
+.. code-block:: python
+
+    setup(...
+        
+        message_extractors = {
+            'foobar': [
+                ('**.py',                'python', None),
+                ('**/templates/**.html', 'genshi', None),
+                ('**/templates/**.txt',  'genshi', {
+                    'template_class': 'genshi.template:TextTemplate'
+                })
+            ],
+        },
+        
+        ...
+    )
+
+
+Options
+-------
+
+The ``extract_messages`` command accepts the following options:
+
+  +-----------------------------+----------------------------------------------+
+  | Option                      | Description                                  |
+  +=============================+==============================================+
+  | ``--charset``               | charset to use in the output file            |
+  +-----------------------------+----------------------------------------------+
+  | ``--keywords`` (``-k``)     | space-separated list of keywords to look for |
+  |                             | in addition to the defaults                  |
+  +-----------------------------+----------------------------------------------+
+  | ``--no-default-keywords``   | do not include the default keywords          |
+  +-----------------------------+----------------------------------------------+
+  | ``--mapping-file`` (``-F``) | path to the mapping configuration file       |
+  +-----------------------------+----------------------------------------------+
+  | ``--no-location``           | do not include location comments with        |
+  |                             | filename and line number                     |
+  +-----------------------------+----------------------------------------------+
+  | ``--omit-header``           | do not include msgid "" entry in header      |
+  +-----------------------------+----------------------------------------------+
+  | ``--output-file`` (``-o``)  | name of the output file                      |
+  +-----------------------------+----------------------------------------------+
+  | ``--width`` (``-w``)        | set output line width (default 76)           |
+  +-----------------------------+----------------------------------------------+
+  | ``--no-wrap``               | do not break long message lines, longer than |
+  |                             | the output line width, into several lines    |
+  +-----------------------------+----------------------------------------------+
+  | ``--input-dirs``            | directories that should be scanned for       |
+  |                             | messages                                     |
+  +-----------------------------+----------------------------------------------+
+  | ``--sort-output``           | generate sorted output (default False)       |
+  +-----------------------------+----------------------------------------------+
+  | ``--sort-by-file``          | sort output by file location (default False) |
+  +-----------------------------+----------------------------------------------+
+  | ``--msgid-bugs-address``    | set email address for message bug reports    |
+  +-----------------------------+----------------------------------------------+
+  | ``--copyright-holder``      | set copyright holder in output               |
+  +-----------------------------+----------------------------------------------+
+  | ``--add-comments (-c)``     | place comment block with TAG (or those       |
+  |                             | preceding keyword lines) in output file.     |
+  |                             | Separate multiple TAGs with commas(,)        |
+  +-----------------------------+----------------------------------------------+
+
+These options can either be specified on the command-line, or in the
+``setup.cfg`` file. In the latter case, the options above become entries of the
+section ``[extract_messages]``, and the option names are changed to use
+underscore characters instead of dashes, for example:
+
+.. code-block:: ini
+
+    [extract_messages]
+    keywords = _, gettext, ngettext
+    mapping_file = babel.cfg
+    width = 80
+
+This would be equivalent to invoking the command from the command-line as
+follows::
+
+    $ setup.py extract_messages -k _ -k gettext -k ngettext -F mapping.cfg -w 80
+
+Any path names are interpreted relative to the location of the ``setup.py``
+file. For boolean options, use "true" or "false" values.
+
+
+init_catalog
+============
+
+The ``init_catalog`` command is basically equivalent to the GNU ``msginit``
+program: it creates a new translation catalog based on a PO template file (POT).
+
+If the command has been correctly installed or registered, a project's
+``setup.py`` script should allow you to use the command::
+
+    $ ./setup.py init_catalog --help
+    Global options:
+      --verbose (-v)  run verbosely (default)
+      --quiet (-q)    run quietly (turns verbosity off)
+      --dry-run (-n)  don't actually do anything
+      --help (-h)     show detailed help message
+
+    Options for 'init_catalog' command:
+      ...
+
+Running the command will produce a PO file::
+
+    $ ./setup.py init_catalog -l fr -i foobar/locales/messages.pot \
+                             -o foobar/locales/fr/messages.po
+    running init_catalog
+    creating catalog 'foobar/locales/fr/messages.po' based on 'foobar/locales/messages.pot'
+
+
+Options
+-------
+
+The ``init_catalog`` command accepts the following options:
+
+  +-----------------------------+---------------------------------------------+
+  | Option                      | Description                                 |
+  +=============================+=============================================+
+  | ``--domain``                | domain of the PO file (defaults to          |
+  |                             | lower-cased project name)                   |
+  +-----------------------------+---------------------------------------------+
+  | ``--input-file`` (``-i``)   | name of the input file                      |
+  +-----------------------------+---------------------------------------------+
+  | ``--output-dir`` (``-d``)   | name of the output directory                |
+  +-----------------------------+---------------------------------------------+
+  | ``--output-file`` (``-o``)  | name of the output file                     |
+  +-----------------------------+---------------------------------------------+
+  | ``--locale``                | locale for the new localized string         |
+  +-----------------------------+---------------------------------------------+
+
+If ``output-dir`` is specified, but ``output-file`` is not, the default filename
+of the output file will be::
+
+    <output_dir>/<locale>/LC_MESSAGES/<domain>.po
+
+These options can either be specified on the command-line, or in the
+``setup.cfg`` file.
+
+
+update_catalog
+==============
+
+The ``update_catalog`` command is basically equivalent to the GNU ``msgmerge``
+program: it updates an existing translations catalog based on a PO template
+file (POT).
+
+If the command has been correctly installed or registered, a project's
+``setup.py`` script should allow you to use the command::
+
+    $ ./setup.py update_catalog --help
+    Global options:
+      --verbose (-v)  run verbosely (default)
+      --quiet (-q)    run quietly (turns verbosity off)
+      --dry-run (-n)  don't actually do anything
+      --help (-h)     show detailed help message
+
+    Options for 'update_catalog' command:
+      ...
+
+Running the command will update a PO file::
+
+    $ ./setup.py update_catalog -l fr -i foobar/locales/messages.pot \
+                                -o foobar/locales/fr/messages.po
+    running update_catalog
+    updating catalog 'foobar/locales/fr/messages.po' based on 'foobar/locales/messages.pot'
+
+
+Options
+-------
+
+The ``update_catalog`` command accepts the following options:
+
+  +-------------------------------------+-------------------------------------+
+  | Option                              | Description                         |
+  +=====================================+=====================================+
+  | ``--domain``                        | domain of the PO file (defaults to  |
+  |                                     | lower-cased project name)           |
+  +-------------------------------------+-------------------------------------+
+  | ``--input-file`` (``-i``)           | name of the input file              |
+  +-------------------------------------+-------------------------------------+
+  | ``--output-dir`` (``-d``)           | name of the output directory        |
+  +-------------------------------------+-------------------------------------+
+  | ``--output-file`` (``-o``)          | name of the output file             |
+  +-------------------------------------+-------------------------------------+
+  | ``--locale``                        | locale for the new localized string |
+  +-------------------------------------+-------------------------------------+
+  | ``--ignore-obsolete``               | do not include obsolete messages in |
+  |                                     | the output                          |
+  +-------------------------------------+-------------------------------------+
+  | ``--no-fuzzy-matching`` (``-N``)    | do not use fuzzy matching           |
+  +-------------------------------------+-------------------------------------+
+  | ``--previous``                      | keep previous msgids of translated  |
+  |                                     | messages                            |
+  +-------------------------------------+-------------------------------------+
+
+If ``output-dir`` is specified, but ``output-file`` is not, the default filename
+of the output file will be::
+
+    <output_dir>/<locale>/LC_MESSAGES/<domain>.po
+
+If neither the ``input_file`` nor the ``locale`` option is set, this command
+looks for all catalog files in the base directory that match the given domain,
+and updates each of them.
+
+These options can either be specified on the command-line, or in the
+``setup.cfg`` file.
