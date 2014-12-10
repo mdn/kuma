@@ -21,7 +21,6 @@ def update_code(ctx, tag):
         ctx.local("git fetch")
         ctx.local("git checkout -f %s" % tag)
         ctx.local("git submodule sync")
-        ctx.local("cd vendor; git submodule sync; cd ..")
         ctx.local("git submodule update --init --recursive")
 
 

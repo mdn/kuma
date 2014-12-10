@@ -59,13 +59,6 @@ def update_site(debug):
         ]
 
     commands += [
-        (CHDIR, os.path.join(here, 'vendor')),
-        # This seems like a bad idea - it pulls from master, while the web app
-        # itself has a submodule pointing at a specific vendor-lib commit ID
-        (EXEC, GIT_RESET_HARD),
-        (EXEC, GIT_SUBMODULE_SYNC),
-        (EXEC, GIT_SUBMODULE_UPDATE),
-        (CHDIR, here),
         (EXEC, 'python2.6 vendor/src/schematic/schematic migrations/'),
         (EXEC, 'python2.6 manage.py syncdb --noinput'),
 
