@@ -4,7 +4,14 @@ cache: apt
 python:
     - "2.6"
 
-env: FORCE_DB=1 PYTHONPATH=. DJANGO_SETTINGS_MODULE=settings_travis DEBIAN_FRONTEND=noninteractive
+env:
+  global:
+      - FORCE_DB=1
+      - PYTHONPATH=.
+      - DJANGO_SETTINGS_MODULE=settings_travis
+      - DEBIAN_FRONTEND=noninteractive
+      - secure: "BDhiGi2cADI8YC3vcaDW94k1fOb1GmyoANPu1a3T9qPsMDRhpcFAV4zsmu3gMFerv8YYq1Otl0Uq76PyAHXyHKIx3U+VomYXlG2Pb40X/tBseXlPnNbgdvzclf7fWJH9hzxlYSgSaKE5hVn0Gu3sNJM0ZGCdlzg9DMxKqE6xXvs="
+      - secure: "GPCURF5Ww3fvzR8pPK+C8yTgYry/BP9VD6y+4vWUHfxO0a8WlP0+WJqSo+16nPt4+7jf48Y06Q5xLjuUi1Y8ksT4Q/CVNYf42XWFBfRNK1YWz5Ze0ebPN7lEOF5CXxPzPw+h/eK72aq9sRYxJ/7n8DfdCGFR82ms6qG8+vbVADI=“
 
 services:
     - memcached
@@ -32,12 +39,18 @@ install:
     - pip install --no-index --find-links=travis_wheels -r requirements/compiled.txt
     - pip install --find-links=base_wheels -r requirements/prod.txt -r requirements/dev.txt
     - pip install coveralls
+    # JS test requirements
+    - curl -sL https://deb.nodesource.com/setup | sudo bash -
+    - sudo apt-get install -y nodejs
 
 before_script:
     - mysql -e 'create database kuma;'
 
 script:
     - coverage run --include=`pwd`/kuma/*,`pwd`/apps/* manage.py test --noinput -v2 access actioncounters authkeys contentflagging devmo kpi kuma landing sumo
+    - cd tests/ui
+    - npm install intern
+    - node_modules/.bin/intern-runner config=intern-sauce-labs d=developer.allizom.org
 
 after_success:
     - coveralls
