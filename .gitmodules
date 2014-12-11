@@ -178,3 +178,18 @@
 [submodule "vendor/src/urlobject"]
 	path = vendor/src/urlobject
 	url = git://github.com/zacharyvoase/urlobject.git
+[submodule "vendor/src/billiard"]
+	path = vendor/src/billiard
+	url = git://github.com/celery/billiard.git
+[submodule "vendor/src/celery"]
+	path = vendor/src/celery
+	url = git://github.com/celery/celery.git
+[submodule "vendor/src/kombu"]
+	path = vendor/src/kombu
+	url = git://github.com/celery/kombu.git
+[submodule "vendor/src/py-amqp"]
+	path = vendor/src/py-amqp
+	url = git://github.com/celery/py-amqp.git
+[submodule "vendor/src/django-celery"]
+	path = vendor/src/django-celery
+	url = git://github.com/celery/django-celery.git
