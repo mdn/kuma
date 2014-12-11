@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("scayt","da",{btn_about:"Om SCAYT",btn_dictionaries:"Ordbøger",btn_disable:"Deaktivér SCAYT",btn_enable:"Aktivér SCAYT",btn_langs:"Sprog",btn_options:"Indstillinger",text_title:""});

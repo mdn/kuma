@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("elementspath","no",{eleLabel:"Element-sti",eleTitle:"%1 element"});

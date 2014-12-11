@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("removeformat","bg",{toolbar:"Премахване на форматирането"});

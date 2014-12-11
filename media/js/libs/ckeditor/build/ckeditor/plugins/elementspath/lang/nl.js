@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("elementspath","nl",{eleLabel:"Elementenpad",eleTitle:"%1 element"});

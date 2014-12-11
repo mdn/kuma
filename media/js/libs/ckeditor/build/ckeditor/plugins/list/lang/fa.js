@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("list","fa",{bulletedlist:"فهرست نقطه​ای",numberedlist:"فهرست شماره​دار"});

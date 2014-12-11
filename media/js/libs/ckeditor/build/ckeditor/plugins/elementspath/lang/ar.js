@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("elementspath","ar",{eleLabel:"مسار العنصر",eleTitle:"عنصر 1%"});

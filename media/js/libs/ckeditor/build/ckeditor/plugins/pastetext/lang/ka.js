@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("pastetext","ka",{button:"მხოლოდ ტექსტის ჩასმა",title:"მხოლოდ ტექსტის ჩასმა"});

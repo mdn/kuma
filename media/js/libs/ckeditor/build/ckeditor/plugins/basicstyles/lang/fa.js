@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("basicstyles","fa",{bold:"درشت",italic:"خمیده",strike:"خط‌خورده",subscript:"زیرنویس",superscript:"بالانویس",underline:"زیرخط‌دار"});

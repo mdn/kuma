@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("elementspath","fo",{eleLabel:"Slóð til elementir",eleTitle:"%1 element"});

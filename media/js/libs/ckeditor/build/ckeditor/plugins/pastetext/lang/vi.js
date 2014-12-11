@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("pastetext","vi",{button:"Dán theo định dạng văn bản thuần",title:"Dán theo định dạng văn bản thuần"});

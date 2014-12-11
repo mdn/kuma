@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("pastetext","af",{button:"Plak as eenvoudige teks",title:"Plak as eenvoudige teks"});

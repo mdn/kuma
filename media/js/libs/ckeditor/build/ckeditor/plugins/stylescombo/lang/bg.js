@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("stylescombo","bg",{label:"Стилове",panelTitle:"Стилове за форматиране",panelTitle1:"Блокови стилове",panelTitle2:"Вътрешни стилове",panelTitle3:"Обектни стилове"});

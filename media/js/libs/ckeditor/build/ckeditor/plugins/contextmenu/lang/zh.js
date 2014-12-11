@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("contextmenu","zh",{options:"內容功能表選項"});

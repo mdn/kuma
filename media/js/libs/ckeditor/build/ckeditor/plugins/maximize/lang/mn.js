@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("maximize","mn",{maximize:"Дэлгэц дүүргэх",minimize:"Цонхыг багсгаж харуулах"});

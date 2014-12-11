@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("pastetext","ug",{button:"پىچىمى يوق تېكىست سۈپىتىدە چاپلا",title:"پىچىمى يوق تېكىست سۈپىتىدە چاپلا"});

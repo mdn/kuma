@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("maximize","ro",{maximize:"Mărește",minimize:"Micșorează"});

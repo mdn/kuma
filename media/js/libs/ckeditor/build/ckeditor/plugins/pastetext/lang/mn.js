@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("pastetext","mn",{button:"Энгийн бичвэрээр буулгах",title:"Энгийн бичвэрээр буулгах"});

@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("pastefromword","no",{confirmCleanup:"Teksten du limer inn ser ut til å være kopiert fra Word. Vil du renske den før du limer den inn?",error:"Det var ikke mulig å renske den innlimte teksten på grunn av en intern feil",title:"Lim inn fra Word",toolbar:"Lim inn fra Word"});

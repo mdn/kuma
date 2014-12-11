@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("pastetext","tt",{button:"Форматлаусыз текст өстәү",title:"Форматлаусыз текст өстәү"});

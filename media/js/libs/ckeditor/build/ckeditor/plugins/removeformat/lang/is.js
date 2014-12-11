@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("removeformat","is",{toolbar:"Fjarlægja snið"});

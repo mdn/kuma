@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("removeformat","sq",{toolbar:"Largo Formatin"});

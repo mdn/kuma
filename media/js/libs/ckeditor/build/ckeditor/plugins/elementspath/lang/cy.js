@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("elementspath","cy",{eleLabel:"Llwybr elfennau",eleTitle:"Elfen %1"});

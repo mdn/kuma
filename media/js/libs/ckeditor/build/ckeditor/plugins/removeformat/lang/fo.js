@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("removeformat","fo",{toolbar:"Strika sniðgeving"});

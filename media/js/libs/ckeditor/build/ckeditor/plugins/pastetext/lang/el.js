@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("pastetext","el",{button:"Επικόλληση ως απλό κείμενο",title:"Επικόλληση ως απλό κείμενο"});

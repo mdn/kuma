@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("scayt","he",{btn_about:"אודות SCAYT",btn_dictionaries:"מילון",btn_disable:"בטל SCAYT",btn_enable:"אפשר SCAYT",btn_langs:"שפות",btn_options:"אפשרויות",text_title:""});

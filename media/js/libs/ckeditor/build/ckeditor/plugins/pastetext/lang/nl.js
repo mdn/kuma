@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("pastetext","nl",{button:"Plakken als platte tekst",title:"Plakken als platte tekst"});

@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("pastetext","lv",{button:"Ievietot kā vienkāršu tekstu",title:"Ievietot kā vienkāršu tekstu"});

@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("pastetext","cy",{button:"Gludo fel testun plaen",title:"Gludo fel Testun Plaen"});

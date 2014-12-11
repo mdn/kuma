@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("pastetext","ms",{button:"Tampal sebagai text biasa",title:"Tampal sebagai text biasa"});

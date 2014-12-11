@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("removeformat","hr",{toolbar:"Ukloni formatiranje"});
