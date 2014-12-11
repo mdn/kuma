@@ -3,48 +3,44 @@ interface"""
 
 import sys
 
-__version__ = "0.3.1"
-__author__ = "Rune Halvorsen <runefh@gmail.com>"
+VERSION = (0, 3, 3)
+__version__ = ".".join(map(str, VERSION[0:3])) + "".join(VERSION[3:])
+__author__ = "Rune Halvorsen"
+__contact__ = "runefh@gmail.com"
 __homepage__ = "http://bitbucket.org/runeh/anyjson/"
 __docformat__ = "restructuredtext"
 
+# -eof meta-
+
+#: The json implementation object. This is probably not useful to you,
+#: except to get the name of the implementation in use. The name is
+#: available through ``implementation.name``.
 implementation = None
 
-"""
-.. function:: serialize(obj)
+# json.loads does not support buffer() objects,
+# so we load() and StringIO instead, and it won't copy.
+if sys.version_info[0] == 3:
+    from io import StringIO
+else:
+    try:
+        from cStringIO import StringIO  # noqa
+    except ImportError:
+        from StringIO import StringIO   # noqa
 
-    Serialize the object to JSON.
-
-.. function:: deserialize(str)
-
-    Deserialize JSON-encoded object to a Python object.
-
-.. function:: force_implementation(name)
-
-    Load a specific json module. This is useful for testing and not much else
-
-.. attribute:: implementation
-
-    The json implementation object. This is probably not useful to you,
-    except to get the name of the implementation in use. The name is
-    available through `implementation.name`.
-
-.. data:: _modules
-
-    List of known json modules, and the names of their serialize/unserialize
-    methods, as well as the exception they throw. Exception can be either
-    an exception class or a string.
-"""
-_modules = [("yajl", "dumps", TypeError, "loads", ValueError),
-            ("jsonlib2", "write", "WriteError", "read", "ReadError"),
-            ("jsonlib", "write", "WriteError", "read", "ReadError"),
-            ("simplejson", "dumps", TypeError, "loads", ValueError),
-            ("json", "dumps", TypeError, "loads", ValueError),
-            ("django.utils.simplejson", "dumps", TypeError, "loads",ValueError),
-            ("cjson", "encode", "EncodeError", "decode", "DecodeError")
+#: List of known json modules, and the names of their loads/dumps
+#: methods, as well as the exceptions they throw.  Exception can be either
+#: an exception class or a string.
+_modules = [("yajl", "dumps", TypeError, "loads", ValueError, "load"),
+            ("jsonlib2", "write", "WriteError", "read", "ReadError", None),
+            ("jsonlib", "write", "WriteError", "read", "ReadError", None),
+            ("simplejson", "dumps", TypeError, "loads", ValueError, "load"),
+            ("json", "dumps", TypeError, "loads", ValueError, "load"),
+            ("django.utils.simplejson", "dumps", TypeError, "loads", ValueError, "load"),
+            ("cjson", "encode", "EncodeError", "decode", "DecodeError", None)
            ]
 
-_fields = ("modname", "encoder", "encerror", "decoder", "decerror")
+_fields = ("modname", "encoder", "encerror",
+           "decoder", "decerror", "filedecoder")
 
 
 class _JsonImplementation(object):
@@ -63,6 +59,8 @@ class _JsonImplementation(object):
         self.implementation = modinfo["modname"]
         self._encode = getattr(module, modinfo["encoder"])
         self._decode = getattr(module, modinfo["decoder"])
+        fdec = modinfo["filedecoder"]
+        self._filedecode = fdec and getattr(module, fdec)
         self._encode_error = modinfo["encerror"]
         self._decode_error = modinfo["decerror"]
 
@@ -73,7 +71,7 @@ class _JsonImplementation(object):
 
         self.name = modinfo["modname"]
 
-    def __str__(self):
+    def __repr__(self):
         return "<_JsonImplementation instance using %s>" % self.name
 
     def _attempt_load(self, modname):
@@ -82,21 +80,26 @@ class _JsonImplementation(object):
         __import__(modname)
         return sys.modules[modname]
 
-    def serialize(self, data):
+    def dumps(self, data):
         """Serialize the datastructure to json. Returns a string. Raises
         TypeError if the object could not be serialized."""
         try:
             return self._encode(data)
         except self._encode_error, exc:
-            raise TypeError(*exc.args)
+            raise TypeError, TypeError(*exc.args), sys.exc_info()[2]
+    serialize = dumps
 
-    def deserialize(self, s):
+    def loads(self, s):
         """deserialize the string to python data types. Raises
-        ValueError if the string vould not be parsed."""
+        ValueError if the string could not be parsed."""
+        # uses StringIO to support buffer objects.
         try:
+            if self._filedecode and not isinstance(s, basestring):
+                return self._filedecode(StringIO(s))
             return self._decode(s)
         except self._decode_error, exc:
-            raise ValueError(*exc.args)
+            raise ValueError, ValueError(*exc.args), sys.exc_info()[2]
+    deserialize = loads
 
 
 def force_implementation(modname):
@@ -126,7 +129,14 @@ else:
     else:
         raise ImportError("No supported JSON module found")
 
-    serialize = lambda value: implementation.serialize(value)
-    deserialize = lambda value: implementation.deserialize(value)
-    dumps = serialize
-    loads = deserialize
+
+    def loads(value):
+        """Serialize the object to JSON."""
+        return implementation.loads(value)
+    deserialize = loads   # compat
+
+
+    def dumps(value):
+        """Deserialize JSON-encoded object to a Python object."""
+        return implementation.dumps(value)
+    serialize = dumps

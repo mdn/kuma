@@ -8,18 +8,17 @@ South==0.8.2
 ## Formerly vendor/packages
 Babel==0.9.6
 GitPython==0.1.7
-amqplib==0.6.1
-anyjson==0.3.1
+amqp==1.4.6
+anyjson==0.3.3
 beautifulsoup==3.2.1
-billiard==0.3.1
-carrot==0.10.7
-celery==2.5.5
-django-celery==2.5.5
+billiard==3.3.0.19
+celery==3.1.17
+django-celery==3.1.16
 django-threadedcomments==0.5.2
 feedparser==5.1.3
 html5lib==0.90
 jsonpickle==0.3.1
-kombu==2.2.0
+kombu==3.0.24
 lockfile==0.8
 logilab-astng==0.20.1
 logilab-common==0.50.3

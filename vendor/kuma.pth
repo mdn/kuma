@@ -10,10 +10,8 @@ packages/python-dateutil
 packages/pylint
 packages/ipython
 packages/pyflakes
-packages/amqplib
 packages/django-taggit
 packages/anyjson
-packages/carrot
 packages/pyquery
 packages/django-picklefield/src
 packages/setuptools
@@ -22,13 +20,9 @@ packages/logilab-astng
 packages/importlib
 packages/selenium
 packages/mock
-packages/celery
-packages/kombu
 packages/ordereddict
-packages/django-celery
 packages/html5lib/src
 packages/logilab-common
-packages/billiard
 packages/pyparsing
 packages/sqlalchemy
 packages/translate-toolkit
@@ -98,3 +92,8 @@ src/django-allauth
 src/requests-oauthlib
 src/python-openid
 src/oauthlib
+src/billiard
+src/celery
+src/kombu
+src/py-amqp
+src/django-celery
