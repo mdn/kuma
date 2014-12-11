@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("removeformat","hu",{toolbar:"Formázás eltávolítása"});

@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("removeformat","ru",{toolbar:"Убрать форматирование"});

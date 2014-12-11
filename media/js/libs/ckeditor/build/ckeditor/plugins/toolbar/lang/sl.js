@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("toolbar","sl",{toolbarCollapse:"Skrči Orodno Vrstico",toolbarExpand:"Razširi Orodno Vrstico",toolbarGroups:{document:"Document",clipboard:"Clipboard/Undo",editing:"Editing",forms:"Forms",basicstyles:"Basic Styles",paragraph:"Paragraph",links:"Links",insert:"Insert",styles:"Styles",colors:"Colors",tools:"Tools"},toolbars:"Urejevalnik orodne vrstice"});

@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("removeformat","ka",{toolbar:"ფორმატირების მოხსნა"});

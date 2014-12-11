@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("pastetext","ar",{button:"لصق كنص بسيط",title:"لصق كنص بسيط"});

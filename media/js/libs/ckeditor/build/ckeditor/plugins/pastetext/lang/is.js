@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("pastetext","is",{button:"Líma sem ósniðinn texta",title:"Líma sem ósniðinn texta"});

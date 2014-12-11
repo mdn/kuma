@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("pastetext","sk",{button:"Vložiť ako čistý text",title:"Vložiť ako čistý text"});

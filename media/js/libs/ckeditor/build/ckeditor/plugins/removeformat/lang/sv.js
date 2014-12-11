@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("removeformat","sv",{toolbar:"Radera formatering"});

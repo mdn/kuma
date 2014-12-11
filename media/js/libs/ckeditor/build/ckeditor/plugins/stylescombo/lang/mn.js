@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("stylescombo","mn",{label:"Загвар",panelTitle:"Загвар хэлбэржүүлэх",panelTitle1:"Block Styles",panelTitle2:"Inline Styles",panelTitle3:"Object Styles"});

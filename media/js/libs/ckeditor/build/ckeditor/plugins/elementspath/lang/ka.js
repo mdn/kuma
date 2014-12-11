@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("elementspath","ka",{eleLabel:"ელემეტის გზა",eleTitle:"%1 ელემენტი"});

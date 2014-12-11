@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("pastetext","hu",{button:"Beillesztés formázatlan szövegként",title:"Beillesztés formázatlan szövegként"});

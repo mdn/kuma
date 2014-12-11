@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("maximize","sq",{maximize:"Zmadho",minimize:"Zvogëlo"});

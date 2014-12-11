@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("elementspath","pl",{eleLabel:"Ścieżka elementów",eleTitle:"element %1"});

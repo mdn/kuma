@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("scayt","sl",{btn_about:"O storitvi SCAYT",btn_dictionaries:"Slovarji",btn_disable:"Onemogoči SCAYT",btn_enable:"Omogoči SCAYT",btn_langs:"Jeziki",btn_options:"Možnosti",text_title:""});

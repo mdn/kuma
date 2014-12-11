@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("contextmenu","km",{options:"ជម្រើស​ម៉ឺនុយ​បរិបទ"});

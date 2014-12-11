@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("contextmenu","sq",{options:"Mundësitë e Menysë së Kontekstit"});

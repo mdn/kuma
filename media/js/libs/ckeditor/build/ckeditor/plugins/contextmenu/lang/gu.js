@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("contextmenu","gu",{options:"કોન્તેક્ષ્ત્ મેનુના વિકલ્પો"});

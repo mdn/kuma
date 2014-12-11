@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("removeformat","bn",{toolbar:"ফরমেট সরাও"});

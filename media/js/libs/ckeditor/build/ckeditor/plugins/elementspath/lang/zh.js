@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("elementspath","zh",{eleLabel:"元件路徑",eleTitle:"%1 個元件"});

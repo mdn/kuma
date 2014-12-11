@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("pastetext","ro",{button:"Adaugă ca text simplu (Plain Text)",title:"Adaugă ca text simplu (Plain Text)"});
