@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("contextmenu","he",{options:"אפשרויות תפריט ההקשר"});

@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("elementspath","vi",{eleLabel:"Nhãn thành phần",eleTitle:"%1 thành phần"});

@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("stylescombo","nl",{label:"Stijl",panelTitle:"Opmaakstijlen",panelTitle1:"Blok stijlen",panelTitle2:"Inline stijlen",panelTitle3:"Object stijlen"});

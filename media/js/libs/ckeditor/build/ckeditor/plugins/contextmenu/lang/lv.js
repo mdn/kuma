@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("contextmenu","lv",{options:"Uznirstošās izvēlnes uzstādījumi"});

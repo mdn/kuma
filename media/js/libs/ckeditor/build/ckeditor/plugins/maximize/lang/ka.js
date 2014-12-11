@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("maximize","ka",{maximize:"გადიდება",minimize:"დაპატარავება"});

@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("pastetext","sv",{button:"Klistra in som vanlig text",title:"Klistra in som vanlig text"});

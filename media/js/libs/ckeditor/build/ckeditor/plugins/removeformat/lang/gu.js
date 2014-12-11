@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("removeformat","gu",{toolbar:"ફૉર્મટ કાઢવું"});

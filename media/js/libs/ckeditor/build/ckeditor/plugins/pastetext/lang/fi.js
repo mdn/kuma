@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("pastetext","fi",{button:"Liitä tekstinä",title:"Liitä tekstinä"});

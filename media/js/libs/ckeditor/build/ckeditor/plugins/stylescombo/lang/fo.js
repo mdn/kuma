@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("stylescombo","fo",{label:"Typografi",panelTitle:"Formatterings stílir",panelTitle1:"Blokk stílir",panelTitle2:"Inline stílir",panelTitle3:"Object stílir"});

@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("removeformat","cs",{toolbar:"Odstranit formátování"});

@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("pastetext","bs",{button:"Zalijepi kao obièan tekst",title:"Zalijepi kao obièan tekst"});

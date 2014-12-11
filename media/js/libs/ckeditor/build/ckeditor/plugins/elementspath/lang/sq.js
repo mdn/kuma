@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("elementspath","sq",{eleLabel:"Rruga e elementeve",eleTitle:"%1 element"});

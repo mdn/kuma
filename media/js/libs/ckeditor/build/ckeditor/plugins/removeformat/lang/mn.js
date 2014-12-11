@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("removeformat","mn",{toolbar:"Параргафын загварыг авч хаях"});

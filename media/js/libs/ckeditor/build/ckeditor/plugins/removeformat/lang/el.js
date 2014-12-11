@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("removeformat","el",{toolbar:"Εκκαθάριση Μορφοποίησης"});

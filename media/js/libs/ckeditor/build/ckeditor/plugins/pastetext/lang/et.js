@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("pastetext","et",{button:"Asetamine tavalise tekstina",title:"Asetamine tavalise tekstina"});

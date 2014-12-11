@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("basicstyles","mn",{bold:"Тод бүдүүн",italic:"Налуу",strike:"Дундуур нь зураастай болгох",subscript:"Суурь болгох",superscript:"Зэрэг болгох",underline:"Доогуур нь зураастай болгох"});

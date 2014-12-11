@@ -14,5 +14,9 @@ Contents:
    search
 
    development
+   configuration
+   wheels
    localization
+   ckeditor
    tests
+   ui-tests

@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("pastetext","tr",{button:"Düz Metin Olarak Yapıştır",title:"Düz Metin Olarak Yapıştır"});

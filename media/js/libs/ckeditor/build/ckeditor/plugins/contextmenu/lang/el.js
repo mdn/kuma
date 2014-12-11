@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("contextmenu","el",{options:"Επιλογές Αναδυόμενου Μενού"});

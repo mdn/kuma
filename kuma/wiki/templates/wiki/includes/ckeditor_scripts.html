@@ -1,2 +1,20 @@
-<script src="{{ MEDIA_URL }}js/libs/ckeditor/ckeditor.js?build={{ BUILD_ID_JS }}"></script>
-<script src="{{ MEDIA_URL }}js/libs/ckeditor/adapters/jquery.js?build={{ BUILD_ID_JS }}"></script>
+<!-- Production ready CKEditor scripts -->
+<!--
+<script src="{{ MEDIA_URL }}js/libs/ckeditor/build/ckeditor/ckeditor.js?build={{ BUILD_ID_JS }}"></script>
+<script src="{{ MEDIA_URL }}js/libs/ckeditor/build/ckeditor/adapters/jquery.js?build={{ BUILD_ID_JS }}"></script>
+-->
+
+<!-- Development version -->
+<script src="{{ MEDIA_URL }}js/libs/ckeditor/source/ckeditor/ckeditor.js?build={{ BUILD_ID_JS }}"></script>
+<script src="{{ MEDIA_URL }}js/libs/ckeditor/source/ckeditor/adapters/jquery.js?build={{ BUILD_ID_JS }}"></script>
+<script>
+  // Define the path to non-core plugins.
+  (
+    'scayt,wsc,mdn-attachment,mdn-format,mdn-sticky-toolbar,mdn-image-attachment,mdn-link-customization,' +
+    'mdn-link-launch,mdn-redirect,mdn-sample-finder,mdn-sampler,mdn-spell,mdn-syntaxhighlighter,' +
+    'mdn-system-integration,mdn-table-customization,mdn-toggle-block,mdn-wrapstyle,descriptionlist,' +
+    'tablesort,texzilla,youtube'
+  ).split(',').forEach(function(pluginName) {
+    CKEDITOR.plugins.addExternal(pluginName, '{{ MEDIA_URL }}js/libs/ckeditor/source/plugins/' + pluginName + '/');
+  });
+</script>

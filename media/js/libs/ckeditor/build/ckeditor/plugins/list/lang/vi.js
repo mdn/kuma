@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("list","vi",{bulletedlist:"Chèn/Xoá Danh sách không thứ tự",numberedlist:"Chèn/Xoá Danh sách có thứ tự"});

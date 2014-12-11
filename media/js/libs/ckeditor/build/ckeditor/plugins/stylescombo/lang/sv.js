@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("stylescombo","sv",{label:"Anpassad stil",panelTitle:"Formatmallar",panelTitle1:"Blockstil",panelTitle2:"Inbäddad stil",panelTitle3:"Objektets stil"});

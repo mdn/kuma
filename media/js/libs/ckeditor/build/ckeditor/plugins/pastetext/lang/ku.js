@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("pastetext","ku",{button:"لکاندنی وەك دەقی ڕوون",title:"لکاندنی وەك دەقی ڕوون"});

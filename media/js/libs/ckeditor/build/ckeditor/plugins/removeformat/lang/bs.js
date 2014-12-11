@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("removeformat","bs",{toolbar:"Poništi format"});

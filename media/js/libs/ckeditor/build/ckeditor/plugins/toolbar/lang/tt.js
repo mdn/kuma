@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("toolbar","tt",{toolbarCollapse:"Collapse Toolbar",toolbarExpand:"Expand Toolbar",toolbarGroups:{document:"Документ",clipboard:"Алмашу буферы/Кайтару",editing:"Төзәтү",forms:"Формалар",basicstyles:"Төп стильләр",paragraph:"Параграф",links:"Сылталамалар",insert:"Өстәү",styles:"Стильләр",colors:"Төсләр",tools:"Кораллар"},toolbars:"Editor toolbars"});

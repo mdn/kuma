@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("stylescombo","vi",{label:"Kiểu",panelTitle:"Phong cách định dạng",panelTitle1:"Kiểu khối",panelTitle2:"Kiểu trực tiếp",panelTitle3:"Kiểu đối tượng"});

@@ -1,0 +1,1 @@
+﻿CKEDITOR.plugins.setLang("pastetext","th",{button:"วางแบบตัวอักษรธรรมดา",title:"วางแบบตัวอักษรธรรมดา"});
