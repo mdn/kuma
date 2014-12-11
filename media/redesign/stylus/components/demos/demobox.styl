@@ -260,11 +260,14 @@ $demo-preview-width = 434px;
 $demo-preview-height = 325px;
 
 #demobox .demo-preview{
-    padding: 11px 58px 72px;
     margin: 0 auto;
-    background:url("/media/img/demos/bg-mainscreen.png") center top;
-    background-size: contain;
     width: $demo-preview-width;
+    background: #000;
+    border: 4px solid #fff;
+    padding: 0;
+    border-radius: 6px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4), 0px 21px 14px -10px rgba(0, 0, 0, 0.5);
+
     @media $media-query-tablet {
         padding: (11px / 2 ) (58px / 2 ) (72px / 2);
         margin-top: 48px;
@@ -274,6 +277,10 @@ $demo-preview-height = 325px;
     @media $media-query-mobile {
         margin-top: $grid-spacing;
         margin-bottom: $grid-spacing;
+    }
+
+    img.preview {
+        border-radius: 4px;
     }
 }
 

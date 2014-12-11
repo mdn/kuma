@@ -2,6 +2,8 @@
 
 /* edit/remove/hide buttons on demo detail page */
 #demo-manage {
+    margin-bottom: $grid-spacing;
+
     @media $media-query-mobile {
         display: none;
     }
@@ -40,24 +42,27 @@
   font-weight: normal;
 }
 #demo-manage .edit {
-  color: #2f2f2f;
-  background-color: #a5d9f3;
+  background-color: $button-background;
+  color: $button-color;
+
+  &:hover,
+  &:focus,
+  &:active {
+        background-color: $button-background;
+        color: $button-color;
+    }
 }
-#demo-manage .edit:hover,
-#demo-manage .edit:focus,
-#demo-manage .edit:active {
-  color: #000;
-  background-color: #80cdf3;
-}
+
 #demo-manage .remove {
-  color: #2f2f2f;
-  background-color: #f07b7b;
+  background-color: #ea3b28;
+  color: #fff;
 }
 #demo-manage .remove:hover,
 #demo-manage .remove:focus,
 #demo-manage .remove:active,
 #demo-manage button:hover .remove,
 #demo-manage button:focus .remove {
-  color: #000;
-  background-color: #f05b5b;
+  background-color: #ea3b28;
+  color: #fff;
+  text-decoration: underline;
 }

@@ -1,3 +1,6 @@
+@require '../../includes/vars';
+@require '../../includes/mixins';
+
 /* Gallery Head */
 .gallery-head {
   clear: both;
@@ -36,9 +39,7 @@
   top: -2px;
 }
 .section-demos .gallery-head .count {
-  padding-left: 40px;
   margin: 0 20px -3px 0;
-  background: url("/media/img/demos/icn-demoreel.png") 0 0 no-repeat;
   font: normal 22px/1.2 "Bebas Neue", "League Gothic", "Arial Narrow", sans-serif;
   letter-spacing: 2px;
 }
@@ -62,14 +63,9 @@
   color: #fff;
   padding-bottom: 6px;
 }
-.section-demos .gallery-head .sort a:hover,
-.section-demos .gallery-head .sort a:focus,
-.section-demos .gallery-head .sort a:active {
-  color: #f1ed0f;
-}
 .section-demos .gallery-head .sort strong {
   font-weight: normal;
-  color: #f1ed0f;
+  color: $link-color;
   padding-bottom: 6px;
   background: url("/media/img/demos/sort-arrow.png") center bottom no-repeat;
 }
