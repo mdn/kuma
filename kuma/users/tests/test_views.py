@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core.paginator import PageNotAnInteger
 
+from allauth.account.models import EmailAddress
 from allauth.socialaccount.models import SocialAccount, SocialApp
 from allauth.socialaccount.providers import registry
 from allauth.tests import MockedResponse, mocked_response
@@ -20,6 +21,7 @@ from sumo.urlresolvers import reverse
 
 from . import UserTestCase, user, email
 from ..models import UserProfile, UserBan
+from ..signup import SignupForm
 from ..providers.github.provider import KumaGitHubProvider
 
 TESTUSER_PASSWORD = 'testpass'
@@ -754,6 +756,21 @@ class KumaGitHubTests(UserTestCase):
                          {'verified': True,
                           'email': 'octo.cat@github-inc.com',
                           'primary': True})
+
+        unverified_email = 'o.ctocat@gmail.com'
+        data = {
+            'username': 'octocat',
+            'email': SignupForm.other_email_value,  # = use other_email
+            'other_email': unverified_email,
+        }
+        self.assertFalse((EmailAddress.objects.filter(email=unverified_email)
+                                              .exists()))
+        response = self.client.post(self.signup_url, data=data, follow=True)
+        unverified_email_addresses = EmailAddress.objects.filter(email=unverified_email)
+        self.assertTrue(unverified_email_addresses.exists())
+        self.assertEquals(unverified_email_addresses.count(), 1)
+        self.assertTrue(unverified_email_addresses[0].primary)
+        self.assertFalse(unverified_email_addresses[0].verified)
 
     def test_matching_accounts(self):
         testemail = 'octo.cat.III@github-inc.com'

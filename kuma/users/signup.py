@@ -32,6 +32,7 @@ class SignupForm(BaseSignupForm):
 
     def __init__(self, *args, **kwargs):
         super(SignupForm, self).__init__(*args, **kwargs)
+        self.other_email_used = False
         self.fields['username'].error_messages = {
             'required': USERNAME_REQUIRED,
             'min_length': USERNAME_SHORT,
@@ -62,6 +63,9 @@ class SignupForm(BaseSignupForm):
         if cleaned_data.get('email') == self.other_email_value:
             # and set the cleaned data to the cleaned other_email value
             self.cleaned_data['email'] = self.cleaned_data['other_email']
+            # also store the fact of using the other value in an attribute
+            # to be used in the view to check for it
+            self.other_email_used = True
             # then run the usual email clean method again to apply
             # the regular email validation and put the error into the
             # email field specific value
