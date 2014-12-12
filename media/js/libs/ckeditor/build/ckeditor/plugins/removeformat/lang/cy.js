@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("removeformat","cy",{toolbar:"Tynnu Fformat"});

@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("maximize","hu",{maximize:"Teljes méret",minimize:"Kis méret"});

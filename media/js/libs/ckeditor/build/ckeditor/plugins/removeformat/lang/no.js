@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("removeformat","no",{toolbar:"Fjern formatering"});

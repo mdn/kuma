@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("contextmenu","vi",{options:"Tùy chọn menu bổ xung"});

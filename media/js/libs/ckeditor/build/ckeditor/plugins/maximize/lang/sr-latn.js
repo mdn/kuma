@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("maximize","sr-latn",{maximize:"Maximize",minimize:"Minimize"});

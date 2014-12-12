@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("pastetext","pl",{button:"Wklej jako czysty tekst",title:"Wklej jako czysty tekst"});

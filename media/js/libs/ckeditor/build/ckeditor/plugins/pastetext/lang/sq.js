@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("pastetext","sq",{button:"Hidhe si tekst të thjeshtë",title:"Hidhe si Tekst të Thjeshtë"});

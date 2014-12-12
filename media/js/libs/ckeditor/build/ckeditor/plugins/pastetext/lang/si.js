@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("pastetext","si",{button:"සාමාන්‍ය අක්ෂර ලෙස අලවන්න",title:"සාමාන්‍ය අක්ෂර ලෙස අලවන්න"});

@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("basicstyles","uk",{bold:"Жирний",italic:"Курсив",strike:"Закреслений",subscript:"Нижній індекс",superscript:"Верхній індекс",underline:"Підкреслений"});

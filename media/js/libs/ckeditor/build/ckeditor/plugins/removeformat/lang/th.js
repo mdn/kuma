@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("removeformat","th",{toolbar:"ล้างรูปแบบ"});

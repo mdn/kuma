@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("pastetext","lt",{button:"Įdėti kaip gryną tekstą",title:"Įdėti kaip gryną tekstą"});

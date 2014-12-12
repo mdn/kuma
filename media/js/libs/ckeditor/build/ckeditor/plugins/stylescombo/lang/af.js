@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("stylescombo","af",{label:"Styl",panelTitle:"Opmaak style",panelTitle1:"Blok style",panelTitle2:"Inlyn style",panelTitle3:"Objek style"});

@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("contextmenu","tr",{options:"İçerik Menüsü Seçenekleri"});

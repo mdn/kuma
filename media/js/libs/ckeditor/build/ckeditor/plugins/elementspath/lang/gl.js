@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("elementspath","gl",{eleLabel:"Ruta dos elementos",eleTitle:"Elemento %1"});

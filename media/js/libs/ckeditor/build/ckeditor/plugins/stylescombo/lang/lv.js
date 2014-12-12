@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("stylescombo","lv",{label:"Stils",panelTitle:"Formatēšanas stili",panelTitle1:"Bloka stili",panelTitle2:"iekļautie stili",panelTitle3:"Objekta stili"});

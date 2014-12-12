@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("removeformat","fi",{toolbar:"Poista muotoilu"});

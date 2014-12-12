@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("pastetext","uk",{button:"Вставити тільки текст",title:"Вставити тільки текст"});

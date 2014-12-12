@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("pastetext","hi",{button:"पेस्ट (सादा टॅक्स्ट)",title:"पेस्ट (सादा टॅक्स्ट)"});

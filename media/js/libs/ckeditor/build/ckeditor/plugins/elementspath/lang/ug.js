@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("elementspath","ug",{eleLabel:"ئېلېمېنت يولى",eleTitle:"%1 ئېلېمېنت"});

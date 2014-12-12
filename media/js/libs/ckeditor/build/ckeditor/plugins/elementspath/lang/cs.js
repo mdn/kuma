@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("elementspath","cs",{eleLabel:"Cesta objektu",eleTitle:"%1 objekt"});

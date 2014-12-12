@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("elementspath","he",{eleLabel:"עץ האלמנטים",eleTitle:"%1 אלמנט"});

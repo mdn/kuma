@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("pastetext","no",{button:"Lim inn som ren tekst",title:"Lim inn som ren tekst"});

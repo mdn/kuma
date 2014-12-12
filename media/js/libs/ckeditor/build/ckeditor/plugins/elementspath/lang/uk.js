@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("elementspath","uk",{eleLabel:"Шлях",eleTitle:"%1 елемент"});

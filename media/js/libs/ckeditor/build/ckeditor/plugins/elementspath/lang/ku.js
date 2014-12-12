@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("elementspath","ku",{eleLabel:"ڕێڕەوی توخمەکان",eleTitle:"%1 توخم"});

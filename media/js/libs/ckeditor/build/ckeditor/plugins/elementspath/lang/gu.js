@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("elementspath","gu",{eleLabel:"એલીમેન્ટ્સ નો ",eleTitle:"એલીમેન્ટ %1"});

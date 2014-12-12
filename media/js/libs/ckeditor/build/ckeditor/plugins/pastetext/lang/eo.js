@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("pastetext","eo",{button:"Interglui kiel platan tekston",title:"Interglui kiel platan tekston"});

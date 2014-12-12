@@ -1,1 +1,0 @@
-﻿CKEDITOR.plugins.setLang("contextmenu","fi",{options:"Pikavalikon ominaisuudet"});
