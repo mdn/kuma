@@ -63,6 +63,19 @@ cd ../..
 
 echo ""
 echo "Copying extra plugins..."
+
+rm -rf plugins/descriptionlist
+git clone https://github.com/Reinmar/ckeditor-plugin-descriptionlist.git plugins/descriptionlist
+rm -rf plugins/descriptionlist/.git
+
+rm -rf plugins/scayt
+git clone https://github.com/WebSpellChecker/ckeditor-plugin-scayt.git plugins/scayt
+rm -rf plugins/scayt/.git
+
+rm -rf plugins/wsc
+git clone https://github.com/WebSpellChecker/ckeditor-plugin-wsc.git plugins/wsc
+rm -rf plugins/wsc/.git
+
 cp -r plugins/* ckeditor/plugins/
 
 
