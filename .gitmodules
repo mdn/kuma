@@ -178,6 +178,3 @@
 [submodule "vendor/src/urlobject"]
 	path = vendor/src/urlobject
 	url = git://github.com/zacharyvoase/urlobject.git
-[submodule "media/js/libs/ckeditor/source/ckeditor"]
-	path = media/js/libs/ckeditor/source/ckeditor
-	url = git://github.com/ckeditor/ckeditor-dev.git

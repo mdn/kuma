@@ -17,6 +17,14 @@ echo "========================"
 
 target="../build"
 
+
+echo ""
+echo "Pulling down CKEditor from GitHub..."
+rm -rf ckeditor/
+git clone https://github.com/ckeditor/ckeditor-dev.git ckeditor
+rm -rf ckeditor/.git
+
+
 # User the ckeditor-dev commit hash as the revision.
 cd ckeditor/
 rev=`git rev-parse --verify --short HEAD`
@@ -59,6 +67,7 @@ else
 	fi
 fi
 cd ../..
+
 
 
 echo ""
