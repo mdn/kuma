@@ -117,10 +117,11 @@ blockquote {
 
 pre,
 code {
-    font-family: 'Courier New', 'Andale Mono', monospace;
+    font-family: Consolas, Monaco, 'Andale Mono', monospace; /* match Prism */
     margin-bottom: $content-block-margin;
 }
 
+/* pre is a block element so it gets a bit more fancy styling */
 pre {
     set-font-size($base-font-size);
     line-height: 19px;
@@ -130,10 +131,10 @@ pre {
     overflow: auto;
 }
 
+/* code may appear inline in headings, we want to match the font weight of the element its nested in */
 code {
     font-weight: inherit;
 }
-
 
 @media $media-query-mobile {
     h1, h2, h3, h4, h5, h6 {

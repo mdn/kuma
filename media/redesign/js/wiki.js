@@ -196,7 +196,7 @@
         var syntaxSections = {
             css:  {
                 link: 'docs/Web/CSS/Value_definition_syntax',
-                title: 'How to read CSS syntax.', // how do I localize this
+                title: gettext('How to read CSS syntax.'),
                 urlTest: '/docs/Web/CSS/',
                 classTest: 'brush:css'
             },
