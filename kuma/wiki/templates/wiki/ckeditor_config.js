@@ -58,16 +58,11 @@
       // Other plugins.
       'descriptionlist,tablesort,texzilla,youtube';
 
-    // Add the spellchecker to the top bar.
-    if(window.waffle && waffle.FLAGS.wiki_spellcheck) {
-      config.plugins += ',mdn-spell';
-    }
-
     config.removeButtons = 'Cut,Copy,PasteFromWord';
     config.toolbarGroups = [
       { name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
       { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
-      { name: 'editing', groups: [ 'find', 'selection', 'spellchecker' ] },
+      { name: 'editing', groups: [ 'find', 'selection', 'spellchecker'] },
       { name: 'forms' },
       { name: 'tools' },
       { name: 'others' },
