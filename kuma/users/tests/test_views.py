@@ -597,7 +597,8 @@ class AllauthPersonaTestCase(UserTestCase):
             self.client.post(reverse('persona_login'), follow=True)
             data = {'username': persona_signup_username,
                     'email': persona_signup_email,
-                    'newsletter': True}
+                    'newsletter': True,
+                    'terms': True}
             signup_url = reverse('socialaccount_signup',
                                  locale=settings.WIKI_DEFAULT_LANGUAGE)
             response = self.client.post(signup_url, data=data, follow=True)
@@ -643,7 +644,8 @@ class AllauthPersonaTestCase(UserTestCase):
             }
             self.client.post(reverse('persona_login'), follow=True)
             data = {'username': persona_signup_username,
-                    'email': persona_signup_email}
+                    'email': persona_signup_email,
+                    'terms': True}
             signup_url = reverse('socialaccount_signup',
                                  locale=settings.WIKI_DEFAULT_LANGUAGE)
             self.client.post(signup_url, data=data, follow=True)
@@ -762,6 +764,7 @@ class KumaGitHubTests(UserTestCase):
             'username': 'octocat',
             'email': SignupForm.other_email_value,  # = use other_email
             'other_email': unverified_email,
+            'terms': True
         }
         self.assertFalse((EmailAddress.objects.filter(email=unverified_email)
                                               .exists()))

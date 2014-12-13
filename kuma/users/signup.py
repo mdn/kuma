@@ -10,6 +10,8 @@ USERNAME_SHORT = _(u'Username is too short (%(show_value)s characters). '
 USERNAME_LONG = _(u'Username is too long (%(show_value)s characters). '
                   u'It must be %(limit_value)s characters or less.')
 
+TERMS_REQUIRED = _(u'You must agree to the terms of use.')
+
 
 class SignupForm(BaseSignupForm):
     """
@@ -27,6 +29,9 @@ class SignupForm(BaseSignupForm):
                             widget=forms.TextInput(attrs={'type': 'email'}))
     other_email = forms.CharField(required=False,
                                   widget=forms.TextInput(attrs={'type': 'email'}))
+    terms = forms.BooleanField(label=_(u'I agree'),
+                               required=True,
+                               error_messages={'required': TERMS_REQUIRED})
     other_email_value = '_other'
     duplicate_email_error_label = '_duplicate_email'
 
