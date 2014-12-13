@@ -32,7 +32,11 @@ class SignupTests(UserTestCase):
         ok_('Sign In Failure' not in r.content)
         test_strings = ['Create your MDN profile to continue',
                         'choose a username',
-                        'having trouble']
+                        'having trouble',
+                        'I agree',
+                        'to Mozilla',
+                        'Terms',
+                        'Privacy Notice']
         verify_strings_in_response(test_strings, r)
 
 
@@ -274,7 +278,8 @@ class AllauthPersonaTestCase(UserTestCase):
             r = self.client.post(reverse('persona_login'),
                                  follow=True)
             data = {'username': persona_signup_username,
-                    'email': persona_signup_email}
+                    'email': persona_signup_email,
+                    'terms': True}
             r = self.client.post(
                 reverse('socialaccount_signup',
                         locale=settings.WIKI_DEFAULT_LANGUAGE),
