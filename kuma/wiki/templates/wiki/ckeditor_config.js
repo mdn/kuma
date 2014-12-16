@@ -134,9 +134,9 @@
       // CTRL+SHIFT+L
       [ CKEDITOR.CTRL + CKEDITOR.SHIFT + 76, 'mdn-toggle-block' ],
       // CTRL+S
-      [ CKEDITOR.CTRL + 83, 'mdn-save' ],
+      [ CKEDITOR.CTRL + 83, 'mdn-save-edit' ],
       // CTRL+SHIFT+S
-      [ CKEDITOR.CTRL + CKEDITOR.SHIFT + 83, 'mdn-save-exit' ],
+      [ CKEDITOR.CTRL + CKEDITOR.SHIFT + 83, 'mdn-save' ],
       // CTRL+SHIFT+O
       [ CKEDITOR.CTRL + CKEDITOR.SHIFT + 79, 'source' ]
     ];
