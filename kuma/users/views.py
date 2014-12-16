@@ -362,17 +362,20 @@ class SignupView(BaseSignupView):
         So, we need to manually commit the user to the db for it.
         """
         selected_email = form.cleaned_data['email']
-        if selected_email == form.other_email_value:
+        if form.other_email_used:
             email_address = {
-                'email': form.cleaned_data['other_email'],
+                'email': selected_email,
                 'verified': False,
                 'primary': True,
             }
         else:
             email_address = self.email_addresses.get(selected_email, None)
+
         if email_address:
             email_address['primary'] = True
-            self.sociallogin.email_addresses = [EmailAddress(*email_address)]
+            primary_email_address = EmailAddress(**email_address)
+            form.sociallogin.email_addresses = \
+                self.sociallogin.email_addresses = [primary_email_address]
             if email_address['verified']:
                 # we have to stash the selected email address here
                 # so that no email verification is sent again

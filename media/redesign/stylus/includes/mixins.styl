@@ -247,7 +247,10 @@ remove-center-spacing() {
 
 /* overrides the navigation menu color - zones and homepage */
 override-main-nav-color(hex) {
-    #main-nav > ul > li > a, .user-state a {
+    #main-nav > ul > li > a,
+    .user-state,
+    .user-state a,
+    .submenu-close {
         color: hex;
     }
 

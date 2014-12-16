@@ -629,9 +629,6 @@ MINIFY_BUNDLES = {
         'demostudio': (
             'redesign/css/demos.css',
         ),
-        'demostudio_10th': (
-            'redesign/css/demos_10th.css',
-        ),
         'devderby': (
             'css/devderby.css',
         ),
