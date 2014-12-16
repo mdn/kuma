@@ -58,7 +58,7 @@
       // Other plugins.
       'descriptionlist,tablesort,texzilla,youtube';
 
-    config.removeButtons = 'Cut,Copy,PasteFromWord';
+    config.removeButtons = 'Cut,Copy,PasteFromWord,Language';
     config.toolbarGroups = [
       { name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
       { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
