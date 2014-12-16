@@ -30,7 +30,7 @@ def build_wheelball(name, requirements,
 
 
 wheel_builders = {
-    'base': lambda: build_wheelball('base_wheels', ['prod', 'dev', 'compiled']),
+    'base': lambda: build_wheelball('base_wheels', ['dev', 'compiled']),
     'travis': lambda: build_wheelball('travis_wheels', ['compiled']),
 }
 

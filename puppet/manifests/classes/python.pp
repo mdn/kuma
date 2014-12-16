@@ -53,7 +53,7 @@ class python_wheels {
         "install-wheels":
             cwd => '/home/vagrant/src',
             timeout => 1200, # Too long, but this can take awhile
-            command => "/home/vagrant/env/bin/pip install --no-index --find-links=/home/vagrant/src/puppet/cache/wheels/base_wheels -r requirements/prod.txt -r requirements/dev.txt -r requirements/compiled.txt",
+            command => "/home/vagrant/env/bin/pip install --no-index --find-links=/home/vagrant/src/puppet/cache/wheels/base_wheels -r requirements/dev.txt -r requirements/compiled.txt",
             require => Exec["download-wheels"],
             user => 'vagrant';
         "clean-wheels":

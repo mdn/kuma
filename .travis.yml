@@ -14,11 +14,9 @@ before_install:
     - sudo apt-get -y install build-essential aria2 libxml2-dev libxslt-dev libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev zlib1g-dev sqlite3 libtidy-dev
     - sudo ln -s /usr/lib/`uname -i`-linux-gnu/libfreetype.so /usr/lib
     - sudo ln -s /usr/lib/`uname -i`-linux-gnu/libz.so /usr/lib
-    - aria2c -j 10 https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/base_wheels.tar.gz
     - aria2c -j 10 https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/travis_wheels.tar.gz
     - aria2c -j 10 https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/product_details_json.tar.gz
     - aria2c -j 10 https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/locale/mdn/locale.tar.gz
-    - tar xvfz base_wheels.tar.gz
     - tar xvfz travis_wheels.tar.gz
     - tar -C .. -zxf product_details_json.tar.gz
     - tar xvfz locale.tar.gz
@@ -29,8 +27,7 @@ before_install:
 install:
     # we install 1.4.x here separately because 1.4.x can't be packaged as a wheel file
     - pip install -U pip wheel Django==1.4.13
-    - pip install --no-index --find-links=travis_wheels -r requirements/compiled.txt
-    - pip install --find-links=base_wheels -r requirements/prod.txt -r requirements/dev.txt
+    - pip install --find-links=travis_wheels -r requirements/compiled.txt
     - pip install coveralls
 
 before_script:
