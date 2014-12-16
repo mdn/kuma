@@ -155,11 +155,7 @@
       // CTRL+O
       CKEDITOR.CTRL + 79,
       // CTRL+P
-      CKEDITOR.CTRL + 80,
-      // Back
-      1114149,
-      // Forward
-      1114151
+      CKEDITOR.CTRL + 80
     ] );
 
     {{ editor_config|safe }}
