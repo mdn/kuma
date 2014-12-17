@@ -1774,6 +1774,13 @@ class Revision(models.Model):
 
 
 
+class RevisionIP(models.Model):
+    """IP Address for a Revision."""
+    revision = models.ForeignKey(Revision)
+    ip = models.CharField(max_length=40, editable=False, db_index=True,
+                          blank=True, null=True)
+
+
 class HelpfulVote(models.Model):
     """Helpful or Not Helpful vote on Document."""
     document = models.ForeignKey(Document, related_name='poll_votes')
