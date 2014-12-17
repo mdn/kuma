@@ -1,3 +1,4 @@
+import datetime
 import logging
 
 from celery.task import task, group
@@ -14,7 +15,7 @@ import waffle
 
 from devmo.utils import MemcacheLock
 from .exceptions import StaleDocumentsRenderingInProgress, PageMoveError
-from .models import Document
+from .models import Document, RevisionIP
 from .signals import render_done
 
 
@@ -210,3 +211,17 @@ def update_community_stats():
 
     cache = get_cache('memcache')
     cache.set('community_stats', community_stats, 86400)
+
+
+@task
+def delete_old_revision_ips(immediate=False, age=30, log=None):
+    import ipdb; ipdb.set_trace()
+    if log is None:
+        # fetch a logger in case none is given
+        log = delete_old_revision_ips.get_logger()
+
+    cutoff_date = datetime.date.today() - datetime.timedelta(days=age)
+    old_rev_ips = RevisionIP.objects.filter(revision__created__lte=cutoff_date)
+    log.info("Found %s old revision IPs" % old_rev_ips.count())
+    old_rev_ips.delete()
+    log.info("Deleted old revision IPs")
