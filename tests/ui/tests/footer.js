@@ -37,7 +37,7 @@ define([
                         .type(['e', keys.RETURN])
                         .getCurrentUrl()
                         .then(function(url) {
-                            assert.isTrue(url.indexOf('/es/') != -1);
+                            assert.ok(url.indexOf('/es/') != -1, 'The URL after language selector changed in the footer is: ' + url);
                         })
                         .goBack(); // Cleanup to go back to default locale
         }
