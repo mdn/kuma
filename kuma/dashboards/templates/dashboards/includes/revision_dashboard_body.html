@@ -1,5 +1,9 @@
 {{ revisions|paginator }}
 
+{% set show_ips = False %}
+{% if waffle.flag('store_revision_ips') and user.is_superuser %}
+    {% set show_ips = True %}
+{% endif %}
 {% if total %}
     <table class="dashboard-table" width="100%">
         <thead>
@@ -8,6 +12,9 @@
                 <td class="dashboard-title">Title</td>
                 <td class="dashboard-comment">Comment</td>
                 <td class="dashboard-author">Author</td>
+                {% if show_ips %}
+                <td class="dashboard-ip">View IP</td>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -37,6 +44,9 @@
                     </td>
                     <td class="dashboard-comment">{{ format_comment(revision) }}</td>
                     <td class="dashboard-author"><a href="{{ revision.creator.get_absolute_url() }}">{{ revision.creator }}</a></td>
+                    {% if show_ips %}
+                    <td class="dashboard-ip"><a href="{{ url('admin:wiki_revisionip_changelist') }}?revision={{revision.id}}">{{ _('View in admin') }}</a></td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </tbody>
