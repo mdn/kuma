@@ -1,10 +1,9 @@
 /* The .no-details styles will get applied only if JavaScript is enabled and
-   <details> is not natively supported. Add focus styles (for keyboard
-   accessibility) */
+<details> is not natively supported. Add focus styles (for keyboard
+accessibility) */
 .no-details {
-    summary:hover, summary:focus {
+    summary {
         display: block;
-        outline: 0; /* csslint - see bug #1083481 */
     }
 
     summary:before {
