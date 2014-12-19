@@ -39,8 +39,10 @@ import constance.config
 from smuggler.utils import superuser_required
 from smuggler.forms import ImportFileForm
 from teamwork.shortcuts import get_object_or_404_or_403
+import waffle
 
 from access.decorators import permission_required, login_required
+from actioncounters.utils import get_ip
 from authkeys.decorators import accepts_auth_key
 from contentflagging.models import ContentFlag, FLAG_NOTIFICATIONS
 from devmo.decorators import never_cache
@@ -70,7 +72,8 @@ from .helpers import format_comment
 from .models import (Document, Revision, HelpfulVote, EditorToolbar,
                      DocumentZone, DocumentTag, ReviewTag, LocalizationTag,
                      DocumentDeletionLog,
-                     DocumentRenderedContentNotAvailable)
+                     DocumentRenderedContentNotAvailable,
+                     RevisionIP)
 from .queries import MultiQuerySet
 from .tasks import move_page
 from .utils import locale_and_slug_from_path
@@ -956,7 +959,7 @@ def new_document(request):
                 raise PermissionDenied
 
             doc = doc_form.save(None)
-            _save_rev_and_notify(rev_form, request.user, doc)
+            _save_rev_and_notify(rev_form, request, doc)
             if doc.current_revision.is_approved:
                 view = 'wiki.document'
             else:
@@ -1121,7 +1124,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                             rev, doc)
 
                 if rev_form.is_valid():
-                    _save_rev_and_notify(rev_form, user, doc)
+                    _save_rev_and_notify(rev_form, request, doc)
 
                     if is_iframe_target:
                         # TODO: Does this really need to be a template? Just
@@ -1733,7 +1736,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
                         except Document.DoesNotExist:
                             pass
 
-                    _save_rev_and_notify(rev_form, request.user, doc)
+                    _save_rev_and_notify(rev_form, request, doc)
                     url = reverse('wiki.document', args=[doc.full_path],
                                   locale=doc.locale)
                     return HttpResponseRedirect(url)
@@ -2152,9 +2155,13 @@ def _document_form_initial(document):
             'tags': [t.name for t in document.tags.all()],}
 
 
-def _save_rev_and_notify(rev_form, creator, document):
+def _save_rev_and_notify(rev_form, request, document):
     """Save the given RevisionForm and send notifications."""
+    creator = request.user
     new_rev = rev_form.save(creator, document)
+
+    if waffle.switch_is_active('store_revision_ips'):
+        RevisionIP(revision=new_rev, ip=get_ip(request)).save()
 
     document.schedule_rendering('max-age=0')
 

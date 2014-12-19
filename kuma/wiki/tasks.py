@@ -14,7 +14,7 @@ import waffle
 
 from devmo.utils import MemcacheLock
 from .exceptions import StaleDocumentsRenderingInProgress, PageMoveError
-from .models import Document
+from .models import Document, RevisionIP
 from .signals import render_done
 
 
@@ -210,3 +210,8 @@ def update_community_stats():
 
     cache = get_cache('memcache')
     cache.set('community_stats', community_stats, 86400)
+
+
+@task
+def delete_old_revision_ips(immediate=False, days=30):
+    RevisionIP.objects.delete_old(days=days)

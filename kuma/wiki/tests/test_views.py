@@ -22,7 +22,7 @@ from django.http import Http404
 from django.utils.encoding import smart_str
 
 import constance.config
-from waffle.models import Flag
+from waffle.models import Flag, Switch
 
 from authkeys.models import Key
 from devmo.tests import override_constance_settings
@@ -32,7 +32,8 @@ from kuma.users.tests import UserTestCase, user
 from kuma.wiki.constants import DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL
 from kuma.wiki.content import get_seo_description
 from kuma.wiki.events import EditDocumentEvent
-from kuma.wiki.models import Document, Revision, DocumentZone, DocumentTag
+from kuma.wiki.models import (Document, Revision, RevisionIP, DocumentZone,
+                              DocumentTag)
 from kuma.wiki.tests import (doc_rev, document, new_document_data, revision,
                              normalize_html, create_template_test_users,
                              make_translation)
@@ -2313,6 +2314,37 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         ok_(not ': ' in rev.comment)
         ok_(mock_kumascript_get.called,
             "kumascript should have been used")
+
+    def test_store_revision_ip(self):
+        self.client.login(username='testuser', password='testpass')
+        data = new_document_data()
+        slug = 'test-article-for-storing-revision-ip'
+        data.update({'title': 'A Test Article For Storing Revision IP',
+                     'slug': slug})
+        self.client.post(reverse('wiki.new_document'), data)
+
+        doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE,
+                                   slug=slug)
+
+        data.update({'form': 'rev',
+                     'content': 'This revision should NOT record IP',
+                     'comment': 'This revision should NOT record IP'})
+
+        self.client.post(reverse('wiki.edit_document', args=[doc.full_path]),
+                         data)
+        eq_(0, RevisionIP.objects.all().count())
+
+        Switch.objects.create(name='store_revision_ips', active=True).save()
+
+        data.update({'content': 'Store the IP address for the revision.',
+                     'comment': 'Store the IP address for the revision.'})
+
+        self.client.post(reverse('wiki.edit_document', args=[doc.full_path]),
+                         data)
+        eq_(1, RevisionIP.objects.all().count())
+        rev = doc.revisions.order_by('-id').all()[0]
+        rev_ip = RevisionIP.objects.get(revision=rev)
+        eq_('127.0.0.1', rev_ip.ip)
 
 
 class DocumentWatchTests(UserTestCase, WikiTestCase):
