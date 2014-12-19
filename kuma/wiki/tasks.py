@@ -1,4 +1,3 @@
-import datetime
 import logging
 
 from celery.task import task, group
@@ -214,14 +213,5 @@ def update_community_stats():
 
 
 @task
-def delete_old_revision_ips(immediate=False, age=30, log=None):
-    import ipdb; ipdb.set_trace()
-    if log is None:
-        # fetch a logger in case none is given
-        log = delete_old_revision_ips.get_logger()
-
-    cutoff_date = datetime.date.today() - datetime.timedelta(days=age)
-    old_rev_ips = RevisionIP.objects.filter(revision__created__lte=cutoff_date)
-    log.info("Found %s old revision IPs" % old_rev_ips.count())
-    old_rev_ips.delete()
-    log.info("Deleted old revision IPs")
+def delete_old_revision_ips(immediate=False, days=30):
+    RevisionIP.objects.delete_old(days=days)

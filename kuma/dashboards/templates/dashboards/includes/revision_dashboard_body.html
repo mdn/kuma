@@ -1,7 +1,7 @@
 {{ revisions|paginator }}
 
 {% set show_ips = False %}
-{% if waffle.flag('store_revision_ips') and user.is_superuser %}
+{% if waffle.switch('store_revision_ips') and user.is_superuser %}
     {% set show_ips = True %}
 {% endif %}
 {% if total %}

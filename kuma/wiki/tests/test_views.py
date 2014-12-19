@@ -22,7 +22,7 @@ from django.http import Http404
 from django.utils.encoding import smart_str
 
 import constance.config
-from waffle.models import Flag
+from waffle.models import Flag, Switch
 
 from authkeys.models import Key
 from devmo.tests import override_constance_settings
@@ -2319,25 +2319,25 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         self.client.login(username='testuser', password='testpass')
         data = new_document_data()
         slug = 'test-article-for-storing-revision-ip'
-        data['title'] = 'A Test Article For Storing Revision IP'
-        data['slug'] = slug
+        data.update({'title': 'A Test Article For Storing Revision IP',
+                     'slug': slug})
         self.client.post(reverse('wiki.new_document'), data)
 
         doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE,
                                    slug=slug)
 
-        data['form'] = 'rev'
-        data['content'] = 'This revision should NOT record IP'
-        data['comment'] = 'This revision should NOT record IP'
+        data.update({'form': 'rev',
+                     'content': 'This revision should NOT record IP',
+                     'comment': 'This revision should NOT record IP'})
 
         self.client.post(reverse('wiki.edit_document', args=[doc.full_path]),
                          data)
         eq_(0, RevisionIP.objects.all().count())
 
-        Flag.objects.create(name='store_revision_ips', everyone=True).save()
+        Switch.objects.create(name='store_revision_ips', active=True).save()
 
-        data['content'] = 'Store the IP address for the revision.'
-        data['comment'] = 'Store the IP address for the revision.'
+        data.update({'content': 'Store the IP address for the revision.',
+                     'comment': 'Store the IP address for the revision.'})
 
         self.client.post(reverse('wiki.edit_document', args=[doc.full_path]),
                          data)

@@ -39,7 +39,7 @@ import constance.config
 from smuggler.utils import superuser_required
 from smuggler.forms import ImportFileForm
 from teamwork.shortcuts import get_object_or_404_or_403
-from waffle import flag_is_active
+import waffle
 
 from access.decorators import permission_required, login_required
 from actioncounters.utils import get_ip
@@ -2160,7 +2160,7 @@ def _save_rev_and_notify(rev_form, request, document):
     creator = request.user
     new_rev = rev_form.save(creator, document)
 
-    if flag_is_active(request, 'store_revision_ips'):
+    if waffle.switch_is_active('store_revision_ips'):
         RevisionIP(revision=new_rev, ip=get_ip(request)).save()
 
     document.schedule_rendering('max-age=0')

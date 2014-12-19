@@ -55,7 +55,8 @@ from .exceptions import (UniqueCollision, SlugCollision, PageMoveError,
                          DocumentRenderedContentNotAvailable)
 from .managers import (TransformManager, DocumentManager,
                        TaggedDocumentManager, DeletedDocumentManager,
-                       DocumentAdminManager, DocumentZoneManager)
+                       DocumentAdminManager, DocumentZoneManager,
+                       RevisionIPManager)
 from .signals import render_done
 
 add_introspection_rules([], ["^utils\.OverwritingFileField"])
@@ -1779,6 +1780,8 @@ class RevisionIP(models.Model):
     revision = models.ForeignKey(Revision)
     ip = models.CharField(max_length=40, editable=False, db_index=True,
                           blank=True, null=True)
+
+    objects = RevisionIPManager()
 
 
 class HelpfulVote(models.Model):

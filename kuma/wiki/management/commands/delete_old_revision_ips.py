@@ -17,4 +17,4 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         self.options = options
-        delete_old_revision_ips(log=logging, age=options['days'])
+        delete_old_revision_ips(days=options['days'])
