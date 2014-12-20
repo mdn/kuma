@@ -10,6 +10,7 @@ from django.dispatch import receiver
 from django.db import connection
 from django.core.cache import get_cache
 
+from constance import config
 import waffle
 
 from devmo.utils import MemcacheLock
@@ -215,3 +216,9 @@ def update_community_stats():
 @task
 def delete_old_revision_ips(immediate=False, days=30):
     RevisionIP.objects.delete_old(days=days)
+
+
+@task
+def send_first_edit_email(email):
+    email.to = [config.EMAIL_LIST_FOR_FIRST_EDITS,]
+    email.send()

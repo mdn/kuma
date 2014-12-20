@@ -19,6 +19,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.core.cache import cache
+from django.core.mail import EmailMessage
 from django.db import transaction
 from django.db.models import Q
 from django.http import (HttpResponse, HttpResponseRedirect,
@@ -36,6 +37,7 @@ from django.views.decorators.clickjacking import (xframe_options_exempt,
 from django.views.decorators.csrf import csrf_exempt
 
 import constance.config
+from jingo import render_to_string
 from smuggler.utils import superuser_required
 from smuggler.forms import ImportFileForm
 from teamwork.shortcuts import get_object_or_404_or_403
@@ -64,7 +66,7 @@ from .constants import (DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX,
                         REDIRECT_CONTENT)
 from .decorators import (check_readonly, process_document_path,
                          allow_CORS_GET, prevent_indexing)
-from .events import EditDocumentEvent
+from .events import EditDocumentEvent, context_dict
 from .forms import (DocumentForm, RevisionForm, DocumentContentFlagForm,
                     RevisionValidationForm, TreeMoveForm,
                     DocumentDeletionForm)
@@ -75,7 +77,7 @@ from .models import (Document, Revision, HelpfulVote, EditorToolbar,
                      DocumentRenderedContentNotAvailable,
                      RevisionIP)
 from .queries import MultiQuerySet
-from .tasks import move_page
+from .tasks import move_page, send_first_edit_email
 from .utils import locale_and_slug_from_path
 
 
@@ -2158,15 +2160,34 @@ def _document_form_initial(document):
 def _save_rev_and_notify(rev_form, request, document):
     """Save the given RevisionForm and send notifications."""
     creator = request.user
+    # have to check for first edit before we rev_form.save
+    first_edit = creator.get_profile().wiki_activity().count() == 0
+
     new_rev = rev_form.save(creator, document)
 
     if waffle.switch_is_active('store_revision_ips'):
         RevisionIP(revision=new_rev, ip=get_ip(request)).save()
 
+    if first_edit:
+        email = _make_first_edit_email(new_rev, request)
+        send_first_edit_email.delay(email)
+
     document.schedule_rendering('max-age=0')
 
     # Enqueue notifications
     EditDocumentEvent(new_rev).fire(exclude=new_rev.creator)
+
+
+def _make_first_edit_email(new_rev, request):
+    """ Make an 'edited' notification email for first-time editors """
+    user, doc = new_rev.creator, new_rev.document
+    subject = "[MDN] %(user)s made their first edit, to: %(doc)s" % (
+        {'user': user.username, 'doc': doc.title})
+    template = 'wiki/email/edited.ltxt'
+    context = context_dict(new_rev)
+    message = render_to_string(request, template, context)
+    email = EmailMessage(subject, message, settings.DEFAULT_FROM_EMAIL)
+    return email
 
 
 # Legacy MindTouch redirects.
