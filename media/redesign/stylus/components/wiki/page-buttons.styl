@@ -1,0 +1,55 @@
+/* edit, language, settings, save, and cancel buttons */
+.page-buttons, #page-buttons {
+    bidi-value(float, right, left);
+    padding: 5px 0;
+    width: auto;
+
+    &.fixed {
+        overflow-y: inherit;
+        z-index: 50;
+    }
+
+    > li {
+        margin-left: ($grid-spacing / 2);
+        display: inline-block;
+        position: relative;
+        bidi-value(text-align, left, right);
+
+        a, button, input[type='submit'], input[type='button'] {
+            set-smaller-font-size();
+
+            &.disabled, &[disabled] {
+                opacity: 0.4;
+                box-shadow: none;
+                cursor: not-allowed;
+            }
+        }
+
+        .transparent {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        {$selector-icon} {
+            set-font-size($base-bump-font-size);
+        }
+    }
+
+    .submenu {
+        @extend $advanced-menu;
+    }
+}
+
+@media $media-query-mobile {
+
+    .page-buttons > li.page-buttons-edit {
+        display: none;
+    }
+}
+
+@media print {
+
+    .page-buttons{
+        display: none;
+    }
+}

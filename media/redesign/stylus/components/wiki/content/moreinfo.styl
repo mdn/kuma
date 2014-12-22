@@ -1,0 +1,30 @@
+/* moreinfo styling */
+.moreinfo {
+    position: relative;
+    padding: $gutter-width $gutter-width $gutter-width 30px;
+    margin-bottom: $gutter-width;
+    background: $light-background-color;
+
+    dl {
+        margin-bottom: 0;
+    }
+
+    dd {
+        margin-bottom: 10px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    &:after {
+        border-top: $gutter-width solid transparent;
+        border-bottom: $gutter-width solid transparent;
+        border-left: 15px solid #fff;
+        content: '';
+        display: block;
+        left: 0;
+        position: absolute;
+        top: 5px;
+    }
+}

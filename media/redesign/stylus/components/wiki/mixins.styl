@@ -1,0 +1,38 @@
+/* mixins applying only to the wiki */
+make-wiki-blocks-flat() {
+    #wiki-content, #wiki-right, #wiki-left {
+        margin-right: 0;
+        width: auto !important;
+        float: none;
+        padding-bottom: ($grid-spacing * 2);
+    }
+}
+
+enable-toc-toggle() {
+    #toc {
+        padding: ($grid-spacing / 2) $grid-spacing;
+
+        .toggler {
+            pointer-events: auto;
+            color: $link-color;
+
+            i {
+                display: inline-block;
+            }
+        }
+
+        .toggle-container {
+            display: none;
+
+            .no-js & {
+                display: block;
+            }
+        }
+    }
+}
+
+$review-base {
+    background: #fbf8e9;
+    border-color: #f9f3d9;
+    color: $text-color;
+}

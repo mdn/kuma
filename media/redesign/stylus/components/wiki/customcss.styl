@@ -1,6 +1,3 @@
-@require 'includes/vars';
-@require 'includes/mixins';
-
 /*
 
 Copied from the custom CSS macro template https://developer.mozilla.org/en-US/docs/Template:CustomCSS
@@ -83,19 +80,6 @@ table#fullwidth-table td.thirdColumn {
 }
 /* Simulate two columns for landing page, if enough space is available    */
 @media (min-width:1050px) {
-    .topicpage-table {
-        display: table;
-        border-collapse: separate;
-        border-spacing: 20px 0;
-    }
-    .topicpage-table .section:first-of-type {
-        margin-right: 20px;
-        border-right: solid 6px rgba-fallback(rgba(212,221,228,0.5));
-    }
-    html[dir="rtl"] .topicpage-table .section:first-of-type {
-        border-left: solid 6px rgba-fallback(rgba(212,221,228,0.5));
-        border-right: none;
-    }
     .landing {
         display: table-row;
     }
@@ -1066,92 +1050,12 @@ ul.card-grid li {
     box-shadow: 3px 3px 0 3px rgba(212,221,228,0.5);
     background-image: none;
 }
-/*-----------------
-        for Topic page
-*/
-table.topicpage-table,
-table.topicpage-table td,
-table.topicpage-table tr,
-table.topicpage-table th {
-    border: none;
-}
-.topicpage-table .section {
-    padding-right: 1em;
-}
-/* New theme */
+
+
 dl {
     margin-bottom: 20px;
 }
-.center .topicpage-table h2 {
-    font-family: 'Open Sans Light', sans-serif;
-}
-.topicpage-table ul {
-    padding-left: 20px;
-}
-.topicpage2col {
-    margin: 1em 0;
-    padding: 0 10px;
-    zoom: 1;
-}
-.topicpage2col::after {
-    content: ".";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
-}
-.topicpage2col .A,
-.topicpage2col .B {
-    width: 50%;
-    position: relative;
-}
-.html-ltr .topicpage2col .A,
-.html-rtl .topicpage2col .B {
-    float: left;
-    left: -10px;
-}
-.html-ltr .topicpage2col .B,
-.html-rtl .topicpage2col .A {
-    float: right;
-    right: -10px;
-}
-.topicpage2col h2 {
-    background-image: url("/media/img/icons-sections.png");
-    background-repeat: no-repeat;
-    margin: 0 0 0.25em;
-    padding: 18px 18px 0 65px;
-    min-height: 48px;
-    font: 400 28px/1 'Bebas Neue', 'League Gothic', Haettenschweiler, Impact, 'Arial Narrow', Meiryo, sans-serif;
-    text-transform: uppercase;
-    border: none;
-}
-.html-rtl .topicpage2col h2 {
-    padding: 18px 65px 0 18px;
-}
-.html-ltr .topicpage2col .Documentation {
-    background-position: 0 0;
-}
-.html-ltr .topicpage2col .Community {
-    background-position: 0 -200px;
-}
-.html-ltr .topicpage2col .Tools {
-    background-position: 0 -400px;
-}
-.html-ltr .topicpage2col .Related_Topics {
-    background-position: 0 -600px;
-}
-.html-rtl .topicpage2col .Documentation {
-    background-position: right 0;
-}
-.html-rtl .topicpage2col .Community {
-    background-position: right -200px;
-}
-.html-rtl .topicpage2col .Tools {
-    background-position: right -400px;
-}
-.html-rtl .topicpage2col .Related_Topics {
-    background-position: right -600px;
-}
+
 /* ----------------------------
         Styles for Indicator
 */
@@ -1185,6 +1089,16 @@ dl {
 /* font-size: 11px; */
     padding: 10px;
 }
+
+.blockIndicator,
+.overheadIndicator {
+    prevent-last-child-bottom-spacing();
+
+    pre {
+        color: $text-color;
+    }
+}
+
 .redesign .inlineIndicator,
 .redesign .indicatorInHeadline {
     border-width: 0;
@@ -1953,26 +1867,15 @@ dd.landingPageList {
     font-weight: bold;
 }
 /* Default glossary links style to ease readability */
-a.glossaryLink:link,
-a.glossaryLink:hover,
-a.glossaryLink:visited,
-a.glossaryLink:focus,
-a.glossaryLink:active {
+a.glossaryLink:not(.new):link,
+a.glossaryLink:not(.new):hover,
+a.glossaryLink:not(.new):visited,
+a.glossaryLink:not(.new):focus,
+a.glossaryLink:not(.new):active {
     color: inherit;
     text-decoration: none;
     border-bottom: 1px dashed #aaa;
     cursor: help;
-}
-a.new.glossaryLink:link,
-a.new.glossaryLink:hover,
-a.new.glossaryLink:visited,
-a.new.glossaryLink:focus,
-a.new.glossaryLink:active {
-    color: #900;
-    border-bottom: none;
-}
-a.new.glossaryLink:hover {
-    text-decoration: underline;
 }
 
 /* download buttons */

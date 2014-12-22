@@ -8,14 +8,14 @@
 
 </p>
 {% if request.user.is_authenticated() %}
-  <button type="button" class="kumascript-detail-toggle" data-alternate-message="{{ _('Hide error information') }}">
+  <button type="button" class="kumascript-error-detail-toggle" data-alternate-message="{{ _('Hide error information') }}">
     {{ ngettext(
       'More information about this error',
       'More information about these errors',
       kumascript_errors|count)
     }}
   </button>
-  <div class="kumascript-details hidden">
+  <div class="kumascript-error-details hidden">
       <p>{% trans %}
         Anyone with an MDN profile can edit a document to fix an error. Use the <a href="/docs/MDN/Kuma/Troubleshooting_KumaScript_errors">KumaScript troubleshooting guide</a> as a starting point.
       {% endtrans %}</p>
