@@ -28,4 +28,4 @@ Edit Article:
 Article History:
 {% endtrans %}
  https://{{ host }}{{ history_url }}
-{{ unsubscribe_text(watch) }}{% endautoescape %}
+{% if watch %}{{ unsubscribe_text(watch) }}{% endif %}{% endautoescape %}

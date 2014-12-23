@@ -14,6 +14,7 @@ from urlparse import urlparse
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
+from django.core import mail
 from django.core.cache import cache
 from django.db.models import Q
 from django.test.client import (FakePayload, encode_multipart,
@@ -2346,6 +2347,35 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         rev_ip = RevisionIP.objects.get(revision=rev)
         eq_('127.0.0.1', rev_ip.ip)
 
+    def test_email_for_first_edits(self):
+        self.client.login(username='testuser', password='testpass')
+        data = new_document_data()
+        slug = 'test-article-for-storing-revision-ip'
+        data.update({'title': 'A Test Article For First Edit Emails',
+                     'slug': slug})
+        self.client.post(reverse('wiki.new_document'), data)
+        eq_(1, len(mail.outbox))
+
+        doc = Document.objects.get(
+            locale=settings.WIKI_DEFAULT_LANGUAGE, slug=slug)
+
+        data.update({'form': 'rev',
+                     'content': 'This edit should not send an email',
+                     'comment': 'This edit should not send an email'})
+
+        self.client.post(reverse('wiki.edit_document',
+                                 args=[doc.full_path]),
+                         data)
+        eq_(1, len(mail.outbox))
+
+        self.client.login(username='admin', password='testpass')
+        data.update({'content': 'Admin first edit should send an email',
+                     'comment': 'Admin first edit should send an email'})
+
+        self.client.post(reverse('wiki.edit_document',
+                                 args=[doc.full_path]),
+                         data)
+        eq_(2, len(mail.outbox))
 
 class DocumentWatchTests(UserTestCase, WikiTestCase):
     """Tests for un/subscribing to document edit notifications."""

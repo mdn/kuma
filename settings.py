@@ -1149,6 +1149,11 @@ CONSTANCE_CONFIG = dict(
         'Email address from which welcome emails will be sent',
     ),
 
+    EMAIL_LIST_FOR_FIRST_EDITS = (
+        "mdn-first-edits@mozilla.org",
+        "Email address to which emails will be sent for users' first edits",
+    ),
+
     FACEBOOK_RESEARCH_APP_ID = (
         '',
         'ID of the Facebook application used to determine whether an MDN user is logged in with Facebook',
