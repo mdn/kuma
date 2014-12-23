@@ -1,0 +1,34 @@
+#translate-document {
+
+    /* approved version of the article content */
+    .translate-rendered {
+        overflow-x: hidden;
+
+        pre {
+            white-space: normal;
+        }
+    }
+
+    /* translation interface has a number of headings that do not have icons
+       so we hide the icon on this heading to make them all match */
+    #page-comment .icon-comment {
+        display: none;
+    }
+
+    /* when approved version hidden from view translated version fills full width of page */
+    .translate-only {
+
+        .boxed,
+        .doc-mode-btn {
+            display: none;
+        }
+
+        .approved-title {
+            display: inline-block;
+            float: left;
+        }
+
+    }
+
+}
+

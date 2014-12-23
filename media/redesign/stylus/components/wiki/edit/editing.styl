@@ -1,0 +1,42 @@
+/* editing is the class applied to the forms on the edit, translate, move and create
+   document pages. */
+
+.editing {
+    position: relative;
+
+    h1 {
+        letter-spacing: normal;
+        line-height: 40px;
+        margin-bottom: $grid-spacing;
+
+        em {
+            color: #333;
+            font-style: normal;
+            margin-left: -3px;
+            text-transform: none;
+        }
+    }
+
+    h2 {
+        margin-bottom: $grid-spacing;
+        text-transform: none;
+    }
+
+    summary h2 {
+        display: inline-block;
+        margin-bottom: 0;
+    }
+
+    h2 {$selector-icon},
+    h3 {$selector-icon} {
+        @extend $right-icons;
+    }
+
+    summary {
+        clearfix();
+        set-font-size(20px);
+        cursor: pointer;
+        margin: $summary-margin;
+        padding: $summary-padding;
+    }
+}
