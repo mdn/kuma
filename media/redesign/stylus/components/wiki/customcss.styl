@@ -187,11 +187,10 @@ table#fullwidth-table td.thirdColumn {
     line-height: 1.5;
     overflow: hidden; /* Fix for firefox and IE 10-11  */
     -webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
+            column-break-inside: avoid;
     page-break-inside: avoid; /* Deprecated Firefox */
-    -moz-column-break-inside:avoid; /* Current Firefox */
-    column-break-inside:avoid;
-    break-inside: avoid; /* IE 10+ */
-    break-inside: avoid-column;
+         break-inside: avoid; /* IE 10+ */
+         break-inside: avoid-column;
 }
 .fancyTOC a::before {
     counter-increment: fancyTOC;
