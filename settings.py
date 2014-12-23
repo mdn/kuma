@@ -1150,7 +1150,7 @@ CONSTANCE_CONFIG = dict(
     ),
 
     EMAIL_LIST_FOR_FIRST_EDITS = (
-        "mdn-first-edits@mozilla.org",
+        "mdn-spam-watch@mozilla.com",
         "Email address to which emails will be sent for users' first edits",
     ),
 
