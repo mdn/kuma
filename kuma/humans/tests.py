@@ -14,6 +14,12 @@ CONTRIBUTORS_JSON = "%s/fixtures/contributors.json" % APP_DIR
 
 
 class HumansTest(TestCase):
+    def test_split_name(self):
+        ht = HumansTXT()
+
+        name = 'buddyl@example.org'
+        assert_equal('buddyl', ht.split_name(name))
+
     def test_basic_get_github(self):
         """
         Test that json is parsed and a list is returned
@@ -40,7 +46,7 @@ class HumansTest(TestCase):
     def test_write_to_file(self):
         if not isdir("%s/tmp/" % APP_DIR):
             makedirs("%s/tmp/" % APP_DIR)
-            
+
         target = open("%s/tmp/humans.txt" % APP_DIR, 'w')
         human1 = Human()
         human1.name = "joe"
