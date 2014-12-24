@@ -69,7 +69,7 @@
     zoom: 1;
 }
 
-.media-img {
+.media-side {
     bidi-value(float, left, right);
     bidi-style(margin-right, ($grid-spacing / 2), margin-left, 0);
 
@@ -86,7 +86,7 @@
 /* declaration for stacking the two items */
 media-stack() {
     .media-body,
-    .media-img {
+    .media-side {
         float: none;
         margin-left: 0;
         margin-right: 0;
@@ -97,7 +97,7 @@ media-stack() {
         caption-side: top;
         width: 100%;
 
-        .media-img {
+        .media-side {
             display: table-cell;
         }
         .media-body {

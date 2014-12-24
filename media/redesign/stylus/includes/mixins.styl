@@ -496,6 +496,10 @@ $checkbox-label-container {
         position: absolute;
         bidi-style(margin-left, 25px, margin-right, 0);
     }
+
+    > p {
+        clear: left;
+    }
 }
 
 
@@ -525,8 +529,8 @@ $advanced-menu {
 }
 
 $right-icons {
-    margin-left: 0 !important;
-    margin-right: 10px !important;
+    bidi-value(margin-left, 0 !important, 10px !important);
+    bidi-value(margin-right, 10px !important, 0px !important);
 }
 
 

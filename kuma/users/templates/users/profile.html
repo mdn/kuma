@@ -33,42 +33,19 @@
 <div class="wrap">
 
   <section id="content-main" class="full">
-    <section id="profile-head" class="vcard">
-
-      <div class="extra">
-        <figure class="avatar">
-          <img src="{{ profile.gravatar }}" alt="{{ profile.user.username }}" width="120" height="120" class="photo" />
-        </figure>
-
-        <ul class="links">
-        {% for site_name, site_meta in profile.website_choices %}
-          {% if site_name == 'github' %}
-            {% if accounts.github and waffle.flag('github_login') %}
-              {% for github_account in accounts.github %}{% if github_account.extra_data %}
-              <li class="{{ site_name }}"><i class="{{ site_meta.fa_icon }}" aria-hidden="true"></i><a href="{{ github_account.get_profile_url() }}" rel="me external" class="url">{{ site_meta.label }}</a></li>
-              {% endif %}{% endfor %}
-            {% else %}
-              {{ account(profile, site_name, site_meta) }}
-            {% endif %}
-          {% else %}
-            {{ account(profile, site_name, site_meta) }}
-          {% endif %}
-        {% endfor %}
-        </ul>
-      </div>
-
-      <div class="main">
-        <h1 class="page-title">
+    <section id="profile-head" class="column-container column-container-reverse vcard profile-head">
+      <div class="column-10">
+        <h1 class="profile-title">
             <span class="nickname">{{ profile.user.username }}</span>
             {% if profile.fullname %}
-                <b>(<span class="fn">{{ profile.fullname }}</span>)</b>
+                <b class="profile-title-fullname">(<span class="fn">{{ profile.fullname }}</span>)</b>
             {% endif %}
             {% if user.is_authenticated and user.username == profile.user.username %}
                 {% include 'socialaccount/snippets/login_service_icon.html' %}
             {% endif %}
         </h1>
 
-        <div class="edit">
+        <div class="profile-buttons">
           {% if show_manage_roles_button %}
               {# TODO: Need a method to detect whether the logged in user can manage any roles, here #}
               <a href="{{ url('teamwork.views.user_roles', profile.user.username) }}" class="button neutral">{{ _("Manage Roles") }}<i aria-hidden="true" class="icon-users"></i></a>
@@ -92,20 +69,19 @@
               </div>
               {% endif %}
           {% endif %}
-      </div>
+        </div>
+        {% if profile.title or profile.organization or profile.location or profile.irc_nickname %}
+        <ul class="profile-info">
+          {% if profile.title %}<li class="title">{{ profile.title }}</li>{% endif %}
+          {% if profile.organization %}<li class="org">{{ profile.organization }}</li>{% endif %}
+          {% if profile.location %}<li class="loc">{{ profile.location }}</li>{% endif %}
+          {% if profile.irc_nickname %}<li class="irc">IRC: {{ profile.irc_nickname }}</li>{% endif %}
+        </ul>
+        {% endif %}
 
-      {% if profile.title or profile.organization or profile.location or profile.irc_nickname %}
-      <ul class="info">
-        {% if profile.title %}<li class="title">{{ profile.title }}</li>{% endif %}
-        {% if profile.organization %}<li class="org">{{ profile.organization }}</li>{% endif %}
-        {% if profile.location %}<li class="loc">{{ profile.location }}</li>{% endif %}
-        {% if profile.irc_nickname %}<li class="irc">IRC: {{ profile.irc_nickname }}</li>{% endif %}
-      </ul>
-      {% endif %}
-
-      <div class="bio">
-        <p>{{ profile.bio | nl2br }}</p>
-      </div>
+        <div class="profile-bio">
+          <p>{{ profile.bio | nl2br }}</p>
+        </div>
 
         {% set tag_ns = 'profile:interest:' %}
         {% set tags = profile.tags.all_ns(tag_ns) %}
@@ -114,7 +90,7 @@
           <h2>{{ _("Interests") }}</h2>
           <ul>
             {% for tag in tags%}
-                <li><span rel="tag">{{ tag.name.replace(tag_ns,'') }}</span></li>
+              <li><span rel="tag">{{ tag.name.replace(tag_ns,'') }}</span></li>
             {% endfor %}
           </ul>
         </div>
@@ -127,13 +103,33 @@
           <h2>{{ _("Areas of Expertise") }}</h2>
           <ul>
             {% for tag in tags%}
-                <li><span rel="tag">{{ tag.name.replace(tag_ns,'') }}</span></li>
+              <li><span rel="tag">{{ tag.name.replace(tag_ns,'') }}</span></li>
             {% endfor %}
           </ul>
         </div>
         {% endif %}
+        <div class="profile-since">{{ _('Member since') }} {{ datetimeformat(profile.user.date_joined, format='date') }}</div>
+      </div>
+      <div class="column-2 ">
+        <figure>
+          <img src="{{ profile.gravatar }}" alt="{{ profile.user.username }}" width="200" height="200" class="profile-photo avatar" />
+        </figure>
 
-        <div class="memberSince">{{ _('Member since') }} {{ datetimeformat(profile.user.date_joined, format='date') }}</div>
+        <ul class="profile-links">
+        {% for site_name, site_meta in profile.website_choices %}
+          {% if site_name == 'github' %}
+            {% if accounts.github and waffle.flag('github_login') %}
+              {% for github_account in accounts.github %}{% if github_account.extra_data %}
+              <li class="{{ site_name }}"><i class="{{ site_meta.fa_icon }}" aria-hidden="true"></i><a href="{{ github_account.get_profile_url() }}" rel="me external" class="url">{{ site_meta.label }}</a></li>
+              {% endif %}{% endfor %}
+            {% else %}
+              {{ account(profile, site_name, site_meta) }}
+            {% endif %}
+          {% else %}
+            {{ account(profile, site_name, site_meta) }}
+          {% endif %}
+        {% endfor %}
+        </ul>
       </div>
     </section>
 

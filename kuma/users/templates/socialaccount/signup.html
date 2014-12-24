@@ -156,9 +156,9 @@
               </li>
               {% endif %}
 
-              {{ newsletter_widget(form) }}
+              <li>{{ newsletter_widget(form) }}</li>
 
-              <fieldset id="terms-of-use" class="section">
+              <li>
                   <ol>
                       <li id="terms-agree>">
                           <ul class="errorlist">
@@ -172,7 +172,7 @@
                       </label>
                       </li>
                   </ol>
-              </fieldset>
+              </li>
 
               <li class="submit">
                 <button class="positive" type="submit" name="create">{{ _('Create my MDN profile') }}</button>

@@ -1,0 +1,24 @@
+.profile-links {
+    border-spacing: ($grid-spacing / 2);
+    display: table;
+    set-smaller-font-size();
+    margin: -(@border-spacing); // Offset outer border
+
+    li {
+        display: table-row;
+    }
+
+    i, a {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    i {
+        set-font-size($base-font-size);
+        text-align: center;
+    }
+
+    a {
+        padding: 0;
+    }
+}
