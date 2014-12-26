@@ -1,10 +1,20 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth.models import User
 from sumo.urlresolvers import reverse
 
 from taggit_extras.managers import NamespacedTaggableManager
 from taggit.forms import TagWidget
 
 from .models import UserBan, UserProfile
+
+
+class UserAdmin(BaseUserAdmin):
+    change_form_template = 'admin/users/user/change_form.html'
+
+
+admin.site.unregister(User)
+admin.site.register(User, UserAdmin)
 
 
 class UserBanAdmin(admin.ModelAdmin):
