@@ -5,6 +5,12 @@
 @require 'includes/vars';
 @require 'includes/mixins';
 
+$dashboard-col-base {
+        padding: 6px;
+        display: inline-block;
+        vertical-align: text-top;
+}
+
 /* New revision dashboard styles */
 .dashboard-table {
     width: 100%;
@@ -15,10 +21,14 @@
         font-weight: bold;
     }
 
-    .dashboard-revision, .dashboard-title, .dashboard-comment, .dashboard-author {
-        padding: 6px;
-        display: inline-block;
-        vertical-align: text-top;
+    .dashboard-col {
+        @extend $dashboard-col-base;
+        @extend $column-strip;
+    }
+
+    .dashboard-with-ip-col {
+        @extend $dashboard-col-base;
+        width: 18%; // FIXME: with some kind of grid calc?
     }
 
     tbody tr {
@@ -61,9 +71,6 @@
         padding: 0 $grid-spacing;
     }
 
-    .dashboard-revision, .dashboard-title, .dashboard-comment, .dashboard-author {
-        @extend $column-strip;
-    }
 
     .dashboard-slug {
         set-smaller-font-size();
