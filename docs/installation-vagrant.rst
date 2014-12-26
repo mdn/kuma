@@ -113,6 +113,37 @@ Some site features are controlled using `constance
 <https://github.com/comoga/django-constance>`_. You control these features in
 the `constance config admin panel`_.
 
+.. _GitHub Auth:
+
+GitHub Auth
+~~~~~~~~~~~
+
+To enable GitHub authentication ...
+
+`Register your own OAuth application on GitHub`_:
+
+* Application name: MDN (<username>)
+* Homepage url: https://developer-local.allizom.org/docs/MDN/Contribute/Howto/Create_an_MDN_account
+* Application description: My own GitHub app for MDN!
+* Authorization callback URL: https://developer-local.allizom.org/users/github/login/callback/
+
+`Add a django-allauth social app`_ for GitHub:
+
+* Provider: GitHub
+* Name: developer-local.allizom.org
+* Client id: <your GitHub App Client ID>
+* Secret key: <your GitHub App Client Secret>
+* Sites: example.com -> Chosen sites
+
+GitHub auth is also (temporarily) behind a waffle flag. So, `add a waffle
+flag`_ called ``github_login`` and set "Everyone" to "Yes".
+
+Now you can sign in with GitHub at https://developer-local.allizom.org
+
+.. _Add a django-allauth social app: https://developer-local.allizom.org/admin/socialaccount/socialapp/add/
+.. _Register your own OAuth application on GitHub: https://github.com/settings/applications/new
+
+
 Wiki Editing
 ~~~~~~~~~~~~
 
