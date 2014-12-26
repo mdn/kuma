@@ -136,4 +136,5 @@ class RevisionsDashTest(UserTestCase):
 
         eq_(6, revisions.length)
         for revision in revisions:
-            ok_('lorem' not in pq(revision).find('.dashboard-col.title').html())
+            ok_('lorem' not in
+                pq(revision).find('.dashboard-col.title').html())
