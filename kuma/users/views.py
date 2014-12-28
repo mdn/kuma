@@ -332,17 +332,21 @@ class SignupView(BaseSignupView):
                     'primary': False,
                 }
             choices = []
+            verified_emails = []
             for email_address in self.email_addresses.values():
                 if email_address['verified']:
                     label = _('%(email)s <b>Verified</b>')
+                    verified_emails.append(email_address['email'])
                 else:
                     label = _('%(email)s Unverified')
-                email = email_address['email']
-                choices.append((email, label % {'email': email}))
+                next_email = email_address['email']
+                choices.append((next_email, label % {'email': next_email}))
             choices.append((form.other_email_value, _('Other:')))
             email_select = forms.RadioSelect(choices=choices,
                                              attrs={'id': 'email'})
             form.fields['email'].widget = email_select
+            if not email and len(verified_emails) == 1:
+                form.initial.update(email=verified_emails[0])
         return form
 
     def get_form_kwargs(self):
