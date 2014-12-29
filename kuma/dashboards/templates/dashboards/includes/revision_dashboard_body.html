@@ -1,19 +1,21 @@
 {{ revisions|paginator }}
 
 {% set show_ips = False %}
+{% set col_class = "dashboard-col" %}
 {% if waffle.switch('store_revision_ips') and user.is_superuser %}
     {% set show_ips = True %}
+    {% set col_class = "dashboard-with-ip-col" %}
 {% endif %}
 {% if total %}
     <table class="dashboard-table" width="100%">
         <thead>
             <tr>
-                <td class="dashboard-revision">Revision</td>
-                <td class="dashboard-title">Title</td>
-                <td class="dashboard-comment">Comment</td>
-                <td class="dashboard-author">Author</td>
+                <td class="{{ col_class }} revision">Revision</td>
+                <td class="{{ col_class }} title">Title</td>
+                <td class="{{ col_class }} comment">Comment</td>
+                <td class="{{ col_class }} author">Author</td>
                 {% if show_ips %}
-                <td class="dashboard-ip">View IP</td>
+                <td class="{{ col_class }} ip">View IP</td>
                 {% endif %}
             </tr>
         </thead>
@@ -32,21 +34,21 @@
                     data-compare-url="{{ url('wiki.compare_revisions', revision.document.full_path, locale=revision.document.locale) }}?from={{ previous_id if previous_id else revision.id }}&to={{ revision.id }}&raw=1"
                     data-revert-url="{{ url('wiki.revert_document', revision.document.full_path, revision.id, locale=revision.document.locale) }}"
                     data-history-url="{{ url('wiki.document_revisions', revision.document.full_path, locale=revision.document.locale) }}">
-                    <td class="dashboard-revision">
+                    <td class="{{ col_class }} revision">
                         <a href="{{ url('wiki.revision', revision.document.full_path, revision.id) }}">{{ datetimeformat(revision.created, format='datetime') }}</a>
                         <br />
                         <span class="locale">{{ revision.document.locale }}</span>
                         {% if not previous_id %}<span class="new">{{ _('new') }}</span>{% endif %}
                         {% if revision.document.deleted %}<span class="deleted">{{ _('deleted') }}</span>{% endif %}
                     </td>
-                    <td class="dashboard-title">
+                    <td class="{{ col_class }} title">
                         <a href="{{ revision_url }}">{{ revision.title }}</a>
                         <span class="dashboard-slug">{{ revision.document.slug }}</span>
                     </td>
-                    <td class="dashboard-comment">{{ format_comment(revision) }}</td>
-                    <td class="dashboard-author"><a href="{{ revision.creator.get_absolute_url() }}">{{ revision.creator }}</a></td>
+                    <td class="{{ col_class }} comment">{{ format_comment(revision) }}</td>
+                    <td class="{{ col_class }} author"><a href="{{ revision.creator.get_absolute_url() }}">{{ revision.creator }}</a></td>
                     {% if show_ips %}
-                    <td class="dashboard-ip"><a href="{{ url('admin:wiki_revisionip_changelist') }}?revision={{revision.id}}">{{ _('View in admin') }}</a></td>
+                    <td class="{{ col_class }} ip"><a href="{{ url('admin:wiki_revisionip_changelist') }}?revision={{revision.id}}">{{ _('View in admin') }}</a></td>
                     {% endif %}
                 </tr>
             {% endfor %}
