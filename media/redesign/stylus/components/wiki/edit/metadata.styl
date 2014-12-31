@@ -1,0 +1,45 @@
+.metadata {
+    display: none;
+    float: none;
+    margin-top: ($grid-spacing / 2);
+    margin-bottom: @margin-top;
+    width: auto;
+
+    .new & {
+        display: block;
+    }
+
+    .metadataDisplay {
+        display: inline-block;
+        padding: 8px 0 0 3px;
+    }
+
+    &.metadata-choose-parent {
+        display: none;
+        set-font-size($small-bump-font-size);
+    }
+
+    input, input#id_title {
+        float: left;
+        margin: 2px 0px;
+        padding: 6px 8px;
+        width: 70%;
+    }
+
+    select {
+        float: left;
+        margin: 5px 0;
+    }
+
+    label, legend {
+        color: #888;
+        display: block;
+        float: left;
+        font-weight: bold;
+        line-height: 2.5;
+        padding-right: 5px;
+        text-align: right;
+        width: auto;
+    }
+
+}

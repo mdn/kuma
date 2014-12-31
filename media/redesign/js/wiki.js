@@ -427,9 +427,9 @@
     /*
         Toggle kumascript error detail pane
     */
-    $('.kumascript-error-detail-toggle').toggleMessage({
+    $('.kserrors-details-toggle').toggleMessage({
         toggleCallback: function() {
-            $('.kumascript-error-details').toggleClass('hidden');
+            $('.kserrors-details').toggleClass('hidden');
         }
     });
 
