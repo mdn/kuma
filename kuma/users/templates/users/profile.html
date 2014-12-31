@@ -167,7 +167,7 @@
 
           <section id="docs-activity" class="profile-section">
             <header>
-              <h2>{{ _("Recent Docs Activity") }}</h2>
+              <h2>{{ _("Recent Docs Activity") }}</h2> <a href="{{ url('dashboards.revisions') }}?user={{ profile.user.username }}" class="button">{{ _('View all activity') }}</a>
             </header>
 
             {% if wiki_activity and wiki_activity|length %}
@@ -207,7 +207,6 @@
               </tfoot>
             </table>
 
-            <p><a href="{{ url('dashboards.revisions') }}?user={{ profile.user.username }}" class="button">{{ _('View all activity') }}</a></p>
             {% else %}
 
             {% if profile.user == request.user %}

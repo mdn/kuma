@@ -133,10 +133,16 @@
 
 #docs-activity {
     header {
+        display: flex;
+        align-items: center;
         margin-bottom: ($grid-spacing / 2);
         h2 {
             display: inline;
+            margin-bottom: 0;
         }
+    }
+    .button {
+        bidi-style(margin-left, 10px, margin-right, 0);
     }
 }
 
