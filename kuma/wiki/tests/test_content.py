@@ -739,6 +739,10 @@ class ContentSectionToolTests(UserTestCase):
         good = 'Fixing <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=12345" target="_blank">bug 12345</a> again. &lt;img src=&#34;http://davidwalsh.name&#34; /&gt; &lt;a href=&#34;&#34;&gt;javascript&gt;&lt;/a&gt;'
         eq_(bugize_text(bad), Markup(good))
 
+        bad_upper = 'Fixing Bug #12345 again.'
+        good_upper = 'Fixing <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=12345" target="_blank">Bug 12345</a> again.'
+        eq_(bugize_text(bad_upper), Markup(good_upper))
+
     def test_iframe_host_filter(self):
         slug = 'test-code-embed'
         embed_url = 'https://sampleserver/en-US/docs/%s$samples/sample1' % slug
