@@ -94,10 +94,11 @@ def _massage_diff_content(content):
 @register.filter
 def bugize_text(content):
     content = jinja2.escape(content)
-    content = re.sub(r'bug\s+#?(\d+)',
-                  jinja2.Markup('<a href="https://bugzilla.mozilla.org/'
-                                'show_bug.cgi?id=\\1" '
-                                'target="_blank">bug \\1</a>'),
+    regex = re.compile('(bug)\s+#?(\d+)', re.IGNORECASE)
+    content = regex.sub(
+        jinja2.Markup('<a href="https://bugzilla.mozilla.org/'
+                      'show_bug.cgi?id=\\2" '
+                      'target="_blank">\\1 \\2</a>'),
                   content)
     return content
 
