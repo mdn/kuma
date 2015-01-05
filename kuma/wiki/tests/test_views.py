@@ -158,7 +158,7 @@ class ViewTests(UserTestCase, WikiTestCase):
 
         url = reverse('wiki.json_slug', args=('article-title',),
                       locale=settings.WIKI_DEFAULT_LANGUAGE)
-        Switch.objects.create(name='application_ACAO', active=True).save()
+        Switch.objects.create(name='application_ACAO', active=True)
         resp = self.client.get(url)
         ok_('Access-Control-Allow-Origin' in resp)
         eq_('*', resp['Access-Control-Allow-Origin'])
@@ -213,7 +213,7 @@ class ViewTests(UserTestCase, WikiTestCase):
         url = reverse('wiki.toc', args=[slug],
                       locale=settings.WIKI_DEFAULT_LANGUAGE)
 
-        Switch.objects.create(name='application_ACAO', active=True).save()
+        Switch.objects.create(name='application_ACAO', active=True)
         resp = self.client.get(url)
         ok_('Access-Control-Allow-Origin' in resp)
         eq_('*', resp['Access-Control-Allow-Origin'])
@@ -258,7 +258,7 @@ class ViewTests(UserTestCase, WikiTestCase):
         _make_doc('Child 2', 'Root/Child_2', root_doc)
         _make_doc('Child 3', 'Root/Child_3', root_doc, True)
 
-        Switch.objects.create(name='application_ACAO', active=True).save()
+        Switch.objects.create(name='application_ACAO', active=True)
         for expand in (True, False):
             url = reverse('wiki.get_children', args=['Root'],
                           locale=settings.WIKI_DEFAULT_LANGUAGE)
@@ -2338,7 +2338,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                          data)
         eq_(0, RevisionIP.objects.all().count())
 
-        Switch.objects.create(name='store_revision_ips', active=True).save()
+        Switch.objects.create(name='store_revision_ips', active=True)
 
         data.update({'content': 'Store the IP address for the revision.',
                      'comment': 'Store the IP address for the revision.'})
@@ -2450,7 +2450,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
             <p>test</p>
             <p>test</p>
         """
-        Switch.objects.create(name='application_ACAO', active=True).save()
+        Switch.objects.create(name='application_ACAO', active=True)
         response = self.client.get('%s?raw=true' %
                               reverse('wiki.document', args=[d.full_path]),
                               HTTP_X_REQUESTED_WITH='XMLHttpRequest')
@@ -2995,7 +2995,7 @@ class AutosuggestDocumentsTests(WikiTestCase):
 
         url = reverse('wiki.autosuggest_documents',
                       locale=settings.WIKI_DEFAULT_LANGUAGE) + '?term=e'
-        Switch.objects.create(name='application_ACAO', active=True).save()
+        Switch.objects.create(name='application_ACAO', active=True)
         resp = self.client.get(url)
         ok_('Access-Control-Allow-Origin' in resp)
         eq_('*', resp['Access-Control-Allow-Origin'])
@@ -3062,7 +3062,7 @@ class CodeSampleViewTests(UserTestCase, WikiTestCase):
             '<script type="text/javascript">window.alert("HI THERE")</script>',
         )
 
-        Switch.objects.create(name='application_ACAO', active=True).save()
+        Switch.objects.create(name='application_ACAO', active=True)
         response = self.client.get(reverse('wiki.code_sample',
                                            args=[d.full_path, 'sample1']),
                                    HTTP_HOST='testserver')
