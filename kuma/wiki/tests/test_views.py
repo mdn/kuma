@@ -14,6 +14,7 @@ from urlparse import urlparse
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
+from django.core import mail
 from django.core.cache import cache
 from django.db.models import Q
 from django.test.client import (FakePayload, encode_multipart,
@@ -22,7 +23,7 @@ from django.http import Http404
 from django.utils.encoding import smart_str
 
 import constance.config
-from waffle.models import Flag
+from waffle.models import Flag, Switch
 
 from authkeys.models import Key
 from devmo.tests import override_constance_settings
@@ -32,7 +33,8 @@ from kuma.users.tests import UserTestCase, user
 from kuma.wiki.constants import DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL
 from kuma.wiki.content import get_seo_description
 from kuma.wiki.events import EditDocumentEvent
-from kuma.wiki.models import Document, Revision, DocumentZone, DocumentTag
+from kuma.wiki.models import (Document, Revision, RevisionIP, DocumentZone,
+                              DocumentTag)
 from kuma.wiki.tests import (doc_rev, document, new_document_data, revision,
                              normalize_html, create_template_test_users,
                              make_translation)
@@ -156,6 +158,7 @@ class ViewTests(UserTestCase, WikiTestCase):
 
         url = reverse('wiki.json_slug', args=('article-title',),
                       locale=settings.WIKI_DEFAULT_LANGUAGE)
+        Switch.objects.create(name='application_ACAO', active=True)
         resp = self.client.get(url)
         ok_('Access-Control-Allow-Origin' in resp)
         eq_('*', resp['Access-Control-Allow-Origin'])
@@ -210,6 +213,7 @@ class ViewTests(UserTestCase, WikiTestCase):
         url = reverse('wiki.toc', args=[slug],
                       locale=settings.WIKI_DEFAULT_LANGUAGE)
 
+        Switch.objects.create(name='application_ACAO', active=True)
         resp = self.client.get(url)
         ok_('Access-Control-Allow-Origin' in resp)
         eq_('*', resp['Access-Control-Allow-Origin'])
@@ -254,6 +258,7 @@ class ViewTests(UserTestCase, WikiTestCase):
         _make_doc('Child 2', 'Root/Child_2', root_doc)
         _make_doc('Child 3', 'Root/Child_3', root_doc, True)
 
+        Switch.objects.create(name='application_ACAO', active=True)
         for expand in (True, False):
             url = reverse('wiki.get_children', args=['Root'],
                           locale=settings.WIKI_DEFAULT_LANGUAGE)
@@ -1955,15 +1960,15 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         # Ensure the page appears on the listing pages
         response = self.client.get(reverse('wiki.list_review'))
-        eq_(1, pq(response.content).find("ul.documents li a:contains('%s')" %
+        eq_(1, pq(response.content).find("ul.document-list li a:contains('%s')" %
                                          doc.title).length)
         response = self.client.get(reverse('wiki.list_review_tag',
                                       args=('technical',)))
-        eq_(1, pq(response.content).find("ul.documents li a:contains('%s')" %
+        eq_(1, pq(response.content).find("ul.document-list li a:contains('%s')" %
                                          doc.title).length)
         response = self.client.get(reverse('wiki.list_review_tag',
                                       args=('editorial',)))
-        eq_(1, pq(response.content).find("ul.documents li a:contains('%s')" %
+        eq_(1, pq(response.content).find("ul.document-list li a:contains('%s')" %
                                          doc.title).length)
 
         # Also, ensure that the page appears in the proper feeds
@@ -1994,15 +1999,15 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         # Ensure the page appears on the listing pages
         response = self.client.get(reverse('wiki.list_review'))
-        eq_(1, pq(response.content).find("ul.documents li a:contains('%s')" %
+        eq_(1, pq(response.content).find("ul.document-list li a:contains('%s')" %
                                          doc.title).length)
         response = self.client.get(reverse('wiki.list_review_tag',
                                       args=('technical',)))
-        eq_(0, pq(response.content).find("ul.documents li a:contains('%s')" %
+        eq_(0, pq(response.content).find("ul.document-list li a:contains('%s')" %
                                          doc.title).length)
         response = self.client.get(reverse('wiki.list_review_tag',
                                       args=('editorial',)))
-        eq_(1, pq(response.content).find("ul.documents li a:contains('%s')" %
+        eq_(1, pq(response.content).find("ul.document-list li a:contains('%s')" %
                                          doc.title).length)
 
         # Also, ensure that the page appears in the proper feeds
@@ -2314,6 +2319,66 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         ok_(mock_kumascript_get.called,
             "kumascript should have been used")
 
+    def test_store_revision_ip(self):
+        self.client.login(username='testuser', password='testpass')
+        data = new_document_data()
+        slug = 'test-article-for-storing-revision-ip'
+        data.update({'title': 'A Test Article For Storing Revision IP',
+                     'slug': slug})
+        self.client.post(reverse('wiki.new_document'), data)
+
+        doc = Document.objects.get(locale=settings.WIKI_DEFAULT_LANGUAGE,
+                                   slug=slug)
+
+        data.update({'form': 'rev',
+                     'content': 'This revision should NOT record IP',
+                     'comment': 'This revision should NOT record IP'})
+
+        self.client.post(reverse('wiki.edit_document', args=[doc.full_path]),
+                         data)
+        eq_(0, RevisionIP.objects.all().count())
+
+        Switch.objects.create(name='store_revision_ips', active=True)
+
+        data.update({'content': 'Store the IP address for the revision.',
+                     'comment': 'Store the IP address for the revision.'})
+
+        self.client.post(reverse('wiki.edit_document', args=[doc.full_path]),
+                         data)
+        eq_(1, RevisionIP.objects.all().count())
+        rev = doc.revisions.order_by('-id').all()[0]
+        rev_ip = RevisionIP.objects.get(revision=rev)
+        eq_('127.0.0.1', rev_ip.ip)
+
+    def test_email_for_first_edits(self):
+        self.client.login(username='testuser', password='testpass')
+        data = new_document_data()
+        slug = 'test-article-for-storing-revision-ip'
+        data.update({'title': 'A Test Article For First Edit Emails',
+                     'slug': slug})
+        self.client.post(reverse('wiki.new_document'), data)
+        eq_(1, len(mail.outbox))
+
+        doc = Document.objects.get(
+            locale=settings.WIKI_DEFAULT_LANGUAGE, slug=slug)
+
+        data.update({'form': 'rev',
+                     'content': 'This edit should not send an email',
+                     'comment': 'This edit should not send an email'})
+
+        self.client.post(reverse('wiki.edit_document',
+                                 args=[doc.full_path]),
+                         data)
+        eq_(1, len(mail.outbox))
+
+        self.client.login(username='admin', password='testpass')
+        data.update({'content': 'Admin first edit should send an email',
+                     'comment': 'Admin first edit should send an email'})
+
+        self.client.post(reverse('wiki.edit_document',
+                                 args=[doc.full_path]),
+                         data)
+        eq_(2, len(mail.outbox))
 
 class DocumentWatchTests(UserTestCase, WikiTestCase):
     """Tests for un/subscribing to document edit notifications."""
@@ -2385,6 +2450,7 @@ class SectionEditingResourceTests(UserTestCase, WikiTestCase):
             <p>test</p>
             <p>test</p>
         """
+        Switch.objects.create(name='application_ACAO', active=True)
         response = self.client.get('%s?raw=true' %
                               reverse('wiki.document', args=[d.full_path]),
                               HTTP_X_REQUESTED_WITH='XMLHttpRequest')
@@ -2929,8 +2995,8 @@ class AutosuggestDocumentsTests(WikiTestCase):
 
         url = reverse('wiki.autosuggest_documents',
                       locale=settings.WIKI_DEFAULT_LANGUAGE) + '?term=e'
+        Switch.objects.create(name='application_ACAO', active=True)
         resp = self.client.get(url)
-
         ok_('Access-Control-Allow-Origin' in resp)
         eq_('*', resp['Access-Control-Allow-Origin'])
 
@@ -2971,7 +3037,7 @@ class AutosuggestDocumentsTests(WikiTestCase):
 
         resp = self.client.get(reverse('wiki.all_documents',
                                        locale=settings.WIKI_DEFAULT_LANGUAGE))
-        eq_(len(valid_documents), len(pq(resp.content).find('.documents li')))
+        eq_(len(valid_documents), len(pq(resp.content).find('.document-list li')))
 
 
 class CodeSampleViewTests(UserTestCase, WikiTestCase):
@@ -2996,6 +3062,7 @@ class CodeSampleViewTests(UserTestCase, WikiTestCase):
             '<script type="text/javascript">window.alert("HI THERE")</script>',
         )
 
+        Switch.objects.create(name='application_ACAO', active=True)
         response = self.client.get(reverse('wiki.code_sample',
                                            args=[d.full_path, 'sample1']),
                                    HTTP_HOST='testserver')

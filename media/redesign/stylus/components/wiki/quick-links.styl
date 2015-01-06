@@ -1,0 +1,80 @@
+/* quick links */
+.quick-links {
+    set-smaller-font-size();
+    position: relative;
+    margin-bottom: $grid-spacing;
+
+    a {
+        color: $text-color;
+
+        /* 404 link */
+        &.new {
+            color: #900;
+        }
+    }
+
+    .title {
+        margin-bottom: 0;
+        display: inline-block;
+    }
+
+    li {
+        position: relative;
+        padding-top: $list-item-spacing;
+    }
+
+    li li {
+        bidi-style(padding-left, 20px, padding-right, 0);
+    }
+
+    ul ul { /* hides submenus by default */
+        display: none;
+
+        .no-js & {
+            display: block;
+        }
+    }
+}
+
+.quick-links li.toggleable a, .quick-links .title, #quick-links-toggle {
+    bidi-style(padding-left, 20px, padding-right, 0);
+    color: $text-color;
+    display: inline-block;
+}
+
+.quick-links a, .quick-links .title {
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.see-also {
+    margin-left: -6px !important;
+    padding: 4px 4px 4px 6px !important;
+}
+
+.quick-links .see-also{
+    background: $light-background-color !important;
+    padding-left: 0;
+    margin-left: -22px;
+    display: inline-block !important;
+    padding: 4px 42px;
+    width: 100%;
+    vendorize(box-sizing, border-box);
+}
+
+
+.quick-links {$selector-icon}, #quick-links-toggle {$selector-icon} {
+    bidi-style(left, -6px, right, auto);
+    set-font-size($base-font-size);
+    position: absolute;
+    top: 1px;
+
+    /* don't allow empty paragraphs by CKEditor */
+    p, div {
+        display: none;
+    }
+
+    reverse-link-decoration();
+}

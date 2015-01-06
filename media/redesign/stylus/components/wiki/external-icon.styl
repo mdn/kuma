@@ -1,0 +1,27 @@
+/* add icon to external inks but not if they are to demos or if we're specifically to ignore */
+
+.external-icon:not([href^='https://mdn.mozillademos.org']):not(.ignore-external) {
+    white-space: pre-line;
+
+    html[dir='ltr'] &:before,
+    html[dir='rtl'] &:after {
+        content: '\f08e';
+        font-family: FontAwesome;
+        set-font-size(9px);
+        display: inline-block;
+        opacity: 0.5;
+        margin-right: 3px;
+    }
+
+    html[dir='rtl'] &:after {
+        transform: rotateY(180deg);
+    }
+
+    &:hover,
+    &:focus {
+        &:before,
+        &:after {
+            text-decoration: none;
+        }
+    }
+}

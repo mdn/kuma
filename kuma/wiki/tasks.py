@@ -10,11 +10,12 @@ from django.dispatch import receiver
 from django.db import connection
 from django.core.cache import get_cache
 
+from constance import config
 import waffle
 
 from devmo.utils import MemcacheLock
 from .exceptions import StaleDocumentsRenderingInProgress, PageMoveError
-from .models import Document
+from .models import Document, RevisionIP
 from .signals import render_done
 
 
@@ -210,3 +211,14 @@ def update_community_stats():
 
     cache = get_cache('memcache')
     cache.set('community_stats', community_stats, 86400)
+
+
+@task
+def delete_old_revision_ips(immediate=False, days=30):
+    RevisionIP.objects.delete_old(days=days)
+
+
+@task
+def send_first_edit_email(email):
+    email.to = [config.EMAIL_LIST_FOR_FIRST_EDITS,]
+    email.send()

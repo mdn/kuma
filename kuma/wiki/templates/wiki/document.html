@@ -342,18 +342,18 @@
                   {% set tags = document.tags.all() %}
                   {% if tags.exists() %}
                   <!-- tags if present -->
-                  <div class="tag-attach-list contributor-sub">
+                  <div class="tag-attach-list contributors-sub">
                     <i aria-hidden="true" class="icon-tags"></i><strong>{{ _('Tags:') }}</strong>&nbsp;
                     <ul class="tags tags-small">{% for tag in tags %}<li><a href="{{ url('wiki.tag', tag.name) }}">{{ tag.name }}</a></li>{% endfor %}</ul>
                   </div>
                   {% endif %}
                   {% trans contributors=user_list(contributors) %}
-                  <div class="contributor-sub">
+                  <div class="contributors-sub">
                     <i aria-hidden="true" class="icon-group"></i><strong>Contributors to this page:</strong> {{ contributors }}
                   </div>
                   {% endtrans %}
                   {% if current_revision.creator %}
-                    <div class="contributor-sub">
+                    <div class="contributors-sub">
                       <i aria-hidden="true" class="icon-clock-o"></i><strong>{{ _('Last updated by:') }}</strong>
                       <a href="{{ current_revision.creator.get_absolute_url() }}">{{ current_revision.creator }}</a>,
                       {{ datetimeformat(current_revision.created, format='datetime') }}

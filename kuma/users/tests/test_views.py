@@ -688,7 +688,7 @@ class KumaGitHubTests(UserTestCase):
             "company": "GitHub",
             "blog": "https://github.com/blog",
             "location": "San Francisco",
-            "email": "octocat@github.com",
+            "email": %(public_email)s,
             "hireable": false,
             "bio": "There once was...",
             "public_repos": 2,
@@ -758,6 +758,8 @@ class KumaGitHubTests(UserTestCase):
                          {'verified': True,
                           'email': 'octo.cat@github-inc.com',
                           'primary': True})
+        # then check if the radio button's default value is the public email address
+        self.assertEqual(response.context["form"].initial["email"], 'octocat@github.com')
 
         unverified_email = 'o.ctocat@gmail.com'
         data = {
@@ -774,6 +776,13 @@ class KumaGitHubTests(UserTestCase):
         self.assertEquals(unverified_email_addresses.count(), 1)
         self.assertTrue(unverified_email_addresses[0].primary)
         self.assertFalse(unverified_email_addresses[0].verified)
+
+    def test_email_addresses_with_no_public(self):
+        self.login(username='private_octocat',
+                   verified_email='octocat@github.com',
+                   public_email=None)
+        response = self.client.get(self.signup_url)
+        self.assertEqual(response.context["form"].initial["email"], 'octocat@github.com')
 
     def test_matching_accounts(self):
         testemail = 'octo.cat.III@github-inc.com'
@@ -826,7 +835,8 @@ class KumaGitHubTests(UserTestCase):
     def login(self,
               username='octocat',
               verified_email='octo.cat@github-inc.com',
-              process='login', with_refresh_token=True):
+              process='login', with_refresh_token=True,
+              public_email='octocat@github.com'):
         resp = self.client.get(reverse('github_login',
                                        locale=settings.WIKI_DEFAULT_LANGUAGE),
                                {'process': process})
@@ -842,7 +852,8 @@ class KumaGitHubTests(UserTestCase):
                            {'content-type': 'application/json'}),
                 MockedResponse(200,
                                self.mocked_user_response %
-                               {'username': username}),
+                               {'username': username, 
+                                'public_email': json.dumps(public_email)}),
                 MockedResponse(200,
                                self.mocked_email_response %
                                {'verified_email': verified_email})):

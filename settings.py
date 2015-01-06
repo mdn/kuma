@@ -655,6 +655,9 @@ MINIFY_BUNDLES = {
             'js/prism-mdn/components/prism-json.css',
             'redesign/css/wiki-syntax.css',
         ),
+        'wiki-revisions': (
+            'redesign/css/wiki-revisions.css',
+        ),
         'wiki-edit': (
             'redesign/css/wiki-edit.css',
         ),
@@ -1139,6 +1142,11 @@ CONSTANCE_CONFIG = dict(
     WELCOME_EMAIL_FROM = (
         "Janet Swisher <no-reply@mozilla.org>",
         'Email address from which welcome emails will be sent',
+    ),
+
+    EMAIL_LIST_FOR_FIRST_EDITS = (
+        "mdn-spam-watch@mozilla.com",
+        "Email address to which emails will be sent for users' first edits",
     ),
 
     FACEBOOK_RESEARCH_APP_ID = (
