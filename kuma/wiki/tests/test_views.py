@@ -2350,7 +2350,10 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         rev_ip = RevisionIP.objects.get(revision=rev)
         eq_('127.0.0.1', rev_ip.ip)
 
-    def test_email_for_first_edits(self):
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_email_for_first_edits(self, get_current):
+        get_current.return_value.domain = 'dev.mo.org'
+
         self.client.login(username='testuser', password='testpass')
         data = new_document_data()
         slug = 'test-article-for-storing-revision-ip'
@@ -2379,6 +2382,17 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
                                  args=[doc.full_path]),
                          data)
         eq_(2, len(mail.outbox))
+
+        def _check_message_for_headers(message, username):
+            ok_("%s made their first edit" % username in message.subject)
+            eq_({'X-Article-Url': "dev.mo.org%s" % doc.get_absolute_url(),
+                 'X-Editor-Username': username}, message.extra_headers)
+
+        testuser_message = mail.outbox[0]
+        admin_message = mail.outbox[1]
+        _check_message_for_headers(testuser_message, 'testuser')
+        _check_message_for_headers(admin_message, 'admin')
+
 
 class DocumentWatchTests(UserTestCase, WikiTestCase):
     """Tests for un/subscribing to document edit notifications."""
