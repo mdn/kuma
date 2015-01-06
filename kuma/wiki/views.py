@@ -2190,8 +2190,8 @@ def _make_first_edit_email(new_rev, request):
     article_url = "%s%s" % (Site.objects.get_current().domain,
                             doc.get_absolute_url())
     email = EmailMessage(subject, message, settings.DEFAULT_FROM_EMAIL,
-                         headers = {'X-Article-Url': article_url,
-                                    'X-Editor-Username': user.username})
+                         headers={'X-Kuma-Document-Url': article_url,
+                                  'X-Kuma-Editor-Username': user.username})
     return email
 
 
