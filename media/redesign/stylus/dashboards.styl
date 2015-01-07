@@ -50,7 +50,8 @@
         }
     }
 
-    td {
+    /* Select only the outer table cells. */
+    > thead td, .dashboard-row > td {
         @extend $column-strip;
         padding: 6px;
         display: inline-block;
