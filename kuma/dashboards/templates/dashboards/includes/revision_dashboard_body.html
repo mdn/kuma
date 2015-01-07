@@ -8,10 +8,10 @@
     <table class="dashboard-table" width="100%">
         <thead>
             <tr>
-                <td class="dashboard-revision">Revision</td>
-                <td class="dashboard-title">Title</td>
-                <td class="dashboard-comment">Comment</td>
-                <td class="dashboard-author">Author</td>
+                <td class="dashboard-col">Revision</td>
+                <td class="dashboard-col dashboard-col-title">Title</td>
+                <td class="dashboard-col">Comment</td>
+                <td class="dashboard-col dashboard-col-author">Author</td>
             </tr>
         </thead>
         <tbody>
@@ -29,19 +29,19 @@
                     data-compare-url="{{ url('wiki.compare_revisions', revision.document.full_path, locale=revision.document.locale) }}?from={{ previous_id if previous_id else revision.id }}&to={{ revision.id }}&raw=1"
                     data-revert-url="{{ url('wiki.revert_document', revision.document.full_path, revision.id, locale=revision.document.locale) }}"
                     data-history-url="{{ url('wiki.document_revisions', revision.document.full_path, locale=revision.document.locale) }}">
-                    <td class="dashboard-revision">
+                    <td class="dashboard-col">
                         <a href="{{ url('wiki.revision', revision.document.full_path, revision.id) }}">{{ datetimeformat(revision.created, format='datetime') }}</a>
                         <br />
                         <span class="locale">{{ revision.document.locale }}</span>
                         {% if not previous_id %}<span class="new">{{ _('new') }}</span>{% endif %}
                         {% if revision.document.deleted %}<span class="deleted">{{ _('deleted') }}</span>{% endif %}
                     </td>
-                    <td class="dashboard-title">
+                    <td class="dashboard-col dashboard-col-title">
                         <a href="{{ revision_url }}">{{ revision.title }}</a>
                         <span class="dashboard-slug">{{ revision.document.slug }}</span>
                     </td>
-                    <td class="dashboard-comment">{{ format_comment(revision) }}</td>
-                    <td class="dashboard-author"><a href="{{ revision.creator.get_absolute_url() }}">{{ revision.creator }}</a>
+                    <td class="dashboard-col">{{ format_comment(revision) }}</td>
+                    <td class="dashboard-col dashboard-col-author"><a href="{{ revision.creator.get_absolute_url() }}">{{ revision.creator }}</a>
                     {% if show_ips %}
                     <br/><a class="dashboard-ip-link" href="{{ url('admin:wiki_revisionip_changelist') }}?revision={{revision.id}}" target="_blank">{{ _('View IP') }}</a>
                     {% endif %}

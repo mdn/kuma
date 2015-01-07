@@ -103,7 +103,7 @@ class RevisionsDashTest(UserTestCase):
         eq_(2, revisions.length)
 
         for revision in revisions:
-            author = pq(revision).find('.dashboard-author').text()
+            author = pq(revision).find('.dashboard-col-author').text()
             ok_('testuser01' in author)
             ok_('testuser2' not in author)
 
@@ -118,7 +118,7 @@ class RevisionsDashTest(UserTestCase):
         revisions = page.find('.dashboard-row')
 
         for revision in revisions:
-            slug = pq(revision).find('.dashboard-title').html()
+            slug = pq(revision).find('.dashboard-col-title').html()
             ok_('lorem' in slug)
             ok_('article' not in slug)
 
@@ -134,4 +134,4 @@ class RevisionsDashTest(UserTestCase):
 
         eq_(6, revisions.length)
         for revision in revisions:
-            ok_('lorem' not in pq(revision).find('.dashboard-title').html())
+            ok_('lorem' not in pq(revision).find('.dashboard-col-title').html())
