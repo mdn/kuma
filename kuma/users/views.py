@@ -82,8 +82,7 @@ def profile_view(request, username):
     profile = get_object_or_404(UserProfile, user__username=username)
     user = profile.user
 
-    if (user.bans.filter(is_active=True).exists() and
-            not request.user.is_superuser):
+    if (profile.is_banned and not request.user.is_superuser):
         return render(request, '403.html',
                       {'reason': "bannedprofile"}, status=403)
 
