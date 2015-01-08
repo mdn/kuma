@@ -4,7 +4,13 @@ cache: apt
 python:
     - "2.6"
 
-env: FORCE_DB=1 PYTHONPATH=. DJANGO_SETTINGS_MODULE=settings_travis DEBIAN_FRONTEND=noninteractive
+env:
+    global:
+        - FORCE_DB=1
+        - PYTHONPATH=.
+        - DJANGO_SETTINGS_MODULE=settings_travis
+        - DEBIAN_FRONTEND=noninteractive
+        - CFLAGS="-O0"
 
 services:
     - memcached
