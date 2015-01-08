@@ -8,10 +8,6 @@ class python_prereqs {
           "python-pyquery", "python-pygments", "pylint", "pyflakes"]:
           ensure => purged;
     }
-    file {
-        "/home/vagrant/src/puppet/cache/wheels":
-        ensure => directory;
-    }
     exec {
         "get-pip":
             cwd => '/tmp',
@@ -28,8 +24,7 @@ class python_prereqs {
     exec {
         "install-extras":
             require => Exec["install-pip"],
-            # we install 1.4.9 here separately because 1.4.x can't be packaged as a wheel file
-            command => '/usr/local/bin/pip2.6 install wheel virtualenv "Django<1.5"';
+            command => '/usr/local/bin/pip2.6 install virtualenv';
     }
     exec {
         "create-virtualenv":
@@ -41,30 +36,17 @@ class python_prereqs {
 }
 
 
-class python_wheels {
+class python_reqs {
     exec {
-        "download-wheels":
-            cwd => "/home/vagrant/src/puppet/cache/wheels",
-            timeout => 1800, # Too long, but this can take awhile
-            command => "/usr/bin/axel https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/base_wheels.tar.gz && /bin/tar xfz *.tar.gz && /bin/rm base_wheels.tar.gz",
-            creates => '/home/vagrant/src/puppet/cache/wheels/base_wheels',
-            require => File["/home/vagrant/src/puppet/cache/wheels"],
-            user => 'vagrant';
-        "install-wheels":
+        "install-reqs":
             cwd => '/home/vagrant/src',
             timeout => 1200, # Too long, but this can take awhile
-            command => "/home/vagrant/env/bin/pip install --no-index --find-links=/home/vagrant/src/puppet/cache/wheels/base_wheels -r requirements/dev.txt -r requirements/compiled.txt",
-            require => Exec["download-wheels"],
-            user => 'vagrant';
-        "clean-wheels":
-            cwd => "/home/vagrant/src/puppet/cache/wheels",
-            command => "/bin/rm -rf base_wheels",
-            require => Exec["install-wheels"],
+            command => "/home/vagrant/env/bin/pip install -r requirements/dev.txt -r requirements/compiled.txt",
             user => 'vagrant';
      }
 }
 
 class python {
-    include python_prereqs, python_wheels
-    Class['python_prereqs'] -> Class['python_wheels']
+    include python_prereqs, python_reqs
+    Class['python_prereqs'] -> Class['python_reqs']
 }
