@@ -10,7 +10,7 @@ At the end, you'll earn `the badge`_:
 
 .. image:: https://badges.mozilla.org/media/uploads/badge/2/3/23fef80968a03f3ba32321a7f31ae1e2_image_1372816280_0238.png
 
-.. note:: **If you have problems using vagrant**, check Troubleshooting_ below
+.. note:: **If you have problems using vagrant**, check Troubleshooting_ and `Getting More Help`_ below.
 
 .. _vagrant: http://vagrantup.com/
 .. _uses NFS to share the current working directory: http://docs.vagrantup.com/v2/synced-folders/nfs.html
@@ -79,8 +79,9 @@ Install and run everything
 
 #. Visit the homepage at `https://developer-local.allizom.org <https://developer-local.allizom.org/>`_
 
-#. You've installed Kuma! If you want `the badge`_, send a screenshot of your
-   browser to luke dot crouch at gmail dot com.
+#. You've installed Kuma! If you want `the badge`_, `email a screenshot of your
+   browser to mdn-dev at mozilla dot com
+   <mailto:mdn-dev@mozilla.com?subject=Local%20MDN%20Screenshot>`_.
 
 .. _the badge: https://badges.mozilla.org/badges/badge/Installed-and-ran-Kuma
 
@@ -255,6 +256,7 @@ Errors after switching branches
           sudo puppet apply /home/vagrant/src/puppet/manifests/dev-vagrant.pp
 
 .. _more help:
+.. _Getting More Help:
 
 Getting more help
 ~~~~~~~~~~~~~~~~~
