@@ -11,7 +11,6 @@ from django.db import connection
 from django.core.cache import get_cache
 
 from constance import config
-import waffle
 
 from devmo.utils import MemcacheLock
 from .exceptions import StaleDocumentsRenderingInProgress, PageMoveError
@@ -63,15 +62,8 @@ def render_stale_documents(immediate=False, log=None):
                                                        settings.SITE_URL))
                     subtasks.append(subtask)
                     log.info("Deferred rendering for stale %s" % doc)
-            if subtasks:
-                task_group = group(tasks=subtasks)
-                if waffle.switch_is_active('render_stale_documents_async'):
-                    # kick off the task group asynchronously
-                    task_group.apply_async()
-                else:
-                    # kick off the task group synchronously
-                    result = task_group.apply()
-                    response = result.join()
+            task_group = group(subtasks)
+            task_group().get()  # calling it since async doesn't work
         finally:
             lock.release()
     return response

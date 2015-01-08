@@ -1,5 +1,6 @@
 from settings import *
 
+CELERY_ALWAYS_EAGER = True
 ASYNC_SIGNALS = False
 ES_URLS = ['http://localhost:9200']
 ES_INDEX_PREFIX = 'mdn'
