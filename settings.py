@@ -826,6 +826,7 @@ BROKER_URL = 'amqp://kuma:kuma@localhost:5672/kuma'
 
 CELERY_ALWAYS_EAGER = True  # For tests. Set to False for use.
 CELERY_SEND_TASK_ERROR_EMAILS = True
+CELERY_SEND_EVENTS = True
 CELERY_SEND_TASK_SENT_EVENT = True
 
 CELERYD_LOG_LEVEL = logging.INFO
