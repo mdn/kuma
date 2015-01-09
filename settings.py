@@ -787,9 +787,7 @@ MINIFY_BUNDLES = {
 # Map wiki article tags to scrollback.io rooms
 # Warning: Tag matching is case-sensitive.
 SCROLLBACK_ROOM_MAP = {
-    "mdn": "mdn",
-    "MDN": "mdn",
-    "Accessibility": "amalroom"
+    "MDN": "mdn"
 }
 
 #
