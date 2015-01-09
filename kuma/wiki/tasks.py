@@ -58,9 +58,7 @@ def render_stale_documents(immediate=False, log=None):
                     doc.render('no-cache', settings.SITE_URL)
                     log.info("Rendered stale %s" % doc)
                 else:
-                    subtask = render_document.subtask((doc.pk, 'no-cache',
-                                                       settings.SITE_URL))
-                    subtasks.append(subtask)
+                    render_document(doc.pk, 'no-cache', settings.SITE_URL)
                     log.info("Deferred rendering for stale %s" % doc)
             task_group = group(subtasks)
             task_group().get()  # calling it since async doesn't work
