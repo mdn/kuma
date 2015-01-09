@@ -30,10 +30,10 @@ def render_document(pk, cache_control, base_url):
 
 
 @task(throws=(StaleDocumentsRenderingInProgress,))
-def render_stale_documents(immediate=False, log=None):
+def render_stale_documents(log=None):
     """Simple task wrapper for rendering stale documents"""
     lock = MemcacheLock('render-stale-documents-lock', expires=60 * 60)
-    if lock.acquired and not immediate:
+    if lock.acquired:
         # fail loudly if this is running already
         # may indicate a problem with the schedule of this task
         raise StaleDocumentsRenderingInProgress
@@ -52,16 +52,9 @@ def render_stale_documents(immediate=False, log=None):
     response = None
     if lock.acquire():
         try:
-            subtasks = []
             for doc in stale_docs:
-                if immediate:
-                    doc.render('no-cache', settings.SITE_URL)
-                    log.info("Rendered stale %s" % doc)
-                else:
-                    render_document(doc.pk, 'no-cache', settings.SITE_URL)
-                    log.info("Deferred rendering for stale %s" % doc)
-            task_group = group(subtasks)
-            task_group().get()  # calling it since async doesn't work
+                doc.render('no-cache', settings.SITE_URL)
+                log.info("Rendered stale %s" % doc)
         finally:
             lock.release()
     return response
