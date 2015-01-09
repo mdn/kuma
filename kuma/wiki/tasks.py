@@ -29,7 +29,7 @@ def render_document(pk, cache_control, base_url):
     return document.rendered_errors
 
 
-@task
+@task(throws=(StaleDocumentsRenderingInProgress,))
 def render_stale_documents(immediate=False, log=None):
     """Simple task wrapper for rendering stale documents"""
     lock = MemcacheLock('render-stale-documents-lock')
