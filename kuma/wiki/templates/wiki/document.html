@@ -80,7 +80,7 @@
   	function addScrollback(roomName) {
       if (!roomName) return;
       if(!scrollbackAdded) {
-    		window.scrollback = {"room": roomName,"form":"toast","minimize":false};
+    		window.scrollback = {"room": roomName,"form":"toast","minimize":false, titlebarColor: "#00539f"};
         var el = document.createElement("script");
         el.async = 1;
         el.src = (location.protocol === "https:" ? "https:" : "http:") + "//scrollback.io/client.min.js";
