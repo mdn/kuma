@@ -5,6 +5,7 @@ from kuma.users.tests import UserTestCase
 from sumo.urlresolvers import reverse
 
 from pyquery import PyQuery as pq
+from waffle.models import Switch
 
 
 class RevisionsDashTest(UserTestCase):
@@ -39,6 +40,26 @@ class RevisionsDashTest(UserTestCase):
         eq_(28, int(pq(revisions[1]).attr('data-revision-id')))
         # Oldest revision last.
         eq_(19, int(pq(revisions[-1]).attr('data-revision-id')))
+
+    @attr('dashboards')
+    def test_ip_link_on_switch(self):
+        url = reverse('dashboards.revisions', locale='en-US')
+        response = self.client.get(url)
+        eq_(200, response.status_code)
+
+        page = pq(response.content)
+        ip_col_header = page.find('a.ip-link')
+        eq_([], ip_col_header)
+
+        Switch.objects.create(name='store_revision_ips', active=True).save()
+        self.client.login(username='admin', password='testpass')
+        url = reverse('dashboards.revisions', locale='en-US')
+        response = self.client.get(url)
+        eq_(200, response.status_code)
+
+        page = pq(response.content)
+        ip_col_header = page.find('a.dashboard-ip-link')
+        ok_(len(ip_col_header) > 0)
 
     @attr('dashboards')
     def test_locale_filter(self):

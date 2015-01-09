@@ -15,12 +15,6 @@
         font-weight: bold;
     }
 
-    .dashboard-revision, .dashboard-title, .dashboard-comment, .dashboard-author {
-        padding: 6px;
-        display: inline-block;
-        vertical-align: text-top;
-    }
-
     tbody tr {
         border-bottom: 1px solid #ccc;
         cursor: pointer;
@@ -56,13 +50,17 @@
         }
     }
 
+    /* Select only the outer table cells. */
+    > thead td, .dashboard-row > td {
+        @extend $column-strip;
+        padding: 6px;
+        display: inline-block;
+        vertical-align: text-top;
+    }
+
     .dashboard-detail {
         display: none;
         padding: 0 $grid-spacing;
-    }
-
-    .dashboard-revision, .dashboard-title, .dashboard-comment, .dashboard-author {
-        @extend $column-strip;
     }
 
     .dashboard-slug {

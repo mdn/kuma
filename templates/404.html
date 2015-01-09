@@ -37,9 +37,6 @@
         <a href="{{ tumbeasts_url }}" rel="nofollow">Tumbeasts</a> by Matthew Inman of <a href="{{ oatmeal_url }}" rel="nofollow">The Oatmeal</a>
     {% endtrans %}</small></p>
 
-    {% if waffle.flag('social_account_research') and (not user.is_authenticated()) %}
-        {% include "users/snippets/social_account_research_notice.html" %}
-    {% endif %}
   </section>
 </div>
 </section>

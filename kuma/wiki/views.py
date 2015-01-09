@@ -17,6 +17,7 @@ from tower import ugettext_lazy as _lazy, ugettext as _
 
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.sites.models import Site
 from django.core.exceptions import PermissionDenied
 from django.core.cache import cache
 from django.core.mail import EmailMessage
@@ -2186,7 +2187,11 @@ def _make_first_edit_email(new_rev, request):
     template = 'wiki/email/edited.ltxt'
     context = context_dict(new_rev)
     message = render_to_string(request, template, context)
-    email = EmailMessage(subject, message, settings.DEFAULT_FROM_EMAIL)
+    article_url = "%s%s" % (Site.objects.get_current().domain,
+                            doc.get_absolute_url())
+    email = EmailMessage(subject, message, settings.DEFAULT_FROM_EMAIL,
+                         headers={'X-Kuma-Document-Url': article_url,
+                                  'X-Kuma-Editor-Username': user.username})
     return email
 
 
