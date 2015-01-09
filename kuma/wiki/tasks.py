@@ -32,7 +32,7 @@ def render_document(pk, cache_control, base_url):
 @task(throws=(StaleDocumentsRenderingInProgress,))
 def render_stale_documents(immediate=False, log=None):
     """Simple task wrapper for rendering stale documents"""
-    lock = MemcacheLock('render-stale-documents-lock')
+    lock = MemcacheLock('render-stale-documents-lock', expires=60 * 60)
     if lock.acquired and not immediate:
         # fail loudly if this is running already
         # may indicate a problem with the schedule of this task
