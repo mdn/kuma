@@ -1,20 +1,21 @@
 import logging
 
-from celery.task import task, group
-
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.core.mail import send_mail
-from django.db import transaction
-from django.dispatch import receiver
-from django.db import connection
+from django.contrib.sites.models import Site
 from django.core.cache import get_cache
+from django.core.mail import EmailMessage, send_mail
+from django.db import connection, transaction
+from django.dispatch import receiver
+from django.template.loader import render_to_string
 
+from celery.task import task
 from constance import config
 
 from devmo.utils import MemcacheLock
+from .events import context_dict
 from .exceptions import StaleDocumentsRenderingInProgress, PageMoveError
-from .models import Document, RevisionIP
+from .models import Document, RevisionIP, Revision
 from .signals import render_done
 
 
@@ -202,6 +203,18 @@ def delete_old_revision_ips(immediate=False, days=30):
 
 
 @task
-def send_first_edit_email(email):
-    email.to = [config.EMAIL_LIST_FOR_FIRST_EDITS,]
+def send_first_edit_email(revision_pk):
+    """ Make an 'edited' notification email for first-time editors """
+    revision = Revision.objects.get(pk=revision_pk)
+    user, doc = revision.creator, revision.document
+    subject = (u"[MDN] %(user)s made their first edit, to: %(doc)s" %
+               {'user': user.username, 'doc': doc.title})
+    message = render_to_string('wiki/email/edited.ltxt',
+                               context_dict(revision))
+    current_site = Site.objects.get_current()
+    doc_url = "https://%s%s" % (current_site.domain, doc.get_absolute_url())
+    email = EmailMessage(subject, message, settings.DEFAULT_FROM_EMAIL,
+                         to=[config.EMAIL_LIST_FOR_FIRST_EDITS],
+                         headers={'X-Kuma-Document-Url': doc_url,
+                                  'X-Kuma-Editor-Username': user.username})
     email.send()

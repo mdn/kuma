@@ -17,10 +17,8 @@ from tower import ugettext_lazy as _lazy, ugettext as _
 
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.sites.models import Site
 from django.core.exceptions import PermissionDenied
 from django.core.cache import cache
-from django.core.mail import EmailMessage
 from django.db import transaction
 from django.db.models import Q
 from django.http import (HttpResponse, HttpResponseRedirect,
@@ -38,7 +36,6 @@ from django.views.decorators.clickjacking import (xframe_options_exempt,
 from django.views.decorators.csrf import csrf_exempt
 
 import constance.config
-from jingo import render_to_string
 from smuggler.utils import superuser_required
 from smuggler.forms import ImportFileForm
 from teamwork.shortcuts import get_object_or_404_or_403
@@ -2170,8 +2167,7 @@ def _save_rev_and_notify(rev_form, request, document):
         RevisionIP(revision=new_rev, ip=get_ip(request)).save()
 
     if first_edit:
-        email = _make_first_edit_email(new_rev, request)
-        send_first_edit_email.delay(email)
+        send_first_edit_email.delay(new_rev.pk)
 
     document.schedule_rendering('max-age=0')
 
@@ -2179,20 +2175,6 @@ def _save_rev_and_notify(rev_form, request, document):
     EditDocumentEvent(new_rev).fire(exclude=new_rev.creator)
 
 
-def _make_first_edit_email(new_rev, request):
-    """ Make an 'edited' notification email for first-time editors """
-    user, doc = new_rev.creator, new_rev.document
-    subject = "[MDN] %(user)s made their first edit, to: %(doc)s" % (
-        {'user': user.username, 'doc': doc.title})
-    template = 'wiki/email/edited.ltxt'
-    context = context_dict(new_rev)
-    message = render_to_string(request, template, context)
-    article_url = "%s%s" % (Site.objects.get_current().domain,
-                            doc.get_absolute_url())
-    email = EmailMessage(subject, message, settings.DEFAULT_FROM_EMAIL,
-                         headers={'X-Kuma-Document-Url': article_url,
-                                  'X-Kuma-Editor-Username': user.username})
-    return email
 
 
 # Legacy MindTouch redirects.

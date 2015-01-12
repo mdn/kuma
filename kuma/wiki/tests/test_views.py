@@ -2385,7 +2385,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
         def _check_message_for_headers(message, username):
             ok_("%s made their first edit" % username in message.subject)
-            eq_({'X-Kuma-Document-Url': "dev.mo.org%s" % doc.get_absolute_url(),
+            eq_({'X-Kuma-Document-Url': "https://dev.mo.org%s" % doc.get_absolute_url(),
                  'X-Kuma-Editor-Username': username}, message.extra_headers)
 
         testuser_message = mail.outbox[0]
