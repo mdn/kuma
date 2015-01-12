@@ -1164,32 +1164,9 @@ class RenderExpiresTests(UserTestCase):
 
     @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0)
     @mock.patch('kuma.wiki.kumascript.get')
-    def test_render_stale(self, mock_kumascript_get):
-        mock_kumascript_get.return_value = ('MOCK CONTENT', None)
-
-        now = datetime.now()
-        earlier = now - timedelta(seconds=1000)
-
-        d1 = document(title='Aged 3')
-        d1.last_rendered_at = earlier
-        d1.render_expires = now - timedelta(seconds=100)
-        d1.save()
-        eq_(Document.objects.get_by_stale_rendering().count(), 1)
-
-        lock = MemcacheLock('render-stale-documents-lock')
-        ok_(not lock.acquired)
-        tasks.render_stale_documents()
-        ok_(not lock.acquired)
-        eq_(Document.objects.get_by_stale_rendering().count(), 0)
-
-        d1_fresh = Document.objects.get(pk=d1.pk)
-        ok_(d1_fresh.last_rendered_at > earlier)
-
-    @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0)
-    @mock.patch('kuma.wiki.kumascript.get')
     @mock.patch_object(tasks.render_document, 'delay')
-    def test_render_stale_immediate(self, mock_render_document_delay,
-                                    mock_kumascript_get):
+    def test_render_stale(self, mock_render_document_delay,
+                          mock_kumascript_get):
         mock_kumascript_get.return_value = ('MOCK CONTENT', None)
 
         now = datetime.now()
@@ -1200,7 +1177,7 @@ class RenderExpiresTests(UserTestCase):
         d1.render_expires = now - timedelta(seconds=100)
         d1.save()
 
-        tasks.render_stale_documents(immediate=True)
+        tasks.render_stale_documents()
 
         d1_fresh = Document.objects.get(pk=d1.pk)
         ok_(not mock_render_document_delay.called)

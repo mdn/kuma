@@ -11,7 +11,6 @@ from django.db import connection
 from django.core.cache import get_cache
 
 from constance import config
-import waffle
 
 from devmo.utils import MemcacheLock
 from .exceptions import StaleDocumentsRenderingInProgress, PageMoveError
@@ -30,11 +29,11 @@ def render_document(pk, cache_control, base_url):
     return document.rendered_errors
 
 
-@task
-def render_stale_documents(immediate=False, log=None):
+@task(throws=(StaleDocumentsRenderingInProgress,))
+def render_stale_documents(log=None):
     """Simple task wrapper for rendering stale documents"""
-    lock = MemcacheLock('render-stale-documents-lock')
-    if lock.acquired and not immediate:
+    lock = MemcacheLock('render-stale-documents-lock', expires=60 * 60)
+    if lock.acquired:
         # fail loudly if this is running already
         # may indicate a problem with the schedule of this task
         raise StaleDocumentsRenderingInProgress
@@ -53,25 +52,9 @@ def render_stale_documents(immediate=False, log=None):
     response = None
     if lock.acquire():
         try:
-            subtasks = []
             for doc in stale_docs:
-                if immediate:
-                    doc.render('no-cache', settings.SITE_URL)
-                    log.info("Rendered stale %s" % doc)
-                else:
-                    subtask = render_document.subtask((doc.pk, 'no-cache',
-                                                       settings.SITE_URL))
-                    subtasks.append(subtask)
-                    log.info("Deferred rendering for stale %s" % doc)
-            if subtasks:
-                task_group = group(tasks=subtasks)
-                if waffle.switch_is_active('render_stale_documents_async'):
-                    # kick off the task group asynchronously
-                    task_group.apply_async()
-                else:
-                    # kick off the task group synchronously
-                    result = task_group.apply()
-                    response = result.join()
+                doc.render('no-cache', settings.SITE_URL)
+                log.info("Rendered stale %s" % doc)
         finally:
             lock.release()
     return response

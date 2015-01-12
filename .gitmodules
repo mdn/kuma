@@ -118,9 +118,6 @@
 [submodule "vendor/src/jingo-minify"]
 	path = vendor/src/jingo-minify
 	url = git://github.com/jsocol/jingo-minify.git
-[submodule "vendor/src/librabbitmq"]
-	path = vendor/src/librabbitmq
-	url = git://github.com/celery/librabbitmq.git
 [submodule "vendor/src/nuggets"]
 	path = vendor/src/nuggets
 	url = git://github.com/mozilla/nuggets.git
@@ -178,3 +175,15 @@
 [submodule "vendor/src/urlobject"]
 	path = vendor/src/urlobject
 	url = git://github.com/zacharyvoase/urlobject.git
+[submodule "vendor/src/billiard"]
+	path = vendor/src/billiard
+	url = git://github.com/celery/billiard.git
+[submodule "vendor/src/celery"]
+	path = vendor/src/celery
+	url = git://github.com/celery/celery.git
+[submodule "vendor/src/kombu"]
+	path = vendor/src/kombu
+	url = git://github.com/celery/kombu.git
+[submodule "vendor/src/django-celery"]
+	path = vendor/src/django-celery
+	url = git://github.com/celery/django-celery.git

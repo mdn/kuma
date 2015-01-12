@@ -822,23 +822,23 @@ EMAIL_FILE_PATH = '/tmp/kuma-messages'
 import djcelery
 djcelery.setup_loader()
 
-BROKER_HOST = 'localhost'
-BROKER_PORT = 5672
-BROKER_USER = 'kuma'
-BROKER_PASSWORD = 'kuma'
-BROKER_VHOST = 'kuma'
-CELERY_RESULT_BACKEND = 'amqp'
-CELERY_IGNORE_RESULT = True
+BROKER_URL = 'amqp://kuma:kuma@localhost:5672/kuma'
+
 CELERY_ALWAYS_EAGER = True  # For tests. Set to False for use.
 CELERY_SEND_TASK_ERROR_EMAILS = True
+CELERY_SEND_EVENTS = True
+CELERY_SEND_TASK_SENT_EVENT = True
+CELERY_TRACK_STARTED = True
+
 CELERYD_LOG_LEVEL = logging.INFO
 CELERYD_CONCURRENCY = 4
-CELERY_SEND_TASK_SENT_EVENT = True
+
+CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+
+CELERY_ACCEPT_CONTENT = ['pickle']
 
 CELERY_IMPORTS = (
-    'devmo.tasks',
-    'kuma.wiki.tasks',
-    'kuma.search.tasks',
     'tidings.events',
     'elasticutils.contrib.django.tasks',
 )
@@ -851,8 +851,6 @@ CELERY_ANNOTATIONS = {
         "rate_limit": "100/m",
     }
 }
-
-CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 
 # Wiki rebuild settings
 WIKI_REBUILD_TOKEN = 'sumo:wiki:full-rebuild'
@@ -913,7 +911,6 @@ SKIP_SOUTH_TESTS = True
 # TODO: Move migrations for our apps here, rather than living with the app?
 SOUTH_MIGRATION_MODULES = {
     'taggit': 'migrations.south.taggit',
-    'djcelery': 'migrations.south.djcelery',
 }
 
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
