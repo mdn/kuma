@@ -73,9 +73,11 @@
               {# TODO: Need a method to detect whether the logged in user can manage any roles, here #}
               <a href="{{ url('teamwork.views.user_roles', profile.user.username) }}" class="button neutral">{{ _("Manage Roles") }}<i aria-hidden="true" class="icon-users"></i></a>
           {% endif %}
-          {% if not profile.is_banned %}
+
+          {% if request.user.is_superuser %}
             {{ ban_link(profile.user, request.user) }}
           {% endif %}
+
           <!-- Only shown for the user and admins -->
           {% if profile.allows_editing_by(request.user) %}
               <a id="edit-profile" href="{{ url('users.profile_edit', username=profile.user.username) }}" class="button neutral">{{ _("Edit") }}<i aria-hidden="true" class="icon-pencil"></i></a>
@@ -95,14 +97,6 @@
               {% endif %}
           {% endif %}
       </div>
-
-      {% if request.user.is_superuser and profile.is_banned %}
-        {% set active_ban = profile.active_ban() %}
-        <div class="banned">
-            User banned {{ datetimeformat(active_ban.date, format='date') }}
-            by {{ active_ban.by }}
-        </div> 
-      {% endif %}
 
       {% if profile.title or profile.organization or profile.location or profile.irc_nickname %}
       <ul class="info">
