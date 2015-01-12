@@ -104,3 +104,21 @@ body .cke_dialog{visibility:visible;padding:20px;background:rgba(0,0,0,.3);font:
   background: -webkit-linear-gradient(top, #f8b8a0 0, #f8a688 100%);
   background: linear-gradient(top, #f8b8a0 0, #f8a688 100%);
 }
+
+.cke_skin_kuma #cke_dialog_contents_78 div.cke_dialog_ui_input_text, 
+.cke_skin_kuma #cke_dialog_contents_78 div.cke_dialog_ui_input_password {
+  border:none;
+}
+
+.cke_skin_kuma #cke_dialog_contents_78 input.cke_dialog_ui_input_text, 
+.cke_skin_kuma #cke_dialog_contents_78 input.cke_dialog_ui_input_password {
+  border:solid 1px #cbc8b9;
+}
+
+#cke_dialog_contents_78 .cke_dialog_ui_hbox_last .ImagePreviewBox {
+  width:100%;
+}
+
+#cke_dialog_contents_78 .cke_dialog_ui_hbox_first .cke_dialog_ui_input_text {
+  width:100% !important;
+}
