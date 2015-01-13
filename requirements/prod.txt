@@ -61,8 +61,6 @@ python-magic==0.4.6
 commonware==0.4.2
 # -e git://github.com/jsocol/django-authority@543c39a889444488de2b16be72da61b1845b9141#egg=django-authority
 django-authority==0.4
-# -e git://github.com/jsocol/django-cronjobs.git@fa411be81d26619c973ec281c5cce2ce5219bd9c#egg=django-cronjobs
-django-cronjobs==0.1
 # -e git://github.com/brosner/django-timezones.git@adf2fb3dcb353733bc8f8742388e2e34f17e3d70#egg=django-timezones
 django-timezones==0.2
 requests==2.3.0

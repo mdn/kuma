@@ -37,7 +37,6 @@ packages/beautifulsoup
 packages/pyes
 packages/six
 src
-src/django-cronjobs
 src/django-nose
 src/django-authority
 src/django-timezones
