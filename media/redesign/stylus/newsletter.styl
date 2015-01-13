@@ -1,17 +1,3 @@
 @require 'includes/mixins';
 @require 'includes/vars';
-
-#apps-newsletter-subscribe {
-    #newsletter-toggle {
-        @extend $checkbox-label-container;
-    }
-
-    .newsletter-setting {
-        display: none; /* Prevents flash of content */
-        padding-left: $grid-spacing;
-
-        .no-js & {
-            display: block;
-        }
-    }
-}
+@require 'components/newsletter';
