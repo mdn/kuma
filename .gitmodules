@@ -31,9 +31,6 @@
 [submodule "vendor/src/django-browserid"]
 	path = vendor/src/django-browserid
 	url = git://github.com/mozilla/django-browserid.git
-[submodule "vendor/src/django-cache-machine"]
-	path = vendor/src/django-cache-machine
-	url = git://github.com/jbalogh/django-cache-machine.git
 [submodule "vendor/src/django-constance"]
 	path = vendor/src/django-constance
 	url = git://github.com/comoga/django-constance.git

@@ -2,8 +2,6 @@
 
 See also: djangoratings for inspiration
 """
-import logging
-
 from django.conf import settings
 from django.db import models
 from django.db.models import F
@@ -69,20 +67,24 @@ class ActionCounterManager(object):
 
     def _get_total(self, default=0):
         return getattr(self.instance, self.total_field_name, default)
+
     def _set_total(self, value):
         return setattr(self.instance, self.total_field_name, value)
+
     total = property(_get_total, _set_total)
 
     def _get_recent(self, default=0):
         return getattr(self.instance, self.recent_field_name, default)
+
     def _set_recent(self, value):
         return setattr(self.instance, self.recent_field_name, value)
+
     recent = property(_get_recent, _set_recent)
 
     def _get_counter_for_request(self, request, do_create=True):
         from .models import ActionCounterUnique
         counter, created = ActionCounterUnique.objects.get_unique_for_request(
-                self.instance, self.name, request, do_create)
+            self.instance, self.name, request, do_create)
         return counter
 
     def get_total_for_request(self, request):
@@ -91,29 +93,31 @@ class ActionCounterManager(object):
 
     def increment(self, request):
         counter = self._get_counter_for_request(request)
-        ok = counter.increment(self.field.min_total_per_unique, 
+        ok = counter.increment(self.field.min_total_per_unique,
                 self.field.max_total_per_unique)
-        if ok: self._change_total(1)
+        if ok:
+            self._change_total(1)
 
     def decrement(self, request):
         counter = self._get_counter_for_request(request)
-        ok = counter.decrement(self.field.min_total_per_unique, 
+        ok = counter.decrement(self.field.min_total_per_unique,
                 self.field.max_total_per_unique)
-        if ok: self._change_total(-1)
+        if ok:
+            self._change_total(-1)
 
     def _change_total(self, delta):
         # This is ugly, but results in a single-column UPDATE like so:
         #
-        # UPDATE `actioncounters_testmodel` 
-        # SET `likes_total` = `actioncounters_testmodel`.`likes_total` + 1 
-        # WHERE `actioncounters_testmodel`.`id` = 1 
-        # 
+        # UPDATE `actioncounters_testmodel`
+        # SET `likes_total` = `actioncounters_testmodel`.`likes_total` + 1
+        # WHERE `actioncounters_testmodel`.`id` = 1
+        #
         # This also avoids updating datestamps and doing a more verbose query.
         # TODO: Find a less-ugly way to do this.
         m_cls = self.instance.__class__
         qs = m_cls.objects.all().filter(pk=self.instance.pk)
-        update_kwargs = { 
-            "%s" % self.total_field_name: F(self.total_field_name) + delta 
+        update_kwargs = {
+            "%s" % self.total_field_name: F(self.total_field_name) + delta
         }
         qs.update(**update_kwargs)
 
@@ -122,9 +126,3 @@ class ActionCounterManager(object):
         # race condition. A subsequent save() could clobber concurrent counter
         # changes.
         self.total = self.total + delta
-
-        # HACK: Invalidate this object in cache-machine, if the method is available.
-        if hasattr(m_cls.objects, 'invalidate'):
-            m_cls.objects.invalidate(self.instance)
-
-

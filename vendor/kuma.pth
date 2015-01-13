@@ -38,7 +38,6 @@ packages/pyes
 packages/six
 src
 src/django-cronjobs
-src/django-cache-machine
 src/django-nose
 src/django-authority
 src/django-timezones
