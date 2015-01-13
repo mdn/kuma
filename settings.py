@@ -520,7 +520,6 @@ INSTALLED_APPS = (
     'dbgettext',
 
     'kuma.dashboards',
-    'kpi',
     'statici18n',
     'rest_framework',
 
