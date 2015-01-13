@@ -401,7 +401,8 @@ def _document_deleted(request, deletion_logs):
 
     return render(request,
                   'wiki/deletion_log.html',
-                  {'deletion_log': deletion_log})
+                  {'deletion_log': deletion_log},
+                  status=404)
 
 
 @newrelic.agent.function_trace()
