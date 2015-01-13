@@ -50,6 +50,13 @@
     margin-left: ($grid-spacing * 2);
 }
 
+.fixed {
+    position: fixed;
+    top: 0;
+    z-index: 10;
+    overflow-y: auto;
+}
+
 /*  media block
     for use when you want an item of defined width on the left and some stuff on the right of it
     http://www.stubbornella.org/content/2010/06/25/the-media-object-saves-hundreds-of-lines-of-code/
@@ -62,7 +69,7 @@
     zoom: 1;
 }
 
-.media-img {
+.media-side {
     bidi-value(float, left, right);
     bidi-style(margin-right, ($grid-spacing / 2), margin-left, 0);
 
@@ -79,7 +86,7 @@
 /* declaration for stacking the two items */
 media-stack() {
     .media-body,
-    .media-img {
+    .media-side {
         float: none;
         margin-left: 0;
         margin-right: 0;
@@ -90,7 +97,7 @@ media-stack() {
         caption-side: top;
         width: 100%;
 
-        .media-img {
+        .media-side {
             display: table-cell;
         }
         .media-body {

@@ -10,6 +10,10 @@
 {{ diff|safe }}
 
 --
+{% trans %}
+View User Profile:
+{% endtrans %}
+ https://{{ host }}{{ profile_url }}
 {% if compare_url %}
 {% trans %}
 Compare on MDN:
@@ -28,4 +32,4 @@ Edit Article:
 Article History:
 {% endtrans %}
  https://{{ host }}{{ history_url }}
-{{ unsubscribe_text(watch) }}{% endautoescape %}
+{% if watch %}{{ unsubscribe_text(watch) }}{% endif %}{% endautoescape %}

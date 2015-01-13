@@ -517,14 +517,22 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         eq_(self.d.current_revision, new_rev.based_on)
 
         # Assert notifications fired and have the expected content:
-        eq_(1, len(mail.outbox)) # Regression check:
+        # 1 email for the first time edit notification
+        # 1 email for the EditDocumentEvent to sam@example.com
+        eq_(2, len(mail.outbox)) # Regression check:
                                  # messing with context processors can
                                  # cause notification emails to error
                                  # and stop being sent.
+        first_edit_email = mail.outbox[0]
+        expected_to = [constance.config.EMAIL_LIST_FOR_FIRST_EDITS]
+        expected_subject = u'[MDN] %(username)s made their first edit, to: %(title)s' % ({'username': new_rev.creator.username, 'title': self.d.title})
+        eq_(expected_subject, first_edit_email.subject)
+        eq_(expected_to, first_edit_email.to)
+
+        edited_email = mail.outbox[1]
         expected_to = [u'sam@example.com']
         expected_subject = u'[MDN] Page "%s" changed by %s' % (self.d.title,
                                                      new_rev.creator)
-        edited_email = mail.outbox[0]
         eq_(expected_subject, edited_email.subject)
         eq_(expected_to, edited_email.to)
         ok_('%s changed %s.' % (unicode(self.username), unicode(self.d.title))
@@ -670,14 +678,14 @@ class DocumentListTests(UserTestCase, WikiTestCase):
         doc = pq(response.content)
         cat = self.doc.category
         eq_(Document.objects.filter(category=cat, locale=self.locale).count(),
-            len(doc('#document-list ul.documents li')))
+            len(doc('#document-list ul.document-list li')))
 
     def test_all_list(self):
         """Verify the all documents list view."""
         response = self.client.get(reverse('wiki.all_documents'))
         doc = pq(response.content)
         eq_(Document.objects.filter(locale=self.locale).count(),
-            len(doc('#document-list ul.documents li')))
+            len(doc('#document-list ul.document-list li')))
 
     @attr('tags')
     def test_tag_list(self):
@@ -689,7 +697,7 @@ class DocumentListTests(UserTestCase, WikiTestCase):
                                    args=[tag.name]))
         eq_(200, response.status_code)
         doc = pq(response.content)
-        eq_(1, len(doc('#document-list ul.documents li')))
+        eq_(1, len(doc('#document-list ul.document-list li')))
 
     # http://bugzil.la/871638
     @attr('tags')
@@ -707,7 +715,7 @@ class DocumentListTests(UserTestCase, WikiTestCase):
                                    args=[en_tag.name]))
         eq_(200, response.status_code)
         doc = pq(response.content)
-        eq_(1, len(doc('#document-list ul.documents li')))
+        eq_(1, len(doc('#document-list ul.document-list li')))
 
 
 class CompareRevisionTests(UserTestCase, WikiTestCase):

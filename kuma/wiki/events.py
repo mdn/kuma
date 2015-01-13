@@ -32,6 +32,7 @@ def context_dict(revision):
             + '?from=%s&to=%s' % (from_revision.id, to_revision.id))
 
     link_urls = {
+        'profile_url': revision.creator.get_absolute_url(),
         'compare_url': compare_url,
         'view_url': reverse('wiki.document',
                             locale=document.locale,

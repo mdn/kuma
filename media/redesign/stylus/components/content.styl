@@ -1,4 +1,5 @@
-@require '../includes/mixins'
+@require 'components/option-list';
+
 /*
     Additional formatting for the real page content; i.e. text in the <main> element
     We cannot put these styles in the tags.styl file because they don't apply to the entire layout
@@ -13,21 +14,6 @@ $table-blue = #d4dde4;
         border-collapse: collapse;
         border: solid #e0e0dc;
         border-width: 1px 0 0 1px;
-
-        &.topicpage-table {
-            clear: both;
-            width: auto;
-
-            td {
-                padding: 10px;
-                vertical-align: top;
-                width: 50%;
-            }
-
-            small {
-                font-size: $smaller-font-size;
-            }
-        }
 
         &.standard-table {
             border: 2px solid #fff;
@@ -122,7 +108,7 @@ $table-blue = #d4dde4;
 
     dd {
         margin-bottom: $content-block-margin;
-        padding-left: $grid-spacing;
+        bidi-style(padding-left, $grid-spacing, padding-right, 0);
     }
 
     span.alllinks {
@@ -213,6 +199,10 @@ ul.directory-tree {
     &.error {
         border-color: #e1a696;
     }
+
+    .ckeditor-container & {
+        margin-bottom: 0;
+    }
 }
 
 .ui-helper-hidden-accessible {
@@ -259,6 +249,11 @@ ul.directory-tree {
 
 div.bug {
     font-style: italic;
+    prevent-last-child-bottom-spacing();
+
+    pre {
+        color: $text-color;
+    }
 }
 
 div.callout-box {
@@ -307,35 +302,3 @@ ul.errorlist {
     max-width: 60em;
 }
 
-/*
-- list that has text on left and child .option-list-options on right
-- list is as narrow as possible given with width of the text on the left
-- on large screens the options will drop below the text if the text is long
-- on mobile screens the options are placed below intentionally
-*/
-
-ul.option-list {
-    clearfix();
-    float:left;
-    list-style-type: none;
-    max-width: 100%;
-    overflow: hidden;
-    bidi-style(padding-left, ($grid-spacing), padding-right, 0);
-
-    li {
-        clearfix();
-    }
-}
-
-.option-list-options {
-    bidi-value(float, right, left);
-    bidi-style(margin-left, $grid-spacing, margin-right, $grid-spacing );
-    bidi-value(text-align, right, left);
-}
-
-/* options drop beneath text on smaller screens */
-@media $media-query-mobile {
-    .option-list-options {
-        width: 100%;
-    }
-}

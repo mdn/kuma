@@ -17,8 +17,10 @@ from tower import ugettext_lazy as _lazy, ugettext as _
 
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.sites.models import Site
 from django.core.exceptions import PermissionDenied
 from django.core.cache import cache
+from django.core.mail import EmailMessage
 from django.db import transaction
 from django.db.models import Q
 from django.http import (HttpResponse, HttpResponseRedirect,
@@ -36,11 +38,14 @@ from django.views.decorators.clickjacking import (xframe_options_exempt,
 from django.views.decorators.csrf import csrf_exempt
 
 import constance.config
+from jingo import render_to_string
 from smuggler.utils import superuser_required
 from smuggler.forms import ImportFileForm
 from teamwork.shortcuts import get_object_or_404_or_403
+import waffle
 
 from access.decorators import permission_required, login_required
+from actioncounters.utils import get_ip
 from authkeys.decorators import accepts_auth_key
 from contentflagging.models import ContentFlag, FLAG_NOTIFICATIONS
 from devmo.decorators import never_cache
@@ -62,7 +67,7 @@ from .constants import (DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX,
                         REDIRECT_CONTENT)
 from .decorators import (check_readonly, process_document_path,
                          allow_CORS_GET, prevent_indexing)
-from .events import EditDocumentEvent
+from .events import EditDocumentEvent, context_dict
 from .forms import (DocumentForm, RevisionForm, DocumentContentFlagForm,
                     RevisionValidationForm, TreeMoveForm,
                     DocumentDeletionForm)
@@ -70,9 +75,10 @@ from .helpers import format_comment
 from .models import (Document, Revision, HelpfulVote, EditorToolbar,
                      DocumentZone, DocumentTag, ReviewTag, LocalizationTag,
                      DocumentDeletionLog,
-                     DocumentRenderedContentNotAvailable)
+                     DocumentRenderedContentNotAvailable,
+                     RevisionIP)
 from .queries import MultiQuerySet
-from .tasks import move_page
+from .tasks import move_page, send_first_edit_email
 from .utils import locale_and_slug_from_path
 
 
@@ -956,7 +962,7 @@ def new_document(request):
                 raise PermissionDenied
 
             doc = doc_form.save(None)
-            _save_rev_and_notify(rev_form, request.user, doc)
+            _save_rev_and_notify(rev_form, request, doc)
             if doc.current_revision.is_approved:
                 view = 'wiki.document'
             else:
@@ -1121,7 +1127,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
                             rev, doc)
 
                 if rev_form.is_valid():
-                    _save_rev_and_notify(rev_form, user, doc)
+                    _save_rev_and_notify(rev_form, request, doc)
 
                     if is_iframe_target:
                         # TODO: Does this really need to be a template? Just
@@ -1733,7 +1739,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
                         except Document.DoesNotExist:
                             pass
 
-                    _save_rev_and_notify(rev_form, request.user, doc)
+                    _save_rev_and_notify(rev_form, request, doc)
                     url = reverse('wiki.document', args=[doc.full_path],
                                   locale=doc.locale)
                     return HttpResponseRedirect(url)
@@ -2152,14 +2158,41 @@ def _document_form_initial(document):
             'tags': [t.name for t in document.tags.all()],}
 
 
-def _save_rev_and_notify(rev_form, creator, document):
+def _save_rev_and_notify(rev_form, request, document):
     """Save the given RevisionForm and send notifications."""
+    creator = request.user
+    # have to check for first edit before we rev_form.save
+    first_edit = creator.get_profile().wiki_activity().count() == 0
+
     new_rev = rev_form.save(creator, document)
+
+    if waffle.switch_is_active('store_revision_ips'):
+        RevisionIP(revision=new_rev, ip=get_ip(request)).save()
+
+    if first_edit:
+        email = _make_first_edit_email(new_rev, request)
+        send_first_edit_email.delay(email)
 
     document.schedule_rendering('max-age=0')
 
     # Enqueue notifications
     EditDocumentEvent(new_rev).fire(exclude=new_rev.creator)
+
+
+def _make_first_edit_email(new_rev, request):
+    """ Make an 'edited' notification email for first-time editors """
+    user, doc = new_rev.creator, new_rev.document
+    subject = "[MDN] %(user)s made their first edit, to: %(doc)s" % (
+        {'user': user.username, 'doc': doc.title})
+    template = 'wiki/email/edited.ltxt'
+    context = context_dict(new_rev)
+    message = render_to_string(request, template, context)
+    article_url = "%s%s" % (Site.objects.get_current().domain,
+                            doc.get_absolute_url())
+    email = EmailMessage(subject, message, settings.DEFAULT_FROM_EMAIL,
+                         headers={'X-Kuma-Document-Url': article_url,
+                                  'X-Kuma-Editor-Username': user.username})
+    return email
 
 
 # Legacy MindTouch redirects.

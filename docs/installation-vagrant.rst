@@ -10,7 +10,7 @@ At the end, you'll earn `the badge`_:
 
 .. image:: https://badges.mozilla.org/media/uploads/badge/2/3/23fef80968a03f3ba32321a7f31ae1e2_image_1372816280_0238.png
 
-.. note:: **If you have problems using vagrant**, check Troubleshooting_ below
+.. note:: **If you have problems using vagrant**, check Troubleshooting_ and `Getting More Help`_ below.
 
 .. _vagrant: http://vagrantup.com/
 .. _uses NFS to share the current working directory: http://docs.vagrantup.com/v2/synced-folders/nfs.html
@@ -79,8 +79,9 @@ Install and run everything
 
 #. Visit the homepage at `https://developer-local.allizom.org <https://developer-local.allizom.org/>`_
 
-#. You've installed Kuma! If you want `the badge`_, send a screenshot of your
-   browser to luke dot crouch at gmail dot com.
+#. You've installed Kuma! If you want `the badge`_, `email a screenshot of your
+   browser to mdn-dev at mozilla dot com
+   <mailto:mdn-dev@mozilla.com?subject=Local%20MDN%20Screenshot>`_.
 
 .. _the badge: https://badges.mozilla.org/badges/badge/Installed-and-ran-Kuma
 
@@ -112,6 +113,37 @@ You control these features in the `waffle admin
 Some site features are controlled using `constance
 <https://github.com/comoga/django-constance>`_. You control these features in
 the `constance config admin panel`_.
+
+.. _GitHub Auth:
+
+GitHub Auth
+~~~~~~~~~~~
+
+To enable GitHub authentication ...
+
+`Register your own OAuth application on GitHub`_:
+
+* Application name: MDN (<username>)
+* Homepage url: https://developer-local.allizom.org/docs/MDN/Contribute/Howto/Create_an_MDN_account
+* Application description: My own GitHub app for MDN!
+* Authorization callback URL: https://developer-local.allizom.org/users/github/login/callback/
+
+`Add a django-allauth social app`_ for GitHub:
+
+* Provider: GitHub
+* Name: developer-local.allizom.org
+* Client id: <your GitHub App Client ID>
+* Secret key: <your GitHub App Client Secret>
+* Sites: example.com -> Chosen sites
+
+GitHub auth is also (temporarily) behind a waffle flag. So, `add a waffle
+flag`_ called ``github_login`` and set "Everyone" to "Yes".
+
+Now you can sign in with GitHub at https://developer-local.allizom.org
+
+.. _Add a django-allauth social app: https://developer-local.allizom.org/admin/socialaccount/socialapp/add/
+.. _Register your own OAuth application on GitHub: https://github.com/settings/applications/new
+
 
 Wiki Editing
 ~~~~~~~~~~~~
@@ -224,6 +256,7 @@ Errors after switching branches
           sudo puppet apply /home/vagrant/src/puppet/manifests/dev-vagrant.pp
 
 .. _more help:
+.. _Getting More Help:
 
 Getting more help
 ~~~~~~~~~~~~~~~~~

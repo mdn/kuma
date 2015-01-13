@@ -3,12 +3,8 @@
 
 /*
     Sectioning elements - things that contribute to document outline
-    Section, article, aside, header, footer, main (main is not actually sectioning, did you know that?)
-*/
-
-
-/*
-    aside
+    Section, article, aside, header, footer, main (main is not actually sectioning,
+    did you know that?), hr (hr is sectioning in HTML5, did you know that?)
 */
 
 aside {
@@ -23,10 +19,6 @@ aside {
     margin-bottom: $grid-spacing;
 }
 
-/*
-    main
-*/
-
 main {
     background: #fff;
     min-height: 200px;
@@ -35,10 +27,6 @@ main {
         padding-top: $first-content-top-padding;
     }
 }
-
-/*
-    footer
-*/
 
 footer {
     set-smaller-font-size();
@@ -80,13 +68,16 @@ footer {
     }
 }
 
-/*
-    hr
-*/
+details {
+    clear: both;
+    display: block;
+}
 
 hr {
     border-top: 1px solid $text-color;
     height: 0;
     margin: $grid-spacing 0;
 }
+
+
 

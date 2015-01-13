@@ -1,5 +1,5 @@
 {% extends "wiki/base.html" %}
-{% set title = _('Move "{t}"')|f(t=document.title) %}
+{% set title = _('Move Article | {document}')|f(document=document.title) %}
 {% block title %}{{ page_title(title) }}{% endblock %}
 {% set meta = [('robots', 'noindex, nofollow')] %}
 {% block bodyclass %}move-page{% endblock %}
@@ -12,14 +12,16 @@
 
 {% block content %}
 
-      <h1>{{ title }}</h1>
+      <div class="title">
+        <h1>{{ _('<span class="title-prefix">Moving</span> <em>{title}</em>')|fe(title=document.title) }}</h1>
+      </div>
       <p>{{ _('Please provide a new slug for this page using the field below.') }}</p>
 
       {% if conflicts: %}
       <div class="warning">
         <p>{{ _('Your requested move cannot be completed due to slug conflicts:') }}</p>
 
-        <ul class="move-descendants-list">
+        <ul class="document-list">
         {% for doc in descendants %}
           <li>{{ doc }}</li>
         {% endfor %}
@@ -35,7 +37,7 @@
       </div>
       {% endif %}
 
-      <form action="" method="post">
+      <form action="" method="post" class="editing">
         {{ csrf() }}
         <ul class="description">
           <li>
@@ -67,7 +69,7 @@
                 <input type="hidden" value="{{ document.locale }}" id="locale" name="locale"/>
               </dd>
               <dd class="parent-suggest-container">
-                <button class="transparent move-lookup-link" type="button">{{ _('Lookup by Document Title') }}</button>
+                <button class="transparent parent-suggest-link" type="button">{{ _('Lookup by Document Title') }}</button>
 
                 <div id="parent-suggest-input-container">
                     <input type="text" placeholder="{{ _('Parent Title') }}" id="parent-suggestion" disabled />
@@ -84,7 +86,7 @@
 
         {% if descendants_count: %}
           <p><strong>{{ _('The following {d} subpages will be affected by this move:')|f(d=descendants_count) }}</strong></p>
-          <div class="move-descendants"><ul class="move-descendants-list">
+          <div class="move-descendants"><ul class="document-list">
             {% for doc in descendants %}
               <li>{{ doc }}</li>
             {% endfor %}

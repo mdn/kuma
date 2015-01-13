@@ -1,8 +1,8 @@
-Metadata-Version: 1.0
+Metadata-Version: 1.1
 Name: anyjson
-Version: 0.3.1
+Version: 0.3.3
 Summary: Wraps the best available JSON implementation available in a common interface
-Home-page: http://bitbucket.org/runeh/anyjson
+Home-page: http://bitbucket.org/runeh/anyjson/
 Author: Rune Halvorsen
 Author-email: runefh@gmail.com
 License: BSD
@@ -68,7 +68,9 @@ Description: ##############################
         
 Keywords: json
 Platform: any
+Classifier: Development Status :: 5 - Production/Stable
 Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: OS Independent
 Classifier: Intended Audience :: Developers
 Classifier: Programming Language :: Python
 Classifier: Programming Language :: Python :: 2
@@ -78,3 +80,6 @@ Classifier: Programming Language :: Python :: 2.6
 Classifier: Programming Language :: Python :: 2.7
 Classifier: Programming Language :: Python :: 3
 Classifier: Programming Language :: Python :: 3.1
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Programming Language :: Python :: Implementation :: PyPy
+Classifier: Programming Language :: Python :: Implementation :: Jython

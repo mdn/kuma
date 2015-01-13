@@ -1,0 +1,81 @@
+/* wiki structure */
+
+.wiki-main-content {
+    background: #fff;
+    min-height: 300px;
+
+    .center {
+        remove-center-spacing();
+    }
+}
+
+/* the subnav and quick link column of the layout */
+#wiki-left {
+    position: relative;
+}
+
+/* set minimum heights on main columns */
+#wiki-right, #wiki-left, #wiki-content {
+    min-height: 1px; /* ensures that when TOC becomes fixed, the column has width */
+}
+
+/* adjustments to columns based on show/hide and media query */
+#wiki-column-container.wiki-right-closed #wiki-content,
+#wiki-column-container.wiki-left-closed #wiki-content {
+    @extend $column-9;
+}
+
+#wiki-column-container.wiki-right-closed.wiki-left-closed {
+    #wiki-content {
+        @extend $column-all;
+        float: none;
+        width: auto;
+    }
+
+    .column-container-reverse {
+        margin-left: 0;
+    }
+}
+
+@media $media-query-small-desktop {
+
+    /* when there's a left sidebar, we need to adjust the layout to look like:  |= */
+    .wiki-left-present:not(.wiki-left-closed) {
+        #wiki-right, #wiki-content {
+            width: $grid-width-column-main;
+            margin-right: 0;
+        }
+        #wiki-right {
+            enable-toc-toggle();
+            padding-bottom: ($grid-spacing * 2);
+        }
+        #wiki-left {
+            float: none;
+        }
+    }
+}
+
+@media $media-query-tablet {
+    make-wiki-blocks-flat();
+
+    #wiki-right {
+        enable-toc-toggle();
+    }
+
+    #wiki-column-container, #wiki-content {
+        width: auto !important;
+    }
+
+    #quick-links-toggle,  #wiki-controls {
+        display: none;
+    }
+}
+
+/* print styling */
+@media print {
+
+    /* hide sections not important to the article */
+    #wiki-left, #wiki-right, #wiki-controls {
+        display: none;
+    }
+}

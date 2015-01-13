@@ -11,7 +11,7 @@ from sumo.urlresolvers import reverse
 from access.decorators import login_required, permission_required
 from .decorators import check_readonly
 from .models import (Document, DocumentZone, DocumentTag,
-                     Revision, EditorToolbar)
+                     Revision, RevisionIP, EditorToolbar)
 
 
 def dump_selected_documents(self, request, queryset):
@@ -43,7 +43,7 @@ purge_documents.short_description = "Permanently purge deleted documents"
 def purge_view(request):
     """
     Interstitial admin view for purging multiple Documents.
-    
+
     """
     selected = request.GET.get('ids', '').split(',')
     to_purge = Document.deleted_objects.filter(id__in=selected)
@@ -285,7 +285,7 @@ class DocumentAdmin(admin.ModelAdmin):
         Remove the built-in delete action, since it bypasses the model
         delete() method (bad) and we want people using the non-admin
         deletion UI anyway.
-        
+
         """
         actions = super(DocumentAdmin, self).get_actions(request)
         if 'delete_selected' in actions:
@@ -296,7 +296,7 @@ class DocumentAdmin(admin.ModelAdmin):
         """
         Disable deletion of individual Documents, by always returning
         False for the permission check.
-        
+
         """
         return False
 
@@ -305,7 +305,7 @@ class DocumentAdmin(admin.ModelAdmin):
         The Document class has multiple managers which perform
         different filtering based on deleted status; we want the
         special admin-only one that doesn't filter.
-        
+
         """
         qs = Document.admin_objects.all()
         # TODO: When we're on a Django version that handles admin
@@ -328,6 +328,11 @@ class RevisionAdmin(admin.ModelAdmin):
     search_fields = ('title', 'slug', 'summary', 'content', 'tags')
 
 
+class RevisionIPAdmin(admin.ModelAdmin):
+    readonly_fields = ('revision', 'ip',)
+    list_display = ('revision', 'ip',)
+
+
 class DocumentTagAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug')
     search_fields = ('name',)
@@ -342,4 +347,5 @@ admin.site.register(Document, DocumentAdmin)
 admin.site.register(DocumentZone, DocumentZoneAdmin)
 admin.site.register(DocumentTag, DocumentTagAdmin)
 admin.site.register(Revision, RevisionAdmin)
+admin.site.register(RevisionIP, RevisionIPAdmin)
 admin.site.register(EditorToolbar, admin.ModelAdmin)

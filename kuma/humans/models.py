@@ -60,6 +60,12 @@ class HumansTXT:
 
         return humans
 
+    def split_name(self, name):
+        if '@' in name:
+            name = name.split('@')[0]
+
+        return name
+
     def get_mdn(self):
         p = subprocess.Popen("svn log --quiet http://svn.mozilla.org/projects/\
             mdn/trunk/locale/ | grep '^r' | awk '{print $3}' | sort | uniq",
@@ -69,7 +75,7 @@ class HumansTXT:
         humans = []
         for localizer in localizers_list:
             human = Human()
-            human.name = localizer
+            human.name = self.split_name(localizer)
             humans.append(human)
 
         return humans

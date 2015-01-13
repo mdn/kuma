@@ -37,18 +37,6 @@
         }
     }
 
-    .note {
-        color: #666;
-        font-family: inherit;
-        set-smaller-font-size();
-        font-style: normal;
-        font-weight: normal;
-    }
-
-    p.note {
-        margin: ($grid-spacing / 4) 0;
-    }
-
     .trouble {
         margin-top: $grid-spacing;
     }
@@ -76,12 +64,15 @@
 
     .other-value {
         margin-top: ($grid-spacing / 4);
+
         label {
             display: block;
         }
     }
 
-    input[type='url'], input[type='email'], input[type='text'] {
+    input[type='url'],
+    input[type='email'],
+    input[type='text'] {
         width: 350px;
         max-width: 100%;
     }
@@ -120,5 +111,48 @@
         label, .label {
             display: inline;
         }
+    }
+}
+
+.field-note {
+    color: #666;
+    font-family: inherit;
+    set-smaller-font-size();
+    font-style: normal;
+    font-weight: normal;
+
+    p& {
+        margin: ($grid-spacing / 4) 0;
+    }
+
+    .wordcount & {
+        float: right;
+    }
+}
+
+.field-management {
+    bidi-value(float, right, left);
+    margin: 0 0 5px;
+}
+
+.field-account {
+    clear: both;
+}
+
+#field-beta {
+    @extend $checkbox-label-container;
+}
+
+#profiles {
+    label {
+        margin: 0 0 5px;
+        bidi-value(float, left, right);
+        bidi-style(margin-right, 10px, margin-left, 10px);
+    }
+}
+
+.key {
+    label {
+        display: block;
     }
 }

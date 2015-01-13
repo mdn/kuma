@@ -68,7 +68,7 @@ define([
                                     .getCurrentUrl()
                                     .then(function(url) {
                                         assert.isTrue(url.indexOf('/account/signup') != -1);
-                                        return libLogin.completePersonaLogout(remote).sleep(4000).then(dfd.resolve);
+                                        return libLogin.completePersonaLogout(remote).then(dfd.resolve);
                                     });
                         });
                 });

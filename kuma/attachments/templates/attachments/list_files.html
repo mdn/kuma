@@ -11,7 +11,7 @@
       <div id="document-list">
         <h1>{{ title }}</h1>
         {% if files.object_list %}
-          <ul class="documents cols-3">
+          <ul class="document-list cols-3">
             {% for file in files.object_list %}
               <li>
                 <a href="{{ file.get_absolute_url() }}">{{ file.title }}</a>

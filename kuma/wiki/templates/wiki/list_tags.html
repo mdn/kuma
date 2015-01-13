@@ -6,7 +6,7 @@
     <div id="document-list">
       <h1>{{ title }}</h1>
       {% if tags.object_list %}
-        <ul class="documents cols-3">
+        <ul class="documents-list cols-3">
           {% for tag in tags.object_list %}
             <li>
               <a href="{{url('wiki.tag', tag.name)}}">{{ tag.name }}</a>

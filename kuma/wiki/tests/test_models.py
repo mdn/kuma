@@ -1,5 +1,5 @@
 from cStringIO import StringIO
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 import json
 import time
 from xml.sax.saxutils import escape
@@ -24,7 +24,7 @@ from kuma.wiki.cron import calculate_related_documents
 from kuma.wiki.exceptions import (PageMoveError,
                                   DocumentRenderedContentNotAvailable,
                                   DocumentRenderingInProgress)
-from kuma.wiki.models import (Document, Revision,
+from kuma.wiki.models import (Document, Revision, RevisionIP,
                               DocumentZone, TaggedDocument)
 from kuma.wiki import tasks
 from kuma.wiki.tests import (document, revision, doc_rev, normalize_html,
@@ -1164,32 +1164,9 @@ class RenderExpiresTests(UserTestCase):
 
     @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0)
     @mock.patch('kuma.wiki.kumascript.get')
-    def test_render_stale(self, mock_kumascript_get):
-        mock_kumascript_get.return_value = ('MOCK CONTENT', None)
-
-        now = datetime.now()
-        earlier = now - timedelta(seconds=1000)
-
-        d1 = document(title='Aged 3')
-        d1.last_rendered_at = earlier
-        d1.render_expires = now - timedelta(seconds=100)
-        d1.save()
-        eq_(Document.objects.get_by_stale_rendering().count(), 1)
-
-        lock = MemcacheLock('render-stale-documents-lock')
-        ok_(not lock.acquired)
-        tasks.render_stale_documents()
-        ok_(not lock.acquired)
-        eq_(Document.objects.get_by_stale_rendering().count(), 0)
-
-        d1_fresh = Document.objects.get(pk=d1.pk)
-        ok_(d1_fresh.last_rendered_at > earlier)
-
-    @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0)
-    @mock.patch('kuma.wiki.kumascript.get')
     @mock.patch_object(tasks.render_document, 'delay')
-    def test_render_stale_immediate(self, mock_render_document_delay,
-                                    mock_kumascript_get):
+    def test_render_stale(self, mock_render_document_delay,
+                          mock_kumascript_get):
         mock_kumascript_get.return_value = ('MOCK CONTENT', None)
 
         now = datetime.now()
@@ -1200,7 +1177,7 @@ class RenderExpiresTests(UserTestCase):
         d1.render_expires = now - timedelta(seconds=100)
         d1.save()
 
-        tasks.render_stale_documents(immediate=True)
+        tasks.render_stale_documents()
 
         d1_fresh = Document.objects.get(pk=d1.pk)
         ok_(not mock_render_document_delay.called)
@@ -1949,3 +1926,37 @@ class DocumentParsingTests(UserTestCase):
             {'id': 'Section_3', 'title': 'Section 3'}
         ]
         eq_(expected_sections, json_data['sections'])
+
+
+class RevisionIPTests(UserTestCase):
+    def test_delete_older_than_default_30_days(self):
+        old_date = date.today() - timedelta(days=31)
+        r = revision(created=old_date, save=True)
+        RevisionIP.objects.create(revision=r, ip='127.0.0.1').save()
+        eq_(1, RevisionIP.objects.all().count())
+        RevisionIP.objects.delete_old()
+        eq_(0, RevisionIP.objects.all().count())
+
+    def test_delete_older_than_days_argument(self):
+        rev_date = date.today() - timedelta(days=5)
+        r = revision(created=rev_date, save=True)
+        RevisionIP.objects.create(revision=r, ip='127.0.0.1').save()
+        eq_(1, RevisionIP.objects.all().count())
+        RevisionIP.objects.delete_old(days=4)
+        eq_(0, RevisionIP.objects.all().count())
+
+    def test_delete_older_than_only_deletes_older_than(self):
+        oldest_date = date.today() - timedelta(days=31)
+        r1 = revision(created=oldest_date, save=True)
+        RevisionIP.objects.create(revision=r1, ip='127.0.0.1').save()
+
+        old_date = date.today() - timedelta(days=29)
+        r1 = revision(created=old_date, save=True)
+        RevisionIP.objects.create(revision=r1, ip='127.0.0.1').save()
+
+        now_date = date.today()
+        r2 = revision(created=now_date, save=True)
+        RevisionIP.objects.create(revision=r2, ip='127.0.0.1').save()
+        eq_(3, RevisionIP.objects.all().count())
+        RevisionIP.objects.delete_old()
+        eq_(2, RevisionIP.objects.all().count())

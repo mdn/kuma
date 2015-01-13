@@ -1,0 +1,27 @@
+/* Profile edit newsletter */
+.profile-newsletter-container {
+    background: $light-background-color;
+    padding: $grid-spacing;
+    margin-bottom: $grid-spacing;
+    overflow: hidden;
+}
+
+/* For tablet and lower, move the profile buttons below the user name */
+@media $media-query-tablet {
+    .profile-newsletter-container {
+        margin-bottom: ($grid-spacing * 1.5);
+    }
+}
+
+@media $media-query-mobile {
+    .profile-newsletter-container {
+        #apps-newsletter-subscribe {
+            margin: 0;
+            padding: 0;
+        }
+
+        .fm-submit {
+            display: none;
+        }
+    }
+}

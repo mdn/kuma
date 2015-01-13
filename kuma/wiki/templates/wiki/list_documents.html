@@ -21,18 +21,18 @@
 
 {% block extrahead %}
   {% if category %}
-      <link rel="alternate" type="application/atom+xml" title="{{title}}" 
+      <link rel="alternate" type="application/atom+xml" title="{{title}}"
           href="{{ url('wiki.feeds.recent_documents_category', format='atom', category=category) }}" />
   {% elif tag %}
-      <link rel="alternate" type="application/atom+xml" title="{{title}}" 
+      <link rel="alternate" type="application/atom+xml" title="{{title}}"
           href="{{ url('wiki.feeds.recent_documents', format='atom', tag=tag) }}" />
   {% else %}
-      <link rel="alternate" type="application/atom+xml" title="{{title}}" 
+      <link rel="alternate" type="application/atom+xml" title="{{title}}"
           href="{{ url('wiki.feeds.recent_documents', format='atom') }}" />
       {% if (request.locale != 'en-US'): %}
         {# TODO: Someday, en-US won't be special in l10n. #}
-        <link rel="alternate" type="application/atom+xml" 
-              title="{{_('Translation updates needed')}}" 
+        <link rel="alternate" type="application/atom+xml"
+              title="{{_('Translation updates needed')}}"
               href="{{ url('wiki.feeds.l10n_updates', format='atom') }}" />
       {% endif %}
   {% endif %}
@@ -44,7 +44,7 @@
       <h1>{{ title }}</h1>
       {% if documents.object_list %}
         <p>{{ counter }}</p>
-        <ul class="documents">
+        <ul class="document-list">
           {% for doc in documents.object_list %}
             <li>
               <a href="{{ doc.get_absolute_url() }}">{{ doc.slug }}</a>

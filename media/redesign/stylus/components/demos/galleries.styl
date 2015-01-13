@@ -23,6 +23,18 @@
   margin: 0 0 1em 20px;
 }
 
+.landing .gallery .demo,
+.landing .gallery .demo .stats {
+    color: #fff;
+    vendorize(transition, color 0.2s 0.2s);
+}
+
+.landing .gallery .demo:hover,
+.landing .gallery .demo:hover .stats,
+.landing .gallery .demo .byline a {
+    color: inherit;
+}
+
 .gallery .demo {
   position: relative;
   z-index: 1;
@@ -66,12 +78,11 @@
 }
 .demo .demo-title a:link,
 .demo .demo-title a:visited {
-  color: #000;
+  color: $link-color;
 }
 .demo .demo-title a:hover,
 .demo .demo-title a:focus,
 .demo .demo-title a:active {
-  color: #414f55;
   text-decoration: underline;
 }
 .demo .demo-title a img {
@@ -80,6 +91,7 @@
   left: 0;
   padding: 2px;
   background: #fff;
+  border-radius: 4px;
   box-shadow: 3px 3px 1px rgba(0,0,0,0.25);
   /* can't vendorize because multiple values. PR #2840 has a fix for that */
   -webkit-transition: box-shadow 0.2s 0.2s, top 0.2s 0.2s, left 0.2s 0.2s;
@@ -167,7 +179,6 @@
   margin: 0 0 0.75em;
 }
 .demo .descLink {
-  color: #79120e;
   font-weight: bold;
 }
 .demo .launch {

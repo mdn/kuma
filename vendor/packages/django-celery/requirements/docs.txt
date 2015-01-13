@@ -1,4 +1,0 @@
-Django
-Sphinx
-sphinxcontrib-issuetracker
-python-memcached

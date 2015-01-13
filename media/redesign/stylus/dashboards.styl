@@ -15,12 +15,6 @@
         font-weight: bold;
     }
 
-    .dashboard-revision, .dashboard-title, .dashboard-comment, .dashboard-author {
-        padding: 6px;
-        display: inline-block;
-        vertical-align: text-top;
-    }
-
     tbody tr {
         border-bottom: 1px solid #ccc;
         cursor: pointer;
@@ -37,7 +31,7 @@
             }
         }
 
-        .new, .locale {
+        .new, .locale, .deleted {
             set-font-size(11px);
             border-radius: 8px;
             color: #fff;
@@ -51,15 +45,22 @@
         .locale {
             background: rgba-fallback(rgba(#777, 0.6));
         }
+        .deleted {
+            background: rgba-fallback(rgba(#f00, 0.6));
+        }
+    }
+
+    /* Select only the outer table cells. */
+    > thead td, .dashboard-row > td {
+        @extend $column-strip;
+        padding: 6px;
+        display: inline-block;
+        vertical-align: text-top;
     }
 
     .dashboard-detail {
         display: none;
         padding: 0 $grid-spacing;
-    }
-
-    .dashboard-revision, .dashboard-title, .dashboard-comment, .dashboard-author {
-        @extend $column-strip;
     }
 
     .dashboard-slug {

@@ -156,7 +156,23 @@
               </li>
               {% endif %}
 
-              {{ newsletter_widget(form) }}
+              <li>{{ newsletter_widget(form) }}</li>
+
+              <li>
+                  <ol>
+                      <li id="terms-agree>">
+                          <ul class="errorlist">
+                          {{ form.terms.errors }}
+                          </ul>
+                      <label for="{{ form.terms.id_for_label }}">
+                          {{ form.terms }} {{ form.terms.label }}
+                          {% trans terms_url='https://www.mozilla.org/about/legal/terms/mozilla', privacy_url='https://www.mozilla.org/privacy/websites/' %}
+                          to Mozilla's <a href="{{ terms_url }}">Terms</a> and <a href="{{ privacy_url }}">Privacy Notice</a>.
+                          {% endtrans %}
+                      </label>
+                      </li>
+                  </ol>
+              </li>
 
               <li class="submit">
                 <button class="positive" type="submit" name="create">{{ _('Create my MDN profile') }}</button>

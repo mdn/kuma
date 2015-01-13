@@ -321,7 +321,7 @@ class ContentSectionTool(object):
 
 class URLAbsolutionFilter(html5lib_Filter):
     """Filter which turns relative links into absolute links.
-       Originally created for teh purpose of sphinx templates."""
+       Originally created for generating sphinx templates."""
 
     def __init__(self, source, base_url, tag_attributes):
         html5lib_Filter.__init__(self, source)

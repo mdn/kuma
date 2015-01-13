@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core.paginator import PageNotAnInteger
 
+from allauth.account.models import EmailAddress
 from allauth.socialaccount.models import SocialAccount, SocialApp
 from allauth.socialaccount.providers import registry
 from allauth.tests import MockedResponse, mocked_response
@@ -20,6 +21,7 @@ from sumo.urlresolvers import reverse
 
 from . import UserTestCase, user, email
 from ..models import UserProfile, UserBan
+from ..signup import SignupForm
 from ..providers.github.provider import KumaGitHubProvider
 
 TESTUSER_PASSWORD = 'testpass'
@@ -154,7 +156,7 @@ class ProfileViewsTest(UserTestCase):
         eq_('IRC: ' + profile.irc_nickname,
             doc.find('#profile-head.vcard .irc').text())
         eq_(profile.bio,
-            doc.find('#profile-head.vcard .bio').text())
+            doc.find('#profile-head.vcard .profile-bio').text())
 
     def test_my_profile_view(self):
         u = User.objects.get(username='testuser')
@@ -196,7 +198,7 @@ class ProfileViewsTest(UserTestCase):
         r = self.client.get(url, follow=True)
         doc = pq(r.content)
 
-        edit_button = doc.find('#profile-head .edit #edit-profile')
+        edit_button = doc.find('#profile-head .profile-buttons #edit-profile')
         eq_(1, edit_button.length)
 
         url = edit_button.attr('href')
@@ -228,11 +230,11 @@ class ProfileViewsTest(UserTestCase):
 
         eq_(1, doc.find('#profile-head').length)
         eq_(new_attrs['profile-fullname'],
-            doc.find('#profile-head .main .fn').text())
+            doc.find('#profile-head .fn').text())
         eq_(new_attrs['profile-title'],
-            doc.find('#profile-head .info .title').text())
+            doc.find('#profile-head .profile-info .title').text())
         eq_(new_attrs['profile-organization'],
-            doc.find('#profile-head .info .org').text())
+            doc.find('#profile-head .profile-info .org').text())
 
         profile = UserProfile.objects.get(user__username=profile.user.username)
         eq_(new_attrs['profile-fullname'], profile.fullname)
@@ -595,7 +597,8 @@ class AllauthPersonaTestCase(UserTestCase):
             self.client.post(reverse('persona_login'), follow=True)
             data = {'username': persona_signup_username,
                     'email': persona_signup_email,
-                    'newsletter': True}
+                    'newsletter': True,
+                    'terms': True}
             signup_url = reverse('socialaccount_signup',
                                  locale=settings.WIKI_DEFAULT_LANGUAGE)
             response = self.client.post(signup_url, data=data, follow=True)
@@ -641,7 +644,8 @@ class AllauthPersonaTestCase(UserTestCase):
             }
             self.client.post(reverse('persona_login'), follow=True)
             data = {'username': persona_signup_username,
-                    'email': persona_signup_email}
+                    'email': persona_signup_email,
+                    'terms': True}
             signup_url = reverse('socialaccount_signup',
                                  locale=settings.WIKI_DEFAULT_LANGUAGE)
             self.client.post(signup_url, data=data, follow=True)
@@ -684,7 +688,7 @@ class KumaGitHubTests(UserTestCase):
             "company": "GitHub",
             "blog": "https://github.com/blog",
             "location": "San Francisco",
-            "email": "octocat@github.com",
+            "email": %(public_email)s,
             "hireable": false,
             "bio": "There once was...",
             "public_repos": 2,
@@ -754,6 +758,31 @@ class KumaGitHubTests(UserTestCase):
                          {'verified': True,
                           'email': 'octo.cat@github-inc.com',
                           'primary': True})
+        # then check if the radio button's default value is the public email address
+        self.assertEqual(response.context["form"].initial["email"], 'octocat@github.com')
+
+        unverified_email = 'o.ctocat@gmail.com'
+        data = {
+            'username': 'octocat',
+            'email': SignupForm.other_email_value,  # = use other_email
+            'other_email': unverified_email,
+            'terms': True
+        }
+        self.assertFalse((EmailAddress.objects.filter(email=unverified_email)
+                                              .exists()))
+        response = self.client.post(self.signup_url, data=data, follow=True)
+        unverified_email_addresses = EmailAddress.objects.filter(email=unverified_email)
+        self.assertTrue(unverified_email_addresses.exists())
+        self.assertEquals(unverified_email_addresses.count(), 1)
+        self.assertTrue(unverified_email_addresses[0].primary)
+        self.assertFalse(unverified_email_addresses[0].verified)
+
+    def test_email_addresses_with_no_public(self):
+        self.login(username='private_octocat',
+                   verified_email='octocat@github.com',
+                   public_email=None)
+        response = self.client.get(self.signup_url)
+        self.assertEqual(response.context["form"].initial["email"], 'octocat@github.com')
 
     def test_matching_accounts(self):
         testemail = 'octo.cat.III@github-inc.com'
@@ -806,7 +835,8 @@ class KumaGitHubTests(UserTestCase):
     def login(self,
               username='octocat',
               verified_email='octo.cat@github-inc.com',
-              process='login', with_refresh_token=True):
+              process='login', with_refresh_token=True,
+              public_email='octocat@github.com'):
         resp = self.client.get(reverse('github_login',
                                        locale=settings.WIKI_DEFAULT_LANGUAGE),
                                {'process': process})
@@ -822,7 +852,8 @@ class KumaGitHubTests(UserTestCase):
                            {'content-type': 'application/json'}),
                 MockedResponse(200,
                                self.mocked_user_response %
-                               {'username': username}),
+                               {'username': username,
+                                'public_email': json.dumps(public_email)}),
                 MockedResponse(200,
                                self.mocked_email_response %
                                {'verified_email': verified_email})):

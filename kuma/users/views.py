@@ -332,17 +332,21 @@ class SignupView(BaseSignupView):
                     'primary': False,
                 }
             choices = []
+            verified_emails = []
             for email_address in self.email_addresses.values():
                 if email_address['verified']:
                     label = _('%(email)s <b>Verified</b>')
+                    verified_emails.append(email_address['email'])
                 else:
                     label = _('%(email)s Unverified')
-                email = email_address['email']
-                choices.append((email, label % {'email': email}))
+                next_email = email_address['email']
+                choices.append((next_email, label % {'email': next_email}))
             choices.append((form.other_email_value, _('Other:')))
             email_select = forms.RadioSelect(choices=choices,
                                              attrs={'id': 'email'})
             form.fields['email'].widget = email_select
+            if not email and len(verified_emails) == 1:
+                form.initial.update(email=verified_emails[0])
         return form
 
     def get_form_kwargs(self):
@@ -362,17 +366,20 @@ class SignupView(BaseSignupView):
         So, we need to manually commit the user to the db for it.
         """
         selected_email = form.cleaned_data['email']
-        if selected_email == form.other_email_value:
+        if form.other_email_used:
             email_address = {
-                'email': form.cleaned_data['other_email'],
+                'email': selected_email,
                 'verified': False,
                 'primary': True,
             }
         else:
             email_address = self.email_addresses.get(selected_email, None)
+
         if email_address:
             email_address['primary'] = True
-            self.sociallogin.email_addresses = [EmailAddress(*email_address)]
+            primary_email_address = EmailAddress(**email_address)
+            form.sociallogin.email_addresses = \
+                self.sociallogin.email_addresses = [primary_email_address]
             if email_address['verified']:
                 # we have to stash the selected email address here
                 # so that no email verification is sent again

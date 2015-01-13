@@ -27,6 +27,7 @@ def clean_sessions():
 
     if cache.add(LOCK_ID, now.strftime('%c'), LOCK_EXPIRE):
         total_count = get_expired_sessions(now).count()
+        delete_count = 0
         logger.info('Deleting the %s of %s oldest expired sessions' %
                     (chunk_size, total_count))
         try:

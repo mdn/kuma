@@ -64,7 +64,7 @@
     {% include "includes/google_analytics.html" %}
   {% endif %}
 </head>
-<body {% block body_attributes %}{% endblock %} class="{% block bodyclass %}{% endblock %}"{% if request.user.is_authenticated() %} data-login-service="{{ request.session.sociallogin_provider }}"{% endif %}>
+<body {% block body_attributes %}{% endblock %} class="{% block bodyclass %}{% endblock %}"{% if request.user and request.user.is_authenticated() %} data-login-service="{{ request.session.sociallogin_provider }}"{% endif %}>
 
   {% include "includes/config.html" %}
 
@@ -169,7 +169,7 @@
         <p>
           {% trans copyright_url=devmo_url('Project:MDN/About#Copyrights_and_licenses'), about_url=devmo_url('Project:MDN/About'), thisyear=thisyear() %}
           <bdi>&copy; 2005-{{ thisyear }} Mozilla Developer Network and individual contributors<br />
-          Content is available under <a href="{{ copyright_url }}">these licenses</a> &middot; <a href="{{ about_url }}">About MDN</a> &middot; <a href="//github.com/mozilla/kuma">Contribute to the code</a> &middot; <a href="//www.mozilla.org/privacy/websites/">Privacy policy</a></bdi>
+          Content is available under <a href="{{ copyright_url }}">these licenses</a> &middot; <a href="{{ about_url }}">About MDN</a> &middot; <a href="//www.mozilla.org/about/legal/terms/mozilla">Terms</a> &middot; <a href="//www.mozilla.org/privacy/websites/">Privacy</a> &middot; <a href="//www.mozilla.org/privacy/websites/#cookies">Cookies</a> &middot; <a href="//github.com/mozilla/kuma">Contribute to the code</a></bdi>
           {% endtrans %}
         </p>
         {% endblock %}
