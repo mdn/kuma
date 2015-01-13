@@ -34,7 +34,7 @@ from kuma.wiki.constants import DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL
 from kuma.wiki.content import get_seo_description
 from kuma.wiki.events import EditDocumentEvent
 from kuma.wiki.models import (Document, Revision, RevisionIP, DocumentZone,
-                              DocumentTag)
+                              DocumentTag, DocumentDeletionLog)
 from kuma.wiki.tests import (doc_rev, document, new_document_data, revision,
                              normalize_html, create_template_test_users,
                              make_translation)
@@ -461,6 +461,15 @@ class ConditionalGetTests(UserTestCase, WikiTestCase):
         # last-modified data in the cache for it afterward.
         doc.delete()
         ok_(not cache.get(cache_key))
+
+    def test_deleted_doc_returns_404(self):
+        """Requesting a deleted doc returns 404"""
+        doc, rev = doc_rev()
+        doc.delete()
+        DocumentDeletionLog.objects.create(locale=doc.locale, slug=doc.slug,
+                                           user=rev.creator, reason="test")
+        response = self.client.get(doc.get_absolute_url(), follow=False)
+        eq_(404, response.status_code)
 
 
 class ReadOnlyTests(UserTestCase, WikiTestCase):
