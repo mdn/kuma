@@ -20,7 +20,6 @@ from waffle.models import Switch
 from devmo.utils import MemcacheLock
 from devmo.tests import override_constance_settings
 from kuma.wiki.constants import REDIRECT_CONTENT
-from kuma.wiki.cron import calculate_related_documents
 from kuma.wiki.exceptions import (PageMoveError,
                                   DocumentRenderedContentNotAvailable,
                                   DocumentRenderingInProgress)
@@ -716,36 +715,6 @@ class RevisionTests(UserTestCase):
         reverted_tags = [t.name for t in reverted.review_tags.all()]
         ok_('technical' in reverted_tags)
         ok_('editorial' not in reverted_tags)
-
-
-class RelatedDocumentTests(UserTestCase):
-    fixtures = UserTestCase.fixtures + ['wiki/documents.json']
-
-    def test_related_documents_calculated(self):
-        d = Document.objects.get(pk=1)
-        eq_(0, d.related_documents.count())
-
-        calculate_related_documents()
-
-        d = Document.objects.get(pk=1)
-        eq_(2, d.related_documents.count())
-
-    def test_related_only_locale(self):
-        calculate_related_documents()
-        d = Document.objects.get(pk=1)
-        for rd in d.related_documents.all():
-            eq_(settings.WIKI_DEFAULT_LANGUAGE, rd.locale)
-
-    def test_only_approved_revisions(self):
-        calculate_related_documents()
-        d = Document.objects.get(pk=1)
-        for rd in d.related_documents.all():
-            assert rd.current_revision
-
-    def test_only_approved_have_related(self):
-        calculate_related_documents()
-        d = Document.objects.get(pk=3)
-        eq_(0, d.related_documents.count())
 
 
 class GetCurrentOrLatestRevisionTests(UserTestCase):

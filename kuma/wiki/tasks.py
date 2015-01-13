@@ -1,16 +1,23 @@
+from __future__ import with_statement
+import os
+import time
 import logging
+from datetime import datetime
 
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
+from django.contrib.sitemaps import GenericSitemap
 from django.core.cache import get_cache
 from django.core.mail import EmailMessage, send_mail
 from django.db import connection, transaction
 from django.dispatch import receiver
 from django.template.loader import render_to_string
+from django.utils.encoding import smart_str
 
 from celery.task import task
 from constance import config
+from xml.dom.minidom import parseString
 
 from devmo.utils import MemcacheLock
 from .events import context_dict
@@ -218,3 +225,46 @@ def send_first_edit_email(revision_pk):
                          headers={'X-Kuma-Document-Url': doc_url,
                                   'X-Kuma-Editor-Username': user.username})
     email.send()
+
+
+class WikiSitemap(GenericSitemap):
+    protocol = 'https'
+    priority = 0.5
+
+
+@task
+def build_sitemaps():
+    sitemap_element = '<sitemap><loc>%s</loc><lastmod>%s</lastmod></sitemap>'
+    sitemap_index = ('<sitemapindex xmlns="http://www.sitemaps.org/'
+                     'schemas/sitemap/0.9">')
+    now = datetime.utcnow()
+    timestamp = '%s+00:00' % now.replace(microsecond=0).isoformat()
+    for locale in settings.MDN_LANGUAGES:
+        queryset = (Document.objects
+                            .filter(is_template=False,
+                                    locale=locale,
+                                    is_redirect=False)
+                            .exclude(title__startswith='User:')
+                            .exclude(slug__icontains='Talk:'))
+        if queryset.count() > 0:
+            info = {'queryset': queryset, 'date_field': 'modified'}
+            sitemap = WikiSitemap(info)
+            urls = sitemap.get_urls(page=1)
+            xml = smart_str(render_to_string('wiki/sitemap.xml',
+                                             {'urlset': urls}))
+            directory = os.path.join(settings.MEDIA_ROOT, 'sitemaps', locale)
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+            with open(os.path.join(directory, 'sitemap.xml'), 'w') as f:
+                f.write(xml)
+
+            sitemap_url = ("https://%s/sitemaps/%s/sitemap.xml" %
+                          (Site.objects.get_current().domain, locale))
+            sitemap_index = (sitemap_index + sitemap_element %
+                             (sitemap_url, timestamp))
+
+    sitemap_index = sitemap_index + "</sitemapindex>"
+
+    index_path = os.path.join(settings.MEDIA_ROOT, 'sitemap.xml')
+    with open(index_path, 'w') as index_file:
+        index_file.write(parseString(sitemap_index).toxml())

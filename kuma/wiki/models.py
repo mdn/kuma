@@ -220,13 +220,6 @@ class Document(NotificationsMixin, models.Model):
     parent_topic = models.ForeignKey('self', related_name='children',
                                      null=True, blank=True)
 
-    # Related documents, based on tags in common.
-    # The RelatedDocument table is populated by
-    # wiki.cron.calculate_related_documents.
-    related_documents = models.ManyToManyField('self',
-                                               through='RelatedDocument',
-                                               symmetrical=False)
-
     files = models.ManyToManyField(Attachment,
                                    through=DocumentAttachment)
 
@@ -1792,15 +1785,6 @@ class HelpfulVote(models.Model):
     creator = models.ForeignKey(User, related_name='poll_votes', null=True)
     anonymous_id = models.CharField(max_length=40, db_index=True)
     user_agent = models.CharField(max_length=1000)
-
-
-class RelatedDocument(models.Model):
-    document = models.ForeignKey(Document, related_name='related_from')
-    related = models.ForeignKey(Document, related_name='related_to')
-    in_common = models.IntegerField()
-
-    class Meta(object):
-        ordering = ['-in_common']
 
 
 class EditorToolbar(models.Model):

@@ -82,7 +82,6 @@ TABLES_TO_DUMP=[x.strip() for x in """
     wiki_documenttag
     wiki_editortoolbar
     wiki_helpfulvote
-    wiki_relateddocument
     wiki_reviewtag
     wiki_reviewtaggedrevision
     wiki_revision
