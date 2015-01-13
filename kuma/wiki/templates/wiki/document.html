@@ -73,25 +73,6 @@
   <meta property="og:description" content="{{ seo_summary }}">
   <meta name="description" content="{{ seo_summary }}">
   <meta name="twitter:description" content="{{ seo_summary }}">
-
-  <!-- Scrollback widget -->
-  <script>
-    var scrollbackAdded = false;
-  	function addScrollback(roomName) {
-      if (!roomName) return;
-      if(!scrollbackAdded) {
-    		window.scrollback = {"room": roomName,"form":"toast","minimize":false, titlebarColor: "#00539f"};
-        var el = document.createElement("script");
-        el.async = 1;
-        el.src = (location.protocol === "https:" ? "https:" : "http:") + "//scrollback.io/client.min.js";
-        document.getElementsByTagName("script")[0].parentNode.appendChild(el);
-        scrollbackAdded = true;
-      } else {
-        var iframe = document.getElementsByClassName("scrollback-stream")[0];
-        iframe.src = iframe.src.replace(/\/[^/]*\?/, '/' + encodeURIComponent(roomName) + '?');
-      }
-  	}
-  </script>
   {% endif %}
 {% endblock %}
 
@@ -420,15 +401,18 @@
   <!-- embed scrollback widget based on the tags on the page -->
   {% set tags = document.tags.all() %}
   {% for tag in tags %}
-    {% if settings.SCROLLBACK_ROOM_MAP[tag.name] and waffle.flag('scrollback_widget') %}
-      <button class = "scrollback-button" onclick='addScrollback("{{settings.SCROLLBACK_ROOM_MAP[tag.name]}}")'> Chat about {{tag.name}} </button>
+   	{% if settings.SCROLLBACK_ROOM_MAP[tag.name] and waffle.flag('scrollback_widget') %}
+    <button class = "scrollback-button" onclick='addScrollback("{{settings.SCROLLBACK_ROOM_MAP[tag.name]}}")'> Chat about {{tag.name}} </button>
     {% endif %}
   {% endfor %}
 
 {% endblock %}
 
 {% block js %}
+  {% if waffle.flag('scrollback_widget') %}
+  	 <script type="text/javascript" src="../../../../media/redesign/js/scrollback.js" async="true"></script>
+  {% endif %}
   <script type="text/javascript">
-      if(window.jQuery) jQuery('.from-search-toc').mozSearchResults('{{ search_url|safe }}');
+     if(window.jQuery) jQuery('.from-search-toc').mozSearchResults('{{ search_url|safe }}');
   </script>
 {% endblock %}
