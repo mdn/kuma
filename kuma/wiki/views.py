@@ -547,9 +547,6 @@ def document(request, document_slug, document_locale):
     if rendering_params['raw']:
         return _document_raw(request, doc, doc_html, rendering_params)
 
-    # Step 7: Get related info for this Document.
-    related = doc.related_documents.order_by('-related_to__in_common')[0:5]
-
     # Get the contributors. (To avoid this query, we could render the
     # the contributors right into the Document's html field.)
     # NOTE: .only() avoids a memcache object-too-large error for large wiki
@@ -590,7 +587,6 @@ def document(request, document_slug, document_locale):
                'quick_links_html': quick_links_html,
                'zone_subnav_html': zone_subnav_html,
                'body_html': body_html,
-               'related': related,
                'contributors': contributors,
                'fallback_reason': fallback_reason,
                'kumascript_errors': ks_errors,
