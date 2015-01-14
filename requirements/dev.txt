@@ -17,9 +17,6 @@ django-dbgettext==0.1
 URLObject==2.3.4
 django-debug-toolbar==1.0.1
 
--e git://github.com/jbalogh/check.git@1c73813fcd085020decc6f72caf232f71150db0a#egg=check
-# 2010-04-07
--e git://github.com/jbalogh/django-debug-cache-panel@a6b0f248b721bdd759ee5b5eb843fedc9c33da09#egg=cache-panel
 -e git://github.com/jbalogh/django-nose.git#egg=django_nose
 # 2012-11-19
 -e git://github.com/jbalogh/test-utils.git@ce5136a257cd44a1c663319124a255c1d10a9834#egg=test-utils
