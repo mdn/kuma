@@ -42,8 +42,9 @@ def ban_link(context, ban_user, banner_user):
     if ban_user.id != banner_user.id and banner_user.has_perm('users.add_userban'):
         if ban_user.get_profile().is_banned:
             active_ban = ban_user.get_profile().active_ban()
-            # TODO: link to the active ban
-            link = '<a class="button inactive ban-link" title="%s %s %s %s">%s</a>' % (_('Banned'), datetimeformat(context, active_ban.date, format='date', output='json'), _('by'), active_ban.by, _('Banned'))
+            url = reverse('admin:users_userban_change', args=(active_ban.id,))
+            title = _('Banned on {ban_date} by {ban_admin}.').format(ban_date=datetimeformat(context, active_ban.date, format='date', output='json'), ban_admin=active_ban.by )
+            link = '<a href="%s" class="button ban-link" title="%s">%s</a>' % (url, title, _('Banned'))
         else:
             url = '%s?user=%s&by=%s' % (reverse('admin:users_userban_add'), ban_user.id, banner_user.id)
             link = '<a href="%s" class="button negative ban-link">%s</a>' % (url, _('Ban User'))
