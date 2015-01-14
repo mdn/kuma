@@ -13,6 +13,8 @@ from tower import ugettext as _
 
 from sumo.urlresolvers import reverse
 
+from devmo.helpers import datetimeformat
+
 DEFAULT_AVATAR = getattr(settings, 'DEFAULT_AVATAR',
                          settings.MEDIA_URL + 'img/avatar-default.png')
 
@@ -33,12 +35,18 @@ def gravatar_url(user, secure=True, size=220, rating='pg',
 
 
 @register.function
-def ban_link(ban_user, banner_user):
+@contextfunction
+def ban_link(context, ban_user, banner_user):
     """Returns a link to ban a user"""
     link = ''
     if ban_user.id != banner_user.id and banner_user.has_perm('users.add_userban'):
-        url = '%s?user=%s&by=%s' % (reverse('admin:users_userban_add'), ban_user.id, banner_user.id)
-        link = '<a href="%s" class="button ban-link">%s</a>' % (url, _('Ban User'))
+        if ban_user.get_profile().is_banned:
+            active_ban = ban_user.get_profile().active_ban()
+            # TODO: link to the active ban
+            link = '<a class="button inactive ban-link" title="%s %s %s %s">%s</a>' % (_('Banned'), datetimeformat(context, active_ban.date, format='date', output='json'), _('by'), active_ban.by, _('Banned'))
+        else:
+            url = '%s?user=%s&by=%s' % (reverse('admin:users_userban_add'), ban_user.id, banner_user.id)
+            link = '<a href="%s" class="button negative ban-link">%s</a>' % (url, _('Ban User'))
     return Markup(link)
 
 

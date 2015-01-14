@@ -67,7 +67,7 @@ label {
         }
     }
 
-    &.neutral, &.negative, &.positive {
+    &.neutral, &.negative, &.positive, &.inactive {
         color: #fff;
     }
 
@@ -89,6 +89,12 @@ label {
     &.transparent {
         box-shadow: none;
         background-color: transparent;
+    }
+
+    &.inactive {
+        cursor: default;
+        background-color: #95959a;
+        box-shadow: inset 0 -1px #65656a;
     }
 
     &::-moz-focus-inner {
