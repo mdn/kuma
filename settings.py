@@ -426,6 +426,7 @@ MIDDLEWARE_CLASSES = (
     'kuma.core.anonymous.AnonymousIdentityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'kuma.users.middleware.BanMiddleware',
+    'banish.middleware.BanishMiddleware',
 
     'badger.middleware.RecentBadgeAwardsMiddleware',
     'kuma.wiki.badges.BadgeAwardingMiddleware',
@@ -519,6 +520,7 @@ INSTALLED_APPS = (
     'djcelery',
     'taggit',
     'dbgettext',
+    'banish',
 
     'kuma.dashboards',
     'statici18n',
@@ -1263,3 +1265,9 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+
+# django-banish defaults; listing here to be explicit
+BANISH_ENABLED = True
+BANISH_EMPTY_UA = True
+BANISH_ABUSE_THRESHOLD = 75
+BANISH_MESSAGE = _("This connection has been banned for suspicious activity.")
