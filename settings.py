@@ -1270,4 +1270,5 @@ SOCIALACCOUNT_PROVIDERS = {
 BANISH_ENABLED = True
 BANISH_EMPTY_UA = True
 BANISH_ABUSE_THRESHOLD = 75
+BANISH_USE_HTTP_X_FORWARDED_FOR = True
 BANISH_MESSAGE = _("This connection has been banned for suspicious activity.")
