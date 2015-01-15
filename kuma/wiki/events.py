@@ -1,16 +1,12 @@
 import logging
 
-from django.conf import settings
-from django.contrib.sites.models import Site
-from django.core.mail import EmailMessage
-from django.template import Context, loader
-
 from tower import ugettext as _
 
 from devmo import email_utils
 from devmo.helpers import add_utm
-from tidings.events import InstanceEvent
 from sumo.urlresolvers import reverse
+from tidings.events import InstanceEvent
+
 from .helpers import revisions_unified_diff
 from .models import Document
 
@@ -52,30 +48,11 @@ def context_dict(revision):
     context = {
         'document_title': document.title,
         'creator': revision.creator,
-        'host': Site.objects.get_current().domain,
         'diff': diff
     }
     context.update(link_urls)
 
     return context
-
-
-def notification_mails(revision, subject, template, url, users_and_watches):
-    """Return EmailMessages in standard notification mail format."""
-    document = revision.document
-    subject = subject.format(title=document.title, creator=revision.creator,
-                             locale=document.locale)
-    t = loader.get_template(template)
-    c = {'document_title': document.title,
-         'creator': revision.creator,
-         'url': url,
-         'host': Site.objects.get_current().domain}
-    content = t.render(Context(c))
-    mail = EmailMessage(subject, content, settings.TIDINGS_FROM_ADDRESS)
-
-    for u, dummy in users_and_watches:
-        mail.to = [u.email]
-        yield mail
 
 
 class EditDocumentEvent(InstanceEvent):

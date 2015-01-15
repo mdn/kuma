@@ -1,15 +1,16 @@
 # coding=utf-8
-
-import json
 import difflib
+import json
 import re
 import urllib
+import urlparse
 
 import jinja2
 from pyquery import PyQuery as pq
 from tidylib import tidy_document
 from tower import ugettext as _
 
+from django.contrib.sites.models import Site
 from django.core.serializers.json import DjangoJSONEncoder
 from django.utils.html import conditional_escape
 
@@ -112,12 +113,13 @@ def format_comment(rev):
         prev_rev = rev.get_previous()
     comment = bugize_text(rev.comment if rev.comment else "")
 
-    #  If a page move, say so
+    # If a page move, say so
     if prev_rev and prev_rev.slug != rev.slug:
-        comment += (jinja2.Markup('<span class="slug-change">'
-                                  '<span>%s</span>'
-                                  ' <i class="icon-long-arrow-right" aria-hidden="true"></i> '
-                                  '<span>%s</span></span>') % (prev_rev.slug, rev.slug))
+        comment += jinja2.Markup(
+            '<span class="slug-change">'
+            '<span>%s</span>'
+            ' <i class="icon-long-arrow-right" aria-hidden="true"></i> '
+            '<span>%s</span></span>') % (prev_rev.slug, rev.slug)
 
     return comment
 
@@ -277,3 +279,31 @@ def document_zone_management_links(user, document):
                                   args=(zone.id,))
 
     return links
+
+
+@register.filter
+def absolutify(url, site=None):
+    """
+    Joins a base ``Site`` URL with a URL path.
+
+    If no site provided it gets the current site from Site.
+
+    """
+    if url.startswith('http'):
+        return url
+
+    if not site:
+        site = Site.objects.get_current()
+
+    parts = urlparse.urlsplit(url)
+
+    scheme = 'https'
+    netloc = site.domain
+    path = parts.path
+    query = parts.query
+    fragment = parts.fragment
+
+    if path == '':
+        path = '/'
+
+    return urlparse.urlunparse([scheme, netloc, path, None, query, fragment])

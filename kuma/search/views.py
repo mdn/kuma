@@ -1,6 +1,5 @@
 import json
 
-from django.contrib.sites.models import Site
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render
 from django.views.decorators.cache import cache_page
@@ -9,13 +8,14 @@ from rest_framework.generics import ListAPIView
 from rest_framework.renderers import JSONRenderer
 from waffle import flag_is_active
 
-from .filters import (LanguageFilterBackend, DatabaseFilterBackend,
-                      SearchQueryBackend, HighlightFilterBackend,
-                      AdvancedSearchQueryBackend, get_filters)
-from .models import Filter, DocumentType
-from .renderers import ExtendedTemplateHTMLRenderer
-from .serializers import SearchSerializer, DocumentSerializer, FilterWithGroupSerializer
+from .filters import (AdvancedSearchQueryBackend, DatabaseFilterBackend,
+                      get_filters, HighlightFilterBackend,
+                      LanguageFilterBackend, SearchQueryBackend)
+from .models import DocumentType, Filter
 from .queries import DocumentS
+from .renderers import ExtendedTemplateHTMLRenderer
+from .serializers import (DocumentSerializer, FilterWithGroupSerializer,
+                          SearchSerializer)
 
 
 class SearchView(ListAPIView):
@@ -78,8 +78,6 @@ def suggestions(request):
 @cache_page(60 * 60 * 168)  # 1 week.
 def plugin(request):
     """Render an OpenSearch Plugin."""
-    site = Site.objects.get_current()
     return render(request, 'search/plugin.html', {
-        'site': site,
         'locale': request.locale
     }, content_type='application/opensearchdescription+xml')

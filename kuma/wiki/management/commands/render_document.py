@@ -8,6 +8,7 @@ from optparse import make_option
 
 from django.core.management.base import BaseCommand, CommandError
 
+from kuma.wiki.helpers import absolutify
 from kuma.wiki.models import Document, DocumentRenderingInProgress
 from kuma.wiki.tasks import render_document
 
@@ -39,12 +40,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         self.options = options
-
-        self.base_url = options['baseurl']
-        if not self.base_url:
-            from django.contrib.sites.models import Site
-            site = Site.objects.get_current()
-            self.base_url = 'http://%s' % site.domain
+        self.base_url = options['baseurl'] or absolutify('')
 
         if options['all']:
             logging.info(u"Querying ALL %s documents..." %
