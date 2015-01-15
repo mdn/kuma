@@ -166,6 +166,13 @@ class UserProfile(ModelBase):
                 self.user.groups.values_list('name', flat=True))
 
     @property
+    def is_banned(self):
+        return self.user.bans.filter(is_active=True).exists()
+
+    def active_ban(self):
+        if self.is_banned:
+            return self.user.bans.filter(is_active=True)[:1][0]
+
     def gravatar(self):
         return gravatar_url(self.user)
 

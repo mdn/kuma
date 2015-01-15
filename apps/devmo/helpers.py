@@ -207,8 +207,12 @@ def datetimeformat(context, value, format='shortdatetime', output='html'):
     timezone from settings.py
     """
     if not isinstance(value, datetime.datetime):
-        # Expecting date value
-        raise ValueError
+        if isinstance(value, datetime.date):
+            # Turn a date into a datetime
+            value = datetime.datetime.combine(value, datetime.datetime.min.time())
+        else:
+            # Expecting datetime value
+            raise ValueError
 
     default_tz = timezone(settings.TIME_ZONE)
     tzvalue = default_tz.localize(value)

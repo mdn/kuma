@@ -45,6 +45,13 @@
                     {% if show_ips %}
                     <br/><a class="dashboard-ip-link" href="{{ url('admin:wiki_revisionip_changelist') }}?revision={{revision.id}}" target="_blank">{{ _('View IP') }}</a>
                     {% endif %}
+                    {% if request.user.is_superuser and revision.creator.get_profile().is_banned %}
+                        {% set active_ban = revision.creator.get_profile().active_ban() %}
+                        <div class="banned">
+                            banned {{ datetimeformat(active_ban.date, format='date') }}
+                            by {{ active_ban.by }}
+                        </div> 
+                    {% endif %}
                     </td>
                 </tr>
             {% endfor %}
