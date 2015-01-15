@@ -8,7 +8,7 @@
 {% block content %}
 
   <article>
-    <h1><a href="{{ url('wiki.document', document.full_path, locale=document.locale) }}">{{ document.title }}</a></h1>
+    <h1><a href="{{ document.get_absolute_url() }}">{{ document.title }}</a></h1>
 
     <details class="h2" open="open">
       <summary class="hidden">{{ _('Revision Information') }}</summary>
