@@ -39,7 +39,7 @@ What to work on
 
 Good starting projects are listed on [Bugzilla][bugzilla]. If you have any questions, just ask in the #mdndev IRC channel on irc.mozilla.org!
 
-[bugzilla]: https://bugzilla.mozilla.org/buglist.cgi?bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&columnlist=short_desc%2Ccomponent%2Cchangeddate&list_id=9799718&product=Mozilla%20Developer%20Network&query_format=advanced&status_whiteboard=[good%20first%20bug]&status_whiteboard_type=allwordssubstr&query_based_on=
+[bugzilla]: https://bugzilla.mozilla.org/buglist.cgi?j_top=OR&list_id=11858643&o1=isnotempty&o2=substring&v2=%5Bgood%20first%20bug%5D&f1=bug_mentor&columnlist=short_desc%2Ccomponent%2Cchangeddate&query_format=advanced&f2=status_whiteboard&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&product=Mozilla%20Developer%20Network
 
 How to submit code
 ==================
