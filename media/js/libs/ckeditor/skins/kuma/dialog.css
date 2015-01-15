@@ -104,3 +104,12 @@ body .cke_dialog{visibility:visible;padding:20px;background:rgba(0,0,0,.3);font:
   background: -webkit-linear-gradient(top, #f8b8a0 0, #f8a688 100%);
   background: linear-gradient(top, #f8b8a0 0, #f8a688 100%);
 }
+
+#cke_dialog_contents_78 .cke_dialog_ui_hbox_last .ImagePreviewBox {
+  width:100%;
+}
+
+#cke_dialog_contents_78 .cke_dialog_ui_hbox_first .cke_dialog_ui_input_text {
+  width:100% !important;
+  padding:2px 0;
+}
