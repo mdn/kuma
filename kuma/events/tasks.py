@@ -1,9 +1,9 @@
-import cronjobs
+from celery.task import task
 
 from .models import Calendar
 
 
-@cronjobs.register
+@task
 def calendar_reload():
     calendar = Calendar.objects.get(shortname='devengage_events')
     calendar.reload()

@@ -503,7 +503,6 @@ INSTALLED_APPS = (
     'threadedcomments',
 
     # util
-    'cronjobs',
     'jingo_minify',
     'product_details',
     'tower',
@@ -520,7 +519,6 @@ INSTALLED_APPS = (
     'dbgettext',
 
     'kuma.dashboards',
-    'kpi',
     'statici18n',
     'rest_framework',
 
@@ -1200,10 +1198,6 @@ LOGGING = {
             'propagate': True,
             # Use the most permissive setting. It is filtered in the handlers.
             'level': logging.DEBUG,
-        },
-        'cron': {
-            'handlers': ['console'],
-            'level': logging.INFO,
         },
         'django.request': {
             'handlers': ['console'],
