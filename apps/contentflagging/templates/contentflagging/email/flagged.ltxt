@@ -6,4 +6,4 @@
 To change the status of this flag, click the following
 link, or paste it into your browser's location bar:
 {% trans %}
-https://{{ host }}{{ url }}
+{{ url|absolutify }}

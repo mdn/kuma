@@ -1,12 +1,14 @@
+import mock
 from nose.tools import eq_
 
 from django.contrib.auth.models import User
+from django.contrib.sites.models import Site
 
 from kuma.users.tests import UserTestCase
+from kuma.wiki.helpers import (absolutify, document_zone_management_links,
+                               revisions_unified_diff, tojson)
 from kuma.wiki.models import DocumentZone
-from kuma.wiki.helpers import (revisions_unified_diff,
-                               document_zone_management_links, tojson)
-from kuma.wiki.tests import WikiTestCase, revision
+from kuma.wiki.tests import revision, WikiTestCase
 
 
 class HelpTests(WikiTestCase):
@@ -14,6 +16,23 @@ class HelpTests(WikiTestCase):
     def test_tojson(self):
         eq_(tojson({'title': '<script>alert("Hi!")</script>'}),
             '{"title": "&lt;script&gt;alert(&quot;Hi!&quot;)&lt;/script&gt;"}')
+
+    @mock.patch_object(Site.objects, 'get_current')
+    def test_absolutify(self, get_current):
+        get_current.return_value.domain = 'testserver'
+
+        eq_(absolutify(''), 'https://testserver/')
+        eq_(absolutify('/'), 'https://testserver/')
+        eq_(absolutify('//'), 'https://testserver/')
+        eq_(absolutify('/foo/bar'), 'https://testserver/foo/bar')
+        eq_(absolutify('http://domain.com'), 'http://domain.com')
+
+        site = Site(domain='otherserver')
+        eq_(absolutify('/woo', site), 'https://otherserver/woo')
+
+        eq_(absolutify('/woo?var=value'), 'https://testserver/woo?var=value')
+        eq_(absolutify('/woo?var=value#fragment'),
+            'https://testserver/woo?var=value#fragment')
 
 
 class RevisionsUnifiedDiffTests(UserTestCase, WikiTestCase):

@@ -1,12 +1,10 @@
 from __future__ import with_statement
 import os
-import time
 import logging
 from datetime import datetime
 
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.contrib.sites.models import Site
 from django.contrib.sitemaps import GenericSitemap
 from django.core.cache import get_cache
 from django.core.mail import EmailMessage, send_mail
@@ -21,8 +19,9 @@ from xml.dom.minidom import parseString
 
 from devmo.utils import MemcacheLock
 from .events import context_dict
-from .exceptions import StaleDocumentsRenderingInProgress, PageMoveError
-from .models import Document, RevisionIP, Revision
+from .exceptions import PageMoveError, StaleDocumentsRenderingInProgress
+from .helpers import absolutify
+from .models import Document, Revision, RevisionIP
 from .signals import render_done
 
 
@@ -218,8 +217,7 @@ def send_first_edit_email(revision_pk):
                {'user': user.username, 'doc': doc.title})
     message = render_to_string('wiki/email/edited.ltxt',
                                context_dict(revision))
-    current_site = Site.objects.get_current()
-    doc_url = "https://%s%s" % (current_site.domain, doc.get_absolute_url())
+    doc_url = absolutify(doc.get_absolute_url())
     email = EmailMessage(subject, message, settings.DEFAULT_FROM_EMAIL,
                          to=[config.EMAIL_LIST_FOR_FIRST_EDITS],
                          headers={'X-Kuma-Document-Url': doc_url,
@@ -258,8 +256,7 @@ def build_sitemaps():
             with open(os.path.join(directory, 'sitemap.xml'), 'w') as f:
                 f.write(xml)
 
-            sitemap_url = ("https://%s/sitemaps/%s/sitemap.xml" %
-                          (Site.objects.get_current().domain, locale))
+            sitemap_url = absolutify('/sitemaps/%s/sitemap.xml' % locale)
             sitemap_index = (sitemap_index + sitemap_element %
                              (sitemap_url, timestamp))
 

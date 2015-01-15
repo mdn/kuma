@@ -4,24 +4,18 @@ Refresh cached wiki data.
 Run this periodically, it's useful for preventing redundant traffic between
 Kuma and other services like Kumascript.
 """
-import datetime
 import hashlib
 import logging
-from optparse import make_option
-import sys
-import time
 import urlparse
+from optparse import make_option
 
 import requests
 
 from django.conf import settings
 from django.core.cache import cache
-from django.contrib.auth.models import User
-from django.contrib.sites.models import Site
-from django.core.management.base import (BaseCommand, NoArgsCommand,
-                                         CommandError)
+from django.core.management.base import BaseCommand
 
-from kuma.wiki.models import (Document, Revision)
+from kuma.wiki.models import Document
 
 
 PAGE_EXISTS_KEY_TMPL = getattr(settings, 'wiki_page_exists_key_tmpl',
@@ -40,12 +34,6 @@ class Command(BaseCommand):
     )
 
     def handle(self, *args, **options):
-        
-        base_url = options['baseurl']
-        if not base_url:
-            from django.contrib.sites.models import Site
-            site = Site.objects.get_current()
-            base_url = 'http://%s' % site.domain
 
         to_prefetch = []
         logging.info("Querying all Documents...")

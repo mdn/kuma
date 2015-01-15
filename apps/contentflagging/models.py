@@ -1,18 +1,13 @@
 """Models for content moderation flagging"""
-from django.db import models
 from django.conf import settings
-
-from django.core import urlresolvers
-from django.core.mail import send_mail
-
-from django.contrib.sites.models import Site
-from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
-
-from django.utils.translation import ugettext_lazy as _
-
+from django.contrib.contenttypes.models import ContentType
+from django.core import urlresolvers
+from django.core.mail import send_mail
+from django.db import models
 from django.template import Context, loader
+from django.utils.translation import ugettext_lazy as _
 
 from .utils import get_unique
 
@@ -45,6 +40,7 @@ for reason in FLAG_REASONS:
 # individual reasons to the set like so:
 #FLAG_NOTIFICATIONS['inappropriate'] = True
 
+
 class ContentFlagManager(models.Manager):
     """Manager for ContentFlags"""
 
@@ -71,9 +67,9 @@ class ContentFlagManager(models.Manager):
             subject = subject.format(object=object)
             t = loader.get_template('contentflagging/email/flagged.ltxt')
             url = '/admin/contentflagging/contentflag/' + str(object.pk)
-            host = Site.objects.get_current().domain
-            content = t.render(Context({'url':url,'host':host,
-                                        'object':object,'flag_type':flag_type}))
+            content = t.render(Context({'url': url,
+                                        'object': object,
+                                        'flag_type': flag_type}))
             send_mail(subject, content, settings.DEFAULT_FROM_EMAIL, recipients)
         return cf
 
@@ -87,8 +83,6 @@ class ContentFlagManager(models.Manager):
                 flag_dict[model_name] = []
             flag_dict[model_name].append(flag)
         return flag_dict
-
-        
 
 
 class ContentFlag(models.Model):
