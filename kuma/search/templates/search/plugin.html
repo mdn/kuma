@@ -5,15 +5,15 @@
 <Description>{{ _('Search Mozilla Developer Network documentation') }}</Description>
 <InputEncoding>UTF-8</InputEncoding>
 <Image width="16" height="16" type="image/png">{{ MEDIA_URL }}redesign/img/favicon32.png</Image>
-<Url type="text/html" method="get" template="https://{{ site }}/{{ locale }}/search">
+<Url type="text/html" method="get" template="{{ url('search', locale=locale)|absolutify }}">
   <Param name="q" value="{searchTerms}"/>
   <Param name="w" value="3"/>
   <Param name="qs" value="plugin"/>
 </Url>
 <Url type="application/opensearchdescription+xml"
      rel="self"
-     template="https://{{ site }}/{{ locale }}/search/xml"/>
+     template="{{ url('search.plugin', locale=locale)|absolutify }}"/>
 <Url type="application/x-suggestions+json"
-     template="https://{{ site }}/{{ locale }}/search/suggestions?q={searchTerms}"/>
-<moz:SearchForm>https://{{ site }}/{{ locale }}/search</moz:SearchForm>
+     template="{{ url('search.suggestions', locale=locale)|absolutify }}?q={searchTerms}"/>
+<moz:SearchForm>{{ url('search', locale=locale)|absolutify }}</moz:SearchForm>
 </OpenSearchDescription>

@@ -64,7 +64,7 @@ from .constants import (DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX,
                         REDIRECT_CONTENT)
 from .decorators import (check_readonly, process_document_path,
                          allow_CORS_GET, prevent_indexing)
-from .events import EditDocumentEvent, context_dict
+from .events import EditDocumentEvent
 from .forms import (DocumentForm, RevisionForm, DocumentContentFlagForm,
                     RevisionValidationForm, TreeMoveForm,
                     DocumentDeletionForm)
@@ -471,9 +471,8 @@ def document(request, document_slug, document_locale):
             raise Http404
 
         # Check if we should fall back to default locale.
-        fallback_doc, fallback_reason, redirect_url = _default_locale_fallback(request,
-                                                                               document_slug,
-                                                                               document_locale)
+        fallback_doc, fallback_reason, redirect_url = _default_locale_fallback(
+            request, document_slug, document_locale)
         if fallback_doc is not None:
             doc = fallback_doc
             if redirect_url is not None:
@@ -525,16 +524,14 @@ def document(request, document_slug, document_locale):
     rendering_params = {}
     for param in ('raw', 'summary',
                   'include', 'edit_links'):
-        rendering_params[param] = (request.GET.get(param, False) \
-                                   is not False)
+        rendering_params[param] = request.GET.get(param, False) is not False
     rendering_params['section'] = request.GET.get('section', None)
     rendering_params['render_raw_fallback'] = False
     rendering_params['use_rendered'] = kumascript.should_use_rendered(doc, request.GET)
 
     # Step 4: Get us some HTML to play with.
-    doc_html, ks_errors, render_raw_fallback = _get_html_and_errors(request,
-                                                                    doc,
-                                                                    rendering_params)
+    doc_html, ks_errors, render_raw_fallback = _get_html_and_errors(
+        request, doc, rendering_params)
     rendering_params['render_raw_fallback'] = render_raw_fallback
     toc_html = None
 
@@ -761,6 +758,7 @@ def list_documents(request, category=None, tag=None):
                    'category': category,
                    'tag': tag})
 
+
 @require_GET
 def list_templates(request):
     """Returns listing of all templates"""
@@ -771,12 +769,14 @@ def list_templates(request):
                    'count': docs.count(),
                    'is_templates': True})
 
+
 @require_GET
 def list_tags(request):
     """Returns listing of all tags"""
     tags = DocumentTag.objects.order_by('name')
     tags = paginate(request, tags, per_page=DOCUMENTS_PER_PAGE)
     return render(request, 'wiki/list_tags.html', {'tags': tags})
+
 
 @require_GET
 def list_documents_for_review(request, tag=None):
@@ -790,17 +790,20 @@ def list_documents_for_review(request, tag=None):
                    'tag': tag_obj,
                    'tag_name': tag})
 
+
 @require_GET
 def list_documents_with_localization_tag(request, tag=None):
     """Lists wiki documents with localization tag"""
     tag_obj = tag and get_object_or_404(LocalizationTag, name=tag) or None
-    docs = Document.objects.filter_with_localization_tag(locale=request.locale, tag=tag_obj)
+    docs = Document.objects.filter_with_localization_tag(locale=request.locale,
+                                                         tag=tag_obj)
     paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
     return render(request, 'wiki/list_documents_with_localization_tags.html',
                   {'documents': paginated_docs,
                    'count': docs.count(),
                    'tag': tag_obj,
                    'tag_name': tag})
+
 
 @require_GET
 def list_documents_with_errors(request):
@@ -925,17 +928,19 @@ def new_document(request):
 
         allow_add_attachment = (
             Attachment.objects.allow_add_attachment_by(request.user))
-        return render(request, 'wiki/new_document.html',
-                            {'is_template': is_template,
-                             'parent_slug': parent_slug,
-                             'parent_id': initial_parent_id,
-                             'document_form': doc_form,
-                             'revision_form': rev_form,
-                             'WIKI_DOCUMENT_TAG_SUGGESTIONS': constance.config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
-                             'initial_tags': initial_tags,
-                             'allow_add_attachment': allow_add_attachment,
-                             'attachment_form': AttachmentRevisionForm(),
-                             'parent_path': parent_path})
+        context = {
+            'is_template': is_template,
+            'parent_slug': parent_slug,
+            'parent_id': initial_parent_id,
+            'document_form': doc_form,
+            'revision_form': rev_form,
+            'WIKI_DOCUMENT_TAG_SUGGESTIONS': constance.config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
+            'initial_tags': initial_tags,
+            'allow_add_attachment': allow_add_attachment,
+            'attachment_form': AttachmentRevisionForm(),
+            'parent_path': parent_path}
+
+        return render(request, 'wiki/new_document.html', context)
 
     post_data = request.POST.copy()
     posted_slug = post_data['slug']
@@ -970,15 +975,17 @@ def new_document(request):
 
     allow_add_attachment = (
         Attachment.objects.allow_add_attachment_by(request.user))
-    return render(request, 'wiki/new_document.html',
-                        {'is_template': is_template,
-                         'document_form': doc_form,
-                         'revision_form': rev_form,
-                         'WIKI_DOCUMENT_TAG_SUGGESTIONS': constance.config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
-                         'allow_add_attachment': allow_add_attachment,
-                         'attachment_form': AttachmentRevisionForm(),
-                         'parent_slug': parent_slug,
-                         'parent_path': parent_path})
+    context = {
+        'is_template': is_template,
+        'document_form': doc_form,
+        'revision_form': rev_form,
+        'WIKI_DOCUMENT_TAG_SUGGESTIONS': constance.config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
+        'allow_add_attachment': allow_add_attachment,
+        'attachment_form': AttachmentRevisionForm(),
+        'parent_slug': parent_slug,
+        'parent_path': parent_path}
+
+    return render(request, 'wiki/new_document.html', context)
 
 
 @require_http_methods(['GET', 'POST'])
@@ -2149,7 +2156,7 @@ def _document_form_initial(document):
             'slug': document.slug,
             'category': document.category,
             'is_localizable': document.is_localizable,
-            'tags': [t.name for t in document.tags.all()],}
+            'tags': [t.name for t in document.tags.all()]}
 
 
 def _save_rev_and_notify(rev_form, request, document):
@@ -2170,8 +2177,6 @@ def _save_rev_and_notify(rev_form, request, document):
 
     # Enqueue notifications
     EditDocumentEvent(new_rev).fire(exclude=new_rev.creator)
-
-
 
 
 # Legacy MindTouch redirects.

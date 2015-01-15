@@ -13,23 +13,23 @@
 {% trans %}
 View User Profile:
 {% endtrans %}
- https://{{ host }}{{ profile_url }}
+ {{ profile_url|absolutify }}
 {% if compare_url %}
 {% trans %}
 Compare on MDN:
 {% endtrans %}
- https://{{ host }}{{ compare_url }}
+ {{ compare_url|absolutify }}
 {% endif %}
 {% trans %}
 View Article:
 {% endtrans %}
- https://{{ host }}{{ view_url }}
+ {{ view_url|absolutify }}
 {% trans %}
 Edit Article:
 {% endtrans %}
- https://{{ host }}{{ edit_url }}
+ {{ edit_url|absolutify }}
 {% trans %}
 Article History:
 {% endtrans %}
- https://{{ host }}{{ history_url }}
+ {{ history_url|absolutify }}
 {% if watch %}{{ unsubscribe_text(watch) }}{% endif %}{% endautoescape %}
