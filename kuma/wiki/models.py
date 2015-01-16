@@ -37,7 +37,7 @@ import waffle
 from kuma.attachments.models import Attachment, DocumentAttachment
 from kuma.search.decorators import register_live_index
 from kuma.core.exceptions import ProgrammingError
-from kuma.core.models import LocaleField
+from kuma.core.fields import LocaleField
 from kuma.core.urlresolvers import reverse, split_path
 from kuma.core.locales import LOCALES
 
