@@ -18,8 +18,7 @@ handler404 = core_views.handler404
 handler500 = core_views.handler500
 
 urlpatterns = patterns('',
-   # Home / landing pages:
-    ('', include('landing.urls')),
+    ('', include('kuma.landing.urls')),
     (r'^demos/', include('kuma.demos.urls')),
     (r'^events/?', include('kuma.events.urls')),
     (r'^demos', lambda x: redirect('demos')),

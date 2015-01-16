@@ -6,7 +6,7 @@ from devmo.tests import KumaTestCase, override_constance_settings
 
 class HomeTests(KumaTestCase):
     def test_google_analytics(self):
-        url = reverse('landing.views.home')
+        url = reverse('home')
 
         with override_constance_settings(GOOGLE_ANALYTICS_ACCOUNT='0'):
             r = self.client.get(url, follow=True)

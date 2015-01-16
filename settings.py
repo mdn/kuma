@@ -470,7 +470,7 @@ INSTALLED_APPS = (
     # MDN
     'devmo',
     'kuma.feeder',
-    'landing',
+    'kuma.landing',
     'kuma.search',
     'kuma.users',
     'kuma.wiki',
