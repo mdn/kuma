@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from contentflagging.models import ContentFlag, FLAG_STATUS_FLAGGED
+from .models import ContentFlag, FLAG_STATUS_FLAGGED
 
 
 def flagged(request):

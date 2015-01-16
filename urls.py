@@ -55,7 +55,7 @@ urlpatterns = patterns('',
 
     # Flagged content.
     url(r'^flagged/$',
-        'contentflagging.views.flagged',
+        'kuma.contentflagging.views.flagged',
         name='contentflagging.flagged'),
 
     # Users

@@ -13,10 +13,10 @@ from .utils import get_unique
 
 
 FLAG_REASONS = getattr(settings, "FLAG_REASONS", (
-    ('notworking',    _('This is not working for me')),
+    ('notworking', _('This is not working for me')),
     ('inappropriate', _('This contains inappropriate content')),
-    ('plagarised',    _('This was not created by the author')),
-    ('fakeauthor',    _('The author is fake')),
+    ('plagarised', _('This was not created by the author')),
+    ('fakeauthor', _('The author is fake')),
 ))
 
 FLAG_STATUS_FLAGGED = "flagged"
@@ -26,11 +26,11 @@ FLAG_STATUS_HIDDEN = "hidden"
 FLAG_STATUS_DELETED = "deleted"
 
 FLAG_STATUSES = getattr(settings, "FLAG_STATUSES", (
-    (FLAG_STATUS_FLAGGED,  _("Flagged")),
+    (FLAG_STATUS_FLAGGED, _("Flagged")),
     (FLAG_STATUS_REJECTED, _("Flag rejected by moderator")),
     (FLAG_STATUS_NOTIFIED, _("Creator notified")),
-    (FLAG_STATUS_HIDDEN,   _("Content hidden by moderator")),
-    (FLAG_STATUS_DELETED,  _("Content deleted by moderator")),
+    (FLAG_STATUS_HIDDEN, _("Content hidden by moderator")),
+    (FLAG_STATUS_DELETED, _("Content deleted by moderator")),
 ))
 
 FLAG_NOTIFICATIONS = {}
@@ -38,7 +38,7 @@ for reason in FLAG_REASONS:
     FLAG_NOTIFICATIONS[reason[0]] = True
 # to refine flag notifications, change preceding line to False and add
 # individual reasons to the set like so:
-#FLAG_NOTIFICATIONS['inappropriate'] = True
+# FLAG_NOTIFICATIONS['inappropriate'] = True
 
 
 class ContentFlagManager(models.Manager):
@@ -55,12 +55,12 @@ class ContentFlagManager(models.Manager):
                                                        request=request)
 
         cf = ContentFlag.objects.get_or_create(
-                unique_hash=unique_hash,
-                defaults=dict(content_type=content_type,
-                              object_pk=object.pk, ip=ip,
-                              user_agent=user_agent, user=user,
-                              flag_type=flag_type,
-                              explanation=explanation))
+            unique_hash=unique_hash,
+            defaults=dict(content_type=content_type,
+                          object_pk=object.pk, ip=ip,
+                          user_agent=user_agent, user=user,
+                          flag_type=flag_type,
+                          explanation=explanation))
 
         if recipients:
             subject = _("{object} Flagged")
@@ -70,15 +70,18 @@ class ContentFlagManager(models.Manager):
             content = t.render(Context({'url': url,
                                         'object': object,
                                         'flag_type': flag_type}))
-            send_mail(subject, content, settings.DEFAULT_FROM_EMAIL, recipients)
+            send_mail(subject, content,
+                      settings.DEFAULT_FROM_EMAIL, recipients)
         return cf
 
     def flags_by_type(self, status=FLAG_STATUS_FLAGGED):
         """Return a dict of flags by content type."""
-        flags = self.filter(flag_status=status).prefetch_related('content_object')
+        flags = (self.filter(flag_status=status)
+                     .prefetch_related('content_object'))
         flag_dict = {}
         for flag in flags:
-            model_name = flag.content_type.model_class()._meta.verbose_name_plural
+            model_class = flag.content_type.model_class()
+            model_name = model_class._meta.verbose_name_plural
             if model_name not in flag_dict:
                 flag_dict[model_name] = []
             flag_dict[model_name].append(flag)
@@ -93,34 +96,26 @@ class ContentFlag(models.Model):
         ordering = ('-created',)
         get_latest_by = 'created'
 
-    flag_status = models.CharField(
-            _('current status of flag review'),
-            max_length=16, blank=False, choices=FLAG_STATUSES, default='flagged')
-    flag_type = models.CharField(
-            _('reason for flagging the content'),
-            max_length=64, db_index=True, blank=False, choices=FLAG_REASONS)
-    explanation = models.TextField(
-            _('please explain what content you feel is inappropriate'),
-            max_length=255, blank=True)
+    flag_status = models.CharField(_('current status of flag review'),
+                                   max_length=16, blank=False,
+                                   choices=FLAG_STATUSES, default='flagged')
+    flag_type = models.CharField(_('reason for flagging the content'),
+                                 max_length=64, db_index=True,
+                                 blank=False, choices=FLAG_REASONS)
+    explanation = models.TextField(_('please explain what content you '
+                                     'feel is inappropriate'),
+                                   max_length=255, blank=True)
 
-    content_type = models.ForeignKey(
-            ContentType, editable=False,
-            verbose_name="content type",
-            related_name="content_type_set_for_%(class)s",)
-    object_pk = models.CharField(
-            _('object ID'),
-            max_length=32, editable=False)
-    content_object = generic.GenericForeignKey(
-            'content_type', 'object_pk')
+    content_type = models.ForeignKey(ContentType, editable=False,
+                                     verbose_name="content type",
+                                     related_name="content_type_set_for_%(class)s",)
+    object_pk = models.CharField(_('object ID'), max_length=32, editable=False)
+    content_object = generic.GenericForeignKey('content_type', 'object_pk')
 
-    ip = models.CharField(
-            max_length=40, editable=False,
-            blank=True, null=True)
-    user_agent = models.CharField(
-            max_length=128, editable=False,
-            blank=True, null=True)
-    user = models.ForeignKey(
-            User, editable=False, blank=True, null=True)
+    ip = models.CharField(max_length=40, editable=False, blank=True, null=True)
+    user_agent = models.CharField(max_length=128, editable=False,
+                                  blank=True, null=True)
+    user = models.ForeignKey(User, editable=False, blank=True, null=True)
 
     # HACK: As it turns out, MySQL doesn't consider two rows with NULL values
     # in a column as duplicates. So, resorting to calculating a unique hash in
@@ -128,22 +123,20 @@ class ContentFlag(models.Model):
     unique_hash = models.CharField(max_length=32, editable=False,
                                    unique=True, db_index=True, null=True)
 
-    created = models.DateTimeField(
-            _('date submitted'),
-            auto_now_add=True, blank=False, editable=False)
-    modified = models.DateTimeField(
-            _('date last modified'),
-            auto_now=True, blank=False)
+    created = models.DateTimeField(_('date submitted'), auto_now_add=True,
+                                   blank=False, editable=False)
+    modified = models.DateTimeField(_('date last modified'),
+                                    auto_now=True, blank=False)
 
     def __unicode__(self):
-        return 'ContentFlag %(flag_type)s -> "%(title)s"' % dict(
-                flag_type=self.flag_type, title=str(self.content_object))
+        return ('ContentFlag %(flag_type)s -> "%(title)s"' % dict(
+                flag_type=self.flag_type, title=str(self.content_object)))
 
     def save(self, *args, **kwargs):
         # Ensure unique_hash is updated whenever the object is saved
         user, ip, user_agent, unique_hash = get_unique(
-                self.content_type, self.object_pk,
-                ip=self.ip, user_agent=self.user_agent, user=self.user)
+            self.content_type, self.object_pk,
+            ip=self.ip, user_agent=self.user_agent, user=self.user)
         self.unique_hash = unique_hash
         super(ContentFlag, self).save(*args, **kwargs)
 
@@ -152,7 +145,6 @@ class ContentFlag(models.Model):
         object = self.content_object
         return ('<a target="_new" href="%(link)s">View %(title)s</a>' %
                 dict(link=object.get_absolute_url(), title=object))
-
     content_view_link.allow_tags = True
 
     def content_admin_link(self):
@@ -164,5 +156,4 @@ class ContentFlag(models.Model):
         link = urlresolvers.reverse(url_name, args=(object.id,))
         return ('<a target="_new" href="%(link)s">Edit %(title)s</a>' %
                 dict(link=link, title=object))
-
     content_admin_link.allow_tags = True

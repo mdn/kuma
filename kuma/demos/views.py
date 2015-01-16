@@ -18,8 +18,8 @@ import threadedcomments.views
 from threadedcomments.models import ThreadedComment
 from threadedcomments.forms import ThreadedCommentForm
 
-from contentflagging.models import ContentFlag, FLAG_NOTIFICATIONS
-from contentflagging.forms import ContentFlagForm
+from kuma.contentflagging.models import ContentFlag, FLAG_NOTIFICATIONS
+from kuma.contentflagging.forms import ContentFlagForm
 from kuma.users.models import UserProfile
 from . import DEMOS_CACHE_NS_KEY
 from .models import Submission

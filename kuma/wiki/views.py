@@ -44,7 +44,7 @@ import waffle
 from access.decorators import permission_required, login_required
 from kuma.actioncounters.utils import get_ip
 from authkeys.decorators import accepts_auth_key
-from contentflagging.models import ContentFlag, FLAG_NOTIFICATIONS
+from kuma.contentflagging.models import ContentFlag, FLAG_NOTIFICATIONS
 from devmo.decorators import never_cache
 from devmo.utils import get_object_or_none
 

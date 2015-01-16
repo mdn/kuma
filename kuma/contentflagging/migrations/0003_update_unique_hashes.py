@@ -1,23 +1,22 @@
 # encoding: utf-8
-import datetime
-from south.db import db
+from django.db import IntegrityError
 from south.v2 import DataMigration
-from django.db import models
+
 
 class Migration(DataMigration):
 
     def forwards(self, orm):
         "Write your forwards methods here."
         # Update all remaining flags with a unique hash.
-        from contentflagging.utils import get_unique
+        from kuma.contentflagging.utils import get_unique
         flags = orm.ContentFlag.objects.all()
         for flag in flags:
             try:
                 # Need to duplicate the custom saving code from the model,
                 # since South's frozen version of it doesn't have the logic.
                 user, ip, user_agent, unique_hash = get_unique(
-                        flag.content_type, flag.object_pk,
-                        ip=flag.ip, user_agent=flag.user_agent, user=flag.user)
+                    flag.content_type, flag.object_pk,
+                    ip=flag.ip, user_agent=flag.user_agent, user=flag.user)
                 flag.unique_hash = unique_hash
                 flag.save()
             except IntegrityError:
@@ -25,10 +24,8 @@ class Migration(DataMigration):
                 # this one as a duplicate.
                 flag.delete()
 
-
     def backwards(self, orm):
         "Write your backwards methods here."
-
 
     models = {
         'auth.group': {

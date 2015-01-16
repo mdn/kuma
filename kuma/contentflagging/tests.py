@@ -47,13 +47,16 @@ class DemoPackageTest(UserTestCase):
             obj_1 = self.user2
             obj_1_ct = ContentType.objects.get_for_model(obj_1)
             user, ip, user_agent, unique_hash = get_unique(obj_1_ct, obj_1.pk,
-                                                       request=request)
+                                                           request=request)
         except UnicodeDecodeError:
             ok_(False, "UnicodeDecodeError should not be thrown")
 
     @attr('bad_multiple')
     def test_bad_multiple_flags(self):
-        """Force multiple flags, possibly result of race condition, ensure graceful handling"""
+        """
+        Force multiple flags, possibly result of race condition,
+        ensure graceful handling
+        """
         request = self.mk_request()
 
         obj_1 = self.user2
@@ -79,45 +82,54 @@ class DemoPackageTest(UserTestCase):
         # Try flag, which should turn up the single unique record created
         # earlier.
         try:
-            flag, created = ContentFlag.objects.flag(request=request, object=obj_1,
-                    flag_type='notworking', explanation="It really not go!")
+            flag, created = ContentFlag.objects.flag(
+                request=request, object=obj_1, flag_type='notworking',
+                explanation="It really not go!")
             ok_(flag is not None)
             ok_(not created)
-        except MultipleObjectsReturned, e:
+        except MultipleObjectsReturned:
             ok_(False, "MultipleObjectsReturned should not be raised")
 
     def test_basic_flag(self):
-        """Exercise flagging with limit of one per unique request per unique object"""
-
+        """
+        Exercise flagging with limit of one per unique
+        request per unique object
+        """
         # Submit a flag.
         request = self.mk_request()
-        flag, created = ContentFlag.objects.flag(request=request, object=self.user2,
-                flag_type='notworking', explanation="It not go.")
+        flag, created = ContentFlag.objects.flag(
+            request=request, object=self.user2, flag_type='notworking',
+            explanation="It not go.")
         eq_(True, created)
 
         # One flag instance per unique user
-        flag, created = ContentFlag.objects.flag(request=request, object=self.user2,
-                flag_type='notworking', explanation="It really not go!")
+        flag, created = ContentFlag.objects.flag(
+            request=request, object=self.user2, flag_type='notworking',
+            explanation="It really not go!")
         eq_(False, created)
 
         # Submit a flag on another object.
         request = self.mk_request()
-        flag, created = ContentFlag.objects.flag(request=request, object=self.user1,
-                flag_type='notworking', explanation="It not go.")
+        flag, created = ContentFlag.objects.flag(
+            request=request, object=self.user1, flag_type='notworking',
+            explanation="It not go.")
         eq_(True, created)
 
         # Try another unique request
         request = self.mk_request(ip='192.168.123.1')
-        flag, created = ContentFlag.objects.flag(request=request, object=self.user2,
-                flag_type='inappropriate', explanation="This is porn.")
+        flag, created = ContentFlag.objects.flag(
+            request=request, object=self.user2, flag_type='inappropriate',
+            explanation="This is porn.")
         eq_(True, created)
 
-        request = self.mk_request(ip='192.168.123.50', user_agent='Mozilla 1.0')
-        flag, created = ContentFlag.objects.flag(request=request, object=self.user2,
-                flag_type='inappropriate', explanation="This is porn.")
+        request = self.mk_request(ip='192.168.123.50',
+                                  user_agent='Mozilla 1.0')
+        flag, created = ContentFlag.objects.flag(
+            request=request, object=self.user2, flag_type='inappropriate',
+            explanation="This is porn.")
         eq_(True, created)
 
-        eq_(4, len(ContentFlag.objects.all()))
+        eq_(4, ContentFlag.objects.count())
 
     def test_flag_dict(self):
         request = self.mk_request()
@@ -133,10 +145,9 @@ class DemoPackageTest(UserTestCase):
              'explanation': 'Camels are for Perl, not Python.'},
         ]
         for o in objects_to_flag:
-            flag, created = ContentFlag.objects.flag(request=request,
-                                                     object=o['obj'],
-                                                     flag_type=o['flag_type'],
-                                                     explanation=o['explanation'])
+            flag, created = ContentFlag.objects.flag(
+                request=request, object=o['obj'], flag_type=o['flag_type'],
+                explanation=o['explanation'])
         flag_dict = ContentFlag.objects.flags_by_type()
 
         # These are translation proxy objects, not strings, so we have
@@ -184,9 +195,8 @@ class ViewTests(UserTestCase):
              'explanation': 'Camels are for Perl, not Python.'},
         ]
         for o in objects_to_flag:
-            flag, created = ContentFlag.objects.flag(request=request,
-                                                     object=o['obj'],
-                                                     flag_type=o['flag_type'],
-                                                     explanation=o['explanation'])
+            flag, created = ContentFlag.objects.flag(
+                request=request, object=o['obj'], flag_type=o['flag_type'],
+                explanation=o['explanation'])
         resp = self.client.get(reverse('contentflagging.flagged'))
         eq_(200, resp.status_code)
