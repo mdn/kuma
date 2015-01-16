@@ -8,7 +8,6 @@ from django.shortcuts import get_object_or_404
 from django.utils.decorators import available_attrs
 from django.utils.http import urlquote
 
-import access
 from kuma.core.urlresolvers import reverse
 
 
@@ -87,46 +86,6 @@ def permission_required(perm, login_url=None, redirect=REDIRECT_FIELD_NAME,
     return user_access_decorator(redirect_func, redirect_field=redirect,
                                  redirect_url_func=redirect_url_func,
                                  deny_func=deny_func)
-
-
-def has_perm_or_owns_or_403(perm, owner_attr, obj_lookup, perm_obj_lookup,
-                            **kwargs):
-    """Act like permission_required_or_403 but also grant permission to owners.
-
-    Arguments:
-        perm: authority permission to check, e.g. 'wiki_document.add_document'
-
-        owner_attr: Attr of model object that references the owner
-
-        obj_lookup: Triple that specifies a lookup to the object on which
-            ownership should be compared. Items in the tuple are...
-            (model class or import path thereof,
-             kwarg name specifying field and comparator (e.g. 'id__exact'),
-             name of kwarg containing the value to which to compare)
-
-        perm_obj_lookup: Triple that specifies a lookup to the object on which
-            to check for permission. Elements of the tuple are as in
-            obj_lookup.
-
-    """
-    def decorator(view_func):
-        def _wrapped_view(request, *args, **kwargs):
-            # based on authority/decorators.py
-            user = request.user
-            if user.is_authenticated():
-                obj = _resolve_lookup(obj_lookup, kwargs)
-                perm_obj = _resolve_lookup(perm_obj_lookup, kwargs)
-                granted = access.has_perm_or_owns(user, perm, obj, perm_obj,
-                                                  owner_attr)
-                if granted or user.has_perm(perm):
-                    return view_func(request, *args, **kwargs)
-
-            # In all other cases, permission denied
-            return HttpResponseForbidden()
-
-        return wraps(view_func)(_wrapped_view)
-
-    return decorator
 
 
 def _resolve_lookup((model, lookup, arg_name), view_kwargs):

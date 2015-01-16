@@ -10,7 +10,6 @@ from django.http import Http404, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, render, redirect
 from django.utils.datastructures import SortedDict
 
-from access.decorators import login_required
 from allauth.account.adapter import get_adapter
 from allauth.account.models import EmailAddress
 from allauth.socialaccount import helpers
@@ -22,6 +21,7 @@ from taggit.utils import parse_tags
 from teamwork.models import Team
 from tower import ugettext_lazy as _
 
+from kuma.core.decorators import login_required
 from kuma.demos.models import Submission
 from kuma.demos.views import DEMOS_PAGE_SIZE
 

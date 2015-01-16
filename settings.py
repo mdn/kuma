@@ -565,7 +565,6 @@ TOWER_KEYWORDS = {
 DOMAIN_METHODS = {
     'messages': [
         ('vendor/**', 'ignore'),
-        ('apps/access/**', 'ignore'),
         ('kuma/dashboards/**', 'ignore'),
         ('kuma/core/**', 'ignore'),
         ('kuma/**.py',

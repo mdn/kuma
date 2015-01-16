@@ -41,10 +41,10 @@ from smuggler.forms import ImportFileForm
 from teamwork.shortcuts import get_object_or_404_or_403
 import waffle
 
-from access.decorators import permission_required, login_required
 from kuma.actioncounters.utils import get_ip
 from kuma.authkeys.decorators import accepts_auth_key
 from kuma.contentflagging.models import ContentFlag, FLAG_NOTIFICATIONS
+from kuma.core.decorators import permission_required, login_required
 from devmo.decorators import never_cache
 from devmo.utils import get_object_or_none
 

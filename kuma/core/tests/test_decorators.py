@@ -4,9 +4,9 @@ from django.http import HttpResponse
 from django.test import RequestFactory
 from nose.tools import eq_
 
+from kuma.core.decorators import (logout_required, login_required,
+                                  permission_required)
 from kuma.users.tests import UserTestCase
-from access.decorators import (logout_required, login_required,
-                               permission_required)
 
 
 def simple_view(request):
