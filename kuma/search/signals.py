@@ -4,7 +4,7 @@ from django.conf import settings
 from elasticutils.contrib.django.tasks import index_objects, unindex_objects
 
 
-log = logging.getLogger('kuma.search')
+log = logging.getLogger('kuma.search.signals')
 
 
 def render_done_handler(**kwargs):

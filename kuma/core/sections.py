@@ -7,11 +7,13 @@ class SECTION_ADDONS:
     twitter = 'twitter-addons'
     updates = 'updates-addons'
 
+
 class SECTION_MOZILLA:
     short = 'mozilla'
     pretty = _(u'Mozilla')
     twitter = 'twitter-mozilla'
     updates = 'updates-mozilla'
+
 
 class SECTION_APPS:
     short = 'apps'
@@ -19,17 +21,20 @@ class SECTION_APPS:
     twitter = 'twitter-apps'
     updates = 'updates-apps'
 
+
 class SECTION_MOBILE:
     short = 'mobile'
     pretty = _(u'Mobile')
     twitter = 'twitter-mobile'
     updates = 'updates-mobile'
 
+
 class SECTION_WEB:
     short = 'web'
     pretty = _(u'Web')
     twitter = 'twitter-web'
     updates = 'updates-web'
+
 
 class SECTION_HACKS:
     short = 'hacks'

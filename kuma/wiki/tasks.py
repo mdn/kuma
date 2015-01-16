@@ -17,7 +17,8 @@ from celery.task import task
 from constance import config
 from xml.dom.minidom import parseString
 
-from devmo.utils import MemcacheLock
+from kuma.core.utils import MemcacheLock
+
 from .events import context_dict
 from .exceptions import PageMoveError, StaleDocumentsRenderingInProgress
 from .helpers import absolutify
@@ -25,7 +26,7 @@ from .models import Document, Revision, RevisionIP
 from .signals import render_done
 
 
-log = logging.getLogger('k.task')
+log = logging.getLogger('kuma.wiki.tasks')
 
 
 @task(rate_limit='60/m')

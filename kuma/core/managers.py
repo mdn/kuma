@@ -96,7 +96,7 @@ class NamespacedTaggableManager(TaggableManager):
 
 
 class _NamespacedTaggableManager(_TaggableManager):
-    
+
     def __unicode__(self):
         """Return the list of tags as an editable string.
         Expensive: Does a DB query for the tags"""
@@ -244,6 +244,6 @@ def resolve_allowed_tags(model_obj, tags_curr, tags_new,
 # Tell South to ignore our fields, if present.
 try:
     import south.modelsinspector
-    south.modelsinspector.add_ignored_fields(["^taggit_extras"])
+    south.modelsinspector.add_ignored_fields(["^kuma.core.managers"])
 except ImportError, e:
     pass

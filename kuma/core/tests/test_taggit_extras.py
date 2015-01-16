@@ -1,23 +1,17 @@
 from django.test import TestCase
 
-from taggit_extras.tests.models import Food
+from .taggit_extras.models import Food
 
 
-class BaseTaggingTest(object):
+class NamespacedTaggableManagerTest(TestCase):
+    food_model = Food
+
     def assert_tags_equal(self, qs, tags, sort=True, attr="name"):
         got = map(lambda tag: getattr(tag, attr), qs)
         if sort:
             got.sort()
             tags.sort()
         self.assertEqual(got, tags)
-
-
-class BaseTaggingTestCase(TestCase, BaseTaggingTest):
-    pass
-
-
-class NamespacedTaggableManagerTest(BaseTaggingTestCase):
-    food_model = Food
 
     def test_all_ns(self):
         """Tags can be collated or fetched by namespace"""

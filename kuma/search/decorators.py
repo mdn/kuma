@@ -7,7 +7,7 @@ from kuma.wiki.signals import render_done
 from .signals import render_done_handler, pre_delete_handler
 
 
-log = logging.getLogger('mdn.search')
+log = logging.getLogger('kuma.search.decorators')
 
 
 _mapping_types = {}

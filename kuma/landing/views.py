@@ -5,7 +5,7 @@ from django.core.cache import get_cache
 
 import constance.config
 
-from devmo import SECTION_USAGE
+from kuma.core.sections import SECTION_USAGE
 from kuma.demos.models import Submission
 from kuma.feeder.models import Bundle
 

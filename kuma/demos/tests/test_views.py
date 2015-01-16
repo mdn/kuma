@@ -12,9 +12,9 @@ from django.conf import settings
 from django.contrib.auth.models import User
 
 import constance.config
-from taggit_extras.utils import parse_tags
 
 from kuma.core.urlresolvers import reverse
+from kuma.core.utils import parse_tags
 from kuma.users.tests import UserTestCase
 
 from .. import challenge_utils

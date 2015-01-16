@@ -6,7 +6,7 @@ from django.conf import settings
 from elasticsearch.exceptions import ConnectionError, NotFoundError
 from rest_framework.test import APIRequestFactory
 
-from devmo.tests import LocalizingMixin
+from kuma.core.tests import LocalizingMixin
 from kuma.core.urlresolvers import reset_url_prefixer
 from kuma.core.middleware import LocaleURLMiddleware
 from kuma.users.tests import UserTestCase

@@ -88,7 +88,7 @@ Running the test suite is easy::
 Note that this will try (and fail) to run tests that depend on apps disabled
 via ``INSTALLED_APPS``. You should run a subset of tests::
 
-    ./manage.py test devmo kuma
+    ./manage.py test kuma
 
 For more information, see the :doc:`test documentation <tests>`.
 

@@ -53,7 +53,7 @@ You can also exclude tests that match a regular expression with ``-e``::
 
 To run the subset of tests that should pass::
 
-    ./manage.py test devmo kuma
+    ./manage.py test kuma
 
 See the output of ``./manage.py test --help`` for more arguments.
 

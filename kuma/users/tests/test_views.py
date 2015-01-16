@@ -16,7 +16,7 @@ from allauth.socialaccount.models import SocialAccount, SocialApp
 from allauth.socialaccount.providers import registry
 from allauth.tests import MockedResponse, mocked_response
 
-from devmo.tests import mock_lookup_user
+from kuma.core.tests import mock_lookup_user
 from kuma.core.urlresolvers import reverse
 
 from . import UserTestCase, user, email

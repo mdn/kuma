@@ -44,19 +44,19 @@ import waffle
 from kuma.actioncounters.utils import get_ip
 from kuma.authkeys.decorators import accepts_auth_key
 from kuma.contentflagging.models import ContentFlag, FLAG_NOTIFICATIONS
-from kuma.core.decorators import permission_required, login_required
-from devmo.decorators import never_cache
-from devmo.utils import get_object_or_none
 
-import kuma.wiki.content
 from kuma.attachments.forms import AttachmentRevisionForm
 from kuma.attachments.models import Attachment
 from kuma.attachments.utils import attachments_json
-from kuma.search.store import referrer_url
-from kuma.users.models import UserProfile
+from kuma.core.decorators import (never_cache, login_required,
+                                  permission_required)
 from kuma.core.helpers import urlparams
 from kuma.core.urlresolvers import reverse
-from kuma.core.utils import paginate, smart_int
+from kuma.core.utils import get_object_or_none, paginate, smart_int
+from kuma.search.store import referrer_url
+from kuma.users.models import UserProfile
+
+import kuma.wiki.content
 from . import kumascript
 from .constants import (DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX,
                         SLUG_CLEANSING_REGEX, REVIEW_FLAG_TAGS_DEFAULT,
@@ -79,7 +79,7 @@ from .tasks import move_page, send_first_edit_email
 from .utils import locale_and_slug_from_path
 
 
-log = logging.getLogger('k.wiki')
+log = logging.getLogger('kuma.wiki.views')
 
 
 @newrelic.agent.function_trace()
@@ -1218,10 +1218,9 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
 
     # Process the content as if it were about to be saved, so that the
     # html_diff is close as possible.
-    content = (kuma.wiki.content
-               .parse(request.POST['content'])
-               .injectSectionIDs()
-               .serialize())
+    content = (kuma.wiki.content.parse(request.POST['content'])
+                                .injectSectionIDs()
+                                .serialize())
 
     # Process the original content for a diff, extracting a section if we're
     # editing one.
@@ -1656,8 +1655,8 @@ def translate(request, document_slug, document_locale, revision_id=None):
             content = based_on_rev.content
         if content:
             initial.update(content=kuma.wiki.content.parse(content)
-                           .filterEditorSafety()
-                           .serialize())
+                                                    .filterEditorSafety()
+                                                    .serialize())
         instance = doc and doc.current_or_latest_revision()
         rev_form = RevisionForm(instance=instance, initial=initial)
 
@@ -1828,8 +1827,8 @@ def json_view(request, document_slug=None, document_locale=None):
 
     document = get_object_or_404(Document, **kwargs)
     (kuma.wiki.content.parse(document.html)
-     .injectSectionIDs()
-     .serialize())
+                      .injectSectionIDs()
+                      .serialize())
 
     stale = True
     if request.user.is_authenticated():

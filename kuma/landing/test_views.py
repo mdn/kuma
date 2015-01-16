@@ -1,6 +1,6 @@
 from nose.tools import eq_, ok_
 
-from devmo.tests import KumaTestCase
+from kuma.core.tests import KumaTestCase
 from kuma.core.urlresolvers import reverse
 
 

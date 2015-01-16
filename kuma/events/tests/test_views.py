@@ -4,7 +4,7 @@ from pyquery import PyQuery as pq
 from waffle.models import Flag
 
 from kuma.core.urlresolvers import reverse
-from devmo.tests import KumaTestCase
+from kuma.core.tests import KumaTestCase
 
 from ..tasks import calendar_reload
 

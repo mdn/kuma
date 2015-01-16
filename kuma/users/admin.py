@@ -1,9 +1,9 @@
 from django.contrib import admin
 from kuma.core.urlresolvers import reverse
 
-from taggit_extras.managers import NamespacedTaggableManager
 from taggit.forms import TagWidget
 
+from kuma.core.managers import NamespacedTaggableManager
 from .models import UserBan, UserProfile
 
 

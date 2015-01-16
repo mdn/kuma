@@ -20,18 +20,16 @@ from django.test.utils import override_settings
 import constance.config
 from waffle.models import Flag
 
-from devmo.tests import SkippedTestCase
+from kuma.core.helpers import urlparams
+from kuma.core.tests import SkippedTestCase, post, get
+from kuma.core.urlresolvers import reverse
 from kuma.wiki.events import EditDocumentEvent
 from kuma.wiki.constants import REDIRECT_CONTENT, TEMPLATE_TITLE_PREFIX
 from kuma.wiki.models import (Document, Revision, HelpfulVote,
-                              DocumentTag, Attachment)
-from kuma.wiki.tests import (WikiTestCase, document, revision, new_document_data,
-                             create_topical_parents_docs)
+                              DocumentTag)
+from kuma.wiki.tests import (WikiTestCase, document, revision,
+                             new_document_data, create_topical_parents_docs)
 from kuma.users.tests import UserTestCase
-
-from kuma.core.urlresolvers import reverse
-from kuma.core.helpers import urlparams
-from kuma.core.tests import post, get
 
 
 DOCUMENT_EDITED_EMAIL_CONTENT = """

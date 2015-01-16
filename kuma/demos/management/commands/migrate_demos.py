@@ -17,7 +17,7 @@ from demos.models import Submission, update_submission_comment_count
 from kuma.users.models import UserProfile
 
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('kuma.demos')
 
 
 class Command(BaseCommand):

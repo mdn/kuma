@@ -30,12 +30,12 @@ from constance.admin import FIELDS
 from django.utils.functional import lazy
 
 import south.modelsinspector
-from taggit_extras.managers import NamespacedTaggableManager
 from threadedcomments.models import ThreadedComment
 
 from kuma.actioncounters.fields import ActionCounterField
+from kuma.core.managers import NamespacedTaggableManager
 from kuma.core.urlresolvers import reverse
-from devmo.utils import generate_filename_and_delete_previous
+from kuma.core.utils import generate_filename_and_delete_previous
 
 from . import challenge_utils, DEMO_LICENSES, scale_image
 

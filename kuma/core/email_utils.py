@@ -11,7 +11,7 @@ import jingo
 import tower
 
 
-log = logging.getLogger('mdn.email')
+log = logging.getLogger('kuma.core.email')
 
 
 @contextlib.contextmanager

@@ -4,16 +4,12 @@ from StringIO import StringIO
 
 from django.contrib.auth.models import AnonymousUser
 from django.core.handlers.wsgi import WSGIRequest
-from django.test import RequestFactory
 
 from nose.tools import eq_
 from nose import SkipTest
 import test_utils
 
-from devmo.helpers import devmo_url
-from devmo.context_processors import next_url
-
-from kuma.users.tests import UserTestCase
+from ..context_processors import next_url
 
 
 def parse_robots(base_url):
@@ -88,27 +84,6 @@ class TestDevMoRobots(test_utils.TestCase):
 
         eq_(parse_robots('https://developer-stage9.mozilla.org'), rules)
         eq_(parse_robots('http://developer-stage9.mozilla.org'), rules)
-
-
-class TestDevMoHelpers(UserTestCase):
-    fixtures = UserTestCase.fixtures + ['wiki/documents.json']
-
-    def test_devmo_url(self):
-
-        # Skipping this test for now, because it hits unreliable prod resources
-        raise SkipTest()
-
-        en_only_page = '/en/HTML/HTML5'
-        localized_page = '/en/HTML'
-        req = RequestFactory().get('/')
-        context = {'request': req}
-
-        req.locale = 'en-US'
-        eq_(devmo_url(context, en_only_page), en_only_page)
-        req.locale = 'de'
-        eq_(devmo_url(context, localized_page), '/de/HTML')
-        req.locale = 'zh-TW'
-        eq_(devmo_url(context, localized_page), '/zh_tw/HTML')
 
 
 class TestDevMoNextUrl(test_utils.TestCase):

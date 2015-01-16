@@ -10,7 +10,9 @@ from pyquery import PyQuery as pq
 from tidylib import tidy_document
 from tower import ugettext as _
 
+from django.conf import settings
 from django.contrib.sites.models import Site
+from django.core.cache import cache
 from django.core.serializers.json import DjangoJSONEncoder
 from django.utils.html import conditional_escape
 
@@ -20,7 +22,7 @@ from teamwork.shortcuts import build_policy_admin_links
 
 from kuma.core.urlresolvers import reverse
 from .constants import DIFF_WRAP_COLUMN
-
+from .models import Document
 
 register.function(build_policy_admin_links)
 
@@ -307,3 +309,43 @@ def absolutify(url, site=None):
         path = '/'
 
     return urlparse.urlunparse([scheme, netloc, path, None, query, fragment])
+
+
+@register.function
+@jinja2.contextfunction
+def devmo_url(context, path):
+    """
+    Create a URL pointing to Kuma.
+    Look for a wiki page in the current locale, or default to given path
+    """
+    if hasattr(context['request'], 'locale'):
+        locale = context['request'].locale
+    else:
+        locale = settings.WIKI_DEFAULT_LANGUAGE
+    try:
+        url = cache.get('devmo_url:%s_%s' % (locale, path))
+    except:
+        return path
+    if not url:
+        url = reverse('wiki.document',
+                      locale=settings.WIKI_DEFAULT_LANGUAGE,
+                      args=[path])
+        if locale != settings.WIKI_DEFAULT_LANGUAGE:
+            try:
+                parent = Document.objects.get(
+                    locale=settings.WIKI_DEFAULT_LANGUAGE, slug=path)
+                """ # TODO: redirect_document is coupled to doc view
+                follow redirects vs. update devmo_url calls
+
+                target = parent.redirect_document()
+                if target:
+                parent = target
+                """
+                child = Document.objects.get(locale=locale,
+                                             parent=parent)
+                url = reverse('wiki.document', locale=locale,
+                              args=[child.slug])
+            except Document.DoesNotExist:
+                pass
+        cache.set('devmo_url:%s_%s' % (locale, path), url)
+    return url

@@ -5,11 +5,12 @@ from soapbox.models import Message
 
 from django.conf import settings
 from django.core import mail
-from kuma.core.urlresolvers import reverse
+
+from ..urlresolvers import reverse
 
 
 class LoggingTests(test_utils.TestCase):
-    urls = 'devmo.tests.logging_urls'
+    urls = 'kuma.core.tests.logging_urls'
 
     def setUp(self):
         self.old_logging = settings.LOGGING

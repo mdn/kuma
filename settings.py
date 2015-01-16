@@ -376,9 +376,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'allauth.socialaccount.context_processors.socialaccount',
 
     'kuma.core.context_processors.global_settings',
-
-    'devmo.context_processors.i18n',
-    'devmo.context_processors.next_url',
+    'kuma.core.context_processors.i18n',
+    'kuma.core.context_processors.next_url',
 
     'jingo_minify.helpers.build_ids',
     'constance.context_processors.config',
@@ -468,7 +467,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     # MDN
-    'devmo',
+    'kuma.core',
     'kuma.feeder',
     'kuma.landing',
     'kuma.search',
@@ -568,8 +567,6 @@ DOMAIN_METHODS = {
         ('kuma/dashboards/**', 'ignore'),
         ('kuma/core/**', 'ignore'),
         ('kuma/**.py',
-            'tower.management.commands.extract.extract_tower_python'),
-        ('apps/**.py',
             'tower.management.commands.extract.extract_tower_python'),
         ('**/templates/**.html',
             'tower.management.commands.extract.extract_tower_template'),
@@ -1157,8 +1154,8 @@ LOGGING = {
             '()': 'django.utils.log.RequireDebugFalse',
         },
         'require_debug_true': {
-            # use from devmo.helpers until we upgrade to django 1.5
-            '()': 'devmo.future.filters.RequireDebugTrue',
+            # use from kuma.core.helpers until we upgrade to django 1.5
+            '()': 'kuma.core.future.filters.RequireDebugTrue',
         },
     },
     'formatters': {
@@ -1213,7 +1210,7 @@ TEAMWORK_BASE_POLICIES = {
 GRAPPELLI_ADMIN_TITLE = 'Mozilla Developer Network - Admin'
 GRAPPELLI_INDEX_DASHBOARD = 'admin_dashboard.CustomIndexDashboard'
 
-DBGETTEXT_PATH = 'apps/'
+DBGETTEXT_PATH = 'kuma/core/'
 DBGETTEXT_ROOT = 'translations'
 
 

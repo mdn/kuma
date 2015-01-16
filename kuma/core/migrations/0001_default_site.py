@@ -20,5 +20,5 @@ class Migration(DataMigration):
         pass
 
     models = {}
-    complete_apps = ['devmo']
+    complete_apps = ['core']
     symmetrical = True

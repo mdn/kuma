@@ -2,8 +2,8 @@ import logging
 
 from tower import ugettext as _
 
-from devmo import email_utils
-from devmo.helpers import add_utm
+from kuma.core.email_utils import emails_with_users_and_watches
+from kuma.core.helpers import add_utm
 from kuma.core.urlresolvers import reverse
 from tidings.events import InstanceEvent
 
@@ -11,7 +11,7 @@ from .helpers import revisions_unified_diff
 from .models import Document
 
 
-log = logging.getLogger('mdn.wiki.events')
+log = logging.getLogger('kuma.wiki.events')
 
 
 def context_dict(revision):
@@ -72,7 +72,7 @@ class EditDocumentEvent(InstanceEvent):
         subject = _(u'[MDN] Page "{document_title}" changed by {creator}')
         context = context_dict(revision)
 
-        return email_utils.emails_with_users_and_watches(
+        return emails_with_users_and_watches(
             subject=subject,
             text_template='wiki/email/edited.ltxt',
             html_template=None,
