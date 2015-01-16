@@ -1269,6 +1269,6 @@ SOCIALACCOUNT_PROVIDERS = {
 # django-banish defaults; listing here to be explicit
 BANISH_ENABLED = True
 BANISH_EMPTY_UA = True
-BANISH_ABUSE_THRESHOLD = 75
+BANISH_ABUSE_THRESHOLD = 9999999 # TODO: https://bugzil.la/1122658
 BANISH_USE_HTTP_X_FORWARDED_FOR = True
 BANISH_MESSAGE = _("This connection has been banned for suspicious activity.")
