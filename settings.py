@@ -510,7 +510,7 @@ INSTALLED_APPS = (
     'constance',
     'waffle',
     'soapbox',
-    'authkeys',
+    'kuma.authkeys',
     'tidings',
     'teamwork',
     'djcelery',

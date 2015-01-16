@@ -1,7 +1,6 @@
-import logging
 from django.contrib import admin
 
-from sumo.urlresolvers import reverse, split_path
+from sumo.urlresolvers import reverse
 
 from .models import Key, KeyAction
 
@@ -15,14 +14,14 @@ def history_link(self):
 
 history_link.allow_tags = True
 history_link.short_description = 'Usage history'
-                  
+
 
 class KeyAdmin(admin.ModelAdmin):
     fields = ('description',)
     list_display = ('id', 'user', 'created', history_link, 'key',
                     'description')
     ordering = ('-created', 'user')
-    search_fields = ('key', 'description', 'user__username',)
+    search_fields = ('key', 'description', 'user__username')
 
 
 def key_link(self):
@@ -48,10 +47,11 @@ content_object_link.short_description = 'Object'
 
 class KeyActionAdmin(admin.ModelAdmin):
     fields = ('notes',)
-    list_display = ('id', 'created', key_link, 'action', content_object_link, 'notes',)
-    list_filter = ('action', 'content_type',)
+    list_display = ('id', 'created', key_link, 'action',
+                    content_object_link, 'notes')
+    list_filter = ('action', 'content_type')
     ordering = ('-id',)
-    search_fields = ('action', 'key__key', 'key__user__username', 'notes', )
+    search_fields = ('action', 'key__key', 'key__user__username', 'notes')
 
 
 admin.site.register(Key, KeyAdmin)

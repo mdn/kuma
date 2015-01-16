@@ -5,10 +5,10 @@ from pyquery import PyQuery as pq
 
 from sumo.urlresolvers import reverse
 
-from authkeys.models import Key
-from authkeys.views import ITEMS_PER_PAGE
-
 from kuma.users.tests import user
+
+from ..models import Key
+from ..views import ITEMS_PER_PAGE
 
 
 class KeyViewsTest(TestCase):

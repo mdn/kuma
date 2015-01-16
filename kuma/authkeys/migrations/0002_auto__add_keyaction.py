@@ -1,30 +1,28 @@
 # encoding: utf-8
-import datetime
 from south.db import db
 from south.v2 import SchemaMigration
-from django.db import models
+
 
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
-        # Adding model 'Key'
-        db.create_table('authkeys_key', (
+
+        # Adding model 'KeyAction'
+        db.create_table('authkeys_keyaction', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
-            ('key', self.gf('django.db.models.fields.CharField')(max_length=64, db_index=True)),
-            ('hashed_secret', self.gf('django.db.models.fields.CharField')(max_length=128)),
-            ('description', self.gf('django.db.models.fields.TextField')()),
+            ('key', self.gf('django.db.models.fields.related.ForeignKey')(related_name='history', to=orm['authkeys.Key'])),
+            ('action', self.gf('django.db.models.fields.CharField')(max_length=128)),
+            ('notes', self.gf('django.db.models.fields.TextField')(null=True)),
+            ('content_type', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['contenttypes.ContentType'])),
+            ('object_id', self.gf('django.db.models.fields.PositiveIntegerField')()),
             ('created', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
         ))
-        db.send_create_signal('authkeys', ['Key'])
-
+        db.send_create_signal('authkeys', ['KeyAction'])
 
     def backwards(self, orm):
-        
-        # Deleting model 'Key'
-        db.delete_table('authkeys_key')
 
+        # Deleting model 'KeyAction'
+        db.delete_table('authkeys_keyaction')
 
     models = {
         'auth.group': {
@@ -64,6 +62,16 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'key': ('django.db.models.fields.CharField', [], {'max_length': '64', 'db_index': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"})
+        },
+        'authkeys.keyaction': {
+            'Meta': {'object_name': 'KeyAction'},
+            'action': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
+            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['contenttypes.ContentType']"}),
+            'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'key': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'history'", 'to': "orm['authkeys.Key']"}),
+            'notes': ('django.db.models.fields.TextField', [], {'null': 'True'}),
+            'object_id': ('django.db.models.fields.PositiveIntegerField', [], {})
         },
         'contenttypes.contenttype': {
             'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},

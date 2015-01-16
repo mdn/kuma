@@ -5,7 +5,7 @@ from nose.plugins.attrib import attr
 
 from kuma.users.tests import user
 
-from authkeys.models import Key
+from ..models import Key
 
 
 class KeyViewsTest(TestCase):

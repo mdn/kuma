@@ -1,15 +1,10 @@
-import logging
-
 import hashlib
 import base64
 import random
-import re
-import json
 
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.db import models, transaction
-from django.db.models import Q
+from django.db import models
 
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
@@ -18,13 +13,13 @@ from django.utils.translation import ugettext_lazy as _
 
 
 def generate_key():
-    """Generate a random API key
+    """
+    Generate a random API key
     see: http://jetfar.com/simple-api-key-generation-in-python/
     """
-    return (base64.b64encode(hashlib.sha256(
-            str(random.getrandbits(256))).digest(),
-            random.choice(['rA', 'aZ', 'gQ', 'hH', 'hG', 'aR', 'DD']))
-            .rstrip('=='))
+    random_hash = hashlib.sha256(str(random.getrandbits(256))).digest()
+    random_chars = random.choice(['rA', 'aZ', 'gQ', 'hH', 'hG', 'aR', 'DD'])
+    return (base64.b64encode(random_hash, random_chars).rstrip('=='))
 
 
 def hash_secret(secret):
@@ -34,13 +29,13 @@ def hash_secret(secret):
 class Key(models.Model):
     """Authentication key"""
     user = models.ForeignKey(User, editable=False, db_index=True, blank=False,
-            null=False)
-    key = models.CharField(_("Lookup key"),
-            max_length=64, editable=False, db_index=True)
-    hashed_secret = models.CharField(_("Hashed secret"),
-            max_length=128, editable=False, db_index=False)
+                             null=False)
+    key = models.CharField(_("Lookup key"), max_length=64,
+                           editable=False, db_index=True)
+    hashed_secret = models.CharField(_("Hashed secret"), max_length=128,
+                                     editable=False, db_index=False)
     description = models.TextField(_("Description of intended use"),
-            blank=False)
+                                   blank=False)
     created = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):

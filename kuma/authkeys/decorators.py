@@ -5,8 +5,6 @@ try:
 except ImportError:
     from django.utils.functional import wraps
 
-from django.conf import settings
-
 from .models import Key
 
 

@@ -9,8 +9,8 @@ from nose.plugins.attrib import attr
 
 from kuma.users.tests import user
 
-from authkeys.models import Key
-from authkeys.decorators import accepts_auth_key
+from ..models import Key
+from ..decorators import accepts_auth_key
 
 
 class KeyDecoratorsTest(TestCase):

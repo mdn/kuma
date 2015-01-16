@@ -25,7 +25,7 @@ from django.utils.encoding import smart_str
 import constance.config
 from waffle.models import Flag, Switch
 
-from authkeys.models import Key
+from kuma.authkeys.models import Key
 from devmo.tests import override_constance_settings
 from . import WikiTestCase, FakeResponse
 
