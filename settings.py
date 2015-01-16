@@ -579,7 +579,6 @@ DOMAIN_METHODS = {
         ('vendor/**', 'ignore'),
         ('apps/access/**', 'ignore'),
         ('kuma/dashboards/**', 'ignore'),
-        ('apps/kadmin/**', 'ignore'),
         ('apps/sumo/**', 'ignore'),
         ('apps/**.py',
             'tower.management.commands.extract.extract_tower_python'),
