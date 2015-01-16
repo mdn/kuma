@@ -5,11 +5,11 @@ import mock
 import test_utils
 from nose.tools import eq_
 
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
 
 
 class OpenSearchTestCase(test_utils.TestCase):
-    """Test the SUMO OpenSearch plugin."""
+    """Test the Kuma OpenSearch plugin."""
 
     @mock.patch_object(Site.objects, 'get_current')
     def test_plugin(self, get_current):

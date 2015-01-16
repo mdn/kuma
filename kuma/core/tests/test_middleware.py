@@ -2,7 +2,7 @@ from nose.plugins.skip import SkipTest
 from nose.tools import eq_
 import test_utils
 
-from sumo.urlresolvers import get_best_language
+from ..urlresolvers import get_best_language
 
 
 class TrailingSlashMiddlewareTestCase(test_utils.TestCase):

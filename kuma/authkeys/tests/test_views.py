@@ -3,7 +3,7 @@ from django.test import TestCase
 from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
 
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
 
 from kuma.users.tests import user
 

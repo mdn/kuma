@@ -5,7 +5,7 @@ from soapbox.models import Message
 
 from django.conf import settings
 from django.core import mail
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
 
 
 class LoggingTests(test_utils.TestCase):

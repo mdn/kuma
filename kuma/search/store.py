@@ -5,7 +5,7 @@ from urlobject import URLObject as URL
 from django.utils import translation
 from django.utils.encoding import smart_str
 
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
 
 from .filters import get_filters
 
@@ -23,7 +23,7 @@ def referrer_url(request):
         urlpath = URL(referrer).path
     except UnicodeDecodeError:
         urlpath = None
-        
+
     if (referrer is None or urlpath is None or
             reverse('search', locale=request.locale) != urlpath):
         return None

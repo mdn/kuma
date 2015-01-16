@@ -40,9 +40,9 @@ from kuma.wiki.tests import (doc_rev, document, new_document_data, revision,
                              make_translation)
 from kuma.wiki.forms import MIDAIR_COLLISION
 
-from sumo.tests import post, get
-from sumo.helpers import urlparams
-from sumo.urlresolvers import reverse
+from kuma.core.tests import post, get
+from kuma.core.helpers import urlparams
+from kuma.core.urlresolvers import reverse
 
 
 class RedirectTests(UserTestCase, WikiTestCase):

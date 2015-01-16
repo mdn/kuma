@@ -11,7 +11,7 @@ from allauth.socialaccount.helpers import render_authentication_error
 from allauth.socialaccount.models import SocialLogin
 from allauth.socialaccount import app_settings, providers
 
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
 
 from .provider import PersonaProvider
 

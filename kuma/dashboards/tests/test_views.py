@@ -2,7 +2,7 @@ from nose.plugins.attrib import attr
 from nose.tools import eq_, ok_
 
 from kuma.users.tests import UserTestCase
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
 
 from pyquery import PyQuery as pq
 from waffle.models import Switch

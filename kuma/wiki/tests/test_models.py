@@ -17,7 +17,6 @@ from django.core.exceptions import ValidationError
 import constance.config
 from waffle.models import Switch
 
-from devmo.utils import MemcacheLock
 from devmo.tests import override_constance_settings
 from kuma.wiki.constants import REDIRECT_CONTENT
 from kuma.wiki.exceptions import (PageMoveError,
@@ -31,7 +30,7 @@ from kuma.wiki.tests import (document, revision, doc_rev, normalize_html,
                              create_topical_parents_docs)
 from kuma.users.tests import UserTestCase
 
-from sumo import ProgrammingError
+from kuma.core.exceptions import ProgrammingError
 
 
 def _objects_eq(manager, list_):

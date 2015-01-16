@@ -11,7 +11,7 @@ from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from allauth.socialaccount.models import SocialLogin
 from tower import ugettext_lazy as _
 
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
 
 from .constants import USERNAME_CHARACTERS, USERNAME_REGEX
 

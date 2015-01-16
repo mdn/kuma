@@ -36,7 +36,7 @@ before_script:
     - mysql -e 'create database kuma;'
 
 script:
-    - coverage run --include=`pwd`/kuma/*,`pwd`/apps/* manage.py test --noinput -v2 access devmo kuma landing sumo
+    - coverage run --include=`pwd`/kuma/*,`pwd`/apps/* manage.py test --noinput -v2 access devmo kuma landing
 
 after_success:
     - coveralls

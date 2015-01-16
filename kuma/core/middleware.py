@@ -7,9 +7,9 @@ from django.utils.encoding import iri_to_uri, smart_str
 
 import tower
 
-from sumo.helpers import urlparams
-from sumo.urlresolvers import Prefixer, set_url_prefixer, split_path
-from sumo.views import handle403
+from .helpers import urlparams
+from .urlresolvers import Prefixer, set_url_prefixer, split_path
+from .views import handler403
 
 
 class LocaleURLMiddleware(object):
@@ -76,21 +76,8 @@ class Forbidden403Middleware(object):
     """
     def process_response(self, request, response):
         if isinstance(response, HttpResponseForbidden):
-            return handle403(request)
+            return handler403(request)
         # If not 403, return response unmodified
-        return response
-
-
-class NoCacheHttpsMiddleware(object):
-    """
-    Sets no-cache headers when HTTPS META variable is set
-    and not equal to 'off'.
-    """
-    def process_response(self, request, response):
-        if 'HTTPS' in request.META and request.META['HTTPS'] != 'off':
-            response['Expires'] = 'Thu, 19 Nov 1981 08:52:00 GMT'
-            response['Cache-Control'] = 'no-cache, must-revalidate'
-            response['Pragma'] = 'no-cache'
         return response
 
 
@@ -113,9 +100,9 @@ class RemoveSlashMiddleware(object):
 
     def process_response(self, request, response):
         if (response.status_code == 404
-            and request.path_info.endswith('/')
-            and not is_valid_path(request, request.path_info)
-            and is_valid_path(request, request.path_info[:-1])):
+                and request.path_info.endswith('/')
+                and not is_valid_path(request, request.path_info)
+                and is_valid_path(request, request.path_info[:-1])):
             # Use request.path because we munged app/locale in path_info.
             newurl = request.path[:-1]
             if request.GET:

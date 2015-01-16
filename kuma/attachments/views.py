@@ -19,7 +19,7 @@ import constance.config
 from access.decorators import login_required
 from kuma.wiki.constants import DOCUMENTS_PER_PAGE
 from kuma.wiki.models import Document
-from sumo.utils import paginate
+from kuma.core.utils import paginate
 
 from .forms import AttachmentRevisionForm
 from .models import Attachment

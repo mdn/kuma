@@ -34,7 +34,7 @@ from taggit_extras.managers import NamespacedTaggableManager
 from threadedcomments.models import ThreadedComment
 
 from kuma.actioncounters.fields import ActionCounterField
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
 from devmo.utils import generate_filename_and_delete_previous
 
 from . import challenge_utils, DEMO_LICENSES, scale_image

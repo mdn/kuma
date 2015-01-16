@@ -8,8 +8,8 @@ from waffle import flag_is_active, switch_is_active
 
 from django.http import HttpResponsePermanentRedirect, Http404
 
-from sumo.helpers import urlparams
-from sumo.urlresolvers import reverse
+from kuma.core.helpers import urlparams
+from kuma.core.urlresolvers import reverse
 
 from .exceptions import ReadOnlyException
 from .utils import locale_and_slug_from_path

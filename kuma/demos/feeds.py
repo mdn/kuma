@@ -13,7 +13,7 @@ from django.utils.translation import ugettext as _
 
 import jingo
 
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
 
 from . import TAG_DESCRIPTIONS
 from .models import Submission

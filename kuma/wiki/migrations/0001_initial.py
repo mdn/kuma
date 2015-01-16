@@ -7,7 +7,7 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding model 'Document'
         db.create_table('wiki_document', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -15,7 +15,7 @@ class Migration(SchemaMigration):
             ('slug', self.gf('django.db.models.fields.CharField')(max_length=255, db_index=True)),
             ('is_template', self.gf('django.db.models.fields.BooleanField')(default=False, db_index=True)),
             ('is_localizable', self.gf('django.db.models.fields.BooleanField')(default=True, db_index=True)),
-            ('locale', self.gf('sumo.models.LocaleField')(default='en-US', max_length=7, db_index=True)),
+            ('locale', self.gf('kuma.core.models.LocaleField')(default='en-US', max_length=7, db_index=True)),
             ('current_revision', self.gf('django.db.models.fields.related.ForeignKey')(related_name='current_for+', null=True, to=orm['wiki.Revision'])),
             ('parent', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='translations', null=True, to=orm['wiki.Document'])),
             ('html', self.gf('django.db.models.fields.TextField')()),
@@ -95,7 +95,7 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        
+
         # Removing unique constraint on 'OperatingSystem', fields ['item_id', 'document']
         db.delete_unique('wiki_operatingsystem', ['item_id', 'document_id'])
 
@@ -199,7 +199,7 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_localizable': ('django.db.models.fields.BooleanField', [], {'default': 'True', 'db_index': 'True'}),
             'is_template': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'db_index': 'True'}),
-            'locale': ('sumo.models.LocaleField', [], {'default': "'en-US'", 'max_length': '7', 'db_index': 'True'}),
+            'locale': ('kuma.core.models.LocaleField', [], {'default': "'en-US'", 'max_length': '7', 'db_index': 'True'}),
             'parent': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'translations'", 'null': 'True', 'to': "orm['wiki.Document']"}),
             'related_documents': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['wiki.Document']", 'through': "orm['wiki.RelatedDocument']", 'symmetrical': 'False'}),
             'slug': ('django.db.models.fields.CharField', [], {'max_length': '255', 'db_index': 'True'}),

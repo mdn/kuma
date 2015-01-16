@@ -6,7 +6,7 @@ from django.test import RequestFactory
 
 import test_utils
 
-from sumo.anonymous import AnonymousIdentityMiddleware
+from ..anonymous import AnonymousIdentityMiddleware
 
 
 class TestAnonymousMiddleware(test_utils.TestCase):

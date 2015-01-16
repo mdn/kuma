@@ -24,7 +24,7 @@ from soapbox.models import Message
 from statici18n.utils import get_filename
 
 from kuma.wiki.models import Document
-from sumo.urlresolvers import split_path, reverse
+from kuma.core.urlresolvers import split_path, reverse
 from .utils import entity_decode
 
 from babel import localedata

@@ -1,23 +1,16 @@
 import datetime
-import json as jsonlib
-import re
 import urlparse
 
-from django.conf import settings
 from django.http import QueryDict
 from django.utils.encoding import smart_str
 from django.utils.http import urlencode
 from django.utils.tzinfo import LocalTimezone
 
-from babel import localedata
-from babel.dates import format_date, format_time, format_datetime
-from babel.numbers import format_decimal
 from jingo import register, env
 import jinja2
-from pytz import timezone
 from tower import ugettext_lazy as _lazy, ungettext
 
-from sumo.urlresolvers import reverse
+from .urlresolvers import reverse
 
 
 class DateTimeFormatError(Exception):
@@ -103,31 +96,6 @@ class Paginator(object):
         t = env.get_template('includes/paginator.html').render(c)
         return jinja2.Markup(t)
 
-_whitespace_then_break = re.compile(r'[\r\n\t ]+[\r\n]+')
-
-
-@register.filter
-def collapse_linebreaks(text):
-    """Replace consecutive CRs and/or LFs with single CRLFs.
-
-    CRs or LFs with nothing but whitespace between them are still considered
-    consecutive.
-
-    As a nice side effect, also strips trailing whitespace from lines that are
-    followed by line breaks.
-
-    """
-    # I previously tried an heuristic where we'd cut the number of linebreaks
-    # in half until there remained at least one lone linebreak in the text.
-    # However, about:support in some versions of Firefox does yield some hard-
-    # wrapped paragraphs using single linebreaks.
-    return _whitespace_then_break.sub('\r\n', text)
-
-
-@register.filter
-def json(s):
-    return jsonlib.dumps(s)
-
 
 @register.filter
 def timesince(d, now=None):
@@ -161,7 +129,7 @@ def timesince(d, now=None):
         (60, lambda n: ungettext('%(number)d minute ago',
                                  '%(number)d minutes ago', n)),
         (1, lambda n: ungettext('%(number)d second ago',
-                                 '%(number)d seconds ago', n))]
+                                '%(number)d seconds ago', n))]
     if not now:
         if d.tzinfo:
             now = datetime.datetime.now(LocalTimezone(d))
@@ -179,14 +147,6 @@ def timesince(d, now=None):
         if count != 0:
             break
     return name(count) % {'number': count}
-
-
-@register.filter
-def label_with_help(f):
-    """Print the label tag for a form field, including the help_text
-    value as a title attribute."""
-    label = u'<label for="%s" title="%s">%s</label>'
-    return jinja2.Markup(label % (f.auto_id, f.help_text, f.label))
 
 
 @register.filter

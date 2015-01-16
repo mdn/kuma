@@ -7,8 +7,8 @@ from elasticsearch.exceptions import ConnectionError, NotFoundError
 from rest_framework.test import APIRequestFactory
 
 from devmo.tests import LocalizingMixin
-from sumo.urlresolvers import reset_url_prefixer
-from sumo.middleware import LocaleURLMiddleware
+from kuma.core.urlresolvers import reset_url_prefixer
+from kuma.core.middleware import LocaleURLMiddleware
 from kuma.users.tests import UserTestCase
 
 from ..index import get_index, get_indexing_es

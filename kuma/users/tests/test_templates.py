@@ -5,8 +5,8 @@ from pyquery import PyQuery as pq
 from django.conf import settings
 from django.contrib.auth.models import User
 
-from sumo.helpers import urlparams
-from sumo.urlresolvers import reverse
+from kuma.core.helpers import urlparams
+from kuma.core.urlresolvers import reverse
 from .test_views import TESTUSER_PASSWORD
 from . import (verify_strings_in_response, verify_strings_not_in_response,
                UserTestCase)

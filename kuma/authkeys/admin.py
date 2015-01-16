@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
 
 from .models import Key, KeyAction
 

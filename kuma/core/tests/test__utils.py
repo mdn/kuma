@@ -1,7 +1,7 @@
 from nose.tools import eq_
 
 import test_utils
-from sumo.utils import smart_int
+from ..utils import smart_int
 
 
 class SmartIntTestCase(test_utils.TestCase):

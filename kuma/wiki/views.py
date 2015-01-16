@@ -54,9 +54,9 @@ from kuma.attachments.models import Attachment
 from kuma.attachments.utils import attachments_json
 from kuma.search.store import referrer_url
 from kuma.users.models import UserProfile
-from sumo.helpers import urlparams
-from sumo.urlresolvers import reverse
-from sumo.utils import paginate, smart_int
+from kuma.core.helpers import urlparams
+from kuma.core.urlresolvers import reverse
+from kuma.core.utils import paginate, smart_int
 from . import kumascript
 from .constants import (DOCUMENTS_PER_PAGE, TEMPLATE_TITLE_PREFIX,
                         SLUG_CLEANSING_REGEX, REVIEW_FLAG_TAGS_DEFAULT,

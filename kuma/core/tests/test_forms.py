@@ -4,7 +4,7 @@ from nose.tools import eq_
 from pyquery import PyQuery as pq
 import test_utils
 
-from sumo.form_fields import StrippedCharField
+from ..form_fields import StrippedCharField
 
 
 class ExampleForm(forms.Form):
@@ -25,7 +25,7 @@ class ExampleForm(forms.Form):
 
 class TestFields(test_utils.TestCase):
     """We're not breaking CharField when monkey patching in
-    sumo/monkeypatch.py."""
+    kuma/core/monkeypatch.py."""
     def setUp(self):
         self.f = ExampleForm()
 

@@ -18,7 +18,7 @@ import constance.config
 from jingo import register
 from teamwork.shortcuts import build_policy_admin_links
 
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
 from .constants import DIFF_WRAP_COLUMN
 
 

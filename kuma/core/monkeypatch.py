@@ -10,7 +10,7 @@ charfield_widget_attrs = fields.CharField.widget_attrs
 def required_field_attrs(self, widget):
     """This function is for use on the base Field class."""
     attrs = field_widget_attrs(self, widget)
-    if self.required and not 'required' in attrs:
+    if self.required and 'required' not in attrs:
         attrs['required'] = 'required'
     return attrs
 

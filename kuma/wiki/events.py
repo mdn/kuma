@@ -4,7 +4,7 @@ from tower import ugettext as _
 
 from devmo import email_utils
 from devmo.helpers import add_utm
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
 from tidings.events import InstanceEvent
 
 from .helpers import revisions_unified_diff

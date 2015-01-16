@@ -1,5 +1,5 @@
 from django.contrib import admin
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
 
 from taggit_extras.managers import NamespacedTaggableManager
 from taggit.forms import TagWidget

@@ -16,7 +16,7 @@ import test_utils
 from devmo.helpers import (urlencode, soapbox_messages, get_soapbox_messages,
                            datetimeformat, DateTimeFormatError, json, number)
 from kuma.users.tests import UserTestCase
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
 
 
 class TestUrlEncode(test_utils.TestCase):

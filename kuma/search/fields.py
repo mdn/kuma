@@ -1,6 +1,6 @@
 from django.conf import settings
 from rest_framework import serializers
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
 
 
 class QueryParameterField(serializers.Field):

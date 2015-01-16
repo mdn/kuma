@@ -10,7 +10,7 @@ from constance.backends import database as constance_database
 from nose import SkipTest
 import test_utils
 
-from sumo.urlresolvers import split_path
+from kuma.core.urlresolvers import split_path
 
 
 class overrider(object):
@@ -138,7 +138,7 @@ class LocalizingClient(LocalizingMixin, SessionAwareClient):
 
     """
     # If you use this, you might also find the force_locale=True argument to
-    # sumo.urlresolvers.reverse() handy, in case you need to force locale
+    # kuma.core.urlresolvers.reverse() handy, in case you need to force locale
     # prepending in a one-off case or do it outside a mock request.
 
 

@@ -101,7 +101,7 @@ class Migration(DataMigration):
             'homepage': ('django.db.models.fields.URLField', [], {'default': "''", 'max_length': '255', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'irc_nickname': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'blank': 'True'}),
-            'locale': ('sumo.models.LocaleField', [], {'default': "'en-US'", 'max_length': '7', 'null': 'True', 'db_index': 'True', 'blank': 'True'}),
+            'locale': ('kuma.core.models.LocaleField', [], {'default': "'en-US'", 'max_length': '7', 'null': 'True', 'db_index': 'True', 'blank': 'True'}),
             'location': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'blank': 'True'}),
             'misc': ('jsonfield.JSONField', [], {'null': 'True', 'blank': 'True'}),
             'organization': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'blank': 'True'}),

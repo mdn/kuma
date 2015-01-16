@@ -11,7 +11,7 @@ from waffle.models import Flag
 from devmo.tests import KumaTestCase
 import kuma.wiki.content
 from kuma.wiki.models import Document, Revision
-from sumo.tests import get_user
+from kuma.core.tests import get_user
 
 
 class WikiTestCase(KumaTestCase):

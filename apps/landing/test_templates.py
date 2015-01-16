@@ -1,6 +1,6 @@
 from nose.tools import eq_, ok_
 
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
 from devmo.tests import KumaTestCase, override_constance_settings
 
 

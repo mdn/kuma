@@ -9,7 +9,7 @@ from django.http import HttpRequest
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
 
 from kuma.demos.models import Submission
 from kuma.demos.tests.test_models import save_valid_submission

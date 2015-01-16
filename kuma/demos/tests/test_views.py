@@ -14,7 +14,7 @@ from django.contrib.auth.models import User
 import constance.config
 from taggit_extras.utils import parse_tags
 
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase
 
 from .. import challenge_utils

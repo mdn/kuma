@@ -2,24 +2,20 @@ from django.conf.urls import include, patterns, url
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect
 from django.views.i18n import javascript_catalog
 from django.views.decorators.cache import cache_page
 
+from kuma.core import views as core_views
 import badger
 
 
 admin.autodiscover()
 badger.autodiscover()
 
-
-# Handle 404 and 500 errors
-def _error_page(request, status):
-    """Render error pages with jinja2."""
-    return render(request, '%d.html' % status, status=status)
-handler403 = lambda r: _error_page(r, 403)
-handler404 = lambda r: _error_page(r, 404)
-handler500 = lambda r: _error_page(r, 500)
+handler403 = core_views.handler403
+handler404 = core_views.handler404
+handler500 = core_views.handler500
 
 urlpatterns = patterns('',
    # Home / landing pages:

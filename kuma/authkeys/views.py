@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 
-from sumo.utils import paginate
+from kuma.core.utils import paginate
 
 from .models import Key
 from .forms import KeyForm

@@ -1,7 +1,7 @@
 from nose.tools import eq_, ok_
 
 from devmo.tests import KumaTestCase
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
 
 
 class LearnViewsTest(KumaTestCase):

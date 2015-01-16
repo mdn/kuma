@@ -2,9 +2,9 @@ from django.test import RequestFactory
 from nose.tools import eq_
 import pyquery
 
-from sumo.urlresolvers import reverse
-from sumo.utils import paginate
-from sumo.helpers import paginator
+from ..urlresolvers import reverse
+from ..utils import paginate
+from ..helpers import paginator
 
 
 def test_paginated_url():

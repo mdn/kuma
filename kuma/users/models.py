@@ -17,7 +17,7 @@ from waffle import switch_is_active
 
 from devmo.models import ModelBase
 from kuma.wiki.models import Revision
-from sumo.models import LocaleField
+from kuma.core.models import LocaleField
 
 from .helpers import gravatar_url
 from .tasks import send_welcome_email
@@ -245,6 +245,5 @@ try:
             }
             )],
         patterns=['timezones\.fields\.'])
-    add_introspection_rules([], ['sumo.models.LocaleField'])
 except ImportError:
     pass
