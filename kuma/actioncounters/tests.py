@@ -54,7 +54,10 @@ class ActionCountersTest(TestCase):
 
     @attr('bad_multiple')
     def test_bad_multiple_counters(self):
-        """Force multiple counters, possibly result of race condition, ensure graceful handling"""
+        """
+        Force multiple counters, possibly result of race condition,
+        ensure graceful handling
+        """
         action_name = "likes"
         obj_1 = self.obj_1
         obj_1_ct = ContentType.objects.get_for_model(obj_1)
@@ -132,7 +135,8 @@ class ActionCountersTest(TestCase):
         eq_(3, obj_1.likes.total)
 
         # set up request for user agent Mozilla 1.0
-        request = self.mk_request(ip='192.168.123.50', user_agent='Mozilla 1.0')
+        request = self.mk_request(ip='192.168.123.50',
+                                  user_agent='Mozilla 1.0')
         obj_1.likes.increment(request)
         eq_(4, obj_1.likes.total)
 
@@ -147,7 +151,7 @@ class ActionCountersTest(TestCase):
         MAX = obj_1.views.field.max_total_per_unique
 
         request = self.mk_request(ip='192.168.123.123')
-        for x in range(1, MAX+1):
+        for x in range(1, MAX + 1):
             obj_1.views.increment(request)
             eq_(x, obj_1.views.total)
 
@@ -205,15 +209,15 @@ class ActionCountersTest(TestCase):
         # Undo all the increments before going below zero
         for unique in UNIQUES:
             request = self.mk_request(**unique)
-            for x in range(1, MAX+1):
+            for x in range(1, MAX + 1):
                 obj_1.boogs.decrement(request)
 
         for unique in UNIQUES:
             request = self.mk_request(**unique)
 
-            for x in range(1, (0-MIN)+1):
+            for x in range(1, (0 - MIN) + 1):
                 obj_1.boogs.decrement(request)
-                eq_(0-x, obj_1.boogs.get_total_for_request(request))
+                eq_(0 - x, obj_1.boogs.get_total_for_request(request))
 
             obj_1.boogs.decrement(request)
             obj_1.boogs.decrement(request)
@@ -222,8 +226,10 @@ class ActionCountersTest(TestCase):
         eq_(MIN * len(UNIQUES), obj_1.boogs.total)
 
     def test_count_starts_at_zero(self):
-        """Make sure initial count is zero.
+        """
+        Make sure initial count is zero.
 
-        Sounds dumb, but it was a bug at one point."""
+        Sounds dumb, but it was a bug at one point.
+        """
         request = self.mk_request()
         eq_(0, self.obj_1.likes.get_total_for_request(request))

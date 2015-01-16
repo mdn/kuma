@@ -498,7 +498,7 @@ INSTALLED_APPS = (
     'kuma.demos',
     'captcha',
     'contentflagging',
-    'actioncounters',
+    'kuma.actioncounters',
     'threadedcomments',
 
     # util

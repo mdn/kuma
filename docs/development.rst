@@ -88,7 +88,7 @@ Running the test suite is easy::
 Note that this will try (and fail) to run tests that depend on apps disabled
 via ``INSTALLED_APPS``. You should run a subset of tests::
 
-    ./manage.py test actioncounters authkeys contentflagging devmo landing kuma
+    ./manage.py test authkeys contentflagging devmo landing kuma
 
 For more information, see the :doc:`test documentation <tests>`.
 

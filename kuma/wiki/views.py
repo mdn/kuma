@@ -42,7 +42,7 @@ from teamwork.shortcuts import get_object_or_404_or_403
 import waffle
 
 from access.decorators import permission_required, login_required
-from actioncounters.utils import get_ip
+from kuma.actioncounters.utils import get_ip
 from authkeys.decorators import accepts_auth_key
 from contentflagging.models import ContentFlag, FLAG_NOTIFICATIONS
 from devmo.decorators import never_cache

@@ -12,7 +12,7 @@ from django.forms.models import model_to_dict
 from taggit.models import Tag, TaggedItem
 from threadedcomments.models import ThreadedComment
 
-from actioncounters.models import ActionCounterUnique
+from kuma.actioncounters.models import ActionCounterUnique
 from demos.models import Submission, update_submission_comment_count
 from kuma.users.models import UserProfile
 

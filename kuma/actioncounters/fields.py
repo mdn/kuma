@@ -24,10 +24,12 @@ class ActionCounterField(models.IntegerField):
     def contribute_to_class(self, cls, name):
         self.name = name
 
-        self.total_field = models.IntegerField(editable=False, default=0, blank=True, db_index=True)
+        self.total_field = models.IntegerField(editable=False, default=0,
+                                               blank=True, db_index=True)
         cls.add_to_class('%s_total' % (self.name,), self.total_field)
 
-        self.recent_field = models.IntegerField(editable=False, default=0, blank=True, db_index=True)
+        self.recent_field = models.IntegerField(editable=False, default=0,
+                                                blank=True, db_index=True)
         cls.add_to_class('%s_recent' % (self.name,), self.recent_field)
 
         # TODO: Could maybe include a JSON-formatted history list of recent rollups

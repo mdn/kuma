@@ -1,8 +1,8 @@
 # encoding: utf-8
 import datetime
-from south.db import db
+from django.db import IntegrityError
 from south.v2 import DataMigration
-from django.db import models
+
 
 class Migration(DataMigration):
 
@@ -16,8 +16,8 @@ class Migration(DataMigration):
         # but wasn't implemented before this migration. Doing it now, so the
         # data migration has a smaller set to work with.
         (orm.ActionCounterUnique.objects
-                .filter(user=None, modified__lt=datetime.datetime(2011,8,1))
-                .delete())
+            .filter(user=None, modified__lt=datetime.datetime(2011, 8, 1))
+            .delete())
 
         # Update all remaining counters with a unique hash.
         from actioncounters.utils import get_unique
@@ -27,9 +27,9 @@ class Migration(DataMigration):
                 # Need to duplicate the custom saving code from the model,
                 # since South's frozen version of it doesn't have the logic.
                 user, ip, user_agent, unique_hash = get_unique(
-                        counter.content_type, counter.object_pk, counter.name, 
-                        ip=counter.ip, user_agent=counter.user_agent,
-                        user=counter.user)
+                    counter.content_type, counter.object_pk, counter.name,
+                    ip=counter.ip, user_agent=counter.user_agent,
+                    user=counter.user)
                 counter.unique_hash = unique_hash
                 counter.save()
             except IntegrityError:
@@ -37,10 +37,8 @@ class Migration(DataMigration):
                 # this one as a duplicate.
                 counter.delete()
 
-
     def backwards(self, orm):
         "Nothing to reverse - the field will be deleted"
-
 
     models = {
         'actioncounters.actioncounterunique': {
