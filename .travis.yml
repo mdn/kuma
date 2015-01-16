@@ -39,18 +39,16 @@ install:
     - pip install --no-index --find-links=travis_wheels -r requirements/compiled.txt
     - pip install --find-links=base_wheels -r requirements/prod.txt -r requirements/dev.txt
     - pip install coveralls
-    # JS test requirements
-    - curl -sL https://deb.nodesource.com/setup | sudo bash -
-    - sudo apt-get install -y nodejs
+    # theintern.io test requirements
+    - cd tests/ui
+    - npm install intern
 
 before_script:
     - mysql -e 'create database kuma;'
 
 script:
     - coverage run --include=`pwd`/kuma/*,`pwd`/apps/* manage.py test --noinput -v2 access actioncounters authkeys contentflagging devmo kpi kuma landing sumo
-    - cd tests/ui
-    - npm install intern
-    - node_modules/.bin/intern-runner config=intern-sauce-labs d=developer.allizom.org
+    - if [ "$TRAVIS_SECURE_VARS" = 1 ]; then cd tests/ui && node_modules/.bin/intern-runner config=intern-sauce-labs d=developer.allizom.org; fi;
 
 after_success:
     - coveralls
