@@ -11,7 +11,7 @@
 
   <article>
 
-    <h1>{{ _('History of') }} <a href="{{ url('wiki.document', document.full_path, locale=document.locale) }}">{{ _('{title}')|fe(title=document.title) }}</a></h1>
+    <h1>{{ _('History of') }} <a href="{{ document.get_absolute_url() }}">{{ document.title }}</a></h1>
 
     <div class="revision-list-head">
       {{ _('Revision history for:') }}
