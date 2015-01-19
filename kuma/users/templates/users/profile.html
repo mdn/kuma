@@ -51,7 +51,7 @@
               <a href="{{ url('teamwork.views.user_roles', profile.user.username) }}" class="button neutral">{{ _("Manage Roles") }}<i aria-hidden="true" class="icon-users"></i></a>
           {% endif %}
 
-          {% if request.user.is_superuser %}
+          {% if profile.user.id != request.user.id and request.user.has_perm('users.add_userban') %}
             {{ ban_link(profile.user, request.user) }}
           {% endif %}
 
