@@ -7,7 +7,7 @@ from django.shortcuts import render
 from django.views.decorators.http import require_GET
 
 from kuma.wiki.models import Document, Revision
-from sumo.utils import paginate
+from kuma.core.utils import paginate
 
 from .forms import RevisionDashboardForm
 from . import PAGE_SIZE

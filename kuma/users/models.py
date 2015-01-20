@@ -10,14 +10,14 @@ from allauth.account.signals import user_signed_up, email_confirmed
 from allauth.socialaccount.signals import social_account_removed
 import constance.config
 from jsonfield import JSONField
-from taggit_extras.managers import NamespacedTaggableManager
 from timezones.fields import TimeZoneField, MAX_TIMEZONE_LENGTH
 from tower import ugettext_lazy as _
 from waffle import switch_is_active
 
-from devmo.models import ModelBase
+from kuma.core.fields import LocaleField
+from kuma.core.managers import NamespacedTaggableManager
+from kuma.core.models import ModelBase
 from kuma.wiki.models import Revision
-from sumo.models import LocaleField
 
 from .helpers import gravatar_url
 from .tasks import send_welcome_email
@@ -245,6 +245,5 @@ try:
             }
             )],
         patterns=['timezones\.fields\.'])
-    add_introspection_rules([], ['sumo.models.LocaleField'])
 except ImportError:
     pass

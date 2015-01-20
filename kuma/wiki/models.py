@@ -36,10 +36,11 @@ import waffle
 
 from kuma.attachments.models import Attachment, DocumentAttachment
 from kuma.search.decorators import register_live_index
-from sumo import ProgrammingError
-from sumo.models import LocaleField
-from sumo.urlresolvers import reverse, split_path
-from sumo_locales import LOCALES
+from kuma.core.exceptions import ProgrammingError
+from kuma.core.fields import LocaleField
+from kuma.core.urlresolvers import reverse, split_path
+from kuma.core.locales import LOCALES
+
 from . import kumascript
 from .constants import (SECONDARY_CACHE_ALIAS, TEMPLATE_TITLE_PREFIX,
                         URL_REMAPS_CACHE_KEY_TMPL, REDIRECT_HTML,
@@ -202,7 +203,6 @@ class Document(NotificationsMixin, models.Model):
     # Is this document localizable or not?
     is_localizable = models.BooleanField(default=True, db_index=True)
 
-    # TODO: validate (against settings.SUMO_LANGUAGES?)
     locale = LocaleField(default=settings.WIKI_DEFAULT_LANGUAGE, db_index=True)
 
     # Latest approved revision. L10n dashboard depends on this being so (rather

@@ -24,7 +24,7 @@ account_patterns = patterns('',
     url(r'^email/confirm/(?P<key>\w+)/?$', account_views.confirm_email,
         name='account_confirm_email'),
     # Auth keys
-    url(r'^keys', include('authkeys.urls')),
+    url(r'^keys', include('kuma.authkeys.urls')),
 )
 
 

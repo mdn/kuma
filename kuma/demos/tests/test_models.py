@@ -22,7 +22,7 @@ from django.test import TestCase
 
 import constance.config
 
-from devmo.tests import override_constance_settings
+from kuma.core.tests import override_constance_settings
 from ..models import Submission
 from .. import models
 from . import make_users, build_submission, build_hidden_submission

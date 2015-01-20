@@ -2,7 +2,7 @@ from django import forms
 from django.conf import settings
 
 from tower import ugettext_lazy as _
-from sumo.form_fields import StrippedCharField
+from kuma.core.form_fields import StrippedCharField
 
 
 LANG_CHOICES = [('', _('All Locales'))] + settings.LANGUAGES

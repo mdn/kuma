@@ -8,7 +8,7 @@ from elasticutils.contrib.django import get_es, S
 from .decorators import _mapping_types
 from .models import Index
 
-log = logging.getLogger('mdn.search')
+log = logging.getLogger('kuma.search.index')
 
 
 def get_mapping_types(mapping_types=None):

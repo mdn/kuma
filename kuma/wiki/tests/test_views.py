@@ -25,24 +25,21 @@ from django.utils.encoding import smart_str
 import constance.config
 from waffle.models import Flag, Switch
 
-from authkeys.models import Key
-from devmo.tests import override_constance_settings
-from . import WikiTestCase, FakeResponse
-
+from kuma.authkeys.models import Key
+from kuma.core.tests import post, get, override_constance_settings
+from kuma.core.helpers import urlparams
+from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase, user
-from kuma.wiki.constants import DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL
-from kuma.wiki.content import get_seo_description
-from kuma.wiki.events import EditDocumentEvent
-from kuma.wiki.models import (Document, Revision, RevisionIP, DocumentZone,
-                              DocumentTag, DocumentDeletionLog)
-from kuma.wiki.tests import (doc_rev, document, new_document_data, revision,
-                             normalize_html, create_template_test_users,
-                             make_translation)
-from kuma.wiki.forms import MIDAIR_COLLISION
 
-from sumo.tests import post, get
-from sumo.helpers import urlparams
-from sumo.urlresolvers import reverse
+from ..constants import DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL
+from ..content import get_seo_description
+from ..events import EditDocumentEvent
+from ..models import (Document, Revision, RevisionIP, DocumentZone,
+                      DocumentTag, DocumentDeletionLog)
+from ..tests import (doc_rev, document, new_document_data, revision,
+                     normalize_html, create_template_test_users,
+                     make_translation, WikiTestCase, FakeResponse)
+from ..forms import MIDAIR_COLLISION
 
 
 class RedirectTests(UserTestCase, WikiTestCase):

@@ -7,7 +7,7 @@ from django.conf import settings
 
 from kuma.users.tests import UserTestCase
 from kuma.wiki.tests import revision, WikiTestCase
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
 
 from ..models import Attachment
 from ..utils import make_test_file

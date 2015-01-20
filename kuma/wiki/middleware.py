@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
-from sumo.helpers import urlparams
+from kuma.core.helpers import urlparams
 
 from .exceptions import ReadOnlyException
 from .models import DocumentZone

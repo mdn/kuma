@@ -8,10 +8,9 @@ from html5lib.filters._base import Filter as html5lib_Filter
 from nose.tools import nottest
 from waffle.models import Flag
 
-from devmo.tests import KumaTestCase
-import kuma.wiki.content
+from kuma.core.tests import get_user, KumaTestCase
 from kuma.wiki.models import Document, Revision
-from sumo.tests import get_user
+import kuma.wiki.content
 
 
 class WikiTestCase(KumaTestCase):

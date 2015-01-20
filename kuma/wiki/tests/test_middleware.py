@@ -2,7 +2,7 @@
 from django.core.cache import get_cache
 
 from nose.tools import eq_
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
 
 from kuma.users.tests import UserTestCase
 from kuma.wiki.constants import SECONDARY_CACHE_ALIAS
@@ -118,7 +118,7 @@ class DocumentZoneMiddlewareTestCase(UserTestCase, WikiTestCase):
 
     def test_reverse_rewrite(self):
         """Ensure reverse() URLs are remapped"""
-        # HACK: This actually exercises code in apps/sumo/urlresolvers.py, but
+        # HACK: This actually exercises code in kuma/core/urlresolvers.py, but
         # lives here to share fixtures and such with other wiki URL remap code.
         url = reverse('wiki.document',
                       args=[self.other_doc.slug],

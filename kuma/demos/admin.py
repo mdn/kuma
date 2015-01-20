@@ -7,7 +7,7 @@ from django.template.response import TemplateResponse
 from django.utils.encoding import force_unicode
 from django.utils.translation import ugettext_lazy, ugettext as _
 
-from taggit_extras.managers import NamespacedTaggableManager
+from kuma.core.managers import NamespacedTaggableManager
 from taggit.forms import TagWidget
 
 from .models import Submission

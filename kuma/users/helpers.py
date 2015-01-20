@@ -2,7 +2,6 @@ import urllib
 import hashlib
 
 from django.conf import settings
-from django.core.exceptions import ObjectDoesNotExist
 
 from jinja2 import escape, Markup, contextfunction
 from jingo import register
@@ -11,9 +10,8 @@ from allauth.account.utils import user_display
 from allauth.socialaccount import providers
 from tower import ugettext as _
 
-from sumo.urlresolvers import reverse
-
-from devmo.helpers import datetimeformat
+from kuma.core.urlresolvers import reverse
+from kuma.core.helpers import datetimeformat
 
 DEFAULT_AVATAR = getattr(settings, 'DEFAULT_AVATAR',
                          settings.MEDIA_URL + 'img/avatar-default.png')

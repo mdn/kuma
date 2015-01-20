@@ -11,7 +11,7 @@ from .index import (get_indexing_es, get_index, recreate_index, get_indexable,
                     get_index_stats)
 from .utils import chunked, format_time
 
-log = logging.getLogger('mdn.search')
+log = logging.getLogger('kuma.search.commands')
 
 
 @requires_good_connection

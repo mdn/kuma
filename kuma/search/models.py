@@ -4,7 +4,6 @@ from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.db import models
-from django.db.models import query
 from django.db.models.signals import post_delete
 from django.utils.html import strip_tags
 from django.utils import timezone
@@ -14,10 +13,9 @@ from django.template.defaultfilters import slugify
 from elasticutils.contrib.django import MappingType, Indexable
 from elasticutils.contrib.django.tasks import index_objects
 
-from sumo.urlresolvers import reverse
-
+from kuma.core.managers import PrefetchTaggableManager
+from kuma.core.urlresolvers import reverse
 from kuma.wiki.models import Document
-from taggit_extras.managers import PrefetchTaggableManager
 
 from .decorators import register_mapping_type
 from .queries import DocumentS

@@ -8,9 +8,9 @@ from django.conf import settings
 from django.forms.widgets import CheckboxSelectMultiple
 
 
-from contentflagging.forms import ContentFlagForm
+from kuma.contentflagging.forms import ContentFlagForm
 import kuma.wiki.content
-from sumo.form_fields import StrippedCharField
+from kuma.core.form_fields import StrippedCharField
 from .constants import (SLUG_CLEANSING_REGEX, REVIEW_FLAG_TAGS,
                         LOCALIZATION_FLAG_TAGS, RESERVED_SLUGS)
 from .models import (Document, Revision,

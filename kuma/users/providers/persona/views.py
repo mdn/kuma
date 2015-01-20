@@ -3,7 +3,6 @@ from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpResponse, QueryDict
 from django.shortcuts import redirect
 from django.template import RequestContext
-from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_POST, require_GET
 
 from allauth.socialaccount.helpers import complete_social_login
@@ -11,7 +10,8 @@ from allauth.socialaccount.helpers import render_authentication_error
 from allauth.socialaccount.models import SocialLogin
 from allauth.socialaccount import app_settings, providers
 
-from sumo.urlresolvers import reverse
+from kuma.core.urlresolvers import reverse
+from kuma.core.decorators import never_cache
 
 from .provider import PersonaProvider
 

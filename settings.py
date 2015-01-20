@@ -8,7 +8,7 @@ from django.utils.functional import lazy
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse_lazy
 
-from sumo_locales import LOCALES
+from kuma.core.locales import LOCALES
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
@@ -98,18 +98,6 @@ TIME_ZONE = 'US/Pacific'
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-US'
-
-# Supported languages
-SUMO_LANGUAGES = (
-    'ak', 'ar', 'as', 'ast', 'bg', 'bn-BD', 'bn-IN', 'bs', 'ca', 'cs', 'da',
-    'de', 'el', 'en-US', 'eo', 'es', 'et', 'eu', 'fa', 'fi', 'fr', 'fur',
-    'fy-NL', 'ga-IE', 'gd', 'gl', 'gu-IN', 'he', 'hi-IN', 'hr', 'hu', 'hy-AM',
-    'id', 'ilo', 'is', 'it', 'ja', 'kk', 'kn', 'ko', 'lt', 'mai', 'mk', 'mn',
-    'mr', 'ms', 'my', 'nb-NO', 'nl', 'no', 'oc', 'pa-IN', 'pl', 'pt-BR',
-    'pt-PT', 'rm', 'ro', 'ru', 'rw', 'si', 'sk', 'sl', 'sq', 'sr-CYRL',
-    'sr-LATN', 'sv-SE', 'ta-LK', 'te', 'th', 'tr', 'uk', 'vi', 'zh-CN',
-    'zh-TW',
-)
 
 # Accepted locales
 MDN_LANGUAGES = (
@@ -387,10 +375,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'allauth.account.context_processors.account',
     'allauth.socialaccount.context_processors.socialaccount',
 
-    'sumo.context_processors.global_settings',
-
-    'devmo.context_processors.i18n',
-    'devmo.context_processors.next_url',
+    'kuma.core.context_processors.global_settings',
+    'kuma.core.context_processors.i18n',
+    'kuma.core.context_processors.next_url',
 
     'jingo_minify.helpers.build_ids',
     'constance.context_processors.config',
@@ -408,19 +395,19 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.transaction.TransactionMiddleware',
 
     # LocaleURLMiddleware must be before any middleware that uses
-    # sumo.urlresolvers.reverse() to add locale prefixes to URLs:
-    'sumo.middleware.LocaleURLMiddleware',
+    # kuma.core.urlresolvers.reverse() to add locale prefixes to URLs:
+    'kuma.core.middleware.LocaleURLMiddleware',
     'kuma.wiki.middleware.DocumentZoneMiddleware',
     'kuma.wiki.middleware.ReadOnlyMiddleware',
-    'sumo.middleware.Forbidden403Middleware',
+    'kuma.core.middleware.Forbidden403Middleware',
     'django.middleware.common.CommonMiddleware',
-    'sumo.middleware.RemoveSlashMiddleware',
+    'kuma.core.middleware.RemoveSlashMiddleware',
     'commonware.middleware.NoVarySessionMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'sumo.anonymous.AnonymousIdentityMiddleware',
+    'kuma.core.anonymous.AnonymousIdentityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'kuma.users.middleware.BanMiddleware',
 
@@ -480,9 +467,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     # MDN
-    'devmo',
+    'kuma.core',
     'kuma.feeder',
-    'landing',
+    'kuma.landing',
     'kuma.search',
     'kuma.users',
     'kuma.wiki',
@@ -497,8 +484,8 @@ INSTALLED_APPS = (
     # DEMOS
     'kuma.demos',
     'captcha',
-    'contentflagging',
-    'actioncounters',
+    'kuma.contentflagging',
+    'kuma.actioncounters',
     'threadedcomments',
 
     # util
@@ -510,7 +497,7 @@ INSTALLED_APPS = (
     'constance',
     'waffle',
     'soapbox',
-    'authkeys',
+    'kuma.authkeys',
     'tidings',
     'teamwork',
     'djcelery',
@@ -577,11 +564,9 @@ TOWER_KEYWORDS = {
 DOMAIN_METHODS = {
     'messages': [
         ('vendor/**', 'ignore'),
-        ('apps/access/**', 'ignore'),
         ('kuma/dashboards/**', 'ignore'),
-        ('apps/kadmin/**', 'ignore'),
-        ('apps/sumo/**', 'ignore'),
-        ('apps/**.py',
+        ('kuma/core/**', 'ignore'),
+        ('kuma/**.py',
             'tower.management.commands.extract.extract_tower_python'),
         ('**/templates/**.html',
             'tower.management.commands.extract.extract_tower_template'),
@@ -850,15 +835,15 @@ CELERY_ANNOTATIONS = {
 }
 
 # Wiki rebuild settings
-WIKI_REBUILD_TOKEN = 'sumo:wiki:full-rebuild'
+WIKI_REBUILD_TOKEN = 'kuma:wiki:full-rebuild'
 WIKI_REBUILD_ON_DEMAND = False
 
 # Anonymous user cookie
-ANONYMOUS_COOKIE_NAME = 'SUMO_ANONID'
+ANONYMOUS_COOKIE_NAME = 'KUMA_ANONID'
 ANONYMOUS_COOKIE_MAX_AGE = 30 * 86400  # Seconds
 
 # Top contributors cache settings
-TOP_CONTRIBUTORS_CACHE_KEY = 'sumo:TopContributors'
+TOP_CONTRIBUTORS_CACHE_KEY = 'kuma:TopContributors'
 TOP_CONTRIBUTORS_CACHE_TIMEOUT = 60 * 60 * 12
 
 # Do not change this without also deleting all wiki documents:
@@ -1169,8 +1154,8 @@ LOGGING = {
             '()': 'django.utils.log.RequireDebugFalse',
         },
         'require_debug_true': {
-            # use from devmo.helpers until we upgrade to django 1.5
-            '()': 'devmo.future.filters.RequireDebugTrue',
+            # use from kuma.core.helpers until we upgrade to django 1.5
+            '()': 'kuma.core.future.filters.RequireDebugTrue',
         },
     },
     'formatters': {
@@ -1225,12 +1210,12 @@ TEAMWORK_BASE_POLICIES = {
 GRAPPELLI_ADMIN_TITLE = 'Mozilla Developer Network - Admin'
 GRAPPELLI_INDEX_DASHBOARD = 'admin_dashboard.CustomIndexDashboard'
 
-DBGETTEXT_PATH = 'apps/'
+DBGETTEXT_PATH = 'kuma/core/'
 DBGETTEXT_ROOT = 'translations'
 
 
 def get_user_url(user):
-    from sumo.urlresolvers import reverse
+    from kuma.core.urlresolvers import reverse
     return reverse('users.profile', args=[user.username])
 
 ABSOLUTE_URL_OVERRIDES = {

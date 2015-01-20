@@ -20,18 +20,16 @@ from django.test.utils import override_settings
 import constance.config
 from waffle.models import Flag
 
-from devmo.tests import SkippedTestCase
+from kuma.core.helpers import urlparams
+from kuma.core.tests import SkippedTestCase, post, get
+from kuma.core.urlresolvers import reverse
 from kuma.wiki.events import EditDocumentEvent
 from kuma.wiki.constants import REDIRECT_CONTENT, TEMPLATE_TITLE_PREFIX
 from kuma.wiki.models import (Document, Revision, HelpfulVote,
-                              DocumentTag, Attachment)
-from kuma.wiki.tests import (WikiTestCase, document, revision, new_document_data,
-                             create_topical_parents_docs)
+                              DocumentTag)
+from kuma.wiki.tests import (WikiTestCase, document, revision,
+                             new_document_data, create_topical_parents_docs)
 from kuma.users.tests import UserTestCase
-
-from sumo.urlresolvers import reverse
-from sumo.helpers import urlparams
-from sumo.tests import post, get
 
 
 DOCUMENT_EDITED_EMAIL_CONTENT = """
@@ -519,10 +517,11 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         # Assert notifications fired and have the expected content:
         # 1 email for the first time edit notification
         # 1 email for the EditDocumentEvent to sam@example.com
-        eq_(2, len(mail.outbox)) # Regression check:
-                                 # messing with context processors can
-                                 # cause notification emails to error
-                                 # and stop being sent.
+        # Regression check:
+        # messing with context processors can
+        # cause notification emails to error
+        # and stop being sent.
+        eq_(2, len(mail.outbox))
         first_edit_email = mail.outbox[0]
         expected_to = [constance.config.EMAIL_LIST_FOR_FIRST_EDITS]
         expected_subject = u'[MDN] %(username)s made their first edit, to: %(title)s' % ({'username': new_rev.creator.username, 'title': self.d.title})
