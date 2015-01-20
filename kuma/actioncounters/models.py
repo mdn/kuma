@@ -9,21 +9,6 @@ from django.contrib.contenttypes import generic
 from django.utils.translation import ugettext_lazy as _
 
 from .utils import get_unique
-from .fields import ActionCounterField
-
-
-class TestModel(models.Model):
-    # TODO: Find a way to move this to tests.py and create only during testing!
-
-    title = models.CharField(max_length=255, blank=False, unique=True)
-
-    likes = ActionCounterField()
-    views = ActionCounterField(max_total_per_unique=5)
-    frobs = ActionCounterField(min_total_per_unique=-5)
-    boogs = ActionCounterField(min_total_per_unique=-5, max_total_per_unique=5)
-
-    def __unicode__(self):
-        return unicode(self.pk)
 
 
 class ActionCounterUniqueManager(models.Manager):

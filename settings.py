@@ -1177,7 +1177,7 @@ LOGGING = {
         },
     },
     'loggers': {
-        'mdn': {
+        'kuma': {
             'handlers': ['console'],
             'propagate': True,
             # Use the most permissive setting. It is filtered in the handlers.

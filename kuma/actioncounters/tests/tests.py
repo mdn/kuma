@@ -13,8 +13,9 @@ from django.contrib.auth.models import User
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 
-from .utils import get_unique
-from .models import TestModel, ActionCounterUnique
+from ..utils import get_unique
+from ..models import ActionCounterUnique
+from .models import TestModel
 
 
 class ActionCountersTest(TestCase):
