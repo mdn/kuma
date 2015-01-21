@@ -20,7 +20,7 @@ class Migration(DataMigration):
             .delete())
 
         # Update all remaining counters with a unique hash.
-        from actioncounters.utils import get_unique
+        from kuma.actioncounters.utils import get_unique
         counters = orm.ActionCounterUnique.objects.all()
         for counter in counters:
             try:
