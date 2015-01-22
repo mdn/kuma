@@ -195,7 +195,7 @@
         // possible syntax languages and links to resources for reading them
         var syntaxSections = {
             css:  {
-                link: 'docs/Web/CSS/Value_definition_syntax',
+                link: '/docs/Web/CSS/Value_definition_syntax',
                 title: gettext('How to read CSS syntax.'),
                 urlTest: '/docs/Web/CSS/',
                 classTest: 'brush:css'
