@@ -1165,15 +1165,6 @@ SYSLOG_TAG = 'http_app_kuma'
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse',
-        },
-        'require_debug_true': {
-            # use from kuma.core.helpers until we upgrade to django 1.5
-            '()': 'kuma.core.future.filters.RequireDebugTrue',
-        },
-    },
     'formatters': {
         'default': {
             'format': '{0}: %(asctime)s %(name)s:%(levelname)s %(message)s: '
@@ -1183,12 +1174,11 @@ LOGGING = {
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
-            'filters': ['require_debug_true'],
+            'formatter': 'default',
             'level': LOG_LEVEL,
         },
         'mail_admins': {
             'class': 'django.utils.log.AdminEmailHandler',
-            'filters': ['require_debug_false'],
             'level': logging.ERROR,
         },
     },
@@ -1211,7 +1201,6 @@ LOGGING = {
         },
     },
 }
-
 
 CSRF_COOKIE_SECURE = True
 X_FRAME_OPTIONS = 'DENY'
