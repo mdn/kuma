@@ -3,12 +3,14 @@ import logging
 import os
 import platform
 import json
+from collections import namedtuple
 
 from django.utils.functional import lazy
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse_lazy
 
-from kuma.core.locales import LOCALES
+_Language = namedtuple(u'Language', u'english native iso639_1')
+
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
@@ -190,9 +192,9 @@ LOCALE_ALIASES = {
 
 try:
     DEV_LANGUAGES = [
-        loc.replace('_','-') for loc in os.listdir(path('locale'))
-        if os.path.isdir(path('locale', loc))
-            and loc not in ['.svn', '.git', 'templates']
+        loc.replace('_', '-') for loc in os.listdir(path('locale'))
+        if (os.path.isdir(path('locale', loc)) and
+            loc not in ['.svn', '.git', 'templates'])
     ]
     for pootle_dir in DEV_LANGUAGES:
         if pootle_dir in DEV_POOTLE_PRODUCT_DETAILS_MAP:
@@ -208,8 +210,22 @@ for requested_lang, delivered_lang in LOCALE_ALIASES.items():
     if delivered_lang in PROD_LANGUAGES:
         LANGUAGE_URL_MAP[requested_lang.lower()] = delivered_lang
 
-# Override Django's built-in with our native names
+
+def get_locales():
+    locales = {}
+    file = os.path.join(ROOT, 'kuma', 'languages.json')
+    json_locales = json.load(open(file, 'r'))
+    for locale, meta in json_locales.items():
+        locales[locale] = _Language(meta['english'],
+                                    meta['native'],
+                                    meta['iso639_1'])
+    return locales
+
+LOCALES = get_locales()
+
+
 def lazy_langs():
+    """Override Django's built-in with our native names"""
     from product_details import product_details
     # for bug 664330
     # from django.conf import settings
