@@ -39,7 +39,6 @@ from kuma.search.decorators import register_live_index
 from kuma.core.exceptions import ProgrammingError
 from kuma.core.fields import LocaleField
 from kuma.core.urlresolvers import reverse, split_path
-from kuma.core.locales import LOCALES
 
 from . import kumascript
 from .constants import (SECONDARY_CACHE_ALIAS, TEMPLATE_TITLE_PREFIX,
@@ -1685,7 +1684,7 @@ class Revision(models.Model):
                 else:
                     old = self.based_on
                     self.based_on = based_on  # Guess a correct value.
-                    locale = LOCALES[settings.WIKI_DEFAULT_LANGUAGE].native
+                    locale = settings.LOCALES[settings.WIKI_DEFAULT_LANGUAGE].native
                     # TODO(erik): This error message ignores non-translations.
                     error = _('A revision must be based on a revision of the '
                               '%(locale)s document. Revision ID %(id)s does '
