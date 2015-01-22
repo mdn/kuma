@@ -60,6 +60,7 @@
     var $localeInput = $('#id_locale');
     var $filterForm = $('#revision-filter');
     var $pageInput = $('#revision-page');
+    var $showIPsButton = $('#show_ips_btn');
     var currentLocale = '{{ request.locale }}';
     var controlsTemplate = '\
     <div class="action-bar">\
@@ -101,6 +102,12 @@
             $(item).trigger('mdn:click');
         },
         alwaysCollectItems: true
+    });
+
+    // Hide IPs & wire Toggle IPs button, if present
+    $('.revision_ip').toggle();
+    $showIPsButton.click(function(e) {
+        $('.revision_ip').toggle();
     });
 
     // Focus on the first item, if there
