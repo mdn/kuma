@@ -329,16 +329,14 @@
                 }
             }
 
-            // Check if page buttons need to be sticky
-            if($pageButtons.attr('data-sticky') === 'true'){
-                pageButtonsHeight = $pageButtons.innerHeight();
-                if(scroll > pageButtonsOffset.top) {
-                    $pageButtons.css('min-width', $pageButtons.css('width'));
-                    $pageButtons.css(buttonDirection, pageButtonsOffset[buttonDirection]);
-                    $pageButtons.addClass(fixedClass);
-                } else {
-                    $pageButtons.removeClass(fixedClass);
-                }
+            // Make page buttons (Language, Edit, etc.) sticky
+            pageButtonsHeight = $pageButtons.innerHeight();
+            if(scroll > pageButtonsOffset.top) {
+                $pageButtons.css('min-width', $pageButtons.css('width'));
+                $pageButtons.css(buttonDirection, pageButtonsOffset[buttonDirection]);
+                $pageButtons.addClass(fixedClass);
+            } else {
+                $pageButtons.removeClass(fixedClass);
             }
 
             // If there is no ToC on the page
@@ -366,7 +364,7 @@
         }, 10);
 
         // Set it forth!
-        if($toc.length || $pageButtons.attr('data-sticky') === 'true'){
+        if($toc.length) {
             scrollFn();
             $(win).on('scroll resize', scrollFn);
         }
