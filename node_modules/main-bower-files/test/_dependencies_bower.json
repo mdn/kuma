@@ -1,0 +1,10 @@
+{
+    "dependencies": {
+        "recursive": "*"
+    },
+    "overrides": {
+        "recursive": {
+            "dependencies": null
+        }
+    }
+}

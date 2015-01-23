@@ -1,0 +1,8 @@
+{
+    "dependencies": {
+        "simple": "*"
+    },
+    "devDependencies": {
+	      "includeDev": "*"
+    }
+}

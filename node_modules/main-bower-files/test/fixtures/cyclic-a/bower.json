@@ -1,0 +1,6 @@
+{
+    "main": "./cyclic-a.js",
+    "dependencies": {
+        "cyclic-b": "*"
+    } 
+}

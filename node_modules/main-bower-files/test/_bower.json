@@ -1,0 +1,19 @@
+{
+    "dependencies": {
+        "simple": "*",
+        "overwritten": "*",
+        "multi": "*",
+        "ignore": "*",
+        "hasPackageNoBower": "*",
+        "deepPaths":"*",
+        "decoy": "*"
+    },
+    "overrides": {
+        "overwritten": {
+            "main": "another.js"
+        },
+        "ignore": {
+            "ignore": true
+        }
+    }
+}

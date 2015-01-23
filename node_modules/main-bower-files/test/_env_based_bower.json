@@ -1,0 +1,13 @@
+{
+    "dependencies": {
+        "envBased": "*"
+    },
+    "overrides": {
+        "envBased": {
+            "main": {
+                "prod": "prod.js",
+                "dev": "dev.js"
+            }
+        }
+    }
+}
