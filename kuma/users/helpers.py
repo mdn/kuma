@@ -42,10 +42,20 @@ def ban_link(context, ban_user, banner_user):
             active_ban = ban_user.get_profile().active_ban()
             url = reverse('admin:users_userban_change', args=(active_ban.id,))
             title = _('Banned on {ban_date} by {ban_admin}.').format(ban_date=datetimeformat(context, active_ban.date, format='date', output='json'), ban_admin=active_ban.by )
-            link = '<a href="%s" class="button ban-link" title="%s">%s</a>' % (url, title, _('Banned'))
+            link = '<a href="%s" class="button ban-link" title="%s">%s<i aria-hidden="true" class="icon-ban"></i></a>' % (url, title, _('Banned'))
         else:
             url = '%s?user=%s&by=%s' % (reverse('admin:users_userban_add'), ban_user.id, banner_user.id)
-            link = '<a href="%s" class="button negative ban-link">%s</a>' % (url, _('Ban User'))
+            link = '<a href="%s" class="button negative ban-link">%s<i aria-hidden="true" class="icon-ban"></i></a>' % (url, _('Ban User'))
+    return Markup(link)
+
+
+@register.function
+@contextfunction
+def admin_link(context, user):
+    """Returns a link to admin a user"""
+    link = ''
+    url = reverse('admin:auth_user_change', args=(user.id,))
+    link = '<a href="%s" class="button neutral">%s<i aria-hidden="true" class="icon-lock"></i></a>' % (url, _('Admin'))
     return Markup(link)
 
 
