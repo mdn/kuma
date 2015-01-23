@@ -1,0 +1,12 @@
+{
+    // dependencies
+    "dependencies": {
+        "overwritten": "*"
+    },
+    /* overrides */
+    "overrides": {
+        "overwritten": {
+            "main": "another.js"
+        }
+    }
+}

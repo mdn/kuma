@@ -1,0 +1,6 @@
+{
+    "main": [
+        "./multi.js",
+        "./multi.css"
+    ]
+}

@@ -31,7 +31,7 @@ kumascript.log
 kumascript_settings_local.json
 lib/product_details_json
 .DS_Store
-node_modules/
+tests/ui/node_modules/
 media/redesign/css/*.css
 docs/_build/
 maintenance/media
@@ -40,3 +40,4 @@ wheelhouse
 james.ini
 celeryev.pid
 media/js/libs/ckeditor/source/ckbuilder
+bower_components

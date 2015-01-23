@@ -1,0 +1,12 @@
+{
+    "dependencies": {
+        "recursive": "*"
+    },
+    "overrides": {
+        "recursive": {
+            "dependencies": {
+                "decoy": "*"
+            }
+        }
+    }
+}
