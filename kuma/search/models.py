@@ -4,9 +4,9 @@ from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.dispatch import receiver
-from django.template.defaultfilters import slugify
 from django.utils import timezone
 from django.utils.functional import cached_property
+from django.utils.text import slugify
 
 from elasticsearch.exceptions import NotFoundError
 

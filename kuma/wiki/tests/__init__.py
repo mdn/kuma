@@ -2,7 +2,7 @@ from datetime import datetime
 import time
 
 from django.contrib.auth.models import User, Group, Permission
-from django.template.defaultfilters import slugify
+from django.utils.text import slugify
 
 from html5lib.filters._base import Filter as html5lib_Filter
 from nose.tools import nottest

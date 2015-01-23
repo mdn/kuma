@@ -21,7 +21,8 @@ from django.core.files.storage import FileSystemStorage
 from django.db import models
 from django.db.models import Q
 from django.db.models.fields.files import FieldFile, ImageFieldFile
-from django.template.defaultfilters import slugify, filesizeformat
+from django.template.defaultfilters import filesizeformat
+from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 
 import constance.config
