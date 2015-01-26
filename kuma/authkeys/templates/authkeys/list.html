@@ -24,10 +24,6 @@
                 <a class="button"
                    title="{{ _('View key usage history') }}"
                    href="{{ url('authkeys.history', pk=key.pk) }}">{{ _('History ({count})') | f(count=key.history.count()) }}</a>
-                <a class="button transparent only-icon"
-                   href="{{ url('authkeys.delete', pk=key.pk) }}">
-                   <span>{{ _('Delete key') }}</span><i aria-hidden="true" class="icon-trash"></i>
-                </a>
             </span>
 
         </li>
