@@ -11,6 +11,7 @@ from .forms import KeyForm
 ITEMS_PER_PAGE = 15
 
 
+@login_required
 @permission_required('authkeys.add_key', raise_exception=True)
 def new(request):
     context = {"key": None}
@@ -48,6 +49,7 @@ def history(request, pk):
     return render(request, 'authkeys/history.html', context)
 
 
+@login_required
 @permission_required('authkeys.delete_key', raise_exception=True)
 def delete(request, pk):
     key = get_object_or_404(Key, pk=pk)

@@ -55,7 +55,7 @@ def admin_link(context, user):
     """Returns a link to admin a user"""
     link = ''
     url = reverse('admin:auth_user_change', args=(user.id,))
-    link = '<a href="%s" class="button neutral">%s<i aria-hidden="true" class="icon-lock"></i></a>' % (url, _('Admin'))
+    link = '<a href="%s" class="button neutral">%s<i aria-hidden="true" class="icon-wrench"></i></a>' % (url, _('Admin'))
     return Markup(link)
 
 
