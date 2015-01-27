@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>CKEditor description list (aka definition list) plugin</title>
+	<script src="../dev/ckeditor/ckeditor.js"></script>
+	<link href="../dev/ckeditor/samples/sample.css" rel="stylesheet">
+</head>
+<body>
+	<h1 class="samples">
+		CKEditor description list (aka definition list) plugin
+	</h1>
+
+	<textarea id="editor1" cols="10" rows="10">
+
+		<h1>Tutorials</h1>
+
+		<p>Learn how to program JavaScript.</p>
+
+		<h2>Introductory</h2>
+
+		<dl>
+			<dt><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Getting_Started">Getting started</a></dt>
+			<dd>Your first steps with JavaScript.</dd>
+		</dl>
+
+		<dl>
+			<dt><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide">JavaScript Guide</a></dt>
+			<dd>If you are new to JavaScript, this guide will walk you through the language.</dd>
+			<dt><a href="https://developer.mozilla.org/en-US/docs/JavaScript_technologies_overview">JavaScript technologies overview</a></dt>
+			<dd>Introduction to the web browser JavaScript landscape.</dd>
+			<dt><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Introduction_to_Object-Oriented_JavaScript">Introduction to Object Oriented JavaScript</a></dt>
+			<dd>Introduction to the concepts of object oriented programming in JavaScript.</dd>
+			<dt>
+			<h2>Intermediate</h2>
+			</dt>
+			<dt><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript">A re-introduction to JavaScript</a></dt>
+			<dd>An overview for those who&nbsp;think&nbsp;they know about JavaScript.</dd>
+			<dt><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures">JavaScript data structures</a></dt>
+			<dd>Overview of available data structures in JavaScript</dd>
+			<dt><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_when_to_use_them">Equality comparisons and when to use them</a></dt>
+			<dd>JavaScript provides three different value-comparison operations: strict equality using&nbsp;===&nbsp;and loose equality using&nbsp;==.</dd>
+		</dl>
+
+		<p>Source: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">Mozilla Developer Network</a></p>
+
+	</textarea>
+
+	<script>
+
+		CKEDITOR.plugins.addExternal( 'descriptionlist', '../../' );
+
+		CKEDITOR.replace( 'editor1', {
+			extraPlugins: 'descriptionlist',
+
+			// Following options are used just to make sample editor look better.
+			toolbarGroups: [
+				{ name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
+				{ name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },
+				{ name: 'links' },
+				{ name: 'insert' },
+				{ name: 'forms' },
+				{ name: 'tools' },
+				{ name: 'document',	   groups: [ 'mode', 'document', 'doctools' ] },
+				{ name: 'others' },
+				'/',
+				{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+				{ name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
+				{ name: 'styles' },
+				{ name: 'colors' },
+				{ name: 'about' }
+			],
+			removePlugins: 'forms,justify,flash,iframe,smiley,colorbutton,font,div,bidi,selectall,find,save,newpage,templates,language,preview,print,pagebreak,stylescombo,indentblock',
+			removeButtons: 'Strike,Subscript,Superscript,PasteFromWord,PasteText',
+			height: 450,
+			contentsCss: [ '../dev/ckeditor/contents.css', 'assets/contents.css' ]
+		} );
+
+	</script>
+</body>
+</html>
