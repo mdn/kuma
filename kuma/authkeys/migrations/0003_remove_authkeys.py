@@ -8,7 +8,9 @@ class Migration(DataMigration):
 
     def forwards(self, orm):
         "Write your forwards methods here."
-        orm.Key.objects.all().delete()
+        (orm.Key.objects.all().exclude(
+            id__in=orm.KeyAction.objects.values_list('key_id', flat=True))
+         .delete())
 
     def backwards(self, orm):
         "Write your backwards methods here."

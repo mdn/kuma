@@ -11,7 +11,15 @@ from ..models import Key
 from ..views import ITEMS_PER_PAGE
 
 
-class KeyViewsTest(TestCase):
+class RefetchingUserTestCase(TestCase):
+
+    def _cache_bust_user_perms(self):
+        # method to cache-bust the user perms by re-fetching from DB
+        # https://docs.djangoproject.com/en/1.7/topics/auth/default/#permissions-and-authorization
+        self.user = User.objects.get(username=self.user.username)
+
+
+class KeyViewsTest(RefetchingUserTestCase):
 
     def setUp(self):
         username = 'tester23'
@@ -28,7 +36,7 @@ class KeyViewsTest(TestCase):
         self.user.user_permissions.add(add_perm)
         self.user.user_permissions.add(del_perm)
 
-        _cache_bust_user_perms(self)
+        self._cache_bust_user_perms()
 
         username2 = 'someone'
         password2 = 'somepass'
@@ -148,7 +156,7 @@ class KeyViewsTest(TestCase):
         eq_(0, Key.objects.filter(pk=self.key1.pk).count())
 
 
-class KeyViewsPermissionTest(TestCase):
+class KeyViewsPermissionTest(RefetchingUserTestCase):
 
     def setUp(self):
         username = 'tester23'
@@ -166,7 +174,7 @@ class KeyViewsPermissionTest(TestCase):
 
         perm = Permission.objects.get(codename='add_key')
         self.user.user_permissions.add(perm)
-        _cache_bust_user_perms(self)
+        self._cache_bust_user_perms()
 
         resp = self.client.get(url)
         eq_(200, resp.status_code)
@@ -178,20 +186,14 @@ class KeyViewsPermissionTest(TestCase):
         url = reverse('authkeys.delete', locale='en-US', args=(self.key1.pk,))
         resp = self.client.get(url)
         eq_(403, resp.status_code)
-        _cache_bust_user_perms(self)
+        self._cache_bust_user_perms()
 
         resp = self.client.get(url)
         eq_(403, resp.status_code)
 
         perm = Permission.objects.get(codename='delete_key')
         self.user.user_permissions.add(perm)
-        _cache_bust_user_perms(self)
+        self._cache_bust_user_perms()
 
         resp = self.client.get(url)
         eq_(200, resp.status_code)
-
-
-def _cache_bust_user_perms(self):
-    # Need to cache-bust the user perms by re-fetching from DB
-    # https://docs.djangoproject.com/en/1.7/topics/auth/default/#permissions-and-authorization
-    self.user = User.objects.get(username=self.user.username)
