@@ -48,8 +48,8 @@ class RevisionsDashTest(UserTestCase):
         eq_(200, response.status_code)
 
         page = pq(response.content)
-        ip_col_header = page.find('a.ip-link')
-        eq_([], ip_col_header)
+        ip_button = page.find('button#show_ips_btn')
+        eq_([], ip_button)
 
         Switch.objects.create(name='store_revision_ips', active=True).save()
         self.client.login(username='admin', password='testpass')
@@ -58,8 +58,8 @@ class RevisionsDashTest(UserTestCase):
         eq_(200, response.status_code)
 
         page = pq(response.content)
-        ip_col_header = page.find('a.dashboard-ip-link')
-        ok_(len(ip_col_header) > 0)
+        ip_button = page.find('button#show_ips_btn')
+        ok_(len(ip_button) > 0)
 
     @attr('dashboards')
     def test_locale_filter(self):

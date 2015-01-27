@@ -139,3 +139,6 @@
 [submodule "vendor/src/django-celery"]
 	path = vendor/src/django-celery
 	url = git://github.com/celery/django-celery.git
+[submodule "vendor/src/django-banish"]
+	path = vendor/src/django-banish
+	url = git://github.com/yourabi/django-banish.git

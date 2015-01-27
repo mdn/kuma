@@ -95,3 +95,4 @@ src/celery
 src/kombu
 src/py-amqp
 src/django-celery
+src/django-banish
