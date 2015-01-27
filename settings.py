@@ -1268,7 +1268,7 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 # django-banish defaults; listing here to be explicit
-BANISH_ENABLED = True
+BANISH_ENABLED = False # TODO: https://bugzil.la/1126412
 BANISH_EMPTY_UA = True
 BANISH_ABUSE_THRESHOLD = sys.maxint # TODO: https://bugzil.la/1122658
 BANISH_USE_HTTP_X_FORWARDED_FOR = True
