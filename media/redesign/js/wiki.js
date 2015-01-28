@@ -308,12 +308,12 @@
         var scrollFn = debounce(function(e) {
             var scroll = $(doc).scrollTop();
             var pageButtonsHeight = 0;
-            var $mainContent = $('.wiki-main-content');
+            var $columnContainer = $('#wiki-column-container');
 
             if(!e || e.type === 'resize') {
                 // Calculate right and offset for page buttons on resize and page load
                 if(buttonDirection === 'right'){
-                    pageButtonsOffset.right = $(win).width() - $mainContent.offset().left - $mainContent.innerWidth();
+                    pageButtonsOffset.right = $(win).width() - $columnContainer.offset().left - $columnContainer.innerWidth();
                 }
                 // Should the TOC be one-column (auto-closed) or sidebar'd
                 if($toc.length){
