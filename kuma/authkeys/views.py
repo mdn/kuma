@@ -1,7 +1,6 @@
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, render, redirect
-from django.core.urlresolvers import reverse
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 
 from kuma.core.utils import paginate
 
@@ -13,6 +12,7 @@ ITEMS_PER_PAGE = 15
 
 
 @login_required
+@permission_required('authkeys.add_key', raise_exception=True)
 def new(request):
     context = {"key": None}
     if request.method != "POST":
@@ -50,6 +50,7 @@ def history(request, pk):
 
 
 @login_required
+@permission_required('authkeys.delete_key', raise_exception=True)
 def delete(request, pk):
     key = get_object_or_404(Key, pk=pk)
     if key.user != request.user:
