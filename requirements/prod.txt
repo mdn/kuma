@@ -55,7 +55,7 @@ oauthlib==0.6.3
 # 2013-11-01 (Current.)
 -e git://github.com/mozilla/django-badger.git@1a41701179df11df8ca8ca44898b70b6352623d3#egg=django-badger
 # 2014-12-29
--e git://github.com/yourabi/django-banish.get@f0a36d1ffe6ad32a5969ec742152dfb541f4108c#egg=django-banish
+-e git://github.com/yourabi/django-banish.git@f0a36d1ffe6ad32a5969ec742152dfb541f4108c#egg=django-banish
 
 ## Formerly vendor/src - converted to versions from git refs
 python-magic==0.4.6
