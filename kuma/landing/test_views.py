@@ -4,29 +4,6 @@ from kuma.core.tests import KumaTestCase
 from kuma.core.urlresolvers import reverse
 
 
-class LearnViewsTest(KumaTestCase):
-
-    def test_learn(self):
-        url = reverse('learn')
-        r = self.client.get(url, follow=True)
-        eq_(200, r.status_code)
-
-    def test_learn_html(self):
-        url = reverse('learn_html')
-        r = self.client.get(url, follow=True)
-        eq_(200, r.status_code)
-
-    def test_learn_css(self):
-        url = reverse('learn_css')
-        r = self.client.get(url, follow=True)
-        eq_(200, r.status_code)
-
-    def test_learn_javascript(self):
-        url = reverse('learn_javascript')
-        r = self.client.get(url, follow=True)
-        eq_(200, r.status_code)
-
-
 class LandingViewsTest(KumaTestCase):
     fixtures = ['test_data.json']
 

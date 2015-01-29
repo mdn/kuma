@@ -52,6 +52,12 @@ RewriteRule ^([\w\-]*)/docs/?$ $1/docs/Web [R=301,L,NC]
 RewriteRule ^(\w{2,3}(?:-\w{2})?/)?devnews/index.php/feed.* https://blog.mozilla.org/feed/ [R=301,L]
 RewriteRule ^(\w{2,3}(?:-\w{2})?/)?devnews.* https://wiki.mozilla.org/Releases [R=301,L]
 
+# Old "Learn" pages
+RewriteRule ^(\w{2,3}(?:-\w{2})?/)?learn/html /Learn/HTML [R=301,L]
+RewriteRule ^(\w{2,3}(?:-\w{2})?/)?learn/css /Learn/CSS [R=301,L]
+RewriteRule ^(\w{2,3}(?:-\w{2})?/)?learn/javascript /Learn/JavaScript [R=301,L]
+RewriteRule ^(\w{2,3}(?:-\w{2})?/)?learn /Learn [R=301,L]
+
 # Off-site redirects
 RewriteRule ^contests/$ http://labs.mozilla.com/contests/extendfirefox/ [R=302]
 RewriteRule ^contests/extendfirefox(/.*)? http://labs.mozilla.com/contests/extendfirefox$1 [R=302]
