@@ -181,9 +181,9 @@
 
 {% block js %}
   {{ super() }}
-  {{ js('home', async=True) }}
+  <script src="{{ cache_bust('js/home-min.js') }}" async></script>
   {% if waffle.flag('search_suggestions') %}
-    {{ js('search-suggestions') }}
+    <script src="{{ cache_bust('js/search-suggestions-min.js') }}"></script>
     <script>
         jQuery('#home-search-form').searchSuggestions();
     </script>

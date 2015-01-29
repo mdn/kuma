@@ -220,7 +220,7 @@
   </script>
   {% endif %}
   {% if waffle.flag('search_suggestions') %}
-  {{ js('search-suggestions') }}
+  <script src="{{ cache_bust('js/search-suggestions-min.js') }}"></script>
   <script>
   (function($) {
     var get_filters = function() {

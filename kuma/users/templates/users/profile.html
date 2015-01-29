@@ -19,7 +19,7 @@
 
 {% block site_js %}
     {{ super() }}
-    {{ js('demostudio') }}
+    <script src="{{ cache_bust('js/demostudio-min.js') }}"></script>
 {% endblock %}
 
 {% macro account(profile, site_name, site_meta) %}

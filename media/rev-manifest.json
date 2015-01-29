@@ -1,0 +1,19 @@
+{
+  "build/js/demostudio-min.js": "build/js/demostudio-min-bd905316.js",
+  "build/js/demostudio_devderby_landing-min.js": "build/js/demostudio_devderby_landing-min-222685a0.js",
+  "build/js/events-min.js": "build/js/events-min-20aa0368.js",
+  "build/js/framebuster-min.js": "build/js/framebuster-min-f9b6c60a.js",
+  "build/js/home-min.js": "build/js/home-min-e432fb9e.js",
+  "build/js/jquery-ui-min.js": "build/js/jquery-ui-min-44cd6f2f.js",
+  "build/js/main-min.js": "build/js/main-min-236161dc.js",
+  "build/js/newsletter-min.js": "build/js/newsletter-min-b0909332.js",
+  "build/js/popup-min.js": "build/js/popup-min-ff112a00.js",
+  "build/js/profile-min.js": "build/js/profile-min-118f16b3.js",
+  "build/js/search-min.js": "build/js/search-min-8f17d06b.js",
+  "build/js/search-suggestions-min.js": "build/js/search-suggestions-min-4d28fce5.js",
+  "build/js/syntax-prism-min.js": "build/js/syntax-prism-min-1216d70c.js",
+  "build/js/tagit-min.js": "build/js/tagit-min-f49b57ae.js",
+  "build/js/wiki-edit-min.js": "build/js/wiki-edit-min-906f6549.js",
+  "build/js/wiki-min.js": "build/js/wiki-min-2c82d708.js",
+  "build/js/wiki-move-min.js": "build/js/wiki-move-min-f827f4c2.js"
+}

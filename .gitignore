@@ -14,8 +14,6 @@ nosetests.xml
 build.py
 **-all.css
 **-min.css
-**-all.js
-**-min.js
 media/uploads
 media/attachments
 media/sitemap*

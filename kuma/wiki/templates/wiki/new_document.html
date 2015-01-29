@@ -92,7 +92,7 @@
 
 {% block site_js %}
     {{ super() }}
-    {{ js('jquery-ui') }}
+    <script src="{{ cache_bust('js/jquery-ui-min.js') }}"></script>
 
     {% include 'wiki/includes/tag_suggestions.html' %}
 
@@ -101,6 +101,6 @@
     {% else %}
       {% include 'wiki/includes/ckeditor_scripts.html' %}
     {% endif %}
-    {{ js('wiki-edit') }}
+    <script src="{{ cache_bust('js/wiki-edit-min.js') }}"></script>
 
 {% endblock %}

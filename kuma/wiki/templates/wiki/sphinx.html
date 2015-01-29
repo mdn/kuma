@@ -51,7 +51,7 @@
 {% endblock %}
 
 {% block js %}
-    {{ js('wiki') }}
+    <script src="{{ cache_bust('js/wiki-min.js') }}"></script>
 {% endblock %}
 
 {% block extrahead %}

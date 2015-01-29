@@ -88,7 +88,7 @@
 
  {% block site_js %}
   {{ super() }}
-  {{ js('framebuster') }}
+  <script src="{{ cache_bust('js/framebuster-min.js') }}"></script>
 
   <script type="text/javascript">
     $(document).ready(function() {

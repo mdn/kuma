@@ -63,7 +63,14 @@ Install and run everything
 
        vagrant ssh
 
-#. Use ``foreman`` inside the VM to start all site services::
+.. Ideally we would automate this with Puppet, but the command fails
+   inexplicably when attempted. Switching to Ansible or upgrading NPM might
+   help.
+#. Inside the VM, install NPM dependencies::
+
+       npm install
+
+#. Inside the VM, use ``foreman`` to start all site services::
 
        foreman start
 

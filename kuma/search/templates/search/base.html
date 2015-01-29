@@ -4,9 +4,6 @@
 {% if not styles %}
   {% set styles = ('search',) %}
 {% endif %}
-{% if not scripts %}
-  {% set scripts = ('search',) %}
-{% endif %}
 {% set hide_header_search = True %}
 
 {% block site_css %}
@@ -15,4 +12,5 @@
 
 {% block site_js %}
     {{ super() }}
+    <script src="{{ cache_bust('js/search-min.js') }}"></script>
 {% endblock %}

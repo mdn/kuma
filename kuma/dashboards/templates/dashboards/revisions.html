@@ -50,7 +50,7 @@
 
 
 {% block js %}
-{{ js('jquery-ui') }}
+<script src="{{ cache_bust('js/jquery-ui-min.js') }}"></script>
 
 <script>
 (function (jQuery) {

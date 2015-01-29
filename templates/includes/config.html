@@ -11,7 +11,6 @@
 
         // This represents the site configuration
         win.mdn = {
-            build: '{{ BUILD_ID_JS }}',
             // Properties and settings for CKEditor will go here
             ckeditor: {},
             // Feature test results and methods will be placed here
@@ -32,7 +31,8 @@
             wiki: {
                 autosuggestTitleUrl: '{{ url('wiki.autosuggest_documents') }}'
             },
-            searchFilters: {{ command_search_filters|jsonencode }}
+            searchFilters: {{ command_search_filters|jsonencode }},
+            prismURL: '{{ cache_bust("build/js/syntax-prism-min.js") }}'
         };
 
         // Ensures gettext always returns something, is always set

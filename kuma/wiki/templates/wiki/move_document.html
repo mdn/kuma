@@ -100,6 +100,6 @@
 {% endblock %}
 
 {% block js %}
-  {{ js('jquery-ui') }}
-  {{ js('wiki-move', async=True) }}
+  <script src="{{ cache_bust('js/jquery-ui-min.js') }}"></script>
+  <script src="{{ cache_bust('js/wiki-move-min.js') }}" async></script>
 {% endblock %}
