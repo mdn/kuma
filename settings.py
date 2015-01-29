@@ -695,9 +695,6 @@ MINIFY_BUNDLES = {
         'newsletter': (
             'redesign/css/newsletter.css',
         ),
-        'learn': (
-            'redesign/css/learn.css',
-        ),
         'submission': (
             'redesign/css/submission.css',
         ),

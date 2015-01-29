@@ -44,26 +44,6 @@ def contribute_json(request):
                         document_root=settings.ROOT)
 
 
-def learn(request):
-    """Learn landing page."""
-    return render(request, 'landing/learn.html')
-
-
-def learn_html(request):
-    """HTML landing page."""
-    return render(request, 'landing/learn_html.html')
-
-
-def learn_css(request):
-    """CSS landing page."""
-    return render(request, 'landing/learn_css.html')
-
-
-def learn_javascript(request):
-    """JavaScript landing page."""
-    return render(request, 'landing/learn_javascript.html')
-
-
 def promote_buttons(request):
     """Bug 646192: MDN affiliate buttons"""
     return render(request, 'landing/promote_buttons.html')
