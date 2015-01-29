@@ -67,18 +67,3 @@ def learn_javascript(request):
 def promote_buttons(request):
     """Bug 646192: MDN affiliate buttons"""
     return render(request, 'landing/promote_buttons.html')
-
-
-def common_landing(request, section=None, extra=None):
-    """Common code for landing pages."""
-    if not section:
-        raise NotImplementedError
-
-    updates = Bundle.objects.recent_entries(section.updates)[:5]
-    tweets = Bundle.objects.recent_entries(section.twitter)[:8]
-
-    data = {'updates': updates, 'tweets': tweets}
-    if extra:
-        data.update(extra)
-
-    return render(request, 'landing/%s.html' % section.short, data)
