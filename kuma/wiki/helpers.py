@@ -312,7 +312,7 @@ def absolutify(url, site=None):
 
 @register.function
 @jinja2.contextfunction
-def devmo_url(context, path):
+def wiki_url(context, path):
     """
     Create a URL pointing to Kuma.
     Look for a wiki page in the current locale, or default to given path
@@ -321,7 +321,7 @@ def devmo_url(context, path):
     locale = getattr(context['request'], 'locale', default_locale)
 
     # let's first check if the cache is already filled
-    url = memcache.get(u'devmo_url:%s_%s' % (locale, path))
+    url = memcache.get(u'wiki_url:%s:%s' % (locale, path))
     if url:
         # and return the URL right away if yes
         return url
@@ -351,5 +351,5 @@ def devmo_url(context, path):
             pass
 
     # finally cache the reversed document URL for a bit
-    memcache.set(u'devmo_url:%s_%s' % (locale, path), url, 60 * 5)
+    memcache.set(u'wiki_url:%s:%s' % (locale, path), url, 60 * 5)
     return url

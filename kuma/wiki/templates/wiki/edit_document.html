@@ -147,7 +147,7 @@
           <section class="first-contrib-welcome">
             <h2>{{_('Thank you for taking the time to improve MDN!')}}</h2>
             <p>
-              {% trans url=devmo_url('Project:MDN/Contributing/Editor_guide/') %}
+              {% trans url=wiki_url('Project:MDN/Contributing/Editor_guide/') %}
                 It looks like this is your first contribution to MDN. You can find answers to common editing questions within our <a target="_blank" href="{{ url }}">Editor Guide</a>.
               {% endtrans %}
             </p>
@@ -171,9 +171,9 @@
 
             {% set tags = document.tags.all() %}
             <section id="page-tags" class="page-tags wiki-block">
-              <h3><i aria-hidden="true" class="icon-tags"></i>{{ _('Tags') }} <a href="{{ devmo_url('Project:MDN/Contributing/Editor_guide/Editing#The_tags_box') }}"><i aria-hidden="true" title="{{ _('Learn how to tag an article') }}" class="icon-question-sign editor-help-icon"></i></a></h3>
+              <h3><i aria-hidden="true" class="icon-tags"></i>{{ _('Tags') }} <a href="{{ wiki_url('Project:MDN/Contributing/Editor_guide/Editing#The_tags_box') }}"><i aria-hidden="true" title="{{ _('Learn how to tag an article') }}" class="icon-question-sign editor-help-icon"></i></a></h3>
               <p>
-              {% trans url=devmo_url('Project:MDN/Contributing/Tagging_standards') %}
+              {% trans url=wiki_url('Project:MDN/Contributing/Tagging_standards') %}
                 Categorize the article. It will make the article findable under the right filters in the search engine. <a target="_blank" href="{{ url }}">Read the Tagging Guide</a>.
               {% endtrans %}
               </p>
