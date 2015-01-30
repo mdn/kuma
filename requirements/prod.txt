@@ -94,8 +94,6 @@ django-recaptcha==0.0.9
 -e git://github.com/jsocol/jingo-minify.git@b7405d3f93628190bf83cc43b0ff44e2fbb8b3c0#egg=jingo-minify
 # 2011-09-09
 -e git://github.com/pcraciunoiu/py-wikimarkup.git@bf2046e42a2f2aaae8df233407efbce803342d04#egg=py-wikimarkup
-# 2010-11-04
--e git://github.com/jbalogh/schematic.git@e749978cc06bda8ba655faf8d672ae270e25b5f5#egg=schematic
 # 2013-02-07
 -e git://github.com/clouserw/tower.git@ce2eba049a5146918fa5239d827bdde9e36eadb7#egg=tower
 # 2013-12-18

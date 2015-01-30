@@ -15,7 +15,7 @@ Contents:
 
    development
    configuration
-   wheels
+   migrations
    localization
    ckeditor
    tests
