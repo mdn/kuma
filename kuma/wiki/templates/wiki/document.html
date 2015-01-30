@@ -399,20 +399,22 @@
   </menu>
 
   <!-- embed scrollback widget based on the tags on the page -->
-  {% set tags = document.tags.all() %}
-  {% for tag in tags %}
-   	{% if settings.SCROLLBACK_ROOM_MAP[tag.name] and waffle.flag('scrollback_widget') %}
-    <button class = "scrollback-button" onclick='addScrollback("{{settings.SCROLLBACK_ROOM_MAP[tag.name]}}")'> Chat about {{tag.name}} </button>
-    {% endif %}
-  {% endfor %}
+	{% if waffle.flag('scrollback_widget') %}
+		{% set tags = document.tags.all() %}
+		{% for tag in tags %}
+			{% if settings.SCROLLBACK_ROOM_MAP[tag.name] %}
+			<button class = "scrollback-button" onclick='addScrollback("{{settings.SCROLLBACK_ROOM_MAP[tag.name]}}", "{{request.user.username}}")'> Chat about {{tag.name}} </button>
+			{% endif %}
+		{% endfor %}
+	{% endif %}
 
 {% endblock %}
 
 {% block js %}
-  {% if waffle.flag('scrollback_widget') %}
-  	 <script type="text/javascript" src="../../../../media/redesign/js/scrollback.js" async="true"></script>
-  {% endif %}
-  <script type="text/javascript">
-     if(window.jQuery) jQuery('.from-search-toc').mozSearchResults('{{ search_url|safe }}');
-  </script>
+	{% if waffle.flag('scrollback_widget') %}
+		<script type="text/javascript" src="../../../../media/redesign/js/scrollback.js" async="true"></script>
+	{% endif %}
+	<script type="text/javascript">
+		if(window.jQuery) jQuery('.from-search-toc').mozSearchResults('{{ search_url|safe }}');
+	</script>
 {% endblock %}

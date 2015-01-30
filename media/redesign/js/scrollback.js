@@ -1,7 +1,9 @@
 /* jshint browser:true */
+
 var scrollbackAdded = false;
 
 function addScrollback(roomName, suggestedNick) {
+	var div = document.createElement('div');
 	if (!roomName) {
 		return;
 	}
@@ -10,9 +12,13 @@ function addScrollback(roomName, suggestedNick) {
 			"room": roomName,
 			"form": "toast",
 			"minimize": false,
-			"nick": suggestedNick,
 			"titlebarColor": "#00539f"
 		};
+		if(suggestedNick) {
+			window.scrollback.nick = suggestedNick;
+		} else {
+			window.scrollback.nick = "guest";
+		}
 		var el = document.createElement("script");
 		el.async = 1;
 		el.src = (location.protocol === "https:" ? "https:" : "http:") + "//scrollback.io/client.min.js";
