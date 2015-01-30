@@ -302,8 +302,8 @@ class SubmissionManager(models.Manager):
         return self.get(slug=slug)
 
     # never show censored submissions
-    def get_query_set(self):
-        return super(SubmissionManager, self).get_query_set().exclude(censored=True)
+    def get_queryset(self):
+        return super(SubmissionManager, self).get_queryset().exclude(censored=True)
 
     # TODO: Make these search functions into a mixin?
 
@@ -383,20 +383,21 @@ class Submission(models.Model):
             _("describe your demo in more detail (optional)"),
             blank=True)
 
-    featured = models.BooleanField()
+    featured = models.BooleanField(default=False)
     hidden = models.BooleanField(
             _("Hide this demo from others?"), default=False)
-    censored = models.BooleanField()
+    censored = models.BooleanField(default=False)
     censored_url = models.URLField(
             _("Redirect URL for censorship."),
-            verify_exists=False, blank=True, null=True)
+            blank=True, null=True)
 
     navbar_optout = models.BooleanField(
         _('control how your demo is launched'),
         choices=(
             (True, _('Disable navigation bar, launch demo in a new window')),
             (False, _('Use navigation bar, display demo in <iframe>'))
-        )
+        ),
+        default=False
     )
 
     comments_total = models.PositiveIntegerField(default=0)

@@ -43,6 +43,7 @@ DATABASES = {
         'HOST': 'localhost',  # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '3306',  # Set to empty string for default. Not used with sqlite3.
         'OPTIONS': {'init_command': 'SET storage_engine=InnoDB'},
+        'ATOMIC_REQUESTS': True,
     },
 }
 
@@ -392,14 +393,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    # This gives us atomic success or failure on multi-row writes. It does not
-    # give us a consistent per-transaction snapshot for reads; that would need
-    # the serializable isolation level (which InnoDB does support) and code to
-    # retry transactions that roll back due to serialization failures. It's a
-    # possibility for the future. Keep in mind that memcache defeats
-    # snapshotted reads where we don't explicitly use the "uncached" manager.
-    'django.middleware.transaction.TransactionMiddleware',
-
     # LocaleURLMiddleware must be before any middleware that uses
     # kuma.core.urlresolvers.reverse() to add locale prefixes to URLs:
     'kuma.core.middleware.LocaleURLMiddleware',

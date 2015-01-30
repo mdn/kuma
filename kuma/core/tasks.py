@@ -1,6 +1,7 @@
 from celery.task import task
 
-from django.db import connection, transaction
+from django.core.cache import cache
+from django.db import connection
 from django.contrib.sessions.models import Session
 from django.utils import timezone
 
@@ -42,7 +43,6 @@ def clean_sessions():
                 ORDER BY expire_date ASC
                 LIMIT %s;
                 """, [chunk_size])
-            transaction.commit_unless_managed()
         finally:
             logger.info('Deleted %s expired sessions' % delete_count)
             memcache.delete(LOCK_ID)

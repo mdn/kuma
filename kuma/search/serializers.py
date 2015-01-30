@@ -45,7 +45,7 @@ class FacetedFilterOptionsSerializer(serializers.Serializer):
     name = serializers.CharField(read_only=True)
     slug = serializers.CharField(read_only=True)
     count = serializers.IntegerField(read_only=True)
-    active = serializers.BooleanField(read_only=True)
+    active = serializers.BooleanField(read_only=True, default=False)
     urls = FilterURLSerializer(read_only=True)
 
 

@@ -387,7 +387,7 @@ class SignupView(BaseSignupView):
                 get_adapter().stash_verified_email(self.request,
                                                    email_address['email'])
 
-        with transaction.commit_on_success():
+        with transaction.atomic():
             form.save(self.request)
         return helpers.complete_social_signup(self.request,
                                               self.sociallogin)

@@ -30,7 +30,7 @@ class _PrefetchTaggableManager(_TaggableManager):
     def is_cached(self, instance):
         return self.prefetch_cache_name in instance._prefetched_objects_cache
 
-    def get_query_set(self):
+    def get_queryset(self):
         try:
             return self.instance._prefetched_objects_cache[self.prefetch_cache_name]
         except (AttributeError, KeyError):
@@ -52,7 +52,7 @@ class _PrefetchTaggableManager(_TaggableManager):
         source_col = fk.column
         connection = connections[db]
         qn = connection.ops.quote_name
-        qs = self.get_query_set().using(db)._next_is_sticky().filter(
+        qs = self.get_queryset().using(db)._next_is_sticky().filter(
             **query
         ).extra(select={
             '_prefetch_related_val': '%s.%s' % (qn(join_table), qn(source_col))

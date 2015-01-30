@@ -433,7 +433,6 @@ def _document_raw(request, doc, doc_html, rendering_params):
 @accepts_auth_key
 @process_document_path
 @condition(last_modified_func=_document_last_modified)
-@transaction.autocommit  # For rendering bookkeeping, needs immediate updates
 @newrelic.agent.function_trace()
 def document(request, document_slug, document_locale):
     """
@@ -845,7 +844,6 @@ def list_top_level_documents(request):
 @check_readonly
 @prevent_indexing
 @never_cache
-@transaction.autocommit  # For rendering bookkeeping, needs immediate updates
 @newrelic.agent.function_trace()
 def new_document(request):
     """Create a new wiki document."""
@@ -995,7 +993,6 @@ def new_document(request):
 @check_readonly
 @prevent_indexing
 @never_cache
-@transaction.autocommit  # For rendering bookkeeping, needs immediate updates
 @newrelic.agent.function_trace()
 def edit_document(request, document_slug, document_locale, revision_id=None):
     """Create a new revision of a wiki document, or edit document metadata."""
@@ -1306,7 +1303,6 @@ def move(request, document_slug, document_locale):
 @login_required
 @process_document_path
 @check_readonly
-@transaction.autocommit
 def repair_breadcrumbs(request, document_slug, document_locale):
     if not request.user.is_superuser:
         raise PermissionDenied
@@ -1564,7 +1560,6 @@ def select_locale(request, document_slug, document_locale):
 @check_readonly
 @prevent_indexing
 @never_cache
-@transaction.autocommit  # For rendering bookkeeping, needs immediate updates
 def translate(request, document_slug, document_locale, revision_id=None):
     """
     Create a new translation of a wiki document.
@@ -1942,7 +1937,6 @@ def helpful_vote(request, document_path):
 
 @login_required
 @check_readonly
-@transaction.autocommit
 def revert_document(request, document_path, revision_id):
     """Revert document to a specific revision."""
     document_locale, document_slug, needs_redirect = (

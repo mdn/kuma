@@ -74,7 +74,7 @@ def update_actioncounter_counts():
         get_update(row[0], row[1])['%s_total' % row[2]] = row[3]
 
     # Finally, perform all the counter updates within a transaction...
-    @transaction.commit_on_success
+    @transaction.atomic
     def perform_updates():
         for key, update in updates.items():
             (ct_pk, obj_pk) = key
