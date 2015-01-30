@@ -12,7 +12,6 @@ from tower import ugettext as _
 
 from django.conf import settings
 from django.contrib.sites.models import Site
-from django.core.cache import cache
 from django.core.serializers.json import DjangoJSONEncoder
 from django.utils.html import conditional_escape
 
@@ -22,7 +21,7 @@ from teamwork.shortcuts import build_policy_admin_links
 
 from kuma.core.urlresolvers import reverse
 from .constants import DIFF_WRAP_COLUMN
-from .models import Document
+from .models import Document, memcache
 
 register.function(build_policy_admin_links)
 
@@ -313,39 +312,44 @@ def absolutify(url, site=None):
 
 @register.function
 @jinja2.contextfunction
-def devmo_url(context, path):
+def wiki_url(context, path):
     """
     Create a URL pointing to Kuma.
     Look for a wiki page in the current locale, or default to given path
     """
-    if hasattr(context['request'], 'locale'):
-        locale = context['request'].locale
-    else:
-        locale = settings.WIKI_DEFAULT_LANGUAGE
-    try:
-        url = cache.get('devmo_url:%s_%s' % (locale, path))
-    except:
-        return path
-    if not url:
-        url = reverse('wiki.document',
-                      locale=settings.WIKI_DEFAULT_LANGUAGE,
-                      args=[path])
-        if locale != settings.WIKI_DEFAULT_LANGUAGE:
-            try:
-                parent = Document.objects.get(
-                    locale=settings.WIKI_DEFAULT_LANGUAGE, slug=path)
-                """ # TODO: redirect_document is coupled to doc view
-                follow redirects vs. update devmo_url calls
+    default_locale = settings.WIKI_DEFAULT_LANGUAGE
+    locale = getattr(context['request'], 'locale', default_locale)
 
-                target = parent.redirect_document()
-                if target:
-                parent = target
-                """
-                child = Document.objects.get(locale=locale,
-                                             parent=parent)
-                url = reverse('wiki.document', locale=locale,
-                              args=[child.slug])
-            except Document.DoesNotExist:
-                pass
-        cache.set('devmo_url:%s_%s' % (locale, path), url)
+    # let's first check if the cache is already filled
+    url = memcache.get(u'wiki_url:%s:%s' % (locale, path))
+    if url:
+        # and return the URL right away if yes
+        return url
+
+    # shortcut for when the current locale is the default one (English)
+    url = reverse('wiki.document', locale=default_locale, args=[path])
+
+    if locale != default_locale:
+        # in case the current request's locale is *not* the default, e.g. 'de'
+        try:
+            # check if there are any translated documents in the request's
+            # locale of a document with the given path and the default locale
+            translation = Document.objects.get(locale=locale,
+                                               parent__slug=path,
+                                               parent__locale=default_locale)
+
+            # look if the document is actual just a redirect
+            redirect_url = translation.redirect_url()
+            if redirect_url is None:
+                # if no, build the URL of the translation
+                url = translation.get_absolute_url()
+            else:
+                # use the redirect URL instead
+                url = redirect_url
+        except Document.DoesNotExist:
+            # otherwise use the already defined url to the English document
+            pass
+
+    # finally cache the reversed document URL for a bit
+    memcache.set(u'wiki_url:%s:%s' % (locale, path), url, 60 * 5)
     return url

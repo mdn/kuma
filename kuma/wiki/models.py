@@ -21,6 +21,7 @@ from django.core.exceptions import ValidationError
 from django.core.urlresolvers import resolve
 from django.db import models
 from django.db.models import signals, Count
+from django.dispatch import receiver
 from django.http import Http404
 from django.utils.decorators import available_attrs
 from django.utils.functional import cached_property
@@ -60,6 +61,8 @@ from .managers import (TransformManager, DocumentManager,
 from .signals import render_done
 
 add_introspection_rules([], ["^utils\.OverwritingFileField"])
+
+memcache = get_cache('memcache')
 
 
 def cache_with_field(field_name):
@@ -1476,6 +1479,11 @@ Full traceback:
                                          .annotate(Count('creator'))
                                          .order_by('-creator__count'))
         return User.objects.filter(pk__in=list(top_creator_ids))
+
+
+@receiver(render_done)
+def purge_wiki_url_cache(sender, instance, **kwargs):
+    memcache.delete(u'wiki_url:%s:%s' % (instance.locale, instance.slug))
 
 
 class DocumentDeletionLog(models.Model):

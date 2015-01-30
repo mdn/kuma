@@ -215,7 +215,7 @@
             {% else %}
 
             {% if profile.user == request.user %}
-                {% trans docs_url=devmo_url('Project:MDN/Contributing/Creating_and_editing_pages') %}
+                {% trans docs_url=wiki_url('Project:MDN/Contributing/Creating_and_editing_pages') %}
                 <p class="none">You haven't contributed to any MDN docs. <a href="{{ docs_url }}">Pitch in!</a></p>
                 {% endtrans %}
             {% else %}

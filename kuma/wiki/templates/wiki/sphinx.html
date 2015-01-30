@@ -29,7 +29,7 @@
 
 {% block footer_copyright %}
     <p>
-      {% trans copyright_url=devmo_url('Project:Copyrights'), about_url=devmo_url('Project:About') %}
+      {% trans copyright_url=wiki_url('Project:Copyrights'), about_url=wiki_url('Project:About') %}
       Content is available under a license specific to this project.
       &middot; <a href="{{ about_url }}">About MDN</a>
       &middot; <a href="//github.com/mozilla/kuma">Contribute to the code</a>
@@ -40,8 +40,8 @@
 
 {% block footer_copyright_redesign %}
     <p>
-      {% trans copyright_url=devmo_url('Project:Copyrights'), about_url=devmo_url('Project:About') %}
-      &copy; 2005-2013 Mozilla Developer Network and individual contributors<br />
+      {% trans copyright_url=wiki_url('Project:Copyrights'), about_url=wiki_url('Project:About') %}
+      &copy; 2005-2015 Mozilla Developer Network and individual contributors<br />
       Content is available under a license specific to this project.
       &middot; <a href="{{ about_url }}">About MDN</a>
       &middot; <a href="//github.com/mozilla/kuma">Contribute to the code</a>
