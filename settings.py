@@ -1165,6 +1165,11 @@ SYSLOG_TAG = 'http_app_kuma'
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+    },
     'formatters': {
         'default': {
             'format': '{0}: %(asctime)s %(name)s:%(levelname)s %(message)s: '
@@ -1179,6 +1184,7 @@ LOGGING = {
         },
         'mail_admins': {
             'class': 'django.utils.log.AdminEmailHandler',
+            'filters': ['require_debug_false'],
             'level': logging.ERROR,
         },
     },
@@ -1186,18 +1192,16 @@ LOGGING = {
         'kuma': {
             'handlers': ['console'],
             'propagate': True,
-            # Use the most permissive setting. It is filtered in the handlers.
-            'level': logging.DEBUG,
+            'level': logging.ERROR,
         },
         'django.request': {
             'handlers': ['console'],
             'propagate': True,
-            # Use the most permissive setting. It is filtered in the handlers.
-            'level': logging.DEBUG,
+            'level': logging.ERROR,
         },
         'elasticsearch': {
-            'level': logging.ERROR,
             'handlers': ['console'],
+            'level': logging.ERROR,
         },
     },
 }
