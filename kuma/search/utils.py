@@ -17,7 +17,7 @@ class QueryURLObject(URLObject):
             else:
                 params[param] = defaults
         return (self.del_query_param(name)
-                    .set_query_params(params))
+                    .set_query_params(self.clean_params(params)))
 
     def merge_query_param(self, name, value):
         """
@@ -30,10 +30,24 @@ class QueryURLObject(URLObject):
                 if param == name:
                     if value not in defaults and value not in (None, [None]):
                         defaults.append(value)
-                params[param] = defaults
         else:
             params[name] = value
-        return self.set_query_params(params)
+        return self.without_query().set_query_params(self.clean_params(params))
+
+    def clean_params(self, params):
+        """
+        Cleans query parameters that don't have a value to not freak out
+        urllib's quoting and Django's form system.
+        """
+        clean_params = {}
+        for param, default in params.items():
+            if isinstance(default, list) and len(default) == 1:
+                default = default[0]
+            if isinstance(default, basestring):
+                default = default.strip()
+            if default not in ('', None):
+                clean_params[param] = default
+        return clean_params
 
 
 def chunked(iterable, n):

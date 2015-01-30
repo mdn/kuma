@@ -43,6 +43,12 @@ class URLTests(test_utils.TestCase):
         eq_(url.merge_query_param('foo', [None]),
             'http://example.com/?foo=&foo=bar&spam=eggs')
 
+    def test_clean_params(self):
+        for url in ['http://example.com/?spam=',
+                    'http://example.com/?spam']:
+            url_object = QueryURLObject(url)
+            eq_(url_object.clean_params(url_object.query_dict), {})
+
     def test_referer_bad_encoding(self):
         class _TestRequest(object):
             # In order to test this we just need an object that has
