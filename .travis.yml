@@ -8,6 +8,7 @@ env:
     matrix:
         - TOXENV=py26
         - TOXENV=flake8
+        - TOXENV=docs
     global:
         - DJANGO_SETTINGS_MODULE=settings_travis
         - DEBIAN_FRONTEND=noninteractive

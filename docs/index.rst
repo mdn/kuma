@@ -14,7 +14,6 @@ Contents:
    search
 
    development
-   configuration
    migrations
    localization
    ckeditor
