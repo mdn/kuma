@@ -148,17 +148,12 @@ class kuma_config {
             require => [
                 File["/home/vagrant/product_details_json"]
             ];
-        "kuma_sql_migrate":
-            user => "vagrant",
-            cwd => "/home/vagrant/src",
-            command => "/home/vagrant/env/bin/python ./vendor/src/schematic/schematic migrations/",
-            require => [ Exec["kuma_update_product_details"],
-                Service["mysql"], File["/home/vagrant/logs"] ];
         "kuma_django_syncdb":
             user => "vagrant",
             cwd => "/home/vagrant/src",
             command => "/home/vagrant/env/bin/python manage.py syncdb --noinput",
-            require => [ Exec["kuma_sql_migrate"] ];
+            require => [ Exec["kuma_update_product_details"],
+                Service["mysql"], File["/home/vagrant/logs"] ];
         "kuma_south_migrate":
             user => "vagrant",
             cwd => "/home/vagrant/src",
