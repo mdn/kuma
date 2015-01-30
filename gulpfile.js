@@ -3,17 +3,19 @@ var gulp = require('gulp');
 // Plugins
 var concat = require('gulp-concat');
 var del = require('del');
+var install = require('gulp-install');
 var path = require('path');
 var rev = require('gulp-rev');
 var shell = require('gulp-shell');
 var uglify = require('gulp-uglify');
 
 var npmDependencies = 'package.json';
+var jsDependencies = 'bower.json';
 var buildDirectory = 'build/';
 var jsBuildDirectory = buildDirectory + 'js/';
 var jsBundles = {
     'main': [
-        'media/js/libs/jquery-2.1.0.js',
+        'lib/js/jquery/dist/jquery.js',
         'media/redesign/js/components.js',
         'media/redesign/js/analytics.js',
         'media/redesign/js/main.js',
@@ -89,11 +91,16 @@ var jsBundles = {
 
 gulp.task('default', ['build-javascript']);
 
-gulp.task('build-javascript', function() {
+gulp.task('build-javascript', ['install-javascript-dependencies'], function() {
     // Delete the old builds and build some new ones
     del(jsBuildDirectory + '*-min-*.js', function() {
         buildBundles(jsBundles, jsBuildDirectory, '.js');
     });
+});
+
+gulp.task('install-javascript-dependencies', function() {
+    return gulp.src(jsDependencies)
+               .pipe(install());
 });
 
 /**
@@ -118,6 +125,9 @@ gulp.task('install-and-shrinkwrap-npm-dependencies', function() {
 gulp.task('watch', function() {
     // NPM
     gulp.watch(npmDependencies, ['install-and-shrinkwrap-npm-dependencies']);
+
+    // Bower
+    gulp.watch(jsDependencies, ['install-javascript-dependencies']);
 
     // JavaScript
     for(var bundleName in jsBundles) {
