@@ -15,7 +15,6 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core import mail
-from django.core.cache import cache
 from django.db.models import Q
 from django.test.client import (FakePayload, encode_multipart,
                                 BOUNDARY, CONTENT_TYPE_RE, MULTIPART_CONTENT)
@@ -26,12 +25,12 @@ import constance.config
 from waffle.models import Flag, Switch
 
 from kuma.authkeys.models import Key
-from kuma.core.tests import post, get, override_constance_settings
+from kuma.core.cache import memcache as cache
 from kuma.core.helpers import urlparams
+from kuma.core.tests import post, get, override_constance_settings
 from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase, user
 
-from ..constants import DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL
 from ..content import get_seo_description
 from ..events import EditDocumentEvent
 from ..models import (Document, Revision, RevisionIP, DocumentZone,
@@ -405,10 +404,9 @@ class ConditionalGetTests(UserTestCase, WikiTestCase):
                           args=[doc.slug],
                           locale=settings.WIKI_DEFAULT_LANGUAGE)
 
-        # There should be no last-modified date cached for this document yet.
-        cache_key = (DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL %
-                     doc.natural_cache_key)
-        ok_(not cache.get(cache_key))
+        # There should be a last-modified date cached for this document already
+        cache_key = doc.last_modified_cache_key
+        ok_(cache.get(cache_key))
 
         # Now, try a request, and ensure that the last-modified header is
         # present.
@@ -416,7 +414,7 @@ class ConditionalGetTests(UserTestCase, WikiTestCase):
         ok_(response.has_header('last-modified'))
         last_mod = response['last-modified']
 
-        # Try another request, using If-Modified-Since. THis should be a 304
+        # Try another request, using If-Modified-Since. This should be a 304
         response = self.client.get(get_url, follow=False,
                                    HTTP_IF_MODIFIED_SINCE=last_mod)
         eq_(304, response.status_code)
@@ -430,7 +428,7 @@ class ConditionalGetTests(UserTestCase, WikiTestCase):
 
         # Edit the document, ensure the last-modified has been invalidated.
         revision(document=doc, content="New edits", save=True)
-        ok_(not cache.get(cache_key))
+        ok_(cache.get(cache_key) != cached_last_mod)
 
         # This should be another 304, but the last-modified in response and
         # cache should have changed.
@@ -448,11 +446,11 @@ class ConditionalGetTests(UserTestCase, WikiTestCase):
         self.url = reverse('wiki.document',
                            args=[doc.slug],
                            locale=settings.WIKI_DEFAULT_LANGUAGE)
-        cache_key = (DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL %
-                     doc.natural_cache_key)
-        ok_(not cache.get(cache_key))
-        response = self.client.get(self.url, follow=False)
-        ok_(cache.get(cache_key))
+        cache_key = doc.last_modified_cache_key
+        last_mod = cache.get(cache_key)
+        ok_(last_mod)  # exists already because pre-filled
+        self.client.get(self.url, follow=False)
+        ok_(cache.get(cache_key) == last_mod)
 
         # Now delete the doc and make sure there's no longer
         # last-modified data in the cache for it afterward.

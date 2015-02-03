@@ -667,12 +667,16 @@ class Document(NotificationsMixin, models.Model):
         return extract_html_attributes(self.rendered_html)
 
     def natural_key(self):
-        return (self.locale, self.slug,)
+        return (self.locale, self.slug)
 
-    @property
+    @staticmethod
+    def natural_key_hash(keys):
+        natural_key = u'/'.join(keys)
+        return hashlib.md5(natural_key.encode('utf8')).hexdigest()
+
+    @cached_property
     def natural_cache_key(self):
-        nk = u'/'.join(self.natural_key())
-        return hashlib.md5(nk.encode('utf8')).hexdigest()
+        return self.natural_key_hash(self.natural_key())
 
     def _existing(self, attr, value):
         """Return an existing doc (if any) in this locale whose `attr` attr is
@@ -832,6 +836,20 @@ class Document(NotificationsMixin, models.Model):
         new_rev.review_tags.set(*parse_tags(review_tags))
         return new_rev
 
+    @cached_property
+    def last_modified_cache_key(self):
+        return DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL % self.natural_cache_key
+
+    def fill_last_modified_cache(self):
+        """
+        Convert python datetime to Unix epoch seconds. This is more
+        easily digested by the cache, and is more compatible with other
+        services that might spy on Kuma's cache entries (eg. KumaScript)
+        """
+        modified_epoch = self.modified.strftime('%s')
+        memcache.set(self.last_modified_cache_key, modified_epoch)
+        return modified_epoch
+
     def save(self, *args, **kwargs):
         self.is_template = self.slug.startswith(TEMPLATE_TITLE_PREFIX)
         self.is_redirect = 1 if self.redirect_url() else 0
@@ -862,9 +880,7 @@ class Document(NotificationsMixin, models.Model):
         super(Document, self).save(*args, **kwargs)
 
         # Delete any cached last-modified timestamp.
-        cache_key = (DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL %
-                     self.natural_cache_key)
-        cache.delete(cache_key)
+        self.fill_last_modified_cache()
 
     def delete(self, *args, **kwargs):
         if waffle.switch_is_active('wiki_error_on_delete'):
@@ -879,13 +895,10 @@ class Document(NotificationsMixin, models.Model):
             signals.pre_delete.send(sender=self.__class__,
                                     instance=self)
             if not self.deleted:
-                cache_key = (DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL %
-                             self.natural_cache_key)
                 Document.objects.filter(pk=self.pk).update(deleted=True)
-                cache.delete(cache_key)
+                memcache.delete(self.last_modified_cache_key)
 
-            signals.post_delete.send(sender=self.__class__,
-                                     instance=self)
+            signals.post_delete.send(sender=self.__class__, instance=self)
 
     def purge(self):
         if waffle.switch_is_active('wiki_error_on_delete'):
