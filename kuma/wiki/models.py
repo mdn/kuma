@@ -16,7 +16,7 @@ from tower import ugettext_lazy as _lazy, ugettext as _
 
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.core.cache import get_cache, cache
+from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import resolve
 from django.db import models
@@ -43,10 +43,9 @@ from kuma.core.fields import LocaleField
 from kuma.core.urlresolvers import reverse, split_path
 
 from . import kumascript
-from .constants import (SECONDARY_CACHE_ALIAS, TEMPLATE_TITLE_PREFIX,
-                        URL_REMAPS_CACHE_KEY_TMPL, REDIRECT_HTML,
-                        REDIRECT_CONTENT, DEKI_FILE_URL, KUMA_FILE_URL,
-                        DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL)
+from .constants import (TEMPLATE_TITLE_PREFIX, URL_REMAPS_CACHE_KEY_TMPL,
+                        REDIRECT_HTML, REDIRECT_CONTENT, DEKI_FILE_URL,
+                        KUMA_FILE_URL, DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL)
 from .content import (get_seo_description, get_content_sections,
                       extract_code_sample, parse as parse_content,
                       extract_css_classnames, extract_html_attributes,
@@ -1525,10 +1524,7 @@ class DocumentZone(models.Model):
         super(DocumentZone, self).save(*args, **kwargs)
 
         # Invalidate URL remap cache for this zone
-        locale = self.document.locale
-        cache_key = URL_REMAPS_CACHE_KEY_TMPL % locale
-        s_cache = get_cache(SECONDARY_CACHE_ALIAS)
-        s_cache.delete(cache_key)
+        memcache.delete(URL_REMAPS_CACHE_KEY_TMPL % self.document.locale)
 
 
 class ReviewTag(TagBase):
