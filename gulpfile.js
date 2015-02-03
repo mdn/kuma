@@ -63,10 +63,10 @@ var jsBundles = {
         'media/js/framebuster.js'
     ],
     'syntax-prism': [
-        'media/js/libs/prism/prism.js',
+        'lib/js/prism/prism.js',
         'media/js/prism-mdn/components/prism-json.js',
         'media/js/prism-mdn/plugins/line-numbering/prism-line-numbering.js',
-        'media/js/libs/prism/plugins/line-highlight/prism-line-highlight.js',
+        'lib/js/prism/plugins/line-highlight/prism-line-highlight.js',
         'media/js/syntax-prism.js'
     ],
     'search-suggestions': [
