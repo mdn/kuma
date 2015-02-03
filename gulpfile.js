@@ -87,6 +87,9 @@ var jsBundles = {
     'newsletter': [
         'media/js/newsletter.js'
     ],
+    'html5shiv': [
+        'lib/js/html5shiv/dist/html5shiv.js'
+    ]
 };
 
 gulp.task('default', ['build-javascript']);
