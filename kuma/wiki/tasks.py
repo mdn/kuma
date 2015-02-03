@@ -13,11 +13,11 @@ from django.dispatch import receiver
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
 
-from celery.task import task
+from celery import chord, task
 from constance import config
 from xml.dom.minidom import parseString
 
-from kuma.core.utils import MemcacheLock
+from kuma.core.utils import MemcacheLock, chunked
 
 from .events import context_dict
 from .exceptions import PageMoveError, StaleDocumentsRenderingInProgress
@@ -27,6 +27,7 @@ from .signals import render_done
 
 
 log = logging.getLogger('kuma.wiki.tasks')
+render_lock = MemcacheLock('render-stale-documents-lock', expires=60 * 60)
 
 
 @task(rate_limit='60/m')
@@ -37,16 +38,40 @@ def render_document(pk, cache_control, base_url):
     return document.rendered_errors
 
 
+@task
+def render_document_chunk(pks):
+    """
+    Simple task to render a chunk of documents instead of one per each
+    """
+    logger = render_document_chunk.get_logger()
+    logger.info(u'Starting to render document chunk: %s' % pks)
+    for pk in pks:
+        # calling the task without delay here since we want to localize
+        # the processing of the chunk in one process
+        result = render_document(pk, 'no-cache', settings.SITE_URL)
+        if result:
+            logger.error(u'Error while rendering document %s with error: %s' %
+                         (pk, result))
+    logger.info(u'Finished rendering of document chunk')
+
+
+@task
+def release_render_lock():
+    """
+    A task to release the render document lock
+    """
+    render_lock.release()
+
+
 @task(throws=(StaleDocumentsRenderingInProgress,))
 def render_stale_documents(log=None):
     """Simple task wrapper for rendering stale documents"""
-    lock = MemcacheLock('render-stale-documents-lock', expires=60 * 60)
-    if lock.acquired:
+    if render_lock.locked():
         # fail loudly if this is running already
         # may indicate a problem with the schedule of this task
         raise StaleDocumentsRenderingInProgress
 
-    stale_docs = Document.objects.get_by_stale_rendering()
+    stale_docs = Document.objects.get_by_stale_rendering().distinct()
     stale_docs_count = stale_docs.count()
     if stale_docs_count == 0:
         # not stale documents to render
@@ -56,15 +81,15 @@ def render_stale_documents(log=None):
         # fetch a logger in case none is given
         log = render_stale_documents.get_logger()
 
-    log.info("Found %s stale documents" % stale_docs_count)
+    log.info('Found %s stale documents' % stale_docs_count)
     response = None
-    if lock.acquire():
-        try:
-            for doc in stale_docs:
-                doc.render('no-cache', settings.SITE_URL)
-                log.info("Rendered stale %s" % doc)
-        finally:
-            lock.release()
+    if render_lock.acquire():
+        stale_pks = stale_docs.values_list('pk', flat=True)
+        render_tasks = [render_document_chunk.si(pks)
+                        for pks in chunked(stale_pks, 10)]
+        render_chord = chord(header=render_tasks,
+                             body=release_render_lock.si())
+        render_chord.apply_async()
     return response
 
 
