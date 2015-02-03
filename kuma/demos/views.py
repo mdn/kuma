@@ -3,8 +3,7 @@ import random
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
-from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, render, redirect
 from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.clickjacking import xframe_options_sameorigin
@@ -78,7 +77,7 @@ def detail(request, slug):
     """Detail page for a submission"""
     submission = get_object_or_404(Submission.admin_manager, slug=slug)
     if submission.censored and submission.censored_url:
-        return HttpResponseRedirect(submission.censored_url)
+        return redirect(submission.censored_url)
     if not submission.allows_viewing_by(request.user):
         return HttpResponseForbidden(_('access denied') + '')
 
@@ -122,13 +121,11 @@ class TagView(ListView):
         get_object_or_404(Tag, name=tag)
 
         if tag in KNOWN_TECH_TAGS:
-            return HttpResponseRedirect(reverse(
-                'demos_tag', args=('tech:%s' % tag,)))
+            return redirect('demos_tag', 'tech:%s' % tag)
 
         # Bounce to special-purpose Dev Derby tag page
         if tag.startswith('challenge:'):
-            return HttpResponseRedirect(reverse(
-                'demos_devderby_tag', args=(tag,)))
+            return redirect('demos_devderby_tag', tag)
 
         return super(TagView, self).get(request, *args, **kwargs)
 
@@ -156,8 +153,7 @@ class DevDerbyTagView(ListView):
     def get(self, request, *args, **kwargs):
         tag = kwargs['tag']
         if not tag.startswith('challenge'):
-            return HttpResponseRedirect(reverse(
-                'demos_tag', args=(tag,)))
+            return redirect('demos_tag', tag)
         return super(DevDerbyTagView, self).get(request, *args, **kwargs)
 
     def get_queryset(self):
@@ -237,8 +233,8 @@ def _like_feedback(request, submission, event):
         return render(request, 'demos/iframe_utils.html', dict(
             submission=submission, event=event
         ))
-    return HttpResponseRedirect(reverse(
-        'kuma.demos.views.detail', args=(submission.slug,)))
+    return redirect(submission)
+
 
 @xframe_options_sameorigin
 def flag(request, slug):
@@ -261,8 +257,7 @@ def flag(request, slug):
                 flag_type=flag_type,
                 explanation=form.cleaned_data['explanation'],
                 recipients=recipients)
-            return HttpResponseRedirect(reverse(
-                'kuma.demos.views.detail', args=(submission.slug,)))
+            return redirect(submission)
 
     return render(request, 'demos/flag.html', {
         'form': form, 'submission': submission})
@@ -271,7 +266,7 @@ def flag(request, slug):
 def download(request, slug):
     """Demo download with action counting"""
     submission = get_object_or_404(Submission, slug=slug)
-    return HttpResponseRedirect(submission.demo_package.url)
+    return redirect(submission.demo_package.url)
 
 
 def launch(request, slug):
@@ -279,8 +274,7 @@ def launch(request, slug):
     submission = get_object_or_404(Submission, slug=slug)
     submission.launches.increment(request)
     if submission.navbar_optout:
-        return HttpResponseRedirect(
-            submission.demo_package.url.replace('.zip', '/index.html'))
+        return redirect(submission.demo_package.url.replace('.zip', '/index.html'))
     else:
         return render(request, 'demos/launch.html', {
             'submission': submission})
@@ -309,8 +303,7 @@ def submit(request):
             new_sub.process_demo_package()
             _invalidate_submission_listing_helper_cache()
 
-            return HttpResponseRedirect(reverse(
-                    'kuma.demos.views.detail', args=(new_sub.slug,)))
+            return redirect(new_sub)
 
     return render(request, 'demos/submit.html', {'form': form})
 
@@ -336,8 +329,7 @@ def edit(request, slug):
             sub.process_demo_package()
             _invalidate_submission_listing_helper_cache()
 
-            return HttpResponseRedirect(reverse(
-                    'kuma.demos.views.detail', args=(sub.slug,)))
+            return redirect(sub)
 
     return render(request, 'demos/submit.html', {
         'form': form, 'submission': submission, 'edit': True})
@@ -353,7 +345,7 @@ def delete(request, slug):
     if request.method == "POST":
         submission.delete()
         _invalidate_submission_listing_helper_cache()
-        return HttpResponseRedirect(reverse('demos'))
+        return redirect('demos')
 
     return render(request, 'demos/delete.html', {
         'submission': submission})
@@ -381,8 +373,7 @@ def new_comment(request, slug, parent_id=None):
 
         request.session[DEMOS_LAST_NEW_COMMENT_ID] = new_comment.id
 
-    return HttpResponseRedirect(reverse(
-        'kuma.demos.views.detail', args=(submission.slug,)))
+    return redirect(submission)
 
 
 @xframe_options_sameorigin
@@ -394,8 +385,7 @@ def delete_comment(request, slug, object_id):
     submission = get_object_or_404(Submission, slug=slug)
     if request.method == "POST":
         tc.delete()
-        return HttpResponseRedirect(reverse(
-            'kuma.demos.views.detail', args=(submission.slug,)))
+        return redirect(submission)
     return render(request, 'demos/delete_comment.html', {
         'comment': tc
     })
@@ -411,8 +401,7 @@ def hideshow(request, slug, hide=True):
         submission.hidden = hide
         submission.save()
 
-    return HttpResponseRedirect(reverse(
-            'kuma.demos.views.detail', args=(submission.slug,)))
+    return redirect(submission)
 
 
 def terms(request):
