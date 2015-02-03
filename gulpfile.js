@@ -23,7 +23,7 @@ var jsBundles = {
         'media/js/badges.js'
     ],
     'home': [
-        'media/js/libs/owl.carousel/owl-carousel/owl.carousel.js',
+        'lib/js/OwlCarousel/owl-carousel/owl.carousel.js',
         'media/js/home.js'
     ],
     'popup': [
