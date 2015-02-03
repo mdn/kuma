@@ -16,15 +16,15 @@ var jsBuildDirectory = buildDirectory + 'js/';
 var jsBundles = {
     'main': [
         'lib/js/jquery/dist/jquery.js',
-        'media/redesign/js/components.js',
-        'media/redesign/js/analytics.js',
-        'media/redesign/js/main.js',
-        'media/redesign/js/auth.js',
-        'media/redesign/js/badges.js'
+        'media/js/components.js',
+        'media/js/analytics.js',
+        'media/js/main.js',
+        'media/js/auth.js',
+        'media/js/badges.js'
     ],
     'home': [
         'media/js/libs/owl.carousel/owl-carousel/owl.carousel.js',
-        'media/redesign/js/home.js'
+        'media/js/home.js'
     ],
     'popup': [
         'media/js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
@@ -56,8 +56,8 @@ var jsBundles = {
         'media/js/libs/tag-it.js'
     ],
     'search': [
-        'media/redesign/js/search.js',
-        'media/redesign/js/search-navigator.js'
+        'media/js/search.js',
+        'media/js/search-navigator.js'
     ],
     'framebuster': [
         'media/js/framebuster.js'
@@ -73,8 +73,8 @@ var jsBundles = {
         'media/js/search-suggestions.js'
     ],
     'wiki': [
-        'media/redesign/js/search-navigator.js',
-        'media/redesign/js/wiki.js'
+        'media/js/search-navigator.js',
+        'media/js/wiki.js'
     ],
     'wiki-edit': [
         'media/js/wiki-edit.js',
@@ -85,7 +85,7 @@ var jsBundles = {
         'media/js/wiki-move.js'
     ],
     'newsletter': [
-        'media/redesign/js/newsletter.js'
+        'media/js/newsletter.js'
     ],
 };
 
