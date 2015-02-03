@@ -11,8 +11,7 @@ from django.utils.tzinfo import LocalTimezone
 
 import jingo
 from jingo import register
-from tower import ugettext as _
-from tower import ugettext, ungettext
+from tower import ungettext, ugettext as _
 from taggit.models import TaggedItem
 from threadedcomments.models import ThreadedComment
 from threadedcomments.forms import ThreadedCommentForm
@@ -45,14 +44,12 @@ def register_cached_inclusion_tag(template, key_fn=None,
     Accepts a string or function to generate a cache key based on the incoming
     parameters, along with an expiration time configurable as
     INCLUDE_CACHE_EXPIRES or an explicit parameter"""
-
     if key_fn is None:
         key_fn = template
 
     def decorator(f):
         @functools.wraps(f)
         def wrapper(*args, **kw):
-
             if type(key_fn) is str:
                 cache_key = key_fn
             else:
@@ -306,8 +303,7 @@ def date_diff(timestamp, to=None):
             count = abs(round(delta.days / chunk, 0))
             break
 
-    date_str = (ugettext('%(number)d %(type)s') %
-                        {'number': count, 'type': name(count)})
+    date_str = (_('%(number)d %(type)s') % {'number': count, 'type': name(count)})
 
     if delta.days > 0:
         return "in " + date_str

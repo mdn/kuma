@@ -21,6 +21,7 @@ from kuma.contentflagging.forms import ContentFlagForm
 from kuma.core.utils import parse_tags
 from kuma.core.cache import memcache
 from kuma.users.models import UserProfile
+
 from . import DEMOS_CACHE_NS_KEY
 from .models import Submission
 from .forms import SubmissionNewForm, SubmissionEditForm
@@ -58,18 +59,17 @@ class HomeView(ListView):
 
     def get_queryset(self):
         submissions = Submission.objects.all_sorted(
-            self.request.GET.get('sort', 'created')
-            )
+            self.request.GET.get('sort', 'created'))
         if not Submission.allows_listing_hidden_by(self.request.user):
             submissions = submissions.exclude(hidden=True)
         return submissions
 
     def get_context_data(self, **kwargs):
         base_context = super(HomeView, self).get_context_data(**kwargs)
-        featured_submissions = Submission.objects.filter(featured=True)\
-                               .exclude(hidden=True)\
-                               .order_by('-modified').all()[:3]
-        base_context['featured_submission_list'] = featured_submissions
+        featured = (Submission.objects.filter(featured=True)
+                                      .exclude(hidden=True)
+                                      .order_by('-modified').all()[:3])
+        base_context['featured_submission_list'] = featured
         base_context['is_demo_home'] = True
         return base_context
 
@@ -86,9 +86,9 @@ def detail(request, slug):
     if last_new_comment_id:
         del request.session[DEMOS_LAST_NEW_COMMENT_ID]
 
-    more_by = Submission.objects.filter(creator=submission.creator)\
-            .exclude(hidden=True)\
-            .order_by('-modified').all()[:5]
+    more_by = (Submission.objects.filter(creator=submission.creator)
+                                 .exclude(hidden=True)
+                                 .order_by('-modified').all()[:5])
 
     return render(request, 'demos/detail.html', {
         'submission': submission,
@@ -119,7 +119,7 @@ class TagView(ListView):
 
     def get(self, request, *args, **kwargs):
         tag = kwargs['tag']
-        tag_obj = get_object_or_404(Tag, name=tag)
+        get_object_or_404(Tag, name=tag)
 
         if tag in KNOWN_TECH_TAGS:
             return HttpResponseRedirect(reverse(
@@ -135,9 +135,9 @@ class TagView(ListView):
     def get_queryset(self):
         tag = self.kwargs['tag']
         sort_order = self.request.GET.get('sort', 'created')
-        queryset = Submission.objects.all_sorted(sort_order)\
-                   .filter(taggit_tags__name__in=[tag])\
-                   .exclude(hidden=True)
+        queryset = (Submission.objects.all_sorted(sort_order)
+                                      .filter(taggit_tags__name__in=[tag])
+                                      .exclude(hidden=True))
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -163,9 +163,9 @@ class DevDerbyTagView(ListView):
     def get_queryset(self):
         tag = self.kwargs['tag']
         sort_order = self.request.GET.get('sort', 'created')
-        return Submission.objects.all_sorted(sort_order)\
-               .filter(taggit_tags__name__in=[tag])\
-               .exclude(hidden=True)
+        return (Submission.objects.all_sorted(sort_order)
+                                  .filter(taggit_tags__name__in=[tag])
+                                  .exclude(hidden=True))
 
     def get_context_data(self, **kwargs):
         tag = self.kwargs['tag']
@@ -176,7 +176,7 @@ class DevDerbyTagView(ListView):
             # system:challenge:firstplace:2011:june
             winner_tag_name = 'system:challenge:%s:%s' % (
                 name, tag.replace('challenge:', '')
-                )
+            )
 
             # Grab only the first match for this tag. If there are others, we'll
             # just ignore them.
@@ -196,7 +196,7 @@ class DevDerbyByDate(DevDerbyTagView):
         month = kwargs['month']
         self.kwargs['tag'] = 'challenge:%s:%s' % (year, month)
         return super(DevDerbyByDate, self).get(request,
-                                                tag=self.kwargs['tag'])
+                                               tag=self.kwargs['tag'])
 
 
 class SearchView(ListView):
@@ -208,8 +208,8 @@ class SearchView(ListView):
     def get_queryset(self):
         query_string = self.request.GET.get('q', '')
         sort_order = self.request.GET.get('sort', 'created')
-        queryset = Submission.objects.search(query_string, sort_order)\
-                   .exclude(hidden=True)
+        queryset = (Submission.objects.search(query_string, sort_order)
+                                      .exclude(hidden=True))
         return queryset
 
 
@@ -229,6 +229,7 @@ def unlike(request, slug):
     if request.method == "POST":
         submission.likes.decrement(request)
     return _like_feedback(request, submission, 'unliked')
+
 
 @xframe_options_sameorigin
 def _like_feedback(request, submission, event):
@@ -251,7 +252,7 @@ def flag(request, slug):
             flag_type = form.cleaned_data['flag_type']
             recipients = None
             if (flag_type in FLAG_NOTIFICATIONS and
-                FLAG_NOTIFICATIONS[flag_type]):
+                    FLAG_NOTIFICATIONS[flag_type]):
                 recipients = [profile.user.email for profile in
                               UserProfile.objects.filter(
                                   content_flagging_email=True)]
@@ -325,7 +326,8 @@ def edit(request, slug):
             instance=submission, request_user=request.user)
     else:
         form = SubmissionEditForm(request.POST, request.FILES,
-                instance=submission, request_user=request.user)
+                                  instance=submission,
+                                  request_user=request.user)
         if form.is_valid():
 
             sub = form.save()
@@ -425,23 +427,23 @@ def devderby_landing(request):
 
     # Grab current arrangement of challenges from Constance settings
     current_challenge_tag_name = str(
-            constance.config.DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG).strip()
+        constance.config.DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG).strip()
     previous_winner_tag_name = str(
-            constance.config.DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG).strip()
+        constance.config.DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG).strip()
     previous_challenge_tag_names = parse_tags(
-            constance.config.DEMOS_DEVDERBY_PREVIOUS_CHALLENGE_TAGS,
-            sorted=False)
+        constance.config.DEMOS_DEVDERBY_PREVIOUS_CHALLENGE_TAGS,
+        sorted=False)
     challenge_choices = parse_tags(
-            constance.config.DEMOS_DEVDERBY_CHALLENGE_CHOICE_TAGS,
-            sorted=False)
+        constance.config.DEMOS_DEVDERBY_CHALLENGE_CHOICE_TAGS,
+        sorted=False)
 
     submissions_qs = (Submission.objects.all_sorted(sort_order)
-        .filter(taggit_tags__name__in=[current_challenge_tag_name])
-        .exclude(hidden=True))
+                                .filter(taggit_tags__name__in=[current_challenge_tag_name])
+                                .exclude(hidden=True))
 
     previous_winner_qs = (Submission.objects.all()
-        .filter(taggit_tags__name__in=[previous_winner_tag_name])
-        .exclude(hidden=True))
+                                    .filter(taggit_tags__name__in=[previous_winner_tag_name])
+                                    .exclude(hidden=True))
 
     # TODO: Use an object_list here, in case we need pagination?
     return render(request, 'demos/devderby_landing.html', dict(
