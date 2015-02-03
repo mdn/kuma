@@ -3,7 +3,6 @@ import random
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
-from django.core.cache import cache
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, render, redirect
@@ -20,6 +19,7 @@ from threadedcomments.forms import ThreadedCommentForm
 from kuma.contentflagging.models import ContentFlag, FLAG_NOTIFICATIONS
 from kuma.contentflagging.forms import ContentFlagForm
 from kuma.core.utils import parse_tags
+from kuma.core.cache import memcache
 from kuma.users.models import UserProfile
 from . import DEMOS_CACHE_NS_KEY
 from .models import Submission
@@ -42,12 +42,12 @@ def _invalidate_submission_listing_helper_cache():
     """Invalidate the cache for submission_listing helper used in templates"""
     # TODO: Does this belong in helpers.py? Better done with a model save event
     # subscription?
-    ns_key = cache.get(DEMOS_CACHE_NS_KEY)
+    ns_key = memcache.get(DEMOS_CACHE_NS_KEY)
     if ns_key is None:
         ns_key = random.randint(1, 10000)
-        cache.set(DEMOS_CACHE_NS_KEY, ns_key)
+        memcache.set(DEMOS_CACHE_NS_KEY, ns_key)
     else:
-        cache.incr(DEMOS_CACHE_NS_KEY)
+        memcache.incr(DEMOS_CACHE_NS_KEY)
 
 
 class HomeView(ListView):

@@ -7,7 +7,6 @@ from babel import localedata
 import jinja2
 
 from django.conf import settings
-from django.core.cache import cache
 from django.utils.tzinfo import LocalTimezone
 
 import jingo
@@ -20,6 +19,7 @@ from threadedcomments.forms import ThreadedCommentForm
 from threadedcomments.templatetags import threadedcommentstags
 import threadedcomments.views
 
+from kuma.core.cache import memcache
 from kuma.core.urlresolvers import reverse
 from .models import Submission
 from . import DEMOS_CACHE_NS_KEY, TAG_DESCRIPTIONS, DEMO_LICENSES
@@ -58,12 +58,12 @@ def register_cached_inclusion_tag(template, key_fn=None,
             else:
                 cache_key = key_fn(*args, **kw)
 
-            out = cache.get(cache_key)
+            out = memcache.get(cache_key)
             if out is None:
                 context = f(*args, **kw)
                 t = jingo.env.get_template(template).render(context)
                 out = jinja2.Markup(t)
-                cache.set(cache_key, out, expires)
+                memcache.set(cache_key, out, expires)
             return out
 
         return register.function(wrapper)
@@ -133,10 +133,10 @@ def submission_thumb(submission, extra_class=None, thumb_width="200",
 
 
 def submission_listing_cache_key(*args, **kw):
-    ns_key = cache.get(DEMOS_CACHE_NS_KEY)
+    ns_key = memcache.get(DEMOS_CACHE_NS_KEY)
     if ns_key is None:
         ns_key = random.randint(1, 10000)
-        cache.set(DEMOS_CACHE_NS_KEY, ns_key)
+        memcache.set(DEMOS_CACHE_NS_KEY, ns_key)
     full_path = args[0].get_full_path()
     username = args[0].user.username
     return 'demos_%s:%s' % (ns_key,
