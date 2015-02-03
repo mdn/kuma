@@ -1,4 +1,9 @@
 {
+    "az": {
+        "iso639_1": "az",
+        "english": "Azerbaijani",
+        "native": "Az\u0259rbaycanca"
+    },
     "pa-IN": {
         "iso639_1": "pa",
         "english": "Punjabi",
