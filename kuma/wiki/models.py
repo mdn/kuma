@@ -38,6 +38,7 @@ import waffle
 from kuma.attachments.models import Attachment, DocumentAttachment
 from kuma.search.decorators import register_live_index
 from kuma.core.exceptions import ProgrammingError
+from kuma.core.cache import memcache
 from kuma.core.fields import LocaleField
 from kuma.core.urlresolvers import reverse, split_path
 
@@ -61,8 +62,6 @@ from .managers import (TransformManager, DocumentManager,
 from .signals import render_done
 
 add_introspection_rules([], ["^utils\.OverwritingFileField"])
-
-memcache = get_cache('memcache')
 
 
 def cache_with_field(field_name):

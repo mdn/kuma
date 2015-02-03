@@ -11,13 +11,14 @@ import lockfile
 from polib import pofile
 
 from django.conf import settings
-from django.core.cache import get_cache
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.shortcuts import _get_queryset
 from django.utils.encoding import force_unicode
 from django.utils.http import urlencode
 
 from taggit.utils import split_strip
+
+from .cache import memcache
 
 
 log = commonware.log.getLogger('kuma.core.utils')
@@ -138,15 +139,14 @@ class MemcacheLock(object):
         self.key = 'lock_%s' % key
         self.attempts = attempts
         self.expires = expires
-        self.cache = get_cache('memcache')
+        self.cache = memcache
 
     def locked(self):
         return bool(self.cache.get(self.key))
 
     def acquire(self):
-        cache = get_cache('memcache')
         for i in xrange(0, self.attempts):
-            stored = cache.add(self.key, 1, self.expires)
+            stored = self.cache.add(self.key, 1, self.expires)
             if stored:
                 return True
             if i != self.attempts - 1:

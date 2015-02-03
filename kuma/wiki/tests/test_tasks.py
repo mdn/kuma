@@ -1,9 +1,9 @@
 from __future__ import with_statement
 import os
 from django.conf import settings
-from django.core.cache import get_cache
 from nose.tools import ok_
 
+from kuma.core.cache import memcache
 from kuma.users.tests import UserTestCase, user
 
 from . import revision, document
@@ -16,7 +16,7 @@ class UpdateCommunityStatsTests(UserTestCase):
 
     def setUp(self):
         super(UpdateCommunityStatsTests, self).setUp()
-        self.cache = get_cache('memcache')
+        self.cache = memcache
 
     def test_empty_community_stats(self):
         update_community_stats()

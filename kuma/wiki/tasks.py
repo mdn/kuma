@@ -6,7 +6,6 @@ from datetime import datetime
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.sitemaps import GenericSitemap
-from django.core.cache import get_cache
 from django.core.mail import EmailMessage, send_mail
 from django.db import connection, transaction
 from django.dispatch import receiver
@@ -17,6 +16,7 @@ from celery import chord, task
 from constance import config
 from xml.dom.minidom import parseString
 
+from kuma.core.cache import memcache
 from kuma.core.utils import MemcacheLock, chunked
 
 from .events import context_dict
@@ -226,8 +226,7 @@ def update_community_stats():
     if 0 in community_stats.values():
         community_stats = None
 
-    cache = get_cache('memcache')
-    cache.set('community_stats', community_stats, 86400)
+    memcache.set('community_stats', community_stats, 86400)
 
 
 @task
