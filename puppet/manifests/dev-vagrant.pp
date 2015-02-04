@@ -21,9 +21,9 @@ class dev {
       key_source => 'http://packages.elasticsearch.org/GPG-KEY-elasticsearch',
     }
     class { 'elasticsearch':
-      package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.13.deb',
+      package_url => 'https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.3.7.deb',
       java_install => true,
-      java_package => 'openjdk-6-jre-headless',
+      java_package => 'openjdk-7-jre-headless',
     }
 
     elasticsearch::instance { 'kuma':
@@ -38,6 +38,10 @@ class dev {
         },
         'network' => {
           'host' => '0.0.0.0'
+        },
+        'discovery.zen.ping' => {
+            'multicast.enabled' => false,
+            'unicast.hosts' => ['0.0.0.0']
         }
       },
     }

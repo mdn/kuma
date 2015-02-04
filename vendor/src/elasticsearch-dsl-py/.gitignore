@@ -1,0 +1,11 @@
+.*.swp
+*~
+*.py[co]
+.coverage
+*.egg-info
+dist
+*.egg
+coverage.xml
+junit.xml
+test_elasticsearch_dsl/htmlcov
+docs/_build

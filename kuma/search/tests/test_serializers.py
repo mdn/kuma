@@ -1,10 +1,11 @@
 from nose.tools import ok_, eq_
 
+from kuma.wiki.search import WikiDocumentType
+
 from . import ElasticTestCase
 from ..fields import DocumentExcerptField, SearchQueryField, SiteURLField
-from ..models import DocumentType, Filter, FilterGroup
+from ..models import Filter, FilterGroup
 from ..serializers import FilterWithGroupSerializer, DocumentSerializer
-from ..queries import DocumentS
 
 
 class SerializerTests(ElasticTestCase):
@@ -26,37 +27,34 @@ class SerializerTests(ElasticTestCase):
             'shortcut': None})
 
     def test_document_serializer(self):
-        doc = DocumentS(DocumentType)
-        doc_serializer = DocumentSerializer(doc, many=True)
+        search = WikiDocumentType.search()
+        result = search.execute()
+        doc_serializer = DocumentSerializer(result, many=True)
         list_data = doc_serializer.data
         eq_(len(list_data), 7)
         ok_(isinstance(list_data, list))
         ok_(1 in [data['id'] for data in list_data])
 
-        doc_serializer = DocumentSerializer(doc[0], many=False)
+        doc_serializer = DocumentSerializer(result[0], many=False)
         dict_data = doc_serializer.data
         ok_(isinstance(dict_data, dict))
-        eq_(dict_data['id'], doc[0]['id'])
+        eq_(dict_data['id'], result[0].id)
 
 
 class FieldTests(ElasticTestCase):
 
     def test_DocumentExcerptField(self):
 
-        class Meta(object):
-            def __init__(self, highlight):
-                self.highlight = highlight
-
-        class FakeValue(DocumentType):
+        class FakeValue(WikiDocumentType):
             summary = 'just a summary'
-            es_meta = Meta({'content': ['this is <em>matching</em> text']})
+            highlight = {'content': ['this is <em>matching</em> text']}
 
         field = DocumentExcerptField()
         eq_(field.to_native(FakeValue()), 'this is <em>matching</em> text')
 
-        class FakeValue(DocumentType):
+        class FakeValue(WikiDocumentType):
             summary = 'just a summary'
-            es_meta = Meta({})
+            highlight = {}
 
         eq_(field.to_native(FakeValue()), FakeValue.summary)
 

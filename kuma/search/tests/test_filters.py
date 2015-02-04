@@ -1,8 +1,8 @@
 from nose.tools import ok_, eq_
 
 from . import ElasticTestCase
-from ..filters import (SearchQueryBackend, HighlightFilterBackend,
-                       LanguageFilterBackend, DatabaseFilterBackend)
+from ..filters import (DatabaseFilterBackend, LanguageFilterBackend,
+                       SearchQueryBackend)
 from ..views import SearchView
 
 
@@ -19,13 +19,13 @@ class FilterTests(ElasticTestCase):
         response = view(request)
         eq_(response.data['count'], 4)
         eq_(len(response.data['documents']), 4)
-        eq_(response.data['documents'][0]['slug'], 'article-title')
+        eq_(response.data['documents'][0]['slug'], 'CSS/article-title-3')
         eq_(response.data['documents'][0]['locale'], 'en-US')
 
     def test_highlight_filter(self):
 
         class HighlightView(SearchView):
-            filter_backends = (SearchQueryBackend, HighlightFilterBackend)
+            filter_backends = (SearchQueryBackend,)
 
         view = HighlightView.as_view()
         request = self.get_request('/en-US/search?q=article')
@@ -51,6 +51,26 @@ class FilterTests(ElasticTestCase):
         eq_(response.data['count'], 6)
         eq_(len(response.data['documents']), 6)
         eq_(response.data['documents'][0]['locale'], 'en-US')
+
+    def test_language_filter_override(self):
+        """Ensure locale override can find the only 'fr' document."""
+        class LanguageView(SearchView):
+            filter_backends = (SearchQueryBackend, LanguageFilterBackend,)
+
+        view = LanguageView.as_view()
+        request = self.get_request('/en-US/search?q=pipe&locale=*')
+        eq_(request.locale, 'en-US')
+        response = view(request)
+
+        eq_(response.data['count'], 1)
+        eq_(len(response.data['documents']), 1)
+        eq_(response.data['documents'][0]['locale'], 'fr')
+
+        request = self.get_request('/en-US/search?q=pipe')
+        eq_(request.locale, 'en-US')
+        response = view(request)
+        eq_(response.data['count'], 0)
+        eq_(len(response.data['documents']), 0)
 
     def test_database_filter(self):
         class DatabaseFilterView(SearchView):

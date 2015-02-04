@@ -110,12 +110,18 @@ KUMASCRIPT_URL_TEMPLATE = 'http://localhost:9080/docs/{path}'
 
 ATTACHMENT_HOST = 'mdn-local.mozillademos.org'
 
+# Elasticsearch related settings.
+ES_DEFAULT_NUM_REPLICAS = 0
+ES_DEFAULT_NUM_SHARDS = 5
+ES_DEFAULT_REFRESH_INTERVAL = '5s'
 ES_DISABLED = False
-ES_URLS = ['http://127.0.0.1:9200']
-ES_INDEXES = {'default': 'main_index'}
 ES_INDEX_PREFIX = 'mdn'
-ES_LIVE_INDEX = True
+ES_INDEXES = {'default': 'main_index'}
+# Specify the extra timeout in seconds for the indexing ES connection.
 ES_INDEXING_TIMEOUT = 30
+ES_LIVE_INDEX = True
+ES_URLS = ['localhost:9200']
+
 
 # See https://mana.mozilla.org/wiki/display/websites/Developer+Cluster#DeveloperCluster-Sentry
 SENTRY_DSN = ''

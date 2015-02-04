@@ -73,6 +73,9 @@
 [submodule "vendor/src/elasticsearch-py"]
 	path = vendor/src/elasticsearch-py
 	url = git://github.com/elasticsearch/elasticsearch-py.git
+[submodule "vendor/src/elasticsearch-dsl-py"]
+       path = vendor/src/elasticsearch-dsl-py
+       url = git://github.com/elasticsearch/elasticsearch-dsl-py.git
 [submodule "vendor/src/elasticutils"]
 	path = vendor/src/elasticutils
 	url = git://github.com/mozilla/elasticutils.git
