@@ -579,6 +579,17 @@
     });
 
 
+    /*
+        Toggle <pre> visibility and button caret glyph
+    */
+    $('button.toggle-pre').on('click', function(e) {
+        e.preventDefault();
+        var $button = $(this);
+        $button.children('i').toggleClass('icon-caret-down icon-caret-right');
+        $button.next('pre').toggle();
+    });
+
+
     function debounce(func, wait, immediate) {
         var timeout;
         return function() {

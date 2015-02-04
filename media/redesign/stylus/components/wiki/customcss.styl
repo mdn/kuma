@@ -72,6 +72,11 @@ table#fullwidth-table td.thirdColumn {
 #wikiArticle {$selector-icon} {
     margin-left: 0px;
 }
+/* make injected toggle button a consistent width
+     since icon-caret* glyphs varies in size */
+#wikiArticle button.toggle-pre i {
+    width: 1px;
+}
 /* Iframe for live sample centered (Test) */
 .centered iframe {
     display: block;
