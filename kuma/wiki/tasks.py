@@ -44,7 +44,8 @@ def render_document_chunk(pks):
     Simple task to render a chunk of documents instead of one per each
     """
     logger = render_document_chunk.get_logger()
-    logger.info(u'Starting to render document chunk: %s' % pks)
+    logger.info(u'Starting to render document chunk: %s' %
+                ','.join([str(pk) for pk in pks]))
     for pk in pks:
         # calling the task without delay here since we want to localize
         # the processing of the chunk in one process
