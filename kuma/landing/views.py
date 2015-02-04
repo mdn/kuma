@@ -45,3 +45,6 @@ def contribute_json(request):
 def promote_buttons(request):
     """Bug 646192: MDN affiliate buttons"""
     return render(request, 'landing/promote_buttons.html')
+
+def fellowship(request):
+    return render(request, 'landing/fellowship.html')

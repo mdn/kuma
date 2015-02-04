@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block body_attributes %}id="fellowship-2015"{% endblock %}
+
+{% block site_css %}
+	{{ super() }}
+	{{ css('home', 'all') }}
+{% endblock %}
+
+{% block extrahead %}
+
+  {% set seo_description = _('The Mozilla Developer Network (MDN) Fellowship Program invites world-class web developers to come change the world with Mozilla.') %}
+  {% set social_title = 'MDN Fellowship Program' %}
+  <meta property="og:description" content="{{ seo_description }}">
+  <meta name="description" content="{{ seo_description }}">
+  <meta name="twitter:description" content="{{ seo_description }}">
+  <meta name="twitter:title" content="{{ social_title }}">
+  <meta property="og:title" content="{{ social_title }}">
+
+{% endblock %}
+
+{% block content %}
+
+{% endblock %}
+
+{% block js %}
+  {{ super() }}
+{% endblock %}
