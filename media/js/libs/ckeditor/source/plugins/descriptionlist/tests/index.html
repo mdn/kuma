@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>CKEditor descriptionlist plugin tests</title>
+	<link rel="stylesheet" href="../node_modules/mocha/mocha.css">
+</head>
+<body>
+	<div id="mocha"></div>
+	<div id="ed" contenteditable="true"></div>
+	<script src="jquery-2.1.1.min.js"></script>
+	<script src="../node_modules/chai/chai.js"></script>
+	<script src="../node_modules/mocha/mocha.js"></script>
+	<script src="../dev/ckeditor/ckeditor.js"></script>
+	<script>
+		mocha.setup( 'qunit' );
+		window.assert = chai.assert;
+		window.assert.areSame = function( expected, actual, msg ) {
+			window.assert.strictEqual( actual, expected, msg );
+		};
+		window.assert.areNotSame = function( expected, actual, msg ) {
+			window.assert.notStrictEqual( actual, expected, msg );
+		};
+		window.tests = {
+			plugins: 'toolbar,floatingspace,undo,enterkey,descriptionlist'
+		};
+	</script>
+
+	<script src="helpers.js"></script>
+	<script src="states.js"></script>
+	<script src="createdescriptionlist.js"></script>
+	<script src="removedescriptionlist.js"></script>
+	<script src="createlistcontainer.js"></script>
+	<script src="descriptiontermandvalue.js"></script>
+	<script src="enterkey.js"></script>
+
+	<script>
+		( function() {
+			'use strict';
+
+			CKEDITOR.plugins.addExternal( 'descriptionlist', '../../' );
+			CKEDITOR.disableAutoInline = true;
+
+			var el = tests.editorElement = document.getElementById( 'ed' );
+			tests.editor = CKEDITOR.inline( el, {
+				plugins: tests.plugins,
+				allowedContent: true
+			} );
+			tests.editor.on( 'instanceReady', function() {
+				this.dataProcessor.writer.sortAttributes = true;
+
+				this.focus();
+				if ( !this.focusManager.hasFocus ) {
+					console.error( 'You must focus viewport, so selection works within editor. ' +
+						'Just make sure to click viewport before refreshing this page.' );
+				} else {
+					mocha.run();
+				}
+			} );
+		} )();
+	</script>
+</body>
+</html>
