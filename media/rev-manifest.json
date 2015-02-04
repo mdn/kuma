@@ -16,5 +16,6 @@
   "build/js/wiki-edit-min.js": "build/js/wiki-edit-min-906f6549.js",
   "build/js/wiki-min.js": "build/js/wiki-min-2c82d708.js",
   "build/js/wiki-move-min.js": "build/js/wiki-move-min-f827f4c2.js",
-  "build/js/html5shiv-min.js": "build/js/html5shiv-min-831d9bca.js"
+  "build/js/html5shiv-min.js": "build/js/html5shiv-min-831d9bca.js",
+  "build/js/jquery.hoverIntent-min.js": "build/js/jquery.hoverIntent-min-08656428.js"
 }

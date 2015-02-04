@@ -16,5 +16,6 @@
   "js/wiki-edit-min.js": "js/wiki-edit-min-906f6549.js",
   "js/wiki-min.js": "js/wiki-min-8f1edfa3.js",
   "js/wiki-move-min.js": "js/wiki-move-min-f827f4c2.js",
-  "js/html5shiv-min.js": "js/html5shiv-min-831d9bca.js"
+  "js/html5shiv-min.js": "js/html5shiv-min-831d9bca.js",
+  "js/jquery.hoverIntent-min.js": "js/jquery.hoverIntent-min-08656428.js"
 }

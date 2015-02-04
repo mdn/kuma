@@ -39,7 +39,7 @@ var jsBundles = {
         'media/js/calendar.js'
     ],
     'demostudio': [
-        'media/js/libs/jquery.hoverIntent.minified.js',
+        'lib/js/jquery.hoverIntent-1.5.0/index.js',
         'media/js/libs/jquery.scrollTo-1.4.2-min.js',
         'media/js/demos.js',
         'media/js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
@@ -89,6 +89,9 @@ var jsBundles = {
     ],
     'html5shiv': [
         'lib/js/html5shiv/dist/html5shiv.js'
+    ],
+    'jquery.hoverIntent': [
+        'lib/js/jquery.hoverIntent-1.5.0/index.js'
     ]
 };
 
