@@ -48,7 +48,7 @@ Vagrant.configure("2") do |config|
                       mkdir -p /etc/puppet/modules;
                       puppet module install -f puppetlabs-stdlib;
                       puppet module install -f puppetlabs-apt;
-                      puppet module install -f elasticsearch-elasticsearch"
+                      puppet module install -f --version 0.4.0 elasticsearch-elasticsearch"
     end
 
     config.vm.provision :puppet do |puppet|
