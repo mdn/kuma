@@ -1,15 +1,13 @@
 from django.conf import settings
 from django.shortcuts import render
 from django.views import static
-from django.core.cache import get_cache
 
 import constance.config
 
 from kuma.core.sections import SECTION_USAGE
+from kuma.core.cache import memcache
 from kuma.demos.models import Submission
 from kuma.feeder.models import Bundle
-
-memcache = get_cache('memcache')
 
 
 def home(request):

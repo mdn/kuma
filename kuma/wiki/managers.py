@@ -1,15 +1,15 @@
 from datetime import date, datetime, timedelta
 
 from django.core import serializers
-from django.core.cache import get_cache
 from django.db import models
 
 import bleach
 import constance.config
 
+from kuma.core.cache import memcache
+
 from .constants import (ALLOWED_TAGS, ALLOWED_ATTRIBUTES, ALLOWED_STYLES,
-                        SECONDARY_CACHE_ALIAS, TEMPLATE_TITLE_PREFIX,
-                        URL_REMAPS_CACHE_KEY_TMPL)
+                        TEMPLATE_TITLE_PREFIX, URL_REMAPS_CACHE_KEY_TMPL)
 from .content import parse as parse_content
 from .queries import TransformQuerySet
 
@@ -232,8 +232,7 @@ class DocumentZoneManager(models.Manager):
 
     def get_url_remaps(self, locale):
         cache_key = URL_REMAPS_CACHE_KEY_TMPL % locale
-        s_cache = get_cache(SECONDARY_CACHE_ALIAS)
-        remaps = s_cache.get(cache_key)
+        remaps = memcache.get(cache_key)
 
         if not remaps:
             qs = (self.filter(document__locale=locale,
@@ -243,7 +242,7 @@ class DocumentZoneManager(models.Manager):
                 'original_path': '/docs/%s' % zone.document.slug,
                 'new_path': '/%s' % zone.url_root
             } for zone in qs]
-            s_cache.set(cache_key, remaps)
+            memcache.set(cache_key, remaps)
 
         return remaps
 

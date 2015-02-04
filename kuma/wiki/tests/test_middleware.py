@@ -1,11 +1,9 @@
 # coding=utf-8
-from django.core.cache import get_cache
-
 from nose.tools import eq_
-from kuma.core.urlresolvers import reverse
 
+from kuma.core.cache import memcache
+from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase
-from kuma.wiki.constants import SECONDARY_CACHE_ALIAS
 from kuma.wiki.models import DocumentZone
 from kuma.wiki.tests import revision
 
@@ -17,8 +15,7 @@ class DocumentZoneMiddlewareTestCase(UserTestCase, WikiTestCase):
     def setUp(self):
         super(DocumentZoneMiddlewareTestCase, self).setUp()
 
-        s_cache = get_cache(SECONDARY_CACHE_ALIAS)
-        s_cache.clear()
+        memcache.clear()
 
         self.zone_root = 'ExtraWiki'
         self.zone_root_content = 'This is the Zone Root'
