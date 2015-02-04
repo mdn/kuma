@@ -40,7 +40,7 @@ var jsBundles = {
     ],
     'demostudio': [
         'lib/js/jquery.hoverIntent-1.5.0/index.js',
-        'media/js/libs/jquery.scrollTo-1.4.2-min.js',
+        'lib/js/jquery.scrollTo-1.4.2/index.js',
         'media/js/demos.js',
         'media/js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
         'media/js/modal-control.js'
