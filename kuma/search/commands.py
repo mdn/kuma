@@ -5,11 +5,12 @@ from django.conf import settings
 from django.db import reset_queries
 from elasticsearch.exceptions import NotFoundError
 
+from kuma.core.utils import chunked
 from .decorators import requires_good_connection
 from .index import (get_indexing_es, get_index, recreate_index, get_indexable,
                     index_chunk, get_indexes, delete_index_if_exists,
                     get_index_stats)
-from .utils import chunked, format_time
+from .utils import format_time
 
 log = logging.getLogger('kuma.search.commands')
 

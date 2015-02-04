@@ -1,4 +1,3 @@
-from itertools import islice
 from urlobject import URLObject
 
 
@@ -48,31 +47,6 @@ class QueryURLObject(URLObject):
             if default not in ('', None):
                 clean_params[param] = default
         return clean_params
-
-
-def chunked(iterable, n):
-    """Return chunks of n length of iterable.
-
-    If ``len(iterable) % n != 0``, then the last chunk will have
-    length less than n.
-
-    Example:
-
-    >>> chunked([1, 2, 3, 4, 5], 2)
-    [(1, 2), (3, 4), (5,)]
-
-    :arg iterable: the iterable
-    :arg n: the chunk length
-
-    :returns: generator of chunks from the iterable
-    """
-    iterable = iter(iterable)
-    while 1:
-        t = tuple(islice(iterable, n))
-        if t:
-            yield t
-        else:
-            return
 
 
 def format_time(time_to_go):

@@ -1,9 +1,10 @@
-import time
-import logging
-import random
 import functools
+from itertools import islice
+import logging
 import os
+import random
 import tempfile
+import time
 
 import commonware.log
 import lockfile
@@ -139,8 +140,7 @@ class MemcacheLock(object):
         self.expires = expires
         self.cache = get_cache('memcache')
 
-    @property
-    def acquired(self):
+    def locked(self):
         return bool(self.cache.get(self.key))
 
     def acquire(self):
@@ -246,3 +246,28 @@ def parse_tags(tagstring, sorted=True):
     if sorted:
         words.sort()
     return words
+
+
+def chunked(iterable, n):
+    """Return chunks of n length of iterable.
+
+    If ``len(iterable) % n != 0``, then the last chunk will have
+    length less than n.
+
+    Example:
+
+    >>> chunked([1, 2, 3, 4, 5], 2)
+    [(1, 2), (3, 4), (5,)]
+
+    :arg iterable: the iterable
+    :arg n: the chunk length
+
+    :returns: generator of chunks from the iterable
+    """
+    iterable = iter(iterable)
+    while 1:
+        t = tuple(islice(iterable, n))
+        if t:
+            yield t
+        else:
+            return
