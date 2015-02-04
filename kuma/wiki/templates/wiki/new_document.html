@@ -65,17 +65,19 @@
         </div>
       {% endif %}
 
+      <section id="page-tags" class="page-tags wiki-block">
+        <h3><i aria-hidden="true" class="icon-tags"></i>{{ _('Tags') }} <a href="{{ wiki_url('Project:MDN/Contributing/Editor_guide/Editing#The_tags_box') }}"><i aria-hidden="true" title="{{ _('Learn how to tag an article') }}" class="icon-question-sign editor-help-icon"></i></a></h3>
+        <p>
+        {% trans url=wiki_url('Project:MDN/Contributing/Tagging_standards') %}
+        Categorize the article. It will make the article findable under the right filters in the search engine. <a target="_blank" href="{{ url }}">Read the Tagging Guide</a>.
+        {% endtrans %}
+        </p>
+        <input id="tagit_tags" type="text" name="tags" value="{% for tag in tags %}{{ tag.name }},{% endfor %}" maxlength="255" class="tags" />
+      </section>
+
       {% include 'wiki/includes/revision_comment.html' %}
 
       {% include 'wiki/includes/review_tags.html' %}
-
-      <section id="page-tags" class="page-tags wiki-block">
-
-          <h3><i aria-hidden="true" class="icon-tags"></i>{{ _('Tags') }}</h3>
-
-        <input id="tagit_tags" type="text" name="tags" value="{% for tag in initial_tags %}{{ tag.name }},{% endfor %}" maxlength="255" />
-      </section>
-
 
     </fieldset>
 
