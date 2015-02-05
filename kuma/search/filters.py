@@ -1,4 +1,3 @@
-import operator
 from django.conf import settings
 from django.utils.datastructures import SortedDict
 
@@ -162,50 +161,36 @@ class DatabaseFilterBackend(BaseFilterBackend):
             filter_tags = serialized_filter['tags']
             filter_operator = Filter.OPERATORS[serialized_filter['operator']]
             if serialized_filter['slug'] in view.selected_filters:
-
                 if len(filter_tags) > 1:
                     tag_filters = []
                     for filter_tag in filter_tags:
                         tag_filters.append(F('term', tags=filter_tag))
-                    active_filters.append(reduce(filter_operator, tag_filters))
+                    active_filters.append(F(filter_operator, tag_filters))
                 else:
                     active_filters.append(F('term', tags=filter_tags[0]))
 
             if len(filter_tags) > 1:
-                facet_params = {
-                    'or': {
-                        'filters': [{'term': {'tags': tag}}
-                                    for tag in filter_tags],
-                        '_cache': True,
-                    },
-                }
+                facet_params = F('terms', tags=filter_tags)
             else:
-                facet_params = {
-                    'term': {'tags': filter_tags[0]}
-                }
+                facet_params = F('term', tags=filter_tags[0])
             active_facets.append((serialized_filter['slug'], facet_params))
-
-        if view.drilldown_faceting:
-            filter_operator = operator.and_
-        else:
-            filter_operator = operator.or_
 
         unfiltered_queryset = queryset
         if active_filters:
-            queryset = queryset.filter(reduce(filter_operator, active_filters))
+            if len(active_filters) == 1:
+                queryset = queryset.post_filter(active_filters[0])
+            else:
+                queryset = queryset.post_filter(F('or', active_filters))
 
         # only way to get to the currently applied filters
         # to use it to limit the facets filters below
-        if view.drilldown_faceting:
-            facet_filter = queryset.to_dict().get('filter', [])
-        else:
-            facet_filter = unfiltered_queryset.to_dict().get('filter', [])
+        facet_filter = unfiltered_queryset.to_dict().get('filter', [])
 
         # TODO: Convert to use aggregations.
         facets = {}
         for facet_slug, facet_params in active_facets:
             facets[facet_slug] = {
-                'filter': facet_params,
+                'filter': facet_params.to_dict(),
                 'facet_filter': facet_filter,
             }
         queryset = queryset.extra(facets=facets)

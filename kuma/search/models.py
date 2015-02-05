@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-import operator
-
 from django.conf import settings
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
@@ -197,8 +195,8 @@ class Filter(models.Model):
         (OPERATOR_AND, OPERATOR_AND),
     )
     OPERATORS = {
-        OPERATOR_OR: operator.or_,
-        OPERATOR_AND: operator.and_,
+        OPERATOR_OR: 'or',
+        OPERATOR_AND: 'and',
     }
     name = models.CharField(max_length=255, db_index=True,
                             help_text='the English name of the filter '

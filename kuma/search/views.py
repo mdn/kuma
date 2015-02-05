@@ -6,7 +6,6 @@ from django.views.decorators.cache import cache_page
 
 from rest_framework.generics import ListAPIView
 from rest_framework.renderers import JSONRenderer
-from waffle import flag_is_active
 
 from kuma.wiki.search import WikiDocumentType
 
@@ -43,8 +42,6 @@ class SearchView(ListAPIView):
     def initial(self, request, *args, **kwargs):
         super(SearchView, self).initial(request, *args, **kwargs)
         self.current_page = self.request.QUERY_PARAMS.get(self.page_kwarg, 1)
-        self.drilldown_faceting = flag_is_active(request,
-                                                 'search_drilldown_faceting')
         self.available_filters = (
             Filter.objects.prefetch_related('tags', 'group')
                           .filter(enabled=True))
