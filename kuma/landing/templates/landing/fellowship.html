@@ -1,10 +1,9 @@
-{% extends "base.html" %}
+{% extends "wiki/base.html" %}
 
-{% block body_attributes %}id="fellowship-2015"{% endblock %}
+{% block body_attributes %}id="fellowship-2015" class="document zone zone-landing"{% endblock %}
 
 {% block site_css %}
-	{{ super() }}
-	{{ css('home', 'all') }}
+    {{ super() }}
 {% endblock %}
 
 {% block extrahead %}
@@ -20,6 +19,36 @@
 {% endblock %}
 
 {% block content %}
+
+    <div id="document-main" class="zone-landing-header" role="main">
+        <div class="center">
+            <nav class="crumbs" role="navigation">
+            <ol xmlns:v="http://rdf.data-vocabulary.org/#" aria-label="breadcrumbs">
+                <li typeof="v:Breadcrumb"><a href="/en-US" rel="v:url" property="v:title">MDN</a></li>
+                <li class="crumb" typeof="v:Breadcrumb" property="v:title">Fellowship Program</li>
+            </ol>
+            </nav>
+
+            <h1>This area gets a color (currently #424f5a)</h1>
+
+        </div><!-- .center -->
+        <div class="zone-image"></div>
+    </div><!-- #document-main -->
+
+
+    <div class="wiki-main-content column-container center" role="main">
+        <div class="column-9" dir="ltr">
+            <h2>Be a part of something <strong>big</strong></h2>
+                <p><strong>This area gets content, and any arbitrary layout (on a 12-column grid) that we want.</strong> Bacon ipsum dolor amet doner pastrami ribeye sausage andouille, short ribs tongue venison short loin rump ham. Pork loin shoulder meatball pancetta, fatback short ribs drumstick shankle strip steak venison meatloaf pork chop swine ball tip. Hamburger prosciutto pork loin pork belly andouille ground round cupim chuck kevin cow flank swine salami short loin. Flank sausage boudin ball tip turducken swine, filet mignon ham hock pork loin shankle sirloin beef ribs pork fatback ribeye. Bresaola salami kevin, ham hock tri-tip cow pork chop tail meatball shank. Beef ham tail kevin tongue pig drumstick ground round meatloaf. Cow filet mignon spare ribs pig, frankfurter pastrami flank beef ribs.</p>
+                <p><strong>This is just an example of layout. The big white area truly can have arbitrary layout.</strong> Bacon ipsum dolor amet doner pastrami ribeye sausage andouille, short ribs tongue venison short loin rump ham. Pork loin shoulder meatball pancetta, fatback short ribs drumstick shankle strip steak venison meatloaf pork chop swine ball tip. Hamburger prosciutto pork loin pork belly andouille ground round cupim chuck kevin cow flank swine salami short loin. Flank sausage boudin ball tip turducken swine, filet mignon ham hock pork loin shankle sirloin beef ribs pork fatback ribeye. Bresaola salami kevin, ham hock tri-tip cow pork chop tail meatball shank. Beef ham tail kevin tongue pig drumstick ground round meatloaf. Cow filet mignon spare ribs pig, frankfurter pastrami flank beef ribs.</p>
+        </div><!-- column-9 -->
+
+        <div class="column-3" dir="ltr">
+            <h2>Be a part of something <strong>big</strong></h2>
+                <p>Bacon ipsum dolor amet doner pastrami ribeye sausage andouille, short ribs tongue venison short loin rump ham. Pork loin shoulder meatball pancetta, fatback short ribs drumstick shankle strip steak venison meatloaf pork chop swine ball tip. Hamburger prosciutto pork loin pork belly andouille ground round cupim chuck kevin cow flank swine salami short loin. Flank sausage boudin ball tip turducken swine, filet mignon ham hock pork loin shankle sirloin beef ribs pork fatback ribeye. Bresaola salami kevin, ham hock tri-tip cow pork chop tail meatball shank. Beef ham tail kevin tongue pig drumstick ground round meatloaf. Cow filet mignon spare ribs pig, frankfurter pastrami flank beef ribs.</p>
+                <p>Shoulder beef capicola rump tri-tip filet mignon ground round doner biltong alcatra ham drumstick. Short ribs ribeye tail frankfurter. Shank capicola boudin filet mignon beef, swine bacon venison ground round tri-tip andouille sirloin ball tip. Brisket andouille turducken ham hock, capicola cupim kevin corned beef swine chicken turkey meatloaf leberkas tongue. Cow fatback bresaola flank kevin biltong landjaeger, tongue tenderloin meatball.</p>
+        </div><!-- column-3 -->
+    </div><!-- column-container -->
 
 {% endblock %}
 
