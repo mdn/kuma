@@ -114,7 +114,6 @@ ES_DISABLED = False
 ES_URLS = ['http://127.0.0.1:9200']
 ES_INDEXES = {'default': 'main_index'}
 ES_INDEX_PREFIX = 'mdn'
-ES_LIVE_INDEX = True
 ES_INDEXING_TIMEOUT = 30
 
 # See https://mana.mozilla.org/wiki/display/websites/Developer+Cluster#DeveloperCluster-Sentry
