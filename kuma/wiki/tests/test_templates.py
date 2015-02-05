@@ -485,7 +485,6 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         doc = pq(response.content)
         eq_(doc('#id_content')[0].value, r.content)
 
-    @override_settings(CELERY_ALWAYS_EAGER=True)
     @mock.patch_object(Site.objects, 'get_current')
     @mock.patch_object(settings._wrapped, 'TIDINGS_CONFIRM_ANONYMOUS_WATCHES', False)
     def test_new_revision_POST_document_with_current(self, get_current):

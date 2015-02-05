@@ -107,11 +107,8 @@ def render_stale_documents(log=None):
     else:
         chain(
             pre_task,
-            chord(
-                header=group(index_tasks),
-                body=post_task,
-            )
-        ).apply_async()
+            chord(index_tasks, body=post_task)
+        ).delay()
 
 
 @task

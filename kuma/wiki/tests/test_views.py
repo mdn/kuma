@@ -604,8 +604,8 @@ class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
         """When disabled, the kumascript service should not be used
         in rendering"""
         mock_kumascript_get.return_value = (self.d.html, None)
-        settings.CELERY_ALWAYS_EAGER = True
         self.d.schedule_rendering('max-age=0')
+        time.sleep(1)
         ok_(not mock_kumascript_get.called,
             "kumascript not should have been used")
 
