@@ -1,5 +1,7 @@
 from django.conf import settings
+
 from rest_framework import serializers
+
 from kuma.core.urlresolvers import reverse
 
 
@@ -35,7 +37,7 @@ class DocumentExcerptField(serializers.Field):
     <em> tag intact.
     """
     def to_native(self, value):
-        if not value.es_meta.highlight:
+        if not getattr(value, 'highlight', False):
             return value.summary
         return value.get_excerpt()
 

@@ -1,3 +1,4 @@
+import logging
 import warnings
 
 from django.conf import settings
@@ -6,12 +7,13 @@ from django.core.mail import mail_admins
 from celery.exceptions import SoftTimeLimitExceeded
 from celery.task import task
 
-from .commands import es_reindex_cmd
-from .models import Index
+
+log = logging.getLogger('kuma.search.tasks')
+
 
 # ignore a deprecation warning from elasticutils until the fix is released
 # refs https://github.com/mozilla/elasticutils/pull/160
-warnings.filterwarnings("ignore",
+warnings.filterwarnings('ignore',
                         category=DeprecationWarning,
                         module='celery.decorators')
 
@@ -21,9 +23,12 @@ ONE_HOUR = FIVE_MINUTES * 12
 
 @task(soft_time_limit=ONE_HOUR, time_limit=ONE_HOUR + FIVE_MINUTES)
 def populate_index(index_pk):
+    from kuma.wiki.search import WikiDocumentType
+    from kuma.search.models import Index
+
     index = Index.objects.get(pk=index_pk)
     try:
-        es_reindex_cmd(index=index.prefixed_name, chunk_size=500)
+        WikiDocumentType.reindex_all(index=index, chunk_size=500)
     except SoftTimeLimitExceeded:
         subject = ('[%s] Exceptions raised in populate_index() task '
                   'with index %s' % (settings.PLATFORM_NAME,

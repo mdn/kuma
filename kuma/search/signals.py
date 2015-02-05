@@ -1,7 +1,8 @@
 import logging
 
 from django.conf import settings
-from elasticutils.contrib.django.tasks import index_objects, unindex_objects
+
+from kuma.wiki.search import WikiDocumentType
 
 
 log = logging.getLogger('kuma.search.signals')
@@ -10,10 +11,12 @@ log = logging.getLogger('kuma.search.signals')
 def render_done_handler(**kwargs):
     if not settings.ES_LIVE_INDEX or 'instance' not in kwargs:
         return
+
+    from kuma.wiki.tasks import index_documents
     from .models import Index
+
     doc = kwargs['instance']
-    mappping_type = doc.get_mapping_type()
-    if mappping_type.should_update(doc):
+    if WikiDocumentType.should_update(doc):
         current_index = Index.objects.get_current()
         outdated = current_index.record_outdated(doc)
         if outdated:
@@ -22,7 +25,7 @@ def render_done_handler(**kwargs):
         doc_pks = set(doc.other_translations.values_list('pk', flat=True))
         doc_pks.add(doc.id)
         try:
-            index_objects.delay(mappping_type, list(doc_pks))
+            index_documents.delay(list(doc_pks), current_index.pk)
         except:
             log.error('Search indexing task failed', exc_info=True)
     else:
@@ -33,17 +36,21 @@ def render_done_handler(**kwargs):
 def pre_delete_handler(**kwargs):
     if not settings.ES_LIVE_INDEX or 'instance' not in kwargs:
         return
-    instance = kwargs['instance']
-    mappping_type = instance.get_mapping_type()
-    if mappping_type.should_update(instance):
-        unindex_objects.delay(mappping_type, [instance.id])
+
+    from kuma.wiki.tasks import unindex_documents
+    from .models import Index
+
+    doc = kwargs['instance']
+    current_index = Index.objects.get_current()
+
+    if WikiDocumentType.should_update(doc):
+        unindex_documents.delay([doc.pk], current_index.pk)
     else:
         log.info('Ignoring wiki document %r while updating search index',
-                 instance.id, exc_info=True)
+                 doc.pk, exc_info=True)
 
 
 def delete_index(**kwargs):
-    instance = kwargs.get('instance', None)
-    if instance is not None:
-        from .index import delete_index_if_exists
-        delete_index_if_exists(instance.prefixed_name)
+    index = kwargs.get('instance', None)
+    if index is not None:
+        index.delete_if_exists()

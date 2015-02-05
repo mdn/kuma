@@ -828,17 +828,7 @@ CELERY_ACCEPT_CONTENT = ['pickle']
 
 CELERY_IMPORTS = (
     'tidings.events',
-    'elasticutils.contrib.django.tasks',
 )
-
-CELERY_ANNOTATIONS = {
-    "elasticutils.contrib.django.tasks.index_objects": {
-        "rate_limit": "100/m",
-    },
-    "elasticutils.contrib.django.tasks.unindex_objects": {
-        "rate_limit": "100/m",
-    }
-}
 
 # Wiki rebuild settings
 WIKI_REBUILD_TOKEN = 'kuma:wiki:full-rebuild'
@@ -1146,8 +1136,17 @@ BASKET_APPS_NEWSLETTER = 'app-dev'
 
 KUMASCRIPT_URL_TEMPLATE = 'http://developer.mozilla.org:9080/docs/{path}'
 
+# Elasticsearch related settings.
+ES_DEFAULT_NUM_REPLICAS = 1
+ES_DEFAULT_NUM_SHARDS = 5
+ES_DEFAULT_REFRESH_INTERVAL = '5s'
 ES_DISABLED = True
+ES_INDEX_PREFIX = 'mdn'
+ES_INDEXES = {'default': 'main_index'}
+# Specify the extra timeout in seconds for the indexing ES connection.
+ES_INDEXING_TIMEOUT = 30
 ES_LIVE_INDEX = False
+ES_URLS = ['localhost:9200']
 
 LOG_LEVEL = logging.WARN
 SYSLOG_TAG = 'http_app_kuma'
@@ -1190,6 +1189,10 @@ LOGGING = {
             'level': logging.ERROR,
         },
         'elasticsearch': {
+            'handlers': ['console'],
+            'level': logging.ERROR,
+        },
+        'urllib3': {
             'handlers': ['console'],
             'level': logging.ERROR,
         },

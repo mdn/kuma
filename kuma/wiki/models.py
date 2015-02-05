@@ -1,8 +1,8 @@
-from datetime import datetime, timedelta
 import hashlib
 import json
 import sys
 import traceback
+from datetime import datetime, timedelta
 from urlparse import urlparse
 
 try:
@@ -16,49 +16,49 @@ from tower import ugettext_lazy as _lazy, ugettext as _
 
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import resolve
 from django.db import models
-from django.db.models import signals, Count
+from django.db.models import Count, signals
 from django.dispatch import receiver
 from django.http import Http404
 from django.utils.decorators import available_attrs
 from django.utils.functional import cached_property
 
 import constance.config
+import waffle
 from south.modelsinspector import add_introspection_rules
-from taggit.models import ItemBase, TagBase
 from taggit.managers import TaggableManager
-from taggit.utils import parse_tags, edit_string_for_tags
+from taggit.models import ItemBase, TagBase
+from taggit.utils import edit_string_for_tags, parse_tags
 from teamwork.models import Team
 from tidings.models import NotificationsMixin
-import waffle
 
 from kuma.attachments.models import Attachment, DocumentAttachment
-from kuma.search.decorators import register_live_index
 from kuma.core.exceptions import ProgrammingError
 from kuma.core.cache import memcache
 from kuma.core.fields import LocaleField
 from kuma.core.urlresolvers import reverse, split_path
+from kuma.search.decorators import register_live_index
 
 from . import kumascript
-from .constants import (TEMPLATE_TITLE_PREFIX, URL_REMAPS_CACHE_KEY_TMPL,
-                        REDIRECT_HTML, REDIRECT_CONTENT, DEKI_FILE_URL,
-                        KUMA_FILE_URL, DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL)
-from .content import (get_seo_description, get_content_sections,
-                      extract_code_sample, parse as parse_content,
-                      extract_css_classnames, extract_html_attributes,
-                      extract_kumascript_macro_names,
-                      SectionTOCFilter, H2TOCFilter, H3TOCFilter)
-from .exceptions import (UniqueCollision, SlugCollision, PageMoveError,
-                         DocumentRenderingInProgress,
-                         DocumentRenderedContentNotAvailable)
-from .managers import (TransformManager, DocumentManager,
-                       TaggedDocumentManager, DeletedDocumentManager,
-                       DocumentAdminManager, DocumentZoneManager,
-                       RevisionIPManager)
+from .constants import (DEKI_FILE_URL, DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL,
+                        KUMA_FILE_URL, REDIRECT_CONTENT, REDIRECT_HTML,
+                        TEMPLATE_TITLE_PREFIX, URL_REMAPS_CACHE_KEY_TMPL)
+from .content import parse as parse_content
+from .content import (extract_code_sample, extract_css_classnames,
+                      extract_html_attributes, extract_kumascript_macro_names,
+                      get_content_sections, get_seo_description, H2TOCFilter,
+                      H3TOCFilter, SectionTOCFilter)
+from .exceptions import (DocumentRenderedContentNotAvailable,
+                         DocumentRenderingInProgress, PageMoveError,
+                         SlugCollision, UniqueCollision)
+from .managers import (DeletedDocumentManager, DocumentAdminManager,
+                       DocumentManager, DocumentZoneManager, RevisionIPManager,
+                       TaggedDocumentManager, TransformManager)
+from .search import WikiDocumentType
 from .signals import render_done
+
 
 add_introspection_rules([], ["^utils\.OverwritingFileField"])
 
@@ -1481,9 +1481,8 @@ Full traceback:
         from .events import EditDocumentEvent
         return EditDocumentEvent.is_notifying(user, self)
 
-    def get_mapping_type(self):
-        from kuma.search.models import DocumentType
-        return DocumentType
+    def get_document_type(self):
+        return WikiDocumentType
 
     def get_contributors(self):
         top_creator_ids = (self.revisions.values_list('creator', flat=True)
@@ -1780,7 +1779,6 @@ class Revision(models.Model):
     @property
     def translation_age(self):
         return abs((datetime.now() - self.created).days)
-
 
 
 class RevisionIP(models.Model):

@@ -8,11 +8,12 @@ from rest_framework.generics import ListAPIView
 from rest_framework.renderers import JSONRenderer
 from waffle import flag_is_active
 
+from kuma.wiki.search import WikiDocumentType
+
 from .filters import (AdvancedSearchQueryBackend, DatabaseFilterBackend,
-                      get_filters, HighlightFilterBackend,
-                      LanguageFilterBackend, SearchQueryBackend)
-from .models import DocumentType, Filter
-from .queries import DocumentS
+                      get_filters, LanguageFilterBackend, SearchQueryBackend)
+from .models import Filter
+from .paginator import SearchPaginator
 from .renderers import ExtendedTemplateHTMLRenderer
 from .serializers import (DocumentSerializer, FilterWithGroupSerializer,
                           SearchSerializer)
@@ -30,10 +31,10 @@ class SearchView(ListAPIView):
     filter_backends = (
         SearchQueryBackend,
         AdvancedSearchQueryBackend,
-        HighlightFilterBackend,
         DatabaseFilterBackend,
         LanguageFilterBackend,
     )
+    paginator_class = SearchPaginator
     paginate_by = 10
     max_paginate_by = 100
     paginate_by_param = 'per_page'
@@ -44,19 +45,25 @@ class SearchView(ListAPIView):
         self.current_page = self.request.QUERY_PARAMS.get(self.page_kwarg, 1)
         self.drilldown_faceting = flag_is_active(request,
                                                  'search_drilldown_faceting')
-        self.available_filters = (Filter.objects.prefetch_related('tags',
-                                                                  'group')
-                                                .filter(enabled=True))
-        self.serialized_filters = FilterWithGroupSerializer(self.available_filters,
-                                                   many=True).data
+        self.available_filters = (
+            Filter.objects.prefetch_related('tags', 'group')
+                          .filter(enabled=True))
+        self.serialized_filters = (
+            FilterWithGroupSerializer(self.available_filters, many=True).data)
         self.selected_filters = get_filters(self.request.QUERY_PARAMS.getlist)
 
     def get_queryset(self):
-        return DocumentS(DocumentType,
-                         url=self.request.get_full_path(),
-                         current_page=self.current_page,
-                         serialized_filters=self.serialized_filters,
-                         selected_filters=self.selected_filters)
+        return WikiDocumentType.search()
+
+    def list(self, request, *args, **kwargs):
+        """
+        We override the `list` method here to store the URL.
+        """
+        # Stash some data here for the serializer.
+        self.url = request.get_full_path()
+
+        return super(SearchView, self).list(request, *args, **kwargs)
+
 
 search = SearchView.as_view()
 

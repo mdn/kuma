@@ -96,23 +96,26 @@ class ViewTests(ElasticTestCase):
             def list(self, *args, **kwargs):
                 response = super(QuerysetSearchView, self).list(*args,
                                                                 **kwargs)
+                data = response.data
+
                 # queryset content
-                eq_(self.object_list[0].title, 'an article title')
-                eq_(self.object_list[0].locale, 'en-US')
+                docs = data['documents']
+                eq_(docs[0]['title'], 'an article title')
+                eq_(docs[0]['locale'], 'en-US')
 
                 # metadata
-                eq_(self.object_list.current_page, 1)
-                eq_(len(self.object_list.serialized_filters), 1)
-                eq_(self.object_list.selected_filters, ['tagged'])
-                eq_(self.object_list.url, self.request.get_full_path())
+                eq_(self.current_page, 1)
+                eq_(len(self.serialized_filters), 1)
+                eq_(self.selected_filters, ['tagged'])
+                eq_(self.url, self.request.get_full_path())
 
                 # facets
-                faceted_filters = self.object_list.faceted_filters()
-                eq_(len(faceted_filters), 1)
-                eq_(faceted_filters[0].name, 'Group')
-                eq_(faceted_filters[0].options[0].name, 'Tagged')
-                eq_(faceted_filters[0].options[0].count, 2)
-                eq_(faceted_filters[0].options[0].active, True)
+                filters = data['filters']
+                eq_(len(filters), 1)
+                eq_(filters[0]['name'], 'Group')
+                eq_(filters[0]['options'][0]['name'], 'Tagged')
+                eq_(filters[0]['options'][0]['count'], 2)
+                eq_(filters[0]['options'][0]['active'], True)
                 return response
 
         view = QuerysetSearchView.as_view()
