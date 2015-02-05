@@ -81,6 +81,8 @@ hash_ring==1.3.1
 # -e git://github.com/praekelt/django-recaptcha.git@bbb40d4e5f9ec463ac9015450b87d2f073a0315b#egg=django-recaptcha
 django-recaptcha==0.0.9
 
+django-honeypot==0.4.0
+
 ## Formerly vendor/src - arbitrary commits not matched to versions
 # 2011-12-29
 -e git://github.com/django-extensions/django-extensions.git@1610e1e59124071e1d01b3814b6f17ff72b526bb#egg=django-extensions
