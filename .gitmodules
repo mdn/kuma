@@ -139,3 +139,6 @@
 [submodule "vendor/src/django-banish"]
 	path = vendor/src/django-banish
 	url = git://github.com/yourabi/django-banish.git
+[submodule "vendor/src/django-honeypot"]
+	path = vendor/src/django-honeypot
+	url = git://github.com/sunlightlabs/django-honeypot.git
