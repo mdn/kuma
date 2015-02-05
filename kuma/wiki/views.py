@@ -48,6 +48,7 @@ from kuma.contentflagging.models import ContentFlag, FLAG_NOTIFICATIONS
 from kuma.attachments.forms import AttachmentRevisionForm
 from kuma.attachments.models import Attachment
 from kuma.attachments.utils import attachments_json
+from kuma.core.cache import memcache
 from kuma.core.decorators import (never_cache, login_required,
                                   permission_required)
 from kuma.core.helpers import urlparams
@@ -84,22 +85,20 @@ log = logging.getLogger('kuma.wiki.views')
 
 @newrelic.agent.function_trace()
 def _document_last_modified(request, document_slug, document_locale):
-    """Utility function to derive the last modified timestamp of a document.
-    Mainly for the @condition decorator."""
-    nk = u'/'.join((document_locale, document_slug))
-    nk_hash = hashlib.md5(nk.encode('utf8')).hexdigest()
-    cache_key = DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL % nk_hash
+    """
+    Utility function to derive the last modified timestamp of a document.
+    Mainly for the @condition decorator.
+    """
+    # build an adhoc natural cache key to not have to do DB query
+    adhoc_natural_key = (document_locale, document_slug)
+    natural_key_hash = Document.natural_key_hash(adhoc_natural_key)
+    cache_key = DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL % natural_key_hash
     try:
-        last_mod = cache.get(cache_key)
-        if not last_mod:
+        last_mod = memcache.get(cache_key)
+        if last_mod is None:
             doc = Document.objects.get(locale=document_locale,
                                        slug=document_slug)
-
-            # Convert python datetime to Unix epoch seconds. This is more
-            # easily digested by the cache, and is more compatible with other
-            # services that might spy on Kuma's cache entries (eg. KumaScript)
-            last_mod = doc.modified.strftime('%s')
-            cache.set(cache_key, last_mod)
+            last_mod = doc.fill_last_modified_cache()
 
         # Convert the cached Unix epoch seconds back to Python datetime
         return datetime.fromtimestamp(float(last_mod))

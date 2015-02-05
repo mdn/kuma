@@ -66,15 +66,6 @@ CACHES = {
         'TIMEOUT': CACHE_COUNT_TIMEOUT,
         'KEY_PREFIX': CACHE_PREFIX,
     },
-    # NOTE: The 'secondary' cache should be the same as 'default' in
-    # settings_local. The only reason it exists is because we had some issues
-    # with caching, disabled 'default', and wanted to selectively re-enable
-    # caching on a case-by-case basis to resolve the issue.
-    'secondary': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'TIMEOUT': CACHE_COUNT_TIMEOUT,
-        'KEY_PREFIX': CACHE_PREFIX,
-    },
     'memcache': {
         'BACKEND': 'memcached_hashring.backend.MemcachedHashRingCache',
         'TIMEOUT': CACHE_COUNT_TIMEOUT * 60,
@@ -82,8 +73,6 @@ CACHES = {
         'LOCATION': ['127.0.0.1:11211'],
     },
 }
-
-SECONDARY_CACHE_ALIAS = 'secondary'
 
 # Addresses email comes from
 DEFAULT_FROM_EMAIL = 'notifications@developer.mozilla.org'

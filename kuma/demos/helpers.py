@@ -7,19 +7,18 @@ from babel import localedata
 import jinja2
 
 from django.conf import settings
-from django.core.cache import cache
 from django.utils.tzinfo import LocalTimezone
 
 import jingo
 from jingo import register
-from tower import ugettext as _
-from tower import ugettext, ungettext
+from tower import ungettext, ugettext as _
 from taggit.models import TaggedItem
 from threadedcomments.models import ThreadedComment
 from threadedcomments.forms import ThreadedCommentForm
 from threadedcomments.templatetags import threadedcommentstags
 import threadedcomments.views
 
+from kuma.core.cache import memcache
 from kuma.core.urlresolvers import reverse
 from .models import Submission
 from . import DEMOS_CACHE_NS_KEY, TAG_DESCRIPTIONS, DEMO_LICENSES
@@ -45,25 +44,23 @@ def register_cached_inclusion_tag(template, key_fn=None,
     Accepts a string or function to generate a cache key based on the incoming
     parameters, along with an expiration time configurable as
     INCLUDE_CACHE_EXPIRES or an explicit parameter"""
-
     if key_fn is None:
         key_fn = template
 
     def decorator(f):
         @functools.wraps(f)
         def wrapper(*args, **kw):
-
             if type(key_fn) is str:
                 cache_key = key_fn
             else:
                 cache_key = key_fn(*args, **kw)
 
-            out = cache.get(cache_key)
+            out = memcache.get(cache_key)
             if out is None:
                 context = f(*args, **kw)
                 t = jingo.env.get_template(template).render(context)
                 out = jinja2.Markup(t)
-                cache.set(cache_key, out, expires)
+                memcache.set(cache_key, out, expires)
             return out
 
         return register.function(wrapper)
@@ -133,10 +130,10 @@ def submission_thumb(submission, extra_class=None, thumb_width="200",
 
 
 def submission_listing_cache_key(*args, **kw):
-    ns_key = cache.get(DEMOS_CACHE_NS_KEY)
+    ns_key = memcache.get(DEMOS_CACHE_NS_KEY)
     if ns_key is None:
         ns_key = random.randint(1, 10000)
-        cache.set(DEMOS_CACHE_NS_KEY, ns_key)
+        memcache.set(DEMOS_CACHE_NS_KEY, ns_key)
     full_path = args[0].get_full_path()
     username = args[0].user.username
     return 'demos_%s:%s' % (ns_key,
@@ -306,8 +303,7 @@ def date_diff(timestamp, to=None):
             count = abs(round(delta.days / chunk, 0))
             break
 
-    date_str = (ugettext('%(number)d %(type)s') %
-                        {'number': count, 'type': name(count)})
+    date_str = (_('%(number)d %(type)s') % {'number': count, 'type': name(count)})
 
     if delta.days > 0:
         return "in " + date_str
