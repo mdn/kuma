@@ -418,6 +418,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'kuma.users.middleware.BanMiddleware',
     'banish.middleware.BanishMiddleware',
+    'honeypot.middleware.HoneypotMiddleware',
 
     'badger.middleware.RecentBadgeAwardsMiddleware',
     'kuma.wiki.badges.BadgeAwardingMiddleware',
@@ -512,6 +513,7 @@ INSTALLED_APPS = (
     'taggit',
     'dbgettext',
     'banish',
+    'honeypot',
 
     'kuma.dashboards',
     'statici18n',
@@ -1267,6 +1269,8 @@ BANISH_EMPTY_UA = True
 BANISH_ABUSE_THRESHOLD = sys.maxint # TODO: https://bugzil.la/1122658
 BANISH_USE_HTTP_X_FORWARDED_FOR = True
 BANISH_MESSAGE = _("This connection has been banned for suspicious activity.")
+
+HONEYPOT_FIELD_NAME = 'website'
 
 # TODO: Once using DRF more we need to make that exception handler more generic
 REST_FRAMEWORK = {
