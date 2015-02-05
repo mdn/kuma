@@ -1,7 +1,9 @@
 from __future__ import with_statement
-import os
+
 import logging
+import os
 from datetime import datetime
+from xml.dom.minidom import parseString
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -13,9 +15,8 @@ from django.dispatch import receiver
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
 
-from celery import chord, task
+from celery import chain, chord, task
 from constance import config
-from xml.dom.minidom import parseString
 
 from kuma.core.utils import MemcacheLock, chunked
 
@@ -57,6 +58,18 @@ def render_document_chunk(pks):
 
 
 @task
+def acquire_render_lock():
+    """
+    A task to acquire the render document lock
+    """
+    if render_lock.locked():
+        # fail loudly if this is running already
+        # may indicate a problem with the schedule of this task
+        raise StaleDocumentsRenderingInProgress
+    render_lock.acquire()
+
+
+@task
 def release_render_lock():
     """
     A task to release the render document lock
@@ -67,11 +80,6 @@ def release_render_lock():
 @task(throws=(StaleDocumentsRenderingInProgress,))
 def render_stale_documents(log=None):
     """Simple task wrapper for rendering stale documents"""
-    if render_lock.locked():
-        # fail loudly if this is running already
-        # may indicate a problem with the schedule of this task
-        raise StaleDocumentsRenderingInProgress
-
     stale_docs = Document.objects.get_by_stale_rendering().distinct()
     stale_docs_count = stale_docs.count()
     if stale_docs_count == 0:
@@ -83,15 +91,13 @@ def render_stale_documents(log=None):
         log = render_stale_documents.get_logger()
 
     log.info('Found %s stale documents' % stale_docs_count)
-    response = None
-    if render_lock.acquire():
-        stale_pks = stale_docs.values_list('pk', flat=True)
-        render_tasks = [render_document_chunk.si(pks)
-                        for pks in chunked(stale_pks, 10)]
-        render_chord = chord(header=render_tasks,
-                             body=release_render_lock.si())
-        render_chord.apply_async()
-    return response
+    stale_pks = stale_docs.values_list('pk', flat=True)
+    render_tasks = [render_document_chunk.si(pks)
+                    for pks in chunked(stale_pks, 10)]
+    render_chord = chord(header=render_tasks,
+                         body=release_render_lock.si())
+    render_chain = chain(acquire_render_lock.si(), render_chord)
+    render_chain.apply_async()
 
 
 @task
