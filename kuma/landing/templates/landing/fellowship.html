@@ -53,32 +53,45 @@
                         <li>Build something used by hundreds of thousands (or more) developers worldwide</li>
                         <li>Directly impact and grow the value of the open web</li>
                     </ul>
+                </li>
+            </ul>
 
             <h2>The Fine Print</h2>
             <p><strong>Mozilla will</strong> provide coaching, direction and training on teaching best practices, as well as reimburse Fellows for the Orientation trip (travel, lodging, meals and related expenses) up to $5K per Fellow.</p>
             <p><strong>The Fellows will</strong> meet the stated deliverables of their projects and meet weekly with their mentor, the program lead and their other Fellows. The Fellow will also share the results of their projects at 1-2 events agreed upon by the Fellow and the Program Director, as well as on their personal channels (blog, social media, etc). The Fellow is responsible for any related visas (Mozilla can provide any necessary supporting documentation).</p>
             <p><strong>Join The Movement: Code and Teach to keep the web open!</strong></p>
 
-            <h2>Apply now.</h2>
-            <p><a href="foo">Applications are open now</a> and we will accept them through TKTKTK, 2015. Apply now.</p>
+            {% if waffle.flag('fellowship_applications_open') %}
+                <h2>Apply now.</h2>
+                <p><a href="foo">Applications are open now</a> and we will accept them through March 31, 2015. Apply now!</p>
 
-            <div class="column-container">
-                <div class="column-6">
-                    <p>Excited about this opportunity? Share it with your friends.</p>
+                <div class="column-container">
+                    <div class="column-3">
+                        <p>Excited about this opportunity? Share it with your friends.</p>
+                    </div>
+                    <div class="column-9">
+                        <div class="share-widget" tabindex="0">
+                            <h3>Share This</h3>
+                            <ul>
+                                <li><a class="twitter" href="https://www.twitter.com/intent/tweet?url=TKTKTK" title="Twitter">Twitter</a></li>
+                                <li><a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=TKTKTK" title="Facebook">Facebook</a></li>
+                                <li><a class="g-plus" href="https://plus.google.com/share?url=TKTKTK" title="Google+">Google+</a></li>
+                            </ul>
+                        </div><!-- .share-widget -->
+                    </div>
                 </div>
-                <div class="share-widget column-6" tabindex="0">
-                    <h3>Share This</h3>
-                    <ul>
-                        <li><a class="twitter" href="https://www.twitter.com/intent/tweet?url=TKTKTK" title="Twitter">Twitter</a></li>
-                        <li><a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=TKTKTK" title="Facebook">Facebook</a></li>
-                        <li><a class="g-plus" href="https://plus.google.com/share?url=TKTKTK" title="Google+">Google+</a></li>
-                   </ul>
-                </div><!-- .share-widget -->
-            </div>
+
+            {% else %}
+                <h2>Applications are closed.</h2>
+                <p>The application period has ended. Watch this space for information about our 2015 Fellows!</p>
+            {% endif %}
 
         </div><!-- .column-9 -->
 
         <div class="column-3" dir="ltr">
+            <figure class="hero">
+                <img src="http://placehold.it/319x319">
+            </figure>
             <div class="pullquote">
                 <p class="quote">Building people’s understanding of the web — and building the leaders of the future of the web — is core to our work.</p>
                 <span class="attribution">&mdash;Mark Surman, Executive Director of the Mozilla Foundation</span>
