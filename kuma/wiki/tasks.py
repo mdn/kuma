@@ -59,7 +59,7 @@ def render_document_chunk(pks):
     logger.info(u'Finished rendering of document chunk')
 
 
-@task
+@task(throws=(StaleDocumentsRenderingInProgress,))
 def acquire_render_lock():
     """
     A task to acquire the render document lock
@@ -79,7 +79,7 @@ def release_render_lock():
     render_lock.release()
 
 
-@task(throws=(StaleDocumentsRenderingInProgress,))
+@task
 def render_stale_documents(log=None):
     """Simple task wrapper for rendering stale documents"""
     stale_docs = Document.objects.get_by_stale_rendering().distinct()
