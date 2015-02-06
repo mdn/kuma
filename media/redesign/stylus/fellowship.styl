@@ -2,13 +2,21 @@
 Styles specific to fellowship page
 TODO: break these into class-file components and require, like below
 ====================================================================== 
-@require 'components/fellowship/fellowship';
+@require 'components/fellowship/overrides';
+@require 'components/fellowship/pullquote';
+@require 'components/fellowship/share-widget';
 */
 
+/*
+Override MDN standard styles
+======================================================================*/
 body.fellowship {
     background-color: #424f5a;
 }
 
+/*
+The quote on the fellowship page
+======================================================================*/
 .pullquote {
     box-sizing: border-box;
     .quote {
@@ -39,6 +47,9 @@ body.fellowship {
     }
 }
 
+/*
+General purpose share widget inspired by https://www.mozilla.org/en-US/privacy/tips/
+======================================================================*/
 .share-widget {
     position: relative;
     width: 11rem;
@@ -118,57 +129,3 @@ body.fellowship {
         }
     }
 }
-
-/*
-.js .mozilla-share-cta h3 {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-}
-
-.mozilla-share-cta h3 {
-    display: block;
-    width: 256px;
-    padding: 1em 20px;
-    margin: 0px;
-    color: #FFF;
-    border: 0px none;
-    background: none repeat scroll 0px center transparent;
-    visibility: visible;
-    text-shadow: none;
-    font-family: "Open Sans",sans-serif;
-    opacity: 1;
-    transition: opacity 0.2s ease-in-out 0s;
-}
-
-.mozilla-share-cta ul {
-    display: table;
-    position: relative;
-    list-style-type: none;
-    margin: 0px;
-    padding: 0px;
-    width: 100%;
-    height: 100%;
-    visibility: hidden;
-}
-.mozilla-share-cta ul li {
-    display: table-cell;
-    width: 33.3%;
-    margin: 0px;
-    padding: 0px;
-    text-align: center;
-    vertical-align: middle;
-    opacity: 0;
-    transition: opacity 0.2s ease-in-out 0s;
-}
-.share-widget .mozilla-share-cta ul li a {
-    color: #0C99D5;
-}
-.mozilla-share-cta ul li a {
-    color: #FFF;
-    display: block;
-    margin: 0px 10px;
-    font-size: 0px;
-}
-*/
-
