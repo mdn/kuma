@@ -418,7 +418,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'kuma.users.middleware.BanMiddleware',
     'banish.middleware.BanishMiddleware',
-    'honeypot.middleware.HoneypotMiddleware',
 
     'badger.middleware.RecentBadgeAwardsMiddleware',
     'kuma.wiki.badges.BadgeAwardingMiddleware',

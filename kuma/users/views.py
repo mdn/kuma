@@ -6,7 +6,7 @@ from django.contrib.auth.models import User, Group
 from django.core.paginator import Paginator
 from django.db import transaction
 from django.db.models import Q
-from django.http import Http404, HttpResponseForbidden
+from django.http import Http404, HttpResponseForbidden, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, render, redirect
 from django.utils.datastructures import SortedDict
 
@@ -17,6 +17,7 @@ from allauth.socialaccount.models import SocialAccount
 from allauth.socialaccount.views import SignupView as BaseSignupView
 from badger.models import Award
 import constance.config
+from honeypot.decorators import verify_honeypot_value
 from taggit.utils import parse_tags
 from teamwork.models import Team
 from tower import ugettext_lazy as _
@@ -417,6 +418,12 @@ class SignupView(BaseSignupView):
             'matching_accounts': matching_accounts,
         })
         return context
+
+    def dispatch(self, request, *args, **kwargs):
+        ret = verify_honeypot_value(request, None)
+        if type(ret) is HttpResponseBadRequest:
+            return ret
+        return super(SignupView, self).dispatch(request, *args, **kwargs)
 
 
 signup = SignupView.as_view()

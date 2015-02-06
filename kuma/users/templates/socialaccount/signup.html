@@ -50,6 +50,7 @@
             {% endif %}
 
           <form class="submission readable-line-length" method="post" action="{{ url('socialaccount_signup') }}">
+              {{ honeypot_field()|safe }}
 
               <p>{% trans provider_name=provider.name %}
               Thanks for signing in to MDN with {{ provider_name }}. You have
