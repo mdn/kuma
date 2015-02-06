@@ -14,11 +14,11 @@ from django.dispatch import receiver
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_str
 
-from celery import chain, chord, task, group
+from celery import task
 from constance import config
 
 from kuma.core.cache import memcache
-from kuma.core.utils import MemcacheLock, chunked
+from kuma.core.utils import chord_flow, chunked, MemcacheLock
 from kuma.search.models import Index
 
 from .events import context_dict
@@ -96,24 +96,11 @@ def render_stale_documents(log=None):
     stale_pks = stale_docs.values_list('pk', flat=True)
 
     pre_task = acquire_render_lock.si()
-    index_tasks = [render_document_chunk.si(pks)
-                   for pks in chunked(stale_pks, 10)]
+    render_tasks = [render_document_chunk.si(pks)
+                    for pks in chunked(stale_pks, 10)]
     post_task = release_render_lock.si()
 
-    if settings.CELERY_ALWAYS_EAGER:
-        # Eager mode and chords don't get along. So we serialize
-        # the tasks as a workaround.
-        index_tasks.insert(0, pre_task)
-        index_tasks.append(post_task)
-        chain(*index_tasks).apply_async()
-    else:
-        chain(
-            pre_task,
-            chord(
-                header=group(index_tasks),
-                body=post_task,
-            )
-        ).apply_async()
+    chord_flow(pre_task, render_tasks, post_task).apply_async()
 
 
 @task

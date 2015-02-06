@@ -23,18 +23,21 @@ class TestIndexes(ElasticTestCase):
         eq_(Index.objects.get_current().prefixed_name,
             '%s-main_index' % settings.ES_INDEX_PREFIX)
 
+    def _reload(self, index):
+        return Index.objects.get(pk=index.pk)
+
     def test_add_newindex(self):
         index = Index.objects.create()
         ok_(not index.populated)
         index.populate()
-        index = Index.objects.get(pk=index.pk)  # reload the index again
+        index = self._reload(index)
         ok_(index.populated)
         index.delete()
 
     def test_promote_index(self):
         index = Index.objects.create()
         index.populate()
-        index = Index.objects.get(pk=index.pk)  # reload the index again
+        index = self._reload(index)
         ok_(index.populated)
         index.promote()
         ok_(index.promoted)
@@ -43,53 +46,53 @@ class TestIndexes(ElasticTestCase):
 
         index.demote()
         ok_(not index.promoted)
-        main_name = '%s-main_index' % settings.ES_INDEX_PREFIX
-        eq_(Index.objects.get_current().prefixed_name, main_name)
-        index.delete()
+
+    def test_there_can_be_only_one(self):
+        """Tests that when one index is promoted, all others are demoted."""
+        index1 = Index.objects.get_current()
+        ok_(index1.promoted)
+
+        index2 = Index.objects.create(name='second')
+        index2.promote()
+        index1 = self._reload(index1)
+        ok_(index2.promoted)
+        ok_(not index1.promoted)
 
     def test_outdated(self):
         # first create and populate an index
-        main_index = Index.objects.create()
+        main_index = Index.objects.create(name='first')
         main_index.populate()
-        main_index = Index.objects.get(pk=main_index.pk)
+        main_index = self._reload(main_index)
         ok_(main_index.populated)
         main_index.promote()
         eq_(Index.objects.get_current().prefixed_name,
             main_index.prefixed_name)
 
         # then create a successor and render a document against the old index
-        successor_index = Index.objects.create()
+        successor_index = Index.objects.create(name='second')
         doc = Document.objects.get(pk=1)
         doc.render()
         eq_(successor_index.outdated_objects.count(), 1)
 
-        # then populate the successor and see if we still have outdated objects
+        # .populate() creates the index and populates it.
         successor_index.populate()
-        successor_index = Index.objects.get(pk=successor_index.pk)
 
         S = WikiDocumentType.search
-
-        # check if the newly created index is empty
-        eq_(S(index=successor_index.prefixed_name).count(), 0)
+        eq_(S(index=successor_index.prefixed_name).count(), 7)
+        eq_(S().query('match', title='lorem').execute()[0].slug, 'lorem-ipsum')
 
         successor_index.promote()
         eq_(successor_index.outdated_objects.count(), 0)
-
-        self.refresh()  # refresh to make sure the index has the results ready
-        eq_(S().count(), 7)
-        eq_(S().query('match', title='lorem ipsum').execute()[0].slug,
-            'lorem-ipsum')
 
     def test_delete_index(self):
         # first create and populate the index
         index = Index.objects.create()
         index.populate()
 
-        # then create it again and see if it blows up
-        es = connections.get_connection()
-
         # then delete it and check if recreating works without blowing up
         index.delete()
+
+        es = connections.get_connection()
         try:
             es.indices.create(index.prefixed_name)
         except RequestError:

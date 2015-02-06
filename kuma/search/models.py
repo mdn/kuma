@@ -107,8 +107,7 @@ class Index(models.Model):
         return '%s-%s' % (settings.ES_INDEX_PREFIX, self.name)
 
     def populate(self):
-        from .tasks import populate_index
-        populate_index.delay(self.pk)
+        return WikiDocumentType.reindex_all(index=self, chunk_size=500)
 
     def record_outdated(self, instance):
         if self.successor:
@@ -130,6 +129,8 @@ class Index(models.Model):
         self.outdated_objects.all().delete()
         self.promoted = True
         self.save()
+        # Allow only a single index to be promoted.
+        Index.objects.exclude(pk=self.pk).update(promoted=False)
 
     def demote(self):
         self.promoted = False

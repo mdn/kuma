@@ -1,15 +1,16 @@
 from __future__ import absolute_import
+
 import time
 
 from django.conf import settings
 
 from elasticsearch_dsl.connections import connections
-from elasticsearch.exceptions import ConnectionError, NotFoundError
+from elasticsearch.exceptions import ConnectionError
 from rest_framework.test import APIRequestFactory
 
+from kuma.core.middleware import LocaleURLMiddleware
 from kuma.core.tests import LocalizingMixin
 from kuma.core.urlresolvers import reset_url_prefixer
-from kuma.core.middleware import LocaleURLMiddleware
 from kuma.users.tests import UserTestCase
 from kuma.wiki.search import WikiDocumentType
 
@@ -82,25 +83,15 @@ class ElasticTestCase(UserTestCase):
         if timesleep > 0:
             time.sleep(timesleep)
 
-    def setup_indexes(self, wait=True):
-        """(Re-)create ES indexes."""
-        # Removes the index, creates a new one, and indexes
-        # existing data into it.
+    def setup_indexes(self):
+        """Clear and repopulate the current index."""
         WikiDocumentType.reindex_all()
-
-        self.refresh()
-        if wait:
-            connections.get_connection().cluster.health(wait_for_status='yellow')
 
     def teardown_indexes(self):
         es = connections.get_connection()
         for index in Index.objects.all():
-            try:
-                es.indices.delete(index.prefixed_name)
-            except NotFoundError:
-                # If we get this error, it means the index didn't exist
-                # so there's nothing to delete.
-                pass
+            # Ignore indices that do not exist.
+            es.indices.delete(index.prefixed_name, ignore=[404])
 
     def get_request(self, *args, **kwargs):
         request = factory.get(*args, **kwargs)
