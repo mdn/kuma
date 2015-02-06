@@ -115,7 +115,6 @@ pre/code/kbd
 pre,
 code {
     font-family: Consolas, Monaco, 'Andale Mono', monospace; /* match Prism */
-    margin-bottom: $content-block-margin;
 }
 
 /* pre is a block element so it gets a bit more fancy styling */
@@ -123,9 +122,11 @@ pre {
     set-font-size($base-font-size);
     line-height: 19px;
     border: 0;
-    background: #f6f6f2;
-    padding: 15px;
+    background: $light-background-color;
+    color: $text-color;
+    padding: $code-block-padding;
     overflow: auto;
+    margin: 0 0 $grid-spacing 0;
 }
 
 /* code may appear inline in headings, we want to match the font weight of the element its nested in */
