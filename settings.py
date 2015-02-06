@@ -695,6 +695,9 @@ MINIFY_BUNDLES = {
         'error-403-alternate': (
             'redesign/css/error-403-alternate.css',
         ),
+        'fellowship': (
+            'redesign/css/fellowship.css',
+        ),
     },
     'js': {
         'main': (

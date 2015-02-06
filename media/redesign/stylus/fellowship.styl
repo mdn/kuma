@@ -1,0 +1,174 @@
+/*
+Styles specific to fellowship page
+TODO: break these into class-file components and require, like below
+====================================================================== 
+@require 'components/fellowship/fellowship';
+*/
+
+body.fellowship {
+    background-color: #424f5a;
+}
+
+.pullquote {
+    box-sizing: border-box;
+    .quote {
+        position: relative;
+        background-color: inherit;
+        border: none;
+        font-family: "Open Sans Light",X-LocaleSpecific-Light,"Open Sans",X-LocaleSpecific,sans-serif;
+        font-style: italic;
+        font-size: 1.8rem;
+        color: #0095dd;
+    }
+    .quote:before, .quote:after {
+        font-size: 2rem;
+        font-family: sans-serif;
+        color: #0095dd;
+    }
+    .quote:before {
+        content: "“";
+        position: absolute;
+        top: -.3rem;
+        left: -.8rem;
+    }
+    .quote:after {
+        content: "”";
+    }
+    .attribution {
+
+    }
+}
+
+.share-widget {
+    position: relative;
+    width: 11rem;
+    background-color: #0095dd;
+    border: 2px solid #9ed6ee;
+    border-radius: 8px;
+    overflow: hidden;
+    color: #ffffff;
+    h3 {
+        width: 100%;
+        padding: 0.75rem 0;
+        margin: 0px;
+        font-size: 1.6rem;
+        text-transform: uppercase;
+        text-align: center;
+        font-family: "Open Sans",sans-serif;
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 0.2s ease-in-out 0s;
+    }
+    &:hover h3 {
+        visibility: hidden;
+        opacity: 0;
+    }
+    ul {
+        display: table;
+        position: relative;
+        list-style-type: none;
+        margin: 0px;
+        padding: 0px;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s ease-in-out 0s;
+    }
+    &:hover ul {
+        visibility: visible;
+        opacity: 1;
+    }
+    li {
+        display: table-cell;
+        width: 33.3%;
+        margin: 0px;
+        padding: .3rem 0px;
+        text-align: center;
+        vertical-align: middle;
+        &:hover a {
+            transition: color 0.1s ease-in-out 0s;
+            color: #4d4e53;
+        }
+        a {
+            color: #fff;
+            font-size: 0px;
+            display: block;
+            height: 100%;
+            width: 100%;
+            &:hover {
+                text-decoration: none;
+            }
+            &:before {
+                font-family: "FontAwesome";
+                font-size: 2rem;
+            }
+            &.twitter:before {
+                content: '\f099';
+            }
+            &.facebook:before {
+                content: '\f09a';
+            }
+            &.g-plus:before {
+                content: '\f0d5';
+            }
+        }
+    }
+}
+
+/*
+.js .mozilla-share-cta h3 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.mozilla-share-cta h3 {
+    display: block;
+    width: 256px;
+    padding: 1em 20px;
+    margin: 0px;
+    color: #FFF;
+    border: 0px none;
+    background: none repeat scroll 0px center transparent;
+    visibility: visible;
+    text-shadow: none;
+    font-family: "Open Sans",sans-serif;
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out 0s;
+}
+
+.mozilla-share-cta ul {
+    display: table;
+    position: relative;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+}
+.mozilla-share-cta ul li {
+    display: table-cell;
+    width: 33.3%;
+    margin: 0px;
+    padding: 0px;
+    text-align: center;
+    vertical-align: middle;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out 0s;
+}
+.share-widget .mozilla-share-cta ul li a {
+    color: #0C99D5;
+}
+.mozilla-share-cta ul li a {
+    color: #FFF;
+    display: block;
+    margin: 0px 10px;
+    font-size: 0px;
+}
+*/
+
