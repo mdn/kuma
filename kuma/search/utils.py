@@ -47,15 +47,3 @@ class QueryURLObject(URLObject):
             if default not in ('', None):
                 clean_params[param] = default
         return clean_params
-
-
-def format_time(time_to_go):
-    """Return minutes and seconds string for given time in seconds.
-
-    :arg time_to_go: Number of seconds to go.
-
-    :returns: string representation of how much time to go.
-    """
-    if time_to_go < 60:
-        return '%ds' % time_to_go
-    return '%dm %ds' % (time_to_go / 60, time_to_go % 60)

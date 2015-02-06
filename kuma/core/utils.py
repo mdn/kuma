@@ -1,17 +1,18 @@
 import functools
-from itertools import islice
 import logging
 import os
 import random
 import tempfile
 import time
+from itertools import islice
 
 import commonware.log
 import lockfile
+from celery import chain, chord
 from polib import pofile
 
 from django.conf import settings
-from django.core.paginator import Paginator, EmptyPage, InvalidPage
+from django.core.paginator import EmptyPage, InvalidPage, Paginator
 from django.shortcuts import _get_queryset
 from django.utils.encoding import force_unicode
 from django.utils.http import urlencode
@@ -271,3 +272,15 @@ def chunked(iterable, n):
             yield t
         else:
             return
+
+
+def chord_flow(pre_task, tasks, post_task):
+
+    if settings.CELERY_ALWAYS_EAGER:
+        # Eager mode and chords don't get along. So we serialize
+        # the tasks as a workaround.
+        tasks.insert(0, pre_task)
+        tasks.append(post_task)
+        return chain(*tasks)
+    else:
+        return chain(pre_task, chord(header=tasks, body=post_task))

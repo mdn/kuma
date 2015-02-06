@@ -3,22 +3,21 @@ from __future__ import division
 
 import logging
 import operator
-import time
+from math import ceil
 
 from django.conf import settings
 from django.db.models import Q
 from django.utils.html import strip_tags
-from django.db import reset_queries
+from django.utils.translation import ugettext_lazy as _
 
+from celery import chain
 from elasticsearch.helpers import bulk
-from elasticsearch.exceptions import NotFoundError
 from elasticsearch_dsl import document, field
 from elasticsearch_dsl.connections import connections
 from elasticsearch_dsl.mapping import Mapping
 from elasticsearch_dsl.search import Search
 
-from kuma.core.utils import chunked
-from kuma.search.utils import format_time
+from kuma.core.utils import chord_flow, chunked
 
 
 log = logging.getLogger('kuma.wiki.search')
@@ -278,7 +277,7 @@ class WikiDocumentType(document.DocType):
         return self.summary
 
     @classmethod
-    def reindex_all(cls, chunk_size=1000, index=None, percent=100):
+    def reindex_all(cls, chunk_size=500, index=None, percent=100):
         """Rebuild ElasticSearch indexes.
 
         :arg chunk_size: how many documents to bulk index as a single chunk.
@@ -288,86 +287,31 @@ class WikiDocumentType(document.DocType):
 
         """
         from kuma.search.models import Index
+        from kuma.search.tasks import prepare_index, finalize_index
         from kuma.wiki.tasks import index_documents
 
         index = index or Index.objects.get_current()
-        index_name = index.prefixed_name
 
-        es = cls.get_connection('indexing')
-
-        log.info('Wiping and recreating %s....', index_name)
-        Index.objects.recreate_index(es=es, index=index)
-
+        # Get the list of document IDs to index.
         indexable = WikiDocumentType.get_indexable(percent)
 
-        # We're doing a lot of indexing, so we get the refresh_interval
-        # currently in the index, then nix refreshing. Later we'll restore it.
-        index_settings = {}
-        try:
-            index_settings = (es.indices.get_settings(index_name)
-                                .get(index_name, {}).get('settings', {}))
-        except NotFoundError:
-            pass
+        total = len(indexable)
+        total_chunks = int(ceil(total / chunk_size))
 
-        refresh_interval = index_settings.get(
-            'index.refresh_interval', settings.ES_DEFAULT_REFRESH_INTERVAL)
-        number_of_replicas = index_settings.get(
-            'number_of_replicas', settings.ES_DEFAULT_NUM_REPLICAS)
+        pre_task = prepare_index.si(index.pk)
+        post_task = finalize_index.si(index.pk)
 
-        # Disable automatic refreshing.
-        temporary_settings = {
-            'index': {
-                'refresh_interval': '-1',
-                'number_of_replicas': '0',
-            }
-        }
+        if not total:
+            # If there's no data we still create the index and finalize it.
+            chain(pre_task, post_task).apply_async()
+        else:
+            index_tasks = [index_documents.si(chunk, index.pk)
+                           for chunk in chunked(indexable, chunk_size)]
+            chord_flow(pre_task, index_tasks, post_task).apply_async()
 
-        try:
-            es.indices.put_settings(temporary_settings, index=index_name)
-            start_time = time.time()
-
-            cls_start_time = time.time()
-            total = len(indexable)
-
-            if total == 0:
-                return
-
-            log.info('Reindex %s. %s to index...', cls.get_doc_type(), total)
-
-            i = 0
-            for chunk in chunked(indexable, chunk_size):
-                index_documents(chunk, index.pk)
-
-                i += len(chunk)
-                time_to_go = (total - i) * ((time.time() - start_time) / i)
-                per_chunk_size = ((time.time() - start_time) /
-                                  (i / float(chunk_size)))
-                log.info('%s/%s... (%s to go, %s per %s docs)', i, total,
-                         format_time(time_to_go),
-                         format_time(per_chunk_size),
-                         chunk_size)
-
-                # We call this every 1000 or so because we're
-                # essentially loading the whole db and if DEBUG=True,
-                # then Django saves every sql statement which causes
-                # our memory to go up up up. So we reset it and that
-                # makes things happier even in DEBUG environments.
-                reset_queries()
-
-            delta_time = time.time() - cls_start_time
-            log.info('Done! (%s, %s per %s docs)',
-                     format_time(delta_time),
-                     format_time(delta_time / (total / float(per_chunk_size))),
-                     chunk_size)
-
-        finally:
-            # Re-enable automatic refreshing
-            reset_settings = {
-                'index': {
-                    'refresh_interval': refresh_interval,
-                    'number_of_replicas': number_of_replicas,
-                }
-            }
-            es.indices.put_settings(reset_settings, index_name)
-            delta_time = time.time() - start_time
-            log.info('Done! (total time: %s)', format_time(delta_time))
+        message = _(
+            'Indexing {total} documents into {n} chunks of size {size} into '
+            'index {index}.'.format(total=total, n=total_chunks,
+                                    size=chunk_size,
+                                    index=index.prefixed_name))
+        return message

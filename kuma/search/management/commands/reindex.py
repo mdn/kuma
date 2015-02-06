@@ -23,4 +23,6 @@ class Command(BaseCommand):
         if not 1 <= percent <= 100:
             raise CommandError('percent should be between 1 and 100')
 
-        WikiDocumentType.reindex_all(options['chunk_size'], percent=percent)
+        message = WikiDocumentType.reindex_all(options['chunk_size'],
+                                               percent=percent)
+        self.stdout.write(unicode(message) + '\n')
