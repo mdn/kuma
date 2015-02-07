@@ -212,6 +212,19 @@
         mdn.Notifier.discover();
     })();
 
+
+    /*
+        Inject Toggle Code button before <pre> elements
+        TODO: Make it translatable into any detected browser language
+    */
+    (function() {
+        $.each($('pre'), function() {
+            var $pre = $(this);
+            $pre.before('<button class="button toggle-pre">Toggle code <i class="icon-caret-down" aria-hidden="true"></i></button>');
+        });
+    })();
+
+
     /*
         Tabzilla
     */
