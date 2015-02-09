@@ -7,6 +7,7 @@ from .store import ref_from_request
 
 class ExtendedTemplateHTMLRenderer(TemplateHTMLRenderer):
     template_name = 'search/results.html'
+    exception_template_names = ['search/down.html']
 
     def resolve_context(self, data, request, response):
         """
