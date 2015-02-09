@@ -6,10 +6,30 @@ from django.conf import settings
 from django.contrib.auth.models import User
 
 from kuma.core.helpers import urlparams
+from kuma.core.tests import override_constance_settings
 from kuma.core.urlresolvers import reverse
 from .test_views import TESTUSER_PASSWORD
 from . import (verify_strings_in_response, verify_strings_not_in_response,
                UserTestCase)
+from ..models import UserProfile
+
+
+class ProfileTests(UserTestCase):
+    def test_hide_websites_for_low_activity_users(self):
+        # testuser has 0 edits
+        profile = UserProfile.objects.get(user__username='testuser')
+        url = reverse('users.profile', args=(profile.user.username,))
+        r = self.client.get(url, follow=True)
+        ok_("testuser.com" not in r.content)
+
+    @override_constance_settings(WIKI_LOW_ACTIVITY_THRESHOLD=1)
+    @mock.patch_object(UserProfile, 'num_wiki_revisions')
+    def test_show_websites_for_higher_activity_users(self, mock_num_wiki_revisions):
+        mock_num_wiki_revisions.return_value = 2
+        profile = UserProfile.objects.get(user__username='testuser')
+        url = reverse('users.profile', args=(profile.user.username,))
+        r = self.client.get(url, follow=True)
+        ok_("testuser.com" in r.content)
 
 
 class SignupTests(UserTestCase):

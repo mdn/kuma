@@ -187,6 +187,10 @@ class UserProfile(ModelBase):
         return (Revision.objects.filter(creator=self.user)
                                 .order_by('-created')[:5])
 
+    @property
+    def num_wiki_revisions(self):
+        return Revision.objects.filter(creator=self.user).count()
+
 
 @receiver(models.signals.post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

@@ -123,6 +123,24 @@
         <figure>
           <img src="{{ profile.gravatar() }}" alt="{{ profile.user.username }}" width="200" height="200" class="profile-photo avatar" />
         </figure>
+        {# https://bugzil.la/1119545 - hide website until user makes 10 revisions #}
+        {% set low_activity = False %}
+        {% set low_activity_threshold = config.WIKI_LOW_ACTIVITY_THRESHOLD %}
+        {% set show_sites = True %}
+        {% if profile.num_wiki_revisions < low_activity_threshold %}
+          {% set low_activity = True %}
+        {% endif %}
+        {% if low_activity %}
+          {% if request.user == profile.user %}
+          {{ _('Until you have made {threshold} revisions, these fields are hidden from others.') | f(threshold=low_activity_threshold) }}
+          {% elif request.user.is_superuser %}
+          {{ _('Until this user has made {threshold} revisions, these fields are hidden from others.') | f(threshold=low_activity_threshold) }}
+          {% else %}
+            {% set show_sites = False %}
+          {% endif %}
+        {% endif %}
+
+        {% if show_sites %}
 
         <ul class="profile-links">
         {% for site_name, site_meta in profile.website_choices %}
@@ -139,6 +157,9 @@
           {% endif %}
         {% endfor %}
         </ul>
+
+        {% endif %}
+
       </div>
     </section>
 

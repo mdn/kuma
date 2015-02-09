@@ -24,7 +24,7 @@ class TestUserProfile(UserTestCase):
 
         # Property should start off as an empty dict()
         sites = profile.websites
-        eq_({}, sites)
+        eq_({u'website': u'http://testuser.com'}, sites)
 
         # Assemble a set of test sites.
         test_sites = dict(
