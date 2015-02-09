@@ -1,4 +1,12 @@
+import elasticsearch
 from urlobject import URLObject
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import exception_handler
+from tower import ugettext_lazy as _
+
+SEARCH_DOWN_DETAIL = _('Search is temporarily unavailable. '
+                       'Please try again in a few minutes.')
 
 
 class QueryURLObject(URLObject):
@@ -47,3 +55,19 @@ class QueryURLObject(URLObject):
             if default not in ('', None):
                 clean_params[param] = default
         return clean_params
+
+
+def search_exception_handler(exc):
+    # Call REST framework's default exception handler first,
+    # to get the standard error response.
+    response = exception_handler(exc)
+
+    if (response is None and
+            isinstance(exc, elasticsearch.ElasticsearchException)):
+        # FIXME: This really should return a 503 error instead but Zeus
+        # doesn't let that through and displays a generic error page in that
+        # case which we don't want here
+        return Response({'error': SEARCH_DOWN_DETAIL},
+                        status=status.HTTP_200_OK)
+
+    return response
