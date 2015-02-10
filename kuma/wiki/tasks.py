@@ -3,7 +3,6 @@ from __future__ import with_statement
 import logging
 import os
 from datetime import datetime
-from xml.dom.minidom import parseString
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -16,6 +15,7 @@ from django.utils.encoding import smart_str
 
 from celery import task
 from constance import config
+from lxml import etree
 
 from kuma.core.cache import memcache
 from kuma.core.utils import chord_flow, chunked, MemcacheLock
@@ -265,13 +265,17 @@ class WikiSitemap(GenericSitemap):
     priority = 0.5
 
 
+SITEMAP_ELEMENT = u'<sitemap><loc>%s</loc><lastmod>%s</lastmod></sitemap>'
+
+
 @task
 def build_sitemaps():
-    sitemap_element = '<sitemap><loc>%s</loc><lastmod>%s</lastmod></sitemap>'
-    sitemap_index = ('<sitemapindex xmlns="http://www.sitemaps.org/'
-                     'schemas/sitemap/0.9">')
+    sitemap_parts = [u'<sitemapindex xmlns="http://www.sitemaps.org/'
+                     u'schemas/sitemap/0.9">']
     now = datetime.utcnow()
     timestamp = '%s+00:00' % now.replace(microsecond=0).isoformat()
+    index_path = os.path.join(settings.MEDIA_ROOT, 'sitemap.xml')
+
     for locale in settings.MDN_LANGUAGES:
         queryset = (Document.objects
                             .filter(is_template=False,
@@ -281,25 +285,29 @@ def build_sitemaps():
                             .exclude(slug__icontains='Talk:'))
         if queryset.count() > 0:
             info = {'queryset': queryset, 'date_field': 'modified'}
-            sitemap = WikiSitemap(info)
-            urls = sitemap.get_urls(page=1)
-            xml = smart_str(render_to_string('wiki/sitemap.xml',
-                                             {'urlset': urls}))
+
             directory = os.path.join(settings.MEDIA_ROOT, 'sitemaps', locale)
             if not os.path.exists(directory):
                 os.makedirs(directory)
+
             with open(os.path.join(directory, 'sitemap.xml'), 'w') as f:
-                f.write(xml)
+                f.write(smart_str(render_to_string('wiki/sitemap.xml',
+                                  {'urls': WikiSitemap(info).get_urls(page=1)})))
+
+            del info  # Force the gc to cleanup
 
             sitemap_url = absolutify('/sitemaps/%s/sitemap.xml' % locale)
-            sitemap_index = (sitemap_index + sitemap_element %
-                             (sitemap_url, timestamp))
+            sitemap_parts.append(SITEMAP_ELEMENT % (sitemap_url, timestamp))
 
-    sitemap_index = sitemap_index + "</sitemapindex>"
+        del queryset  # Force the gc to cleanup
 
-    index_path = os.path.join(settings.MEDIA_ROOT, 'sitemap.xml')
+    sitemap_parts.append(u'</sitemapindex>')
+
+    sitemap_tree = etree.fromstringlist(sitemap_parts)
     with open(index_path, 'w') as index_file:
-        index_file.write(parseString(sitemap_index).toxml())
+        sitemap_tree.getroottree().write(index_file,
+                                         encoding='utf-8',
+                                         pretty_print=True)
 
 
 @task
