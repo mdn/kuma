@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-{% for url in urlset %}
+{% for url in urls %}
   <url>
     <loc>{{ url.location }}</loc>
     {% if url.lastmod %}<lastmod>{{ url.lastmod.strftime('%Y-%m-%d') }}</lastmod>{% endif %}
