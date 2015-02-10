@@ -1,9 +1,15 @@
+import logging
+
 import elasticsearch
-from urlobject import URLObject
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import exception_handler
 from tower import ugettext_lazy as _
+from urlobject import URLObject
+
+
+log = logging.getLogger('kuma.search.utils')
+
 
 SEARCH_DOWN_DETAIL = _('Search is temporarily unavailable. '
                        'Please try again in a few minutes.')
@@ -67,6 +73,7 @@ def search_exception_handler(exc):
         # FIXME: This really should return a 503 error instead but Zeus
         # doesn't let that through and displays a generic error page in that
         # case which we don't want here
+        log.error('Elasticsearch exception: %s' % exc)
         return Response({'error': SEARCH_DOWN_DETAIL},
                         status=status.HTTP_200_OK)
 

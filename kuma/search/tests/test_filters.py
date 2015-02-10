@@ -1,8 +1,11 @@
 from nose.tools import ok_, eq_
 
+from kuma.wiki.models import Document
+from kuma.wiki.signals import render_done
+
 from . import ElasticTestCase
-from ..filters import (DatabaseFilterBackend, LanguageFilterBackend,
-                       SearchQueryBackend)
+from ..filters import (AdvancedSearchQueryBackend, DatabaseFilterBackend,
+                       LanguageFilterBackend, SearchQueryBackend)
 from ..views import SearchView
 
 
@@ -22,8 +25,28 @@ class FilterTests(ElasticTestCase):
         eq_(response.data['documents'][0]['slug'], 'CSS/article-title-3')
         eq_(response.data['documents'][0]['locale'], 'en-US')
 
-    def test_highlight_filter(self):
+    def test_advanced_search_query(self):
+        """Test advanced search query filter."""
+        # Update a document so that it has a `css_classname` and trigger a
+        # reindex via `render_done`.
+        doc = Document.objects.get(pk=1)
+        doc.rendered_html = '<html><body class="eval">foo()</body></html>'
+        doc.save()
+        render_done.send(sender=Document, instance=doc)
+        self.refresh()
 
+        class View(SearchView):
+            filter_backends = (AdvancedSearchQueryBackend,)
+
+        view = View.as_view()
+        request = self.get_request('/en-US/search?css_classnames=eval')
+        response = view(request)
+        eq_(response.data['count'], 1)
+        eq_(len(response.data['documents']), 1)
+        eq_(response.data['documents'][0]['slug'], doc.slug)
+        eq_(response.data['documents'][0]['locale'], doc.locale)
+
+    def test_highlight_filter(self):
         class HighlightView(SearchView):
             filter_backends = (SearchQueryBackend,)
 
