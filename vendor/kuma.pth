@@ -95,6 +95,6 @@ src/py-amqp
 src/django-celery
 src/django-honeypot
 src/bitly-api-python
-src/django-cacheback
 src/django-ratelimit
 src/django-cacheback
+src/django-taggit
