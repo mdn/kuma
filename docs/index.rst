@@ -11,7 +11,7 @@ Contents:
    celery
    wsgi
    email
-   search
+   elasticsearch
 
    development
    migrations
