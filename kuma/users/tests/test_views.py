@@ -595,7 +595,8 @@ class AllauthPersonaTestCase(UserTestCase):
                 'email': persona_signup_email,
             }
             self.client.post(reverse('persona_login'), follow=True)
-            data = {'username': persona_signup_username,
+            data = {'website': '',
+                    'username': persona_signup_username,
                     'email': persona_signup_email,
                     'newsletter': True,
                     'terms': True}
@@ -643,7 +644,8 @@ class AllauthPersonaTestCase(UserTestCase):
                 'email': persona_signup_email,
             }
             self.client.post(reverse('persona_login'), follow=True)
-            data = {'username': persona_signup_username,
+            data = {'website': '',
+                    'username': persona_signup_username,
                     'email': persona_signup_email,
                     'terms': True}
             signup_url = reverse('socialaccount_signup',
@@ -763,6 +765,7 @@ class KumaGitHubTests(UserTestCase):
 
         unverified_email = 'o.ctocat@gmail.com'
         data = {
+            'website': '',
             'username': 'octocat',
             'email': SignupForm.other_email_value,  # = use other_email
             'other_email': unverified_email,

@@ -8,6 +8,7 @@ from jingo import register
 
 from allauth.account.utils import user_display
 from allauth.socialaccount import providers
+from honeypot.templatetags.honeypot import render_honeypot_field
 from tower import ugettext as _
 
 from kuma.core.urlresolvers import reverse
@@ -126,6 +127,11 @@ def social_accounts(user):
         providers = accounts.setdefault(account.provider, [])
         providers.append(account)
     return accounts
+
+
+@register.inclusion_tag('honeypot/honeypot_field.html')
+def honeypot_field(field_name=None):
+    return render_honeypot_field(field_name)
 
 
 register.function(user_display)
