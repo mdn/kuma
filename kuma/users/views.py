@@ -420,9 +420,9 @@ class SignupView(BaseSignupView):
         return context
 
     def dispatch(self, request, *args, **kwargs):
-        ret = verify_honeypot_value(request, None)
-        if type(ret) is HttpResponseBadRequest:
-            return ret
+        response = verify_honeypot_value(request, None)
+        if isinstance(response, HttpResponseBadRequest):
+            return response
         return super(SignupView, self).dispatch(request, *args, **kwargs)
 
 
