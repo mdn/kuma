@@ -73,11 +73,6 @@
             </li>
             {% if loop.last %}</ul>{% endif %}
           {% endfor %}
-          {% if revision_count > 1 %}
-            <div class="revision-list-controls revision-list-controls-bottom">
-              <input type="submit" class="link-btn" value="{% if document.parent %}{{ _('Compare Selected Translations') }}{% else %}{{ _('Compare Selected Revisions') }}{% endif %}" />
-            </div>
-          {% endif %}
         </form>
       {% else %}
         {{ _('This document has no revisions.') }}
