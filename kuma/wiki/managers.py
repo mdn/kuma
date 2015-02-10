@@ -9,7 +9,7 @@ import constance.config
 from kuma.core.cache import memcache
 
 from .constants import (ALLOWED_TAGS, ALLOWED_ATTRIBUTES, ALLOWED_STYLES,
-                        TEMPLATE_TITLE_PREFIX, URL_REMAPS_CACHE_KEY_TMPL)
+                        TEMPLATE_TITLE_PREFIX)
 from .content import parse as parse_content
 from .queries import TransformQuerySet
 
@@ -230,20 +230,27 @@ class TaggedDocumentManager(models.Manager):
 class DocumentZoneManager(models.Manager):
     """Manager for DocumentZone objects"""
 
+    def build_url_remaps(self, locale):
+        qs = (self.filter(document__locale=locale,
+                          url_root__isnull=False)
+                  .exclude(url_root=''))
+        return [{
+            'original_path': '/docs/%s' % zone.document.slug,
+            'new_path': '/%s' % zone.url_root
+        } for zone in qs]
+
+    def reset_url_remaps(self, locale, cache_key=None):
+        if cache_key is None:
+            cache_key = self.model.cache_key(locale)
+        remaps = self.build_url_remaps(locale)
+        memcache.set(cache_key, remaps, timeout=60 * 60 * 24)
+        return remaps
+
     def get_url_remaps(self, locale):
-        cache_key = URL_REMAPS_CACHE_KEY_TMPL % locale
+        cache_key = self.model.cache_key(locale)
         remaps = memcache.get(cache_key)
-
         if not remaps:
-            qs = (self.filter(document__locale=locale,
-                              url_root__isnull=False)
-                      .exclude(url_root=''))
-            remaps = [{
-                'original_path': '/docs/%s' % zone.document.slug,
-                'new_path': '/%s' % zone.url_root
-            } for zone in qs]
-            memcache.set(cache_key, remaps)
-
+            remaps = self.reset_url_remaps(locale, cache_key)
         return remaps
 
 

@@ -44,7 +44,7 @@ from kuma.search.decorators import register_live_index
 from . import kumascript
 from .constants import (DEKI_FILE_URL, DOCUMENT_LAST_MODIFIED_CACHE_KEY_TMPL,
                         KUMA_FILE_URL, REDIRECT_CONTENT, REDIRECT_HTML,
-                        TEMPLATE_TITLE_PREFIX, URL_REMAPS_CACHE_KEY_TMPL)
+                        TEMPLATE_TITLE_PREFIX)
 from .content import parse as parse_content
 from .content import (extract_code_sample, extract_css_classnames,
                       extract_html_attributes, extract_kumascript_macro_names,
@@ -1532,11 +1532,15 @@ class DocumentZone(models.Model):
         return u'DocumentZone %s (%s)' % (self.document.get_absolute_url(),
                                           self.document.title)
 
+    @staticmethod
+    def cache_key(locale):
+        return 'wiki:zones:remaps:%s' % locale
+
     def save(self, *args, **kwargs):
         super(DocumentZone, self).save(*args, **kwargs)
 
-        # Invalidate URL remap cache for this zone
-        memcache.delete(URL_REMAPS_CACHE_KEY_TMPL % self.document.locale)
+        # Reset URL cache for the locale of this zone's attached document
+        DocumentZone.objects.reset_url_remaps(self.document.locale)
 
 
 class ReviewTag(TagBase):
