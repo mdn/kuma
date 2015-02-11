@@ -115,25 +115,21 @@ class AdvancedSearchQueryBackend(BaseFilterBackend):
         'css_classnames',
         'html_attributes',
     )
-    search_operations = [
-        # (<query_type>, <boost>)
-        ('match', 10.0),
-        ('prefix', 5.0),
-    ]
 
     def filter_queryset(self, request, queryset, view):
         queries = []
         for field in self.fields:
 
-            search_param = request.QUERY_PARAMS.get(field, None)
+            search_param = request.QUERY_PARAMS.get(field, '').lower()
             if not search_param:
                 continue
-            search_param = search_param.lower()
 
-            for query_type, boost in self.search_operations:
-                queries.append(
-                    Q(query_type, **{field: {'query': search_param,
-                                             'boost': boost}}))
+            queries.append(
+                Q('match', **{field: {'query': search_param,
+                                      'boost': 10.0}}))
+            queries.append(
+                Q('prefix', **{field: {'value': search_param,
+                                       'boost': 5.0}}))
 
         if queries:
             queryset = queryset.query(query.Bool(should=queries))
