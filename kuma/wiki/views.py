@@ -1,7 +1,6 @@
 # coding=utf-8
 from datetime import datetime
 import json
-import hashlib
 import logging
 import re
 from urllib import urlencode
@@ -18,7 +17,6 @@ from tower import ugettext_lazy as _lazy, ugettext as _
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
-from django.core.cache import cache
 from django.db import transaction
 from django.db.models import Q
 from django.http import (HttpResponse, HttpResponseRedirect,
