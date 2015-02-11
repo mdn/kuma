@@ -8,10 +8,11 @@ from urlparse import urljoin
 import requests
 
 from django.conf import settings
-from django.core.cache import cache
 from django.contrib.sites.models import Site
 
 import constance.config
+
+from kuma.core.cache import memcache
 
 from .constants import KUMASCRIPT_TIMEOUT_ERROR, TEMPLATE_TITLE_PREFIX
 
@@ -162,7 +163,7 @@ def get(document, cache_control, base_url, timeout=None):
         add_env_headers(headers, env_vars)
 
         # Set up for conditional GET, if we have the details cached.
-        c_meta = cache.get_many([ck_etag, ck_modified])
+        c_meta = memcache.get_many([ck_etag, ck_modified])
         if ck_etag in c_meta:
             headers['If-None-Match'] = c_meta[ck_etag]
         if ck_modified in c_meta:
@@ -173,7 +174,7 @@ def get(document, cache_control, base_url, timeout=None):
 
         if resp.status_code == 304:
             # Conditional GET was a pass, so use the cached content.
-            c_result = cache.get_many([ck_body, ck_errors])
+            c_result = memcache.get_many([ck_body, ck_errors])
             resp_body = c_result.get(ck_body, '').decode('utf-8')
             resp_errors = c_result.get(ck_errors, None)
 
@@ -183,14 +184,14 @@ def get(document, cache_control, base_url, timeout=None):
 
             # Cache the request for conditional GET, but use the max_age for
             # the cache timeout here too.
-            cache.set(ck_etag, resp.headers.get('etag'),
-                      timeout=max_age)
-            cache.set(ck_modified, resp.headers.get('last-modified'),
-                      timeout=max_age)
-            cache.set(ck_body, resp_body.encode('utf-8'),
-                      timeout=max_age)
+            memcache.set(ck_etag, resp.headers.get('etag'),
+                         timeout=max_age)
+            memcache.set(ck_modified, resp.headers.get('last-modified'),
+                         timeout=max_age)
+            memcache.set(ck_body, resp_body.encode('utf-8'),
+                         timeout=max_age)
             if resp_errors:
-                cache.set(ck_errors, resp_errors, timeout=max_age)
+                memcache.set(ck_errors, resp_errors, timeout=max_age)
 
         elif resp.status_code is None:
             resp_errors = KUMASCRIPT_TIMEOUT_ERROR
@@ -245,7 +246,7 @@ def process_errors(response):
         for k, v in response.headers.items():
             if not k.lower().startswith('firelogger-'):
                 continue
-            _, packet_id, seq = k.split('-', 3)
+            prefix, packet_id, seq = k.split('-', 3)
             fl_packets[packet_id][seq] = v
 
         # The FireLogger spec allows for multiple "packets". But,
