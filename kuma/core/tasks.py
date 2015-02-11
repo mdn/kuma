@@ -1,11 +1,13 @@
 from celery.task import task
 
-from django.core.cache import cache
 from django.db import connection, transaction
 from django.contrib.sessions.models import Session
 from django.utils import timezone
 
 import constance.config
+
+from kuma.core.cache import memcache
+
 
 LOCK_ID = 'clean-sessions-lock'
 LOCK_EXPIRE = 60 * 5
@@ -25,7 +27,7 @@ def clean_sessions():
     logger = clean_sessions.get_logger()
     chunk_size = constance.config.SESSION_CLEANUP_CHUNK_SIZE
 
-    if cache.add(LOCK_ID, now.strftime('%c'), LOCK_EXPIRE):
+    if memcache.add(LOCK_ID, now.strftime('%c'), LOCK_EXPIRE):
         total_count = get_expired_sessions(now).count()
         delete_count = 0
         logger.info('Deleting the %s of %s oldest expired sessions' %
@@ -42,10 +44,10 @@ def clean_sessions():
             transaction.commit_unless_managed()
         finally:
             logger.info('Deleted %s expired sessions' % delete_count)
-            cache.delete(LOCK_ID)
+            memcache.delete(LOCK_ID)
             expired_sessions = get_expired_sessions(now)
             if expired_sessions.exists():
                 clean_sessions.apply_async()
     else:
         logger.error('The clean_sessions task is already running since %s' %
-                     cache.get(LOCK_ID))
+                     memcache.get(LOCK_ID))
