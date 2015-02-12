@@ -29,7 +29,7 @@ class Migration(SchemaMigration):
             ('screenshot_3', self.gf('kuma.demos.models.ReplacingImageWithThumbField')(max_length=255, blank=True)),
             ('screenshot_4', self.gf('kuma.demos.models.ReplacingImageWithThumbField')(max_length=255, blank=True)),
             ('screenshot_5', self.gf('kuma.demos.models.ReplacingImageWithThumbField')(max_length=255, blank=True)),
-            ('video_url', self.gf('embedutils.VideoEmbedURLField')(max_length=200, null=True, blank=True)),
+            ('video_url', self.gf('kuma.demos.embed.VideoEmbedURLField')(max_length=200, null=True, blank=True)),
             ('demo_package', self.gf('kuma.demos.models.ReplacingZipFileField')(max_upload_size=62914560, max_length=255)),
             ('source_code_url', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
             ('license_name', self.gf('django.db.models.fields.CharField')(max_length=64)),
@@ -117,7 +117,7 @@ class Migration(SchemaMigration):
             #'tags': ('kuma.demos.models.ConstrainedTagField', [], {}),
             'tags': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'}),
-            'video_url': ('embedutils.VideoEmbedURLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'})
+            'video_url': ('kuma.demos.embed.VideoEmbedURLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'})
         }
     }
 
