@@ -145,3 +145,6 @@
 [submodule "vendor/src/django-honeypot"]
 	path = vendor/src/django-honeypot
 	url = git://github.com/sunlightlabs/django-honeypot.git
+[submodule "vendor/src/bitly-api-python"]
+	path = vendor/src/bitly-api-python
+	url = https://github.com/bitly/bitly-api-python.git

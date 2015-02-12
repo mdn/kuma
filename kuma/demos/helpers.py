@@ -4,9 +4,11 @@ import hashlib
 import random
 
 from babel import localedata
+import bitly_api
 import jinja2
 
 from django.conf import settings
+from django.utils.encoding import smart_str
 from django.utils.tzinfo import LocalTimezone
 
 import jingo
@@ -24,6 +26,10 @@ from .models import Submission
 from . import DEMOS_CACHE_NS_KEY, TAG_DESCRIPTIONS, DEMO_LICENSES
 
 threadedcommentstags.reverse = reverse
+
+
+bitly = bitly_api.Connection(login=getattr(settings, 'BITLY_USERNAME', ''),
+                             api_key=getattr(settings, 'BITLY_API_KEY', ''))
 
 
 TEMPLATE_INCLUDE_CACHE_EXPIRES = getattr(settings,
@@ -162,30 +168,20 @@ def search_form(context):
     return new_context(**locals())
 
 
-bitly_api = None
-
-
-def _get_bitly_api():
-    """Get an instance of the bit.ly API class"""
-    global bitly_api
-    if bitly_api is None:
-        import bitly
-        login = getattr(settings, 'BITLY_USERNAME', '')
-        apikey = getattr(settings, 'BITLY_API_KEY', '')
-        bitly_api = bitly.Api(login, apikey)
-    return bitly_api
-
-
 @register.filter
 def bitly_shorten(url):
     """Attempt to shorten a given URL through bit.ly / mzl.la"""
-    try:
-        # TODO:caching
-        return _get_bitly_api().shorten(url)
-    except:
-        # Just in case the bit.ly service fails or the API key isn't
-        # configured, fall back to using the original URL.
-        return url
+    cache_key = 'bitly:%s' % hashlib.md5(smart_str(url)).hexdigest()
+    short_url = memcache.get(cache_key)
+    if short_url is None:
+        try:
+            short_url = bitly.shorten(url)['url']
+            memcache.set(cache_key, short_url, 60 * 60 * 24 * 30 * 12)
+        except (bitly_api.BitlyError, KeyError):
+            # Just in case the bit.ly service fails or the API key isn't
+            # configured, fall back to using the original URL.
+            return url
+    return short_url
 
 
 @register.function
