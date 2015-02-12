@@ -92,6 +92,14 @@ a vendor library. This allows them to be available on the Python path without
 needing to be installed in the system, allowing multiple versions for multiple
 projects simultaneously.
 
+NPM Packages
+------------
+
+Several NPM packages are needed by Gulp, our front-end build task manager. Run
+this command at the reposistory root to install them::
+
+    npm install
+
 Configuration
 =============
 
@@ -194,9 +202,9 @@ set your ``settings_local.py`` with the following::
 Testing it Out
 ==============
 
-To start the dev server, run ``./manage.py runserver``, then open up
-``http://localhost:8000``. If everything's working, you should see
-the MDN home page!
+To start the dev server, run ``./manage.py runserver``. In another terminal, run
+``gulp watch``. Then open up ``http://localhost:8000``. If everything's working,
+you should see the MDN home page!
 
 You might need to first set ``LC_CTYPE`` if you're on Mac OS X until
 `bug 754728 <https://bugzilla.mozilla.org/show_bug.cgi?id=754728>`_ is fixed::

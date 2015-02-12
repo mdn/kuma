@@ -1,0 +1,1 @@
+!function(e){"use strict";var t=e("#apps-newsletter-subscribe"),i=e("#newsletter-toggle").find("input:checkbox"),r=t.find(".newsletter-setting"),n=r.filter(".agree").find("input:checkbox"),c="required";i.is(":checked")||(r.hide(0),n.removeAttr(c)),i.on("click",function(){i.is(":checked")?(r.fadeIn(),n.attr(c,c)):(r.fadeOut(),n.removeAttr(c))})}(jQuery);

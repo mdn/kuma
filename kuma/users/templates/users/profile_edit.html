@@ -20,11 +20,11 @@
 
 {% block site_js %}
     {{ super() }}
-    {{ js('jquery-ui') }}
-    {{ js('demostudio') }}
-    {{ js('libs/tagit') }}
-    {{ js('profile') }}
-    {{ js('newsletter',) }}
+    <script src="{{ cache_bust('js/jquery-ui-min.js') }}"></script>
+    <script src="{{ cache_bust('js/demostudio-min.js') }}"></script>
+    <script src="{{ cache_bust('js/tagit-min.js') }}" async></script>
+    <script src="{{ cache_bust('js/profile-min.js') }}"></script>
+    <script src="{{ cache_bust('js/newsletter-min.js') }}"></script>
 {% endblock %}
 
 {% block content %}

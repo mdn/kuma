@@ -10,6 +10,7 @@
     {% endif %}
 {% endblock %}
 
-{% if not scripts %}
-  {% set scripts = ('wiki',) %}
-{% endif %}
+{% block site_js %}
+    {{ super() }}
+    <script src="{{ cache_bust('js/wiki-min.js') }}"></script>
+{% endblock %}

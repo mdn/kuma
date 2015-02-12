@@ -55,7 +55,7 @@
   <link rel="shortcut icon" href="{{ MEDIA_URL }}redesign/img/favicon32{{ favicon_suffix }}.png">
   <!--[if IE]>
   <meta http-equiv="imagetoolbar" content="no">
-  <script src="{{ MEDIA_URL }}js/libs/html5.js"></script>
+  <script src="{{ cache_bust('js/html5shiv-min.js') }}"></script>
   <![endif]-->
 
   {% block extrahead %}{% endblock %}
@@ -194,7 +194,7 @@
     <!--[if lte IE 8]><script src="/media/js/libs/selectivizr-1.0.2/selectivizr-build.js"></script><![endif]-->
 
     {{ providers_media_js() }}
-    {{ js('main') }}
+    <script src="{{ cache_bust('js/main-min.js') }}"></script>
 
     {% if waffle.flag('ga_outbound_links') %}
       <script>
@@ -202,9 +202,6 @@
       </script>
     {% endif %}
 
-    {% for script in scripts %}
-      {{ js(script) }}
-    {% endfor %}
   {% endblock %}
 
   {% block js %}{% endblock %}

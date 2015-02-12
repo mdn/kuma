@@ -333,6 +333,9 @@ HUMANSTXT_ROOT = MEDIA_ROOT
 MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
 STATIC_ROOT = path('static')
+STATICFILES_DIRS = (
+    path('build'),
+)
 
 SERVE_MEDIA = False
 
@@ -604,7 +607,6 @@ TOWER_ADD_HEADERS = True
 # Bundles for JS/CSS Minification
 JINGO_MINIFY_USE_STATIC = False
 CLEANCSS_BIN = '/usr/local/bin/cleancss'
-UGLIFY_BIN = '/usr/bin/uglifyjs'
 
 MINIFY_BUNDLES = {
     'css': {
@@ -694,81 +696,6 @@ MINIFY_BUNDLES = {
         ),
         'error-403-alternate': (
             'redesign/css/error-403-alternate.css',
-        ),
-    },
-    'js': {
-        'main': (
-            'js/libs/jquery-2.1.0.js',
-            'redesign/js/components.js',
-            'redesign/js/analytics.js',
-            'redesign/js/main.js',
-            'redesign/js/auth.js',
-            'redesign/js/badges.js',
-        ),
-        'home': (
-            'js/libs/owl.carousel/owl-carousel/owl.carousel.js',
-            'redesign/js/home.js'
-        ),
-        'popup': (
-            'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
-            'js/modal-control.js',
-        ),
-        'profile': (
-            'js/profile.js',
-            'js/moz-jquery-plugins.js',
-        ),
-        'events': (
-            'js/libs/jquery.gmap-1.1.0.js',
-            'js/calendar.js',
-        ),
-        'demostudio': (
-            'js/libs/jquery.hoverIntent.minified.js',
-            'js/libs/jquery.scrollTo-1.4.2-min.js',
-            'js/demos.js',
-            'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
-            'js/modal-control.js',
-        ),
-        'demostudio_devderby_landing': (
-            'js/demos-devderby-landing.js',
-        ),
-        'jquery-ui': (
-            'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
-            'js/moz-jquery-plugins.js',
-        ),
-        'libs/tagit': (
-            'js/libs/tag-it.js',
-        ),
-        'search': (
-            'redesign/js/search.js',
-            'redesign/js/search-navigator.js',
-        ),
-        'framebuster': (
-            'js/framebuster.js',
-        ),
-        'syntax-prism': (
-            'js/libs/prism/prism.js',
-            'js/prism-mdn/components/prism-json.js',
-            'js/prism-mdn/plugins/line-numbering/prism-line-numbering.js',
-            'js/libs/prism/plugins/line-highlight/prism-line-highlight.js',
-            'js/syntax-prism.js',
-        ),
-        'search-suggestions': (
-            'js/search-suggestions.js',
-        ),
-        'wiki': (
-            'redesign/js/search-navigator.js',
-            'redesign/js/wiki.js',
-        ),
-        'wiki-edit': (
-            'js/wiki-edit.js',
-            'js/libs/tag-it.js',
-            'js/wiki-tags-edit.js',
-        ),
-        'wiki-move': (
-            'js/wiki-move.js',
-        ),
-        'newsletter': (
-            'redesign/js/newsletter.js',
         ),
     },
 }

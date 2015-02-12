@@ -25,7 +25,7 @@
   <!--[if IE]>
   <meta http-equiv="imagetoolbar" content="no">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-  <script src="{{ MEDIA_URL }}js/libs/html5.js"></script>
+  <script src="{{ cache_bust('js/html5shiv-min.js') }}"></script>
   <![endif]-->
 
 </head>
@@ -90,8 +90,8 @@
     </nav>
 
 
-    {{ js('main') }}
-    {{ js('popup') }}
+    <script src="{{ cache_bust('js/main-min.js') }}"></script>
+    <script src="{{ cache_bust('js/popup-min.js') }}"></script>
 
     <script type="text/javascript">
 
@@ -186,7 +186,7 @@
   </script>
 
   <!-- provide "report" functionality -->
-  <script type="text/javascript" src="{{MEDIA_URL}}js/libs/jquery.hoverIntent.minified.js"></script>
+  <script type="text/javascript" src="{{ cache_bust('js/jquery.hoverIntent-min.js') }}"></script>
   <script type="text/javascript" src="{{MEDIA_URL}}js/modal-control.js"></script>
 
 </body>

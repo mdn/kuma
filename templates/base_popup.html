@@ -19,7 +19,7 @@
 
     <!--[if IE]>
   <meta http-equiv="imagetoolbar" content="no">
-  <script src="{{ MEDIA_URL }}js/libs/html5.js"></script>
+  <script src="{{ cache_bust('js/html5shiv-min.js') }}"></script>
   <![endif]-->
 
   {% block extrahead %}{% endblock %}
@@ -33,9 +33,9 @@
 
 {% block site_js %}
 
-  {{ js('main') }}
+  <script src="{{ cache_bust('js/main-min.js') }}"></script>
 
-  {{ js('popup') }}
+  <script src="{{ cache_bust('js/popup-min.js') }}"></script>
 
 {% endblock %}
 {% block js %}{% endblock %}

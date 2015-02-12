@@ -1,5 +1,6 @@
 import datetime
 import HTMLParser
+import json
 import os
 import urllib
 import urlparse
@@ -22,7 +23,9 @@ from tower import ugettext_lazy as _lazy, ungettext
 
 from django.conf import settings
 from django.contrib.messages.storage.base import LEVEL_TAGS
+from django.contrib.staticfiles.finders import find
 from django.contrib.staticfiles.storage import staticfiles_storage
+from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.template import defaultfilters
 from django.utils.encoding import force_text
 from django.utils.html import strip_tags
@@ -349,3 +352,17 @@ def number(context, n):
     if n is None:
         return ''
     return format_decimal(n, locale=_babel_locale(_contextual_locale(context)))
+
+
+@register.function
+@jinja2.contextfunction
+def cache_bust(context, path):
+    """Return the versioned filename of an asset in build/, given its
+    non-versioned filename."""
+    with open(find('rev-manifest.json')) as manifest_data:
+        manifest = json.load(manifest_data)
+
+        try:
+            return static(manifest[path])
+        except KeyError:
+            return static(path)

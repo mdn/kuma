@@ -184,7 +184,7 @@
         var syntaxScript = doc.createElement('script');
         syntaxScript.setAttribute('data-manual', '');
         syntaxScript.async = 'true';
-        syntaxScript.src = mdn.mediaPath + 'js/syntax-prism-min.js?build=' + mdn.build;
+        syntaxScript.src = mdn.prismURL;
         doc.body.appendChild(syntaxScript);
     })();
 
