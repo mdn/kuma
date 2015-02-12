@@ -1,8 +1,6 @@
 import datetime
 import json
 
-import validate_jsonp
-
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.syndication.views import Feed
@@ -13,6 +11,7 @@ from django.utils.translation import ugettext as _
 
 import jingo
 
+from kuma.core.validators import valid_jsonp_callback_value
 from kuma.core.urlresolvers import reverse
 
 from . import TAG_DESCRIPTIONS
@@ -37,7 +36,7 @@ class SubmissionJSONFeedGenerator(SyndicationFeed):
         # Check for a callback param, validate it before use
         callback = request.GET.get('callback', None)
         if callback is not None:
-            if not validate_jsonp.is_valid_jsonp_callback_value(callback):
+            if not valid_jsonp_callback_value(callback):
                 callback = None
 
         items_out = []

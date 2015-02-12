@@ -4,8 +4,6 @@ import datetime
 import json
 import urllib
 
-import validate_jsonp
-
 from django.conf import settings
 from django.db.models import F
 from django.contrib.syndication.views import Feed
@@ -14,6 +12,7 @@ from django.utils.feedgenerator import (SyndicationFeed, Rss201rev2Feed,
 from django.utils.translation import ugettext as _
 
 from kuma.core.urlresolvers import reverse
+from kuma.core.validators import valid_jsonp_callback_value
 from kuma.users.helpers import gravatar_url
 from .helpers import diff_table, tag_diff_table, compare_url, colorize_diff
 from .models import Document, Revision
@@ -86,7 +85,7 @@ class DocumentJSONFeedGenerator(SyndicationFeed):
         # Check for a callback param, validate it before use
         callback = request.GET.get('callback', None)
         if callback is not None:
-            if not validate_jsonp.is_valid_jsonp_callback_value(callback):
+            if not valid_jsonp_callback_value(callback):
                 callback = None
 
         items_out = []
