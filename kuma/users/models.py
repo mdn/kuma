@@ -9,12 +9,11 @@ from django.utils.functional import cached_property
 from allauth.account.signals import user_signed_up, email_confirmed
 from allauth.socialaccount.signals import social_account_removed
 import constance.config
-from jsonfield import JSONField
 from timezones.fields import TimeZoneField, MAX_TIMEZONE_LENGTH
 from tower import ugettext_lazy as _
 from waffle import switch_is_active
 
-from kuma.core.fields import LocaleField
+from kuma.core.fields import LocaleField, JSONField
 from kuma.core.managers import NamespacedTaggableManager
 from kuma.core.models import ModelBase
 from kuma.wiki.models import Revision

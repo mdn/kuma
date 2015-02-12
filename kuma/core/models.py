@@ -34,4 +34,7 @@ class ModelBase(models.Model):
                                           created=False)
 
 
-add_introspection_rules([], ["^kuma\.core\.fields\.LocaleField"])
+add_introspection_rules([], [
+    '^kuma\.core\.fields\.LocaleField',
+    '^kuma\.core\.fields\.JSONField',
+])
