@@ -1,5 +1,5 @@
 import json
-import mime_types
+import mimetypes
 
 import jinja2
 from tower import ugettext as _
@@ -24,6 +24,17 @@ from kuma.wiki.models import Document
 from .forms import AttachmentRevisionForm
 from .models import Attachment
 from .utils import attachments_json, convert_to_http_date
+
+
+# Mime types used on MDN
+OVERRIDE_MIMETYPES = {
+    'image/jpeg': '.jpeg, .jpg, .jpe',
+    'image/vnd.adobe.photoshop': '.psd',
+}
+
+
+def guess_extension(mimetype):
+    return OVERRIDE_MIMETYPES.get(mimetype, mimetypes.guess_extension(mimetype))
 
 
 @require_GET
@@ -128,12 +139,12 @@ def new_attachment(request):
             return HttpResponseRedirect(attachment.get_absolute_url())
     else:
         if request.POST.get('is_ajax', ''):
-            allowed_types = ', '.join(map(mime_types.guess_extension,
-                                constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES.split()))
+            allowed_list = constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES.split()
+            allowed_types = ', '.join(map(guess_extension, allowed_list))
             error_obj = {
                 'title': request.POST.get('is_ajax', ''),
                 'error': _(u'The file provided is not valid. '
-                           u'File must be one of these types: ' + allowed_types + u'.')
+                           u'File must be one of these types: %s.') % allowed_types
             }
             response = render(
                 request,
