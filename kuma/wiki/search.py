@@ -208,12 +208,13 @@ class WikiDocumentType(document.DocType):
 
     @classmethod
     def search(cls, **kwargs):
-        kwargs.update({
+        options = {
             'using': connections.get_connection(),
             'index': cls.get_index(),
             'doc_type': {cls._doc_type.name: cls.from_es},
-        })
-        sq = Search(**kwargs)
+        }
+        options.update(kwargs)
+        sq = Search(**options)
 
         # Add highlighting.
         sq = sq.highlight(*cls.excerpt_fields)
@@ -281,8 +282,8 @@ class WikiDocumentType(document.DocType):
         """Rebuild ElasticSearch indexes.
 
         :arg chunk_size: how many documents to bulk index as a single chunk.
-        :arg index: the `Index` object to reindex into. Uses the current promoted
-            index if none provided.
+        :arg index: the `Index` object to reindex into. Uses the current
+            promoted index if none provided.
         :arg percent: 1 to 100--the percentage of the db to index.
 
         """

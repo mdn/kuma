@@ -1,5 +1,4 @@
 import logging
-import warnings
 
 from django.conf import settings
 from django.core.mail import mail_admins
@@ -8,13 +7,6 @@ from celery.task import task
 
 
 log = logging.getLogger('kuma.search.tasks')
-
-
-# ignore a deprecation warning from elasticutils until the fix is released
-# refs https://github.com/mozilla/elasticutils/pull/160
-warnings.filterwarnings('ignore',
-                        category=DeprecationWarning,
-                        module='celery.decorators')
 
 
 @task

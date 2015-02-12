@@ -339,7 +339,9 @@ def index_documents(ids, index_pk, reraise=False):
             if reraise:
                 raise
 
-    cls.bulk_index(documents, id_field='id', es=es, index=index.prefixed_name)
+    if documents:
+        cls.bulk_index(documents, id_field='id', es=es,
+                       index=index.prefixed_name)
 
 
 @task

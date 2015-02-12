@@ -69,7 +69,6 @@ src/pystatsd
 src/django-statsd
 src/elasticsearch-py
 src/elasticsearch-dsl-py
-src/elasticutils
 src/urllib3
 src/simplejson
 src/django-tidings
