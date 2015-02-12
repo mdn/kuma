@@ -73,8 +73,8 @@ class ElasticTestCase(UserTestCase):
         self.teardown_indexes()
         reset_url_prefixer()
 
-    def refresh(self, timesleep=0):
-        index = Index.objects.get_current().prefixed_name
+    def refresh(self, index=None, timesleep=0):
+        index = index or Index.objects.get_current().prefixed_name
         # Any time we're doing a refresh, we're making sure that the
         # index is ready to be queried.  Given that, it's almost
         # always the case that we want to run all the generated tasks,

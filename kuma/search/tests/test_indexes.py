@@ -71,6 +71,9 @@ class TestIndexes(ElasticTestCase):
         # then create a successor and render a document against the old index
         successor_index = Index.objects.create(name='second')
         doc = Document.objects.get(pk=1)
+        doc.title = 'test outdated'
+        doc.slug = 'test-outdated'
+        doc.save()
         doc.render()
         eq_(successor_index.outdated_objects.count(), 1)
 
@@ -81,8 +84,14 @@ class TestIndexes(ElasticTestCase):
         eq_(S(index=successor_index.prefixed_name).count(), 7)
         eq_(S().query('match', title='lorem').execute()[0].slug, 'lorem-ipsum')
 
+        # Promotion reindexes outdated documents. Test that our change is
+        # reflected in the index.
         successor_index.promote()
+        self.refresh(index=successor_index.prefixed_name)
         eq_(successor_index.outdated_objects.count(), 0)
+        eq_(S(index=successor_index.prefixed_name)
+            .query('match', title='outdated').execute()[0].slug,
+            'test-outdated')
 
     def test_delete_index(self):
         # first create and populate the index

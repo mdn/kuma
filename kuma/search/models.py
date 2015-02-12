@@ -9,7 +9,6 @@ from django.utils import timezone
 from django.utils.functional import cached_property
 
 from elasticsearch.exceptions import NotFoundError, RequestError
-from elasticutils.contrib.django.tasks import index_objects
 
 from kuma.core.managers import PrefetchTaggableManager
 from kuma.core.urlresolvers import reverse
@@ -115,18 +114,18 @@ class Index(models.Model):
                                                  content_object=instance)
 
     def promote(self):
-        rescheduled = []
+        from kuma.wiki.tasks import index_documents
+
+        # Index all outdated documents to this index.
+        outdated_ids = []
         for outdated_object in self.outdated_objects.all():
             instance = outdated_object.content_object
-            label = ('%s.%s.%s' %
-                     (outdated_object.content_type.natural_key() +
-                      (instance.id,)))  # gives us 'wiki.document.12345'
-            if label in rescheduled:
-                continue
-            mapping_type = instance.get_document_type()
-            index_objects.delay(mapping_type, [instance.id])
-            rescheduled.append(label)
+            outdated_ids.append(instance.id)
+        if outdated_ids:
+            index_documents.delay(outdated_ids, self.pk)
+        # Clear outdated.
         self.outdated_objects.all().delete()
+        # Promote this index.
         self.promoted = True
         self.save()
         # Allow only a single index to be promoted.

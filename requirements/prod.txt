@@ -33,7 +33,6 @@ django-constance==0.6
 django-statici18n==0.4.5
 django-appconf==0.6
 urllib3==1.8
-elasticutils==0.9.1
 elasticsearch==0.4.5
 django-allauth==0.17.0
 requests-oauthlib==0.4.1
