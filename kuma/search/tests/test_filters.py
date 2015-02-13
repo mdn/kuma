@@ -53,7 +53,7 @@ class FilterTests(ElasticTestCase):
         view = HighlightView.as_view()
         request = self.get_request('/en-US/search?q=article')
         response = view(request)
-        ok_('<em>article</em>' in response.data['documents'][0]['excerpt'])
+        ok_('<mark>article</mark>' in response.data['documents'][0]['excerpt'])
 
     def test_language_filter(self):
         class LanguageView(SearchView):

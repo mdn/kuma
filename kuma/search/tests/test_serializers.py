@@ -47,10 +47,10 @@ class FieldTests(ElasticTestCase):
 
         class FakeValue(WikiDocumentType):
             summary = 'just a summary'
-            highlight = {'content': ['this is <em>matching</em> text']}
+            highlight = {'content': ['this is <mark>matching</mark> text']}
 
         field = DocumentExcerptField()
-        eq_(field.to_native(FakeValue()), 'this is <em>matching</em> text')
+        eq_(field.to_native(FakeValue()), 'this is <mark>matching</mark> text')
 
         class FakeValue(WikiDocumentType):
             summary = 'just a summary'
