@@ -18,13 +18,13 @@ search or Google's site search.
 Installing Elasticsearch Search
 ===============================
 
-We currently require **Elasticsearch 0.90.9**. You may be able to install this
+We currently require Elasticsearch >= 1.3.x. You may be able to install this
 from a package manager like yum, aptitude, or brew.
 
 If not, you can easily `download <http://www.elasticsearch.org/download/>`_ the
 source and compile it. Generally all you'll need to do is::
 
-    $ cd elasticsearch-0.90.9
+    $ cd elasticsearch-1.3.7
     $ bin/elasticsearch -f
 
 Then run the Kuma search tests::
@@ -45,21 +45,27 @@ The Easy, Sort of Wrong Way
 
 The easiest way to start Elasticsearch for testing is::
 
-    $ cd path/to/elasticsearch-0.90.9
+    $ cd path/to/elasticsearch-1.3.7
     $ bin/elasticsearch -f
 
 Then from the Kuma source code path::
 
-    $ ./manage.py reindex
+    $ ./manage.py reindex -c 200
 
 If you need to update the search indexes::
 
-    $ ./manage.py reindex
+    $ ./manage.py reindex -c 200
+
+Note: If you have a very large database of wiki documents you can also adjust the
+percentage of documents you want to reindex by adding the `-p` flag. In the example
+below this will index 5% of the documents in the database::
+
+    $ ./manage.py reindex -p 5 -c 200
 
 While this method is very easy, you will need to reindex after any time you run
 the search tests, as they will overwrite the data files Elasticsearch uses.
 
-The Ellaborate, Kinda Proper Way
+The Elaborate, Kinda Proper Way
 --------------------------------
 
 Assuming you're running the full stack with ``foreman start`` (or any other
