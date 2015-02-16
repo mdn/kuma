@@ -7,10 +7,6 @@
         set-smaller-font-size();
     }
 
-    ol ol {
-        padding-left: $grid-spacing;
-    }
-
     li {
         padding-top: ($grid-spacing / 2);
         position: relative;
@@ -21,6 +17,10 @@
             position: absolute;
             color: #484848;
         }
+    }
+
+    li li {
+        padding-left: $grid-spacing;
     }
 
     .toggler {

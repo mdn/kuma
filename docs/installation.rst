@@ -224,5 +224,5 @@ Last Steps
 Setting Up Search
 -----------------
 
-See the :doc:`search documentation <search>` for steps to get Elasticsearch
+See the :doc:`search documentation <elasticsearch>` for steps to get Elasticsearch
 search working.
