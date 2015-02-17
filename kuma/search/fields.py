@@ -34,7 +34,7 @@ class DocumentExcerptField(serializers.Field):
     """
     A serializer field that given a wiki DocumentType object returns
     a cleaned version of the excerpt fields with the highlighting
-    <em> tag intact.
+    <mark> tag intact.
     """
     def to_native(self, value):
         if not getattr(value, 'highlight', False):

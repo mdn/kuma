@@ -218,7 +218,8 @@ class WikiDocumentType(document.DocType):
 
         # Add highlighting.
         sq = sq.highlight(*cls.excerpt_fields)
-        sq = sq.highlight_options(order='score')
+        sq = sq.highlight_options(order='score', pre_tags=['<mark>'],
+                                  post_tags=['</mark>'])
 
         return sq
 
