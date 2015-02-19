@@ -1047,11 +1047,6 @@ CONSTANCE_CONFIG = dict(
         'Allowed file types for wiki file attachments',
     ),
 
-    WIKI_LOW_ACTIVITY_THRESHOLD = (
-        10,
-        'Number of edits a user must make to cross the "Low Activity" threshold',
-    ),
-
     KUMA_WIKI_IFRAME_ALLOWED_HOSTS = (
         '^https?\:\/\/(developer-local.allizom.org|developer-dev.allizom.org|developer.allizom.org|mozillademos.org|testserver|localhost\:8000|(www.)?youtube.com\/embed\/(\.*))',
         'Regex comprised of domain names that are allowed for IFRAME SRCs'

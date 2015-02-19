@@ -23,6 +23,9 @@ from .helpers import gravatar_url
 from .tasks import send_welcome_email
 
 
+LOW_ACTIVITY_THRESHOLD = 10
+
+
 class UserBan(models.Model):
     user = models.ForeignKey(User,
                              related_name="bans",
@@ -187,9 +190,12 @@ class UserProfile(ModelBase):
         return (Revision.objects.filter(creator=self.user)
                                 .order_by('-created')[:5])
 
-    @property
+    @cached_property
     def num_wiki_revisions(self):
         return Revision.objects.filter(creator=self.user).count()
+
+    def has_low_activity(self):
+        return self.num_wiki_revisions < LOW_ACTIVITY_THRESHOLD
 
 
 @receiver(models.signals.post_save, sender=User)
