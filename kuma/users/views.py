@@ -94,6 +94,10 @@ def profile_view(request, username):
         page_number = 1
     show_hidden = (user == request.user) or user.is_superuser
 
+    show_sites = True
+    if profile.has_low_activity() and not show_hidden:
+        show_sites = False
+
     demos = (Submission.objects.all_sorted(sort_order)
                                .filter(creator=profile.user))
     if not show_hidden:
@@ -117,6 +121,8 @@ def profile_view(request, username):
 
     context = {
         'profile': profile,
+        'show_sites': show_sites,
+        'show_hidden': show_hidden,
         'demos': demos,
         'demos_paginator': demos_paginator,
         'demos_page': demos_page,

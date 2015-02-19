@@ -45,6 +45,7 @@
             "deki_user_id": 0,
             "fullname": "Test User",
             "homepage": "http://testuser.com/",
+            "misc": "{\"websites\": {\"website\": \"http://testuser.com\"} }",
             "irc_nickname": "testuser",
             "locale": "en-US",
             "location": "Testville",

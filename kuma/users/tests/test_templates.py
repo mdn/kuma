@@ -10,6 +10,26 @@ from kuma.core.urlresolvers import reverse
 from .test_views import TESTUSER_PASSWORD
 from . import (verify_strings_in_response, verify_strings_not_in_response,
                UserTestCase)
+from ..models import UserProfile
+
+
+class ProfileTests(UserTestCase):
+    def test_hide_websites_for_low_activity_users(self):
+        # testuser has 0 edits
+        profile = UserProfile.objects.get(user__username='testuser')
+        url = reverse('users.profile', args=(profile.user.username,))
+        r = self.client.get(url, follow=True)
+        ok_("testuser.com" not in r.content)
+
+    @mock.patch_object(UserProfile, 'has_low_activity')
+    def test_show_websites_for_higher_activity_users(self,
+                                                     mock_low_activity):
+        mock_low_activity.return_value = False
+        profile = UserProfile.objects.get(user__username='testuser')
+        with mock.patch_object(profile, 'has_low_activity', False):
+            url = reverse('users.profile', args=(profile.user.username,))
+            r = self.client.get(url, follow=True)
+            ok_("testuser.com" in r.content)
 
 
 class SignupTests(UserTestCase):

@@ -123,6 +123,15 @@
         <figure>
           <img src="{{ profile.gravatar() }}" alt="{{ profile.user.username }}" width="200" height="200" class="profile-photo avatar" />
         </figure>
+        {% if show_hidden %}
+          {% if request.user == profile.user %}
+          {{ _('Until you have made {threshold} revisions, these fields are hidden from others.') | f(threshold=low_activity_threshold) }}
+          {% elif request.user.is_superuser %}
+          {{ _('Until this user has made {threshold} revisions, these fields are hidden from others.') | f(threshold=low_activity_threshold) }}
+          {% endif %}
+        {% endif %}
+
+        {% if show_sites %}
 
         <ul class="profile-links">
         {% for site_name, site_meta in profile.website_choices %}
@@ -139,6 +148,9 @@
           {% endif %}
         {% endfor %}
         </ul>
+
+        {% endif %}
+
       </div>
     </section>
 
