@@ -582,13 +582,15 @@
       Make Compare selected revisions button sticky when scrolling history page
     */
     (function() {
-        var button = $('.revision-list-controls .link-btn');
-        var revisionButtonOffset = $(button).offset().top;
-        $(window).on('scroll', function() {
-            var $compareButton = $(button);
-            var scroll = $(this).scrollTop();
-            $compareButton.toggleClass('fixed', scroll >= revisionButtonOffset);
-        });
+        var $button = $('.revision-list-controls .link-btn');
+        if($button.length) {
+            var revisionButtonOffset = $button.offset().top;
+            $(win).on('scroll', function() {
+                var $compareButton = $button;
+                var scroll = $(this).scrollTop();
+                $compareButton.toggleClass('fixed', scroll >= revisionButtonOffset);
+            });
+        }
     })();
 
     function debounce(func, wait, immediate) {
