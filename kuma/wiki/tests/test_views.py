@@ -1861,7 +1861,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         ok_(str(parent.id) in content.html())
 
     @attr('tags')
-    @mock.patch_object(Site.objects, 'get_current')
+    @mock.patch.object(Site.objects, 'get_current')
     def test_document_tags(self, get_current):
         """Document tags can be edited through revisions"""
         data = new_document_data()
@@ -1922,7 +1922,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         assert_tag_state(ts2, ts1)
 
     @attr('review_tags')
-    @mock.patch_object(Site.objects, 'get_current')
+    @mock.patch.object(Site.objects, 'get_current')
     def test_review_tags(self, get_current):
         """Review tags can be managed on document revisions"""
         get_current.return_value.domain = 'su.mo.com'
@@ -2354,7 +2354,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         rev_ip = RevisionIP.objects.get(revision=rev)
         eq_('127.0.0.1', rev_ip.ip)
 
-    @mock.patch_object(Site.objects, 'get_current')
+    @mock.patch.object(Site.objects, 'get_current')
     def test_email_for_first_edits(self, get_current):
         get_current.return_value.domain = 'dev.mo.org'
 
@@ -3257,7 +3257,7 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
         eq_(1, p.find('#doc-render-raw-fallback').length)
 
     @attr('schedule_rendering')
-    @mock.patch_object(Document, 'schedule_rendering')
+    @mock.patch.object(Document, 'schedule_rendering')
     @mock.patch('kuma.wiki.kumascript.get')
     def test_schedule_rendering(self, mock_kumascript_get,
                                 mock_document_schedule_rendering):

@@ -317,7 +317,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         eq_("Name Your Article", doc('input#id_title').attr('placeholder'))
         eq_("10", doc('input#id_category').attr('value'))
 
-    @mock.patch_object(Site.objects, 'get_current')
+    @mock.patch.object(Site.objects, 'get_current')
     def test_new_document_POST(self, get_current):
         """HTTP POST to new document URL creates the document."""
         get_current.return_value.domain = 'testserver'
@@ -338,7 +338,7 @@ class NewDocumentTests(UserTestCase, WikiTestCase):
         eq_(data['summary'], r.summary)
         eq_(data['content'], r.content)
 
-    @mock.patch_object(Site.objects, 'get_current')
+    @mock.patch.object(Site.objects, 'get_current')
     def test_new_document_other_locale(self, get_current):
         """Make sure we can create a document in a non-default locale."""
         # You shouldn't be able to make a new doc in a non-default locale
@@ -486,8 +486,8 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         eq_(doc('#id_content')[0].value, r.content)
 
     @override_settings(CELERY_ALWAYS_EAGER=True)
-    @mock.patch_object(Site.objects, 'get_current')
-    @mock.patch_object(settings._wrapped, 'TIDINGS_CONFIRM_ANONYMOUS_WATCHES', False)
+    @mock.patch.object(Site.objects, 'get_current')
+    @mock.patch.object(settings._wrapped, 'TIDINGS_CONFIRM_ANONYMOUS_WATCHES', False)
     def test_new_revision_POST_document_with_current(self, get_current):
         """HTTP POST to new revision URL creates the revision on a document.
 
@@ -540,8 +540,8 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
                                                                     self.d.slug
             in edited_email.body)
 
-    @mock.patch_object(EditDocumentEvent, 'fire')
-    @mock.patch_object(Site.objects, 'get_current')
+    @mock.patch.object(EditDocumentEvent, 'fire')
+    @mock.patch.object(Site.objects, 'get_current')
     def test_new_revision_POST_document_without_current(
             self, get_current, edited_fire):
         """HTTP POST to new revision URL creates the revision on a document.
@@ -852,8 +852,8 @@ class TranslateTests(UserTestCase, WikiTestCase):
         eq_(200, response.status_code)
         eq_(0, self.d.translations.count())
 
-    @mock.patch_object(EditDocumentEvent, 'fire')
-    @mock.patch_object(Site.objects, 'get_current')
+    @mock.patch.object(EditDocumentEvent, 'fire')
+    @mock.patch.object(Site.objects, 'get_current')
     def test_first_translation_to_locale(self, get_current, edited_fire):
         """Create the first translation of a doc to new locale."""
         get_current.return_value.domain = 'testserver'
@@ -882,8 +882,8 @@ class TranslateTests(UserTestCase, WikiTestCase):
         rev_es.save()
         return rev_es
 
-    @mock.patch_object(EditDocumentEvent, 'fire')
-    @mock.patch_object(Site.objects, 'get_current')
+    @mock.patch.object(EditDocumentEvent, 'fire')
+    @mock.patch.object(Site.objects, 'get_current')
     def test_another_translation_to_locale(self, get_current, edited_fire):
         """Create the second translation of a doc."""
         get_current.return_value.domain = 'testserver'

@@ -17,7 +17,7 @@ class HelpTests(WikiTestCase):
         eq_(tojson({'title': '<script>alert("Hi!")</script>'}),
             '{"title": "&lt;script&gt;alert(&quot;Hi!&quot;)&lt;/script&gt;"}')
 
-    @mock.patch_object(Site.objects, 'get_current')
+    @mock.patch.object(Site.objects, 'get_current')
     def test_absolutify(self, get_current):
         get_current.return_value.domain = 'testserver'
 
