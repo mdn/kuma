@@ -7,8 +7,7 @@ from rest_framework import serializers, pagination
 from tower import ugettext as _
 
 from . import models
-from .fields import (DocumentExcerptField, LocaleField, SearchQueryField,
-                     SiteURLField)
+from .fields import LocaleField, SearchQueryField, SiteURLField
 from .paginator import SearchPaginator
 from .queries import Filter, FilterGroup
 from .utils import QueryURLObject
@@ -118,11 +117,14 @@ class BaseDocumentSerializer(serializers.Serializer):
 
 
 class DocumentSerializer(BaseDocumentSerializer):
-    excerpt = DocumentExcerptField(source='*')
+    excerpt = serializers.SerializerMethodField('get_excerpt')
     tags = serializers.ChoiceField(read_only=True, source='tags')
     score = serializers.FloatField(read_only=True, source='_meta.score')
     explanation = serializers.SerializerMethodField('get_explanation')
     parent = BaseDocumentSerializer(read_only=True, source='parent')
+
+    def get_excerpt(self, obj):
+        return obj.get_excerpt()
 
     def get_explanation(self, obj):
         return getattr(obj._meta, 'explanation', None)

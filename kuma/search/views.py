@@ -10,7 +10,8 @@ from rest_framework.renderers import JSONRenderer
 from kuma.wiki.search import WikiDocumentType
 
 from .filters import (AdvancedSearchQueryBackend, DatabaseFilterBackend,
-                      get_filters, LanguageFilterBackend, SearchQueryBackend)
+                      get_filters, HighlightFilterBackend,
+                      LanguageFilterBackend, SearchQueryBackend)
 from .models import Filter
 from .paginator import SearchPaginator
 from .renderers import ExtendedTemplateHTMLRenderer
@@ -32,6 +33,7 @@ class SearchView(ListAPIView):
         AdvancedSearchQueryBackend,
         DatabaseFilterBackend,
         LanguageFilterBackend,
+        HighlightFilterBackend,
     )
     paginator_class = SearchPaginator
     paginate_by = 10

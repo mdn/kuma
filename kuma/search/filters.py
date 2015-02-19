@@ -5,6 +5,8 @@ from elasticsearch_dsl import F, Q, query
 from rest_framework.filters import BaseFilterBackend
 from waffle import flag_is_active
 
+from kuma.wiki.search import WikiDocumentType
+
 from .models import Filter, FilterGroup
 
 
@@ -190,5 +192,23 @@ class DatabaseFilterBackend(BaseFilterBackend):
                 'facet_filter': facet_filter,
             }
         queryset = queryset.extra(facets=facets)
+
+        return queryset
+
+
+class HighlightFilterBackend(BaseFilterBackend):
+    """
+    A django-rest-framework filter backend that adds search term highlighting.
+
+    If the query string `highlight=0` is passed, we bypass highlighting.
+
+    """
+    def filter_queryset(self, request, queryset, view):
+        highlight = request.GET.get('highlight', True)
+        if highlight != '0':
+            queryset = queryset.highlight(*WikiDocumentType.excerpt_fields)
+            queryset = queryset.highlight_options(order='score',
+                                                  pre_tags=['<mark>'],
+                                                  post_tags=['</mark>'])
 
         return queryset

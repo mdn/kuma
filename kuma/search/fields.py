@@ -30,18 +30,6 @@ class LocaleField(serializers.Field):
         return request.locale
 
 
-class DocumentExcerptField(serializers.Field):
-    """
-    A serializer field that given a wiki DocumentType object returns
-    a cleaned version of the excerpt fields with the highlighting
-    <mark> tag intact.
-    """
-    def to_native(self, value):
-        if not getattr(value, 'highlight', False):
-            return value.summary
-        return value.get_excerpt()
-
-
 class SiteURLField(serializers.Field):
     """
     A serializer field for creating URL for the given objects with the
