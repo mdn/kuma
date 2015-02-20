@@ -3,7 +3,7 @@ from nose.tools import ok_, eq_
 from kuma.wiki.search import WikiDocumentType
 
 from . import ElasticTestCase
-from ..fields import DocumentExcerptField, SearchQueryField, SiteURLField
+from ..fields import SearchQueryField, SiteURLField
 from ..models import Filter, FilterGroup
 from ..serializers import FilterWithGroupSerializer, DocumentSerializer
 
@@ -40,23 +40,16 @@ class SerializerTests(ElasticTestCase):
         ok_(isinstance(dict_data, dict))
         eq_(dict_data['id'], result[0].id)
 
+    def test_excerpt(self):
+        search = WikiDocumentType.search()
+        search = search.query('match', summary='CSS')
+        search = search.highlight(*WikiDocumentType.excerpt_fields)
+        result = search.execute()
+        data = DocumentSerializer(result).data
+        eq_(data[0]['excerpt'], u'A <em>CSS</em> article')
+
 
 class FieldTests(ElasticTestCase):
-
-    def test_DocumentExcerptField(self):
-
-        class FakeValue(WikiDocumentType):
-            summary = 'just a summary'
-            highlight = {'content': ['this is <mark>matching</mark> text']}
-
-        field = DocumentExcerptField()
-        eq_(field.to_native(FakeValue()), 'this is <mark>matching</mark> text')
-
-        class FakeValue(WikiDocumentType):
-            summary = 'just a summary'
-            highlight = {}
-
-        eq_(field.to_native(FakeValue()), FakeValue.summary)
 
     def test_SearchQueryField(self):
         request = self.get_request('/?q=test')

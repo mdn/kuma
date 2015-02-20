@@ -5,6 +5,8 @@ from elasticsearch_dsl import F, Q, query
 from rest_framework.filters import BaseFilterBackend
 from waffle import flag_is_active
 
+from kuma.wiki.search import WikiDocumentType
+
 from .models import Filter, FilterGroup
 
 
@@ -73,7 +75,6 @@ class SearchQueryBackend(BaseFilterBackend):
     queryset based on the search query found in the current request's
     query parameters.
     """
-    search_param = 'q'
     search_operations = [
         # (<query type>, <field>, <boost factor>)
         ('match', 'title', 6.0),
@@ -84,13 +85,13 @@ class SearchQueryBackend(BaseFilterBackend):
     ]
 
     def filter_queryset(self, request, queryset, view):
-        search_param = request.QUERY_PARAMS.get(self.search_param, None)
+        search_term = view.query_params.get('q')
 
-        if search_param:
+        if search_term:
             queries = []
             for query_type, field, boost in self.search_operations:
                 queries.append(
-                    Q(query_type, **{field: {'query': search_param,
+                    Q(query_type, **{field: {'query': search_term,
                                              'boost': boost}}))
             queryset = queryset.query(
                 'function_score',
@@ -118,9 +119,9 @@ class AdvancedSearchQueryBackend(BaseFilterBackend):
 
     def filter_queryset(self, request, queryset, view):
         queries = []
-        for field in self.fields:
 
-            search_param = request.QUERY_PARAMS.get(field, '').lower()
+        for field in self.fields:
+            search_param = view.query_params.get(field)
             if not search_param:
                 continue
 
@@ -190,5 +191,22 @@ class DatabaseFilterBackend(BaseFilterBackend):
                 'facet_filter': facet_filter,
             }
         queryset = queryset.extra(facets=facets)
+
+        return queryset
+
+
+class HighlightFilterBackend(BaseFilterBackend):
+    """
+    A django-rest-framework filter backend that adds search term highlighting.
+    """
+    def filter_queryset(self, request, queryset, view):
+
+        highlight = view.query_params.get('highlight')
+
+        if highlight:
+            queryset = queryset.highlight(*WikiDocumentType.excerpt_fields)
+            queryset = queryset.highlight_options(order='score',
+                                                  pre_tags=['<mark>'],
+                                                  post_tags=['</mark>'])
 
         return queryset

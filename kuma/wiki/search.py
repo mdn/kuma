@@ -216,11 +216,6 @@ class WikiDocumentType(document.DocType):
         options.update(kwargs)
         sq = Search(**options)
 
-        # Add highlighting.
-        sq = sq.highlight(*cls.excerpt_fields)
-        sq = sq.highlight_options(order='score', pre_tags=['<mark>'],
-                                  post_tags=['</mark>'])
-
         return sq
 
     @classmethod

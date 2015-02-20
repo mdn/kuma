@@ -7,11 +7,33 @@ from rest_framework import serializers, pagination
 from tower import ugettext as _
 
 from . import models
-from .fields import (DocumentExcerptField, LocaleField, SearchQueryField,
-                     SiteURLField)
+from .fields import LocaleField, SearchQueryField, SiteURLField
 from .paginator import SearchPaginator
 from .queries import Filter, FilterGroup
 from .utils import QueryURLObject
+
+
+class SearchQuerySerializer(serializers.Serializer):
+    q = serializers.CharField(required=False)
+    highlight = serializers.CharField(required=False)
+    # Advanced search query paramenters.
+    css_classnames = serializers.CharField(required=False)
+    html_attributes = serializers.CharField(required=False)
+    kumascript_macros = serializers.CharField(required=False)
+
+    def validate_highlight(self, attrs, source):
+        """
+        The 'highlight' value should only be 'true' (default) or 'false'.
+        """
+        value = attrs.get(source)
+        if value and value == 'false':
+            value = False
+        else:
+            # If empty or any value other than 'false', we default to
+            # highlighting enabled.
+            value = True
+        attrs[source] = value
+        return attrs
 
 
 class FilterURLSerializer(serializers.Serializer):
@@ -114,15 +136,19 @@ class BaseDocumentSerializer(serializers.Serializer):
         # sure the code in restframework works as it assumes a dict instance.
         if isinstance(obj, document.DocType):
             obj = obj.to_dict()
-        return super(BaseDocumentSerializer, self).field_to_native(obj, field_name)
+        return super(BaseDocumentSerializer,
+                     self).field_to_native(obj, field_name)
 
 
 class DocumentSerializer(BaseDocumentSerializer):
-    excerpt = DocumentExcerptField(source='*')
+    excerpt = serializers.SerializerMethodField('get_excerpt')
     tags = serializers.ChoiceField(read_only=True, source='tags')
     score = serializers.FloatField(read_only=True, source='_meta.score')
     explanation = serializers.SerializerMethodField('get_explanation')
     parent = BaseDocumentSerializer(read_only=True, source='parent')
+
+    def get_excerpt(self, obj):
+        return obj.get_excerpt()
 
     def get_explanation(self, obj):
         return getattr(obj._meta, 'explanation', None)

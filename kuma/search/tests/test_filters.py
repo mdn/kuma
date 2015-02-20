@@ -5,7 +5,8 @@ from kuma.wiki.signals import render_done
 
 from . import ElasticTestCase
 from ..filters import (AdvancedSearchQueryBackend, DatabaseFilterBackend,
-                       LanguageFilterBackend, SearchQueryBackend)
+                       HighlightFilterBackend, LanguageFilterBackend,
+                       SearchQueryBackend)
 from ..views import SearchView
 
 
@@ -48,12 +49,21 @@ class FilterTests(ElasticTestCase):
 
     def test_highlight_filter(self):
         class HighlightView(SearchView):
-            filter_backends = (SearchQueryBackend,)
+            filter_backends = (SearchQueryBackend, HighlightFilterBackend)
 
         view = HighlightView.as_view()
         request = self.get_request('/en-US/search?q=article')
         response = view(request)
         ok_('<mark>article</mark>' in response.data['documents'][0]['excerpt'])
+
+    def test_no_highlight_filter(self):
+        class HighlightView(SearchView):
+            filter_backends = (SearchQueryBackend, HighlightFilterBackend)
+
+        view = HighlightView.as_view()
+        request = self.get_request('/en-US/search?q=article&highlight=false')
+        response = view(request)
+        ok_('<mark>' not in response.data['documents'][0]['excerpt'])
 
     def test_language_filter(self):
         class LanguageView(SearchView):
