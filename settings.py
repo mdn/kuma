@@ -773,6 +773,9 @@ MINIFY_BUNDLES = {
         'newsletter': (
             'redesign/js/newsletter.js',
         ),
+        'fellowship': (
+            'redesign/js/fellowship.js',
+        ),
     },
 }
 
