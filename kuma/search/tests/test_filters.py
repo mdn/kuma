@@ -61,7 +61,7 @@ class FilterTests(ElasticTestCase):
             filter_backends = (SearchQueryBackend, HighlightFilterBackend)
 
         view = HighlightView.as_view()
-        request = self.get_request('/en-US/search?q=article&highlight=0')
+        request = self.get_request('/en-US/search?q=article&highlight=false')
         response = view(request)
         ok_('<mark>' not in response.data['documents'][0]['excerpt'])
 

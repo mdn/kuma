@@ -9,6 +9,7 @@ from rest_framework.renderers import JSONRenderer
 
 from kuma.wiki.search import WikiDocumentType
 
+from .exceptions import ValidationError
 from .filters import (AdvancedSearchQueryBackend, DatabaseFilterBackend,
                       get_filters, HighlightFilterBackend,
                       LanguageFilterBackend, SearchQueryBackend)
@@ -16,7 +17,7 @@ from .models import Filter
 from .paginator import SearchPaginator
 from .renderers import ExtendedTemplateHTMLRenderer
 from .serializers import (DocumentSerializer, FilterWithGroupSerializer,
-                          SearchSerializer)
+                          SearchQuerySerializer, SearchSerializer)
 
 
 class SearchView(ListAPIView):
@@ -50,6 +51,7 @@ class SearchView(ListAPIView):
         self.serialized_filters = (
             FilterWithGroupSerializer(self.available_filters, many=True).data)
         self.selected_filters = get_filters(self.request.QUERY_PARAMS.getlist)
+        self.query_params = {}
 
     def get_queryset(self):
         return WikiDocumentType.search()
@@ -60,6 +62,10 @@ class SearchView(ListAPIView):
         """
         # Stash some data here for the serializer.
         self.url = request.get_full_path()
+        query_params = SearchQuerySerializer(data=request.QUERY_PARAMS)
+        if not query_params.is_valid():
+            raise ValidationError(query_params.errors)
+        self.query_params = query_params.data
 
         return super(SearchView, self).list(request, *args, **kwargs)
 

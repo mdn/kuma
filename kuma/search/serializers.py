@@ -13,6 +13,29 @@ from .queries import Filter, FilterGroup
 from .utils import QueryURLObject
 
 
+class SearchQuerySerializer(serializers.Serializer):
+    q = serializers.CharField(required=False)
+    highlight = serializers.CharField(required=False)
+    # Advanced search query paramenters.
+    css_classnames = serializers.CharField(required=False)
+    html_attributes = serializers.CharField(required=False)
+    kumascript_macros = serializers.CharField(required=False)
+
+    def validate_highlight(self, attrs, source):
+        """
+        The 'highlight' value should only be 'true' (default) or 'false'.
+        """
+        value = attrs.get(source)
+        if value and value == 'false':
+            value = False
+        else:
+            # If empty or any value other than 'false', we default to
+            # highlighting enabled.
+            value = True
+        attrs[source] = value
+        return attrs
+
+
 class FilterURLSerializer(serializers.Serializer):
     active = serializers.CharField(read_only=True)
     inactive = serializers.CharField(read_only=True)
@@ -113,7 +136,8 @@ class BaseDocumentSerializer(serializers.Serializer):
         # sure the code in restframework works as it assumes a dict instance.
         if isinstance(obj, document.DocType):
             obj = obj.to_dict()
-        return super(BaseDocumentSerializer, self).field_to_native(obj, field_name)
+        return super(BaseDocumentSerializer,
+                     self).field_to_native(obj, field_name)
 
 
 class DocumentSerializer(BaseDocumentSerializer):
