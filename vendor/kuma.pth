@@ -96,3 +96,4 @@ src/py-amqp
 src/django-celery
 src/django-banish
 src/django-honeypot
+src/bitly-api-python

@@ -83,7 +83,7 @@ class Migration(SchemaMigration):
             'source_code_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'summary': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'title': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '255'}),
-            'video_url': ('embedutils.VideoEmbedURLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'})
+            'video_url': ('kuma.demos.embed.VideoEmbedURLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'})
         },
         'taggit.tag': {
             'Meta': {'object_name': 'Tag'},

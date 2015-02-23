@@ -985,7 +985,7 @@ class DeferredRenderingTests(UserTestCase):
         constance.config.KUMASCRIPT_TIMEOUT = 0.0
 
     @mock.patch('kuma.wiki.kumascript.get')
-    @mock.patch_object(tasks.render_document, 'delay')
+    @mock.patch.object(tasks.render_document, 'delay')
     def test_schedule_rendering(self, mock_render_document_delay,
                                 mock_kumascript_get):
         mock_kumascript_get.return_value = (self.rendered_content, None)
@@ -1020,7 +1020,7 @@ class DeferredRenderingTests(UserTestCase):
         ok_(not self.d1.is_rendering_in_progress)
 
     @mock.patch('kuma.wiki.kumascript.get')
-    @mock.patch_object(tasks.render_document, 'delay')
+    @mock.patch.object(tasks.render_document, 'delay')
     def test_deferred_vs_immediate_rendering(self, mock_render_document_delay,
                                              mock_kumascript_get):
         mock_kumascript_get.return_value = (self.rendered_content, None)
@@ -1131,7 +1131,7 @@ class RenderExpiresTests(UserTestCase):
 
     @override_constance_settings(KUMASCRIPT_TIMEOUT=1.0)
     @mock.patch('kuma.wiki.kumascript.get')
-    @mock.patch_object(tasks.render_document, 'delay')
+    @mock.patch.object(tasks.render_document, 'delay')
     def test_render_stale(self, mock_render_document_delay,
                           mock_kumascript_get):
         mock_kumascript_get.return_value = ('MOCK CONTENT', None)

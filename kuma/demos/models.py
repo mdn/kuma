@@ -7,7 +7,6 @@ import re
 from time import time
 import zipfile
 
-from embedutils import VideoEmbedURLField
 import magic
 
 try:
@@ -38,6 +37,7 @@ from kuma.core.urlresolvers import reverse
 from kuma.core.utils import generate_filename_and_delete_previous
 
 from . import challenge_utils, DEMO_LICENSES, scale_image
+from .embed import VideoEmbedURLField
 
 
 south.modelsinspector.add_ignored_fields(["^taggit\.managers"])

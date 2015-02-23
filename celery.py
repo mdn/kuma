@@ -5,11 +5,13 @@ import site
 import sys
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-path = lambda *a: os.path.join(ROOT, *a)
+
+
+def path(*parts):
+    return os.path.join(ROOT, *parts)
 
 prev_sys_path = list(sys.path)
 
-site.addsitedir(path('lib'))
 site.addsitedir(path('vendor'))
 
 # Move the new items to the front of sys.path.
