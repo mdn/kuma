@@ -1,4 +1,4 @@
-<script src="https://login.persona.org/include.js"></script>
+<script src="{{ settings.PERSONA_INCLUDE_URL }}"></script>
 <form id="_persona_login" method="post" action="{{ url('persona_login') }}" data-csrf-token-url="{{ url('persona_csrf_token') }}" data-request='{{ request_parameters|safe }}'>
   <input type="hidden" name="csrfmiddlewaretoken" value="" id="_persona_csrf_token" />
   <input type="hidden" name="next" value="" id="_persona_next_url"/>

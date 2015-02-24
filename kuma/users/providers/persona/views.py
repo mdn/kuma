@@ -1,4 +1,5 @@
 import requests
+from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpResponse, QueryDict
 from django.shortcuts import redirect
@@ -57,16 +58,15 @@ def persona_login(request):
 
 def persona_complete(request):
     assertion = request.session.pop('sociallogin_assertion', '')
-    settings = app_settings.PROVIDERS.get(PersonaProvider.id, {})
-    audience = settings.get('AUDIENCE', None)
+    provider_settings = app_settings.PROVIDERS.get(PersonaProvider.id, {})
+    audience = provider_settings.get('AUDIENCE', None)
     if audience is None:
         raise ImproperlyConfigured("No Persona audience configured. Please "
                                    "add an AUDIENCE item to the "
                                    "SOCIALACCOUNT_PROVIDERS['persona'] setting.")
 
-    resp = requests.post('https://verifier.login.persona.org/verify',
-                         {'assertion': assertion,
-                          'audience': audience})
+    resp = requests.post(settings.PERSONA_VERIFIER_URL,
+                         {'assertion': assertion, 'audience': audience})
     if resp.json()['status'] != 'okay':
         return render_authentication_error(request)
     extra_data = resp.json()
