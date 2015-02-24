@@ -1261,6 +1261,8 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+PERSONA_VERIFIER_URL = 'https://verifier.login.persona.org/verify'
+PERSONA_INCLUDE_URL = 'https://login.persona.org/include.js'
 
 # django-banish defaults; listing here to be explicit
 BANISH_ENABLED = False # TODO: https://bugzil.la/1126412
