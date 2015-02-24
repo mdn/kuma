@@ -147,8 +147,8 @@ class DatabaseFilterBackend(BaseFilterBackend):
     use the filter's operator to determine which logical operation to
     use with those tags. The default is OR.
 
-    It then applies custom facets based on those database filters
-    but will ignore non-raw facets.
+    It then applies custom aggregations based on those database filters
+    but will ignore non-raw aggregations.
     """
     def filter_queryset(self, request, queryset, view):
         active_filters = []
@@ -172,25 +172,15 @@ class DatabaseFilterBackend(BaseFilterBackend):
                 facet_params = F('term', tags=filter_tags[0])
             active_facets.append((serialized_filter['slug'], facet_params))
 
-        unfiltered_queryset = queryset
         if active_filters:
             if len(active_filters) == 1:
                 queryset = queryset.post_filter(active_filters[0])
             else:
                 queryset = queryset.post_filter(F('or', active_filters))
 
-        # only way to get to the currently applied filters
-        # to use it to limit the facets filters below
-        facet_filter = unfiltered_queryset.to_dict().get('filter', [])
-
-        # TODO: Convert to use aggregations.
-        facets = {}
         for facet_slug, facet_params in active_facets:
-            facets[facet_slug] = {
-                'filter': facet_params.to_dict(),
-                'facet_filter': facet_filter,
-            }
-        queryset = queryset.extra(facets=facets)
+            queryset.aggs.bucket(facet_slug, 'filter',
+                                 **facet_params.to_dict())
 
         return queryset
 

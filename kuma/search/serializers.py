@@ -77,8 +77,9 @@ class SearchSerializer(pagination.PaginationSerializer):
         filter_groups = SortedDict()
 
         try:
-            facet_counts = [(k, getattr(obj, 'facets', {})[k]['count'])
-                            for k in filter_mapping.keys()]
+            facet_counts = [
+                (k, getattr(obj, 'aggregations', {})[k]['doc_count'])
+                for k in filter_mapping.keys()]
         except KeyError:
             facet_counts = []
 
