@@ -105,14 +105,8 @@ You will want to make yourself an admin user to enable important site features.
 
 Enable Important Site Features
 ------------------------------
-
-Some site features are controlled using `django-waffle <http://waffle.readthedocs.org/en/latest/>`_.
-You control these features in the `waffle admin
-<https://developer-local.allizom.org/admin/waffle/>`_.
-
-Some site features are controlled using `constance
-<https://github.com/comoga/django-constance>`_. You control these features in
-the `constance config admin panel`_.
+You'll need to use :doc:`feature toggles <feature-toggles>` to enable some
+basic features.
 
 .. _GitHub Auth:
 

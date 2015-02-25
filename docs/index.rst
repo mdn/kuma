@@ -15,6 +15,7 @@ Contents:
 
    development
    migrations
+   feature-toggles
    localization
    ckeditor
    tests
