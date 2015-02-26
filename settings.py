@@ -708,7 +708,7 @@ MINIFY_BUNDLES = {
     },
     'js': {
         'main': (
-            'js/libs/jquery-2.1.0.js',
+            'js/libs/jquery/dist/jquery.js',
             'redesign/js/components.js',
             'redesign/js/analytics.js',
             'redesign/js/main.js',
