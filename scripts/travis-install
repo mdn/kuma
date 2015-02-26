@@ -9,10 +9,12 @@ then
     sudo apt-get -y install build-essential aria2 libxml2-dev libxslt-dev libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev zlib1g-dev sqlite3 libtidy-dev
     sudo ln -s /usr/lib/`uname -i`-linux-gnu/libfreetype.so /usr/lib
     sudo ln -s /usr/lib/`uname -i`-linux-gnu/libz.so /usr/lib
-    aria2c -j 10 https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/python/mdn/product_details_json.tar.gz
-    aria2c -j 10 https://s3-us-west-2.amazonaws.com/pkgs.mozilla.net/locale/mdn/locale.tar.gz
-    tar -C .. -zxf product_details_json.tar.gz
-    tar xvfz locale.tar.gz
+
+    # product details & locales
+    tar -C .. -zxf etc/data/product_details_json.tar.gz
+    tar xvfz etc/data/locale.tar.gz
+
+    # elasticsearch
     wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.3.7.deb
     sudo dpkg --force-confdef -i elasticsearch-1.3.7.deb
     sudo service elasticsearch start

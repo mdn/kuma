@@ -99,25 +99,29 @@ MDN_LANGUAGES = (
                  'az',
                  'bn-BD',
                  'bn-IN',
+                 'cs',
+                 'ca',
                  'de',
+                 'ee',
                  'el',
                  'es',
                  'fa',
                  'fi',
                  'fr',
-                 'cs',
-                 'ca',
                  'fy-NL',
                  'ga-IE',
+                 'ha',
                  'he',
                  'hi-IN',
                  'hr',
                  'hu',
                  'id',
+                 'ig',
                  'it',
                  'ja',
                  'ka',
                  'ko',
+                 'ln',
                  'ml',
                  'ms',
                  'nl',
@@ -127,11 +131,14 @@ MDN_LANGUAGES = (
                  'ro',
                  'ru',
                  'sq',
+                 'sw',
                  'ta',
                  'th',
                  'tr',
                  'vi',
+                 'wo',
                  'xh',
+                 'yo',
                  'zh-CN',
                  'zh-TW',
                  'zu',
@@ -207,9 +214,9 @@ def get_locales():
     file = os.path.join(ROOT, 'kuma', 'languages.json')
     json_locales = json.load(open(file, 'r'))
     for locale, meta in json_locales.items():
-        locales[locale] = _Language(meta['english'],
+        locales[locale] = _Language(meta['English'],
                                     meta['native'],
-                                    meta['iso639_1'])
+                                    locale)
     return locales
 
 LOCALES = get_locales()

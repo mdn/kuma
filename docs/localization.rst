@@ -267,10 +267,9 @@ if you're a git fan.)
 
 Updating the Localizations
 ==========================
-Updating strings is easy. But when we add or update strings, we need to update
-`Verbatim <http://localize.mozilla.org/>`_ templates and PO files for
-localizers. If you commit changes to SVN without updating Verbatim,
-localizers will have merge head-aches.
+When we add or update strings, we need to update `Verbatim <http://localize.mozilla.org/>`_
+templates and PO files for localizers. If you commit changes to SVN without
+updating Verbatim, localizers will have merge head-aches.
 
 1.  Check out the localizations (See `get-localizations`_)
 2.  Run the following in the virtual machine (see :doc:`installation-vagrant <installation-vagrant>`)::
@@ -312,7 +311,6 @@ localizers will have merge head-aches.
 
 Adding a new Locale
 ===================
-Adding a new locale is also easy.
 
 1.  Check out the localizations (See `get-localizations`_)
 
@@ -323,6 +321,7 @@ Adding a new locale is also easy.
 
         $ cd locale
         $ svn up
+        $ cd ..
 
 4.  Add the locale to `MDN_LANGUAGES` in `settings.py`
 
@@ -338,3 +337,16 @@ Adding a new locale is also easy.
 
     Restart the django server and re-visit the new locale to verify it shows
     "translated" strings in the locale.
+
+7.  Update the `locale.tar.gz` and `product_details_json.tar.gz` files used by
+    `our Travis install script`_::
+
+        $ python manage.py update_product_details
+        $ tar -czf product_details_json.tar.gz ../product_details_json/
+        $ tar -czf locale.tar.gz locale/
+
+8.  Commit the changes to `settings.py`, `locale.tar.gz`, and
+    `product_details_json.tar.gz`
+
+
+.. _our Travis install script: https://github.com/mozilla/kuma/blob/master/scripts/travis-install
