@@ -633,8 +633,8 @@ MINIFY_BUNDLES = {
         ),
         'home': (
             'redesign/css/home.css',
-            'js/libs/owl.carousel/owl-carousel/owl.carousel.css',
-            'js/libs/owl.carousel/owl-carousel/owl.theme.css',
+            'js/libs/OwlCarousel/owl-carousel/owl.carousel.css',
+            'js/libs/OwlCarousel/owl-carousel/owl.theme.css',
         ),
         'search': (
             'redesign/css/search.css',
@@ -716,7 +716,7 @@ MINIFY_BUNDLES = {
             'redesign/js/badges.js',
         ),
         'home': (
-            'js/libs/owl.carousel/owl-carousel/owl.carousel.js',
+            'js/libs/OwlCarousel/owl-carousel/owl.carousel.js',
             'redesign/js/home.js'
         ),
         'popup': (
