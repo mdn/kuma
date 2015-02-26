@@ -61,7 +61,7 @@ class SignupTests(UserTestCase):
 
         eq_(200, r.status_code)
         ok_('Sign In Failure' not in r.content)
-        test_strings = ['Sign Up Closed']
+        test_strings = ['Profile Creation Disabled']
         verify_strings_in_response(test_strings, r)
 
         # re-enable registration
