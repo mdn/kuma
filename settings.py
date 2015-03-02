@@ -534,14 +534,14 @@ FEEDER_TIMEOUT = 6  # in seconds
 def JINJA_CONFIG():
     import jinja2
     from django.conf import settings
-    from django.core.cache.backends.memcached import CacheClass as MemcachedCacheClass
+    from django.core.cache.backends.memcached import MemcachedCache
     from django.core.cache import get_cache
     cache = get_cache('memcache')
     config = {'extensions': ['jinja2.ext.i18n', 'tower.template.i18n',
                              'jinja2.ext.with_', 'jinja2.ext.loopcontrols',
                              'jinja2.ext.autoescape'],
               'finalize': lambda x: x if x is not None else ''}
-    if isinstance(cache, MemcachedCacheClass) and not settings.DEBUG:
+    if isinstance(cache, MemcachedCache) and not settings.DEBUG:
         # We're passing the _cache object directly to jinja because
         # Django can't store binary directly; it enforces unicode on it.
         # Details: http://jinja.pocoo.org/2/documentation/api#bytecode-cache
