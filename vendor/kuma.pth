@@ -83,7 +83,7 @@ src/hash_ring
 src/django-memcached-hashring
 src/django-badger
 src/django-appconf
-src/django-statici18n
+src/django-statici18n/src
 src/django-allauth
 src/requests-oauthlib
 src/python-openid
