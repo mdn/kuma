@@ -82,6 +82,8 @@ class dev {
         uglify: stage => extras;
         csslint: stage => extras;
 
+        bower: stage => extras;
+
         site_config: stage => main;
         dev_hacks_post: stage => hacks_post;
     }

@@ -633,8 +633,8 @@ MINIFY_BUNDLES = {
         ),
         'home': (
             'redesign/css/home.css',
-            'js/libs/owl.carousel/owl-carousel/owl.carousel.css',
-            'js/libs/owl.carousel/owl-carousel/owl.theme.css',
+            'js/libs/OwlCarousel/owl-carousel/owl.carousel.css',
+            'js/libs/OwlCarousel/owl-carousel/owl.theme.css',
         ),
         'search': (
             'redesign/css/search.css',
@@ -708,7 +708,7 @@ MINIFY_BUNDLES = {
     },
     'js': {
         'main': (
-            'js/libs/jquery-2.1.0.js',
+            'js/libs/jquery/dist/jquery.js',
             'redesign/js/components.js',
             'redesign/js/analytics.js',
             'redesign/js/main.js',
@@ -716,7 +716,7 @@ MINIFY_BUNDLES = {
             'redesign/js/badges.js',
         ),
         'home': (
-            'js/libs/owl.carousel/owl-carousel/owl.carousel.js',
+            'js/libs/OwlCarousel/owl-carousel/owl.carousel.js',
             'redesign/js/home.js'
         ),
         'popup': (
@@ -783,6 +783,9 @@ MINIFY_BUNDLES = {
         'fellowship': (
             'redesign/js/fellowship.js',
         ),
+        'html5shiv': [
+            'js/libs/html5shiv/dist/html5shiv.js',
+        ]
     },
 }
 
