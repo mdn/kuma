@@ -44,9 +44,9 @@ class SearchPaginator(Paginator):
         page = Page(result.hits, number, self)
         # Update the `_count`.
         self._count = page.object_list.total
-        # Also store the facets, if any.
-        if hasattr(result, 'facets'):
-            page.facets = result.facets
+        # Also store the aggregations, if any.
+        if hasattr(result, 'aggregations'):
+            page.aggregations = result.aggregations
 
         # Now that we have the count validate that the page number isn't higher
         # than the possible number of pages and adjust accordingly.

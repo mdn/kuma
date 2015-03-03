@@ -109,7 +109,7 @@ class ViewTests(ElasticTestCase):
                 eq_(self.selected_filters, ['tagged'])
                 eq_(self.url, self.request.get_full_path())
 
-                # facets
+                # aggregations
                 filters = data['filters']
                 eq_(len(filters), 1)
                 eq_(filters[0]['name'], 'Group')
