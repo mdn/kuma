@@ -8,8 +8,8 @@
 PATH=/usr/local/bin:$PATH
 
 BASEDIR=$(dirname $0)
-CSSDIR=$BASEDIR/../media/redesign/css
-STYLUSDIR=$BASEDIR/../media/redesign/stylus
+CSSDIR=$BASEDIR/../media/css
+STYLUSDIR=$BASEDIR/../media/stylus
 
 for opt in "$@"; do
   case $opt in

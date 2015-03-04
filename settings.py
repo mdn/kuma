@@ -616,108 +616,108 @@ UGLIFY_BIN = '/usr/bin/uglifyjs'
 MINIFY_BUNDLES = {
     'css': {
         'mdn': (
-            'redesign/css/font-awesome.css',
-            'redesign/css/main.css',
-            'redesign/css/badges.css',
+            'css/font-awesome.css',
+            'css/main.css',
+            'css/badges.css',
         ),
         'jquery-ui': (
             'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
             'css/jqueryui/moz-jquery-plugins.css',
-            'redesign/css/jquery-ui-customizations.css',
+            'css/jquery-ui-customizations.css',
         ),
         'demostudio': (
-            'redesign/css/demos.css',
+            'css/demos.css',
         ),
         'devderby': (
             'css/devderby.css',
         ),
         'home': (
-            'redesign/css/home.css',
+            'css/home.css',
             'js/libs/owl.carousel/owl-carousel/owl.carousel.css',
             'js/libs/owl.carousel/owl-carousel/owl.theme.css',
         ),
         'search': (
-            'redesign/css/search.css',
+            'css/search.css',
         ),
         'search-suggestions': (
-            'redesign/css/search-suggestions.css',
+            'css/search-suggestions.css',
         ),
         'wiki': (
-            'redesign/css/wiki.css',
-            'redesign/css/zones.css',
-            'redesign/css/diff.css',
+            'css/wiki.css',
+            'css/zones.css',
+            'css/diff.css',
 
             'js/libs/prism/themes/prism.css',
             'js/libs/prism/plugins/line-highlight/prism-line-highlight.css',
             'js/libs/prism/plugins/ie8/prism-ie8.css',
             'js/prism-mdn/plugins/line-numbering/prism-line-numbering.css',
             'js/prism-mdn/components/prism-json.css',
-            'redesign/css/wiki-syntax.css',
+            'css/wiki-syntax.css',
         ),
         'wiki-revisions': (
-            'redesign/css/wiki-revisions.css',
+            'css/wiki-revisions.css',
         ),
         'wiki-edit': (
-            'redesign/css/wiki-edit.css',
+            'css/wiki-edit.css',
         ),
         'sphinx': (
-            'redesign/css/wiki.css',
-            'redesign/css/sphinx.css',
+            'css/wiki.css',
+            'css/sphinx.css',
         ),
         'users': (
-            'redesign/css/users.css',
+            'css/users.css',
         ),
         'tagit': (
             'css/libs/jquery.tagit.css',
         ),
         'promote': (
-            'redesign/css/promote.css',
+            'css/promote.css',
         ),
         'error': (
-            'redesign/css/error.css',
+            'css/error.css',
         ),
         'error-404': (
-            'redesign/css/error.css',
-            'redesign/css/error-404.css',
+            'css/error.css',
+            'css/error-404.css',
         ),
         'calendar': (
-            'redesign/css/calendar.css',
+            'css/calendar.css',
         ),
         'profile': (
-            'redesign/css/profile.css',
+            'css/profile.css',
         ),
         'dashboards': (
-            'redesign/css/dashboards.css',
-            'redesign/css/diff.css',
+            'css/dashboards.css',
+            'css/diff.css',
         ),
         'newsletter': (
-            'redesign/css/newsletter.css',
+            'css/newsletter.css',
         ),
         'submission': (
-            'redesign/css/submission.css',
+            'css/submission.css',
         ),
         'user-banned': (
-            'redesign/css/user-banned.css',
+            'css/user-banned.css',
         ),
         'error-403-alternate': (
-            'redesign/css/error-403-alternate.css',
+            'css/error-403-alternate.css',
         ),
         'fellowship': (
-            'redesign/css/fellowship.css',
+            'css/fellowship.css',
         ),
     },
     'js': {
         'main': (
             'js/libs/jquery-2.1.0.js',
-            'redesign/js/components.js',
-            'redesign/js/analytics.js',
-            'redesign/js/main.js',
-            'redesign/js/auth.js',
-            'redesign/js/badges.js',
+            'js/components.js',
+            'js/analytics.js',
+            'js/main.js',
+            'js/auth.js',
+            'js/badges.js',
         ),
         'home': (
             'js/libs/owl.carousel/owl-carousel/owl.carousel.js',
-            'redesign/js/home.js'
+            'js/home.js'
         ),
         'popup': (
             'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
@@ -749,8 +749,8 @@ MINIFY_BUNDLES = {
             'js/libs/tag-it.js',
         ),
         'search': (
-            'redesign/js/search.js',
-            'redesign/js/search-navigator.js',
+            'js/search.js',
+            'js/search-navigator.js',
         ),
         'framebuster': (
             'js/framebuster.js',
@@ -766,8 +766,8 @@ MINIFY_BUNDLES = {
             'js/search-suggestions.js',
         ),
         'wiki': (
-            'redesign/js/search-navigator.js',
-            'redesign/js/wiki.js',
+            'js/search-navigator.js',
+            'js/wiki.js',
         ),
         'wiki-edit': (
             'js/wiki-edit.js',
@@ -778,10 +778,10 @@ MINIFY_BUNDLES = {
             'js/wiki-move.js',
         ),
         'newsletter': (
-            'redesign/js/newsletter.js',
+            'js/newsletter.js',
         ),
         'fellowship': (
-            'redesign/js/fellowship.js',
+            'js/fellowship.js',
         ),
     },
 }
@@ -1270,7 +1270,7 @@ SOCIALACCOUNT_PROVIDERS = {
         'AUDIENCE': 'https://developer.mozilla.org',
         'REQUEST_PARAMETERS': {
             'siteName': 'Mozilla Developer Network',
-            'siteLogo': '/media/redesign/img/opengraph-logo.png',
+            'siteLogo': '/media/img/opengraph-logo.png',
         }
     }
 }

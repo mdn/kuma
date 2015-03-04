@@ -48,7 +48,7 @@ If you're updating the Stylus CSS files, you'll need to compile them before you 
 
 	./scripts/compile-stylesheets
 
-The relevant CSS files will be generated and placed within the `media/redesign/css` directory. You can add a ``-w`` flag to that call to compile stylesheets upon save.
+The relevant CSS files will be generated and placed within the `media/css` directory. You can add a ``-w`` flag to that call to compile stylesheets upon save.
 
 Hacking on bleeding edge features
 =================================

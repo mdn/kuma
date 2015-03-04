@@ -31,7 +31,7 @@ kumascript_settings_local.json
 lib/product_details_json
 .DS_Store
 node_modules/
-media/redesign/css/*.css
+media/css/*.css
 docs/_build/
 wheelhouse
 .awsconfig
