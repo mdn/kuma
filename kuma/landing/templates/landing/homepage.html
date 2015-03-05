@@ -181,7 +181,11 @@
 
 {% block js %}
   {{ super() }}
-  {{ js('home', async=True) }}
+  {% if settings.TEMPLATE_DEBUG %}
+      {{ js('home') }}
+  {% else %}
+      {{ js('home', async=True) }}
+  {% endif %}
   {% if waffle.flag('search_suggestions') %}
     {{ js('search-suggestions') }}
     <script>
