@@ -10,4 +10,12 @@
         $list.css('height', 'auto');
     }
 
+    // Track search submissions with Optimizely
+    var $centerSearchBox = $('#home-search-form');
+    if ($centerSearchBox) {
+        $centerSearchBox.submit(function() {
+            mdn.optimizely.push(['trackEvent', 'submit-homepage-search-form']);
+        });
+    }
+
 })(jQuery);
