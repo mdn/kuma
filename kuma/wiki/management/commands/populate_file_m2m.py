@@ -1,5 +1,3 @@
-import logging
-
 from django.core.management.base import NoArgsCommand
 
 from kuma.wiki.models import Document
@@ -12,6 +10,4 @@ class Command(NoArgsCommand):
         for doc in Document.objects.all():
             for attachment in doc.attachments:
                 rev = attachment.current_revision
-                attachment.attach(doc,
-                                  rev.creator,
-                                  rev.filename())
+                attachment.attach(doc, rev.creator, rev.filename())

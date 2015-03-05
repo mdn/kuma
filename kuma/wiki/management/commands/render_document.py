@@ -14,28 +14,26 @@ from kuma.wiki.tasks import render_document
 
 
 class Command(BaseCommand):
-    args = "<document_path document_path ...>"
-    help = "Render a wiki document"
+    args = '<document_path document_path ...>'
+    help = 'Render a wiki document'
     option_list = BaseCommand.option_list + (
-        make_option('--all', dest="all", default=False,
-                    action="store_true",
-                    help="Render ALL documents"),
-        make_option('--min-age', dest="min_age", default=600,
-                    help="Documents rendered less than this many seconds ago "
-                         "will be skipped"),
-        make_option('--baseurl', dest="baseurl",
+        make_option('--all', dest='all', default=False, action='store_true',
+                    help='Render ALL documents'),
+        make_option('--min-age', dest='min_age', default=600,
+                    help='Documents rendered less than this many seconds ago '
+                         'will be skipped'),
+        make_option('--baseurl', dest='baseurl', default=False,
+                    help='Base URL to site'),
+        make_option('--force', action='store_true', dest='force',
                     default=False,
-                    help="Base URL to site"),
-        make_option('--force', action="store_true", dest="force",
+                    help='Force rendering, first clearing record of any '
+                         'rendering in progress'),
+        make_option('--nocache', action='store_true', dest='nocache',
                     default=False,
-                    help="Force rendering, first clearing record of any "
-                         "rendering in progress"),
-        make_option('--nocache', action="store_true", dest="nocache",
+                    help='Use Cache-Control: no-cache instead of max-age=0'),
+        make_option('--defer', action='store_true', dest='defer',
                     default=False,
-                    help="Use Cache-Control: no-cache instead of max-age=0"),
-        make_option('--defer', action="store_true", dest="defer",
-                    default=False,
-                    help="Defer rendering"),
+                    help='Defer rendering by chaining tasks via celery'),
     )
 
     def handle(self, *args, **options):
@@ -43,7 +41,7 @@ class Command(BaseCommand):
         self.base_url = options['baseurl'] or absolutify('')
 
         if options['all']:
-            logging.info(u"Querying ALL %s documents..." %
+            logging.info(u'Querying ALL %s documents...' %
                          Document.objects.count())
             docs = Document.objects.order_by('-modified').iterator()
             for doc in docs:
@@ -51,11 +49,11 @@ class Command(BaseCommand):
 
         else:
             if not len(args) == 1:
-                raise CommandError("Need at least one document path to render")
+                raise CommandError('Need at least one document path to render')
             for path in args:
-                # Accept a single page path from command line, but be liberal in
-                # what we accept, eg: /en-US/docs/CSS (full path); /en-US/CSS (no
-                # /docs); or even en-US/CSS (no leading slash)
+                # Accept a single page path from command line, but be liberal
+                # in what we accept, eg: /en-US/docs/CSS (full path);
+                # /en-US/CSS (no /docs); or even en-US/CSS (no leading slash)
                 if path.startswith('/'):
                     path = path[1:]
                 locale, sep, slug = path.partition('/')
@@ -73,7 +71,7 @@ class Command(BaseCommand):
             render_age = now - doc.last_rendered_at
             min_age = datetime.timedelta(seconds=self.options['min_age'])
             if (render_age < min_age):
-                logging.debug(u"Skipping %s (%s) - rendered %s sec ago" %
+                logging.debug(u'Skipping %s (%s) - rendered %s sec ago' %
                               (doc, doc.get_absolute_url(), render_age))
                 return
 
@@ -86,16 +84,17 @@ class Command(BaseCommand):
             cc = 'max-age=0'
 
         if self.options['defer']:
-            logging.info(u"Queuing deferred render for %s (%s)" %
-                          (doc, doc.get_absolute_url()))
+            logging.info(u'Queuing deferred render for %s (%s)' % (
+                doc, doc.get_absolute_url()))
             render_document.delay(doc.pk, cc, self.base_url)
-            logging.debug(u"Queued.")
+            logging.debug(u'Queued.')
 
         else:
-            logging.info(u"Rendering %s (%s)" %
+            logging.info(u'Rendering %s (%s)' %
                          (doc, doc.get_absolute_url()))
             try:
                 render_document(doc, cc, self.base_url)
-                logging.debug(u"DONE.")
+                logging.debug(u'DONE.')
             except DocumentRenderingInProgress:
-                logging.error(u"Rendering is already in progress for this document")
+                logging.error(
+                    u'Rendering is already in progress for this document')
