@@ -45,6 +45,7 @@ src/jingo
 src/django-debug-cache-panel
 src/jingo-minify
 src/check
+src/django-product-details
 src/test-utils
 src/py-wikimarkup
 src/django-multidb-router

@@ -148,3 +148,6 @@
 [submodule "vendor/src/httplib2"]
 	path = vendor/src/httplib2
 	url = git://github.com/jcgregorio/httplib2.git
+[submodule "vendor/src/django-product-details"]
+	path = vendor/src/django-product-details
+	url = git://github.com/mozilla/django-product-details.git
