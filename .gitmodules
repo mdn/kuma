@@ -150,4 +150,4 @@
 	url = git://github.com/alex/django-taggit.git
 [submodule "vendor/src/httplib2"]
 	path = vendor/src/httplib2
-	url = git@github.com:jcgregorio/httplib2.git
+	url = git://github.com/jcgregorio/httplib2.git
