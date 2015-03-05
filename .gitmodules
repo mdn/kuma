@@ -34,9 +34,6 @@
 [submodule "vendor/src/django-memcached-hashring"]
 	path = vendor/src/django-memcached-hashring
 	url = git://github.com/jezdez/django-memcached-hashring.git
-[submodule "vendor/src/django-mozilla-product-details"]
-	path = vendor/src/django-mozilla-product-details
-	url = git://github.com/fwenzel/django-mozilla-product-details.git
 [submodule "vendor/src/django-multidb-router"]
 	path = vendor/src/django-multidb-router
 	url = git://github.com/jbalogh/django-multidb-router.git
