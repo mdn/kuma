@@ -136,9 +136,6 @@
 [submodule "vendor/src/django-celery"]
 	path = vendor/src/django-celery
 	url = git://github.com/celery/django-celery.git
-[submodule "vendor/src/django-banish"]
-	path = vendor/src/django-banish
-	url = git://github.com/yourabi/django-banish.git
 [submodule "vendor/src/django-honeypot"]
 	path = vendor/src/django-honeypot
 	url = git://github.com/sunlightlabs/django-honeypot.git
@@ -148,3 +145,6 @@
 [submodule "vendor/src/django-cacheback"]
 	path = vendor/src/django-cacheback
 	url = https://github.com/codeinthehole/django-cacheback.git
+[submodule "vendor/src/django-ratelimit"]
+	path = vendor/src/django-ratelimit
+	url = git://github.com/jsocol/django-ratelimit.git

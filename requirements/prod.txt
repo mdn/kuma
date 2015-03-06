@@ -54,8 +54,6 @@ django-cacheback==0.9
 -e git://github.com/countergram/pytidylib.git@15f8f734e761485d79556c03266353534c987601#egg=pytidylib
 # 2013-11-01 (Current.)
 -e git://github.com/mozilla/django-badger.git@1a41701179df11df8ca8ca44898b70b6352623d3#egg=django-badger
-# 2014-12-29
--e git://github.com/yourabi/django-banish.git@f0a36d1ffe6ad32a5969ec742152dfb541f4108c#egg=django-banish
 # 2015-01-13
 -e git+https://github.com/elasticsearch/elasticsearch-dsl-py.git@97774f045c23d74253fe2f8794cb2111f7064285#egg=elasticsearch-dsl-py
 
@@ -85,6 +83,7 @@ django-recaptcha==0.0.9
 
 django-honeypot==0.4.0
 bitly_api==0.3
+django-ratelimit==0.5.0
 
 ## Formerly vendor/src - arbitrary commits not matched to versions
 # 2011-12-29

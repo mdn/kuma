@@ -426,7 +426,6 @@ MIDDLEWARE_CLASSES = (
     'kuma.core.anonymous.AnonymousIdentityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'kuma.users.middleware.BanMiddleware',
-    'banish.middleware.BanishMiddleware',
 
     'badger.middleware.RecentBadgeAwardsMiddleware',
     'kuma.wiki.badges.BadgeAwardingMiddleware',
@@ -520,7 +519,6 @@ INSTALLED_APPS = (
     'djcelery',
     'taggit',
     'dbgettext',
-    'banish',
     'honeypot',
 
     'kuma.dashboards',
@@ -1284,13 +1282,6 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 PERSONA_VERIFIER_URL = 'https://verifier.login.persona.org/verify'
 PERSONA_INCLUDE_URL = 'https://login.persona.org/include.js'
-
-# django-banish defaults; listing here to be explicit
-BANISH_ENABLED = False # TODO: https://bugzil.la/1126412
-BANISH_EMPTY_UA = True
-BANISH_ABUSE_THRESHOLD = sys.maxint # TODO: https://bugzil.la/1122658
-BANISH_USE_HTTP_X_FORWARDED_FOR = True
-BANISH_MESSAGE = _("This connection has been banned for suspicious activity.")
 
 HONEYPOT_FIELD_NAME = 'website'
 

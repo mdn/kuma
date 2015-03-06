@@ -7,9 +7,11 @@ TODO:
 - Permissions for tag namespaces (eg. system:* is superuser-only)
 - Machine tag assists
 """
+from datetime import date, timedelta
 import operator
-from django.db import router
 
+from django.db import router
+from django.db import models
 from django.db.models.fields import BLANK_CHOICE_DASH
 from django.contrib.auth.models import AnonymousUser
 
@@ -239,6 +241,16 @@ def resolve_allowed_tags(model_obj, tags_curr, tags_new,
             tags_out.extend(ns_tags_curr[ns])
 
     return tags_out
+
+
+class IPBanManager(models.Manager):
+    def active(self, ip):
+        return super(IPBanManager, self).filter(ip=ip, deleted__isnull=True)
+
+    def delete_old(self, days=30):
+        cutoff_date = date.today() - timedelta(days=days)
+        old_ip_bans = self.get_query_set().filter(created__lte=cutoff_date)
+        old_ip_bans.delete()
 
 
 # Tell South to ignore our fields, if present.

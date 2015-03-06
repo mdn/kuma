@@ -2354,6 +2354,9 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         rev_ip = RevisionIP.objects.get(revision=rev)
         eq_('127.0.0.1', rev_ip.ip)
 
+    def test_banned_ip(self):
+        pass
+
     @mock.patch.object(Site.objects, 'get_current')
     def test_email_for_first_edits(self, get_current):
         get_current.return_value.domain = 'dev.mo.org'

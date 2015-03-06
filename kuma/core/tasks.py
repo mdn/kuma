@@ -7,6 +7,7 @@ from django.utils import timezone
 import constance.config
 
 from kuma.core.cache import memcache
+from .models import IPBan
 
 
 LOCK_ID = 'clean-sessions-lock'
@@ -51,3 +52,8 @@ def clean_sessions():
     else:
         logger.error('The clean_sessions task is already running since %s' %
                      memcache.get(LOCK_ID))
+
+
+@task
+def delete_old_ip_bans(immediate=False, days=30):
+    IPBan.objects.delete_old(days=days)

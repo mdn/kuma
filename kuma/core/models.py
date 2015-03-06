@@ -1,6 +1,9 @@
+from datetime import datetime
 from django.db import models
 
 from south.modelsinspector import add_introspection_rules
+
+from .managers import IPBanManager
 
 
 class ModelBase(models.Model):
@@ -32,6 +35,21 @@ class ModelBase(models.Model):
         if signal:
             models.signals.post_save.send(sender=cls, instance=self,
                                           created=False)
+
+
+class IPBan(models.Model):
+    ip = models.GenericIPAddressField()
+    created = models.DateTimeField(default=datetime.now, db_index=True)
+    deleted = models.DateTimeField(null=True, blank=True)
+
+    objects = IPBanManager()
+
+    def delete(self, *args, **kwargs):
+        self.deleted = datetime.now()
+        self.save()
+
+    def __unicode__(self):
+        return u'%s banned on %s' % (self.ip, self.created)
 
 
 add_introspection_rules([], [
