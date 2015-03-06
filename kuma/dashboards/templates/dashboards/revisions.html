@@ -36,6 +36,11 @@
                 {{ form.end_date }}
             </div>
 
+            <div class="revision-field">
+                <label for="id_preceding_period">{{ _('Preceding Period:') }}</label>
+                {{ form.preceding_period }}
+            </div>
+
             <button type="submit">{{ _('Filter') }}</button>
             <input type="hidden" name="page" id="revision-page" value="{{ page }}" />
         </form>
