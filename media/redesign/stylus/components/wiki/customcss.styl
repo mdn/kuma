@@ -1331,6 +1331,7 @@ div.fxosLiveSampleWrapper {
 .spec-ED:before,
 .spec-WD:before,
 .spec-CR:before,
+.spec-RC:before,
 .spec-PR:before,
 .spec-REC:before,
 .spec-RFC:before,
@@ -1361,11 +1362,16 @@ div.fxosLiveSampleWrapper {
     color: #e66e33;
 }
 
-.spec-CR:before {
+.spec-CR:before,
+.spec-RC:before {
     content: 'CR';
     background-color: rgba-fallback(rgba(0,151,142,0.25));
     border-left: 4px solid #00978e;
     color: #00978e;
+}
+
+.spec-RC:before {
+    content: "RC";
 }
 
 .spec-PR:before {
@@ -1416,7 +1422,8 @@ div.fxosLiveSampleWrapper {
 .spec-WD {
     color: #e66e33;
 }
-.spec-CR {
+.spec-CR,
+.spec-RC {
     color: #00978e;
 }
 .spec-PR {
