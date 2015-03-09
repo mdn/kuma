@@ -142,70 +142,90 @@ CKEDITOR.plugins.add('scayt', {
 				editor.addMenuGroup('scayt_' + items_order[pos], pos - 10);
 			}
 		}
+		
+		editor.addCommand( 'scaytToggle', {
+			exec: function(editor) {
+				var scaytInstance = editor.scayt;
+
+				plugin.state[editor.name] = !plugin.state[editor.name];
+
+				if(plugin.state[editor.name] === true) {
+					if(!scaytInstance) {
+						plugin.createScayt(editor);
+					}
+				} else {
+					if(scaytInstance) {
+						plugin.destroy(editor);
+					}
+				}
+			}
+		} );
+
+		editor.addCommand( 'scaytAbout', {
+			exec: function(editor) {
+				var scaytInstance = editor.scayt;
+
+				scaytInstance.tabToOpen = 'about';
+				editor.lockSelection();
+				editor.openDialog(self.dialogName);
+			}
+		} );
+		
+		editor.addCommand( 'scaytOptions', {
+			exec: function(editor) {
+				var scaytInstance = editor.scayt;
+
+				scaytInstance.tabToOpen = 'options';
+				editor.lockSelection();
+				editor.openDialog(self.dialogName);
+			}
+		} );
+
+		editor.addCommand( 'scaytLangs', {
+			exec: function(editor) {
+				var scaytInstance = editor.scayt;
+
+				scaytInstance.tabToOpen = 'langs';
+				editor.lockSelection();
+				editor.openDialog(self.dialogName);
+			}
+		} );
+
+		editor.addCommand( 'scaytDict', {
+			exec: function(editor) {
+				var scaytInstance = editor.scayt;
+
+				scaytInstance.tabToOpen = 'dictionaries';
+				editor.lockSelection();
+				editor.openDialog(self.dialogName);
+			}
+		} );
 
 		var uiMenuItems = {
 			scaytToggle: {
 				label : editor.lang.scayt.btn_enable,
 				group : menuGroup,
-				onClick : function() {
-					var scaytInstance = editor.scayt;
-
-					plugin.state[editor.name] = !plugin.state[editor.name];
-
-					if(plugin.state[editor.name] === true) {
-						if(!scaytInstance) {
-							plugin.createScayt(editor);
-						}
-					} else {
-						if(scaytInstance) {
-							plugin.destroy(editor);
-						}
-					}
-				}
+				command: 'scaytToggle'
 			},
 			scaytAbout: {
 				label : editor.lang.scayt.btn_about,
 				group : menuGroup,
-				onClick : function() {
-					var scaytInstance = editor.scayt;
-
-					scaytInstance.tabToOpen = 'about';
-					editor.lockSelection();
-					editor.openDialog(self.dialogName);
-				}
+				command: 'scaytAbout'
 			},
 			scaytOptions: {
 				label : editor.lang.scayt.btn_options,
 				group : menuGroup,
-				onClick : function() {
-					var scaytInstance = editor.scayt;
-
-					scaytInstance.tabToOpen = 'options';
-					editor.lockSelection();
-					editor.openDialog(self.dialogName);
-				}
+				command: 'scaytOptions'
 			},
 			scaytLangs: {
 				label : editor.lang.scayt.btn_langs,
 				group : menuGroup,
-				onClick : function() {
-					var scaytInstance = editor.scayt;
-
-					scaytInstance.tabToOpen = 'langs';
-					editor.lockSelection();
-					editor.openDialog(self.dialogName);
-				}
+				command: 'scaytLangs'
 			},
 			scaytDict: {
 				label : editor.lang.scayt.btn_dictionaries,
 				group : menuGroup,
-				onClick : function() {
-					var scaytInstance = editor.scayt;
-
-					scaytInstance.tabToOpen = 'dictionaries';
-					editor.lockSelection();
-					editor.openDialog(self.dialogName);
-				}
+				command: 'scaytDict'
 			}
 		};
 
@@ -261,6 +281,10 @@ CKEDITOR.plugins.add('scayt', {
 			var editable = editor.editable();
 
 			editable.attachListener( editable, 'focus', function( evt ) {
+				if( CKEDITOR.plugins.scayt && !editor.scayt ) {
+					contentDomReady();
+				}
+
 				var pluginStatus = CKEDITOR.plugins.scayt && CKEDITOR.plugins.scayt.state[editor.name] && editor.scayt,
 					selectedElement, ranges, textLength, range;
 
@@ -336,7 +360,6 @@ CKEDITOR.plugins.add('scayt', {
 				// remove custom data from body, to prevent waste properties showing in IE8
 				if(editor.document) { //GitHub #84 : make sure that document exists(e.g. when startup mode set to 'source')
 					editor.document.getBody().removeAttribute('_jquid');
-					editor.document.getBody().removeAttribute('dir');
 				}
 			}
 		});
@@ -430,19 +453,13 @@ CKEDITOR.plugins.add('scayt', {
 			dialog.selectPage(scaytInstance.tabToOpen);
 		});
 
-		/*
-		After each 'paste' CKEditor call insertHtml and we have subscribed for 'insertHtml' event before
-		editor.on('paste', function(ev)
-			{
-				var scaytInstance = plugin.getScayt(editor);
-				if(!scaytInstance || scaytInstance.enabled === false)
-					return;
+		editor.on('paste', function(ev) {
+			var scaytInstance = editor.scayt;
 
-				setTimeout(function() {
-					scaytInstance.removeMarkupInSelectionNode();
-					scaytInstance.fire("startSpellCheck");
-				}, 0);
-			});*/
+			if(scaytInstance) {
+				scaytInstance.removeMarkupInSelectionNode();
+			}
+		}, null, null, 0);
 	},
 	parseConfig: function(editor) {
 		var plugin = CKEDITOR.plugins.scayt;

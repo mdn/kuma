@@ -15,7 +15,7 @@ CKEDITOR.plugins.add('mdn-link-customization', {
 
       if (dialogName != 'link')
         return;
-      
+
       dialogDefinition.removeContents('target');
 
       var infoTab = dialogDefinition.getContents('info');
@@ -92,7 +92,7 @@ CKEDITOR.plugins.add('mdn-link-customization', {
         // Create widget if not done already
         if(!that.autoCompleteTextbox) {
           that.autoCompleteTextbox = this.getElement().getElementsByTag('input').$[0];
-          
+
           jQuery(that.autoCompleteTextbox).mozillaAutocomplete({
             minLength: 1,
             requireValidOption: true,
@@ -109,7 +109,7 @@ CKEDITOR.plugins.add('mdn-link-customization', {
             }
           });
         }
-        
+
         // Clear out the the values so there aren't any problems
         jQuery(that.autoCompleteTextbox).mozillaAutocomplete('clear');
       }
@@ -157,8 +157,11 @@ CKEDITOR.plugins.add('mdn-link-customization', {
         return;
 
       var text;
+      var selectedText = editor.getSelection().getSelectedText();
 
-      if (that.autoCompleteSelection) {
+      if (selectedText) {
+        text = selectedText;
+      } else if (that.autoCompleteSelection) {
         text = that.autoCompleteSelection.label;
       } else if (that.autoCompleteTextbox.value) {
         text = that.autoCompleteTextbox.value;
