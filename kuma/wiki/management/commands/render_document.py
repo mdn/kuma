@@ -2,15 +2,26 @@
 """
 Manually schedule the rendering of a document
 """
+from __future__ import division
+
 import datetime
 import logging
+from math import ceil
 from optparse import make_option
 
-from django.core.management.base import BaseCommand, CommandError
+from celery import chain
 
+from django.core.management.base import BaseCommand, CommandError
+from django.db.models import Q
+
+from kuma.core.utils import chunked
 from kuma.wiki.helpers import absolutify
 from kuma.wiki.models import Document, DocumentRenderingInProgress
-from kuma.wiki.tasks import render_document
+from kuma.wiki.tasks import (email_render_document_progress, render_document,
+                             render_document_chunk)
+
+
+log = logging.getLogger('kuma.wiki.management.commands.render_document')
 
 
 class Command(BaseCommand):
@@ -19,7 +30,7 @@ class Command(BaseCommand):
     option_list = BaseCommand.option_list + (
         make_option('--all', dest='all', default=False, action='store_true',
                     help='Render ALL documents'),
-        make_option('--min-age', dest='min_age', default=600,
+        make_option('--min-age', dest='min_age', type='int', default=600,
                     help='Documents rendered less than this many seconds ago '
                          'will be skipped'),
         make_option('--baseurl', dest='baseurl', default=False,
@@ -39,13 +50,24 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.options = options
         self.base_url = options['baseurl'] or absolutify('')
+        if self.options['nocache']:
+            self.cache_control = 'no-cache'
+        else:
+            self.cache_control = 'max-age=0'
 
         if options['all']:
-            logging.info(u'Querying ALL %s documents...' %
-                         Document.objects.count())
-            docs = Document.objects.order_by('-modified').iterator()
-            for doc in docs:
-                self.do_render(doc)
+            # Query all documents, excluding those whose `last_rendered_at` is
+            # within `min_render_age` or NULL.
+            min_render_age = (
+                datetime.datetime.now() -
+                datetime.timedelta(seconds=self.options['min_age']))
+            docs = Document.objects.filter(
+                Q(last_rendered_at__isnull=True) |
+                Q(last_rendered_at__gte=min_render_age))
+            docs = docs.order_by('-modified')
+            docs = docs.values_list('id', flat=True)
+
+            self.chain_render_docs(docs)
 
         else:
             if not len(args) == 1:
@@ -60,41 +82,32 @@ class Command(BaseCommand):
                 head, sep, tail = slug.partition('/')
                 if head == 'docs':
                     slug = tail
-                self.do_render(Document.objects.get(locale=locale, slug=slug))
+                doc = Document.objects.get(locale=locale, slug=slug)
+                if self.options['force']:
+                    doc.render_started_at = None
+                log.info(u'Rendering %s (%s)' % (doc, doc.get_absolute_url()))
+                try:
+                    render_document(doc, self.cache_control, self.base_url)
+                    log.debug(u'DONE.')
+                except DocumentRenderingInProgress:
+                    log.error(
+                        u'Rendering is already in progress for this document.')
 
-    def do_render(self, doc):
-        # Skip very recently rendered documents. This should help make it
-        # easier to start and stop an --all command without needing to start
-        # from the top of the list every time.
-        if doc.last_rendered_at:
-            now = datetime.datetime.now()
-            render_age = now - doc.last_rendered_at
-            min_age = datetime.timedelta(seconds=self.options['min_age'])
-            if (render_age < min_age):
-                logging.debug(u'Skipping %s (%s) - rendered %s sec ago' %
-                              (doc, doc.get_absolute_url(), render_age))
-                return
+    def chain_render_docs(self, docs):
+        tasks = []
+        count = 0
+        total = len(docs)
+        n = int(ceil(total / 5))
+        chunks = chunked(docs, n)
 
-        if self.options['force']:
-            doc.render_started_at = None
+        for chunk in chunks:
+            count += len(chunk)
+            tasks.append(
+                render_document_chunk.si(chunk, self.cache_control,
+                                         self.base_url, self.options['force']))
+            percent_complete = int(ceil((count / total) * 100))
+            tasks.append(
+                email_render_document_progress.si(percent_complete, total))
 
-        if self.options['nocache']:
-            cc = 'no-cache'
-        else:
-            cc = 'max-age=0'
-
-        if self.options['defer']:
-            logging.info(u'Queuing deferred render for %s (%s)' % (
-                doc, doc.get_absolute_url()))
-            render_document.delay(doc.pk, cc, self.base_url)
-            logging.debug(u'Queued.')
-
-        else:
-            logging.info(u'Rendering %s (%s)' %
-                         (doc, doc.get_absolute_url()))
-            try:
-                render_document(doc, cc, self.base_url)
-                logging.debug(u'DONE.')
-            except DocumentRenderingInProgress:
-                logging.error(
-                    u'Rendering is already in progress for this document')
+        # Make it so.
+        chain(*tasks).apply_async()
