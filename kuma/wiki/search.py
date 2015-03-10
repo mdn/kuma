@@ -26,8 +26,8 @@ log = logging.getLogger('kuma.wiki.search')
 
 # Configure Elasticsearch connections for connection pooling.
 connections.configure(
-    default={'hosts': settings.ES_URLS},
-    indexing={'hosts': settings.ES_URLS,
+    default={'hosts': settings.ES_HOSTS},
+    indexing={'hosts': settings.ES_HOSTS,
               'timeout': settings.ES_INDEXING_TIMEOUT},
 )
 

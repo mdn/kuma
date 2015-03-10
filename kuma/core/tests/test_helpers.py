@@ -16,16 +16,16 @@ from pyquery import PyQuery as pq
 from pytz import timezone
 from soapbox.models import Message
 
-from kuma.core.cache import memcache
-from kuma.core.helpers import bitly_shorten, bitly
-from kuma.core.tests import KumaTestCase
-from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase
 
+from . import KumaTestCase
+from ..cache import memcache
 from ..exceptions import DateTimeFormatError
 from ..helpers import (timesince, urlparams, yesno, urlencode,
                        soapbox_messages, get_soapbox_messages,
-                       datetimeformat, jsonencode, number)
+                       datetimeformat, jsonencode, number,
+                       bitly_shorten, bitly)
+from ..urlresolvers import reverse
 
 
 def render(s, context={}):

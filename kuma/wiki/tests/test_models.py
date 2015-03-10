@@ -18,6 +18,7 @@ from waffle.models import Switch
 
 from kuma.core.exceptions import ProgrammingError
 from kuma.core.tests import override_constance_settings, KumaTestCase
+
 from kuma.users.tests import UserTestCase
 
 from . import (document, revision, doc_rev, normalize_html,
@@ -60,7 +61,7 @@ class DocumentTests(UserTestCase):
 
         # Create a translation with some tags
         de_doc = document(parent=doc, locale='de', save=True)
-        de_rev = revision(document=de_doc, save=True)
+        revision(document=de_doc, save=True)
         expected_l10n_tags = ['inprogress']
         de_doc.current_revision.localization_tags.set(*expected_l10n_tags)
         de_doc.tags.set(*expected_tags)
@@ -97,13 +98,13 @@ class DocumentTests(UserTestCase):
         # Check fields of translated doc
         ok_('translations' in data)
         eq_(de_doc.locale, data['translations'][0]['locale'])
-        result_l10n_tags = sorted([str(x) for x
-                           in data['translations'][0]['localization_tags']])
+        result_l10n_tags = sorted([str(x)
+                                   for x in data['translations'][0]['localization_tags']])
         eq_(expected_l10n_tags, result_l10n_tags)
         result_tags = sorted([str(x) for x in data['translations'][0]['tags']])
         eq_(expected_tags, result_tags)
-        result_review_tags = sorted([str(x) for x
-                             in data['translations'][0]['review_tags']])
+        result_review_tags = sorted([str(x)
+                                     for x in data['translations'][0]['review_tags']])
         eq_(expected_review_tags, result_review_tags)
         eq_(de_doc.current_revision.summary, data['translations'][0]['summary'])
         eq_(de_doc.title, data['translations'][0]['title'])
@@ -280,15 +281,18 @@ class DocumentTests(UserTestCase):
         parent = document(locale=settings.WIKI_DEFAULT_LANGUAGE, title='test',
                           save=True)
         enfant = document(locale='fr', title='le test', parent=parent,
-                         save=True)
+                          save=True)
         bambino = document(locale='es', title='el test', parent=parent,
                            save=True)
 
-        children = Document.objects.filter(parent=parent).order_by('locale').values_list('pk', flat=True)
+        children = (Document.objects.filter(parent=parent)
+                                    .order_by('locale')
+                                    .values_list('pk', flat=True))
         eq_(list(children),
             list(parent.other_translations.values_list('pk', flat=True)))
 
-        enfant_translation_pks = enfant.other_translations.values_list('pk', flat=True)
+        enfant_translation_pks = (enfant.other_translations
+                                        .values_list('pk', flat=True))
         ok_(parent.pk in enfant_translation_pks)
         ok_(bambino.pk in enfant_translation_pks)
         eq_(False, enfant.pk in enfant_translation_pks)
@@ -649,12 +653,12 @@ class RevisionTests(UserTestCase):
         # wait a second so next revision is a different datetime
         time.sleep(1)
         next_rev = revision(document=rev.document, content="Updated",
-                        is_approved=True)
+                            is_approved=True)
         next_rev.save()
         eq_(rev, next_rev.get_previous())
         time.sleep(1)
         last_rev = revision(document=rev.document, content="Finally",
-                        is_approved=True)
+                            is_approved=True)
         last_rev.save()
         eq_(next_rev, last_rev.get_previous())
 
@@ -787,11 +791,11 @@ class DumpAndLoadJsonTests(UserTestCase):
 
         # For good measure, ensure no documents missing revisions in the dump.
         doc_no_rev = (Document.objects
-                      .filter(current_revision__isnull=True))[0]
+                              .filter(current_revision__isnull=True))[0]
         no_rev_cnt = len([x for x in data
-                          if x['model'] == 'wiki.document' and
-                             x['fields']['slug'] == doc_no_rev.slug and
-                             x['fields']['locale'] == doc_no_rev.locale])
+                          if (x['model'] == 'wiki.document' and
+                              x['fields']['slug'] == doc_no_rev.slug and
+                              x['fields']['locale'] == doc_no_rev.locale)])
         eq_(0, no_rev_cnt,
             "There should be no document exported without revision")
 
@@ -1400,7 +1404,7 @@ class PageMoveTests(UserTestCase):
                           is_approved=True,
                           save=True)
         child1_doc = child1.document
-        child1_doc.parent_topic= top_doc
+        child1_doc.parent_topic = top_doc
         child1_doc.save()
         child2 = revision(title='Taking webcam photos',
                           slug='WebRTC/Taking_webcam_photos',
@@ -1442,7 +1446,7 @@ class PageMoveTests(UserTestCase):
         """Moving a tree of documents under an existing doc updates breadcrumbs"""
 
         grandpa = revision(title='Top-level parent for breadcrumb move',
-                       slug='grandpa', is_approved=True, save=True)
+                           slug='grandpa', is_approved=True, save=True)
         grandpa_doc = grandpa.document
 
         dad = revision(title='Mid-level parent for breadcrumb move',
@@ -1458,7 +1462,7 @@ class PageMoveTests(UserTestCase):
         son_doc.save()
 
         grandma = revision(title='Top-level parent for breadcrumb move',
-                       slug='grandma', is_approved=True, save=True)
+                           slug='grandma', is_approved=True, save=True)
         grandma_doc = grandma.document
 
         mom = revision(title='Mid-level parent for breadcrumb move',
@@ -1481,7 +1485,7 @@ class PageMoveTests(UserTestCase):
         # assert the parent_topics are correctly rooted at grandpa
         # note we have to refetch these to see any DB changes.
         grandma_moved = Document.objects.get(locale=grandma_doc.locale,
-                                           slug='grandpa/grandma')
+                                             slug='grandpa/grandma')
         ok_(grandma_moved.parent_topic == grandpa_doc)
         mom_moved = Document.objects.get(locale=mom_doc.locale,
                                          slug='grandpa/grandma/mom')
@@ -1522,7 +1526,7 @@ class PageMoveTests(UserTestCase):
         page_to_move_doc.save()
 
         page_child = revision(title='child', slug=page_child_slug,
-                         is_approved=True, save=True)
+                              is_approved=True, save=True)
         page_child_doc = page_child.document
         page_child_doc.parent_topic = page_to_move_doc
         page_child_doc.save()
@@ -1585,12 +1589,12 @@ class PageMoveTests(UserTestCase):
         child_doc._move_tree(moved_child_slug)
 
         redirected_child = Document.objects.get(slug=child_slug)
-        moved_child = Document.objects.get(slug=moved_child_slug)
+        Document.objects.get(slug=moved_child_slug)
         ok_('REDIRECT' in redirected_child.html)
         ok_(moved_child_slug in redirected_child.html)
 
         redirected_grandchild = Document.objects.get(slug=grandchild_doc.slug)
-        moved_grandchild = Document.objects.get(slug=moved_grandchild_slug)
+        Document.objects.get(slug=moved_grandchild_slug)
         ok_('REDIRECT' in redirected_grandchild.html)
         ok_(moved_grandchild_slug in redirected_grandchild.html)
 
@@ -1604,18 +1608,18 @@ class PageMoveTests(UserTestCase):
         special_root = document(title='User:foo',
                                 slug=root_slug,
                                 save=True)
-        root_rev = revision(document=special_root,
-                            title=special_root.title,
-                            slug=root_slug,
-                            save=True)
+        revision(document=special_root,
+                 title=special_root.title,
+                 slug=root_slug,
+                 save=True)
 
         special_child = document(title='User:foo child',
                                  slug=child_slug,
                                  save=True)
-        child_rev = revision(document=special_child,
-                             title=special_child.title,
-                             slug=child_slug,
-                             save=True)
+        revision(document=special_child,
+                 title=special_child.title,
+                 slug=child_slug,
+                 save=True)
 
         special_child.parent_topic = special_root
         special_child.save()
@@ -1805,7 +1809,7 @@ class DocumentParsingTests(UserTestCase):
         eq_(normalize_html(expected), normalize_html(result))
 
     def test_cached_content_fields(self):
-        src="""
+        src = """
             <h2>First</h2>
             <p>This is a document</p>
             <h3 id="Quick_Links">Quick Links</h3>

@@ -24,11 +24,6 @@ class dev_hacks {
         owner => "vagrant", group => "vagrant", mode => 0777;
     }
 
-    file { "/home/vagrant/src/settings_local.py":
-        ensure => file,
-        source => "/home/vagrant/src/puppet/files/vagrant/settings_local.py";
-    }
-
     file { "/home/vagrant/src/kumascript_settings_local.json":
         ensure => file,
         source => "/home/vagrant/src/puppet/files/vagrant/kumascript_settings_local.json";

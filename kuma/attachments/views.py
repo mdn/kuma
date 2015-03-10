@@ -56,11 +56,11 @@ def raw_file(request, attachment_id, filename):
         raise Http404
     if request.get_host() == settings.ATTACHMENT_HOST:
         rev = attachment.current_revision
-        resp = HttpResponse(rev.file.read(), mimetype=rev.mime_type)
-        resp['Last-Modified'] = convert_to_http_date(rev.created)
-        resp['Content-Length'] = rev.file.size
-        resp['X-Frame-Options'] = 'ALLOW-FROM: %s' % settings.DOMAIN
-        return resp
+        response = HttpResponse(rev.file.read(), mimetype=rev.mime_type)
+        response['Last-Modified'] = convert_to_http_date(rev.created)
+        response['Content-Length'] = rev.file.size
+        response['X-Frame-Options'] = 'ALLOW-FROM: %s' % settings.DOMAIN
+        return response
     else:
         return HttpResponsePermanentRedirect(attachment.get_file_url())
 

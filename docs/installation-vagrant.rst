@@ -136,7 +136,6 @@ Now you can sign in with GitHub at https://developer-local.allizom.org
 .. _Add a django-allauth social app: https://developer-local.allizom.org/admin/socialaccount/socialapp/add/
 .. _Register your own OAuth application on GitHub: https://github.com/settings/applications/new
 
-
 Wiki Editing
 ~~~~~~~~~~~~
 
@@ -179,7 +178,6 @@ needed.
 
 Many core MDN contributors create a personal ``User:<username>`` page as a testing sandbox.
 
-
 Developing with Vagrant
 -----------------------
 
@@ -196,8 +194,6 @@ reflected without any action on your part.
        vagrant halt    # Shutdown the VM
        vagrant up      # Boot up the VM
        vagrant destroy # Destroy the VM
-
-
 
 .. _Errors:
 

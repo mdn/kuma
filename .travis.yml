@@ -15,10 +15,12 @@ env:
     global:
         - PIP_WHEEL_DIR=$HOME/.cache/pip/wheels
         - PIP_FIND_LINKS=file://$HOME/.cache/pip/wheels
-        - DJANGO_SETTINGS_MODULE=settings_travis
+        - DJANGO_SETTINGS_MODULE=kuma.settings.travis
         - DEBIAN_FRONTEND=noninteractive
+        - DATABASE_URL=mysql://root:@localhost:3306/kuma
 before_install: scripts/travis-install
 install:
+    - mkdir -p $PIP_WHEEL_DIR
     - pip wheel -r requirements/compiled.txt -r requirements/dev.txt coveralls
     - pip install coveralls tox==1.9.2
 before_script: mysql -e 'create database kuma;'
