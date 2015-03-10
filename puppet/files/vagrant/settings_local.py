@@ -73,28 +73,6 @@ DEVSERVER_MODULES = (
     #'devserver.modules.profile.LineProfilerModule',
 )
 
-# The default database should point to the master.
-DATABASES = {
-    'default': {
-        'NAME': 'kuma',
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'localhost',
-        'USER': 'kuma',
-        'PASSWORD': 'kuma',
-        'OPTIONS': {'init_command': 'SET storage_engine=InnoDB'},
-    },
-}
-
-MIGRATION_DATABASES = {
-    'wikidb': {
-        'NAME': 'wikidb',
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'localhost',
-        'USER': 'wikiuser',
-        'PASSWORD': '2yeOr7ByBUMBiB4z',
-    },
-}
-
 # This is used to hash some things in Django.
 SECRET_KEY = 'jenny8675309'
 

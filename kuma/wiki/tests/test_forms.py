@@ -1,6 +1,5 @@
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
-import test_utils
 
 from kuma.users.tests import UserTestCase
 from kuma.wiki.forms import RevisionForm, RevisionValidationForm, TreeMoveForm
@@ -110,7 +109,7 @@ class TreeMoveFormTests(UserTestCase):
             ['/docs/one', 'one'],  # leading docs
             ['docs/one', 'one'],  # leading docs without slash
             ['fr/docs/one', 'one'],  # foreign locale with docs
-            ['docs/article-title/docs', 'article-title/docs'] # docs with later docs
+            ['docs/article-title/docs', 'article-title/docs']  # docs with later docs
         ]
 
         for comparison in comparisons:

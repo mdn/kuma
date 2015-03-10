@@ -7,7 +7,8 @@ from django.core.handlers.wsgi import WSGIRequest
 
 from nose.tools import eq_
 from nose import SkipTest
-import test_utils
+
+from kuma.core.tests import KumaTestCase
 
 from ..context_processors import next_url
 
@@ -46,7 +47,7 @@ def _make_request(path):
     return req
 
 
-class TestDevMoRobots(test_utils.TestCase):
+class TestDevMoRobots(KumaTestCase):
     """ These are really acceptance tests, but we seem to lump
         together unit, integration, regression, and
         acceptance tests """
@@ -86,7 +87,7 @@ class TestDevMoRobots(test_utils.TestCase):
         eq_(parse_robots('http://developer-stage9.mozilla.org'), rules)
 
 
-class TestDevMoNextUrl(test_utils.TestCase):
+class TestDevMoNextUrl(KumaTestCase):
     """ Tests that the next_url value is properly set,
     including query string """
     def test_basic(self):

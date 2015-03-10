@@ -24,15 +24,24 @@ sys.path[:0] = new_sys_path
 # Now we can import from third-party libraries.
 from django.core.management import execute_from_command_line
 
-settings_mod = 'settings'
+# Don't try to force a new setting module on us
+if 'DJANGO_SETTINGS_MODULE' not in os.environ:
 
-try:
-    import settings_local
-    settings_mod = 'settings_local'
-except ImportError:
-    pass
+    # use settings_test.py for running tests
+    if 'test' in sys.argv:
+        settings_mod = 'settings_test'
+    else:
+        # or try the optional "local" settings module first
+        try:
+            import settings_local  # noqa
+        except ImportError:
+            # or use the plain settings.py module
+            settings_mod = 'settings'
+        else:
+            settings_mod = 'settings_local'
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings_mod)
+    # override the env var with what we want
+    os.environ['DJANGO_SETTINGS_MODULE'] = settings_mod
 
 import jingo.monkey
 jingo.monkey.patch()

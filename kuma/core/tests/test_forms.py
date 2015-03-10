@@ -2,7 +2,8 @@ from django import forms
 
 from nose.tools import eq_
 from pyquery import PyQuery as pq
-import test_utils
+
+from kuma.core.tests import KumaTestCase
 
 from ..form_fields import StrippedCharField
 
@@ -23,7 +24,7 @@ class ExampleForm(forms.Form):
     time = forms.TimeField()
 
 
-class TestFields(test_utils.TestCase):
+class TestFields(KumaTestCase):
     """We're not breaking CharField when monkey patching in
     kuma/core/monkeypatch.py."""
     def setUp(self):

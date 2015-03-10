@@ -38,21 +38,11 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'kuma',  # Or path to database file if using sqlite3.
-        'USER': '',  # Not used with sqlite3.
-        'PASSWORD': '',  # Not used with sqlite3.
-        'HOST': '',  # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',  # Set to empty string for default. Not used with sqlite3.
+        'USER': 'kuma',  # Not used with sqlite3.
+        'PASSWORD': 'kuma',  # Not used with sqlite3.
+        'HOST': 'localhost',  # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '3306',  # Set to empty string for default. Not used with sqlite3.
         'OPTIONS': {'init_command': 'SET storage_engine=InnoDB'},
-    },
-}
-
-MIGRATION_DATABASES = {
-    'wikidb': {
-        'NAME': 'wikidb',
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'localhost',
-        'USER': 'wikiuser',
-        'PASSWORD': 'wikipass',
     },
 }
 
@@ -532,7 +522,6 @@ INSTALLED_APPS = (
 
     # testing.
     'django_nose',
-    'test_utils',
 
     # other
     'kuma.humans',
@@ -541,13 +530,11 @@ INSTALLED_APPS = (
     'cacheback',
 )
 
-TEST_RUNNER = 'test_utils.runner.RadicalTestSuiteRunner'
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 NOSE_ARGS = [
     '--traverse-namespace',  # make sure `./manage.py test kuma` works
 ]
-
-TEST_UTILS_NO_TRUNCATE = ('django_content_type',)
 
 # Feed fetcher config
 FEEDER_TIMEOUT = 6  # in seconds

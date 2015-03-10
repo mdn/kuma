@@ -3,11 +3,11 @@ from django.http import HttpResponse
 
 from django.test import RequestFactory
 from nose.tools import eq_, ok_
-import test_utils
 
 from kuma.core.decorators import (logout_required, login_required,
                                   never_cache, permission_required)
 
+from kuma.core.tests import KumaTestCase
 from kuma.users.tests import UserTestCase
 
 
@@ -115,7 +115,7 @@ class PermissionRequiredTestCase(UserTestCase):
         eq_(200, response.status_code)
 
 
-class TestNeverCache(test_utils.TestCase):
+class TestNeverCache(KumaTestCase):
 
     def test_never_cache(self):
         request = RequestFactory().get('/foo')

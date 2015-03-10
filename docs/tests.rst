@@ -65,13 +65,6 @@ The test suite will create a new database named ``test_%s`` where ``%s`` is
 whatever value you have for ``settings.DATABASES['default']['NAME']``. Make
 sure the user has ``ALL`` on the test database as well.
 
-When the schema changes, you may need to drop the test database. You can also
-run the test suite with ``FORCE_DB`` once to cause Django to drop and recreate
-it::
-
-    FORCE_DB=1 ./manage.py test -s --noinput --logging-clear-handlers
-
-
 Adding Tests
 ============
 

@@ -1,15 +1,16 @@
 from nose.tools import eq_
 from pyquery import PyQuery as pq
-import test_utils
 from soapbox.models import Message
 
 from django.conf import settings
 from django.core import mail
 
+from kuma.core.tests import KumaTestCase
+
 from ..urlresolvers import reverse
 
 
-class LoggingTests(test_utils.TestCase):
+class LoggingTests(KumaTestCase):
     urls = 'kuma.core.tests.logging_urls'
 
     def setUp(self):
@@ -36,7 +37,7 @@ class LoggingTests(test_utils.TestCase):
             pass
 
 
-class SoapboxViewsTest(test_utils.TestCase):
+class SoapboxViewsTest(KumaTestCase):
     fixtures = ['devmo_calendar.json']
 
     def test_global_home(self):

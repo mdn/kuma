@@ -1,10 +1,10 @@
 from nose.tools import eq_
 
-import test_utils
+from kuma.core.tests import KumaTestCase
 from ..utils import smart_int
 
 
-class SmartIntTestCase(test_utils.TestCase):
+class SmartIntTestCase(KumaTestCase):
     def test_sanity(self):
         eq_(10, smart_int('10'))
         eq_(10, smart_int('10.5'))

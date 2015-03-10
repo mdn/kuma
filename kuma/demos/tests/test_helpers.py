@@ -1,11 +1,12 @@
 from django.conf import settings
 from nose.tools import eq_
-import test_utils
+
+from kuma.core.tests import KumaTestCase
 
 from ..helpers import tag_description
 
 
-class TagDescriptionTestCase(test_utils.TestCase):
+class TagDescriptionTestCase(KumaTestCase):
 
     def test_tag_description_no_description(self):
         settings.TAG_DESCRIPTIONS = {

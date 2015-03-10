@@ -104,9 +104,6 @@ Coding Conventions
 Tests
 -----
 
-* Avoid naming test files ``test_utils.py``, since we use a library with the
-  same name. Use ``test__utils.py`` instead.
-
 * If you're expecting ``reverse`` to return locales in the URL, use
   ``LocalizingClient`` instead of the default client for the ``TestCase``
   class.

@@ -6,8 +6,6 @@ import bitly_api
 import jingo
 import mock
 from nose.tools import eq_, ok_, assert_raises
-import test_utils
-
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -20,9 +18,9 @@ from soapbox.models import Message
 
 from kuma.core.cache import memcache
 from kuma.core.helpers import bitly_shorten, bitly
+from kuma.core.tests import KumaTestCase
 from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase
-
 
 from ..exceptions import DateTimeFormatError
 from ..helpers import (timesince, urlparams, yesno, urlencode,
@@ -35,7 +33,7 @@ def render(s, context={}):
     return t.render(**context)
 
 
-class TestHelpers(test_utils.TestCase):
+class TestHelpers(KumaTestCase):
 
     def setUp(self):
         jingo.load_helpers()
@@ -73,7 +71,7 @@ class TestHelpers(test_utils.TestCase):
         eq_('No', yesno(0))
 
 
-class TimesinceTests(test_utils.TestCase):
+class TimesinceTests(KumaTestCase):
     """Tests for the timesince filter"""
 
     def test_none(self):
@@ -93,7 +91,7 @@ class TimesinceTests(test_utils.TestCase):
         eq_('', timesince(datetime(9999, 1, 2)))
 
 
-class TestUrlEncode(test_utils.TestCase):
+class TestUrlEncode(KumaTestCase):
 
     def test_utf8_urlencode(self):
         """Bug 689056: Unicode strings with non-ASCII characters should not
@@ -105,7 +103,7 @@ class TestUrlEncode(test_utils.TestCase):
             self.fail("There should be no KeyError")
 
 
-class TestSoapbox(test_utils.TestCase):
+class TestSoapbox(KumaTestCase):
 
     def test_global_message(self):
         m = Message(message="Global", is_global=True, is_active=True, url="/")
@@ -236,7 +234,7 @@ class TestDateTimeFormat(UserTestCase):
         eq_(pq(value_returned)('time').text(), value_expected)
 
 
-class BitlyTestCase(test_utils.TestCase):
+class BitlyTestCase(KumaTestCase):
     @mock.patch.object(memcache, 'set')  # prevent caching
     @mock.patch.object(bitly, 'shorten')
     def test_bitly_shorten(self, shorten, cache_set):

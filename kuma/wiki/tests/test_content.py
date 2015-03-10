@@ -7,8 +7,8 @@ from jinja2 import escape, Markup
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
-import test_utils
 
+from kuma.core.tests import KumaTestCase
 from kuma.users.tests import UserTestCase
 import kuma.wiki.content
 from kuma.wiki.content import (CodeSyntaxFilter, DekiscriptMacroFilter,
@@ -1003,7 +1003,7 @@ class ContentSectionToolTests(UserTestCase):
         eq_(normalize_html(expected), normalize_html(result))
 
 
-class AllowedHTMLTests(test_utils.TestCase):
+class AllowedHTMLTests(KumaTestCase):
     simple_tags = (
         'div', 'span', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'pre',
         'code', 'dl', 'dt', 'dd', 'table',
@@ -1077,7 +1077,7 @@ class AllowedHTMLTests(test_utils.TestCase):
         eq_(normalize_html(expected), normalize_html(result))
 
 
-class SearchParserTests(test_utils.TestCase):
+class SearchParserTests(KumaTestCase):
     """Tests for document parsers that extract content for search indexing"""
 
     def test_css_classname_extraction(self):
@@ -1116,7 +1116,7 @@ class SearchParserTests(test_utils.TestCase):
         eq_(sorted(expected), sorted(result))
 
 
-class GetSEODescriptionTests(test_utils.TestCase):
+class GetSEODescriptionTests(KumaTestCase):
 
     def test_summary_section(self):
         content = (

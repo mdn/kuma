@@ -1,12 +1,13 @@
 from django.utils import translation
 
-import test_utils
 from nose.tools import eq_
+
+from kuma.core.tests import KumaTestCase
 
 from ..form_fields import _format_decimal
 
 
-class TestFormatDecimal(test_utils.TestCase):
+class TestFormatDecimal(KumaTestCase):
 
     def test_default_locale(self):
         """Default locale just works"""

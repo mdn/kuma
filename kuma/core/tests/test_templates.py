@@ -5,14 +5,14 @@ from django.utils import translation
 from nose.tools import eq_
 from pyquery import PyQuery as pq
 import jingo
-import test_utils
 
+from kuma.core.tests import KumaTestCase
 
 def setup():
     jingo.load_helpers()
 
 
-class MockRequestTests(test_utils.TestCase):
+class MockRequestTests(KumaTestCase):
     """Base class for tests that need a mock request"""
     rf = RequestFactory()
 

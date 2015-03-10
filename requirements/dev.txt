@@ -18,5 +18,3 @@ URLObject==2.3.4
 django-debug-toolbar==1.0.1
 
 -e git://github.com/jbalogh/django-nose.git#egg=django_nose
-# 2012-11-19
--e git://github.com/jbalogh/test-utils.git@ce5136a257cd44a1c663319124a255c1d10a9834#egg=test-utils
