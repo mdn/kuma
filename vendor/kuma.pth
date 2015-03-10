@@ -6,6 +6,8 @@ src/bleach
 src/celery
 src/commonware
 src/cssselect
+src/dj-database-url
+src/dj-email-url
 src/django
 src/django-allauth
 src/django-appconf
@@ -43,6 +45,7 @@ src/puente
 src/py-amqp
 src/pyquery
 src/python-dateutil
+src/python-decouple
 src/python-magic
 src/python-memcached
 src/python-openid

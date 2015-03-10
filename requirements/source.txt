@@ -115,3 +115,9 @@ django-sundial==1.0.1
 django-pipeline==1.5.4
 
 django-celery-transactions==0.3.6
+
+python-decouple==3.0
+
+dj-database-url==0.3.0
+
+dj-email-url==0.0.4

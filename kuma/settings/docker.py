@@ -1,8 +1,8 @@
-from settings import *
+from .common import *  # noqa
 
 DEBUG = True
 TEMPLATE_DEBUG = True
-#BROKER_URL = 'redis://redis:6379/1'
+# BROKER_URL = 'redis://redis:6379/1'
 CELERY_ALWAYS_EAGER = True
 ES_LIVE_INDEX = True
 ES_URLS = ['elasticsearch:9200']

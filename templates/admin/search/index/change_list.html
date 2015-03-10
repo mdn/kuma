@@ -3,9 +3,9 @@
 
 {% block content_title %}
   {{ block.super }}
-  {% if settings.ES_URLS %}
+  {% if settings.ES_HOSTS %}
   <div class="g-d-c grp-rte">
-    <p>{% blocktrans with backend=settings.ES_URLS|join:", " %}Elasticsearch server: {{ backend }}{% endblocktrans %}</p>
+    <p>{% blocktrans with backend=settings.ES_HOSTS|join:", " %}Elasticsearch server: {{ backend }}{% endblocktrans %}</p>
   </div>
   {% endif %}
 {% endblock %}
