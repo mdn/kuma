@@ -7,7 +7,7 @@ from datetime import datetime
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.sitemaps import GenericSitemap
-from django.core.mail import EmailMessage, send_mail
+from django.core.mail import EmailMessage, mail_admins, send_mail
 from django.db import connection, transaction
 from django.dispatch import receiver
 from django.template.loader import render_to_string
@@ -34,25 +34,47 @@ render_lock = MemcacheLock('render-stale-documents-lock', expires=60 * 60)
 
 
 @task(rate_limit='60/m')
-def render_document(pk, cache_control, base_url):
+def render_document(pk, cache_control, base_url, force=False):
     """Simple task wrapper for the render() method of the Document model"""
     document = Document.objects.get(pk=pk)
-    document.render(cache_control, base_url)
+    if force:
+        document.render_started_at = None
+
+    try:
+        document.render(cache_control, base_url)
+    except Exception as e:
+        subject = 'Exception while rendering document %s' % document.pk
+        mail_admins(subject=subject, message=e)
     return document.rendered_errors
 
 
 @task
-def render_document_chunk(pks):
+def email_render_document_progress(percent_complete, total):
+    """
+    Task to send email for render_document progress notification.
+    """
+    subject = ('The command `render_document` is %s%% complete' %
+               percent_complete)
+    message = (
+        'The command `render_document` is %s%% complete out of a total of '
+        '%s documents to render.' % (percent_complete, total))
+    mail_admins(subject=subject, message=message)
+
+
+@task
+def render_document_chunk(pks, cache_control='no-cache', base_url=None,
+                          force=False):
     """
     Simple task to render a chunk of documents instead of one per each
     """
     logger = render_document_chunk.get_logger()
     logger.info(u'Starting to render document chunk: %s' %
                 ','.join([str(pk) for pk in pks]))
+    base_url = base_url or settings.SITE_URL
     for pk in pks:
         # calling the task without delay here since we want to localize
         # the processing of the chunk in one process
-        result = render_document(pk, 'no-cache', settings.SITE_URL)
+        result = render_document(pk, cache_control, base_url, force=force)
         if result:
             logger.error(u'Error while rendering document %s with error: %s' %
                          (pk, result))

@@ -35,7 +35,8 @@ class Command(NoArgsCommand):
 
         # Use a filter to make links absolute
         tool = parse(content, is_full_document=True)
-        content = tool.absolutizeAddresses(base_url=settings.PRODUCTION_URL,
+        content = tool.absolutizeAddresses(
+            base_url=settings.PRODUCTION_URL,
             tag_attributes={
                 'a': 'href',
                 'img': 'src',
