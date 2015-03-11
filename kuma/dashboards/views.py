@@ -4,6 +4,7 @@ import json
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.utils import timezone
 from django.views.decorators.http import require_GET
 
 from kuma.wiki.models import Document, Revision
@@ -48,6 +49,24 @@ def revisions(request):
                         datetime.datetime.now())
             query_kwargs['created__range'] = [start_date, end_date]
 
+        preceding_period = filter_form.cleaned_data['preceding_period']
+        if preceding_period:
+            # these are messy but work with timedelta's seconds format,
+            # and keep the form and url arguments human readable
+            if preceding_period == 'month':
+                seconds = 30 * 24 * 60 * 60
+            if preceding_period == 'week':
+                seconds = 7 * 24 * 60 * 60
+            if preceding_period == 'day':
+                seconds = 24 * 60 * 60
+            if preceding_period == 'hour':
+                seconds = 60 * 60
+            # use the form date if present, otherwise, offset from now
+            end_date = (filter_form.cleaned_data['end_date'] or
+                        timezone.now())
+            start_date = end_date - datetime.timedelta(seconds=seconds)
+            query_kwargs['created__range'] = [start_date, end_date]
+            
     if query_kwargs:
         revisions = revisions.filter(**query_kwargs)
         total = revisions.count()
