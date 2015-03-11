@@ -63,7 +63,7 @@ class Command(BaseCommand):
                 datetime.timedelta(seconds=self.options['min_age']))
             docs = Document.objects.filter(
                 Q(last_rendered_at__isnull=True) |
-                Q(last_rendered_at__gte=min_render_age))
+                Q(last_rendered_at__lt=min_render_age))
             docs = docs.order_by('-modified')
             docs = docs.values_list('id', flat=True)
 
