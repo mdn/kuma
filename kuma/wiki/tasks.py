@@ -386,7 +386,7 @@ def unindex_documents(ids, index_pk):
 def invalidate_zone_cache(pk):
     document = Document.objects.get(pk=pk)
     # if the document is a document zone
-    if document.zones.exists():
+    if document.zone:
         # reset the cached list of zones of the document's locale
         DocumentZone.objects.reset_url_remaps(document.locale)
 

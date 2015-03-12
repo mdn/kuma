@@ -1521,10 +1521,11 @@ class DocumentDeletionLog(models.Model):
 
 
 class DocumentZone(models.Model):
-    """Model object declaring a content zone root at a given Document, provides
-    attributes inherited by the topic hierarchy beneath it."""
-
-    document = models.ForeignKey(Document, related_name='zones', unique=True)
+    """
+    Model object declaring a content zone root at a given Document, provides
+    attributes inherited by the topic hierarchy beneath it.
+    """
+    document = models.OneToOneField(Document, related_name='zone')
     styles = models.TextField(null=True, blank=True)
     url_root = models.CharField(
         max_length=255, null=True, blank=True, db_index=True,

@@ -84,7 +84,7 @@ class WikiDocumentType(document.DocType):
             'css_classnames': obj.extract_css_classnames(),
             'html_attributes': obj.extract_html_attributes(),
         }
-        if obj.zones.exists():
+        if obj.zone:
             # boost all documents that are a zone
             doc['boost'] = 8.0
         elif obj.slug.count('/') == 1:
