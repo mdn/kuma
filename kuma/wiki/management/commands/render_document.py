@@ -83,11 +83,10 @@ class Command(BaseCommand):
                 if head == 'docs':
                     slug = tail
                 doc = Document.objects.get(locale=locale, slug=slug)
-                if self.options['force']:
-                    doc.render_started_at = None
                 log.info(u'Rendering %s (%s)' % (doc, doc.get_absolute_url()))
                 try:
-                    render_document(doc, self.cache_control, self.base_url)
+                    render_document(doc.pk, self.cache_control, self.base_url,
+                                    self.options['force'])
                     log.debug(u'DONE.')
                 except DocumentRenderingInProgress:
                     log.error(
