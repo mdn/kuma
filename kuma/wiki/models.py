@@ -168,21 +168,6 @@ class Document(NotificationsMixin, models.Model):
         4: SectionTOCFilter
     }
 
-    class Meta(object):
-        unique_together = (('parent', 'locale'), ('slug', 'locale'))
-        permissions = (
-            ("view_document", "Can view document"),
-            ("add_template_document", "Can add Template:* document"),
-            ("change_template_document", "Can change Template:* document"),
-            ("move_tree", "Can move a tree of documents"),
-            ("purge_document", "Can permanently delete document"),
-            ("restore_document", "Can restore deleted document"),
-        )
-
-    objects = DocumentManager()
-    deleted_objects = DeletedDocumentManager()
-    admin_objects = DocumentAdminManager()
-
     title = models.CharField(max_length=255, db_index=True)
     slug = models.CharField(max_length=255, db_index=True)
 
@@ -280,6 +265,27 @@ class Document(NotificationsMixin, models.Model):
     summary_html = models.TextField(editable=False, blank=True, null=True)
 
     summary_text = models.TextField(editable=False, blank=True, null=True)
+
+    class Meta(object):
+        unique_together = (
+            ('parent', 'locale'),
+            ('slug', 'locale'),
+        )
+        permissions = (
+            ('view_document', 'Can view document'),
+            ('add_template_document', 'Can add Template:* document'),
+            ('change_template_document', 'Can change Template:* document'),
+            ('move_tree', 'Can move a tree of documents'),
+            ('purge_document', 'Can permanently delete document'),
+            ('restore_document', 'Can restore deleted document'),
+        )
+
+    objects = DocumentManager()
+    deleted_objects = DeletedDocumentManager()
+    admin_objects = DocumentAdminManager()
+
+    def __unicode__(self):
+        return u'%s (%s)' % (self.get_absolute_url(), self.title)
 
     @cache_with_field('body_html')
     def get_body_html(self, *args, **kwargs):
@@ -1332,9 +1338,6 @@ Full traceback:
         if url:
             return self.from_url(url)
 
-    def __unicode__(self):
-        return u'%s (%s)' % (self.get_absolute_url(), self.title)
-
     def filter_permissions(self, user, permissions):
         """Filter permissions with custom logic"""
         # No-op, for now.
@@ -1520,13 +1523,14 @@ class DocumentDeletionLog(models.Model):
 class DocumentZone(models.Model):
     """Model object declaring a content zone root at a given Document, provides
     attributes inherited by the topic hierarchy beneath it."""
-    objects = DocumentZoneManager()
 
     document = models.ForeignKey(Document, related_name='zones', unique=True)
     styles = models.TextField(null=True, blank=True)
     url_root = models.CharField(
         max_length=255, null=True, blank=True, db_index=True,
         help_text="alternative URL path root for documents under this zone")
+
+    objects = DocumentZoneManager()
 
     def __unicode__(self):
         return u'DocumentZone %s (%s)' % (self.document.get_absolute_url(),
