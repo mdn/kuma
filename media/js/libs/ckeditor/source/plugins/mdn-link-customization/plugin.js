@@ -5,6 +5,7 @@ CKEDITOR.plugins.add('mdn-link-customization', {
 
   autoCompleteTextbox: null,
   autoCompleteSelection: null,
+  originalHighlightedText: '',
 
   onLoad: function() {
     var that = this;
@@ -15,7 +16,7 @@ CKEDITOR.plugins.add('mdn-link-customization', {
 
       if (dialogName != 'link')
         return;
-      
+
       dialogDefinition.removeContents('target');
 
       var infoTab = dialogDefinition.getContents('info');
@@ -31,6 +32,7 @@ CKEDITOR.plugins.add('mdn-link-customization', {
   init: function(editor) {
     // We can't use attachment's setup callback, because it is executed
     // becure url's value is set. This event is fired after that.
+    var that = this;
     editor.on('dialogShow', function(evt) {
       var dialog = evt.data;
 
@@ -40,6 +42,8 @@ CKEDITOR.plugins.add('mdn-link-customization', {
       var select = dialog.getContentElement('info', 'attachment');
 
       mdn.ckeditor.updateAttachments(select, dialog.getValueOf('info', 'url'));
+
+      that.originalHighlightedText = editor.getSelection().getSelectedText();
     });
   },
 
@@ -92,11 +96,12 @@ CKEDITOR.plugins.add('mdn-link-customization', {
         // Create widget if not done already
         if(!that.autoCompleteTextbox) {
           that.autoCompleteTextbox = this.getElement().getElementsByTag('input').$[0];
-          
+
           jQuery(that.autoCompleteTextbox).mozillaAutocomplete({
             minLength: 1,
             requireValidOption: true,
             _renderItemAsLink: true,
+            labelField: 'label',
             styleElement: that.autoCompleteTextbox.parentNode,
             autocompleteUrl: mdn.wiki.autosuggestTitleUrl,
             onSelect: function(item, isSilent) {
@@ -109,7 +114,7 @@ CKEDITOR.plugins.add('mdn-link-customization', {
             }
           });
         }
-        
+
         // Clear out the the values so there aren't any problems
         jQuery(that.autoCompleteTextbox).mozillaAutocomplete('clear');
       }
@@ -158,8 +163,11 @@ CKEDITOR.plugins.add('mdn-link-customization', {
 
       var text;
 
-      if (that.autoCompleteSelection) {
-        text = that.autoCompleteSelection.label;
+      if(that.originalHighlightedText) {
+        text = that.originalHighlightedText
+      }
+      else if (that.autoCompleteSelection) {
+        text = that.autoCompleteSelection.title;
       } else if (that.autoCompleteTextbox.value) {
         text = that.autoCompleteTextbox.value;
       }

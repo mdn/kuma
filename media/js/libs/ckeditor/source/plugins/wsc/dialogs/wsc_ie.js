@@ -1,5 +1,5 @@
 ﻿/**
- * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 
@@ -133,7 +133,7 @@ CKEDITOR.dialog.add( 'checkspell', function( editor ) {
 			}
 
 			var sData = editor.getData(); // Get the data to be checked.
-			
+
 			CKEDITOR.document.getById( textareaId ).setValue( sData );
 
 			interval = window.setInterval( burnSpelling( this, errorMsg ), 250 );

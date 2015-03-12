@@ -1426,7 +1426,8 @@ def autosuggest_documents(request):
     docs_list = []
     for d in docs:
         data = d.get_json_data()
-        data['title'] += ' [' + d.locale + ']'
+        #data['plain_title'] = data['title']
+        data['label'] += ' [' + d.locale + ']'
         docs_list.append(data)
 
     data = json.dumps(docs_list)

@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+﻿// Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
 // For licensing, see LICENSE.md or http://ckeditor.com/license
 
 CKEDITOR.plugins.add( 'wsc', {
@@ -17,7 +17,7 @@ CKEDITOR.plugins.add( 'wsc', {
 		editor.config.wsc_customLoaderScript = editor.config.wsc_customLoaderScript || CKEDITOR.config.wsc_customLoaderScript;
 
 		CKEDITOR.config.wsc_cmd = editor.config.wsc_cmd || CKEDITOR.config.wsc_cmd || 'spell'; // spell, thes or grammar. default tab
-		CKEDITOR.config.wsc_version="v4.3.0-wsc-dev-bcb1714";
+		CKEDITOR.config.wsc_version="v4.3.0-wsc-dev-571bdc9";
 		CKEDITOR.config.wsc_removeGlobalVariable = true;
 	},
 	init: function( editor ) {
@@ -28,6 +28,7 @@ CKEDITOR.plugins.add( 'wsc', {
 			strDialog,
 			self = this,
 			env = CKEDITOR.env;
+
 		self.parseConfig(editor);
 		self.parseApi(editor);
 		var command = editor.addCommand( commandName, new CKEDITOR.dialogCommand( commandName ) );
