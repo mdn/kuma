@@ -349,21 +349,28 @@ class Document(NotificationsMixin, models.Model):
             if src:
                 return src
 
+    def extract_section(self, content, section_id, ignore_heading=False):
+        parsed_content = parse_content(content)
+        extracted = parsed_content.extractSection(section_id,
+                                                  ignore_heading=ignore_heading)
+        return extracted.serialize()
+
     def get_section_content(self, section_id, ignore_heading=True):
-        """Convenience method to extract the rendered content for a single section"""
-        html = self.rendered_html and self.rendered_html or self.html
-        return (parse_content(html)
-                .extractSection(section_id, ignore_heading=ignore_heading)
-                .serialize())
+        """
+        Convenience method to extract the rendered content for a single section
+        """
+        if self.rendered_html:
+            content = self.rendered_html
+        else:
+            content = self.html
+        return self.extract_section(content, section_id, ignore_heading)
 
     def calculate_etag(self, section_id=None):
         """Calculate an etag-suitable hash for document content or a section"""
         if not section_id:
             content = self.html
         else:
-            content = (parse_content(self.html)
-                       .extractSection(section_id)
-                       .serialize())
+            content = self.extract_section(self.html, section_id)
         return '"%s"' % hashlib.sha1(content.encode('utf8')).hexdigest()
 
     def current_or_latest_revision(self):
@@ -1304,10 +1311,10 @@ Full traceback:
             return None
 
     def redirect_url(self):
-        """If I am a redirect, return the absolute URL to which I redirect.
+        """
+        If I am a redirect, return the absolute URL to which I redirect.
 
         Otherwise, return None.
-
         """
         # If a document starts with REDIRECT_HTML and contains any <a> tags
         # with hrefs, return the href of the first one. This trick saves us
@@ -1758,9 +1765,7 @@ class Revision(models.Model):
 
     def get_section_content(self, section_id):
         """Convenience method to extract the content for a single section"""
-        return (parse_content(self.content)
-                .extractSection(section_id)
-                .serialize())
+        return self.document.extract_section(self.content, section_id)
 
     @property
     def content_cleaned(self):
