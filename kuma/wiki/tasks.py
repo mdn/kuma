@@ -24,7 +24,7 @@ from kuma.search.models import Index
 from .events import context_dict
 from .exceptions import PageMoveError, StaleDocumentsRenderingInProgress
 from .helpers import absolutify
-from .models import Document, Revision, RevisionIP, DocumentZone
+from .models import Document, Revision, RevisionIP
 from .search import WikiDocumentType
 from .signals import render_done
 
@@ -380,17 +380,3 @@ def unindex_documents(ids, index_pk):
     index = Index.objects.get(pk=index_pk)
 
     cls.bulk_delete(ids, es=es, index=index.prefixed_name)
-
-
-@task
-def invalidate_zone_cache(pk):
-    document = Document.objects.get(pk=pk)
-    # if the document is a document zone
-    if document.zone:
-        # reset the cached list of zones of the document's locale
-        DocumentZone.objects.reset_url_remaps(document.locale)
-
-
-@receiver(render_done)
-def invalidate_zone_cache_handler(sender, instance, **kwargs):
-    invalidate_zone_cache.delay(instance.pk)

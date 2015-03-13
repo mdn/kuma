@@ -6,6 +6,7 @@ import operator
 from math import ceil
 
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 from django.utils.html import strip_tags
 from django.utils.translation import ugettext_lazy as _
@@ -84,7 +85,14 @@ class WikiDocumentType(document.DocType):
             'css_classnames': obj.extract_css_classnames(),
             'html_attributes': obj.extract_html_attributes(),
         }
-        if obj.zone:
+
+        # Check if the document has a document zone attached
+        try:
+            is_zone = bool(obj.zone)
+        except ObjectDoesNotExist:
+            is_zone = False
+
+        if is_zone:
             # boost all documents that are a zone
             doc['boost'] = 8.0
         elif obj.slug.count('/') == 1:

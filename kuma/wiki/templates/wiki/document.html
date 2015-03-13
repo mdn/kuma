@@ -22,7 +22,7 @@
   {% set approvals_html = get_approvals_html(document, request.user) %}
 {% endif %}
 
-{% set zone_stack = document.find_zone_stack() %}
+{% set zone_stack = document.zone_stack %}
 {% set is_zone = zone_stack|length %}
 {% set is_zone_root = is_zone and zone_stack[0].document == document %}
 {% set is_translated = document.other_translations.exists() %}

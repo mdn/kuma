@@ -19,17 +19,18 @@ from waffle.models import Switch
 
 from kuma.core.exceptions import ProgrammingError
 from kuma.core.tests import override_constance_settings
-from kuma.wiki.constants import REDIRECT_CONTENT
-from kuma.wiki.exceptions import (PageMoveError,
-                                  DocumentRenderedContentNotAvailable,
-                                  DocumentRenderingInProgress)
-from kuma.wiki.models import (Document, Revision, RevisionIP,
-                              DocumentZone, TaggedDocument)
-from kuma.wiki import tasks
-from kuma.wiki.tests import (document, revision, doc_rev, normalize_html,
-                             create_template_test_users,
-                             create_topical_parents_docs)
 from kuma.users.tests import UserTestCase
+
+from . import (document, revision, doc_rev, normalize_html,
+               create_template_test_users, create_topical_parents_docs)
+from .. import tasks
+from ..constants import REDIRECT_CONTENT
+from ..exceptions import (PageMoveError,
+                          DocumentRenderedContentNotAvailable,
+                          DocumentRenderingInProgress)
+from ..jobs import DocumentZoneStackJob
+from ..models import (Document, Revision, RevisionIP, DocumentZone,
+                      TaggedDocument)
 
 
 def _objects_eq(manager, list_):
@@ -1742,8 +1743,8 @@ class DocumentZoneTests(UserTestCase):
         root_doc = root_rev.document
 
         middle_rev = revision(title='Zonemiddle', slug='Zonemiddle',
-                            content='This is the Zone middle',
-                            is_approved=True, save=True)
+                              content='This is the Zone middle',
+                              is_approved=True, save=True)
         middle_doc = middle_rev.document
         middle_doc.parent_topic = root_doc
         middle_doc.save()
@@ -1773,14 +1774,17 @@ class DocumentZoneTests(UserTestCase):
         middle_zone = DocumentZone(document=middle_doc)
         middle_zone.save()
 
-        eq_(root_zone, root_doc.find_zone_stack()[0])
-        eq_(middle_zone, middle_doc.find_zone_stack()[0])
-        eq_(middle_zone, sub_doc.find_zone_stack()[0])
-        eq_(0, len(other_doc.find_zone_stack()))
+        eq_(self.get_zone_stack(root_doc)[0], root_zone)
+        eq_(self.get_zone_stack(middle_doc)[0], middle_zone)
+        eq_(self.get_zone_stack(sub_doc)[0], middle_zone)
+        eq_(0, len(self.get_zone_stack(other_doc)))
 
-        zone_stack = sub_sub_doc.find_zone_stack()
+        zone_stack = self.get_zone_stack(sub_sub_doc)
         eq_(zone_stack[0], middle_zone)
         eq_(zone_stack[1], root_zone)
+
+    def get_zone_stack(self, doc):
+        return DocumentZoneStackJob().get(doc.pk)
 
 
 class DocumentParsingTests(UserTestCase):

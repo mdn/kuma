@@ -58,8 +58,8 @@ class DocumentZoneMiddlewareTestCase(UserTestCase, WikiTestCase):
 
         # One more doc, just to be sure we can have multiple blank url_roots
         onemore_rev = revision(title='onemorePage', slug='onemorePage',
-                             content='This is an onemorepage',
-                             is_approved=True, save=True)
+                               content='This is an onemorepage',
+                               is_approved=True, save=True)
         self.onemore_doc = onemore_rev.document
         self.onemore_doc.save()
 
@@ -89,9 +89,10 @@ class DocumentZoneMiddlewareTestCase(UserTestCase, WikiTestCase):
         eq_(self.sub_doc.html, response.content)
 
     def test_actual_wiki_url_redirect(self):
-        """Ensure a request for the 'real' path to a document results in a
-        redirect to the internal redirect path"""
-
+        """
+        Ensure a request for the 'real' path to a document results in a
+        redirect to the internal redirect path
+        """
         url = '/en-US/docs/%s?raw=1' % self.middle_doc.slug
         response = self.client.get(url, follow=False)
         eq_(302, response.status_code)

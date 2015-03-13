@@ -50,11 +50,12 @@ from .content import (extract_code_sample, extract_css_classnames,
                       extract_html_attributes, extract_kumascript_macro_names,
                       get_content_sections, get_seo_description, H2TOCFilter,
                       H3TOCFilter, SectionTOCFilter)
+from .jobs import DocumentZoneStackJob, DocumentZoneURLRemapsJob
 from .exceptions import (DocumentRenderedContentNotAvailable,
                          DocumentRenderingInProgress, PageMoveError,
                          SlugCollision, UniqueCollision)
 from .managers import (DeletedDocumentManager, DocumentAdminManager,
-                       DocumentManager, DocumentZoneManager, RevisionIPManager,
+                       DocumentManager, RevisionIPManager,
                        TaggedDocumentManager, TransformManager)
 from .search import WikiDocumentType
 from .signals import render_done
@@ -339,12 +340,14 @@ class Document(NotificationsMixin, models.Model):
         self.get_summary_text(force_fresh=True)
 
     def get_zone_subnav_html(self):
-        """Search from self up through DocumentZone stack, returning the first
-        zone nav HTML found."""
+        """
+        Search from self up through DocumentZone stack, returning the first
+        zone nav HTML found.
+        """
         src = self.get_zone_subnav_local_html()
         if src:
             return src
-        for zone in self.find_zone_stack():
+        for zone in DocumentZoneStackJob().get(self.pk):
             src = zone.document.get_zone_subnav_local_html()
             if src:
                 return src
@@ -555,9 +558,7 @@ class Document(NotificationsMixin, models.Model):
 
     def build_json_data(self):
         html = self.rendered_html and self.rendered_html or self.html
-        content = (parse_content(html)
-                   .injectSectionIDs()
-                   .serialize())
+        content = parse_content(html).injectSectionIDs().serialize()
         sections = get_content_sections(content)
 
         summary = ''
@@ -1361,21 +1362,6 @@ Full traceback:
     def get_permission_parents(self):
         return self.get_topic_parents()
 
-    def find_zone_stack(self):
-        """Assemble the stack of DocumentZones available from this document,
-        moving up the stack of topic parents"""
-        stack = []
-        try:
-            stack.append(DocumentZone.objects.get(document=self))
-        except DocumentZone.DoesNotExist:
-            pass
-        for p in self.get_topic_parents():
-            try:
-                stack.append(DocumentZone.objects.get(document=p))
-            except DocumentZone.DoesNotExist:
-                pass
-        return stack
-
     def allows_revision_by(self, user):
         """Return whether `user` is allowed to create new revisions of me.
 
@@ -1500,6 +1486,10 @@ Full traceback:
                                          .order_by('-creator__count'))
         return User.objects.filter(pk__in=list(top_creator_ids))
 
+    @cached_property
+    def zone_stack(self):
+        return DocumentZoneStackJob().get(self.pk)
+
 
 @receiver(render_done)
 def purge_wiki_url_cache(sender, instance, **kwargs):
@@ -1538,21 +1528,53 @@ class DocumentZone(models.Model):
         max_length=255, null=True, blank=True, db_index=True,
         help_text="alternative URL path root for documents under this zone")
 
-    objects = DocumentZoneManager()
-
     def __unicode__(self):
         return u'DocumentZone %s (%s)' % (self.document.get_absolute_url(),
                                           self.document.title)
 
-    @staticmethod
-    def cache_key(locale):
-        return 'wiki:zones:remaps:%s' % locale
-
     def save(self, *args, **kwargs):
         super(DocumentZone, self).save(*args, **kwargs)
 
-        # Reset URL cache for the locale of this zone's attached document
-        DocumentZone.objects.reset_url_remaps(self.document.locale)
+        # Refresh the cache for the locale of this zone's attached document
+        DocumentZoneURLRemapsJob().refresh(self.document.locale)
+        invalidate_zone_stack_cache(self.document)
+
+
+def invalidate_zone_stack_cache(document, async=False):
+    """
+    reset the cache for the zone stack for all of the documents
+    in the document tree branch
+    """
+    pks = [document.pk] + [parent.pk
+                           for parent in document.get_topic_parents()]
+    job = DocumentZoneStackJob()
+    if async:
+        invalidator = job.invalidate
+    else:
+        invalidator = job.refresh
+    for pk in pks:
+        invalidator(pk)
+
+
+def invalidate_zone_urls_cache(document, async=False):
+    # if the document is a document zone
+    job = DocumentZoneURLRemapsJob()
+    if async:
+        invalidator = job.invalidate
+    else:
+        invalidator = job.refresh
+    try:
+        if document.zone:
+            # reset the cached list of zones of the document's locale
+            invalidator(document.locale)
+    except DocumentZone.DoesNotExist:
+        pass
+
+
+@receiver(signals.post_save, sender=Document)
+def invalidate_zone_caches(sender, instance, **kwargs):
+    invalidate_zone_urls_cache(instance, async=True)
+    invalidate_zone_stack_cache(instance, async=True)
 
 
 class ReviewTag(TagBase):

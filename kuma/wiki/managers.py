@@ -227,33 +227,6 @@ class TaggedDocumentManager(models.Manager):
         return base_qs.filter(content_object__deleted=False)
 
 
-class DocumentZoneManager(models.Manager):
-    """Manager for DocumentZone objects"""
-
-    def build_url_remaps(self, locale):
-        qs = (self.filter(document__locale=locale,
-                          url_root__isnull=False)
-                  .exclude(url_root=''))
-        return [{
-            'original_path': '/docs/%s' % zone.document.slug,
-            'new_path': '/%s' % zone.url_root
-        } for zone in qs]
-
-    def reset_url_remaps(self, locale, cache_key=None):
-        if cache_key is None:
-            cache_key = self.model.cache_key(locale)
-        remaps = self.build_url_remaps(locale)
-        memcache.set(cache_key, remaps, timeout=60 * 60 * 24)
-        return remaps
-
-    def get_url_remaps(self, locale):
-        cache_key = self.model.cache_key(locale)
-        remaps = memcache.get(cache_key)
-        if not remaps:
-            remaps = self.reset_url_remaps(locale, cache_key)
-        return remaps
-
-
 class RevisionIPManager(models.Manager):
     def delete_old(self, days=30):
         cutoff_date = date.today() - timedelta(days=days)

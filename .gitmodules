@@ -145,3 +145,6 @@
 [submodule "vendor/src/bitly-api-python"]
 	path = vendor/src/bitly-api-python
 	url = https://github.com/bitly/bitly-api-python.git
+[submodule "vendor/src/django-cacheback"]
+	path = vendor/src/django-cacheback
+	url = https://github.com/codeinthehole/django-cacheback.git
