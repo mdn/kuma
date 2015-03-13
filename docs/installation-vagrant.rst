@@ -161,7 +161,14 @@ To enable KumaScript (Kuma's template system):
 #. Change ``KUMASCRIPT_TIMEOUT`` to 600
 #. Click "Save" at the bottom
 
+KumaScript is now enabled. You will also want to import the `KumaScript auto-loaded modules`_.
+You can simply copy & paste them from the production site to your local site at
+the same slugs. Or you can email the `dev-mdn`_ list to get a .json file to
+load in your local django admin interface as described in `this comment`_.
+
 .. _constance config admin panel: https://developer-local.allizom.org/admin/constance/config/
+.. _KumaScript auto-loaded modules: https://developer.mozilla.org/en-US/docs/MDN/Kuma/Introduction_to_KumaScript#Auto-loaded_modules
+.. _this comment: https://github.com/mozilla/kuma/issues/2518#issuecomment-53665362
 
 Create pages
 ------------
@@ -258,9 +265,10 @@ Getting more help
 If you have more problems using vagrant, please:
 
 #. Paste errors to `pastebin`_
-#. `email dev-mdn@lists.mozilla.org <mailto:dev-mdn@lists.mozilla.org?subject=vagrant%20issue>`_.
+#. email the `dev-mdn`_ list
 #. After you email dev-mdn, you can also ask in `IRC`_
 
 .. _pastebin: http://pastebin.mozilla.org/
+.. _dev-mdn: mailto:dev-mdn@lists.mozilla.org?subject=vagrant%20issue
 .. _IRC: irc://irc.mozilla.org:6697/#mdndev
 .. _puppet: http://puppetlabs.com/puppet/puppet-open-source
