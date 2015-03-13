@@ -6,7 +6,7 @@ from django.utils import timezone
 
 import constance.config
 
-from kuma.core.cache import memcache
+from .cache import memcache
 from .models import IPBan
 
 
@@ -55,5 +55,5 @@ def clean_sessions():
 
 
 @task
-def delete_old_ip_bans(immediate=False, days=30):
+def delete_old_ip_bans(days=30):
     IPBan.objects.delete_old(days=days)

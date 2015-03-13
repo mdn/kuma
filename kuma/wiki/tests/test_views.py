@@ -557,24 +557,26 @@ class BannedIPTests(UserTestCase, WikiTestCase):
         super(BannedIPTests, self).setUp()
         self.ip = '127.0.0.1'
         self.ip_ban = IPBan.objects.create(ip=self.ip)
-        self.d, r = doc_rev()
-        self.edit_url = reverse('wiki.edit_document', args=[self.d.full_path])
+        self.doc, rev = doc_rev()
+        self.edit_url = reverse('wiki.edit_document',
+                                args=[self.doc.full_path]
+                               )
 
     def test_banned_ip_cant_get_edit(self):
         self.client.login(username='testuser', password='testpass')
-        resp = self.client.get(self.edit_url, REMOTE_ADDR=self.ip)
-        eq_(403, resp.status_code)
+        response = self.client.get(self.edit_url, REMOTE_ADDR=self.ip)
+        eq_(403, response.status_code)
 
     def test_banned_ip_cant_post_edit(self):
         self.client.login(username='testuser', password='testpass')
-        resp = self.client.get(self.edit_url, REMOTE_ADDR=self.ip)
-        eq_(403, resp.status_code)
+        response = self.client.get(self.edit_url, REMOTE_ADDR=self.ip)
+        eq_(403, response.status_code)
 
     def test_banned_ip_can_still_get_articles(self):
-        resp = self.client.get(reverse('wiki.document',
-                                       args=[self.d.full_path]),
-                               REMOTE_ADDR=self.ip)
-        eq_(200, resp.status_code)
+        response = self.client.get(self.doc.get_absolute_url(),
+                                   REMOTE_ADDR=self.ip
+                                  )
+        eq_(200, response.status_code)
 
 class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
     """
@@ -2382,9 +2384,6 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         rev = doc.revisions.order_by('-id').all()[0]
         rev_ip = RevisionIP.objects.get(revision=rev)
         eq_('127.0.0.1', rev_ip.ip)
-
-    def test_banned_ip(self):
-        pass
 
     @mock.patch.object(Site.objects, 'get_current')
     def test_email_for_first_edits(self, get_current):

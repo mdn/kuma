@@ -257,7 +257,7 @@ def update_community_stats():
 
 
 @task
-def delete_old_revision_ips(immediate=False, days=30):
+def delete_old_revision_ips(days=30):
     RevisionIP.objects.delete_old(days=days)
 
 

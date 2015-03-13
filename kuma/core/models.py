@@ -1,5 +1,7 @@
 from datetime import datetime
+
 from django.db import models
+from django.utils import timezone
 
 from south.modelsinspector import add_introspection_rules
 
@@ -39,13 +41,13 @@ class ModelBase(models.Model):
 
 class IPBan(models.Model):
     ip = models.GenericIPAddressField()
-    created = models.DateTimeField(default=datetime.now, db_index=True)
+    created = models.DateTimeField(default=timezone.now, db_index=True)
     deleted = models.DateTimeField(null=True, blank=True)
 
     objects = IPBanManager()
 
     def delete(self, *args, **kwargs):
-        self.deleted = datetime.now()
+        self.deleted = timezone.now()
         self.save()
 
     def __unicode__(self):

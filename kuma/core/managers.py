@@ -245,11 +245,11 @@ def resolve_allowed_tags(model_obj, tags_curr, tags_new,
 
 class IPBanManager(models.Manager):
     def active(self, ip):
-        return super(IPBanManager, self).filter(ip=ip, deleted__isnull=True)
+        return self.filter(ip=ip, deleted__isnull=True)
 
     def delete_old(self, days=30):
         cutoff_date = date.today() - timedelta(days=days)
-        old_ip_bans = self.get_query_set().filter(created__lte=cutoff_date)
+        old_ip_bans = self.filter(created__lte=cutoff_date)
         old_ip_bans.delete()
 
 
