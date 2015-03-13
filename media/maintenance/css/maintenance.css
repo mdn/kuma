@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'Open Sans';
-    src: url('/media/fonts/OpenSans-Regular-webfont.eot');
-    src: url('/media/fonts/OpenSans-Regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('/media/fonts/OpenSans-Regular-webfont.woff') format('woff'),
-         url('/media/fonts/OpenSans-Regular-webfont.ttf') format('truetype'),
-         url('/media/fonts/OpenSans-Regular-webfont.svg#OpenSansRegular') format('svg');
+    src: url('/media/maintenance/fonts/OpenSans-Regular-webfont.eot');
+    src: url('/media/maintenance/fonts/OpenSans-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/media/maintenance/fonts/OpenSans-Regular-webfont.woff') format('woff'),
+         url('/media/maintenance/fonts/OpenSans-Regular-webfont.ttf') format('truetype'),
+         url('/media/maintenance/fonts/OpenSans-Regular-webfont.svg#OpenSansRegular') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -23,10 +23,10 @@ body {
 
 header {
     background-color: #00539f;
-    background-image: url("/media/img/header-background.png");
-    background-image: url("/media/img/header-background.png"),
-                      url("/media/img/blueprint.png"),
-                      url("/media/img/mdn-header-gradient.png");
+    background-image: url("/media/maintenance/img/header-background.png");
+    background-image: url("/media/maintenance/img/header-background.png"),
+                      url("/media/maintenance/img/blueprint.png"),
+                      url("/media/maintenance/img/mdn-header-gradient.png");
     background-position: 0 0, 0 0, 0 0;
     background-repeat: repeat, repeat, repeat-x;
 
@@ -41,7 +41,7 @@ header {
 }
 
 .logo {
-    background-image: url("/media/img/logo_sprite.svg");
+    background-image: url("/media/maintenance/img/logo_sprite.svg");
     background-position: 0 -41px;
     background-repeat: no-repeat;
     background-size: 100% auto;
