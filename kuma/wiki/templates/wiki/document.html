@@ -171,7 +171,15 @@
           <span class="from-search-next-box">
             <a class="button from-search-next only-icon disabled" title="{{ _('Next Search Result') }}" data-empty-title="{{ _('No Previous Search Result') }}"><i aria-hidden="true" class="icon-chevron-right"></i></a>
           </span>
+
         <h1>{{ document.title }}</h1>
+
+        {% if waffle.flag('share_links') %}
+        <a href="" class="share-link twitter"><i aria-hidden="true" class="icon-twitter"></i></a>
+        <a href="" class="share-link facebook"><i aria-hidden="true" class="icon-facebook"></i></a>
+        <a href="" class="share-link gplus"><i aria-hidden="true" class="icon-google-plus"></i></a>
+        {% endif %}
+
         {% if waffle.flag('top_contributors') %}
             {% set contributors = document.get_contributors() %}
             {% set contrib_limit = 13 %}
