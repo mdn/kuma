@@ -145,9 +145,6 @@
 [submodule "vendor/src/django-taggit"]
 	path = vendor/src/django-taggit
 	url = git://github.com/alex/django-taggit.git
-[submodule "vendor/src/httplib2"]
-	path = vendor/src/httplib2
-	url = git://github.com/jcgregorio/httplib2.git
 [submodule "vendor/src/django-product-details"]
 	path = vendor/src/django-product-details
 	url = git://github.com/mozilla/django-product-details.git
