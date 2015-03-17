@@ -174,12 +174,6 @@
 
         <h1>{{ document.title }}</h1>
 
-        {% if waffle.flag('share_links') %}
-        <a href="" class="share-link twitter"><i aria-hidden="true" class="icon-twitter"></i></a>
-        <a href="" class="share-link facebook"><i aria-hidden="true" class="icon-facebook"></i></a>
-        <a href="" class="share-link gplus"><i aria-hidden="true" class="icon-google-plus"></i></a>
-        {% endif %}
-
         {% if waffle.flag('top_contributors') %}
             {% set contributors = document.get_contributors() %}
             {% set contrib_limit = 13 %}
@@ -341,6 +335,18 @@
                   {{ _("This article doesn't have approved content yet.") }}
                 {% endif %}
               </article>
+
+            {% if waffle.flag('share_links') %}
+                <div class="share">
+                    <strong><i class="icon-share" aria-hidden="true"></i> {{ _('Share:') }}</strong>
+                    <ul>
+                        <li><button class="share-link twitter"><i aria-hidden="true" class="icon-twitter"></i>{{ _('Twitter') }}</button></li>
+                        <li><button class="share-link facebook"><i aria-hidden="true" class="icon-facebook"></i>{{ _('Facebook') }}</button></li>
+                        <li><button class="share-link gplus"><i aria-hidden="true" class="icon-google-plus"></i>{{ _('Google +') }}</button></li>
+                    </ul>
+                </div>
+            {% endif %}
+
 
               {% if not is_zone_root %}
 
