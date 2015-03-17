@@ -520,6 +520,7 @@ INSTALLED_APPS = (
     'taggit',
     'dbgettext',
     'honeypot',
+    'cacheback',
 
     'kuma.dashboards',
     'statici18n',
@@ -1215,7 +1216,6 @@ LOGGING = {
             'handlers': ['console'],
             'level': logging.ERROR,
         }
-
     },
 }
 

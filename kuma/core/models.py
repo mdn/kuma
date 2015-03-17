@@ -1,11 +1,10 @@
-from datetime import datetime
-
 from django.db import models
 from django.utils import timezone
 
 from south.modelsinspector import add_introspection_rules
 
 from .managers import IPBanManager
+from .jobs import IPBanJob
 
 
 class ModelBase(models.Model):
@@ -49,6 +48,7 @@ class IPBan(models.Model):
     def delete(self, *args, **kwargs):
         self.deleted = timezone.now()
         self.save()
+        IPBanJob.delete(self.ip)
 
     def __unicode__(self):
         return u'%s banned on %s' % (self.ip, self.created)

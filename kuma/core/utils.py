@@ -21,7 +21,7 @@ from taggit.utils import split_strip
 
 from kuma.actioncounters.utils import get_ip
 from .cache import memcache
-from .models import IPBan
+from .jobs import IPBanJob
 
 
 log = commonware.log.getLogger('kuma.core.utils')
@@ -289,6 +289,5 @@ def chord_flow(pre_task, tasks, post_task):
 
 
 def limit_banned_ip_to_0(group, request):
-    if IPBan.objects.active(ip=get_ip(request)).exists():
-        return "0/s"
-    return "60/m"
+    ip = get_ip(request)
+    return IPBanJob().get(ip)

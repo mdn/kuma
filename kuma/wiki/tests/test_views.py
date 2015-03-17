@@ -566,17 +566,20 @@ class BannedIPTests(UserTestCase, WikiTestCase):
         self.client.login(username='testuser', password='testpass')
         response = self.client.get(self.edit_url, REMOTE_ADDR=self.ip)
         eq_(403, response.status_code)
+        cache.clear()
 
     def test_banned_ip_cant_post_edit(self):
         self.client.login(username='testuser', password='testpass')
         response = self.client.get(self.edit_url, REMOTE_ADDR=self.ip)
         eq_(403, response.status_code)
+        cache.clear()
 
     def test_banned_ip_can_still_get_articles(self):
         response = self.client.get(self.doc.get_absolute_url(),
                                    REMOTE_ADDR=self.ip
                                   )
         eq_(200, response.status_code)
+        cache.clear()
 
 class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
     """
