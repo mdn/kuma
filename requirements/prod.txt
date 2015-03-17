@@ -70,8 +70,6 @@ django-statsd-mozilla==0.3.8.5
 django-tidings==0.4
 # -e git://github.com/getsentry/raven-python.git@edd9b1f4fb0ca85b09c1859a228c54f18d6e7d95#egg=raven-python
 raven==3.3.12
-# -e git+https://github.com/sehmaschine/django-grappelli.git@95558ba99f656ba9bd0736e93317b280c05f4237#egg=django-grappelli
-django-grappelli==2.4.5
 # -e git+https://github.com/tomchristie/django-rest-framework.git@195790e60b117eff421eb8f04a9f9f3527e797b8#egg=django-rest-framework
 djangorestframework==2.3.8
 # -e git+https://github.com/jezdez/django-memcached-hashring.git@e66d2cd9255cb802428872360b7fc7071496c063#egg=django-memcached-hashring

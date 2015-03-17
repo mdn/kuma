@@ -28,9 +28,6 @@
 [submodule "vendor/src/django-extensions"]
 	path = vendor/src/django-extensions
 	url = git://github.com/django-extensions/django-extensions.git
-[submodule "vendor/src/django-grappelli"]
-	path = vendor/src/django-grappelli
-	url = git://github.com/sehmaschine/django-grappelli.git
 [submodule "vendor/src/django-memcached-hashring"]
 	path = vendor/src/django-memcached-hashring
 	url = git://github.com/jezdez/django-memcached-hashring.git
