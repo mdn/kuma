@@ -6,7 +6,7 @@
 	url = git://github.com/mozilla/basket-client.git
 [submodule "vendor/src/bleach"]
 	path = vendor/src/bleach
-	url = git://github.com/lmorchard/bleach.git
+	url = git://github.com/jsocol/bleach.git
 [submodule "vendor/src/commonware"]
 	path = vendor/src/commonware
 	url = git://github.com/jsocol/commonware.git
