@@ -204,8 +204,10 @@
 
         // Inject notifications
         $.each(mdn.notifications || [], function() {
+            var encodedMessage=this.message;
+            var messageHTML=$('<div />').html(encodedMessage).text();
             // Make it so
-            $('<div class="notification ' + this.level + ' ' + this.tags + '" data-level="' + this.level + '">' + this.message + '</div>')[insertLocation.method](insertLocation.selector);
+            $('<div class="notification ' + this.level + ' ' + this.tags + '" data-level="' + this.level + '">' + messageHTML + '</div>')[insertLocation.method](insertLocation.selector);
         });
 
         // Make them official

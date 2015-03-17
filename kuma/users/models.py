@@ -16,6 +16,7 @@ from waffle import switch_is_active
 from kuma.core.fields import LocaleField, JSONField
 from kuma.core.managers import NamespacedTaggableManager
 from kuma.core.models import ModelBase
+from kuma.wiki.helpers import wiki_url
 from kuma.wiki.models import Revision
 
 from .helpers import gravatar_url
@@ -195,6 +196,9 @@ def create_user_profile(sender, instance, created, **kwargs):
 
 @receiver(user_signed_up)
 def on_user_signed_up(sender, request, user, **kwargs):
+    context={'request':request}
+    msg='You have completed the first step of <a href="%s">Getting started with MDN</a>' % wiki_url(context, 'MDN/Getting_started')
+    messages.success(request, msg);
     if switch_is_active('welcome_email'):
         # only send if the user has already verified at least one email address
         if user.emailaddress_set.filter(verified=True).exists():
