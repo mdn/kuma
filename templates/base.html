@@ -25,7 +25,7 @@
   {% endblock %}
 
   <!-- common social tags -->
-  {% set social_logo = request.build_absolute_uri('/media/redesign/img/opengraph-logo.png') %}
+  {% set social_logo = request.build_absolute_uri('/media/img/opengraph-logo.png') %}
   <meta property="og:type" content="website">
   <meta property="og:image" content="{{ social_logo }}">
   <meta property="og:site_name" content="{{ _('Mozilla Developer Network') }}">
@@ -37,13 +37,13 @@
   <link rel="search" type="application/opensearchdescription+xml" href="{{ settings.SITE_URL }}/{{ request.locale }}/search/xml" title="{{ _('Mozilla Developer Network') }}">
 
   <!-- third-generation iPad with high-resolution Retina display: -->
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ MEDIA_URL }}redesign/img/favicon144.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ MEDIA_URL }}img/favicon144.png">
   <!-- iPhone with high-resolution Retina display: -->
-  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ MEDIA_URL }}redesign/img/favicon114.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ MEDIA_URL }}img/favicon114.png">
   <!-- first- and second-generation iPad: -->
-  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ MEDIA_URL }}redesign/img/favicon72.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ MEDIA_URL }}img/favicon72.png">
   <!-- non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
-  <link rel="apple-touch-icon-precomposed" href="{{ MEDIA_URL }}redesign/img/favicon57.png">
+  <link rel="apple-touch-icon-precomposed" href="{{ MEDIA_URL }}img/favicon57.png">
   <!-- basic favicon -->
   {% if request.META.SERVER_NAME in settings.PRODUCTION_URL %}
     {% set favicon_suffix = '' %}
@@ -52,7 +52,7 @@
   {% else %}
     {% set favicon_suffix = '-local' %}
   {% endif %}
-  <link rel="shortcut icon" href="{{ MEDIA_URL }}redesign/img/favicon32{{ favicon_suffix }}.png">
+  <link rel="shortcut icon" href="{{ MEDIA_URL }}img/favicon32{{ favicon_suffix }}.png">
   <!--[if IE]>
   <meta http-equiv="imagetoolbar" content="no">
   <script src="{{ MEDIA_URL }}js/libs/html5.js"></script>

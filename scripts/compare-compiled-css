@@ -15,7 +15,7 @@
 #     commit with the specified hash.
 
 SCRIPTS=$(dirname $0)
-COMPILED_CSS=$SCRIPTS/../media/redesign/css
+COMPILED_CSS=$SCRIPTS/../media/css
 COMPARISON_DIR=$(mktemp -d)
 
 # $1: The directory where the compiled CSS should be stored
