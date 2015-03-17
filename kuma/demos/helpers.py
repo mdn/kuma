@@ -4,7 +4,6 @@ import hashlib
 import random
 
 from babel import localedata
-import bitly_api
 import jinja2
 
 from django.conf import settings
@@ -20,16 +19,13 @@ from threadedcomments.forms import ThreadedCommentForm
 from threadedcomments.templatetags import threadedcommentstags
 import threadedcomments.views
 
+from kuma.core.helpers import bitly_shorten
 from kuma.core.cache import memcache
 from kuma.core.urlresolvers import reverse
 from .models import Submission
 from . import DEMOS_CACHE_NS_KEY, TAG_DESCRIPTIONS, DEMO_LICENSES
 
 threadedcommentstags.reverse = reverse
-
-
-bitly = bitly_api.Connection(login=getattr(settings, 'BITLY_USERNAME', ''),
-                             api_key=getattr(settings, 'BITLY_API_KEY', ''))
 
 
 TEMPLATE_INCLUDE_CACHE_EXPIRES = getattr(settings,
@@ -166,22 +162,6 @@ def tech_tags_list():
 @jinja2.contextfunction
 def search_form(context):
     return new_context(**locals())
-
-
-@register.filter
-def bitly_shorten(url):
-    """Attempt to shorten a given URL through bit.ly / mzl.la"""
-    cache_key = 'bitly:%s' % hashlib.md5(smart_str(url)).hexdigest()
-    short_url = memcache.get(cache_key)
-    if short_url is None:
-        try:
-            short_url = bitly.shorten(url)['url']
-            memcache.set(cache_key, short_url, 60 * 60 * 24 * 30 * 12)
-        except (bitly_api.BitlyError, KeyError):
-            # Just in case the bit.ly service fails or the API key isn't
-            # configured, fall back to using the original URL.
-            return url
-    return short_url
 
 
 @register.function

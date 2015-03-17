@@ -1,0 +1,43 @@
+.share {
+    set-smaller-font-size();
+    bidi-value(text-align, right, left);
+    position: relative;
+    top: $grid-spacing;
+
+    strong {
+        bidi-style(margin-right, 6px, margin-left, 0);
+    }
+
+    ul,
+    li {
+        display: inline-block;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+.share-link {
+    border: 1px solid rgba-fallback(rgba(255,255,255,0.2));
+    border-radius: 2px;
+    box-shadow: none;
+    color: #fff;
+    bidi-value(margin, 0px 6px 6px 0px, 0px 0px 6px 6px);
+    padding: 3px;
+
+    &.facebook {
+        background-color: rgb(59, 89, 152);
+    }
+    &.twitter {
+        background-color: rgb(0, 172, 237);
+    }
+    &.gplus {
+        background-color: rgb(221, 75, 57);
+    }
+
+    {$selector-icon} {
+        bidi-style(margin-left, 0px, margin-right, 4px);
+        bidi-style(margin-right, 4px, margin-left, 0px);
+    }
+
+}
+
