@@ -7,7 +7,6 @@ from babel import localedata
 import jinja2
 
 from django.conf import settings
-from django.utils.encoding import smart_str
 from django.utils.tzinfo import LocalTimezone
 
 import jingo
@@ -19,7 +18,6 @@ from threadedcomments.forms import ThreadedCommentForm
 from threadedcomments.templatetags import threadedcommentstags
 import threadedcomments.views
 
-from kuma.core.helpers import bitly_shorten
 from kuma.core.cache import memcache
 from kuma.core.urlresolvers import reverse
 from .models import Submission

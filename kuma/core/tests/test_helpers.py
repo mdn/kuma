@@ -2,7 +2,9 @@
 from collections import namedtuple
 from datetime import datetime
 
+import bitly_api
 import jingo
+import mock
 from nose.tools import eq_, ok_, assert_raises
 import test_utils
 
@@ -16,8 +18,10 @@ from pyquery import PyQuery as pq
 from pytz import timezone
 from soapbox.models import Message
 
-from kuma.users.tests import UserTestCase
+from kuma.core.cache import memcache
+from kuma.core.helpers import bitly_shorten, bitly
 from kuma.core.urlresolvers import reverse
+from kuma.users.tests import UserTestCase
 
 
 from ..exceptions import DateTimeFormatError
@@ -230,3 +234,30 @@ class TestDateTimeFormat(UserTestCase):
         value_returned = datetimeformat(self.context, value_test,
                                         format='longdatetime')
         eq_(pq(value_returned)('time').text(), value_expected)
+
+
+class BitlyTestCase(test_utils.TestCase):
+    @mock.patch.object(memcache, 'set')  # prevent caching
+    @mock.patch.object(bitly, 'shorten')
+    def test_bitly_shorten(self, shorten, cache_set):
+        long_url = 'http://example.com/long-url'
+        short_url = 'http://bit.ly/short-url'
+
+        # the usual case of returning a dict with a URL
+        def short_mock(*args, **kwargs):
+            return {'url': short_url}
+        shorten.side_effect = short_mock
+
+        eq_(bitly_shorten(long_url), short_url)
+        shorten.assert_called_with(long_url)
+
+        # in case of a key error
+        def short_mock(*args, **kwargs):
+            return {}
+        shorten.side_effect = short_mock
+        eq_(bitly_shorten(long_url), long_url)
+        shorten.assert_called_with(long_url)
+
+        # in case of an upstream error
+        shorten.side_effect = bitly_api.BitlyError('500', 'fail fail fail')
+        eq_(bitly_shorten(long_url), long_url)
