@@ -4,12 +4,12 @@ from django.http import HttpResponse
 from django.conf import settings
 from django.test import RequestFactory
 
-import test_utils
+from kuma.core.tests import KumaTestCase
 
 from ..anonymous import AnonymousIdentityMiddleware
 
 
-class TestAnonymousMiddleware(test_utils.TestCase):
+class TestAnonymousMiddleware(KumaTestCase):
     """Tests for the anonymous middleware."""
     def setUp(self):
         super(TestAnonymousMiddleware, self).setUp()

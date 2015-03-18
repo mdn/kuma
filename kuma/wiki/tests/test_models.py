@@ -8,7 +8,6 @@ import mock
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
 from nose import SkipTest
-import test_utils
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -18,7 +17,7 @@ import constance.config
 from waffle.models import Switch
 
 from kuma.core.exceptions import ProgrammingError
-from kuma.core.tests import override_constance_settings
+from kuma.core.tests import override_constance_settings, KumaTestCase
 from kuma.users.tests import UserTestCase
 
 from . import (document, revision, doc_rev, normalize_html,
@@ -336,7 +335,8 @@ class DocumentTests(UserTestCase):
         d = document(is_redirect=True, html=html)
         eq_(href, d.redirect_url())
 
-class PermissionTests(test_utils.TestCase):
+
+class PermissionTests(KumaTestCase):
 
     def setUp(self):
         """Set up the permissions, groups, and users needed for the tests"""

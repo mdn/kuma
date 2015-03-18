@@ -2,13 +2,13 @@ from __future__ import absolute_import
 from django.contrib.sites.models import Site
 
 import mock
-import test_utils
 from nose.tools import eq_
 
+from kuma.core.tests import KumaTestCase
 from kuma.core.urlresolvers import reverse
 
 
-class OpenSearchTestCase(test_utils.TestCase):
+class OpenSearchTestCase(KumaTestCase):
     """Test the Kuma OpenSearch plugin."""
 
     @mock.patch.object(Site.objects, 'get_current')

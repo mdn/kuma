@@ -1,7 +1,7 @@
-import test_utils
+from kuma.core.tests import KumaTestCase
 
 
-class TestLocaleMiddleware(test_utils.TestCase):
+class TestLocaleMiddleware(KumaTestCase):
     def test_default_redirect(self):
         # User wants en-us, we send en-US
         response = self.client.get('/', follow=True,

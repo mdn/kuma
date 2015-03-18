@@ -1,7 +1,8 @@
 from django import forms
 
 from nose.tools import eq_
-import test_utils
+
+from kuma.core.tests import KumaTestCase
 
 from . import user, profile
 from ..adapters import (KumaAccountAdapter, USERNAME_CHARACTERS,
@@ -9,7 +10,7 @@ from ..adapters import (KumaAccountAdapter, USERNAME_CHARACTERS,
 from ..forms import UserProfileEditForm
 
 
-class TestUserProfileEditForm(test_utils.TestCase):
+class TestUserProfileEditForm(KumaTestCase):
 
     def test_username(self):
         """bug 753563: Support username changes"""
@@ -73,7 +74,7 @@ class TestUserProfileEditForm(test_utils.TestCase):
                 eq_(expected_valid, result_valid)
 
 
-class AllauthUsernameTests(test_utils.TestCase):
+class AllauthUsernameTests(KumaTestCase):
     def test_email_username(self):
         """
         Trying to use an email address as a username fails, with a

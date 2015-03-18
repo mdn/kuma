@@ -1,12 +1,13 @@
 from __future__ import absolute_import
-import test_utils
 from nose.tools import eq_, ok_
+
+from kuma.core.tests import KumaTestCase
 
 from ..store import referrer_url
 from ..utils import QueryURLObject
 
 
-class URLTests(test_utils.TestCase):
+class URLTests(KumaTestCase):
 
     def test_pop_query_param(self):
         original = 'http://example.com/?spam=eggs'

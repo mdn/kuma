@@ -1,16 +1,21 @@
 from django.conf import settings, UserSettingsHolder
 from django.contrib.auth.models import User
 from django.contrib.messages.storage.fallback import FallbackStorage
+from django.core.cache import cache
+from django import test
+from django.test import TestCase
 from django.test.client import Client
 from django.utils.functional import wraps
 from django.utils.importlib import import_module
+from django.utils.translation import trans_real
 
 import constance.config
 from constance.backends import database as constance_database
+from djcelery.app import app
 from nose import SkipTest
 from nose.tools import eq_
-import test_utils
 
+from ..cache import memcache
 from ..exceptions import FixtureMissingError
 from ..urlresolvers import split_path, reverse
 
@@ -164,7 +169,10 @@ class LocalizingClient(LocalizingMixin, SessionAwareClient):
     # prepending in a one-off case or do it outside a mock request.
 
 
-class KumaTestCase(test_utils.TestCase):
+JINJA_INSTRUMENTED = False
+
+
+class KumaTestCase(TestCase):
     client_class = SessionAwareClient
     localizing_client = False
     skipme = False
@@ -176,6 +184,31 @@ class KumaTestCase(test_utils.TestCase):
         if cls.localizing_client:
             cls.client_class = LocalizingClient
         super(KumaTestCase, cls).setUpClass()
+
+    def _pre_setup(self):
+        super(KumaTestCase, self)._pre_setup()
+
+        # Clean the slate.
+        cache.clear()
+        memcache.clear()
+
+        trans_real.deactivate()
+        trans_real._translations = {}  # Django fails to clear this cache.
+        trans_real.activate(settings.LANGUAGE_CODE)
+
+        global JINJA_INSTRUMENTED
+        if not JINJA_INSTRUMENTED:
+            import jinja2
+            old_render = jinja2.Template.render
+
+            def instrumented_render(self, *args, **kwargs):
+                context = dict(*args, **kwargs)
+                test.signals.template_rendered.send(sender=self, template=self,
+                                                    context=context)
+                return old_render(self, *args, **kwargs)
+
+            jinja2.Template.render = instrumented_render
+            JINJA_INSTRUMENTED = True
 
     def get_messages(self, request):
         # Django 1.4 RequestFactory requests can't be used to test views that
