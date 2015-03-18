@@ -20,7 +20,7 @@ class KumaJob(Job):
         return hashlib.md5(six.b(':').join(value)).hexdigest()
 
 
-class IPBanJob(Job):
+class IPBanJob(KumaJob):
     lifetime = 60 * 60 * 3
     refresh_timeout = 60
 
@@ -29,11 +29,6 @@ class IPBanJob(Job):
         if IPBan.objects.active(ip=ip).exists():
             return "0/s"
         return "60/m"
-
-    def key(self, ip):
-        # override the default way to make sure we handle unicode,
-        # bytestring and integer versions of the pk the same
-        return 'kuma:core:ipban:%s' % ip
 
     def empty(self):
         return []
