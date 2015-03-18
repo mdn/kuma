@@ -230,6 +230,5 @@ class TaggedDocumentManager(models.Manager):
 class RevisionIPManager(models.Manager):
     def delete_old(self, days=30):
         cutoff_date = date.today() - timedelta(days=days)
-        old_rev_ips = self.get_query_set().filter(
-            revision__created__lte=cutoff_date)
+        old_rev_ips = self.filter(revision__created__lte=cutoff_date)
         old_rev_ips.delete()

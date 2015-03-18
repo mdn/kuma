@@ -94,7 +94,8 @@ src/celery
 src/kombu
 src/py-amqp
 src/django-celery
-src/django-banish
 src/django-honeypot
 src/bitly-api-python
+src/django-cacheback
+src/django-ratelimit
 src/django-cacheback

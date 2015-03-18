@@ -27,6 +27,7 @@ from waffle.models import Flag, Switch
 from kuma.authkeys.models import Key
 from kuma.core.cache import memcache as cache
 from kuma.core.helpers import urlparams
+from kuma.core.models import IPBan
 from kuma.core.tests import post, get, override_constance_settings
 from kuma.core.urlresolvers import reverse
 from kuma.users.tests import UserTestCase, user
@@ -545,6 +546,38 @@ class ReadOnlyTests(UserTestCase, WikiTestCase):
         resp = self.client.get(self.edit_url)
         eq_(403, resp.status_code)
         ok_('Your profile has been banned from making edits.' in resp.content)
+
+
+class BannedIPTests(UserTestCase, WikiTestCase):
+    """Tests readonly scenarios"""
+    fixtures = UserTestCase.fixtures + ['wiki/documents.json']
+    localizing_client = True
+
+    def setUp(self):
+        super(BannedIPTests, self).setUp()
+        self.ip = '127.0.0.1'
+        self.ip_ban = IPBan.objects.create(ip=self.ip)
+        self.doc, rev = doc_rev()
+        self.edit_url = reverse('wiki.edit_document',
+                                args=[self.doc.full_path])
+
+    def tearDown(self):
+        cache.clear()
+
+    def test_banned_ip_cant_get_edit(self):
+        self.client.login(username='testuser', password='testpass')
+        response = self.client.get(self.edit_url, REMOTE_ADDR=self.ip)
+        eq_(403, response.status_code)
+
+    def test_banned_ip_cant_post_edit(self):
+        self.client.login(username='testuser', password='testpass')
+        response = self.client.get(self.edit_url, REMOTE_ADDR=self.ip)
+        eq_(403, response.status_code)
+
+    def test_banned_ip_can_still_get_articles(self):
+        response = self.client.get(self.doc.get_absolute_url(),
+                                   REMOTE_ADDR=self.ip)
+        eq_(200, response.status_code)
 
 
 class KumascriptIntegrationTests(UserTestCase, WikiTestCase):

@@ -34,12 +34,12 @@ from django.views.decorators.clickjacking import (xframe_options_exempt,
 from django.views.decorators.csrf import csrf_exempt
 
 import constance.config
+from ratelimit.decorators import ratelimit
 from smuggler.utils import superuser_required
 from smuggler.forms import ImportFileForm
 from teamwork.shortcuts import get_object_or_404_or_403
 import waffle
 
-from kuma.actioncounters.utils import get_ip
 from kuma.authkeys.decorators import accepts_auth_key
 from kuma.contentflagging.models import ContentFlag, FLAG_NOTIFICATIONS
 
@@ -51,7 +51,8 @@ from kuma.core.decorators import (never_cache, login_required,
                                   permission_required)
 from kuma.core.helpers import urlparams
 from kuma.core.urlresolvers import reverse
-from kuma.core.utils import get_object_or_none, paginate, smart_int
+from kuma.core.utils import (get_object_or_none, paginate, smart_int,
+                             get_ip, limit_banned_ip_to_0)
 from kuma.search.store import referrer_url
 from kuma.users.models import UserProfile
 
@@ -990,6 +991,7 @@ def new_document(request):
 
 @require_http_methods(['GET', 'POST'])
 @login_required  # TODO: Stop repeating this knowledge here and in Document.allows_editing_by.
+@ratelimit(key='user', rate=limit_banned_ip_to_0, block=True)
 @process_document_path
 @check_readonly
 @prevent_indexing

@@ -46,8 +46,8 @@
                     {% set revision_ip = revision.revisionip_set.all()[0].ip %}
                     <span class="revision_ip">
                     <br/>IP: {{ revision_ip }}
-                    {% set ban_ip_url = '%s?%s' % (url('admin:banish_banishment_add'), 'condition=%s' % revision_ip) %}
-                    <br/><a class="dashboard-ban-ip-link" href="{{ ban_ip_url }}" target="_blank">{{ _('Ban IP') }}</a>
+                    {% set ban_ip_url = '%s?%s' % (url('admin:core_ipban_add'), 'ip=%s' % revision_ip) %}
+                    <br/><a class="dashboard-ban-ip-link" href="{{ ban_ip_url }}" target="_blank">{{ _('Ban IP from Editing') }}</a>
                     </span>
                     {% endif %}
                     {% if request.user.is_superuser and revision.creator.get_profile().is_banned %}
