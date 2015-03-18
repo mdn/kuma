@@ -574,6 +574,8 @@ def document(request, document_slug, document_locale):
         zone_subnav_html = doc.get_zone_subnav_html()
         body_html = doc.get_body_html()
 
+    share_text = _('I learned about %(title)s on MDN.') % {"title": doc.title, }
+
     # Step 8: Bundle it all up and, finally, return.
     context = {'document': doc,
                'document_html': doc_html,
@@ -587,6 +589,7 @@ def document(request, document_slug, document_locale):
                'render_raw_fallback': rendering_params['render_raw_fallback'],
                'seo_summary': seo_summary,
                'seo_parent_title': seo_parent_title,
+               'share_text': share_text,
                'attachment_data': attachments,
                'attachment_data_json': json.dumps(attachments),
                'search_url': referrer_url(request) or ''}

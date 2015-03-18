@@ -717,6 +717,7 @@ MINIFY_BUNDLES = {
             'js/main.js',
             'js/auth.js',
             'js/badges.js',
+            'js/social.js',
         ),
         'home': (
             'js/libs/owl.carousel/owl-carousel/owl.carousel.js',
