@@ -148,6 +148,3 @@
 [submodule "vendor/src/django-ratelimit"]
 	path = vendor/src/django-ratelimit
 	url = git://github.com/jsocol/django-ratelimit.git
-[submodule "vendor/src/django-cacheback"]
-    path = vendor/src/django-cachebackk
-    url = https://github.com/codeinthehole/django-cacheback.git

@@ -559,27 +559,26 @@ class BannedIPTests(UserTestCase, WikiTestCase):
         self.ip_ban = IPBan.objects.create(ip=self.ip)
         self.doc, rev = doc_rev()
         self.edit_url = reverse('wiki.edit_document',
-                                args=[self.doc.full_path]
-                               )
+                                args=[self.doc.full_path])
+
+    def tearDown(self):
+        cache.clear()
 
     def test_banned_ip_cant_get_edit(self):
         self.client.login(username='testuser', password='testpass')
         response = self.client.get(self.edit_url, REMOTE_ADDR=self.ip)
         eq_(403, response.status_code)
-        cache.clear()
 
     def test_banned_ip_cant_post_edit(self):
         self.client.login(username='testuser', password='testpass')
         response = self.client.get(self.edit_url, REMOTE_ADDR=self.ip)
         eq_(403, response.status_code)
-        cache.clear()
 
     def test_banned_ip_can_still_get_articles(self):
         response = self.client.get(self.doc.get_absolute_url(),
-                                   REMOTE_ADDR=self.ip
-                                  )
+                                   REMOTE_ADDR=self.ip)
         eq_(200, response.status_code)
-        cache.clear()
+
 
 class KumascriptIntegrationTests(UserTestCase, WikiTestCase):
     """

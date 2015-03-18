@@ -31,4 +31,4 @@ class IPBanJob(KumaJob):
         return "60/m"
 
     def empty(self):
-        return []
+        return "60/m"

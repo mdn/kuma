@@ -40,7 +40,6 @@ from smuggler.forms import ImportFileForm
 from teamwork.shortcuts import get_object_or_404_or_403
 import waffle
 
-from kuma.actioncounters.utils import get_ip
 from kuma.authkeys.decorators import accepts_auth_key
 from kuma.contentflagging.models import ContentFlag, FLAG_NOTIFICATIONS
 
@@ -53,7 +52,7 @@ from kuma.core.decorators import (never_cache, login_required,
 from kuma.core.helpers import urlparams
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import (get_object_or_none, paginate, smart_int,
-                             limit_banned_ip_to_0)
+                             get_ip, limit_banned_ip_to_0)
 from kuma.search.store import referrer_url
 from kuma.users.models import UserProfile
 

@@ -48,7 +48,7 @@ class IPBan(models.Model):
     def delete(self, *args, **kwargs):
         self.deleted = timezone.now()
         self.save()
-        IPBanJob.delete(self.ip)
+        IPBanJob().invalidate(self.ip)
 
     def __unicode__(self):
         return u'%s banned on %s' % (self.ip, self.created)
