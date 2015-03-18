@@ -74,6 +74,8 @@ CACHES = {
     },
 }
 
+CACHEBACK_CACHE_ALIAS = 'memcache'
+
 # Addresses email comes from
 DEFAULT_FROM_EMAIL = 'notifications@developer.mozilla.org'
 SERVER_EMAIL = 'server-error@developer.mozilla.org'
@@ -536,6 +538,7 @@ INSTALLED_APPS = (
     'kuma.humans',
 
     'badger',
+    'cacheback',
 )
 
 TEST_RUNNER = 'test_utils.runner.RadicalTestSuiteRunner'
@@ -1210,6 +1213,11 @@ LOGGING = {
             'handlers': ['console'],
             'level': logging.ERROR,
         },
+        'cacheback': {
+            'handlers': ['console'],
+            'level': logging.ERROR,
+        }
+
     },
 }
 

@@ -21,6 +21,7 @@ from teamwork.shortcuts import build_policy_admin_links
 
 from kuma.core.urlresolvers import reverse
 from .constants import DIFF_WRAP_COLUMN
+from .jobs import DocumentZoneStackJob
 from .models import Document, memcache
 
 register.function(build_policy_admin_links)
@@ -264,7 +265,7 @@ def tojson(value):
 @register.function
 def document_zone_management_links(user, document):
     links = {'add': None, 'change': None}
-    stack = document.find_zone_stack()
+    stack = DocumentZoneStackJob().get(document.pk)
     zone = (len(stack) > 0) and stack[0] or None
 
     # Enable "add" link if there is no zone for this document, or if there's a

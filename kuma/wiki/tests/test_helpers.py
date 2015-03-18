@@ -4,6 +4,7 @@ from nose.tools import eq_
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 
+from kuma.core.cache import memcache
 from kuma.users.tests import UserTestCase
 from kuma.wiki.helpers import (absolutify, document_zone_management_links,
                                revisions_unified_diff, tojson)
@@ -60,9 +61,11 @@ class DocumentZoneTests(UserTestCase, WikiTestCase):
             %s
         """ % (self.root_links_content)
 
-        root_rev = revision(title='ZoneRoot', slug='ZoneRoot',
+        root_rev = revision(title='ZoneRoot',
+                            slug='ZoneRoot',
                             content=self.root_content,
-                            is_approved=True, save=True)
+                            is_approved=True,
+                            save=True)
         self.root_doc = root_rev.document
         self.root_doc.rendered_html = self.root_content
         self.root_doc.save()
@@ -70,9 +73,11 @@ class DocumentZoneTests(UserTestCase, WikiTestCase):
         self.root_zone = DocumentZone(document=self.root_doc)
         self.root_zone.save()
 
-        sub_rev = revision(title='SubPage', slug='SubPage',
+        sub_rev = revision(title='SubPage',
+                           slug='SubPage',
                            content='This is a subpage',
-                           is_approved=True, save=True)
+                           is_approved=True,
+                           save=True)
         self.sub_doc = sub_rev.document
         self.sub_doc.parent_topic = self.root_doc
         self.sub_doc.rendered_html = sub_rev.content
@@ -86,19 +91,24 @@ class DocumentZoneTests(UserTestCase, WikiTestCase):
             %s
         """ % (self.sub_sub_links_content)
 
-        sub_sub_rev = revision(title='SubSubPage', slug='SubSubPage',
-                           content='This is a subpage',
-                           is_approved=True, save=True)
+        sub_sub_rev = revision(title='SubSubPage',
+                               slug='SubSubPage',
+                               content='This is a subpage',
+                               is_approved=True,
+                               save=True)
         self.sub_sub_doc = sub_sub_rev.document
         self.sub_sub_doc.parent_topic = self.sub_doc
         self.sub_sub_doc.rendered_html = self.sub_sub_content
         self.sub_sub_doc.save()
 
-        other_rev = revision(title='otherPage', slug='otherPage',
-                            content='This is an other page',
-                            is_approved=True, save=True)
+        other_rev = revision(title='otherPage',
+                             slug='otherPage',
+                             content='This is an other page',
+                             is_approved=True,
+                             save=True)
         self.other_doc = other_rev.document
         self.other_doc.save()
+        memcache.clear()
 
     def test_document_zone_links(self):
         admin = User.objects.filter(is_superuser=True)[0]
@@ -113,5 +123,5 @@ class DocumentZoneTests(UserTestCase, WikiTestCase):
         ]
         for (user, doc, add, change) in cases:
             result_links = document_zone_management_links(user, doc)
-            eq_(add, (result_links['add'] is not None))
-            eq_(change, (result_links['change'] is not None))
+            eq_(add, result_links['add'] is not None, (user, doc))
+            eq_(change, result_links['change'] is not None)

@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from kuma.core.helpers import urlparams
 
 from .exceptions import ReadOnlyException
-from .models import DocumentZone
+from .jobs import DocumentZoneURLRemapsJob
 
 
 class ReadOnlyMiddleware(object):
@@ -24,14 +24,15 @@ class DocumentZoneMiddleware(object):
     incoming path_info to point at the internal wiki path
     """
     def process_request(self, request):
-        remaps = DocumentZone.objects.get_url_remaps(request.locale)
-        for remap in remaps:
+        remaps = DocumentZoneURLRemapsJob().get(request.locale)
+        for original_path, new_path in remaps:
 
-            if request.path_info.startswith(remap['original_path']):
+            if request.path_info.startswith(original_path):
                 # Is this a request for the "original" wiki path? Redirect to
                 # new URL root, if so.
-                new_path = request.path_info.replace(remap['original_path'],
-                                                     remap['new_path'], 1)
+                new_path = request.path_info.replace(original_path,
+                                                     new_path,
+                                                     1)
                 new_path = '/%s%s' % (request.locale, new_path)
 
                 query = request.GET.copy()
@@ -41,9 +42,10 @@ class DocumentZoneMiddleware(object):
 
                 return HttpResponseRedirect(new_path)
 
-            elif request.path_info.startswith(remap['new_path']):
+            elif request.path_info.startswith(new_path):
                 # Is this a request for the relocated wiki path? If so, rewrite
                 # the path as a request for the proper wiki view.
-                request.path_info = request.path_info.replace(
-                    remap['new_path'], remap['original_path'], 1)
+                request.path_info = request.path_info.replace(new_path,
+                                                              original_path,
+                                                              1)
                 break

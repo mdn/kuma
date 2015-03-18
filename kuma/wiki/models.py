@@ -50,11 +50,12 @@ from .content import (extract_code_sample, extract_css_classnames,
                       extract_html_attributes, extract_kumascript_macro_names,
                       get_content_sections, get_seo_description, H2TOCFilter,
                       H3TOCFilter, SectionTOCFilter)
+from .jobs import DocumentZoneStackJob, DocumentZoneURLRemapsJob
 from .exceptions import (DocumentRenderedContentNotAvailable,
                          DocumentRenderingInProgress, PageMoveError,
                          SlugCollision, UniqueCollision)
 from .managers import (DeletedDocumentManager, DocumentAdminManager,
-                       DocumentManager, DocumentZoneManager, RevisionIPManager,
+                       DocumentManager, RevisionIPManager,
                        TaggedDocumentManager, TransformManager)
 from .search import WikiDocumentType
 from .signals import render_done
@@ -168,21 +169,6 @@ class Document(NotificationsMixin, models.Model):
         4: SectionTOCFilter
     }
 
-    class Meta(object):
-        unique_together = (('parent', 'locale'), ('slug', 'locale'))
-        permissions = (
-            ("view_document", "Can view document"),
-            ("add_template_document", "Can add Template:* document"),
-            ("change_template_document", "Can change Template:* document"),
-            ("move_tree", "Can move a tree of documents"),
-            ("purge_document", "Can permanently delete document"),
-            ("restore_document", "Can restore deleted document"),
-        )
-
-    objects = DocumentManager()
-    deleted_objects = DeletedDocumentManager()
-    admin_objects = DocumentAdminManager()
-
     title = models.CharField(max_length=255, db_index=True)
     slug = models.CharField(max_length=255, db_index=True)
 
@@ -281,6 +267,27 @@ class Document(NotificationsMixin, models.Model):
 
     summary_text = models.TextField(editable=False, blank=True, null=True)
 
+    class Meta(object):
+        unique_together = (
+            ('parent', 'locale'),
+            ('slug', 'locale'),
+        )
+        permissions = (
+            ('view_document', 'Can view document'),
+            ('add_template_document', 'Can add Template:* document'),
+            ('change_template_document', 'Can change Template:* document'),
+            ('move_tree', 'Can move a tree of documents'),
+            ('purge_document', 'Can permanently delete document'),
+            ('restore_document', 'Can restore deleted document'),
+        )
+
+    objects = DocumentManager()
+    deleted_objects = DeletedDocumentManager()
+    admin_objects = DocumentAdminManager()
+
+    def __unicode__(self):
+        return u'%s (%s)' % (self.get_absolute_url(), self.title)
+
     @cache_with_field('body_html')
     def get_body_html(self, *args, **kwargs):
         html = self.rendered_html and self.rendered_html or self.html
@@ -333,31 +340,40 @@ class Document(NotificationsMixin, models.Model):
         self.get_summary_text(force_fresh=True)
 
     def get_zone_subnav_html(self):
-        """Search from self up through DocumentZone stack, returning the first
-        zone nav HTML found."""
+        """
+        Search from self up through DocumentZone stack, returning the first
+        zone nav HTML found.
+        """
         src = self.get_zone_subnav_local_html()
         if src:
             return src
-        for zone in self.find_zone_stack():
+        for zone in DocumentZoneStackJob().get(self.pk):
             src = zone.document.get_zone_subnav_local_html()
             if src:
                 return src
 
+    def extract_section(self, content, section_id, ignore_heading=False):
+        parsed_content = parse_content(content)
+        extracted = parsed_content.extractSection(section_id,
+                                                  ignore_heading=ignore_heading)
+        return extracted.serialize()
+
     def get_section_content(self, section_id, ignore_heading=True):
-        """Convenience method to extract the rendered content for a single section"""
-        html = self.rendered_html and self.rendered_html or self.html
-        return (parse_content(html)
-                .extractSection(section_id, ignore_heading=ignore_heading)
-                .serialize())
+        """
+        Convenience method to extract the rendered content for a single section
+        """
+        if self.rendered_html:
+            content = self.rendered_html
+        else:
+            content = self.html
+        return self.extract_section(content, section_id, ignore_heading)
 
     def calculate_etag(self, section_id=None):
         """Calculate an etag-suitable hash for document content or a section"""
         if not section_id:
             content = self.html
         else:
-            content = (parse_content(self.html)
-                       .extractSection(section_id)
-                       .serialize())
+            content = self.extract_section(self.html, section_id)
         return '"%s"' % hashlib.sha1(content.encode('utf8')).hexdigest()
 
     def current_or_latest_revision(self):
@@ -542,9 +558,7 @@ class Document(NotificationsMixin, models.Model):
 
     def build_json_data(self):
         html = self.rendered_html and self.rendered_html or self.html
-        content = (parse_content(html)
-                   .injectSectionIDs()
-                   .serialize())
+        content = parse_content(html).injectSectionIDs().serialize()
         sections = get_content_sections(content)
 
         summary = ''
@@ -1298,10 +1312,10 @@ Full traceback:
             return None
 
     def redirect_url(self):
-        """If I am a redirect, return the absolute URL to which I redirect.
+        """
+        If I am a redirect, return the absolute URL to which I redirect.
 
         Otherwise, return None.
-
         """
         # If a document starts with REDIRECT_HTML and contains any <a> tags
         # with hrefs, return the href of the first one. This trick saves us
@@ -1332,9 +1346,6 @@ Full traceback:
         if url:
             return self.from_url(url)
 
-    def __unicode__(self):
-        return u'%s (%s)' % (self.get_absolute_url(), self.title)
-
     def filter_permissions(self, user, permissions):
         """Filter permissions with custom logic"""
         # No-op, for now.
@@ -1350,21 +1361,6 @@ Full traceback:
 
     def get_permission_parents(self):
         return self.get_topic_parents()
-
-    def find_zone_stack(self):
-        """Assemble the stack of DocumentZones available from this document,
-        moving up the stack of topic parents"""
-        stack = []
-        try:
-            stack.append(DocumentZone.objects.get(document=self))
-        except DocumentZone.DoesNotExist:
-            pass
-        for p in self.get_topic_parents():
-            try:
-                stack.append(DocumentZone.objects.get(document=p))
-            except DocumentZone.DoesNotExist:
-                pass
-        return stack
 
     def allows_revision_by(self, user):
         """Return whether `user` is allowed to create new revisions of me.
@@ -1490,6 +1486,10 @@ Full traceback:
                                          .order_by('-creator__count'))
         return User.objects.filter(pk__in=list(top_creator_ids))
 
+    @cached_property
+    def zone_stack(self):
+        return DocumentZoneStackJob().get(self.pk)
+
 
 @receiver(render_done)
 def purge_wiki_url_cache(sender, instance, **kwargs):
@@ -1518,11 +1518,11 @@ class DocumentDeletionLog(models.Model):
 
 
 class DocumentZone(models.Model):
-    """Model object declaring a content zone root at a given Document, provides
-    attributes inherited by the topic hierarchy beneath it."""
-    objects = DocumentZoneManager()
-
-    document = models.ForeignKey(Document, related_name='zones', unique=True)
+    """
+    Model object declaring a content zone root at a given Document, provides
+    attributes inherited by the topic hierarchy beneath it.
+    """
+    document = models.OneToOneField(Document, related_name='zone')
     styles = models.TextField(null=True, blank=True)
     url_root = models.CharField(
         max_length=255, null=True, blank=True, db_index=True,
@@ -1532,15 +1532,49 @@ class DocumentZone(models.Model):
         return u'DocumentZone %s (%s)' % (self.document.get_absolute_url(),
                                           self.document.title)
 
-    @staticmethod
-    def cache_key(locale):
-        return 'wiki:zones:remaps:%s' % locale
-
     def save(self, *args, **kwargs):
         super(DocumentZone, self).save(*args, **kwargs)
 
-        # Reset URL cache for the locale of this zone's attached document
-        DocumentZone.objects.reset_url_remaps(self.document.locale)
+        # Refresh the cache for the locale of this zone's attached document
+        DocumentZoneURLRemapsJob().refresh(self.document.locale)
+        invalidate_zone_stack_cache(self.document)
+
+
+def invalidate_zone_stack_cache(document, async=False):
+    """
+    reset the cache for the zone stack for all of the documents
+    in the document tree branch
+    """
+    pks = [document.pk] + [parent.pk
+                           for parent in document.get_topic_parents()]
+    job = DocumentZoneStackJob()
+    if async:
+        invalidator = job.invalidate
+    else:
+        invalidator = job.refresh
+    for pk in pks:
+        invalidator(pk)
+
+
+def invalidate_zone_urls_cache(document, async=False):
+    # if the document is a document zone
+    job = DocumentZoneURLRemapsJob()
+    if async:
+        invalidator = job.invalidate
+    else:
+        invalidator = job.refresh
+    try:
+        if document.zone:
+            # reset the cached list of zones of the document's locale
+            invalidator(document.locale)
+    except DocumentZone.DoesNotExist:
+        pass
+
+
+@receiver(signals.post_save, sender=Document)
+def invalidate_zone_caches(sender, instance, **kwargs):
+    invalidate_zone_urls_cache(instance, async=True)
+    invalidate_zone_stack_cache(instance, async=True)
 
 
 class ReviewTag(TagBase):
@@ -1753,9 +1787,7 @@ class Revision(models.Model):
 
     def get_section_content(self, section_id):
         """Convenience method to extract the content for a single section"""
-        return (parse_content(self.content)
-                .extractSection(section_id)
-                .serialize())
+        return self.document.extract_section(self.content, section_id)
 
     @property
     def content_cleaned(self):

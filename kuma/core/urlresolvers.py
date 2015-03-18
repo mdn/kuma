@@ -73,7 +73,7 @@ def reverse(viewname, urlconf=None, args=None, kwargs=None, prefix=None,
     # See apps/wiki/tests/test_middleware.py for a test exercising this hack.
     if url.startswith('/docs/'):
         # HACK: Import here, because otherwise it's a circular reference
-        from kuma.wiki.models import DocumentZone
+        from kuma.wiki.jobs import DocumentZoneURLRemapsJob
         # Work out a current locale, from some source.
         zone_locale = locale
         if not zone_locale:
@@ -82,11 +82,10 @@ def reverse(viewname, urlconf=None, args=None, kwargs=None, prefix=None,
             else:
                 zone_locale = settings.WIKI_DEFAULT_LANGUAGE
         # Get DocumentZone remaps for the current locale.
-        remaps = DocumentZone.objects.get_url_remaps(zone_locale)
-        for remap in remaps:
-            if url.startswith(remap['original_path']):
-                url = url.replace(remap['original_path'],
-                                  remap['new_path'], 1)
+        remaps = DocumentZoneURLRemapsJob().get(zone_locale)
+        for original_path, new_path in remaps:
+            if url.startswith(original_path):
+                url = url.replace(original_path, new_path, 1)
                 break
 
     if prefixer:
