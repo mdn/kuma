@@ -16,6 +16,7 @@ from . import UserTestCase, user
 
 
 class TestWelcomeEmails(UserTestCase):
+    rf = RequestFactory()
 
     def test_default_language_email(self):
         u = User.objects.get(username='testuser')
@@ -43,8 +44,12 @@ class TestWelcomeEmails(UserTestCase):
                  email='welcome@tester.com',
                  password='welcome',
                  save=True)
-        request = RequestFactory().get('/')
+        request = self.rf.get('/')
         request.locale = 'en-US'
+        session = self.client.session
+        session.save()
+        request.session = session
+        self.get_messages(request)
         user_signed_up.send(sender=u.__class__, request=request, user=u)
 
         # no email sent
@@ -72,7 +77,7 @@ class TestWelcomeEmails(UserTestCase):
         email_address = EmailAddress.objects.create(user=u,
                                                     email='welcome2@tester.com',
                                                     verified=False)
-        request = RequestFactory().get('/')
+        request = self.rf.get('/')
         request.locale = 'en-US'
 
         # emulate the phase in which the request for email confirmation is
