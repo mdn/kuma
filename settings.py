@@ -385,7 +385,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'kuma.core.context_processors.i18n',
     'kuma.core.context_processors.next_url',
 
-    'jingo_minify.helpers.build_ids',
     'constance.context_processors.config',
 
     'kuma.search.context_processors.search_filters',
@@ -455,6 +454,12 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
 )
 
+STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
+
+STATICFILES_DIRS = (
+    path('media'),
+)
+
 # TODO: Figure out why changing the order of apps (for example, moving taggit
 # higher in the list) breaks tests.
 INSTALLED_APPS = (
@@ -495,7 +500,7 @@ INSTALLED_APPS = (
     'threadedcomments',
 
     # util
-    'jingo_minify',
+    'pipeline',
     'product_details',
     'tower',
     'smuggler',
@@ -546,7 +551,8 @@ def JINJA_CONFIG():
     cache = get_cache('memcache')
     config = {'extensions': ['jinja2.ext.i18n', 'tower.template.i18n',
                              'jinja2.ext.with_', 'jinja2.ext.loopcontrols',
-                             'jinja2.ext.autoescape'],
+                             'jinja2.ext.autoescape',
+                             'pipeline.jinja2.ext.PipelineExtension'],
               'finalize': lambda x: x if x is not None else ''}
     if isinstance(cache, MemcachedCacheClass) and not settings.DEBUG:
         # We're passing the _cache object directly to jinja because
@@ -597,106 +603,194 @@ STANDALONE_DOMAINS = [
 # to True
 TOWER_ADD_HEADERS = True
 
-# Bundles for JS/CSS Minification
-JINGO_MINIFY_USE_STATIC = False
-CLEANCSS_BIN = '/usr/local/bin/cleancss'
-UGLIFY_BIN = '/usr/bin/uglifyjs'
-
-MINIFY_BUNDLES = {
-    'css': {
-        'mdn': (
-            'css/font-awesome.css',
-            'css/main.css',
-            'css/badges.css',
+PIPELINE_CSS_COMPRESSOR = 'pipeline.compressors.cssmin.CSSMinCompressor'
+PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.uglifyjs.UglifyJSCompressor'
+PIPELINE_DISABLE_WRAPPER = True
+PIPELINE_COMPILERS = (
+    'pipeline.compilers.stylus.StylusCompiler',
+)
+PIPELINE_CSS = {
+    'mdn': {
+        'source_filenames': (
+            'styles/font-awesome.styl',
+            'styles/main.styl',
+            'styles/badges.styl',
         ),
-        'jquery-ui': (
+        'output_filename': 'css/mdn.css',
+    },
+    'jquery-ui': {
+        'source_filenames': (
             'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
-            'css/jqueryui/moz-jquery-plugins.css',
-            'css/jquery-ui-customizations.css',
+            'styles/libs/jqueryui/moz-jquery-plugins.css',
+            'styles/jquery-ui-customizations.css',
         ),
-        'demostudio': (
-            'css/demos.css',
+        'output_filename': 'css/jquery-ui.css',
+    },
+    'demostudio': {
+        'source_filenames': (
+            'styles/demos.styl',
         ),
-        'devderby': (
-            'css/devderby.css',
+        'output_filename': 'css/demostudio.css',
+    },
+    'devderby': {
+        'source_filenames': (
+            'styles/devderby.styl',
         ),
-        'home': (
-            'css/home.css',
+        'output_filename': 'css/devderby.css',
+    },
+    'home': {
+        'source_filenames': (
+            'styles/home.styl',
             'js/libs/owl.carousel/owl-carousel/owl.carousel.css',
             'js/libs/owl.carousel/owl-carousel/owl.theme.css',
         ),
-        'search': (
-            'css/search.css',
+        'output_filename': 'css/home.css',
+        'extra_context': {
+            # Bug 1139947
+            'async': not TEMPLATE_DEBUG,
+        },
+    },
+    'search': {
+        'source_filenames': (
+            'styles/search.styl',
         ),
-        'search-suggestions': (
-            'css/search-suggestions.css',
+        'output_filename': 'css/search.css',
+    },
+    'search-suggestions': {
+        'source_filenames': (
+            'styles/search-suggestions.styl',
         ),
-        'wiki': (
-            'css/wiki.css',
-            'css/zones.css',
-            'css/diff.css',
+        'output_filename': 'css/search-suggestions.css',
+    },
+    'wiki': {
+        'source_filenames': (
+            'styles/wiki.styl',
+            'styles/zones.styl',
+            'styles/diff.styl',
 
             'js/libs/prism/themes/prism.css',
             'js/libs/prism/plugins/line-highlight/prism-line-highlight.css',
             'js/libs/prism/plugins/ie8/prism-ie8.css',
             'js/prism-mdn/plugins/line-numbering/prism-line-numbering.css',
             'js/prism-mdn/components/prism-json.css',
-            'css/wiki-syntax.css',
+            'styles/wiki-syntax.styl',
         ),
-        'wiki-revisions': (
-            'css/wiki-revisions.css',
-        ),
-        'wiki-edit': (
-            'css/wiki-edit.css',
-        ),
-        'sphinx': (
-            'css/wiki.css',
-            'css/sphinx.css',
-        ),
-        'users': (
-            'css/users.css',
-        ),
-        'tagit': (
-            'css/libs/jquery.tagit.css',
-        ),
-        'promote': (
-            'css/promote.css',
-        ),
-        'error': (
-            'css/error.css',
-        ),
-        'error-404': (
-            'css/error.css',
-            'css/error-404.css',
-        ),
-        'calendar': (
-            'css/calendar.css',
-        ),
-        'profile': (
-            'css/profile.css',
-        ),
-        'dashboards': (
-            'css/dashboards.css',
-            'css/diff.css',
-        ),
-        'newsletter': (
-            'css/newsletter.css',
-        ),
-        'submission': (
-            'css/submission.css',
-        ),
-        'user-banned': (
-            'css/user-banned.css',
-        ),
-        'error-403-alternate': (
-            'css/error-403-alternate.css',
-        ),
-        'fellowship': (
-            'css/fellowship.css',
-        ),
+        'output_filename': 'css/wiki.css',
     },
-    'js': {
-        'main': (
+    'wiki-revisions': {
+        'source_filenames': (
+            'styles/wiki-revisions.styl',
+        ),
+        'output_filename': 'css/wiki-revisions.css',
+    },
+    'wiki-edit': {
+        'source_filenames': (
+            'styles/wiki-edit.styl',
+        ),
+        'output_filename': 'css/wiki-edit.css',
+    },
+    'sphinx': {
+        'source_filenames': (
+            'styles/wiki.styl',
+            'styles/sphinx.styl',
+        ),
+        'output_filename': 'css/sphinx.css',
+    },
+    'users': {
+        'source_filenames': (
+            'styles/users.styl',
+        ),
+        'output_filename': 'css/users.css',
+    },
+    'tagit': {
+        'source_filenames': (
+            'styles/libs/jquery.tagit.css',
+        ),
+        'output_filename': 'css/tagit.css',
+    },
+    'promote': {
+        'source_filenames': (
+            'styles/promote.styl',
+        ),
+        'output_filename': 'css/promote.css',
+    },
+    'error': {
+        'source_filenames': (
+            'styles/error.styl',
+        ),
+        'output_filename': 'css/error.css',
+    },
+    'error-404': {
+        'source_filenames': (
+            'styles/error.styl',
+            'styles/error-404.styl',
+        ),
+        'output_filename': 'css/error-404.css',
+    },
+    'calendar': {
+        'source_filenames': (
+            'styles/calendar.styl',
+        ),
+        'output_filename': 'css/calendar.css',
+    },
+    'profile': {
+        'source_filenames': (
+            'styles/profile.styl',
+        ),
+        'output_filename': 'css/profile.css',
+    },
+    'dashboards': {
+        'source_filenames': (
+            'styles/dashboards.styl',
+            'styles/diff.styl',
+        ),
+        'output_filename': 'css/dashboards.css',
+    },
+    'newsletter': {
+        'source_filenames': (
+            'styles/newsletter.styl',
+        ),
+        'output_filename': 'css/newsletter.css',
+    },
+    'submission': {
+        'source_filenames': (
+            'styles/submission.styl',
+        ),
+        'output_filename': 'css/submission.css',
+    },
+    'user-banned': {
+        'source_filenames': (
+            'styles/user-banned.styl',
+        ),
+        'output_filename': 'css/user-banned.css',
+    },
+    'error-403-alternate': {
+        'source_filenames': (
+            'styles/error-403-alternate.styl',
+        ),
+        'output_filename': 'css/error-403-alternate.css',
+    },
+    'fellowship': {
+        'source_filenames': (
+            'styles/fellowship.styl',
+        ),
+        'output_filename': 'css/fellowship.css',
+    },
+    'ckeditor-content': {
+        'source_filenames': (
+            'styles/main.styl',
+            'styles/wiki.styl',
+            'styles/wiki-wysiwyg.styl',
+            'styles/wiki-syntax.styl',
+            'styles/libs/font-awesome/css/font-awesome.min.css',
+        ),
+        'output_filename': 'css/ckeditor-content.css',
+        'template_name': 'pipeline/javascript-array.jinja',
+    },
+}
+PIPELINE_JS = {
+    'main': {
+        'source_filenames': (
             'js/libs/jquery-2.1.0.js',
             'js/components.js',
             'js/analytics.js',
@@ -705,74 +799,129 @@ MINIFY_BUNDLES = {
             'js/badges.js',
             'js/social.js',
         ),
-        'home': (
+        'output_filename': 'js/main.js',
+    },
+    'home': {
+        'source_filenames': (
             'js/libs/owl.carousel/owl-carousel/owl.carousel.js',
             'js/home.js'
         ),
-        'popup': (
+        'output_filename': 'js/home.js',
+    },
+    'popup': {
+        'source_filenames': (
             'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
             'js/modal-control.js',
         ),
-        'profile': (
+        'output_filename': 'js/popup.js',
+    },
+    'profile': {
+        'source_filenames': (
             'js/profile.js',
             'js/moz-jquery-plugins.js',
         ),
-        'events': (
+        'output_filename': 'js/profile.js',
+    },
+    'events': {
+        'source_filenames': (
             'js/libs/jquery.gmap-1.1.0.js',
             'js/calendar.js',
         ),
-        'demostudio': (
+        'output_filename': 'js/events.js',
+    },
+    'demostudio': {
+        'source_filenames': (
             'js/libs/jquery.hoverIntent.minified.js',
             'js/libs/jquery.scrollTo-1.4.2-min.js',
             'js/demos.js',
             'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
             'js/modal-control.js',
         ),
-        'demostudio_devderby_landing': (
+        'output_filename': 'js/demostudio.js',
+    },
+    'demostudio_devderby_landing': {
+        'source_filenames': (
             'js/demos-devderby-landing.js',
         ),
-        'jquery-ui': (
+        'output_filename': 'js/demostudio_devderby_landing.js',
+    },
+    'jquery-ui': {
+        'source_filenames': (
             'js/libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js',
             'js/moz-jquery-plugins.js',
         ),
-        'libs/tagit': (
+        'output_filename': 'js/jquery-ui.js',
+    },
+    'libs/tagit': {
+        'source_filenames': (
             'js/libs/tag-it.js',
         ),
-        'search': (
+        'output_filename': 'js/libs/tagit.js',
+    },
+    'search': {
+        'source_filenames': (
             'js/search.js',
             'js/search-navigator.js',
         ),
-        'framebuster': (
+        'output_filename': 'js/search.js',
+    },
+    'framebuster': {
+        'source_filenames': (
             'js/framebuster.js',
         ),
-        'syntax-prism': (
+        'output_filename': 'js/framebuster.js',
+    },
+    'syntax-prism': {
+        'source_filenames': (
             'js/libs/prism/prism.js',
             'js/prism-mdn/components/prism-json.js',
             'js/prism-mdn/plugins/line-numbering/prism-line-numbering.js',
             'js/libs/prism/plugins/line-highlight/prism-line-highlight.js',
             'js/syntax-prism.js',
         ),
-        'search-suggestions': (
+        'output_filename': 'js/syntax-prism.js',
+    },
+    'search-suggestions': {
+        'source_filenames': (
             'js/search-suggestions.js',
         ),
-        'wiki': (
+        'output_filename': 'js/search-suggestions.js',
+    },
+    'wiki': {
+        'source_filenames': (
             'js/search-navigator.js',
             'js/wiki.js',
         ),
-        'wiki-edit': (
+        'output_filename': 'js/wiki.js',
+    },
+    'wiki-edit': {
+        'source_filenames': (
             'js/wiki-edit.js',
             'js/libs/tag-it.js',
             'js/wiki-tags-edit.js',
         ),
-        'wiki-move': (
+        'output_filename': 'js/wiki-edit.js',
+    },
+    'wiki-move': {
+        'source_filenames': (
             'js/wiki-move.js',
         ),
-        'newsletter': (
+        'output_filename': 'js/wiki-move.js',
+        'extra_context': {
+            'async': True,
+        },
+    },
+    'newsletter': {
+        'source_filenames': (
             'js/newsletter.js',
         ),
-        'fellowship': (
+        'output_filename': 'js/newsletter.js',
+    },
+    'fellowship': {
+        'source_filenames': (
             'js/fellowship.js',
         ),
+        'output_filename': 'js/fellowship.js',
     },
 }
 

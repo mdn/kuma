@@ -14,7 +14,7 @@
   <link rel="shortcut icon" href="{{ MEDIA_URL }}img/favicon.ico"/>
 
   {% block site_css %}
-  {{ css('mdn') }}
+  {% compressed_css 'mdn' %}
   {% endblock %}
 
     <!--[if IE]>
@@ -29,13 +29,13 @@
 {% block content %}{% endblock %}
 
 {# js #}
-<script src="{{ url('jsi18n') }}build:{{ BUILD_ID_JS }}"></script>
+<script src="{{ url('jsi18n') }}build:{{ get_build() }}"></script>
 
 {% block site_js %}
 
-  {{ js('main') }}
+  {% compressed_js 'main' %}
 
-  {{ js('popup') }}
+  {% compressed_js 'popup' %}
 
 {% endblock %}
 {% block js %}{% endblock %}

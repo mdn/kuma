@@ -17,10 +17,10 @@
 
   <link href="//mozorg.cdn.mozilla.net/media/css/tabzilla-min.css" type="text/css" rel="stylesheet">
   {% block site_css %}
-    {{ css('mdn', 'all') }}
+    {% compressed_css 'mdn' %}
 
     {% for style in styles %}
-      {{ css(style) }}
+      {% compressed_css style %}
     {% endfor %}
   {% endblock %}
 
@@ -187,14 +187,14 @@
 
   <!-- site js -->
   {% if not waffle.flag('static-i18njs') %}
-  <script src="{{ url('jsi18n') }}build:{{ BUILD_ID_JS }}"></script>
+  <script src="{{ url('jsi18n') }}build:{{ get_build() }}"></script>
   {% endif %}
 
   {% block site_js %}
     <!--[if lte IE 8]><script src="/media/js/libs/selectivizr-1.0.2/selectivizr-build.js"></script><![endif]-->
 
     {{ providers_media_js() }}
-    {{ js('main') }}
+    {% compressed_js 'main' %}
 
     {% if waffle.flag('ga_outbound_links') %}
       <script>
