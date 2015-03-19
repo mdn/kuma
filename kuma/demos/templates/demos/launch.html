@@ -19,8 +19,8 @@
 
   <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/demowrap.css">
   <link rel="stylesheet" type="text/css" media="all" href="{{ MEDIA_URL }}css/demos_wrap.css">
-  {{ css('jquery-ui') }}
-  <script src="{{ url('jsi18n') }}build:{{ BUILD_ID_JS }}"></script>
+  {% compressed_css 'jquery-ui' %}
+  <script src="{{ url('jsi18n') }}build:{{ get_build() }}"></script>
 
   <!--[if IE]>
   <meta http-equiv="imagetoolbar" content="no">
@@ -90,8 +90,8 @@
     </nav>
 
 
-    {{ js('main') }}
-    {{ js('popup') }}
+    {% compressed_js 'main' %}
+    {% compressed_js 'popup' %}
 
     <script type="text/javascript">
 

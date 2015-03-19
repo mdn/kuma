@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% set title = _('Revision Dashboard') %}
-{% set styles = ('dashboards', 'jquery-ui') %}
+{% compressed_css 'dashboards' %}
+{% compressed_css 'jquery-ui' %}
 {% set classes = 'compare' %}
 
 {% block title %}{{ page_title(title) }}{% endblock %}
@@ -55,7 +56,7 @@
 
 
 {% block js %}
-{{ js('jquery-ui') }}
+{% compressed_js 'jquery-ui' %}
 
 <script>
 (function (jQuery) {

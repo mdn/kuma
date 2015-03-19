@@ -84,6 +84,7 @@ django-recaptcha==0.0.9
 django-honeypot==0.4.0
 bitly_api==0.3
 django-ratelimit==0.5.0
+django-pipeline=1.3.20
 
 ## Formerly vendor/src - arbitrary commits not matched to versions
 # 2011-12-29
@@ -94,8 +95,6 @@ django-ratelimit==0.5.0
 -e git://github.com/jbalogh/django-multidb-router.git@25ca0c68929144ed9020d89f2ea1e941c7f9aeca#egg=django-multidb-router
 # 2013-04-22
 -e git://github.com/jbalogh/jingo.git@327dd865b6c350f02ce40092f2983be19de71303#egg=jingo
-# 2010-11-05
--e git://github.com/jsocol/jingo-minify.git@b7405d3f93628190bf83cc43b0ff44e2fbb8b3c0#egg=jingo-minify
 # 2011-09-09
 -e git://github.com/pcraciunoiu/py-wikimarkup.git@bf2046e42a2f2aaae8df233407efbce803342d04#egg=py-wikimarkup
 # 2013-02-07

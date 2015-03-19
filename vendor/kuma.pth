@@ -98,3 +98,5 @@ src/bitly-api-python
 src/django-cacheback
 src/django-ratelimit
 src/django-cacheback
+src/django-pipeline
+src/futures

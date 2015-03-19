@@ -4,7 +4,7 @@
 
 {% block title %}{{ page_title(_('Permission Denied')) }}{% endblock %}
 
-{% set styles = ('error',) %}
+{% compressed_css 'error' %}
 
 {% block content %}
 
@@ -51,5 +51,5 @@
 
 {% block site_js %}
     {{ super() }}
-    {{ js('framebuster') }}
+    {% compressed_js 'framebuster' %}
 {% endblock %}
