@@ -1,4 +1,5 @@
 from django.db import models
+from django.dispatch import receiver
 from django.utils import timezone
 
 from south.modelsinspector import add_introspection_rules
@@ -48,10 +49,15 @@ class IPBan(models.Model):
     def delete(self, *args, **kwargs):
         self.deleted = timezone.now()
         self.save()
-        IPBanJob().invalidate(self.ip)
 
     def __unicode__(self):
         return u'%s banned on %s' % (self.ip, self.created)
+
+
+@receiver(models.signals.post_save, sender=IPBan)
+@receiver(models.signals.pre_delete, sender=IPBan)
+def invalidate_ipban_caches(sender, instance, **kwargs):
+    IPBanJob().invalidate(instance.ip)
 
 
 add_introspection_rules([], [
