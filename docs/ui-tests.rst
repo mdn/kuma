@@ -1,12 +1,10 @@
-===============================
 Client-side Testing with Intern
 ===============================
 
 The client-side testing tool for the MDN front-end is `Intern <http://intern.io>`_, a Selenium WebDriver API which allows developers to write automated testing via JavaScript. Intern is an open source project created and maintained by `SitePen <http://sitepen.com>`_.
 
-=======================
 Installing Dependencies
-=======================
+-----------------------
 
 1. Download the most current release of Selenium `WebDriver <http://selenium-release.storage.googleapis.com/index.html>`_. Download the current standalone version which is a `.jar` file.
 
@@ -18,9 +16,8 @@ Do *not* install Intern globally -- path issues may occur.
 
 Firefox appears to work out of the box, but `Chrome <https://code.google.com/p/selenium/wiki/ChromeDriver>`_ and `Safari <https://code.google.com/p/selenium/wiki/SafariDriver>`_ drivers must be downloaded and installed separately.
 
-===================
 Adding a Test Suite
-===================
+-------------------
 
 To add a test suite, place your JavaScript file within the `tests/ui/tests` directory. Use the following as a template for your test suite code::
 
@@ -51,9 +48,8 @@ To add a test suite, place your JavaScript file within the `tests/ui/tests` dire
 
 To run your new tests with, add the new suite path to the `tests/ui/_tests.js` file.
 
-=============
 Running Tests
-=============
+-------------
 
 1. From the command line, start WebDriver::
 
@@ -70,9 +66,8 @@ The above runs the entire suite of tests. Custom functionality has been added to
 
 The user credentials must be Persona-only (not GMail or Mozilla LDAP lookups).  User credentials are the only required custom command line arguments.
 
-=========================
 Identifying Test Failures
-=========================
+-------------------------
 
 Tests are run for each browser cited in the config's `environments` setting. A sample output with error may look like::
 
