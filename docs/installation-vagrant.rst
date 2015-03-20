@@ -6,10 +6,6 @@ the entire MDN stack. (Django, KumaScript, Search, Celery, etc.)
 If you're on Mac OS X or Linux and looking for a quick way to get started, you
 should try these instructions.
 
-At the end, you'll earn `the badge`_:
-
-.. image:: https://badges.mozilla.org/media/uploads/badge/2/3/23fef80968a03f3ba32321a7f31ae1e2_image_1372816280_0238.png
-
 .. note:: **If you have problems getting vagrant up**, check Errors_ below.
 
 .. _vagrant: http://vagrantup.com/
@@ -79,9 +75,11 @@ Install and run everything
 
 #. Visit the homepage at `https://developer-local.allizom.org <https://developer-local.allizom.org/>`_
 
-#. You've installed Kuma! If you want `the badge`_, `email a screenshot of your
-   browser to mdn-dev at mozilla dot com
-   <mailto:mdn-dev@mozilla.com?subject=Local%20MDN%20Screenshot>`_.
+#. You've installed Kuma! If you want `the badge`_ ...
+
+.. image:: https://badges.mozilla.org/media/uploads/badge/2/3/23fef80968a03f3ba32321a7f31ae1e2_image_1372816280_0238.png
+
+`email a screenshot of your browser to mdn-dev at mozilla dot com <mailto:mdn-dev@mozilla.com?subject=Local%20MDN%20Screenshot>`_.
 
 .. _the badge: https://badges.mozilla.org/badges/badge/Installed-and-ran-Kuma
 
