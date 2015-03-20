@@ -20,3 +20,5 @@ Contents:
    ckeditor
    tests
    ui-tests
+
+   troubleshooting

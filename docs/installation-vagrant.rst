@@ -10,7 +10,7 @@ At the end, you'll earn `the badge`_:
 
 .. image:: https://badges.mozilla.org/media/uploads/badge/2/3/23fef80968a03f3ba32321a7f31ae1e2_image_1372816280_0238.png
 
-.. note:: **If you have problems using vagrant**, check Troubleshooting_ and `Getting More Help`_ below.
+.. note:: **If you have problems getting vagrant up**, check Errors_ below.
 
 .. _vagrant: http://vagrantup.com/
 .. _uses NFS to share the current working directory: http://docs.vagrantup.com/v2/synced-folders/nfs.html
@@ -151,6 +151,8 @@ To enable wiki editing on your MDN vm, `add a waffle flag`_ called
 
 .. _add a waffle flag: https://developer-local.allizom.org/admin/waffle/flag/add/
 
+.. _enable KumaScript:
+
 KumaScript
 ~~~~~~~~~~
 
@@ -199,13 +201,10 @@ reflected without any action on your part.
 
 
 
-.. _Troubleshooting:
-
-Troubleshooting
----------------
+.. _Errors:
 
 Errors during `vagrant up`
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+==========================
 
 ``vagrant up`` starts the virtual machine. The first time you run ``vagrant up`` it
 also `provisions <https://docs.vagrantup.com/v2/cli/provision.html>`_ the vm -
@@ -218,8 +217,11 @@ errors can be fixed by simply provisioning the vm again::
 
        vagrant provision
 
-In some rare occasions you might need to run this multiple times. If you see
-the same error over and over, please ask for `more help`_.
+In some rare occasions you might need to run this multiple times. If you find an
+error that is fixed by running ``vagrant provision`` again, please email us the
+error at dev-mdn@lists.mozilla.org and we'll see if we can fix it.
+
+If you see the same error over and over, please ask for :ref:`more help <more-help>`.
 
 On Ubuntu, ``vagrant up`` might fail after being unable to mount NFS shared
 folders. First, make sure you have the nfs-common and nfs-server packages
@@ -238,37 +240,5 @@ There is also the potential of running into weird issues with puppet,
 since the current puppet configurations do not currently support
 ``nfs: false``.
 
-If you have other problems during ``vagrant up``, please ask for `more help`_.
-
-Errors after switching branches
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
--  You should occasionally re-run the Puppet setup, especially after
-   updating code with major changes. This will ensure that the VM
-   environment stays up to date with configuration changes and
-   installation of additional services.
-
-   -  On the Host::
-
-          vagrant provision
-
-   -  Inside the VM::
-
-          sudo puppet apply /home/vagrant/src/puppet/manifests/dev-vagrant.pp
-
-.. _more help:
-.. _Getting More Help:
-
-Getting more help
-~~~~~~~~~~~~~~~~~
-
-If you have more problems using vagrant, please:
-
-#. Paste errors to `pastebin`_
-#. email the `dev-mdn`_ list
-#. After you email dev-mdn, you can also ask in `IRC`_
-
-.. _pastebin: http://pastebin.mozilla.org/
-.. _dev-mdn: mailto:dev-mdn@lists.mozilla.org?subject=vagrant%20issue
-.. _IRC: irc://irc.mozilla.org:6697/#mdndev
-.. _puppet: http://puppetlabs.com/puppet/puppet-open-source
+If you have other problems during ``vagrant up``, please check
+:ref:`Troubleshooting`.
