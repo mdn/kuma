@@ -21,7 +21,11 @@ $home-involved-background-y = 50px;
     minimize-header-search();
 
     .home-callouts {
-        background: #4d4e53;
+        background: #fff;
+
+        .column-container {
+            padding: $grid-spacing;
+        }
     }
 
     /*  Change open auth text in white */
@@ -234,6 +238,11 @@ $home-involved-background-y = 50px;
 /* homepage hacks block of blog post summaries */
 .home-hacks {
     background: #fff;
+
+    /* Increase specificity to override another padding-top */
+    #home & {
+        padding-top: 0;
+    }
 
     .column-hacks {
         @extend $column-main;
@@ -451,10 +460,6 @@ $home-involved-background-y = 50px;
             a {
                 set-larger-font-size();
             }
-        }
-
-        .home-callouts {
-            padding-top: 20px;
         }
 
         .column-home-features {
