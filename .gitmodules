@@ -43,9 +43,6 @@
 [submodule "vendor/src/django-nose"]
 	path = vendor/src/django-nose
 	url = git://github.com/django-nose/django-nose.git
-[submodule "vendor/src/django-recaptcha"]
-	path = vendor/src/django-recaptcha
-	url = git://github.com/praekelt/django-recaptcha.git
 [submodule "vendor/src/django-rest-framework"]
 	path = vendor/src/django-rest-framework
 	url = git://github.com/tomchristie/django-rest-framework.git
