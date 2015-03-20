@@ -1809,8 +1809,8 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
     def test_clone(self):
         self.client.login(username='admin', password='testpass')
-        slug = 'my_doc'
-        title = 'My Doc'
+        slug = None 
+        title = None
         content = '<p>Hello!</p>'
 
         test_revision = revision(save=True, title=title, slug=slug,
@@ -1823,7 +1823,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
         page = pq(response.content)
 
         eq_(page.find('input[name=title]')[0].value, title)
-        eq_(page.find('input[name=slug]')[0].value, slug + '_clone')
+        eq_(page.find('input[name=slug]')[0].value, slug)
         eq_(page.find('textarea[name=content]')[0].value, content)
 
     def test_localized_based_on(self):
