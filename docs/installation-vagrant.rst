@@ -202,7 +202,7 @@ reflected without any action on your part.
 .. _Errors:
 
 Errors during `vagrant up`
-==========================
+--------------------------
 
 ``vagrant up`` starts the virtual machine. The first time you run ``vagrant up`` it
 also `provisions <https://docs.vagrantup.com/v2/cli/provision.html>`_ the vm -
@@ -220,6 +220,23 @@ error that is fixed by running ``vagrant provision`` again, please email us the
 error at dev-mdn@lists.mozilla.org and we'll see if we can fix it.
 
 If you see the same error over and over, please ask for :ref:`more help <more-help>`.
+
+kuma_south_migrate
+~~~~~~~~~~~~~~~~~~
+
+If you see errors like::
+
+    notice: /Stage[main]/Kuma_config/Exec[kuma_south_migrate]
+
+try to manually run database migrations in the vm. To do so::
+
+    vagrant ssh
+    python manage.py migrate
+
+If you get an error, please ask for :ref:`more help <more-help>`.
+
+Ubuntu
+~~~~~~
 
 On Ubuntu, ``vagrant up`` might fail after being unable to mount NFS shared
 folders. First, make sure you have the nfs-common and nfs-server packages

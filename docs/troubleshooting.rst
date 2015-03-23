@@ -25,7 +25,7 @@ Running individual processes
 It is usually easier to see and debug problems if you run MDN processes
 individually, instead of running them via ``foreman``. You can run each process
 exactly as it is listed in ``Procfile``
- 
+
 -  ``runserver`` - runs the Django development server
 
 -  ``celery worker`` - runs the celery worker process for tasks
@@ -110,7 +110,7 @@ Errors with styles
 Getting more help
 -----------------
 
-If you have more problems using vagrant, please:
+If you have more problems running Kuma, please:
 
 #. Paste errors to `pastebin`_
 #. email the `dev-mdn`_ list
