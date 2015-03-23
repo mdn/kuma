@@ -197,7 +197,7 @@ def create_user_profile(sender, instance, created, **kwargs):
 
 @receiver(user_signed_up)
 def on_user_signed_up(sender, request, user, **kwargs):
-    context={'request': request}
+    context = {'request': request}
     msg = _('You have completed the first step of <a href="%s">getting started with MDN</a>') % wiki_url(context, 'MDN/Getting_started')
     messages.success(request, msg)
     if switch_is_active('welcome_email'):
