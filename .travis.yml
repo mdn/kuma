@@ -20,7 +20,7 @@ env:
 before_install: scripts/travis-install
 install:
     - pip wheel -r requirements/compiled.txt -r requirements/dev.txt coveralls
-    - pip install coveralls tox
+    - pip install coveralls tox==1.9.2
 before_script: mysql -e 'create database kuma;'
 script: tox -v
 after_success: coveralls
