@@ -1,0 +1,107 @@
+# Django itself, and all of the third-party Django applications used
+# by kuma.
+
+
+# sha256: flDlc-SEQ1hzs1FdeYLYAJOyaVq6F_0P8CQwdFTcOlY
+Django==1.6.11
+
+
+# sha256: OxNQQo3tQ4uqhTRD9zfPOTHrRggCTveBe2Dl3bp0nT8
+commonware==0.4.2
+
+# sha256: Z6WNv_q-Z2goBlP0O12ps7n9v8gf9y-wlHDz3L8aJ8U
+django-allauth==0.19.1
+
+# sha256: uhN1-xAk6OkVR1BNQ5IyF5XJif3lALluvHyTiE94bmA
+django-appconf==1.0.1
+
+# sha256: AlZhpbZccnb7ec8fWx75yWmOYzDTJMWdzqq8_KkBnSg
+django-authority==0.4
+
+# sha256: 9f4w7MALriOqfrGkBHJfX7q0hmmZw1NoW21hMQxi0es
+django-banish==0.2
+
+# sha256: 5F9_ELpYjxzEZRmmHqiV92fi2Zpjfn3lr4cJsSFIXss
+django-browserid==0.11
+
+# sha256: gyRlMv37381SLszGEr3H1a0AZGu56r7B752w4fEZr2g
+django-cache-machine==0.8
+
+# sha256: B6nGUKHyDgQM9f_9C82SCoHQc0kVEw2JjAMlxfr7LsQ
+django-celery==3.1.16
+
+# sha256: loAD5YJnaGr9dnMXGuuIc3Xz6aw2JpExMQp6A4xv6vI
+django-constance==1.0.1
+
+# sha256: IGzaYaKIrScTRCF5whnv2vXiY_6j0TtEvHmUpRvsylQ
+django-cronjobs==0.1
+
+# sha256: 0yV2uq13_dnmhZvpfCtqPBem9IQ2Q4nbcx8Gl7ehlmE
+django_csp==2.0.3
+
+# sha256: ycbRtyIaUPV0CP61C4HV4RrllmxQnYOx-aJnDTMzMi0
+django-dbgettext==0.1
+
+# sha256: LkRTJQDzcg5be046xIP6bgxeP-rcEyeR8Itu1O6cpwQ
+django-extensions==1.5.0
+
+# sha256: XwunWUzj1iljxTaVVyevv9kTLigvL6kX4XkWT37_pBk
+django-honeypot==0.4.0
+
+# sha256: 9x-Z1g5wTMI5vdu-M23NxbuKSHtlobC2x84PSvWEhEI
+django-memcached-hashring==0.1.2
+
+# sha256: uSXhpPQKk_2BhB75pyIrcFPaRiRdL8h2TVNCDc_9AU0
+django-mobility==0.1
+
+# sha256: NmfSakH-wwNkoO9yWAgyylMogC1VP21ucq9awhyzY2U
+django-nose==1.3
+
+# sha256: VhNFSiRxLZoqO7Ed6LfYdpVYBzploxkmvOgY5s5tCw8
+django-picklefield==0.1.9
+
+# sha256: u7c2WkL5XjKULmokZX56dgyb5mDvZB2szsn6gzb66mk
+django-recaptcha==1.0.3
+
+# sha256: UtMWsDWWYafe_ET1uTrzSCxy93DOiFTCCgVky-fczvw
+djangorestframework==2.3.8
+
+# sha256: RORjnsBXprap3duGnU46SBj8knjsSQzOOa7whEBZKpM
+django-session-csrf==0.5
+
+# sha256: qTI8v0sx6t2cUtyoZAYg_RYdEByz4JYY6Htul0mXZ1o
+django-smuggler==0.6.0
+
+# sha256: puw4IsDDvxJHZf3_fJ7cfLLG1xLbV7OauLlNGymftRM
+django-statici18n==1.1.1
+
+# sha256: UYHp69xx-OKZtaf7WOzIBofnie6WMIGY0kH_QwhRXqQ
+django-statsd-mozilla==0.3.5
+
+# sha256: xZelUWKR3HSXhpSNn0s3sUyxSYt006Ms7npzHkOq_bw
+django-taggit==0.9.3
+
+# sha256: gxbTP8mVvVKVeEhpDC6PElGdM62uqMn1qzF7fuB3D1w
+django-teamwork==0.0.3
+
+# sha256: 2oq-BKxfkbkQWGOF__ztNFC_ySFML7eOCGKEmbjeJGo
+django-threadedcomments==0.5.2
+
+# sha256: B2DUwWWcHTjb-BqFt-hiecsV1NQyh4Mc7qnO2Zobqfs
+django-tidings==1.0
+
+# sha256: xZelUWKR3HSXhpSNn0s3sUyxSYt006Ms7npzHkOq_bw
+django-taggit==0.9.3
+
+# sha256: XdB6sb7A64hZ89MOwbKT9xgdwB5gQQ9XQLm7nTYEc-w
+django-timezones==0.2
+
+# sha256: dEJWIK08Kh8FFR8MyFGrfiYYbaOfsDma_Aqo7uu9IBs
+django-waffle==0.10.1
+
+# sha256: UvCV-GFHuwtfYjva-VJVLReOu8XqyI2RsvWR09IsO4A
+funfactory==2.3.0
+
+# sha256: pvB08EimOg0ZzRpq4pg3e0gANR7KjhKU0z9wnFzdXlo
+South==0.8.2
+

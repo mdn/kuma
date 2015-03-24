@@ -1,0 +1,136 @@
+# Non-Django Python libraries required by kuma.
+
+# sha256: 68_IZ95aaPn1uhTRHbrYjmr_hDWo05M51c6w5bBt5kA
+amqp==1.4.6
+
+# sha256: N4Ethjya0-NcBzTELgvwMgzow77YLNIK1UyzTRWBV7o
+anyjson==0.3.3
+
+# sha256: SjoIXs8fzSc2VzU4_6EU8fQzGzu73Wk4Hm4XLEnJdQ8
+Babel==0.9.6
+
+# sha256: a9FoNOllgvzIowTck7A3ovd0fKbt2Suw2He1hS9B_E0
+basket-client==0.3.10
+
+# sha256: aoy0QBER4BG1ecjFKlHNq5cAQcxUOBS72Vd6RSn-HNs
+BeautifulSoup==3.2.1
+
+# sha256: bmuOxuRbiTiQUXN8fmIV2OVag4lutiEvpybKdugMehk
+billiard==3.3.0.19
+
+# sha256: FSrynUWAsRL8UpZoZEknkclR5jgrVgcOleEoxrYUgzs
+bleach==1.4.1
+
+# sha256: VNCAMILM8yqQ9B5DxhENxLhoaJuse-lauPLmgEkJkLM
+bitly_api==0.3
+
+# sha256: z-K2UyaL1Ybi0Ip16Ib3vjvlW6Ny9y4vV0eut2xHA2I
+celery==3.1.17
+
+# sha256: vjtAX2ezbybvBNNKkSJSvps-Q0bxtfXQK_0jzH3ZQeg
+elasticsearch-dsl==0.0.3
+
+# sha256: 3-5BXIBkzjYnPzDY-eJ7bA4P8qQ9Uv1-1Gcurbry6DM
+elasticsearch==0.4.5
+
+# sha256: E_91_bau0KJSZ6_JIBTR8b2alaakyi1OXquychsnX4Y
+elasticutils==0.9.1
+
+# sha256: f2UH1ADQft_R6oIF2jaAgAmwxTn1uKbgq1Qze5VebcM
+feedparser==5.1.3
+
+# sha256: A3VLx7JWOXwbZG5QSOIpFZD1CAFxrbiwD04tc4THbu4
+GitPython==0.1.7
+
+# sha256: -GuWUXvFy32_NLu8Uc3VloFwh3tDvBq3yes5NFz_Tdc
+hash_ring==1.3.1
+
+# sha256: Gw4j8GGPvIlys2LV3cKFRJHaH1dCrYJst7U2PKNvVLc
+html5lib==0.90
+
+# sha256: FJHD7Zj4GcCCpuWLa652Xs2Ov8SAW27dquuQcLbe2iE
+jingo==0.6.1
+
+# sha256: 17nrXP1_UFVtnoWGo0OJO3crYnbpe2SluI0gXeeVWZ8
+jsonpickle==0.3.1
+
+# sha256: uf8EN2BxE66nAf1RIsKvpAwF3_bx2k9YsvHqGNnyv40
+kombu==3.0.24
+
+# sha256: OyzMuVF_op-Gt0NXfwD0VF2YkF4T_klFJgSvRw5QziI
+lockfile==0.8
+
+# sha256: _rvld3LyBrrNJG-kH980xSySPl2sB5CxXJ3umX64pww
+logilab-astng==0.20.1
+
+# sha256: 79Sm-_24veOJAa5AqAHcKlzWoPOFkKfBM3wlwCdAKQQ
+logilab-common==0.50.3
+
+# sha256: ZFdjJirWHfP-7GGMPL4SJnEKNk_KVyVvYcU7AQGr2IA
+librabbitmq==1.0.1
+
+# sha256: ChGrIxH3op0Aef5Sm96VA_7Jor3VLbg0z4ooSowcUvk
+oauthlib==0.6.3
+
+# sha256: HDW0rCBs7y0kgWyJ-Jzyid09OM98RJuz-re_bUPwGx8
+ordereddict==1.1
+
+# sha256: mj3p41pJENu0qYxi4bXPf_o1wnAnoPj9v4zqTFih74w
+py-wikimarkup==1.0.2
+
+# sha256: 8S2Y66uuDo2j4GnZxwYh0VT2iL0G4HZoGzWZ7Xn7JsQ
+pyflakes==0.4.0
+
+# sha256: 0XVN8IAYcdBalvHO9QpPMuXUDUnqJKocbKlSnL1WIAU
+pyparsing==1.5.5
+
+# sha256: bxlzSLRvuM358_z8Kn1al9qV2z4uhmfPZXIWJ0_hsAk
+python-dateutil==1.5
+
+# sha256: nRovSMKXDUGoFKhedQ0C6pQTShaqpC4VN69imYEy7H4
+python-magic==0.4.0
+
+# sha256: vPcTcdmXu0ajFop7Y6rma1bMyswCWvkxDbQxVoHviGg
+python-memcached==1.53
+
+# sha256: ksUcPs7IRsvsSu_xH5_0cwPUpj-TsOasDsAqCR_tcO8
+python-openid==2.2.5
+
+# sha256: Hv0cPCeBfSB-nzR3AjtY9tIcPTCzp-FqFBjPzq7WU4s
+pytidylib==0.2.2
+
+# sha256: OH-Wj955OxQoZYApFlYYOfVZHYtLFMlBEl6w_Kfk5Y0
+pytz==2014.10
+
+# sha256: ivyytfIatxFGp4bH5xyIO9MtgZGld9aVAXtkhntxzKw
+raven==3.3.12
+
+# sha256: KMaFPB0T02W33HGmsF5f-1ZHH3CoUN4xivUNPXwN6i8
+recaptcha-client==1.0.6
+
+# sha256: HBRzh12Eb-Vj1whorPBbGVOkRy9GlbezVm0dl4lXuPw
+requests==2.3.0
+
+# sha256: xtJVDE_vwqA9dCLK9h5yyngnhU4N7v4gHes0qRUn2I4
+requests-oauthlib==0.4.1
+
+# sha256: _lMoR-CPEVj4EJr9NJdUBZ4QFYMNsYjXOwHi7MD35Sg
+simplejson==3.1.2
+
+# sha256: 4kBSQR_E-9H2cmNVN8P8IzDZSBsYwDF2lbRiWVEskdU
+six==1.9.0
+
+# sha256: xDk0Lw5v1G9WRDHJrksEoAiIlyFCZeLRjUGugY09b_E
+SQLAlchemy==0.6.4
+
+# sha256: 0wKmxbx5nbKBP_OtuEGkXEbvmrNoqj1sThSnYJaYUXY
+tower==0.3.4
+
+# sha256: OfCzm-Qb8AwA4trjweYhkIw_raepO2pQEsKKTbGSjIY
+tweepy==1.7.1
+
+# sha256: Gon6G0PSd8-t8ijMkLnHXyVIGOo6Gqt7_7AiPLt7sV0
+urllib3==1.8
+
+# sha256: syCYLbXKUlTBX4CcAEy8gNcSuQLFzfgP3HG_DpDfBFc
+URLObject==2.3.4
