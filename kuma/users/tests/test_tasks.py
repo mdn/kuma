@@ -4,6 +4,7 @@ from waffle import Switch
 
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.contrib import messages as django_messages
 from django.core import mail
 from django.test import RequestFactory
 
@@ -17,6 +18,14 @@ from . import UserTestCase, user
 
 class TestWelcomeEmails(UserTestCase):
     rf = RequestFactory()
+
+    def setup_request_for_messages(self):
+        request = self.rf.get('/')
+        request.locale = 'en-US'
+        session = self.client.session
+        session.save()
+        request.session = session
+        return request
 
     def test_default_language_email(self):
         u = User.objects.get(username='testuser')
@@ -44,11 +53,7 @@ class TestWelcomeEmails(UserTestCase):
                  email='welcome@tester.com',
                  password='welcome',
                  save=True)
-        request = self.rf.get('/')
-        request.locale = 'en-US'
-        session = self.client.session
-        session.save()
-        request.session = session
+        request = self.setup_request_for_messages()
         self.get_messages(request)
         user_signed_up.send(sender=u.__class__, request=request, user=u)
 
@@ -67,6 +72,22 @@ class TestWelcomeEmails(UserTestCase):
         expected_to = [u.email]
         eq_(expected_to, welcome_email.to)
         ok_(u'utm_campaign=welcome' in welcome_email.body)
+
+    def test_signup_getting_started_message(self):
+        u = user(username='welcome',
+                 email='welcome@tester.com',
+                 password='welcome',
+                 save=True)
+        request = self.setup_request_for_messages()
+        messages = self.get_messages(request)
+        eq_(len(messages), 0)
+
+        user_signed_up.send(sender=u.__class__, request=request, user=u)
+
+        queued_messages = list(messages)
+        eq_(len(queued_messages), 1)
+        eq_(django_messages.SUCCESS, queued_messages[0].level)
+        ok_('getting started' in queued_messages[0].message)
 
     def test_welcome_mail_for_unverified_email(self):
         Switch.objects.get_or_create(name='welcome_email', active=True)
