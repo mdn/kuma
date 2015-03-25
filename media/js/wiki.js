@@ -302,6 +302,8 @@
         var $pageButtons = $('.page-buttons');
         var pageButtonsOffset = $pageButtons.offset();
 
+        var stickyFeatureEnabled = $pageButtons.attr('data-sticky') === 'true';
+
         // Get button alignment according to text direction
         var buttonDirection = ($('html').attr('dir') === 'rtl') ? 'left' : 'right';
 
@@ -310,6 +312,8 @@
             var pageButtonsHeight = 0;
             var $mainContent = $('.wiki-main-content');
 
+            var pointerEvents = $toggler.css('pointer-events');
+
             if(!e || e.type === 'resize') {
                 // Calculate right and offset for page buttons on resize and page load
                 if(buttonDirection === 'right'){
@@ -317,7 +321,7 @@
                 }
                 // Should the TOC be one-column (auto-closed) or sidebar'd
                 if($toc.length){
-                    if($toggler.css('pointer-events') === 'auto' || $toggler.find('i').css('display') !== 'none') { /* icon check is for old IEs that don't support pointer-events */
+                    if(pointerEvents === 'auto' || $toggler.find('i').css('display') !== 'none') { /* icon check is for old IEs that don't support pointer-events */
                         // Checking "data-clicked" to ensure we don't override closing/opening if user has done so explicitly
                         if(!$toc.attr('data-closed') && !$toggler.attr('data-clicked')) {
                             $toggler.trigger('mdn:click');
@@ -330,12 +334,17 @@
             }
 
             // Check if page buttons need to be sticky
-            if($pageButtons.attr('data-sticky') === 'true'){
+            if(stickyFeatureEnabled){
                 pageButtonsHeight = $pageButtons.innerHeight();
                 if(scroll > pageButtonsOffset.top) {
-                    $pageButtons.css('min-width', $pageButtons.css('width'));
-                    $pageButtons.css(buttonDirection, pageButtonsOffset[buttonDirection]);
                     $pageButtons.addClass(fixedClass);
+
+                    // Only do the fixed positioning if the stylesheet says to
+                    // i.e. don't fix buttons to top while scrolling if on smaller device
+                    if(($pageButtons.css('position') === 'fixed')) {
+                        $pageButtons.css('min-width', $pageButtons.css('width'));
+                        $pageButtons.css(buttonDirection, pageButtonsOffset[buttonDirection]);
+                    }
                 } else {
                     $pageButtons.removeClass(fixedClass);
                 }
@@ -346,8 +355,7 @@
 
             // Styling for sticky ToC
             var maxHeight = win.innerHeight - parseInt($toc.css('padding-top'), 10) - parseInt($toc.css('padding-bottom'), 10) - pageButtonsHeight;
-
-            if(scroll + pageButtonsHeight > tocOffset.top && $toggler.css('pointer-events') === 'none') {
+            if((scroll + pageButtonsHeight > tocOffset.top) && pointerEvents === 'none') {
                 $toc.css({
                     width: $toc.css('width'),
                     top: pageButtonsHeight,
@@ -363,10 +371,10 @@
                 $toc.removeClass(fixedClass);
             }
 
-        }, 10);
+        }, 15);
 
         // Set it forth!
-        if($toc.length || $pageButtons.attr('data-sticky') === 'true'){
+        if($toc.length || stickyFeatureEnabled){
             scrollFn();
             $(win).on('scroll resize', scrollFn);
         }
