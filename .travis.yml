@@ -10,6 +10,7 @@ services:
 env:
     matrix:
         - TOXENV=py26
+        - TOXENV=py27
         - TOXENV=flake8
         - TOXENV=docs
     global:
@@ -34,3 +35,4 @@ notifications:
 matrix:
     allow_failures:
         - env: TOXENV=flake8
+        - env: TOXENV=py27
