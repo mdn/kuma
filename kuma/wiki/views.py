@@ -23,9 +23,8 @@ from django.http import (HttpResponse, HttpResponseRedirect,
                          HttpResponsePermanentRedirect,
                          Http404, HttpResponseBadRequest)
 from django.http.multipartparser import MultiPartParser
-from django.shortcuts import (get_object_or_404, render_to_response, redirect,
-                              render)
-from django.template import RequestContext
+from django.shortcuts import (get_object_or_404, get_list_or_404,
+                              redirect, render)
 from django.utils.safestring import mark_safe
 from django.views.decorators.http import (require_GET, require_POST,
                                           require_http_methods, condition)
@@ -223,14 +222,12 @@ def _document_redirect_to_create(document_slug, document_locale, slug_dict):
     """
     url = reverse('wiki.new_document', locale=document_locale)
     if slug_dict['length'] > 1:
-        try:
-            parent_doc = Document.objects.get(locale=document_locale,
-                                              slug=slug_dict['parent'],
-                                              is_template=0)
-            url = urlparams(url, parent=parent_doc.id,
-                            slug=slug_dict['specific'])
-        except Document.DoesNotExist:
-            raise Http404
+        parent_doc = get_object_or_404(Document,
+                                       locale=document_locale,
+                                       slug=slug_dict['parent'],
+                                       is_template=0)
+        url = urlparams(url, parent=parent_doc.id,
+                        slug=slug_dict['specific'])
     else:
         # This is a "base level" redirect, i.e. no parent
         url = urlparams(url, slug=document_slug)
@@ -367,16 +364,13 @@ def _get_seo_parent_title(slug_dict, document_locale):
     Get parent-title information for SEO purposes.
 
     """
-    seo_parent_title = ''
     if slug_dict['seo_root']:
-        try:
-            seo_root_doc = Document.objects.get(locale=document_locale,
-                                            slug=slug_dict['seo_root'])
-            #TODO: will this break a unicode title?
-            seo_parent_title = ' - ' + seo_root_doc.title
-        except Document.DoesNotExist:
-            pass
-    return seo_parent_title
+        seo_root_doc = get_object_or_404(Document,
+                                         locale=document_locale,
+                                         slug=slug_dict['seo_root'])
+        return u' - %s' % seo_root_doc.title
+    else:
+        return ''
 
 
 #####################################################################
@@ -473,7 +467,7 @@ def document(request, document_slug, document_locale):
         if fallback_doc is not None:
             doc = fallback_doc
             if redirect_url is not None:
-                return HttpResponseRedirect(redirect_url)
+                return redirect(redirect_url)
         else:
             if _check_404_params(request):
                 raise Http404
@@ -484,7 +478,7 @@ def document(request, document_slug, document_locale):
             create_url = _document_redirect_to_create(document_slug,
                                                       document_locale,
                                                       slug_dict)
-            return HttpResponseRedirect(create_url)
+            return redirect(create_url)
 
     # We found a Document. Now we need to figure out how we're going
     # to display it.
@@ -731,23 +725,19 @@ def list_documents(request, category=None, tag=None):
     if category:
         try:
             category_id = int(category)
-        except ValueError:
-            raise Http404
-        try:
             category = unicode(dict(Document.CATEGORIES)[category_id])
-        except KeyError:
+        except (KeyError, ValueError):
             raise Http404
 
     # Taggit offers a slug - but use name here, because the slugification
     # stinks and is hard to customize.
     tag_obj = None
     if tag:
-        matching_tags = DocumentTag.objects.filter(name__iexact=tag)
-        if len(matching_tags) == 0:
-            raise Http404
+        matching_tags = get_list_or_404(DocumentTag, name__iexact=tag)
         for matching_tag in matching_tags:
-            if (matching_tag.name).lower() == tag.lower():
+            if matching_tag.name.lower() == tag.lower():
                 tag_obj = matching_tag
+                break
     docs = Document.objects.filter_for_list(locale=request.locale,
                                              category=category_id,
                                              tag=tag_obj)
@@ -998,8 +988,11 @@ def new_document(request):
 @newrelic.agent.function_trace()
 def edit_document(request, document_slug, document_locale, revision_id=None):
     """Create a new revision of a wiki document, or edit document metadata."""
-    doc = get_object_or_404_or_403('wiki.add_revision', request.user,
-        Document, locale=document_locale, slug=document_slug)
+    doc = get_object_or_404_or_403('wiki.add_revision',
+                                   request.user,
+                                   Document,
+                                   locale=document_locale,
+                                   slug=document_slug)
     user = request.user
 
     # If this document has a parent, then the edit is handled by the
@@ -1551,8 +1544,9 @@ def compare_revisions(request, document_slug, document_locale):
 @process_document_path
 def select_locale(request, document_slug, document_locale):
     """Select a locale to translate the document to."""
-    doc = get_object_or_404(
-        Document, locale=document_locale, slug=document_slug)
+    doc = get_object_or_404(Document,
+                            locale=document_locale,
+                            slug=document_slug)
     return render(request, 'wiki/select_locale.html', {'document': doc})
 
 
@@ -1573,8 +1567,9 @@ def translate(request, document_slug, document_locale, revision_id=None):
     """
     # TODO: Refactor this view into two views? (new, edit)
     # That might help reduce the headache-inducing branchiness.
-    parent_doc = get_object_or_404(
-        Document, locale=settings.WIKI_DEFAULT_LANGUAGE, slug=document_slug)
+    parent_doc = get_object_or_404(Document,
+                                   locale=settings.WIKI_DEFAULT_LANGUAGE,
+                                   slug=document_slug)
     user = request.user
 
     if not revision_id:
@@ -2013,12 +2008,10 @@ def delete_revision(request, document_path, revision_id):
 def delete_document(request, document_slug, document_locale):
     """
     Delete a Document.
-
     """
-    document = get_object_or_404(
-        Document,
-        locale=document_locale,
-        slug=document_slug)
+    document = get_object_or_404(Document,
+                                 locale=document_locale,
+                                 slug=document_slug)
 
     # HACK: https://bugzil.la/972545 - Don't delete pages that have children
     # TODO: https://bugzil.la/972541 -  Deleting a page that has subpages
@@ -2091,20 +2084,19 @@ def purge_document(request, document_slug, document_locale):
 def quick_review(request, document_slug, document_locale):
     """Quickly mark a revision as no longer needing a particular type
     of review."""
-    try:
-        doc = Document.objects.get(locale=document_locale,
-                                   slug=document_slug)
-    except Document.DoesNotExist:
-        raise Http404
+    doc = get_object_or_404(Document,
+                            locale=document_locale,
+                            slug=document_slug)
+
     if not doc.allows_revision_by(request.user):
         raise PermissionDenied
+
     rev_id = request.POST.get('revision_id')
     if not rev_id:
         raise Http404
-    try:
-        rev = Revision.objects.get(pk=rev_id)
-    except Revision.DoesNotExist:
-        raise Http404
+
+    rev = get_object_or_404(Revision, pk=rev_id)
+
     if rev.id != doc.current_revision.id:
         # TODO: Find a better way to bail out of a collision.
         # Ideal is to kick them to the diff view, but that expects
@@ -2117,7 +2109,7 @@ def quick_review(request, document_slug, document_locale):
 
     if not any((needs_technical, needs_editorial)):
         # No need to "approve" something that doesn't need it.
-        return HttpResponseRedirect(doc.get_absolute_url())
+        return redirect(doc)
 
     approve_technical = request.POST.get('approve_technical', False)
     approve_editorial = request.POST.get('approve_editorial', False)
@@ -2143,7 +2135,7 @@ def quick_review(request, document_slug, document_locale):
             new_rev.review_tags.set(*new_tags)
         else:
             new_rev.review_tags.clear()
-    return HttpResponseRedirect(doc.get_absolute_url())
+    return redirect(doc)
 
 
 def _document_form_initial(document):
