@@ -561,52 +561,55 @@ class Document(NotificationsMixin, models.Model):
         content = parse_content(html).injectSectionIDs().serialize()
         sections = get_content_sections(content)
 
-        summary = ''
+        translations = []
+        if self.pk:
+            for translation in self.other_translations:
+                revision = translation.current_revision
+                translations.append({
+                    'last_edit': revision.created.isoformat(),
+                    'locale': translation.locale,
+                    'localization_tags': list(revision.localization_tags
+                                                      .values_list('name',
+                                                                   flat=True)),
+                    'review_tags': list(revision.review_tags
+                                                .values_list('name',
+                                                             flat=True)),
+                    'summary': translation.current_revision.summary,
+                    'tags': list(translation.tags
+                                            .values_list('name', flat=True)),
+                    'title': translation.title,
+                    'url': translation.get_absolute_url(),
+                })
+
         if self.current_revision:
+            review_tags = list(self.current_revision
+                                   .review_tags
+                                   .values_list('name', flat=True))
+            localization_tags = list(self.current_revision
+                                         .localization_tags
+                                         .values_list('name', flat=True))
+            last_edit = self.current_revision.created.isoformat()
             if self.current_revision.summary:
                 summary = self.current_revision.summary
             else:
                 summary = self.get_summary(strip_markup=False)
-
-        translations = []
-        if self.pk:
-            for translation in self.other_translations:
-                translations.append({
-                    'last_edit': translation.current_revision.created.isoformat(),
-                    'locale': translation.locale,
-                    'localization_tags': [tag.name for tag in
-                          translation.current_revision.localization_tags.all()],
-                    'review_tags': [tag.name for tag in
-                          translation.current_revision.review_tags.all()],
-                    'summary': translation.current_revision.summary,
-                    'tags': [tag.name for tag in translation.tags.all()],
-                    'title': translation.title,
-                    'url': reverse('wiki.document',
-                                   args=[translation.full_path],
-                                   locale=translation.locale)
-                })
-
-        if not self.current_revision:
+        else:
             review_tags = []
             localization_tags = []
-        else:
-            review_tags = [x.name for x in
-                           self.current_revision.review_tags.all()]
-            localization_tags = [tag.name for tag in
-                           self.current_revision.localization_tags.all()]
+            last_edit = ''
+            summary = ''
+
         if not self.pk:
             tags = []
         else:
-            tags = [tag.name for tag in self.tags.all()]
+            tags = list(self.tags.values_list('name', flat=True))
+
+        now_iso = datetime.now().isoformat()
 
         if self.modified:
             modified = self.modified.isoformat()
         else:
-            modified = datetime.now().isoformat()
-
-        last_edit = ''
-        if self.current_revision:
-            last_edit = self.current_revision.created.isoformat()
+            modified = now_iso
 
         return {
             'title': self.title,
@@ -622,7 +625,7 @@ class Document(NotificationsMixin, models.Model):
             'summary': summary,
             'translations': translations,
             'modified': modified,
-            'json_modified': datetime.now().isoformat(),
+            'json_modified': now_iso,
             'last_edit': last_edit
         }
 
@@ -784,7 +787,8 @@ class Document(NotificationsMixin, models.Model):
             return unique_attr()
 
     def revert(self, revision, user, comment=None):
-        old_review_tags = [t.name for t in revision.review_tags.all()]
+        old_review_tags = list(revision.review_tags
+                                       .values_list('name', flat=True))
         if revision.document.original == self:
             revision.based_on = revision
         revision.id = None
@@ -1052,7 +1056,9 @@ class Document(NotificationsMixin, models.Model):
 
         # Step 2: stash our current review tags, since we want to
         # preserve them.
-        review_tags = [str(tag) for tag in self.current_revision.review_tags.all()]
+        review_tags = list(self.current_revision
+                               .review_tags
+                               .values_list('name', flat=True))
 
         # Step 3: Create (but don't yet save) a copy of our current
         # revision, but with the new slug and title (if title is
@@ -1432,10 +1438,6 @@ Full traceback:
             current_parent = current_parent.parent_topic
         return parents
 
-    def has_children(self):
-        """Does this document have at least one child?"""
-        return self.children.count()
-
     def is_child_of(self, other):
         """Circular dependency detection -- if someone tries to set
         this as a parent of a document it's a child of, they're gonna
@@ -1451,7 +1453,7 @@ Full traceback:
         (grandchildren, great-grandchildren, etc.) of this one."""
         results = []
 
-        if (limit is None or levels < limit) and self.has_children():
+        if (limit is None or levels < limit) and self.children.exists():
             for child in self.children.all().filter(locale=self.locale):
                 results.append(child)
                 [results.append(grandchild)
@@ -1800,17 +1802,20 @@ class Revision(models.Model):
             is_approved=True,
             created__lt=self.created,
         ).order_by('-created')
-        if len(previous_revisions):
+        if previous_revisions.exists():
             return previous_revisions[0]
 
+    @cached_property
     def needs_editorial_review(self):
-        return 'editorial' in [t.name for t in self.review_tags.all()]
+        return self.review_tags.filter(name='editorial').exists()
 
+    @cached_property
     def needs_technical_review(self):
-        return 'technical' in [t.name for t in self.review_tags.all()]
+        return self.review_tags.filter(name='technical').exists()
 
+    @cached_property
     def localization_in_progress(self):
-        return 'inprogress' in [t.name for t in self.localization_tags.all()]
+        return self.localization_tags.filter(name='inprogress').exists()
 
     @property
     def translation_age(self):

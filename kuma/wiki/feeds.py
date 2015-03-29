@@ -302,10 +302,11 @@ class RevisionsFeed(DocumentsFeed):
         content_diff = ''
 
         if previous:
-            prev_review_tags = ','.join(
-                [x.name for x in previous.review_tags.all()])
-            curr_review_tags = ','.join(
-                [x.name for x in item.review_tags.all()])
+            prev_review_tags = ','.join(previous.review_tags
+                                                .values_list('name',
+                                                             flat=True))
+            curr_review_tags = ','.join(item.review_tags
+                                            .values_list('name', flat=True))
             if prev_review_tags != curr_review_tags:
                 review_diff = ("<h3>Review changes:</h3>%s" % tag_diff_table(
                     prev_review_tags, curr_review_tags, previous.id, item.id))

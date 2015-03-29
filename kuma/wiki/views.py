@@ -1316,8 +1316,8 @@ def repair_breadcrumbs(request, document_slug, document_locale):
 
 def ckeditor_config(request):
     """Return ckeditor config from database"""
-    default_config = EditorToolbar.objects.filter(name='default').all()
-    if len(default_config) > 0:
+    default_config = EditorToolbar.objects.filter(name='default')
+    if default_config.exists():
         code = default_config[0].code
     else:
         code = ''
@@ -2022,9 +2022,7 @@ def delete_document(request, document_slug, document_locale):
 
     # HACK: https://bugzil.la/972545 - Don't delete pages that have children
     # TODO: https://bugzil.la/972541 -  Deleting a page that has subpages
-    prevent = False
-    if document.has_children():
-        prevent = True
+    prevent = document.children.exists()
 
     first_revision = document.revisions.all()[0]
 
@@ -2114,9 +2112,8 @@ def quick_review(request, document_slug, document_locale):
         # here.
         raise PermissionDenied(_lazy("Document has been edited; please re-review."))
 
-    current_tags = [t.name for t in rev.review_tags.all()]
-    needs_technical = 'technical' in current_tags
-    needs_editorial = 'editorial' in current_tags
+    needs_technical = rev.needs_technical_review
+    needs_editorial = rev.needs_editorial_review
 
     if not any((needs_technical, needs_editorial)):
         # No need to "approve" something that doesn't need it.
