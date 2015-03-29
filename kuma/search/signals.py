@@ -48,9 +48,3 @@ def pre_delete_handler(**kwargs):
     else:
         log.info('Ignoring wiki document %r while updating search index',
                  doc.pk, exc_info=True)
-
-
-def delete_index(**kwargs):
-    index = kwargs.get('instance', None)
-    if index is not None:
-        index.delete_if_exists()

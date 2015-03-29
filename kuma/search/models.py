@@ -3,58 +3,18 @@ from django.conf import settings
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
-from django.db.models.signals import post_delete
+from django.dispatch import receiver
 from django.template.defaultfilters import slugify
 from django.utils import timezone
 from django.utils.functional import cached_property
 
-from elasticsearch.exceptions import NotFoundError, RequestError
+from elasticsearch.exceptions import NotFoundError
 
 from kuma.core.managers import PrefetchTaggableManager
 from kuma.core.urlresolvers import reverse
 from kuma.wiki.search import WikiDocumentType
 
-from .signals import delete_index
-
-
-class IndexManager(models.Manager):
-    """
-    The model manager to implement a couple of useful methods for handling
-    search indexes.
-    """
-    def get_current(self):
-        try:
-            return (self.filter(promoted=True, populated=True)
-                        .order_by('-created_at'))[0]
-        except (self.model.DoesNotExist, IndexError, AttributeError):
-            fallback_name = settings.ES_INDEXES['default']
-            return Index.objects.create(name=fallback_name, promoted=True)
-
-    def recreate_index(self, es=None, index=None):
-        """Delete index if it's there and creates a new one.
-
-        :arg es: ES to use. By default, this creates a new indexing ES.
-        :arg index: The Index object to use.
-
-        """
-        cls = WikiDocumentType
-
-        if es is None:
-            es = cls.get_connection()
-        if index is None:
-            index = Index.objects.get_current()
-
-        index.delete_if_exists()
-
-        # Simultaneously create the index and the mappings, so live
-        # indexing doesn't get a chance to index anything between the two
-        # causing ES to infer a possibly bogus mapping (which causes ES to
-        # freak out if the inferred mapping is incompatible with the
-        # explicit mapping).
-        try:
-            es.indices.create(index.prefixed_name, body=cls.get_settings())
-        except RequestError:
-            pass
+from .managers import IndexManager, FilterManager
 
 
 class Index(models.Model):
@@ -136,8 +96,12 @@ class Index(models.Model):
         self.save()
 
 
-post_delete.connect(delete_index, sender=Index,
-                    dispatch_uid='search.index.delete')
+@receiver(models.signals.post_delete,
+          sender=Index, dispatch_uid='search.index.delete')
+def delete_index(**kwargs):
+    index = kwargs.get('instance', None)
+    if index is not None:
+        index.delete_if_exists()
 
 
 class OutdatedObject(models.Model):
@@ -174,13 +138,6 @@ class FilterGroup(models.Model):
 
     def __unicode__(self):
         return self.name
-
-
-class FilterManager(models.Manager):
-    use_for_related_fields = True
-
-    def visible_only(self):
-        return self.filter(visible=True)
 
 
 class Filter(models.Model):
