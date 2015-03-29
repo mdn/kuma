@@ -31,7 +31,18 @@
 <!-- top search area -->
 <div class="home-masthead"><div class="center">
 
-  <h1>{{ _('Shared knowledge <span>for the Open Web</span>') }}</h1>
+
+    {# We want to A/B test the removal of this heading. If we try to remove it
+       with Optimizely, it flashes briefly before disappearing. By using Waffle
+       and percent-based activation, we can achieve the same effect without
+       needing to remove the heading on the client side after the fact. We can
+       then later use the Optimizely API to bucket visitors accordingly for
+       accurate reporting.
+
+       This can be removed once the homepage heading A/B test is completed. #}
+    {% if not waffle.flag('hide_homepage_heading') %}
+        <h1>{{ _('Shared knowledge <span>for the Open Web</span>') }}</h1>
+    {% endif %}
 
   <form id="home-search-form" action="{{ url('search') }}" method="get" class="search">
     <div class="home-search-form search-form">
@@ -192,4 +203,15 @@
         jQuery('#home-search-form').searchSuggestions();
     </script>
   {% endif %}
+
+  {# This can be removed once the homepage heading A/B test is completed. #}
+  <script>
+      {% if not waffle.flag('hide_homepage_heading') %}
+          // Bucket visitor into the baseline Optimizely variation for reporting
+          mdn.optimizely.push(['bucketVisitor', 2702600192, 2707400176]);
+      {% else %}
+          // Bucket visitor into the tested Optimizely variation for reporting
+          mdn.optimizely.push(['bucketVisitor', 2702600192, 2709140171]);
+      {% endif %}
+  </script>
 {% endblock %}
