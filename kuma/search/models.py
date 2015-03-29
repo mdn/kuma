@@ -14,6 +14,7 @@ from kuma.core.managers import PrefetchTaggableManager
 from kuma.core.urlresolvers import reverse
 from kuma.wiki.search import WikiDocumentType
 
+from .jobs import AvailableFiltersJob
 from .managers import IndexManager, FilterManager
 
 
@@ -197,3 +198,9 @@ class Filter(models.Model):
         path = reverse('search', locale=settings.LANGUAGE_CODE)
         return '%s%s?%s=%s' % (settings.SITE_URL, path,
                                self.group.slug, self.slug)
+
+
+@receiver(models.signals.post_save, sender=Filter)
+@receiver(models.signals.pre_delete, sender=Filter)
+def invalidate_filter_cache(sender, instance, **kwargs):
+    AvailableFiltersJob().invalidate()

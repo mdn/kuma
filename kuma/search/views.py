@@ -13,7 +13,7 @@ from .exceptions import ValidationError
 from .filters import (AdvancedSearchQueryBackend, DatabaseFilterBackend,
                       get_filters, HighlightFilterBackend,
                       LanguageFilterBackend, SearchQueryBackend)
-from .models import Filter
+from .jobs import AvailableFiltersJob
 from .paginator import SearchPaginator
 from .renderers import ExtendedTemplateHTMLRenderer
 from .serializers import (DocumentSerializer, FilterWithGroupSerializer,
@@ -45,9 +45,7 @@ class SearchView(ListAPIView):
     def initial(self, request, *args, **kwargs):
         super(SearchView, self).initial(request, *args, **kwargs)
         self.current_page = self.request.QUERY_PARAMS.get(self.page_kwarg, 1)
-        self.available_filters = (
-            Filter.objects.prefetch_related('tags', 'group')
-                          .filter(enabled=True))
+        self.available_filters = AvailableFiltersJob().get()
         self.serialized_filters = (
             FilterWithGroupSerializer(self.available_filters, many=True).data)
         self.selected_filters = get_filters(self.request.QUERY_PARAMS.getlist)
