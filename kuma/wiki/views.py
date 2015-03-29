@@ -35,7 +35,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 import constance.config
 from ratelimit.decorators import ratelimit
-from smuggler.utils import superuser_required
 from smuggler.forms import ImportFileForm
 from teamwork.shortcuts import get_object_or_404_or_403
 import waffle
@@ -48,7 +47,7 @@ from kuma.attachments.models import Attachment
 from kuma.attachments.utils import attachments_json
 from kuma.core.cache import memcache
 from kuma.core.decorators import (never_cache, login_required,
-                                  permission_required)
+                                  permission_required, superuser_required)
 from kuma.core.helpers import urlparams
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import (get_object_or_none, paginate, smart_int,
@@ -1303,15 +1302,14 @@ def move(request, document_slug, document_locale):
     })
 
 
-@login_required
 @process_document_path
 @check_readonly
+@superuser_required
 @transaction.autocommit
 def repair_breadcrumbs(request, document_slug, document_locale):
-    if not request.user.is_superuser:
-        raise PermissionDenied
-    doc = get_object_or_404(
-        Document, locale=document_locale, slug=document_slug)
+    doc = get_object_or_404(Document,
+                            locale=document_locale,
+                            slug=document_slug)
     doc.repair_breadcrumbs()
     return redirect(doc.get_absolute_url())
 
