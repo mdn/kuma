@@ -397,7 +397,7 @@ class Document(NotificationsMixin, models.Model):
         timeout = constance.config.KUMA_DOCUMENT_RENDER_TIMEOUT
         max_duration = timedelta(seconds=timeout)
         duration = datetime.now() - self.render_scheduled_at
-        if (duration > max_duration):
+        if duration > max_duration:
             return False
 
         if not self.last_rendered_at:
@@ -416,7 +416,7 @@ class Document(NotificationsMixin, models.Model):
         timeout = constance.config.KUMA_DOCUMENT_RENDER_TIMEOUT
         max_duration = timedelta(seconds=timeout)
         duration = datetime.now() - self.render_started_at
-        if (duration > max_duration):
+        if duration > max_duration:
             return False
 
         if not self.last_rendered_at:
@@ -464,8 +464,10 @@ class Document(NotificationsMixin, models.Model):
         return (self.rendered_html, errors)
 
     def schedule_rendering(self, cache_control=None, base_url=None):
-        """Attempt to schedule rendering. Honor the deferred_rendering field to
-        decide between an immediate or a queued render."""
+        """
+        Attempt to schedule rendering. Honor the deferred_rendering field to
+        decide between an immediate or a queued render.
+        """
         # Avoid scheduling a rendering if already scheduled or in progress.
         if self.is_rendering_scheduled or self.is_rendering_in_progress:
             return False
@@ -487,7 +489,9 @@ class Document(NotificationsMixin, models.Model):
             tasks.render_document.delay(self.pk, cache_control, base_url)
 
     def render(self, cache_control=None, base_url=None, timeout=None):
-        """Render content using kumascript and any other services necessary."""
+        """
+        Render content using kumascript and any other services necessary.
+        """
         if not base_url:
             base_url = settings.SITE_URL
 
@@ -528,7 +532,6 @@ class Document(NotificationsMixin, models.Model):
         # TODO: Automatically clear the defer_rendering flag if the rendering
         # time falls under the limit? Probably safer to require manual
         # intervention to free docs from deferred jail.
-
         if self.render_max_age:
             # If there's a render_max_age, automatically update render_expires
             self.render_expires = (datetime.now() +
@@ -658,7 +661,6 @@ class Document(NotificationsMixin, models.Model):
         if (not self._json_data) or (not stale and doc_lmod > json_lmod):
             self._json_data = self.build_json_data()
             self.json = json.dumps(self._json_data)
-            # HACK: Update just the json field for the document.
             Document.objects.filter(pk=self.pk).update(json=self.json)
 
         return self._json_data
@@ -823,7 +825,7 @@ class Document(NotificationsMixin, models.Model):
         # Accept optional field edits...
 
         new_title = data.get('title', False)
-        new_rev.title = (new_title and new_title or self.title)
+        new_rev.title = new_title and new_title or self.title
 
         new_tags = data.get('tags', False)
         new_rev.tags = (new_tags and new_tags or
@@ -845,9 +847,9 @@ class Document(NotificationsMixin, models.Model):
             if not section_id:
                 new_rev.content = new_html
             else:
-                new_rev.content = (parse_content(self.html)
-                                   .replaceSection(section_id, new_html)
-                                   .serialize())
+                content = parse_content(self.html)
+                new_rev.content = (content.replaceSection(section_id, new_html)
+                                          .serialize())
 
         # Finally, commit the revision changes and return the new rev.
         new_rev.save()
@@ -875,12 +877,12 @@ class Document(NotificationsMixin, models.Model):
         try:
             # Check if the slug would collide with an existing doc
             self._raise_if_collides('slug', SlugCollision)
-        except UniqueCollision, e:
-            if e.existing.redirect_url() is not None:
+        except UniqueCollision as err:
+            if err.existing.redirect_url() is not None:
                 # If the existing doc is a redirect, delete it and clobber it.
-                e.existing.delete()
+                err.existing.delete()
             else:
-                raise e
+                raise err
 
         # These are too important to leave to a (possibly omitted) is_valid
         # call:
@@ -949,16 +951,17 @@ class Document(NotificationsMixin, models.Model):
                                 slug=self.slug,
                                 category=self.category,
                                 is_localizable=False)
-        redirect_rev = Revision(content=REDIRECT_CONTENT % {
-                                  'href': reverse('wiki.document',
-                                                  args=[new_slug],
-                                                  locale=self.locale),
-                                  'title': title,
-                                },
+        content = REDIRECT_CONTENT % {
+            'href': reverse('wiki.document',
+                            args=[new_slug],
+                            locale=self.locale),
+            'title': title,
+        }
+        redirect_rev = Revision(content=content,
                                 is_approved=True,
                                 toc_depth=self.current_revision.toc_depth,
                                 creator=user)
-        return (redirect_doc, redirect_rev)
+        return redirect_doc, redirect_rev
 
     def _moved_revision(self, new_slug, user, title=None):
         """
@@ -1067,7 +1070,9 @@ class Document(NotificationsMixin, models.Model):
 
         # Step 4: Create (but don't yet save) a Document and Revision
         # to leave behind as a redirect from old location to new.
-        redirect_doc, redirect_rev = self._post_move_redirects(new_slug, user, title)
+        redirect_doc, redirect_rev = self._post_move_redirects(new_slug,
+                                                               user,
+                                                               title)
 
         # Step 5: Update our breadcrumbs.
         new_parent = self._get_new_parent(new_slug)
@@ -1094,7 +1099,7 @@ class Document(NotificationsMixin, models.Model):
         redirect_rev.save()
 
         # Finally, step 10: recurse through all of our children.
-        for child in self.children.all().filter(locale=self.locale):
+        for child in self.children.filter(locale=self.locale):
             # Save the original slug and locale so we can use them in
             # the error message if something goes wrong.
             old_child_slug, old_child_locale = child.slug, child.locale
@@ -1128,8 +1133,10 @@ Exception message: %(exc_message)s
 Full traceback:
 
 %(traceback)s
-                """ % {'doc_id': child.id, 'locale': old_child_locale,
-                       'slug': old_child_slug, 'exc_class': exc_class,
+                """ % {'doc_id': child.id,
+                       'locale': old_child_locale,
+                       'slug': old_child_slug,
+                       'exc_class': exc_class,
                        'exc_message': exc_message,
                        'traceback': traceback.format_exc(e)}
                 raise PageMoveError(message)
@@ -1143,55 +1150,55 @@ Full traceback:
         acquire_translated_topic_parent() for as long as there's a
         language mismatch.
         """
-        if not self.parent_topic or \
-           self.parent_topic.locale != self.locale:
+        if (not self.parent_topic or
+                self.parent_topic.locale != self.locale):
             self.acquire_translated_topic_parent()
         if self.parent_topic:
             self.parent_topic.repair_breadcrumbs()
 
     def acquire_translated_topic_parent(self):
-        """This normalizes topic breadcrumb paths between locales.
+        """
+        This normalizes topic breadcrumb paths between locales.
 
         Attempt to acquire a topic parent from a translation of our translation
-        parent's topic parent, auto-creating a stub document if necessary."""
+        parent's topic parent, auto-creating a stub document if necessary.
+        """
         if not self.parent:
             # Bail, if this is not in fact a translation.
             return
-        ppt = self.parent.parent_topic
-        if not ppt:
+        parent_topic = self.parent.parent_topic
+        if not parent_topic:
             # Bail, if the translation parent has no topic parent
             return
         try:
             # Look for an existing translation of the topic parent
-            new_pt = ppt.translations.get(locale=self.locale)
+            new_parent = parent_topic.translations.get(locale=self.locale)
         except Document.DoesNotExist:
             try:
                 # No luck. As a longshot, let's try looking for the same slug.
-                new_pt = (Document.objects.get(locale=self.locale,
-                                               slug=ppt.slug))
-                if not new_pt.parent:
+                new_parent = Document.objects.get(locale=self.locale,
+                                                  slug=parent_topic.slug)
+                if not new_parent.parent:
                     # HACK: This same-slug/different-locale doc should probably
                     # be considered a translation. Let's correct that on the
                     # spot.
-                    new_pt.parent = ppt
-                    new_pt.save()
+                    new_parent.parent = parent_topic
+                    new_parent.save()
             except Document.DoesNotExist:
                 # Finally, let's create a translated stub for a topic parent
-                new_pt = (Document.objects
-                          .get(pk=ppt.pk))
-                new_pt.pk = None
-                new_pt.current_revision = None
-                new_pt.parent_topic = None
-                new_pt.parent = ppt
-                new_pt.locale = self.locale
-                new_pt.save()
+                new_parent = Document.objects.get(pk=parent_topic.pk)
+                new_parent.pk = None
+                new_parent.current_revision = None
+                new_parent.parent_topic = None
+                new_parent.parent = parent_topic
+                new_parent.locale = self.locale
+                new_parent.save()
 
-                if ppt.current_revision:
+                if parent_topic.current_revision:
                     # Don't forget to clone a current revision
-                    new_rev = (Revision.objects
-                               .get(pk=ppt.current_revision.pk))
+                    new_rev = Revision.objects.get(pk=parent_topic.current_revision.pk)
                     new_rev.pk = None
-                    new_rev.document = new_pt
+                    new_rev.document = new_parent
                     # HACK: Let's auto-add tags that flag this as a topic stub
                     stub_tags = '"TopicStub","NeedsTranslation"'
                     stub_l10n_tags = ['inprogress']
@@ -1203,28 +1210,29 @@ Full traceback:
                     new_rev.localization_tags.add(*stub_l10n_tags)
 
         # Finally, assign the new default parent topic
-        self.parent_topic = new_pt
+        self.parent_topic = new_parent
         self.save()
 
     @property
     def content_parsed(self):
         if not self.current_revision:
             return None
-
         return self.current_revision.content_parsed
 
     def files_dict(self):
         intermediates = DocumentAttachment.objects.filter(document__pk=self.id)
         files = {}
-        for f in intermediates:
-            attachment = f.file
-            rev = attachment.current_revision
-            files[f.name] = {'attached_by': f.attached_by.username,
-                             'creator': rev.creator.username,
-                             'description': rev.description,
-                             'mime_type': rev.mime_type,
-                             'html': attachment.get_embed_html(),
-                             'url': attachment.get_file_url()}
+        for intermediate in intermediates:
+            attachment = intermediate.file
+            revision = attachment.current_revision
+            files[intermediate.name] = {
+                'attached_by': intermediate.attached_by.username,
+                'creator': revision.creator.username,
+                'description': revision.description,
+                'mime_type': revision.mime_type,
+                'html': attachment.get_embed_html(),
+                'url': attachment.get_file_url(),
+            }
         return files
 
     @property
@@ -1279,7 +1287,8 @@ Full traceback:
 
     @staticmethod
     def from_url(url, required_locale=None, id_only=False):
-        """Return the approved Document the URL represents, None if there isn't
+        """
+        Return the approved Document the URL represents, None if there isn't
         one.
 
         Return None if the URL is a 404, the URL doesn't point to the right
@@ -1288,7 +1297,6 @@ Full traceback:
         To limit the universe of discourse to a certain locale, pass in a
         `required_locale`. To fetch only the ID of the returned Document, set
         `id_only` to True.
-
         """
         # Extract locale and path from URL:
         path = urlparse(url)[2]  # never has errors AFAICT
@@ -1311,9 +1319,8 @@ Full traceback:
         if id_only:
             doc_query = doc_query.only('id')
         try:
-            return doc_query.get(
-                locale=locale,
-                slug=view_kwargs['document_slug'])
+            return doc_query.get(locale=locale,
+                                 slug=view_kwargs['document_slug'])
         except Document.DoesNotExist:
             return None
 
@@ -1421,7 +1428,8 @@ Full traceback:
             return self.translations.all().order_by('locale')
         else:
             translations = (self.parent.translations.all()
-                                .exclude(id=self.id).order_by('locale'))
+                                .exclude(id=self.id)
+                                .order_by('locale'))
             pks = list(translations.values_list('pk', flat=True))
             return Document.objects.filter(pk__in=[self.parent.pk] + pks)
 
@@ -1439,9 +1447,11 @@ Full traceback:
         return parents
 
     def is_child_of(self, other):
-        """Circular dependency detection -- if someone tries to set
+        """
+        Circular dependency detection -- if someone tries to set
         this as a parent of a document it's a child of, they're gonna
-        have a bad time."""
+        have a bad time.
+        """
         return other.id in (d.id for d in self.parents)
 
     # This is a method, not a property, because it can do a lot of DB
@@ -1449,8 +1459,10 @@ Full traceback:
     # 'children' because that's taken already by the reverse relation
     # on parent_topic.
     def get_descendants(self, limit=None, levels=0):
-        """Return a list of all documents which are children
-        (grandchildren, great-grandchildren, etc.) of this one."""
+        """
+        Return a list of all documents which are children
+        (grandchildren, great-grandchildren, etc.) of this one.
+        """
         results = []
 
         if (limit is None or levels < limit) and self.children.exists():
@@ -1686,13 +1698,14 @@ class Revision(models.Model):
     # settings.WIKI_DEFAULT_LANGUAGE} is a start but not sufficient.
 
     is_mindtouch_migration = models.BooleanField(default=False, db_index=True,
-            help_text="Did this revision come from MindTouch?")
+                                                 help_text="Did this revision come from MindTouch?")
 
     objects = TransformManager()
 
     def get_absolute_url(self):
         """Build the absolute URL to this revision"""
-        return reverse('wiki.revision', locale=self.document.locale,
+        return reverse('wiki.revision',
+                       locale=self.document.locale,
                        args=[self.document.full_path, self.pk])
 
     def _based_on_is_clean(self):
@@ -1795,15 +1808,20 @@ class Revision(models.Model):
     def content_cleaned(self):
         if self.document.is_template:
             return self.content
-        return Document.objects.clean_content(self.content)
+        else:
+            return Document.objects.clean_content(self.content)
 
     def get_previous(self):
-        previous_revisions = self.document.revisions.filter(
-            is_approved=True,
-            created__lt=self.created,
-        ).order_by('-created')
-        if previous_revisions.exists():
-            return previous_revisions[0]
+        """
+        Returns the previous approved revision or None.
+        """
+        try:
+            return self.document.revisions.filter(
+                is_approved=True,
+                created__lt=self.created,
+            ).order_by('-created')[0]
+        except IndexError:
+            return None
 
     @cached_property
     def needs_editorial_review(self):

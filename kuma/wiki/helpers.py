@@ -186,8 +186,7 @@ def tag_diff_table(prev_tags, curr_tags, prev_id, curr_id):
 
     diff = html_diff.make_table(prev_tag_lines, curr_tag_lines,
                                 _("Revision %s") % prev_id,
-                                _("Revision %s") % curr_id
-                               )
+                                _("Revision %s") % curr_id)
 
     # Simple formatting update: 784877
     diff = diff.replace('",', '"<br />').replace('<td', '<td valign="top"')
@@ -196,6 +195,8 @@ def tag_diff_table(prev_tags, curr_tags, prev_id, curr_id):
 
 @register.function
 def colorize_diff(diff):
+    # we're doing something horrible here because this will show up
+    # in feed reader and other clients that don't load CSS files
     diff = diff.replace('<span class="diff_add"', '<span class="diff_add" '
                 'style="background-color: #afa; text-decoration: none;"')
     diff = diff.replace('<span class="diff_sub"', '<span class="diff_sub" '

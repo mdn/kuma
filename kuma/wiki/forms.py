@@ -351,8 +351,8 @@ class RevisionForm(forms.ModelForm):
         form.
 
         """
-        if self.section_id and self.instance and \
-           self.instance.document:
+        if (self.section_id and self.instance and
+                self.instance.document):
             return self.save_section(creator, document, **kwargs)
         # Throws a TypeError if somebody passes in a commit kwarg:
         new_rev = super(RevisionForm, self).save(commit=False, **kwargs)

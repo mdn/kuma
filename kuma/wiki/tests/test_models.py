@@ -487,7 +487,7 @@ class DocumentTestsWithFixture(UserTestCase):
 
         for p in parents_5:
             ok_(p.current_revision)
-            if not p.pk in (trans_0.pk, trans_2.pk, trans_5.pk):
+            if p.pk not in (trans_0.pk, trans_2.pk, trans_5.pk):
                 ok_('NeedsTranslation' in p.current_revision.tags)
                 ok_('TopicStub' in p.current_revision.tags)
                 ok_(p.current_revision.localization_in_progress)
