@@ -909,22 +909,11 @@ dl {
 .indicatorInHeadline,
 .blockIndicator,
 .overheadIndicator {
-/*box-shadow: 1px 1px 1px #CCC*/
     margin: 0px 0px 1.5em;
     border: 5px solid;
-    padding: 10px 10px 0px 10px;
+    padding: 10px;
     background: none repeat scroll 0 0;
     font-size: 12px;
-}
-.redesign .inlineIndicator,
-.redesign .indicatorInHeadline,
-.redesign .blockIndicator,
-.redesign .overheadIndicator {
-/* background-color:rgba-fallback(rgba(255,203,0,0.75); *)/
-    border-color: rgba-fallback(rgba(0,0,0,0.05));
-    border-style: solid !important;
-/* font-size: 11px; */
-    padding: 10px;
 }
 
 .blockIndicator,
@@ -936,8 +925,8 @@ dl {
     }
 }
 
-.redesign .inlineIndicator,
-.redesign .indicatorInHeadline {
+.inlineIndicator,
+.indicatorInHeadline {
     border-width: 0;
     border-left-width: 4px;
     font-size: 10px;
@@ -1055,7 +1044,7 @@ html[dir="rtl"] .warningHeader {
     background: #ffc;
     border-color: #990;
 }
-.redesign .draft {
+.draft {
     background: rgba-fallback(rgba(255,203,0,0.5));
     border-color: rgba-fallback(rgba(0,0,0,0.05));
 }
@@ -1063,7 +1052,7 @@ html[dir="rtl"] .warningHeader {
     background: #cee;
     border-color: #267373;
 }
-.redesign .htmlVer {
+.htmlVer {
     border-color: rgba-fallback(rgba(0,0,0,0.05));
 }
 .nonStandard {
@@ -1617,11 +1606,11 @@ dd.landingPageList {
     background-color: rgba-fallback(rgba(0,150,221,0.1));
     padding: 11px 22px;
 }
-.redesign[dir="ltr"] .summary-box-events {
+html[dir="ltr"] .summary-box-events {
     clear: left;
     border-left: 6px solid rgba-fallback(rgba(0,150,221,0.5));
 }
-.redesign[dir="rtl"] .summary-box-events {
+html[dir="rtl"] .summary-box-events {
     clear: right;
     border-right: 6px solid rgba-fallback(rgba(0,150,221,0.5));
 }
@@ -1630,22 +1619,22 @@ dd.landingPageList {
     background-color: rgba-fallback(rgba(230,96,0,0.1));
     padding: 11px 22px;
 }
-.redesign[dir="ltr"] .summary-box-js {
+html[dir="ltr"] .summary-box-js {
     clear: left;
     border-left: 6px solid rgba-fallback(rgba(230,96,0,0.5));
 }
-.redesign[dir="rtl"] .summary-box-js {
+html[dir="rtl"] .summary-box-js {
     clear: right;
     border-right: 6px solid rgba-fallback(rgba(230,96,0,0.5));
 }
-.redesign .standardNote,
-.redesign .optional,
+.standardNote,
+.optional,
 .renamed {
     background: rgba-fallback(rgba(0,83,159,0.2));
     border-color: rgba-fallback(rgba(0,0,0,0.05));
 }
-.redesign .obsolete,
-.redesign .notXPCOM {
+.obsolete,
+.notXPCOM {
     background: rgba-fallback(rgba(230,96,0,0.45));
     border-color: rgba-fallback(rgba(0,0,0,0.05));
 }
