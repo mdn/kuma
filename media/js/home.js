@@ -2,20 +2,11 @@
     'use strict';
 
     // Create the demos slider
-    var $list = $('.home-demos-list');
-    if ($list.length) {
-        $list.owlCarousel({
-            lazyLoad: true
-        });
-        $list.css('height', 'auto');
-    }
+    $('.home-demos-list').css('height', 'auto').owlCarousel({ lazyLoad: true });
 
     // Track search submissions with Optimizely
-    var $centerSearchBox = $('#home-search-form');
-    if ($centerSearchBox) {
-        $centerSearchBox.submit(function() {
-            mdn.optimizely.push(['trackEvent', 'submit-homepage-search-form']);
-        });
-    }
+    $('#home-search-form').on('submit', function() {
+        mdn.optimizely.push(['trackEvent', 'submit-homepage-search-form']);
+    });
 
 })(jQuery);
