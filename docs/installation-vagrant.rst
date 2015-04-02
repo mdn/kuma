@@ -256,4 +256,4 @@ since the current puppet configurations do not currently support
 ``nfs: false``.
 
 If you have other problems during ``vagrant up``, please check
-:ref:`Troubleshooting`.
+:doc:`Troubleshooting <troubleshooting>`.
