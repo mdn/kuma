@@ -424,8 +424,8 @@
     </div> <!-- ends "main-content" -->
 
   <menu type="context" id="edit-history-menu">
-    <menuitem data-action="$edit" label="{{_('Edit page')}}"></menuitem>
-    <menuitem data-action="$history" label="{{_('View page history')}}"></menuitem>
+    <menuitem data-action="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}" label="{{_('Edit page')}}"></menuitem>
+    <menuitem data-action="{{ url('wiki.document_revisions', document.full_path) }}" label="{{_('View page history')}}"></menuitem>
   </menu>
 {% endblock %}
 
