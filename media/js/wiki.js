@@ -847,5 +847,67 @@
     if($('details').length){
         initDetailsTags();
     }
+    
+    function create_jsfiddle(title, htmlCode, cssCode, jsCode) {
+       var $form = $('<form method="post" target="_blank" action="https://jsfiddle.net/api/mdn/">'
+            + '<input type="hidden" name="html" />'
+            + '<input type="hidden" name="css" />'
+            + '<input type="hidden" name="js" />'
+            + '<input type="hidden" name="title" />'
+            + '<input type="hidden" name="wrap" value="b" />'
+            + '<input type="submit" />'
+        + '</form>');
+       $form.find('input[name=html]').val(htmlCode);
+       $form.find('input[name=css]').val(cssCode);
+       $form.find('input[name=js]').val(jsCode);
+       $form.find('input[name=title]').val(title);
+       $form.submit();
+    }
+    
+    function create_codepen(title, htmlCode, cssCode, jsCode) {
+       var $form = $('<form method="post" target="_blank" action="http://codepen.io/pen/define">'
+            + '<input type="hidden" name="data">'
+            + '<input type="submit" />'
+        + '</form>');
+       var data = {'title': title, 'html': htmlCode, 'css': cssCode, 'js': jsCode};
+       $form.find('input[name=data]').val(JSON.stringify(data));
+       $form.submit();
+    }
+           
+    function create_sample(sampleCodeHost, title, htmlCode, cssCode, jsCode) {
+       if(sampleCodeHost == 'jsfiddle') {
+            create_jsfiddle(title, htmlCode, cssCode, jsCode);
+        } else if(sampleCodeHost == 'codepen') {
+            create_codepen(title, htmlCode, cssCode, jsCode);
+        } 
+    }
+
+    $('#wikiArticle').on('click', 'button.open-in-host', function(){
+        var $button = $(this);
+        var section = $button.attr('data-section');
+        var sampleCodeHost = $button.attr('data-host');
+        
+        // track the click and sample code host
+        mdn.analytics.trackEvent({
+            category: 'Samples',
+            action: 'open-' + sampleCodeHost,
+            label: section
+        });
+        
+        // disable the button, till we open the fiddle
+        $button.attr('disabled', 'disabled');
+        var sampleUrl = window.location.href.split('#')[0] + '?section=' + section + '&raw=1';
+        $.get(sampleUrl).then(function(sample) {
+            var $sample = $('<div />').append(sample);
+            var htmlCode = $sample.find('.brush\\:.html, .brush\\:.html\\;').text();
+            var cssCode = $sample.find('.brush\\:.css, .brush\\:.css\\;').text();
+            var jsCode = $sample.find('.brush\\:.js, .brush\\:.js\\;').text();
+            var title = $sample.find('h2[name=' + section + ']').text();
+            
+            create_sample(sampleCodeHost, title, htmlCode, cssCode, jsCode);
+            
+            $button.removeAttr('disabled');
+        });
+    });
 
 })(window, document, jQuery);
