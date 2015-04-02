@@ -119,4 +119,3 @@ If you have more problems running Kuma, please:
 .. _pastebin: http://pastebin.mozilla.org/
 .. _dev-mdn: mailto:dev-mdn@lists.mozilla.org?subject=vagrant%20issue
 .. _IRC: irc://irc.mozilla.org:6697/#mdndev
-.. _puppet: http://puppetlabs.com/puppet/puppet-open-source
