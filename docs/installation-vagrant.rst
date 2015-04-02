@@ -48,7 +48,7 @@ Install and run everything
       => default: notice: Finished catalog run in .... seconds
 
 
-   If the above process fails with an error, check `Troubleshooting`_.
+   If the above process fails with an error, check `Errors`_.
 
 
 #. Add the hostnames to the end of your hosts file with this shell command::
@@ -163,7 +163,7 @@ To enable KumaScript (Kuma's template system):
 
 KumaScript is now enabled. You will also want to import the `KumaScript auto-loaded modules`_.
 You can simply copy & paste them from the production site to your local site at
-the same slugs. Or you can email the `dev-mdn`_ list to get a .json file to
+the same slugs. Or you can email the dev-mdn@lists.mozilla.org list to get a .json file to
 load in your local django admin interface as described in `this comment`_.
 
 .. _constance config admin panel: https://developer-local.allizom.org/admin/constance/config/
@@ -220,6 +220,8 @@ error that is fixed by running ``vagrant provision`` again, please email us the
 error at dev-mdn@lists.mozilla.org and we'll see if we can fix it.
 
 If you see the same error over and over, please ask for :ref:`more help <more-help>`.
+
+.. _puppet: http://puppetlabs.com/puppet/puppet-open-source
 
 kuma_south_migrate
 ~~~~~~~~~~~~~~~~~~
