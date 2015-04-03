@@ -15,7 +15,6 @@ from allauth.account.models import EmailAddress
 from allauth.socialaccount import helpers
 from allauth.socialaccount.models import SocialAccount
 from allauth.socialaccount.views import SignupView as BaseSignupView
-from badger.models import Award
 import constance.config
 from honeypot.decorators import verify_honeypot_value
 from taggit.utils import parse_tags
@@ -105,8 +104,6 @@ def profile_view(request, username):
     wiki_activity, docs_feed_items = None, None
     wiki_activity = profile.wiki_activity()
 
-    awards = Award.objects.filter(user=user)
-
     if request.user.is_anonymous():
         show_manage_roles_button = False
     else:
@@ -122,7 +119,6 @@ def profile_view(request, username):
         'demos_page': demos_page,
         'docs_feed_items': docs_feed_items,
         'wiki_activity': wiki_activity,
-        'award_list': awards,
         'show_manage_roles_button': show_manage_roles_button,
     }
     return render(request, 'users/profile.html', context)

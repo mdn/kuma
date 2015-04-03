@@ -7,11 +7,9 @@ from django.views.i18n import javascript_catalog
 from django.views.decorators.cache import cache_page
 
 from kuma.core import views as core_views
-import badger
 
 
 admin.autodiscover()
-badger.autodiscover()
 
 handler403 = core_views.handler403
 handler404 = core_views.handler404
@@ -56,8 +54,6 @@ urlpatterns = patterns('',
     # Users
     ('', include('kuma.users.urls')),
 
-    # Badges
-    (r'^badges/', include('badger.urls_simple')),
 
     # Services and sundry.
     (r'^', include('tidings.urls')),

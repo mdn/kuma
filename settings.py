@@ -407,9 +407,6 @@ MIDDLEWARE_CLASSES = (
     'kuma.core.anonymous.AnonymousIdentityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'kuma.users.middleware.BanMiddleware',
-
-    'badger.middleware.RecentBadgeAwardsMiddleware',
-    'kuma.wiki.badges.BadgeAwardingMiddleware',
 )
 
 # Auth
@@ -514,7 +511,6 @@ INSTALLED_APPS = (
     # other
     'kuma.humans',
 
-    'badger',
     'cacheback',
 )
 
@@ -596,7 +592,6 @@ MINIFY_BUNDLES = {
         'mdn': (
             'css/font-awesome.css',
             'css/main.css',
-            'css/badges.css',
         ),
         'jquery-ui': (
             'js/libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.min.css',
@@ -691,7 +686,6 @@ MINIFY_BUNDLES = {
             'js/analytics.js',
             'js/main.js',
             'js/auth.js',
-            'js/badges.js',
             'js/social.js',
         ),
         'home': (
@@ -1217,8 +1211,6 @@ def get_user_url(user):
 ABSOLUTE_URL_OVERRIDES = {
     'auth.user': get_user_url
 }
-
-OBI_BASE_URL = 'https://backpack.openbadges.org/'
 
 # Honor the X-Forwarded-Proto header for environments like local dev VM that
 # uses Apache mod_proxy instead of mod_wsgi
