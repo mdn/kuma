@@ -368,13 +368,7 @@
                 <div class="wiki-block contributors">
                   <h2 class="offscreen">{{ _('Document Tags and Contributors') }}</h2>
                   {% set tags = document.tags.all() %}
-                  {% if tags.exists() %}
-                  <!-- tags if present -->
-                  <div class="tag-attach-list contributors-sub">
-                    <i aria-hidden="true" class="icon-tags"></i><strong>{{ _('Tags:') }}</strong>&nbsp;
-                    <ul class="tags tags-small">{% for tag in tags %}<li><a href="{{ url('wiki.tag', tag.name) }}">{{ tag.name }}</a></li>{% endfor %}</ul>
-                  </div>
-                  {% endif %}
+                  {% include "wiki/includes/document_tag.html" %}
                   {% trans contributors=user_list(contributors) %}
                   <div class="contributors-sub">
                     <i aria-hidden="true" class="icon-group"></i><strong>Contributors to this page:</strong> {{ contributors }}

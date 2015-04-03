@@ -52,6 +52,11 @@
       </div>
     </details>
 
+    <div class="wiki-block contributors">
+      {% set tags = document.tags.all() %}
+      {% include "wiki/includes/document_tag.html" %}
+    </div>
+
     <details><div class="wiki-block">
       <h2><summary>{{ _('Revision Content') }}</summary></h2>
       <article id="wikiArticle" class="text-content">
