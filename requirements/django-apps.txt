@@ -15,17 +15,8 @@ django-allauth==0.19.1
 # sha256: uhN1-xAk6OkVR1BNQ5IyF5XJif3lALluvHyTiE94bmA
 django-appconf==1.0.1
 
-# sha256: AlZhpbZccnb7ec8fWx75yWmOYzDTJMWdzqq8_KkBnSg
-django-authority==0.4
-
 # sha256: 9f4w7MALriOqfrGkBHJfX7q0hmmZw1NoW21hMQxi0es
 django-banish==0.2
-
-# sha256: 5F9_ELpYjxzEZRmmHqiV92fi2Zpjfn3lr4cJsSFIXss
-django-browserid==0.11
-
-# sha256: gyRlMv37381SLszGEr3H1a0AZGu56r7B752w4fEZr2g
-django-cache-machine==0.8
 
 # sha256: B6nGUKHyDgQM9f_9C82SCoHQc0kVEw2JjAMlxfr7LsQ
 django-celery==3.1.16
@@ -66,17 +57,11 @@ django-recaptcha==1.0.3
 # sha256: UtMWsDWWYafe_ET1uTrzSCxy93DOiFTCCgVky-fczvw
 djangorestframework==2.3.8
 
-# sha256: RORjnsBXprap3duGnU46SBj8knjsSQzOOa7whEBZKpM
-django-session-csrf==0.5
-
 # sha256: qTI8v0sx6t2cUtyoZAYg_RYdEByz4JYY6Htul0mXZ1o
 django-smuggler==0.6.0
 
 # sha256: puw4IsDDvxJHZf3_fJ7cfLLG1xLbV7OauLlNGymftRM
 django-statici18n==1.1.1
-
-# sha256: UYHp69xx-OKZtaf7WOzIBofnie6WMIGY0kH_QwhRXqQ
-django-statsd-mozilla==0.3.5
 
 # sha256: xZelUWKR3HSXhpSNn0s3sUyxSYt006Ms7npzHkOq_bw
 django-taggit==0.9.3
@@ -98,9 +83,6 @@ django-timezones==0.2
 
 # sha256: dEJWIK08Kh8FFR8MyFGrfiYYbaOfsDma_Aqo7uu9IBs
 django-waffle==0.10.1
-
-# sha256: UvCV-GFHuwtfYjva-VJVLReOu8XqyI2RsvWR09IsO4A
-funfactory==2.3.0
 
 # sha256: pvB08EimOg0ZzRpq4pg3e0gANR7KjhKU0z9wnFzdXlo
 South==0.8.2

@@ -75,9 +75,6 @@ oauthlib==0.6.3
 # sha256: HDW0rCBs7y0kgWyJ-Jzyid09OM98RJuz-re_bUPwGx8
 ordereddict==1.1
 
-# sha256: mj3p41pJENu0qYxi4bXPf_o1wnAnoPj9v4zqTFih74w
-py-wikimarkup==1.0.2
-
 # sha256: 8S2Y66uuDo2j4GnZxwYh0VT2iL0G4HZoGzWZ7Xn7JsQ
 pyflakes==0.4.0
 
@@ -105,9 +102,6 @@ pytz==2014.10
 # sha256: ivyytfIatxFGp4bH5xyIO9MtgZGld9aVAXtkhntxzKw
 raven==3.3.12
 
-# sha256: KMaFPB0T02W33HGmsF5f-1ZHH3CoUN4xivUNPXwN6i8
-recaptcha-client==1.0.6
-
 # sha256: HBRzh12Eb-Vj1whorPBbGVOkRy9GlbezVm0dl4lXuPw
 requests==2.3.0
 
@@ -120,14 +114,8 @@ simplejson==3.1.2
 # sha256: 4kBSQR_E-9H2cmNVN8P8IzDZSBsYwDF2lbRiWVEskdU
 six==1.9.0
 
-# sha256: xDk0Lw5v1G9WRDHJrksEoAiIlyFCZeLRjUGugY09b_E
-SQLAlchemy==0.6.4
-
 # sha256: 0wKmxbx5nbKBP_OtuEGkXEbvmrNoqj1sThSnYJaYUXY
 tower==0.3.4
-
-# sha256: OfCzm-Qb8AwA4trjweYhkIw_raepO2pQEsKKTbGSjIY
-tweepy==1.7.1
 
 # sha256: Gon6G0PSd8-t8ijMkLnHXyVIGOo6Gqt7_7AiPLt7sV0
 urllib3==1.8
