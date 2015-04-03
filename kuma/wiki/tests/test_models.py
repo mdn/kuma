@@ -487,10 +487,10 @@ class DocumentTestsWithFixture(UserTestCase):
 
         for p in parents_5:
             ok_(p.current_revision)
-            if not p.pk in (trans_0.pk, trans_2.pk, trans_5.pk):
+            if p.pk not in (trans_0.pk, trans_2.pk, trans_5.pk):
                 ok_('NeedsTranslation' in p.current_revision.tags)
                 ok_('TopicStub' in p.current_revision.tags)
-                ok_(p.current_revision.localization_in_progress())
+                ok_(p.current_revision.localization_in_progress)
 
     def test_repair_breadcrumbs(self):
         english_top = document(locale=settings.WIKI_DEFAULT_LANGUAGE,
@@ -1245,14 +1245,6 @@ class PageMoveTests(UserTestCase):
         child.save()
 
         ok_(child.is_child_of(grandparent))
-
-    def test_has_children(self):
-        parent = document(title='Parent document for testing has_children()')
-        child = document(title='Child document for testing has_children()')
-        child.parent_topic = parent
-        child.save()
-
-        ok_(parent.has_children())
 
     @attr('move')
     def test_move_tree(self):

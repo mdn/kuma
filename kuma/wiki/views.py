@@ -23,9 +23,8 @@ from django.http import (HttpResponse, HttpResponseRedirect,
                          HttpResponsePermanentRedirect,
                          Http404, HttpResponseBadRequest)
 from django.http.multipartparser import MultiPartParser
-from django.shortcuts import (get_object_or_404, render_to_response, redirect,
-                              render)
-from django.template import RequestContext
+from django.shortcuts import (get_object_or_404, get_list_or_404,
+                              redirect, render)
 from django.utils.safestring import mark_safe
 from django.views.decorators.http import (require_GET, require_POST,
                                           require_http_methods, condition)
@@ -35,7 +34,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 import constance.config
 from ratelimit.decorators import ratelimit
-from smuggler.utils import superuser_required
 from smuggler.forms import ImportFileForm
 from teamwork.shortcuts import get_object_or_404_or_403
 import waffle
@@ -48,7 +46,7 @@ from kuma.attachments.models import Attachment
 from kuma.attachments.utils import attachments_json
 from kuma.core.cache import memcache
 from kuma.core.decorators import (never_cache, login_required,
-                                  permission_required)
+                                  permission_required, superuser_required)
 from kuma.core.helpers import urlparams
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import (get_object_or_none, paginate, smart_int,
@@ -224,14 +222,12 @@ def _document_redirect_to_create(document_slug, document_locale, slug_dict):
     """
     url = reverse('wiki.new_document', locale=document_locale)
     if slug_dict['length'] > 1:
-        try:
-            parent_doc = Document.objects.get(locale=document_locale,
-                                              slug=slug_dict['parent'],
-                                              is_template=0)
-            url = urlparams(url, parent=parent_doc.id,
-                            slug=slug_dict['specific'])
-        except Document.DoesNotExist:
-            raise Http404
+        parent_doc = get_object_or_404(Document,
+                                       locale=document_locale,
+                                       slug=slug_dict['parent'],
+                                       is_template=0)
+        url = urlparams(url, parent=parent_doc.id,
+                        slug=slug_dict['specific'])
     else:
         # This is a "base level" redirect, i.e. no parent
         url = urlparams(url, slug=document_slug)
@@ -257,8 +253,8 @@ def _set_common_headers(doc, section_id, response):
 
     """
     response['ETag'] = doc.calculate_etag(section_id)
-    if doc.current_revision:
-        response['X-kuma-revision'] = doc.current_revision.id
+    if doc.current_revision_id:
+        response['X-kuma-revision'] = doc.current_revision_id
     return response
 
 
@@ -368,16 +364,13 @@ def _get_seo_parent_title(slug_dict, document_locale):
     Get parent-title information for SEO purposes.
 
     """
-    seo_parent_title = ''
     if slug_dict['seo_root']:
-        try:
-            seo_root_doc = Document.objects.get(locale=document_locale,
-                                            slug=slug_dict['seo_root'])
-            #TODO: will this break a unicode title?
-            seo_parent_title = ' - ' + seo_root_doc.title
-        except Document.DoesNotExist:
-            pass
-    return seo_parent_title
+        seo_root_doc = get_object_or_404(Document,
+                                         locale=document_locale,
+                                         slug=slug_dict['seo_root'])
+        return u' - %s' % seo_root_doc.title
+    else:
+        return ''
 
 
 #####################################################################
@@ -396,11 +389,8 @@ def _document_deleted(request, deletion_logs):
 
     """
     deletion_log = deletion_logs.order_by('-pk')[0]
-
-    return render(request,
-                  'wiki/deletion_log.html',
-                  {'deletion_log': deletion_log},
-                  status=404)
+    context = {'deletion_log': deletion_log}
+    return render(request, 'wiki/deletion_log.html', context, status=404)
 
 
 @newrelic.agent.function_trace()
@@ -408,7 +398,6 @@ def _document_deleted(request, deletion_logs):
 def _document_raw(request, doc, doc_html, rendering_params):
     """
     Display a raw Document.
-
     """
     response = HttpResponse(doc_html)
     response['X-Frame-Options'] = 'Allow'
@@ -422,9 +411,7 @@ def _document_raw(request, doc, doc_html, rendering_params):
         # Treat raw, un-bleached template source as plain text, not HTML.
         response['Content-Type'] = 'text/plain; charset=utf-8'
 
-    return _set_common_headers(doc,
-                               rendering_params['section'],
-                               response)
+    return _set_common_headers(doc, rendering_params['section'], response)
 
 
 @csrf_exempt
@@ -442,8 +429,8 @@ def document(request, document_slug, document_locale):
     """
     # PUT requests go to the write API.
     if request.method == 'PUT':
-        if not request.authkey and \
-           not request.user.is_authenticated():
+        if (not request.authkey and
+               not request.user.is_authenticated()):
             raise PermissionDenied
         return _document_PUT(request,
                              document_slug,
@@ -459,7 +446,8 @@ def document(request, document_slug, document_locale):
     if doc is None:
         # Possible the document once existed, but is now deleted.
         # If so, show that it was deleted.
-        deletion_logs = _check_for_deleted_document(document_locale, document_slug)
+        deletion_logs = _check_for_deleted_document(document_locale,
+                                                    document_slug)
         if deletion_logs.exists():
             return _document_deleted(request, deletion_logs)
 
@@ -474,7 +462,7 @@ def document(request, document_slug, document_locale):
         if fallback_doc is not None:
             doc = fallback_doc
             if redirect_url is not None:
-                return HttpResponseRedirect(redirect_url)
+                return redirect(redirect_url)
         else:
             if _check_404_params(request):
                 raise Http404
@@ -485,7 +473,7 @@ def document(request, document_slug, document_locale):
             create_url = _document_redirect_to_create(document_slug,
                                                       document_locale,
                                                       slug_dict)
-            return HttpResponseRedirect(create_url)
+            return redirect(create_url)
 
     # We found a Document. Now we need to figure out how we're going
     # to display it.
@@ -520,8 +508,7 @@ def document(request, document_slug, document_locale):
     # Step 3: Read some request params to see what we're supposed to
     # do.
     rendering_params = {}
-    for param in ('raw', 'summary',
-                  'include', 'edit_links'):
+    for param in ('raw', 'summary', 'include', 'edit_links'):
         rendering_params[param] = request.GET.get(param, False) is not False
     rendering_params['section'] = request.GET.get('section', None)
     rendering_params['render_raw_fallback'] = False
@@ -578,23 +565,24 @@ def document(request, document_slug, document_locale):
     share_text = _('I learned about %(title)s on MDN.') % {"title": doc.title, }
 
     # Step 8: Bundle it all up and, finally, return.
-    context = {'document': doc,
-               'document_html': doc_html,
-               'toc_html': toc_html,
-               'quick_links_html': quick_links_html,
-               'zone_subnav_html': zone_subnav_html,
-               'body_html': body_html,
-               'contributors': contributors,
-               'fallback_reason': fallback_reason,
-               'kumascript_errors': ks_errors,
-               'render_raw_fallback': rendering_params['render_raw_fallback'],
-               'seo_summary': seo_summary,
-               'seo_parent_title': seo_parent_title,
-               'share_text': share_text,
-               'attachment_data': attachments,
-               'attachment_data_json': json.dumps(attachments),
-               'search_url': referrer_url(request) or ''}
-
+    context = {
+        'document': doc,
+        'document_html': doc_html,
+        'toc_html': toc_html,
+        'quick_links_html': quick_links_html,
+        'zone_subnav_html': zone_subnav_html,
+        'body_html': body_html,
+        'contributors': contributors,
+        'fallback_reason': fallback_reason,
+        'kumascript_errors': ks_errors,
+        'render_raw_fallback': rendering_params['render_raw_fallback'],
+        'seo_summary': seo_summary,
+        'seo_parent_title': seo_parent_title,
+        'share_text': share_text,
+        'attachment_data': attachments,
+        'attachment_data_json': json.dumps(attachments),
+        'search_url': referrer_url(request) or '',
+    }
     response = render(request, 'wiki/document.html', context)
     return _set_common_headers(doc, rendering_params['section'], response)
 
@@ -732,32 +720,30 @@ def list_documents(request, category=None, tag=None):
     if category:
         try:
             category_id = int(category)
-        except ValueError:
-            raise Http404
-        try:
             category = unicode(dict(Document.CATEGORIES)[category_id])
-        except KeyError:
+        except (KeyError, ValueError):
             raise Http404
 
     # Taggit offers a slug - but use name here, because the slugification
     # stinks and is hard to customize.
     tag_obj = None
     if tag:
-        matching_tags = DocumentTag.objects.filter(name__iexact=tag)
-        if len(matching_tags) == 0:
-            raise Http404
+        matching_tags = get_list_or_404(DocumentTag, name__iexact=tag)
         for matching_tag in matching_tags:
-            if (matching_tag.name).lower() == tag.lower():
+            if matching_tag.name.lower() == tag.lower():
                 tag_obj = matching_tag
+                break
     docs = Document.objects.filter_for_list(locale=request.locale,
-                                             category=category_id,
-                                             tag=tag_obj)
+                                            category=category_id,
+                                            tag=tag_obj)
     paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
-    return render(request, 'wiki/list_documents.html',
-                  {'documents': paginated_docs,
-                   'count': docs.count(),
-                   'category': category,
-                   'tag': tag})
+    context = {
+        'documents': paginated_docs,
+        'count': docs.count(),
+        'category': category,
+        'tag': tag,
+    }
+    return render(request, 'wiki/list_documents.html', context)
 
 
 @require_GET
@@ -765,10 +751,12 @@ def list_templates(request):
     """Returns listing of all templates"""
     docs = Document.objects.filter(is_template=True).order_by('title')
     paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
-    return render(request, 'wiki/list_documents.html',
-                  {'documents': paginated_docs,
-                   'count': docs.count(),
-                   'is_templates': True})
+    context = {
+        'documents': paginated_docs,
+        'count': docs.count(),
+        'is_templates': True,
+    }
+    return render(request, 'wiki/list_documents.html', context)
 
 
 @require_GET
@@ -785,11 +773,13 @@ def list_documents_for_review(request, tag=None):
     tag_obj = tag and get_object_or_404(ReviewTag, name=tag) or None
     docs = Document.objects.filter_for_review(locale=request.locale, tag=tag_obj)
     paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
-    return render(request, 'wiki/list_documents_for_review.html',
-                  {'documents': paginated_docs,
-                   'count': docs.count(),
-                   'tag': tag_obj,
-                   'tag_name': tag})
+    context = {
+        'documents': paginated_docs,
+        'count': docs.count(),
+        'tag': tag_obj,
+        'tag_name': tag,
+    }
+    return render(request, 'wiki/list_documents_for_review.html', context)
 
 
 @require_GET
@@ -799,11 +789,14 @@ def list_documents_with_localization_tag(request, tag=None):
     docs = Document.objects.filter_with_localization_tag(locale=request.locale,
                                                          tag=tag_obj)
     paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
+    context = {
+        'documents': paginated_docs,
+        'count': docs.count(),
+        'tag': tag_obj,
+        'tag_name': tag,
+    }
     return render(request, 'wiki/list_documents_with_localization_tags.html',
-                  {'documents': paginated_docs,
-                   'count': docs.count(),
-                   'tag': tag_obj,
-                   'tag_name': tag})
+                  context)
 
 
 @require_GET
@@ -811,10 +804,12 @@ def list_documents_with_errors(request):
     """Lists wiki documents with (KumaScript) errors"""
     docs = Document.objects.filter_for_list(locale=request.locale, errors=True)
     paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
-    return render(request, 'wiki/list_documents.html',
-                  {'documents': paginated_docs,
-                   'count': docs.count(),
-                   'errors': True})
+    context = {
+        'documents': paginated_docs,
+        'count': docs.count(),
+        'errors': True,
+    }
+    return render(request, 'wiki/list_documents.html', context)
 
 
 @require_GET
@@ -823,10 +818,12 @@ def list_documents_without_parent(request):
     docs = Document.objects.filter_for_list(locale=request.locale,
                                             noparent=True)
     paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
-    return render(request, 'wiki/list_documents.html',
-                  {'documents': paginated_docs,
-                   'count': docs.count(),
-                   'noparent': True})
+    context = {
+        'documents': paginated_docs,
+        'count': docs.count(),
+        'noparent': True,
+    }
+    return render(request, 'wiki/list_documents.html', context)
 
 
 @require_GET
@@ -835,10 +832,12 @@ def list_top_level_documents(request):
     docs = Document.objects.filter_for_list(locale=request.locale,
                                             toplevel=True)
     paginated_docs = paginate(request, docs, per_page=DOCUMENTS_PER_PAGE)
-    return render(request, 'wiki/list_documents.html',
-                  {'documents': paginated_docs,
-                   'count': docs.count(),
-                   'toplevel': True})
+    context = {
+        'documents': paginated_docs,
+        'count': docs.count(),
+        'toplevel': True,
+    }
+    return render(request, 'wiki/list_documents.html', context)
 
 
 @login_required
@@ -999,8 +998,11 @@ def new_document(request):
 @newrelic.agent.function_trace()
 def edit_document(request, document_slug, document_locale, revision_id=None):
     """Create a new revision of a wiki document, or edit document metadata."""
-    doc = get_object_or_404_or_403('wiki.add_revision', request.user,
-        Document, locale=document_locale, slug=document_slug)
+    doc = get_object_or_404_or_403('wiki.add_revision',
+                                   request.user,
+                                   Document,
+                                   locale=document_locale,
+                                   slug=document_slug)
     user = request.user
 
     # If this document has a parent, then the edit is handled by the
@@ -1244,17 +1246,19 @@ def _edit_document_collision(request, orig_rev, curr_rev, is_iframe_target,
 
     # Make this response iframe-friendly so we can hack around the
     # save-and-edit iframe button
-    return render(request, 'wiki/edit_document.html',
-                  {'collision': True,
-                   'revision_form': rev_form,
-                   'document_form': doc_form,
-                   'content': content,
-                   'current_content': curr_content,
-                   'section_id': section_id,
-                   'original_revision': orig_rev,
-                   'current_revision': curr_rev,
-                   'revision': rev,
-                   'document': doc})
+    context = {
+        'collision': True,
+        'revision_form': rev_form,
+        'document_form': doc_form,
+        'content': content,
+        'current_content': curr_content,
+        'section_id': section_id,
+        'original_revision': orig_rev,
+        'current_revision': curr_rev,
+        'revision': rev,
+        'document': doc,
+    }
+    return render(request, 'wiki/edit_document.html', context)
 
 
 @require_http_methods(['GET', 'POST'])
@@ -1303,23 +1307,22 @@ def move(request, document_slug, document_locale):
     })
 
 
-@login_required
 @process_document_path
 @check_readonly
+@superuser_required
 @transaction.autocommit
 def repair_breadcrumbs(request, document_slug, document_locale):
-    if not request.user.is_superuser:
-        raise PermissionDenied
-    doc = get_object_or_404(
-        Document, locale=document_locale, slug=document_slug)
+    doc = get_object_or_404(Document,
+                            locale=document_locale,
+                            slug=document_slug)
     doc.repair_breadcrumbs()
     return redirect(doc.get_absolute_url())
 
 
 def ckeditor_config(request):
     """Return ckeditor config from database"""
-    default_config = EditorToolbar.objects.filter(name='default').all()
-    if len(default_config) > 0:
+    default_config = EditorToolbar.objects.filter(name='default')
+    if default_config.exists():
         code = default_config[0].code
     else:
         code = ''
@@ -1331,21 +1334,54 @@ def ckeditor_config(request):
 @login_required
 @require_POST
 def preview_revision(request):
-    """Create an HTML fragment preview of the posted wiki syntax."""
+    """
+    Create an HTML fragment preview of the posted wiki syntax.
+    """
     wiki_content = request.POST.get('content', '')
     kumascript_errors = []
-    doc = None
-    if request.POST.get('doc_id', False):
-        doc = Document.objects.get(id=request.POST.get('doc_id'))
+    doc_id = request.POST.get('doc_id')
+    if doc_id:
+        doc = Document.objects.get(id=doc_id)
+    else:
+        doc = None
 
     if kumascript.should_use_rendered(doc, request.GET, html=wiki_content):
         wiki_content, kumascript_errors = kumascript.post(request,
                                                           wiki_content,
                                                           request.locale)
     # TODO: Get doc ID from JSON.
-    data = {'content': wiki_content, 'title': request.POST.get('title', ''),
-            'kumascript_errors': kumascript_errors}
-    return render(request, 'wiki/preview.html', data)
+    context = {
+        'content': wiki_content,
+        'title': request.POST.get('title', ''),
+        'kumascript_errors': kumascript_errors,
+    }
+    return render(request, 'wiki/preview.html', context)
+
+
+def _make_doc_structure(document, level, expand, depth):
+    if document.is_redirect:
+        return None
+
+    if expand:
+        result = dict(document.get_json_data())
+        result['subpages'] = []
+    else:
+        result = {
+            'title': document.title,
+            'slug': document.slug,
+            'locale': document.locale,
+            'url': document.get_absolute_url(),
+            'subpages': []
+        }
+
+    if level < depth:
+        descendants = document.get_descendants(1)
+        descendants.sort(key=lambda item: item.title)
+        for descendant in descendants:
+            subpage = _make_doc_structure(descendant, level + 1, expand, depth)
+            if subpage is not None:
+                result['subpages'].append(subpage)
+    return result
 
 
 @require_GET
@@ -1353,46 +1389,20 @@ def preview_revision(request):
 @process_document_path
 def get_children(request, document_slug, document_locale):
     """Retrieves a document and returns its children in a JSON structure"""
-    expand = request.GET.get('expand', False) is not False
-    maxDepth = 5
-    depth = int(request.GET.get('depth', maxDepth))
-    if(depth > maxDepth):
-        depth = maxDepth
+    expand = 'expand' in request.GET
+    max_depth = 5
+    depth = int(request.GET.get('depth', max_depth))
+    if depth > max_depth:
+        depth = max_depth
 
     result = []
     try:
-        def _make_doc_structure(d, level):
-            if d.is_redirect:
-                return None
-
-            if expand:
-                res = dict(d.get_json_data())
-                res['subpages'] = []
-            else:
-                res = {
-                    'title': d.title,
-                    'slug': d.slug,
-                    'locale': d.locale,
-                    'url': d.get_absolute_url(),
-                    'subpages': []
-                }
-
-            if level < depth:
-                descendants = d.get_descendants(1)
-                descendants.sort(key=lambda item: item.title)
-                for descendant in descendants:
-                    sp = _make_doc_structure(descendant, level + 1)
-                    if sp is not None:
-                        res['subpages'].append(sp)
-            return res
-
-        result = _make_doc_structure(Document.objects.
-                        get(locale=document_locale, slug=document_slug), 0)
-
+        doc = Document.objects.get(locale=document_locale,
+                                   slug=document_slug)
     except Document.DoesNotExist:
         result = {'error': 'Document does not exist.'}
 
-    result = json.dumps(result)
+    result = json.dumps(_make_doc_structure(doc, 0, expand, depth))
     return HttpResponse(result, mimetype='application/json')
 
 
@@ -1412,11 +1422,12 @@ def autosuggest_documents(request):
         return HttpResponseBadRequest(_lazy('Autosuggest requires a partial title. For a full document index, see the main page.'))
 
     # Retrieve all documents that aren't redirects or templates
-    docs = (Document.objects.
-        extra(select={'length': 'Length(slug)'}).
-        filter(title__icontains=partial_title, is_template=0, is_redirect=0).
-        exclude(slug__icontains='Talk:').  # Remove old talk pages
-        order_by('title', 'length'))
+    docs = (Document.objects.extra(select={'length': 'Length(slug)'})
+                            .filter(title__icontains=partial_title,
+                                    is_template=0,
+                                    is_redirect=0)
+                            .exclude(slug__icontains='Talk:')  # Remove old talk pages
+                            .order_by('title', 'length'))
 
     # All locales are assumed, unless a specific locale is requested or banned
     if locale:
@@ -1428,14 +1439,12 @@ def autosuggest_documents(request):
 
     # Generates a list of acceptable docs
     docs_list = []
-    for d in docs:
-        data = d.get_json_data()
-        #data['plain_title'] = data['title']
-        data['label'] += ' [' + d.locale + ']'
+    for doc in docs:
+        data = doc.get_json_data()
+        data['label'] += ' [' + doc.locale + ']'
         docs_list.append(data)
 
-    data = json.dumps(docs_list)
-    return HttpResponse(data, mimetype='application/json')
+    return HttpResponse(json.dumps(docs_list), mimetype='application/json')
 
 
 @require_GET
@@ -1553,8 +1562,9 @@ def compare_revisions(request, document_slug, document_locale):
 @process_document_path
 def select_locale(request, document_slug, document_locale):
     """Select a locale to translate the document to."""
-    doc = get_object_or_404(
-        Document, locale=document_locale, slug=document_slug)
+    doc = get_object_or_404(Document,
+                            locale=document_locale,
+                            slug=document_slug)
     return render(request, 'wiki/select_locale.html', {'document': doc})
 
 
@@ -1575,8 +1585,9 @@ def translate(request, document_slug, document_locale, revision_id=None):
     """
     # TODO: Refactor this view into two views? (new, edit)
     # That might help reduce the headache-inducing branchiness.
-    parent_doc = get_object_or_404(
-        Document, locale=settings.WIKI_DEFAULT_LANGUAGE, slug=document_slug)
+    parent_doc = get_object_or_404(Document,
+                                   locale=settings.WIKI_DEFAULT_LANGUAGE,
+                                   slug=document_slug)
     user = request.user
 
     if not revision_id:
@@ -2015,18 +2026,14 @@ def delete_revision(request, document_path, revision_id):
 def delete_document(request, document_slug, document_locale):
     """
     Delete a Document.
-
     """
-    document = get_object_or_404(
-        Document,
-        locale=document_locale,
-        slug=document_slug)
+    document = get_object_or_404(Document,
+                                 locale=document_locale,
+                                 slug=document_slug)
 
     # HACK: https://bugzil.la/972545 - Don't delete pages that have children
     # TODO: https://bugzil.la/972541 -  Deleting a page that has subpages
-    prevent = False
-    if document.has_children():
-        prevent = True
+    prevent = document.children.exists()
 
     first_revision = document.revisions.all()[0]
 
@@ -2093,22 +2100,22 @@ def purge_document(request, document_slug, document_locale):
 @require_POST
 @process_document_path
 def quick_review(request, document_slug, document_locale):
-    """Quickly mark a revision as no longer needing a particular type
+    """
+    Quickly mark a revision as no longer needing a particular type
     of review."""
-    try:
-        doc = Document.objects.get(locale=document_locale,
-                                   slug=document_slug)
-    except Document.DoesNotExist:
-        raise Http404
+    doc = get_object_or_404(Document,
+                            locale=document_locale,
+                            slug=document_slug)
+
     if not doc.allows_revision_by(request.user):
         raise PermissionDenied
+
     rev_id = request.POST.get('revision_id')
     if not rev_id:
         raise Http404
-    try:
-        rev = Revision.objects.get(pk=rev_id)
-    except Revision.DoesNotExist:
-        raise Http404
+
+    rev = get_object_or_404(Revision, pk=rev_id)
+
     if rev.id != doc.current_revision.id:
         # TODO: Find a better way to bail out of a collision.
         # Ideal is to kick them to the diff view, but that expects
@@ -2116,13 +2123,12 @@ def quick_review(request, document_slug, document_locale):
         # here.
         raise PermissionDenied(_lazy("Document has been edited; please re-review."))
 
-    current_tags = [t.name for t in rev.review_tags.all()]
-    needs_technical = 'technical' in current_tags
-    needs_editorial = 'editorial' in current_tags
+    needs_technical = rev.needs_technical_review
+    needs_editorial = rev.needs_editorial_review
 
     if not any((needs_technical, needs_editorial)):
         # No need to "approve" something that doesn't need it.
-        return HttpResponseRedirect(doc.get_absolute_url())
+        return redirect(doc)
 
     approve_technical = request.POST.get('approve_technical', False)
     approve_editorial = request.POST.get('approve_editorial', False)
@@ -2148,16 +2154,18 @@ def quick_review(request, document_slug, document_locale):
             new_rev.review_tags.set(*new_tags)
         else:
             new_rev.review_tags.clear()
-    return HttpResponseRedirect(doc.get_absolute_url())
+    return redirect(doc)
 
 
 def _document_form_initial(document):
     """Return a dict with the document data pertinent for the form."""
-    return {'title': document.title,
-            'slug': document.slug,
-            'category': document.category,
-            'is_localizable': document.is_localizable,
-            'tags': [t.name for t in document.tags.all()]}
+    return {
+        'title': document.title,
+        'slug': document.slug,
+        'category': document.category,
+        'is_localizable': document.is_localizable,
+        'tags': list(document.tags.values_list('name', flat=True))
+    }
 
 
 def _save_rev_and_notify(rev_form, request, document):
@@ -2320,9 +2328,7 @@ def load_documents(request):
                 messages.add_message(request, messages.ERROR, err_msg)
 
     context = {'import_file_form': form, }
-    return render_to_response('admin/wiki/document/load_data_form.html',
-                              context,
-                              context_instance=RequestContext(request))
+    return render(request, 'admin/wiki/document/load_data_form.html', context)
 
 
 @xframe_options_sameorigin
@@ -2355,5 +2361,5 @@ def flag(request, document_slug, document_locale):
                 args=[document_slug]))
     else:
         form = DocumentContentFlagForm(data=request.GET)
-    return render(request, 'wiki/flag.html', {
-        'form': form, 'doc': doc})
+
+    return render(request, 'wiki/flag.html', {'form': form, 'doc': doc})

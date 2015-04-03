@@ -84,7 +84,7 @@
     # HACK: https://bugzil.la/972545 - Don't delete pages that have children
     # TODO: https://bugzil.la/972541 -  Deleting a page that has subpages
 #}
-                {% if user.has_perm('wiki.delete_document') and not document.has_children() %}
+                {% if user.has_perm('wiki.delete_document') and not document.children.exists() %}
                   <li><a href="{{ url('wiki.delete_document', document.slug) }}" rel="nofollow, noindex">{{ _('Delete this page') }}</a></li>
                 {% endif %}
 
@@ -128,20 +128,20 @@
 
 {% macro get_approvals_html(document, user) %}
   {% if user.is_authenticated() and document.current_revision and document.allows_revision_by(user) %}
-    {% if document.current_revision.needs_technical_review() or document.current_revision.needs_editorial_review() %}
+    {% if document.current_revision.needs_technical_review or document.current_revision.needs_editorial_review %}
     <section class="page-meta reviews">
       <p>{{ _('The following reviews have been requested:') }}</p>
 
       <form method="post" action="{{ url('wiki.quick_review', document.full_path) }}">
         {{ csrf() }}
         <ul>
-        {% if document.current_revision.needs_technical_review() %}
+        {% if document.current_revision.needs_technical_review %}
           <li>
             <input type="checkbox" value="approve_technical" id="id_approve_technical" name="approve_technical">
             <label for="id_approve_technical">{{ _('Technical') }}</label>
           </li>
         {% endif %}
-        {% if document.current_revision.needs_editorial_review() %}
+        {% if document.current_revision.needs_editorial_review %}
           <li>
             <input type="checkbox" value="approve_editorial" id="id_approve_editorial" name="approve_editorial">
             <label for="id_approve_editorial">{{ _('Editorial') }}</label>
