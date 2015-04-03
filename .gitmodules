@@ -19,9 +19,6 @@
 [submodule "vendor/src/django-appconf"]
 	path = vendor/src/django-appconf
 	url = git://github.com/jezdez/django-appconf.git
-[submodule "vendor/src/django-badger"]
-	path = vendor/src/django-badger
-	url = git://github.com/mozilla/django-badger.git
 [submodule "vendor/src/django-constance"]
 	path = vendor/src/django-constance
 	url = git://github.com/comoga/django-constance.git
