@@ -178,9 +178,9 @@ class SubmissionEditForm(MyModelForm):
 class SubmissionNewForm(SubmissionEditForm):
 
     class Meta(SubmissionEditForm.Meta):
-        fields = SubmissionEditForm.Meta.fields + ( 'accept_terms', )
+        fields = SubmissionEditForm.Meta.fields + ('accept_terms', )
 
     accept_terms = forms.BooleanField(initial=False, required=True)
 
     def __init__(self, *args, **kwargs):
-        super(SubmissionNewForm, self).__init__(*args, **kwargs)        
+        super(SubmissionNewForm, self).__init__(*args, **kwargs)
