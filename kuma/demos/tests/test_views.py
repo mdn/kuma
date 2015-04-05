@@ -115,7 +115,6 @@ class DemoViewsTest(UserTestCase):
         assert d('li#field_screenshot_1 ul.errorlist')
         assert d('li#field_demo_package ul.errorlist')
         assert d('li#field_license_name ul.errorlist')
-        assert d('li#field_captcha ul.errorlist')
         assert d('li#field_accept_terms ul.errorlist')
 
     @logged_in
