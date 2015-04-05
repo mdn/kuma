@@ -391,6 +391,8 @@
               {% endif %}
             </div>
 
+	    <center>Document number : {{ document.id }}</center>
+
             {% if show_left %}
               <!-- quick links and zone subnav strip -->
               <div id="wiki-left" class="column-strip wiki-column">
@@ -413,9 +415,9 @@
                 {% if approvals_html %}
                   {{ approvals_html }}
                 {% endif %}
-
+		
               {% endif %}
-
+				
               </div>
             {% endif %}
           </div>
