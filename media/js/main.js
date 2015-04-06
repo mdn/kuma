@@ -207,7 +207,10 @@
             var encodedMessage = this.message;
             var messageHTML = $('<div />').html(encodedMessage).text();
             // Make it so
-            $('<div class="notification ' + this.level + ' ' + this.tags + '" data-level="' + this.level + '">' + messageHTML + '</div>')[insertLocation.method](insertLocation.selector);
+            $('<div />').attr({
+                'class': 'notification ' + this.level + ' ' + this.tags,
+                'data-level': this.level
+            }).html(messageHTML)[insertLocation.method](insertLocation.selector);
         });
 
         // Make them official
