@@ -4,12 +4,12 @@ cache:
         - ~/.cache/pip
 language: python
 python:
-    - "2.6"
+    - "2.7"
 services:
     - memcached
 env:
     matrix:
-        - TOXENV=py26
+        - TOXENV=py27
         - TOXENV=flake8
         - TOXENV=docs
     global:
