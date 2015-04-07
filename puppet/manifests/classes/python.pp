@@ -17,20 +17,20 @@ class python_prereqs {
         # will install setuptools, too
         "install-pip":
             cwd => '/tmp',
-            require => [Exec["get-pip"], Package["python2.6"]],
-            command => '/usr/bin/python2.6 get-pip.py && /bin/rm get-pip.py',
-            creates => '/usr/local/bin/pip2.6';
+            require => [Exec["get-pip"], Package["python2.7"]],
+            command => '/usr/bin/python2.7 get-pip.py && /bin/rm get-pip.py',
+            creates => '/usr/local/bin/pip2.7';
     }
     exec {
         "install-extras":
             require => Exec["install-pip"],
-            command => '/usr/local/bin/pip2.6 install virtualenv';
+            command => '/usr/local/bin/pip2.7 install virtualenv';
     }
     exec {
         "create-virtualenv":
             cwd => '/home/vagrant',
             require => Exec["install-extras"],
-            command => '/bin/rm -rf env && /usr/local/bin/virtualenv -p /usr/bin/python2.6 env',
+            command => '/bin/rm -rf env && /usr/local/bin/virtualenv -p /usr/bin/python2.7 env',
             user => 'vagrant';
     }
 }

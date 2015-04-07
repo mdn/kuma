@@ -22,7 +22,7 @@ class basics {
             require => Package["python-software-properties"];
     }
     package {
-        [ "python2.6", "python2.6-dev"]:
+        [ "python2.7", "python2.7-dev"]:
           ensure => installed,
           require => Exec["deadsnakes-ppa"];
     }
