@@ -100,9 +100,6 @@
 [submodule "vendor/src/requests-oauthlib"]
 	path = vendor/src/requests-oauthlib
 	url = git://github.com/requests/requests-oauthlib.git
-[submodule "vendor/src/simplejson"]
-	path = vendor/src/simplejson
-	url = git://github.com/simplejson/simplejson.git
 [submodule "vendor/src/tower"]
 	path = vendor/src/tower
 	url = git://github.com/clouserw/tower.git

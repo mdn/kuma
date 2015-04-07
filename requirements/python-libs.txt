@@ -108,9 +108,6 @@ requests==2.3.0
 # sha256: xtJVDE_vwqA9dCLK9h5yyngnhU4N7v4gHes0qRUn2I4
 requests-oauthlib==0.4.1
 
-# sha256: _lMoR-CPEVj4EJr9NJdUBZ4QFYMNsYjXOwHi7MD35Sg
-simplejson==3.1.2
-
 # sha256: 4kBSQR_E-9H2cmNVN8P8IzDZSBsYwDF2lbRiWVEskdU
 six==1.9.0
 
