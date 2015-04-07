@@ -70,7 +70,7 @@ def prime_app(ctx):
 @hostgroups(settings.CELERY_HOSTGROUP, remote_kwargs={'ssh_key': settings.SSH_KEY})
 def update_celery(ctx):
     ctx.remote(settings.REMOTE_UPDATE_SCRIPT)
-    ctx.remote('/usr/bin/supervisorctl mrestart celery*')
+    ctx.remote('/usr/bin/supervisorctl mrestart celery\*')
 
 # As far as I can tell, Chief does not pass the username to commander,
 # so I can't give a username here: (
