@@ -507,8 +507,6 @@ INSTALLED_APPS = (
 
     # other
     'kuma.humans',
-
-    'cacheback',
 )
 
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
