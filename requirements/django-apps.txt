@@ -84,6 +84,3 @@ django-timezones==0.2
 # sha256: dEJWIK08Kh8FFR8MyFGrfiYYbaOfsDma_Aqo7uu9IBs
 django-waffle==0.10.1
 
-# sha256: pvB08EimOg0ZzRpq4pg3e0gANR7KjhKU0z9wnFzdXlo
-South==0.8.2
-
