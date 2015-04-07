@@ -1,5 +1,6 @@
 import datetime
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ObjectDoesNotExist
