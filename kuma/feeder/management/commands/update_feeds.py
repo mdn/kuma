@@ -1,4 +1,5 @@
 import datetime
+import hashlib
 from optparse import make_option
 import logging
 import socket
@@ -10,7 +11,7 @@ import jsonpickle
 from django.conf import settings
 from django.core.management.base import NoArgsCommand
 from django.db import IntegrityError
-from django.utils import encoding, hashcompat
+from django.utils import encoding
 
 from kuma.core.utils import file_lock
 from kuma.feeder.models import Feed, Entry
@@ -224,8 +225,7 @@ class Command(NoArgsCommand):
                  Entry._meta.get_field_by_name('guid')[0].max_length)):
                 entry_guid = entry.guid
             else:
-                entry_guid = hashcompat.md5_constructor(encoding.smart_str(
-                    json_entry)).hexdigest()
+                entry_guid = hashlib.md5(encoding.smart_str(json_entry)).hexdigest()
 
             if 'updated_parsed' in entry:
                 yr, mon, d, hr, min, sec = entry.updated_parsed[:-3]
