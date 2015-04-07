@@ -1389,7 +1389,7 @@ def get_children(request, document_slug, document_locale):
         result = {'error': 'Document does not exist.'}
 
     result = json.dumps(result)
-    return HttpResponse(result, mimetype='application/json')
+    return HttpResponse(result, content_type='application/json')
 
 
 @require_GET
@@ -1431,7 +1431,7 @@ def autosuggest_documents(request):
         docs_list.append(data)
 
     data = json.dumps(docs_list)
-    return HttpResponse(data, mimetype='application/json')
+    return HttpResponse(data, content_type='application/json')
 
 
 @require_GET
@@ -1838,7 +1838,7 @@ def json_view(request, document_slug=None, document_locale=None):
     json_obj = document.get_json_data(stale=stale)
 
     data = json.dumps(json_obj)
-    return HttpResponse(data, mimetype='application/json')
+    return HttpResponse(data, content_type='application/json')
 
 
 @require_GET
@@ -1850,7 +1850,7 @@ def styles_view(request, document_slug=None, document_locale=None):
     kwargs = {'slug': document_slug, 'locale': document_locale}
     document = get_object_or_404(Document, **kwargs)
     zone = get_object_or_404(DocumentZone, document=document)
-    return HttpResponse(zone.styles, mimetype='text/css')
+    return HttpResponse(zone.styles, content_type='text/css')
 
 
 @require_GET

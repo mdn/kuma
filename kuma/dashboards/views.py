@@ -66,7 +66,7 @@ def revisions(request):
                         timezone.now())
             start_date = end_date - datetime.timedelta(seconds=seconds)
             query_kwargs['created__range'] = [start_date, end_date]
-            
+
     if query_kwargs:
         revisions = revisions.filter(**query_kwargs)
         total = revisions.count()
@@ -105,8 +105,7 @@ def user_lookup(request):
                 userlist.append({'label': match.username})
 
     data = json.dumps(userlist)
-    return HttpResponse(data,
-                        content_type='application/json; charset=utf-8')
+    return HttpResponse(data, content_type='application/json; charset=utf-8')
 
 
 @require_GET

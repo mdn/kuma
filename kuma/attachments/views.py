@@ -33,8 +33,8 @@ OVERRIDE_MIMETYPES = {
 }
 
 
-def guess_extension(mimetype):
-    return OVERRIDE_MIMETYPES.get(mimetype, mimetypes.guess_extension(mimetype))
+def guess_extension(_type):
+    return OVERRIDE_MIMETYPES.get(_type, mimetypes.guess_extension(_type))
 
 
 @require_GET
@@ -56,7 +56,7 @@ def raw_file(request, attachment_id, filename):
         raise Http404
     if request.get_host() == settings.ATTACHMENT_HOST:
         rev = attachment.current_revision
-        resp = HttpResponse(rev.file.read(), mimetype=rev.mime_type)
+        resp = HttpResponse(rev.file.read(), content_type=rev.mime_type)
         resp['Last-Modified'] = convert_to_http_date(rev.created)
         resp['Content-Length'] = rev.file.size
         resp['X-Frame-Options'] = 'ALLOW-FROM: %s' % settings.DOMAIN

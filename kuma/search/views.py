@@ -75,14 +75,14 @@ search = SearchView.as_view()
 def suggestions(request):
     """Return empty array until we restore internal search system."""
 
-    mimetype = 'application/x-suggestions+json'
+    content_type = 'application/x-suggestions+json'
 
     term = request.GET.get('q')
     if not term:
-        return HttpResponseBadRequest(mimetype=mimetype)
+        return HttpResponseBadRequest(content_type=content_type)
 
     results = []
-    return HttpResponse(json.dumps(results), mimetype=mimetype)
+    return HttpResponse(json.dumps(results), content_type=content_type)
 
 
 @cache_page(60 * 60 * 168)  # 1 week.

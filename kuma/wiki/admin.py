@@ -16,7 +16,7 @@ from .models import (Document, DocumentZone, DocumentTag,
 
 def dump_selected_documents(self, request, queryset):
     filename = "documents_%s.json" % (datetime.now().isoformat(),)
-    response = HttpResponse(mimetype="text/plain")
+    response = HttpResponse(content_type="text/plain")
     response['Content-Disposition'] = 'attachment; filename=%s' % filename
     Document.objects.dump_json(queryset, response)
     return response
