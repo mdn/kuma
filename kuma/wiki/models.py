@@ -25,7 +25,7 @@ from django.http import Http404
 from django.utils.decorators import available_attrs
 from django.utils.functional import cached_property
 
-import constance.config
+from constance import config
 import waffle
 from south.modelsinspector import add_introspection_rules
 from taggit.managers import TaggableManager
@@ -394,7 +394,7 @@ class Document(NotificationsMixin, models.Model):
 
         # Check whether a scheduled rendering has waited for too long.  Assume
         # failure, in this case, and allow another scheduling attempt.
-        timeout = constance.config.KUMA_DOCUMENT_RENDER_TIMEOUT
+        timeout = config.KUMA_DOCUMENT_RENDER_TIMEOUT
         max_duration = timedelta(seconds=timeout)
         duration = datetime.now() - self.render_scheduled_at
         if (duration > max_duration):
@@ -413,7 +413,7 @@ class Document(NotificationsMixin, models.Model):
 
         # Check whether an in-progress rendering has gone on for too long.
         # Assume failure, in this case, and allow another rendering attempt.
-        timeout = constance.config.KUMA_DOCUMENT_RENDER_TIMEOUT
+        timeout = config.KUMA_DOCUMENT_RENDER_TIMEOUT
         max_duration = timedelta(seconds=timeout)
         duration = datetime.now() - self.render_started_at
         if (duration > max_duration):
@@ -502,7 +502,7 @@ class Document(NotificationsMixin, models.Model):
         self.render_started_at = now
 
         # Perform rendering and update document
-        if not constance.config.KUMASCRIPT_TIMEOUT:
+        if not config.KUMASCRIPT_TIMEOUT:
             # A timeout of 0 should shortcircuit kumascript usage.
             self.rendered_html, self.rendered_errors = self.html, []
         else:
@@ -519,7 +519,7 @@ class Document(NotificationsMixin, models.Model):
 
         # If this rendering took longer than we'd like, mark it for deferred
         # rendering in the future.
-        timeout = constance.config.KUMA_DOCUMENT_FORCE_DEFERRED_TIMEOUT
+        timeout = config.KUMA_DOCUMENT_FORCE_DEFERRED_TIMEOUT
         max_duration = timedelta(seconds=timeout)
         duration = self.last_rendered_at - self.render_started_at
         if duration >= max_duration:

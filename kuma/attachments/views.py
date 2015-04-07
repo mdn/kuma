@@ -14,7 +14,7 @@ from django.shortcuts import get_object_or_404, render
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.decorators.http import require_GET, require_POST
 
-import constance.config
+from constance import config
 
 from kuma.core.decorators import login_required
 from kuma.core.utils import paginate
@@ -139,7 +139,7 @@ def new_attachment(request):
             return HttpResponseRedirect(attachment.get_absolute_url())
     else:
         if request.POST.get('is_ajax', ''):
-            allowed_list = constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES.split()
+            allowed_list = config.WIKI_ATTACHMENT_ALLOWED_TYPES.split()
             allowed_types = ', '.join(map(guess_extension, allowed_list))
             error_obj = {
                 'title': request.POST.get('is_ajax', ''),

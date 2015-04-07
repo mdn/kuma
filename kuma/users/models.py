@@ -9,7 +9,7 @@ from django.utils.functional import cached_property
 
 from allauth.account.signals import user_signed_up, email_confirmed
 from allauth.socialaccount.signals import social_account_removed
-import constance.config
+from constance import config
 from timezones.fields import TimeZoneField, MAX_TIMEZONE_LENGTH
 from tower import ugettext_lazy as _
 from waffle import switch_is_active
@@ -163,7 +163,7 @@ class UserProfile(ModelBase):
 
     @cached_property
     def beta_tester(self):
-        return (constance.config.BETA_GROUP_NAME in
+        return (config.BETA_GROUP_NAME in
                 self.user.groups.values_list('name', flat=True))
 
     @property

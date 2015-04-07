@@ -33,7 +33,7 @@ from django.views.decorators.clickjacking import (xframe_options_exempt,
                                                   xframe_options_sameorigin)
 from django.views.decorators.csrf import csrf_exempt
 
-import constance.config
+from constance import config
 from ratelimit.decorators import ratelimit
 from smuggler.utils import superuser_required
 from smuggler.forms import ImportFileForm
@@ -415,8 +415,8 @@ def _document_raw(request, doc, doc_html, rendering_params):
     response['X-Robots-Tag'] = 'noindex'
     absolute_url = doc.get_absolute_url()
 
-    if absolute_url in (constance.config.KUMA_CUSTOM_CSS_PATH,
-                        constance.config.KUMA_CUSTOM_SAMPLE_CSS_PATH):
+    if absolute_url in (config.KUMA_CUSTOM_CSS_PATH,
+                        config.KUMA_CUSTOM_SAMPLE_CSS_PATH):
         response['Content-Type'] = 'text/css; charset=utf-8'
     elif doc.is_template:
         # Treat raw, un-bleached template source as plain text, not HTML.
@@ -932,7 +932,7 @@ def new_document(request):
             'parent_id': initial_parent_id,
             'document_form': doc_form,
             'revision_form': rev_form,
-            'WIKI_DOCUMENT_TAG_SUGGESTIONS': constance.config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
+            'WIKI_DOCUMENT_TAG_SUGGESTIONS': config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
             'initial_tags': initial_tags,
             'allow_add_attachment': allow_add_attachment,
             'attachment_form': AttachmentRevisionForm(),
@@ -977,7 +977,7 @@ def new_document(request):
         'is_template': is_template,
         'document_form': doc_form,
         'revision_form': rev_form,
-        'WIKI_DOCUMENT_TAG_SUGGESTIONS': constance.config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
+        'WIKI_DOCUMENT_TAG_SUGGESTIONS': config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
         'allow_add_attachment': allow_add_attachment,
         'attachment_form': AttachmentRevisionForm(),
         'parent_slug': parent_slug,
@@ -1203,7 +1203,7 @@ def edit_document(request, document_slug, document_locale, revision_id=None):
         'allow_add_attachment': allow_add_attachment,
         'attachment_form': AttachmentRevisionForm(),
         'attachment_data': attachments,
-        'WIKI_DOCUMENT_TAG_SUGGESTIONS': constance.config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
+        'WIKI_DOCUMENT_TAG_SUGGESTIONS': config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
         'attachment_data_json': json.dumps(attachments)
     }
     return render(request, 'wiki/edit_document.html', context)
@@ -1775,7 +1775,7 @@ def translate(request, document_slug, document_locale, revision_id=None):
         'attachment_form': AttachmentRevisionForm(),
         'attachment_data': attachments,
         'attachment_data_json': json.dumps(attachments),
-        'WIKI_DOCUMENT_TAG_SUGGESTIONS': constance.config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
+        'WIKI_DOCUMENT_TAG_SUGGESTIONS': config.WIKI_DOCUMENT_TAG_SUGGESTIONS,
         'specific_slug': parent_split['specific'],
         'parent_slug': parent_split['parent'],
         'revision_from': revision_from,
@@ -1890,7 +1890,7 @@ def code_sample(request, document_slug, document_locale, sample_id):
     full_address = (''.join(('http', ('', 's')[request.is_secure()], '://',
                     request.META.get('HTTP_HOST'), request.path)))
 
-    if not re.search(constance.config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS, full_address):
+    if not re.search(config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS, full_address):
         raise PermissionDenied
 
     document = get_object_or_404(Document, slug=document_slug,

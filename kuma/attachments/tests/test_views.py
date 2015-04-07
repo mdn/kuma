@@ -8,7 +8,7 @@ from django.core.files.base import ContentFile
 from django.core.files import temp as tempfile
 from django.utils.http import parse_http_date_safe
 
-import constance.config
+from constance import config
 
 from kuma.users.tests import UserTestCase
 from kuma.wiki.models import Document
@@ -23,14 +23,14 @@ from ..utils import make_test_file
 class AttachmentTests(UserTestCase, WikiTestCase):
 
     def setUp(self):
-        self.old_allowed_types = constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES
-        constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES = 'text/plain'
+        self.old_allowed_types = config.WIKI_ATTACHMENT_ALLOWED_TYPES
+        config.WIKI_ATTACHMENT_ALLOWED_TYPES = 'text/plain'
         super(AttachmentTests, self).setUp()
         self.client.login(username='admin', password='testpass')
 
     def tearDown(self):
         super(AttachmentTests, self).tearDown()
-        constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES = self.old_allowed_types
+        config.WIKI_ATTACHMENT_ALLOWED_TYPES = self.old_allowed_types
 
     def _post_new_attachment(self):
         file_for_upload = make_test_file(

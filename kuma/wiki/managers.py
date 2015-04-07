@@ -4,7 +4,7 @@ from django.core import serializers
 from django.db import models
 
 import bleach
-import constance.config
+import config
 
 from kuma.core.cache import memcache
 
@@ -23,15 +23,15 @@ class TransformManager(models.Manager):
 class BaseDocumentManager(models.Manager):
     """Manager for Documents, assists for queries"""
     def clean_content(self, content_in, use_constance_bleach_whitelists=False):
-        allowed_hosts = constance.config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS
+        allowed_hosts = config.KUMA_WIKI_IFRAME_ALLOWED_HOSTS
         out = (parse_content(content_in)
                .filterIframeHosts(allowed_hosts)
                .serialize())
 
         if use_constance_bleach_whitelists:
-            tags = constance.config.BLEACH_ALLOWED_TAGS
-            attributes = constance.config.BLEACH_ALLOWED_ATTRIBUTES
-            styles = constance.config.BLEACH_ALLOWED_STYLES
+            tags = config.BLEACH_ALLOWED_TAGS
+            attributes = config.BLEACH_ALLOWED_ATTRIBUTES
+            styles = config.BLEACH_ALLOWED_STYLES
         else:
             tags = ALLOWED_TAGS
             attributes = ALLOWED_ATTRIBUTES

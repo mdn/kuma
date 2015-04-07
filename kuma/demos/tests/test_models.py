@@ -20,7 +20,7 @@ from django.core.files.base import ContentFile
 from django.template.defaultfilters import slugify
 from django.test import TestCase
 
-import constance.config
+from constance import config
 
 from kuma.core.tests import override_constance_settings
 from ..models import Submission
@@ -349,14 +349,14 @@ class DemoPackageTest(TestCase):
         # settings change,
         # so force it directly in the field
         s.demo_package.field.max_upload_size = (
-            constance.config.DEMO_MAX_FILESIZE_IN_ZIP
+            config.DEMO_MAX_FILESIZE_IN_ZIP
         )
 
         fout = StringIO()
         zf = zipfile.ZipFile(fout, 'w')
         zf.writestr('index.html', """<html> </html>""")
         zf.writestr('bigfile.txt',
-                    'x' * (constance.config.DEMO_MAX_FILESIZE_IN_ZIP + 1))
+                    'x' * (config.DEMO_MAX_FILESIZE_IN_ZIP + 1))
         zf.close()
         s.demo_package.save('play_demo.zip', ContentFile(fout.getvalue()))
 

@@ -13,7 +13,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
-import constance.config
+from constance import config
 from waffle.models import Switch
 
 from kuma.core.exceptions import ProgrammingError
@@ -846,8 +846,8 @@ class DeferredRenderingTests(UserTestCase):
         self.rendered_content = 'THIS IS RENDERED'
         self.raw_content = 'THIS IS NOT RENDERED CONTENT'
         self.d1, self.r1 = doc_rev('Doc 1')
-        constance.config.KUMA_DOCUMENT_RENDER_TIMEOUT = 600.0
-        constance.config.KUMA_DOCUMENT_FORCE_DEFERRED_TIMEOUT = 7.0
+        config.KUMA_DOCUMENT_RENDER_TIMEOUT = 600.0
+        config.KUMA_DOCUMENT_FORCE_DEFERRED_TIMEOUT = 7.0
 
     def tearDown(self):
         super(DeferredRenderingTests, self).tearDown()
@@ -923,7 +923,7 @@ class DeferredRenderingTests(UserTestCase):
         """get_summary() should attempt to use rendered"""
         raise SkipTest("Transient failures here, skip for now")
 
-        constance.config.KUMASCRIPT_TIMEOUT = 1.0
+        config.KUMASCRIPT_TIMEOUT = 1.0
         mock_kumascript_get.return_value = ('<p>summary!</p>', None)
 
         ok_(not self.d1.rendered_html)
@@ -931,7 +931,7 @@ class DeferredRenderingTests(UserTestCase):
         ok_(mock_kumascript_get.called)
         eq_("summary!", result_summary)
 
-        constance.config.KUMASCRIPT_TIMEOUT = 0.0
+        config.KUMASCRIPT_TIMEOUT = 0.0
 
     @mock.patch('kuma.wiki.kumascript.get')
     def test_one_render_at_a_time(self, mock_kumascript_get):
@@ -953,7 +953,7 @@ class DeferredRenderingTests(UserTestCase):
         """
         mock_kumascript_get.return_value = (self.rendered_content, None)
         timeout = 5.0
-        constance.config.KUMA_DOCUMENT_RENDER_TIMEOUT = timeout
+        config.KUMA_DOCUMENT_RENDER_TIMEOUT = timeout
         self.d1.render_started_at = (datetime.now() -
                                      timedelta(seconds=timeout + 1))
         self.d1.save()
@@ -967,7 +967,7 @@ class DeferredRenderingTests(UserTestCase):
     def test_long_render_sets_deferred(self, mock_kumascript_get):
         """A rendering that takes more than a desired response time marks the
         document as in need of deferred rendering in the future."""
-        constance.config.KUMASCRIPT_TIMEOUT = 1.0
+        config.KUMASCRIPT_TIMEOUT = 1.0
         rendered_content = self.rendered_content
 
         def my_kumascript_get(self, cache_control, base_url, timeout):
@@ -976,14 +976,14 @@ class DeferredRenderingTests(UserTestCase):
 
         mock_kumascript_get.side_effect = my_kumascript_get
 
-        constance.config.KUMA_DOCUMENT_FORCE_DEFERRED_TIMEOUT = 2.0
+        config.KUMA_DOCUMENT_FORCE_DEFERRED_TIMEOUT = 2.0
         self.d1.render('', 'http://testserver/')
         ok_(not self.d1.defer_rendering)
 
-        constance.config.KUMA_DOCUMENT_FORCE_DEFERRED_TIMEOUT = 0.5
+        config.KUMA_DOCUMENT_FORCE_DEFERRED_TIMEOUT = 0.5
         self.d1.render('', 'http://testserver/')
         ok_(self.d1.defer_rendering)
-        constance.config.KUMASCRIPT_TIMEOUT = 0.0
+        config.KUMASCRIPT_TIMEOUT = 0.0
 
     @mock.patch('kuma.wiki.kumascript.get')
     @mock.patch.object(tasks.render_document, 'delay')

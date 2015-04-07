@@ -15,7 +15,7 @@ from allauth.account.models import EmailAddress
 from allauth.socialaccount import helpers
 from allauth.socialaccount.models import SocialAccount
 from allauth.socialaccount.views import SignupView as BaseSignupView
-import constance.config
+from constance import config
 from honeypot.decorators import verify_honeypot_value
 from taggit.utils import parse_tags
 from teamwork.models import Team
@@ -213,7 +213,7 @@ def profile_edit(request, username):
 
             try:
                 # Beta
-                beta_group = Group.objects.get(name=constance.config.BETA_GROUP_NAME)
+                beta_group = Group.objects.get(name=config.BETA_GROUP_NAME)
                 if profile_form.cleaned_data['beta']:
                     beta_group.user_set.add(request.user)
                 else:

@@ -25,7 +25,7 @@ from django.template.defaultfilters import filesizeformat
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 
-import constance.config
+from constance import config
 from constance.admin import FIELDS
 from django.utils.functional import lazy
 
@@ -116,7 +116,7 @@ def config(name, default=None):
     """
     Just a silly wrapper arround the constance's config object.
     """
-    return getattr(constance.config, name, default)
+    return getattr(config, name, default)
 
 """
 A function to use constance's config object in an environment in which
@@ -127,7 +127,7 @@ E.g. something that is a pretty stupid idea but should show the risk as well::
     class Entry(models.Model):
         title = models.CharField(max_length=config_lazy('ENTRY_MAX_LENGTH'))
 
-.. where ``ENTRY_MAX_LENGTH`` is the name of the constance config value.
+.. where ``ENTRY_MAX_LENGTH`` is the name of the config value.
 
 """
 config_lazy = lazy(config, *LAZY_CONSTANCE_TYPES)
@@ -688,7 +688,7 @@ class Submission(models.Model):
             if 'index.html' == name or 'demo.html' == name:
                 index_found = True
 
-            if zi.file_size > constance.config.DEMO_MAX_FILESIZE_IN_ZIP:
+            if zi.file_size > config.DEMO_MAX_FILESIZE_IN_ZIP:
                 raise ValidationError(
                     _('ZIP file contains a file that is too large: %(filename)s') %
                     {"filename": name}
@@ -698,7 +698,7 @@ class Submission(models.Model):
             # HACK: Sometimes we get "type; charset", even if charset wasn't asked for
             file_mime_type = m_mime.from_buffer(file_data).split(';')[0]
 
-            extensions = constance.config.DEMO_BLACKLIST_OVERRIDE_EXTENSIONS.split()
+            extensions = config.DEMO_BLACKLIST_OVERRIDE_EXTENSIONS.split()
             override_file_extensions = ['.%s' % extension
                                        for extension in extensions]
 

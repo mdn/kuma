@@ -11,7 +11,7 @@ from pyquery import PyQuery as pq
 from django.conf import settings
 from django.contrib.auth.models import User
 
-import constance.config
+from constance import config
 
 from kuma.core.urlresolvers import reverse
 from kuma.core.utils import parse_tags
@@ -272,7 +272,7 @@ class DemoViewsTest(UserTestCase):
             description='Some description goes here',
             tech_tags=('tech:audio',),
             challenge_tags=parse_tags(
-                constance.config.DEMOS_DEVDERBY_CHALLENGE_CHOICE_TAGS)[0],
+                config.DEMOS_DEVDERBY_CHALLENGE_CHOICE_TAGS)[0],
             license_name='gpl',
             accept_terms='1',
         ))

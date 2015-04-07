@@ -17,7 +17,7 @@ from django.core import mail
 from django.utils.http import urlquote
 from django.test.utils import override_settings
 
-import constance.config
+from constance import config
 from waffle.models import Flag
 
 from kuma.core.helpers import urlparams
@@ -65,12 +65,12 @@ class DocumentTests(UserTestCase, WikiTestCase):
         r = revision(save=True, content='Some text.', is_approved=True)
         response = self.client.get(r.document.get_absolute_url())
         eq_(200, response.status_code)
-        ok_(constance.config.KUMA_CUSTOM_CSS_PATH not in response.content)
+        ok_(config.KUMA_CUSTOM_CSS_PATH not in response.content)
 
         Flag.objects.create(name='enable_customcss', everyone=True)
         response = self.client.get(r.document.get_absolute_url())
         eq_(200, response.status_code)
-        ok_(constance.config.KUMA_CUSTOM_CSS_PATH in response.content)
+        ok_(config.KUMA_CUSTOM_CSS_PATH in response.content)
 
     @attr("breadcrumbs")
     def test_document_breadcrumbs(self):
@@ -523,7 +523,7 @@ class NewRevisionTests(UserTestCase, WikiTestCase):
         # and stop being sent.
         eq_(2, len(mail.outbox))
         first_edit_email = mail.outbox[0]
-        expected_to = [constance.config.EMAIL_LIST_FOR_FIRST_EDITS]
+        expected_to = [config.EMAIL_LIST_FOR_FIRST_EDITS]
         expected_subject = u'[MDN] %(username)s made their first edit, to: %(title)s' % ({'username': new_rev.creator.username, 'title': self.d.title})
         eq_(expected_subject, first_edit_email.subject)
         eq_(expected_to, first_edit_email.to)

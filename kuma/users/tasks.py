@@ -1,5 +1,5 @@
 import logging
-import constance.config
+from constance import config
 from celery.task import task
 from tower import ugettext_lazy as _
 
@@ -36,7 +36,7 @@ def send_welcome_email(user_pk, locale):
             email = EmailMultiAlternatives(
                 _('Take the next step to get involved on MDN!'),
                 content_plain,
-                constance.config.WELCOME_EMAIL_FROM,
+                config.WELCOME_EMAIL_FROM,
                 [user.email],
             )
             email.attach_alternative(content_html, 'text/html')

@@ -15,7 +15,7 @@ from django.contrib.sites.models import Site
 from django.core.serializers.json import DjangoJSONEncoder
 from django.utils.html import conditional_escape
 
-import constance.config
+from constance import config
 from jingo import register
 from teamwork.shortcuts import build_policy_admin_links
 
@@ -39,7 +39,7 @@ def compare_url(doc, from_id, to_id):
 def show_diff(seqm):
     """Unify operations between two compared strings
 seqm is a difflib.SequenceMatcher instance whose a & b are strings"""
-    lines = constance.config.FEED_DIFF_CONTEXT_LINES
+    lines = config.FEED_DIFF_CONTEXT_LINES
     full_output = []
     for opcode, a0, a1, b0, b1 in seqm.get_opcodes():
         if opcode == 'equal':
@@ -160,7 +160,7 @@ def diff_table(content_from, content_to, prev_id, curr_id):
                                 _("Revision %s") % prev_id,
                                 _("Revision %s") % curr_id,
                                 context=True,
-                                numlines=constance.config.DIFF_CONTEXT_LINES
+                                numlines=config.DIFF_CONTEXT_LINES
                                )
     except RuntimeError:
         # some diffs hit a max recursion error

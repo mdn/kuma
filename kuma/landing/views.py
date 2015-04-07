@@ -2,7 +2,7 @@ from django.conf import settings
 from django.shortcuts import render
 from django.views import static
 
-import constance.config
+from constance import config
 
 from kuma.core.sections import SECTION_USAGE
 from kuma.core.cache import memcache
@@ -25,8 +25,7 @@ def home(request):
     if not community_stats:
         community_stats = {'contributors': 5453, 'locales': 36}
 
-    devderby_tag = str(constance.config
-                                .DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG).strip()
+    devderby_tag = str(config.DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG).strip()
 
     context = {
         'demos': demos,

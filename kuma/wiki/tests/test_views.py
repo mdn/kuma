@@ -21,7 +21,7 @@ from django.test.client import (FakePayload, encode_multipart,
 from django.http import Http404
 from django.utils.encoding import smart_str
 
-import constance.config
+from constance import config
 from waffle.models import Flag, Switch
 
 from kuma.authkeys.models import Key
@@ -1809,7 +1809,7 @@ class DocumentEditingTests(UserTestCase, WikiTestCase):
 
     def test_clone(self):
         self.client.login(username='admin', password='testpass')
-        slug = None 
+        slug = None
         title = None
         content = '<p>Hello!</p>'
 
@@ -3216,14 +3216,14 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
                            args=(self.d.slug,),
                            locale=self.d.locale)
 
-        constance.config.KUMASCRIPT_TIMEOUT = 5.0
-        constance.config.KUMASCRIPT_MAX_AGE = 600
+        config.KUMASCRIPT_TIMEOUT = 5.0
+        config.KUMASCRIPT_MAX_AGE = 600
 
     def tearDown(self):
         super(DeferredRenderingViewTests, self).tearDown()
 
-        constance.config.KUMASCRIPT_TIMEOUT = 0
-        constance.config.KUMASCRIPT_MAX_AGE = 0
+        config.KUMASCRIPT_TIMEOUT = 0
+        config.KUMASCRIPT_MAX_AGE = 0
 
     @mock.patch('kuma.wiki.kumascript.get')
     def test_rendered_content(self, mock_kumascript_get):
@@ -3350,17 +3350,17 @@ class DeferredRenderingViewTests(UserTestCase, WikiTestCase):
         """
 
         # Set up an alternate set of whitelists...
-        constance.config.BLEACH_ALLOWED_TAGS = json.dumps([
+        config.BLEACH_ALLOWED_TAGS = json.dumps([
             "a", "p"
         ])
-        constance.config.BLEACH_ALLOWED_ATTRIBUTES = json.dumps({
+        config.BLEACH_ALLOWED_ATTRIBUTES = json.dumps({
             "a": ['href', 'style'],
             "p": ['id']
         })
-        constance.config.BLEACH_ALLOWED_STYLES = json.dumps([
+        config.BLEACH_ALLOWED_STYLES = json.dumps([
             "border"
         ])
-        constance.config.KUMASCRIPT_TIMEOUT = 100
+        config.KUMASCRIPT_TIMEOUT = 100
 
         # Rig up a mocked response from KumaScript GET method
         mock_kumascript_get.return_value = (test_content, None)

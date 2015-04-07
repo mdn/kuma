@@ -2,7 +2,7 @@ from nose.plugins.attrib import attr
 from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
 
-import constance.config
+from constance import config
 from django.conf import settings
 
 from kuma.users.tests import UserTestCase
@@ -17,12 +17,12 @@ class AttachmentTests(UserTestCase, WikiTestCase):
 
     def setUp(self):
         super(AttachmentTests, self).setUp()
-        self.old_allowed_types = constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES
-        constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES = 'text/plain'
+        self.old_allowed_types = config.WIKI_ATTACHMENT_ALLOWED_TYPES
+        config.WIKI_ATTACHMENT_ALLOWED_TYPES = 'text/plain'
 
     def tearDown(self):
         super(AttachmentTests, self).tearDown()
-        constance.config.WIKI_ATTACHMENT_ALLOWED_TYPES = self.old_allowed_types
+        config.WIKI_ATTACHMENT_ALLOWED_TYPES = self.old_allowed_types
 
     @attr('security')
     def test_xss_file_attachment_title(self):

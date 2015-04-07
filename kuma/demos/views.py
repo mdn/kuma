@@ -9,7 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.generic import ListView
 
-import constance.config
+from constance import config
 from taggit.models import Tag
 import threadedcomments.views
 from threadedcomments.models import ThreadedComment
@@ -416,14 +416,14 @@ def devderby_landing(request):
 
     # Grab current arrangement of challenges from Constance settings
     current_challenge_tag_name = str(
-        constance.config.DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG).strip()
+        config.DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG).strip()
     previous_winner_tag_name = str(
-        constance.config.DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG).strip()
+        config.DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG).strip()
     previous_challenge_tag_names = parse_tags(
-        constance.config.DEMOS_DEVDERBY_PREVIOUS_CHALLENGE_TAGS,
+        config.DEMOS_DEVDERBY_PREVIOUS_CHALLENGE_TAGS,
         sorted=False)
     challenge_choices = parse_tags(
-        constance.config.DEMOS_DEVDERBY_CHALLENGE_CHOICE_TAGS,
+        config.DEMOS_DEVDERBY_CHALLENGE_CHOICE_TAGS,
         sorted=False)
 
     submissions_qs = (Submission.objects.all_sorted(sort_order)

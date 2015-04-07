@@ -9,7 +9,7 @@ from django.utils.functional import wraps
 from django.utils.importlib import import_module
 from django.utils.translation import trans_real
 
-import constance.config
+from constance import config
 from constance.backends import database as constance_database
 from djcelery.app import app
 from nose import SkipTest
@@ -79,14 +79,14 @@ class override_constance_settings(overrider):
     def enable(self):
         self.old_cache = constance_database.db_cache
         constance_database.db_cache = None
-        self.old_settings = dict((k, getattr(constance.config, k))
-                                 for k in dir(constance.config))
+        self.old_settings = dict((k, getattr(config, k))
+                                 for k in dir(config))
         for k, v in self.options.items():
-            constance.config._backend.set(k, v)
+            config._backend.set(k, v)
 
     def disable(self):
         for k, v in self.old_settings.items():
-            constance.config._backend.set(k, v)
+            config._backend.set(k, v)
         constance_database.db_cache = self.old_cache
 
 

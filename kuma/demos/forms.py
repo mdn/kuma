@@ -16,7 +16,7 @@ from django.forms.widgets import CheckboxSelectMultiple, RadioSelect
 from django.utils.translation import ugettext_lazy as _
 
 from captcha.fields import ReCaptchaField
-import constance.config
+from constance import config
 
 from kuma.core.utils import parse_tags
 from . import TAG_DESCRIPTIONS
@@ -96,7 +96,7 @@ class SubmissionEditForm(MyModelForm):
             (TAG_DESCRIPTIONS[x]['tag_name'], TAG_DESCRIPTIONS[x]['title'])
             for x in parse_tags(
                 'challenge:none %s' %
-                constance.config.DEMOS_DEVDERBY_CHALLENGE_CHOICE_TAGS,
+                config.DEMOS_DEVDERBY_CHALLENGE_CHOICE_TAGS,
                 sorted=False)
             if x in TAG_DESCRIPTIONS
         )
