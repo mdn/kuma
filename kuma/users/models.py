@@ -234,20 +234,3 @@ def on_social_account_removed(sender, request, socialaccount, **kwargs):
         request.session.modified = True
     except (ObjectDoesNotExist, IndexError):
         pass
-
-
-# from https://github.com/brosner/django-timezones/pull/13
-try:
-    from south.modelsinspector import (add_introspection_rules,
-                                       add_ignored_fields)
-    add_ignored_fields(["^taggit\.managers"])
-    add_introspection_rules(rules=[(
-            (TimeZoneField,),   # Class(es) these apply to
-            [],                 # Positional arguments (not used)
-            {                   # Keyword argument
-            "max_length": ["max_length", {"default": MAX_TIMEZONE_LENGTH}],
-            }
-            )],
-        patterns=['timezones\.fields\.'])
-except ImportError:
-    pass

@@ -251,11 +251,3 @@ class IPBanManager(models.Manager):
         cutoff_date = date.today() - timedelta(days=days)
         old_ip_bans = self.filter(created__lte=cutoff_date)
         old_ip_bans.delete()
-
-
-# Tell South to ignore our fields, if present.
-try:
-    import south.modelsinspector
-    south.modelsinspector.add_ignored_fields(["^kuma.core.managers"])
-except ImportError, e:
-    pass

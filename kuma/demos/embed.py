@@ -136,10 +136,3 @@ class VideoEmbedURLField(models.URLField):
     def contribute_to_class(self, cls, name):
         super(VideoEmbedURLField, self).contribute_to_class(cls, name)
         setattr(cls, self.name, self.descriptor_class(self))
-
-try:
-    import south.modelsinspector
-    south.modelsinspector.add_introspection_rules(
-        [], ["^kuma.demos.embed.VideoEmbedURLField"])
-except ImportError:
-    pass

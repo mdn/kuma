@@ -27,7 +27,6 @@ from django.utils.functional import cached_property
 
 from constance import config
 import waffle
-from south.modelsinspector import add_introspection_rules
 from taggit.managers import TaggableManager
 from taggit.models import ItemBase, TagBase
 from taggit.utils import edit_string_for_tags, parse_tags
@@ -59,9 +58,6 @@ from .managers import (DeletedDocumentManager, DocumentAdminManager,
                        TaggedDocumentManager, TransformManager)
 from .search import WikiDocumentType
 from .signals import render_done
-
-
-add_introspection_rules([], ["^utils\.OverwritingFileField"])
 
 
 def cache_with_field(field_name):

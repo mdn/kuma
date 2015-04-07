@@ -29,7 +29,6 @@ from constance import config
 from constance.admin import FIELDS
 from django.utils.functional import lazy
 
-import south.modelsinspector
 from threadedcomments.models import ThreadedComment
 
 from kuma.actioncounters.fields import ActionCounterField
@@ -40,8 +39,6 @@ from kuma.core.utils import generate_filename_and_delete_previous
 from . import challenge_utils, DEMO_LICENSES, scale_image
 from .embed import VideoEmbedURLField
 
-
-south.modelsinspector.add_ignored_fields(["^taggit\.managers"])
 
 SCREENSHOT_MAXW = getattr(settings, 'DEMO_SCREENSHOT_MAX_WIDTH', 480)
 SCREENSHOT_MAXH = getattr(settings, 'DEMO_SCREENSHOT_MAX_HEIGHT', 360)
@@ -189,7 +186,7 @@ class ReplacingZipFileField(models.FileField):
     attr_class = ReplacingFieldZipFile
 
     def __init__(self, *args, **kwargs):
-        self.max_upload_size = kwargs.pop("max_upload_size")
+        self.max_upload_size = kwargs.pop('max_upload_size', 5)
         super(ReplacingZipFileField, self).__init__(*args, **kwargs)
 
     def clean(self, *args, **kwargs):
@@ -206,16 +203,6 @@ class ReplacingZipFileField(models.FileField):
             pass
 
         return data
-
-south.modelsinspector.add_introspection_rules([
-    (
-        [ReplacingZipFileField],
-        [],
-        {
-            'max_upload_size': ['max_upload_size', {'default': 5}],
-        },
-    )
-], ["^kuma.demos.models.ReplacingZipFileField"])
 
 
 class ReplacingImageWithThumbFieldFile(ImageFieldFile):
@@ -280,19 +267,6 @@ class ReplacingImageWithThumbField(models.ImageField):
         data.file = scaled_file
 
         return data
-
-south.modelsinspector.add_introspection_rules([
-    (
-        [ReplacingImageWithThumbField],
-        [],
-        {
-            'full_max_width': ['full_max_width', {'default': SCREENSHOT_MAXW}],
-            'full_max_width': ['full_max_height', {'default': SCREENSHOT_MAXH}],
-            'full_max_width': ['full_max_width', {'default': THUMBNAIL_MAXW}],
-            'full_max_width': ['thumb_max_height', {'default': THUMBNAIL_MAXH}],
-        },
-    )
-], ["^kuma.demos.models.ReplacingImageWithThumbField"])
 
 
 class SubmissionManager(models.Manager):
