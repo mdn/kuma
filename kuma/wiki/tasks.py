@@ -5,7 +5,7 @@ import os
 from datetime import datetime
 
 from django.conf import settings
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.contrib.sitemaps import GenericSitemap
 from django.core.mail import EmailMessage, mail_admins, send_mail
 from django.db import connection, transaction
@@ -140,6 +140,7 @@ def build_json_data_handler(sender, instance, **kwargs):
 @task
 def move_page(locale, slug, new_slug, email):
     transaction.set_autocommit(False)
+    User = get_user_model()
     try:
         user = User.objects.get(email=email)
     except User.DoesNotExist:
@@ -196,7 +197,7 @@ def move_page(locale, slug, new_slug, email):
                   [user.email])
         transaction.set_autocommit(True)
         return
-    
+
     transaction.commit()
     transaction.set_autocommit(True)
 

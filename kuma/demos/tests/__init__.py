@@ -1,11 +1,12 @@
 import datetime
 
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
 from ..models import Submission
 
 
 def make_users():
+    User = get_user_model()
     user = User.objects.create_user(
         'tester', 'tester@tester.com', 'tester')
     admin_user = User.objects.create_superuser(

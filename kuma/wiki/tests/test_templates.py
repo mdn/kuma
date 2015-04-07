@@ -11,7 +11,6 @@ from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core import mail
 from django.utils.http import urlquote
@@ -725,7 +724,7 @@ class CompareRevisionTests(UserTestCase, WikiTestCase):
         super(CompareRevisionTests, self).setUp()
         self.document = _create_document()
         self.revision1 = self.document.current_revision
-        user = User.objects.get(username='testuser')
+        user = self.user_model.objects.get(username='testuser')
         self.revision2 = Revision(summary="lipsum",
                                  content='<div>Lorem Ipsum Dolor</div>',
                                  keywords='kw1 kw2',
@@ -1084,7 +1083,7 @@ class HelpfulVoteTests(UserTestCase, SkippedTestCase):
     def test_vote_yes(self):
         """Test voting helpful."""
         d = self.document
-        user = User.objects.get(username='testuser')
+        user = self.user_model.objects.get(username='testuser')
         self.client.login(username='testuser', password='testpass')
         response = post(self.client, 'wiki.document_vote',
                         {'helpful': 'Yes'}, args=[self.document.slug])
@@ -1096,7 +1095,7 @@ class HelpfulVoteTests(UserTestCase, SkippedTestCase):
     def test_vote_no(self):
         """Test voting not helpful."""
         d = self.document
-        user = User.objects.get(username='testuser')
+        user = self.user_model.objects.get(username='testuser')
         self.client.login(username='testuser', password='testpass')
         response = post(self.client, 'wiki.document_vote',
                         {'not-helpful': 'No'}, args=[d.slug])

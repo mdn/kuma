@@ -3,7 +3,6 @@ import datetime
 from nose.tools import eq_, ok_
 
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.core.files.base import ContentFile
 from django.core.files import temp as tempfile
 from django.utils.http import parse_http_date_safe
@@ -46,7 +45,7 @@ class AttachmentTests(UserTestCase, WikiTestCase):
         return resp
 
     def test_legacy_redirect(self):
-        test_user = User.objects.get(username='testuser2')
+        test_user = self.user_model.objects.get(username='testuser2')
         test_file_content = 'Meh meh I am a test file.'
         test_files = (
             {'file_id': 97, 'filename': 'Canvas_rect.png',
@@ -193,7 +192,7 @@ class AttachmentTests(UserTestCase, WikiTestCase):
         """
         AttachmentRevision.get_previous() should return this revisions's
         files's most recent approved revision."""
-        test_user = User.objects.get(username='testuser2')
+        test_user = self.user_model.objects.get(username='testuser2')
         a = Attachment(title='Test attachment for get_previous',
                        slug='test-attachment-for-get-previous')
         a.save()
@@ -235,7 +234,7 @@ class AttachmentTests(UserTestCase, WikiTestCase):
         #SLIGHT HACK: this requires the default set of allowed
         #mime-types specified in settings.py. Specifically, adding
         #'text/html' to that set will make this test fail.
-        test_user = User.objects.get(username='testuser2')
+        test_user = self.user_model.objects.get(username='testuser2')
         a = Attachment(title='Test attachment for file type filter',
                        slug='test-attachment-for-file-type-filter')
         a.save()

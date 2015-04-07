@@ -1,11 +1,9 @@
 """Models for activity counters"""
+from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes import generic
 from django.db import models
 from django.db.models import F
-
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.auth.models import User
-from django.contrib.contenttypes import generic
-
 from django.utils.translation import ugettext_lazy as _
 
 from .utils import get_unique
@@ -55,7 +53,7 @@ class ActionCounterUnique(models.Model):
                           db_index=True, blank=True, null=True)
     user_agent = models.CharField(max_length=128, editable=False,
                                   db_index=True, blank=True, null=True)
-    user = models.ForeignKey(User, editable=False,
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, editable=False,
                              db_index=True, blank=True, null=True)
 
     # HACK: As it turns out, MySQL doesn't consider two rows with NULL values

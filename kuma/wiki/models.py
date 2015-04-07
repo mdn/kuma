@@ -15,7 +15,7 @@ from pyquery import PyQuery
 from tower import ugettext_lazy as _lazy, ugettext as _
 
 from django.conf import settings
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import resolve
 from django.db import models
@@ -1480,7 +1480,7 @@ Full traceback:
         top_creator_ids = (self.revisions.values_list('creator', flat=True)
                                          .annotate(Count('creator'))
                                          .order_by('-creator__count'))
-        return User.objects.filter(pk__in=list(top_creator_ids))
+        return get_user_model().objects.filter(pk__in=list(top_creator_ids))
 
     @cached_property
     def zone_stack(self):
@@ -1501,7 +1501,7 @@ class DocumentDeletionLog(models.Model):
     locale = LocaleField(default=settings.WIKI_DEFAULT_LANGUAGE, db_index=True)
     slug = models.CharField(max_length=255, db_index=True)
 
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
     timestamp = models.DateTimeField(auto_now=True)
     reason = models.TextField()
 
@@ -1669,7 +1669,8 @@ class Revision(models.Model):
 
     created = models.DateTimeField(default=datetime.now, db_index=True)
     comment = models.CharField(max_length=255)
-    creator = models.ForeignKey(User, related_name='created_revisions')
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                related_name='created_revisions')
     is_approved = models.BooleanField(default=True, db_index=True)
 
     # The default locale's rev that was current when the Edit button was hit to
@@ -1827,13 +1828,15 @@ class HelpfulVote(models.Model):
     document = models.ForeignKey(Document, related_name='poll_votes')
     helpful = models.BooleanField(default=False)
     created = models.DateTimeField(default=datetime.now, db_index=True)
-    creator = models.ForeignKey(User, related_name='poll_votes', null=True)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                related_name='poll_votes', null=True)
     anonymous_id = models.CharField(max_length=40, db_index=True)
     user_agent = models.CharField(max_length=1000)
 
 
 class EditorToolbar(models.Model):
-    creator = models.ForeignKey(User, related_name='created_toolbars')
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                related_name='created_toolbars')
     default = models.BooleanField(default=False)
     name = models.CharField(max_length=100)
     code = models.TextField(max_length=2000)

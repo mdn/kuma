@@ -15,7 +15,6 @@ except ImportError:
     import Image
 
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.files.storage import FileSystemStorage
 from django.db import models
@@ -433,7 +432,7 @@ class Submission(models.Model):
             max_length=64, blank=False,
             choices=( (x['name'], x['title']) for x in DEMO_LICENSES.values()))
 
-    creator = models.ForeignKey(User, blank=False, null=True)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, blank=False, null=True)
 
     created = models.DateTimeField(_('date created'),
             auto_now_add=True, blank=False)

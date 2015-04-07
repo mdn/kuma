@@ -7,7 +7,6 @@ from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core.paginator import PageNotAnInteger
 
@@ -41,8 +40,8 @@ class BanTestCase(UserTestCase):
     @attr('bans')
     def test_ban_permission(self):
         """The ban permission controls access to the ban view."""
-        admin = User.objects.get(username='admin')
-        testuser = User.objects.get(username='testuser')
+        admin = self.user_model.objects.get(username='admin')
+        testuser = self.user_model.objects.get(username='testuser')
 
         # testuser doesn't have ban permission, can't ban.
         self.client.login(username='testuser',
@@ -64,8 +63,8 @@ class BanTestCase(UserTestCase):
 
     @attr('bans')
     def test_ban_view(self):
-        testuser = User.objects.get(username='testuser')
-        admin = User.objects.get(username='admin')
+        testuser = self.user_model.objects.get(username='testuser')
+        admin = self.user_model.objects.get(username='admin')
 
         self.client.login(username='admin', password='testpass')
 
@@ -77,7 +76,7 @@ class BanTestCase(UserTestCase):
         eq_(302, resp.status_code)
         ok_(testuser.get_absolute_url() in resp['Location'])
 
-        testuser_banned = User.objects.get(username='testuser')
+        testuser_banned = self.user_model.objects.get(username='testuser')
         ok_(not testuser_banned.is_active)
 
         bans = UserBan.objects.filter(user=testuser,
@@ -88,7 +87,7 @@ class BanTestCase(UserTestCase):
     @attr('bans')
     def test_bug_811751_banned_profile(self):
         """A banned user's profile should not be viewable"""
-        testuser = User.objects.get(username='testuser')
+        testuser = self.user_model.objects.get(username='testuser')
         url = reverse('users.profile', args=(testuser.username,))
 
         # Profile viewable if not banned
@@ -96,8 +95,8 @@ class BanTestCase(UserTestCase):
         self.assertNotEqual(response.status_code, 403)
 
         # Ban User
-        admin = User.objects.get(username='admin')
-        testuser = User.objects.get(username='testuser')
+        admin = self.user_model.objects.get(username='admin')
+        testuser = self.user_model.objects.get(username='testuser')
         UserBan.objects.create(user=testuser, by=admin,
                                reason='Banned by unit test.',
                                is_active=True)
@@ -159,7 +158,7 @@ class ProfileViewsTest(UserTestCase):
             doc.find('#profile-head.vcard .profile-bio').text())
 
     def test_my_profile_view(self):
-        u = User.objects.get(username='testuser')
+        u = self.user_model.objects.get(username='testuser')
         self.client.login(username=u.username, password=TESTUSER_PASSWORD)
         resp = self.client.get(reverse('users.my_profile'))
         eq_(302, resp.status_code)
@@ -168,7 +167,7 @@ class ProfileViewsTest(UserTestCase):
 
     def test_bug_698971(self):
         """A non-numeric page number should not cause an error"""
-        testuser = User.objects.get(username='testuser')
+        testuser = self.user_model.objects.get(username='testuser')
 
         url = '%s?page=asdf' % reverse('users.profile',
                                        args=(testuser.username,))
@@ -242,7 +241,7 @@ class ProfileViewsTest(UserTestCase):
         eq_(new_attrs['profile-organization'], profile.organization)
 
     def test_my_profile_edit(self):
-        u = User.objects.get(username='testuser')
+        u = self.user_model.objects.get(username='testuser')
         self.client.login(username=u.username, password=TESTUSER_PASSWORD)
         resp = self.client.get(reverse('users.my_profile_edit'))
         eq_(302, resp.status_code)
@@ -256,7 +255,7 @@ class ProfileViewsTest(UserTestCase):
         lookup_user.return_value = mock_lookup_user()
         subscribe.return_value = True
         unsubscribe.return_value = True
-        testuser = User.objects.get(username='testuser')
+        testuser = self.user_model.objects.get(username='testuser')
         self.client.login(username=testuser.username,
                           password=TESTUSER_PASSWORD)
 
@@ -285,7 +284,7 @@ class ProfileViewsTest(UserTestCase):
         subscribe.return_value = True
         unsubscribe.return_value = True
 
-        testuser = User.objects.get(username='testuser')
+        testuser = self.user_model.objects.get(username='testuser')
         self.client.login(username=testuser.username,
                           password=TESTUSER_PASSWORD)
 
@@ -358,7 +357,7 @@ class ProfileViewsTest(UserTestCase):
         subscribe.return_value = True
         unsubscribe.return_value = True
 
-        testuser = User.objects.get(username='testuser')
+        testuser = self.user_model.objects.get(username='testuser')
         self.client.login(username=testuser.username,
                           password=TESTUSER_PASSWORD)
 
@@ -415,7 +414,7 @@ class ProfileViewsTest(UserTestCase):
         lookup_user.return_value = mock_lookup_user()
         subscribe.return_value = True
         unsubscribe.return_value = True
-        testuser = User.objects.get(username='testuser')
+        testuser = self.user_model.objects.get(username='testuser')
         self.client.login(username=testuser.username,
                           password=TESTUSER_PASSWORD)
 
@@ -449,7 +448,7 @@ class ProfileViewsTest(UserTestCase):
         lookup_user.return_value = mock_lookup_user()
         subscribe.return_value = True
         unsubscribe.return_value = True
-        testuser = User.objects.get(username='testuser')
+        testuser = self.user_model.objects.get(username='testuser')
         self.client.login(username=testuser.username,
                           password=TESTUSER_PASSWORD)
 
@@ -589,7 +588,7 @@ class AllauthPersonaTestCase(UserTestCase):
         persona_signup_username = 'views_persona_django_user'
 
         with mock.patch('requests.post') as requests_mock:
-            old_count = User.objects.count()
+            old_count = self.user_model.objects.count()
             requests_mock.return_value.json.return_value = {
                 'status': 'okay',
                 'email': persona_signup_email,
@@ -608,7 +607,7 @@ class AllauthPersonaTestCase(UserTestCase):
                 {'__all__': ['You must agree to the privacy policy.']})
 
             # We didn't create a new user.
-            eq_(old_count, User.objects.count())
+            eq_(old_count, self.user_model.objects.count())
 
             data.update({'agree': True})
             response = self.client.post(signup_url, data=data, follow=True)
@@ -617,12 +616,12 @@ class AllauthPersonaTestCase(UserTestCase):
             ok_('form' not in response.context)
 
             # Did we get a new user?
-            eq_(old_count + 1, User.objects.count())
+            eq_(old_count + 1, self.user_model.objects.count())
 
             # Does it have the right attributes?
             testuser = None
             try:
-                testuser = User.objects.order_by('-date_joined')[0]
+                testuser = self.user_model.objects.order_by('-date_joined')[0]
             except IndexError:
                 pass
             ok_(testuser)
@@ -661,7 +660,7 @@ class AllauthPersonaTestCase(UserTestCase):
             eq_(persona_signup_email, socialaccount.uid)
             eq_({'status': 'okay', 'email': persona_signup_email},
                 socialaccount.extra_data)
-            testuser = User.objects.get(username=persona_signup_username)
+            testuser = self.user_model.objects.get(username=persona_signup_username)
             eq_(testuser.id, socialaccount.user.id)
 
 

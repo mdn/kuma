@@ -1,6 +1,7 @@
 from nose.tools import ok_
 
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from django.utils.crypto import get_random_string
 from allauth.account.models import EmailAddress
 
 from kuma.core.tests import KumaTestCase
@@ -8,12 +9,13 @@ from kuma.core.tests import KumaTestCase
 from ..models import UserProfile
 
 
-random_str = User.objects.make_random_password
-
-
 class UserTestCase(KumaTestCase):
     """Base TestCase for the users app test cases."""
     fixtures = ['test_users.json']
+
+    def setUp(self):
+        super(UserTestCase, self).setUp()
+        self.user_model = get_user_model()
 
 
 def profile(user, **kwargs):
@@ -23,9 +25,9 @@ def profile(user, **kwargs):
 
 def user(save=False, **kwargs):
     if 'username' not in kwargs:
-        kwargs['username'] = random_str(length=15)
+        kwargs['username'] = get_random_string(length=15)
     password = kwargs.pop('password', 'password')
-    user = User(**kwargs)
+    user = get_user_model()(**kwargs)
     user.set_password(password)
     if save:
         user.save()
@@ -36,7 +38,8 @@ def email(save=False, **kwargs):
     if 'user' not in kwargs:
         kwargs['user'] = user(save=True)
     if 'email' not in kwargs:
-        kwargs['email'] = '%s@%s.com' % (random_str(), random_str())
+        kwargs['email'] = '%s@%s.com' % (get_random_string(),
+                                         get_random_string())
     email = EmailAddress(**kwargs)
     if save:
         email.save()

@@ -14,7 +14,7 @@ except ImportError:
 
 from nose.tools import assert_false, eq_, ok_
 
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
 from django.template.defaultfilters import slugify
@@ -30,6 +30,7 @@ from . import make_users, build_submission, build_hidden_submission
 
 def save_valid_submission(title='hello world',
                           desc='This is a hello world demo'):
+    User = get_user_model()
     testuser = User.objects.get(username='testuser')
     s = Submission(title=title, slug=slugify(title),
         description=desc,

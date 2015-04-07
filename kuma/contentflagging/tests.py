@@ -3,7 +3,6 @@ from django.core.exceptions import MultipleObjectsReturned
 from django.contrib.auth.models import AnonymousUser
 
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.auth.models import User
 from django.http import HttpRequest
 
 from nose.tools import eq_, ok_
@@ -24,9 +23,9 @@ class DemoPackageTest(UserTestCase):
     fixtures = UserTestCase.fixtures + ['wiki/documents.json']
 
     def setUp(self):
-        self.user1 = User.objects.create_user('tester1',
+        self.user1 = self.user_model.objects.create_user('tester1',
                 'tester2@tester.com', 'tester1')
-        self.user2 = User.objects.create_user('tester2',
+        self.user2 = self.user_model.objects.create_user('tester2',
                 'tester2@tester.com', 'tester2')
 
     def mk_request(self, user=None, ip='192.168.123.123',

@@ -9,7 +9,6 @@ from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 
 from django.conf import settings
-from django.contrib.auth.models import User
 
 from constance import config
 
@@ -91,7 +90,7 @@ class DemoViewsTest(UserTestCase):
 
     def setUp(self):
         super(DemoViewsTest, self).setUp()
-        self.testuser = User.objects.get(username='testuser')
+        self.testuser = self.user_model.objects.get(username='testuser')
         self.testuser.set_password(TESTUSER_PASSWORD)
         self.testuser.save()
 

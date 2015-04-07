@@ -10,7 +10,6 @@ from nose.plugins.attrib import attr
 from nose import SkipTest
 
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
 from constance import config
@@ -757,7 +756,7 @@ class DumpAndLoadJsonTests(UserTestCase):
         # The same creator will be used for all the revs, so let's also get a
         # non-creator user for the upload.
         creator = r1.creator
-        uploader = User.objects.exclude(pk=creator.id).all()[0]
+        uploader = self.user_model.objects.exclude(pk=creator.id).all()[0]
 
         # Count docs (with revisions) and revisions in DB
         doc_cnt_db = (Document.objects

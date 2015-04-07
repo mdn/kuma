@@ -2,7 +2,6 @@ import datetime
 import json
 
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.contrib.syndication.views import Feed
 from django.shortcuts import get_object_or_404
 from django.utils.feedgenerator import (Atom1Feed, SyndicationFeed,
@@ -47,7 +46,7 @@ class SubmissionJSONFeedGenerator(SyndicationFeed):
                 'link', 'title', 'pubdate', 'author_name', 'author_link',
             ))
 
-            item_out['author_avatar'] = item['obj'].creator.get_profile().gravatar
+            item_out['author_avatar'] = item['obj'].creator.profile.gravatar
 
             # Linkify the tags used in the feed item
             item_out['categories'] = dict(
@@ -195,7 +194,7 @@ class ProfileSubmissionsFeed(SubmissionsFeed):
 
     def get_object(self, request, format, username):
         super(ProfileSubmissionsFeed, self).get_object(request, format)
-        user = get_object_or_404(User, username=username)
+        user = get_object_or_404(get_user_model(), username=username)
         self.title = _("%s's MDN demos") % user.username
         return user
 

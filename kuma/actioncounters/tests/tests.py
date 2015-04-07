@@ -2,12 +2,11 @@ from django.conf import settings
 
 from django.core.exceptions import MultipleObjectsReturned
 
+from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
-
+from django.contrib.contenttypes.models import ContentType
 from django.http import HttpRequest
 from django.test import TestCase
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.auth.models import User
 
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
@@ -21,6 +20,7 @@ class ActionCountersTest(TestCase):
 
     def setUp(self):
         super(ActionCountersTest, self).setUp()
+        User = get_user_model()
         self.user1 = User.objects.create_user(
             'tester1', 'tester2@tester.com', 'tester1')
         self.user2 = User.objects.create_user(

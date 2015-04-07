@@ -1,6 +1,5 @@
 """Models for content moderation flagging"""
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.core import urlresolvers
@@ -115,7 +114,8 @@ class ContentFlag(models.Model):
     ip = models.CharField(max_length=40, editable=False, blank=True, null=True)
     user_agent = models.CharField(max_length=128, editable=False,
                                   blank=True, null=True)
-    user = models.ForeignKey(User, editable=False, blank=True, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, editable=False,
+                             blank=True, null=True)
 
     # HACK: As it turns out, MySQL doesn't consider two rows with NULL values
     # in a column as duplicates. So, resorting to calculating a unique hash in

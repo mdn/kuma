@@ -1,7 +1,7 @@
 import datetime
 
 from django.contrib import messages
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ObjectDoesNotExist
 from django.dispatch import receiver
 from django.db import models
@@ -25,10 +25,10 @@ from .tasks import send_welcome_email
 
 
 class UserBan(models.Model):
-    user = models.ForeignKey(User,
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              related_name="bans",
                              verbose_name="Banned user")
-    by = models.ForeignKey(User,
+    by = models.ForeignKey(settings.AUTH_USER_MODEL,
                            related_name="bans_issued",
                            verbose_name="Banned by")
     reason = models.TextField()
@@ -45,6 +45,23 @@ class UserBan(models.Model):
         super(UserBan, self).save(*args, **kwargs)
         self.user.is_active = not self.is_active
         self.user.save()
+
+
+class User(AbstractUser):
+    """
+    Our custom user class that contains just a link to the user's profile
+    right now.
+    """
+    class Meta:
+        db_table = 'auth_user'
+
+    @cached_property
+    def profile(self):
+        """
+        Returns site-specific profile for this user. Is locally cached.
+        """
+        return (UserProfile.objects.using(self._state.db)
+                                   .get(user__id__exact=self.id))
 
 
 class UserProfile(ModelBase):
@@ -132,7 +149,8 @@ class UserProfile(ModelBase):
 
     # should this user receive contentflagging emails?
     content_flagging_email = models.BooleanField(default=False)
-    user = models.ForeignKey(User, null=True, editable=False, blank=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             null=True, editable=False, blank=True)
 
     # HACK: Grab-bag field for future expansion in profiles
     # We can store arbitrary data in here and later migrate to relational
@@ -189,7 +207,7 @@ class UserProfile(ModelBase):
                                 .order_by('-created')[:5])
 
 
-@receiver(models.signals.post_save, sender=User)
+@receiver(models.signals.post_save, sender=settings.AUTH_USER_MODEL)
 def create_user_profile(sender, instance, created, **kwargs):
     if created and not kwargs.get('raw', False):
         p, created = UserProfile.objects.get_or_create(user=instance)

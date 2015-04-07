@@ -12,7 +12,6 @@ from pyquery import PyQuery as pq
 from urlparse import urlparse
 
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core import mail
 from django.db.models import Q
@@ -509,7 +508,7 @@ class ReadOnlyTests(UserTestCase, WikiTestCase):
         self.kumaediting_flag.save()
         # ban testuser2
         kumabanned = Flag.objects.create(name='kumabanned')
-        kumabanned.users = User.objects.filter(username='testuser2')
+        kumabanned.users = self.user_model.objects.filter(username='testuser2')
         kumabanned.save()
 
         # testuser can still access
@@ -525,8 +524,8 @@ class ReadOnlyTests(UserTestCase, WikiTestCase):
         ok_('Your profile has been banned from making edits.' in resp.content)
 
         # ban testuser01 and testuser2
-        kumabanned.users = User.objects.filter(Q(username='testuser2') |
-                                               Q(username='testuser01'))
+        kumabanned.users = self.user_model.objects.filter(
+            Q(username='testuser2') | Q(username='testuser01'))
         kumabanned.save()
 
         # testuser can still access
@@ -2454,7 +2453,7 @@ class DocumentWatchTests(UserTestCase, WikiTestCase):
 
     def test_watch_unwatch(self):
         """Watch and unwatch a document."""
-        user = User.objects.get(username='testuser')
+        user = self.user_model.objects.get(username='testuser')
 
         # Subscribe
         response = post(self.client, 'wiki.subscribe_document', args=[self.document.slug])
@@ -3759,7 +3758,7 @@ class PageMoveTests(UserTestCase, WikiTestCase):
 
     def setUp(self):
         page_move_flag = Flag.objects.create(name='page_move')
-        page_move_flag.users = User.objects.filter(is_superuser=True)
+        page_move_flag.users = self.user_model.objects.filter(is_superuser=True)
         page_move_flag.save()
         super(PageMoveTests, self).setUp()
 

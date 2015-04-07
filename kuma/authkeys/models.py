@@ -3,7 +3,6 @@ import base64
 import random
 
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.db import models
 
 from django.contrib.contenttypes.models import ContentType
@@ -28,8 +27,8 @@ def hash_secret(secret):
 
 class Key(models.Model):
     """Authentication key"""
-    user = models.ForeignKey(User, editable=False, db_index=True, blank=False,
-                             null=False)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, editable=False,
+                             db_index=True, blank=False, null=False)
     key = models.CharField(_("Lookup key"), max_length=64,
                            editable=False, db_index=True)
     hashed_secret = models.CharField(_("Hashed secret"), max_length=128,

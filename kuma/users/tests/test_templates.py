@@ -4,7 +4,6 @@ from pyquery import PyQuery as pq
 from waffle import Flag
 
 from django.conf import settings
-from django.contrib.auth.models import User
 
 from kuma.core.helpers import urlparams
 from kuma.core.urlresolvers import reverse
@@ -88,7 +87,7 @@ class AccountEmailTests(UserTestCase):
         ok_('Please sign in' in r.content)
 
     def test_account_email_page_single_email(self):
-        u = User.objects.get(username='testuser')
+        u = self.user_model.objects.get(username='testuser')
         self.client.login(username=u.username, password=TESTUSER_PASSWORD)
         url = reverse('account_email')
         r = self.client.get(url)
@@ -101,7 +100,7 @@ class AccountEmailTests(UserTestCase):
         verify_strings_not_in_response(test_strings, r)
 
     def test_account_email_page_multiple_emails(self):
-        u = User.objects.get(username='testuser2')
+        u = self.user_model.objects.get(username='testuser2')
         self.client.login(username=u.username, password=TESTUSER_PASSWORD)
         url = reverse('account_email')
         r = self.client.get(url)
@@ -124,7 +123,7 @@ class SocialAccountConnectionsTests(UserTestCase):
         ok_('Please sign in' in r.content)
 
     def test_account_connections_page(self):
-        u = User.objects.get(username='testuser')
+        u = self.user_model.objects.get(username='testuser')
         self.client.login(username=u.username, password=TESTUSER_PASSWORD)
         url = reverse('socialaccount_connections')
         r = self.client.get(url)

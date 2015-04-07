@@ -1,7 +1,6 @@
 import mock
 from nose.tools import eq_
 
-from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 
 from kuma.core.cache import memcache
@@ -111,8 +110,8 @@ class DocumentZoneTests(UserTestCase, WikiTestCase):
         memcache.clear()
 
     def test_document_zone_links(self):
-        admin = User.objects.filter(is_superuser=True)[0]
-        random = User.objects.filter(is_superuser=False)[0]
+        admin = self.user_model.objects.filter(is_superuser=True)[0]
+        random = self.user_model.objects.filter(is_superuser=False)[0]
         cases = [
             (admin, self.root_doc, False, True),
             (random, self.root_doc, False, False),

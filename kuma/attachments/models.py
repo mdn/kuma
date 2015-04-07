@@ -1,7 +1,6 @@
 from datetime import datetime
 
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.db import models
 
 import jingo
@@ -21,7 +20,7 @@ class DocumentAttachment(models.Model):
     file = models.ForeignKey('Attachment')
     # This has to be a string ref to avoid circular import.
     document = models.ForeignKey('wiki.Document')
-    attached_by = models.ForeignKey(User, null=True)
+    attached_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True)
     name = models.TextField()
 
 
@@ -123,7 +122,7 @@ class AttachmentRevision(models.Model):
 
     created = models.DateTimeField(default=datetime.now)
     comment = models.CharField(max_length=255, blank=True)
-    creator = models.ForeignKey(User,
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL,
                                 related_name='created_attachment_revisions')
     is_approved = models.BooleanField(default=True, db_index=True)
 

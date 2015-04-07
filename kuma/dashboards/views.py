@@ -1,7 +1,7 @@
 import datetime
 import json
 
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
@@ -100,7 +100,7 @@ def user_lookup(request):
     if request.is_ajax():
         user = request.GET.get('user', '')
         if user:
-            matches = User.objects.filter(username__istartswith=user)
+            matches = get_user_model().objects.filter(username__istartswith=user)
             for match in matches:
                 userlist.append({'label': match.username})
 

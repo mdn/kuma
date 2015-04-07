@@ -414,7 +414,8 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
     'teamwork.backends.TeamworkBackend',
 )
-AUTH_PROFILE_MODULE = 'users.UserProfile'
+AUTH_USER_MODEL = 'users.User'
+
 
 PASSWORD_HASHERS = (
     'kuma.users.backends.Sha256Hasher',

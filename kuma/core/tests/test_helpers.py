@@ -8,7 +8,6 @@ import mock
 from nose.tools import eq_, ok_, assert_raises
 
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.test import RequestFactory
 
 from babel.dates import format_date, format_time, format_datetime
@@ -138,7 +137,7 @@ class TestDateTimeFormat(UserTestCase):
         url_ = reverse('home')
         self.context = {'request': RequestFactory().get(url_)}
         self.context['request'].locale = u'en-US'
-        self.context['request'].user = User.objects.get(username='testuser01')
+        self.context['request'].user = self.user_model.objects.get(username='testuser01')
 
     def test_today(self):
         """Expects shortdatetime, format: Today at {time}."""
@@ -218,12 +217,12 @@ class TestDateTimeFormat(UserTestCase):
         """Shows time in user timezone."""
         value_test = datetime.fromordinal(733900)
         # Choose user with non default timezone
-        user = User.objects.get(username='admin')
+        user = self.user_model.objects.get(username='admin')
         self.context['request'].user = user
 
         # Convert tzvalue to user timezone
         default_tz = timezone(settings.TIME_ZONE)
-        user_tz = user.get_profile().timezone
+        user_tz = user.profile.timezone
         tzvalue = default_tz.localize(value_test)
         tzvalue = user_tz.normalize(tzvalue.astimezone(user_tz))
 

@@ -1,8 +1,9 @@
 import operator
 
 from django import forms
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import permission_required
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import Group
 from django.core.paginator import Paginator
 from django.db import transaction
 from django.db.models import Q
@@ -54,6 +55,7 @@ def ban_user(request, user_id):
     """
     Ban a user.
     """
+    User = get_user_model()
     try:
         user = User.objects.get(pk=user_id)
     except User.DoesNotExist:
@@ -278,6 +280,7 @@ class SignupView(BaseSignupView):
         initial_username = form.initial.get('username', None)
         # For GitHub users, see if we can find matching user by username
         if self.sociallogin.account.provider == 'github':
+            User = get_user_model()
             try:
                 self.matching_user = User.objects.get(username=initial_username)
                 # deleting the initial username because we found a matching user

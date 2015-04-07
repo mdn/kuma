@@ -4,7 +4,7 @@ import time
 from django import forms
 from django.conf import settings
 from django.http import HttpResponseServerError
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
 import basket
 from basket.base import BasketException
@@ -184,8 +184,9 @@ class UserProfileEditForm(forms.ModelForm):
         new_username = self.cleaned_data['username']
 
         if (self.instance is not None and
-                User.objects.exclude(pk=self.instance.user.pk)
-                            .filter(username=new_username)
-                            .exists()):
+                get_user_model().objects
+                                .exclude(pk=self.instance.user.pk)
+                                .filter(username=new_username)
+                                .exists()):
             raise forms.ValidationError(_('Username already in use.'))
         return new_username

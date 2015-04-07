@@ -1,5 +1,4 @@
 from django.conf import settings, UserSettingsHolder
-from django.contrib.auth.models import User
 from django.contrib.messages.storage.fallback import FallbackStorage
 from django.core.cache import cache
 from django import test
@@ -32,6 +31,7 @@ def attrs_eq(received, **expected):
 
 def get_user(username='testuser'):
     """Return a django user or raise FixtureMissingError"""
+    User = get_user_model()
     try:
         return User.objects.get(username=username)
     except User.DoesNotExist:

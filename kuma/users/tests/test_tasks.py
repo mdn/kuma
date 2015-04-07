@@ -3,7 +3,6 @@ from nose.tools import eq_, ok_
 from waffle import Switch
 
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.contrib import messages as django_messages
 from django.core import mail
 from django.test import RequestFactory
@@ -28,7 +27,7 @@ class TestWelcomeEmails(UserTestCase):
         return request
 
     def test_default_language_email(self):
-        testuser = User.objects.get(username='testuser')
+        testuser = self.user_model.objects.get(username='testuser')
         send_welcome_email(testuser.pk, settings.WIKI_DEFAULT_LANGUAGE)
 
         welcome_email = mail.outbox[0]
@@ -40,7 +39,7 @@ class TestWelcomeEmails(UserTestCase):
     def test_dont_send_untranslated_language_email(self,
                                                    strings_are_translated):
         strings_are_translated.return_value = False
-        testuser = User.objects.get(username='testuser')
+        testuser = self.user_model.objects.get(username='testuser')
         send_welcome_email(testuser.pk, 'tlh')  # Qapla'
         eq_([], mail.outbox)
 

@@ -1,7 +1,8 @@
 from datetime import datetime
 import time
 
-from django.contrib.auth.models import User, Group, Permission
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group, Permission
 from django.utils.text import slugify
 
 from html5lib.filters._base import Filter as html5lib_Filter
@@ -166,6 +167,7 @@ def create_template_test_users():
         groups[x] = [group]
 
     users = {}
+    User = get_user_model()
     for x in ('none', 'add', 'change', 'all'):
         user, created = User.objects.get_or_create(username='user_%s' % x,
             defaults=dict(email='user_%s@example.com',

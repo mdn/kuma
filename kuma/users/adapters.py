@@ -2,7 +2,7 @@ import re
 
 from django import forms
 from django.contrib import messages
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.shortcuts import redirect
 
 from allauth.account.adapter import DefaultAccountAdapter, get_adapter
@@ -47,7 +47,7 @@ class KumaAccountAdapter(DefaultAccountAdapter):
         if not USERNAME_REGEX.match(username):
             raise forms.ValidationError(USERNAME_CHARACTERS)
         username = super(KumaAccountAdapter, self).clean_username(username)
-        if User.objects.filter(username=username).exists():
+        if get_user_model().objects.filter(username=username).exists():
             raise forms.ValidationError(_(u'The username you entered '
                                           u'already exists.'))
         return username
