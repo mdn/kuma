@@ -43,8 +43,5 @@ if 'DJANGO_SETTINGS_MODULE' not in os.environ:
     # override the env var with what we want
     os.environ['DJANGO_SETTINGS_MODULE'] = settings_mod
 
-import jingo.monkey
-jingo.monkey.patch()
-
 if __name__ == "__main__":
     execute_from_command_line(sys.argv)

@@ -5,10 +5,11 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.shortcuts import redirect
 from django.views.i18n import javascript_catalog
 from django.views.decorators.cache import cache_page
+import jingo.monkey
 
 from kuma.core import views as core_views
 
-
+jingo.monkey.patch()
 admin.autodiscover()
 
 handler403 = core_views.handler403
