@@ -148,26 +148,23 @@ class SubmissionsFeed(Feed):
 
 
 class RecentSubmissionsFeed(SubmissionsFeed):
-
     title    = _('MDN recent demos')
     subtitle = _('Demos recently submitted to MDN')
 
     def items(self):
-        submissions = Submission.objects\
-            .exclude(hidden=True)\
-            .order_by('-modified').all()[:MAX_FEED_ITEMS]
+        submissions = (Submission.objects.exclude(hidden=True)
+                                         .order_by('-modified')[:MAX_FEED_ITEMS])
         return submissions
 
 
 class FeaturedSubmissionsFeed(SubmissionsFeed):
-
     title    = _('MDN featured demos')
     subtitle = _('Demos featured on MDN')
 
     def items(self):
-        submissions = Submission.objects.filter(featured=True)\
-            .exclude(hidden=True)\
-            .order_by('-modified').all()[:MAX_FEED_ITEMS]
+        submissions = Submission.objects.filter(featured=True)
+                                        .exclude(hidden=True)
+                                        .order_by('-modified')[:MAX_FEED_ITEMS]
         return submissions
 
 
@@ -184,9 +181,9 @@ class TagSubmissionsFeed(SubmissionsFeed):
         return tag
 
     def items(self, tag):
-        submissions = ( Submission.objects.filter(taggit_tags__name__in=[tag])
-            .exclude(hidden=True)
-            .order_by('-modified').all()[:MAX_FEED_ITEMS] )
+        submissions = (Submission.objects.filter(taggit_tags__name__in=[tag])
+                                         .exclude(hidden=True)
+                                         .order_by('-modified')[:MAX_FEED_ITEMS])
         return submissions
 
 
@@ -199,10 +196,9 @@ class ProfileSubmissionsFeed(SubmissionsFeed):
         return user
 
     def items(self, user):
-        submissions = Submission.objects.filter(creator=user)\
-            .exclude(hidden=True)\
-            .order_by('-modified').all()[:MAX_FEED_ITEMS]
-        return submissions
+        return (Submission.objects.filter(creator=user)
+                                  .exclude(hidden=True)
+                                  .order_by('-modified')[:MAX_FEED_ITEMS])
 
 
 class SearchSubmissionsFeed(SubmissionsFeed):
