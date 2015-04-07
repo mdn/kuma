@@ -75,9 +75,6 @@ django-threadedcomments==0.5.2
 # sha256: B2DUwWWcHTjb-BqFt-hiecsV1NQyh4Mc7qnO2Zobqfs
 django-tidings==1.0
 
-# sha256: xZelUWKR3HSXhpSNn0s3sUyxSYt006Ms7npzHkOq_bw
-django-taggit==0.9.3
-
 # sha256: XdB6sb7A64hZ89MOwbKT9xgdwB5gQQ9XQLm7nTYEc-w
 django-timezones==0.2
 
