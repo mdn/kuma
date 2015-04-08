@@ -848,7 +848,7 @@
         initDetailsTags();
     }
     
-    function create_jsfiddle(title, htmlCode, cssCode, jsCode) {
+    function openJSFiddle(title, htmlCode, cssCode, jsCode) {
        var $form = $('<form method="post" target="_blank" action="https://jsfiddle.net/api/mdn/">'
             + '<input type="hidden" name="html" />'
             + '<input type="hidden" name="css" />'
@@ -864,7 +864,7 @@
        $form.submit();
     }
     
-    function create_codepen(title, htmlCode, cssCode, jsCode) {
+    function openCodepen(title, htmlCode, cssCode, jsCode) {
        var $form = $('<form method="post" target="_blank" action="http://codepen.io/pen/define">'
             + '<input type="hidden" name="data">'
             + '<input type="submit" />'
@@ -874,11 +874,11 @@
        $form.submit();
     }
            
-    function create_sample(sampleCodeHost, title, htmlCode, cssCode, jsCode) {
+    function openSample(sampleCodeHost, title, htmlCode, cssCode, jsCode) {
        if(sampleCodeHost == 'jsfiddle') {
-            create_jsfiddle(title, htmlCode, cssCode, jsCode);
+            openJSFiddle(title, htmlCode, cssCode, jsCode);
         } else if(sampleCodeHost == 'codepen') {
-            create_codepen(title, htmlCode, cssCode, jsCode);
+            openCodepen(title, htmlCode, cssCode, jsCode);
         } 
     }
 
@@ -904,10 +904,33 @@
             var jsCode = $sample.find('.brush\\:.js, .brush\\:.js\\;').text();
             var title = $sample.find('h2[name=' + section + ']').text();
             
-            create_sample(sampleCodeHost, title, htmlCode, cssCode, jsCode);
+            openSample(sampleCodeHost, title, htmlCode, cssCode, jsCode);
             
             $button.removeAttr('disabled');
         });
     });
 
+    function createSampleButtons(section, sites) {
+        var buttons = '<div style="margin-bottom:10px;">';
+        sites.forEach(function(site){
+            // convert sitename to lowercase for icon name and host identifier
+            buttons += '<button class="open-in-host" data-host="'+ site.toLowerCase() +'" data-section="' + 
+                section + '"><i aria-hidden="true" class="icon-'+ site.toLowerCase() +'"></i> Open in ' + 
+                site +'</button>';
+        });
+        buttons += '</div>';
+        return buttons;
+    }
+
+    mdn.insertSampleButtons = function(sites) {
+        // using id to get sample code section since macros discard other attributes
+        $('.sample-code-frame').before(function() {
+            var section = $(this).attr('id').substring("frame_".length);
+            return createSampleButtons(section, sites);
+        });
+        $('.sample-code-table').before(function(){
+            var section = $(this).find('iframe').attr('id').substring("frame_".length);
+            return createSampleButtons(section, sites);
+        }); 
+    }
 })(window, document, jQuery);
