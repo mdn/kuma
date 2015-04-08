@@ -41,7 +41,7 @@
   CKEDITOR.dtd.$block['i'] = 1;
   delete CKEDITOR.dtd.$removeEmpty['i'];
 
-  CKEDITOR.timestamp = '{{ BUILD_ID_JS }}';
+  CKEDITOR.timestamp = '{{ get_build() }}';
 
   CKEDITOR.editorConfig = function(config) {
     // Should be kept in sync with the list in ckeditor/source/build-config.js.
@@ -86,11 +86,7 @@
     config.startupFocus = true;
     config.bodyClass = 'text-content redesign';
     config.contentsCss = [
-      mdn.mediaPath + 'css/main.css?{{ BUILD_ID_JS }}',
-      mdn.mediaPath + 'css/wiki.css?{{ BUILD_ID_JS }}',
-      mdn.mediaPath + 'css/wiki-wysiwyg.css?{{ BUILD_ID_JS }}',
-      mdn.mediaPath + 'css/wiki-syntax.css?{{ BUILD_ID_JS }}',
-      mdn.mediaPath + 'css/libs/font-awesome/css/font-awesome.min.css?{{ BUILD_ID_JS }}'
+        {% compressed_css 'ckeditor-content' %}
     ];
 
     if (window.waffle && waffle.FLAGS.enable_customcss) {

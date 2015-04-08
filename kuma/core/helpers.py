@@ -5,6 +5,7 @@ import urllib
 import urlparse
 import hashlib
 import bitly_api
+import git
 
 from django.http import QueryDict
 from django.utils.encoding import smart_str
@@ -24,6 +25,7 @@ from tower import ugettext_lazy as _lazy, ungettext
 
 from django.conf import settings
 from django.contrib.messages.storage.base import LEVEL_TAGS
+from django.contrib.staticfiles.finders import find
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.template import defaultfilters
 from django.utils.encoding import force_text
@@ -370,3 +372,7 @@ def number(context, n):
     if n is None:
         return ''
     return format_decimal(n, locale=_babel_locale(_contextual_locale(context)))
+
+@register.function
+def get_build():
+    return git.repo.Repo().log('-1')[0].id_abbrev

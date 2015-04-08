@@ -4,7 +4,7 @@
 
 {% block site_css %}
 	{{ super() }}
-	{{ css('home', 'all') }}
+	{% compressed_css 'home' %}
 {% endblock %}
 
 {% block extrahead %}
@@ -19,9 +19,9 @@
   <meta name="twitter:title" content="{{ social_title }}">
   <meta property="og:title" content="{{ social_title }}">
 
-  {{ css('home') }}
+  {% compressed_css 'home' %}
   {% if waffle.flag('search_suggestions') %}
-  {{ css('search-suggestions') }}
+  {% compressed_css 'search-suggestions' %}
   {% endif %}
 
 {% endblock %}
@@ -192,13 +192,9 @@
 
 {% block js %}
   {{ super() }}
-  {% if settings.TEMPLATE_DEBUG %}
-      {{ js('home') }}
-  {% else %}
-      {{ js('home', async=True) }}
-  {% endif %}
+  {% compressed_js 'home' %}
   {% if waffle.flag('search_suggestions') %}
-    {{ js('search-suggestions') }}
+    {% compressed_js 'search-suggestions' %}
     <script>
         jQuery('#home-search-form').searchSuggestions();
     </script>

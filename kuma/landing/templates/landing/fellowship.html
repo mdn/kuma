@@ -4,7 +4,7 @@
 
 {% block site_css %}
     {{ super() }}
-    {{ css('fellowship') }}
+    {% compressed_css 'fellowship' %}
 {% endblock %}
 
 {% block extrahead %}
@@ -232,5 +232,5 @@
 
 {% block js %}
   {{ super() }}
-  {{ js('fellowship') }}
+  {% compressed_js 'fellowship' %}
 {% endblock %}

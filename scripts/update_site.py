@@ -64,8 +64,6 @@ def update_site(debug):
         (EXEC, 'python2.6 manage.py migrate --noinput'),
         (EXEC, 'python2.6 manage.py update_badges'),
         (EXEC, 'python2.6 manage.py collectstatic --noinput'),
-        (EXEC, './scripts/compile-stylesheets'),
-        (EXEC, 'LANG=en_US.UTF-8 python2.6 manage.py compress_assets'),
         (EXEC, GIT_REVISION_TXT),
     ]
 

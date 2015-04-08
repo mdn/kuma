@@ -41,15 +41,6 @@ Set up permissions
 Some features are only available to privileged users. To manage permissions use the
 Auth -> Users section of the django admin interface.
 
-Compiling Stylus Files
-======================
-
-If you're updating the Stylus CSS files, you'll need to compile them before you can see your updates within the browser.  To compile stylus files, run the following from the command line::
-
-	./scripts/compile-stylesheets
-
-The relevant CSS files will be generated and placed within the `media/css` directory. You can add a ``-w`` flag to that call to compile stylesheets upon save.
-
 Hacking on bleeding edge features
 =================================
 To hack on the features not yet ready for production you have to enable them first.

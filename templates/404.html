@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% set styles = ('error-404',) %}
+{% compressed_css 'error-404' %}
 
 {% block bodyclass %}error{% endblock %}
 {% block title %}{{ page_title(_('Not Found')) }}{% endblock %}
@@ -45,7 +45,7 @@
 
 {% block site_js %}
     {{ super() }}
-    {{ js('framebuster') }}
+    {% compressed_js 'framebuster' %}
 {% endblock %}
 
 {% block js %}

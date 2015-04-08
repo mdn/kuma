@@ -82,9 +82,6 @@
 [submodule "vendor/src/jingo"]
 	path = vendor/src/jingo
 	url = git://github.com/jbalogh/jingo.git
-[submodule "vendor/src/jingo-minify"]
-	path = vendor/src/jingo-minify
-	url = git://github.com/jsocol/jingo-minify.git
 [submodule "vendor/src/oauthlib"]
 	path = vendor/src/oauthlib
 	url = git://github.com/idan/oauthlib.git
@@ -145,3 +142,9 @@
 [submodule "vendor/src/django-ratelimit"]
 	path = vendor/src/django-ratelimit
 	url = git://github.com/jsocol/django-ratelimit.git
+[submodule "vendor/src/django-pipeline"]
+	path = vendor/src/django-pipeline
+	url = git://github.com/cyberdelia/django-pipeline.git
+[submodule "vendor/src/futures"]
+	path = vendor/src/futures
+	url = git://github.com/agronholm/pythonfutures
