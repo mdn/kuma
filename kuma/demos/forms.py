@@ -1,21 +1,9 @@
-try:
-    from cStringIO import StringIO
-except ImportError:
-    from StringIO import StringIO
-
-try:
-    from PIL import Image
-except ImportError:
-    import Image
-
 from django import forms
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
 from django.core.exceptions import ValidationError
 from django.forms.widgets import CheckboxSelectMultiple, RadioSelect
-from django.utils.translation import ugettext_lazy as _
 
-from captcha.fields import ReCaptchaField
 import constance.config
 
 from kuma.core.utils import parse_tags
@@ -178,12 +166,9 @@ class SubmissionEditForm(MyModelForm):
 class SubmissionNewForm(SubmissionEditForm):
 
     class Meta(SubmissionEditForm.Meta):
-        fields = SubmissionEditForm.Meta.fields + ( 'captcha', 'accept_terms', )
+        fields = SubmissionEditForm.Meta.fields + ('accept_terms', )
 
-    captcha = ReCaptchaField(label=_("Show us you're human"))
     accept_terms = forms.BooleanField(initial=False, required=True)
 
     def __init__(self, *args, **kwargs):
         super(SubmissionNewForm, self).__init__(*args, **kwargs)
-        if not settings.RECAPTCHA_PRIVATE_KEY:
-            del self.fields['captcha']
