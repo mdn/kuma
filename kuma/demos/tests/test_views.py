@@ -37,17 +37,6 @@ def logged_in(test, *args, **kwargs):
     return test_new
 
 
-def disable_captcha(fn):
-    """Disable captcha requirement during call of the decorated function"""
-    def wrap(self):
-        old_key = settings.RECAPTCHA_PRIVATE_KEY
-        settings.RECAPTCHA_PRIVATE_KEY = ''
-        rv = fn(self)
-        settings.RECAPTCHA_PRIVATE_KEY = old_key
-        return rv
-    return wrap
-
-
 def make_challenge_tag():
     """
     Create a dev derby challenge tag corresponding to the current
@@ -115,11 +104,9 @@ class DemoViewsTest(UserTestCase):
         assert d('li#field_screenshot_1 ul.errorlist')
         assert d('li#field_demo_package ul.errorlist')
         assert d('li#field_license_name ul.errorlist')
-        assert d('li#field_captcha ul.errorlist')
         assert d('li#field_accept_terms ul.errorlist')
 
     @logged_in
-    @disable_captcha
     def test_submit_post_valid(self):
 
         # Create a valid demo zip file
