@@ -66,8 +66,8 @@ django-statici18n==1.1.1
 # sha256: xZelUWKR3HSXhpSNn0s3sUyxSYt006Ms7npzHkOq_bw
 django-taggit==0.9.3
 
-# sha256: gxbTP8mVvVKVeEhpDC6PElGdM62uqMn1qzF7fuB3D1w
-django-teamwork==0.0.3
+# sha256: 3CNdn1g9ny8cwkzNl0dJSFMV64Nc2ntnWvlFDeJlyQY
+django-teamwork==0.2.0
 
 # sha256: 2oq-BKxfkbkQWGOF__ztNFC_ySFML7eOCGKEmbjeJGo
 django-threadedcomments==0.5.2
