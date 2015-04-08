@@ -1,21 +1,9 @@
-try:
-    from cStringIO import StringIO
-except ImportError:
-    from StringIO import StringIO
-
-try:
-    from PIL import Image
-except ImportError:
-    import Image
-
 from django import forms
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
 from django.core.exceptions import ValidationError
 from django.forms.widgets import CheckboxSelectMultiple, RadioSelect
-from django.utils.translation import ugettext_lazy as _
 
-from captcha.fields import ReCaptchaField
 import constance.config
 
 from kuma.core.utils import parse_tags
