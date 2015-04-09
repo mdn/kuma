@@ -10,7 +10,8 @@ define({
         'tests/env',
         'tests/footer',
         'tests/header',
-        'tests/homepage'
+        'tests/homepage',
+        'tests/wiki'
     ]
 
 });
