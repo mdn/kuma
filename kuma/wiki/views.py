@@ -16,6 +16,7 @@ from tower import ugettext_lazy as _lazy, ugettext as _
 
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.decorators import user_passes_test
 from django.core.exceptions import PermissionDenied
 from django.db import transaction
 from django.db.models import Q
@@ -35,8 +36,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from constance import config
 from ratelimit.decorators import ratelimit
-from smuggler.utils import superuser_required
-from smuggler.forms import ImportFileForm
+from smuggler.forms import ImportForm
 from teamwork.shortcuts import get_object_or_404_or_403
 import waffle
 
@@ -2285,15 +2285,15 @@ def mindtouch_to_kuma_redirect(request, path):
     return HttpResponsePermanentRedirect(location)
 
 
-@superuser_required
+@user_passes_test(lambda u: u.is_superuser)
 def load_documents(request):
     """Load documents from uploaded file."""
-    form = ImportFileForm()
+    form = ImportForm()
     if request.method == 'POST':
 
         # Accept the uploaded document data.
         file_data = None
-        form = ImportFileForm(request.POST, request.FILES)
+        form = ImportForm(request.POST, request.FILES)
         if form.is_valid():
             uploaded_file = request.FILES['file']
             if uploaded_file.multiple_chunks():
