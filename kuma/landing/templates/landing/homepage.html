@@ -43,13 +43,35 @@
         <h1>{{ _('Shared knowledge <span>for the Open Web</span>') }}</h1>
     {% endif %}
 
-  <form id="home-search-form" action="{{ url('search') }}" method="get" class="search">
-    <div class="home-search-form search-form">
-      <label for="home-q" class="offscreen">{{ _('Search') }}</label>
-      <input class="search-input" type="search" id="home-q" name="q" placeholder="{{ _('Search the docs') }}" />
-      <button type="submit" class="offscreen">{{ _('Search') }}</button>
-    </div>
-  </form>
+    {% if waffle.flag('search_suggestions') %}
+        <form id="home-search-form" action="{{ url('search') }}" method="get" class="search">
+            <div class="home-search-form search-form">
+                <div class="search-filter-wrapper">
+                    <div id="filters-right" class="filter-arrow">
+                        <i class="icon-chevron-left" aria-hidden="true"></i>
+                    </div>
+                    <div class="filters"></div>
+                    <div id="filters-left" class="filter-arrow">
+                        <i class="icon-chevron-right" aria-hidden="true"></i>
+                    </div>
+                    <label for="home-q" class="offscreen">{{ _('Search') }}</label>
+                    <input class="search-input" type="search" id="home-q" name="q" placeholder="{{ _('Search the docs') }}" />
+                    <button type="submit" class="offscreen">{{ _('Search') }}</button>
+                    <button class="show-topics" type="button">
+                        <i class="icon-caret-down" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    {% else %}
+        <form id="home-search-form" action="{{ url('search') }}" method="get" class="search">
+            <div class="home-search-form search-form">
+                <label for="home-q" class="offscreen">{{ _('Search') }}</label>
+                <input class="search-input" type="search" id="home-q" name="q" placeholder="{{ _('Search the docs') }}" />
+                <button type="submit" class="offscreen">{{ _('Search') }}</button>
+            </div>
+        </form>
+    {% endif %}
 
   <div class="home-features">
     <h2 class="offscreen">{{ _('Web Technologies') }}</h2>
