@@ -6,15 +6,35 @@ The client-side testing tool for the MDN front-end is `Intern <http://intern.io>
 Installing Dependencies
 -----------------------
 
-1. Download the most current release of Selenium `WebDriver <http://selenium-release.storage.googleapis.com/index.html>`_. Download the current standalone version which is a `.jar` file.
+1. Install `JDK <http://www.oracle.com/technetwork/java/javase/downloads/index.html>`_
 
-2. From the `tests/ui/` directory, use NPM or another package manager to install Intern::
+2. Download the most current release of Selenium `WebDriver <http://selenium-release.storage.googleapis.com/index.html>`_. Download the current standalone version which is a `.jar` file.
+
+3. From the `tests/ui/` directory, use NPM or another package manager to install Intern::
 
     npm install intern
 
 Do *not* install Intern globally -- path issues may occur.
 
 Firefox appears to work out of the box, but `Chrome <https://code.google.com/p/selenium/wiki/ChromeDriver>`_ and `Safari <https://code.google.com/p/selenium/wiki/SafariDriver>`_ drivers must be downloaded and installed separately.
+
+Running Tests
+-------------
+
+1. From the command line, start WebDriver::
+
+    # Substitute your WebDriver version in the `#` chars
+    java -jar /path/to/selenium-server-standalone-#.#.#.jar
+
+2. From within the `tests/ui/` directory, run intern on your local intern config file (omitting the `.js`)::
+
+    node_modules/.bin/intern-runner config=intern-local
+
+The above runs the entire suite of tests. Custom functionality has been added to allow for command line arguments to be passed to modify configuration, namely `b` to set which browsers to run in, `t` for which test suites to run, `u` to provide a username for Persona, `p` to provide a password for Persona, and `d` for which domain to run on::
+
+    node_modules/.bin/intern-runner config=intern-local b=firefox,chrome t=auth,homepage d=developer-local.allizom.org u=someone@somewhere.com p=8675309
+
+The user credentials must be Persona-only (not GMail or Mozilla LDAP lookups).  User credentials are the only required custom command line arguments.
 
 Adding a Test Suite
 -------------------
@@ -47,24 +67,6 @@ To add a test suite, place your JavaScript file within the `tests/ui/tests` dire
 
 
 To run your new tests with, add the new suite path to the `tests/ui/_tests.js` file.
-
-Running Tests
--------------
-
-1. From the command line, start WebDriver::
-
-    # Substitute your WebDriver version in the `#` chars
-    java -jar /path/to/selenium-server-standalone-#.#.#.jar
-
-2. From within the `tests/ui/` directory, run intern on your local intern config file (omitting the `.js`)::
-
-    node_modules/.bin/intern-runner config=intern-local
-
-The above runs the entire suite of tests. Custom functionality has been added to allow for command line arguments to be passed to modify configuration, namely `b` to set which browsers to run in, `t` for which test suites to run, `u` to provide a username for Persona, `p` to provide a password for Persona, and `d` for which domain to run on::
-
-    node_modules/.bin/intern-runner config=intern-local b=firefox,chrome t=auth,homepage d=developer-local.allizom.org u=someone@somewhere.com p=8675309
-
-The user credentials must be Persona-only (not GMail or Mozilla LDAP lookups).  User credentials are the only required custom command line arguments.
 
 Identifying Test Failures
 -------------------------
