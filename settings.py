@@ -479,7 +479,6 @@ INSTALLED_APPS = (
     'captcha',
     'kuma.contentflagging',
     'kuma.actioncounters',
-    'threadedcomments',
 
     # util
     'jingo_minify',

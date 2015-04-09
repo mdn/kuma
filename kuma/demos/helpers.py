@@ -13,17 +13,11 @@ import jingo
 from jingo import register
 from tower import ungettext, ugettext as _
 from taggit.models import TaggedItem
-from threadedcomments.models import ThreadedComment
-from threadedcomments.forms import ThreadedCommentForm
-from threadedcomments.templatetags import threadedcommentstags
-import threadedcomments.views
 
 from kuma.core.cache import memcache
 from kuma.core.urlresolvers import reverse
 from .models import Submission
 from . import DEMOS_CACHE_NS_KEY, TAG_DESCRIPTIONS, DEMO_LICENSES
-
-threadedcommentstags.reverse = reverse
 
 
 TEMPLATE_INCLUDE_CACHE_EXPIRES = getattr(settings,
@@ -283,58 +277,6 @@ def date_diff(timestamp, to=None):
         return "in " + date_str
     else:
         return date_str + " ago"
-
-
-# TODO: Maybe just register the template tag functions in the jingo environment
-# directly, rather than building adapter functions?
-@register.function
-def get_threaded_comment_flat(content_object, tree_root=0):
-    return ThreadedComment.public.get_tree(content_object, root=tree_root)
-
-
-@register.function
-def get_threaded_comment_tree(content_object, tree_root=0):
-    """Convert the flat list with depth indices into a true tree structure for
-    recursive template display"""
-    root = dict(children=[])
-    parent_stack = [root, ]
-
-    flat = ThreadedComment.public.get_tree(content_object, root=tree_root)
-    for comment in flat:
-        c = dict(comment=comment, children=[])
-        if (comment.depth > len(parent_stack) - 1 and
-            len(parent_stack[-1]['children'])):
-            parent_stack.append(parent_stack[-1]['children'][-1])
-        while comment.depth < len(parent_stack) - 1:
-            parent_stack.pop(-1)
-        parent_stack[-1]['children'].append(c)
-
-    return root
-
-
-@register.inclusion_tag('demos/elements/comments_tree.html')
-def comments_tree(request, object, root):
-    return locals()
-
-
-@register.function
-def get_comment_url(content_object, parent=None):
-    return threadedcommentstags.get_comment_url(content_object, parent)
-
-
-@register.function
-def get_threaded_comment_form():
-    return ThreadedCommentForm()
-
-
-@register.function
-def auto_transform_markup(comment):
-    return threadedcommentstags.auto_transform_markup(comment)
-
-
-@register.function
-def can_delete_comment(comment, user):
-    return threadedcomments.views.can_delete_comment(comment, user)
 
 
 @register.filter

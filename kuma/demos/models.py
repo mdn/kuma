@@ -28,8 +28,6 @@ from constance import config
 from constance.admin import FIELDS
 from django.utils.functional import lazy
 
-from threadedcomments.models import ThreadedComment
-
 from kuma.actioncounters.fields import ActionCounterField
 from kuma.core.managers import NamespacedTaggableManager
 from kuma.core.urlresolvers import reverse
@@ -373,6 +371,7 @@ class Submission(models.Model):
         default=False
     )
 
+    # FIXME: remove since it's unneeded
     comments_total = models.PositiveIntegerField(default=0)
 
     launches = ActionCounterField()
@@ -722,13 +721,3 @@ class Submission(models.Model):
             # Extract the file from the zip into the desired location.
             fout = open(out_fn.encode('utf-8'), 'wb')
             copyfileobj(zf.open(zi), fout)
-
-def update_submission_comment_count(sender, instance, **kwargs):
-    """Update the denormalized count of comments for a submission on comment save/delete"""
-    obj = instance.content_object
-    if isinstance(obj, Submission):
-        new_total = ThreadedComment.public.all_for_object(obj).count()
-        Submission.objects.filter(pk=obj.pk).update(comments_total=new_total)
-
-models.signals.post_save.connect(update_submission_comment_count, sender=ThreadedComment)
-models.signals.post_delete.connect(update_submission_comment_count, sender=ThreadedComment)

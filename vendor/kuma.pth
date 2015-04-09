@@ -28,7 +28,6 @@ packages/sqlalchemy
 packages/translate-toolkit
 packages/nose
 packages/django-tagging
-packages/django-threadedcomments
 packages/feedparser/feedparser
 packages/jsonpickle
 packages/lockfile
