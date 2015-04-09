@@ -162,9 +162,9 @@ class FeaturedSubmissionsFeed(SubmissionsFeed):
     subtitle = _('Demos featured on MDN')
 
     def items(self):
-        submissions = Submission.objects.filter(featured=True)
-                                        .exclude(hidden=True)
-                                        .order_by('-modified')[:MAX_FEED_ITEMS]
+        submissions = (Submission.objects.filter(featured=True)
+                                         .exclude(hidden=True)
+                                         .order_by('-modified')[:MAX_FEED_ITEMS])
         return submissions
 
 
