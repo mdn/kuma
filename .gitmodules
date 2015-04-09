@@ -139,3 +139,6 @@
 [submodule "vendor/src/django-product-details"]
 	path = vendor/src/django-product-details
 	url = git://github.com/mozilla/django-product-details.git
+[submodule "vendor/src/django-debug-toolbar"]
+	path = vendor/src/django-debug-toolbar
+	url = git://github.com/django-debug-toolbar/django-debug-toolbar.git
