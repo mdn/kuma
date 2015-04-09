@@ -19,6 +19,6 @@ Contents:
    localization
    ckeditor
    tests
-   ui-tests
+   tests-ui
 
    troubleshooting
