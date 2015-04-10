@@ -44,7 +44,7 @@
     {% endif %}
 
     {% if waffle.flag('search_suggestions') %}
-        <form id="home-search-form" action="{{ url('search') }}" method="get" class="search">
+        <form id="home-search-form" action="{{ url('search') }}" method="get" class="search nodisable">
             <div class="home-search-form search-form">
                 <div class="search-filter-wrapper">
                     <div id="filters-right" class="filter-arrow">
@@ -64,7 +64,7 @@
             </div>
         </form>
     {% else %}
-        <form id="home-search-form" action="{{ url('search') }}" method="get" class="search">
+        <form id="home-search-form" action="{{ url('search') }}" method="get" class="search nodisable">
             <div class="home-search-form search-form">
                 <label for="home-q" class="offscreen">{{ _('Search') }}</label>
                 <input class="search-input" type="search" id="home-q" name="q" placeholder="{{ _('Search the docs') }}" />
