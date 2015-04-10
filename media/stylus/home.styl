@@ -184,56 +184,98 @@ $home-involved-background-y = 50px;
 }
 
 /* three colorful callouts */
+$callout-icon-spacing = 25px;
+$callout-icon-width = 90px;
+
 .column-callout    {
     @extend $column-4;
-    position: relative;
-    background-image: url($media-url-dir + 'promo-sprite.png');
-    background-repeat: no-repeat;
-    i {
-        bidi-style(right, 5%, left, auto);
-        position: absolute;
-        top: 0;
-        display: block;
-    }
-
-    span {
-        padding-right: 20px;
-    }
+    background: #00539F;
 
     a {
         color: $blue-background-text-color !important;
         display: block;
-        padding: 100px $grid-spacing $grid-spacing $grid-spacing;
+        min-height: 160px;
         position: relative;
-        overflow-x: hidden;
+        overflow: hidden;
         set-larger-font-size();
+
+        &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: $callout-icon-spacing;
+            bidi-style(right, $callout-icon-spacing + $grid-spacing, left, auto);
+            height: $callout-icon-width;
+            width: $callout-icon-width;
+            background-image: url($media-url-dir + 'promo-sprite.png');
+        }
 
         &:before {
             bidi-style(content, '\f061', content, '\f060');
             bidi-style(right, $grid-spacing, left, auto);
             font-family: 'FontAwesome';
-            bottom: $grid-spacing;
+            bottom: 11px;
             position: absolute;
             set-font-size(24px);
             z-index: 4;
         }
     }
 
-    &.callout-apps {
-        background-position: 100% 0;
-        background-color: #e66000;
-    }
-
-    &.callout-android {
-        background-position: 100% -300px;
-        background-color: #97c03d;
-    }
-
-    &.callout-firefoxos {
-        background-position: 100% -600px;
-        background-color: #0095dd;
+    span {
+        position: absolute;
+        z-index: 1;
+        bottom: -2px;
+        bidi-value(padding, $grid-spacing 50px $grid-spacing $grid-spacing, $grid-spacing $grid-spacing $grid-spacing 50px);
+        width: 75%;
+        min-width: 160px;
+        max-width: 270px;
+        box-sizing: border-box;
     }
 }
+
+
+.callout-learn {
+    background-color: #e14164;
+}
+
+.callout-deved {
+    background-color: #056b9f;
+
+    a:after {
+        background-position: 0 -300px;
+    }
+}
+
+.callout-apps {
+    background-color: #58779d;
+
+    a:after {
+        background-position: 0 -600px;
+    }
+}
+
+@media $media-query-tablet {
+    .column-callout a:after {
+        top: $grid-spacing;
+        bidi-style(right, $grid-spacing, left, auto);
+    }
+}
+
+@media $media-query-mobile {
+    .column-callout a:after {
+        top: $callout-icon-spacing;
+        bidi-style(right, $callout-icon-spacing + $grid-spacing, left, auto);
+    }
+}
+
+@media $media-query-small-mobile {
+    .column-callout a:after {
+        top: $grid-spacing;
+        bidi-style(right, $grid-spacing, left, auto);
+    }
+}
+
+
 
 /* homepage hacks block of blog post summaries */
 .home-hacks {
