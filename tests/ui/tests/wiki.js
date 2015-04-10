@@ -49,8 +49,8 @@ define([
                         });
 
         },
-        /*
-        'The new document-template screen passes all the checks': function() {
+
+        '[requires-login] The new document-template screen passes all the checks': function() {
 
             var remote = this.remote;
 
@@ -60,8 +60,25 @@ define([
                             return libAssert.windowPropertyExists(remote, 'ace_editor');
                         });
 
-        }
-        */
+        },
+
+        '[requires-login][requires-doc] Existing document is editable': function() {
+
+            return this.remote.get(config.url + 'docs/' + config.wikiDocumentSlug)
+                        .then(function() {
+                            return libAssert.elementExistsAndDisplayed('#edit-button');
+                        })
+                        .then(function() {
+                            return libAssert.elementExistsAndDisplayed('#advanced-menu');
+                        })
+                        .then(function() {
+                            return libAssert.elementExistsAndDisplayed('#languages-menu');
+                        });
+
+        },
+
+
+
     });
 
 });

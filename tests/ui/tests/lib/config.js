@@ -33,7 +33,10 @@ define(['intern'], function(intern) {
 
         // Async testing in milliseconds
         testTimeout: 22000,
-        asyncExecutionTimeout: 4000
+        asyncExecutionTimeout: 4000,
+
+        // Wiki-specific
+        wikiDocumentSlug: ''
     };
 
 });

@@ -32,6 +32,12 @@ define({
             args.grep+= '^(?!.*?\\[requires-login\\])';
         }
 
+        // Set a document for wiki testing
+        if(args.wd == undefined) {
+            args.grep+= '';
+        }
+
+
         return config;
     }
 });
