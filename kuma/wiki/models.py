@@ -568,6 +568,10 @@ class Document(NotificationsMixin, models.Model):
         if self.pk:
             for translation in self.other_translations:
                 revision = translation.current_revision
+                if revision.summary:
+                   summary = revision.summary
+                else:
+                   summary = translation.get_summary(strip_markup=False)
                 translations.append({
                     'last_edit': revision.created.isoformat(),
                     'locale': translation.locale,
@@ -577,7 +581,7 @@ class Document(NotificationsMixin, models.Model):
                     'review_tags': list(revision.review_tags
                                                 .values_list('name',
                                                              flat=True)),
-                    'summary': translation.current_revision.summary,
+                    'summary': summary,
                     'tags': list(translation.tags
                                             .values_list('name', flat=True)),
                     'title': translation.title,
