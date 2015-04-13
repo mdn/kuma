@@ -24,6 +24,8 @@ from .constants import DIFF_WRAP_COLUMN
 from .jobs import DocumentZoneStackJob
 from .models import Document, memcache
 
+BREAKS_RE = re.compile(r'(?<=[a-z,A-Z])\.(?=[a-z,A-Z])')
+
 register.function(build_policy_admin_links)
 
 
@@ -355,3 +357,12 @@ def wiki_url(context, path):
     # finally cache the reversed document URL for a bit
     memcache.set(u'wiki_url:%s:%s' % (locale, path), url, 60 * 5)
     return url
+
+
+@register.filter
+def addbreaks(title):
+    """
+    adds <wbr> tags before . that appear between letters
+    no numbers should be split
+    """
+    return BREAKS_RE.sub('<wbr>.', title)

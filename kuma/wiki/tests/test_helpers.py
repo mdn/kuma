@@ -7,7 +7,7 @@ from django.contrib.sites.models import Site
 from kuma.core.cache import memcache
 from kuma.users.tests import UserTestCase
 from kuma.wiki.helpers import (absolutify, document_zone_management_links,
-                               revisions_unified_diff, tojson)
+                               revisions_unified_diff, tojson, addbreaks)
 from kuma.wiki.models import DocumentZone
 from kuma.wiki.tests import revision, WikiTestCase
 
@@ -17,6 +17,9 @@ class HelpTests(WikiTestCase):
     def test_tojson(self):
         eq_(tojson({'title': '<script>alert("Hi!")</script>'}),
             '{"title": "&lt;script&gt;alert(&quot;Hi!&quot;)&lt;/script&gt;"}')
+
+    def test_addbreaks(self):
+        eq_(addbreaks('this.is.a.test.1.1'), 'this<wbr>.is<wbr>.a<wbr>.test.1.1')
 
     @mock.patch.object(Site.objects, 'get_current')
     def test_absolutify(self, get_current):
