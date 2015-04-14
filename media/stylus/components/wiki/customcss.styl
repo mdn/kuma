@@ -365,6 +365,10 @@ div.index ol {
     padding: 11px 22px;
     background-color: rgba-fallback(rgba(255,149,0,0.1));
 }
+// Necessary to overload .text-content table
+.text-content .htmlelt {
+    border:none;
+}
 [dir="ltr"] .htmlelt {
     clear: left;
     border-left: 6px solid rgba-fallback(rgba(255,149,0,0.5));
@@ -372,6 +376,13 @@ div.index ol {
 [dir="rtl"] .htmlelt {
     clear: right;
     border-right: 6px solid rgba-fallback(rgba(255,149,0,0.5));
+}
+.htmlelt th, .htmlelt td {
+    border:none;
+}
+.htmlelt th {
+    text-align: right;
+    font-weight: bold;
 }
 .htmlelt li {
     display: table-row;
