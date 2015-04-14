@@ -35,7 +35,7 @@
             "user_permissions": [],
             "username": "testuser"
         },
-        "model": "auth.user",
+        "model": "users.user",
         "pk": 7
     },
     {
@@ -98,7 +98,7 @@
             "user_permissions": [],
             "username": "testuser2"
         },
-        "model": "auth.user",
+        "model": "users.user",
         "pk": 8
     },
     {
@@ -191,7 +191,7 @@
             "user_permissions": [],
             "username": "testuser01"
         },
-        "model": "auth.user",
+        "model": "users.user",
         "pk": 9
     },
     {
@@ -225,7 +225,7 @@
             "user_permissions": [],
             "username": "admin"
         },
-        "model": "auth.user",
+        "model": "users.user",
         "pk": 10
     },
     {
