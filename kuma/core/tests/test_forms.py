@@ -19,7 +19,7 @@ class ExampleForm(forms.Form):
     bool = forms.BooleanField()
     textarea = StrippedCharField(widget=forms.Textarea())
     email = forms.EmailField()
-    url = forms.URLField(required=False, verify_exists=False)
+    url = forms.URLField(required=False)
     date = forms.DateField()
     time = forms.TimeField()
 
