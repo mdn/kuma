@@ -1194,7 +1194,7 @@ def get_user_url(user):
     return reverse('users.profile', args=[user.username])
 
 ABSOLUTE_URL_OVERRIDES = {
-    'auth.user': get_user_url
+    'users.user': get_user_url
 }
 
 # Honor the X-Forwarded-Proto header for environments like local dev VM that
