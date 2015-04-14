@@ -23,6 +23,7 @@ class DemoPackageTest(UserTestCase):
     fixtures = UserTestCase.fixtures + ['wiki/documents.json']
 
     def setUp(self):
+        super(DemoPackageTest, self).setUp()
         self.user1 = self.user_model.objects.create_user('tester1',
                 'tester2@tester.com', 'tester1')
         self.user2 = self.user_model.objects.create_user('tester2',
