@@ -1,7 +1,7 @@
 import mock
 from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
-from waffle import Flag
+from waffle.models import Flag
 
 from django.conf import settings
 

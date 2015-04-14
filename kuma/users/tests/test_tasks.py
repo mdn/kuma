@@ -1,6 +1,6 @@
 import mock
 from nose.tools import eq_, ok_
-from waffle import Switch
+from waffle.models import Switch
 
 from django.conf import settings
 from django.contrib import messages as django_messages
