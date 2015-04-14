@@ -18,11 +18,12 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
 from django.template.defaultfilters import slugify
-from django.test import TestCase
 
 from constance import config
 
 from kuma.core.tests import override_constance_settings
+from kuma.users.tests import UserTestCase
+
 from ..models import Submission
 from .. import models
 from . import make_users, build_submission, build_hidden_submission
@@ -51,9 +52,10 @@ def save_valid_submission(title='hello world',
     return s
 
 
-class DemoPackageTest(TestCase):
+class DemoPackageTest(UserTestCase):
 
     def setUp(self):
+        super(DemoPackageTest, self).setUp()
         self.user, self.admin_user, self.other_user = make_users()
 
         hidden_prev_demo = build_hidden_submission(self.other_user,

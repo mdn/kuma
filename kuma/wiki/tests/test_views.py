@@ -3757,10 +3757,10 @@ class PageMoveTests(UserTestCase, WikiTestCase):
     localizing_client = True
 
     def setUp(self):
+        super(PageMoveTests, self).setUp()
         page_move_flag = Flag.objects.create(name='page_move')
         page_move_flag.users = self.user_model.objects.filter(is_superuser=True)
         page_move_flag.save()
-        super(PageMoveTests, self).setUp()
 
     def test_move_conflict(self):
         parent = revision(title='Test page move views',
