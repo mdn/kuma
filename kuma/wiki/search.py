@@ -79,7 +79,7 @@ class WikiDocumentType(document.DocType):
             'summary': obj.get_summary(strip_markup=True),
             'locale': obj.locale,
             'modified': obj.modified,
-            'content': strip_tags(obj.rendered_html),
+            'content': strip_tags(obj.rendered_html or ''),
             'tags': list(obj.tags.values_list('name', flat=True)),
             'kumascript_macros': obj.extract_kumascript_macro_names(),
             'css_classnames': obj.extract_css_classnames(),
