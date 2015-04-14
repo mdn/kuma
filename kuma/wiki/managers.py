@@ -36,7 +36,7 @@ class BaseDocumentManager(models.Manager):
             styles = ALLOWED_STYLES
 
         out = bleach.clean(out, attributes=attributes, tags=tags,
-                           styles=styles, skip_gauntlet=True)
+                           styles=styles)
         return out
 
     def get_by_natural_key(self, locale, slug):
