@@ -9,8 +9,8 @@ from django.utils.functional import cached_property
 from django.utils.text import slugify
 
 from elasticsearch.exceptions import NotFoundError
+from taggit.managers import TaggableManager
 
-from kuma.core.managers import PrefetchTaggableManager
 from kuma.core.urlresolvers import reverse
 from kuma.wiki.search import WikiDocumentType
 
@@ -169,9 +169,9 @@ class Filter(models.Model):
                                           'e.g. fxos')
     group = models.ForeignKey(FilterGroup, related_name='filters',
                               help_text='E.g. "Topic", "Skill level" etc')
-    tags = PrefetchTaggableManager(help_text='A comma-separated list of tags. '
-                                             'If more than one tag given a OR '
-                                             'query is executed')
+    tags = TaggableManager(help_text='A comma-separated list of tags. '
+                                     'If more than one tag given a OR '
+                                     'query is executed')
     operator = models.CharField(max_length=3, choices=OPERATOR_CHOICES,
                                 default=OPERATOR_OR,
                                 help_text='The logical operator to use '
