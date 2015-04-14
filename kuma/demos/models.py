@@ -106,7 +106,7 @@ LAZY_CONSTANCE_TYPES = list(FIELDS.keys())
 LAZY_CONSTANCE_TYPES.remove(unicode)  # because we already have str in the list
 
 
-def config(name, default=None):
+def config_attr(name, default=None):
     """
     Just a silly wrapper arround the constance's config object.
     """
@@ -124,7 +124,7 @@ E.g. something that is a pretty stupid idea but should show the risk as well::
 .. where ``ENTRY_MAX_LENGTH`` is the name of the config value.
 
 """
-config_lazy = lazy(config, *LAZY_CONSTANCE_TYPES)
+config_lazy = lazy(config_attr, *LAZY_CONSTANCE_TYPES)
 
 
 def get_root_for_submission(instance):
