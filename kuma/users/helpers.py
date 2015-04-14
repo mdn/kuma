@@ -2,6 +2,7 @@ import urllib
 import hashlib
 
 from django.conf import settings
+from django.contrib import admin
 
 from jinja2 import escape, Markup, contextfunction
 from jingo import register
@@ -55,7 +56,8 @@ def ban_link(context, ban_user, banner_user):
 def admin_link(context, user):
     """Returns a link to admin a user"""
     link = ''
-    url = reverse('admin:auth_user_change', args=(user.id,))
+    url = reverse('admin:auth_user_change', args=(user.id,),
+                  current_app=admin.site.name)
     link = '<a href="%s" class="button neutral">%s<i aria-hidden="true" class="icon-wrench"></i></a>' % (url, _('Admin'))
     return Markup(link)
 

@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+
 from kuma.core.urlresolvers import reverse
 
 from taggit.forms import TagWidget
@@ -49,7 +50,8 @@ class ProfileAdmin(admin.ModelAdmin):
 
     def related_user(self, obj):
         """HTML link to related user account"""
-        link = reverse('admin:auth_user_change', args=(obj.user.id,))
+        link = reverse('admin:auth_user_change', args=(obj.user.id,),
+                       current_app=admin.site.name)
         # TODO: Needs l10n? Maybe not a priority for an admin page.
         return ('<a href="%(link)s"><strong>User %(id)s</strong></a>' % dict(
             link=link, id=obj.user.id, username=obj.user.username))
