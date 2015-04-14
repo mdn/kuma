@@ -32,7 +32,7 @@ def document(save=False, **kwargs):
     """Return an empty document with enough stuff filled out that it can be
     saved."""
     defaults = {'category': Document.CATEGORIES[0][0],
-                'title': str(datetime.now()),
+                'title': unicode(datetime.now()),
                 'is_redirect': 0}
     defaults.update(kwargs)
     if 'slug' not in kwargs:
