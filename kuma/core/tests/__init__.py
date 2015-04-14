@@ -77,8 +77,8 @@ class override_constance_settings(overrider):
     its caching."""
 
     def enable(self):
-        self.old_cache = constance_database.db_cache
-        constance_database.db_cache = None
+        self.old_cache = config._backend._cache
+        config._backend._cache = None
         self.old_settings = dict((k, getattr(config, k))
                                  for k in dir(config))
         for k, v in self.options.items():
@@ -87,7 +87,7 @@ class override_constance_settings(overrider):
     def disable(self):
         for k, v in self.old_settings.items():
             config._backend.set(k, v)
-        constance_database.db_cache = self.old_cache
+        config._backend._cache = self.old_cache
 
 
 def mock_lookup_user():
