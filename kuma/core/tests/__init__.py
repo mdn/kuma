@@ -1,4 +1,4 @@
-from django.conf import settings, UserSettingsHolder
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.messages.storage.fallback import FallbackStorage
 from django.core.cache import cache
@@ -11,7 +11,6 @@ from django.utils.translation import trans_real
 
 from constance import config
 from constance.backends import database as constance_database
-from djcelery.app import app
 from nose import SkipTest
 from nose.tools import eq_
 
@@ -89,20 +88,6 @@ class override_constance_settings(overrider):
         for k, v in self.old_settings.items():
             config._backend.set(k, v)
         constance_database.db_cache = self.old_cache
-
-
-class override_settings(overrider):
-    """Decorator / context manager to override Django settings"""
-
-    def enable(self):
-        self.old_settings = settings._wrapped
-        override = UserSettingsHolder(settings._wrapped)
-        for key, new_value in self.options.items():
-            setattr(override, key, new_value)
-        settings._wrapped = override
-
-    def disable(self):
-        settings._wrapped = self.old_settings
 
 
 def mock_lookup_user():
