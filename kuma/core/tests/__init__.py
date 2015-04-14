@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.messages.storage.fallback import FallbackStorage
+from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django import test
 from django.test import TestCase
