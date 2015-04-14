@@ -84,7 +84,7 @@
     config.entities = false;
 
     config.startupFocus = true;
-    config.bodyClass = 'text-content redesign';
+    config.bodyClass = 'text-content';
     config.contentsCss = [
       mdn.mediaPath + 'css/main.css?{{ BUILD_ID_JS }}',
       mdn.mediaPath + 'css/wiki.css?{{ BUILD_ID_JS }}',
