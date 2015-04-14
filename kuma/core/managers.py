@@ -28,15 +28,9 @@ class NamespacedTaggableManager(TaggableManager):
     def get_choices(self, include_blank=True, blank_choice=BLANK_CHOICE_DASH):
         return [(t.id, t.name) for t in Tag.objects.all()]
 
-    def __get__(self, instance, model):
-        if instance is not None and instance.pk is None:
-            raise ValueError("%s objects need to have a primary key value "
-                             "before you can access their tags." %
-                             model.__name__)
-        manager = _NamespacedTaggableManager(
-            through=self.through, model=model, instance=instance
-        )
-        return manager
+    def __init__(self, *args, **kwargs):
+        kwargs['manager'] = _NamespacedTaggableManager
+        super(NamespacedTaggableManager, self).__init__(*args, **kwargs)
 
 
 class _NamespacedTaggableManager(_TaggableManager):
