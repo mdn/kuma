@@ -36,7 +36,7 @@ def document(save=False, **kwargs):
                 'is_redirect': 0}
     defaults.update(kwargs)
     if 'slug' not in kwargs:
-        defaults['slug'] = slugify(defaults['title'])
+        defaults['slug'] = slugify(unicode(defaults['title']))
     d = Document(**defaults)
     if save:
         d.save()
