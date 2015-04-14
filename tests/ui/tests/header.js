@@ -45,35 +45,54 @@ define([
         },
 
         'The header search box expands and contracts correctly': function() {
+            // Possible ToDo:  Move click() call after the transitionend event listener
 
+            var remote = this.remote;
             var searchBoxId = 'main-q';
             var homeSearchBoxId = 'home-q';
-            var originalSize;
+            var originalWidth;
 
-            return this.remote
+            remote.setExecuteAsyncTimeout(config.asyncExecutionTimeout);
+
+            var transitionEndCallback = function() {
+                return remote.executeAsync(function(done) {
+                    var element = document.getElementById('main-q');
+                    var eventType = 'transitionend';
+
+                    var ev = element.addEventListener(eventType, function(){
+                        element.removeEventListener(eventType, ev);
+                        done();
+                    });
+                });
+            }
+
+            return remote
                             .findById(searchBoxId)
                             .getSize()
                             .then(function(size) {
-                                originalSize = size;
+                                originalWidth = size.width;
                             })
-                            .click()
-                            .end()
-                            .sleep(2000) // wait for animation
+                            .click() // ToDo:  Will calling click first cause a timing issue?
+                            .then(transitionEndCallback)
                             .findById(searchBoxId)
                             .getSize()
                             .then(function(newSize) {
-                                assert.isTrue(newSize.width > originalSize.width);
+                                assert.isTrue(newSize.width > originalWidth);
                             })
                             .end()
-                            .findById(homeSearchBoxId)
-                            .click()
-                            .end()
-                            .sleep(2000) // wait for animation
-                            .findById(searchBoxId)
-                            .getSize()
-                            .then(function(newSize) {
-                                assert.equal(newSize.width, originalSize.width);
+                            .then(function() {
+                                return remote
+                                            .findById(homeSearchBoxId)
+                                            .click() // ToDo:  Will calling click first cause a timing issue?
+                                            .end()
+                                            .then(transitionEndCallback)
+                                            .findById(searchBoxId)
+                                            .getSize()
+                                            .then(function(newSize) {
+                                                assert.equal(newSize.width, originalWidth);
+                                            });
                             });
+
         },
 
         'Tabzilla loads properly': libAssert.elementExistsAndDisplayed('#tabzilla')

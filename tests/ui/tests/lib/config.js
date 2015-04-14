@@ -32,8 +32,11 @@ define(['intern'], function(intern) {
         personaPassword: intern.args.p || '',
 
         // Async testing in milliseconds
-        testTimeout: 22000
+        testTimeout: 22000,
+        asyncExecutionTimeout: 4000,
 
+        // Wiki-specific
+        wikiDocumentSlug: ''
     };
 
 });
