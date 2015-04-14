@@ -4,9 +4,7 @@ from django.core import serializers
 from django.db import models
 
 import bleach
-import config
-
-from kuma.core.cache import memcache
+from constance import config
 
 from .constants import (ALLOWED_TAGS, ALLOWED_ATTRIBUTES, ALLOWED_STYLES,
                         TEMPLATE_TITLE_PREFIX)
