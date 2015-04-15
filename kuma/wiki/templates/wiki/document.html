@@ -10,6 +10,7 @@
 {% endif %}
 
 {% set is_logged_in = request.user.is_authenticated() %}
+{% set is_admin = request.user.is_superuser %}
 {% set canonical = request.build_absolute_uri(document.get_absolute_url()) %}
 
 {% if document.is_template %}
@@ -367,6 +368,14 @@
                       {{ datetimeformat(current_revision.created, format='datetime') }}
                     </div>
                   {% endif %}
+		 {% if is_admin %}
+		    <div class="contributors-sub">
+		      {% trans id=document.id %}
+		      Document ID: {{ id }}
+		      {% endtrans %}
+		    </div>
+		 {% endif %}
+
                 </div>
               {% endif %}
             </div>
