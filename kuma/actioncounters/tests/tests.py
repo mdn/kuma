@@ -1,12 +1,10 @@
-from django.conf import settings
-
 from django.core.exceptions import MultipleObjectsReturned
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
 from django.contrib.contenttypes.models import ContentType
 from django.http import HttpRequest
-from django.test import TestCase
+from django.test import TransactionTestCase
 
 from nose.tools import eq_, ok_
 from nose.plugins.attrib import attr
@@ -16,7 +14,7 @@ from ..models import ActionCounterUnique
 from .models import TestModel
 
 
-class ActionCountersTest(TestCase):
+class ActionCountersTest(TransactionTestCase):
 
     def setUp(self):
         super(ActionCountersTest, self).setUp()
@@ -67,15 +65,15 @@ class ActionCountersTest(TestCase):
 
         # Create an initial counter record directly.
         u1 = ActionCounterUnique(content_type=obj_1_ct, object_pk=obj_1.pk,
-                name=action_name, total=1, ip=ip, user_agent=user_agent,
-                user=user)
+                                 name=action_name, total=1, ip=ip,
+                                 user_agent=user_agent, user=user)
         u1.save()
 
         # Adding a duplicate counter should be prevented at the model level.
         try:
             u2 = ActionCounterUnique(content_type=obj_1_ct, object_pk=obj_1.pk,
-                    name=action_name, total=1, ip=ip, user_agent=user_agent,
-                    user=user)
+                                     name=action_name, total=1, ip=ip,
+                                     user_agent=user_agent, user=user)
             u2.save()
             ok_(False, "This should have triggered an IntegrityError")
         except:
@@ -84,10 +82,10 @@ class ActionCountersTest(TestCase):
         # Try get_unique_for_request, which should turn up the single unique
         # record created earlier.
         try:
-            (u, created) = ActionCounterUnique.objects.get_unique_for_request(obj_1,
-                               action_name, request)
+            (u, created) = ActionCounterUnique.objects.get_unique_for_request(
+                obj_1, action_name, request)
             eq_(False, created)
-        except MultipleObjectsReturned, e:
+        except MultipleObjectsReturned:
             ok_(False, "MultipleObjectsReturned should not be raised")
 
     def test_basic_action_increment(self):
@@ -166,9 +164,9 @@ class ActionCountersTest(TestCase):
         MIN = obj_1.frobs.field.min_total_per_unique
 
         request = self.mk_request(ip='192.168.123.123')
-        for x in range(1, (0-MIN)+1):
+        for x in range(1, (0 - MIN) + 1):
             obj_1.frobs.decrement(request)
-            eq_(0-x, obj_1.frobs.total)
+            eq_(0 - x, obj_1.frobs.total)
 
         obj_1.frobs.decrement(request)
         eq_(MIN, obj_1.frobs.total)
