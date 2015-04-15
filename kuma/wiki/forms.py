@@ -428,6 +428,10 @@ class TreeMoveForm(forms.Form):
         self.cleaned_data['slug'] = re.sub(re.compile(SLUG_CLEANSING_REGEX),
                                            '', self.cleaned_data['slug'])
 
+        # Remove the trailing slash if one is present, because it
+        # will screw up the page move, which doesn't expect one.
+        self.cleaned_data['slug'] = self.cleaned_data['slug'].rstrip('/');
+        
         return self.cleaned_data['slug']
 
     def clean(self):
