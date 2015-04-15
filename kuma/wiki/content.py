@@ -16,9 +16,17 @@ from tower import ugettext as _
 from kuma.core.urlresolvers import reverse
 from .utils import locale_and_slug_from_path
 
+# A few regex patterns for various parsing efforts in this file
+MACRO_RE = re.compile(r'\{\{\s*([^\(\} ]+)', re.MULTILINE)
+
+LEVEL_RE = re.compile(r'^h(\d)$')
+
+TEMPLATE_PARAMS_RE = re.compile(r'''^template\(['"]([^'"]+)['"],\s*\[([^\]]+)]''', re.I)
+
+TEMPLATE_RE = re.compile(r'''^template\(['"]([^'"]+)['"]''', re.I)
 
 # Regex to extract language from MindTouch code elements' function attribute
-MT_SYNTAX_PAT = re.compile(r"""syntax\.(\w+)""")
+MT_SYNTAX_RE = re.compile(r'syntax\.(\w+)')
 # map for mt syntax values that should turn into new brush values
 MT_SYNTAX_BRUSH_MAP = {
     'javascript': 'js',
@@ -223,8 +231,7 @@ def extract_kumascript_macro_names(content):
             if token['type'] in ('Characters', 'SpaceCharacters'):
                 txt.append(token['data'])
         txt = ''.join(txt)
-        macro_re = re.compile('\{\{\s*([^\(\} ]+)', re.MULTILINE)
-        names.update(macro_re.findall(txt))
+        names.update(MACRO_RE.findall(txt))
     except:
         pass
     return list(names)
@@ -694,7 +701,7 @@ class SectionTOCFilter(html5lib_Filter):
         for token in input:
             if ('StartTag' == token['type'] and
                     token['name'] in HEAD_TAGS_TOC):
-                level_match = re.compile(r'^h(\d)$').match(token['name'])
+                level_match = LEVEL_RE.match(token['name'])
                 level = int(level_match.group(1))
                 if level > self.max_level:
                     self.skip_header = True
@@ -749,7 +756,7 @@ class SectionTOCFilter(html5lib_Filter):
                 yield token
             elif ('EndTag' == token['type'] and
                     token['name'] in HEAD_TAGS_TOC):
-                level_match = re.compile(r'^h(\d)$').match(token['name'])
+                level_match = LEVEL_RE.match(token['name'])
                 level = int(level_match.group(1))
                 if level > self.max_level:
                     self.skip_header = False
@@ -944,7 +951,7 @@ class CodeSyntaxFilter(html5lib_Filter):
                     attrs = dict(token['data'])
                     function = attrs.get('function', None)
                     if function:
-                        m = MT_SYNTAX_PAT.match(function)
+                        m = MT_SYNTAX_RE.match(function)
                         if m:
                             lang = m.group(1).lower()
                             brush = MT_SYNTAX_BRUSH_MAP.get(lang, lang)
@@ -1051,15 +1058,12 @@ class DekiscriptMacroFilter(html5lib_Filter):
                     ds_call = ds_call[len(prefix):]
 
             # template("template name", [ "params" ])
-            wt_re = re.compile(
-                r'''^template\(['"]([^'"]+)['"],\s*\[([^\]]+)]''', re.I)
-            m = wt_re.match(ds_call)
+            m = TEMPLATE_PARAMS_RE.match(ds_call)
             if m:
                 ds_call = '%s(%s)' % (m.group(1), m.group(2).strip())
 
             # template("template name")
-            wt_re = re.compile(r'''^template\(['"]([^'"]+)['"]''', re.I)
-            m = wt_re.match(ds_call)
+            m = TEMPLATE_RE.match(ds_call)
             if m:
                 ds_call = '%s()' % (m.group(1))
 
