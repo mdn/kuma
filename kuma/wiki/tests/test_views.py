@@ -300,6 +300,13 @@ class ViewTests(UserTestCase, WikiTestCase):
         json_obj = json.loads(resp.content)
         eq_(json_obj['subpages'][0]['title'], 'A Child')
 
+        # Test if we are serving an error json if document does not exist
+        no_doc_url = reverse('wiki.get_children', args=['nonexistentDocument'],
+            locale=settings.WIKI_DEFAULT_LANGUAGE)
+        resp = self.client.get(no_doc_url)
+        result = json.loads(resp.content)
+        eq_(result, {'error': 'Document does not exist.'})
+
     def test_summary_view(self):
         """The ?summary option should restrict document view to summary"""
         d, r = doc_rev("""

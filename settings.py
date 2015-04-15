@@ -476,7 +476,6 @@ INSTALLED_APPS = (
 
     # DEMOS
     'kuma.demos',
-    'captcha',
     'kuma.contentflagging',
     'kuma.actioncounters',
 
@@ -831,10 +830,6 @@ WIKI_DEFAULT_LANGUAGE = LANGUAGE_CODE
 TIDINGS_FROM_ADDRESS = 'notifications@developer.mozilla.org'
 TIDINGS_CONFIRM_ANONYMOUS_WATCHES = True
 
-# recaptcha
-RECAPTCHA_USE_SSL = False
-RECAPTCHA_PRIVATE_KEY = 'SET ME IN SETTINGS_LOCAL'
-RECAPTCHA_PUBLIC_KEY = 'SET ME IN SETTINGS_LOCAL'
 
 # content flagging
 DEMO_FLAG_REASONS = (

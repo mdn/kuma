@@ -1,7 +1,7 @@
 {% extends "wiki/base.html" %}
 {% block title %}{{ page_title(document.title + seo_parent_title) }}{% endblock %}
 
-{% from "wiki/includes/document_macros.html" import build_document_crumbs, get_document_quick_links, get_document_buttons, get_document_subnav, get_approvals_html, document_watch with context %}
+{% from "wiki/includes/document_macros.html" import build_document_crumbs, get_document_quick_links, get_document_buttons, get_document_subnav, get_approvals_html, document_watch, share_links with context %}
 
 {% if fallback_reason == 'no_translation' %}
   {% set help_link = url('wiki.translate', document_path=document.full_path, locale=document.locale)|urlparams(tolocale=request.locale) %}
@@ -18,7 +18,7 @@
 {% endif %}
 
 {% set current_revision = document.current_revision %}
-{% if (is_logged_in and current_revision and document.allows_revision_by(user)) and (current_revision.needs_technical_review() or current_revision.needs_editorial_review()) %}
+{% if (is_logged_in and current_revision and document.allows_revision_by(user)) and (current_revision.needs_technical_review or current_revision.needs_editorial_review) %}
   {% set approvals_html = get_approvals_html(document, request.user) %}
 {% endif %}
 
@@ -174,6 +174,10 @@
 
         <h1>{{ document.title }}</h1>
 
+        {% if waffle.flag('share_links') %}
+          {{ share_links(document) }}
+        {% endif %}
+
         {% if waffle.flag('top_contributors') %}
             {% set contributors = document.get_contributors() %}
             {% set contrib_limit = 13 %}
@@ -231,6 +235,9 @@
                 <ol class="toggle-container">
                   {{ toc_html|safe }}
                 </ol>
+                {% if waffle.flag('share_links') %}
+                  {{ share_links(document) }}
+                {% endif %}
               </div>
               {% endif %}
               </div>
@@ -281,17 +288,17 @@
               {% endif %}
 
               {% if document.current_revision %}
-                {% if document.current_revision.needs_technical_review() %}
+                {% if document.current_revision.needs_technical_review %}
                   <div class="warning warning-review"><p>{% trans %}
                     This article is in need of a technical review.
                   {% endtrans %}</p></div>
                 {% endif %}
-                {% if document.current_revision.needs_editorial_review() %}
+                {% if document.current_revision.needs_editorial_review %}
                   <div class="warning warning-review"><p>{% trans %}
                     This article is in need of an editorial review.
                   {% endtrans %}</p></div>
                 {% endif %}
-                {% if document.current_revision.localization_in_progress() %}
+                {% if document.current_revision.localization_in_progress %}
                   {% if document.current_revision.translation_age >= 10 %}
                       <div class="warning warning-review"><p>{% trans translate_url=url('wiki.edit_document', document.full_path, locale=document.locale) %}
                         This translation is incomplete. Please help <a href="{{ translate_url }}">translate this article</a> from English.
@@ -337,28 +344,7 @@
               </article>
 
             {% if waffle.flag('share_links') %}
-                {% set full_url = request.build_absolute_uri(document.get_absolute_url()) %}
-
-                {% set share_url_twitter = full_url|urlparams(utm_campaign='share', utm_source='twitter.com', utm_medium='doc share link') %}
-                {% set share_url_facebook = full_url|urlparams(utm_campaign='share', utm_source='facebook.com', utm_medium='doc share link')%}
-                {% set share_url_gplus = full_url|urlparams(utm_campaign='share', utm_source='plus.google.com', utm_medium='doc share link')%}
-
-                {% set short_share_url_twitter = share_url_twitter | bitly_shorten %}
-                {% set short_share_url_facebook = share_url_facebook | bitly_shorten %}
-                {% set short_share_url_gplus = share_url_gplus | bitly_shorten %}
-
-                {% set twitter_url = 'http://twitter.com/share'|urlparams(url=short_share_url_twitter, text=share_text) %}
-                {% set facebook_url = 'http://facebook.com/sharer.php?s=100&p[url]='+short_share_url_facebook+'&p[images][0]=/media/redesign/img/favicon144.png&p[title]=' + share_text %}
-                {% set gplus_url = 'https://plus.google.com/share'|urlparams(url=short_share_url_gplus) %}
-
-                <div class="share">
-                    <strong><i class="icon-share" aria-hidden="true"></i> {{ _('Share:') }}</strong>
-                    <ul>
-                        <li><a href="{{ twitter_url }}" target="_blank" data-url="{{short_share_url_twitter}}" data-title="{{ share_text }}" class="share-link twitter"><i aria-hidden="true" class="icon-twitter"></i>{{ _('Twitter') }}</a></li>
-                        <li><a href="{{ facebook_url }}" target="_blank" data-url="{{short_share_url_facebook}}" data-title="{{ share_text }}" class="share-link facebook"><i aria-hidden="true" class="icon-facebook"></i>{{ _('Facebook') }}</a></li>
-                        <li><a href="{{ gplus_url }}" target="_blank" data-url="{{short_share_url_gplus}}" data-title="{{ share_text }}" class="share-link gplus"><i aria-hidden="true" class="icon-google-plus"></i>{{ _('Google +') }}</a></li>
-                    </ul>
-                </div>
+              {{ share_links(document) }}
             {% endif %}
 
 
@@ -368,13 +354,7 @@
                 <div class="wiki-block contributors">
                   <h2 class="offscreen">{{ _('Document Tags and Contributors') }}</h2>
                   {% set tags = document.tags.all() %}
-                  {% if tags.exists() %}
-                  <!-- tags if present -->
-                  <div class="tag-attach-list contributors-sub">
-                    <i aria-hidden="true" class="icon-tags"></i><strong>{{ _('Tags:') }}</strong>&nbsp;
-                    <ul class="tags tags-small">{% for tag in tags %}<li><a href="{{ url('wiki.tag', tag.name) }}">{{ tag.name }}</a></li>{% endfor %}</ul>
-                  </div>
-                  {% endif %}
+                  {% include "wiki/includes/document_tag.html" %}
                   {% trans contributors=user_list(contributors) %}
                   <div class="contributors-sub">
                     <i aria-hidden="true" class="icon-group"></i><strong>Contributors to this page:</strong> {{ contributors }}
@@ -424,13 +404,18 @@
     </div> <!-- ends "main-content" -->
 
   <menu type="context" id="edit-history-menu">
-    <menuitem data-action="$edit" label="{{_('Edit page')}}"></menuitem>
-    <menuitem data-action="$history" label="{{_('View page history')}}"></menuitem>
+    <menuitem data-action="{{ url('wiki.edit_document', document.full_path, locale=document.locale) }}" label="{{_('Edit page')}}"></menuitem>
+    <menuitem data-action="{{ url('wiki.document_revisions', document.full_path) }}" label="{{_('View page history')}}"></menuitem>
   </menu>
 {% endblock %}
 
 {% block js %}
   <script type="text/javascript">
       if(window.jQuery) jQuery('.from-search-toc').mozSearchResults('{{ search_url|safe }}');
+
+      {# This can be removed once the edit button background color A/B test is completed. #}
+      {% if not is_zone_root %}
+          mdn.optimizely.push(['activate', 2706700712]);
+      {% endif %}
   </script>
 {% endblock %}

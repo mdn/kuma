@@ -421,14 +421,12 @@
             var isLinkTargeted = ($(target).is('a') || $(target).parents().is('a'));
             var isImageTargeted = $(target).is('img');
 
-            $body.attr('contextmenu', 'edit-history-menu');
-
             if(isLinkTargeted || isTextSelected || isImageTargeted) {
                 $body.attr('contextmenu', '');
             }
 
             $contextMenu.on('click', function(e) {
-                location.href = (target.href || location.href) + $(e.target).data('action') + '?src=context';
+                location.href = $(e.target).data('action') + '?src=context';
             });
     });
 

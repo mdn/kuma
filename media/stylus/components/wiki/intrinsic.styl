@@ -1,0 +1,31 @@
+/*
+Creates container that preserves aspect ratio, and fills container with iframe
+http://alistapart.com/article/creating-intrinsic-ratios-for-video
+https://css-tricks.com/NetMag/FluidWidthVideo/Article-FluidWidthVideo.php
+====================================================================== */
+.intrinsic-wrapper {
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+.intrinsic-container {
+    position: relative;
+    height: 0;
+    overflow: hidden;
+
+    /* 16x9 Aspect Ratio */
+    padding-bottom: 56.25%;
+
+    /* 4x3 Aspect Ratio */
+    &-4x3{
+        padding-bottom: 75%;
+    }
+
+    iframe {
+        position: absolute;
+        top:0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+}

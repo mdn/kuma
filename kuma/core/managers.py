@@ -47,7 +47,7 @@ class _NamespacedTaggableManager(_TaggableManager):
 
         if namespace == '':
             # Empty namespace is special - just look for absence of ':'
-            return [t for t in tags if (':' not in t.name)]
+            return tags.exclude(name__contains=':')
 
         if namespace is not None:
             # Namespace requested, so generate filtered set
@@ -64,10 +64,10 @@ class _NamespacedTaggableManager(_TaggableManager):
             # differ only by case.
             seen = []
             results = []
-            for t in tags:
-                if t.name.startswith(namespace) and t.name.lower() not in seen:
-                    seen.append(t.name.lower())
-                    results.append(t)
+            for tag in tags:
+                if tag.name.startswith(namespace) and tag.name.lower() not in seen:
+                    seen.append(tag.name.lower())
+                    results.append(tag)
             return results
 
         # No namespace requested, so collate into namespaces

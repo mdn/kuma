@@ -2,6 +2,8 @@ from functools import wraps
 import inspect
 
 from django.contrib.auth import REDIRECT_FIELD_NAME
+from django.contrib.auth.decorators import user_passes_test
+from django.core.exceptions import PermissionDenied
 from django.db.models import Model, get_model
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
@@ -123,3 +125,14 @@ def never_cache(view_func):
         return resp
 
     return _wrapped_view_func
+
+
+def is_superuser(u):
+    if u.is_authenticated():
+        if u.is_superuser:
+            return True
+        raise PermissionDenied
+    return False
+
+superuser_required = user_passes_test(is_superuser)
+#: A decorator to use for requiring a superuser

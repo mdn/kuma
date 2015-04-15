@@ -60,9 +60,7 @@ class HomeView(ListView):
 
     def get_context_data(self, **kwargs):
         base_context = super(HomeView, self).get_context_data(**kwargs)
-        featured = (Submission.objects.filter(featured=True)
-                                      .exclude(hidden=True)
-                                      .order_by('-modified').all()[:3])
+        featured = Submission.objects.all_sorted(sort='recentfeatured', max=3)
         base_context['featured_submission_list'] = featured
         base_context['is_demo_home'] = True
         return base_context

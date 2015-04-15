@@ -12,9 +12,7 @@ from kuma.feeder.models import Bundle
 
 def home(request):
     """Home page."""
-    demos = (Submission.objects
-                       .all_sorted('upandcoming')
-                       .exclude(hidden=True))[:12]
+    demos = Submission.objects.all_sorted(sort='recentfeatured', max=12)
 
     updates = []
     for s in SECTION_USAGE:

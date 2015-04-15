@@ -158,13 +158,14 @@ class RecentSubmissionsFeed(SubmissionsFeed):
 
 
 class FeaturedSubmissionsFeed(SubmissionsFeed):
-    title    = _('MDN featured demos')
+    title = _('MDN featured demos')
     subtitle = _('Demos featured on MDN')
 
     def items(self):
-        submissions = (Submission.objects.filter(featured=True)
-                                         .exclude(hidden=True)
-                                         .order_by('-modified')[:MAX_FEED_ITEMS])
+        submissions = Submission.objects.all_sorted(
+            sort='recentfeatured',
+            max=MAX_FEED_ITEMS
+        )
         return submissions
 
 
@@ -173,10 +174,10 @@ class TagSubmissionsFeed(SubmissionsFeed):
     def get_object(self, request, format, tag):
         super(TagSubmissionsFeed, self).get_object(request, format)
         if tag in TAG_DESCRIPTIONS:
-            self.title    = _('MDN demos tagged %s') % TAG_DESCRIPTIONS[tag]['title']
+            self.title = _('MDN demos tagged %s') % TAG_DESCRIPTIONS[tag]['title']
             self.subtitle = TAG_DESCRIPTIONS[tag]['description']
         else:
-            self.title    = _('MDN demos tagged "%s"') % tag
+            self.title = _('MDN demos tagged "%s"') % tag
             self.subtitle = None
         return tag
 

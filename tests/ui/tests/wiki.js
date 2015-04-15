@@ -17,7 +17,6 @@ define([
 
         before: function() {
             Page.init(this.remote, config.homepageUrl);
-            return Page.login();
         },
 
         beforeEach: function() {
@@ -26,6 +25,13 @@ define([
 
         after: function() {
             return Page.teardown();
+        },
+
+        '[requires-login] Logging in for wiki tests': function() {
+            // This appears here instead of "before" so that login isn't attempted
+            // due to '[requires-login]'
+
+            return Page.login();
         },
 
         '[requires-login] The new document screen passes all the checks': function() {
@@ -49,8 +55,8 @@ define([
                         });
 
         },
-        /*
-        'The new document-template screen passes all the checks': function() {
+
+        '[requires-login] The new document-template screen passes all the checks': function() {
 
             var remote = this.remote;
 
@@ -60,8 +66,25 @@ define([
                             return libAssert.windowPropertyExists(remote, 'ace_editor');
                         });
 
-        }
-        */
+        },
+
+        '[requires-login][requires-doc] Existing document is editable': function() {
+
+            return this.remote.get(config.url + 'docs/' + config.wikiDocumentSlug)
+                        .then(function() {
+                            return libAssert.elementExistsAndDisplayed('#edit-button');
+                        })
+                        .then(function() {
+                            return libAssert.elementExistsAndDisplayed('#advanced-menu');
+                        })
+                        .then(function() {
+                            return libAssert.elementExistsAndDisplayed('#languages-menu');
+                        });
+
+        },
+
+
+
     });
 
 });

@@ -324,7 +324,7 @@ class SubmissionManager(models.Manager):
             query = self._get_query(strip_qs, ['title', 'summary', 'description'])
             return self.all_sorted(sort).filter(query).order_by('-modified')
 
-    def all_sorted(self, sort=None):
+    def all_sorted(self, sort=None, max=5):
         """Apply to .all() one of the sort orders supported for views"""
         queryset = self.all()
         if sort == 'launches':
@@ -333,6 +333,10 @@ class SubmissionManager(models.Manager):
             return queryset.order_by('-likes_total')
         elif sort == 'upandcoming':
             return queryset.order_by('-likes_recent', '-launches_recent')
+        elif sort == 'recentfeatured':
+            return (queryset.filter(featured=True)
+                            .exclude(hidden=True)
+                            .order_by('-modified')[:max])
         else:
             return queryset.order_by('-created')
 
