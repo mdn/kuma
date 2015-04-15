@@ -139,3 +139,6 @@
 [submodule "vendor/src/django-debug-toolbar"]
 	path = vendor/src/django-debug-toolbar
 	url = git://github.com/django-debug-toolbar/django-debug-toolbar.git
+[submodule "vendor/src/html5lib"]
+	path = vendor/src/html5lib
+	url = https://github.com/html5lib/html5lib-python

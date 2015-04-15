@@ -45,8 +45,8 @@ GitPython==0.1.7
 # sha256: -GuWUXvFy32_NLu8Uc3VloFwh3tDvBq3yes5NFz_Tdc
 hash_ring==1.3.1
 
-# sha256: Gw4j8GGPvIlys2LV3cKFRJHaH1dCrYJst7U2PKNvVLc
-html5lib==0.90
+# sha256: xoREx0xH-1yqMNuVHKdW5YttDM0k1qA_WRCN2l-8RLo
+html5lib==0.999
 
 # sha256: FJHD7Zj4GcCCpuWLa652Xs2Ov8SAW27dquuQcLbe2iE
 jingo==0.6.1

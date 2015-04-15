@@ -99,3 +99,4 @@ src/django-ratelimit
 src/django-cacheback
 src/django-taggit
 src/httplib2/python2
+src/html5lib
