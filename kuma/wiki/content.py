@@ -51,7 +51,7 @@ DOC_SPECIAL_PATHS = ('new', 'tag', 'feeds', 'templates', 'needs-review')
 
 
 @newrelic.agent.function_trace()
-def parse(src, is_full_document = False):
+def parse(src, is_full_document=False):
     return ContentSectionTool(src, is_full_document)
 
 
@@ -81,50 +81,46 @@ def get_seo_description(content, locale=None, strip_markup=True):
     # TODO:  Google only takes the first 180 characters, so maybe we find a
     #        logical way to find the end of sentence before 180?
     seo_summary = ''
-    try:
-        if content:
-            # Try constraining the search for summary to an explicit "Summary"
-            # section, if any.
-            summary_section = (parse(content).extractSection('Summary')
-                                             .serialize())
-            if summary_section:
-                content = summary_section
+    if content:
+        # Try constraining the search for summary to an explicit "Summary"
+        # section, if any.
+        summary_section = (parse(content).extractSection('Summary')
+                                         .serialize())
+        if summary_section:
+            content = summary_section
 
-            # Need to add a BR to the page content otherwise pyQuery wont find
-            # a <p></p> element if it's the only element in the doc_html
-            seo_analyze_doc_html = content + '<br />'
-            page = pq(seo_analyze_doc_html)
+        # Need to add a BR to the page content otherwise pyQuery wont find
+        # a <p></p> element if it's the only element in the doc_html
+        seo_analyze_doc_html = content + '<br />'
+        page = pq(seo_analyze_doc_html)
 
-            # Look for the SEO summary class first
-            summaryClasses = page.find('.seoSummary')
-            if len(summaryClasses):
-                if strip_markup:
-                    seo_summary = summaryClasses.text()
-                else:
-                    seo_summary = summaryClasses.html()
+        # Look for the SEO summary class first
+        summaryClasses = page.find('.seoSummary')
+        if len(summaryClasses):
+            if strip_markup:
+                seo_summary = summaryClasses.text()
             else:
-                paragraphs = page.find('p')
-                if paragraphs.length:
-                    for p in range(len(paragraphs)):
-                        item = paragraphs.eq(p)
-                        if strip_markup:
-                            text = item.text()
-                        else:
-                            text = item.html()
-                        # Checking for a parent length of 2
-                        # because we don't want p's wrapped
-                        # in DIVs ("<div class='warning'>") and pyQuery adds
-                        # "<html><div>" wrapping to entire document
-                        if (text and len(text) and
-                            not 'Redirect' in text and
+                seo_summary = summaryClasses.html()
+        else:
+            paragraphs = page.find('p')
+            if paragraphs.length:
+                for p in range(len(paragraphs)):
+                    item = paragraphs.eq(p)
+                    if strip_markup:
+                        text = item.text()
+                    else:
+                        text = item.html()
+                    # Checking for a parent length of 2
+                    # because we don't want p's wrapped
+                    # in DIVs ("<div class='warning'>") and pyQuery adds
+                    # "<html><div>" wrapping to entire document
+                    if (text and len(text) and
+                            'Redirect' not in text and
                             text.find(u'«') == -1 and
                             text.find('&laquo') == -1 and
                             item.parents().length == 2):
-                            seo_summary = text.strip()
-                            break
-    except:
-        raise
-        pass
+                        seo_summary = text.strip()
+                        break
 
     if strip_markup:
         # Post-found cleanup
@@ -140,7 +136,9 @@ def get_seo_description(content, locale=None, strip_markup=True):
 
 @newrelic.agent.function_trace()
 def filter_out_noinclude(src):
-    """Quick and dirty filter to remove <div class="noinclude"> blocks"""
+    """
+    Quick and dirty filter to remove <div class="noinclude"> blocks
+    """
     # NOTE: This started as an html5lib filter, but it started getting really
     # complex. Seems like pyquery works well enough without corrupting
     # character encoding.
@@ -153,7 +151,8 @@ def filter_out_noinclude(src):
 
 @newrelic.agent.function_trace()
 def extract_code_sample(id, src):
-    """Extract a dict containing the html, css, and js listings for a given
+    """
+    Extract a dict containing the html, css, and js listings for a given
     code sample identified by ID.
 
     This should be pretty agnostic to markup patterns, since it just requires a
@@ -194,14 +193,18 @@ def extract_code_sample(id, src):
 
 @newrelic.agent.function_trace()
 def extract_css_classnames(content):
-    """Extract the unique set of class names used in the content"""
+    """
+    Extract the unique set of class names used in the content
+    """
     classnames = set()
     try:
         elements = pq(content).find('*')
+
         def process_el(e):
             cls = e.attr('class')
             if cls:
                 classnames.update(cls.split(' '))
+
         elements.each(process_el)
     except:
         pass
@@ -210,7 +213,9 @@ def extract_css_classnames(content):
 
 @newrelic.agent.function_trace()
 def extract_html_attributes(content):
-    """Extract the unique set of HTML attributes used in the content"""
+    """
+    Extract the unique set of HTML attributes used in the content
+    """
     try:
         attribs = set()
         for token in parse(content).stream:
@@ -223,7 +228,9 @@ def extract_html_attributes(content):
 
 @newrelic.agent.function_trace()
 def extract_kumascript_macro_names(content):
-    """Extract a unique set of KumaScript macro names used in the content"""
+    """
+    Extract a unique set of KumaScript macro names used in the content
+    """
     names = set()
     try:
         txt = []
@@ -244,7 +251,7 @@ class ContentSectionTool(object):
         self.tree = html5lib.treebuilders.getTreeBuilder("etree")
 
         self.parser = html5lib.HTMLParser(tree=self.tree,
-            namespaceHTMLElements=False)
+                                          namespaceHTMLElements=False)
 
         self.serializer = html5lib.serializer.htmlserializer.HTMLSerializer(
             omit_optional_tags=False, quote_attr_values=True,
@@ -256,7 +263,7 @@ class ContentSectionTool(object):
         self.doc = None
         self.stream = []
 
-        if (src):
+        if src:
             self.parse(src, is_full_document)
 
     @newrelic.agent.function_trace()
@@ -326,9 +333,10 @@ class ContentSectionTool(object):
 
 
 class URLAbsolutionFilter(html5lib_Filter):
-    """Filter which turns relative links into absolute links.
-       Originally created for generating sphinx templates."""
-
+    """
+    Filter which turns relative links into absolute links.
+    Originally created for generating sphinx templates.
+    """
     def __init__(self, source, base_url, tag_attributes):
         html5lib_Filter.__init__(self, source)
         self.base_url = base_url
@@ -362,9 +370,10 @@ class URLAbsolutionFilter(html5lib_Filter):
 
 
 class LinkAnnotationFilter(html5lib_Filter):
-    """Filter which annotates links to indicate things like whether they're
-    external, if they point to non-existent wiki pages, etc."""
-
+    """
+    Filter which annotates links to indicate things like whether they're
+    external, if they point to non-existent wiki pages, etc.
+    """
     # TODO: Need more external link prefixes, here?
     EXTERNAL_PREFIXES = ('http:', 'https:', 'ftp:',)
 
@@ -385,7 +394,7 @@ class LinkAnnotationFilter(html5lib_Filter):
             buffer.append(token)
             if ('StartTag' == token['type'] and 'a' == token['name']):
                 attrs = dict(token['data'])
-                if not 'href' in attrs:
+                if 'href' not in attrs:
                     continue
 
                 href = attrs['href']
@@ -395,9 +404,7 @@ class LinkAnnotationFilter(html5lib_Filter):
                     href = href_parsed.path
 
                 # Prepare annotations record for this path.
-                links[href] = dict(
-                    classes=[]
-                )
+                links[href] = {'classes': []}
 
         needs_existence_check = defaultdict(lambda: defaultdict(set))
 
@@ -501,8 +508,9 @@ class LinkAnnotationFilter(html5lib_Filter):
 
 
 class SectionIDFilter(html5lib_Filter):
-    """Filter which ensures section-related elements have unique IDs"""
-
+    """
+    Filter which ensures section-related elements have unique IDs
+    """
     def __init__(self, source):
         html5lib_Filter.__init__(self, source)
         self.id_cnt = 0
@@ -636,8 +644,9 @@ class SectionIDFilter(html5lib_Filter):
 
 
 class SectionEditLinkFilter(html5lib_Filter):
-    """Filter which injects editing links for sections with IDs"""
-
+    """
+    Filter which injects editing links for sections with IDs
+    """
     def __init__(self, source, full_path, locale):
         html5lib_Filter.__init__(self, source)
         self.full_path = full_path
@@ -667,14 +676,14 @@ class SectionEditLinkFilter(html5lib_Filter):
                                          locale=self.locale),
                                  urlencode({'section': id.encode('utf-8'),
                                             'raw': 'true'})
-                              ),
-                              'href': u'%s?%s' % (
+                             ),
+                             'href': u'%s?%s' % (
                                  reverse('wiki.edit_document',
                                          args=[self.full_path],
                                          locale=self.locale),
                                  urlencode({'section': id.encode('utf-8'),
                                             'edit_links': 'true'})
-                              )
+                             )
                          }},
                         {'type': 'Characters', 'data': _('Edit')},
                         {'type': 'EndTag', 'name': 'a'}
@@ -684,7 +693,9 @@ class SectionEditLinkFilter(html5lib_Filter):
 
 
 class SectionTOCFilter(html5lib_Filter):
-    """Filter which builds a TOC tree of sections with headers"""
+    """
+    Filter which builds a TOC tree of sections with headers
+    """
     def __init__(self, source):
         html5lib_Filter.__init__(self, source)
         self.level = 2
@@ -707,38 +718,40 @@ class SectionTOCFilter(html5lib_Filter):
                     self.skip_header = True
                     continue
                 self.in_header = True
-                out = ()
+                out = []
                 if level > self.level:
                     diff = level - self.level
                     for i in range(diff):
                         if (not self.in_hierarchy and i % 2 == 0):
-                            out += ({'type': 'StartTag', 'name': 'li',
-                                     'data': {}},)
-                        out += ({'type': 'StartTag', 'name': 'ol',
-                                 'data': {}},)
+                            out.append({'type': 'StartTag',
+                                        'name': 'li',
+                                        'data': {}})
+                        out.append({'type': 'StartTag',
+                                    'name': 'ol',
+                                    'data': {}})
                         if (diff > 1 and i % 2 == 0 and i != diff - 1):
-                            out += ({'type': 'StartTag', 'name': 'li',
-                                     'data': {}},)
+                            out.append({'type': 'StartTag',
+                                        'name': 'li',
+                                        'data': {}})
                         self.open_level += 1
                     self.level = level
                 elif level < self.level:
                     diff = self.level - level
                     for i in range(diff):
-                        out += ({'type': 'EndTag', 'name': 'ol'},
-                                {'type': 'EndTag', 'name': 'li'})
+                        out.extend([{'type': 'EndTag',
+                                    'name': 'ol'},
+                                    {'type': 'EndTag',
+                                     'name': 'li'}])
                         self.open_level -= 1
                     self.level = level
                 attrs = dict(token['data'])
                 id = attrs.get('id', None)
                 if id:
-                    out += (
+                    out.extend([
                         {'type': 'StartTag', 'name': 'li', 'data': {}},
                         {'type': 'StartTag', 'name': 'a',
-                         'data': {
-                            'rel': 'internal',
-                            'href': '#%s' % id,
-                         }},
-                    )
+                         'data': {'rel': 'internal', 'href': '#%s' % id}},
+                    ])
                     self.in_hierarchy = True
                     for t in out:
                         yield t
@@ -762,15 +775,13 @@ class SectionTOCFilter(html5lib_Filter):
                     self.skip_header = False
                     continue
                 self.in_header = False
-                out = ({'type': 'EndTag', 'name': 'a'},)
-                for t in out:
-                    yield t
+                yield {'type': 'EndTag', 'name': 'a'}
 
         if self.open_level > 0:
-            out = ()
+            out = []
             for i in range(self.open_level):
-                out += ({'type': 'EndTag', 'name': 'ol'},
-                        {'type': 'EndTag', 'name': 'li'})
+                out.extend([{'type': 'EndTag', 'name': 'ol'},
+                            {'type': 'EndTag', 'name': 'li'}])
             for t in out:
                 yield t
 
@@ -962,14 +973,13 @@ class CodeSyntaxFilter(html5lib_Filter):
 
 
 class EditorSafetyFilter(html5lib_Filter):
-    """Minimal filter meant to strip out harmful attributes and elements before
-    rendering HTML for use in CKEditor"""
+    """
+    Minimal filter meant to strip out harmful attributes and elements before
+    rendering HTML for use in CKEditor
+    """
     def __iter__(self):
-
         for token in html5lib_Filter.__iter__(self):
-
             if ('StartTag' == token['type']):
-
                 attrs = dict(token['data'])
                 # Strip out any attributes that start with "on"
                 token['data'] = dict((k, v)
