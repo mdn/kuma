@@ -349,7 +349,7 @@ class URLAbsolutionFilter(html5lib_Filter):
                             attrs[desired_attr] = self.base_url + address
                         else:
                             attrs[desired_attr] = self.base_url + '/' + address
-                        token['data'] = attrs.items()
+                        token['data'] = attrs
 
             yield token
 
@@ -488,7 +488,7 @@ class LinkAnnotationFilter(html5lib_Filter):
                         if classes:
                             attrs['class'] = u' '.join(classes)
 
-                token['data'] = attrs.items()
+                token['data'] = attrs
 
             yield token
 
@@ -575,7 +575,7 @@ class SectionIDFilter(html5lib_Filter):
                 name = attrs.get('name', None)
                 if name:
                     attrs['id'] = name
-                    token['data'] = attrs.items()
+                    token['data'] = attrs
                     yield token
                     continue
 
@@ -584,7 +584,7 @@ class SectionIDFilter(html5lib_Filter):
                     # But, only generate the ID if there's not already one
                     if 'id' not in attrs:
                         attrs['id'] = self.gen_id()
-                        token['data'] = attrs.items()
+                        token['data'] = attrs
                     yield token
                     continue
 
@@ -619,7 +619,7 @@ class SectionIDFilter(html5lib_Filter):
                         start_inc += 1
 
                 attrs['id'] = slug
-                start['data'] = attrs.items()
+                start['data'] = attrs
                 self.known_ids.add(slug)
 
                 # Finally, emit the tokens we scooped up for the header.
@@ -950,7 +950,7 @@ class CodeSyntaxFilter(html5lib_Filter):
                             brush = MT_SYNTAX_BRUSH_MAP.get(lang, lang)
                             attrs['class'] = "brush: %s" % brush
                             del attrs['function']
-                            token['data'] = attrs.items()
+                            token['data'] = attrs
             yield token
 
 
@@ -963,11 +963,11 @@ class EditorSafetyFilter(html5lib_Filter):
 
             if ('StartTag' == token['type']):
 
+                attrs = dict(token['data'])
                 # Strip out any attributes that start with "on"
-                token['data'] = [(k, v)
-                    for (k, v) in dict(token['data']).items()
-                    if not k.startswith('on')]
-
+                token['data'] = dict((k, v)
+                                     for k, v in attrs.items()
+                                     if not k.startswith('on'))
             yield token
 
 
@@ -992,7 +992,7 @@ class IframeHostFilter(html5lib_Filter):
                     if src:
                         if not re.search(self.hosts, src):
                             attrs['src'] = ''
-                    token['data'] = attrs.items()
+                    token['data'] = attrs
                     yield token
             if ('EndTag' == token['type']):
                 if 'iframe' == token['name']:
