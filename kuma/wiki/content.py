@@ -57,7 +57,9 @@ def parse(src, is_full_document=False):
 
 @newrelic.agent.function_trace()
 def get_content_sections(src=''):
-    """Gets sections in a document, """
+    """
+    Gets sections in a document
+    """
     sections = []
 
     if src:
@@ -217,11 +219,12 @@ def extract_html_attributes(content):
     Extract the unique set of HTML attributes used in the content
     """
     try:
-        attribs = set()
+        attribs = []
         for token in parse(content).stream:
-            if 'StartTag' == token['type']:
-                attribs.update(token['data'])
-        return ['%s="%s"' % x for x in attribs]
+            if token['type'] == 'StartTag':
+                for (namespace, name), value in token['data'].items():
+                    attribs.append((name, value))
+        return ['%s="%s"' % (k, v) for k, v in attribs]
     except:
         return []
 
@@ -347,24 +350,27 @@ class URLAbsolutionFilter(html5lib_Filter):
 
         for token in input:
 
-            if ('StartTag' == token['type'] and token['name'] in self.tag_attributes):
+            if (token['type'] == 'StartTag' and
+                    token['name'] in self.tag_attributes):
                 attrs = dict(token['data'])
 
                 # If the element has the attribute we're looking for
                 desired_attr = self.tag_attributes[token['name']]
-                if desired_attr in attrs:
-                    address = attrs[desired_attr]
-                    if not address.startswith('http'):
-                        if address.startswith('//') or address.startswith('{{'):
-                            # Do nothing for absolute addresses or apparent
-                            # template variable output
-                            attrs[desired_attr] = address
-                        elif address.startswith('/'):
-                            # Starts with "/", so just add the base url
-                            attrs[desired_attr] = self.base_url + address
-                        else:
-                            attrs[desired_attr] = self.base_url + '/' + address
-                        token['data'] = attrs
+
+                for (namespace, name), value in attrs.items():
+                    if desired_attr == name:
+                        if not value.startswith('http'):
+                            if value.startswith('//') or value.startswith('{{'):
+                                # Do nothing for absolute addresses or apparent
+                                # template variable output
+                                attrs[(namespace, name)] = value
+                            elif value.startswith('/'):
+                                # Starts with "/", so just add the base url
+                                attrs[(namespace, name)] = self.base_url + value
+                            else:
+                                attrs[(namespace, name)] = self.base_url + '/' + value
+                            token['data'] = attrs
+                        break
 
             yield token
 
@@ -388,23 +394,21 @@ class LinkAnnotationFilter(html5lib_Filter):
         input = html5lib_Filter.__iter__(self)
 
         # Pass #1: Gather all the link URLs and prepare annotations
-        links = dict()
+        links = {}
         buffer = []
         for token in input:
             buffer.append(token)
-            if ('StartTag' == token['type'] and 'a' == token['name']):
-                attrs = dict(token['data'])
-                if 'href' not in attrs:
-                    continue
+            if token['type'] == 'StartTag' and token['name'] == 'a':
+                for (namespace, name), value in token['data'].items():
+                    if name == 'href':
+                        href = value
+                        href_parsed = urlparse(href)
+                        if href_parsed.netloc == self.base_url_parsed.netloc:
+                            # Squash site-absolute URLs to site-relative paths.
+                            href = href_parsed.path
 
-                href = attrs['href']
-                href_parsed = urlparse(href)
-                if href_parsed.netloc == self.base_url_parsed.netloc:
-                    # Squash site-absolute URLs to site-relative paths.
-                    href = href_parsed.path
-
-                # Prepare annotations record for this path.
-                links[href] = {'classes': []}
+                        # Prepare annotations record for this path.
+                        links[href] = {'classes': []}
 
         needs_existence_check = defaultdict(lambda: defaultdict(set))
 
@@ -481,26 +485,26 @@ class LinkAnnotationFilter(html5lib_Filter):
 
         # Pass #2: Filter the content, annotating links
         for token in buffer:
-            if ('StartTag' == token['type'] and 'a' == token['name']):
+            if token['type'] == 'StartTag' and token['name'] == 'a':
                 attrs = dict(token['data'])
+                names = [name for (namespace, name) in attrs.keys()]
+                for (namespace, name), value in attrs.items():
+                    if name == 'href':
+                        href = value
+                        href_parsed = urlparse(value)
+                        if href_parsed.netloc == self.base_url_parsed.netloc:
+                            # Squash site-absolute URLs to site-relative paths.
+                            href = href_parsed.path
 
-                if 'href' in attrs:
-
-                    href = attrs['href']
-                    href_parsed = urlparse(href)
-                    if href_parsed.netloc == self.base_url_parsed.netloc:
-                        # Squash site-absolute URLs to site-relative paths.
-                        href = href_parsed.path
-
-                    if href in links:
-                        # Update class names on this link element.
-                        if 'class' in attrs:
-                            classes = set(attrs['class'].split(u' '))
-                        else:
-                            classes = set()
-                        classes.update(links[href]['classes'])
-                        if classes:
-                            attrs['class'] = u' '.join(classes)
+                        if href in links:
+                            # Update class names on this link element.
+                            if 'class' in names:
+                                classes = set(attrs[(namespace, 'class')].split(u' '))
+                            else:
+                                classes = set()
+                            classes.update(links[href]['classes'])
+                            if classes:
+                                attrs[(namespace, u'class')] = u' '.join(classes)
 
                 token['data'] = attrs
 
@@ -533,7 +537,9 @@ class SectionIDFilter(html5lib_Filter):
                     '{', '|', '}', '~']
 
     def slugify(self, text):
-        """Turn the text content of a header into a slug for use in an ID"""
+        """
+        Turn the text content of a header into a slug for use in an ID
+        """
         non_safe = [c for c in text if c in self.non_url_safe]
         if non_safe:
             for c in non_safe:
@@ -568,79 +574,80 @@ class SectionIDFilter(html5lib_Filter):
         buffer = []
         for token in input:
             buffer.append(token)
-            if 'StartTag' == token['type']:
+            if token['type'] == 'StartTag':
                 attrs = dict(token['data'])
-                # The header tags IDs will be (re)evaluated in pass 2
-                if 'id' in attrs and token['name'] not in HEAD_TAGS:
-                    self.known_ids.add(attrs['id'])
-                if 'name' in attrs:
-                    self.known_ids.add(attrs['name'])
+                for (namespace, name), value in attrs.items():
+                    # The header tags IDs will be (re)evaluated in pass 2
+                    if name == 'id' and token['name'] not in HEAD_TAGS:
+                        self.known_ids.add(value)
+                    if name == 'name':
+                        self.known_ids.add(value)
 
         # Pass 2: Sprinkle in IDs where they're needed
         while len(buffer):
             token = buffer.pop(0)
 
-            if not ('StartTag' == token['type'] and
+            if not (token['type'] == 'StartTag' and
                     token['name'] in SECTION_TAGS):
                 yield token
             else:
                 attrs = dict(token['data'])
 
-                # Treat a name attribute as a human-specified ID override
-                name = attrs.get('name', None)
-                if name:
-                    attrs['id'] = name
-                    token['data'] = attrs
-                    yield token
-                    continue
-
-                # If this is not a header, then generate a section ID.
-                if token['name'] not in HEAD_TAGS:
-                    # But, only generate the ID if there's not already one
-                    if 'id' not in attrs:
-                        attrs['id'] = self.gen_id()
+                for (namespace, name), value in attrs.items():
+                    # Treat a name attribute as a human-specified ID override
+                    if name == 'name' and value:
+                        attrs[(namespace, u'id')] = value
                         token['data'] = attrs
-                    yield token
-                    continue
+                        yield token
+                        continue
 
-                # If this is a header, then scoop up the rest of the header and
-                # gather the text it contains.
-                start, text, tmp = token, [], []
-                while len(buffer):
-                    token = buffer.pop(0)
-                    tmp.append(token)
-                    if token['type'] in ('Characters', 'SpaceCharacters'):
-                        text.append(token['data'])
-                    elif ('EndTag' == token['type'] and
-                          start['name'] == token['name']):
-                        # Note: This is naive, and doesn't track other
-                        # start/end tags nested in the header. Odd things might
-                        # happen in a case like <h1><h1></h1></h1>. But, that's
-                        # invalid markup and the worst case should be a
-                        # truncated ID because all the text wasn't accumulated.
-                        break
+                    # If this is not a header, then generate a section ID.
+                    if token['name'] not in HEAD_TAGS:
+                        # But, only generate the ID if there's not already one
+                        if name != 'id':
+                            attrs[(namespace, u'id')] = self.gen_id()
+                            token['data'] = attrs
+                        yield token
+                        continue
 
-                # Slugify the text we found inside the header, generate an ID
-                # as a last resort.
-                slug = self.slugify(u''.join(text))
-                if not slug:
-                    slug = self.gen_id()
-                else:
-                    # Create unique slug for heading tags with the same content
-                    start_inc = 2
-                    slug_base = slug
-                    while slug in self.known_ids:
-                        slug = '{0}_{1}'.format(slug_base, start_inc)
-                        start_inc += 1
+                    # If this is a header, then scoop up the rest of the header and
+                    # gather the text it contains.
+                    start, text, tmp = token, [], []
+                    while len(buffer):
+                        token = buffer.pop(0)
+                        tmp.append(token)
+                        if token['type'] in ('Characters', 'SpaceCharacters'):
+                            text.append(token['data'])
+                        elif (token['type'] == 'EndTag' and
+                              token['name'] == start['name']):
+                            # Note: This is naive, and doesn't track other
+                            # start/end tags nested in the header. Odd things might
+                            # happen in a case like <h1><h1></h1></h1>. But, that's
+                            # invalid markup and the worst case should be a
+                            # truncated ID because all the text wasn't accumulated.
+                            break
 
-                attrs['id'] = slug
-                start['data'] = attrs
-                self.known_ids.add(slug)
+                    # Slugify the text we found inside the header, generate an ID
+                    # as a last resort.
+                    slug = self.slugify(u''.join(text))
+                    if not slug:
+                        slug = self.gen_id()
+                    else:
+                        # Create unique slug for heading tags with the same content
+                        start_inc = 2
+                        slug_base = slug
+                        while slug in self.known_ids:
+                            slug = '{0}_{1}'.format(slug_base, start_inc)
+                            start_inc += 1
 
-                # Finally, emit the tokens we scooped up for the header.
-                yield start
-                for t in tmp:
-                    yield t
+                    attrs[(namespace, u'id')] = slug
+                    start['data'] = attrs
+                    self.known_ids.add(slug)
+
+                    # Finally, emit the tokens we scooped up for the header.
+                    yield start
+                    for t in tmp:
+                        yield t
 
 
 class SectionEditLinkFilter(html5lib_Filter):
@@ -659,37 +666,37 @@ class SectionEditLinkFilter(html5lib_Filter):
 
             yield token
 
-            if ('StartTag' == token['type'] and
+            if (token['type'] == 'StartTag' and
                     token['name'] in SECTION_TAGS):
                 attrs = dict(token['data'])
-                id = attrs.get('id', None)
-                if id:
-                    out = (
-                        {'type': 'StartTag', 'name': 'a',
-                         'data': {
-                             'title': _('Edit section'),
-                             'class': 'edit-section',
-                             'data-section-id': id,
-                             'data-section-src-url': u'%s?%s' % (
-                                 reverse('wiki.document',
-                                         args=[self.full_path],
-                                         locale=self.locale),
-                                 urlencode({'section': id.encode('utf-8'),
-                                            'raw': 'true'})
-                             ),
-                             'href': u'%s?%s' % (
-                                 reverse('wiki.edit_document',
-                                         args=[self.full_path],
-                                         locale=self.locale),
-                                 urlencode({'section': id.encode('utf-8'),
-                                            'edit_links': 'true'})
-                             )
-                         }},
-                        {'type': 'Characters', 'data': _('Edit')},
-                        {'type': 'EndTag', 'name': 'a'}
-                    )
-                    for t in out:
-                        yield t
+                for (namespace, name), value in attrs.items():
+                    if name == 'id' and value:
+                        ts = ({'type': 'StartTag',
+                               'name': 'a',
+                               'data': {
+                                   (None, u'title'): _('Edit section'),
+                                   (None, u'class'): 'edit-section',
+                                   (None, u'data-section-id'): value,
+                                   (None, u'data-section-src-url'): u'%s?%s' % (
+                                       reverse('wiki.document',
+                                               args=[self.full_path],
+                                               locale=self.locale),
+                                       urlencode({'section': value.encode('utf-8'),
+                                                  'raw': 'true'})
+                                   ),
+                                   (None, u'href'): u'%s?%s' % (
+                                       reverse('wiki.edit_document',
+                                               args=[self.full_path],
+                                               locale=self.locale),
+                                       urlencode({'section': value.encode('utf-8'),
+                                                  'edit_links': 'true'})
+                                   )
+                               }},
+                              {'type': 'Characters',
+                               'data': _(u'Edit')},
+                              {'type': 'EndTag', 'name': 'a'})
+                        for t in ts:
+                            yield t
 
 
 class SectionTOCFilter(html5lib_Filter):
@@ -710,7 +717,7 @@ class SectionTOCFilter(html5lib_Filter):
         self.skip_header = False
 
         for token in input:
-            if ('StartTag' == token['type'] and
+            if (token['type'] == 'StartTag' and
                     token['name'] in HEAD_TAGS_TOC):
                 level_match = LEVEL_RE.match(token['name'])
                 level = int(level_match.group(1))
@@ -750,12 +757,13 @@ class SectionTOCFilter(html5lib_Filter):
                     out.extend([
                         {'type': 'StartTag', 'name': 'li', 'data': {}},
                         {'type': 'StartTag', 'name': 'a',
-                         'data': {'rel': 'internal', 'href': '#%s' % id}},
+                         'data': {(None, u'rel'): 'internal',
+                                  (None, u'href'): '#%s' % id}},
                     ])
                     self.in_hierarchy = True
                     for t in out:
                         yield t
-            elif ('StartTag' == token['type'] and
+            elif (token['type'] == 'StartTag' and
                   token['name'] in TAGS_IN_TOC and
                   self.in_header and
                   not self.skip_header):
@@ -763,11 +771,11 @@ class SectionTOCFilter(html5lib_Filter):
             elif (token['type'] in ("Characters", "SpaceCharacters")
                   and self.in_header):
                 yield token
-            elif ('EndTag' == token['type'] and
+            elif (token['type'] == 'EndTag' and
                   token['name'] in TAGS_IN_TOC and
                   self.in_header):
                 yield token
-            elif ('EndTag' == token['type'] and
+            elif (token['type'] == 'EndTag' and
                     token['name'] in HEAD_TAGS_TOC):
                 level_match = LEVEL_RE.match(token['name'])
                 level = int(level_match.group(1))
@@ -807,10 +815,11 @@ class H3TOCFilter(SectionTOCFilter):
 
 
 class SectionFilter(html5lib_Filter):
-    """Filter which can either extract the fragment representing a section by
+    """
+    Filter which can either extract the fragment representing a section by
     ID, or substitute a replacement stream for a section. Loosely based on
-    HTML5 outline algorithm"""
-
+    HTML5 outline algorithm
+    """
     HEADING_TAGS = ('h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hgroup')
 
     SECTION_TAGS = ('article', 'aside', 'nav', 'section', 'blockquote',
@@ -842,13 +851,13 @@ class SectionFilter(html5lib_Filter):
                 self.next_in_section = False
                 self.in_section = True
 
-            if 'StartTag' == token['type']:
+            if token['type'] == 'StartTag':
                 attrs = dict(token['data'])
                 self.open_level += 1
 
                 # Have we encountered the section or heading element we're
                 # looking for?
-                if attrs.get('id', None) == self.section_id:
+                if self.section_id in attrs.values():
 
                     # If we encounter a section element that matches the ID,
                     # then we'll want to scoop up all its children as an
@@ -889,7 +898,7 @@ class SectionFilter(html5lib_Filter):
 
                     self.heading_to_ignore = token
 
-            if 'EndTag' == token['type']:
+            elif token['type'] == 'EndTag':
                 self.open_level -= 1
 
                 # If the parent of the section has ended, end the section.
@@ -920,7 +929,7 @@ class SectionFilter(html5lib_Filter):
 
             # If this looks like the end of a heading we were ignoring, clear
             # the ignoring condition.
-            if ('EndTag' == token['type'] and
+            if (token['type'] == 'EndTag' and
                     self.in_section and
                     self.ignore_heading and
                     not self.already_ignored_header and
@@ -943,7 +952,7 @@ class SectionFilter(html5lib_Filter):
         """Calculate the heading rank of this token"""
         if not self._isHeading(token):
             return None
-        if 'hgroup' != token['name']:
+        if token['name'] != 'hgroup':
             return int(token['name'][1])
         else:
             # FIXME: hgroup rank == highest rank of headers contained
@@ -954,19 +963,20 @@ class SectionFilter(html5lib_Filter):
 
 
 class CodeSyntaxFilter(html5lib_Filter):
-    """Filter which ensures section-related elements have unique IDs"""
+    """
+    Filter which ensures section-related elements have unique IDs
+    """
     def __iter__(self):
         for token in html5lib_Filter.__iter__(self):
-            if ('StartTag' == token['type']):
-                if 'pre' == token['name']:
-                    attrs = dict(token['data'])
-                    function = attrs.get('function', None)
-                    if function:
-                        m = MT_SYNTAX_RE.match(function)
+            if token['type'] == 'StartTag' and token['name'] == 'pre':
+                attrs = dict(token['data'])
+                for (namespace, name), value in attrs.items():
+                    if name == 'function' and value:
+                        m = MT_SYNTAX_RE.match(value)
                         if m:
                             lang = m.group(1).lower()
                             brush = MT_SYNTAX_BRUSH_MAP.get(lang, lang)
-                            attrs['class'] = "brush: %s" % brush
+                            attrs[(namespace, u'class')] = "brush: %s" % brush
                             del attrs['function']
                             token['data'] = attrs
             yield token
@@ -979,47 +989,49 @@ class EditorSafetyFilter(html5lib_Filter):
     """
     def __iter__(self):
         for token in html5lib_Filter.__iter__(self):
-            if ('StartTag' == token['type']):
-                attrs = dict(token['data'])
+            if token['type'] == 'StartTag':
                 # Strip out any attributes that start with "on"
-                token['data'] = dict((k, v)
-                                     for k, v in attrs.items()
-                                     if not k.startswith('on'))
+                attrs = {}
+                for (namespace, name), value in token['data'].items():
+                    if name.startswith('on'):
+                        continue
+                    attrs[(namespace, name)] = value
+                token['data'] = attrs
             yield token
 
 
 class IframeHostFilter(html5lib_Filter):
-    """Filter which scans through <iframe> tags and strips the src attribute if
+    """
+    Filter which scans through <iframe> tags and strips the src attribute if
     it doesn't contain a URL whose host matches a given list of allowed
     hosts. Also strips any markup found within <iframe></iframe>.
     """
     def __init__(self, source, hosts):
         html5lib_Filter.__init__(self, source)
-
         self.hosts = hosts
 
     def __iter__(self):
         in_iframe = False
         for token in html5lib_Filter.__iter__(self):
-            if ('StartTag' == token['type']):
-                if 'iframe' == token['name']:
-                    in_iframe = True
-                    attrs = dict(token['data'])
-                    src = attrs.get('src', '')
-                    if src:
-                        if not re.search(self.hosts, src):
-                            attrs['src'] = ''
+            if token['type'] == 'StartTag' and token['name'] == 'iframe':
+                in_iframe = True
+                attrs = dict(token['data'])
+                for (namespace, name), value in attrs.items():
+                    if name == 'src' and value:
+                        if not re.search(self.hosts, value):
+                            attrs[(namespace, 'src')] = ''
                     token['data'] = attrs
                     yield token
-            if ('EndTag' == token['type']):
-                if 'iframe' == token['name']:
-                    in_iframe = False
+            if token['type'] == 'EndTag' and token['name'] == 'iframe':
+                in_iframe = False
             if not in_iframe:
                 yield token
 
 
 class DekiscriptMacroFilter(html5lib_Filter):
-    """Filter to convert Dekiscript template calls into kumascript macros."""
+    """
+    Filter to convert Dekiscript template calls into kumascript macros.
+    """
     def __iter__(self):
 
         buffer = []
@@ -1029,22 +1041,23 @@ class DekiscriptMacroFilter(html5lib_Filter):
         while len(buffer):
             token = buffer.pop(0)
 
-            if not ('StartTag' == token['type'] and
-                    'span' == token['name']):
+            if not (token['type'] == 'StartTag' and
+                    token['name'] == 'span'):
                 yield token
                 continue
 
             attrs = dict(token['data'])
-            if attrs.get('class', '') != 'script':
-                yield token
-                continue
+            for (namespace, name), value in attrs.items():
+                if name == 'class' and value != 'script':
+                    yield token
+                    continue
 
             ds_call = []
             while len(buffer):
                 token = buffer.pop(0)
                 if token['type'] in ('Characters', 'SpaceCharacters'):
                     ds_call.append(token['data'])
-                elif 'StartTag' == token['type']:
+                elif token['type'] == 'StartTag':
                     attrs = token['data']
                     if attrs:
                         a_out = (u' %s' % u' '.join(
@@ -1054,8 +1067,8 @@ class DekiscriptMacroFilter(html5lib_Filter):
                     else:
                         a_out = u''
                     ds_call.append(u'<%s%s>' % (token['name'], a_out))
-                elif 'EndTag' == token['type']:
-                    if 'span' == token['name']:
+                elif token['type'] == 'EndTag':
+                    if token['name'] == 'span':
                         break
                     ds_call.append('</%s>' % token['name'])
 
