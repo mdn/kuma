@@ -417,5 +417,8 @@
       {% if not is_zone_root %}
           mdn.optimizely.push(['activate', 2706700712]);
       {% endif %}
+
+      {# This can be removed once the social network button multivariate test is completed. #}
+      mdn.optimizely.push(['activate', 2796520257]);
   </script>
 {% endblock %}
