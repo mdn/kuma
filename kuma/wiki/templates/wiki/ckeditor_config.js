@@ -78,15 +78,7 @@
 
     // Disable the Advanced Content Filter because too many pages
     // use unlimited HTML.
-    config.allowedContent = {
-        $1: {
-            // Use the ability to specify elements as an object.
-            elements: CKEDITOR.dtd,
-            attributes: true,
-            styles: true,
-            classes: true
-        }
-    };
+    config.allowedContent = '{{ allowed_tags }}';
     config.disallowedContent = 'iframe; *[on*]';
 
     // Don't use HTML entities in the output except basic ones (config.basicEntities).
