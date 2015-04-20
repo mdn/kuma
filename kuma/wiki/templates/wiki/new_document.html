@@ -28,6 +28,9 @@
 
         <div class="title">
             <h1><span class="title-prefix">{{ ('Create a ') }}</span><em>{{ _('New Document') }}</em></h1>
+	    <p class="save-state" id="draft-status">
+              {% trans %}Draft <span id="draft-action"></span> <time id="draft-time" class="timeago" title=""></time>{% endtrans %}
+            </p>
         </div>
 
         <ul class="metadata">
