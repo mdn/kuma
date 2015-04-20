@@ -339,6 +339,33 @@ class PermissionTests(UserTestCase, WikiTestCase):
         self.perms, self.groups, self.users, self.superuser = (
             create_template_test_users())
 
+    def test_template_revert_permission(self):
+        locale = 'en-US'
+        slug = 'Template:test-revert-perm'
+        doc = document(save=True, slug=slug, title=slug, locale=locale)
+        rev = revision(save=True, document=doc)
+
+        # Revision template should not show revert button
+        url = reverse('wiki.revision', args=([doc.full_path, rev.id]))
+        resp = self.client.get(url)
+        ok_('Revert' not in resp.content)
+
+        # Revert POST should give permission denied to user without perm
+        username = self.users['none'].username
+        self.client.login(username=username, password='testpass')
+        url = reverse('wiki.revert_document',
+                      args=([doc.full_path, rev.id]))
+        resp = self.client.post(url, {'comment': 'test'})
+        eq_(403, resp.status_code)
+
+        # Revert POST should give success to user with perm
+        username = self.users['change'].username
+        self.client.login(username=username, password='testpass')
+        url = reverse('wiki.revert_document',
+                      args=([doc.full_path, rev.id]))
+        resp = self.client.post(url, {'comment': 'test'}, follow=True)
+        eq_(200, resp.status_code)
+
     def test_template_permissions(self):
         msg = ('edit', 'create')
 
