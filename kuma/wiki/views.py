@@ -1952,11 +1952,7 @@ def helpful_vote(request, document_path):
     return HttpResponseRedirect(document.get_absolute_url())
 
 
-@login_required
-@check_readonly
-@transaction.autocommit
-def revert_document(request, document_path, revision_id):
-    """Revert document to a specific revision."""
+def _check_doc_revision_for_alteration(request, document_path, revision_id):
     document_locale, document_slug, needs_redirect = (
         locale_and_slug_from_path(document_path, request))
 
@@ -1964,6 +1960,20 @@ def revert_document(request, document_path, revision_id):
                                  document__slug=document_slug)
     document = revision.document
 
+    if not document.allows_revision_by(request.user):
+        raise PermissionDenied
+
+    return document, revision
+
+
+@login_required
+@check_readonly
+@transaction.autocommit
+def revert_document(request, document_path, revision_id):
+    """Revert document to a specific revision."""
+    document, revision = _check_doc_revision_for_alteration(request,
+                                                            document_path,
+                                                            revision_id)
     if request.method == 'GET':
         # Render the confirmation page
         return render(request, 'wiki/confirm_revision_revert.html',
@@ -1979,13 +1989,9 @@ def revert_document(request, document_path, revision_id):
 @check_readonly
 def delete_revision(request, document_path, revision_id):
     """Delete a revision."""
-    document_locale, document_slug, needs_redirect = (
-        locale_and_slug_from_path(document_path, request))
-
-    revision = get_object_or_404(Revision, pk=revision_id,
-                                 document__slug=document_slug)
-    document = revision.document
-
+    document, revision = _check_doc_revision_for_alteration(request,
+                                                            document_path,
+                                                            revision_id)
     if request.method == 'GET':
         # Render the confirmation page
         return render(request, 'wiki/confirm_revision_delete.html',
