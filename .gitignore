@@ -31,7 +31,6 @@ kumascript_settings_local.json
 lib/product_details_json
 .DS_Store
 node_modules/
-media/css/*.css
 docs/_build/
 wheelhouse
 .awsconfig
@@ -39,4 +38,4 @@ james.ini
 celeryev.pid
 media/js/libs/ckeditor/source/ckbuilder
 .tox
-media/styles/*.css
+styles/*.css
