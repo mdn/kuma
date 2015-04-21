@@ -59,6 +59,13 @@ draw-grid();
     height: 44px;
     width: 150px;
     overflow: hidden;
+
+    /* Prevents the "mozilla" link from displaying before tabzilla is loaded */
+    opacity: 0;
+
+    &.loaded {
+        opacity: 1;
+    }
 }
 
 #tabzilla-panel {
