@@ -52,8 +52,6 @@ define([
             var homeSearchBoxId = 'home-q';
             var originalWidth;
 
-            remote.setExecuteAsyncTimeout(config.asyncExecutionTimeout);
-
             var transitionEndCallback = function() {
                 return remote.executeAsync(function(done) {
                     var element = document.getElementById('main-q');
