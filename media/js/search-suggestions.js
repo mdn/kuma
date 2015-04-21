@@ -11,16 +11,14 @@
 
             // Mixin options
             var settings = $.extend({
-                sizeLimit: 15,
+                sizeLimit: 25,
                 filters: false,
                 onAddFilter: noop,
                 onRemoveFilter: noop,
             }, options);
 
             var $searchForm = $form.find('.search-form');
-            var $filtersRight = $('#filters-right');
             var $searchFilters = $('#home-search-form .filters');
-            var $filtersLeft = $('#filters-left');
             var $showTopics = $('.show-topics');
             var $searchInput = $('#home-q');
             var $rightColumFilters = $('.search-results-filters input');
@@ -30,14 +28,6 @@
                 .data('hidden', 'true')
                 .css('display', 'none')
                 .appendTo($searchForm);
-
-            $filtersLeft.on('click', function() {
-                $searchFilters.scrollLeft($searchFilters.scrollLeft() + 40);
-            });
-
-            $filtersRight.on('click', function() {
-                $searchFilters.scrollLeft($searchFilters.scrollLeft() - 40);
-            });
 
             // Private vars we'll use throughout the course of the plugin lifecycle
             var filtersData = win.mdn.searchFilters || [];
@@ -78,17 +68,6 @@
                         }
                     }
                 },
-                showarrows: function() {
-                    // max-width of $searchFilters is 70% in search-suggestions.styl
-                    var max_width = 69 / 100 * $searchForm.width();
-                    if($searchFilters.width() > max_width){
-                        $filtersRight.css('display', 'inline-block');
-                        $filtersLeft.css('display', 'inline-block');
-                    }else{
-                        $filtersRight.hide();
-                        $filtersLeft.hide();
-                    }
-                },
                 addFilter: function(slug, group, shortcut) {
                     var self = this;
                     var shortcut = (shortcut || slug);
@@ -115,12 +94,9 @@
                                     });
                                 }
                             });
-                            self.showarrows();
                         })
                     .appendTo(filter)
                     //.focus();
-
-                    self.showarrows();
                 },
                 parseAndAddFilters: function() {
                     var toParse = $searchInput.val();

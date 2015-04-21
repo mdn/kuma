@@ -12,13 +12,17 @@
         padding: $input-padding;
         position: relative;
         background-color: #fff;
+        clearfix();
     }
 
     #home-q {
         border: none;
-        display: inline;
-        padding: 0;
+        display: inline-block;
+        padding: 3px 0;
+        margin-bottom: 0;
         outline: none;
+        max-width: 100%;
+        max-width: calc(100% - 40px);
     }
 
     .show-topics {
@@ -27,8 +31,8 @@
         color: $text-color !important;
         font-size: 1.2em !important;
         position: absolute;
-        right: 0;
-        top: 3px;
+        bidi-style(right, 0, left, auto);
+        top: 6px;
      }
 
     .suggestions {
@@ -68,54 +72,46 @@
                 }
 
                 span {
-                    float: right;
+                    bidi-value(float, right, left);
                 }
             } /* end a.search-ss */
         } /* end li */
     } /* end .suggestions */
 
-    .filter-arrow {
-        display: none;
-        margin: 0 3px;
-
-        {$selector-icon} {
-            margin: 0px !important;
-            vertical-align: bottom;
-
-            &:before {
-                cursor: pointer !important;
-            }
-        }
-    } /* end .filter-arrow */
-
     .filters {
+        box-sizing: border-box;
+        bidi-style(margin-right, -5px, margin-left, 0);
         display: inline-block;
-        max-width: 70%;
-        overflow-y: hidden;
+        max-width: 100%;
+        max-width: calc(100% - 40px);
         vertical-align: top;
-        white-space: nowrap;
+        bidi-value(float, left, right);
 
         span.topic {
-            display: inline;
+            display: inline-block;
             background-color: $homepage-background-color !important;
             box-shadow: none;
             color: #fff!important;
             cursor: default!important;
-            margin-right: 5px;
-            padding: 3px 11px 3px 17px !important;
+            bidi-style(margin-right, 5px, margin-left, 0);
+            padding: 2px 10px 2px 10px !important;
             text-transform: none !important;
 
             button.close {
                 background-color: transparent !important;
                 box-shadow: none;
                 color: #fff!important;
-                margin-left: 5px;
-                padding: 5px 0px 5px 5px !important
+                bidi-style(margin-left, 5px, margin-right, 0);
+                bidi-value(padding, 5px 0px 5px 5px  !important, 5px 5px 5px 0px  !important);
 
                 {$selector-icon} {
                     margin-left: 0;
                 }
             } /* end button.close */
+
+            &:last-child {
+                bidi-style(margin-right, 10px, margin-left, 0);
+            }
         } /* end span.topic */
     } /* end .filters */
 
