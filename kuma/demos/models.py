@@ -230,8 +230,7 @@ class ReplacingImageWithThumbFieldFile(ImageFieldFile):
         if not self.url:
             return ''
         # HACK: Use legacy thumbnail URL, if new-style file missing.
-        DEV = getattr(settings, 'DEV', False)
-        if not DEV and not self.storage.exists(self.thumbnail_name()):
+        if not settings.DEBUG and not self.storage.exists(self.thumbnail_name()):
             return self.url.replace('screenshot', 'screenshot_thumb')
         # HACK: This works, but I'm not proud of it
         parts = self.url.rsplit('.', 1)

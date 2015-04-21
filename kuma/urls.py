@@ -9,6 +9,8 @@ from django.views.decorators.cache import cache_page
 from kuma.core import views as core_views
 import badger
 
+import jingo.monkey
+jingo.monkey.patch()
 
 admin.autodiscover()
 badger.autodiscover()
@@ -42,7 +44,7 @@ urlpatterns = patterns('',
 
     # Javascript translations.
     url(r'^jsi18n/.*$', cache_page(60 * 60 * 24 * 365)(javascript_catalog),
-        {'domain': 'javascript', 'packages': [settings.ROOT_PACKAGE]},
+        {'domain': 'javascript', 'packages': ['kuma']},
         name='jsi18n'),
 
     url(r'^files/', include('kuma.attachments.urls')),
@@ -67,14 +69,12 @@ urlpatterns = patterns('',
     url(r'^miel$', handler500, name='users.honeypot'),
 )
 
-if settings.DEBUG:
-    urlpatterns += staticfiles_urlpatterns()
-
 if settings.SERVE_MEDIA:
     media_url = settings.MEDIA_URL.lstrip('/').rstrip('/')
-    urlpatterns += patterns('',
+    urlpatterns += patterns(
+        '',
         (r'^%s/(?P<path>.*)$' % media_url, 'django.views.static.serve',
-          {'document_root': settings.MEDIA_ROOT}),
+         {'document_root': settings.MEDIA_ROOT}),
     )
 
 # Legacy MindTouch redirects. These go last so that they don't mess

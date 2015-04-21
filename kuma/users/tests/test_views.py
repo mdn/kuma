@@ -776,7 +776,7 @@ class KumaGitHubTests(UserTestCase):
         response = self.client.post(self.signup_url, data=data, follow=True)
         unverified_email_addresses = EmailAddress.objects.filter(email=unverified_email)
         self.assertTrue(unverified_email_addresses.exists())
-        self.assertEquals(unverified_email_addresses.count(), 1)
+        self.assertEqual(unverified_email_addresses.count(), 1)
         self.assertTrue(unverified_email_addresses[0].primary)
         self.assertFalse(unverified_email_addresses[0].verified)
 

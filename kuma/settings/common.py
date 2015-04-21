@@ -3,8 +3,9 @@ from collections import namedtuple
 import json
 import logging
 import os
-import platform
-import sys
+from decouple import config, Csv
+import dj_database_url
+import dj_email_url
 
 from django.utils.functional import lazy
 from django.utils.translation import ugettext_lazy as _
@@ -13,38 +14,47 @@ from django.core.urlresolvers import reverse_lazy
 _Language = namedtuple(u'Language', u'english native iso639_1')
 
 
-DEBUG = False
+class TupleCsv(Csv):
+
+    def __call__(self, value):
+        split_values = super(TupleCsv, self).__call__(value)
+        return ((value, value) for value in split_values)
+
+
+def path(*parts):
+    return os.path.join(ROOT, *parts)
+
+
+DEBUG = config('DEBUG', default=False, cast=bool)
 TEMPLATE_DEBUG = DEBUG
 
-ROOT = os.path.dirname(os.path.abspath(__file__))
-path = lambda *a: os.path.join(ROOT, *a)
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-ROOT_PACKAGE = os.path.basename(ROOT)
+ADMINS = config('ADMIN_EMAILS',
+                default='mdn-dev@mozilla.com',
+                cast=TupleCsv())
 
-ADMINS = (
-    ('MDN devs', 'mdn-dev@mozilla.com'),
-)
-
-PROTOCOL = 'https://'
-DOMAIN = 'developer.mozilla.org'
-SITE_URL = PROTOCOL + DOMAIN
+PROTOCOL = config('PROTOCOL', default='https://')
+DOMAIN = config('DOMAIN', default='developer.mozilla.org')
+SITE_URL = config('SITE_URL', default=PROTOCOL + DOMAIN)
 PRODUCTION_URL = SITE_URL
-STAGING_URL = PROTOCOL + 'developer.allizom.org'
-USE_X_FORWARDED_HOST = True
+STAGING_DOMAIN = 'developer.allizom.org'
+STAGING_URL = PROTOCOL + STAGING_DOMAIN
 
 MANAGERS = ADMINS
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',  # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'kuma',  # Or path to database file if using sqlite3.
-        'USER': 'kuma',  # Not used with sqlite3.
-        'PASSWORD': 'kuma',  # Not used with sqlite3.
-        'HOST': 'localhost',  # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '3306',  # Set to empty string for default. Not used with sqlite3.
-        'OPTIONS': {'init_command': 'SET storage_engine=InnoDB'},
-    },
+    'default': config('DATABASE_URL',
+                      default='mysql://kuma:kuma@localhost:3306/kuma',
+                      cast=dj_database_url.parse)
 }
+if 'mysql' in DATABASES['default']['ENGINE']:
+    DATABASES['default']['OPTIONS'] = {
+        'init_command': 'SET storage_engine=InnoDB',
+    }
+    DATABASES['default']['TEST_CHARSET'] = 'utf8'
+    DATABASES['default']['TEST_COLLATION'] = 'utf8_unicode_ci'
+
 
 # Cache Settings
 CACHE_PREFIX = 'kuma'
@@ -60,17 +70,26 @@ CACHES = {
         'BACKEND': 'memcached_hashring.backend.MemcachedHashRingCache',
         'TIMEOUT': CACHE_COUNT_TIMEOUT * 60,
         'KEY_PREFIX': CACHE_PREFIX,
-        'LOCATION': ['127.0.0.1:11211'],
+        'LOCATION': config('MEMCACHE_SERVERS',
+                           default='127.0.0.1:11211',
+                           cast=Csv()),
     },
 }
 
 CACHEBACK_CACHE_ALIAS = 'memcache'
 
+# Email
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = '/tmp/kuma-messages'
+
+vars().update(config('EMAIL_URL',
+                     default='console://',
+                     cast=dj_email_url.parse))
+EMAIL_SUBJECT_PREFIX = '[mdn] '
+
 # Addresses email comes from
 DEFAULT_FROM_EMAIL = 'notifications@developer.mozilla.org'
 SERVER_EMAIL = 'server-error@developer.mozilla.org'
-
-PLATFORM_NAME = platform.node()
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -85,69 +104,56 @@ LANGUAGE_CODE = 'en-US'
 
 # Accepted locales
 MDN_LANGUAGES = (
-                 'en-US',
-                 'af',
-                 'ar',
-                 'az',
-                 'bn-BD',
-                 'bn-IN',
-                 'cs',
-                 'ca',
-                 'de',
-                 'ee',
-                 'el',
-                 'es',
-                 'fa',
-                 'fi',
-                 'fr',
-                 'fy-NL',
-                 'ga-IE',
-                 'ha',
-                 'he',
-                 'hi-IN',
-                 'hr',
-                 'hu',
-                 'id',
-                 'ig',
-                 'it',
-                 'ja',
-                 'ka',
-                 'ko',
-                 'ln',
-                 'ml',
-                 'ms',
-                 'nl',
-                 'pl',
-                 'pt-BR',
-                 'pt-PT',
-                 'ro',
-                 'ru',
-                 'sq',
-                 'sw',
-                 'ta',
-                 'th',
-                 'tr',
-                 'vi',
-                 'wo',
-                 'xh',
-                 'yo',
-                 'zh-CN',
-                 'zh-TW',
-                 'zu',
+    'en-US',
+    'af',
+    'ar',
+    'az',
+    'bn-BD',
+    'bn-IN',
+    'cs',
+    'ca',
+    'de',
+    'ee',
+    'el',
+    'es',
+    'fa',
+    'fi',
+    'fr',
+    'fy-NL',
+    'ga-IE',
+    'ha',
+    'he',
+    'hi-IN',
+    'hr',
+    'hu',
+    'id',
+    'ig',
+    'it',
+    'ja',
+    'ka',
+    'ko',
+    'ln',
+    'ml',
+    'ms',
+    'nl',
+    'pl',
+    'pt-BR',
+    'pt-PT',
+    'ro',
+    'ru',
+    'sq',
+    'sw',
+    'ta',
+    'th',
+    'tr',
+    'vi',
+    'wo',
+    'xh',
+    'yo',
+    'zh-CN',
+    'zh-TW',
+    'zu',
 )
-
-RTL_LANGUAGES = (
-                 'ar',
-                 'fa',
-                 'fa-IR',
-                 'he'
-)
-
-DEV_POOTLE_PRODUCT_DETAILS_MAP = {
-    'pt': 'pt-PT',
-    'fy': 'fy-NL',
-    'xx-testing': 'x-testing',
-}
 
 # Override generic locale handling with explicit mappings.
 # Keys are the requested locale; values are the delivered locale.
@@ -180,30 +186,16 @@ LOCALE_ALIASES = {
     'zh-Hant': 'zh-TW',
 }
 
-try:
-    DEV_LANGUAGES = [
-        loc.replace('_', '-') for loc in os.listdir(path('locale'))
-        if (os.path.isdir(path('locale', loc)) and
-            loc not in ['.svn', '.git', 'templates'])
-    ]
-    for pootle_dir in DEV_LANGUAGES:
-        if pootle_dir in DEV_POOTLE_PRODUCT_DETAILS_MAP:
-            DEV_LANGUAGES.remove(pootle_dir)
-            DEV_LANGUAGES.append(DEV_POOTLE_PRODUCT_DETAILS_MAP[pootle_dir])
-except OSError:
-    DEV_LANGUAGES = ('en-US',)
+LANGUAGE_URL_MAP = dict([(i.lower(), i) for i in MDN_LANGUAGES])
 
-PROD_LANGUAGES = MDN_LANGUAGES
-
-LANGUAGE_URL_MAP = dict([(i.lower(), i) for i in PROD_LANGUAGES])
 for requested_lang, delivered_lang in LOCALE_ALIASES.items():
-    if delivered_lang in PROD_LANGUAGES:
+    if delivered_lang in MDN_LANGUAGES:
         LANGUAGE_URL_MAP[requested_lang.lower()] = delivered_lang
 
 
 def get_locales():
     locales = {}
-    file = os.path.join(ROOT, 'kuma', 'languages.json')
+    file = path('kuma', 'languages.json')
     json_locales = json.load(open(file, 'r'))
     for locale, meta in json_locales.items():
         locales[locale] = _Language(meta['English'],
@@ -217,30 +209,12 @@ LOCALES = get_locales()
 def lazy_langs():
     """Override Django's built-in with our native names"""
     from product_details import product_details
-    # for bug 664330
-    # from django.conf import settings
-    # langs = DEV_LANGUAGES if (getattr(settings, 'DEV', False) or getattr(settings, 'STAGE', False)) else PROD_LANGUAGES
-    langs = PROD_LANGUAGES
     return dict([(lang.lower(), product_details.languages[lang]['native'])
-                for lang in langs])
+                for lang in MDN_LANGUAGES])
 
 LANGUAGES_DICT = lazy(lazy_langs, dict)()
 LANGUAGES = sorted(tuple([(i, LOCALES[i].native) for i in MDN_LANGUAGES]),
-                   key=lambda lang:lang[0])
-
-# DEKI uses different locale keys
-def lazy_language_deki_map():
-    # for bug 664330
-    # from django.conf import settings
-    # langs = DEV_LANGUAGES if (getattr(settings, 'DEV', False) or getattr(settings, 'STAGE', False)) else PROD_LANGUAGES
-    langs = PROD_LANGUAGES
-    lang_deki_map = dict([(i, i) for i in langs])
-    lang_deki_map['en-US'] = 'en'
-    lang_deki_map['zh-CN'] = 'cn'
-    lang_deki_map['zh-TW'] = 'zh_tw'
-    return lang_deki_map
-
-LANGUAGE_DEKI_MAP = lazy(lazy_language_deki_map, dict)()
+                   key=lambda lang: lang[0])
 
 # List of MindTouch locales mapped to Kuma locales.
 #
@@ -272,44 +246,43 @@ LANGUAGE_DEKI_MAP = lazy(lazy_language_deki_map, dict)()
 # through the mapping exercise.
 
 MT_TO_KUMA_LOCALE_MAP = {
-    "en"    : "en-US",
-    "ja"    : "ja",
-    "pl"    : "pl",
-    "fr"    : "fr",
-    "es"    : "es",
-    ""      : "en-US",
-    "cn"    : "zh-CN",
-    "zh_cn" : "zh-CN",
-    "zh-cn" : "zh-CN",
-    "zh_tw" : "zh-TW",
-    "zh-tw" : "zh-TW",
-    "ko"    : "ko",
-    "pt"    : "pt-PT",
-    "de"    : "de",
-    "it"    : "it",
-    "ca"    : "ca",
-    "cs"    : "cs",
-    "ru"    : "ru",
-    "nl"    : "nl",
-    "hu"    : "hu",
-    "he"    : "he",
-    "el"    : "el",
-    "fi"    : "fi",
-    "tr"    : "tr",
-    "vi"    : "vi",
-    "ro"    : "ro",
-    "ar"    : "ar",
-    "th"    : "th",
-    "fa"    : "fa",
-    "ka"    : "ka",
+    'en': 'en-US',
+    'ja': 'ja',
+    'pl': 'pl',
+    'fr': 'fr',
+    'es': 'es',
+    '': 'en-US',
+    'cn': 'zh-CN',
+    'zh_cn': 'zh-CN',
+    'zh-cn': 'zh-CN',
+    'zh_tw': 'zh-TW',
+    'zh-tw': 'zh-TW',
+    'ko': 'ko',
+    'pt': 'pt-PT',
+    'de': 'de',
+    'it': 'it',
+    'ca': 'ca',
+    'cs': 'cs',
+    'ru': 'ru',
+    'nl': 'nl',
+    'hu': 'hu',
+    'he': 'he',
+    'el': 'el',
+    'fi': 'fi',
+    'tr': 'tr',
+    'vi': 'vi',
+    'ro': 'ro',
+    'ar': 'ar',
+    'th': 'th',
+    'fa': 'fa',
+    'ka': 'ka',
 }
-
-TEXT_DOMAIN = 'messages'
 
 SITE_ID = 1
 
-PROD_DETAILS_DIR = path('../product_details_json')
-MDC_PAGES_DIR = path('../mdc_pages')
+PROD_DETAILS_DIR = config('PROD_DETAILS_DIR',
+                          default=path('..', 'product_details_json'))
+MDC_PAGES_DIR = path('..', 'mdc_pages')
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -333,6 +306,8 @@ MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
 STATIC_ROOT = path('static')
 
+DEFAULT_AVATAR = MEDIA_URL + 'img/avatar.png'
+
 SERVE_MEDIA = False
 
 # Paths that don't require a locale prefix.
@@ -354,7 +329,8 @@ LANGUAGE_URL_IGNORED_PATHS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '#%tc(zja8j01!r#h_y)=hy!^k)9az74k+-ib&ij&+**s3-e^_z'
+SECRET_KEY = config('SECRET_KEY',
+                    default='#%tc(zja8j01!r#h_y)=hy!^k)9az74k+-ib&ij&+**s3-e^_z')
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -435,13 +411,7 @@ PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.UnsaltedMD5PasswordHasher',
 )
 
-USER_AVATAR_PATH = 'uploads/avatars/'
-DEFAULT_AVATAR = MEDIA_URL + 'img/avatar.png'
-AVATAR_SIZE = 48  # in pixels
-ACCOUNT_ACTIVATION_DAYS = 30
-MAX_AVATAR_FILE_SIZE = 131072  # 100k, in bytes
-
-ROOT_URLCONF = 'urls'
+ROOT_URLCONF = 'kuma.urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates"
@@ -537,6 +507,7 @@ NOSE_ARGS = [
 # Feed fetcher config
 FEEDER_TIMEOUT = 6  # in seconds
 
+
 def JINJA_CONFIG():
     import jinja2
     from django.conf import settings
@@ -564,6 +535,10 @@ TOWER_KEYWORDS = {
     '_lazy': None,
 }
 
+# If you have trouble extracting strings with Tower, try setting this
+# to True
+TOWER_ADD_HEADERS = True
+
 # Tells the extract script what files to look for l10n in and what function
 # handles the extraction.  The Tower library expects this.
 DOMAIN_METHODS = {
@@ -590,11 +565,7 @@ DOMAIN_METHODS = {
 # http://github.com/jbalogh/zamboni/blob/d4c64239c24aa2f1e91276909823d1d1b290f0ee/settings.py#L254
 STANDALONE_DOMAINS = [
     'javascript',
-    ]
-
-# If you have trouble extracting strings with Tower, try setting this
-# to True
-TOWER_ADD_HEADERS = True
+]
 
 # Bundles for JS/CSS Minification
 JINGO_MINIFY_USE_STATIC = False
@@ -777,25 +748,14 @@ MINIFY_BUNDLES = {
 
 #
 # Session cookies
-SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = config('SESSION_COOKIE_SECURE',
+                               default=True, cast=bool)
 SESSION_COOKIE_HTTPONLY = True
 
-# Cookie prefix from PHPBB settings.
-PHPBB_COOKIE_PREFIX = 'phpbb3_jzxvr'
-
-# Maximum length of the filename. Forms should use this and raise
-# ValidationError if the length is exceeded.
-# @see http://code.djangoproject.com/ticket/9893
-# Columns are 250 but this leaves 50 chars for the upload_to prefix
-MAX_FILENAME_LENGTH = 200
-MAX_FILEPATH_LENGTH = 250
-
-ATTACHMENT_HOST = 'mdn.mozillademos.org'
-
-# Video settings, hard coded here for now.
-# TODO: figure out a way that doesn't need these values
-WIKI_VIDEO_WIDTH = 640
-WIKI_VIDEO_HEIGHT = 480
+# bug 856061
+ALLOWED_HOSTS = config('ALLOWED_HOSTS',
+                       default='developer-local.allizom.org, mdn-local.mozillademos.org',
+                       cast=Csv())
 
 IMAGE_MAX_FILESIZE = 1048576  # 1 megabyte, in bytes
 THUMBNAIL_SIZE = 120  # Thumbnail size, in pixels
@@ -805,24 +765,19 @@ IMAGE_UPLOAD_PATH = 'uploads/images/'
 # String must not contain double quotes!
 IMAGE_ALLOWED_MIMETYPES = 'image/jpeg,image/png,image/gif'
 
-# Email
-EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-EMAIL_FILE_PATH = '/tmp/kuma-messages'
-
 # Celery
 import djcelery
 djcelery.setup_loader()
 
-BROKER_URL = 'amqp://kuma:kuma@localhost:5672/kuma'
+BROKER_URL = config('BROKER_URL',
+                    default='amqp://kuma:kuma@localhost:5672/kuma')
 
-CELERY_ALWAYS_EAGER = True  # For tests. Set to False for use.
+CELERY_ALWAYS_EAGER = config('CELERY_ALWAYS_EAGER', True, cast=bool)
 CELERY_SEND_TASK_ERROR_EMAILS = True
 CELERY_SEND_EVENTS = True
 CELERY_SEND_TASK_SENT_EVENT = True
 CELERY_TRACK_STARTED = True
-
-CELERYD_LOG_LEVEL = logging.INFO
-CELERYD_CONCURRENCY = 4
+CELERYD_CONCURRENCY = config('CELERYD_CONCURRENCY', default=4, cast=int)
 
 CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
@@ -833,25 +788,15 @@ CELERY_IMPORTS = (
     'tidings.events',
 )
 
-# Wiki rebuild settings
-WIKI_REBUILD_TOKEN = 'kuma:wiki:full-rebuild'
-WIKI_REBUILD_ON_DEMAND = False
-
 # Anonymous user cookie
 ANONYMOUS_COOKIE_NAME = 'KUMA_ANONID'
 ANONYMOUS_COOKIE_MAX_AGE = 30 * 86400  # Seconds
 
-# Top contributors cache settings
-TOP_CONTRIBUTORS_CACHE_KEY = 'kuma:TopContributors'
-TOP_CONTRIBUTORS_CACHE_TIMEOUT = 60 * 60 * 12
-
 # Do not change this without also deleting all wiki documents:
 WIKI_DEFAULT_LANGUAGE = LANGUAGE_CODE
 
-
 TIDINGS_FROM_ADDRESS = 'notifications@developer.mozilla.org'
 TIDINGS_CONFIRM_ANONYMOUS_WATCHES = True
-
 
 # content flagging
 DEMO_FLAG_REASONS = (
@@ -869,14 +814,19 @@ WIKI_FLAG_REASONS = (
 FLAG_REASONS = DEMO_FLAG_REASONS + WIKI_FLAG_REASONS
 
 # bit.ly
-BITLY_API_KEY = "SET ME IN SETTINGS_LOCAL"
-BITLY_USERNAME = "SET ME IN SETTINGS_LOCAL"
+BITLY_USERNAME = config('BITLY_USERNAME', default='lmorchard')
+BITLY_API_KEY = config('BITLY_API_KEY',
+                       default='R_2653e6351e31d02988b3da31dac6e2c0')
 
-GOOGLE_MAPS_API_KEY = "ABQIAAAAijZqBZcz-rowoXZC1tt9iRT5rHVQFKUGOHoyfP_4KyrflbHKcRTt9kQJVST5oKMRj8vKTQS2b7oNjQ"
+GOOGLE_MAPS_API_KEY = config('GOOGLE_MAPS_API_KEY',
+                             default='ABQIAAAAijZqBZcz-rowoXZC1tt9iRT5rHVQFKUG'
+                                     'OHoyfP_4KyrflbHKcRTt9kQJVST5oKMRj8vKTQS2'
+                                     'b7oNjQ')
 
 # demo studio uploads
 # Filesystem path where files uploaded for demos will be written
-DEMO_UPLOADS_ROOT = path('media/uploads/demos')
+DEMO_UPLOADS_ROOT = config('DEMO_UPLOADS_ROOT', default=path('media/uploads/demos'))
+
 # Base URL from where files uploaded for demos will be linked and served
 DEMO_UPLOADS_URL = '/media/uploads/demos/'
 
@@ -897,33 +847,33 @@ CONSTANCE_DATABASE_CACHE_BACKEND = 'memcache'
 # Settings and defaults controllable by Constance in admin
 CONSTANCE_CONFIG = dict(
 
-    DEMO_BLACKLIST_OVERRIDE_EXTENSIONS = (
+    DEMO_BLACKLIST_OVERRIDE_EXTENSIONS=(
         'jsgz datagz memgz',
         'File extensions that override the mimetype blacklist in case of '
         'an ambigous mimetype such as application/gzip',
     ),
 
-    DEMO_MAX_ZIP_FILESIZE = (
+    DEMO_MAX_ZIP_FILESIZE=(
         60 * 1024 * 1024,
         "Max file size for zips uploaded to demo studio."
     ),
 
-    DEMO_MAX_FILESIZE_IN_ZIP = (
+    DEMO_MAX_FILESIZE_IN_ZIP=(
         60 * 1024 * 1024,
         "Max file size for files inside zip uploaded to demo studio."
     ),
 
-    DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG = (
+    DEMOS_DEVDERBY_CURRENT_CHALLENGE_TAG=(
         "challenge:2011:september",
         "Dev derby current challenge"
     ),
 
-    DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG = (
+    DEMOS_DEVDERBY_PREVIOUS_WINNER_TAG=(
         "system:challenge:firstplace:2011:august",
         "Tag used to find most recent winner for dev derby"
     ),
 
-    DEMOS_DEVDERBY_CHALLENGE_CHOICE_TAGS = (
+    DEMOS_DEVDERBY_CHALLENGE_CHOICE_TAGS=(
         ' '.join([
             "challenge:2011:september",
             "challenge:2011:october",
@@ -932,7 +882,7 @@ CONSTANCE_CONFIG = dict(
         "Dev derby choices displayed on submission form (space-separated tags)"
     ),
 
-    DEMOS_DEVDERBY_PREVIOUS_CHALLENGE_TAGS = (
+    DEMOS_DEVDERBY_PREVIOUS_CHALLENGE_TAGS=(
         ' '.join([
             "challenge:2013:june",
             "challenge:2013:may",
@@ -963,58 +913,58 @@ CONSTANCE_CONFIG = dict(
         "Dev derby tags for previous challenges (space-separated tags)"
     ),
 
-    DEMOS_DEVDERBY_HOMEPAGE_FEATURED_DEMO = (
+    DEMOS_DEVDERBY_HOMEPAGE_FEATURED_DEMO=(
         0,
         'The ID of the demo which should be featured on the new homepage structure'
     ),
 
-    BASKET_RETRIES = (
+    BASKET_RETRIES=(
         5,
         'Number of time to retry basket post before giving up.'
     ),
-    BASKET_RETRY_WAIT = (
+    BASKET_RETRY_WAIT=(
         .5,
         'How long to wait between basket api request retries. '
         'We typically multiply this value by the retry number so, e.g., '
-        'the 4th retry waits 4*.5 = 2 seconds.'
+        'the 4th retry waits 4*.5=2 seconds.'
     ),
-    BASKET_API_KEY = (
+    BASKET_API_KEY=(
         '',
         'API Key to use for basket requests'
     ),
 
-    BETA_GROUP_NAME = (
+    BETA_GROUP_NAME=(
         'Beta Testers',
         'Name of the django.contrib.auth.models.Group to use as beta testers'
     ),
 
-    KUMA_DOCUMENT_RENDER_TIMEOUT = (
+    KUMA_DOCUMENT_RENDER_TIMEOUT=(
         180.0,
         'Maximum seconds to wait before considering a rendering in progress or '
         'scheduled as failed and allowing another attempt.'
     ),
-    KUMA_DOCUMENT_FORCE_DEFERRED_TIMEOUT = (
+    KUMA_DOCUMENT_FORCE_DEFERRED_TIMEOUT=(
         10.0,
         'Maximum seconds to allow a document to spend rendering during the '
         'response cycle before flagging it to be sent to the deferred rendering '
         'queue for future renders.'
     ),
 
-    KUMASCRIPT_TIMEOUT = (
+    KUMASCRIPT_TIMEOUT=(
         0.0,
         'Maximum seconds to wait for a response from the kumascript service. '
         'On timeout, the document gets served up as-is and without macro '
         'evaluation as an attempt at graceful failure. NOTE: a value of 0 '
         'disables kumascript altogether.'
     ),
-    KUMASCRIPT_MAX_AGE = (
+    KUMASCRIPT_MAX_AGE=(
         600,
         'Maximum acceptable age (in seconds) of a cached response from '
         'kumascript. Passed along in a Cache-Control: max-age={value} header, '
         'which tells kumascript whether or not to serve up a cached response.'
     ),
 
-    KUMA_CUSTOM_CSS_PATH = (
+    KUMA_CUSTOM_CSS_PATH=(
         '/en-US/docs/Template:CustomCSS',
         'Path to a wiki document whose raw content will be loaded as a CSS '
         'stylesheet for the wiki base template. Will also cause the ?raw '
@@ -1022,7 +972,7 @@ CONSTANCE_CONFIG = dict(
         'value disables the feature altogether.',
     ),
 
-    KUMA_CUSTOM_SAMPLE_CSS_PATH = (
+    KUMA_CUSTOM_SAMPLE_CSS_PATH=(
         '/en-US/docs/Template:CustomSampleCSS',
         'Path to a wiki document whose raw content will be loaded as a CSS '
         'stylesheet for live sample template. Will also cause the ?raw '
@@ -1030,58 +980,58 @@ CONSTANCE_CONFIG = dict(
         'value disables the feature altogether.',
     ),
 
-    DIFF_CONTEXT_LINES = (
+    DIFF_CONTEXT_LINES=(
         0,
         'Number of lines of context to show in diff display.',
     ),
 
-    FEED_DIFF_CONTEXT_LINES = (
+    FEED_DIFF_CONTEXT_LINES=(
         3,
         'Number of lines of context to show in feed diff display.',
     ),
 
-    WIKI_ATTACHMENT_ALLOWED_TYPES = (
+    WIKI_ATTACHMENT_ALLOWED_TYPES=(
         'image/gif image/jpeg image/png image/svg+xml text/html image/vnd.adobe.photoshop',
         'Allowed file types for wiki file attachments',
     ),
 
-    KUMA_WIKI_IFRAME_ALLOWED_HOSTS = (
+    KUMA_WIKI_IFRAME_ALLOWED_HOSTS=(
         '^https?\:\/\/(developer-local.allizom.org|developer-dev.allizom.org|developer.allizom.org|mozillademos.org|testserver|localhost\:8000|(www.)?youtube.com\/embed\/(\.*))',
         'Regex comprised of domain names that are allowed for IFRAME SRCs'
     ),
 
-    GOOGLE_ANALYTICS_ACCOUNT = (
+    GOOGLE_ANALYTICS_ACCOUNT=(
         '0',
         'Google Analytics Tracking Account Number (0 to disable)',
     ),
 
-    OPTIMIZELY_PROJECT_ID = (
+    OPTIMIZELY_PROJECT_ID=(
         '',
         'The ID value for optimizely Project Code script'
     ),
 
-    BLEACH_ALLOWED_TAGS = (
+    BLEACH_ALLOWED_TAGS=(
         json.dumps([
             'a', 'p', 'div',
         ]),
         "JSON array of tags allowed through Bleach",
     ),
 
-    BLEACH_ALLOWED_ATTRIBUTES = (
+    BLEACH_ALLOWED_ATTRIBUTES=(
         json.dumps({
             '*': ['id', 'class', 'style', 'lang'],
         }),
         "JSON object associating tags with lists of allowed attributes",
     ),
 
-    BLEACH_ALLOWED_STYLES = (
+    BLEACH_ALLOWED_STYLES=(
         json.dumps([
             'font-size', 'text-align',
         ]),
         "JSON array listing CSS styles allowed on tags",
     ),
 
-    WIKI_DOCUMENT_TAG_SUGGESTIONS = (
+    WIKI_DOCUMENT_TAG_SUGGESTIONS=(
         json.dumps([
             "Accessibility", "AJAX", "API", "Apps",
             "Canvas", "CSS", "Device", "DOM", "Events",
@@ -1097,7 +1047,7 @@ CONSTANCE_CONFIG = dict(
         "JSON array listing tag suggestions for documents"
     ),
 
-    SEARCH_FILTER_TAG_OPTIONS = (
+    SEARCH_FILTER_TAG_OPTIONS=(
         json.dumps([
             "Accessibility", "AJAX", "API", "Apps",
             "Canvas", "CSS", "Device", "DOM", "Events",
@@ -1113,17 +1063,17 @@ CONSTANCE_CONFIG = dict(
         "JSON array of tags that are enabled for search faceting"
     ),
 
-    SESSION_CLEANUP_CHUNK_SIZE = (
+    SESSION_CLEANUP_CHUNK_SIZE=(
         1000,
         'Number of expired sessions to cleanup up in one go.',
     ),
 
-    WELCOME_EMAIL_FROM = (
+    WELCOME_EMAIL_FROM=(
         "Janet Swisher <no-reply@mozilla.org>",
         'Email address from which welcome emails will be sent',
     ),
 
-    EMAIL_LIST_FOR_FIRST_EDITS = (
+    EMAIL_LIST_FOR_FIRST_EDITS=(
         "mdn-spam-watch@mozilla.com",
         "Email address to which emails will be sent for users' first edits",
     ),
@@ -1133,19 +1083,19 @@ CONSTANCE_CONFIG = dict(
 BASKET_URL = 'https://basket.mozilla.com'
 BASKET_APPS_NEWSLETTER = 'app-dev'
 
-KUMASCRIPT_URL_TEMPLATE = 'http://developer.mozilla.org:9080/docs/{path}'
+KUMASCRIPT_URL_TEMPLATE = 'http://localhost:9080/docs/{path}'
 
 # Elasticsearch related settings.
 ES_DEFAULT_NUM_REPLICAS = 1
 ES_DEFAULT_NUM_SHARDS = 5
 ES_DEFAULT_REFRESH_INTERVAL = '5s'
-ES_DISABLED = True
+ES_DISABLED = False
 ES_INDEX_PREFIX = 'mdn'
 ES_INDEXES = {'default': 'main_index'}
 # Specify the extra timeout in seconds for the indexing ES connection.
 ES_INDEXING_TIMEOUT = 30
 ES_LIVE_INDEX = False
-ES_URLS = ['localhost:9200']
+ES_HOSTS = config('ES_HOSTS', default='127.0.0.1:9200', cast=Csv())
 
 LOG_LEVEL = logging.WARN
 SYSLOG_TAG = 'http_app_kuma'
@@ -1182,7 +1132,7 @@ LOGGING = {
             'propagate': True,
             'level': logging.ERROR,
         },
-        'django.request': {
+        'django': {
             'handlers': ['console'],
             'propagate': True,
             'level': logging.ERROR,
@@ -1202,18 +1152,22 @@ LOGGING = {
     },
 }
 
-CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = config('CSRF_COOKIE_SECURE', default=True, cast=bool)
 X_FRAME_OPTIONS = 'DENY'
 
 TEAMWORK_BASE_POLICIES = {
     'anonymous': (
-        'wiki.view_document',),
+        'wiki.view_document',
+    ),
     'authenticated': (
-        'wiki.view_document', 'wiki.add_document', 'wiki.add_revision'),
+        'wiki.view_document',
+        'wiki.add_document',
+        'wiki.add_revision',
+    ),
 }
 
 GRAPPELLI_ADMIN_TITLE = 'Mozilla Developer Network - Admin'
-GRAPPELLI_INDEX_DASHBOARD = 'admin_dashboard.CustomIndexDashboard'
+GRAPPELLI_INDEX_DASHBOARD = 'kuma.admin_dashboard.CustomIndexDashboard'
 
 DBGETTEXT_PATH = 'kuma/core/'
 DBGETTEXT_ROOT = 'translations'
@@ -1228,6 +1182,8 @@ ABSOLUTE_URL_OVERRIDES = {
 }
 
 OBI_BASE_URL = 'https://backpack.openbadges.org/'
+
+USE_X_FORWARDED_HOST = True
 
 # Honor the X-Forwarded-Proto header for environments like local dev VM that
 # uses Apache mod_proxy instead of mod_wsgi
@@ -1272,3 +1228,10 @@ HONEYPOT_FIELD_NAME = 'website'
 REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'kuma.search.utils.search_exception_handler'
 }
+
+SENTRY_DSN = config('SENTRY_DSN', default=None)
+
+if SENTRY_DSN:
+    INSTALLED_APPS = INSTALLED_APPS + (
+        'raven.contrib.django.raven_compat',
+    )

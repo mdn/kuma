@@ -39,6 +39,9 @@ requests-oauthlib==0.4.1
 python-openid==2.2.5
 oauthlib==0.6.3
 django-cacheback==0.9
+python-decouple==2.3
+dj-database-url==0.3.0
+dj-email-url==0.0.4
 
 ## Forked, temporary or otherwise
 # 2012-08-02

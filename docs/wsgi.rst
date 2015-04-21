@@ -86,12 +86,8 @@ Configuration
 -------------
 
 Most of our ``settings.py`` is under version control, but can be overridden
-in a file called ``settings_local.py`` in the base of the app (the same
-place as ``settings.py``). You can see example settings in
-`docs/settings/settings_local.prod.py <settings/settings_local.prod.py>`_:
-
-.. literalinclude:: settings/settings_local.prod.py
-
+in a file called ``.env`` in the root of the kuma directory (the same
+place as ``README.rst``).
 
 File Permissions
 ================
@@ -111,7 +107,6 @@ its subdirectories. The directories we currently use are::
 ``media/uploads`` and its subdirectories should never be added to version
 control, as they are installation-/content-specific.
 
-
 Product Details JSON
 --------------------
 
@@ -128,9 +123,8 @@ By default, ``product_details`` stores the JSON files in::
     vendor/src/django-mozilla-product-details/product_details/json
 
 This is configurable. If you have multiple web servers, they should share this
-data. You can set the ``PROD_DETAILS_DIR`` variable in ``settings_local.py`` to
+data. You can set the ``PROD_DETAILS_DIR`` variable in ``.env`` to
 a different path, for example on NFS.
-
 
 Debugging
 =========
@@ -141,7 +135,6 @@ allowed within the WSGI process, and will result in a Internal Server Error.
 
 There are three relevant cases for debugging via WSGI (by which I mean, where
 to find stack traces):
-
 
 Apache Error Page
 -----------------
@@ -158,36 +151,21 @@ Where these are is OS-dependent, but a good place to look is
 ``/var/log/httpd``. If you are using SSL, also check the SSL ``VirtualHost``'s
 logs, for example ``/var/log/httpd/ssl_error_log``.
 
-
 With ``DEBUG=True``
 -------------------
 
-With ``DEBUG = True`` in your ``settings_local.py``, you will see a stack trace
-in the browser on error. Problem solved!
-
+With ``DEBUG = True`` in your ``.env`` (also the default for local
+development), you will see a stack trace in the browser on error.
+Problem solved!
 
 With ``DEBUG=False``
 --------------------
 
-With ``DEBUG = False`` in your ``settings_local.py``, you'll see our Server
+With ``DEBUG = False`` in your ``.env``, you'll see our Server
 Error message. You can still get stack traces, though, by setting the
-``ADMINS`` variable in ``settings_local.py``::
+``ADMINS`` variable in ``.env``::
 
-    ADMINS = (
-        ('me', 'my@email.address'),
-    )
+    ADMIN_EMAILS = 'my@email.address'
 
 Django will email you the stack trace. Provided you've set up :doc:`email
 <email>`.
-
-
-Reloading WSGI
-==============
-
-WSGI keeps Python and Kuma running in an isolated process. That means code
-changes aren't automatically reflected on the server. In most default
-configurations of ``mod_wsgi``, you can simply do this::
-
-    touch wsgi/kuma.wsgi
-
-That will cause the WSGI process to reload.
