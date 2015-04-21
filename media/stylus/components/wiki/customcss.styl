@@ -321,122 +321,8 @@ div.index ol {
     padding-left: 0;
     list-style-type: none;
 }
-/* Stuff used for the syntax information about CSS, HTML, and so forth */
-/* ul.cssprop    box used by each CSS Property reference page*/
-.cssprop {
-    background-color: rgba-fallback(rgba(255,203,0,0.1));
-}
-[dir="ltr"] .cssprop {
-    clear: left;
-    margin: 0 0 $grid-spacing 0;
-    padding: 14px 0 14px 40px;
-    border-left: 6px solid rgba-fallback(rgba(255,203,0,0.5));
-}
-[dir="rtl"] .cssprop {
-    clear: right;
-    margin: 0 0 $grid-spacing 0;
-    padding: 14px 40px 14px 0;
-    border-right: 6px solid rgba-fallback(rgba(255,203,0,0.5));
-}
 
-.cssprop li {
-    display: table-row;
-    padding: 3px;
-    margin: 0;
-}
-.cssprop li dfn {
-    display: table-cell;
-    padding: 0 5px;
-    border-bottom: none;
-    white-space: pre;
-    cursor: inherit;
-}
-.cssprop li dfn:after {
-    content: ":";
-}
-.cssprop li li {
-    display: list-item;
-    list-style-type: disc;
-    line-height: 1;
-}
-/* ul.htmlelt box used by each HTML Element reference page */
-.htmlelt {
-    display: table;
-    padding: 11px 22px;
-    background-color: rgba-fallback(rgba(255,149,0,0.1));
-}
-[dir="ltr"] .htmlelt {
-    clear: left;
-    border-left: 6px solid rgba-fallback(rgba(255,149,0,0.5));
-}
-[dir="rtl"] .htmlelt {
-    clear: right;
-    border-right: 6px solid rgba-fallback(rgba(255,149,0,0.5));
-}
-.htmlelt li {
-    display: table-row;
-    padding: 3px;
-    margin: 0;
-    text-align: left;
-}
-.htmlelt li dfn {
-    display: table-cell;
-    padding: 0 5px;
-    border-bottom: none;
-    white-space: pre;
-    cursor: inherit;
-}
-.htmlelt li dfn:after {
-    content: ":";
-}
-.htmlelt li li {
-    display: list-item;
-    list-style-type: disc;
-    line-height: 1;
-}
-/* ul.audionodebox used by each AudioNode object reference page*/
-.audionodebox {
-    display: table;
-    padding: 11px 22px;
-    background-color: rgba-fallback(rgba(117,195,165,0.1));
-}
-[dir="ltr"] .audionodebox {
-    clear: left;
-    border-left: 6px solid rgba-fallback(rgba(117,195,165,0.5));
-}
-[dir="rtl"] .audionodebox {
-    clear: right;
-    border-right: 6px solid rgba-fallback(rgba(117,195,165,0.5));
-}
-.audionodebox li,
-.summary-box-js li,
-.summary-box-events li {
-    display: table-row;
-    padding: 3px;
-    margin: 0;
-    text-align: left;
-}
-.audionodebox li dfn,
-.summary-box-js li dfn,
-.summary-box-events li dfn {
-    display: table-cell;
-    padding: 0 5px;
-    border-bottom: none;
-    white-space: pre;
-    cursor: inherit;
-}
-.audionodebox li dfn:after,
-.summary-box-js li dfn:after,
-.summary-box-events li dfn:after {
-    content: ":";
-}
-.audionodebox li li,
-.summary-box-js li li,
-.summary-box-events li li {
-    display: list-item;
-    list-style-type: disc;
-    line-height: 1;
-}
+
 /* https://developer.mozilla.org/en-US/docs/Template:HTML:Element_Navigation */
 table.HTMLElmNav {
     margin: 1em auto;
@@ -1610,34 +1496,6 @@ dd.landingPageList {
     text-decoration: underline;
 }
 
-
-/* new modules */
-.summary-box-events {
-    display: table;
-    background-color: rgba-fallback(rgba(0,150,221,0.1));
-    padding: 11px 22px;
-}
-.redesign[dir="ltr"] .summary-box-events {
-    clear: left;
-    border-left: 6px solid rgba-fallback(rgba(0,150,221,0.5));
-}
-.redesign[dir="rtl"] .summary-box-events {
-    clear: right;
-    border-right: 6px solid rgba-fallback(rgba(0,150,221,0.5));
-}
-.summary-box-js {
-    display: table;
-    background-color: rgba-fallback(rgba(230,96,0,0.1));
-    padding: 11px 22px;
-}
-.redesign[dir="ltr"] .summary-box-js {
-    clear: left;
-    border-left: 6px solid rgba-fallback(rgba(230,96,0,0.5));
-}
-.redesign[dir="rtl"] .summary-box-js {
-    clear: right;
-    border-right: 6px solid rgba-fallback(rgba(230,96,0,0.5));
-}
 .redesign .standardNote,
 .redesign .optional,
 .renamed {
