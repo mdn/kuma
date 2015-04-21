@@ -140,8 +140,12 @@
         heading-2();
 
         a {
-            font-family: $heading-font-family;
             color: $blue-background-text-color;
+
+            font-family: $heading-font-family;
+            {$selector-heading-font-fallback} {
+                font-family: $hdeading-font-family-fallback;
+            }
         }
     }
 

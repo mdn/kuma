@@ -362,8 +362,12 @@ big-search() {
     margin: 0 auto;
     border: 0;
     border-radius: 3px;
-    font-family: $heading-font-family;
     width: 60%;
+
+    font-family: $heading-font-family;
+    {$selector-heading-font-fallback} {
+        font-family: $heading-font-family-fallback;
+    }
 }
 
 offscreen() {

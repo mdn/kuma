@@ -704,6 +704,7 @@ MINIFY_BUNDLES = {
             'js/auth.js',
             'js/badges.js',
             'js/social.js',
+            'js/fonts.js',
         ),
         'home': (
             'js/libs/owl.carousel/owl-carousel/owl.carousel.js',
@@ -772,6 +773,9 @@ MINIFY_BUNDLES = {
         ),
         'fellowship': (
             'js/fellowship.js',
+        ),
+        'fontfaceobserver': (
+            'js/libs/fontfaceobserver/fontfaceobserver-standalone.js',
         ),
     },
 }

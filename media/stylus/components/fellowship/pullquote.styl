@@ -8,10 +8,14 @@ The quote on the fellowship page
         position: relative;
         background-color: inherit;
         border: none;
+        color: $neutral;
+
         font-family: $heading-font-family;
         font-style: italic;
         font-size: $larger-font-size;
-        color: $neutral;
+        {$selector-heading-font-fallback} {
+            font-family: $heading-font-family-fallback;
+        }
     }
     .quote:before, .quote:after {
         font-size: 2rem;

@@ -21,6 +21,9 @@ body .topicpage-table {
 .topicpage-table {
     h2 {
         font-family: $heading-font-family;
+        {$selector-heading-font-fallback} {
+            font-family: $heading-font-family-fallback;
+        }
     }
 
     ul {

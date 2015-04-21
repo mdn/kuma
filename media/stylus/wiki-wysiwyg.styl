@@ -9,8 +9,12 @@ html.maximized {
     overflow-y: auto !important;
 }
 body {
-    font: 14px/1.5 $site-font-family;
     padding: $grid-spacing;
+
+    font: 14px/1.5 $site-font-family;
+    {$selector-site-font-fallback} {
+        font-family: $site-font-family-fallback;
+    }
 }
 
 

@@ -1,9 +1,14 @@
 $see-also-outdent = 6px;
 
 .quick-links {
-    set-smaller-font-size();
+
     margin-bottom: $grid-spacing;
     position: relative;
+
+    set-smaller-font-size();
+    {$selector-heading-font-fallback} {
+        letter-spacing: -0.002em;
+    }
 
     a {
         color: $text-color;
