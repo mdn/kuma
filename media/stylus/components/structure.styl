@@ -53,7 +53,18 @@ draw-grid();
 }
 
 #tabzilla {
+    /* below copied from https://github.com/mozilla/bedrock/blob/master/media/css/tabzilla/tabzilla.less#L51-L60 */
     bidi-value(float, right, left);
+    display: block;
+    height: 44px;
+    width: 150px;
+    overflow: hidden;
+}
+
+#tabzilla-panel {
+    /* in case the javascript loads before the CSS */
+    height: 0;
+    overflow: hidden;
 }
 
 #nav-access {

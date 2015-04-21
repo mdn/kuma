@@ -221,11 +221,17 @@
         Tabzilla
     */
     if($('#tabzilla').length) {
-        $.ajax({
-            url: '//mozorg.cdn.mozilla.net/en-US/tabzilla/tabzilla.js',
-            dataType: 'script',
-            cache: true
-        });
+        $('<link />').attr({
+            href: '//mozorg.cdn.mozilla.net/media/css/tabzilla-min.css',
+            type: 'text/css',
+            rel: 'stylesheet'
+        }).on('load', function() {
+            $.ajax({
+                url: '//mozorg.cdn.mozilla.net/en-US/tabzilla/tabzilla.js',
+                dataType: 'script',
+                cache: true
+            });
+        }).prependTo(doc.head);
     }
 
 })(window, document, jQuery);
