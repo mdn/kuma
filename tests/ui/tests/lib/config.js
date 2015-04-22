@@ -36,7 +36,7 @@ define(['intern'], function(intern) {
         asyncExecutionTimeout: 4000,
 
         // Wiki-specific
-        wikiDocumentSlug: ''
+        wikiDocumentSlug: intern.args.wd || ''
     };
 
 });

@@ -3,8 +3,9 @@ define([
     'intern/chai!assert',
     'base/lib/config',
     'base/lib/assert',
-    'base/lib/POM'
-], function(registerSuite, assert, config, libAssert, POM) {
+    'base/lib/POM',
+    'base/lib/poll'
+], function(registerSuite, assert, config, libAssert, POM, poll) {
 
     // Create this page's specific POM
     var Page = new POM({
@@ -68,7 +69,7 @@ define([
 
         },
 
-        '[requires-login][requires-doc] Existing document is editable': function() {
+        '[requires-login][requires-doc] Existing document shows "Edit", "Advanced" and "Languages" menu': function() {
 
             return this.remote.get(config.url + 'docs/' + config.wikiDocumentSlug)
                         .then(function() {
@@ -83,6 +84,41 @@ define([
 
         },
 
+        '[requires-login][requires-doc] Clicking the edit button goes to edit page, CKEditor loads properly': function() {
+
+            var remote = this.remote;
+
+            return remote.get(config.url + 'docs/' + config.wikiDocumentSlug)
+                        .findById('edit-button')
+                        .moveMouseTo(5, 5)
+                        .click()
+                        .then(function() {
+                            return libAssert.windowPropertyExists(remote, 'CKEDITOR');
+                        });
+        },
+
+        '[requires-login][requires-doc] Clicking the "translate button" allows for translation and CKEditor loads': function() {
+
+            var remote = this.remote;
+
+            return remote.get(config.url + 'docs/' + config.wikiDocumentSlug)
+                        .findById('languages-menu')
+                        .moveMouseTo(5, 5)
+                        .end()
+                        .findById('languages-menu-submenu')
+                        .then(function(element) {
+                            return poll.until(element, 'isDisplayed').then(function() {
+                                return remote.findById('translations-add')
+                                    .click()
+                                    .end()
+                                    .findByCssSelector('.locales a')
+                                    .click()
+                                    .then(function() {
+                                        return libAssert.windowPropertyExists(remote, 'CKEDITOR');
+                                    });
+                            });
+                        });
+        }
 
 
     });

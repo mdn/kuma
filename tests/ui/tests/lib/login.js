@@ -3,8 +3,9 @@ define([
     'intern/dojo/Deferred',
     'base/lib/config',
     'base/lib/poll',
+    'intern/dojo/node!leadfoot/helpers/pollUntil',
     'intern/chai!assert'
-], function(http, Deferred, config, poll, assert) {
+], function(http, Deferred, config, poll, pollUntil, assert) {
 
     return {
 
@@ -63,7 +64,6 @@ define([
                         .getAllWindowHandles()
                         .then(function(handles) {
                             return remote.switchToWindow(handles[1])
-                                .sleep(2000) // TODO:  Make this programmatic; i.e. an API call to poll when the email field is visible
                                 .findById('authentication_email')
                                 .click()
                                 .type(username)
@@ -71,15 +71,48 @@ define([
                                 .findByCssSelector('button.isStart')
                                 .click()
                                 .end()
-                                .sleep(2000) // TODO:  Make this programmatic; i.e. an API call to poll when the password field is visible
                                 .findById('authentication_password')
+                                .then(function() {
+
+                                    // Needing do perform this "hack" instead of polling for element isDisplayed()
+                                    // due to either a selenium issue or weird construction of Persona window
+                                    // return poll.until(element, 'isDisplayed')
+                                    return remote.executeAsync(function(done) {
+                                        var interval = setInterval(function() {
+                                            if(document.getElementById('authentication_password').offsetHeight) {
+                                                clearInterval(interval);
+                                                done();
+                                            }
+                                        }, 200);
+                                    });
+                                })
                                 .click()
                                 .type(password)
                                 .end()
                                 .findByCssSelector('button.isTransitionToSecondary')
                                 .click()
                                 .switchToWindow(handles[0])
-                                .sleep(6000) // TODO:  Make this programmatic; i.e. an API call to poll when first window has loaded new page
+
+                                // A bit crazy, but since we need to wait for Persona to (1) close the login window and
+                                // (2) refresh the main window, we need to listen for "beforeunload" to confirm the page is "turning"...
+                                .then(function() {
+                                    return remote.executeAsync(function(done) {
+                                        var eventType = 'beforeunload';
+                                        var asyncCallback = function() {
+                                            window.removeEventListener(eventType, asyncCallback);
+                                            done();
+                                        };
+
+                                        var listener = window.addEventListener(eventType, asyncCallback);
+                                    });
+                                })
+
+                                // ... and to confirm the login worked, we need to poll for either the "#id_username" element (signup page)
+                                // or the "a.user-state-signout" element (sign out link)
+                                .then(function() {
+                                    return pollUntil('alert(document.querySelector("#id_username") || document.querySelector("a.user-state-signout")); return document.querySelector("#id_username") || document.querySelector("a.user-state-signout")');
+                                })
+
                                 .end()
                                 .then(callback);
                     });
@@ -107,14 +140,6 @@ define([
             return remote
                         .get('https://login.persona.org/')
                         .execute('return jQuery("a.signOut").click();');
-
-                        // Using jQuery's click() method because WebDriver not registering the click on an inline link
-                        /*
-                        .findByCssSelector('a.signOut')
-                        .moveMouseTo(12, 12)
-                        .sleep(2000)
-                        click();
-                        */
         }
     };
 
