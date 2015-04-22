@@ -172,7 +172,8 @@
             <a class="button from-search-next only-icon disabled" title="{{ _('Next Search Result') }}" data-empty-title="{{ _('No Previous Search Result') }}"><i aria-hidden="true" class="icon-chevron-right"></i></a>
           </span>
 
-        <h1>{{ document.title }}</h1>
+        {% set safe_title = document.title|forceescape %}
+        <h1>{{ safe_title|addbreaks|safe }}</h1>
 
         {% if waffle.flag('share_links') %}
           {{ share_links(document) }}
