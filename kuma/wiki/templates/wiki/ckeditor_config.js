@@ -109,7 +109,7 @@
         { name: 'Callout box', element: 'div', attributes: { 'class': 'geckoVersionNote' }, type: 'wrap' },
         { name: 'Two columns', element: 'div', attributes: { 'class': 'twocolumns' }, type: 'wrap' },
         { name: 'Three columns', element: 'div', attributes: { 'class': 'threecolumns' }, type: 'wrap' },
-        { name: 'Article Summary', element: 'div', attributes: { 'class': 'summary' }, type: 'wrap' },
+        { name: 'Article Summary', element: 'p', attributes: { 'class': 'summary' } },
         { name: 'Syntax Box', element: 'div', attributes: { 'class': 'syntaxbox' } },
         { name: 'Right Sidebar', element: 'div', attributes: { 'class': 'standardSidebar' } },
         { name: 'SEO Summary', element: 'span', attributes: { 'class': 'seoSummary' } }
