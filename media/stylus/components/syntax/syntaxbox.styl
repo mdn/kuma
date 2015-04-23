@@ -8,17 +8,12 @@ pre.syntaxbox,
 pre.twopartsyntaxbox {
     background: $code-block-background-alt-color;
     @extend $code-block;
+    white-space: pre-wrap;
+    text-overflow: ellipsis ellipsis;
 }
 
 pre.twopartsyntaxbox {
     margin-bottom: 0;
-}
-
-/* Allow the content of the syntax box to wrap, to prevent horizontal scrolling */
-
-pre.syntaxbox code[class*="language-"],
-pre.twopartsyntaxbox code[class*="language-"] {
-    white-space: pre-line;
 }
 
 .syntaxbox-help {
