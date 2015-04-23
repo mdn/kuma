@@ -107,7 +107,21 @@ define([
                             });
         },
 
-        'Tabzilla loads properly': libAssert.elementExistsAndDisplayed('#tabzilla')
+        'Tabzilla loads properly': function() {
+
+            return this.remote.executeAsync(function(done) {
+                            var interval = setInterval(function() {
+                                if(document.getElementById('tabzilla-panel')) {
+                                    clearInterval(interval);
+                                    done();
+                                }
+                            }, 200);
+                        }).
+                        then(function() {
+                            return libAssert.elementExistsAndDisplayed('#tabzilla');
+                        });
+
+        }
 
     });
 
