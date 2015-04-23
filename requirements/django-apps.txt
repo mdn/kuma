@@ -69,8 +69,8 @@ django-taggit==0.9.3
 # sha256: 3CNdn1g9ny8cwkzNl0dJSFMV64Nc2ntnWvlFDeJlyQY
 django-teamwork==0.2.0
 
-# sha256: B2DUwWWcHTjb-BqFt-hiecsV1NQyh4Mc7qnO2Zobqfs
-django-tidings==1.0
+# sha256: eX16PoVnH1XIgQvKlhEg_O_sx_fXzTmx_1Q5jbXNt-A
+django-tidings==1.1
 
 # sha256: XdB6sb7A64hZ89MOwbKT9xgdwB5gQQ9XQLm7nTYEc-w
 django-timezones==0.2
