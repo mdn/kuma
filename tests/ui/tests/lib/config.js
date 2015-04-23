@@ -1,6 +1,6 @@
 define(['intern'], function(intern) {
 
-    var domain = intern.args.d || 'developer-local.allizom.org';
+    var domain = intern.args.d || 'developer.allizom.org';
     var httpsAddress = 'https://' + domain + '/';
     var defaultLocale = 'en-US';
 
