@@ -473,7 +473,6 @@ INSTALLED_APPS = (
     'allauth.socialaccount',
     'kuma.users.providers.persona',
     'kuma.users.providers.github',
-    'kuma.events',
 
     # DEMOS
     'kuma.demos',
@@ -694,10 +693,6 @@ MINIFY_BUNDLES = {
         'profile': (
             'js/profile.js',
             'js/moz-jquery-plugins.js',
-        ),
-        'events': (
-            'js/libs/jquery.gmap-1.1.0.js',
-            'js/calendar.js',
         ),
         'demostudio': (
             'js/libs/jquery.hoverIntent.minified.js',

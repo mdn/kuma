@@ -19,8 +19,12 @@ handler500 = core_views.handler500
 urlpatterns = patterns('',
     ('', include('kuma.landing.urls')),
     (r'^demos/', include('kuma.demos.urls')),
-    (r'^events/?', include('kuma.events.urls')),
     (r'^demos', lambda x: redirect('demos')),
+    url(
+        r'^events',
+        lambda x: redirect('https://mozilla.org/contribute/events'),
+        name='events'
+    ),
 
     # Django admin:
     url(r'^admin/wiki/document/purge/',
