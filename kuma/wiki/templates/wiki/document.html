@@ -413,9 +413,7 @@
   <script type="text/javascript">
       if(window.jQuery) jQuery('.from-search-toc').mozSearchResults('{{ search_url|safe }}');
 
-      {# This can be removed once the edit button background color A/B test is completed. #}
-      {% if not is_zone_root %}
-          mdn.optimizely.push(['activate', 2706700712]);
-      {% endif %}
+      {# This can be removed once the social network button multivariate test is completed. #}
+      mdn.optimizely.push(['activate', 2796520257]);
   </script>
 {% endblock %}

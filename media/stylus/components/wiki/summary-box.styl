@@ -1,0 +1,88 @@
+
+/*
+Summary boxes
+====================================================================== */
+
+/* item-spacing matches border and text-content li and td padding
+but no global varible becuase we should really pick 6 or 8 and
+just use $list-item-spacing everywhere */
+$summary-box-item-spacing = 6px;
+$summary-box-spacing = ($grid-spacing) - $summary-box-item-spacing;
+$summary-box-indent = ($grid-spacing * 2) - $summary-box-item-spacing;
+
+.cssprop,
+.htmlelt,
+.audionodebox,
+.summary-box-js,
+.summary-box-events {
+    display: table;
+    margin: 0 0 $grid-spacing 0;
+    border: 0 solid transparent;
+    bidi-value(clear, left, right);
+
+    .text-content & { /* need to override default text-content styles */
+        border-collapse: separate;
+        bidi-value(padding, $summary-box-spacing $summary-box-indent $summary-box-spacing $summary-box-spacing, $summary-box-spacing $summary-box-spacing $summary-box-spacing $summary-box-indent);
+        bidi-value(border-width, 0 0 0 $summary-box-item-spacing, 0 $summary-box-item-spacing 0 0);
+
+        @media $media-query-small-mobile {
+            bidi-value(padding, $summary-box-item-spacing, $summary-box-item-spacing);
+        }
+    }
+
+   li {
+        display: table-row;
+        margin: 0;
+    }
+
+    li dfn {
+        display: table-cell;
+        bidi-value(padding, $summary-box-item-spacing ($summary-box-item-spacing * 2) $summary-box-item-spacing $summary-box-item-spacing, $summary-box-item-spacing $summary-box-item-spacing $summary-box-item-spacing ($summary-box-item-spacing* 2 ));
+        border-bottom: none;
+        font-weight: bold;
+        white-space: pre;
+        cursor: inherit;
+    }
+
+    li li {
+        display: list-item;
+        list-style-type: disc;
+        line-height: 1;
+    }
+
+    th {
+        font-weight: bold;
+    }
+
+    th,
+    td {
+        border-width: 0;
+        vertical-align: top;
+    }
+}
+
+.text-content .cssprop {
+    background-color: rgba-fallback(rgba(255,203,0,0.1));
+    border-color: rgba-fallback(rgba(255,203,0,0.5));
+}
+
+.text-content .htmlelt {
+    background-color: rgba-fallback(rgba(255,149,0,0.1));
+    border-color: rgba-fallback(rgba(255,149,0,0.5));
+}
+
+.text-content .audionodebox {
+    background-color: rgba-fallback(rgba(117,195,165,0.1));
+    border-color: rgba-fallback(rgba(117,195,165,0.5));
+}
+
+.text-content .summary-box-js {
+    background-color: rgba-fallback(rgba(230,96,0,0.1));
+    border-color: rgba-fallback(rgba(230,96,0,0.5));
+}
+
+.text-content .summary-box-events {
+    background-color: rgba-fallback(rgba(0,150,221,0.1));
+    border-color: rgba-fallback(rgba(0,150,221,0.5));
+}
+

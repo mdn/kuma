@@ -220,12 +220,24 @@
     /*
         Tabzilla
     */
-    if($('#tabzilla').length) {
-        $.ajax({
-            url: '//mozorg.cdn.mozilla.net/en-US/tabzilla/tabzilla.js',
-            dataType: 'script',
-            cache: true
-        });
-    }
+    (function($tabzilla) {
+        if(!$tabzilla.length) return;
+
+        $('<link />').attr({
+            href: '//mozorg.cdn.mozilla.net/media/css/tabzilla-min.css',
+            type: 'text/css',
+            rel: 'stylesheet'
+        }).on('load', function() {
+
+            $('#tabzilla').addClass('loaded');
+
+            $.ajax({
+                url: '//mozorg.cdn.mozilla.net/en-US/tabzilla/tabzilla.js',
+                dataType: 'script',
+                cache: true
+            });
+        }).prependTo(doc.head);
+
+    })($('#tabzilla'));
 
 })(window, document, jQuery);

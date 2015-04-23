@@ -99,6 +99,7 @@ MDN_LANGUAGES = (
                  'el',
                  'es',
                  'fa',
+                 'ff',
                  'fi',
                  'fr',
                  'fy-NL',
