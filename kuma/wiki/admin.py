@@ -300,12 +300,11 @@ class DocumentAdmin(admin.ModelAdmin):
         """
         return False
 
-    def queryset(self, request):
+    def get_queryset(self, request):
         """
         The Document class has multiple managers which perform
         different filtering based on deleted status; we want the
         special admin-only one that doesn't filter.
-
         """
         qs = Document.admin_objects.all()
         # TODO: When we're on a Django version that handles admin

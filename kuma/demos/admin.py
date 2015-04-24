@@ -143,12 +143,12 @@ delete_selected.short_description = ugettext_lazy("Delete selected %(verbose_nam
 
 
 class SubmissionAdmin(admin.ModelAdmin):
-    actions = (delete_selected, censor_selected,)
+    actions = (delete_selected, censor_selected)
 
     list_display = ('title', 'creator', 'featured', 'censored', 'hidden',
-                    'taggit_tags', 'modified', )
+                    'taggit_tags', 'modified')
 
-    list_editable = ('featured', 'taggit_tags', )
+    list_editable = ('featured', 'taggit_tags')
 
     search_fields = ('title', 'summary', 'description', 'taggit_tags__name')
 
@@ -162,7 +162,7 @@ class SubmissionAdmin(admin.ModelAdmin):
         }
     }
 
-    def queryset(self, request):
-        return Submission.admin_manager
+    def get_queryset(self, request):
+        return Submission.admin_manager.all()
 
 admin.site.register(Submission, SubmissionAdmin)
