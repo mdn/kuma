@@ -52,13 +52,13 @@ def ban_link(context, ban_user, banner_user):
 
 
 @register.function
-@contextfunction
-def admin_link(context, user):
+def admin_link(user):
     """Returns a link to admin a user"""
-    link = ''
-    url = reverse('admin:auth_user_change', args=(user.id,),
+    url = reverse('admin:users_user_change', args=(user.id,),
                   current_app=admin.site.name)
-    link = '<a href="%s" class="button neutral">%s<i aria-hidden="true" class="icon-wrench"></i></a>' % (url, _('Admin'))
+    link = ('<a href="%s" class="button neutral">%s'
+            '<i aria-hidden="true" class="icon-wrench"></i></a>' %
+            (url, _('Admin')))
     return Markup(link)
 
 
