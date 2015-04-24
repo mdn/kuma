@@ -53,13 +53,13 @@ class ContentFlagManager(models.Manager):
         user, ip, user_agent, unique_hash = get_unique(content_type, object.pk,
                                                        request=request)
 
-        cf = ContentFlag.objects.get_or_create(
-            unique_hash=unique_hash,
-            defaults=dict(content_type=content_type,
-                          object_pk=object.pk, ip=ip,
-                          user_agent=user_agent, user=user,
-                          flag_type=flag_type,
-                          explanation=explanation))
+        defaults = dict(content_type=content_type,
+                        object_pk=object.pk, ip=ip,
+                        user_agent=user_agent, user=user,
+                        flag_type=flag_type,
+                        explanation=explanation)
+        cf = ContentFlag.objects.get_or_create(unique_hash=unique_hash,
+                                               defaults=defaults)
 
         if recipients:
             subject = _("{object} Flagged")

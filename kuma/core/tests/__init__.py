@@ -1,17 +1,15 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.messages.storage.fallback import FallbackStorage
-from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django import test
-from django.test import TestCase
+from django.test import TestCase, TransactionTestCase
 from django.test.client import Client
 from django.utils.functional import wraps
 from django.utils.importlib import import_module
 from django.utils.translation import trans_real
 
 from constance import config
-from constance.backends import database as constance_database
 from nose import SkipTest
 from nose.tools import eq_
 
@@ -159,7 +157,7 @@ class LocalizingClient(LocalizingMixin, SessionAwareClient):
 JINJA_INSTRUMENTED = False
 
 
-class KumaTestCase(TestCase):
+class KumaTestMixin(object):
     client_class = SessionAwareClient
     localizing_client = False
     skipme = False
@@ -170,10 +168,10 @@ class KumaTestCase(TestCase):
             raise SkipTest
         if cls.localizing_client:
             cls.client_class = LocalizingClient
-        super(KumaTestCase, cls).setUpClass()
+        super(KumaTestMixin, cls).setUpClass()
 
     def _pre_setup(self):
-        super(KumaTestCase, self)._pre_setup()
+        super(KumaTestMixin, self)._pre_setup()
 
         # Clean the slate.
         cache.clear()
@@ -204,6 +202,14 @@ class KumaTestCase(TestCase):
         messages = FallbackStorage(request)
         request._messages = messages
         return messages
+
+
+class KumaTestCase(KumaTestMixin, TestCase):
+    pass
+
+
+class KumaTransactionTestCase(KumaTestMixin, TransactionTestCase):
+    pass
 
 
 class SkippedTestCase(KumaTestCase):
