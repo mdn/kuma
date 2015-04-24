@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 import datetime
 from os.path import dirname
 from StringIO import StringIO

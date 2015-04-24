@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 from nose.tools import eq_
 
 from kuma.core.cache import memcache

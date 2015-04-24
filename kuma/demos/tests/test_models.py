@@ -1,7 +1,4 @@
-# coding=utf-8
-
-# This Python file uses the following encoding: utf-8
-# see also: http://www.python.org/dev/peps/pep-0263/
+# -*- coding: utf-8 -*-
 from os import unlink
 from os.path import dirname, isfile, isdir
 from shutil import rmtree

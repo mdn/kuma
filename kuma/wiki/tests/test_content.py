@@ -1,5 +1,4 @@
-# This Python file uses the following encoding: utf-8
-# see also: http://www.python.org/dev/peps/pep-0263/
+# -*- coding: utf-8 -*-
 from urlparse import urljoin
 
 import bleach
