@@ -52,7 +52,7 @@ class FacetedFilterOptionsSerializer(serializers.Serializer):
 class FacetedFilterSerializer(serializers.Serializer):
     name = serializers.CharField(read_only=True)
     slug = serializers.CharField(read_only=True)
-    options = FacetedFilterOptionsSerializer(source='options')
+    options = FacetedFilterOptionsSerializer(source='options', many=True)
 
 
 class SearchSerializer(pagination.PaginationSerializer):
@@ -101,9 +101,13 @@ class SearchSerializer(pagination.PaginationSerializer):
                 group_slug,
                 filter_['group']['order']
             ), []).append(
-                Filter(url=url, page=view.current_page, name=filter_name,
-                       slug=slug, count=count, active=slug in
-                       view.selected_filters, group_name=group_name,
+                Filter(url=url,
+                       page=view.current_page,
+                       name=filter_name,
+                       slug=slug,
+                       count=count,
+                       active=slug in view.selected_filters,
+                       group_name=group_name,
                        group_slug=group_slug)
             )
 

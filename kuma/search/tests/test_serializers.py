@@ -45,7 +45,7 @@ class SerializerTests(ElasticTestCase):
         search = search.query('match', summary='CSS')
         search = search.highlight(*WikiDocumentType.excerpt_fields)
         result = search.execute()
-        data = DocumentSerializer(result).data
+        data = DocumentSerializer(result, many=True).data
         eq_(data[0]['excerpt'], u'A <em>CSS</em> article')
 
 
