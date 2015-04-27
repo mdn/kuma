@@ -593,39 +593,36 @@ TAG_DESCRIPTIONS = dict((x['tag_name'], x) for x in getattr(
     },
 )))
 
-# HACK: For easier L10N, define license in code instead of as a DB model
-DEMO_LICENSES = dict((x['name'], x) for x in getattr(settings, 'DEMO_LICENSES', (
+
+DEFAULT_LICENSES = (
     {
-        'name': "mpl",
-        'title': _("MPL/GPL/LGPL"),
+        'name': 'mpl',
+        'title': _('MPL/GPL/LGPL'),
         'link': _('http://www.mozilla.org/MPL/'),
-        'icon': '',
     },
     {
-        'name': "gpl",
-        'title': _("GPL"),
+        'name': 'gpl',
+        'title': _('GPL'),
         'link': _('http://www.opensource.org/licenses/gpl-license.php'),
-        'icon': '',
     },
     {
-        'name': "bsd",
-        'title': _("BSD"),
+        'name': 'bsd',
+        'title': _('BSD'),
         'link': _('http://www.opensource.org/licenses/bsd-license.php'),
-        'icon': '',
     },
     {
-        'name': "apache",
-        'title': _("Apache"),
+        'name': 'apache',
+        'title': _('Apache'),
         'link': _('http://www.apache.org/licenses/'),
-        'icon': '',
     },
     {
-        'name': "publicdomain",
-        'title': _("Public Domain (where applicable by law)"),
+        'name': 'publicdomain',
+        'title': _('Public Domain (where applicable by law)'),
         'link': _('http://creativecommons.org/publicdomain/zero/1.0/'),
-        'icon': '',
     },
-)))
+)
+DEMO_LICENSES = dict((license['name'], license)
+                     for license in getattr(settings, 'DEMO_LICENSES', DEFAULT_LICENSES))
 
 
 def scale_image(img_upload, img_max_size):

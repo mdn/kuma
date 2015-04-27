@@ -433,7 +433,9 @@ class Submission(models.Model):
     license_name = models.CharField(
             _("Select the license that applies to your source code."),
             max_length=64, blank=False,
-            choices=( (x['name'], x['title']) for x in DEMO_LICENSES.values()))
+            choices=[(license['name'], license['title'])
+                     for license in DEMO_LICENSES.values()]
+    )
 
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, blank=False, null=True)
 
