@@ -156,16 +156,20 @@ class DocumentSerializer(BaseDocumentSerializer):
 
 
 class FilterSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField('get_localized_name')
 
     class Meta:
         model = models.Filter
         depth = 1
         fields = ('name', 'slug', 'shortcut')
-        read_only_fields = ('name', 'slug', 'shortcut')
+        read_only_fields = ('slug', 'shortcut')
+
+    def get_localized_name(self, obj):
+        return _(obj.name)
 
 
 class GroupWithFiltersSerializer(serializers.ModelSerializer):
-    name = serializers.CharField(read_only=True)
+    name = serializers.SerializerMethodField('get_localized_name')
     slug = serializers.CharField(read_only=True)
     order = serializers.CharField(read_only=True)
     filters = FilterSerializer(source='filters.visible_only', read_only=True)
@@ -174,6 +178,9 @@ class GroupWithFiltersSerializer(serializers.ModelSerializer):
         model = models.FilterGroup
         depth = 1
         fields = ('name', 'slug', 'order', 'filters')
+
+    def get_localized_name(self, obj):
+        return _(obj.name)
 
 
 class GroupSerializer(serializers.Serializer):

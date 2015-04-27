@@ -1,11 +1,15 @@
+import mock
 from nose.tools import ok_, eq_
+
+from django.utils import translation
 
 from kuma.wiki.search import WikiDocumentType
 
 from . import ElasticTestCase
 from ..fields import SearchQueryField, SiteURLField
 from ..models import Filter, FilterGroup
-from ..serializers import FilterWithGroupSerializer, DocumentSerializer
+from ..serializers import (DocumentSerializer, FilterSerializer,
+                           FilterWithGroupSerializer)
 
 
 class SerializerTests(ElasticTestCase):
@@ -24,6 +28,17 @@ class SerializerTests(ElasticTestCase):
             'tags': ['tag'],
             'operator': 'OR',
             'group': {'name': 'Group', 'slug': 'group', 'order': 1},
+            'shortcut': None})
+
+    @mock.patch('kuma.search.serializers._')
+    def test_filter_serializer_with_translations(self, _mock):
+        _mock.return_value = u'Juegos'
+        translation.activate('es')
+        filter_ = Filter(name='Games', slug='games')
+        serializer = FilterSerializer(filter_)
+        eq_(serializer.data, {
+            'name': u'Juegos',
+            'slug': u'games',
             'shortcut': None})
 
     def test_document_serializer(self):

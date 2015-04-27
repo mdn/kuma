@@ -4,7 +4,7 @@
 $home-involved-background-y = 50px;
 
 #home {
-    create-home-gradient-background(#00539f);
+    create-home-gradient-background($homepage-background-color);
     remove-main-spacing();
     use-white-logo();
 
@@ -143,8 +143,13 @@ $home-involved-background-y = 50px;
     .search-form {
       padding: ($grid-spacing * 2) 0;
 
-      input#home-q {
+      /* Only use the "big search" style when the search filter feature is not
+         enabled. */
+      > input#home-q {
           big-search();
+      }
+
+      input#home-q {
           set-placeholder-style(letter-spacing, -1px);
           set-placeholder-style(color, $text-color);
           color: $text-color;
