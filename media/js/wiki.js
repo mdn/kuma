@@ -289,6 +289,19 @@
         }
     })();
 
+    /*
+    Track Clicks on TOC links
+    */
+    $('#toc').on('click', 'a', function() {
+        var $thisLink = $(this);
+
+        mdn.analytics.trackEvent( {
+            category: 'TOC Links',
+            action: $thisLink.text(),
+            label: $thisLink.attr('href')
+        });
+    });
+
 
     /*
         Set up the scrolling TOC effect
