@@ -49,7 +49,8 @@ class KumaSocialAccountAdapterTestCase(UserTestCase):
 
         # Set up a GitHub SocialLogin in the session
         github_account = SocialAccount.objects.get(user__username='testuser2')
-        github_login = SocialLogin(account=github_account)
+        github_login = SocialLogin(account=github_account,
+                                   user=github_account.user)
 
         request = self.rf.get('/')
         session = self.client.session
