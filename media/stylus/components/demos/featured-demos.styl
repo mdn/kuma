@@ -1,3 +1,5 @@
+@require 'includes/vars';
+
 /*** Featured demos */
 #featured-demos {
   position: relative;
@@ -10,7 +12,7 @@
   padding: 0 0 22px;
   text-align: center;
   color: #fff;
-  font: 200 40px/0.8 "Bebas Neue", "League Gothic", Haettenschweiler, "Arial Narrow", sans-serif;
+  font: 200 40px/0.8 $heading-font-family;
   text-transform: uppercase;
   letter-spacing: 5px;
   text-shadow: 0 0 5px #ffc, 3px 2px 3px rgba(0,0,0,0.5);
@@ -64,8 +66,8 @@
   border-radius: 6px;
 }
 #demo-main .demo-details .demo-title {
-  font: normal 1.64em/1 "Bebas Neue", "League Gothic", "Arial Narrow", sans-serif;
-  letter-spacing: 2px;
+  font: normal 1.64em/1 $heading-font-family;
+  letter-spacing: 0;
   text-transform: uppercase;
   margin: 0 0 0.15em;
 }
@@ -91,7 +93,7 @@
   width: 110px;
   padding: 4px 80px;
   background: #d3d011;
-  font: normal 18px/0.9 "Bebas Neue", "League Gothic", "Arial Narrow", sans-serif;
+  font: normal 18px/0.9 $heading-font-family;
   text-transform: uppercase;
   letter-spacing: 2px;
   -moz-box-shadow: 0 3px 0 rgba(0,0,0,0.5);
@@ -128,8 +130,8 @@
   opacity: 0.6;
 }
 #featured-demos .side .demo-title {
-  font: normal 1em/1 "Bebas Neue", "League Gothic", "Arial Narrow", sans-serif;
-  letter-spacing: 1px;
+  font: normal 1em/1 $heading-font-family;
+  letter-spacing: 0;
   text-transform: uppercase;
   color: #fff;
 }
