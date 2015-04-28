@@ -7,6 +7,7 @@ from nose.plugins.attrib import attr
 from pyquery import PyQuery as pq
 
 from django.conf import settings
+from django.contrib.auth.hashers import UNUSABLE_PASSWORD_PREFIX
 from django.contrib.sites.models import Site
 from django.core.paginator import PageNotAnInteger
 
@@ -628,7 +629,7 @@ class AllauthPersonaTestCase(UserTestCase):
             ok_(testuser.is_active)
             eq_(persona_signup_username, testuser.username)
             eq_(persona_signup_email, testuser.email)
-            eq_('!', testuser.password)
+            ok_(testuser.password.startswith(UNUSABLE_PASSWORD_PREFIX))
 
     def test_persona_signup_create_socialaccount(self):
         """
