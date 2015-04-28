@@ -52,15 +52,3 @@ def email(save=False, **kwargs):
     if save:
         email.save()
     return email
-
-
-def verify_strings_in_response(test_strings, response):
-    for test_string in test_strings:
-        ok_(test_string in response.content,
-            msg="Expected '%s' in content." % test_string)
-
-
-def verify_strings_not_in_response(test_strings, response):
-    for test_string in test_strings:
-        ok_(test_string not in response.content,
-            msg="Found unexpected '%s' in content." % test_string)
