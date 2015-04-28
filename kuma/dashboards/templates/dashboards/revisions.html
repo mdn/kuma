@@ -8,7 +8,7 @@
 {% block content %}
 
     <div class="dashboard">
-        <h1>{{ title }}</h1>
+        <h1><a href="{{ url('dashboards.revisions') }}">{{ title }}</a></h1>
         <form method="get" id="revision-filter">
             <div class="revision-field">
                 <label for="id_locale">{{ _('Locale:') }}</label>
